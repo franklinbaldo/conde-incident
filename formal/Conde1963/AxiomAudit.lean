@@ -25,3 +25,9 @@ import Conde1963.DocumentaryDay
 #print axioms Conde1963.forced_and_excluded_conde_conflict
 
 #print axioms Conde1963.filter_grid_never_creates_candidates
+
+#print axioms Conde1963.nasa_repeat_is_same_day_predicate
+#print axioms Conde1963.nasa_c131_c197_not_independent
+#print axioms Conde1963.nasa_day_allows_both_regions
+#print axioms Conde1963.nasa_day_cannot_identify_region
+#print axioms Conde1963.nasa_day_does_not_force_ground_impact
