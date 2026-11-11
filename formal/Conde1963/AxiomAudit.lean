@@ -11,3 +11,6 @@ import Conde1963.Provenance
 #print axioms Conde1963.witness_and_exhaustive_region_bound_imply_unique
 #print axioms Conde1963.shared_chain_is_not_independent
 #print axioms Conde1963.radio_reprint_is_not_independent
+
+#print axioms Conde1963.same_observation_precludes_total_region_decoder
+#print axioms Conde1963.day_only_precludes_total_region_decoder
