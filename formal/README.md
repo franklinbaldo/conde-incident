@@ -124,3 +124,47 @@ precisely any time/location window is supported.
 finite-grid interface, NOT calibrated orbital integration, independent
 verification of every historical source, recovery of the 154/151 Lean
 archive, or an observed position/time of a 1963 impact.
+
+
+## 🐙 Documentary day restriction: C131/C197 (11 November 2026)
+
+`Conde1963/DocumentaryDay.lean` instantiates the abstract parameter
+interface with one *historically sourced, limited* condition: the NASA/Goddard
+*Satellite Situation Report* (15 November 1963, printed p. 8,
+[NTRS 19640001198](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf)),
+as pinned in matrix [C131 (L502)](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L502)
+and [C197 (L905)](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L905),
+reports a **decay date** of 8 Nov 1963 for 1963-003B/NORAD 528.
+
+C131 and C197 describe the **same** NASA source, not independent
+tracking stations. The proven `nasa_repeat_is_same_day_predicate` shows
+that using both references does not restrict the scenario further than
+using the documented day once. The executable Boolean day filter
+`nasaReportedDayRule` is proved equivalent to its Lean predicate and
+accepts two *illustrative* region-different candidates, rejecting a
+synthetic off-day candidate. These cases do not represent recovered TLEs,
+measured orbital states, or impact locations.
+
+**Crucial type/semantics limit:** this candidate's `day` field is
+interpreted *only within a scenario equating it to the NASA-recorded decay
+day*. It is **not** a proof of ground-impact date or a calibrated time
+of atmospheric passage. This report gives no terminal hour, coordinates,
+ballistic coefficient, region, or physical link to the reported Conde
+sphere. `nasa_day_cannot_identify_region` and the no-ground-impact
+countermodel prove conditional non-identifiability, **not** that Conde
+is physically excluded or that impact failed to happen.
+
+Proof/test commands (GitHub Actions at the actual PR head):
+
+```bash
+cd formal
+lake build
+lake env lean Conde1963/AxiomAudit.lean
+```
+
+Historical source facsimile was **not reinspected in this slice**.
+Source identification, wording and lineage were read from the versioned
+research matrix, blob SHA-1 `a7978c3a75a153b16ab70118a92c434bba674cb7`.
+The original historical `Evidence.lean` / 154-proposition ZIP and
+its independent custody hashes remain unavailable: historical import
+**NOT_RUN**.
