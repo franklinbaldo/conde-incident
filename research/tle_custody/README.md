@@ -52,3 +52,45 @@ Os testes unitários empregam dados inventados **expressamente sintéticos** e c
 - Matriz cumulativa [C172–C202](../evidence_matrix_C001-C238_2026-11-11.md), rastreia dependência e registra falhas de previsões de holdout. A presente fatia acrescenta C240, **sem alterar retroativamente os IDs anteriores**.
 
 **Limite decisivo em aberto:** precisamos de arquivos brutos primários NORAD/USAF/Space-Track de 1963, para 527/528/529, com arquivo original por época e eventual identificação de objeto, antes de auditar 45 registros de 528 como TLEs originais e resolver o conflito RAAN. Sem captura não se preenche o vazio com órbita sintética.
+
+
+## Confronto de espelhos no mesmo instante (C241, 11/11/2026)
+
+O extrator agora faz **comparação dos dados, não somente de checksums**. Lê o par literal 528 de 27/10 já preservado e validado, interpreta o campo de dia e fração com `Decimal` exato, busca por **época dentro de 1 segundo** as linhas 528 do Parquet original com SHA fixado, e confronta independentemente inclinação, RAAN, excentricidade, argumento de perigeu, anomalia média e movimento médio. As tolerâncias explicitadas no código só admitem arredondamento float32 do espelho; não são tolerâncias orbitais nem licença para escolher uma órbita. Comparar dois espelhos da mesma cadeia NORAD não constitui duas observações físicas.
+
+`audit.json -> mirror_comparison_528.status` pode ser `MATCH_WITHIN_ROUNDING`, `FIELD_DIVERGENCE`, `NO_MATCHING_EPOCH` ou `AMBIGUOUS_DUPLICATE_EPOCH`. **Nenhum dos quatro resolve a autenticidade histórica:** se não houver coincidência, preservar o resultado negativo em vez de alterar arbitrariamente épocas/RAAN. O relatório inclui cada índice `source_row`, a diferença temporal, diferenças de cada campo, SHA-1/SHA-256 do par literal, hashes das linhas e o contraste legado 284,1520° sem usá-lo como dado observado. A passagem do relatório ao GitHub Actions ainda depende de run real em HEAD, não se proclama resultado do confronto antes da execução do Parquet.
+
+A exportação inclui agora `norad_528_epochs_1963.csv`, separado do CSV geral, com **todas as linhas 528 realmente presentes**, índices preservados e hash SHA-1/SHA-256 de ambos os CSVs em `audit.json -> derived_file_hashes`. Não se completa artificialmente até 45, não se colapsam duplicatas: `duplicate_epoch_conflicts` separa a coincidência temporal com valores discordantes da simples repetição idêntica. Não há linha original de radar de 1963, código TLE, checksum de cada um dos 45 ou frame autenticado disponível nesse espelho, portanto essas provas ficam **NOT_RUN/NOT_VERIFIED**.
+
+Os controles sintéticos verificam UTC e dia ordinal não bissexto, envolvimento angular 359,99°↔0,01°, coincidência dentro do arredondamento, divergência deliberada de RAAN 284,1520°, ausência de época e duplicidade conflitante; checam também que o CSV usa LF real e tem hash de saída reproduzível. O teste com bytes do par espelhado de 528 valida *sintaxe*, não origem instrumental.
+
+**Tentativa de fonte secundária adicional:** as páginas públicas de 527 e 529 no espelho itau retornaram HTTP 502 nesta rodada, logo não foram transcritas nem consideradas resultados negativos sobre a existência de TLEs. O acervo numérico original permanece restrito ao Parquet fixado. **Observação decisiva ainda ausente:** pares TLE originais/boletins de elementos de 527–529 com proveniência do sistema de rastreamento, frame e época de emissão, e identificação de engenharia da peça S00528.
+
+
+## Resultado executado no acervo integral de 1963 (CI de 11/11/2026)
+
+**Fato agora efetivamente verificado no GitHub Actions**, não somente declarado pelo card: [workflow de custódia #43104710399](https://github.com/franklinbaldo/conde-incident/actions/runs/43104710399) e [verificações científicas #43104710510](https://github.com/franklinbaldo/conde-incident/actions/runs/43104710510) finalizaram **PASS no SHA `964d142716efbe60a7ae687ff52d3bde98ac8e71`**. O workflow baixou e conferiu o Parquet `SHA256 c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09`, `SHA1 623b8a57c959d980f013a9ba5e4bf4a8559adc69`, executou **14/14 testes** e produziu [artefato CSV+JSON #13894270124](https://github.com/franklinbaldo/conde-incident/actions/runs/43104710399/artifacts/13894270124). O próprio ZIP do artefato tem SHA-256 `66557f245f8df98d1f6b92cb1cc961654b58261c14b1f9c1d74e4a2f1a511f36`, segundo log GitHub.
+
+| Objeto | Linhas 1963 | Épocas UTC distintas | Mesma época repetida | Duplicatas conflitantes |
+|---|---:|---:|---:|---:|
+| NORAD 527 | 21 | 20 | 1 | 0 |
+| NORAD 528 | **45** | **45** | 0 | 0 |
+| NORAD 529 | 57 | 54 | 3 | 0 |
+
+A contagem anterior **21/45/57** em C25/C123 era *linhas*, enquanto **20/45/54** era *épocas únicas*. A incompatibilidade de contagens estava portanto na **definição estatística**, não em 7 elementos ausentes. Essa conclusão diz respeito exclusivamente ao espelho com hash conferido, não a uma auditoria dos TLEs primários.
+
+**Confronto do 528:** índice físico do Parquet `source_row=3017`, época **1963-10-27 14:40:16.132512 UTC**; TLE espelhado com idêntica época (`epoch_delta_seconds=0`), e RAAN Parquet `198.52609252929688°` comparado ao campo literal `198.5261°`, diferença **0,000007470703°**. Os **seis campos** passaram no limiar de arredondamento `float32` (`MATCH_WITHIN_ROUNDING`). O dado do app `284.1520°` permanece sem linhagem e **conflito NÃO RESOLVIDO**. Coincidência entre dois espelhos pode simplesmente indicar cópia da mesma exportação.
+
+**Hashes dos derivados:** CSV geral SHA-256 `3940715d7c15cf15c24e678a8c5b5fbb34a031b3ffd7e33c0580277377383231`; CSV exclusivo das 45 épocas do 528 SHA-256 `e3c946809d8e73d814bc1dfa424bf901a3b4331e63e4c85f82f81cf33b9c073e`. Ver todos os campos de custódia em `audit.json` no artefato.
+
+**Validação neste HEAD posterior às anotações:** os runs citados validam precisamente `964d142`; novas alterações meramente documentais requerem verificação do respectivo HEAD antes de revisão e integração. **Ainda ausentes:** 45 pares de linhas históricas originais com seus checksums, identificação material da peça 528, frame e registros de radar primários, observação terminal com UTC/local. Não se infere impacto em Conde.
+
+## Correção dos insumos operacionais legados por decisão do proprietário (11/11/2026)
+
+**Decisão aplicada ao código, não autenticação primária:** o app `src/lib/constants.ts`, a exportação Python e `norad528_reconstruction.py` deixaram de usar o vetor sem cadeia de fonte `RAAN=284,1520° / e=0,00842 / época 14:40:00` como insumo nominal do **528**. Agora usam exatamente o par TLE secundário preservado neste diretório: época `63300.61129783`, RAAN `198,5261°`, e `0,0017147`, argumento do perigeu `104,7477°`, anomalia média `255,4423°` e n `15,74901460 rev/dia`. O instante de `Date` em JavaScript tem precisão de milissegundos (`14:40:16.132Z`), enquanto o campo literal TLE conserva os `132512` microssegundos.
+
+**Custódia:** URL do espelho itau, SHA-256 das duas linhas `18cf11665e061b5ec8679242e10b00b82accf29bc6f0b9b7b6330b9c44e341cd`; confirmação numérica de mesma época por `source_row=3017` no Parquet oxzoid `SHA256 c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09`. Ambas as cópias podem derivar de uma fonte comum. A escolha operacional significa **melhor rastreabilidade entre os dados disponíveis**, e não resolução instrumental do conflito. O valor 284,1520° segue documentado aqui e no histórico Git para auditoria; não é mais silenciosamente tratado como elemento observado.
+
+Para **527 e 529**, cujos vetores embutidos no app não dispõem de par TLE autenticado, a classificação foi rebaixada para `HIPOTESE` e a proveniência sinaliza explicitamente o cenário sintético legado. Os pares ainda presentes nas estruturas são placeholders que mantêm a compatibilidade de código, **não observações históricas**; não devem fundamentar reconstruções cruzadas/holdout antes de substituição por épocas do CSV custodiado. A cronologia foi corrigida para não apresentar esses vetores como TLEs oficiais, nem a marca `23:59` como horário observado de decaimento. Os valores de passagem terminal produzidos pelo modelo antigo continuam **exploratórios, não previsões físicas**.
+
+**Regressão reproduzível:** `python -m unittest discover -s tests -p 'test_*.py' -v`, incluindo `tests/test_orbital_constants_provenance.py`, bloqueia retorno de RAAN, época e elementos sem fonte ao código operacional e a classificação primária falsa de 527/529. CI de custódia deve validar o novo HEAD antes de merge. Não há novo documento primário, horário terminal ou localização de queda.
