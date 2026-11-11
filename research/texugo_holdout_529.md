@@ -54,6 +54,16 @@ O [GitHub Actions #43100111352](https://github.com/franklinbaldo/conde-incident/
 
 **Resultado negativo real:** em 31/08, a transferência **piorou** o RMSE do 529 em cerca de `0.001462895` rev/dia (não é o resultado sintético de 2,03084). Nos demais três cortes a redução vai de `0.002002977` a `0.008120140` rev/dia, apenas dentro do mesmo catálogo secundário. Não há teste de significância, separação de linhagens, propagação vetorial ou prova de maior acurácia orbital. A contraprova de CSV falso foi descoberta após esse replay; a nova validação por comparação Parquet↔CSV precisa de GitHub Actions no **novo HEAD**, sem herdar o PASS anterior.
 
+## Emenda de ablação pós-resultado: doadores isolados e baseline linear (11/11/2026)
+
+**Status do desenho: POST_HOC.** Esta emenda foi introduzida **depois** de observar os quatro RMSE históricos acima; não é pré-registro nem uma nova amostra independente. Mantém exatamente os quatro cortes originais e a métrica original, sem escolher corte, doador ou hiperparâmetro para maximizar desempenho.
+
+Para cada corte e com **os mesmos dados de treinamento anteriores ao corte**, o script calcula também: (a) curvatura transferida só do 527; (b) curvatura transferida só do 528; (c) baseline **linear** treinado só no 529; (d) controle de sinal invertido já existente. Todos são avaliados no **mesmo futuro oculto do 529**, sem refit no teste. O JSON inclui cada RMSE e três indicadores descritivos: ganho conjunto sobre ambos os doadores isolados, sobre a regressão linear e sobre a curvatura invertida. **Não há nova barreira de CI por vencer esses controles.**
+
+Esta ablação discrimina uma hipótese particularmente fraca: a média 527/528 pode reduzir RMSE perante o quadrático próprio do 529 simplesmente por regularização acidental, enquanto um único doador ou um modelo mais simples já faria melhor. Um doador isolado ganhar **não** valida ligação física nem independência de fonte. Os testes sintéticos agora incluem explicitamente um doador correto e outro incorreto, um 529 exatamente linear e alteração de todos os valores futuros sem mudar nenhum coeficiente ajustado.
+
+**Fonte e custódia inalteradas:** Parquet oxzoid commit `4b4fb3a`, SHA-256 `c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09`; NASA 15/11/1963 p.8 para **dia**, não lugar. A ablação não acrescenta observações de radar, não resolve RAAN e não pode produzir probabilidades. Comparações históricas adicionais **NOT_RUN até o novo workflow no HEAD da emenda**.
+
 ## Controles negativos executáveis
 
 `tests/test_texugo_holdout_529.py` contém dados **100% artificiais**, em dois sentidos: ganho da transferência quando há curvatura realmente compartilhada e treino escasso/perturbado; piora quando a curvatura do 529 diverge; teste anti-vazamento alterando apenas observações pós-corte (coeficientes devem ser invariantes); rejeição de fonte/hash falsos, duplicata conflitante e `NOT_RUN` quando não há amostras. Estes testes provam propriedades do procedimento, **não** dados de 1963.
