@@ -28,7 +28,7 @@ def HasCandidate {α : Type} (constraints : List (ParameterConstraint α)) : Pro
     reviewer must justify that decision from sources and physical premises. -/
 inductive ConstraintUse where
   | admitted | scenarioOnly | exploratory
-  deriving Repr, DecidableEq
+  deriving Repr, DecidableEq, BEq
 
 /-- A matrix label alone is not always unique: C44-C46 each occur twice.
     `occurrence` is an explicit disambiguator; no documentary text or
@@ -55,6 +55,29 @@ theorem source_narrowing_never_adds_parameters {α : Type}
     AllowedFromSources records p := by
   intro record present admitted
   exact h record (List.mem_cons_of_mem extra present) admitted
+
+/-- Certified finite-domain evaluator: every executable predicate must
+    be proved equivalent to its declarative Lean constraint. A search
+    grid or list is *not* proof that continuous trajectories were covered. -/
+structure ExecutableRule (α : Type) where
+  source : SourcedConstraint α
+  accepts : α → Bool
+  corresponds : ∀ p, accepts p = true ↔ source.condition p
+
+/-- Concrete parameter choices supplied to the numerical simulator.
+    The list is exhaustively filtered *only relative to its input grid*. -/
+def filterCandidateGrid {α : Type}
+    (candidates : List α) (rules : List (ExecutableRule α)) : List α :=
+  candidates.filter (fun p =>
+    rules.all (fun r =>
+      (r.source.use != ConstraintUse.admitted) || r.accepts p))
+
+/-- Filtering cannot fabricate a parameter vector outside the source grid. -/
+theorem filter_grid_never_creates_candidates {α : Type}
+    (candidates : List α) (rules : List (ExecutableRule α))
+    (p : α) (h : p ∈ filterCandidateGrid candidates rules) :
+    p ∈ candidates := by
+  exact (List.mem_filter.mp h).1
 
 /-- Appending a new constraint never admits parameters previously excluded. -/
 theorem narrowing_never_adds_parameters {α : Type}
