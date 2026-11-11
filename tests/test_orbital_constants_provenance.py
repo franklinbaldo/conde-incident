@@ -53,7 +53,7 @@ class LegacySourceAlignment(unittest.TestCase):
         block_529 = between(source, "  529: {", "\n};")
         for block in (block_527, block_529):
             self.assertIn("classification: 'HIPOTESE'", block)
-            self.assertIn("sem TLE primário", block.lower())
+            self.assertIn("sem tle primário", block.lower())
             self.assertNotIn("DOCUMENTO_PRIMARIO_VERIFICADO", block)
 
 
