@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
-from texugo_holdout_529 import Observation, CUTOFFS, EXPECTED_SHA256, EXPECTED_URL, evaluate, load_audited, run
+from texugo_holdout_529 import Observation, CUTOFFS, EXPECTED_SHA256, EXPECTED_URL, evaluate, load_audited, parse_csv, require_same_bindings, run
 
 
 def samples(c527=0.4, c528=0.4, c529=0.4, noisy_target=False):
@@ -63,21 +63,40 @@ class HoldoutControls(unittest.TestCase):
         import csv
         with tempfile.TemporaryDirectory() as d:
             p = Path(d)
-            csv_path, audit_path = p / "data.csv", p / "audit.json"
+            csv_path, audit_path, parquet_path = p / "data.csv", p / "audit.json", p / "source.parquet"
             with csv_path.open("w", newline="") as f:
-                writer = csv.DictWriter(f, fieldnames=["norad_id", "epoch", "mean_motion"])
+                writer = csv.DictWriter(f, fieldnames=["source_row", "norad_id", "epoch", "mean_motion"])
                 writer.writeheader()
-                for sat in (527, 528, 529):
-                    writer.writerow({"norad_id": sat, "epoch": "1963-10-01T00:00:00Z", "mean_motion": 15.0})
+                for index, sat in enumerate((527, 528, 529)):
+                    writer.writerow({"source_row": index, "norad_id": sat,
+                                     "epoch": "1963-10-01T00:00:00Z", "mean_motion": 15.0})
+            parquet_path.write_bytes(b"PAR1fabricatedPAR1")
             audit_path.write_text(json.dumps({"source": {"url": EXPECTED_URL, "hashes": {"sha256": "bad"}}}))
             with self.assertRaisesRegex(ValueError, "custódia"):
-                load_audited(csv_path, audit_path)
-            audit_path.write_text(json.dumps({"source": {"url": EXPECTED_URL, "hashes": {"sha256": EXPECTED_SHA256}}, "problems": []}))
-            self.assertEqual(len(load_audited(csv_path, audit_path)), 3)
+                load_audited(csv_path, audit_path, parquet_path)
+            audit_path.write_text(json.dumps({"source": {"url": EXPECTED_URL,
+                                   "hashes": {"sha256": EXPECTED_SHA256, "sha1": "fake"}}, "problems": []}))
+            # A plausible audit JSON does NOT authenticate a fake Parquet or an arbitrary CSV.
+            with self.assertRaisesRegex(ValueError, "custódia"):
+                load_audited(csv_path, audit_path, parquet_path)
+            parsed, keys = parse_csv(csv_path)
+            self.assertEqual(len(parsed), 3)
+            require_same_bindings(keys, list(keys))
+            with self.assertRaisesRegex(ValueError, "CSV"):
+                require_same_bindings(keys, keys[:-1])  # truncated source or added row
+            altered = list(keys)
+            altered[1] = (*altered[1][:3], altered[1][3] + 0.01)
+            with self.assertRaisesRegex(ValueError, "CSV"):
+                require_same_bindings(altered, keys)  # silently changed mean motion
             with csv_path.open("a") as f:
-                f.write("529,1963-10-01T00:00:00Z,16.0\n")
+                f.write("2,529,1963-10-01T00:00:00Z,16.0\\n")
             with self.assertRaisesRegex(ValueError, "duplicatas"):
-                load_audited(csv_path, audit_path)
+                parse_csv(csv_path)
+
+    def test_even_identical_csv_row_repetition_is_not_source_custody(self):
+        row = (1, 529, datetime(1963, 10, 1, tzinfo=timezone.utc), 15.0)
+        with self.assertRaisesRegex(ValueError, "CSV"):
+            require_same_bindings([row, row], [row])
 
     def test_no_likelihood_or_geography_in_report(self):
         report = run(samples())
