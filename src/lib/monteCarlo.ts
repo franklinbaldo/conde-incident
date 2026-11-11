@@ -1,5 +1,4 @@
 import {
-  EARTH_RADIUS_EQUATORIAL_KM,
   CONDE_COORDINATES,
   HISTORICAL_ORBITAL_DATA,
 } from './constants';
@@ -8,6 +7,8 @@ import {
   deg2rad,
   rad2deg,
   getGreatCircleDistanceKm,
+  getGMST,
+  getNodalPrecessionRateDegDay,
 } from './astrodynamics';
 
 // Box-Muller transform for normal distribution
@@ -57,10 +58,14 @@ export function runMonteCarloSimulation(
   const targetLat = CONDE_COORDINATES.latitude; // -11.8139
   const targetLon = CONDE_COORDINATES.longitude; // -37.6108
 
+  // WARNING: a geometric synthetic null model. Terminal latitude phase is
+  // sampled independently of TLE and the sampled lifetime. Its fractions
+  // cannot be interpreted as impact probabilities conditioned on history.
   // Base parameters for 528
   const baseInclinationDeg = 81.8615;
-  const baseNodalRegressionRate = -2.28; // deg/day
-  const baseMeanMotion = 15.7490; // rev/day
+  // Classical secular J2 rate for the same historical element set, not a hard-coded -2.28 deg/day.
+  const el = HISTORICAL_ORBITAL_DATA[528];
+  const baseNodalRegressionRate = getNodalPrecessionRateDegDay(el.meanMotionRevDay, el.inclinationDeg, el.semiMajorAxisKm, el.eccentricity);
 
   for (let i = 1; i <= sampleSize; i++) {
     // 1. Sample physical parameters with uncertainty
@@ -97,8 +102,7 @@ export function runMonteCarloSimulation(
 
     // Greenwich sidereal angle theta_g at decay time
     // Approx 24h = 360 deg
-    const gmstHours = (decayDate.getUTCHours() + decayDate.getUTCMinutes() / 60 + decayDate.getUTCSeconds() / 3600) * 1.0027379;
-    const gmstDeg = ((gmstHours * 15) + (lifetimeDays * 360 / 365.25)) % 360;
+    const gmstDeg = rad2deg(getGMST(decayDate));
 
     // Sub-satellite longitude: lon = RAAN + arctan2(cos(i)*sin(u), cos(u)) - GMST
     const yTrack = Math.cos(incRad) * Math.sin(entryArgLatitudeRad);
