@@ -1,10 +1,6 @@
 name: Audit Conde Pages release
 on:
-  pull_request:
-    paths:
-      - 'scripts/check-pages-release.mjs'
-      - 'scripts/check-pages-release.test.mjs'
-      - '.github/workflows/pages-audit.yml'
+  pull_request: {}
   workflow_run:
     workflows: ['Publish Conde site']
     types: [completed]
