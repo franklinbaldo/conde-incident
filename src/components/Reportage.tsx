@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { readSiteRoute, STORIES_INDEX, storyHref } from '../lib/storyRoutes';
+import { parseStoryBlocks, tokenizeStoryInline } from '../lib/storyMarkdown';
 import { ArrowLeft, ArrowRight, BookOpen, CalendarDays, Feather, FileText } from 'lucide-react';
 
 // Vite bundles authored Markdown sources directly. The formatter deliberately
@@ -29,38 +30,48 @@ const allStories = Object.entries(chapters).map(([path, raw]) => parseStory(path
   .sort((a, b) => b.date.localeCompare(a.date) || b.chapter.localeCompare(a.chapter));
 
 function inlineText(text: string): React.ReactNode[] {
-  // Safe, limited Markdown typography: links, emphasis, bold and inline code.
-  const token = /(\[[^\]]+\]\(https?:\/\/[^\s)]+\)|\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g;
-  const out: React.ReactNode[] = [];
-  let last = 0;
-  for (const m of text.matchAll(token)) {
-    if (m.index > last) out.push(text.slice(last, m.index));
-    const val = m[0], key = m.index;
-    if (val.startsWith('[')) {
-      const i = val.indexOf('](');
-      const href = val.slice(i + 2, -1);
-      out.push(<a key={key} className="text-cyan-300 underline decoration-cyan-800 underline-offset-4 hover:text-cyan-100" href={href} target="_blank" rel="noopener noreferrer">{val.slice(1, i)}</a>);
-    } else if (val.startsWith('**')) out.push(<strong key={key} className="font-semibold text-zinc-100">{val.slice(2, -2)}</strong>);
-    else if (val.startsWith('*')) out.push(<em key={key}>{val.slice(1, -1)}</em>);
-    else out.push(<code key={key} className="rounded bg-zinc-800 px-1.5 py-0.5 text-sm text-cyan-200">{val.slice(1,-1)}</code>);
-    last = m.index + val.length;
-  }
-  if (last < text.length) out.push(text.slice(last));
-  return out;
+  return tokenizeStoryInline(text).map((part, i) => {
+    switch (part.kind) {
+      case 'link':
+        return <a key={i} className="break-words text-cyan-300 underline decoration-cyan-800 underline-offset-4 hover:text-cyan-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400" href={part.href} target="_blank" rel="noopener noreferrer">{part.text}</a>;
+      case 'strong':
+        return <strong key={i} className="font-semibold text-zinc-100">{part.text}</strong>;
+      case 'em':
+        return <em key={i}>{part.text}</em>;
+      case 'code':
+        return <code key={i} className="break-words rounded bg-zinc-800 px-1.5 py-0.5 text-sm text-cyan-200">{part.text}</code>;
+      default:
+        return <React.Fragment key={i}>{part.text}</React.Fragment>;
+    }
+  });
 }
 
 function StoryBody({ markdown }: {markdown: string}) {
-  const blocks = markdown.split(/\n\s*\n/).map(s => s.trim()).filter(Boolean);
+  const blocks = parseStoryBlocks(markdown);
   return <div className="space-y-6 text-[16px] leading-[1.85] text-zinc-300 md:text-[17px]">
     {blocks.map((block, i) => {
-      if (block === '---') return <hr key={i} className="my-10 border-zinc-700"/>;
-      const h = /^(#{1,3})\s+([\s\S]*)$/.exec(block);
-      if (h) return h[1].length===1
-        ? <h2 key={i} className="pt-3 text-3xl font-semibold leading-tight tracking-tight text-white">{inlineText(h[2])}</h2>
-        : <h3 key={i} className="pt-4 text-xl font-semibold leading-snug text-white">{inlineText(h[2])}</h3>;
-      if (block.startsWith('> ')) return <blockquote key={i} className="border-l-2 border-cyan-500 bg-cyan-950/20 px-5 py-4 italic text-zinc-200">{inlineText(block.replace(/^>\s?/gm, '').replace(/\n/g,' '))}</blockquote>;
-      if (block.startsWith('- ')) return <ul key={i} className="list-disc space-y-2 pl-6">{block.split('\n').map((line, j)=><li key={j}>{inlineText(line.replace(/^-\s*/,''))}</li>)}</ul>;
-      return <p key={i}>{inlineText(block.replace(/\n/g, ' '))}</p>;
+      switch (block.kind) {
+        case 'rule':
+          return <hr key={i} className="my-10 border-zinc-700"/>;
+        case 'heading':
+          return block.level === 1
+            ? <h2 key={i} className="pt-3 text-3xl font-semibold leading-tight tracking-tight text-white">{inlineText(block.text)}</h2>
+            : block.level === 2
+              ? <h3 key={i} className="pt-4 text-xl font-semibold leading-snug text-white">{inlineText(block.text)}</h3>
+              : <h4 key={i} className="pt-3 text-lg font-semibold leading-snug text-white">{inlineText(block.text)}</h4>;
+        case 'quote':
+          return <blockquote key={i} className="border-l-2 border-cyan-500 bg-cyan-950/20 px-5 py-4 text-zinc-200">{inlineText(block.text)}</blockquote>;
+        case 'list': {
+          const items = block.items.map((item, j) => <li key={j}>{inlineText(item)}</li>);
+          return block.ordered
+            ? <ol key={i} start={block.start} className="list-decimal space-y-2 pl-6">{items}</ol>
+            : <ul key={i} className="list-disc space-y-2 pl-6">{items}</ul>;
+        }
+        case 'code':
+          return <pre key={i} className="overflow-x-auto rounded-lg border border-zinc-700 bg-zinc-950 p-4 text-sm leading-relaxed text-zinc-200"><code>{block.text}</code></pre>;
+        default:
+          return <p key={i}>{inlineText(block.text)}</p>;
+      }
     })}
   </div>;
 }
@@ -87,6 +98,24 @@ export function Reportage({ lang }: {lang: 'pt'|'en'}) {
     if (current) titleRef.current?.focus();
   }, [current]);
 
+  // Runtime metadata follows the selected deep link. Static Pages crawlers do
+  // not execute fragment routes, so this is browser UX, not per-story OG preview.
+  useEffect(() => {
+    const previousTitle = document.title;
+    const description = document.querySelector<HTMLMetaElement>('meta[name="description"]');
+    const previousDescription = description?.content;
+    document.title = current
+      ? current.title + ' | Caderno de histórias · Conde'
+      : 'Caderno de histórias | Caso Conde (1963)';
+    if (description) {
+      description.content = current?.summary || 'Reportagens documentais com fontes e limites da investigação de Conde (1963).';
+    }
+    return () => {
+      document.title = previousTitle;
+      if (description && previousDescription !== undefined) description.content = previousDescription;
+    };
+  }, [current]);
+
   return <div className="space-y-8 pb-16">
     <section className="relative overflow-hidden rounded-3xl border border-zinc-800 bg-[radial-gradient(ellipse_at_85%_0%,rgba(14,116,144,.21),transparent_58%),linear-gradient(145deg,#111827,#09090b)] px-6 py-10 md:px-12 md:py-14">
       <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-[.25em] text-cyan-300"><Feather size={15}/>{pt?'Caderno de investigação · Conde, Bahia':'Investigative journal · Conde, Brazil'}</div>
@@ -101,7 +130,7 @@ export function Reportage({ lang }: {lang: 'pt'|'en'}) {
     </section> : current ? <>
       <a href={STORIES_INDEX} className="inline-flex items-center gap-2 rounded text-sm text-cyan-300 hover:text-cyan-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-400"><ArrowLeft size={16}/>{pt?'Todos os capítulos':'All chapters'}</a>
       <article lang="pt-BR" aria-labelledby="story-title" className="mx-auto max-w-3xl rounded-2xl border border-zinc-800 bg-zinc-900/40 px-5 py-9 sm:px-6 md:px-12 md:py-14">
-        <div className="flex flex-wrap gap-4 text-xs font-mono text-zinc-400"><span className="text-cyan-300">{pt?'CAPÍTULO':'CHAPTER'} {current.chapter}</span><time dateTime={current.date}>{current.date}</time><span>{current.author}</span></div>
+        <div className="flex flex-wrap gap-4 text-xs font-mono text-zinc-400"><span className="text-cyan-300">{pt?'CAPÍTULO':'CHAPTER'} {current.chapter}</span><time dateTime={current.date}>{current.date}</time><span>{current.author}</span>{current.status && <span className="rounded border border-zinc-700 px-2 py-0.5 text-zinc-300">{current.status}</span>}</div>
         <h2 ref={titleRef} id="story-title" tabIndex={-1} className="mt-5 font-serif text-3xl font-semibold leading-tight text-white focus:outline-none sm:text-4xl md:text-5xl">{current.title}</h2>
         <p className="mt-5 border-b border-zinc-700 pb-8 text-lg leading-relaxed text-zinc-400">{current.summary}</p>
         <StoryBody markdown={current.body.replace(/^# .+\n\s*/, '')}/>
