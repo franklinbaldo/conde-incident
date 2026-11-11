@@ -20,3 +20,6 @@ import Conde1963.Provenance
 #print axioms Conde1963.exclusion_persists_under_consistent_narrowing
 #print axioms Conde1963.unique_impact_entails_window
 #print axioms Conde1963.counterexample_refutes_forced_conde
+
+#print axioms Conde1963.source_narrowing_never_adds_parameters
+#print axioms Conde1963.forced_and_excluded_conde_conflict
