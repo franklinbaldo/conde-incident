@@ -1,0 +1,23 @@
+name: Validate Conde agent memories
+on:
+  pull_request:
+    paths:
+      - 'team/memory/**'
+      - 'scripts/check-agent-memories*'
+      - '.github/workflows/agent-memory.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'team/memory/**'
+      - 'scripts/check-agent-memories*'
+      - '.github/workflows/agent-memory.yml'
+jobs:
+  memory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test scripts/check-agent-memories.test.mjs
+      - run: node scripts/check-agent-memories.mjs team/memory
