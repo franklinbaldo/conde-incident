@@ -1,3 +1,5 @@
+import Conde1963.Core
+
 /-!
 # Conditional identification and source lineage
 
@@ -5,7 +7,6 @@ These theorems concern the information content of *specified premises*.
 They do not certify the historical truth of a document, a TLE, a fall,
 or the calibration of a dynamical model. See matrix C01, C131, C197.
 -/
-import Conde1963.Core
 
 namespace Conde1963
 
