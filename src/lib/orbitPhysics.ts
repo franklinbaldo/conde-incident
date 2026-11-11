@@ -209,3 +209,118 @@ export function propagateEnsemble(
     return propagate({ ...initial, vKmS: add(initial.vKmS, perturbation) }, durationS, stepS, terminationAltitudeKm, dynamics);
   });
 }
+
+
+/** Chronological *Cartesian* positions for a predeclared 527/529 validation split.
+ * A source label is necessary for provenance but does not prove independence.
+ * The caller must establish that the same frame/epochs are scientifically valid.
+ */
+export interface TimedOrbitPosition extends PositionObservation {
+  readonly objectNorad: 527 | 529;
+  readonly epochUtc: string;
+  readonly inertialFrame: string;
+}
+export interface PreCutoffOrbitFit {
+  readonly objectNorad: 527 | 529;
+  readonly initialEpochUtc: string;
+  readonly cutoffEpochUtc: string;
+  readonly inertialFrame: string;
+  readonly initialState: State;
+  readonly fittedState: State;
+  readonly trainingBaselineRmsKm: number;
+  readonly trainingFittedRmsKm: number;
+  readonly evaluations: number;
+  readonly trainingCount: number;
+  readonly stepS: number;
+  readonly terminationAltitudeKm: number;
+  readonly dynamics: Dynamics;
+}
+export interface FutureOrbitScore {
+  readonly baselineRmsKm: number;
+  readonly fittedRmsKm: number;
+  /** Positive means fitted model did WORSE than the unfitted control. */
+  readonly deltaRmsKm: number | null;
+  readonly observationCount: number;
+}
+
+function utcMilliseconds(iso: string): number {
+  // Explicit UTC only: no local-time conversions and no guessed historical timezone.
+  if (typeof iso !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?Z$/.test(iso))
+    throw new RangeError('Observation epochs must be explicit ISO-8601 UTC timestamps');
+  const ms = Date.parse(iso);
+  if (!Number.isFinite(ms) || new Date(ms).toISOString().slice(0, 19) !== iso.slice(0, 19))
+    throw new RangeError('Invalid calendar date in observation UTC epoch');
+  return ms;
+}
+
+function validateTimedPositions(
+  observations: readonly TimedOrbitPosition[],
+  objectNorad: 527 | 529,
+  inertialFrame: string,
+  initialEpochMs: number,
+  cutoffEpochMs: number,
+  side: 'training' | 'holdout',
+): void {
+  let previousEpochMs = initialEpochMs;
+  for (const observation of observations) {
+    const epochMs = utcMilliseconds(observation.epochUtc);
+    if (observation.objectNorad !== objectNorad || observation.inertialFrame !== inertialFrame ||
+        typeof observation.source !== 'string' || !observation.source.trim() ||
+        !finiteVec(observation.rKm) || !Number.isFinite(observation.elapsedS) ||
+        Math.abs(observation.elapsedS - (epochMs - initialEpochMs) / 1000) > 0.001 ||
+        epochMs <= previousEpochMs ||
+        (side === 'training' ? epochMs > cutoffEpochMs : epochMs <= cutoffEpochMs)) {
+      throw new RangeError('Mixed target/frame, missing provenance, inconsistent UTC, or chronological leakage');
+    }
+    previousEpochMs = epochMs;
+  }
+}
+
+/** Fit stage: accepts ONLY observations at or before a predeclared UTC cutoff.
+ * No held-out observations enter this function or its inverse solver.
+ */
+export function fitPreCutoffOrbit(
+  initial: State, objectNorad: 527 | 529,
+  initialEpochUtc: string, cutoffEpochUtc: string, inertialFrame: string,
+  training: readonly TimedOrbitPosition[], stepS: number,
+  terminationAltitudeKm: number, initialGridStepKmS: number,
+  rounds = 8, dynamics: Dynamics = {},
+): PreCutoffOrbitFit {
+  if ((objectNorad !== 527 && objectNorad !== 529) ||
+      typeof inertialFrame !== 'string' || !inertialFrame.trim() ||
+      training.length < 2) throw new RangeError('Require NORAD 527/529, a named inertial frame, and >=2 training positions');
+  const initialMs = utcMilliseconds(initialEpochUtc);
+  const cutoffMs = utcMilliseconds(cutoffEpochUtc);
+  if (cutoffMs <= initialMs) throw new RangeError('Training cutoff must follow initial epoch');
+  validateTimedPositions(training, objectNorad, inertialFrame, initialMs, cutoffMs, 'training');
+  const trainingBaselineRmsKm = positionResidualRmsKm(initial, training, stepS, terminationAltitudeKm, dynamics);
+  const fit = fitInitialVelocity(initial, training, stepS, terminationAltitudeKm, initialGridStepKmS, rounds, dynamics);
+  return {
+    objectNorad, initialEpochUtc, cutoffEpochUtc, inertialFrame, initialState: initial,
+    fittedState: fit.state, trainingBaselineRmsKm, trainingFittedRmsKm: fit.rmsKm,
+    evaluations: fit.evaluations, trainingCount: training.length,
+    stepS, terminationAltitudeKm, dynamics,
+  };
+}
+
+/** Scoring stage: evaluates future positions without updating the fitted state.
+ * This is only a *blind* test if the source observations were withheld during fit.
+ * Infinity means a model reached its numerical threshold before an observation.
+ */
+export function scoreFutureOrbit(
+  fit: PreCutoffOrbitFit, heldout: readonly TimedOrbitPosition[],
+): FutureOrbitScore {
+  if (!heldout.length) throw new RangeError('No future observations to score');
+  validateTimedPositions(heldout, fit.objectNorad, fit.inertialFrame,
+    utcMilliseconds(fit.initialEpochUtc), utcMilliseconds(fit.cutoffEpochUtc), 'holdout');
+  const baselineRmsKm = positionResidualRmsKm(
+    fit.initialState, heldout, fit.stepS, fit.terminationAltitudeKm, fit.dynamics);
+  const fittedRmsKm = positionResidualRmsKm(
+    fit.fittedState, heldout, fit.stepS, fit.terminationAltitudeKm, fit.dynamics);
+  return {
+    baselineRmsKm, fittedRmsKm,
+    deltaRmsKm: Number.isFinite(baselineRmsKm) && Number.isFinite(fittedRmsKm)
+      ? fittedRmsKm - baselineRmsKm : null,
+    observationCount: heldout.length,
+  };
+}
