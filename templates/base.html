@@ -4,9 +4,16 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="{% block description %}{{ config.description }}{% endblock description %}">
 <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+<link rel="canonical" href="{% block canonical %}{{ config.base_url | safe }}{% endblock canonical %}">
+<meta property="og:type" content="{% block ogtype %}website{% endblock ogtype %}">
+<meta property="og:title" content="{% block ogtitle %}{{ config.title }}{% endblock ogtitle %}">
+<meta property="og:description" content="{% block ogdescription %}{{ config.description }}{% endblock ogdescription %}">
+<meta property="og:url" content="{% block ogurl %}{{ config.base_url | safe }}{% endblock ogurl %}">
+<meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="{{ get_url(path='css/site.css') | safe }}">
 </head>
 <body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo principal</a>
 <header class="masthead"><div class="wrap masthead-inner">
 <a class="brand" href="{{ config.base_url | safe }}"><small>Arquivo de investigação</small><strong>Conde, 1963</strong></a>
 <nav aria-label="Navegação principal">
@@ -14,7 +21,7 @@
 <a href="{{ config.base_url | safe }}lab/">Laboratório científico</a>
 </nav>
 </div></header>
-<main class="wrap">{% block content %}{% endblock content %}</main>
+<main id="conteudo" class="wrap" tabindex="-1">{% block content %}{% endblock content %}</main>
 <footer class="site-footer"><div class="wrap">
 <p>Um relato documentado não equivale a uma ocorrência comprovada. As hipóteses continuam abertas.</p>
 <p>Fontes e versões: <a href="https://github.com/franklinbaldo/conde-incident">repositório Conde</a>.</p>

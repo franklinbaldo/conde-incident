@@ -20,6 +20,8 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
       - run: bun run lint
+      - name: Verify laboratory URL fragments
+        run: node --experimental-strip-types --test tests/labRoutes.test.mjs
       - name: Build React scientific lab under repository subpath
         run: SCIENCE_BASE=/conde-incident/lab/ bun run build
       - name: Embed laboratory in Zola static output

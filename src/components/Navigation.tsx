@@ -1,4 +1,5 @@
 import React from 'react';
+import { hashForLabTab } from '../lib/labRoutes';
 import {
   Satellite,
   Compass,
@@ -25,7 +26,7 @@ export type TabId =
   | 'python';
 
 interface NavigationProps {
-  activeTab: TabId;
+  activeTab: TabId | null;
   setActiveTab: (tab: TabId) => void;
   lang: 'pt' | 'en';
   setLang: (lang: 'pt' | 'en') => void;
@@ -163,9 +164,11 @@ export const Navigation: React.FC<NavigationProps> = ({
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
           return (
-            <button
+            <a
               key={tab.id}
+              href={hashForLabTab(tab.id)}
               onClick={() => setActiveTab(tab.id)}
+              aria-current={isActive ? 'page' : undefined}
               className={`flex items-center gap-2 px-3 py-2 rounded-md text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
                 isActive
                   ? 'bg-zinc-800 text-cyan-300 border border-cyan-800/60 shadow-sm'
@@ -185,7 +188,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                   {tab.badge}
                 </span>
               )}
-            </button>
+            </a>
           );
         })}
       </nav>

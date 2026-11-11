@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% block title %}{{ page.title }} | Conde, 1963{% endblock title %}
 {% block description %}{{ page.description }}{% endblock description %}
+{% block canonical %}{{ page.permalink | safe }}{% endblock canonical %}
+{% block ogurl %}{{ page.permalink | safe }}{% endblock ogurl %}
+{% block ogtype %}article{% endblock ogtype %}
+{% block ogtitle %}{{ page.title }} | Conde, 1963{% endblock ogtitle %}
+{% block ogdescription %}{{ page.description }}{% endblock ogdescription %}
 {% block content %}
 <article class="full-story">
 <header>
@@ -9,6 +14,12 @@
 <p class="byline">{{ page.extra.author }} · {{ page.extra.status }}</p>
 </header>
 <div class="story-body">{{ page.content | safe }}</div>
+<aside class="evidence-panel" aria-labelledby="evidence-title">
+<h2 id="evidence-title">Como verificar esta investigação</h2>
+<p>A transcrição FBIS confirma a circulação de um <strong>relato</strong>; o boletim NASA registra um <strong>dia de decaimento orbital</strong>. Nenhuma dessas fontes identifica um impacto em Conde.</p>
+<p><a href="https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md">Consultar a matriz cumulativa C001–C238</a> (versão fixada da PR #1; análise em revisão, não prova física independente).</p>
+<p><a href="{{ config.base_url | safe }}lab/#/map">Examinar o mapa exploratório</a>. A aba Evidências da PR #1 ainda precisa ser conciliada com o laboratório React; este link não afirma que ela já exista.</p>
+</aside>
 <footer class="story-end">
 <p>O texto distingue documentos, resultados de simulação e hipóteses.</p>
 <p><a href="https://github.com/franklinbaldo/conde-incident/blob/main/{{ page.extra.source_path }}">Consultar Markdown-fonte e histórico editorial</a></p>

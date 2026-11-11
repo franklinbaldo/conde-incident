@@ -5,6 +5,7 @@
 
 import React, { useState } from 'react';
 import { Navigation, TabId } from './components/Navigation';
+import { hashForLabTab, resolveLabHash } from './lib/labRoutes';
 import { ExecutiveSummary } from './components/ExecutiveSummary';
 import { OrbitalMap } from './components/OrbitalMap';
 import { InversePassInspector } from './components/InversePassInspector';
@@ -17,7 +18,7 @@ import { PythonScriptModal } from './components/PythonScriptModal';
 import { Satellite, Shield, Globe, Terminal, ExternalLink } from 'lucide-react';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<TabId>('summary');
+  const [activeTab, setActiveTab] = useState<TabId | null>(() => resolveLabHash(window.location.hash));
   const [lang, setLang] = useState<'pt' | 'en'>('pt');
   const [sharedTimeMs, setSharedTimeMs] = useState<number>(
     new Date('1963-11-08T19:48:00Z').getTime()
@@ -31,10 +32,23 @@ export default function App() {
     return () => window.removeEventListener('gmp-quota-exceeded', handleQuotaExceeded);
   }, []);
 
-  // When a pass is selected in the Inverse Inspector, jump directly to Map at that time
+  React.useEffect(() => {
+    const syncRoute = () => setActiveTab(resolveLabHash(window.location.hash));
+    window.addEventListener('hashchange', syncRoute);
+    return () => window.removeEventListener('hashchange', syncRoute);
+  }, []);
+
+  const navigateTab = (tab: TabId) => {
+    if (tab === 'python') { setIsPythonModalOpen(true); return; }
+    const fragment = hashForLabTab(tab);
+    if (window.location.hash !== fragment) window.location.hash = fragment;
+    setActiveTab(tab);
+  };
+
+  // Choosing a simulated pass also updates the shareable map URL.
   const handleSelectPassFromInverse = (timeMs: number) => {
     setSharedTimeMs(timeMs);
-    setActiveTab('map');
+    navigateTab('map');
   };
 
   return (
@@ -59,7 +73,7 @@ export default function App() {
       {/* Top Header & Navigation */}
       <Navigation
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={navigateTab}
         lang={lang}
         setLang={setLang}
         onOpenPython={() => setIsPythonModalOpen(true)}
@@ -67,10 +81,17 @@ export default function App() {
 
       {/* Main Content Body */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-6">
+        {activeTab === null && (
+          <section aria-labelledby="invalid-route" className="max-w-xl rounded-xl border border-amber-800/70 p-6">
+            <h1 id="invalid-route" className="text-xl font-semibold">Página do laboratório não encontrada</h1>
+            <p className="mt-3 text-zinc-300">Esta seção não está disponível nesta versão. Nenhuma observação ou evidência é inferida do endereço.</p>
+            <a href="#/summary" onClick={() => navigateTab('summary')} className="mt-4 inline-block text-cyan-300 underline">Voltar ao resumo</a>
+          </section>
+        )}
         {activeTab === 'summary' && (
           <ExecutiveSummary
             lang={lang}
-            onJumpToTab={(tab: TabId) => setActiveTab(tab)}
+            onJumpToTab={navigateTab}
           />
         )}
 

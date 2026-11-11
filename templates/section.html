@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 {% block title %}Reportagens | Conde, 1963{% endblock title %}
+{% block canonical %}{{ section.permalink | safe }}{% endblock canonical %}
+{% block ogurl %}{{ section.permalink | safe }}{% endblock ogurl %}
+{% block ogtitle %}Reportagens | Conde, 1963{% endblock ogtitle %}
+{% block description %}Capítulos documentais do caso Conde, fontes e limites de verificação.{% endblock description %}
+{% block ogdescription %}Capítulos documentais do caso Conde, fontes e limites de verificação.{% endblock ogdescription %}
 {% block content %}
 <section class="intro compact"><p class="eyebrow">Caderno de histórias</p>
 <h1>Reportagens</h1><p>Capítulos organizados por data e verificação documental, com hipóteses alternativas ainda abertas.</p></section>
