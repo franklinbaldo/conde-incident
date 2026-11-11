@@ -31,3 +31,5 @@ import Conde1963.DocumentaryDay
 #print axioms Conde1963.nasa_day_allows_both_regions
 #print axioms Conde1963.nasa_day_cannot_identify_region
 #print axioms Conde1963.nasa_day_does_not_force_ground_impact
+#print axioms Conde1963.nasa_day_rule_accepts_both_examples
+#print axioms Conde1963.nasa_day_rule_rejects_off_day_example
