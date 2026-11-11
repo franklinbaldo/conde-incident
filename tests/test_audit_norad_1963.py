@@ -124,8 +124,8 @@ class Custody(unittest.TestCase):
             out = Path(d)
             write_outputs(rows, meta, out, {"sha1": "synthetic", "sha256": "synthetic"})
             csv_data = (out / "norad_528_epochs_1963.csv").read_bytes()
-            self.assertEqual(csv_data.count(b"\\n"), 2)
-            self.assertNotIn(b"\\\\n", csv_data)
+            self.assertEqual(csv_data.count(bytes([10])), 2)
+            self.assertNotIn(bytes([92, 110]), csv_data)
             report = json.loads((out / "audit.json").read_text())
             self.assertEqual(report["derived_file_hashes"]["norad_528_epochs_1963.csv"], digest(csv_data))
 
