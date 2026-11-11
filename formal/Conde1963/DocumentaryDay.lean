@@ -51,6 +51,31 @@ theorem nasa_repeat_is_same_day_predicate (c : ReentryCandidate) :
     AllowedFromSources nasaDayConstraints c ↔ ReportedDecayDay c := by
   simp [AllowedFromSources, nasaDayConstraints, nasaDayC131, nasaDayC197]
 
+/-- A Boolean evaluator for Castor's *finite* candidate grid, with a
+    Lean correspondence proof. This is not a continuous orbital solver. -/
+def nasaReportedDayRule : ExecutableRule ReentryCandidate :=
+  { source := nasaDayC131
+    accepts := fun candidate => decide (candidate.day = 19631108)
+    corresponds := by
+      intro candidate
+      simp [nasaDayC131, ReportedDecayDay] }
+
+/-- Regression: the two logical countermodels pass the same date filter.
+    This is a Boolean test, not a historical reconstruction. -/
+theorem nasa_day_rule_accepts_both_examples :
+    nasaReportedDayRule.accepts condeCandidate = true ∧
+    nasaReportedDayRule.accepts anotherCandidate = true := by
+  decide
+
+/-- Regression: a deliberately synthetic different-day candidate fails.
+    No actual NORAD epoch is invented by this example. -/
+def inventedOffDayExample : ReentryCandidate :=
+  ⟨19631109, 900, .elsewhere, 90⟩
+
+theorem nasa_day_rule_rejects_off_day_example :
+    nasaReportedDayRule.accepts inventedOffDayExample = false := by
+  decide
+
 /-- Identical catalog-report genealogy does not create an independent
     tracking measurement. Source-chain assignments remain auditable claims. -/
 theorem nasa_c131_c197_not_independent :
