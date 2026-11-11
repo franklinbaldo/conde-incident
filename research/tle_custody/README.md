@@ -104,3 +104,21 @@ O mesmo relatório `audit.json -> mirror_comparison_528.legacy_raan_temporal_aud
 A [página oficial de arquivos históricos CelesTrak](https://celestrak.org/norad/archives/) lista séries públicas sobretudo entre **1980–2004** e direciona pedidos fora dessas coleções (inclusive **1963**) a **Special Data Request**. Foi consultada publicamente, sem enviar pedido: **nenhum par instrumental de 1963 foi obtido por essa via**. A [TLE API listada na página NASA Open APIs](https://api.nasa.gov/) é descrita como atualização **diária** derivada de CelesTrak, não documentação primária da época de 1963. Também não é fonte orbital independente para resolver 198° versus 284°.
 
 **Reprodução:** `python -m unittest discover -s tests -p 'test_*.py' -v` testa desvios sintéticos de 432/433 µs, 1,000001 s, duplicidade e confronto de valor em datas distintas. A execução sobre o Parquet SHA-256 fixado é a mesma rotina de extração do workflow, que produz hashes dos CSV e o ledger completo. Não se atesta o novo HEAD antes de observar seu CI.
+
+### Observação efetiva do corpus pinado, não inferência de origem da RAAN
+
+A execução real do [NORAD custody #43113160100](https://github.com/franklinbaldo/conde-incident/actions/runs/43113160100), no commit de código e testes `49a833844e9476c23bcc990508838f2e582b0bce`, concluiu **success**, com **22/22 testes PASS** e download/extração do Parquet no SHA-256 já fixado. O confronto com a época do TLE literal continuou `MATCH_WITHIN_ROUNDING` e índice **3017**. Na pesquisa dos **45 registros reais** do 528 pelo valor 284,1520°, o ponto *angularmente* mais próximo foi:
+
+| Campo auditado | Resultado computado a partir do espelho |
+|---|---|
+| Linha fonte | `source_row=2998` |
+| Data/época UTC | **1963-08-12T13:35:30.863616Z** |
+| RAAN do espelho | **284,3310852050781°** |
+| Distância angular de 284,1520° | **0,1790852050781°** |
+| Separação em relação à época literal do par 528 em 27/10 | **−76,04496839 dias** |
+| RAAN na época literal de 27/10, linha 3017 | **198,52609252929688°** |
+
+Isso é um **novo teste discriminante, com resultado negativo para a identidade de época**: a melhor proximidade encontrada é **76 dias antes**, e o registro 3017 no dia 27/10 continua em 198,5261°. Uma hipótese de transposição/confusão de época passou a ser investigável, mas a distância de 0,179° e a similaridade angular por si sós **não provam** que 284,1520° veio do registro de agosto; tampouco provam que o valor foi inventado. Antes de optar entre hipóteses, exigir uma cadeia primária do vetor legado, época, quadro de referência, elemento médio e tipo de propagador. **Nenhuma órbita ou local de impacto foram ajustados a partir dessa busca.**
+
+A reconciliação de tolerância temporal (432 µs) também passou no conjunto real com diferença de época **0 µs**. O log do workflow exibe os três vizinhos angulares com índices e datas, enquanto o artefato `audit.json` mantém os 45 registros completos e sua fonte. Os demais dois vizinhos mais próximos são `source_row=2999` em 16/08 (280,112396°) e `source_row=3000` em 20/08 (275,108093°). Essas proximidades são **dependentes de um único acervo numérico secundário**, não novas observações NORAD independentes.
+
