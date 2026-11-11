@@ -122,3 +122,9 @@ Isso é um **novo teste discriminante, com resultado negativo para a identidade 
 
 A reconciliação de tolerância temporal (432 µs) também passou no conjunto real com diferença de época **0 µs**. O log do workflow exibe os três vizinhos angulares com índices e datas, enquanto o artefato `audit.json` mantém os 45 registros completos e sua fonte. Os demais dois vizinhos mais próximos são `source_row=2999` em 16/08 (280,112396°) e `source_row=3000` em 20/08 (275,108093°). Essas proximidades são **dependentes de um único acervo numérico secundário**, não novas observações NORAD independentes.
 
+
+### Gate contra falso CI de HEAD
+
+O GitHub Actions acionado por `pull_request` usa por padrão o ref sintético `refs/pull/N/merge`; uma execução com `github.sha` nesse evento demonstra o **merge de teste**, não necessariamente o SHA do HEAD de origem. Por isso o workflow de custódia agora faz checkout explícito de `${{ github.event.pull_request.head.sha || github.sha }}`, verifica que `git rev-parse HEAD` é exatamente esse SHA, imprime `audited_source_head=`, e nomeia o artefato com a mesma identidade. Há teste automatizado de não regressão desta configuração. `workflow_dispatch` continua a usar o SHA fornecido pelo evento, igualmente atestado.
+
+As execuções anteriores, inclusive [#43113160100](https://github.com/franklinbaldo/conde-incident/actions/runs/43113160100), **continuam demonstrando os dados e controles naquela versão**, mas não devem ser rotuladas como atestação do checkout do HEAD exato. A nova atestação só vale após CI verde do commit que contém esta correção. O **workflow científico separado** mantém seu próprio escopo/gate; esta correção não alega ter mudado seu checkout.
