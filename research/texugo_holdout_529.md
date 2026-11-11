@@ -62,6 +62,21 @@ Para cada corte e com **os mesmos dados de treinamento anteriores ao corte**, o 
 
 Esta ablação discrimina uma hipótese particularmente fraca: a média 527/528 pode reduzir RMSE perante o quadrático próprio do 529 simplesmente por regularização acidental, enquanto um único doador ou um modelo mais simples já faria melhor. Um doador isolado ganhar **não** valida ligação física nem independência de fonte. Os testes sintéticos agora incluem explicitamente um doador correto e outro incorreto, um 529 exatamente linear e alteração de todos os valores futuros sem mudar nenhum coeficiente ajustado.
 
+### Releitura independente do artefato já aprovado, antes do novo CI
+
+Recuperei o [ZIP histórico do workflow anterior, artefato #13896035257](https://github.com/franklinbaldo/conde-incident/actions/runs/43109127688/artifacts/13896035257), validado no HEAD anterior `36b6064`. Sua saída contém **123 linhas brutas = 119 épocas distintas** (20/45/54 para 527/528/529); a releitura descartou somente repetições idênticas de época, exatamente como faz `parse_csv`. Com regressão NumPy independente, os RMSE originais do quadrático e da média coincidiram até erro absoluto menor que `1.1e-13` rev/dia. Na mesma amostra secundária, os controles adicionais renderam:
+
+| Corte | Quadrático 529 | Média 527+528 | 527 isolado | 528 isolado | Linear 529 |
+|---|---:|---:|---:|---:|---:|
+| 31/08 | 0,210299289 | 0,211762185 | 0,235461981 | **0,188806986** | 0,244950058 |
+| 28/09 | 0,216540216 | 0,214537239 | 0,245414540 | **0,184754193** | 0,253475516 |
+| 11/10 | 0,223016327 | 0,219896277 | 0,257283361 | **0,183954136** | 0,262876770 |
+| 21/10 | 0,223236815 | 0,215116674 | 0,260942304 | **0,171610907** | 0,265515032 |
+
+RMSE em rev/dia, sobre o mesmo futuro temporal do 529. A **média de doadores perdeu para o 528 isolado em todos os quatro cortes**, inclusive naqueles em que superou o baseline quadrático. Portanto, os três ganhos da média perante o quadrático não identificam uma vantagem da **combinação** dos dois doadores: um único doador já fornece previsões descritivas melhores. O 527 isolado ficou pior que a média e que o quadrático em todos os cortes.
+
+Esses cálculos são uma **reprodução local independente** dos números do artefato anterior, não os resultados do novo workflow: **CI do HEAD desta emenda ainda NOT_RUN/não confirmado**, e esta análise foi concebida pós-hoc sobre a mesma série. Comparações de janelas correlacionadas não permitem inferir relevância estatística, causalidade física, escolha válida futura do 528 nem localização de reentrada. O controle com sinal invertido também foi calculado, mas não selecionado como concorrente preditivo.
+
 **Fonte e custódia inalteradas:** Parquet oxzoid commit `4b4fb3a`, SHA-256 `c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09`; NASA 15/11/1963 p.8 para **dia**, não lugar. A ablação não acrescenta observações de radar, não resolve RAAN e não pode produzir probabilidades. Comparações históricas adicionais **NOT_RUN até o novo workflow no HEAD da emenda**.
 
 ## Controles negativos executáveis
