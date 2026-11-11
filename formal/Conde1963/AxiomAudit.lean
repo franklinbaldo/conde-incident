@@ -1,4 +1,4 @@
-import Conde1963.Provenance
+import Conde1963.Constraints
 
 /-! Explicit kernel-dependency report in CI, not an empirical validation. -/
 
