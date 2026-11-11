@@ -86,6 +86,15 @@ class Custody(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "checksum"):
             validate_raw_tle(a, corrupt, 528)
 
+    def test_custody_ci_attests_exact_pr_head_not_merge_ref(self):
+        workflow = (Path(__file__).resolve().parents[1] /
+                    ".github/workflows/tle-custody.yml").read_text(encoding="utf-8")
+        expression = "${{ github.event.pull_request.head.sha || github.sha }}"
+        self.assertGreaterEqual(workflow.count(expression), 3)
+        self.assertIn('actual="$(git rev-parse HEAD)"', workflow)
+        self.assertIn('test "$actual" = "$expected"', workflow)
+        self.assertNotIn("name: norad-1963-numeric-custody-${{ github.sha }}", workflow)
+
     def test_digest_reproducible(self):
         self.assertEqual(digest(b"abc")["sha256"], "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad")
 
