@@ -18,6 +18,10 @@ function good() {
         '<link rel="stylesheet" href="https://franklinbaldo.github.io/conde-incident/css/site.css">',
       stories: { status: 200, body: '<section class="journal"><article class="story-card">' +
         '<a href="/conde-incident/stories/2026-11-11-primeira-historia/">Chapter</a></article></section>' },
+      chapter: { status: 200, path: '/conde-incident/stories/2026-11-11-primeira-historia/',
+        body: '<article class="full-story"><div class="story-body"><p>Documented advance.</p></div>' +
+          '<a href="https://github.com/franklinbaldo/conde-incident/blob/main/stories/a.md">' +
+          'Consultar Markdown-fonte e histórico editorial</a></article>' },
       lab: { status: 200, body: '<div id="root"></div>' +
         '<script src="/conde-incident/lab/assets/main-xyz.js"></script>' },
       style: { status: 200, body: '.masthead{color:#fff}.story-card{padding:1rem}' },
@@ -81,4 +85,36 @@ test('failed upstream and invalid SHA cannot pass', () => {
   const a = good(); a.upstreamConclusion = 'failure';
   const b = good(); b.sha = 'abc';
   for (const x of [a,b]) assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+
+test('chapter link must lead to a live full Zola story with source attribution', () => {
+  const a = good(); a.site.chapter.status = 404;
+  const b = good(); b.site.chapter.body = '<html><body>Generic error fallback</body></html>';
+  const c = good(); c.site.chapter.body = '<article class="full-story"><div class="story-body">No source link</div></article>';
+  const d = good(); d.site.chapter.path = '/conde-incident/stories/2026-11-11-outra/';
+  const e = good(); delete e.site.chapter;
+  for (const x of [a,b,c,d,e]) assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+test('a fake date outside a journal link is not a published story', () => {
+  const x = good();
+  x.site.stories.body = '<section class="journal"><article class="story-card">' +
+    '/conde-incident/stories/2026-11-11-primeira-historia/' +
+    '</article></section>';
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+test('Zola absolute permalink on the canonical host is allowed', () => {
+  const x = good();
+  x.site.stories.body = x.site.stories.body.replace(
+    'href="/conde-incident/stories/',
+    'href="https://franklinbaldo.github.io/conde-incident/stories/'
+  );
+  assert.equal(assessRelease(x).status, 'PASS');
+});
+test('an external host must not be followed as a first-party chapter', () => {
+  const x = good();
+  x.site.stories.body = x.site.stories.body.replace(
+    'href="/conde-incident/stories/',
+    'href="https://unrelated.example/conde-incident/stories/'
+  );
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
 });
