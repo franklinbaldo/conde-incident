@@ -1,0 +1,38 @@
+name: Gavião independent editorial evidence checks
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'research/gaviao_*'
+      - 'tests/gaviaoEditorialEvidence.test.mjs'
+      - '.github/workflows/gaviao-editorial-review.yml'
+      - 'team/memory/gaviao/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ledger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact pull-request head, not an automatic merge
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Record actual tested SHA
+        run: |
+          printf 'Checked HEAD: '
+          git rev-parse HEAD
+          printf 'Requested PR head: %s\n' '${{ github.event.pull_request.head.sha }}'
+          if [ -n '${{ github.event.pull_request.head.sha }}' ]; then
+            test "$(git rev-parse HEAD)" = '${{ github.event.pull_request.head.sha }}'
+          fi
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Falsification regressions for provenance/limits
+        run: node --test tests/gaviaoEditorialEvidence.test.mjs
