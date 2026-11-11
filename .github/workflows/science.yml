@@ -30,6 +30,7 @@ jobs:
       - name: Report theorem axioms (no sorry allowed)
         working-directory: formal
         run: |
+          set -euo pipefail
           lake env lean Conde1963/AxiomAudit.lean | tee axiom-audit.log
           if grep -E 'sorryAx|unsafe|error\(|error:' axiom-audit.log; then
             echo 'Unexpected trusted-admission dependency in proof audit' >&2
