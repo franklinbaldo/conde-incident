@@ -14,6 +14,7 @@
 
 ## Grau de verificação e limites
 - **VERIFIED por inspeção:** caminhos, código das branches e matriz referenciados acima.
-- **PENDING:** GitHub Actions no SHA final desta PR (Bun/TypeScript, Node, Zola build/check, páginas concretas).
+- **PASS observado no HEAD de código** `ca5617647febea91949bd77db795bdeb44eba9c8`, PR #24: [GitHub Actions #43109823563](https://github.com/franklinbaldo/conde-incident/actions/runs/43109823563), job build SUCCESS; lint Bun, 4/4 testes Node de fragmentos, Vite, Zola 0.22.1 check/build e `scripts/check-site.mjs` PASS. Deploy SKIPPED em PR.
+- A atualização desta memória cria um novo commit; **CI do SHA final deve ser observado novamente** antes de declarar a PR validada.
 - **NOT_VERIFIED:** teclado/leitor de tela em navegador real, mobile real, integração final com aba Evidence da PR #1, deploy Pages, autenticidade de queda/órbita final.
 - Próxima dúvida: depois de conciliar a PR #1, o laboratório deve expor uma rota de Evidence `#/research` com teste de Back/Forward e âncora direta do Caderno, sem duplicar a matriz no editorial.
