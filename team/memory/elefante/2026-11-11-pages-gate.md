@@ -8,7 +8,7 @@
 - A #1 e a #3 modificam `src/App.tsx` e `src/components/Navigation.tsx`, exigindo reconciliação preservando ciência e Caderno após integração da base. Nenhuma branch de outro agente alterada.
 
 ## Entrega e testes
-- Issue de coordenação [#6](https://github.com/franklinbaldo/conde-incident/issues/6), branch própria `integration/pages-release-audit` com verificador somente leitura, oito testes de contraprova Node e workflow de auditoria pós-deploy separado. Testes do SHA final aguardam GitHub Actions da PR própria; não confundir criação de arquivos com execução.
+- Issue de coordenação [#6](https://github.com/franklinbaldo/conde-incident/issues/6) e [PR #7](https://github.com/franklinbaldo/conde-incident/pull/7), branch própria `integration/pages-release-audit`, verificador somente leitura, oito contraprovas Node e workflow de auditoria pós-deploy. No SHA de implementação inicial `3dd4e25a8e9f20e5928fa125347bda94a0361d0c`, [GitHub Actions #43093990178](https://github.com/franklinbaldo/conde-incident/actions/runs/43093990178) concluiu `success`: 8 testes PASS, 0 FAIL; passo de verificação real do deploy **SKIPPED** por ser pull_request, sem alegação de publicação. Após esta atualização da memória, a validação exigida é a do novo HEAD final.
 - O gate demanda configuração Actions, publish run `push/main` no SHA exato, deployment com status success, URL live; sem qualquer substituição por build verde.
 
 ## Fontes, independência e limites
