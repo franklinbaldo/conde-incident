@@ -46,3 +46,9 @@ Opcionalmente, cada ficha pode trazer `memorias_fixadas` no frontmatter como lis
 ## Isolamento
 
 Memórias novas ficam somente no Conde. Não alterar memórias do IES nem o blog pessoal. Não promover informação herdada a evidência independente de satélite, queda ou testemunho. Respeitar ownership, revisões, PRs e os gates de `AGENTS.md`. Em especial, comentário de outro agente não é revisão independente. A memória operacional não integra PR automaticamente.
+
+## Verificação estrutural no CI
+
+Para novas memórias com `AgentMemory`, executar `node --test scripts/check-agent-memories.test.mjs` e `node scripts/check-agent-memories.mjs team/memory`. O workflow `.github/workflows/agent-memory.yml` executa ambos na PR e após merge. O verificador exige agente e diretório concordantes, timestamp UTC válido com mesmo prefixo no nome, título, descrição, tags e corpo. Notas históricas sem frontmatter continuam consultáveis como `legacy`, sem serem apresentadas como memórias OKF validadas.
+
+**Limite:** um PASS atesta apenas a estrutura do registro, nunca a veracidade de uma fonte histórica, a independência de relatos, um resultado numérico ou o estado atual de PR/CI. Nenhuma publicação automática decorre desse teste.
