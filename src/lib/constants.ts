@@ -306,7 +306,7 @@ export const NORAD_OBSERVATION_EVENTS: NoradObservationEvent[] = [
     titlePt: 'Dia catalogado de decaimento do 528 (hora desconhecida)',
     titleEn: 'Cataloged NORAD 528 decay day (time unknown)',
     authority: 'NORAD / SPADATS / Space-Track Decayed Catalog',
-    classification: 'HIPOTESE',
+    classification: 'DOCUMENTO_PRIMARIO_VERIFICADO' // day-only NASA SSR; UI clock is not an observation,
     descriptionPt: 'Boletim NASA de 15/11/1963 registra somente o dia 08/11 para decaimento de 1963-003B. Não informa hora, coordenadas, modo de fragmentação ou local de queda. O horário exibido é âncora de interface, não observação.',
     descriptionEn: 'NASA bulletin of 1963-11-15 records only 8 November as decay day for 1963-003B, without hour, coordinates, fragmentation mode or impact location. UI time is a display anchor, not an observation.',
     status528: 'DECAÍDO / REENTROU NA ATMOSFERA (Fim da Trajetória)',
