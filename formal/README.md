@@ -83,3 +83,44 @@ is correct on both illustrated admissible states if they share a day
 yet have different regions. This is about an observational equivalence
 class, not the NORAD 528 terminal orbit or any inferred probability.
 `AxiomAudit.lean` also prints their axiom dependencies.
+
+
+## 🐙 Evidence-driven constraint pipeline (issue #15)
+
+The normative flow is defined in `AGENTS.md` (policy PR #28):
+**verified document/record and lineage → evidence matrix ID+occurrence →
+Lean proposition with explicit premises → feasible physical parameter domain →
+reproducible simulator → falsifying observations and updated constraints**.
+
+`Conde1963/Constraints.lean` provides a strictly conditional interface:
+
+- `SourcedConstraint` distinguishes matrix label **and occurrence**
+  (C44–C46 are ambiguous otherwise), source chain, evidential grade,
+  accepted scenario versus hypothesis, and a predicate on an arbitrary
+  typed parameter vector. No measured value is fabricated.
+- `Allowed`, `HasCandidate` and monotonicity theorems prove that
+  adding restrictions cannot enlarge the admissible set. If no
+  candidate survives, **premises are inconsistent** and no geographic
+  conclusion follows from that empty set.
+- `ExcludesConde`, `ForcesConde`, `UniqueImpact` and `ImpactInside`
+  are separate outcomes requiring nonempty feasible parameter sets.
+  In particular, a NASA calendar day does **not** force an hour or
+  location. A modeled atmospheric reentry is not proof of ground impact.
+- `ExecutableRule` ties a Boolean predicate to its declarative
+  condition through an explicit equivalence proof. `filterCandidateGrid`
+  returns executable surviving numerical parameter choices, and
+  `filter_grid_never_creates_candidates` proves it cannot add any
+  unlisted choice. **Finite-grid exhaustiveness does not establish
+  continuous-space exhaustiveness or physical model validity.**
+
+The Castor integration should supply typed numerical inputs, accepted
+source-backed filters, justified bounds and certified solver/numerical
+errors. Before publishing any conclusion about Conde or another site,
+the analysis must check feasibility, holdout data (including NORAD 529),
+model assumptions, the reentry/ground-impact distinction and how
+precisely any time/location window is supported.
+
+**Present status:** these are machine-checked logical rules and a
+finite-grid interface, NOT calibrated orbital integration, independent
+verification of every historical source, recovery of the 154/151 Lean
+archive, or an observed position/time of a 1963 impact.
