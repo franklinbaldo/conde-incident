@@ -9,7 +9,7 @@ tags: [conde, memoria, okf, equipe, continuidade]
 
 # Retomar na próxima rodada
 
-A pedido do proprietário, formalizamos em [team/memory/README.md](../../README.md) a mesma prática de memória operacional do IES, agora dentro do Conde. O [guia histórico do IES](https://github.com/franklinbaldo/ies/blob/main/team/memories/README.md) e suas [pastas por agente](https://github.com/franklinbaldo/ies/tree/main/team/memories) servem como referência seletiva, sem cópia de arquivos ou transferência automática de fatos.
+A pedido do proprietário, formalizamos em [team/memory/README.md](../README.md) a mesma prática de memória operacional do IES, agora dentro do Conde. O [guia histórico do IES](https://github.com/franklinbaldo/ies/blob/main/team/memories/README.md) e suas [pastas por agente](https://github.com/franklinbaldo/ies/tree/main/team/memories) servem como referência seletiva, sem cópia de arquivos ou transferência automática de fatos.
 
 Verificado: a `main` do Conde tinha `AGENTS.md` e oito fichas `team/*.md` que já pediam notas em `team/memory/<agente>/`, mas a pasta ainda não existia. Nesta branch, adicionados o protocolo, a referência no contrato e esta primeira memória.
 
