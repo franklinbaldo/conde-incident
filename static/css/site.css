@@ -1,0 +1,19 @@
+:root{color-scheme:dark;--ink:#e8e7e4;--muted:#aaa9ac;--paper:#11141b;--panel:#1a1d25;--line:#343741;--accent:#b8dce0}
+*{box-sizing:border-box}html{font-family:Georgia,serif;background:var(--paper);color:var(--ink)}body{margin:0;line-height:1.65}
+a{color:var(--accent);text-underline-offset:.16em}a:hover{color:#fff}.wrap{width:min(100% - 2.5rem,960px);margin-inline:auto}
+.masthead{border-bottom:1px solid var(--line);background:#0e1016}.masthead-inner{padding:1.05rem 0;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.brand{text-decoration:none;color:var(--ink);line-height:1.2}.brand small{display:block;color:var(--muted);font:600 .65rem system-ui,sans-serif;text-transform:uppercase;letter-spacing:.12em}.brand strong{display:block;font-size:1.35rem}
+nav{display:flex;gap:1.5rem;font:600 .85rem system-ui,sans-serif}nav a{text-decoration:none}.intro{padding:6rem 0 3.7rem;border-bottom:1px solid var(--line)}.intro.compact{padding:3.5rem 0 2.2rem}
+.eyebrow,.meta,.byline{font:.75rem system-ui,sans-serif;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+h1,h2,h3{line-height:1.16;letter-spacing:-.025em}h1{font-size:clamp(2.4rem,5vw,4.35rem);max-width:800px;margin:.8rem 0 1.4rem}
+.intro>p:not(.eyebrow){font-size:1.18rem;color:var(--muted);max-width:700px}.science-link{font:.9rem system-ui,sans-serif}
+.section-heading{margin-top:3rem}.section-heading p,.story-card p{color:var(--muted)}.story-card{padding:2rem 0;border-bottom:1px solid var(--line)}
+.story-card h2,.story-card h3{font-size:clamp(1.5rem,3vw,2.1rem);margin:.65rem 0}.story-card h2 a,.story-card h3 a{text-decoration:none}.story-card small{font:.78rem system-ui,sans-serif;color:var(--muted)}
+.full-story{max-width:760px;margin:auto;padding:3.8rem 0 5rem}.full-story header{padding-bottom:2rem;border-bottom:1px solid var(--line)}
+.deck{font-size:1.3rem;color:#c1c3c7;line-height:1.55}.byline{letter-spacing:0;text-transform:none}
+.story-body{font-size:1.1rem;line-height:1.9;overflow-wrap:anywhere}.story-body h2{font-size:1.85rem;margin-top:2.8rem}
+.story-body p{margin:1.3rem 0}.story-body blockquote{padding-left:1.2rem;border-left:3px solid var(--accent);color:var(--muted)}
+.story-body a{overflow-wrap:anywhere}.story-body code{font-size:.87em;background:var(--panel);padding:.15em .3em}
+.story-end{margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--line);color:var(--muted);font-size:.88rem}
+.site-footer{border-top:1px solid var(--line);padding:1.8rem 0;color:var(--muted);font:.78rem system-ui,sans-serif}
+@media(max-width:620px){.masthead-inner{align-items:flex-start;flex-direction:column}nav{gap:1rem}.intro{padding:3.4rem 0 2rem}.full-story{padding-top:2rem}.story-body{font-size:1.03rem}}

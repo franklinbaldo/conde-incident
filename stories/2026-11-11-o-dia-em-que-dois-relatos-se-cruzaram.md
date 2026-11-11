@@ -11,9 +11,9 @@ status: "História documental"
 
 Em algum momento de **8 de novembro de 1963**, um objeto construído pelo ser humano terminou sua trajetória orbital. Não sabemos sobre que país, oceano ou latitude ocorreu sua reentrada. Sabemos apenas que, sete dias depois, a NASA já registrava no seu *Satellite Situation Report* o decaimento do objeto **1963-003B**, hoje conhecido como NORAD 528, naquela data.
 
-Na mesma semana, outra história percorria o Brasil. Uma transmissão da **Rádio Tupi**, preservada nos boletins de monitoramento do **FBIS**, falava de uma esfera metálica em **Conde**, no litoral norte da Bahia. A narrativa ganhou detalhes que soam improváveis: inscrições, uma cratera e até um corpo.
+Na mesma semana, outra história percorria o Brasil. Uma transmissão da **Rádio Tupi**, preservada nos boletins de monitoramento do **FBIS**, falava de uma esfera metálica em **Conde**, no litoral norte da Bahia. O próprio registro já reunia alegações extraordinárias: cratera, inscrições, roupa pesada e um corpo. Não há prova documental de que esses pormenores tenham sido adicionados posteriormente.
 
-Dois registros contemporâneos. Uma coincidência de calendário. E uma pergunta capaz de contaminar toda a investigação: *será que eram o mesmo acontecimento?*
+Dois registros contemporâneos de naturezas diferentes, um catálogo orbital e uma notícia retranscrita. Uma coincidência de calendário. E uma pergunta capaz de contaminar toda a investigação: *será que eram o mesmo acontecimento?*
 
 ## Primeira pista: uma data escrita pela NASA
 
@@ -25,9 +25,9 @@ Fonte primária: [NASA, *Satellite Situation Report*, 15/11/1963, página impres
 
 ## Segunda pista: uma história no rádio
 
-O registro do FBIS confirma que a **notícia foi transmitida**. Não confirma que alguém tenha encontrado uma esfera, uma cratera ou um cadáver. Esse é o ponto em que uma história interessante pode virar uma conclusão errada se confundirmos a fonte de um *relato* com a fonte do *acontecimento*.
+O [fac-símile do FBIS 03, documento EOP-UAP-D001](https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf) registra uma notícia atribuída à **Rádio Tupi do Rio**, com o cabeçalho `2330 8 NOV 63 W`. **O fuso horário desse cabeçalho ainda não foi provado**, e o boletim não informa a hora da suposta queda. O texto contém, desde o início, alegações de esfera, cratera de quatro metros, vidro, vestes e inscrições. A fonte comprova a circulação monitorada do relato; não é áudio original nem observação física da cena.
 
-Há um obstáculo adicional: a rede da Rádio Tupi e o **Diário de Notícias**, de Salvador, estava ligada aos Diários Associados. Notícias repetidas por veículos da mesma rede podem ser apenas versões de uma única reportagem, não testemunhos independentes.
+Há um obstáculo adicional: a Rádio Tupi e o **Diário de Notícias**, de Salvador, integravam o grupo Diários Associados. Notícias repetidas por veículos da mesma rede podem ser apenas versões de uma única reportagem, não testemunhos independentes.
 
 Por isso, os recortes do **Diário de Notícias de 9 de novembro**, do **Jornal da Bahia de 11 de novembro** e das edições de **O Jornal**, no Rio, continuam centrais. Ainda não possuímos, neste conjunto, confirmação visual suficiente de todos os textos dessas páginas.
 
@@ -37,7 +37,7 @@ Pistas documentais: [Biblioteca Nacional, *O Jornal*, página identificada de 9/
 
 O NORAD **528** não estava sozinho. Foi catalogado no mesmo lançamento que os objetos **527** e **529**. Os outros dois permaneceram em órbita depois do dia 8, o que permite estudar parâmetros compartilhados, como a orientação orbital e algumas perturbações gravitacionais.
 
-Mas *ter uma origem comum* não significa permanecer junto durante meses. Pequenas diferenças de velocidade acumulam grandes diferenças de posição. Os outros dois objetos ajudam a estudar o ambiente orbital; ainda não recuperam, sozinhos, a fase terminal do 528.
+Mas *ter uma origem comum* não significa permanecer junto durante meses. Pequenas diferenças de velocidade acumulam grandes diferenças de posição. Os outros dois objetos ajudam a estudar o ambiente orbital; ainda não recuperam, sozinhos, a fase terminal do 528. Registros NASA e NORAD podem depender da mesma cadeia de rastreamento: instituições distintas não equivalem necessariamente a medições independentes.
 
 A investigação encontrou também conjuntos de elementos orbitais com **valores conflitantes de orientação do plano**. Isso exige recuperar a procedência e as épocas das linhas originais, antes de apresentar uma trajetória como reconstrução histórica.
 

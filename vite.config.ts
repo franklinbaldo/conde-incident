@@ -6,7 +6,7 @@ import {defineConfig} from 'vite';
 export default defineConfig(() => {
   return {
     plugins: [react(), tailwindcss()],
-    base: process.env.GITHUB_PAGES === 'true' ? '/conde-incident/' : '/',
+    base: process.env.SCIENCE_BASE ?? (process.env.GITHUB_PAGES === 'true' ? '/conde-incident/lab/' : '/'),
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),

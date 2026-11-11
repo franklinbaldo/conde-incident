@@ -6,3 +6,8 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Generated editorial and scientific artifacts
+/content/stories/
+/static/lab/
+/public/

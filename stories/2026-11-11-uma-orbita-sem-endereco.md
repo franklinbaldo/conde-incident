@@ -13,7 +13,7 @@ status: "Modelo experimental; localização não demonstrada"
 
 ## O passo que faltava ao cálculo
 
-Na [PR #5, desenvolvida pelo Castor](https://github.com/franklinbaldo/conde-incident/pull/5), entrou um núcleo experimental que calcula **posição e velocidade juntas**, a cada passo. Em vez de escolher uma longitude ou ajustar a fase orbital até passar sobre Conde, o programa integra o movimento em coordenadas cartesianas inerciais. A gravidade terrestre é seu ponto de partida; a deformação gravitacional representada por *J2* pode ser incluída. O arrasto atmosférico só entra se alguém fornecer uma função de densidade, o parâmetro aerodinâmico e a procedência desses dados.
+Na [PR #5, ainda em revisão e desenvolvida pelo Castor](https://github.com/franklinbaldo/conde-incident/pull/5), foi implementado na branch um núcleo experimental que calcula **posição e velocidade juntas**, a cada passo. Em vez de escolher uma longitude ou ajustar a fase orbital até passar sobre Conde, o programa integra o movimento em coordenadas cartesianas inerciais. A gravidade terrestre é seu ponto de partida; a deformação gravitacional representada por *J2* pode ser incluída. O arrasto atmosférico só entra se alguém fornecer uma função de densidade, o parâmetro aerodinâmico e a procedência desses dados.
 
 Parece um detalhe técnico. Não é. Ao forçar o modelo a carregar simultaneamente posição, velocidade, forças e condições iniciais, fica mais difícil esconder uma escolha arbitrária dentro de um mapa convincente. O código também distingue um **limiar de altitude definido pelo pesquisador** do impacto no solo: cruzar uma superfície matemática não comprova onde caiu qualquer destroço.
 
@@ -31,7 +31,7 @@ Na [página impressa 8 do *Satellite Situation Report* da NASA, de 15 de novembr
 
 Além disso, a [matriz histórica C001–C238 da PR #1](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md) registra um conflito ainda não resolvido: a orientação orbital expressa por RAAN surge como cerca de **198,5261°** em uma série derivada e **284,1520°** na configuração anterior do site. Os valores não podem ser combinados nem reduzidos a uma média. Antes de calcular a última passagem, é preciso saber a época, a origem e a natureza de cada conjunto de elementos.
 
-E as hipóteses concorrentes? A ideia de uma reentrada associada à notícia baiana continua **possível, mas não demonstrada**. A hipótese de um boato jornalístico e a de um acontecimento local banal ampliado pelo noticiário não são decididas por um teste numérico de conservação de energia. Nenhuma dessas alternativas ganhou uma testemunha física nesta rodada.
+E as hipóteses concorrentes? A ideia de uma reentrada associada à notícia baiana continua **possível, mas não demonstrada**. A hipótese de um boato jornalístico e a de um acontecimento local banal ampliado pelo noticiário não são decididas por um teste numérico de conservação de energia. Nenhuma dessas alternativas ganhou uma testemunha física nesta rodada. O índice administrativo do [Project Blue Book, C232–C238](https://github.com/franklinbaldo/conde-incident/pull/1) classifica o caso como `Other (HOAX)` segundo uma reprodução secundária, mas o dossiê original não foi recuperado. Essa rubrica não certifica a origem da notícia nem decide, sozinha, o que aconteceu no solo.
 
 ## A próxima prova precisa vir de fora do simulador
 
