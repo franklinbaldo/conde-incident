@@ -1,0 +1,6 @@
+{
+  "name": "NORAD 528 & Caso Conde 1963 - Reconstrução Orbital",
+  "description": "Investigação quantitativa, análise orbital histórica SGP4/J2, triangulação dinâmica com NORAD 527/529 e teste de falsificação da reentrada do objeto 1963-003B em Conde, Bahia (1963).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

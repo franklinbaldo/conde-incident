@@ -1,0 +1,102 @@
+import React, { useState } from 'react';
+import {
+  X,
+  Copy,
+  Check,
+  Download,
+  Terminal,
+  Code,
+} from 'lucide-react';
+import { PYTHON_REPRODUCIBILITY_SCRIPT } from '../lib/pythonScriptExport';
+
+interface PythonScriptModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  lang: 'pt' | 'en';
+}
+
+export const PythonScriptModal: React.FC<PythonScriptModalProps> = ({
+  isOpen,
+  onClose,
+  lang,
+}) => {
+  const isPt = lang === 'pt';
+  const [copied, setCopied] = useState<boolean>(false);
+
+  if (!isOpen) return null;
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(PYTHON_REPRODUCIBILITY_SCRIPT);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleDownload = () => {
+    const blob = new Blob([PYTHON_REPRODUCIBILITY_SCRIPT], { type: 'text/x-python' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'norad528_reconstruction.py';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-zinc-950 border border-zinc-800 rounded-xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+        {/* Header */}
+        <div className="p-4 border-b border-zinc-800 bg-zinc-900/60 flex items-center justify-between">
+          <div className="flex items-center gap-2 text-zinc-100">
+            <Terminal className="w-4 h-4 text-cyan-400" />
+            <h3 className="text-sm font-bold font-mono">
+              norad528_reconstruction.py
+            </h3>
+            <span className="text-[11px] text-zinc-500 font-mono hidden sm:inline">
+              (Script Reprodutível em Python 3)
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleCopy}
+              className="px-3 py-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer"
+            >
+              {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+              <span>{copied ? 'Copiado!' : 'Copiar Código'}</span>
+            </button>
+
+            <button
+              onClick={handleDownload}
+              className="px-3 py-1.5 rounded bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer shadow"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>Baixar .py</span>
+            </button>
+
+            <button
+              onClick={onClose}
+              className="p-1.5 rounded hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* Instructions banner */}
+        <div className="bg-zinc-900/80 px-4 py-2 text-[11px] font-mono text-zinc-400 border-b border-zinc-800 flex items-center justify-between">
+          <span>Como executar: <code className="text-cyan-300">python3 norad528_reconstruction.py</code></span>
+          <span className="text-zinc-500">Dependências: numpy, scipy</span>
+        </div>
+
+        {/* Code View */}
+        <div className="p-4 overflow-y-auto flex-1 font-mono text-xs text-zinc-300 bg-zinc-950 scrollbar-thin">
+          <pre className="whitespace-pre-wrap leading-relaxed select-all">
+            {PYTHON_REPRODUCIBILITY_SCRIPT}
+          </pre>
+        </div>
+      </div>
+    </div>
+  );
+};
