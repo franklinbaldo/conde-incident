@@ -23,3 +23,5 @@ import Conde1963.Provenance
 
 #print axioms Conde1963.source_narrowing_never_adds_parameters
 #print axioms Conde1963.forced_and_excluded_conde_conflict
+
+#print axioms Conde1963.filter_grid_never_creates_candidates
