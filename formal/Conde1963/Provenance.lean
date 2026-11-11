@@ -85,4 +85,44 @@ theorem radio_reprint_is_not_independent
   exact shared_chain_is_not_independent tupi t (by
     simpa [tupi] using ht.symm)
 
+/-- A deterministic decoder cannot recover a region for every admitted state
+    if two states yield exactly the same observed datum yet differ in region.
+    This is a conditional information-theoretic obstruction, not an orbit fit. -/
+def CorrectRegionDecoder
+    (observe : ReentryCandidate → Nat)
+    (decode : Nat → Region)
+    (admitted : ReentryCandidate → Prop) : Prop :=
+  ∀ c, admitted c → decode (observe c) = c.region
+
+theorem same_observation_precludes_total_region_decoder
+    (observe : ReentryCandidate → Nat)
+    (decode : Nat → Region)
+    (admitted : ReentryCandidate → Prop)
+    (a b : ReentryCandidate)
+    (ha : admitted a) (hb : admitted b)
+    (same : observe a = observe b)
+    (different : a.region ≠ b.region) :
+    ¬ CorrectRegionDecoder observe decode admitted := by
+  intro correct
+  apply different
+  calc
+    a.region = decode (observe a) := (correct a ha).symm
+    _ = decode (observe b) := congrArg decode same
+    _ = b.region := correct b hb
+
+/-- The historical NASA day-only record is represented here solely as a
+    date predicate. The pedagogical states share that day, yet differ in
+    region; *no* day-to-region function is correct on both. Neither state
+    is asserted to be a 1963 trajectory. -/
+theorem day_only_precludes_total_region_decoder
+    (decode : Nat → Region) :
+    ¬ CorrectRegionDecoder (fun c => c.day) decode ConsistentWithDateOnly := by
+  apply same_observation_precludes_total_region_decoder
+    (fun c => c.day) decode ConsistentWithDateOnly
+    condeCandidate anotherCandidate
+  · exact date_alone_does_not_identify_place.1
+  · exact date_alone_does_not_identify_place.2.1
+  · rfl
+  · exact date_alone_does_not_identify_place.2.2
+
 end Conde1963
