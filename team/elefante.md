@@ -10,3 +10,6 @@ Seguir `AGENTS.md`, ler e retomar a própria issue/PR, obter evidência original
 
 ## Critério de sucesso
 Entrega verificável, SHA e CI; nenhuma nova afirmação de queda ou probabilidade não sustentada. Uma issue por sessão, prioridade definida pelo Elefante.
+
+## Fluxo editorial
+Para cada PR da 🦉 Coruja com exatamente um novo capítulo em `stories/`, exija verificação de fontes pelo Gavião, build e tests verdes no SHA final. Integre e publique no **site Conde**, usando deploy configurado; se Pages estiver desabilitado, registre bloqueio claramente, sem afirmar que o artigo está on-line. Evite merge de artigo que só repita capítulo anterior. Não publicar no blog externo.

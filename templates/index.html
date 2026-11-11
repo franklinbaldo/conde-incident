@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Caderno de investigação | Conde, 1963{% endblock title %}
+{% block content %}
+<section class="intro">
+<p class="eyebrow">Investigação histórica e científica</p>
+<h1>Conde, 1963: a notícia, a órbita e as provas</h1>
+<p>Em novembro de 1963, uma transmissão relatou uma esfera metálica na Bahia. Um catálogo espacial registra um objeto decaído no mesmo dia. São documentos de naturezas diferentes, não provas de uma causa comum.</p>
+<p><a class="science-link" href="{{ config.base_url | safe }}lab/">Abrir os mapas e modelos experimentais</a></p>
+</section>
+{% set journal = get_section(path="stories/_index.md") %}
+<section class="journal" aria-label="Capítulos">
+<div class="section-heading"><h2>Reportagens</h2><p>O que se descobriu, o que se corrigiu e o que ainda não sabemos.</p></div>
+{% for story in journal.pages %}
+<article class="story-card">
+<div class="meta">Capítulo {{ story.extra.chapter }} · <time datetime="{{ story.date }}">{{ story.date }}</time></div>
+<h3><a href="{{ story.permalink | safe }}">{{ story.title }}</a></h3>
+<p>{{ story.description }}</p><small>{{ story.extra.status }}</small>
+</article>
+{% endfor %}
+</section>
+{% endblock content %}

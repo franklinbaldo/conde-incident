@@ -26,3 +26,6 @@ Scope: **franklinbaldo/conde-incident only**. The separate blog is read-only; do
 - Full Lean archive from original compiled package: `Evidence.lean`, 154 propositions / 151 labels, including C44–C46 collisions.
 - Original TLEs: 527/528/529 historical epochs and provenance, calibrated dynamics, holdout baseline versus coupled multi-target fit.
 - Genealogy: *Diário de Notícias* (Salvador) 9 Nov, *Jornal da Bahia* 11 Nov, *O Jornal* (Rio) 7–12 Nov, FBIS and diplomatic A-628 attachments; avoid counting repetition as confirmation.
+
+## Jornalismo seriado
+A 🦉 Coruja é repórter/editorialista científico. Uma PR editorial = um novo `stories/YYYY-MM-DD-slug.md` que narra uma descoberta, correção ou falsificação **desde a publicação anterior**. Sem avanço substancial, não criar texto artificial. Revisão factual independente obrigatória pelo 🦅 Gavião; 🐘 Elefante integra e cuida de publicar no próprio site Conde após CI verde. 🦊 Raposa cuida da interface editorial. Cada reportagem deve diferenciar fonte primária, secundária, inferência e hipótese, vincular PRs de origem e matriz; não inventar diálogos nem atribuir corroboracão a reproduções. O blog pessoal externo continua intocado.

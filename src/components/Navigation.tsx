@@ -39,6 +39,7 @@ export const Navigation: React.FC<NavigationProps> = ({
   setLang,
   onOpenPython,
 }) => {
+  const storiesHref = `${import.meta.env.BASE_URL.replace(/lab\/$/, '')}stories/`;
   const tabs = [
     {
       id: 'summary' as TabId,
@@ -157,6 +158,7 @@ export const Navigation: React.FC<NavigationProps> = ({
 
       {/* Main Navigation Tabs */}
       <nav className="max-w-7xl mx-auto px-4 flex space-x-1 overflow-x-auto py-1.5 scrollbar-thin">
+        <a href={storiesHref} className="flex items-center gap-2 px-3 py-2 rounded-md text-xs font-medium whitespace-nowrap text-cyan-300 hover:bg-zinc-900 border border-cyan-900/60"><FileText className="w-4 h-4"/> {lang === 'pt' ? 'Caderno de histórias' : 'Investigative journal'}</a>
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
