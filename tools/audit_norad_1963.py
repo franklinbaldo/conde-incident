@@ -259,7 +259,7 @@ def write_outputs(rows: list[dict], report: dict, target: Path, checks: dict[str
 
     ledger = target / "norad_528_epochs_1963.csv"
     with ledger.open("w", newline="", encoding="utf-8") as fd:
-        writer = csv.DictWriter(fd, fieldnames=("source_row",) + COLUMNS, lineterminator="\\n")
+        writer = csv.DictWriter(fd, fieldnames=("source_row",) + COLUMNS, lineterminator="\n")
         writer.writeheader()
         for row in rows:
             if row["norad_id"] == 528:
