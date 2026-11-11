@@ -16,4 +16,4 @@ jobs:
         with:
           node-version: '22'
       - name: Physical conservation, synthetic inverse, seeded ensemble
-        run: node --experimental-strip-types --test tests/orbitPhysics.test.mjs tests/orbitHoldout.test.mjs
+        run: node --experimental-strip-types --test tests/orbitPhysics.test.mjs tests/orbitHoldout.test.mjs tests/orbitConvergence.test.mjs
