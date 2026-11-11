@@ -16,11 +16,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Test audit on actual PR checkout
+      - name: Test audit on actual PR head, not merge ref
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
-          git rev-parse HEAD
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
           node scripts/check-editorial-source-audit.mjs
           node --test tests/editorialProvenance.test.mjs
