@@ -6,7 +6,7 @@
 
 A matriz cumulativa da [PR científica #1](https://github.com/franklinbaldo/conde-incident/pull/1) (C20, C25, C179–C185, C197, C238) distingue a data de decaimento do componente 1963-003B do lugar da queda. O original coevo [NASA *Satellite Situation Report*, 15/11/1963, p. 8](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf) somente registra **08/11/1963**, sem hora e sem localização.
 
-O conjunto numérico do experimento procede do [Parquet oxzoid/space-track-tle-history, 1963, commit 4b4fb3a](https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/4b4fb3a/data/tle_1963.parquet), **espelho secundário** que declara origem Space-Track e tem SHA-256 fixado `c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09`. O extrator e auditor `tools/audit_norad_1963.py` pertencem à [PR de custódia #14](https://github.com/franklinbaldo/conde-incident/pull/14). O relatório `audit.json` e seu CSV devem ser produzidos na **mesma execução**, após baixar e comparar os bytes originais por SHA-256. A ausência de `line1/line2`, proveniência individual, frame e instrumentos originais mantém a verificação primária **NOT_RUN**.
+O conjunto numérico do experimento procede do [Parquet oxzoid/space-track-tle-history, 1963, commit 4b4fb3a](https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/4b4fb3a/data/tle_1963.parquet), **espelho secundário** que declara origem Space-Track e tem SHA-256 fixado `c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09`. O extrator e auditor `tools/audit_norad_1963.py` pertencem à [PR de custódia #14](https://github.com/franklinbaldo/conde-incident/pull/14). O relatório `audit.json` e seu CSV devem ser produzidos na **mesma execução**, após baixar e comparar os bytes originais por SHA-256. O leitor Texugo **reabre independentemente** o Parquet, confere SHA-1/SHA-256 e confronta todas as tuplas `(source_row, norad_id, epoch, mean_motion)` com o CSV. Apenas coincidir o JSON de auditoria não basta; um CSV modificado, truncado ou duplicado deve falhar. A ausência de `line1/line2`, proveniência individual, frame e instrumentos originais mantém a verificação primária **NOT_RUN**.
 
 As observações 527/528/529 vêm da **mesma linhagem** de catálogo; não são três medições institucionalmente independentes. O ajuste de uma curvatura numérica conjunta não deve ser chamado de triangulação física. Não há priors, posterior bayesiana, localização nem identificação de objeto por esta rotina.
 
@@ -33,12 +33,26 @@ python -m pip install pyarrow==21.0.0
 python tools/audit_norad_1963.py --download \
   --parquet /tmp/tle_1963.parquet --output /tmp/conde-source
 python tools/texugo_holdout_529.py \
+  --parquet /tmp/tle_1963.parquet \
   --csv /tmp/conde-source/norad_527_528_529_1963_numeric.csv \
   --audit /tmp/conde-source/audit.json \
   --output /tmp/conde-holdout-529.json
 ```
 
 No GitHub Actions `.github/workflows/texugo-holdout.yml` executa o mesmo procedimento no **HEAD exato** da PR e publica CSV, `audit.json` e resultados JSON como artefatos. O CI só pode certificar execução reproduzível, integridade do espelho e testes; não deve reprovar `BASELINE_BETTER`. Um bloqueio de rede de HF ou ausência de registro produz falha/NOT_RUN, **não** paridade histórica.
+
+## Resultado do primeiro replay real (HEAD 44c09b4; 11/11/2026)
+
+O [GitHub Actions #43100111352](https://github.com/franklinbaldo/conde-incident/actions/runs/43100111352) terminou **SUCCESS** no SHA `44c09b454a25885416f1b295a02d55fe3d80efac`, com instalação `pyarrow==21.0.0`, auditoria SHA-256 do Parquet espelhado e arquivo JSON arquivado como [artefato #13892185614](https://github.com/franklinbaldo/conde-incident/actions/runs/43100111352/artifacts/13892185614). A auditoria de custódia [#43100111367](https://github.com/franklinbaldo/conde-incident/actions/runs/43100111367) e o CI científico [#43100111436](https://github.com/franklinbaldo/conde-incident/actions/runs/43100111436) também passaram no mesmo SHA. A tabela abaixo é transcrição de valores numéricos do **log do workflow**, não de medições primárias. Os holdouts se sobrepõem e não são réplicas independentes.
+
+| Corte UTC | Amostras 529 futuras | RMSE 529 quadrático (rev/dia) | RMSE transferido (rev/dia) | Vencedor descritivo |
+|---|---:|---:|---:|---|
+| 31/08 | 28 | 0.210299289 | 0.211762185 | Quadrático |
+| 28/09 | 24 | 0.216540216 | 0.214537239 | Transferência |
+| 11/10 | 21 | 0.223016327 | 0.219896277 | Transferência |
+| 21/10 | 20 | 0.223236815 | 0.215116674 | Transferência |
+
+**Resultado negativo real:** em 31/08, a transferência **piorou** o RMSE do 529 em cerca de `0.001462895` rev/dia (não é o resultado sintético de 2,03084). Nos demais três cortes a redução vai de `0.002002977` a `0.008120140` rev/dia, apenas dentro do mesmo catálogo secundário. Não há teste de significância, separação de linhagens, propagação vetorial ou prova de maior acurácia orbital. A contraprova de CSV falso foi descoberta após esse replay; a nova validação por comparação Parquet↔CSV precisa de GitHub Actions no **novo HEAD**, sem herdar o PASS anterior.
 
 ## Controles negativos executáveis
 
