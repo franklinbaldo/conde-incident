@@ -1,0 +1,307 @@
+{
+  "schema_version": 1,
+  "purpose": "Review-only document genealogy. Documentary roots are not independent physical witnesses. No new 1963 observation claimed.",
+  "based_on": {
+    "matrix": "https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md",
+    "ledger": "https://github.com/franklinbaldo/conde-incident/blob/0338fdefc7a62227265cac125de26876f47e9c4e/research/gaviao_source_ledger_2026-11-11.json",
+    "reviewed_chapter_01_sha": "c84cce85e51252f9e589a851950385aea008e951",
+    "reviewed_chapter_02_sha": "45cd01b838bee208cccffee3d119890035d9c292"
+  },
+  "nodes": [
+    {
+      "id": "TUPI_RIO",
+      "url": "https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf",
+      "inspection": "reported_only_by_FBiS_not_radio_recording",
+      "family": "TUPI_FBIS",
+      "supports": [],
+      "matrix_ids": [
+        "C01",
+        "C76"
+      ],
+      "notes": "Broadcast attribution is on FBIS header; surviving audio or script not inspected."
+    },
+    {
+      "id": "FBIS03",
+      "url": "https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf",
+      "inspection": "direct_visual_facsimile",
+      "family": "TUPI_FBIS",
+      "supports": [
+        "radio_report_in_fbis"
+      ],
+      "matrix_ids": [
+        "C01",
+        "C02",
+        "C03",
+        "C76"
+      ],
+      "notes": "Facsimile of a contemporary monitored report, not physical observation; heading 2330 8 NOV 63 W."
+    },
+    {
+      "id": "NASA_SSR_19631115",
+      "url": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf",
+      "inspection": "direct_visual_facsimile",
+      "family": "ORBITAL_CATALOG",
+      "supports": [
+        "nasa_records_decay_date"
+      ],
+      "matrix_ids": [
+        "C197",
+        "C198"
+      ],
+      "notes": "Printed p. 8 = PDF index 9; 1963 3B / 8 NOV 63, no hour or position."
+    },
+    {
+      "id": "NORAD_MIRROR_528",
+      "url": "https://github.com/franklinbaldo/conde-incident/pull/14",
+      "inspection": "secondary_dataset_under_custody_review",
+      "family": "ORBITAL_CATALOG",
+      "supports": [
+        "unreconciled_raan_mirror"
+      ],
+      "matrix_ids": [
+        "C179",
+        "C185"
+      ],
+      "notes": "No direct primary TLE authentication. Not another independent terminal observation."
+    },
+    {
+      "id": "LEGACY_APP_284",
+      "url": "https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/SCIENTIFIC_AUDIT.md",
+      "inspection": "direct_review_of_repository_audit_not_original_tle",
+      "family": "LEGACY_APP",
+      "supports": [
+        "unreconciled_raan_app"
+      ],
+      "matrix_ids": [
+        "C179",
+        "C185"
+      ],
+      "notes": "RAAN 284.1520 compared to 198.5261; epoch and lineage unresolved."
+    },
+    {
+      "id": "TUPI_SP_SCRIPT_09",
+      "url": "https://media.bcc.org.br/documento/roteiro/tupi/pdf/RE19631109.pdf",
+      "inspection": "prior_matrix_24_page_visual_check_not_repeated",
+      "family": "TUPI_SP_TV_SCRIPT",
+      "supports": [
+        "tv_script_negative_prior_matrix"
+      ],
+      "matrix_ids": [
+        "C111",
+        "C117"
+      ],
+      "notes": "Different city and TV script; not a test of Radio Tupi Rio."
+    },
+    {
+      "id": "DIARIO_SALVADOR_09",
+      "url": "https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md",
+      "inspection": "newspaper_unrecovered_cited_in_a628",
+      "family": "SALVADOR_PRESS",
+      "supports": [],
+      "matrix_ids": [
+        "C05",
+        "C11"
+      ],
+      "notes": "Newspaper image not independently inspected in this review."
+    },
+    {
+      "id": "MIDKIFF_157",
+      "url": "https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md",
+      "inspection": "cable_quoted_in_a628_not_original_cable",
+      "family": "CONSULAR_CHAIN",
+      "supports": [],
+      "matrix_ids": [
+        "C09",
+        "C10"
+      ],
+      "notes": "Original telegram 157 not separately reauthenticated here."
+    },
+    {
+      "id": "A628_19631120",
+      "url": "https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md",
+      "inspection": "original_report_prior_matrix_not_reinspected",
+      "family": "CONSULAR_CHAIN",
+      "supports": [
+        "consular_assessment_reported"
+      ],
+      "matrix_ids": [
+        "C05",
+        "C09",
+        "C10"
+      ],
+      "notes": "Prior facsimile in matrix; quotes telegram and newspapers, not independent observations."
+    },
+    {
+      "id": "BLUEBOOK_INDEX",
+      "url": "https://documents.theblackvault.com/bluebookdesk/pbbcases-1959-1965.pdf",
+      "inspection": "prior_matrix_text_extraction_no_visual_facsimile",
+      "family": "BLUEBOOK_INDEX",
+      "supports": [
+        "bluebook_index_label_reported"
+      ],
+      "matrix_ids": [
+        "C232",
+        "C233",
+        "C238"
+      ],
+      "notes": "Derivative hosted index says Other (HOAX); case file and basis not inspected."
+    }
+  ],
+  "relations": [
+    {
+      "from": "TUPI_RIO",
+      "to": "FBIS03",
+      "kind": "documented_transcription",
+      "verification": "documented_in_fbis_header",
+      "note": "Broadcast attributed to Tupi in the FBIS facsimile; audio unavailable."
+    },
+    {
+      "from": "DIARIO_SALVADOR_09",
+      "to": "A628_19631120",
+      "kind": "documented_quotation",
+      "verification": "matrix_prior_report",
+      "note": "A-628 quotes newspaper; original clipping not recovered."
+    },
+    {
+      "from": "MIDKIFF_157",
+      "to": "A628_19631120",
+      "kind": "documented_quotation",
+      "verification": "matrix_prior_report",
+      "note": "Cable content quoted by diplomatic report."
+    },
+    {
+      "from": "TUPI_RIO",
+      "to": "DIARIO_SALVADOR_09",
+      "kind": "shared_institution_only",
+      "verification": "secondary_institutional_history",
+      "note": "Diários Associados affiliation does not prove this article copied that broadcast."
+    },
+    {
+      "from": "A628_19631120",
+      "to": "BLUEBOOK_INDEX",
+      "kind": "possible_common_information",
+      "verification": "unverified",
+      "note": "May share consular file; index alone cannot establish dependence."
+    },
+    {
+      "from": "NASA_SSR_19631115",
+      "to": "NORAD_MIRROR_528",
+      "kind": "possible_common_tracking",
+      "verification": "unverified",
+      "note": "Catalogs may share tracking; mirrored elements do not certify independent measurement."
+    }
+  ],
+  "claims": [
+    {
+      "id": "radio_report_in_fbis",
+      "status": "documented_text",
+      "sources": [
+        "FBIS03"
+      ],
+      "cannot_infer": [
+        "sphere_physically_found",
+        "broadcast_clock_zone_GMT"
+      ]
+    },
+    {
+      "id": "nasa_records_decay_date",
+      "status": "documented_text",
+      "sources": [
+        "NASA_SSR_19631115"
+      ],
+      "cannot_infer": [
+        "reentry_coordinates",
+        "terminal_hour",
+        "impact_in_conde"
+      ]
+    },
+    {
+      "id": "tv_script_negative_prior_matrix",
+      "status": "prior_matrix_only",
+      "sources": [
+        "TUPI_SP_SCRIPT_09"
+      ],
+      "cannot_infer": [
+        "radio_rio_silence",
+        "new_first_inspection"
+      ]
+    },
+    {
+      "id": "consular_assessment_reported",
+      "status": "prior_matrix_only",
+      "sources": [
+        "A628_19631120"
+      ],
+      "cannot_infer": [
+        "hoax_physically_proven"
+      ]
+    },
+    {
+      "id": "bluebook_index_label_reported",
+      "status": "prior_matrix_only",
+      "sources": [
+        "BLUEBOOK_INDEX"
+      ],
+      "cannot_infer": [
+        "hoax_physically_proven",
+        "independent_field_investigation"
+      ]
+    },
+    {
+      "id": "unreconciled_raan_mirror",
+      "status": "secondary_technical",
+      "sources": [
+        "NORAD_MIRROR_528"
+      ],
+      "cannot_infer": [
+        "primary_tle_authenticated",
+        "correct_raan",
+        "terminal_track"
+      ]
+    },
+    {
+      "id": "unreconciled_raan_app",
+      "status": "secondary_technical",
+      "sources": [
+        "LEGACY_APP_284"
+      ],
+      "cannot_infer": [
+        "primary_tle_authenticated",
+        "correct_raan",
+        "terminal_track"
+      ]
+    },
+    {
+      "id": "impact_in_conde",
+      "status": "not_verified",
+      "sources": [],
+      "cannot_infer": [
+        "physical_confirmation"
+      ]
+    },
+    {
+      "id": "reentry_coordinates",
+      "status": "not_verified",
+      "sources": [],
+      "cannot_infer": [
+        "physical_confirmation"
+      ]
+    },
+    {
+      "id": "broadcast_clock_zone_GMT",
+      "status": "not_verified",
+      "sources": [],
+      "cannot_infer": [
+        "timezone_confirmed_for_1963_FBiS"
+      ]
+    },
+    {
+      "id": "hoax_physically_proven",
+      "status": "not_verified",
+      "sources": [],
+      "cannot_infer": [
+        "field_evidence"
+      ]
+    }
+  ]
+}

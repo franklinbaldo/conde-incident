@@ -1,0 +1,31 @@
+name: Gavião falsify documentary independence
+on:
+  pull_request:
+    paths:
+      - 'research/gaviao_document_genealogy_2026-11-11.json'
+      - 'scripts/check-document-genealogy.mjs'
+      - 'tests/gaviaoDocumentGenealogy.test.mjs'
+      - 'research/gaviao_editorial_audit_2026-11-11.md'
+      - 'research/gaviao_source_ledger_2026-11-11.json'
+      - 'tests/gaviaoEditorialEvidence.test.mjs'
+      - '.github/workflows/gaviao-document-genealogy.yml'
+      - 'team/memory/gaviao/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  dependency-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout final PR HEAD (not synthetic merge)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Record tested SHA
+        run: git rev-parse HEAD
+      - name: Run dependent-document falsifications
+        run: node --test tests/gaviaoDocumentGenealogy.test.mjs
+      - name: Assert documentary claims and lineage
+        run: node scripts/check-document-genealogy.mjs
+      - name: Preserve earlier evidence ledger regressions
+        run: node --test tests/gaviaoEditorialEvidence.test.mjs
