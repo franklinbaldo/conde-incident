@@ -39,7 +39,7 @@ The previous joint-model validation found that a simple quadratic mean-motion ba
 2. Preserve coupled state vectors and implement only physically coherent orbit integrators, with explicit reentry termination criteria; use SGP4 only as a baseline inside its verified validity range.
 3. Replace Monte Carlo with a deterministic-seed, fully propagated ensemble, with explicit prior and likelihood for archival observations, before reporting any numerical impact probability.
 4. Rewrite the inverse solver as a constrained fit in orbital state space, not a longitude slider; verify on 529 blind forecast windows before interpreting 528.
-5. Bring the compiled Lean project and original evidence registry into version control intact, with reproducible `lake build` and explicit verification status.
+5. Port the remaining compiled Lean evidence module and structured evidence registry into version control intact. The older complete C01–C238 Markdown evidence matrix has already been imported under `research/`; `lake build` currently verifies the core logical module only.
 6. Release only the claims supported by independent source documents or validated models. No publication or changes to the separate blog.
 
 ## Document leads
