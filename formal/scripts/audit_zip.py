@@ -95,7 +95,9 @@ def audit_archive(
         raise AuditError("each C44/C45/C46 collision must occur exactly twice")
 
     return {
-        "status": "PASS",
+        "status": "STRUCTURE_PASS_ONLY",
+        "provenance_status": "NOT_VERIFIED: matching caller-supplied digests cannot prove independent custody",
+        "semantic_status": "NOT_RUN: registry entries and Lean propositions are not compared",
         "zip_sha1": sha1.hexdigest(),
         "zip_sha256": sha256.hexdigest(),
         "evidence_member": located["Evidence.lean"],
@@ -104,7 +106,7 @@ def audit_archive(
         "propositions": len(registry),
         "distinct_labels": len(counts),
         "duplicate_labels": sorted(duplicated),
-        "warning": "Integrity/registry-shape only; NOT a Lean recompilation or historical verification.",
+        "warning": "Synthetic ZIPs can satisfy every structural check. Digests require independently documented custody; NOT a Lean recompilation or historical verification.",
     }
 
 

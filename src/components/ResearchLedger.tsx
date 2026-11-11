@@ -71,11 +71,12 @@ export function ResearchLedger({ lang }: { lang: Language }) {
       <p className="mt-2 text-sm leading-relaxed text-zinc-400">{pt ? 'Os teoremas Lean verificam implicações lógicas condicionadas, não a autenticidade dos documentos nem a localização da reentrada. Os IDs levam à matriz cumulativa; repetições do mesmo documento não são corroboração independente.' : 'Lean theorems verify conditional logical implications, not the authenticity of documents or a reentry site. IDs link to the cumulative evidence matrix; repetitions of a document are not independent corroboration.'}</p>
       <div className="mt-5 grid gap-3 sm:grid-cols-2">
         {[
-          { ids: 'C01', label: pt ? 'Relato Tupi/FBIS, não queda comprovada' : 'Tupi/FBIS report, not proven impact', url: 'https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf' },
-          { ids: 'C131 · C197', label: pt ? 'Mesmo boletim NASA: somente dia do decaimento' : 'Same NASA bulletin: decay date only', url: 'https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf' },
-        ].map(({ ids, label, url }) => (
+          { ids: 'C01', matrixLine: 20, label: pt ? 'Relato Tupi/FBIS, não queda comprovada' : 'Tupi/FBIS report, not proven impact', url: 'https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf' },
+          { ids: 'C131', matrixLine: 502, label: pt ? 'Boletim NASA: dia de decaimento, sem lugar/hora' : 'NASA bulletin: decay day, not place/time', url: 'https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf#page=10' },
+          { ids: 'C197', matrixLine: 905, label: pt ? 'Mesmo boletim NASA, não uma segunda observação' : 'Same NASA bulletin, not a second observation', url: 'https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf#page=10' },
+        ].map(({ ids, label, url, matrixLine }) => (
           <div key={ids} className="rounded-xl border border-zinc-800 bg-zinc-950/50 p-4">
-            <a href="https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md" target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-cyan-300 underline hover:text-white">{ids} · {pt ? 'matriz' : 'matrix'}</a>
+            <a href={`https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L${matrixLine}`} target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-cyan-300 underline hover:text-white">{ids} · {pt ? 'matriz' : 'matrix'}</a>
             <p className="mt-2 text-sm text-zinc-300">{label}</p>
             <a href={url} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-xs text-cyan-400 underline">{pt ? 'Documento de referência' : 'Reference document'}</a>
           </div>

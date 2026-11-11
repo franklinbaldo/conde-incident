@@ -45,6 +45,9 @@ class ArchiveAuditTests(unittest.TestCase):
         self.assertEqual(result["propositions"], 154)
         self.assertEqual(result["distinct_labels"], 151)
         self.assertEqual(result["duplicate_labels"], ["C44", "C45", "C46"])
+        self.assertEqual(result["status"], "STRUCTURE_PASS_ONLY")
+        self.assertIn("NOT_VERIFIED", result["provenance_status"])
+        self.assertIn("NOT_RUN", result["semantic_status"])
         self.assertIn("NOT a Lean recompilation", result["warning"])
 
     def test_wrong_hash_fails_before_content(self):
@@ -60,6 +63,36 @@ class ArchiveAuditTests(unittest.TestCase):
     def test_wrong_counts_fail(self):
         make_archive(self.path, duplicate=False)
         with self.assertRaisesRegex(AuditError, "counts/collisions mismatch"):
+            self.verify()
+
+    def test_traversal_member_rejected_even_with_valid_digests(self):
+        with ZipFile(self.path, "w") as zf:
+            zf.writestr("../Evidence.lean", "-- SYNTHETIC")
+            zf.writestr("evidence_registry.json", "[]")
+        with self.assertRaisesRegex(AuditError, "unsafe ZIP member path"):
+            self.verify()
+
+    def test_duplicate_member_path_rejected_even_with_valid_digests(self):
+        import warnings
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", UserWarning)
+            with ZipFile(self.path, "w") as zf:
+                zf.writestr("Evidence.lean", "-- SYNTHETIC A")
+                zf.writestr("Evidence.lean", "-- SYNTHETIC B")
+                zf.writestr("evidence_registry.json", "[]")
+        with self.assertRaisesRegex(AuditError, "duplicate ZIP member path"):
+            self.verify()
+
+    def test_missing_provenance_hash_is_not_assumed(self):
+        make_archive(self.path)
+        with self.assertRaisesRegex(AuditError, "externally recorded 40-hex SHA-1"):
+            self.verify(sha1="not-a-real-hash")
+
+    def test_registry_requires_explicit_label_field(self):
+        with ZipFile(self.path, "w") as zf:
+            zf.writestr("Evidence.lean", "-- SYNTHETIC")
+            zf.writestr("evidence_registry.json", json.dumps([{"claim": "C1"}]))
+        with self.assertRaisesRegex(AuditError, "explicit key"):
             self.verify()
 
 

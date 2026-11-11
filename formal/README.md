@@ -26,7 +26,7 @@ Source lineage (all references are to the [cumulative matrix](../research/eviden
   preserved item is a report, not independent proof of a physical impact.
   [FBIS facsimile](https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf).
 - **C131 and C197:** NASA/Goddard, *Satellite Situation Report*,
-  15 Nov 1963, p. 8, NTRS `19640001198`,
+  15 Nov 1963, printed p. 8 (PDF zero-based index 9, viewer page 10), NTRS `19640001198`,
   [source PDF](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf).
   The day of decay, 8 Nov 1963, is reported; time and region are not.
   C131 and C197 refer to the **same NASA document**, not independent measurements.
@@ -49,7 +49,10 @@ lake env lean Conde1963/AxiomAudit.lean
 ```
 
 Actual original-ZIP audit/import: **NOT_RUN** until original bytes and separately
-recorded hashes are supplied. The tool checks ZIP member integrity, two
+recorded hashes are supplied. A caller can compute matching hashes for a fake
+ZIP, so passing this gate is now reported as `STRUCTURE_PASS_ONLY`, never as
+independent historical provenance. Neither the hashes nor the 154/151 structure
+establishes the authenticity or semantics of the original corpus. The tool checks ZIP member integrity, two
 independent digest algorithms, count/label consistency and duplication, and
 reports available generator candidates without executing them. It does **not**
 check proposition semantics, distinguish two texts with the same ID, or certify
