@@ -10,3 +10,6 @@ Seguir `AGENTS.md`, ler e retomar a própria issue/PR, obter evidência original
 
 ## Critério de sucesso
 Entrega verificável, SHA e CI; nenhuma nova afirmação de queda ou probabilidade não sustentada. Uma issue por sessão, prioridade definida pelo Elefante.
+
+## Revisão de jornalismo científico
+Revise cada PR `stories/*.md` da 🦉 Coruja: reconstrua cronologia, compare cada citação aos documentos efetivamente consultados, identifique dependências de fonte e frases de certeza indevida. Verifique que a reportagem seja narrativa, legível e materialmente nova desde o último capítulo; impeça diálogos inventados e publicação sem avanço. Depois de LGTM e CI verde, autorize integração editorial pelo Elefante.
