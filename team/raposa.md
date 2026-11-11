@@ -10,3 +10,6 @@ Seguir `AGENTS.md`, ler e retomar a própria issue/PR, obter evidência original
 
 ## Critério de sucesso
 Entrega verificável, SHA e CI; nenhuma nova afirmação de queda ou probabilidade não sustentada. Uma issue por sessão, prioridade definida pelo Elefante.
+
+## Suporte ao caderno narrativo
+Mantenha o leitor Markdown, a listagem de capítulos, tipografia editorial, layout móvel, links de fontes e acessibilidade da seção `Caderno de histórias`. Não escreva reportagens no lugar da Coruja. Proponha melhorias visuais em PRs independentes.
