@@ -19,11 +19,31 @@ export function assessRelease({ sha, pages, runs = [], deployments = [], statuse
     Array.isArray(statuses[d.id]) && statuses[d.id][0]?.state === 'success');
   check('successful github-pages deployment on exact SHA', Boolean(successfulDeployment),
     successfulDeployment ? String(successfulDeployment.id) : '(missing)');
-  const htmlOk = site?.status === 200 && typeof site.body === 'string' &&
-    /<div\s+id=["']root["']/.test(site.body) &&
-    /\/conde-incident\/assets\/[^"'\s>]+\.js/.test(site.body);
-  check('live HTTPS page contains correct Vite bundle', Boolean(htmlOk),
+  // The public entrypoint is Zola. React/Vite lives *only* under /lab/.
+  // A successful workflow + Pages deployment does not alone prove the live URL is correct.
+  const homeOk = site?.status === 200 && typeof site.body === 'string' &&
+    /<header\s+class=["']masthead["']/.test(site.body) &&
+    /<section\s+class=["']journal["']/.test(site.body) &&
+    site.body.includes('/conde-incident/stories/') &&
+    site.body.includes('/conde-incident/lab/') &&
+    site.body.includes('/conde-incident/css/site.css');
+  check('live HTTPS root renders Zola journal and correct base URLs', Boolean(homeOk),
     site ? 'HTTP ' + site.status : '(unreachable)');
+  const storiesOk = site?.stories?.status === 200 &&
+    /<section\s+class=["']journal["']/.test(site.stories.body || '') &&
+    /<article\s+class=["']story-card["']/.test(site.stories.body || '') &&
+    /\/conde-incident\/stories\/\d{4}-\d{2}-\d{2}-[a-z0-9-]+\//.test(site.stories.body || '');
+  check('live Zola story listing contains a dated chapter', Boolean(storiesOk),
+    site?.stories ? 'HTTP ' + site.stories.status : '(unreachable)');
+  const labOk = site?.lab?.status === 200 &&
+    /<div\s+id=["']root["']/.test(site.lab.body || '') &&
+    /\/conde-incident\/lab\/assets\/[^"'\s>]+\.js/.test(site.lab.body || '');
+  check('live React lab has separate /lab/ bundle', Boolean(labOk),
+    site?.lab ? 'HTTP ' + site.lab.status : '(unreachable)');
+  const cssOk = site?.style?.status === 200 &&
+    /\.masthead|\.story-card/.test(site.style.body || '');
+  check('live Zola stylesheet available at repository base', Boolean(cssOk),
+    site?.style ? 'HTTP ' + site.style.status : '(unreachable)');
   return { status: checks.every(c => c.status === 'PASS') ? 'PASS' : 'NOT_VERIFIED', checks };
 }
 async function getJson(url, token) {
@@ -49,8 +69,16 @@ export async function auditFromGitHub({ repo, sha, token, upstreamConclusion, si
       statuses[d.id] = await getJson(api + '/deployments/' + d.id + '/statuses?per_page=10', token);
     }
   }
-  const r = await fetch(siteUrl, { signal: AbortSignal.timeout(15000), redirect: 'follow' });
-  const site = { status: r.status, body: r.ok ? await r.text() : '' };
+  const readPage = async suffix => {
+    const r = await fetch(siteUrl + suffix, {
+      signal: AbortSignal.timeout(15000), redirect: 'follow',
+    });
+    return { status: r.status, body: r.ok ? await r.text() : '' };
+  };
+  const site = await readPage('');
+  site.stories = await readPage('stories/');
+  site.lab = await readPage('lab/');
+  site.style = await readPage('css/site.css');
   return assessRelease({ sha, pages, runs: result.workflow_runs, deployments, statuses, site, upstreamConclusion });
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
