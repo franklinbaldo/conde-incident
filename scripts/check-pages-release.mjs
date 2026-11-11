@@ -29,12 +29,24 @@ export function assessRelease({ sha, pages, runs = [], deployments = [], statuse
     site.body.includes('/conde-incident/css/site.css');
   check('live HTTPS root renders Zola journal and correct base URLs', Boolean(homeOk),
     site ? 'HTTP ' + site.status : '(unreachable)');
+  // Require an actual link in the journal, not an arbitrary date-shaped string.
+  // Zola's permalink may be root-relative or absolute on this repository host.
+  const storyPath = (site?.stories?.body || '').match(
+    /href=["'](?:https:\/\/franklinbaldo\.github\.io)?(\/conde-incident\/stories\/\d{4}-\d{2}-\d{2}-[a-z0-9-]+\/)["']/i
+  )?.[1];
   const storiesOk = site?.stories?.status === 200 &&
     /<section\s+class=["']journal["']/.test(site.stories.body || '') &&
     /<article\s+class=["']story-card["']/.test(site.stories.body || '') &&
-    /\/conde-incident\/stories\/\d{4}-\d{2}-\d{2}-[a-z0-9-]+\//.test(site.stories.body || '');
+    Boolean(storyPath);
   check('live Zola story listing contains a dated chapter', Boolean(storiesOk),
     site?.stories ? 'HTTP ' + site.stories.status : '(unreachable)');
+  const chapterOk = storiesOk && site?.chapter?.path === storyPath &&
+    site.chapter.status === 200 &&
+    /<article\s+class=["']full-story["']/.test(site.chapter.body || '') &&
+    /<div\s+class=["']story-body["']/.test(site.chapter.body || '') &&
+    (site.chapter.body || '').includes('Consultar Markdown-fonte e histórico editorial');
+  check('linked Zola chapter is live, complete, and exposes its Markdown source',
+    Boolean(chapterOk), site?.chapter ? 'HTTP ' + site.chapter.status : '(not fetched)');
   const labOk = site?.lab?.status === 200 &&
     /<div\s+id=["']root["']/.test(site.lab.body || '') &&
     /\/conde-incident\/lab\/assets\/[^"'\s>]+\.js/.test(site.lab.body || '');
@@ -77,6 +89,13 @@ export async function auditFromGitHub({ repo, sha, token, upstreamConclusion, si
   };
   const site = await readPage('');
   site.stories = await readPage('stories/');
+  const chapterPath = site.stories.body.match(
+    /href=["'](?:https:\/\/franklinbaldo\.github\.io)?(\/conde-incident\/stories\/\d{4}-\d{2}-\d{2}-[a-z0-9-]+\/)["']/i
+  )?.[1];
+  if (chapterPath) {
+    // Follow only a link under this repository's expected Pages base.
+    site.chapter = { ...await readPage(chapterPath.slice('/conde-incident/'.length)), path: chapterPath };
+  }
   site.lab = await readPage('lab/');
   site.style = await readPage('css/site.css');
   return assessRelease({ sha, pages, runs: result.workflow_runs, deployments, statuses, site, upstreamConclusion });
