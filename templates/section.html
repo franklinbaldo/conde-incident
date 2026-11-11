@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Reportagens | Conde, 1963{% endblock title %}
+{% block content %}
+<section class="intro compact"><p class="eyebrow">Caderno de histórias</p>
+<h1>Reportagens</h1><p>Capítulos organizados por data e verificação documental, com hipóteses alternativas ainda abertas.</p></section>
+<section class="journal">
+{% for story in section.pages %}
+<article class="story-card">
+<div class="meta">Capítulo {{ story.extra.chapter }} · <time datetime="{{ story.date }}">{{ story.date }}</time></div>
+<h2><a href="{{ story.permalink | safe }}">{{ story.title }}</a></h2>
+<p>{{ story.description }}</p><small>{{ story.extra.status }}</small>
+</article>
+{% endfor %}
+</section>
+{% endblock content %}
