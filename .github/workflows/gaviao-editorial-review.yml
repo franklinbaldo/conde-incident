@@ -1,0 +1,26 @@
+name: Gaviao editorial-source audit
+on:
+  pull_request:
+    paths:
+      - 'research/gaviao_editorial_source_audit_2026-11-11.json'
+      - 'research/gaviao_editorial_review_2026-11-11.md'
+      - 'scripts/check-editorial-source-audit.mjs'
+      - 'tests/editorialProvenance.test.mjs'
+      - '.github/workflows/gaviao-editorial-review.yml'
+      - 'team/memory/gaviao/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  evidence-ledger:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test audit on actual PR checkout
+        run: |
+          git rev-parse HEAD
+          node scripts/check-editorial-source-audit.mjs
+          node --test tests/editorialProvenance.test.mjs
