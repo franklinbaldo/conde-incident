@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - 'tools/audit_norad_1963.py'
-      - 'tests/test_audit_norad_1963.py'
+      - 'tests/test_*.py'
       - 'research/tle_custody/**'
       - '.github/workflows/tle-custody.yml'
   workflow_dispatch:
@@ -22,7 +22,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Synthetic controls (no historical claims)
-        run: python -m unittest discover -s tests -p 'test_audit_norad_1963.py' -v
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
       - name: Install read-only Parquet decoder
         run: python -m pip install --disable-pip-version-check pyarrow==21.0.0
       - name: Fetch pinned 1963 source, verify SHA256, audit 527/528/529
