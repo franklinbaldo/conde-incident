@@ -5,6 +5,7 @@
 
 import React, { useState } from 'react';
 import { Navigation, TabId } from './components/Navigation';
+import { readSiteRoute, STORIES_INDEX, tabHref } from './lib/storyRoutes';
 import { ExecutiveSummary } from './components/ExecutiveSummary';
 import { Reportage } from './components/Reportage';
 import { OrbitalMap } from './components/OrbitalMap';
@@ -17,14 +18,36 @@ import { TleAuditViewer } from './components/TleAuditViewer';
 import { PythonScriptModal } from './components/PythonScriptModal';
 import { Satellite, Shield, Globe, Terminal, ExternalLink } from 'lucide-react';
 
+const visibleTabs: TabId[] = ['summary', 'reportage', 'map', 'inverse', 'triangulation', 'sensitivity', 'montecarlo', 'tles', 'documents'];
+
+function tabFromHash(hash: string): TabId {
+  const route = readSiteRoute(hash);
+  if (route?.kind === 'stories') return 'reportage';
+  if (route?.kind === 'tab' && visibleTabs.includes(route.tab as TabId)) return route.tab as TabId;
+  return 'summary';
+}
+
 export default function App() {
-  const [activeTab, setActiveTab] = useState<TabId>('summary');
+  const [activeTab, setActiveTab] = useState<TabId>(() => tabFromHash(window.location.hash));
   const [lang, setLang] = useState<'pt' | 'en'>('pt');
   const [sharedTimeMs, setSharedTimeMs] = useState<number>(
     new Date('1963-11-08T19:48:00Z').getTime()
   );
   const [isPythonModalOpen, setIsPythonModalOpen] = useState<boolean>(false);
   const [quotaExceeded, setQuotaExceeded] = useState<boolean>(false);
+
+  React.useEffect(() => {
+    const onHashChange = () => setActiveTab(tabFromHash(window.location.hash));
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
+  // Keep navigation in the URL so reload, browser Back/Forward and copied links agree.
+  const navigateTab = (tab: TabId) => {
+    const hash = tab === 'reportage' ? STORIES_INDEX : tabHref(tab);
+    if (window.location.hash !== hash) window.location.hash = hash;
+    setActiveTab(tab);
+  };
 
   React.useEffect(() => {
     const handleQuotaExceeded = () => setQuotaExceeded(true);
@@ -35,7 +58,7 @@ export default function App() {
   // When a pass is selected in the Inverse Inspector, jump directly to Map at that time
   const handleSelectPassFromInverse = (timeMs: number) => {
     setSharedTimeMs(timeMs);
-    setActiveTab('map');
+    navigateTab('map');
   };
 
   return (
@@ -60,7 +83,7 @@ export default function App() {
       {/* Top Header & Navigation */}
       <Navigation
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={navigateTab}
         lang={lang}
         setLang={setLang}
         onOpenPython={() => setIsPythonModalOpen(true)}
@@ -72,7 +95,7 @@ export default function App() {
         {activeTab === 'summary' && (
           <ExecutiveSummary
             lang={lang}
-            onJumpToTab={(tab: TabId) => setActiveTab(tab)}
+            onJumpToTab={navigateTab}
           />
         )}
 
