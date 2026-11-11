@@ -1,0 +1,40 @@
+name: Gaviao cross-branch matrix collision audit
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  compare-pinned-branch-ledgers:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Prove tested SHA
+        run: |
+          actual="$(git rev-parse HEAD)"
+          expected="${{ github.event.pull_request.head.sha || github.sha }}"
+          echo "review_head=$actual"
+          test "$actual" = "$expected"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Unit falsifiers
+        run: node --test tests/gaviaoMatrixCollision.test.mjs
+      - name: Obtain original ledger files at the pinned PR HEADs (read-only)
+        run: |
+          mkdir -p "$RUNNER_TEMP/conde-ledgers"
+          curl --fail --location --silent --show-error --retry 0 \
+            "https://raw.githubusercontent.com/franklinbaldo/conde-incident/36b6064f6be8ebf155afff676129ae78b37785b2/research/evidence_matrix_C001-C238_2026-11-11.md" \
+            -o "$RUNNER_TEMP/conde-ledgers/tle-holdout.md"
+          curl --fail --location --silent --show-error --retry 0 \
+            "https://raw.githubusercontent.com/franklinbaldo/conde-incident/56e593d12c777a0461382eba9959a9661e75abdf/research/evidence_matrix_C001-C238_2026-11-11.md" \
+            -o "$RUNNER_TEMP/conde-ledgers/nara.md"
+      - name: Independently compare the original claim rows, retaining collision as negative finding
+        run: |
+          node scripts/audit-matrix-ids.mjs \
+            --source "TLE-Texugo-PR20=$RUNNER_TEMP/conde-ledgers/tle-holdout.md" \
+            --source "NARA-PR25=$RUNNER_TEMP/conde-ledgers/nara.md" \
+            --expect C240,C241
