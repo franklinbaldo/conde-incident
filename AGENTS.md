@@ -2,6 +2,12 @@
 
 Scope: **franklinbaldo/conde-incident only**. The separate blog is read-only; do not publish or alter it. Do not contact archives, researchers or individuals without specific authorization.
 
+## Decisão arquitetural editorial: Zola (11/11/2026)
+- O **Caderno de histórias / blog do Conde usa Zola** para conteúdo Markdown, templates e build estático. React/Vite permanece reservado às visualizações científicas interativas; não criar um segundo motor de publicação de histórias em React.
+- Usar GitHub Actions para validar e construir Zola; publicar no GitHub Pages somente a partir da `main` após merge, com `base_url` e caminhos compatíveis com `/conde-incident/`. Verificar a fonte Pages e o deploy real antes de afirmar que o site foi publicado.
+- Uma história por PR, com novidade verificável desde a publicação anterior, fontes e grau de certeza explícitos, revisão independente de Gavião e CI verde no SHA final. Reconciliação com a PR #1 deve preservar Evidências e Caderno.
+- A Coruja responde pelo texto e estrutura editorial Zola; Raposa responde pela apresentação e integração com visualizações React. Não modificar o blog pessoal.
+
 ## Source and epistemic rules
 - Prioritize original 1963 source facsimiles and raw historical Space-Track data; preserve exact URL, issue/date/page or TLE epoch, checksum and provenance.
 - Label each claim: original directly inspected; contemporary secondhand report; modern secondary catalog; quantitative inference; hypothesis. Documentary proof of the Tupi *report* is not physical proof of a sphere/crater/body.
