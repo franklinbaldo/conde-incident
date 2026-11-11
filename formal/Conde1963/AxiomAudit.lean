@@ -14,3 +14,9 @@ import Conde1963.Provenance
 
 #print axioms Conde1963.same_observation_precludes_total_region_decoder
 #print axioms Conde1963.day_only_precludes_total_region_decoder
+
+#print axioms Conde1963.narrowing_never_adds_parameters
+#print axioms Conde1963.contradiction_has_no_candidate
+#print axioms Conde1963.exclusion_persists_under_consistent_narrowing
+#print axioms Conde1963.unique_impact_entails_window
+#print axioms Conde1963.counterexample_refutes_forced_conde
