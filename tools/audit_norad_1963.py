@@ -140,7 +140,7 @@ def compare_secondary_528(rows: list[dict], mirror_path: Path) -> dict:
     }
 
 
-def digest(payload: bytes) -> dict[str, str>:
+def digest(payload: bytes) -> dict[str, str]:
     return {"sha1": hashlib.sha1(payload).hexdigest(), "sha256": hashlib.sha256(payload).hexdigest()}
 
 
