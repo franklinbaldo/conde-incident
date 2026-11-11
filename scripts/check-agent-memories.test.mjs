@@ -44,3 +44,10 @@ test('older Markdown note is preserved, not falsely called structured', () => {
 test('unknown animal directory is rejected', () => {
   assert.ok(validateAgentMemory('team/memory/other/old.md', '# Legacy note\n', 'other').errors.length);
 });
+
+test('blank tags are not a meaningful list', () => {
+  assert.ok(validateAgentMemory(path, good.replace('tags: [conde, memory]', 'tags: [ ]'), 'elefante').errors.some(e => /tags/.test(e.message)));
+});
+test('Windows CRLF frontmatter is validated as structured, not legacy', () => {
+  assert.deepEqual(validateAgentMemory(path, good.replace(/\n/g, '\r\n'), 'elefante'), { errors: [], legacy: false });
+});
