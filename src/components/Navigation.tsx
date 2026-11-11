@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 
 export type TabId =
+  | 'research'
   | 'summary'
   | 'map'
   | 'inverse'
@@ -41,9 +42,15 @@ export const Navigation: React.FC<NavigationProps> = ({
 }) => {
   const tabs = [
     {
+      id: 'research' as TabId,
+      labelPt: 'Evidências & Pesquisa',
+      labelEn: 'Evidence & Research',
+      icon: FileText,
+    },
+    {
       id: 'summary' as TabId,
-      labelPt: 'Veredito & Resumo',
-      labelEn: 'Verdict & Summary',
+      labelPt: 'Resumo exploratório',
+      labelEn: 'Exploratory Summary',
       icon: ShieldCheck,
       badge: '7 Respostas',
     },
@@ -75,8 +82,8 @@ export const Navigation: React.FC<NavigationProps> = ({
     },
     {
       id: 'montecarlo' as TabId,
-      labelPt: 'Monte Carlo & Falsificação',
-      labelEn: 'Monte Carlo & Falsification',
+      labelPt: 'Monte Carlo exploratório',
+      labelEn: 'Exploratory Monte Carlo',
       icon: Activity,
       badge: 'N=5000',
     },
@@ -85,7 +92,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       labelPt: 'Auditoria de TLEs',
       labelEn: 'TLEs & Checksums',
       icon: Binary,
-      badge: 'Checksums 100%',
+      badge: 'Origem pendente',
     },
     {
       id: 'documents' as TabId,
