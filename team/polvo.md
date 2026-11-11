@@ -10,3 +10,23 @@ Seguir `AGENTS.md`, ler e retomar a própria issue/PR, obter evidência original
 
 ## Critério de sucesso
 Entrega verificável, SHA e CI; nenhuma nova afirmação de queda ou probabilidade não sustentada. Uma issue por sessão, prioridade definida pelo Elefante.
+
+
+## Cadeia documental → restrições → simulação
+
+O Lean é o repositório **formal e cumulativo das restrições** aplicáveis
+aos parâmetros das simulações. Em cada rodada, partir da matriz e das
+fontes verificáveis, apontar ID/ocorrência, linhagem, incerteza e hipóteses,
+formalizar predicados Lean e produzir obrigações para o solver/simulador.
+Nenhum documento cria automaticamente uma equação ou um valor numérico.
+O Castor usa as restrições e devolve contraprovas, domínios remanescentes
+e inconsistências para refinar as formalizações.
+
+Demonstrar condicionalmente, sempre sobre um conjunto **não vazio** de
+parâmetros fisicamente admissíveis, um dos resultados: Conde excluído;
+Conde forçado; outro local/janela temporal identificado; várias soluções
+ainda possíveis; ou premissas incompatíveis. Queda no solo não é sinônimo
+de reentrada atmosférica. Teoremas não autenticam TLEs nem substituem
+integração numérica calibrada, limites de erro e holdouts.
+Manter `lake build`, auditoria `#print axioms`, origem das restrições
+e limitações de precisão no handoff. Não sintetizar provas históricas.
