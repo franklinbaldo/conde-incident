@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 
 export type TabId =
+  | 'reportage'
   | 'summary'
   | 'map'
   | 'inverse'
@@ -40,6 +41,12 @@ export const Navigation: React.FC<NavigationProps> = ({
   onOpenPython,
 }) => {
   const tabs = [
+    {
+      id: 'reportage' as TabId,
+      labelPt: 'Caderno de histórias',
+      labelEn: 'Investigative journal',
+      icon: FileText,
+    },
     {
       id: 'summary' as TabId,
       labelPt: 'Veredito & Resumo',
