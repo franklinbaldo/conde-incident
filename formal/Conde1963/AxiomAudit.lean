@@ -1,4 +1,4 @@
-import Conde1963.Constraints
+import Conde1963.DocumentaryDay
 
 /-! Explicit kernel-dependency report in CI, not an empirical validation. -/
 
