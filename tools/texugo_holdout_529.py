@@ -171,6 +171,9 @@ def evaluate(rows: list[Observation], cutoff_day: str) -> dict:
         c528 = polynomial_fit(train[528], 2)[2]
         shared_c = (c527 + c528) / 2  # equal per-object weight, not per TLE record
         joint = fixed_curvature_fit(train[529], shared_c)
+        donor527 = fixed_curvature_fit(train[529], c527)
+        donor528 = fixed_curvature_fit(train[529], c528)
+        linear = polynomial_fit(train[529], 1)
         negative = fixed_curvature_fit(train[529], -shared_c)  # deliberate wrong-sign control
     except ValueError as exc:
         summary["reason"] = str(exc)
@@ -178,7 +181,8 @@ def evaluate(rows: list[Observation], cutoff_day: str) -> dict:
     xs = [x_at(o.epoch, cutoff) for o in test529]
     ys = [o.mean_motion for o in test529]
     estimates = {"quadratic_529_only": baseline, "shared_curvature_527_528_to_529": joint,
-                 "negative_inverted_curvature": negative}
+                 "transfer_527_only": donor527, "transfer_528_only": donor528,
+                 "linear_529_only": linear, "negative_inverted_curvature": negative}
     summary["coefficients"] = {k: list(v) for k, v in estimates.items()}
     summary["source_curvatures"] = {"527": c527, "528": c528}
     summary["holdout_rmse_rev_day"] = {name: rmse(ys, [project(coeff, x) for x in xs])
@@ -186,6 +190,14 @@ def evaluate(rows: list[Observation], cutoff_day: str) -> dict:
     b = summary["holdout_rmse_rev_day"]["quadratic_529_only"]
     j = summary["holdout_rmse_rev_day"]["shared_curvature_527_528_to_529"]
     summary["status"] = "JOINT_BETTER" if j < b - 1e-10 else "BASELINE_BETTER" if b < j - 1e-10 else "TIE"
+    diagnostics = summary["holdout_rmse_rev_day"]
+    summary["posthoc_ablations"] = {
+        "joint_beats_both_individual_donors":
+            all(j < diagnostics[f"transfer_{sat}_only"] - 1e-10 for sat in (527, 528)),
+        "joint_beats_linear_529": j < diagnostics["linear_529_only"] - 1e-10,
+        "joint_beats_inverted_curvature": j < diagnostics["negative_inverted_curvature"] - 1e-10,
+        "interpretation": "Post-hoc descriptive diagnostics; NOT preregistered, independent or model selection",
+    }
     summary["horizon_days"] = [round((o.epoch - cutoff).total_seconds() / 86400, 6) for o in test529]
     return summary
 
@@ -195,7 +207,7 @@ def run(rows: list[Observation]) -> dict:
         "status": "EXPLORATORY_NUMERIC_MIRROR_NOT_ORBITAL_VALIDATION",
         "source_url": EXPECTED_URL, "source_sha256": EXPECTED_SHA256,
         "training_rule": "527,528 and 529 epochs <= cutoff; target 529 > cutoff never used in fitting",
-        "models": "quadratic on 529 vs per-object equal-mean 527/528 curvature transferred to 529; not a physical coupled propagator",
+        "models": "quadratic on 529 vs equal-mean 527/528 curvature transferred; post-hoc ablations 527 alone, 528 alone, linear 529, inverted sign; not a physical coupled propagator",
         "no_probability": True,
         "results": [evaluate(rows, date) for date in CUTOFFS],
     }
