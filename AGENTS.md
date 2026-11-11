@@ -12,6 +12,64 @@ Scope: **franklinbaldo/conde-incident only**. The separate blog is read-only; do
 - The day-only NASA decay record of 8 Nov 1963 gives no terminal time or place. Do not treat 23:59 as an observed timestamp.
 - The Lean proof kernel certifies logical implications of premises, not empirical authenticity or orbital integration. Preserve any known holdout failures.
 
+## Mandatory scientific pipeline: document → Lean → parameters → simulation
+
+**All scientific and editorial agents follow this chain.** Lean 4.35.0 stores
+and checks explicit admissibility constraints. It is not merely an archive of
+theorems, a numerical optimizer, or proof that a premise is historically true.
+
+1. **Document and trace.** Obtain an identifiable original observation, or
+   explicitly classify a secondhand source. Add/update a stable occurrence in
+   the cumulative evidence matrix: source URL, date/page or TLE epoch, units,
+   extraction, checksum when available, uncertainty, independent chain and
+   negative findings. C44–C46 are duplicated labels: use occurrence-specific
+   keys, never silently collapse them. A report of a falling object is not
+   itself proof of a ground impact.
+2. **Translate into Lean.** For each evidentially justified inference, record
+   its matrix ID/occurrence, source chain, assumptions, status (measured,
+   conditional or hypothesis), physical dimensions, reference frame and
+   uncertainty. Express the restriction as a predicate on typed simulation
+   parameters. **Do not automatically convert every report into a hard
+   constraint.** When a source conflicts with another, keep distinct
+   scenarios until provenance resolves the conflict; do not average TLEs.
+3. **Narrow feasible parameters.** Define the feasible set
+   `Θₙ = {θ | C₁ θ ∧ ... ∧ Cₙ θ}`, with the extra constraint producing
+   `Θₙ₊₁ ⊆ Θₙ`. Verify whether it remains nonempty. A contradiction is
+   a diagnostic of inconsistent premises, not proof of any geography.
+   Keep unconstrained parameters open. Lean checks logical implications;
+   numerical witnesses, error bounds and physically certified enclosures
+   must come from a reproducible solver/integrator with checked assumptions.
+4. **Run simulations and falsify.** Castor consumes only admissible bounds
+   and scenario labels, records deterministic seeds, calibration, units,
+   numerical error and holdouts (notably NORAD 529/527); returns predictions,
+   counterexamples and remaining parameter ranges. Feed supported refinements
+   back into the matrix and Lean, iteratively. Sampling/Monte Carlo cannot
+   prove absence of every feasible trajectory.
+5. **Report one of five honest outcomes:** (a) Conde *excluded* if a nonempty,
+   physically justified feasible set contains **no** candidate with a ground
+   impact there; (b) Conde *forced* if **all** feasible candidates imply that
+   impact; (c) another site and time/coordinate window identified if **all**
+   feasible candidates fit that window; (d) underdetermined if alternatives
+   survive; (e) contradictory if no candidates survive. Distinguish reentry
+   from a proven impact. Never declare an exact hour/point unless precision
+   is justified by observations plus model and numerical error bounds.
+   An abstract Lean theorem is conditional on its premises, not evidence
+   that a 1963 event actually occurred at the proven location.
+6. **Keep the chain bidirectional and auditable:** evidence IDs → Lean
+   predicates → numerical parameter bounds → reproducible simulation →
+   new discriminating checks. Cite every transition and do not present
+   exploratory or conditional results as historical fact.
+
+**Agent handoff:** 🦉 Coruja and 🐢 Tartaruga identify and validate documents
+and orbital records; 🐙 Polvo maintains formal constraints, dependency
+proofs and `lake build`/`#print axioms`; 🦫 Castor connects their admitted
+domains to the physical simulator and holdouts; 🦅 Gavião audits truth versus
+assumptions and proof coverage; 🦡 Texugo challenges false precision/churn;
+🐘 Elefante coordinates integration; 🦊 Raposa shows evidence-linked status
+and uncertainty on the case site. The independent historical-research routine
+may contribute new sources but never invent a formal restriction.
+Keep publication and archive-contact restrictions from this file.
+
 ## Work protocol
 1. Read main, this file, your `team/<animal>.md` card, open issues/PRs, and the cumulative matrix in `research/` (present in PR #1 until merged).
 2. Resume an existing issue/PR in your domain before claiming new work. A single agent claims a single active issue; issues use `<priority 0–100> <emoji> <short title>`. Avoid duplicate claims and conflicting edits.
