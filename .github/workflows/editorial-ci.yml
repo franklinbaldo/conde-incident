@@ -11,7 +11,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: node --experimental-strip-types --test tests/storyRoutes.test.mjs
+      - run: node --experimental-strip-types --test tests/storyRoutes.test.mjs tests/storyMarkdown.test.mjs
       - run: bun install --frozen-lockfile
       - run: bun run lint
       - run: bun run build
