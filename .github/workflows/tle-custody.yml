@@ -12,7 +12,16 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
+      # pull_request defaults to refs/pull/N/merge; custody must test the exact head.
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Assert checked-out SHA is the exact source head
+        run: |
+          expected="${{ github.event.pull_request.head.sha || github.sha }}"
+          actual="$(git rev-parse HEAD)"
+          echo "audited_source_head=$actual"
+          test "$actual" = "$expected"
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -30,7 +39,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: norad-1963-numeric-custody-${{ github.sha }}
+          name: norad-1963-numeric-custody-${{ github.event.pull_request.head.sha || github.sha }}
           path: ${{ runner.temp }}/tle-audit/
           if-no-files-found: warn
           retention-days: 30

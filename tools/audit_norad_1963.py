@@ -21,6 +21,10 @@ SOURCE_URL = (
     "resolve/4b4fb3a/data/tle_1963.parquet"
 )
 IDS = (527, 528, 529)
+# 8 dígitos de fração de dia TLE: 864 microssegundos por incremento.
+# A margem de meia unidade (432 us) é temporal, NÃO tolerância orbital.
+TLE_EPOCH_QUANTUM_US = 864
+TLE_EPOCH_HALF_QUANTUM_US = TLE_EPOCH_QUANTUM_US // 2
 COLUMNS = (
     "norad_id", "epoch", "inclination", "raan", "eccentricity",
     "arg_perigee", "mean_anomaly", "mean_motion", "mean_motion_dot",
@@ -79,6 +83,41 @@ def angular_distance_deg(a: float, b: float) -> float:
     return abs(((a - b + 180.0) % 360.0) - 180.0)
 
 
+def legacy_raan_epoch_audit(rows: list[dict], mirror_epoch: datetime) -> dict:
+    """A RAAN legada é uma consulta de VALOR, não prova de mesma época ou frame.
+
+    Examina todas as épocas realmente presentes para o 528 e informa qual
+    registro do espelho está angularmente mais próximo de 284,1520°. Mesmo
+    uma coincidência perfeita em outra data NÃO identifica a origem do legado.
+    """
+    historical = [row for row in rows if row["norad_id"] == 528]
+    candidates = []
+    for row in historical:
+        stamp = datetime.fromisoformat(row["epoch"].replace("Z", "+00:00"))
+        distance = angular_distance_deg(row["raan"], 284.1520)
+        epoch_offset_days = (stamp - mirror_epoch).total_seconds() / 86400.0
+        candidates.append({
+            "source_row": row["source_row"], "epoch_utc": row["epoch"],
+            "raan_deg": row["raan"], "distance_to_legacy_deg": distance,
+            "offset_from_literal_mirror_epoch_days": epoch_offset_days,
+        })
+    candidates.sort(key=lambda x: (x["distance_to_legacy_deg"], x["epoch_utc"], x["source_row"]))
+    at_mirror_epoch = [x for x in candidates if
+                       abs(datetime.fromisoformat(x["epoch_utc"].replace("Z", "+00:00")) -
+                           mirror_epoch) <= timedelta(microseconds=TLE_EPOCH_HALF_QUANTUM_US)]
+    return {
+        "status": "VALUE_SEARCH_ONLY_NOT_PROVENANCE",
+        "legacy_raan_deg_unproven": 284.1520,
+        "mirror_epoch_utc": mirror_epoch.isoformat().replace("+00:00", "Z"),
+        "observed_528_epoch_count_in_mirror": len({
+            x["epoch_utc"] for x in candidates
+        }),
+        "at_mirror_epoch": sorted(at_mirror_epoch, key=lambda x: x["source_row"]),
+        "nearest_raan_regardless_of_epoch": candidates[:3],
+        "warning": "Proximidade angular em outra época NÃO demonstra mesma fonte, frame ou vetor histórico.",
+    }
+
+
 def compare_secondary_528(rows: list[dict], mirror_path: Path) -> dict:
     """Reconciliar DOIS ESPELHOS da MESMA família de rastreamento, sem forçar acordo.
 
@@ -92,13 +131,19 @@ def compare_secondary_528(rows: list[dict], mirror_path: Path) -> dict:
     observed = validate_raw_tle(first, second, 528)
     target_epoch = tle_epoch_utc(first)
     pairs = []
+    nearby_different_epochs = []
     for row in rows:
         if row["norad_id"] != 528:
             continue
         stamp = datetime.fromisoformat(row["epoch"].replace("Z", "+00:00"))
-        delta = abs((stamp - target_epoch).total_seconds())
-        if delta <= 1.0:
-            pairs.append((row, delta))
+        delta_us = abs(stamp - target_epoch) // timedelta(microseconds=1)
+        if delta_us <= TLE_EPOCH_HALF_QUANTUM_US:
+            pairs.append((row, delta_us))
+        elif delta_us <= 1_000_000:
+            nearby_different_epochs.append({
+                "source_row": row["source_row"], "epoch_utc": row["epoch"],
+                "epoch_delta_microseconds": delta_us,
+            })
     fields = {
         "inclination": (float(second[8:16]), 0.00006, True),
         "raan": (observed["raan_deg"], 0.00006, True),
@@ -108,7 +153,7 @@ def compare_secondary_528(rows: list[dict], mirror_path: Path) -> dict:
         "mean_motion": (observed["mean_motion_rev_day"], 0.00000005, False),
     }
     compared = []
-    for row, seconds in pairs:
+    for row, delta_us in pairs:
         deltas = {
             name: (angular_distance_deg(row[name], expected) if circular
                    else abs(row[name] - expected))
@@ -117,11 +162,13 @@ def compare_secondary_528(rows: list[dict], mirror_path: Path) -> dict:
         agree = all(deltas[name] <= tolerance for name, (_, tolerance, _) in fields.items())
         compared.append({
             "source_row": row["source_row"], "epoch_utc": row["epoch"],
-            "epoch_delta_seconds": seconds, "field_absolute_deltas": deltas,
+            "epoch_delta_seconds": delta_us / 1_000_000,
+            "epoch_delta_microseconds": delta_us, "field_absolute_deltas": deltas,
             "parquet_raan_deg": row["raan"],
             "within_float32_rounding": agree,
         })
-    status = ("NO_MATCHING_EPOCH" if not compared else
+    status = ("NEAR_EPOCH_NOT_EQUAL" if not compared and nearby_different_epochs else
+              "NO_MATCHING_EPOCH" if not compared else
               "AMBIGUOUS_DUPLICATE_EPOCH" if len(compared) > 1 else
               "MATCH_WITHIN_ROUNDING" if compared[0]["within_float32_rounding"]
               else "FIELD_DIVERGENCE")
@@ -134,7 +181,10 @@ def compare_secondary_528(rows: list[dict], mirror_path: Path) -> dict:
         "tle_raan_deg": observed["raan_deg"],
         "site_raan_deg_unproven": 284.1520,
         "site_vs_tle_angular_distance_deg": angular_distance_deg(284.1520, observed["raan_deg"]),
-        "match_criterion": "epoch <=1 second; float32 tolerance on orbital fields",
+        "match_criterion": "epoch <=432 microseconds (half 8-decimal-day TLE quantum); float32 tolerance on orbital fields",
+        "tle_epoch_quantum_microseconds": TLE_EPOCH_QUANTUM_US,
+        "nearby_but_distinct_epoch": nearby_different_epochs,
+        "legacy_raan_temporal_audit": legacy_raan_epoch_audit(rows, target_epoch),
         "matched_records": compared,
         "primary_1963_tle_provenance": "NOT_VERIFIED",
     }
@@ -294,6 +344,7 @@ def main():
                       "unique": report["unique_epochs"], "issues": len(report["problems"]),
                       "oct27": report["norad_528_oct27_rows"],
                       "mirror_reconciliation": report["mirror_comparison_528"]["status"],
+                      "nearest_legacy_raan": report["mirror_comparison_528"]["legacy_raan_temporal_audit"]["nearest_raan_regardless_of_epoch"],
                       "raw_TLE_checksum": report["original_tle_line_checksums"]}, sort_keys=True))
     if any(report["counts"][str(i)] == 0 for i in IDS):
         raise SystemExit("FALHA: objeto sem registros no espelho")

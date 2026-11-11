@@ -56,7 +56,7 @@ Os testes unitários empregam dados inventados **expressamente sintéticos** e c
 
 ## Confronto de espelhos no mesmo instante (C241, 11/11/2026)
 
-O extrator agora faz **comparação dos dados, não somente de checksums**. Lê o par literal 528 de 27/10 já preservado e validado, interpreta o campo de dia e fração com `Decimal` exato, busca por **época dentro de 1 segundo** as linhas 528 do Parquet original com SHA fixado, e confronta independentemente inclinação, RAAN, excentricidade, argumento de perigeu, anomalia média e movimento médio. As tolerâncias explicitadas no código só admitem arredondamento float32 do espelho; não são tolerâncias orbitais nem licença para escolher uma órbita. Comparar dois espelhos da mesma cadeia NORAD não constitui duas observações físicas.
+O extrator agora faz **comparação dos dados, não somente de checksums**. Lê o par literal 528 de 27/10 já preservado e validado, interpreta o campo de dia e fração com `Decimal` exato, busca por **época dentro de meia unidade da resolução TLE (432 µs)** as linhas 528 do Parquet original com SHA fixado, e confronta independentemente inclinação, RAAN, excentricidade, argumento de perigeu, anomalia média e movimento médio. As tolerâncias explicitadas no código só admitem arredondamento float32 do espelho; não são tolerâncias orbitais nem licença para escolher uma órbita. Comparar dois espelhos da mesma cadeia NORAD não constitui duas observações físicas.
 
 `audit.json -> mirror_comparison_528.status` pode ser `MATCH_WITHIN_ROUNDING`, `FIELD_DIVERGENCE`, `NO_MATCHING_EPOCH` ou `AMBIGUOUS_DUPLICATE_EPOCH`. **Nenhum dos quatro resolve a autenticidade histórica:** se não houver coincidência, preservar o resultado negativo em vez de alterar arbitrariamente épocas/RAAN. O relatório inclui cada índice `source_row`, a diferença temporal, diferenças de cada campo, SHA-1/SHA-256 do par literal, hashes das linhas e o contraste legado 284,1520° sem usá-lo como dado observado. A passagem do relatório ao GitHub Actions ainda depende de run real em HEAD, não se proclama resultado do confronto antes da execução do Parquet.
 
@@ -94,3 +94,37 @@ A contagem anterior **21/45/57** em C25/C123 era *linhas*, enquanto **20/45/54**
 Para **527 e 529**, cujos vetores embutidos no app não dispõem de par TLE autenticado, a classificação foi rebaixada para `HIPOTESE` e a proveniência sinaliza explicitamente o cenário sintético legado. Os pares ainda presentes nas estruturas são placeholders que mantêm a compatibilidade de código, **não observações históricas**; não devem fundamentar reconstruções cruzadas/holdout antes de substituição por épocas do CSV custodiado. A cronologia foi corrigida para não apresentar esses vetores como TLEs oficiais, nem a marca `23:59` como horário observado de decaimento. Os valores de passagem terminal produzidos pelo modelo antigo continuam **exploratórios, não previsões físicas**.
 
 **Regressão reproduzível:** `python -m unittest discover -s tests -p 'test_*.py' -v`, incluindo `tests/test_orbital_constants_provenance.py`, bloqueia retorno de RAAN, época e elementos sem fonte ao código operacional e a classificação primária falsa de 527/529. CI de custódia deve validar o novo HEAD antes de merge. Não há novo documento primário, horário terminal ou localização de queda.
+
+## Auditoria temporal adversarial da RAAN legada (C241, complemento de 11/11/2026)
+
+A comparação inicialmente aceitava épocas numéricas separadas por até **1 segundo**, apesar de a fração decimal do dia no TLE (8 dígitos) ter incremento de **0,000864 segundo**. Isso poderia criar uma falsa "mesma época" e passar despercebido a quem observasse apenas a RAAN. O código passou a usar `timedelta` com contagem inteira de microssegundos, tolerância inclusiva de **432 µs** (meia unidade de quantização do campo TLE), e um status separado `NEAR_EPOCH_NOT_EQUAL` para diferenças de **433 µs a 1 s**. Os casos com delta maior continuam `NO_MATCHING_EPOCH`; candidatos próximos permanecem no relatório como **dados não correspondentes**, sem ser descarregados ou fundidos. O valor exato conhecido no espelho Parquet é delta **zero**; a correção não exige mudar a observação.
+
+O mesmo relatório `audit.json -> mirror_comparison_528.legacy_raan_temporal_audit` pesquisa o valor **284,1520° apenas como chave angular** em **todas as épocas reais** do 528, ordenando os três registros do espelho secundário mais próximos, com `source_row`, `epoch_utc`, `distance_to_legacy_deg` e deslocamento temporal em dias relativamente a 27/10. Também conserva os valores **somente** da época do par literal, para impedir a substituição de uma época por outra. Esse confronto é um diagnóstico de possível erro de data/transcrição, não uma hipótese ajustada nem uma prova de que o vetor legado tenha existido naquele instante: proximidade angular isolada não recupera frame, formato de elemento, cadeia instrumental ou peça física.
+
+A [página oficial de arquivos históricos CelesTrak](https://celestrak.org/norad/archives/) lista séries públicas sobretudo entre **1980–2004** e direciona pedidos fora dessas coleções (inclusive **1963**) a **Special Data Request**. Foi consultada publicamente, sem enviar pedido: **nenhum par instrumental de 1963 foi obtido por essa via**. A [TLE API listada na página NASA Open APIs](https://api.nasa.gov/) é descrita como atualização **diária** derivada de CelesTrak, não documentação primária da época de 1963. Também não é fonte orbital independente para resolver 198° versus 284°.
+
+**Reprodução:** `python -m unittest discover -s tests -p 'test_*.py' -v` testa desvios sintéticos de 432/433 µs, 1,000001 s, duplicidade e confronto de valor em datas distintas. A execução sobre o Parquet SHA-256 fixado é a mesma rotina de extração do workflow, que produz hashes dos CSV e o ledger completo. Não se atesta o novo HEAD antes de observar seu CI.
+
+### Observação efetiva do corpus pinado, não inferência de origem da RAAN
+
+A execução real do [NORAD custody #43113160100](https://github.com/franklinbaldo/conde-incident/actions/runs/43113160100), no commit de código e testes `49a833844e9476c23bcc990508838f2e582b0bce`, concluiu **success**, com **22/22 testes PASS** e download/extração do Parquet no SHA-256 já fixado. O confronto com a época do TLE literal continuou `MATCH_WITHIN_ROUNDING` e índice **3017**. Na pesquisa dos **45 registros reais** do 528 pelo valor 284,1520°, o ponto *angularmente* mais próximo foi:
+
+| Campo auditado | Resultado computado a partir do espelho |
+|---|---|
+| Linha fonte | `source_row=2998` |
+| Data/época UTC | **1963-08-12T13:35:30.863616Z** |
+| RAAN do espelho | **284,3310852050781°** |
+| Distância angular de 284,1520° | **0,1790852050781°** |
+| Separação em relação à época literal do par 528 em 27/10 | **−76,04496839 dias** |
+| RAAN na época literal de 27/10, linha 3017 | **198,52609252929688°** |
+
+Isso é um **novo teste discriminante, com resultado negativo para a identidade de época**: a melhor proximidade encontrada é **76 dias antes**, e o registro 3017 no dia 27/10 continua em 198,5261°. Uma hipótese de transposição/confusão de época passou a ser investigável, mas a distância de 0,179° e a similaridade angular por si sós **não provam** que 284,1520° veio do registro de agosto; tampouco provam que o valor foi inventado. Antes de optar entre hipóteses, exigir uma cadeia primária do vetor legado, época, quadro de referência, elemento médio e tipo de propagador. **Nenhuma órbita ou local de impacto foram ajustados a partir dessa busca.**
+
+A reconciliação de tolerância temporal (432 µs) também passou no conjunto real com diferença de época **0 µs**. O log do workflow exibe os três vizinhos angulares com índices e datas, enquanto o artefato `audit.json` mantém os 45 registros completos e sua fonte. Os demais dois vizinhos mais próximos são `source_row=2999` em 16/08 (280,112396°) e `source_row=3000` em 20/08 (275,108093°). Essas proximidades são **dependentes de um único acervo numérico secundário**, não novas observações NORAD independentes.
+
+
+### Gate contra falso CI de HEAD
+
+O GitHub Actions acionado por `pull_request` usa por padrão o ref sintético `refs/pull/N/merge`; uma execução com `github.sha` nesse evento demonstra o **merge de teste**, não necessariamente o SHA do HEAD de origem. Por isso o workflow de custódia agora faz checkout explícito de `${{ github.event.pull_request.head.sha || github.sha }}`, verifica que `git rev-parse HEAD` é exatamente esse SHA, imprime `audited_source_head=`, e nomeia o artefato com a mesma identidade. Há teste automatizado de não regressão desta configuração. `workflow_dispatch` continua a usar o SHA fornecido pelo evento, igualmente atestado.
+
+As execuções anteriores, inclusive [#43113160100](https://github.com/franklinbaldo/conde-incident/actions/runs/43113160100), **continuam demonstrando os dados e controles naquela versão**, mas não devem ser rotuladas como atestação do checkout do HEAD exato. A nova atestação só vale após CI verde do commit que contém esta correção. O **workflow científico separado** mantém seu próprio escopo/gate; esta correção não alega ter mudado seu checkout.

@@ -3,13 +3,14 @@ import sys
 import json
 import tempfile
 import unittest
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from audit_norad_1963 import (check_numeric, digest, epoch_utc, extract_rows, verified_bytes,
     tle_checksum, validate_raw_tle, tle_epoch_utc, angular_distance_deg,
-    compare_secondary_528, write_outputs)
+    compare_secondary_528, legacy_raan_epoch_audit, TLE_EPOCH_QUANTUM_US,
+    TLE_EPOCH_HALF_QUANTUM_US, write_outputs)
 
 
 class DummyTable:
@@ -85,6 +86,15 @@ class Custody(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "checksum"):
             validate_raw_tle(a, corrupt, 528)
 
+    def test_custody_ci_attests_exact_pr_head_not_merge_ref(self):
+        workflow = (Path(__file__).resolve().parents[1] /
+                    ".github/workflows/tle-custody.yml").read_text(encoding="utf-8")
+        expression = "${{ github.event.pull_request.head.sha || github.sha }}"
+        self.assertGreaterEqual(workflow.count(expression), 3)
+        self.assertIn('actual="$(git rev-parse HEAD)"', workflow)
+        self.assertIn('test "$actual" = "$expected"', workflow)
+        self.assertNotIn("name: norad-1963-numeric-custody-${{ github.sha }}", workflow)
+
     def test_digest_reproducible(self):
         self.assertEqual(digest(b"abc")["sha256"], "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad")
 
@@ -110,6 +120,51 @@ class Custody(unittest.TestCase):
         self.assertEqual(compare_secondary_528([bad], pair)["status"], "FIELD_DIVERGENCE")
         self.assertEqual(compare_secondary_528([], pair)["status"], "NO_MATCHING_EPOCH")
         self.assertEqual(compare_secondary_528([good, bad], pair)["status"], "AMBIGUOUS_DUPLICATE_EPOCH")
+
+    def test_epoch_match_uses_half_quantum_not_one_second(self):
+        # 8 dígitos de fração de dia = 864us de resolução: 500us já é outra época.
+        pair = Path(__file__).resolve().parents[1] / "research/tle_custody/mirror_528_1963-10-27.tle"
+        epoch = datetime(1963, 10, 27, 14, 40, 16, 132512, tzinfo=timezone.utc)
+        self.assertEqual((TLE_EPOCH_QUANTUM_US, TLE_EPOCH_HALF_QUANTUM_US), (864, 432))
+        def shifted(us):
+            row = record(dt=epoch + timedelta(microseconds=us))
+            row["source_row"] = 99
+            row["epoch"] = epoch_utc(row["epoch"])
+            return row
+        within = compare_secondary_528([shifted(432)], pair)
+        self.assertEqual(within["status"], "MATCH_WITHIN_ROUNDING")
+        self.assertEqual(within["matched_records"][0]["epoch_delta_microseconds"], 432)
+        outside = compare_secondary_528([shifted(433)], pair)
+        self.assertEqual(outside["status"], "NEAR_EPOCH_NOT_EQUAL")
+        self.assertEqual(outside["matched_records"], [])
+        self.assertEqual(outside["nearby_but_distinct_epoch"][0]["epoch_delta_microseconds"], 433)
+        self.assertEqual(compare_secondary_528([shifted(1_000_001)], pair)["status"], "NO_MATCHING_EPOCH")
+
+    def test_legacy_raan_value_search_does_not_move_old_epoch(self):
+        # Construído, não é a série de 1963: mesmo ângulo em agosto não
+        # demonstra que 284.1520 em 27/out veio de agosto.
+        date = datetime(1963, 10, 27, 14, 40, 16, 132512, tzinfo=timezone.utc)
+        rows = [
+            dict(record(528, raan=198.5261, dt=date), source_row=3017),
+            dict(record(528, raan=284.152, dt=date-timedelta(days=75)), source_row=2000),
+            dict(record(529, raan=284.152, dt=date), source_row=3000),
+        ]
+        for item in rows:
+            item["epoch"] = epoch_utc(item["epoch"])
+        res = legacy_raan_epoch_audit(rows, date)
+        self.assertEqual(res["status"], "VALUE_SEARCH_ONLY_NOT_PROVENANCE")
+        self.assertEqual(res["observed_528_epoch_count_in_mirror"], 2)
+        self.assertEqual(res["at_mirror_epoch"][0]["raan_deg"], 198.5261)
+        self.assertEqual(res["nearest_raan_regardless_of_epoch"][0]["source_row"], 2000)
+        self.assertEqual(res["nearest_raan_regardless_of_epoch"][0]["offset_from_literal_mirror_epoch_days"], -75)
+        self.assertTrue(all(x["source_row"] != 3000 for x in res["nearest_raan_regardless_of_epoch"]))
+
+    def test_legacy_raan_audit_has_explicit_empty_result(self):
+        date = datetime(1963, 10, 27, tzinfo=timezone.utc)
+        res = legacy_raan_epoch_audit([], date)
+        self.assertEqual(res["observed_528_epoch_count_in_mirror"], 0)
+        self.assertEqual(res["nearest_raan_regardless_of_epoch"], [])
+        self.assertEqual(res["at_mirror_epoch"], [])
 
     def test_same_epoch_distinct_state_is_reported_not_deduplicated(self):
         rows, meta = extract_rows(DummyTable([record(527), record(528), record(528, raan=284.152), record(529)]))
