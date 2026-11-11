@@ -57,5 +57,22 @@ class LegacySourceAlignment(unittest.TestCase):
             self.assertNotIn("DOCUMENTO_PRIMARIO_VERIFICADO", block)
 
 
+    def test_timeline_does_not_pretend_to_know_decay_hour(self):
+        source = (ROOT / "src/lib/constants.ts").read_text(encoding="utf-8")
+        block = between(source, "id: 'OBS-08'", "id: 'OBS-09'")
+        self.assertIn("time unknown", block)
+        self.assertIn("horário local não observado", block)
+        self.assertNotIn("23:59:00", block)
+        self.assertIn("DOCUMENTO_PRIMARIO_VERIFICADO", block)
+
+    def test_528_timeline_is_secondary_with_exact_epoch(self):
+        source = (ROOT / "src/lib/constants.ts").read_text(encoding="utf-8")
+        block = between(source, "id: 'OBS-06'", "id: 'OBS-07'")
+        self.assertIn("63300.61129783", block)
+        self.assertIn("198,5261", block)
+        self.assertIn("14:40:16.132512", block)
+        self.assertIn("FONTE_SECUNDARIA", block)
+
+
 if __name__ == "__main__":
     unittest.main()
