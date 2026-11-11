@@ -9,3 +9,52 @@ This folder starts the transfer of the previously compiled 11 November 2026 Lean
 The full historical package also contains `Evidence.lean`, the 154-entry structured registry, a generator and a 151-label cumulative matrix. The cumulative matrix **C01–C238** is now imported at `research/evidence_matrix_C001-C238_2026-11-11.md`. The larger generated `Evidence.lean` and structured formal registry are **not yet incorporated**; their source archive remains the original compiled 2026-11-11 package. Never describe this subset as the full historical corpus.
 
 The `last528` recorded RAAN (198.5261°) highlights a provenance conflict with the existing site (284.1520°). Both need verification against the primary TLE record before a terminal position can be claimed.
+
+
+## 🐙 Conditional proof slice (issue #15)
+
+`Conde1963/Provenance.lean` proves that a *nonempty* admissible set
+containing two different regions does **not** uniquely identify the region;
+adding a physical constraint helps only if it actually removes the ambiguity.
+It also formalizes the consequence of two records assigned to the same
+provenance chain. The candidates are pedagogical countermodels, **not** 1963
+trajectories. `Conde1963/AxiomAudit.lean` lists proof kernel dependencies in CI.
+
+Source lineage (all references are to the [cumulative matrix](../research/evidence_matrix_C001-C238_2026-11-11.md), **not** fresh primary-source inspections in this PR):
+
+- **C01:** Rádio Tupi/Federal Broadcast Information Service: the original
+  preserved item is a report, not independent proof of a physical impact.
+  [FBIS facsimile](https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf).
+- **C131 and C197:** NASA/Goddard, *Satellite Situation Report*,
+  15 Nov 1963, p. 8, NTRS `19640001198`,
+  [source PDF](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf).
+  The day of decay, 8 Nov 1963, is reported; time and region are not.
+  C131 and C197 refer to the **same NASA document**, not independent measurements.
+- **C139–C142:** catalog link of 527/528/529 and proposed joint dynamics:
+  a shared launch or field does not constrain the individual final phase
+  without independent dated observations, calibrated physics and holdouts.
+
+The original Lean ZIP with the reported 154 propositions, 151 labels and
+C44–C46 collisions is **not present** in this repository or the PR #1 tree.
+Do not invent `Evidence.lean`, a registry or a generator from its summary.
+`scripts/audit_zip.py` is a read-only **ingestion gate**, not an importer:
+
+```bash
+cd formal
+python3 -m unittest discover -s tests -v  # synthetic structural regression
+python3 scripts/audit_zip.py /path/to/ORIGINAL.zip \\
+  --sha1 SHA1_FROM_PROVENANCE --sha256 SHA256_FROM_PROVENANCE
+lake build
+lake env lean Conde1963/AxiomAudit.lean
+```
+
+Actual original-ZIP audit/import: **NOT_RUN** until original bytes and separately
+recorded hashes are supplied. The tool checks ZIP member integrity, two
+independent digest algorithms, count/label consistency and duplication, and
+reports available generator candidates without executing them. It does **not**
+check proposition semantics, distinguish two texts with the same ID, or certify
+the authenticity of the source. If the original registry uses another explicit
+key, pass `--label-key`; do not guess its schema or silently deduplicate.
+
+`#print axioms` is made visible in the Actions log. An absence of `sorryAx`
+for these theorems does not demonstrate orbital or documentary validity.
