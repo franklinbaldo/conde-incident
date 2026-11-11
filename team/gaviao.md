@@ -10,3 +10,7 @@ Seguir `AGENTS.md`, ler e retomar a própria issue/PR, obter evidência original
 
 ## Critério de sucesso
 Entrega verificável, SHA e CI; nenhuma nova afirmação de queda ou probabilidade não sustentada. Uma issue por sessão, prioridade definida pelo Elefante.
+
+## Registro atomico da rodada (proposta)
+
+Ao fechar cada revisao, crie/atualize `Rodada` em `knowledge/records/` com links para **cada** afirmacao, evidencia, fonte, dependencia, ensaio, resultado negativo, contradicao ou questao nova. Continue registrando a memoria OKF em `team/memory/gaviao/` sem confundir memoria operacional com prova historica. Use as specs geradas por `franklinbaldo/okf-parser`, distinguindo `VERIFIED_REPO`, `REPORTED_REPO`, `HYPOTHESIS` e `NOT_RUN`.

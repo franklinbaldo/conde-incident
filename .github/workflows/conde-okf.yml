@@ -1,0 +1,41 @@
+name: Conde OKF catalogo
+on:
+  push:
+    branches: [gaviao/okf-taxonomy-20261111]
+    paths: ["knowledge/**", "scripts/bootstrap-okf-specs.mjs", "tests/okfCatalog.test.mjs", ".github/workflows/conde-okf.yml"]
+  pull_request:
+    paths: ["knowledge/**", "scripts/bootstrap-okf-specs.mjs", "tests/okfCatalog.test.mjs", ".github/workflows/conde-okf.yml"]
+permissions:
+  contents: read
+jobs:
+  catalogo:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: astral-sh/setup-uv@v6
+      - name: Inicializar specs e schemas pelo okf-parser
+        run: |
+          uvx --from 'okf-parser==0.48.2' okf-parser init knowledge --spec-template '.okf/specs/{slug}.md' --infer-schema --write
+          node scripts/bootstrap-okf-specs.mjs
+      - name: Validar corpus OKF e schemas gerados
+        run: |
+          uvx --from 'okf-parser==0.48.2' okf-parser check knowledge --require-spec '.okf/specs/{slug}.md' --normative-spec
+          uvx --from 'okf-parser==0.48.2' okf-parser schema knowledge --spec-template '.okf/specs/{slug}.md' --format json > /tmp/conde-okf-schema.json
+          node --test tests/okfCatalog.test.mjs
+      - name: Nao permitir schema faltante no HEAD de PR
+        if: github.event_name == 'pull_request'
+        run: git diff --exit-code -- knowledge/.okf/specs
+      - name: Preservar scaffold inicial no branch isolado
+        if: github.event_name == 'push' && github.ref_name == 'gaviao/okf-taxonomy-20261111'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add knowledge/.okf/specs
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore(okf): registrar specs e schemas inicializados pelo parser'
+            git push origin HEAD:refs/heads/gaviao/okf-taxonomy-20261111
+          fi

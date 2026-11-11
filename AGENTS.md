@@ -26,3 +26,7 @@ Scope: **franklinbaldo/conde-incident only**. The separate blog is read-only; do
 - Full Lean archive from original compiled package: `Evidence.lean`, 154 propositions / 151 labels, including C44–C46 collisions.
 - Original TLEs: 527/528/529 historical epochs and provenance, calibrated dynamics, holdout baseline versus coupled multi-target fit.
 - Genealogy: *Diário de Notícias* (Salvador) 9 Nov, *Jornal da Bahia* 11 Nov, *O Jornal* (Rio) 7–12 Nov, FBIS and diplomatic A-628 attachments; avoid counting repetition as confirmation.
+
+## Catalogacao cientifica em OKF (proposta sujeita a PR)
+
+Cada rodada deve catalogar **todos os fatos novos, duvidas, resultados negativos, fontes, contradicoes e decisoes** em conceitos tipados de `knowledge/records/`, vinculados a uma `Rodada` e a memoria OKF `team/memory/<animal>/`. Use a tipologia e as specs em `knowledge/index.md` e `knowledge/.okf/specs/`; novos tipos devem nascer pelo `okf-parser init --infer-schema` antes de serem usados normativamente. O campo `verification` deve refletir o que foi **efetivamente** consultado, e a matriz cumulativa mantem IDs sem renumeracao silenciosa. Replays, simulacoes e hipotese nunca substituem prova primaria. A adocao so sera normativa apos revisao/CI e integracao desta proposta.
