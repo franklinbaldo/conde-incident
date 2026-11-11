@@ -89,7 +89,7 @@ class HoldoutControls(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "CSV"):
                 require_same_bindings(altered, keys)  # silently changed mean motion
             with csv_path.open("a") as f:
-                f.write("2,529,1963-10-01T00:00:00Z,16.0\\n")
+                f.write("2,529,1963-10-01T00:00:00Z,16.0" + chr(10))
             with self.assertRaisesRegex(ValueError, "duplicatas"):
                 parse_csv(csv_path)
 
