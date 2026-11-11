@@ -146,16 +146,16 @@ export const MonteCarloVisualizer: React.FC<MonteCarloVisualizerProps> = ({
           <div className="space-y-1 max-w-3xl">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-800 text-cyan-300 text-xs font-mono">
               <Activity className="w-3.5 h-3.5 text-cyan-400" />
-              <span>{isPt ? 'PROPAGAÇÃO ESTOCÁSTICA DE DECISÃO' : 'STOCHASTIC DECISION PROPAGATION'}</span>
+              <span>{isPt ? 'EXPERIMENTO GEOMÉTRICO SINTÉTICO' : 'SYNTHETIC GEOMETRIC EXPERIMENT'}</span>
             </div>
             <h2 className="text-lg font-bold text-zinc-100">
               {isPt
-                ? 'Simulação Monte Carlo: Teste de Falsificação H1 vs H0'
-                : 'Monte Carlo Simulation: Falsification Test H1 vs H0'}
+                ? 'Monte Carlo: distribuição geométrica, não previsão de queda'
+                : 'Monte Carlo: geometric sampler, not impact forecast'}
             </h2>
             <p className="text-xs text-zinc-300 leading-relaxed">
               {isPt
-                ? 'Avaliamos a hipótese H1 (reentrada em Conde) contra a hipótese H0 (reentrada noutra região). Amostramos trajetórias estocásticas variando a época, arrasto balístico, escala de altura e flutuações solares de nov/1963, sem condicionar a amostra a priori a Conde.'
+                ? 'Este demonstrador sorteia a fase orbital terminal independentemente do TLE e não integra a trajetória física. Os pontos são amostras sintéticas de geometria, não locais previstos de reentrada.'
                 : 'We evaluate hypothesis H1 (reentry at Conde) versus hypothesis H0 (reentry elsewhere). We sample stochastic trajectories varying epoch, ballistic drag, scale height, and solar variations in Nov 1963, without conditioning the sample on Conde.'}
             </p>
           </div>
@@ -191,8 +191,8 @@ export const MonteCarloVisualizer: React.FC<MonteCarloVisualizerProps> = ({
             <BarChart3 className="w-4 h-4 text-cyan-400" />
             <span className="font-bold text-zinc-200">
               {isPt
-                ? 'Dispersão Global dos Pontos de Reentrada Terminal (<80 km)'
-                : 'Global Dispersion of Terminal Reentry Points (<80 km)'}
+                ? 'Amostras geométricas sintéticas (não são reentradas propagadas)'
+                : 'Synthetic geometric samples (not propagated reentries)'}
             </span>
           </div>
           <div className="flex items-center gap-3 text-[11px] font-mono text-zinc-400">
@@ -244,7 +244,7 @@ export const MonteCarloVisualizer: React.FC<MonteCarloVisualizerProps> = ({
             <div className="text-zinc-500">Dentro de 500 km de Conde:</div>
             <div className="text-lg font-bold text-amber-300 mt-1">{summary.runsWithin500Km}</div>
             <div className="text-[10px] text-zinc-500 mt-0.5">
-              Probabilidade empírica: {(summary.empiricalProbability500Km * 100).toFixed(3)}%
+              Frequência na amostra: {(summary.empiricalProbability500Km * 100).toFixed(3)}%
             </div>
           </div>
 
@@ -252,7 +252,7 @@ export const MonteCarloVisualizer: React.FC<MonteCarloVisualizerProps> = ({
             <div className="text-zinc-500">Dentro de 100 km de Conde:</div>
             <div className="text-lg font-bold text-rose-400 mt-1">{summary.runsWithin100Km}</div>
             <div className="text-[10px] text-zinc-500 mt-0.5">
-              Probabilidade empírica: {(summary.empiricalProbability100Km * 100).toFixed(4)}%
+              Frequência na amostra: {(summary.empiricalProbability100Km * 100).toFixed(4)}%
             </div>
           </div>
         </div>
@@ -262,18 +262,12 @@ export const MonteCarloVisualizer: React.FC<MonteCarloVisualizerProps> = ({
       <div className="p-5 rounded-xl bg-zinc-900 border border-zinc-800 space-y-3">
         <h4 className="text-xs font-bold text-zinc-200 flex items-center gap-2">
           <Info className="w-4 h-4 text-cyan-400" />
-          <span>{isPt ? 'Conclusão Estatística e Falsificação Bayesiana' : 'Statistical & Bayesian Falsification Conclusion'}</span>
+          <span>{isPt ? 'Limitações deste demonstrador' : 'Limitations of this demonstration'}</span>
         </h4>
         <div className="text-xs text-zinc-300 space-y-2 leading-relaxed">
-          <p>
-            <strong className="text-zinc-100">1. A Densidade Geométrica Polar:</strong> Devido à inclinação de 81,86°, a velocidade angular em latitude é mínima próximo dos pontos de reversão (máxima latitude norte e sul). Isso faz com que a probabilidade de reentrada por unidade de latitude seja máxima nas regiões sub-polares e mínima no equador e trópicos (como Conde, a -11,8°).
-          </p>
-          <p>
-            <strong className="text-zinc-100">2. A Falácia da Hipótese Condicionada:</strong> Uma área circular de 100 km de raio representa apenas <strong>0,0062%</strong> da superfície da Terra coberta pela órbita (1 em cada 16.000 áreas equivalentes). Selecionar Conde a posteriori apenas porque houve uma transmissão de rádio no Rio de Janeiro sem rastreamento radar independente não constitui evidência astrodinâmica.
-          </p>
-          <p>
-            <strong className="text-zinc-100">3. Veredito Final:</strong> A hipótese H1 é matematicamente admissível dentro do espaço de fases, mas estatisticamente indistinguível de um ruído de fundo entre milhares de regiões desabitadas. Conjuntamente com o fato de que a Força Aérea Brasileira e o Consulado dos EUA constataram que não houve esfera, cratera ou restos em Conde, <strong>a hipótese de reentrada terminal em Conde permanece sem sustentação empírica</strong>.
-          </p>
+          <p>Este experimento não representa uma distribuição posterior de localização do NORAD 528. Sorteia uma fase terminal e uma duração ilustrativa sem integrar dinamicamente o estado inicial até a reentrada.</p>
+          <p>Os percentuais descrevem apenas a frequência de amostras sob hipóteses escolhidas no código. Não são probabilidades de queda ou evidência independente de Conde.</p>
+          <p>Para produzir inferência física válida, é necessário ajustar elementos orbitais documentados, condições atmosféricas e parâmetros balísticos e validar o procedimento com TLEs históricos não utilizados no ajuste.</p>
         </div>
       </div>
     </div>
