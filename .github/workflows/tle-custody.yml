@@ -2,11 +2,6 @@ name: NORAD 527-529 custody (historical numeric mirror)
 
 on:
   pull_request:
-    paths:
-      - 'tools/audit_norad_1963.py'
-      - 'tests/test_*.py'
-      - 'research/tle_custody/**'
-      - '.github/workflows/tle-custody.yml'
   workflow_dispatch:
 
 permissions:
