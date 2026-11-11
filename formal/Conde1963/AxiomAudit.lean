@@ -1,5 +1,6 @@
-/-! Explicit kernel-dependency report in CI, not an empirical validation. -/
 import Conde1963.Provenance
+
+/-! Explicit kernel-dependency report in CI, not an empirical validation. -/
 
 #print axioms Conde1963.no_double_count_tupi
 #print axioms Conde1963.total_unique_epochs
