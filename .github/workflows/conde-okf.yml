@@ -11,7 +11,7 @@ jobs:
   catalogo:
     runs-on: ubuntu-latest
     permissions:
-      contents: ${{ github.event_name == 'push' && github.ref_name == 'gaviao/okf-taxonomy-20261111' && 'write' || 'read' }}
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
