@@ -66,6 +66,23 @@ export function ResearchLedger({ lang }: { lang: Language }) {
       <p className="mt-2 mb-6 text-sm text-zinc-400">{pt ? 'Cada documento prova uma afirmação específica. Uma reprodução em outro veículo não é, por si só, corroboração independente.' : 'Each record supports a specific claim. Republication is not independent corroboration.'}</p>
       <div className="grid gap-3 sm:grid-cols-2">{sources.map(s=><a key={s.id} href={s.url} target="_blank" rel="noopener noreferrer" className="group rounded-xl border border-zinc-800 bg-zinc-950/60 p-5 transition hover:border-cyan-700"><div className="flex items-start justify-between gap-2"><div className="text-sm font-semibold text-zinc-100 group-hover:text-cyan-300">{s.title}</div><ArrowUpRight className="h-4 w-4 shrink-0 text-zinc-500"/></div><div className="mt-2 text-[11px] font-mono text-cyan-400">{s.kind} · {s.id}</div><p className="mt-3 text-xs leading-relaxed text-zinc-400">{s.finding}</p></a>)}</div>
     </section>
+    <section className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 md:p-8">
+      <h2 className="text-xl font-semibold">{pt ? 'Rastreabilidade das provas formais' : 'Formal-proof traceability'}</h2>
+      <p className="mt-2 text-sm leading-relaxed text-zinc-400">{pt ? 'Os teoremas Lean verificam implicações lógicas condicionadas, não a autenticidade dos documentos nem a localização da reentrada. Os IDs levam à matriz cumulativa; repetições do mesmo documento não são corroboração independente.' : 'Lean theorems verify conditional logical implications, not the authenticity of documents or a reentry site. IDs link to the cumulative evidence matrix; repetitions of a document are not independent corroboration.'}</p>
+      <div className="mt-5 grid gap-3 sm:grid-cols-2">
+        {[
+          { ids: 'C01', label: pt ? 'Relato Tupi/FBIS, não queda comprovada' : 'Tupi/FBIS report, not proven impact', url: 'https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf' },
+          { ids: 'C131 · C197', label: pt ? 'Mesmo boletim NASA: somente dia do decaimento' : 'Same NASA bulletin: decay date only', url: 'https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf' },
+        ].map(({ ids, label, url }) => (
+          <div key={ids} className="rounded-xl border border-zinc-800 bg-zinc-950/50 p-4">
+            <a href="https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md" target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-cyan-300 underline hover:text-white">{ids} · {pt ? 'matriz' : 'matrix'}</a>
+            <p className="mt-2 text-sm text-zinc-300">{label}</p>
+            <a href={url} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-xs text-cyan-400 underline">{pt ? 'Documento de referência' : 'Reference document'}</a>
+          </div>
+        ))}
+      </div>
+      <a href="https://github.com/franklinbaldo/conde-incident/blob/feature/polvo-lean-audit-conditional-15/formal/Conde1963/Provenance.lean" target="_blank" rel="noopener noreferrer" className="mt-4 inline-block text-xs text-cyan-400 underline">{pt ? 'Provas condicionais em Lean 4.35.0 (em revisão)' : 'Conditional Lean 4.35.0 proofs (under review)'}</a>
+    </section>
     <p className="text-xs text-zinc-500">{pt ? 'Nota de método: números condicionais e provas Lean de identificabilidade não certificam uma trajetória SGP4. Nenhum dado experimental novo é criado por esta interface.' : 'Method note: conditional calculations and Lean identifiability proofs do not certify an SGP4 trajectory. This interface creates no new experimental observations.'}</p>
   </div>;
 }
