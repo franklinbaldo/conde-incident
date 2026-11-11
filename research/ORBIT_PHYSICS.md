@@ -10,6 +10,12 @@
 - Inverse solver deterministically searches the three osculating velocity components against time-stamped inertial Cartesian positions carrying a provenance field. It does not adjust RAAN by hand or equate longitude to along-track distance. The optimizer is local, derivative-free and may be non-identifiable or trapped.
 - Seeded xorshift32 ensemble perturbs initial velocity and **propagates every full state**. The sampling is uniform synthetic sensitivity, **not a Bayesian posterior**. No object, launch, drag or date is inferred by the seed.
 
+## Within-step perigee crossing falsification (11 Nov 2026, synthetic)
+
+A coarse RK4 step may begin and end ABOVE a numerical reentry threshold yet pass BELOW it in between. The prior endpoint-only event search silently returned `elapsed` in that case. The kernel now checks for a negative-to-positive radial derivative (`r·v`), bisects the intermediate perigee using coupled state integration, then bisects the **first descending** altitude crossing if the perigee is below the threshold. It does not move only longitude, replace r/v by an interpolated position, or assert ground impact.
+
+An executable synthetic counterexample starts at 90 km spherical altitude with radial/tangential velocity (-0.15, 8.15) km/s and takes a **400 s** step: both endpoint altitudes exceed the **80 km** threshold, but the trajectory intersects it on the descending arc. The 400 s event time is checked against an independent 1 s stepping control (tolerance 0.01 s), along with r/v and threshold altitude; a separate 8.4 km/s synthetic near-miss must remain `elapsed`. This is a numerical falsification/test, NOT a NORAD observation. For extremely coarse steps that cross multiple radial extrema, even a turning-point bracket is not guaranteed: step-size convergence and bounded time steps remain the caller's responsibility.
+
 ## Verification and negative result
 Run `node --experimental-strip-types --test tests/orbitPhysics.test.mjs` with Node 22, or inspect the `Coupled orbit physics` GitHub Actions job on the actual PR HEAD. Synthetic controls cover near-closed Keplerian orbit, inertial energy and angular momentum, J2 energy plus z-angular momentum, co-rotational drag sign, threshold time and velocity, input validation, seed repeatability and inverse reduction against simulated data. They establish mathematical/code consistency **only**. Synthetic data in the tests do not correspond to observed 1963 states.
 

@@ -115,10 +115,27 @@ export function propagate(
     const step = Math.min(stepS, durationS - (current.tS - initial.tS));
     const next = rk4(current, step, dynamics);
     count++;
-    if (altitudeKm(next) <= terminationAltitudeKm) {
-      // Within-step event search re-integrates from the same previous state;
-      // interpolation of position alone would not preserve coupled r/v.
+    // The endpoint can be ABOVE the threshold even though the orbit passed
+    // BELOW it at perigee inside this step. A plain endpoint check misses that
+    // *first* descending crossing and can falsely report elapsed.
+    let eventUpperS: number | null = altitudeKm(next) <= terminationAltitudeKm ? step : null;
+    if (eventUpperS === null &&
+        dot(current.rKm, current.vKmS) < 0 && dot(next.rKm, next.vKmS) >= 0) {
+      // A negative-to-positive radial derivative brackets perigee. As with
+      // RK4 itself, the chosen step must resolve a SINGLE radial turning point.
       let low = 0, high = step;
+      for (let i = 0; i < 42; i++) {
+        const mid = (low + high) / 2;
+        const sample = rk4(current, mid, dynamics);
+        if (dot(sample.rKm, sample.vKmS) < 0) low = mid;
+        else high = mid;
+      }
+      if (altitudeKm(rk4(current, high, dynamics)) <= terminationAltitudeKm) eventUpperS = high;
+    }
+    if (eventUpperS !== null) {
+      // The event is bracketed on the DESCENDING arc, even if the step ends
+      // above the threshold. Reintegrate r AND v from the same prior state.
+      let low = 0, high = eventUpperS;
       for (let i = 0; i < 42; i++) {
         const mid = (low + high) / 2;
         if (altitudeKm(rk4(current, mid, dynamics)) > terminationAltitudeKm) low = mid;

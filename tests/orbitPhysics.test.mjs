@@ -47,6 +47,33 @@ test('radial state triggers threshold with coupled velocity and event time refin
   assert.ok(out.state.vKmS[0] < start.vKmS[0]);
 });
 
+test('perigee inside a step detects the first descending crossing even when both endpoints are above 80 km', () => {
+  // SYNTHETIC near-Earth orbit. This is not an observed 1963 trajectory.
+  const start = { rKm: [EARTH.radiusKm + 90, 0, 0], vKmS: [-0.15, 8.15, 0], tS: 0 };
+  const uncheckedEndpoint = rk4(start, 400);
+  assert.ok(altitudeKm(start) > 80);
+  assert.ok(altitudeKm(uncheckedEndpoint) > 80, 'endpoint-only test must miss the crossing');
+  const coarse = propagate(start, 400, 400, 80);
+  const fine = propagate(start, 400, 1, 80);
+  assert.equal(coarse.event, 'reentry-threshold');
+  assert.equal(fine.event, 'reentry-threshold');
+  assert.equal(coarse.steps, 1);
+  assert.ok(coarse.state.tS > 0 && coarse.state.tS < 200);
+  assert.ok(Math.abs(altitudeKm(coarse.state) - 80) < 1e-7);
+  assert.ok(Math.abs(coarse.state.tS - fine.state.tS) < 0.01);
+  assert.ok(Math.hypot(...coarse.state.rKm.map((x, i) => x - fine.state.rKm[i])) < 0.03);
+  assert.ok(Math.hypot(...coarse.state.vKmS.map((x, i) => x - fine.state.vKmS[i])) < 3e-5);
+});
+
+test('radial turning point ABOVE the threshold does not invent reentry', () => {
+  const nearMiss = { rKm: [EARTH.radiusKm + 90, 0, 0], vKmS: [-0.15, 8.4, 0], tS: 0 };
+  const coarse = propagate(nearMiss, 400, 400, 80);
+  const fine = propagate(nearMiss, 400, 1, 80);
+  assert.equal(coarse.event, 'elapsed');
+  assert.equal(fine.event, 'elapsed');
+  assert.ok(altitudeKm(coarse.state) > 80);
+});
+
 test('reject undocumented atmospheric density and nonphysical controls', () => {
   assert.throws(() => accelerationKmS2(circular, { atmosphere: { source: '', densityKgM3: () => 1e-10, cdAreaOverMassM2Kg: 0.1 }}));
   assert.throws(() => accelerationKmS2(circular, { atmosphere: { source: 'synthetic', densityKgM3: () => -1, cdAreaOverMassM2Kg: 0.1 }}));
