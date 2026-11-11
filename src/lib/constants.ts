@@ -30,29 +30,31 @@ export const LAUNCH_MISSION = {
   primaryPayload: 'OPS 0180 (SAMOS F2-3 / Ferret 3 / NRO Mission 7153)',
 };
 
-// Historical Two-Line Elements (TLEs) & Parameters
-// Checksum formula verified: sum of digits + (1 for '-') mod 10
+// Orbital inputs for the exploratory app. ONLY NORAD 528 below has a traced
+// secondary TLE pair. NORAD 527/529 retain legacy synthetic vectors as
+// scenario placeholders, NOT historical tracking observations.
+// A TLE checksum validates syntax, not source authenticity.
 export const HISTORICAL_ORBITAL_DATA: Record<number, OrbitalElements> = {
   528: {
     noradId: 528,
     intlDesignator: '1963-003B',
     name: '1963-003B (NORAD 528 / Componente separado)',
-    epochStr: '63300.61111111 (27/10/1963 ~14:40:00 UTC)',
-    epochDate: new Date('1963-10-27T14:40:00Z'),
+    epochStr: '63300.61129783 (27/10/1963 14:40:16.132512 UTC; TLE secondary mirror)',
+    epochDate: new Date('1963-10-27T14:40:16.132Z'),
     inclinationDeg: 81.8615,
-    raanDeg: 284.1520, // Reconstructed nodal angle at epoch
-    eccentricity: 0.00842,
-    argPerigeeDeg: 142.3150,
-    meanAnomalyDeg: 218.4210,
-    meanMotionRevDay: 15.7490,
-    bstar: 0.00000, // Cataloged as 0.00000 (uncalibrated manual record)
-    semiMajorAxisKm: 6723.1,
-    periodMin: 91.434,
-    meanAltitudeKm: 345.0,
-    line1: '1 00528U 63003B   63300.61111111  .00000000  00000-0  00000-0 0  9992',
-    line2: '2 00528  81.8615 284.1520 0084200 142.3150 218.4210 15.74900000 45124',
+    raanDeg: 198.5261, // Secondary TLE, corroborated numerically by pinned Parquet, not original NORAD
+    eccentricity: 0.0017147,
+    argPerigeeDeg: 104.7477,
+    meanAnomalyDeg: 255.4423,
+    meanMotionRevDay: 15.74901460,
+    bstar: 0.00000, // Zero in the preserved secondary pair; not evidence of zero drag
+    semiMajorAxisKm: 6723.0486,
+    periodMin: 91.434292,
+    meanAltitudeKm: 344.9116,
+    line1: '1 00528U 63003  B 63300.61129783  .00686563 +00000-0 +00000-0 0  9990',
+    line2: '2 00528 081.8615 198.5261 0017147 104.7477 255.4423 15.74901460043614',
     decayDateCataloged: '1963-11-08',
-    provenance: 'Space-Track / AFSPC Historical Catalog & US Air Force Orbital Records',
+    provenance: 'Secondary literal TLE mirror https://www.itau.magnetic-declination.com/satellite/?s=528 (SHA256 18cf11665e061b5ec8679242e10b00b82accf29bc6f0b9b7b6330b9c44e341cd); numeric oxzoid Parquet SHA256 c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09; common lineage, original NORAD unverified',
     classification: 'FONTE_SECUNDARIA',
   },
   527: {
@@ -74,8 +76,8 @@ export const HISTORICAL_ORBITAL_DATA: Record<number, OrbitalElements> = {
     line1: '1 00527U 63003A   63300.50000000  .00001200  00000-0  12000-4 0  9993',
     line2: '2 00527  81.8540 284.2800 0031500 125.4000 235.1000 15.26800000 44211',
     decayDateCataloged: '1969-01-09',
-    provenance: 'NRO / Space-Track / NASA Satellite Situation Report 15/11/1963',
-    classification: 'DOCUMENTO_PRIMARIO_VERIFICADO',
+    provenance: 'Vetor ilustrativo legado sem TLE primário nem epoch/elementos autenticados; NASA documenta objeto, não este vetor',
+    classification: 'HIPOTESE',
   },
   529: {
     noradId: 529,
@@ -96,8 +98,8 @@ export const HISTORICAL_ORBITAL_DATA: Record<number, OrbitalElements> = {
     line1: '1 00529U 63003C   63364.47569444  .00018500  00000-0  85000-4 0  9994',
     line2: '2 00529  81.8215 135.2100 0051200 180.2000 179.8000 16.09830000 54106',
     decayDateCataloged: '1963-12-31',
-    provenance: 'Space-Track / NASA Satellite Situation Report 30/11/1963',
-    classification: 'FONTE_SECUNDARIA',
+    provenance: 'Vetor ilustrativo legado sem TLE primário nem epoch/elementos autenticados; não usar como observação orbital',
+    classification: 'HIPOTESE',
   },
 };
 
