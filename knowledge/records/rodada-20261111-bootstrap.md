@@ -34,3 +34,10 @@ Catalogacao inicial limitada aos objetos e metadados consultados nesta rodada. N
 - [Questao: questao-tles-originais](questao-tles-originais.md)
 - [Artefato: artefato-pr27](artefato-pr27.md)
 
+
+## Inicializacao verificavel pelo parser
+
+- GitHub Actions [#43118511883](https://github.com/franklinbaldo/conde-incident/actions/runs/43118511883): SUCCESS em 7db63b36bff4e6442163a2e786436799409a8c76.
+- O parser v0.48.2 gerou 17 specs e 17 SQL no commit d1074beb822115da569aba5435243c4727519b80.
+- Nenhum documento historico ou calculo orbital foi revalidado nesta rodada.
+- [Memoria de encerramento](https://github.com/franklinbaldo/conde-incident/blob/gaviao/okf-taxonomy-20261111/team/memory/gaviao/20261111T2300Z-taxonomia-okf.md).
