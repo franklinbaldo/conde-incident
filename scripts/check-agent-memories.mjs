@@ -14,9 +14,11 @@ function issue(path, message) { return { path, message }; }
 export function validateAgentMemory(path, content, agent) {
   const errors = [];
   if (!AGENTS.has(agent)) errors.push(issue(path, 'unknown agent directory'));
+  // Preserve Windows-authored CRLF notes without mistaking structured data for legacy.
+  const normalized = content.replace(/\r\n/g, '\n');
   // Historical notes predate the OKF frontmatter requirement. Report but do not rewrite them.
-  if (!content.startsWith('---\n')) return { errors, legacy: true };
-  const match = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/.exec(content);
+  if (!normalized.startsWith('---\n')) return { errors, legacy: true };
+  const match = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/.exec(normalized);
   if (!match) return { errors: [...errors, issue(path, 'unterminated frontmatter')], legacy: false };
   const fields = {};
   for (const line of match[1].split('\n')) {
@@ -42,7 +44,7 @@ export function validateAgentMemory(path, content, agent) {
       errors.push(issue(path, 'filename must begin with timestamp YYYYMMDDTHHMMSSZ-'));
     }
   }
-  if (!/^\[[^\]]+\]$/.test(fields.tags || '')) errors.push(issue(path, 'tags must be a nonempty inline list'));
+  if (!/^\[\s*[a-zA-Z0-9_-]+(?:\s*,\s*[a-zA-Z0-9_-]+)*\s*\]$/.test(fields.tags || '')) errors.push(issue(path, 'tags must be a nonempty inline list'));
   if (!match[2].trim()) errors.push(issue(path, 'memory must have a body'));
   return { errors, legacy: false };
 }
