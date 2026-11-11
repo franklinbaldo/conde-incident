@@ -98,6 +98,32 @@ class HoldoutControls(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "CSV"):
             require_same_bindings([row, row], [row])
 
+    def test_donor_ablation_detects_one_good_one_bad_donor(self):
+        # SYNTHETIC: 527 shares 529 curvature while 528 has opposite curvature.
+        # The equal-weight joint curvature is consequently worse than 527 alone.
+        result = evaluate(samples(c527=0.4, c528=-0.4, c529=0.4), "1963-10-21")
+        error = result["holdout_rmse_rev_day"]
+        self.assertLess(error["transfer_527_only"],
+                        error["shared_curvature_527_528_to_529"])
+        self.assertFalse(result["posthoc_ablations"]["joint_beats_both_individual_donors"])
+
+    def test_linear_control_falsifies_spurious_donor_curvature(self):
+        # SYNTHETIC: 529 is exactly linear, both donors curve quadratically.
+        result = evaluate(samples(c527=0.4, c528=0.4, c529=0.0), "1963-10-21")
+        error = result["holdout_rmse_rev_day"]
+        self.assertLess(error["linear_529_only"], error["shared_curvature_527_528_to_529"])
+        self.assertFalse(result["posthoc_ablations"]["joint_beats_linear_529"])
+
+    def test_posthoc_models_inherit_strict_temporal_blinding(self):
+        rows = samples(c527=0.2, c528=0.4, c529=0.3)
+        before = evaluate(rows, "1963-10-21")
+        cutoff = datetime(1963, 10, 21, 23, 59, 59, tzinfo=timezone.utc)
+        modified = [Observation(o.sat, o.epoch, o.mean_motion + 7.0)
+                    if o.epoch > cutoff else o for o in rows]
+        after = evaluate(modified, "1963-10-21")
+        self.assertEqual(before["coefficients"], after["coefficients"])
+        self.assertNotEqual(before["holdout_rmse_rev_day"], after["holdout_rmse_rev_day"])
+
     def test_no_likelihood_or_geography_in_report(self):
         report = run(samples())
         self.assertTrue(report["no_probability"])
