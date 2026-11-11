@@ -27,3 +27,14 @@ jobs:
         run: |
           lake update
           lake build
+      - name: Report theorem axioms (no sorry allowed)
+        working-directory: formal
+        run: |
+          lake env lean Conde1963/AxiomAudit.lean | tee axiom-audit.log
+          if grep -E 'sorryAx|\bunsafe\b' axiom-audit.log; then
+            echo 'Unexpected trusted-admission dependency in proof audit' >&2
+            exit 1
+          fi
+      - name: Test original-ZIP intake gate (synthetic corpus ONLY)
+        working-directory: formal
+        run: python3 -m unittest discover -s tests -v
