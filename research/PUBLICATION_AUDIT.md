@@ -4,7 +4,7 @@ Um build web verde **não** prova publicação. O verificador `scripts/check-pag
 
 ## Requisito de aceite
 
-Os quatro sinais devem concordar no mesmo SHA completo da `main`: (1) configuração real de GitHub Pages com `build_type=workflow`, ou seja, fonte GitHub Actions; (2) run `Publish Conde site` por `push` em `main`, concluído com `success`; (3) deployment no ambiente `github-pages` e último status `success`; (4) URL pública `https://franklinbaldo.github.io/conde-incident/` com HTTP 200, página inicial **Zola** com caminhos `/conde-incident/stories/`, `/conde-incident/lab/` e `/conde-incident/css/site.css`, listagem Zola com capítulo datado acessível, folha de estilo do Zola disponível e laboratório React/Vite em `/conde-incident/lab/` com bundle em `/conde-incident/lab/assets/`. Nenhum sinal é substituído por texto de PR, CI de build ou pela existência de YAML.
+Os quatro sinais devem concordar no mesmo SHA completo da `main`: (1) configuração real de GitHub Pages com `build_type=workflow`, ou seja, fonte GitHub Actions; (2) run `Publish Conde site` por `push` em `main`, concluído com `success`; (3) deployment no ambiente `github-pages` e último status `success`; (4) URL pública `https://franklinbaldo.github.io/conde-incident/` com HTTP 200, página inicial **Zola** com caminhos `/conde-incident/stories/`, `/conde-incident/lab/` e `/conde-incident/css/site.css`, listagem Zola com link de capítulo datado **efetivamente acessível por HTTPS**, HTML de artigo completo e ligação ao Markdown-fonte, folha de estilo do Zola disponível e laboratório React/Vite em `/conde-incident/lab/` com bundle em `/conde-incident/lab/assets/`. Nenhum sinal é substituído por texto de PR, CI de build ou pela existência de YAML.
 
 Com o token de leitura do Actions, executar:
 
@@ -24,3 +24,7 @@ O workflow `Audit Conde Pages release` testa contraprovas em PR e audita a publi
 ## Migração de contrato, 11/11/2026
 
 A versão inicial desta PR procurava `<div id="root">` e bundle Vite **na raiz**. Isso era um falso negativo após a decisão de usar Zola. O contrato atualizado exige páginas Zola na raiz e nas histórias, CSS estático e bundle React somente em `/lab/`. Testes de contraprova rejeitam HTML React na raiz, páginas/paths errados e capítulos ausentes. A auditoria permanece somente leitura e **não deve ser tratada como gate de publicação concluída** enquanto #1/#3 não forem integradas e a API Pages/deployment e site real não forem conferidos no HEAD exato.
+
+## Contraprova de capítulo, 11/11/2026
+
+A verificação anterior inspecionava apenas uma URL com data na **listagem**, que poderia apontar para 404 ou texto não publicado. Agora o auditor extrai um `href` canônico de capítulo (mesma origem e base `/conde-incident/`), faz GET do artigo e exige HTTP 200, `<article class="full-story">`, corpo `story-body` e referência ao Markdown-fonte. Há testes negativos de 404, fallback genérico, ausência da fonte, troca de path e origem externa, mais teste positivo para `story.permalink` absoluto do Zola. Isso demonstra apenas **existência da superfície publicada**, não autenticidade de fontes históricas nem integridade criptográfica dos bytes.
