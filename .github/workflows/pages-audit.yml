@@ -1,0 +1,36 @@
+name: Audit Conde Pages release
+on:
+  pull_request:
+    paths:
+      - 'scripts/check-pages-release.mjs'
+      - 'scripts/check-pages-release.test.mjs'
+      - '.github/workflows/pages-audit.yml'
+  workflow_run:
+    workflows: ['Publish Conde site']
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: read
+  deployments: read
+  pages: read
+
+jobs:
+  audit:
+    if: github.event_name == 'pull_request' || github.event.workflow_run.head_branch == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test publication false positives
+        run: node --test scripts/check-pages-release.test.mjs
+      - name: Verify post-merge Pages deployment on actual SHA
+        if: github.event_name == 'workflow_run'
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TARGET_SHA: ${{ github.event.workflow_run.head_sha }}
+          UPSTREAM_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+        run: node scripts/check-pages-release.mjs
