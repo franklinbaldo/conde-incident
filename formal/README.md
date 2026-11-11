@@ -61,3 +61,25 @@ key, pass `--label-key`; do not guess its schema or silently deduplicate.
 
 `#print axioms` is made visible in the Actions log. An absence of `sorryAx`
 for these theorems does not demonstrate orbital or documentary validity.
+
+## Matrix citation integrity and an observation-decoder theorem (issue #15)
+
+The frozen cumulative matrix has Git **blob** SHA-1
+`a7978c3a75a153b16ab70118a92c434bba674cb7` in base PR #1
+(commit `38ee0f01134f6a1ee07c9346945d058d2ad3ce0b`).
+Run `python3 formal/scripts/verify_matrix_refs.py
+research/evidence_matrix_C001-C238_2026-11-11.md` from the repository root.
+CI checks this exact blob plus C01 **line 19**, C131 **line 502**,
+C197 **line 905**, and the separate pairs C44 (164/175), C45 (165/176),
+C46 (166/177). The C197 row uses Markdown bold in its label, which the
+checker parses. The former site link to C01 **line 20** actually pointed
+to **C02** and was corrected. New matrix revisions must be assessed and
+pinned explicitly, never auto-renumbered. This is a snapshot/row-location
+audit, **not** proof of historical source authenticity or recovery of the
+unavailable historical Lean ZIP.
+
+Two additional theorems prove that **no deterministic day-only decoder**
+is correct on both illustrated admissible states if they share a day
+yet have different regions. This is about an observational equivalence
+class, not the NORAD 528 terminal orbit or any inferred probability.
+`AxiomAudit.lean` also prints their axiom dependencies.
