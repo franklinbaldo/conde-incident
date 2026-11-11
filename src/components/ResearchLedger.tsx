@@ -71,7 +71,7 @@ export function ResearchLedger({ lang }: { lang: Language }) {
       <p className="mt-2 text-sm leading-relaxed text-zinc-400">{pt ? 'Os teoremas Lean verificam implicações lógicas condicionadas, não a autenticidade dos documentos nem a localização da reentrada. Os IDs levam à matriz cumulativa; repetições do mesmo documento não são corroboração independente.' : 'Lean theorems verify conditional logical implications, not the authenticity of documents or a reentry site. IDs link to the cumulative evidence matrix; repetitions of a document are not independent corroboration.'}</p>
       <div className="mt-5 grid gap-3 sm:grid-cols-2">
         {[
-          { ids: 'C01', matrixLine: 20, label: pt ? 'Relato Tupi/FBIS, não queda comprovada' : 'Tupi/FBIS report, not proven impact', url: 'https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf' },
+          { ids: 'C01', matrixLine: 19, label: pt ? 'Relato Tupi/FBIS, não queda comprovada' : 'Tupi/FBIS report, not proven impact', url: 'https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf' },
           { ids: 'C131', matrixLine: 502, label: pt ? 'Boletim NASA: dia de decaimento, sem lugar/hora' : 'NASA bulletin: decay day, not place/time', url: 'https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf#page=10' },
           { ids: 'C197', matrixLine: 905, label: pt ? 'Mesmo boletim NASA, não uma segunda observação' : 'Same NASA bulletin, not a second observation', url: 'https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf#page=10' },
         ].map(({ ids, label, url, matrixLine }) => (
@@ -81,6 +81,25 @@ export function ResearchLedger({ lang }: { lang: Language }) {
             <a href={url} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-xs text-cyan-400 underline">{pt ? 'Documento de referência' : 'Reference document'}</a>
           </div>
         ))}
+      </div>
+      <div className="mt-6 border-t border-zinc-800 pt-5">
+        <h3 className="text-sm font-semibold text-zinc-200">{pt ? 'IDs repetidos: C44, C45 e C46' : 'Repeated IDs: C44, C45 and C46'}</h3>
+        <p className="mt-2 text-xs leading-relaxed text-zinc-400">{pt ? 'Cada ID aparece em duas seções de sentidos diferentes. Os links apontam à linha e ao commit exatos da matriz, não a seis observações independentes. A colisão do ZIP Lean histórico continua sem auditoria.' : 'Each ID occurs twice in different sections. These links pin the exact matrix lines and commit, not six independent observations. The historical Lean ZIP collision remains unaudited.'}</p>
+        <div className="mt-3 grid gap-2 sm:grid-cols-2">
+          {[
+            { id: 'C44', line: 164, ptLabel: 'Solo regional, CONDER 11', enLabel: 'Regional soil, CONDER 11' },
+            { id: 'C45', line: 165, ptLabel: 'Geologia regional, CONDER 48', enLabel: 'Regional geology, CONDER 48' },
+            { id: 'C46', line: 166, ptLabel: 'Energia e resistência hipotéticas', enLabel: 'Hypothetical energy and resistance' },
+            { id: 'C44', line: 175, ptLabel: 'TLEs em espelho secundário', enLabel: 'TLEs in secondary mirror' },
+            { id: 'C45', line: 176, ptLabel: 'Fases previstas, não observadas', enLabel: 'Predicted, not observed phases' },
+            { id: 'C46', line: 177, ptLabel: 'Ajuste orbital condicionado', enLabel: 'Conditional orbital fit' },
+          ].map(({ id, line, ptLabel, enLabel }) => (
+            <a key={id + '-' + line} href={`https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L${line}`} target="_blank" rel="noopener noreferrer" className="rounded-lg border border-zinc-800 bg-zinc-950/50 p-3 text-xs hover:border-cyan-700">
+              <span className="font-mono text-cyan-300">{id} · L{line}</span>
+              <span className="ml-2 text-zinc-300">{pt ? ptLabel : enLabel}</span>
+            </a>
+          ))}
+        </div>
       </div>
       <a href="https://github.com/franklinbaldo/conde-incident/blob/feature/polvo-lean-audit-conditional-15/formal/Conde1963/Provenance.lean" target="_blank" rel="noopener noreferrer" className="mt-4 inline-block text-xs text-cyan-400 underline">{pt ? 'Provas condicionais em Lean 4.35.0 (em revisão)' : 'Conditional Lean 4.35.0 proofs (under review)'}</a>
     </section>
