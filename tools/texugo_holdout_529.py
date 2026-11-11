@@ -9,7 +9,9 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
+from collections import Counter
 import math
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -36,16 +38,15 @@ def utc(value: str) -> datetime:
     return result.astimezone(timezone.utc)
 
 
-def load_audited(csv_path: Path, audit_path: Path) -> list[Observation]:
-    audit = json.loads(audit_path.read_text(encoding="utf-8"))
-    source = audit.get("source", {})
-    if source.get("url") != EXPECTED_URL or source.get("hashes", {}).get("sha256") != EXPECTED_SHA256:
-        raise ValueError("custódia não confere com o espelho SHA256 fixado")
-    if audit.get("problems"):
-        raise ValueError("auditoria de entrada registrou anomalias")
+def parse_csv(csv_path: Path) -> tuple[list[Observation], list[tuple[int, int, datetime, float]]]:
+    """Parse and validate the extracted CSV, retaining its Parquet source-row keys."""
     values: dict[tuple[int, datetime], Observation] = {}
+    bindings: list[tuple[int, int, datetime, float]] = []
     with csv_path.open(newline="", encoding="utf-8") as fd:
         for record in csv.DictReader(fd):
+            source_row = int(record["source_row"])
+            if source_row < 0:
+                raise ValueError("source_row negativo")
             sat = int(record["norad_id"])
             if sat not in SATELLITES:
                 raise ValueError("satélite inesperado")
@@ -60,11 +61,52 @@ def load_audited(csv_path: Path, audit_path: Path) -> list[Observation]:
             if key in values and values[key] != sample:
                 raise ValueError("duplicatas de época conflitantes")
             values[key] = sample
+            bindings.append((source_row, sat, epoch, n))
     for sat in SATELLITES:
         if not any(o.sat == sat for o in values.values()):
             raise ValueError(f"sem observações do objeto {sat}")
-    return sorted(values.values(), key=lambda o: (o.sat, o.epoch))
+    return sorted(values.values(), key=lambda o: (o.sat, o.epoch)), bindings
 
+
+def source_bindings(parquet_path: Path, audit: dict) -> list[tuple[int, int, datetime, float]]:
+    """Independently re-read SHA-pinned bytes, not the extractor's JSON assertions."""
+    payload = parquet_path.read_bytes()
+    sha256 = hashlib.sha256(payload).hexdigest()
+    sha1 = hashlib.sha1(payload).hexdigest()
+    if (sha256 != EXPECTED_SHA256 or sha1 != audit["source"]["hashes"].get("sha1")
+            or not payload.startswith(b"PAR1") or not payload.endswith(b"PAR1")):
+        raise ValueError("custódia: bytes Parquet não conferem com SHA-1/SHA-256")
+    import pyarrow.parquet as pq  # only the real-source step requires pyarrow
+    expected: list[tuple[int, int, datetime, float]] = []
+    for source_row, record in enumerate(
+            pq.read_table(parquet_path, columns=["norad_id", "epoch", "mean_motion"]).to_pylist()):
+        sat = record["norad_id"]
+        if sat not in SATELLITES:
+            continue
+        epoch = record["epoch"]
+        if not isinstance(epoch, datetime) or epoch.tzinfo is None:
+            raise ValueError("época do Parquet sem fuso explícito")
+        expected.append((source_row, sat, epoch.astimezone(timezone.utc), float(record["mean_motion"])))
+    return expected
+
+
+def require_same_bindings(csv_rows: list[tuple], parquet_rows: list[tuple]) -> None:
+    """A matching metadata JSON alone never authenticates a modified/truncated CSV."""
+    if Counter(csv_rows) != Counter(parquet_rows):
+        raise ValueError("CSV não corresponde a source_row/epoch/mean_motion do Parquet verificado")
+
+
+def load_audited(csv_path: Path, audit_path: Path, parquet_path: Path) -> list[Observation]:
+    audit = json.loads(audit_path.read_text(encoding="utf-8"))
+    source = audit.get("source", {})
+    if source.get("url") != EXPECTED_URL or source.get("hashes", {}).get("sha256") != EXPECTED_SHA256:
+        raise ValueError("custódia não confere com o espelho SHA256 fixado")
+    if audit.get("problems"):
+        raise ValueError("auditoria de entrada registrou anomalias")
+    expected = source_bindings(parquet_path, audit)
+    rows, bindings = parse_csv(csv_path)
+    require_same_bindings(bindings, expected)
+    return rows
 
 def solve(a: list[list[float]], b: list[float]) -> tuple[float, ...]:
     """Small pivoted system; reject singular rather than silently regularize."""
@@ -162,10 +204,12 @@ def run(rows: list[Observation]) -> dict:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--csv", required=True, type=Path)
+    parser.add_argument("--parquet", required=True, type=Path,
+                        help="bytes originais SHA256-pinned, para conferir cada linha do CSV")
     parser.add_argument("--audit", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
-    result = run(load_audited(args.csv, args.audit))
+    result = run(load_audited(args.csv, args.audit, args.parquet))
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     print(json.dumps({"source_sha256": EXPECTED_SHA256, "cuts": [{"date": r["cutoff_utc_end_of_day"],
