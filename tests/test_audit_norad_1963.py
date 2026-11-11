@@ -1,11 +1,15 @@
 """Contraprovas sintéticas do auditor, sem alegar observações NORAD."""
 import sys
+import json
+import tempfile
 import unittest
 from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
-from audit_norad_1963 import check_numeric, digest, epoch_utc, extract_rows, verified_bytes, tle_checksum, validate_raw_tle
+from audit_norad_1963 import (check_numeric, digest, epoch_utc, extract_rows, verified_bytes,
+    tle_checksum, validate_raw_tle, tle_epoch_utc, angular_distance_deg,
+    compare_secondary_528, write_outputs)
 
 
 class DummyTable:
@@ -83,6 +87,48 @@ class Custody(unittest.TestCase):
 
     def test_digest_reproducible(self):
         self.assertEqual(digest(b"abc")["sha256"], "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad")
+
+    def test_528_secondary_epoch_decimal_exact(self):
+        pair = Path(__file__).resolve().parents[1] / "research/tle_custody/mirror_528_1963-10-27.tle"
+        first = pair.read_text(encoding="ascii").splitlines()[0]
+        self.assertEqual(tle_epoch_utc(first).isoformat(), "1963-10-27T14:40:16.132512+00:00")
+        self.assertEqual(angular_distance_deg(359.99, 0.01), 0.01999999999998181)
+        with self.assertRaisesRegex(ValueError, "calendário"):
+            tle_epoch_utc(first[:20] + "366.00000000" + first[32:])
+
+    def test_secondary_vs_numeric_same_epoch_independent(self):
+        pair = Path(__file__).resolve().parents[1] / "research/tle_custody/mirror_528_1963-10-27.tle"
+        dt = datetime(1963, 10, 27, 14, 40, 16, 132512, tzinfo=timezone.utc)
+        good = record(dt=dt, raan=198.52610778808594)
+        good["source_row"] = 42
+        good["epoch"] = epoch_utc(good["epoch"])
+        comparison = compare_secondary_528([good], pair)
+        self.assertEqual(comparison["status"], "MATCH_WITHIN_ROUNDING")
+        self.assertEqual(comparison["matched_records"][0]["source_row"], 42)
+        self.assertFalse(comparison["primary_1963_tle_provenance"] == "PASS")
+        bad = dict(good, raan=284.152)
+        self.assertEqual(compare_secondary_528([bad], pair)["status"], "FIELD_DIVERGENCE")
+        self.assertEqual(compare_secondary_528([], pair)["status"], "NO_MATCHING_EPOCH")
+        self.assertEqual(compare_secondary_528([good, bad], pair)["status"], "AMBIGUOUS_DUPLICATE_EPOCH")
+
+    def test_same_epoch_distinct_state_is_reported_not_deduplicated(self):
+        rows, meta = extract_rows(DummyTable([record(527), record(528), record(528, raan=284.152), record(529)]))
+        self.assertEqual(len(rows), 4)
+        self.assertEqual(meta["duplicate_epochs"]["528"], 1)
+        self.assertEqual(len(meta["duplicate_epoch_conflicts"]), 1)
+        self.assertEqual(meta["duplicate_epoch_conflicts"][0]["source_rows"], [1, 2])
+
+    def test_csv_528_ledger_has_own_reproducible_sha256(self):
+        rows, meta = extract_rows(DummyTable([record(527), record(528), record(529)]))
+        with tempfile.TemporaryDirectory() as d:
+            out = Path(d)
+            write_outputs(rows, meta, out, {"sha1": "synthetic", "sha256": "synthetic"})
+            csv_data = (out / "norad_528_epochs_1963.csv").read_bytes()
+            self.assertEqual(csv_data.count(b"\\n"), 2)
+            self.assertNotIn(b"\\\\n", csv_data)
+            report = json.loads((out / "audit.json").read_text())
+            self.assertEqual(report["derived_file_hashes"]["norad_528_epochs_1963.csv"], digest(csv_data))
+
 
 
 if __name__ == "__main__":
