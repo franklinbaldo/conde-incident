@@ -30,6 +30,7 @@ jobs:
       - name: Predeclared 529 temporal holdouts, no threshold demanding joint win
         run: |
           python tools/texugo_holdout_529.py \
+            --parquet "${{ runner.temp }}/tle_1963.parquet" \
             --csv "${{ runner.temp }}/source/norad_527_528_529_1963_numeric.csv" \
             --audit "${{ runner.temp }}/source/audit.json" \
             --output "${{ runner.temp }}/holdout_529.json"
