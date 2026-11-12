@@ -1,6 +1,7 @@
 name: Prek policy (OKF and 20KB)
 on:
   push:
+    branches: [main]
   pull_request:
 permissions:
   contents: read
