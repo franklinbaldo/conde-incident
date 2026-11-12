@@ -16,11 +16,11 @@ const block = (start, next) => {
 test('initial retrospective window is contiguous and enumerates EVERY main commit', () => {
   assert.equal(window.schema, 'conde.gaviao.retrospective-main-window/v1');
   const entries = window.window_entries;
-  assert.equal(entries.length, 16);
+  assert.equal(entries.length, 18);
   assert.equal(window.post_base_changes, entries.length - 1);
   assert.equal(entries[0].sha, window.reviewed_base_sha);
   assert.equal(entries.at(-1).sha, window.reviewed_through_sha);
-  assert.equal(window.reviewed_through_sha, '006c7d08b64956aeeabed7162b5604bba77de85b');
+  assert.equal(window.reviewed_through_sha, 'b653bb56b0f7cbf1caebcaf300bbc6a69ae7fb62');
   assert.equal(entries[0].kind, 'initial-root');
   for (let index = 0; index < entries.length; index++) {
     const item = entries[index];
@@ -34,7 +34,7 @@ test('initial retrospective window is contiguous and enumerates EVERY main commi
   assert.deepEqual(entries.filter(e => e.kind === 'direct-commit').map(e => e.sha),
     ['807a118939fac50b48d649b1045461bfcc79b140']);
   const merges = entries.filter(e => e.kind === 'squash-merge-pr').map(e => e.pr_number);
-  assert.deepEqual(merges, [2, 58, 69, 73, 75, 76, 79, 77, 80, 81, 83, 82, 84, 87]);
+  assert.deepEqual(merges, [2, 58, 69, 73, 75, 76, 79, 77, 80, 81, 83, 82, 84, 87, 86, 89]);
   assert.deepEqual(merges, window.merged_prs);
   assert.ok(!merges.includes(74), 'closed unmerged PR must not masquerade as main commit');
   assert.ok(entries.every(e => e.changed_files.every(path => !/^stories\//.test(path))),
