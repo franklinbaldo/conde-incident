@@ -11,7 +11,8 @@ from datetime import date
 from decimal import Decimal
 from pathlib import Path
 
-SOURCE_SHA = "826f260524f6a7b83695e5c01d383025ff0da884656ebcc7fb98a1408c698ce3"
+SOURCE_VARIANTS = (("826f260524f6a7b83695e5c01d383025ff0da884656ebcc7fb98a1408c698ce3", 282624),
+                   ("fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2", 286417))
 EXPECTED_ROWS = (
     ("1963-003A", "1963 3A", "94.6", "81.89", 531, 462),
     ("1963-003B", "1963 3B", "92.4", "81.87", 401, 376),
@@ -29,8 +30,16 @@ def validate_ledger(ledger):
     if src.get("pdf_url") != ("https://ntrs.nasa.gov/api/citations/"
                               "19640000428/downloads/19640000428.pdf"):
         raise ValueError("source URL mismatch")
-    if src.get("sha256") != SOURCE_SHA or src.get("bytes") != 282624:
+    if (src.get("sha256"), src.get("bytes")) != SOURCE_VARIANTS[1]:
         raise ValueError("unpinned facsimile bytes")
+    variants = src.get("retrieval_variants")
+    if not isinstance(variants, list) or [
+        (v.get("sha256"), v.get("bytes")) for v in variants
+    ] != list(SOURCE_VARIANTS):
+        raise ValueError("NASA CDN byte variants must remain independently pinned")
+    if src.get("variant_equivalence") != (
+            "SAME_OFFICIAL_URL_NOT_CLAIMED_BYTE_IDENTICAL_OR_INDEPENDENT; only the newly served PDF's catalog table was visually reinspected after discrepancy"):
+        raise ValueError("variant limitations cannot be removed")
     if (src.get("volume"), src.get("number"), src.get("page_index_zero_based"),
         src.get("page_in_pdf_one_based"), src.get("page_printed")) != (3, 20, 6, 7, 5):
         raise ValueError("wrong volume/page provenance")
@@ -100,7 +109,7 @@ def audit(ledger, pdf_bytes):
     if not pdf_bytes.startswith(b"%PDF-"):
         raise ValueError("not a PDF")
     digest = hashlib.sha256(pdf_bytes).hexdigest()
-    if digest != SOURCE_SHA or len(pdf_bytes) != 282624:
+    if (digest, len(pdf_bytes)) not in SOURCE_VARIANTS:
         raise ValueError("NASA facsimile hash or byte-count mismatch")
     return {
         "record_id": "C241-L12",

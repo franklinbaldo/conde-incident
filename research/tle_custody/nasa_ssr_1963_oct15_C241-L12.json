@@ -16,11 +16,26 @@
     "page_index_zero_based": 6,
     "page_in_pdf_one_based": 7,
     "page_printed": 5,
-    "sha256": "826f260524f6a7b83695e5c01d383025ff0da884656ebcc7fb98a1408c698ce3",
-    "bytes": 282624,
+    "sha256": "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+    "bytes": 286417,
     "transcription_method": "HUMAN_VISUAL_FACSIMILE_NOT_PDF_TEXT_EXTRACTION",
     "printed_table": "OBJECTS IN ORBIT",
-    "measurement_lineage": "NASA_PUBLICATION_COMPILED_FROM_TRACKING_NOT_RAW_SENSOR_RECORD"
+    "measurement_lineage": "NASA_PUBLICATION_COMPILED_FROM_TRACKING_NOT_RAW_SENSOR_RECORD",
+    "retrieval_variants": [
+      {
+        "sha256": "826f260524f6a7b83695e5c01d383025ff0da884656ebcc7fb98a1408c698ce3",
+        "bytes": 282624,
+        "observed": "2026-11-12",
+        "role": "EARLIER_OFFICIAL_URL_RESPONSE"
+      },
+      {
+        "sha256": "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+        "bytes": 286417,
+        "observed": "2026-11-12",
+        "role": "CURRENT_OFFICIAL_URL_RESPONSE_AND_GITHUB_CI"
+      }
+    ],
+    "variant_equivalence": "SAME_OFFICIAL_URL_NOT_CLAIMED_BYTE_IDENTICAL_OR_INDEPENDENT; only the newly served PDF's catalog table was visually reinspected after discrepancy"
   },
   "catalog_rows": [
     {

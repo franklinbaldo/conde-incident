@@ -43,6 +43,12 @@ class Oct15AuditTests(unittest.TestCase):
     def test_wrong_file_size(self):
         self.bad(lambda d: d["source"].update(bytes=1))
 
+    def test_variant_allowlist_cannot_be_changed(self):
+        self.bad(lambda d: d["source"]["retrieval_variants"][1].update(bytes=286418))
+
+    def test_variant_equivalence_must_not_be_claimed(self):
+        self.bad(lambda d: d["source"].update(variant_equivalence="BYTE_IDENTICAL"))
+
     def test_wrong_printed_page(self):
         self.bad(lambda d: d["source"].update(page_printed=8))
 
