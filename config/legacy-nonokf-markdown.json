@@ -1,0 +1,381 @@
+{
+  "policy": "Frozen legacy Markdown exempt from current normative OKF check only at its exact Git blob SHA. Every added or modified Markdown is checked by prek and okf-parser. Remove entries as files are migrated.",
+  "legacy_markdown": [
+    {
+      "path": ".agents/skills/conde-abelha/SKILL.md",
+      "git_blob_sha": "43663253d18fbaf75fba37781efc344f5cb6f752"
+    },
+    {
+      "path": ".agents/skills/conde-caranguejo/SKILL.md",
+      "git_blob_sha": "7c88ae966d9034e01d97331479c7fca76b3f0bc6"
+    },
+    {
+      "path": ".agents/skills/conde-castor/SKILL.md",
+      "git_blob_sha": "f489a29529b305ab702d5a9b76da0b8ec15de1cd"
+    },
+    {
+      "path": ".agents/skills/conde-cervo/SKILL.md",
+      "git_blob_sha": "165d40da9280afed00e78521b934d95de6f382b4"
+    },
+    {
+      "path": ".agents/skills/conde-coruja/SKILL.md",
+      "git_blob_sha": "7b9a22d63d16c13d68987b0ed3dafed549ef1cc2"
+    },
+    {
+      "path": ".agents/skills/conde-elefante/SKILL.md",
+      "git_blob_sha": "da82339ee40ef8c3cf47e05d0b60b63873c2c652"
+    },
+    {
+      "path": ".agents/skills/conde-gaviao/SKILL.md",
+      "git_blob_sha": "b575c1db236b1c21cfd7ff5adad932761de25fe4"
+    },
+    {
+      "path": ".agents/skills/conde-lagarto/SKILL.md",
+      "git_blob_sha": "a78ea9dffc426359b3c098de4a726d86e2f00807"
+    },
+    {
+      "path": ".agents/skills/conde-lontra/SKILL.md",
+      "git_blob_sha": "bbba1b6bc353cf33ac80db254782b038b7ea0eda"
+    },
+    {
+      "path": ".agents/skills/conde-polvo/SKILL.md",
+      "git_blob_sha": "9d79c395eaad11b52b584a5992d13de8a14d5de1"
+    },
+    {
+      "path": ".agents/skills/conde-raposa/SKILL.md",
+      "git_blob_sha": "9b2890e6aa3f63b12a66822e295d62712177e98b"
+    },
+    {
+      "path": ".agents/skills/conde-tartaruga/SKILL.md",
+      "git_blob_sha": "4604f733a21e534ed3938d254d19830b4e166532"
+    },
+    {
+      "path": ".agents/skills/conde-texugo/SKILL.md",
+      "git_blob_sha": "078d63190fccc5ad6b0aad89d659185756bbac97"
+    },
+    {
+      "path": ".gmp_cache/compliance-review.md",
+      "git_blob_sha": "cf391e0def22e0bfab6fcb8be6a262c8a52d0ea6"
+    },
+    {
+      "path": ".gmp_cache/example_core.md",
+      "git_blob_sha": "bcaba553d4b02be3b422f5f01aa9d1578a6f4dbc"
+    },
+    {
+      "path": ".gmp_cache/example_geometry.md",
+      "git_blob_sha": "06a4f3bdc51e6cc17aaf08e25f46fefaaeed061b"
+    },
+    {
+      "path": ".gmp_cache/example_map.md",
+      "git_blob_sha": "909dc46041eb7a77f9b3a364a12785d64c006144"
+    },
+    {
+      "path": ".gmp_cache/gmp-framework-react.md",
+      "git_blob_sha": "1b26487c59ac7f12bb5c619832945706fae25b7c"
+    },
+    {
+      "path": "AGENTS.md",
+      "git_blob_sha": "588053b3514b8c102d06859f9f5bcf9e5843f37a"
+    },
+    {
+      "path": "docs/AGENT_WORKSPACES.md",
+      "git_blob_sha": "5b8d08d72b7c5993cec830833b53bcfc305fe970"
+    },
+    {
+      "path": "formal/README.md",
+      "git_blob_sha": "b0f01c8fd6413394a7475baac640abfd0c2262c8"
+    },
+    {
+      "path": "research/CASTOR_CONVERGENCE_INTEGRATION.md",
+      "git_blob_sha": "d69fae66a9a1c2882945dc74626d5a9ad00fea25"
+    },
+    {
+      "path": "research/CASTOR_KERNEL_INTEGRATION.md",
+      "git_blob_sha": "9ff69d87bdec7b29f3afdc041c708eb236c92591"
+    },
+    {
+      "path": "research/CI_INTEGRATION.md",
+      "git_blob_sha": "ceabcad746dd3d53cf7340555363b737dce51561"
+    },
+    {
+      "path": "research/MATRIX_INTEGRATION.md",
+      "git_blob_sha": "98444ca21d578bb42c31a9dc0e8a05c1429fb003"
+    },
+    {
+      "path": "research/OPERATIONAL_528_REFERENCE.md",
+      "git_blob_sha": "be744c141435cc3b60497850344d6dee1aea28f8"
+    },
+    {
+      "path": "research/ORBIT_ENERGY_BUDGET.md",
+      "git_blob_sha": "6c9e9e49d599ebb90a4425b1c4a7f61881c4923e"
+    },
+    {
+      "path": "research/ORBIT_HOLDOUT_AUDIT.md",
+      "git_blob_sha": "5878ee4ac05ccc3f59402f2c61abcc1f923a7411"
+    },
+    {
+      "path": "research/ORBIT_SPACE_WEATHER_BRIDGE.md",
+      "git_blob_sha": "f424f2ae389728f7e1bd9eb52dccee4249047e84"
+    },
+    {
+      "path": "research/PAGES_METADATA_PREFLIGHT.md",
+      "git_blob_sha": "25d75dceab05e2824cdff204bbfb51e108be4a8b"
+    },
+    {
+      "path": "research/PHYSICAL_OBSERVABLE_HANDOFF.md",
+      "git_blob_sha": "38a3a2240eac20329a863f4b05b948f3e59b2479"
+    },
+    {
+      "path": "research/archives/nara_bluebook_conde_naid_302531012_2026-11-12.md",
+      "git_blob_sha": "f37b713c213d1d24130a61769c89ce68bc23e14b"
+    },
+    {
+      "path": "research/audits/gaviao-main-window-20261112-0740.md",
+      "git_blob_sha": "f6d9a8020ef3ddba1870ac8548fde9dd0a883fd9"
+    },
+    {
+      "path": "research/audits/gaviao-main-window-20261112-0838.md",
+      "git_blob_sha": "eb555536e0def1fdeb6fee2ed4d277487ac972aa"
+    },
+    {
+      "path": "research/audits/gaviao-main-window-20261112-0942.md",
+      "git_blob_sha": "6979d8223e5221a9ed29a76cbea85a8ecedf646d"
+    },
+    {
+      "path": "research/audits/gaviao-main-window-20261112-1041.md",
+      "git_blob_sha": "475806afa943c0df24d6e8231663a0c87b8262a9"
+    },
+    {
+      "path": "research/constraints/C179_528_TLE_to_nasa_graph.md",
+      "git_blob_sha": "7914e1230d7354a0faa157c956808937f5c07756"
+    },
+    {
+      "path": "research/constraints/C241-L4_j2_short_gap_diagnostic.md",
+      "git_blob_sha": "b0678659ddbe1b37c0346066342693af5debfdc7"
+    },
+    {
+      "path": "research/constraints/README.md",
+      "git_blob_sha": "4a374accd52995302d667402e7c348b3d3205d0c"
+    },
+    {
+      "path": "research/constraints/baker_nunn_ru301_1963_notes.md",
+      "git_blob_sha": "56a799e6ff22b60e2c456aa770c33629db63213c"
+    },
+    {
+      "path": "research/constraints/legacy_evidence_154_custody.md",
+      "git_blob_sha": "b51dd9d0eedd2172ad53de0bd4f01b1e299b0793"
+    },
+    {
+      "path": "research/constraints/moonwatch_ru255_1963_notes.md",
+      "git_blob_sha": "47496f2bb397512b5039035583523639fe2e7ae6"
+    },
+    {
+      "path": "research/constraints/texugo_negative_controls_02_2026-11-12.md",
+      "git_blob_sha": "5fa90473009c502665bd8ae6e09ed3f9130bce6e"
+    },
+    {
+      "path": "research/constraints/texugo_negative_controls_03_2026-11-12.md",
+      "git_blob_sha": "e8f8baf108d3d1ab9a2e12719ab146cd4f034f7c"
+    },
+    {
+      "path": "research/constraints/texugo_negative_controls_04_2026-11-12.md",
+      "git_blob_sha": "0db999f5b65fe69f6d721f8b073ee0e065366bee"
+    },
+    {
+      "path": "research/constraints/texugo_negative_controls_2026-11-12.md",
+      "git_blob_sha": "ff96a59f8b417697652c37819283b877970980e2"
+    },
+    {
+      "path": "research/evidence_matrix_C001-C238_2026-11-11.md",
+      "git_blob_sha": "a7978c3a75a153b16ab70118a92c434bba674cb7"
+    },
+    {
+      "path": "research/geo/README.md",
+      "git_blob_sha": "53b56f90fd1f69aaf0c88cfd61ef1f3989c17cb1"
+    },
+    {
+      "path": "research/meteorology/gdex_uadb_1963_coverage_2026-11-12.md",
+      "git_blob_sha": "5d7cb7015491858c6523cd0d756c0ae1516b963d"
+    },
+    {
+      "path": "research/meteorology/igra_bahia_coverage_2026-11-12.md",
+      "git_blob_sha": "55c79d68a9585a187f4e2cf1c812f60deded7487"
+    },
+    {
+      "path": "research/meteorology/nmc_y20175_1963_custody.md",
+      "git_blob_sha": "e80b6cd9a0a0f994f5126292759d61dc0f438e97"
+    },
+    {
+      "path": "research/meteorology/space_weather_msise_inputs_1963_11_07_09.md",
+      "git_blob_sha": "99e10cdf6634f4ecf73042803687c458d59f057e"
+    },
+    {
+      "path": "research/meteorology/space_weather_nov08_3h_epoch_grid.md",
+      "git_blob_sha": "db94d9efdc6db46e5c80a7f99265e93b148a1933"
+    },
+    {
+      "path": "research/provenance/README.md",
+      "git_blob_sha": "1cd0e8aa8607ec4db88f301fd5739f798d725621"
+    },
+    {
+      "path": "research/statistics/CHRONOLOGICAL_HOLDOUT_PROTOCOL.md",
+      "git_blob_sha": "f3526daf2d2847dd92a6055a273876962506a659"
+    },
+    {
+      "path": "research/statistics/LINEAGE_IDENTIFIABILITY.md",
+      "git_blob_sha": "666ca6e82fbb8bdab50fd4adf3ad9632e34ac977"
+    },
+    {
+      "path": "research/statistics/README.md",
+      "git_blob_sha": "5cef45f29f055136f7d29b4616498075b3de3048"
+    },
+    {
+      "path": "research/tle_custody/INTEGRATION.md",
+      "git_blob_sha": "9b7d75b4a678016bb0acb07339dd419ec8361f81"
+    },
+    {
+      "path": "research/tle_custody/evidence_matrix_C241-L1_2026-11-12.md",
+      "git_blob_sha": "daa5bec1505dde91d1eb22dab86d6ddce3093094"
+    },
+    {
+      "path": "research/tle_custody/evidence_matrix_C241-L2_2026-11-12.md",
+      "git_blob_sha": "c21da69a0f29b081f1a8e761947018dcd2dbddc3"
+    },
+    {
+      "path": "research/tle_custody/evidence_matrix_C241-L3_2026-11-12.md",
+      "git_blob_sha": "bbe6ef071a41b2531100b32891ef5585a3a386f4"
+    },
+    {
+      "path": "research/tle_custody/evidence_matrix_C241-L4_2026-11-12.md",
+      "git_blob_sha": "d14d98d8631b372a2543d86225d5a33a80d18705"
+    },
+    {
+      "path": "team/abelha.md",
+      "git_blob_sha": "abca2130c3819d1ead85d76b4b59046e51005462"
+    },
+    {
+      "path": "team/caranguejo.md",
+      "git_blob_sha": "08b1ee01d7596a2d50a961089bdb1dbbdfd33d13"
+    },
+    {
+      "path": "team/castor.md",
+      "git_blob_sha": "993bf26797cf407c00048210c33691c5050df0dc"
+    },
+    {
+      "path": "team/cervo.md",
+      "git_blob_sha": "50f191259cf553dee85003961eeec6a2a639bb56"
+    },
+    {
+      "path": "team/coruja.md",
+      "git_blob_sha": "eba1c77e952ec14b082392f0ccef8c68240db3e7"
+    },
+    {
+      "path": "team/elefante.md",
+      "git_blob_sha": "97b1bd644d9eda839ec51d6599ce04a022fd180c"
+    },
+    {
+      "path": "team/gaviao.md",
+      "git_blob_sha": "7de28dfa500300201dd41005974ca6bdf2153ed2"
+    },
+    {
+      "path": "team/lagarto.md",
+      "git_blob_sha": "67f9b6e7b38493c6c0e4d394912f29958853063c"
+    },
+    {
+      "path": "team/lontra.md",
+      "git_blob_sha": "394f2c4a60faae25b8ca5c27bde5ddb72ebe6088"
+    },
+    {
+      "path": "team/memory/castor/20261112-convergence-independent-slice.md",
+      "git_blob_sha": "af8afd726dad57a312963cc0181e7df1f21c88c6"
+    },
+    {
+      "path": "team/memory/castor/20261112-first-kernel-merge-slice.md",
+      "git_blob_sha": "e4b2e4dfb5b6afba9b59c3a4c48ed1a0d6fde721"
+    },
+    {
+      "path": "team/memory/castor/20261112T1115Z-jacobi-budget-extraction.md",
+      "git_blob_sha": "491e2e36b39b5ff1fc847f4cde2ee1f486888fdb"
+    },
+    {
+      "path": "team/memory/castor/20261112T1205Z-jacobi-refinement-state-consistency.md",
+      "git_blob_sha": "3e746533ebf9033650b05c656c8845d07e5c5f16"
+    },
+    {
+      "path": "team/memory/elefante/20261112T0702Z-ci-head-bootstrap.md",
+      "git_blob_sha": "f158fb5f2cae2d4fb68a045c8e70f6283ed4de25"
+    },
+    {
+      "path": "team/memory/elefante/20261112T0713-RO-ci-suite-coverage.md",
+      "git_blob_sha": "dc3738cea56418a44f273fbee023a8a765cd7c10"
+    },
+    {
+      "path": "team/memory/gaviao/20261112T0740-RO-retrospective-main-checkpoint.md",
+      "git_blob_sha": "0435ea7dfcb4743c637f0236aeea477fe1182e03"
+    },
+    {
+      "path": "team/memory/investigacao-geral/2026-11-12_0808-igra-bahia.md",
+      "git_blob_sha": "ce6f5781e5dbd3cddb47450f4f3b3ad200c55ff3"
+    },
+    {
+      "path": "team/memory/polvo/20261112-autonomia-merges-gaviao-retro.md",
+      "git_blob_sha": "dd9af145db7617cf3e9a3572e1cccae63f4e8e5c"
+    },
+    {
+      "path": "team/memory/polvo/20261112-c179-tle-graph-handoff.md",
+      "git_blob_sha": "b8e1c506285baec54d315120206220f65bc39d3f"
+    },
+    {
+      "path": "team/memory/polvo/20261112-lean-core-independent-slice.md",
+      "git_blob_sha": "f7d33ac1e6c47853c331b35709ccbe25884540ec"
+    },
+    {
+      "path": "team/memory/polvo/20261112-matrix-independent-slice.md",
+      "git_blob_sha": "20c791eab46a5ac2e13ff426b5973b1817688cda"
+    },
+    {
+      "path": "team/memory/polvo/20261112-observable-independent-integration.md",
+      "git_blob_sha": "ed136c88228507081c61adbcbe477a8ae2d06b5c"
+    },
+    {
+      "path": "team/memory/polvo/20261112T0700Z-skills-bootstrap.md",
+      "git_blob_sha": "f0089b6417e47c56da996a0af8eee29cc66a7636"
+    },
+    {
+      "path": "team/memory/raposa/20261112T1112Z-tle-custody-standalone-main.md",
+      "git_blob_sha": "e48bf7fc08492ae1f4ec9cf114aaa9af725ac638"
+    },
+    {
+      "path": "team/memory/tartaruga/20261112-literal-528-incremental.md",
+      "git_blob_sha": "a0d20963fb38b633929d4890f65712e3e83ea464"
+    },
+    {
+      "path": "team/memory/tartaruga/20261112-operational-reference-528.md",
+      "git_blob_sha": "c2d9a8763380c2c50b04cf70bd70bf463e030ce1"
+    },
+    {
+      "path": "team/memory/tartaruga/20261112T0733Z-literal-layout-c241-l1.md",
+      "git_blob_sha": "f9f7237942685890ade5d6184042c5986b0dc264"
+    },
+    {
+      "path": "team/memory/texugo/2026-11-12-qa-derived-edges.md",
+      "git_blob_sha": "466086e44d7d3de0eb70dec90c548f9004025d2b"
+    },
+    {
+      "path": "team/polvo.md",
+      "git_blob_sha": "4f78f07fe3458005425669623368b2a7ca5901de"
+    },
+    {
+      "path": "team/raposa.md",
+      "git_blob_sha": "5b813ef7ccc5777fc5bcf90d31a6c6fcb92055bb"
+    },
+    {
+      "path": "team/tartaruga.md",
+      "git_blob_sha": "2ce6950e78442aa78a339d720969dc874bc6d360"
+    },
+    {
+      "path": "team/texugo.md",
+      "git_blob_sha": "f305b5cacbe66dece657b9307eeb1a9a30b04c1e"
+    }
+  ]
+}
