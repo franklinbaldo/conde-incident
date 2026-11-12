@@ -226,3 +226,45 @@ calibrados. Não escolher 284,1520° ou 198,5261° por conveniência,
 não inferir fase/posição geográfica, e não tratar reentrada como
 queda confirmada em Conde. Identidade física da peça S00528 segue
 sem documentação primária de engenharia.
+
+
+### C241-T3: resultados do acervo pinado, observados em CI do HEAD 4ed7c63
+
+[Custódia Actions #43130028928](https://github.com/franklinbaldo/conde-incident/actions/runs/43130028928)
+concluiu **SUCCESS no source HEAD 4ed7c635600f1b7510e2132fea8ea3b583620ea6**,
+registrado também como audited_source_head no log; **39/39 testes PASS**,
+Parquet e CSV com SHA-256 conferidos e saída JSON arquivada no
+[artefato #13904024160](https://github.com/franklinbaldo/conde-incident/actions/runs/43130028928/artifacts/13904024160),
+digest ZIP SHA-256 902766df555d796458fae5f730bdea64b25f86cdb26ca04025109931131f46ed.
+[Scientific checks #43130028914](https://github.com/franklinbaldo/conde-incident/actions/runs/43130028914)
+também SUCCESS no mesmo HEAD.
+
+| Janela de proximidade temporal | Épocas 528 com 527 próximo | Épocas 528 com 529 próximo | 527 **e** 529 próximos, cada um |
+|---|---:|---:|---:|
+| até 6 horas | 2 | 6 | **1** |
+| até 24 horas | 5 | 18 | **2** |
+| até 72 horas | 16 | 35 | **15** |
+| mesma época UTC, delta 0 µs | 0 | 0 | **0** |
+| proximidade ≤432 µs | 0 | 0 | **0** |
+
+**Novo resultado negativo importante:** das 45 épocas 528 deste arquivo,
+**nenhuma** tem horário **exatamente igual** ao de 527 ou 529, nem
+correspondência dentro de meia unidade de quantização temporal TLE.
+As 15 épocas 528 que têm *ambos* os outros objetos a até 72 h
+não são 15 observações instrumentais simultâneas. Dentro de 72 h,
+os vizinhos mais próximos efetivamente reutilizam apenas **13 épocas
+distintas do 527** e **28 do 529**. Tratar todos como medidas
+independentes inflaria artificialmente a informação.
+
+Extremos da série secundária: 528 de **17/01/1963
+16:18:12.350304 UTC** até **27/10/1963 14:40:16.132512 UTC**; 527
+até **17/12/1963** e 529 até **30/12/1963**. Não há no espelho fixado
+época posterior a 27/10 para 528: qualquer extrapolação até 08/11 exige
+modelo, erro acumulado e validação, e **não é observação terminal**.
+A data NASA do dia 08/11 segue sem horário ou posição.
+
+**Limite epistêmico:** zero coincidências exatas significa apenas zero
+registros com timestamps iguais no espelho secundário pinado,
+não ausência de rastreamento histórico nem impossibilidade de ajuste
+conjunto. O conjunto de linhas próximas é documental, não restrição
+Lean física; não resolve o conflito RAAN nem prova impacto.
