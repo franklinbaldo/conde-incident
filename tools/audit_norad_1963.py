@@ -328,6 +328,20 @@ def write_outputs(rows: list[dict], report: dict, target: Path, checks: dict[str
         json.dumps(report, indent=2, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8")
 
 
+def assert_audit_valid(report: dict) -> None:
+    """Nao permitir gate verde com linhas contraditorias em mesma epoca.
+
+    A saida audit.json ja foi persistida antes deste gate: preservar falha.
+    Duplicatas IDENTICAS continuam permitidas como linhagem redundante.
+    """
+    if any(report["counts"].get(str(i), 0) == 0 for i in IDS):
+        raise ValueError("objeto sem registros no espelho")
+    if report["problems"]:
+        raise ValueError("anomalias numericas; preservar CSV e relatorio")
+    if report["duplicate_epoch_conflicts"]:
+        raise ValueError("epocas identicas com estados conflitantes; nao certificar custodia")
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--parquet", type=Path, required=True)
