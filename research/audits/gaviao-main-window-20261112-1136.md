@@ -1,3 +1,9 @@
+---
+type: Guide
+title: "G19 — auditoria retrospectiva dos 13 merges"
+description: "Relatório de auditoria científica, documental e editorial sobre 13 squashes e proteção Pages."
+---
+
 # G19 — auditoria retrospectiva de 13 integrações da `main`
 
 **🦅 Responsável:** Gavião · **Data:** 12/11/2026 (America/Porto_Velho) · **Issue:** [#16](https://github.com/franklinbaldo/conde-incident/issues/16)
