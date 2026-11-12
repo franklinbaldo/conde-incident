@@ -1,0 +1,293 @@
+{
+  "all_epochs": {
+    "exact_structural_design": {
+      "constant_catalog_offset": {
+        "columns": 7,
+        "nullity": 1,
+        "rank": 6
+      },
+      "free_catalog_offset_and_drift": {
+        "columns": 8,
+        "nullity": 2,
+        "rank": 6
+      },
+      "gauge_phase_vector": [
+        1,
+        1,
+        1,
+        0,
+        0,
+        0,
+        -1,
+        0
+      ],
+      "gauge_rate_vector": [
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        0,
+        -1
+      ],
+      "hypothetical_absolute_phase_528_only": {
+        "columns": 8,
+        "nullity": 1,
+        "rank": 7
+      },
+      "hypothetical_absolute_rate_528_only": {
+        "columns": 8,
+        "nullity": 1,
+        "rank": 7
+      },
+      "hypothetical_both_anchors_528": {
+        "columns": 8,
+        "nullity": 0,
+        "rank": 8
+      }
+    },
+    "unique": 119
+  },
+  "classification": "EXACT_CONDITIONAL_STRUCTURAL_LOCAL_IDENTIFIABILITY",
+  "error_model_historical": null,
+  "exact_time_unit": "integer UTC microseconds / 86400000000, days",
+  "geographic_domain_reduction": "NOT_EVALUABLE",
+  "historical_posterior": "NOT_RUN",
+  "holdout": {
+    "not_instrumentally_independent": true,
+    "path": "research/statistics/raan_chronological_holdout_1963.json",
+    "retrospective_not_blind": true,
+    "sha256": "a51ff61054da94587aa9c45631b3887572f238fe5967d2a8493c49d360c5e59f"
+  },
+  "model_hypothesis": "Omega_j(t)=wrap(F_j(t)+phase_j+rate_j*t+catalog_offset+catalog_drift*t). F_j is fixed but NOT provided, fitted or validated.",
+  "parameter_columns": [
+    "phase_527",
+    "phase_528",
+    "phase_529",
+    "rate_527_deg_day",
+    "rate_528_deg_day",
+    "rate_529_deg_day",
+    "catalog_offset",
+    "catalog_drift_deg_day"
+  ],
+  "per_split": {
+    "evaluation": {
+      "distinct_epochs_by_object": {
+        "527": 4,
+        "528": 8,
+        "529": 23
+      },
+      "epochs_from_one_secondary_lineage": 35,
+      "exact_structural_design": {
+        "constant_catalog_offset": {
+          "columns": 7,
+          "nullity": 1,
+          "rank": 6
+        },
+        "free_catalog_offset_and_drift": {
+          "columns": 8,
+          "nullity": 2,
+          "rank": 6
+        },
+        "gauge_phase_vector": [
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          -1,
+          0
+        ],
+        "gauge_rate_vector": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          -1
+        ],
+        "hypothetical_absolute_phase_528_only": {
+          "columns": 8,
+          "nullity": 1,
+          "rank": 7
+        },
+        "hypothetical_absolute_rate_528_only": {
+          "columns": 8,
+          "nullity": 1,
+          "rank": 7
+        },
+        "hypothetical_both_anchors_528": {
+          "columns": 8,
+          "nullity": 0,
+          "rank": 8
+        }
+      },
+      "historical_likelihood": "NOT_CALIBRATED",
+      "object_counts": {
+        "527": 4,
+        "528": 8,
+        "529": 23
+      },
+      "posterior_mcmc": "NOT_RUN"
+    },
+    "fit": {
+      "distinct_epochs_by_object": {
+        "527": 15,
+        "528": 24,
+        "529": 22
+      },
+      "epochs_from_one_secondary_lineage": 61,
+      "exact_structural_design": {
+        "constant_catalog_offset": {
+          "columns": 7,
+          "nullity": 1,
+          "rank": 6
+        },
+        "free_catalog_offset_and_drift": {
+          "columns": 8,
+          "nullity": 2,
+          "rank": 6
+        },
+        "gauge_phase_vector": [
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          -1,
+          0
+        ],
+        "gauge_rate_vector": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          -1
+        ],
+        "hypothetical_absolute_phase_528_only": {
+          "columns": 8,
+          "nullity": 1,
+          "rank": 7
+        },
+        "hypothetical_absolute_rate_528_only": {
+          "columns": 8,
+          "nullity": 1,
+          "rank": 7
+        },
+        "hypothetical_both_anchors_528": {
+          "columns": 8,
+          "nullity": 0,
+          "rank": 8
+        }
+      },
+      "historical_likelihood": "NOT_CALIBRATED",
+      "object_counts": {
+        "527": 15,
+        "528": 24,
+        "529": 22
+      },
+      "posterior_mcmc": "NOT_RUN"
+    },
+    "validation": {
+      "distinct_epochs_by_object": {
+        "527": 1,
+        "528": 13,
+        "529": 9
+      },
+      "epochs_from_one_secondary_lineage": 23,
+      "exact_structural_design": {
+        "constant_catalog_offset": {
+          "columns": 7,
+          "nullity": 2,
+          "rank": 5
+        },
+        "free_catalog_offset_and_drift": {
+          "columns": 8,
+          "nullity": 3,
+          "rank": 5
+        },
+        "gauge_phase_vector": [
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          -1,
+          0
+        ],
+        "gauge_rate_vector": [
+          0,
+          0,
+          0,
+          1,
+          1,
+          1,
+          0,
+          -1
+        ],
+        "hypothetical_absolute_phase_528_only": {
+          "columns": 8,
+          "nullity": 2,
+          "rank": 6
+        },
+        "hypothetical_absolute_rate_528_only": {
+          "columns": 8,
+          "nullity": 2,
+          "rank": 6
+        },
+        "hypothetical_both_anchors_528": {
+          "columns": 8,
+          "nullity": 1,
+          "rank": 7
+        }
+      },
+      "historical_likelihood": "NOT_CALIBRATED",
+      "object_counts": {
+        "527": 1,
+        "528": 13,
+        "529": 9
+      },
+      "posterior_mcmc": "NOT_RUN"
+    }
+  },
+  "priors_historical": null,
+  "required_to_upgrade": [
+    "Castor: physical forward operator for mean TLE RAAN, frame/epoch-compatible",
+    "Tartaruga: authenticated instrument, independent absolute angle/time calibration and uncertainty",
+    "Documented angular error covariance and reporting/selection model",
+    "Pre-registered true independent holdout before calibrated inference"
+  ],
+  "schema": "conde.raan-temporal-gauge/v1",
+  "source": {
+    "documentary_lineages": 1,
+    "occurrence_ids": [
+      "C25#1",
+      "C179#1",
+      "C180#1",
+      "C181#1",
+      "C241-L3"
+    ],
+    "original_instrument_record": null,
+    "path": "research/statistics/raan_527_528_529_1963.json",
+    "sha256": "b88564912c35167044d5fd4a0c1b50f6c624fcaf1066f82a7b70e503df8928f5"
+  },
+  "time_reference": "1963-01-01T00:00:00Z",
+  "warnings": [
+    "The full model is only a local additive angular design; wrapped observations can have global rate aliases.",
+    "If catalogue drift is unconstrained, rates have a second gauge even with numerous epochs.",
+    "A phase-only anchor does not identify a shared undocumented rate drift, nor vice versa.",
+    "The sole 527 validation epoch cannot separately identify its phase and rate in validation alone.",
+    "Rank does not quantify signal/noise, physical dynamics, errors, selection or posterior uncertainty.",
+    "All anchors here are COUNTERFACTUAL; no independent calibrated instrument is claimed.",
+    "The split was designed after inspecting the data and shares the documentary lineage."
+  ]
+}
