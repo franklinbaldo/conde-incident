@@ -7,6 +7,8 @@ import React, { useState } from 'react';
 import { Navigation, TabId } from './components/Navigation';
 import { hashForLabTab, resolveLabHash } from './lib/labRoutes';
 import { ExecutiveSummary } from './components/ExecutiveSummary';
+import { ResearchLedger } from './components/ResearchLedger';
+import { EvidenceTrace } from './components/EvidenceTrace';
 import { OrbitalMap } from './components/OrbitalMap';
 import { InversePassInspector } from './components/InversePassInspector';
 import { TriangulationDashboard } from './components/TriangulationDashboard';
@@ -87,6 +89,12 @@ export default function App() {
             <p className="mt-3 text-zinc-300">Esta seção não está disponível nesta versão. Nenhuma observação ou evidência é inferida do endereço.</p>
             <a href="#/summary" onClick={() => navigateTab('summary')} className="mt-4 inline-block text-cyan-300 underline">Voltar ao resumo</a>
           </section>
+        )}
+        {activeTab === 'research' && (
+          <>
+            <ResearchLedger lang={lang} />
+            <EvidenceTrace />
+          </>
         )}
         {activeTab === 'summary' && (
           <ExecutiveSummary
