@@ -1,0 +1,22 @@
+name: Coupled orbit kernel (independent slice)
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  physical-kernel:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify exact tested source SHA
+        run: |
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+          git log -1 --format='%H %s'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Synthetic r/v conservation, J2 gradient, optional drag and negative controls
+        run: node --experimental-strip-types --test tests/orbitKernel.test.mjs
