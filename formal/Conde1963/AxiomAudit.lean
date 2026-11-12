@@ -1,4 +1,4 @@
-import Conde1963.FiniteCoverage
+import Conde1963.CertifiedCells
 
 /-! Explicit kernel-dependency report in CI, not an empirical validation. -/
 
@@ -120,3 +120,13 @@ import Conde1963.FiniteCoverage
 #print axioms Conde1963.exhaustive_empty_right_screen_eliminates_right_branch
 #print axioms Conde1963.exhaustive_right_screen_licenses_left_exclusion
 #print axioms Conde1963.empty_sample_does_not_eliminate_unseen_branch
+
+-- Finite cell coverings of continuous parameters: not finite point-grid completeness.
+#print axioms Conde1963.predicted_event_has_certified_cell_bound
+#print axioms Conde1963.nonempty_domain_requires_listed_cell
+#print axioms Conde1963.empty_certified_cells_imply_empty_domain
+#print axioms Conde1963.covered_cells_exclude_conde
+#print axioms Conde1963.covered_cells_force_conde
+#print axioms Conde1963.covered_cells_identify_other_window
+#print axioms Conde1963.cell_cover_survives_common_narrowing
+#print axioms Conde1963.cell_bounds_survive_common_narrowing
