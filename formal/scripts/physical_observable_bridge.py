@@ -18,7 +18,7 @@ import hashlib
 
 MATRIX_PATH = "research/evidence_matrix_C001-C238_2026-11-11.md"
 MATRIX_GIT_BLOB_SHA1 = "a7978c3a75a153b16ab70118a92c434bba674cb7"
-ROW = re.compile(r"^\\|\\s*(?:\\*\\*)?(C[0-9]+)(?:\\*\\*)?\\s*\\|")
+ROW = re.compile(r"^\|\s*(?:\*\*)?(C[0-9]+)(?:\*\*)?\s*\|")
 
 def parse_rows(data: bytes) -> list[dict]:
     text = data.decode("utf-8")
@@ -37,7 +37,7 @@ def parse_rows(data: bytes) -> list[dict]:
     return rows
 
 def audit(data: bytes, rows: list[dict]) -> None:
-    blob = hashlib.sha1(b"blob " + str(len(data)).encode("ascii") + b"\\0" + data).hexdigest()
+    blob = hashlib.sha1(b"blob " + str(len(data)).encode("ascii") + b"\0" + data).hexdigest()
     if blob != MATRIX_GIT_BLOB_SHA1:
         raise ValueError("pinned evidence-matrix Git blob changed")
     counts: dict[int, int] = {}
