@@ -1,0 +1,161 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { EARTH } from '../src/lib/orbitPhysics.ts';
+import { auditVelocityDomain, runConditionalVelocityDomain } from '../src/lib/orbitAdmissibility.ts';
+import { bridgeDeclaredAlternatives } from '../src/lib/orbitDeclaredDomainBridge.ts';
+
+// Contract sample modeled on PR #43 output. Every observation, trace,
+// domain and position here is SYNTHETIC. The #43 branch is not imported.
+const epoch = '1963-10-27T00:00:00.000Z';
+const frame = 'SYNTHETIC_CARTESIAN_INERTIAL';
+const v = Math.sqrt(EARTH.muKm3S2 / (EARTH.radiusKm + 500));
+const initial = { tS: 0, rKm: [EARTH.radiusKm + 500, 0, 0], vKmS: [0, v, 0] };
+const axes = ['vx','vy','vz'];
+const trace = (axis, id) => ({
+  parameter: axis, evidence_id: id, occurrence: 'synthetic ' + axis,
+  source_uri: 'synthetic:' + id, independence_group_declared: 'generated-' + id,
+  lean_ref_declared: 'Synthetic.' + axis, lean_status_declared: 'NOT_RUN',
+});
+const parameter = (name, min, max) => ({
+  name, status: 'REDUCED', initial: { min, max },
+  admissible: { min, max },
+});
+const branch = (id, lo, hi) => ({
+  id, domain_status: 'REDUCED', declared_evidence: 'SYNTHETIC_ONLY',
+  lean_proofs: 'NOT_VERIFIED', numerical_holdout: 'NOT_RUN',
+  parameters: [
+    parameter('vx', lo, hi),
+    parameter('vy', '760/100', '780/100'),
+    parameter('vz', '-1/100', '1/100'),
+  ],
+  trace: axes.map(axis => trace(axis, id + '-' + axis)),
+});
+const baseline = () => ({
+  status: 'MULTIPLE_DECLARED_FEASIBLE',
+  scenarios: [branch('first','0','4/1000'),branch('second','8/100','9/100')],
+  scenario_set_exhaustive: 'NOT_VERIFIED',
+  matrix_occurrences: 'NOT_VERIFIED',
+  source_authenticity: 'NOT_VERIFIED',
+  source_independence_between_scenarios: 'NOT_VERIFIED',
+  lean_proofs: 'NOT_VERIFIED',
+  physical_feasibility: 'NOT_VERIFIED',
+  numerical_holdouts: 'NOT_RUN',
+  location_and_impact: 'NOT_INFERRED',
+});
+const context = (ids = ['first','second']) => ({
+  objectNorad: 529, epochUtc: epoch, inertialFrame: frame,
+  assumedUnit: 'km/s',
+  initials: ids.map(id => ({
+    id, initial, initialDomainSource: 'synthetic declared initial range ' + id,
+  })),
+});
+const run = (audit = baseline(), ctx = context()) => bridgeDeclaredAlternatives(audit,ctx);
+
+test('separate exact rational source branches convert to two bounded Cartesian scenarios', () => {
+  const out = run();
+  assert.deepEqual(out.records.map(x => x.status),
+    ['READY_CONDITIONALLY','READY_CONDITIONALLY']);
+  assert.equal(out.alternatives.length,2);
+  assert.deepEqual(out.alternatives.map(x => auditVelocityDomain(x.scenario).status),
+    ['BOUNDED','BOUNDED']);
+  assert.ok(out.alternatives[0].scenario.bounds[0].upperKmS <= 0.004);
+  assert.ok(out.alternatives[1].scenario.bounds[0].lowerKmS >= 0.08);
+  assert.equal(out.alternatives[0].scenario.bounds[0].premiseStatus,'SYNTHETIC');
+  assert.match(out.alternatives[0].scenario.bounds[0].evidenceOccurrence,/first-vx/);
+  assert.equal(out.unitFromAuditor,'NOT_PRESENT');
+  assert.equal(out.leanProof,'NOT_VERIFIED');
+  assert.equal(out.sourceAuthenticity,'NOT_VERIFIED');
+  assert.equal(out.frameTransformation,'NOT_RUN');
+  assert.equal(out.geographicInference,'NOT_SUPPORTED');
+  assert.equal(out.exhaustiveEnclosure,false);
+});
+
+test('Float64 velocity endpoints are rounded INWARD, not overconfidently outward', () => {
+  const audit = baseline();
+  audit.scenarios[0].parameters[0].admissible = {min:'1/10',max:'1/5'};
+  const out = run(audit);
+  const x = out.alternatives[0].scenario.bounds[0];
+  assert.ok(x.lowerKmS > 0.1, '0.1 binary float is below the exact 1/10');
+  assert.ok(x.upperKmS < 0.2, '0.2 binary float is above the exact 1/5');
+  assert.ok(x.lowerKmS <= x.upperKmS);
+});
+
+test('a tiny exact rational interval with NO Float64 sample is rejected, not widened', () => {
+  const audit = baseline();
+  audit.scenarios[0].parameters[0].admissible = {
+    min:'100000000000000000001/1000000000000000000000',
+    max:'100000000000000000002/1000000000000000000000',
+  };
+  const out = run(audit);
+  assert.equal(out.alternatives.length,1);
+  assert.equal(out.records[0].status,'NOT_RUN_FLOAT64_PRECISION');
+  assert.equal(out.records[1].status,'READY_CONDITIONALLY');
+});
+
+test('exact singleton with representable Float64 survives, but inexact singleton does not', () => {
+  const audit = baseline();
+  audit.scenarios[0].parameters[0].admissible = {min:'1/2',max:'1/2'};
+  assert.deepEqual(run(audit).alternatives[0].scenario.bounds[0].lowerKmS,0.5);
+  audit.scenarios[0].parameters[0].admissible = {min:'1/10',max:'1/10'};
+  assert.equal(run(audit).records[0].status,'NOT_RUN_FLOAT64_PRECISION');
+});
+
+test('declared contradiction remains local; never claim historical exclusion', () => {
+  const audit = baseline();
+  audit.scenarios[0].domain_status = 'CONTRADICTORY';
+  audit.scenarios[0].parameters[0].admissible = null;
+  const out = run(audit);
+  assert.equal(out.records[0].status,'NOT_RUN_CONTRADICTORY');
+  assert.equal(out.records[1].status,'READY_CONDITIONALLY');
+  assert.equal(out.alternatives.length,1);
+  assert.equal(out.geographicInference,'NOT_SUPPORTED');
+});
+
+test('missing trace or velocity coordinate blocks just that branch', () => {
+  const audit = baseline();
+  audit.scenarios[0].trace = audit.scenarios[0].trace.filter(t => t.parameter !== 'vz');
+  assert.equal(run(audit).records[0].status,'NOT_RUN_UNTRACED');
+  audit.scenarios[0].parameters.pop();
+  assert.equal(run(audit).records[0].status,'NOT_RUN_INCOMPLETE');
+});
+
+test('no pretending that a claimed Lean label, units or frame conversion was verified', () => {
+  const audit = baseline();
+  audit.lean_proofs='VERIFIED';
+  assert.throws(() => run(audit),/falsely certified/);
+  audit.lean_proofs='NOT_VERIFIED';
+  audit.scenarios[0].trace[0].lean_status_declared='PASS';
+  assert.throws(() => run(audit),/falsely certified restriction/);
+  audit.scenarios[0].trace[0].lean_status_declared='NOT_RUN';
+  const ctx=context();ctx.assumedUnit='m/s';
+  assert.throws(() => run(audit,ctx),/Explicit Cartesian unit/);
+});
+
+test('no silent mapping from another parameter or another initial lineage', () => {
+  const audit=baseline();
+  audit.scenarios[0].parameters[0].name='RAAN';
+  assert.throws(() => run(audit),/Unsupported non-velocity/);
+  audit.scenarios[0].parameters[0].name='vx';
+  const ctx=context();ctx.initials.pop();
+  assert.throws(() => run(audit,ctx),/Exactly one initial state/);
+});
+
+test('seeded, explicitly CONDiTIONAL physical propagation of rational branches is repeatable', () => {
+  const out=run();
+  const controls={
+    seed:19763,interiorDraws:1,durationS:120,stepS:30,
+    terminationAltitudeKm:80,
+    convergence:{halvings:2,tolerance:{
+      positionKm:0.5,velocityKmS:0.0005,epochS:0.05,
+    }},
+  };
+  const one=runConditionalVelocityDomain(out.alternatives[0].scenario,controls,{j2:true});
+  const again=runConditionalVelocityDomain(out.alternatives[0].scenario,controls,{j2:true});
+  assert.deepEqual(one,again);
+  assert.equal(one.status,'SAMPLED_CONDITIONALLY');
+  assert.ok(one.samples.length>=9);
+  assert.equal(one.proofVerification,'NOT_RUN');
+  assert.equal(one.historicalHoldout,'NOT_RUN');
+  assert.equal(one.geographicInference,'NOT_SUPPORTED');
+  assert.deepEqual(one.samples.map(x=>x.vKmS),again.samples.map(x=>x.vKmS));
+});
