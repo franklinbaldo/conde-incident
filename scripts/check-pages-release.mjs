@@ -203,7 +203,7 @@ export async function auditFromGitHub({ repo, sha, token, upstreamConclusion, si
   }
   const readPage = async suffix => {
     const r = await fetch(siteUrl + suffix, {
-      signal: AbortSignal.timeout(15000), redirect: 'follow',
+      signal: AbortSignal.timeout(15000), redirect: 'manual', // do not follow cross-origin CDN redirects
     });
     return { status: r.status, contentType: r.headers.get('content-type') || '',
       body: r.ok ? await r.text() : '' };
