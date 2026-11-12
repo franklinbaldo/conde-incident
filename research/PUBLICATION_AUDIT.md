@@ -76,3 +76,36 @@ buildado. Testes usam somente árvore/HTML artificiais adversariais.
 Fonte da política: [AGENTS.md](../AGENTS.md),
 [PR #22](https://github.com/franklinbaldo/conde-incident/pull/22)
 e [API Git Trees](https://docs.github.com/en/rest/git/trees).
+
+## Contraprova de atualização da publicação (12/11/2026)
+
+O auditor também exige que `GET /repos/{owner}/{repo}/branches/main`
+retorne **o mesmo SHA de 40 caracteres** sob auditoria e que o
+**deployment mais recente** em `github-pages` (consulta com
+`environment=github-pages&per_page=1`) pertença ao mesmo SHA.
+Mesmo havendo um deployment antigo verde nesse commit, o mais recente
+precisa estar com **último status `success`**, e o run mais recente
+de `Publish Conde site` nesse SHA precisa ter `completed/success`.
+Um run anterior verde não mascara um run posterior com falha, um
+deployment posterior pendente, ou a avanço de `main` sem deploy.
+
+**Independência e incerteza:** as leituras são metadados oficiais do
+próprio GitHub (não atestação independente do binário publicado).
+A regra conservadora pode declarar `NOT_VERIFIED` durante uma
+atualização legítima enquanto `main` avançou e Pages ainda não
+concluiu seu próximo deploy. Isso é preferível a declarar publicado
+o conteúdo do SHA errado. A árvore de fontes, os artigos HTTP e o
+laboratório continuam sujeitos às verificações anteriores; o gate não
+confere hashes de bytes HTML nem detecta toda troca maliciosa de
+conteúdo sem alteração nos metadados. Não utiliza dados astronômicos
+e não afirma reentrada/impacto.
+
+**Documentação da API de controle:**
+[Branches](https://docs.github.com/en/rest/branches/branches#get-a-branch),
+[Deployments](https://docs.github.com/en/rest/deployments/deployments#list-deployments),
+[Deployment statuses](https://docs.github.com/en/rest/deployments/statuses#list-deployment-statuses)
+e [Workflow runs](https://docs.github.com/en/rest/actions/workflow-runs#list-workflow-runs-for-a-workflow).
+Teste reproduzível:
+`node --test scripts/check-pages-release.test.mjs`.
+A fonte Pages via GitHub Actions e o deploy real **seguem NOT_VERIFIED**
+até consultas e respostas de produção no `main` integrado.
