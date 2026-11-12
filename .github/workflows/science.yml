@@ -40,3 +40,9 @@ jobs:
         run: |
           lake update
           lake build
+      - name: Audit existing Lean kernel dependencies
+        working-directory: formal
+        run: |
+          set -euo pipefail
+          lake env lean Conde1963/SourceAxiomAudit.lean | tee /tmp/conde-lean-axioms.log
+          if grep -E 'sorryAx|unsafe|error:' /tmp/conde-lean-axioms.log; then exit 1; fi
