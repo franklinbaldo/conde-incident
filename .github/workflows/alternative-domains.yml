@@ -6,6 +6,9 @@ on:
       - 'scripts/audit-alternative-domains.mjs'
       - 'tests/admissible-domain.test.mjs'
       - 'tests/alternative-domains.test.mjs'
+      - 'tests/domain-sensitivity.test.mjs'
+      - 'scripts/audit-domain-sensitivity.mjs'
+      - 'research/DOMAIN_SENSITIVITY.md'
       - 'research/ALTERNATIVE_DOMAINS.md'
       - '.github/workflows/alternative-domains.yml'
   push:
@@ -15,6 +18,9 @@ on:
       - 'scripts/audit-alternative-domains.mjs'
       - 'tests/admissible-domain.test.mjs'
       - 'tests/alternative-domains.test.mjs'
+      - 'tests/domain-sensitivity.test.mjs'
+      - 'scripts/audit-domain-sensitivity.mjs'
+      - 'research/DOMAIN_SENSITIVITY.md'
       - 'research/ALTERNATIVE_DOMAINS.md'
       - '.github/workflows/alternative-domains.yml'
 permissions:
@@ -24,8 +30,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact source SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - name: Audit exact domains and competing source scenarios
-        run: node --test tests/admissible-domain.test.mjs tests/alternative-domains.test.mjs
+        run: node --test tests/admissible-domain.test.mjs tests/alternative-domains.test.mjs tests/domain-sensitivity.test.mjs
