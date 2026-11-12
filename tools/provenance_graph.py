@@ -213,6 +213,45 @@ def validate_lineages(config: dict, rows: list[dict], root: Path = ROOT) -> None
     if {x["source_id"] for x in by_occurrence["C179#1"]} != {"AFSPC_MIRROR_528"}:
         raise ValueError("unverified mirror cannot be asserted as original tracking")
 
+    # Post-snapshot source occurrences are append-only typed addenda. They must not
+    # rewrite or renumber the 241 frozen rows and cannot imply physical corroboration.
+    addenda = config.get("post_matrix_occurrences", [])
+    if not isinstance(addenda, list):
+        raise ValueError("post_matrix_occurrences must be an array")
+    seen_addenda = set()
+    for update in addenda:
+        uid = update.get("id")
+        if not isinstance(uid, str) or not uid or uid in seen_addenda or uid in occurrences:
+            raise ValueError("duplicate or missing post-matrix occurrence ID")
+        seen_addenda.add(uid)
+        if update.get("source_id") not in sources or update.get("quoted_source_id") not in sources:
+            raise ValueError("post-matrix occurrence orphan source " + uid)
+        if ((update["source_id"], update["quoted_source_id"]) not in seen_edges
+                or any(edge["kind"] != "quotes_uninspected_source"
+                       for edge in config["dependencies"]
+                       if (edge["from"], edge["to"]) ==
+                       (update["source_id"], update["quoted_source_id"]))):
+            raise ValueError("post-matrix source has no explicit uninspected quotation edge " + uid)
+        related = update.get("related_matrix_occurrences")
+        if not isinstance(related, list) or not related or len(related) != len(set(related)) or (
+                set(related) - occurrences):
+            raise ValueError("post-matrix occurrence has missing/duplicate/unknown matrix links " + uid)
+        if update.get("status") != "CONNECTED_PENDING_DOCUMENTARY_VERIFICATION" or (
+                update.get("observation_type") != "DOCUMENTARY_CITATION_NOT_PHYSICAL_OBSERVATION"):
+            raise ValueError("post-matrix must remain pending documentary evidence " + uid)
+        if (update.get("newspaper_page") is not None or
+            update.get("newspaper_edition") is not None or
+            update.get("newspaper_publication_time") is not None or
+            update.get("journalistic_source_independence") != "UNRESOLVED" or
+            update.get("physical_constraint") is not None):
+            raise ValueError("unverified newspaper or physical assumption introduced " + uid)
+        if not re.fullmatch("[0-9a-f]{64}", update.get("image_sha256", "")):
+            raise ValueError("post-matrix digital object missing SHA-256 " + uid)
+        report = Path(update.get("report_path", ""))
+        if not report.parts or report.is_absolute() or ".." in report.parts or (
+                not (root / report).is_file()):
+            raise ValueError("post-matrix report missing or unsafe " + uid)
+
     contract_ids = set()
     for item in config["contracts"]:
         if not item["id"] or item["id"] in contract_ids:
@@ -304,6 +343,11 @@ def build(config: dict, raw: bytes, root: Path = ROOT) -> tuple[dict, dict]:
         "sources": config["sources"],
         "source_dependencies": config["dependencies"],
         "matrix_occurrences": records,
+        "post_matrix_occurrences": [
+            {**item, "related_matrix_snapshot_refs": [
+                matrix_ref(occ) for occ in item["related_matrix_occurrences"]
+            ]} for item in config.get("post_matrix_occurrences", [])
+        ],
         "contracts": config["contracts"],
         "citation_summary": {
             "matrix_occurrences": len(records),
