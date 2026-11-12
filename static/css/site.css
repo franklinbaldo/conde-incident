@@ -34,3 +34,21 @@ h1,h2,h3{line-height:1.16;letter-spacing:-.025em}h1{font-size:clamp(2.4rem,5vw,4
 .evidence-panel p{margin:.85rem 0}
 @media(max-width:620px){.wrap{width:min(100% - 2rem,960px)}.masthead nav{gap:.6rem 1rem}.evidence-panel{padding:1rem}.story-body pre{font-size:.8rem}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+
+/* Native Markdown chapter reader: accessible TOC and next/previous navigation.
+   Zola supplies the anchors and chapter neighbours from the canonical stories. */
+.story-toc{display:block;margin:1.75rem 0 2rem;border:1px solid var(--line);border-radius:.5rem;background:var(--panel);font:.94rem system-ui,sans-serif}
+.story-toc details{padding:.85rem 1.1rem}
+.story-toc summary{cursor:pointer;color:var(--ink);font-weight:700;line-height:1.55}
+.story-toc ol{margin:.8rem 0 .25rem;padding-left:1.5rem}
+.story-toc ol ol{margin:.3rem 0 .55rem}
+.story-toc li{padding:.18rem 0;overflow-wrap:anywhere}
+.story-toc a{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em}
+.story-chapter-nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));gap:.75rem;margin:2.5rem 0;font:.9rem system-ui,sans-serif}
+.story-chapter-nav a{display:block;padding:1rem;border:1px solid var(--line);border-radius:.5rem;background:var(--panel);overflow-wrap:anywhere;text-decoration:underline;text-underline-offset:.18em}
+.story-chapter-nav a:hover{border-color:var(--accent);background:#242a33}
+.story-chapter-nav span{display:block;color:var(--muted);font-size:.8rem;margin-bottom:.4rem}
+.story-chapter-nav strong{font-size:.95rem;font-weight:650}
+.story-chapter-index{align-self:stretch}
+@media(max-width:620px){.story-toc details{padding:.75rem .85rem}.story-chapter-nav{grid-template-columns:1fr}}
