@@ -326,9 +326,12 @@ def rolling_origin_diagnostics(rows: list[Observation]) -> dict:
         raise ValueError("rolling: epocas 529 duplicadas")
     donors = {s: sorted((o for o in rows if o.sat == s), key=lambda o: o.epoch)
               for s in (527, 528)}
+    # C243-T12: predeclared target-only local trends. All models score exactly
+    # the same next-epoch targets; no post-hoc cherry-picking of an epoch count.
     names = ("quadratic_529_only", "shared_curvature_527_528_to_529",
              "transfer_527_only", "transfer_528_only", "linear_529_only",
-             "persistence_529_last_epoch")
+             "persistence_529_last_epoch", "recency_529_two_point_secant",
+             "recency_529_three_point_linear")
     square_errors = {name: [] for name in names}
     outcomes = {"JOINT_BETTER": 0, "BASELINE_BETTER": 0, "TIE": 0}
     steps = []
@@ -364,6 +367,14 @@ def rolling_origin_diagnostics(rows: list[Observation]) -> dict:
             xx = x_at(future.epoch, origin)
             forecasts = {name: project(coeff, xx) for name, coeff in coef.items()}
             forecasts["persistence_529_last_epoch"] = past529[-1].mean_motion
+            # Both fit only target 529 epochs strictly before the next scored
+            # epoch. A 2-point secant and a 3-point OLS line challenge the
+            # full-history fits and joint donors on identical 51 potential
+            # evaluable origins; these are numerical, NOT physical forecasts.
+            forecasts["recency_529_two_point_secant"] = project(
+                polynomial_fit(target_train[-2:], 1), xx)
+            forecasts["recency_529_three_point_linear"] = project(
+                polynomial_fit(target_train[-3:], 1), xx)
             errors = {name: future.mean_motion - v for name, v in forecasts.items()}
             if not all(math.isfinite(v) for v in [*forecasts.values(), *errors.values()]):
                 raise ValueError("rolling: nonfinite forecast or error")
@@ -392,6 +403,12 @@ def rolling_origin_diagnostics(rows: list[Observation]) -> dict:
     return {"status": "EVALUATED_RETROSPECTIVE_PREQUENTIAL" if scored else "NOT_RUN",
             "target_norad_id": 529,
             "origin_rule": "previous 529 epoch; donor epochs <= origin; predict next 529 epoch",
+            "recency_controls": {
+                "models": ["recency_529_two_point_secant", "recency_529_three_point_linear"],
+                "past_529_epoch_counts": [2, 3],
+                "selection": "POST_HOC_FIXED_COUNTS_2_AND_3_NOT_OPTIMIZED",
+                "scored_on_identical_targets": True,
+            },
             "candidate_targets": len(steps), "scored_distinct_targets": scored,
             "skipped_targets": len(steps) - scored, "pooled_rmse_rev_day": pooled,
             "joint_vs_quadratic_one_step_counts": outcomes, "steps": steps,
