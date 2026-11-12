@@ -43,3 +43,26 @@ Não há simulação orbital, inferência de impacto nem identificação de
 sensor. Dado decisivo ausente: boletins/pares instrumentais 1963 dos
 527/528/529 com frame/época, logs de rastreamento e descrição de
 engenharia da peça S00528.
+
+## Resultado efetivamente reproduzido em GitHub Actions
+
+No HEAD inicial `16f767d18d53299474d420b754eba9507ee957e1`,
+[Actions #43220267253](https://github.com/franklinbaldo/conde-incident/actions/runs/43220267253)
+passou com **12/12 testes adversariais** + **10/10 controles literais**.
+O Parquet lido continha 4.567 linhas totais; para os IDs 527/528/529,
+foram **21/45/57 linhas** e **20/45/54 épocas distintas**, sendo
+respectivamente **1/0/3 linhas de época duplicada** sem conflito orbital.
+O par secundário de 27/10/1963 coincidiu com a linha de origem **3017**,
+com diferenças inferiores às tolerâncias decimais das seis colunas;
+status `AGREES_WITHIN_NUMERIC_ROUNDING`.
+
+Os outputs determinísticos desse HEAD tiveram SHA-256:
+
+- `norad_527_528_529_numeric_1963.csv`: `3940715d7c15cf15c24e678a8c5b5fbb34a031b3ffd7e33c0580277377383231`;
+- `norad_528_45_epochs_numeric_1963.csv`: `e3c946809d8e73d814bc1dfa424bf901a3b4331e63e4c85f82f81cf33b9c073e`.
+
+[Artefato ZIP #13946055970](https://github.com/franklinbaldo/conde-incident/actions/runs/43220267253/artifacts/13946055970),
+SHA-256 `d688746b999b4859b130c16f7d84672e981607f580a6686250e735887ff7adfe`.
+Esses hashes são derivados da **representação secundária** e não de
+TLEs instrumentais originais. O CI do HEAD após este adendo também deve
+ser conferido antes de merge.
