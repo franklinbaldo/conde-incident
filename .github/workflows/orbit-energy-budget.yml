@@ -1,0 +1,27 @@
+name: Orbital Jacobi energy budget (independent)
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+
+jobs:
+  physical-budget:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact source SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          git log -1 --format='%H %s'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify mechanical energy/work closure and negative controls
+        run: node --experimental-strip-types --test tests/orbitEnergyAudit.test.mjs
