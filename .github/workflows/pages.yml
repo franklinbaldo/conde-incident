@@ -1,5 +1,4 @@
 name: Publish Conde site
-
 on:
   push:
     branches: [main]
@@ -8,49 +7,68 @@ on:
 
 permissions:
   contents: read
-
 concurrency:
-  group: conde-pages
-  cancel-in-progress: false
-
+  group: conde-site-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout exact commit
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
-      - name: Verify checked-out commit
+      - name: Assert exact SHA
         env:
           EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
       - uses: oven-sh/setup-bun@v2
-      - name: Install locked dependencies
-        run: bun install --frozen-lockfile
-      - name: TypeScript check
-        run: bun run lint
-      - name: Build public site under repository path
-        # Supply base explicitly: the previous CI build rendered root /assets/*
-        # despite VITE_BASE_PATH being exported and failed its own assert.
-        run: bunx vite build --base /conde-incident/
-      - name: Verify published entrypoint and asset paths
+      - run: bun install --frozen-lockfile
+      - run: bun run lint
+      - name: Build scientific lab at nested Pages path
+        run: VITE_BASE_PATH=/conde-incident/lab/ bun run build
+      - name: Install verified SSG Rust 0.0.75 binary
+        shell: bash
         run: |
-          node --input-type=module <<'NODE'
-          import { readFileSync, readdirSync } from 'node:fs';
-          import assert from 'node:assert/strict';
-          const html = readFileSync('dist/index.html', 'utf8');
-          assert.match(html, /\/conde-incident\/assets\//, 'GitHub Pages base path missing');
-          assert.doesNotMatch(html, /(?:src|href)="\/assets\//, 'root asset path would 404');
-          assert.ok(readdirSync('dist/assets').length > 0, 'Vite assets missing');
-          NODE
-      - name: Upload Pages bundle
+          set -euo pipefail
+          curl --fail --location --silent --show-error \
+            'https://github.com/sebastienrousseau/static-site-generator/releases/download/v0.0.75/ssg-v0.0.75-x86_64-unknown-linux-gnu.tar.gz' \
+            --output "$RUNNER_TEMP/ssg-0.0.75.tar.gz"
+          printf '%s  %s\n' 'f6305109e9bec5895e9c90f97a5c569c74048b3d50823d40175e15ca99c50843' "$RUNNER_TEMP/ssg-0.0.75.tar.gz" | sha256sum --check -
+          tar -xzf "$RUNNER_TEMP/ssg-0.0.75.tar.gz" -C "$RUNNER_TEMP" ssg
+          chmod 755 "$RUNNER_TEMP/ssg"
+          echo "$RUNNER_TEMP" >> "$GITHUB_PATH"
+      - name: Record real CLI
+        run: |
+          ssg --version
+          ssg --help
+          ssg build --help
+      - name: Validate chapter schema and chronology
+        run: node scripts/prepare-ssg.mjs --check
+      - name: Generate SSG inputs from canonical stories
+        run: node scripts/prepare-ssg.mjs
+      - name: SSG check
+        run: ssg check --config ssg.toml
+      - name: SSG build
+        run: ssg build --config ssg.toml
+      - name: Unite Vite lab and styles with SSG output
+        run: |
+          mkdir -p public/lab public/css public/img
+          cp -R dist/. public/lab/
+          cp -R static/css/. public/css/
+          cp -R static/img/. public/img/
+      - name: Audit actual GitHub Pages prefix without weakening gates
+        run: |
+          mkdir -p "$RUNNER_TEMP/conde-audit-root/conde-incident"
+          cp -R public/. "$RUNNER_TEMP/conde-audit-root/conde-incident/"
+          ssg audit --output "$RUNNER_TEMP/conde-audit-root" --config ssg.toml --fail-on error
+      - name: Verify every article and /conde-incident/ paths
+        run: node scripts/check-site.mjs
+      - name: Upload Pages artifact
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
-
+          path: ./public
   deploy:
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: build
@@ -63,8 +81,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Check Pages configuration
-        uses: actions/configure-pages@v5
-      - name: Deploy to GitHub Pages
-        id: deployment
+      - uses: actions/configure-pages@v5
+      - id: deployment
         uses: actions/deploy-pages@v4

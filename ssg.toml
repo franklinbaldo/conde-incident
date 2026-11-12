@@ -1,0 +1,10 @@
+# Crate: ssg =0.0.75 (CLI pinned in GitHub Actions; not a Zola config).
+site_name = "Conde Incident"
+content_dir = "content"
+output_dir = "public"
+template_dir = "templates"
+base_url = "https://franklinbaldo.github.io/conde-incident/"
+site_title = "Conde, 1963 · Caderno de investigação"
+site_description = "Jornalismo científico com fontes primárias e hipóteses rivais."
+language = "pt-BR"
+no_taxonomy_pages = true

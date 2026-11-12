@@ -22,16 +22,9 @@ export default function App() {
   const activeTab = route.tab;
   const [lang, setLang] = useState<'pt' | 'en'>('pt');
   const [sharedTimeMs, setSharedTimeMs] = useState<number>(
-    new Date('1963-11-08T19:48:00Z').getTime()
+    new Date('1963-10-27T14:40:16.132Z').getTime()
   );
   const [isPythonModalOpen, setIsPythonModalOpen] = useState<boolean>(false);
-  const [quotaExceeded, setQuotaExceeded] = useState<boolean>(false);
-
-  React.useEffect(() => {
-    const handleQuotaExceeded = () => setQuotaExceeded(true);
-    window.addEventListener('gmp-quota-exceeded', handleQuotaExceeded);
-    return () => window.removeEventListener('gmp-quota-exceeded', handleQuotaExceeded);
-  }, []);
 
   // Hash URLs are stable even after reload and follow native Back/Forward navigation.
   // Only already-shipped lab tabs are recognized. Unavailable SSG routes remain explicit.
@@ -60,23 +53,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans selection:bg-cyan-500 selection:text-black">
-      {/* Google Maps Demo Quota Notification Banner */}
-      {quotaExceeded && (
-        <div className="bg-amber-950/90 border-b border-amber-600/80 text-amber-200 px-4 py-2.5 text-xs text-center sticky top-0 z-50 backdrop-blur shadow-md">
-          <span>
-            Google Maps Platform quota reached. If you are the app owner, visit{' '}
-            <a
-              href="https://developers.google.com/maps/ai/ai-studio?utm_campaign=gmp_mcp_codeassist_v1_aistudio#quota_exceeded_errors"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline font-semibold text-amber-100 hover:text-amber-50"
-            >
-              maps developer site
-            </a>{' '}
-            for instructions to update your account.
-          </span>
-        </div>
-      )}
       {/* Top Header & Navigation */}
       <Navigation
         activeTab={activeTab}
@@ -150,7 +126,7 @@ export default function App() {
           <div className="flex items-center gap-2">
             <Satellite className="w-4 h-4 text-cyan-400" />
             <span>
-              NORAD 528 (1963-003B) &amp; Caso Conde (1963) — Reconstrução Astrodinâmica
+              NORAD 528 (1963-003B) &amp; Caso Conde (1963) — Exploração Orbital Condicional
             </span>
           </div>
 

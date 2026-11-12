@@ -1,0 +1,46 @@
+{
+  "schema": "conde.statistical-inference-bridge/v1",
+  "id": "CERVO-SYNTHETIC-RAAN-PHASE-MCMC-20261112",
+  "status": "CONNECTED_PENDING_HISTORICAL_IDENTIFICATION",
+  "classification": "MATHEMATICAL_SYNTHETIC_METHOD_ONLY",
+  "source_occurrences": ["C25#1", "C179#1", "C180#1", "C181#1", "C241-L3"],
+  "source_lineage": "SECONDARY_SPACE_TRACK_MIRROR_SHARED_TRACKING",
+  "source_path": "research/statistics/raan_527_528_529_1963.json",
+  "historical_measurement_error_covariance": null,
+  "historical_phase_prior": null,
+  "historical_offset_anchor": null,
+  "historical_forward_operator": null,
+  "historical_posterior": null,
+  "candidate_variables": [
+    {"id": "theta", "type": "latent_common_circular_orbital_phase", "unit": "deg", "observed_value": null},
+    {"id": "H_i(theta)", "type": "frozen_catalog_raan_forward_observable", "unit": "deg", "frame": null},
+    {"id": "b_g", "type": "shared_documentary_lineage_bias", "unit": "deg", "prior": "von_Mises"},
+    {"id": "kappa_i", "type": "measurement_error_concentration", "unit": "dimensionless", "value": null},
+    {"id": "mu_theta", "type": "circular_phase_prior_mean", "unit": "deg", "historical_value": null},
+    {"id": "kappa_theta", "type": "circular_phase_prior_concentration", "unit": "dimensionless", "historical_value": null},
+    {"id": "lambda_g", "type": "offset_prior_concentration", "unit": "dimensionless", "historical_value": null}
+  ],
+  "conditional_dependencies": [
+    {"from": "theta", "to": "H_i(theta)", "relationship": "synthetic_additive_circle_phase"},
+    {"from": "H_i(theta)", "to": "r_i", "relationship": "forward_prediction_for_circular_residual"},
+    {"from": "b_g", "to": "r_i", "relationship": "shared_offset_integrated_analytically"},
+    {"from": "kappa_i", "to": "r_i", "relationship": "conditional_von_Mises_precision"},
+    {"from": "mu_theta", "to": "theta", "relationship": "explicit_phase_prior_mean"},
+    {"from": "kappa_theta", "to": "theta", "relationship": "explicit_phase_prior_concentration"},
+    {"from": "lambda_g", "to": "b_g", "relationship": "explicit_offset_prior_concentration"}
+  ],
+  "gauge_result": "all_lambda_g_zero_implies_likelihood_invariant_under_common_theta_shift",
+  "synthetic_check": "four_metropolis_chains_vs_periodic_grid_quadrature",
+  "missing_bridges": [
+    "physical_catalog_mean_raan_operator_matching_epoch_frame",
+    "primary_sensor_lineage_and_covariance",
+    "independent_calibrated_angular_anchor",
+    "physically_justified_phase_prior",
+    "selection_model_and_external_holdout"
+  ],
+  "active_constraint": false,
+  "admissible_domain_delta": "NOT_EVALUABLE",
+  "new_connectivity": ["theta_to_catalog_forward_model", "phase_prior_to_identifiability",
+                       "synthetic_mcmc_to_independent_numerical_quadrature",
+                       "circular_diagnostics_to_future_historical_sampling"]
+}

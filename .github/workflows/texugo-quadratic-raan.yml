@@ -1,0 +1,68 @@
+name: Texugo - C241-T15 quadratic RAAN ablation
+on:
+  pull_request:
+    paths:
+      - tools/texugo_quadratic_raan_ablation.py
+      - tests/test_texugo_quadratic_raan_ablation.py
+      - research/constraints/C241-T15_quadratic_raan_baseline.md
+      - research/tle_custody/evidence_matrix_C241-T15_2026-11-12.md
+      - .github/workflows/texugo-quadratic-raan.yml
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  quadratic-ablation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Require exact HEAD
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Six adversarial cases and frozen upstream models
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p test_texugo_quadratic_raan_ablation.py -v
+          python3 -m unittest discover -s tests -p test_raan_frozen_trend_holdout.py -v
+          python3 -m unittest discover -s tests -p test_raan_frozen_j2_holdout.py -v
+      - name: Verify source and compare all 35 epochs
+        run: |
+          set -euo pipefail
+          python3 -m pip install --disable-pip-version-check pyarrow==21.0.0
+          python3 tools/tle_secondary_1963_ledger.py --download \
+            --parquet "$RUNNER_TEMP/tle_1963.parquet" \
+            --literal research/tle_custody/mirror_528_1963-10-27.tle \
+            --output "$RUNNER_TEMP/texugo-t15"
+          python3 tools/texugo_quadratic_raan_ablation.py \
+            --csv "$RUNNER_TEMP/texugo-t15/norad_527_528_529_numeric_1963.csv" \
+            --output "$RUNNER_TEMP/texugo-t15/quadratic_vs_j2.json"
+          python3 - <<'PY'
+          import json,os,pathlib
+          path=pathlib.Path(os.environ["RUNNER_TEMP"])/"texugo-t15/quadratic_vs_j2.json"
+          report=json.loads(path.read_text())
+          o=report["objects"]
+          assert report["design"]["physical_domain_reduction"]=="NONE"
+          assert {k:o[k]["evaluation"]["n"] for k in ("527","528","529")}=={
+             "527":4,"528":8,"529":23}
+          for k in ("527","528","529"):
+              assert len(o[k]["evaluation"]["per_epoch"])==o[k]["evaluation"]["n"]
+              assert abs(o[k]["evaluation"]["models"]["fitonly_quadratic"]["mae_deg"] -
+                         {"527":0.075589024,"528":0.683123788,"529":1.143076945}[k])<1e-7
+          print("T15_FROZEN_REFERENCE_OK",path)
+          PY
+      - name: Archive exact-input QA outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: texugo-quadratic-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ${{ runner.temp }}/texugo-t15/
+          retention-days: 30
+          if-no-files-found: warn

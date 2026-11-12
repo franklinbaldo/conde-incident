@@ -265,3 +265,33 @@ test("G21-F2: missing deploy identity cannot verify content", async () => {
   assert.equal(result.status, "NOT_VERIFIED");
   assert.equal(f.reads.length, 0);
 });
+
+
+test("G23: href/src text inside quoted data attributes does not provide navigation or assets", async () => {
+  const fakeHome = `<!doctype html><html><head><link data-snapshot='href="/conde-incident/assets/site.css"'></head><body><a data-snapshot='href="/conde-incident/stories/chapter-one/"'>Caderno</a><a data-snapshot='href="/conde-incident/lab/"'>Laboratório</a></body></html>`;
+  const fakeLab = `<!doctype html><html><script data-snapshot='src="/conde-incident/lab/assets/main.js"'></script></html>`;
+  const f = fixture({ content: {
+    [SITE]: ["text/html", fakeHome],
+    [LAB]: ["text/html", fakeLab]
+  } });
+  const result = await auditPublishedSite(f.args);
+  assert.equal(result.status, "NOT_VERIFIED");
+  assert.match(result.failures.join(" | "), /homepage has no laboratory link/);
+  assert.match(result.failures.join(" | "), /homepage has no link to audited chapter/);
+  assert.match(result.failures.join(" | "), /homepage has no local CSS asset/);
+  assert.match(result.failures.join(" | "), /laboratory has no local JS asset/);
+  assert.deepEqual(new Set(f.reads), new Set([SITE, CHAPTER, LAB]));
+});
+
+test("G23: genuine quoted attributes survive adjacent fake attribute values", async () => {
+  const f = fixture({ content: {
+    [SITE]: ["text/html", pages[SITE][1]
+      .replace('<link rel="stylesheet"', `<link data-note='href="/wrong.css"' rel="stylesheet"`)
+      .replace('<a href="/conde-incident/lab/"', `<a data-note='href="/wrong"' href="/conde-incident/lab/"`)],
+    [LAB]: ["text/html", `<!doctype html><html><script data-note='src="/wrong.js"' src="/conde-incident/lab/assets/main.js"></script></html>`]
+  } });
+  const result = await auditPublishedSite(f.args);
+  assert.equal(result.status, "LIVE_CONTENT_PRESENT_UNATTESTED");
+  assert.equal(result.failures.length, 0);
+  assert.equal(f.metadataReads.length, 2);
+});
