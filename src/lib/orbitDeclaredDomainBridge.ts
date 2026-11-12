@@ -17,6 +17,8 @@ interface AuditInterval { min: RationalString; max: RationalString }
 interface AuditParameter {
   name: string;
   status: 'EMPTY' | 'REDUCED' | 'UNCHANGED';
+  /** Original declared rational domain, returned by PR #37 / #43. */
+  initial: AuditInterval;
   admissible: AuditInterval | null;
 }
 interface AuditTrace {
@@ -39,6 +41,8 @@ interface AuditBranch {
 }
 export interface DeclaredAlternativesAudit {
   status: 'MULTIPLE_DECLARED_FEASIBLE' | 'ONE_DECLARED_FEASIBLE' | 'NO_DECLARED_FEASIBLE';
+  scenarios_declared: number;
+  scenarios_with_nonempty_intervals: number;
   scenarios: readonly AuditBranch[];
   scenario_set_exhaustive: 'NOT_VERIFIED';
   matrix_occurrences: 'NOT_VERIFIED';
@@ -144,9 +148,44 @@ function firstFiniteKey(bound: Fraction, inclusive: boolean): bigint {
  * This is an exact *representable subset*, not an enclosure of the whole
  * rational interval or of physical trajectories.
  */
-function finiteInside(box: AuditInterval): [number, number] | null {
+function exactInterval(box: AuditInterval): { lo: Fraction; hi: Fraction } {
+  must(box && typeof box === 'object', 'Missing exact rational interval');
   const lo = rational(box.min), hi = rational(box.max);
   must(compare(lo, hi) <= 0, 'Inverted exact rational interval');
+  return { lo, hi };
+}
+
+/** Independently check the producer's serialized domain arithmetic metadata.
+ * This is NOT a proof that the source restrictions or traces are genuine.
+ */
+function checkedParameters(branch: AuditBranch): void {
+  const seen = new Set<string>();
+  let empty = false, reduced = false;
+  for (const param of branch.parameters) {
+    must(param && typeof param.name === 'string' && !seen.has(param.name) &&
+      AXES.includes(param.name as VelocityAxis), 'Duplicate or unsupported audit parameter');
+    seen.add(param.name);
+    const start = exactInterval(param.initial);
+    if (param.admissible === null) {
+      must(param.status === 'EMPTY', 'Inconsistent empty rational parameter status');
+      empty = true;
+      continue;
+    }
+    const end = exactInterval(param.admissible);
+    must(compare(start.lo, end.lo) <= 0 && compare(end.hi, start.hi) <= 0,
+      'Declared admissible interval expands its original exact domain');
+    const narrowed = compare(start.lo, end.lo) !== 0 || compare(start.hi, end.hi) !== 0;
+    must(param.status === (narrowed ? 'REDUCED' : 'UNCHANGED'),
+      'Inconsistent declared rational parameter status');
+    if (narrowed) reduced = true;
+  }
+  must(seen.size === AXES.length, 'Exactly three declared velocity parameters required');
+  const expected = empty ? 'CONTRADICTORY' : reduced ? 'REDUCED' : 'UNCHANGED';
+  must(branch.domain_status === expected, 'Inconsistent declared scenario domain status');
+}
+
+function finiteInside(box: AuditInterval): [number, number] | null {
+  const { lo, hi } = exactInterval(box);
   const first = firstFiniteKey(lo, true);
   const last = firstFiniteKey(hi, false) - 1n;
   if (first > last || first > MAX_FINITE_KEY || last < MIN_FINITE_KEY) return null;
@@ -164,6 +203,14 @@ export function bridgeDeclaredAlternatives(
 ): BridgeResult {
   must(audit && Array.isArray(audit.scenarios) && audit.scenarios.length > 0 &&
     audit.scenarios.length <= 12 &&
+    Number.isSafeInteger(audit.scenarios_declared) &&
+    audit.scenarios_declared === audit.scenarios.length &&
+    Number.isSafeInteger(audit.scenarios_with_nonempty_intervals) &&
+    audit.scenarios_with_nonempty_intervals === audit.scenarios.filter(s =>
+      s && s.domain_status !== 'CONTRADICTORY').length &&
+    audit.status === (audit.scenarios_with_nonempty_intervals === 0
+      ? 'NO_DECLARED_FEASIBLE' : audit.scenarios_with_nonempty_intervals === 1
+        ? 'ONE_DECLARED_FEASIBLE' : 'MULTIPLE_DECLARED_FEASIBLE') &&
     audit.scenario_set_exhaustive === 'NOT_VERIFIED' &&
     audit.matrix_occurrences === 'NOT_VERIFIED' &&
     audit.source_authenticity === 'NOT_VERIFIED' &&
@@ -191,6 +238,9 @@ export function bridgeDeclaredAlternatives(
       ['CONTRADICTORY', 'REDUCED', 'UNCHANGED'].includes(branch.domain_status) &&
       Array.isArray(branch.parameters) && Array.isArray(branch.trace),
     'Invalid branch identity, status or trace');
+    checkedParameters(branch);
+    must(branch.trace.every(t => t && AXES.includes(t.parameter as VelocityAxis)),
+      'Trace cites unsupported velocity parameter');
     ids.add(branch.id);
     const original = initials.get(branch.id);
     must(original && original.initialDomainSource.trim() &&
@@ -206,14 +256,6 @@ export function bridgeDeclaredAlternatives(
     }
     const bounds: ConditionalVelocityBound[] = [];
     let failure: BridgeRecord | null = null;
-    const seenParams = new Set<string>();
-    for (const param of branch.parameters) {
-      must(typeof param.name === 'string' && !seenParams.has(param.name),
-        'Duplicate/invalid audit parameter');
-      seenParams.add(param.name);
-      must(AXES.includes(param.name as VelocityAxis),
-        'Unsupported non-velocity parameter; no implicit unit conversion');
-    }
     for (const axis of AXES) {
       const param = branch.parameters.find(p => p.name === axis);
       if (!param?.admissible || param.status === 'EMPTY') {
@@ -229,7 +271,10 @@ export function bridgeDeclaredAlternatives(
         must(trace.evidence_id?.trim() && trace.occurrence?.trim() &&
           trace.source_uri?.trim() && trace.independence_group_declared?.trim() &&
           trace.lean_ref_declared?.trim() &&
-          ['NOT_RUN', 'CLAIMED'].includes(trace.lean_status_declared),
+          ['NOT_RUN', 'CLAIMED'].includes(trace.lean_status_declared) &&
+          (branch.declared_evidence === 'SYNTHETIC_ONLY'
+            ? trace.source_uri.startsWith('synthetic:')
+            : trace.source_uri.startsWith('https://') && /^C\d{1,4}(?:-[A-Za-z0-9]+)?$/.test(trace.evidence_id)),
         'Invalid or falsely certified restriction trace');
       }
       const inside = finiteInside(param.admissible);
