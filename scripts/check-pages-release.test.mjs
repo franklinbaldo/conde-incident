@@ -18,10 +18,10 @@ function good() {
         '<link rel="stylesheet" href="https://franklinbaldo.github.io/conde-incident/css/site.css">',
       stories: { status: 200, body: '<section class="journal"><article class="story-card">' +
         '<a href="/conde-incident/stories/2026-11-11-primeira-historia/">Chapter</a></article></section>' },
-      chapter: { status: 200, path: '/conde-incident/stories/2026-11-11-primeira-historia/',
+      chapters: [{ status: 200, path: '/conde-incident/stories/2026-11-11-primeira-historia/',
         body: '<article class="full-story"><div class="story-body"><p>Documented advance.</p></div>' +
-          '<a href="https://github.com/franklinbaldo/conde-incident/blob/main/stories/a.md">' +
-          'Consultar Markdown-fonte e histórico editorial</a></article>' },
+          '<a href="https://github.com/franklinbaldo/conde-incident/blob/main/stories/2026-11-11-primeira-historia.md">' +
+          'Consultar Markdown-fonte e histórico editorial</a></article>' }],
       lab: { status: 200, body: '<div id="root"></div>' +
         '<script src="/conde-incident/lab/assets/main-xyz.js"></script>' },
       style: { status: 200, body: '.masthead{color:#fff}.story-card{padding:1rem}' },
@@ -88,11 +88,11 @@ test('failed upstream and invalid SHA cannot pass', () => {
 });
 
 test('chapter link must lead to a live full Zola story with source attribution', () => {
-  const a = good(); a.site.chapter.status = 404;
-  const b = good(); b.site.chapter.body = '<html><body>Generic error fallback</body></html>';
-  const c = good(); c.site.chapter.body = '<article class="full-story"><div class="story-body">No source link</div></article>';
-  const d = good(); d.site.chapter.path = '/conde-incident/stories/2026-11-11-outra/';
-  const e = good(); delete e.site.chapter;
+  const a = good(); a.site.chapters[0].status = 404;
+  const b = good(); b.site.chapters[0].body = '<html><body>Generic error fallback</body></html>';
+  const c = good(); c.site.chapters[0].body = '<article class="full-story"><div class="story-body">No source link</div></article>';
+  const d = good(); d.site.chapters[0].path = '/conde-incident/stories/2026-11-11-outra/';
+  const e = good(); delete e.site.chapters;
   for (const x of [a,b,c,d,e]) assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
 });
 test('a fake date outside a journal link is not a published story', () => {
@@ -117,4 +117,55 @@ test('an external host must not be followed as a first-party chapter', () => {
     'href="https://unrelated.example/conde-incident/stories/'
   );
   assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+
+
+function withTwoChapters() {
+  const x = good();
+  const slug = '2026-11-12-segunda-historia';
+  const path = '/conde-incident/stories/' + slug + '/';
+  x.site.stories.body = x.site.stories.body.replace('</section>',
+    '<article class="story-card"><a href="' + path + '">Second chapter</a></article></section>');
+  x.site.chapters.push({
+    path, status: 200,
+    body: '<article class="full-story"><div class="story-body"><p>Independent new lead.</p></div>' +
+      '<a href="https://github.com/franklinbaldo/conde-incident/blob/main/stories/' + slug + '.md">' +
+      'Consultar Markdown-fonte e histórico editorial</a></article>',
+  });
+  return x;
+}
+test('all published chapters are checked, not only the first one', () => {
+  const x = withTwoChapters();
+  assert.equal(assessRelease(x).status, 'PASS');
+  x.site.chapters[1].status = 404;
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+  x.site.chapters[1].status = 200;
+  x.site.chapters[1].body = '<article class="full-story"><div class="story-body">No source</div></article>';
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+test('incomplete chapter fetch or altered article order must fail closed', () => {
+  const x = withTwoChapters();
+  x.site.chapters.pop();
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+  const y = withTwoChapters();
+  y.site.chapters.reverse();
+  assert.equal(assessRelease(y).status, 'NOT_VERIFIED');
+});
+test('each chapter must cite its own source Markdown, not another story', () => {
+  const x = good();
+  x.site.chapters[0].body = x.site.chapters[0].body.replace(
+    'stories/2026-11-11-primeira-historia.md', 'stories/another.md');
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+test('duplicate story links and untrusted external chapter links fail', () => {
+  const x = withTwoChapters();
+  x.site.stories.body = x.site.stories.body.replace(
+    '/conde-incident/stories/2026-11-12-segunda-historia/',
+    '/conde-incident/stories/2026-11-11-primeira-historia/');
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+  const y = withTwoChapters();
+  y.site.stories.body = y.site.stories.body.replace(
+    'href="/conde-incident/stories/2026-11-12',
+    'href="https://external.example/conde-incident/stories/2026-11-12');
+  assert.equal(assessRelease(y).status, 'NOT_VERIFIED');
 });
