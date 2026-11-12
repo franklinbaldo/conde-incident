@@ -282,3 +282,16 @@ O novo campo \`rolling_target_only_coverage\` no JSON de \`tools/texugo_holdout_
 Regressões sintéticas verificam a separação de elegibilidade mesmo quando doadores não têm observações suficientes, rejeitam previsão divergente do relatório prequential, cronologia adulterada, alvo duplicado e vazamento da própria época futura. A validação do corpus real e os números de cobertura ficam **NOT_RUN até Actions no HEAD de entrega**, sem reaproveitar CI passado. O mesmo workflow e artefato já existentes capturam o campo; nenhum novo gate ou download de fonte foi acrescentado.
 
 **Fonte e fronteira:** [Parquet secundário oxzoid/Space-Track revision 4b4fb3a](https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/4b4fb3a/data/tle_1963.parquet), SHA256 \`c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09\`; comparado byte-a-byte e linha-a-linha a CSV, mas não substitui TLEs primários instrumentais. NASA 15/11/1963 p. 8 é fonte primária de **dia de decaimento** somente. Nenhuma conclusão orbital, probabilística, de força comum, lugar ou hora de reentrada.
+
+
+### C243-T13, resultado observado no espelho secundário após a reconciliação
+
+No SHA [\`546e6bd3936ba5af26e1c469291637fea9b43e1c\`](https://github.com/franklinbaldo/conde-incident/commit/546e6bd3936ba5af26e1c469291637fea9b43e1c), o [workflow Texugo #43196380743](https://github.com/franklinbaldo/conde-incident/actions/runs/43196380743) passou com **181 testes Python**, leitura independente do Parquet SHA-256 pinado e correspondência completa CSV. [Artefato #13933546145](https://github.com/franklinbaldo/conde-incident/actions/runs/43196380743/artifacts/13933546145), campo \`rolling_target_only_coverage\`, preserva cada previsão, erro, \`NOT_RUN\` e alvo contado.
+
+| Modelo alvo-only | Épocas pontuadas sem qualquer filtro 527/528 | RMSE universo próprio (rev/dia) | RMSE nos 51 alvos conjuntos (rev/dia) |
+|---|---:|---:|---:|
+| Persistência (≥1 registro 529) | **53** | 0,0264153715 | 0,0269039352 |
+| Secante (≥2 registros 529) | **52** | **0,0141676275** | **0,0109350675** |
+| OLS local (≥3 registros 529) | **51** | 0,0145442475 | 0,0145442475 |
+
+O protocolo com doadores continua pontuando **51 de 53** candidatos. As datas adicionais são **18/01/1963 e 07/02/1963** para persistência, e somente **07/02/1963** para secante, ambas épocas catalogadas. **Achado negativo da auditoria:** com três épocas-alvo anteriores, não houve outra censura por doadores neste espelho; a restrição de três épocas era efetivamente o mínimo determinante para os 51 alvos. **Achado positivo contra a interpretação simplista de T12:** a secante não conserva seu RMSE de 0,010935 ao pontuar a época adicional legítima; seu RMSE sobe para **0,014168**. Isso não elimina sua vantagem descritiva nos 51 alvos pareados, mas demonstra que cobertura é parte da definição do placar. RMSE calculado sobre **52** alvos jamais deve ser comparado diretamente como se fosse pareado ao conjunto de **51** do modelo com doadores. Não há p-valores, probabilidade, verificação por sensor independente, prova Lean física ou impacto histórico novo. A atualização textual posterior a \`546e6bd\` exige CI no HEAD final.
