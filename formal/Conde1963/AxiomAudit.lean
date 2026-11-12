@@ -1,4 +1,4 @@
-import Conde1963.MatrixEvidence
+import Conde1963.Interactions
 
 /-! Explicit kernel-dependency report in CI, not an empirical validation. -/
 
