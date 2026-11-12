@@ -1,4 +1,4 @@
-import Conde1963.Outcome
+import Conde1963.SimulatorBridge
 
 /-! Explicit kernel-dependency report in CI, not an empirical validation. -/
 
@@ -63,3 +63,17 @@ import Conde1963.Outcome
 #print axioms Conde1963.grid_witness_implies_global_witness
 #print axioms Conde1963.grid_empty_does_not_mean_contradictory_premises
 #print axioms Conde1963.no_predicted_impact_excludes_conde_but_identifies_no_other_window
+
+-- Simulator ↔ Lean bridge: provenance gates and exact sample invariants only.
+#print axioms Conde1963.synthetic_terminal_geometry_cannot_certify_history
+#print axioms Conde1963.retrospective_sgp4_cannot_certify_history
+#print axioms Conde1963.absent_independent_holdout_precludes_history
+#print axioms Conde1963.numerical_agreement_does_not_replace_input_custody
+#print axioms Conde1963.altitude_threshold_not_ground_impact
+#print axioms Conde1963.missing_survival_model_not_ground_impact
+#print axioms Conde1963.castor_current_declared_status_blocks_historical_claim
+#print axioms Conde1963.castor_current_threshold_blocks_ground_impact
+#print axioms Conde1963.countWithin_monotone
+#print axioms Conde1963.countWithin_bounded_by_sample_size
+#print axioms Conde1963.cumulative_radii_monotone
+#print axioms Conde1963.scaled_drag_power_nonpositive
