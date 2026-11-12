@@ -13,7 +13,7 @@ from urllib.request import urlopen
 
 SCHEMA = "conde.gaviao.chapter07/v1"
 GUARDS = (
-    "não prova que não houve investigação da NASA",
+    "nenhum deles prova que não houve investigação da NASA",
     "Não se deduz",
     "não contém esses recortes",
     "nenhum domínio orbital admissível foi reduzido",
