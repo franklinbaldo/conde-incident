@@ -1,0 +1,475 @@
+{
+  "schema": "conde.gaviao-first-parent-audit/v1",
+  "id": "G24",
+  "source_repo": "franklinbaldo/conde-incident",
+  "reviewed_from_main_sha": "07e9a820aa769c2e5fc643511badb9c9449f8271",
+  "reviewed_through_main_sha": "a52b4e757198d24a3a29a058438abe891d74c54c",
+  "main_commit_count_first_parent": 17,
+  "dag_commit_count": 23,
+  "conventional_merges": 2,
+  "squash_merges": 15,
+  "side_branch_commits_count": 6,
+  "direct_main_commits": 0,
+  "closed_unmerged_prs_during_closed_interval": [],
+  "closed_pr_search": "GitHub issue search is:pr is:closed closed:2026-11-12T19:37:55Z..2026-11-12T20:44:14Z returned 18 incl #198 on lower boundary; all 17 merged PRs accounted for",
+  "source_audit": "Local git history, PR metadata and CI from GitHub; external facsimiles and instrumental TLEs NOT independently reauthenticated",
+  "lean_scope": "Merged changes did not add unconditional proof of terminal trajectory; no new physically grounded Theta reduction",
+  "finding": {
+    "id": "G24-F1",
+    "severity": "MEDIUM_DISPLAY_ACCURACY",
+    "introduced_in_pr": 233,
+    "counterexample": "raw track longitudes 179 to 181 degrees: flat projected x 957.33 to 2.67 while splitDateline kept one segment",
+    "corrective_change": "Normalize longitude before detecting dateline discontinuity, with adversarial regression tests",
+    "historical_claim": "NO_NEW_OBSERVATION"
+  },
+  "limitations": [
+    "CI success on author HEAD is not historical source authentication",
+    "MCMC/Lean hypotheses are conditional",
+    "No verified 1963 528 terminal time/place/frame/covariance",
+    "Actual site deployment artifact bytes not authenticated in G24"
+  ],
+  "entries": [
+    {
+      "merge_sha": "0cf640f6568d6485ef2d1cc93a0c2fb071933bbf",
+      "first_parent": "07e9a820aa769c2e5fc643511badb9c9449f8271",
+      "all_parents": [
+        "07e9a820aa769c2e5fc643511badb9c9449f8271"
+      ],
+      "pr_number": 221,
+      "merge_style": "squash",
+      "author_head_sha": "aafb031f21952c4f17e873c85dfa307dc6589a0b",
+      "author_pr_workflow_runs": {
+        "success": 16,
+        "failure": 0,
+        "cancelled": 0,
+        "scope": "GitHub API PR-triggered runs first page"
+      },
+      "changed_files": [
+        "research/audits/gaviao-main-window-20261112-g23.json",
+        "research/audits/gaviao-main-window-20261112-g23.md",
+        "scripts/gaviao-retrospective-g23.test.mjs",
+        "scripts/pages-live-audit.mjs",
+        "scripts/pages-live-audit.test.mjs"
+      ],
+      "side_branch_commits": [],
+      "scope_checked": "Pages HTML tag parser, audit checkpoint",
+      "audit_status": "NO_MATERIAL_UNSUPPORTED_CLAIM_FOUND_WITHIN_REVIEW_SCOPE",
+      "title": "80 🦅 G23: auditar 15 merges e rejeitar href/src falsos dentro de atributos HTML (#221)"
+    },
+    {
+      "merge_sha": "f529b4bf1fd3c886a959bf50b242e26c2a0fd4cd",
+      "first_parent": "0cf640f6568d6485ef2d1cc93a0c2fb071933bbf",
+      "all_parents": [
+        "0cf640f6568d6485ef2d1cc93a0c2fb071933bbf"
+      ],
+      "pr_number": 222,
+      "merge_style": "squash",
+      "author_head_sha": "43d8e4ce99713034eb609fc7891cc1253a104ca6",
+      "author_pr_workflow_runs": {
+        "success": 16,
+        "failure": 0,
+        "cancelled": 0,
+        "scope": "GitHub API PR-triggered runs first page"
+      },
+      "changed_files": [
+        "research/meteorology/igra_recife_19631107_09_moist_sensitivity.json",
+        "research/meteorology/igra_recife_19631107_09_moist_sensitivity.md",
+        "tests/test_igra_recife_moist_sensitivity.py",
+        "tools/audit_igra_recife_moist_sensitivity.py"
+      ],
+      "side_branch_commits": [],
+      "scope_checked": "Recife RH/moist density, conditional; no Conde transfer",
+      "audit_status": "NO_MATERIAL_UNSUPPORTED_CLAIM_FOUND_WITHIN_REVIEW_SCOPE",
+      "title": "research(meteorology): audit RH-conditioned density sensitivity in 1963 Recife (#222)"
+    },
+    {
+      "merge_sha": "9f692dca84e0ffd12b42058ae4cc5808cf501b97",
+      "first_parent": "f529b4bf1fd3c886a959bf50b242e26c2a0fd4cd",
+      "all_parents": [
+        "f529b4bf1fd3c886a959bf50b242e26c2a0fd4cd"
+      ],
+      "pr_number": 224,
+      "merge_style": "squash",
+      "author_head_sha": "dba66da5adacad92b667410c08d7faa970444127",
+      "author_pr_workflow_runs": {
+        "success": 16,
+        "failure": 0,
+        "cancelled": 0,
+        "scope": "GitHub API PR-triggered runs first page"
+      },
+      "changed_files": [
+        ".agents/skills/conde-cervo/SKILL.md",
+        "research/constraints/raan_phase_mcmc_candidate_C241.json",
+        "research/statistics/SYNTHETIC_PHASE_MCMC_REFERENCE.md",
+        "tests/test_raan_synthetic_phase_mcmc.py",
+        "tools/raan_synthetic_phase_mcmc.py"
+      ],
+      "side_branch_commits": [],
+      "scope_checked": "MCMC synthetic prior/gauge, no empirical posterior",
+      "audit_status": "NO_MATERIAL_UNSUPPORTED_CLAIM_FOUND_WITHIN_REVIEW_SCOPE",
+      "title": "stat(cervo): synthetic RAAN phase MH checked against quadrature (#219)"
+    },
+    {
+      "merge_sha": "1afb60626138e4b27028ed8b776d8c07e1bdf879",
+      "first_parent": "9f692dca84e0ffd12b42058ae4cc5808cf501b97",
+      "all_parents": [
+        "9f692dca84e0ffd12b42058ae4cc5808cf501b97",
+        "cb888e1a5ac44187f3e2785f892472675ac19747"
+      ],
+      "pr_number": 225,
+      "merge_style": "conventional",
+      "author_head_sha": "cb888e1a5ac44187f3e2785f892472675ac19747",
+      "author_pr_workflow_runs": {
+        "success": 16,
+        "failure": 0,
+        "cancelled": 0,
+        "scope": "GitHub API PR-triggered runs first page"
+      },
+      "changed_files": [
+        ".github/workflows/documentary-dependence.yml",
+        "public/data/conde-norad-context.json",
+        "tests/test_norad_documentary_context.py",
+        "tools/export_norad_context.py"
+      ],
+      "side_branch_commits": [
+        "4b4dfaede7d4395cd21984c4cbd0e025dd1859eb",
+        "cb888e1a5ac44187f3e2785f892472675ac19747"
+      ],
+      "scope_checked": "687/688/943 documentary NORAD: not observation 528",
+      "audit_status": "NO_MATERIAL_UNSUPPORTED_CLAIM_FOUND_WITHIN_REVIEW_SCOPE",
+      "title": "Merge PR #225: rastreio NORAD 687/688/943 sem atribuição ao 528"
+    },
+    {
+      "merge_sha": "e02ab16a18c57ca0fbd010931317eac871d88f4e",
+      "first_parent": "1afb60626138e4b27028ed8b776d8c07e1bdf879",
+      "all_parents": [
+        "1afb60626138e4b27028ed8b776d8c07e1bdf879"
+      ],
+      "pr_number": 226,
+      "merge_style": "squash",
+      "author_head_sha": "7fea11b18f2b21a77f745b6b1ba4d57bf53c111a",
+      "author_pr_workflow_runs": {
+        "success": 16,
+        "failure": 0,
+        "cancelled": 0,
+        "scope": "GitHub API PR-triggered runs first page"
+      },
+      "changed_files": [
+        "research/meteorology/nmc_y20175_cos_structure_2026-11-12.json",
+        "tests/test_nmc_y20175_cos.py",
+        "tools/audit_nmc_y20175_cos.py"
+      ],
+      "side_branch_commits": [],
+      "scope_checked": "COS/CRAY framing of NCAR Y20175, ON20 not decoded",
+      "audit_status": "NO_MATERIAL_UNSUPPORTED_CLAIM_FOUND_WITHIN_REVIEW_SCOPE",
+      "title": "feat(archives): verify Y20175 COS blocked record chain"
+    },
+    {
+      "merge_sha": "86ab5e72f35d197fb3023d746488fa1a7503da66",
+      "first_parent": "e02ab16a18c57ca0fbd010931317eac871d88f4e",
+      "all_parents": [
+        "e02ab16a18c57ca0fbd010931317eac871d88f4e",
+        "1506954617372690e6d24f711e3da784b5dd8d38"
+      ],
+      "pr_number": 228,
+      "merge_style": "conventional",
+      "author_head_sha": "1506954617372690e6d24f711e3da784b5dd8d38",
+      "author_pr_workflow_runs": {
+        "success": 16,
+        "failure": 0,
+        "cancelled": 0,
+        "scope": "GitHub API PR-triggered runs first page"
+      },
+      "changed_files": [
+        "research/geo/conde_ibge_1960_world_polyconic.json",
+        "research/geo/ibge_1960_historical_reconstruction.md",
+        "tests/test_conde_ibge_1960.py",
+        "tools/conde_ibge_1960.py"
+      ],
+      "side_branch_commits": [
+        "417029797d2ec959fcead1416bca75f2024bf870",
+        "ad4c0a1dd8d4a8935264a163df847d1af0e3b160",
+        "6fd535531a5c50d4d76f7ea0dde46b57ad4bf385",
+        "1506954617372690e6d24f711e3da784b5dd8d38"
+      ],
+      "scope_checked": "IBGE nominal 1960 geometry in native projection, not legal 1963",
+      "audit_status": "NO_MATERIAL_UNSUPPORTED_CLAIM_FOUND_WITHIN_REVIEW_SCOPE",
+      "title": "Merge pull request #228 from franklinbaldo/research/cgeo10-ibge-1960"
+    },
+    {
+      "merge_sha": "97d13b63fe5b43efd4864b1906d85d5b0d23b0a3",
+      "first_parent": "86ab5e72f35d197fb3023d746488fa1a7503da66",
+      "all_parents": [
+        "86ab5e72f35d197fb3023d746488fa1a7503da66"
+      ],
+      "pr_number": 229,
+      "merge_style": "squash",
+      "author_head_sha": "c8d3c6b610503118a2671a349b679482a3f06ecd",
+      "author_pr_workflow_runs": {
+        "success": 16,
+        "failure": 0,
+        "cancelled": 0,
+        "scope": "GitHub API PR-triggered runs first page"
+      },
+      "changed_files": [
+        "src/lib/orbitJointCovariance.ts",
+        "tests/orbitJointCovariance.test.mjs"
+      ],
+      "side_branch_commits": [],
+      "scope_checked": "r/v declared joint covariance, not sensor calibrated",
+      "audit_status": "NO_MATERIAL_UNSUPPORTED_CLAIM_FOUND_WITHIN_REVIEW_SCOPE",
+      "title": "80 🦫 Audit cross-epoch joint covariance for conditional orbital holdouts (#229)"
+    },
+    {
+      "merge_sha": "805cbb166c416575dc225b1defc71227afb70f1a",
+      "first_parent": "97d13b63fe5b43efd4864b1906d85d5b0d23b0a3",
+      "all_parents": [
+        "97d13b63fe5b43efd4864b1906d85d5b0d23b0a3"
+      ],
+      "pr_number": 230,
+      "merge_style": "squash",
+      "author_head_sha": "ee97c15c48ac546066062ed74f0cdc9a738891c1",
+      "author_pr_workflow_runs": {
+        "success": 17,
+        "failure": 0,
+        "cancelled": 0,
+        "scope": "GitHub API PR-triggered runs first page"
+      },
+      "changed_files": [
+        ".github/workflows/polvo-j2-frozen-long.yml",
+        "research/constraints/C241-P3_fitfield_j2_forward_holdout.md",
+        "research/tle_custody/evidence_matrix_C241-P3_2026-11-12.md",
+        "tests/test_raan_fitfield_j2_holdout.py",
+        "tools/raan_fitfield_j2_holdout.py"
+      ],
+      "side_branch_commits": [],
+      "scope_checked": "C241-P3 FIT J2: 527 negative control",
+      "audit_status": "NO_MATERIAL_UNSUPPORTED_CLAIM_FOUND_WITHIN_REVIEW_SCOPE",
+      "title": "feat(polvo): test FIT-only J2 orbital field drift on frozen 527/528/529 holdouts (#230)"
+    },
+    {
+      "merge_sha": "d26bd411732a0a0d48c23b49e24cffb01aa3fc2b",
+      "first_parent": "805cbb166c416575dc225b1defc71227afb70f1a",
+      "all_parents": [
+        "805cbb166c416575dc225b1defc71227afb70f1a"
+      ],
+      "pr_number": 231,
+      "merge_style": "squash",
+      "author_head_sha": "7247194e2334bc2a6758e79a4a12be173052295c",
+      "author_pr_workflow_runs": {
+        "success": 17,
+        "failure": 0,
+        "cancelled": 0,
+        "scope": "GitHub API PR-triggered runs first page"
+      },
+      "changed_files": [
+        ".github/workflows/texugo-quadratic-raan.yml",
+        "research/constraints/C241-T15_quadratic_raan_baseline.md",
+        "research/tle_custody/evidence_matrix_C241-T15_2026-11-12.md",
+        "tests/test_texugo_quadratic_raan_ablation.py",
+        "tools/texugo_quadratic_raan_ablation.py"
+      ],
+      "side_branch_commits": [],
+      "scope_checked": "C241-T15 quadratic empirical baseline",
+      "audit_status": "NO_MATERIAL_UNSUPPORTED_CLAIM_FOUND_WITHIN_REVIEW_SCOPE",
+      "title": "test(texugo): C241-T15 quadratic versus J2 on frozen RAAN holdout"
+    },
+    {
+      "merge_sha": "ac07799ab9bcd96a0031fe07f4b9187b4f30df9a",
+      "first_parent": "d26bd411732a0a0d48c23b49e24cffb01aa3fc2b",
+      "all_parents": [
+        "d26bd411732a0a0d48c23b49e24cffb01aa3fc2b"
+      ],
+      "pr_number": 114,
+      "merge_style": "squash",
+      "author_head_sha": "5c2e99537999877255b26970ce903447f6c1c71c",
+      "author_pr_workflow_runs": {
+        "success": 8,
+        "failure": 0,
+        "cancelled": 0,
+        "scope": "GitHub API PR-triggered runs first page"
+      },
+      "changed_files": [
+        "research/constraints/sao_1963_optical_archive_locators.json",
+        "research/constraints/sao_1963_optical_archive_notes.md"
+      ],
+      "side_branch_commits": [],
+      "scope_checked": "SAO archival locators/Natal chronology, no optical data 528",
+      "audit_status": "NO_MATERIAL_UNSUPPORTED_CLAIM_FOUND_WITHIN_REVIEW_SCOPE",
+      "title": "🦇 pesquisa: localizar arquivos SAO de reentrada 1963 e corrigir cronologia da estação em Natal (#114)"
+    },
+    {
+      "merge_sha": "8cce69e567f99fb4024fe67a89fa4a1630d953a1",
+      "first_parent": "ac07799ab9bcd96a0031fe07f4b9187b4f30df9a",
+      "all_parents": [
+        "ac07799ab9bcd96a0031fe07f4b9187b4f30df9a"
+      ],
+      "pr_number": 232,
+      "merge_style": "squash",
+      "author_head_sha": "55c8aa5ea4bc5030c3f363053716629f19539533",
+      "author_pr_workflow_runs": {
+        "success": 16,
+        "failure": 0,
+        "cancelled": 0,
+        "scope": "GitHub API PR-triggered runs first page"
+      },
+      "changed_files": [
+        "research/constraints/sao_1963_optical_archive_notes.md"
+      ],
+      "side_branch_commits": [],
+      "scope_checked": "OKF normalization of SAO report",
+      "audit_status": "NO_MATERIAL_UNSUPPORTED_CLAIM_FOUND_WITHIN_REVIEW_SCOPE",
+      "title": "docs(okf): adicionar metadados normativos ao levantamento SAO (#232)"
+    },
+    {
+      "merge_sha": "84150d821f7537a2b67bec9ec0a1d9cb99b4e0d6",
+      "first_parent": "8cce69e567f99fb4024fe67a89fa4a1630d953a1",
+      "all_parents": [
+        "8cce69e567f99fb4024fe67a89fa4a1630d953a1"
+      ],
+      "pr_number": 235,
+      "merge_style": "squash",
+      "author_head_sha": "24d3bd089a58a38c15836156dc8c966ad2ea7729",
+      "author_pr_workflow_runs": {
+        "success": 16,
+        "failure": 0,
+        "cancelled": 0,
+        "scope": "GitHub API PR-triggered runs first page"
+      },
+      "changed_files": [
+        "stories/2026-11-11-uma-orbita-sem-endereco.md"
+      ],
+      "side_branch_commits": [],
+      "scope_checked": "Coruja story 02 citations, no asserted terminal coordinates",
+      "audit_status": "NO_MATERIAL_UNSUPPORTED_CLAIM_FOUND_WITHIN_REVIEW_SCOPE",
+      "title": "🦉 Caderno 02 no SSG: uma órbita sem endereço (#235)"
+    },
+    {
+      "merge_sha": "424516ed4505c2e0c97eae5337970102ffeb9353",
+      "first_parent": "84150d821f7537a2b67bec9ec0a1d9cb99b4e0d6",
+      "all_parents": [
+        "84150d821f7537a2b67bec9ec0a1d9cb99b4e0d6"
+      ],
+      "pr_number": 233,
+      "merge_style": "squash",
+      "author_head_sha": "e7bf5a69ce1ad604f770087adb8457f861d6d4f8",
+      "author_pr_workflow_runs": {
+        "success": 16,
+        "failure": 0,
+        "cancelled": 0,
+        "scope": "GitHub API PR-triggered runs first page"
+      },
+      "changed_files": [
+        "config/legacy-oversized-files.json",
+        "src/App.tsx",
+        "src/components/OrbitalMap.tsx",
+        "src/components/map/OrbitalMapSvg.tsx",
+        "src/lib/mapGeometry.js",
+        "tests/quota-free-map.test.mjs"
+      ],
+      "side_branch_commits": [],
+      "scope_checked": "SVG schematic map; dateline flaw G24-F1",
+      "audit_status": "ISSUE_G24_F1_FIX_IN_THIS_PR",
+      "title": "90 🦊 Mapa orbital SVG 2D/3D sem Google Maps em runtime (#220) (#233)"
+    },
+    {
+      "merge_sha": "d9a6e59bd5637bf7aaaddf21388818614cc6c883",
+      "first_parent": "424516ed4505c2e0c97eae5337970102ffeb9353",
+      "all_parents": [
+        "424516ed4505c2e0c97eae5337970102ffeb9353"
+      ],
+      "pr_number": 236,
+      "merge_style": "squash",
+      "author_head_sha": "557676df102aaa1703ae865b813073bd5c69389a",
+      "author_pr_workflow_runs": {
+        "success": 16,
+        "failure": 0,
+        "cancelled": 0,
+        "scope": "GitHub API PR-triggered runs first page"
+      },
+      "changed_files": [
+        "src/main.tsx",
+        "tests/no-google-quota-interceptor.test.mjs"
+      ],
+      "side_branch_commits": [],
+      "scope_checked": "Remove obsolete global Google quota interceptor",
+      "audit_status": "NO_MATERIAL_UNSUPPORTED_CLAIM_FOUND_WITHIN_REVIEW_SCOPE",
+      "title": "90 🦊 Remover interceptador global de quota Google remanescente (#220) (#236)"
+    },
+    {
+      "merge_sha": "9dabab1dbcd901b902537a324e1c409cb3c4ee23",
+      "first_parent": "d9a6e59bd5637bf7aaaddf21388818614cc6c883",
+      "all_parents": [
+        "d9a6e59bd5637bf7aaaddf21388818614cc6c883"
+      ],
+      "pr_number": 218,
+      "merge_style": "squash",
+      "author_head_sha": "732f146be6b8fdb7f6e971d67c3ddbc809a1d87e",
+      "author_pr_workflow_runs": {
+        "success": 17,
+        "failure": 0,
+        "cancelled": 0,
+        "scope": "GitHub API PR-triggered runs first page"
+      },
+      "changed_files": [
+        ".github/workflows/tle-altitude-lineage.yml",
+        "research/tle_custody/evidence_matrix_C241-L9_2026-11-12.md",
+        "tests/test_tle_altitude_lineage_audit.py",
+        "tools/tle_altitude_lineage_audit.py"
+      ],
+      "side_branch_commits": [],
+      "scope_checked": "C241-L9 altitude may be derived from n/e; not independent",
+      "audit_status": "NO_MATERIAL_UNSUPPORTED_CLAIM_FOUND_WITHIN_REVIEW_SCOPE",
+      "title": "🐢 C241-L9: audit possible catalog altitude dependence (#218)"
+    },
+    {
+      "merge_sha": "97df80d0b33d82ef44b43981f4219a30781b11d9",
+      "first_parent": "9dabab1dbcd901b902537a324e1c409cb3c4ee23",
+      "all_parents": [
+        "9dabab1dbcd901b902537a324e1c409cb3c4ee23"
+      ],
+      "pr_number": 237,
+      "merge_style": "squash",
+      "author_head_sha": "7f1e804ebc3e0c30586dfb8742e33156b7f1e836",
+      "author_pr_workflow_runs": {
+        "success": 16,
+        "failure": 0,
+        "cancelled": 0,
+        "scope": "GitHub API PR-triggered runs first page"
+      },
+      "changed_files": [
+        "src/App.tsx",
+        "src/lib/skipToMain.js",
+        "tests/skip-to-main.test.mjs"
+      ],
+      "side_branch_commits": [],
+      "scope_checked": "A11y hash router skip link focus",
+      "audit_status": "NO_MATERIAL_UNSUPPORTED_CLAIM_FOUND_WITHIN_REVIEW_SCOPE",
+      "title": "fix(a11y): skip navigation without resetting laboratory hash (#237)"
+    },
+    {
+      "merge_sha": "a52b4e757198d24a3a29a058438abe891d74c54c",
+      "first_parent": "97df80d0b33d82ef44b43981f4219a30781b11d9",
+      "all_parents": [
+        "97df80d0b33d82ef44b43981f4219a30781b11d9"
+      ],
+      "pr_number": 238,
+      "merge_style": "squash",
+      "author_head_sha": "4d5454a0a6521c9dfee0bee22c5bf6de9bde77f7",
+      "author_pr_workflow_runs": {
+        "success": 17,
+        "failure": 0,
+        "cancelled": 0,
+        "scope": "GitHub API PR-triggered runs first page"
+      },
+      "changed_files": [
+        ".github/workflows/ui-keyboard-smoke.yml",
+        "tests/ui_keyboard_smoke.mjs"
+      ],
+      "side_branch_commits": [],
+      "scope_checked": "Chromium keyboard/mobile UI smoke on PR HEAD",
+      "audit_status": "NO_MATERIAL_UNSUPPORTED_CLAIM_FOUND_WITHIN_REVIEW_SCOPE",
+      "title": "test(ui): desktop/mobile Chromium keyboard and hash navigation smoke (#238)"
+    }
+  ]
+}

@@ -16,11 +16,14 @@ export function splitDateline(points) {
       current = [];
       continue;
     }
-    if (current.length && Math.abs(p.longitude - current[current.length - 1].longitude) > 180) {
+    // Projectors normalize longitude. Split using those same display
+    // coordinates, otherwise 179° -> 181° paints a false 955px line.
+    const wrapped = { ...p, longitude: wrapLongitude(p.longitude) };
+    if (current.length && Math.abs(wrapped.longitude - current[current.length - 1].longitude) > 180) {
       segments.push(current);
       current = [];
     }
-    current.push(p);
+    current.push(wrapped);
   }
   if (current.length) segments.push(current);
   return segments;
