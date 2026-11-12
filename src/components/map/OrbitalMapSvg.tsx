@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import type { GroundTrackPoint, UncertaintyEnvelope } from '../../types/astrodynamics';
 import { projectFlat, projectGlobe, projectedSegments } from '../../lib/mapGeometry';
+import { canPanWithPointer, shouldShowScenarioConnections } from '../../lib/mapInteraction';
 
 type Mode = 'flat' | 'globe';
 type Marker = GroundTrackPoint | null;
@@ -18,7 +19,6 @@ type Props = {
   showUncertainty: boolean;
   showConnections: boolean;
   onPan: (dx: number, dy: number) => void;
-  onZoom: (next: number) => void;
 };
 
 type Geo = { longitude: number; latitude: number };
@@ -39,7 +39,7 @@ const COLORS: Record<SatelliteId, string> = { 527: '#34d399', 528: '#22d3ee', 52
 
 export function OrbitalMapSvg({
   lang, mode, zoom, pan, rotation, positions, tracks, envelopes,
-  showSisters, showUncertainty, showConnections, onPan, onZoom,
+  showSisters, showUncertainty, showConnections, onPan,
 }: Props) {
   const start = useRef<{ x: number; y: number } | null>(null);
   const isPt = lang === 'pt';
@@ -79,7 +79,7 @@ export function OrbitalMapSvg({
     zoom + ') translate(-480 -240)';
 
   const pointerDown = (event: React.PointerEvent<SVGSVGElement>) => {
-    if (event.button !== 0) return;
+    if (event.button !== 0 || !canPanWithPointer(event.pointerType)) return;
     start.current = { x: event.clientX, y: event.clientY };
     event.currentTarget.setPointerCapture(event.pointerId);
   };
@@ -102,12 +102,11 @@ export function OrbitalMapSvg({
       height="480"
       role="img"
       aria-labelledby="orbital-map-title orbital-map-desc"
-      style={{ touchAction: 'none', maxHeight: '65vh' }}
+      style={{ touchAction: 'pan-y', maxHeight: '65vh' }}
       onPointerDown={pointerDown}
       onPointerMove={pointerMove}
       onPointerUp={pointerUp}
       onPointerCancel={pointerUp}
-      onWheel={(event) => { if (event.ctrlKey) return; onZoom(zoom + (event.deltaY < 0 ? 0.25 : -0.25)); }}
     >
       <title id="orbital-map-title">{mapTitle}</title>
       <desc id="orbital-map-desc">{mapDesc}</desc>
@@ -135,7 +134,7 @@ export function OrbitalMapSvg({
               {lines(tracks[id], COLORS[id], id === 528 ? 2.6 : 1.5)}
             </g>
           ))}
-          {showConnections && positions[528] && (
+          {shouldShowScenarioConnections(showConnections, showSisters, Boolean(positions[528])) && (
             <g>
               {([527, 529] as const).map(id => {
                 const from = project(positions[528]!.longitude, positions[528]!.latitude);

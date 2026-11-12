@@ -35,7 +35,7 @@ const copy = {
     conde: 'Conde, BA (referência geográfica)', displayed: 'modelo disponível', missing: 'sem posição de cenário',
     uncertainty: 'Faixas opcionais: envelopes heurísticos do código legado, SEM incerteza empírica calibrada nem nível de confiança.',
     geometry: 'Os contornos continentais são apenas esquemas aproximados; nenhum tile/cartografia externa é solicitado.',
-    instructions: 'Arraste o mapa para deslocar. Os botões oferecem zoom, pan e rotação também por teclado.',
+    instructions: 'No computador, arraste com mouse ou caneta. No celular, deslize para rolar a página e use os botões para mover, aproximar ou girar o mapa.',
     nodecay: 'O intervalo do controle não estima a hora de decaimento. Após 08/11, não é propagado o 528.',
     sources: 'Matriz C179#1 / C197#1', nasa: 'Boletim NASA 15/11/1963 (dia apenas)', custody: 'Auditoria TLE',
   },
@@ -57,7 +57,7 @@ const copy = {
     conde: 'Conde, Bahia (geographic reference)', displayed: 'scenario output available', missing: 'no scenario position',
     uncertainty: 'Optional rails: legacy code heuristic, with NO empirically calibrated uncertainty or confidence level.',
     geometry: 'Land outlines are rough schematic guides; no external tiles/cartography are requested.',
-    instructions: 'Drag the map to pan. Buttons also provide keyboard-operable zoom, pan and rotation.',
+    instructions: 'On desktop, drag with a mouse or pen. On mobile, swipe to scroll the page; use the buttons to pan, zoom or rotate the map.',
     nodecay: 'This control does not estimate decay time. After 8 Nov, 528 is not propagated.',
     sources: 'Matrix C179#1 / C197#1', nasa: 'NASA bulletin 15 Nov 1963 (day only)', custody: 'TLE custody audit',
   },
@@ -159,7 +159,6 @@ export function OrbitalMap({ lang, selectedTimeMs, onTimeChange }: Props) {
           showSisters={showSisters} showUncertainty={showUncertainty}
           showConnections={showConnections}
           onPan={(dx, dy) => setPan(p => ({ x: Math.max(-600, Math.min(600, p.x + dx)), y: Math.max(-400, Math.min(400, p.y + dy)) }))}
-          onZoom={next => setZoom(clampZoom(next))}
         />
         <div className="flex flex-wrap items-center gap-2 pt-3" role="group"
           aria-label={lang === 'pt' ? 'Controles acessíveis do mapa' : 'Accessible map controls'}>
