@@ -183,3 +183,18 @@ remain unresolved. **Historical Lean export/verification, NORAD 527/529
 original blind holdout, 1963 atmosphere calibration and NORAD 528 terminal
 place/time: NOT_RUN.** Neither a conditional orbital trajectory nor atmospheric
 reentry establishes a terrestrial impact, especially not at Conde.
+
+
+## Ponte conservadora para domínios racionais declarados (#43, 12/11/2026)
+
+`src/lib/orbitDeclaredDomainBridge.ts` consome apenas a **saída declarada** de `analyzeAlternatives` (contrato proposto na [PR #43](https://github.com/franklinbaldo/conde-incident/pull/43)), com frações exatas, IDs/ocorrências de evidências, URIs, grupos de dependência e referências Lean **declaradas**. A #43 não certifica documentação primária, Lean nem física; este módulo também não importa código de uma PR não integrada, não executa Lean 4.35.0, não verifica SHA do artefato nem reconstrói TLEs.
+
+O resultado da #43 **não contém unidade nem fonte do intervalo inicial**. Por isso o chamador deve declarar `assumedUnit: 'km/s'`, época UTC, referencial, NORAD 527 ou 529, estado inicial cartesiano e `initialDomainSource` para cada alternativa. A saída conserva `unitFromAuditor: NOT_PRESENT`, `sourceAuthenticity: NOT_VERIFIED`, `leanProof: NOT_VERIFIED` e `frameTransformation: NOT_RUN`. Campos declarados não certificam a observação.
+
+Somente componentes `vx`, `vy`, `vz` são aceitas; não se converte RAAN, TEME/SGP4 nem outros parâmetros em estado osculador. As caixas de hipóteses alternativas permanecem separadas. Contradições geram `NOT_RUN_CONTRADICTORY` **apenas** no ramo afetado; dados incompletos ou sem linhagem geram `NOT_RUN_INCOMPLETE` ou `NOT_RUN_UNTRACED`.
+
+A conversão racional exata → Float64 arredonda cada extremo **para o interior** do intervalo original. Assim, nenhuma velocidade amostrada fica fora da caixa matemática declarada, mas o conjunto representável pode ser menor que o domínio original. Um intervalo mais estreito que a resolução Float64 sem ponto representável produz `NOT_RUN_FLOAT64_PRECISION`, não um falso testemunho viável. Uma caixa discretizada, mesmo numericamente estável, não é prova de encerramento global, prior estatístico ou posterior histórica.
+
+Os novos testes exclusivamente **sintéticos** cobrem domínios disjuntos, arredondamento de `3/10` a `4/5`, janela racional sub-ulp, singleton inexato, rejeição de Lean `PASS` fictício, unidade/parametrização inválidas e propagação acoplada J2 com seed repetível.
+
+Reproduzir com Node 22: `node --experimental-strip-types --test tests/orbitDeclaredDomainBridge.test.mjs`. O workflow `orbit-physics.yml` executa essa regressão junto à suíte física integral no HEAD exato. **Validação histórica cega 527/529: NOT_RUN**, assim como parâmetros de arrasto documentados e prova Lean histórica. A NASA/Goddard, *Satellite Situation Report*, vol. 3 nº 22 (15/11/1963), p. impressa 8, [NTRS 19640001198](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf), matriz **C197** da [draft PR #1](https://github.com/franklinbaldo/conde-incident/pull/1), só registra **08/11/1963** como data de decaimento de 1963-003B, sem hora e lugar. TLEs derivados C25/C179–C185 não são observações independentes nem resolvem o conflito RAAN. Sem inferência sobre Conde, reentrada terminal ou impacto.
