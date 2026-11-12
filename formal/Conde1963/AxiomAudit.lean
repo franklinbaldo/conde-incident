@@ -39,3 +39,11 @@ import Conde1963.MatrixEvidence
 #print axioms Conde1963.context_rows_add_no_orbital_information
 #print axioms Conde1963.full_matrix_has_only_nasa_day_filter
 #print axioms Conde1963.full_matrix_does_not_identify_region
+
+#print axioms Conde1963.non_admitted_source_does_not_narrow
+#print axioms Conde1963.repeated_filter_preserves_domain
+#print axioms Conde1963.repeated_filter_not_strict
+#print axioms Conde1963.witnessed_filter_strictly_reduces
+#print axioms Conde1963.nasa_double_citation_not_strict
+#print axioms Conde1963.contrary_impact_witnesses_refute_decisive_conde
+#print axioms Conde1963.forcing_persists_under_consistent_narrowing

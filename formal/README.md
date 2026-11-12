@@ -230,3 +230,29 @@ propositions / 151 labels and generator) remains unavailable; import
 historical source authentication `NOT_RUN`. Physical orbit holdouts and
 ground-impact determination `NOT_RUN`. CI validates ID preservation,
 regression logic, generated contracts and conditional proof kernel only.
+
+
+## 🐙 Interactions between evidence (issue #15; conditional proofs)
+
+`Conde1963/Interactions.lean` distinguishes a **second citation** from
+a **second discriminating constraint**. Its machine-checkable definition
+`StrictReduction` requires (1) a surviving parameter solution,
+(2) containment in the original feasible domain and (3) one **explicitly
+excluded** formerly admissible solution. The counterexample criterion
+`witnessed_filter_strictly_reduces` formalizes the minimum mathematical
+evidence needed to establish actual reduction. The witnesses in a real
+application must come from a calibrated numerical model with uncertainty
+bounds and independent dated observations, not hypothetical coordinates.
+
+- The NASA day in [C131](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L502) and [C197](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L905) is one publication, not two positional observations. `nasa_double_citation_not_strict` rules out pretend reduction by duplication.
+- The Tupi/FBIS story [C01](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L19), crater dimensions (C02), ground geology (C44 occurrence 1) and conditional penetration estimates (C46 occurrence 1) could be **coupled** only after primary physical measurements and a demonstrably calibrated material/impact model. These rows are *not yet* accepted terminal-state filters.
+- NORAD 527/528/529 observations (C139–C142) can constrain a shared-dynamics hypothesis **only** if the different objects' epochs and original element custody are verified, the RAAN 198.5261°/284.1520° conflict resolved and the model survives a withheld 529 holdout. A second object is not a second independent source when its catalog descends from shared tracking. No joint filter is admitted at present.
+- Independent witnesses or documents do not by themselves imply stronger physical narrowing; `non_admitted_source_does_not_narrow` prevents speculative hypotheses from silently entering a selected scenario. If impact paths in and out of Conde both survive, `contrary_impact_witnesses_refute_decisive_conde` blocks forced/excluded conclusions. Contradiction or no survivors is not a false proof of a place.
+
+**Source provenance:** these cross-links reuse the pinned matrix (Git blob
+`a7978c3a75a153b16ab70118a92c434bba674cb7`), not a new facsimile
+inspection. The only current admitted date predicate derives from NASA's
+15 Nov 1963 *Satellite Situation Report*, p. 8, NTRS 19640001198.
+C44–C46 have two distinct meanings each and require occurrence-specific
+provenance. No verified terminal state, uncertainty bound, ground impact
+or historical Lean `Evidence.lean` archive was added by this module.
