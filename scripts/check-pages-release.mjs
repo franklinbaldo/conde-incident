@@ -2,7 +2,7 @@
 /** Read-only proof of one Pages release. A green web build is not a deployment. */
 import { pathToFileURL } from 'node:url';
 export const EXPECTED_SITE = 'https://franklinbaldo.github.io/conde-incident/';
-export function assessRelease({ sha, pages, runs = [], deployments = [], statuses = {}, site, upstreamConclusion }) {
+export function assessRelease({ sha, pages, runs = [], deployments = [], statuses = {}, sourceTree, site, upstreamConclusion }) {
   const checks = [];
   const check = (label, ok, evidence) => checks.push({ label, status: ok ? 'PASS' : 'NOT_VERIFIED', evidence });
   check('exact SHA', typeof sha === 'string' && /^[0-9a-f]{40}$/.test(sha), sha || '(missing)');
@@ -19,7 +19,7 @@ export function assessRelease({ sha, pages, runs = [], deployments = [], statuse
     Array.isArray(statuses[d.id]) && statuses[d.id][0]?.state === 'success');
   check('successful github-pages deployment on exact SHA', Boolean(successfulDeployment),
     successfulDeployment ? String(successfulDeployment.id) : '(missing)');
-  // The public entrypoint is Zola. React/Vite lives *only* under /lab/.
+  // The editorial entrypoint may be SSG; stable HTML selectors form a publication contract. React/Vite remains under /lab/.
   // A successful workflow + Pages deployment does not alone prove the live URL is correct.
   const homeOk = site?.status === 200 && typeof site.body === 'string' &&
     /<header\s+class=["']masthead["']/.test(site.body) &&
@@ -27,7 +27,7 @@ export function assessRelease({ sha, pages, runs = [], deployments = [], statuse
     site.body.includes('/conde-incident/stories/') &&
     site.body.includes('/conde-incident/lab/') &&
     site.body.includes('/conde-incident/css/site.css');
-  check('live HTTPS root renders Zola journal and correct base URLs', Boolean(homeOk),
+  check('live HTTPS root renders editorial journal and correct base URLs', Boolean(homeOk),
     site ? 'HTTP ' + site.status : '(unreachable)');
   // Every indexed story must resolve to the expected source, not just the first card.
   const indexedCards = Array.from((site?.stories?.body || '').matchAll(
@@ -41,13 +41,30 @@ export function assessRelease({ sha, pages, runs = [], deployments = [], statuse
     indexedCards.length > 0 &&
     storyMatches.every(Boolean) &&
     new Set(chapterPaths).size === indexedCards.length;
-  check('live Zola story listing resolves every unique dated chapter', Boolean(storiesOk),
+  check('live story listing resolves every unique dated chapter', Boolean(storiesOk),
     site?.stories ? 'HTTP ' + site.stories.status + ', cards: ' + indexedCards.length : '(unreachable)');
-  const chaptersOk = storiesOk && Array.isArray(site?.chapters) &&
+  // Compare published cards with Markdown source files from the exact commit tree.
+  // The tree can be fetched without trusting the rendered site or mutable main refs.
+  const sourceEntries = Array.isArray(sourceTree?.tree)
+    ? sourceTree.tree.filter(e => typeof e.path === 'string' &&
+        e.path.startsWith('stories/') && e.path.endsWith('.md'))
+    : [];
+  const sourceSlugs = sourceEntries.map(e => e.path.slice('stories/'.length, -'.md'.length));
+  const sourceOk = sourceTree?.truncated === false && sourceEntries.length > 0 &&
+    sourceEntries.length <= 100 &&
+    sourceEntries.every(e => e.type === 'blob' &&
+      /^stories\/\d{4}-\d{2}-\d{2}-[a-z0-9-]+\.md$/.test(e.path)) &&
+    new Set(sourceSlugs).size === sourceSlugs.length &&
+    sourceSlugs.length === indexedCards.length &&
+    sourceSlugs.every(slug => storyMatches.some(m => m?.[2] === slug));
+  check('all canonical Markdown sources in exact SHA tree are publicly indexed',
+    Boolean(sourceOk), sourceTree?.truncated ? '(tree truncated)' :
+      'source files: ' + sourceEntries.length + ', cards: ' + indexedCards.length);
+  const chaptersOk = storiesOk && sourceOk && Array.isArray(site?.chapters) &&
     site.chapters.length === chapterPaths.length &&
     storyMatches.every((match, i) => {
       const chapter = site.chapters[i];
-      const expectedSource = 'https://github.com/franklinbaldo/conde-incident/blob/main/stories/' +
+      const expectedSource = 'https://github.com/franklinbaldo/conde-incident/blob/' + sha + '/stories/' +
         match[2] + '.md';
       const body = chapter?.body || '';
       return chapter?.path === match[1] && chapter.status === 200 &&
@@ -57,7 +74,7 @@ export function assessRelease({ sha, pages, runs = [], deployments = [], statuse
           body.includes("href='" + expectedSource + "'")) &&
         body.includes('Consultar Markdown-fonte e histórico editorial');
     });
-  check('every indexed Zola chapter is live, complete, and cites its own Markdown source',
+  check('every chapter is live and links to source at exact immutable commit SHA',
     Boolean(chaptersOk), site?.chapters ? 'Fetched: ' + site.chapters.length : '(not fetched)');
   const labOk = site?.lab?.status === 200 &&
     /<div\s+id=["']root["']/.test(site.lab.body || '') &&
@@ -66,7 +83,7 @@ export function assessRelease({ sha, pages, runs = [], deployments = [], statuse
     site?.lab ? 'HTTP ' + site.lab.status : '(unreachable)');
   const cssOk = site?.style?.status === 200 &&
     /\.masthead|\.story-card/.test(site.style.body || '');
-  check('live Zola stylesheet available at repository base', Boolean(cssOk),
+  check('live editorial stylesheet available at repository base', Boolean(cssOk),
     site?.style ? 'HTTP ' + site.style.status : '(unreachable)');
   return { status: checks.every(c => c.status === 'PASS') ? 'PASS' : 'NOT_VERIFIED', checks };
 }
@@ -87,6 +104,8 @@ export async function auditFromGitHub({ repo, sha, token, upstreamConclusion, si
     encodeURIComponent(sha) + '&event=push&per_page=30', token);
   const deployments = await getJson(api + '/deployments?sha=' + encodeURIComponent(sha) +
     '&environment=github-pages&per_page=30', token);
+  // Git trees API accepts a commit SHA; request all paths from that exact release.
+  const sourceTree = await getJson(api + '/git/trees/' + sha + '?recursive=1', token);
   const statuses = {};
   for (const d of deployments) {
     if (d.sha === sha && d.environment === 'github-pages') {
@@ -119,7 +138,7 @@ export async function auditFromGitHub({ repo, sha, token, upstreamConclusion, si
   }
   site.lab = await readPage('lab/');
   site.style = await readPage('css/site.css');
-  return assessRelease({ sha, pages, runs: result.workflow_runs, deployments, statuses, site, upstreamConclusion });
+  return assessRelease({ sha, pages, runs: result.workflow_runs, deployments, statuses, sourceTree, site, upstreamConclusion });
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const repo = process.env.GITHUB_REPOSITORY || 'franklinbaldo/conde-incident';
