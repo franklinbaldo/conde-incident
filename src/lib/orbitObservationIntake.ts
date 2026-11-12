@@ -166,3 +166,102 @@ export function stageDocumentedCartesianPositions(
     impactInference: 'NOT_SUPPORTED',
   };
 }
+
+
+/**
+ * A declared instrument *record* can occur in only one chronological sample.
+ * A shared station/tracking lineage is NOT itself a duplicate: it may contain
+ * many distinct measurements and still does not establish independence.
+ */
+export interface ReusedOrbitRecord {
+  readonly firstPhase: 'TRAINING' | 'HOLDOUT';
+  readonly repeatedPhase: 'TRAINING' | 'HOLDOUT';
+  readonly firstOccurrence: string;
+  readonly repeatedOccurrence: string;
+  readonly matchingKey: 'LINEAGE_RECORD' | 'DOCUMENT_RECORD';
+}
+export interface ChronologicalCartesianSplit {
+  readonly status: ConditionalIntake['status'];
+  /** Both arrays are emptied if either side is inadmissible or reused. */
+  readonly trainingPositions: readonly TimedOrbitPosition[];
+  readonly holdoutPositions: readonly TimedOrbitPosition[];
+  readonly trainingTraces: readonly IntakeTrace[];
+  readonly holdoutTraces: readonly IntakeTrace[];
+  readonly reusedRecords: readonly ReusedOrbitRecord[];
+  readonly independentInstrumentObservationsVerified: false;
+  readonly historicalHoldoutValidated: false;
+  readonly uncertaintyUsedInFit: false;
+  readonly impactInference: 'NOT_SUPPORTED';
+}
+
+/**
+ * Joint admission for a predeclared split. Running two independent per-phase
+ * admission gates alone would miss the *same instrument record* being replayed
+ * across training and holdout with a different timestamp.
+ *
+ * Compare (lineage root, instrument record ID) and (document URL, record ID);
+ * different records from the same lineage are allowed, but NOT asserted
+ * statistically independent. This cannot detect a disguised copy when all
+ * documentary identifiers are changed. External source authentication and
+ * any covariance modelling remain separate obligations.
+ *
+ * Primary C197#1 (NASA/Goddard SSR 15 Nov 1963, p.8, NTRS 19640001198)
+ * supplies only a decay day for 528. C179/C180 historical TLE reproductions
+ * share AFSPC tracking lineage and supply no original Cartesian holdout.
+ */
+export function stageDocumentedChronologicalSplit(
+  trainingDocuments: readonly DocumentaryOrbitDatum[],
+  holdoutDocuments: readonly DocumentaryOrbitDatum[],
+  context: Omit<IntakeContext, 'phase'>,
+): ChronologicalCartesianSplit {
+  const training = stageDocumentedCartesianPositions(trainingDocuments, { ...context, phase: 'TRAINING' });
+  const holdout = stageDocumentedCartesianPositions(holdoutDocuments, { ...context, phase: 'HOLDOUT' });
+
+  type Ref = { phase: 'TRAINING' | 'HOLDOUT'; occurrence: string };
+  const seen = new Map<string, Ref>();
+  const reusedRecords: ReusedOrbitRecord[] = [];
+  for (const [phase, batch] of [
+    ['TRAINING', trainingDocuments], ['HOLDOUT', holdoutDocuments],
+  ] as const) {
+    for (const datum of batch) {
+      if (!datum || datum.kind !== 'ORIGINAL_INSTRUMENT_CARTESIAN' ||
+          !hasText(datum.instrumentRecordId)) continue;
+      const recordId = datum.instrumentRecordId!.trim();
+          // Only compare fully identified records; missing metadata is rejected
+      // by the ordinary intake gate rather than guessed into a false match.
+      const candidateKeys: [ReusedOrbitRecord['matchingKey'], string][] = [];
+      if (hasText(datum.lineageRoot))
+        candidateKeys.push(['LINEAGE_RECORD', 'L\u0000' + datum.lineageRoot.trim() + '\u0000' + recordId]);
+      if (hasText(datum.documentUrl))
+        candidateKeys.push(['DOCUMENT_RECORD', 'D\u0000' + datum.documentUrl.trim() + '\u0000' + recordId]);
+      const match = candidateKeys
+        .map(([kind, key]) => ({ kind, previous: seen.get(key) }))
+        .find(entry => entry.previous !== undefined);
+      if (match) reusedRecords.push({
+        firstPhase: match.previous!.phase,
+        repeatedPhase: phase,
+        firstOccurrence: match.previous!.occurrence,
+        repeatedOccurrence: datum.matrixOccurrence ?? 'UNKNOWN',
+        matchingKey: match.kind,
+      });
+      else for (const [, key] of candidateKeys)
+        seen.set(key, { phase, occurrence: datum.matrixOccurrence ?? 'UNKNOWN' });
+    }
+  }
+
+  const accepted = training.status === 'CONDITIONAL_UNWEIGHTED_INPUTS' &&
+    holdout.status === 'CONDITIONAL_UNWEIGHTED_INPUTS' &&
+    reusedRecords.length === 0;
+  return {
+    status: accepted ? 'CONDITIONAL_UNWEIGHTED_INPUTS' : 'CONNECTED_PENDING_CALIBRATION',
+    trainingPositions: accepted ? training.positions : [],
+    holdoutPositions: accepted ? holdout.positions : [],
+    trainingTraces: training.traces,
+    holdoutTraces: holdout.traces,
+    reusedRecords,
+    independentInstrumentObservationsVerified: false,
+    historicalHoldoutValidated: false,
+    uncertaintyUsedInFit: false,
+    impactInference: 'NOT_SUPPORTED',
+  };
+}
