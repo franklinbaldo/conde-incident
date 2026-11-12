@@ -29,6 +29,53 @@ class DocumentaryProvenanceTests(unittest.TestCase):
             self.assertEqual([r["citation_status"] for r in matching],
                              ["UNMAPPED_NOT_CLEARED", "UNMAPPED_NOT_CLEARED"])
 
+    def test_nara_bluebook_addendum_is_linked_without_rewriting_frozen_matrix(self):
+        updates = self.graph["post_matrix_occurrences"]
+        self.assertEqual(len(updates), 1)
+        rec = updates[0]
+        self.assertEqual(rec["id"], "NARA-BB-CONDE-20261112-01")
+        self.assertEqual(rec["nara_fileunit_naid"], 302531012)
+        self.assertEqual(rec["nara_object_id"], 302531014)
+        self.assertEqual(rec["image_filename"], "0810.jp2")
+        self.assertEqual(rec["image_sha256"],
+                         "136be026e23acdd5e7ff0a5307e04bef799249b48346072a43cae1506be37ce9")
+        self.assertEqual(rec["telegram_date"], "1963-11-14")
+        self.assertEqual(rec["reported_newspaper_date"], "1963-11-08")
+        self.assertIsNone(rec["newspaper_page"])
+        self.assertIsNone(rec["newspaper_publication_time"])
+        self.assertEqual(rec["journalistic_source_independence"], "UNRESOLVED")
+        self.assertIsNone(rec["physical_constraint"])
+        self.assertEqual(rec["status"], "CONNECTED_PENDING_DOCUMENTARY_VERIFICATION")
+        self.assertTrue({"C232#1", "C238#1", "C01#1", "C03#1"} <=
+                        set(rec["related_matrix_occurrences"]))
+        deps = {(e["from"], e["to"], e["kind"])
+                for e in self.graph["source_dependencies"]}
+        self.assertIn(("NARA_AIRA_TELEGRAM_19631114",
+                       "O_GLOBO_19631108_UNINSPECTED",
+                       "quotes_uninspected_source"), deps)
+        self.assertEqual(len(self.graph["matrix_occurrences"]), 241)
+        self.assertEqual(len(self.citations["records"]), 24)
+
+    def test_nara_addendum_rejects_duplicate_orphan_and_unverified_claim(self):
+        for mutation in ("duplicate", "unknown_matrix", "missing_source",
+                         "invented_page", "invented_independence", "bad_checksum"):
+            config = copy.deepcopy(self.config)
+            row = config["post_matrix_occurrences"][0]
+            if mutation == "duplicate":
+                config["post_matrix_occurrences"].append(copy.deepcopy(row))
+            elif mutation == "unknown_matrix":
+                row["related_matrix_occurrences"].append("C999#1")
+            elif mutation == "missing_source":
+                row["source_id"] = "UNINDEXED_NEW_DOCUMENT"
+            elif mutation == "invented_page":
+                row["newspaper_page"] = 2
+            elif mutation == "invented_independence":
+                row["journalistic_source_independence"] = "INDEPENDENT"
+            else:
+                row["image_sha256"] = "unknown"
+            with self.subTest(mutation=mutation), self.assertRaises(ValueError):
+                pg.build(config, self.raw)
+
     def test_real_mapping_coverage_is_not_inflated_by_unmapped_default_dict(self):
         self.assertEqual(self.citations["curated_occurrences"], 24)
         self.assertEqual(self.citations["unmapped_occurrences"], 217)
