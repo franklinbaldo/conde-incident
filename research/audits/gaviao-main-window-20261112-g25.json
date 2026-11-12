@@ -1,0 +1,335 @@
+{
+  "schema": "conde.gaviao-first-parent-audit/v1",
+  "id": "G25",
+  "source_repo": "franklinbaldo/conde-incident",
+  "reviewed_from_main_sha": "a52b4e757198d24a3a29a058438abe891d74c54c",
+  "reviewed_through_main_sha": "609b352d382fc2d7b4ee48c06c9dc8b9cc1a2e05",
+  "main_commit_count_first_parent": 13,
+  "dag_commit_count": 14,
+  "conventional_merges": 1,
+  "squash_merges": 12,
+  "side_branch_commits_count": 1,
+  "direct_main_commits": 0,
+  "closed_unmerged_prs_during_closed_interval": [
+    148,
+    249,
+    251,
+    254
+  ],
+  "pr_merge_resolution": "PR #253 was a squash commit with no # in commit subject; matched GitHub merged=true and SHA. #242 is an issue, #244 is its integrated PR.",
+  "finding": {
+    "id": "G25-F1",
+    "introduced_in_pr": 239,
+    "severity": "MEDIUM_HOLDOUT_VALIDITY",
+    "synthetic_counterexample": "One 528 evaluation epoch duplicated the earlier validation epoch; both model residuals and source fingerprints unchanged; old comparator accepted it.",
+    "correction": "Reject heldout epochs outside fixed C241-L3 split: validation < 1963-10-01T00:00:00Z, evaluation >= cutoff.",
+    "historical_claim": "NONE_NEW",
+    "tracking_issue": "https://github.com/franklinbaldo/conde-incident/issues/261"
+  },
+  "source_audit": "Inspect diff of every first-parent commit, original G24 checkpoint, code, report, history and PR metadata; NASA/FBIS/NOAA/IBGE/Parquet original bytes not independently re-downloaded on G25.",
+  "lean_audit": "No new .lean files changed in this interval; Lean 4.35 proof kernel does not certify historical orbital premises; direct local Lean NOT_RUN.",
+  "numerical_audit": "Synthetic paired-model same-epoch and date-boundary controls, not calibration, posterior or blind independent holdout.",
+  "epistemic_state": "CONDE_INDETERMINATE",
+  "entries": [
+    {
+      "merge_sha": "184111fbb3d04c9da1fde904fb0a136609e5bd21",
+      "parents": [
+        "a52b4e757198d24a3a29a058438abe891d74c54c"
+      ],
+      "integration_kind": "SQUASH_COMMIT",
+      "pr_number": 239,
+      "pr_head_sha": "635273fc8eb2c1f1716aeaba26d8a8e4c19ecfca",
+      "pre_merge_workflow_runs": {
+        "scope": "first-page PR HEAD at 2026-11-12 UTC",
+        "success": 17,
+        "other": 0,
+        "reported_total": 17
+      },
+      "changed_files": [
+        ".github/workflows/polvo-j2-frozen-long.yml",
+        "research/constraints/C241-P4_paired_J2_drift_vs_quadratic.md",
+        "research/tle_custody/evidence_matrix_C241-P4_2026-11-12.md",
+        "tests/test_raan_p3_quadratic_pair.py",
+        "tools/raan_p3_quadratic_pair.py"
+      ],
+      "review": "J2 FIT-only vs quadrático nos mesmos heldouts secundários; G25-F1 encontrou falta de veto da fronteira cronológica entre validation/evaluation.",
+      "source_class": "REPO_CODE_AND_DOCUMENTS_INSPECTED_NOT_FACSIMILE_REAUTHENTICATED"
+    },
+    {
+      "merge_sha": "40c543e4edfbbf104c622c0d895aaaee77caf04a",
+      "parents": [
+        "184111fbb3d04c9da1fde904fb0a136609e5bd21"
+      ],
+      "integration_kind": "SQUASH_COMMIT",
+      "pr_number": 241,
+      "pr_head_sha": "ef733ee64894313bb3503033e54c12b6a6c8a291",
+      "pre_merge_workflow_runs": {
+        "scope": "first-page PR HEAD at 2026-11-12 UTC",
+        "success": 16,
+        "other": 0,
+        "reported_total": 16
+      },
+      "changed_files": [
+        "research/meteorology/igra_recife_19631107_09_hypsometric_consistency.md",
+        "research/meteorology/igra_recife_19631107_hypsometric_consistency.json",
+        "research/meteorology/igra_recife_19631108_hypsometric_consistency.json",
+        "research/meteorology/igra_recife_19631109_hypsometric_consistency.json",
+        "tests/test_igra_recife_hypsometry.py",
+        "tools/audit_igra_recife_hypsometry.py"
+      ],
+      "review": "78 camadas hipsométricas NOAA Recife 7–9/11 com resíduos de modelo seco, não erros instrumentais nem transferência a Conde.",
+      "source_class": "REPO_CODE_AND_DOCUMENTS_INSPECTED_NOT_FACSIMILE_REAUTHENTICATED"
+    },
+    {
+      "merge_sha": "4da82a60e4f0e4edb449f3c39f696b44a4f5e7d7",
+      "parents": [
+        "40c543e4edfbbf104c622c0d895aaaee77caf04a",
+        "c264dd252f3aac9534768c6be42531a3376eaedb"
+      ],
+      "integration_kind": "MERGE_COMMIT",
+      "pr_number": 240,
+      "pr_head_sha": "c264dd252f3aac9534768c6be42531a3376eaedb",
+      "pre_merge_workflow_runs": {
+        "scope": "first-page PR HEAD at 2026-11-12 UTC",
+        "success": 16,
+        "other": 0,
+        "reported_total": 16
+      },
+      "changed_files": [
+        "research/geo/README.md",
+        "research/geo/ibge_1872_1991_methodology_2026-11-12.json",
+        "research/geo/ibge_1991_based_mesh_lineage_2026-11-12.md",
+        "tests/test_conde_ibge_lineage.py",
+        "tools/conde_ibge_lineage.py"
+      ],
+      "review": "IBGE 1991 fundamenta malha nominal 1960; não comprova fronteira legal 1963.",
+      "source_class": "REPO_CODE_AND_DOCUMENTS_INSPECTED_NOT_FACSIMILE_REAUTHENTICATED"
+    },
+    {
+      "merge_sha": "f3de342f940873b84557fe88b2f427c80c7ed4c9",
+      "parents": [
+        "4da82a60e4f0e4edb449f3c39f696b44a4f5e7d7"
+      ],
+      "integration_kind": "SQUASH_COMMIT",
+      "pr_number": 243,
+      "pr_head_sha": "1ec4793109cade96ae2a4a8739f36c41140bce7d",
+      "pre_merge_workflow_runs": {
+        "scope": "first-page PR HEAD at 2026-11-12 UTC",
+        "success": 16,
+        "other": 0,
+        "reported_total": 16
+      },
+      "changed_files": [
+        "research/meteorology/nmc_y20175_cos_payload_sizes_2026-11-12.json",
+        "research/meteorology/nmc_y20175_cos_payload_sizes_2026-11-12.md",
+        "tests/test_nmc_y20175_record_sizes.py",
+        "tools/audit_nmc_y20175_record_sizes.py"
+      ],
+      "review": "Tamanhos de registros COS Y20175 com uma linhagem NCAR; payload não é sondagem decodificada.",
+      "source_class": "REPO_CODE_AND_DOCUMENTS_INSPECTED_NOT_FACSIMILE_REAUTHENTICATED"
+    },
+    {
+      "merge_sha": "be5cde882db3b113825e6459bd982fa47cec43d4",
+      "parents": [
+        "f3de342f940873b84557fe88b2f427c80c7ed4c9"
+      ],
+      "integration_kind": "SQUASH_COMMIT",
+      "pr_number": 244,
+      "pr_head_sha": "b9dfebf12414051bd0d1ff123ccb53b96f95e81e",
+      "pre_merge_workflow_runs": {
+        "scope": "first-page PR HEAD at 2026-11-12 UTC",
+        "success": 16,
+        "other": 0,
+        "reported_total": 16
+      },
+      "changed_files": [
+        "research/constraints/raan_observation_design_candidate_C241.json",
+        "research/statistics/DISCRIMINATING_OBSERVATION_DESIGN.md",
+        "research/statistics/raan_observation_design_C241.json",
+        "tests/test_raan_observation_design.py",
+        "tools/raan_observation_design.py"
+      ],
+      "review": "Posto da RAAN em modelo S1 com gauge; âncora calibrada apenas contrafactual e sem nova observação.",
+      "source_class": "REPO_CODE_AND_DOCUMENTS_INSPECTED_NOT_FACSIMILE_REAUTHENTICATED"
+    },
+    {
+      "merge_sha": "69ba0ef8a1e9dc05bc8a00b35d427367280b5bc8",
+      "parents": [
+        "be5cde882db3b113825e6459bd982fa47cec43d4"
+      ],
+      "integration_kind": "SQUASH_COMMIT",
+      "pr_number": 246,
+      "pr_head_sha": "ba3c81bc5ad20680b534b4e582738f9c96785e54",
+      "pre_merge_workflow_runs": {
+        "scope": "first-page PR HEAD at 2026-11-12 UTC",
+        "success": 17,
+        "other": 0,
+        "reported_total": 17
+      },
+      "changed_files": [
+        ".github/workflows/texugo-quadratic-raan.yml",
+        "tests/test_texugo_ci_trigger_paths.py"
+      ],
+      "review": "Paths de trigger do quadratic workflow; testes locais de paths, sem tornar CI comprovação de ciência histórica.",
+      "source_class": "REPO_CODE_AND_DOCUMENTS_INSPECTED_NOT_FACSIMILE_REAUTHENTICATED"
+    },
+    {
+      "merge_sha": "8f6510b3df34685d3d9ffaa9c673b004debb6fc1",
+      "parents": [
+        "69ba0ef8a1e9dc05bc8a00b35d427367280b5bc8"
+      ],
+      "integration_kind": "SQUASH_COMMIT",
+      "pr_number": 245,
+      "pr_head_sha": "e4278bdadb69ad003dad4771007c1fd459c55632",
+      "pre_merge_workflow_runs": {
+        "scope": "first-page PR HEAD at 2026-11-12 UTC",
+        "success": 16,
+        "other": 0,
+        "reported_total": 16
+      },
+      "changed_files": [
+        "src/lib/orbitEnsembleRefinement.ts",
+        "tests/orbitEnsembleRefinement.test.mjs"
+      ],
+      "review": "Reruns sintéticos de r/v com mesmas perturbações e refinamentos; nenhuma calibração instrumental/posterior.",
+      "source_class": "REPO_CODE_AND_DOCUMENTS_INSPECTED_NOT_FACSIMILE_REAUTHENTICATED"
+    },
+    {
+      "merge_sha": "a00992814173740fa577aca09168e4e74bbbfdf1",
+      "parents": [
+        "8f6510b3df34685d3d9ffaa9c673b004debb6fc1"
+      ],
+      "integration_kind": "SQUASH_COMMIT",
+      "pr_number": 247,
+      "pr_head_sha": "9e23a59f28904f07bb50626b85a6ddf1a4f85003",
+      "pre_merge_workflow_runs": {
+        "scope": "first-page PR HEAD at 2026-11-12 UTC",
+        "success": 16,
+        "other": 0,
+        "reported_total": 16
+      },
+      "changed_files": [
+        "research/audits/gaviao-main-window-20261112-g24.json",
+        "research/audits/gaviao-main-window-20261112-g24.md",
+        "src/lib/mapGeometry.js",
+        "tests/quota-free-map.test.mjs"
+      ],
+      "review": "Correção G24 do antimeridiano e testes sintéticos; documento histórico e órbitas não alterados.",
+      "source_class": "REPO_CODE_AND_DOCUMENTS_INSPECTED_NOT_FACSIMILE_REAUTHENTICATED"
+    },
+    {
+      "merge_sha": "6e2686c08903bd630216c0268489a748056dbf77",
+      "parents": [
+        "a00992814173740fa577aca09168e4e74bbbfdf1"
+      ],
+      "integration_kind": "SQUASH_COMMIT",
+      "pr_number": 248,
+      "pr_head_sha": "420ec22b7a7d14734020b0a9ff85d7933aace37a",
+      "pre_merge_workflow_runs": {
+        "scope": "first-page PR HEAD at 2026-11-12 UTC",
+        "success": 16,
+        "other": 0,
+        "reported_total": 16
+      },
+      "changed_files": [
+        ".github/workflows/documentary-dependence.yml",
+        "public/data/conde-cgeo10-provenance.json",
+        "research/provenance/DEPENDENCY_EXPORT.md",
+        "tests/test_cgeo10_provenance.py",
+        "tools/export_cgeo10_provenance.py"
+      ],
+      "review": "Cadeia IBGE CGEO-10 anexada ao grafo com hipótese de limite ainda latente, sem coordenadas legais fixadas.",
+      "source_class": "REPO_CODE_AND_DOCUMENTS_INSPECTED_NOT_FACSIMILE_REAUTHENTICATED"
+    },
+    {
+      "merge_sha": "8ee2d8941dd198a193e670a50ef5a239418b583c",
+      "parents": [
+        "6e2686c08903bd630216c0268489a748056dbf77"
+      ],
+      "integration_kind": "SQUASH_COMMIT",
+      "pr_number": 250,
+      "pr_head_sha": "0afa7ab1692fb3054749291d0069420bc608584a",
+      "pre_merge_workflow_runs": {
+        "scope": "first-page PR HEAD at 2026-11-12 UTC",
+        "success": 16,
+        "other": 0,
+        "reported_total": 16
+      },
+      "changed_files": [
+        "AGENTS.md"
+      ],
+      "review": "Contrato SSG Rust/Pages; alteração documental, não atestação do artefato entregue por HTTPS.",
+      "source_class": "REPO_CODE_AND_DOCUMENTS_INSPECTED_NOT_FACSIMILE_REAUTHENTICATED"
+    },
+    {
+      "merge_sha": "5135501f38ca25aeb59cd63cd496e3db1d839a10",
+      "parents": [
+        "8ee2d8941dd198a193e670a50ef5a239418b583c"
+      ],
+      "integration_kind": "SQUASH_COMMIT",
+      "pr_number": 252,
+      "pr_head_sha": "b8866b3be2f0fc4743a68f757c3568db94fa4b90",
+      "pre_merge_workflow_runs": {
+        "scope": "first-page PR HEAD at 2026-11-12 UTC",
+        "success": 17,
+        "other": 0,
+        "reported_total": 17
+      },
+      "changed_files": [
+        "src/components/OrbitalMap.tsx",
+        "src/components/map/OrbitalMapSvg.tsx",
+        "src/lib/mapInteraction.js",
+        "tests/map-interaction-guards.test.mjs",
+        "tests/quota-free-map.test.mjs"
+      ],
+      "review": "Gestos touch e camadas 527/529 no SVG; vizibilidade de cenário não implica sobrevoo observado.",
+      "source_class": "REPO_CODE_AND_DOCUMENTS_INSPECTED_NOT_FACSIMILE_REAUTHENTICATED"
+    },
+    {
+      "merge_sha": "886e5b9f1523e3b426d10585f16ab1908209b3f3",
+      "parents": [
+        "5135501f38ca25aeb59cd63cd496e3db1d839a10"
+      ],
+      "integration_kind": "SQUASH_COMMIT",
+      "pr_number": 253,
+      "pr_head_sha": "ca33f1fe6877ab4d2b8159190819d11c43ec30a6",
+      "pre_merge_workflow_runs": {
+        "scope": "first-page PR HEAD at 2026-11-12 UTC",
+        "success": 16,
+        "other": 0,
+        "reported_total": 16
+      },
+      "changed_files": [
+        ".agents/skills/conde-coruja/SKILL.md",
+        "stories/2026-11-11-o-dia-em-que-dois-relatos-se-cruzaram.md",
+        "stories/2026-11-11-uma-orbita-sem-endereco.md"
+      ],
+      "review": "Capítulos 01–02 reescritos para leitor com distinção entre notícia Tupi/FBIS e data NASA; checagem de prosa sem novas afirmações terminais.",
+      "source_class": "REPO_CODE_AND_DOCUMENTS_INSPECTED_NOT_FACSIMILE_REAUTHENTICATED"
+    },
+    {
+      "merge_sha": "609b352d382fc2d7b4ee48c06c9dc8b9cc1a2e05",
+      "parents": [
+        "886e5b9f1523e3b426d10585f16ab1908209b3f3"
+      ],
+      "integration_kind": "SQUASH_COMMIT",
+      "pr_number": 255,
+      "pr_head_sha": "df258110191bdcd3d12b57e744d2ac0b1a0d4fe1",
+      "pre_merge_workflow_runs": {
+        "scope": "first-page PR HEAD at 2026-11-12 UTC",
+        "success": 17,
+        "other": 0,
+        "reported_total": 17
+      },
+      "changed_files": [
+        ".github/workflows/tle-identity-lineage.yml",
+        "research/tle_custody/catalog_identity_527_529_2026-11-12.json",
+        "research/tle_custody/evidence_matrix_C241-L10_2026-11-12.md",
+        "tests/test_tle_identity_lineage_audit.py",
+        "tools/tle_identity_lineage_audit.py"
+      ],
+      "review": "COSPAR 1963-003A/B/C e NORAD 527/528/529 em fontes secundárias + NASA dia catalogado; não identificação física de fragmento.",
+      "source_class": "REPO_CODE_AND_DOCUMENTS_INSPECTED_NOT_FACSIMILE_REAUTHENTICATED"
+    }
+  ]
+}

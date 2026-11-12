@@ -1,0 +1,73 @@
+{
+  "calculation": {
+    "absolute_native_planar_area_km2": "983.1840473046875",
+    "absolute_native_planar_area_m2": "983184047.3046875",
+    "coordinates": "CGEO-10 native projected (easting_m,northing_m)",
+    "duplicate_vertices_excluding_closure": 0,
+    "edges": 46,
+    "interpretation": "PLANAR_METRIC_OF_RETROSPECTIVE_DRAWING_NOT_SURVEYED_SURFACE_AREA",
+    "method": "Decimal shoelace and pairwise exact decimal segment intersections",
+    "nonadjacent_self_intersections": 0,
+    "reported_positional_accuracy_m": null,
+    "ring_orientation_native_xy": "CLOCKWISE",
+    "signed_native_planar_area_m2": "-983184047.3046875",
+    "vertices_with_closure": 47
+  },
+  "dependency_graph": {
+    "edges": [
+      {
+        "kind": "COMPUTED_FROM_SAME_PINNED_VERTICES_NOT_NEW_SOURCE",
+        "source": "CGEO-10",
+        "target": "CGEO-12"
+      },
+      {
+        "kind": "LIMITS_HISTORICAL_ACCURACY_INTERPRETATION",
+        "source": "CGEO-11",
+        "target": "CGEO-12"
+      },
+      {
+        "kind": "NOT_A_VALIDATED_TEMPORAL_BRIDGE",
+        "source": "CGEO-12",
+        "target": "LEGAL_BOUNDARY_CONDE_1963_LATENT"
+      }
+    ]
+  },
+  "id": "CGEO-12",
+  "schema": "conde.gis.ibge-1960-native-topology/v1",
+  "scope": {
+    "1963_event_position": null,
+    "1963_point_membership": null,
+    "1963_position_error_m": null,
+    "can_restrict_historical_reentry": false,
+    "cannot_infer_boundary_change_from_area": true,
+    "historic_1963_legal_polygon": null,
+    "nominal_1960_year_not_measurement_epoch": true,
+    "reason": "CGEO-11 documents derivation from 1991 and no cartographic precision. Topological validity is not temporal or geodetic accuracy."
+  },
+  "source": {
+    "evidence_dependencies": [
+      "CGEO-10",
+      "CGEO-11"
+    ],
+    "independent_geographical_observation": false,
+    "native_crs": {
+      "axis_order": [
+        "easting_m",
+        "northing_m"
+      ],
+      "central_meridian_deg": -54.0,
+      "datum": "SIRGAS_2000",
+      "ellipsoid": "GRS_1980",
+      "epsg_projected": null,
+      "latitude_of_origin_deg": 0.0,
+      "linear_unit": "metre",
+      "name": "World_Polyconic",
+      "prj_sha256": "c90d581eaa847ae6dd5a94043893b99603186ae7d39a58f603e328d2284c2cf1",
+      "projection": "Polyconic",
+      "wkt_source": "05-malha municipal 1960.prj"
+    },
+    "polygon_id": "CGEO-10",
+    "source_ring_sha256": "735bfbc0f36f6b97c17085824af6f6b4f56f268d94481c05dd75bf8a0a141e23",
+    "source_zip_sha256": "261399b8557ee26c118e94b13cebf3b6b3e1c70e91b5e8438a348847b875120f"
+  }
+}

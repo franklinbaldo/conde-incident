@@ -4,8 +4,16 @@ import { readFileSync } from 'node:fs';
 
 const ci = readFileSync(new URL('../.github/workflows/integration-head.yml', import.meta.url), 'utf8');
 
-test('CI executes for pushes and pull requests', () => {
-  assert.match(ci, /^on:\s*\n  push:\s*\n  pull_request:/m);
+test('CI runs on main pushes and all PRs, not duplicate feature-branch pushes', () => {
+  const trigger = ci.split(/^permissions:/m)[0].trimEnd();
+  assert.equal(trigger, [
+    'name: Integration checks (exact head)',
+    '',
+    'on:',
+    '  push:',
+    '    branches: [main]',
+    '  pull_request:',
+  ].join('\n'));
 });
 
 test('both jobs checkout and verify the exact PR head SHA, not synthetic PR merge', () => {
