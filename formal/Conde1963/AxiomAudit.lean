@@ -1,4 +1,4 @@
-import Conde1963.PairedEnclosures
+import Conde1963.TruthBridge
 
 /-! Explicit kernel-dependency report in CI, not an empirical validation. -/
 
