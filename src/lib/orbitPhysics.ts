@@ -24,6 +24,14 @@ export interface Propagation {
 }
 export const EARTH = Object.freeze({ muKm3S2: 398600.4418, radiusKm: 6378.137, j2: 1.08262668e-3, spinRadS: 7.2921150e-5 });
 
+/** Numerical RK4 failure, not evidence that an admissible physical scenario is false. */
+export class NumericalIntegrationBreakdown extends RangeError {
+  constructor() {
+    super('RK4 trajectory left the representable finite phase space');
+    this.name = 'NumericalIntegrationBreakdown';
+  }
+}
+
 const add = (a: Vec3, b: Vec3): Vec3 => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
 const scale = (a: Vec3, q: number): Vec3 => [a[0] * q, a[1] * q, a[2] * q];
 const dot = (a: Vec3, b: Vec3): number => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
@@ -102,7 +110,16 @@ export function dragJacobiPowerKm2S3(s: State, atmosphere: Atmosphere): number {
 
 export function rk4(s: State, dtS: number, dynamics: Dynamics = {}): State {
   if (!Number.isFinite(dtS) || dtS <= 0) throw new RangeError('RK4 step must be finite and positive');
-  const derivative = (q: State) => ({ dr: q.vKmS, dv: accelerationKmS2(q, dynamics) });
+  const derivative = (q: State) => {
+    // A finite domain endpoint does NOT guarantee numerically representable
+    // intermediate states. Keep a distinct error from invalid force inputs.
+    if (!finiteVec(q.rKm) || !finiteVec(q.vKmS) || !Number.isFinite(q.tS) ||
+        !Number.isFinite(norm(q.rKm)) || !Number.isFinite(norm(q.vKmS)))
+      throw new NumericalIntegrationBreakdown();
+    const dv = accelerationKmS2(q, dynamics);
+    if (!finiteVec(dv)) throw new NumericalIntegrationBreakdown();
+    return { dr: q.vKmS, dv };
+  };
   const shifted = (q: State, k: {dr: Vec3; dv: Vec3}, h: number): State => ({
     rKm: add(q.rKm, scale(k.dr, h)), vKmS: add(q.vKmS, scale(k.dv, h)), tS: q.tS + h,
   });
@@ -111,7 +128,13 @@ export function rk4(s: State, dtS: number, dynamics: Dynamics = {}): State {
   const k3 = derivative(shifted(s, k2, dtS / 2));
   const k4 = derivative(shifted(s, k3, dtS));
   const sum = (key: 'dr' | 'dv'): Vec3 => scale(add(add(k1[key], scale(k2[key], 2)), add(scale(k3[key], 2), k4[key])), dtS / 6);
-  return { rKm: add(s.rKm, sum('dr')), vKmS: add(s.vKmS, sum('dv')), tS: s.tS + dtS };
+  const next: State = { rKm: add(s.rKm, sum('dr')),
+    vKmS: add(s.vKmS, sum('dv')), tS: s.tS + dtS };
+  if (!finiteVec(next.rKm) || !finiteVec(next.vKmS) ||
+      !Number.isFinite(next.tS) || !Number.isFinite(norm(next.rKm)) ||
+      !Number.isFinite(norm(next.vKmS)))
+    throw new NumericalIntegrationBreakdown();
+  return next;
 }
 
 export function propagate(
