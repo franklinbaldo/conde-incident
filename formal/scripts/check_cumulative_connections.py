@@ -180,6 +180,8 @@ def validate(graph: dict) -> dict:
         upstream.add(src.get("upstream_tracking_family", src["source_family"]))
         if o["forward_operator_id"] not in ops:
             raise ValueError(f"unmapped forward operator: {oid}")
+        if o["unit"] not in CANONICAL:
+            raise ValueError(f"unknown physical unit: {oid}")
         if src["source_family"] == "NASA_GODDARD_COMPILED_FROM_TRACKING":
             # The four SSR columns have distinct units/operators. A relabeled
             # column or a state/epoch borrowed from another object/date must
@@ -197,8 +199,6 @@ def validate(graph: dict) -> dict:
                 raise ValueError(f"cross-object or cross-publication SSR parameter link: {oid}")
         if not o.get("input_parameters") or any(p not in params for p in o["input_parameters"]):
             raise ValueError(f"orphan parameter link: {oid}")
-        if o["unit"] not in CANONICAL:
-            raise ValueError(f"unknown physical unit: {oid}")
         number = o["value"]
         if isinstance(number, bool) or not isinstance(number, (int, float)) or not math.isfinite(number):
             raise ValueError(f"non-finite reported measurement: {oid}")
