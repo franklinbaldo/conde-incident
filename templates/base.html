@@ -1,22 +1,15 @@
 <!doctype html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="{% block description %}{{ config.description }}{% endblock description %}">
-<title>{% block title %}{{ config.title }}{% endblock title %}</title>
-<link rel="stylesheet" href="{{ get_url(path='css/site.css') | safe }}">
-</head>
-<body>
-<header class="masthead"><div class="wrap masthead-inner">
-<a class="brand" href="{{ config.base_url | safe }}"><small>Arquivo de investigação</small><strong>Conde, 1963</strong></a>
-<nav aria-label="Navegação principal">
-<a href="{{ config.base_url | safe }}stories/">Reportagens</a>
-<a href="{{ config.base_url | safe }}lab/">Laboratório científico</a>
-</nav>
-</div></header>
-<main class="wrap">{% block content %}{% endblock content %}</main>
-<footer class="site-footer"><div class="wrap">
-<p>Um relato documentado não equivale a uma ocorrência comprovada. As hipóteses continuam abertas.</p>
-<p>Fontes e versões: <a href="https://github.com/franklinbaldo/conde-incident">repositório Conde</a>.</p>
-</div></footer>
+<html lang="{{ site.language | default('pt-BR') }}">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ page.title | default('Conde, 1963') }} | Conde, 1963</title>
+{% if page is defined and page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
+<link rel="stylesheet" href="/conde-incident/css/site.css"></head>
+<body><a class="skip-link" href="#main">Pular para conteúdo</a>
+<header class="masthead"><nav aria-label="Navegação principal">
+<a href="/conde-incident/">Conde, 1963</a>
+<a href="/conde-incident/stories/">Caderno de histórias</a>
+<a href="/conde-incident/lab/">Laboratório científico</a></nav></header>
+<main id="main" class="wrap">{% block content %}{% endblock %}</main>
+<footer><p>Documento, relato, hipótese e simulação são categorias diferentes.</p>
+<a href="https://github.com/franklinbaldo/conde-incident">Método e fontes</a></footer>
 </body></html>

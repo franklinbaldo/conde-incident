@@ -1,50 +1,64 @@
 name: Publish Conde site
 on:
-  pull_request:
   push:
     branches: [main]
+  pull_request:
   workflow_dispatch:
 
 permissions:
   contents: read
-
 concurrency:
   group: conde-site-${{ github.ref }}
   cancel-in-progress: false
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
       - run: bun run lint
-      - name: Build React scientific lab under repository subpath
+      - name: Build scientific lab at nested Pages path
         run: SCIENCE_BASE=/conde-incident/lab/ bun run build
-      - name: Embed laboratory in Zola static output
-        run: mkdir -p static/lab && cp -R dist/. static/lab/
-      - name: Generate native Zola pages from canonical Markdown
-        run: node scripts/prepare-zola.mjs
-      - uses: taiki-e/install-action@v2
-        with:
-          tool: zola@0.22.1
-          fallback: none
-      - name: Check Zola templates and internal links
-        run: zola check --skip-external-links
-      - name: Build editorial site
-        run: zola build
-      - name: Verify chapter rendering and /conde-incident/ paths
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Install exact SSG Rust release
+        run: cargo install ssg --version 0.0.75 --locked
+      - name: Record real CLI
+        run: |
+          ssg --version
+          ssg --help
+          ssg build --help
+      - name: Validate chapter schema and chronology
+        run: node scripts/prepare-ssg.mjs --check
+      - name: Generate SSG inputs from canonical stories
+        run: node scripts/prepare-ssg.mjs
+      - name: SSG check
+        run: ssg check --config ssg.toml
+      - name: SSG build
+        run: ssg build --config ssg.toml
+      - name: Unite Vite lab and styles with SSG output
+        run: |
+          mkdir -p public/lab public/css
+          cp -R dist/. public/lab/
+          cp -R static/css/. public/css/
+      - name: SSG audit
+        run: ssg audit public --out text
+      - name: Verify every article and /conde-incident/ paths
         run: node scripts/check-site.mjs
-      - uses: actions/configure-pages@v5
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      - uses: actions/upload-pages-artifact@v3
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      - name: Upload Pages artifact
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: public
-
+          path: ./public
   deploy:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     permissions:
@@ -55,5 +69,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/configure-pages@v5
       - id: deployment
         uses: actions/deploy-pages@v4
