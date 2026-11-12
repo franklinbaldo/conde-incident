@@ -1,0 +1,256 @@
+{
+  "admissible_geographic_domain_reduction": "NOT_EVALUABLE",
+  "candidates": [
+    {
+      "candidate": "additional_catalog_epochs_528",
+      "candidate_status": "COUNTERFACTUAL_NO_OBSERVATION_RECOVERED",
+      "gauge_vector": [
+        1,
+        1,
+        1,
+        -1
+      ],
+      "global_absolute_phase_identified": false,
+      "interpretation": "Absolute phase remains free: observations do not remove the common S1 gauge.",
+      "new_observation_rows": [
+        [
+          0,
+          1,
+          0,
+          1
+        ]
+      ],
+      "parameter_columns": [
+        "phase_527",
+        "phase_528",
+        "phase_529",
+        "offset_catalog"
+      ],
+      "parameter_count_after": 4,
+      "rank_after_candidate": 3,
+      "rank_before_candidate": 3,
+      "remaining_nullity": 1,
+      "required_independence_or_calibration": "same documentary lineage; not another sensor",
+      "type": "same_lineage_repeated_catalog_row"
+    },
+    {
+      "candidate": "cross_object_relative_raan_528_minus_529",
+      "candidate_status": "COUNTERFACTUAL_NO_OBSERVATION_RECOVERED",
+      "gauge_vector": [
+        1,
+        1,
+        1,
+        -1
+      ],
+      "global_absolute_phase_identified": false,
+      "interpretation": "Absolute phase remains free: observations do not remove the common S1 gauge.",
+      "new_observation_rows": [
+        [
+          0,
+          1,
+          -1,
+          0
+        ]
+      ],
+      "parameter_columns": [
+        "phase_527",
+        "phase_528",
+        "phase_529",
+        "offset_catalog"
+      ],
+      "parameter_count_after": 4,
+      "rank_after_candidate": 3,
+      "rank_before_candidate": 3,
+      "remaining_nullity": 1,
+      "required_independence_or_calibration": "relative phase does not supply inertial absolute reference",
+      "type": "relative_contrast_only"
+    },
+    {
+      "candidate": "new_lineage_only_528_free_bias",
+      "candidate_status": "COUNTERFACTUAL_NO_OBSERVATION_RECOVERED",
+      "gauge_vector": [
+        1,
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "global_absolute_phase_identified": false,
+      "interpretation": "Absolute phase remains free: observations do not remove the common S1 gauge.",
+      "new_observation_rows": [
+        [
+          0,
+          1,
+          0,
+          0,
+          1
+        ]
+      ],
+      "parameter_columns": [
+        "phase_527",
+        "phase_528",
+        "phase_529",
+        "offset_catalog",
+        "offset_new_lineage"
+      ],
+      "parameter_count_after": 5,
+      "rank_after_candidate": 4,
+      "rank_before_candidate": 3,
+      "remaining_nullity": 1,
+      "required_independence_or_calibration": "prove new lineage; independently estimate its unknown angular zero",
+      "type": "new_sensor_or_archive_with_unknown_offset"
+    },
+    {
+      "candidate": "new_lineage_all_three_free_bias",
+      "candidate_status": "COUNTERFACTUAL_NO_OBSERVATION_RECOVERED",
+      "gauge_vector": [
+        1,
+        1,
+        1,
+        -1,
+        -1
+      ],
+      "global_absolute_phase_identified": false,
+      "interpretation": "Absolute phase remains free: observations do not remove the common S1 gauge.",
+      "new_observation_rows": [
+        [
+          1,
+          0,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          0,
+          1
+        ]
+      ],
+      "parameter_columns": [
+        "phase_527",
+        "phase_528",
+        "phase_529",
+        "offset_catalog",
+        "offset_new_lineage"
+      ],
+      "parameter_count_after": 5,
+      "rank_after_candidate": 4,
+      "rank_before_candidate": 3,
+      "remaining_nullity": 1,
+      "required_independence_or_calibration": "prove independently measured source; zero-point remains unknown",
+      "type": "multiple_objects_new_lineage_unknown_offset"
+    },
+    {
+      "candidate": "calibrated_absolute_phase_528",
+      "candidate_status": "COUNTERFACTUAL_NO_OBSERVATION_RECOVERED",
+      "gauge_vector": [
+        1,
+        1,
+        1,
+        -1
+      ],
+      "global_absolute_phase_identified": true,
+      "interpretation": "Absolute phase locally identifiable ONLY IF this proposed absolute measurement and its reference are independently validated.",
+      "new_observation_rows": [
+        [
+          0,
+          1,
+          0,
+          0
+        ]
+      ],
+      "parameter_columns": [
+        "phase_527",
+        "phase_528",
+        "phase_529",
+        "offset_catalog"
+      ],
+      "parameter_count_after": 4,
+      "rank_after_candidate": 4,
+      "rank_before_candidate": 3,
+      "remaining_nullity": 0,
+      "required_independence_or_calibration": "document original calibrated sensor, epoch, inertial frame, catalog-mean mapping, nonzero error precision and covariance",
+      "type": "independent_absolute_inertial_raan_reference"
+    },
+    {
+      "candidate": "independent_calibration_catalog_offset",
+      "candidate_status": "COUNTERFACTUAL_NO_OBSERVATION_RECOVERED",
+      "gauge_vector": [
+        1,
+        1,
+        1,
+        -1
+      ],
+      "global_absolute_phase_identified": true,
+      "interpretation": "Absolute phase locally identifiable ONLY IF this proposed absolute measurement and its reference are independently validated.",
+      "new_observation_rows": [
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "parameter_columns": [
+        "phase_527",
+        "phase_528",
+        "phase_529",
+        "offset_catalog"
+      ],
+      "parameter_count_after": 4,
+      "rank_after_candidate": 4,
+      "rank_before_candidate": 3,
+      "remaining_nullity": 0,
+      "required_independence_or_calibration": "source-independent calibration with frame/epoch and precision",
+      "type": "externally_calibrated_documentary_angular_zero"
+    }
+  ],
+  "frozen_holdout": {
+    "gauge_rank_every_block": {
+      "evaluation": 3,
+      "fit": 3,
+      "validation": 3
+    },
+    "path": "research/statistics/raan_chronological_holdout_1963.json",
+    "retrospective_not_blinded": true,
+    "sha256": "a51ff61054da94587aa9c45631b3887572f238fe5967d2a8493c49d360c5e59f",
+    "unique_epochs": {
+      "evaluation": 35,
+      "fit": 61,
+      "validation": 23
+    }
+  },
+  "historical_error_covariance": null,
+  "historical_forward_operator_validated": false,
+  "historical_mcmc": "NOT_RUN",
+  "holdout_predictive_score": "NOT_RUN",
+  "inference_classification": "STRUCTURAL_AND_COUNTERFACTUAL_ONLY",
+  "non_data_prior_warning": "A concentrated prior on a phase or bias may fix a sampling gauge but is NOT a new observation and is NOT identification by the data.",
+  "observation_available": false,
+  "prior_calibrated": false,
+  "priority_condition": "Recover a truly independent calibrated absolute angular reference or offset calibration; repeated/relative/catalog observations may improve contrasts but cannot resolve absolute gauge.",
+  "schema": "conde.raan-discriminating-observation-design/v1",
+  "scope": "Exact global S1 shift symmetry for three free circular phases and one uncalibrated additive offset per documentary lineage, with frozen dynamics. Rank is LOCAL structural only; it cannot certify global identifiability of real orbital dynamics or geolocation.",
+  "source": {
+    "historical_independent_angular_anchor": null,
+    "lineage": "Single historical Space-Track mirror, not independent NORAD measurements",
+    "occurrence_ids": [
+      "C25#1",
+      "C179#1",
+      "C180#1",
+      "C181#1",
+      "C241-L3"
+    ],
+    "path": "research/statistics/raan_527_528_529_1963.json",
+    "sha256": "b88564912c35167044d5fd4a0c1b50f6c624fcaf1066f82a7b70e503df8928f5"
+  }
+}
