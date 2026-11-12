@@ -120,11 +120,10 @@ class CumulativeConstraintGraphTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "C179 TLE value"):
             validate(bad)
 
-    def test_different_reported_units_cannot_be_subtracted_as_same_unit(self):
+    def test_derived_unit_mismatch_cannot_be_subtracted_as_same_unit(self):
         bad = copy.deepcopy(self.graph)
-        # Both units are individually permitted. Only the cross-row comparison is forged.
-        other = bad["derived_connections"][0]["inputs"][1]
-        next(o for o in bad["observations"] if o["id"] == other)["unit"] = "km"
+        # Both published operands remain valid; only the derived edge lies.
+        bad["derived_connections"][0]["unit"] = "km"
         with self.assertRaisesRegex(ValueError, "mixed units in derived comparison"):
             validate(bad)
 
