@@ -8,6 +8,7 @@
  */
 import { auditVelocityDomain } from './orbitAdmissibility.ts';
 import { sampleVelocityBox } from './orbitBoxSampling.ts';
+import { pivotVelocityResponseRank } from './orbitVelocityRank.ts';
 import { assessNumericalConvergence } from './orbitConvergence.ts';
 import { NumericalIntegrationBreakdown, utcMilliseconds } from './orbitPhysics.ts';
 import type { ConditionalOrbitScenario, VelocityAxis } from './orbitAdmissibility.ts';
@@ -65,16 +66,13 @@ export interface SensitivityAudit {
   readonly geographicInference: 'NOT_SUPPORTED';
 }
 
-const magnitude = (x: readonly number[]): number => Math.hypot(...x);
-const dot = (x: readonly number[], y: readonly number[]): number =>
-  x.reduce((sum, xi, i) => sum + xi * y[i], 0);
 const minus = (a: Vec3, b: Vec3): Vec3 =>
   [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
 
 /**
  * Every free axis is perturbed while all others remain fixed at a finite box
  * midpoint. Rank is computed on the resulting position *displacements* (km)
- * by modified Gram-Schmidt with an explicit caller-chosen km threshold.
+ * by pivoted two-pass Gram-Schmidt with an explicit caller-chosen km threshold.
  * It is not a verified bound on singular values or a proof of observability.
  */
 export function auditLocalVelocitySensitivity(
@@ -178,39 +176,31 @@ export function auditLocalVelocitySensitivity(
     }
     columns.push(observations[1].map((v, i) => v - observations[0][i]));
   }
-  const basis: number[][] = [];
-  const axes: SensitivityAxis[] = [];
-  for (let i = 0; i < 3; i++) {
-    const axis = AXES[i];
-    const pair = axisPairs[i];
-    if (pair === null) {
-      axes.push({ axis, kind: 'FIXED_BY_DECLARED_DOMAIN', velocitiesKmS: null,
-        probeDisplacementKm: 0, independentDisplacementKm: 0,
-        entersNumericalBasis: false });
-      continue;
-    }
-    const column = columns[i];
-    const rawNorm = magnitude(column);
-    const remaining = [...column];
-    // Two passes reduce spurious rank from floating-point Gram-Schmidt loss.
-    for (let pass = 0; pass < 2; pass++) {
-      for (const b of basis) {
-        const projection = dot(remaining, b);
-        for (let j = 0; j < remaining.length; j++)
-          remaining[j] -= projection * b[j];
-      }
-    }
-    const orthogonalNorm = magnitude(remaining);
-    if (!Number.isFinite(rawNorm) || !Number.isFinite(orthogonalNorm))
-      return noScore('NOT_RUN_NUMERICAL_BREAKDOWN');
-    const entersNumericalBasis = orthogonalNorm >= minimumSignalKm;
-    if (entersNumericalBasis)
-      basis.push(remaining.map(x => x / orthogonalNorm));
-    axes.push({ axis, kind: 'PROBED', velocitiesKmS: pair,
-      probeDisplacementKm: rawNorm,
-      independentDisplacementKm: orthogonalNorm, entersNumericalBasis });
-  }
+  // Pivot on the strongest remaining displacement, not an arbitrary
+  // vx→vy→vz ordering. Almost parallel columns can give different ranks
+  // with an unpivoted km-threshold Gram-Schmidt.
+  const freeIndices = axisPairs.flatMap((pair, index) => pair === null ? [] : [index]);
+  const rankResult = pivotVelocityResponseRank(
+    freeIndices.map(index => columns[index]), minimumSignalKm);
+  if (rankResult === null) return noScore('NOT_RUN_NUMERICAL_BREAKDOWN');
+  const rankByAxis = new Map(freeIndices.map((index, j) =>
+    [index, rankResult.columns[j]] as const));
+  const axes: SensitivityAxis[] = AXES.map((axis, index) => {
+    const pair = axisPairs[index];
+    if (pair === null) return {
+      axis, kind: 'FIXED_BY_DECLARED_DOMAIN' as const, velocitiesKmS: null,
+      probeDisplacementKm: 0, independentDisplacementKm: 0,
+      entersNumericalBasis: false,
+    };
+    const response = rankByAxis.get(index)!;
+    return {
+      axis, kind: 'PROBED' as const, velocitiesKmS: pair,
+      probeDisplacementKm: response.rawNormKm,
+      independentDisplacementKm: response.independentNormKm,
+      entersNumericalBasis: response.entersBasis,
+    };
+  });
   return { ...header, status: 'ASSESSED_CONDITIONALLY', axes,
-    localRankAtProbeAndThreshold: basis.length,
-    unresolvedLocalDirections: freeInPremise.length - basis.length };
+    localRankAtProbeAndThreshold: rankResult.rankAtThreshold,
+    unresolvedLocalDirections: freeInPremise.length - rankResult.rankAtThreshold };
 }
