@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="260" viewBox="0 0 900 260" role="img" aria-labelledby="title desc">
+<title id="title">Como a notícia de Conde circulou em documentos de novembro de 1963</title>
+<desc id="desc">Três etapas: monitoramento da notícia atribuída à Rádio Tupi, pedido diplomático de confirmação, e aerograma com resposta do consulado. Os papéis não equivalem a três testemunhas independentes.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9 Z" fill="#83c6cf"/></marker></defs>
+<rect width="900" height="260" rx="16" fill="#151b26"/>
+<g font-family="system-ui,Segoe UI,Arial,sans-serif">
+<text x="28" y="31" fill="#b8dce0" font-size="15" font-weight="700">A TRILHA DO RELATO NOS ARQUIVOS</text>
+<g stroke="#4f6570" fill="#202d3a" stroke-width="1.5">
+<rect x="24" y="62" width="246" height="130" rx="10"/><rect x="328" y="62" width="246" height="130" rx="10"/><rect x="632" y="62" width="244" height="130" rx="10"/>
+</g>
+<g fill="#b8dce0" font-size="15" font-weight="700"><text x="40" y="87">8 NOV 1963</text><text x="344" y="87">14 NOV 1963</text><text x="648" y="87">20 NOV 1963</text></g>
+<g fill="#f0f1ef" font-size="19" font-weight="600"><text x="40" y="119">Notícia monitorada</text><text x="344" y="119">Pedido de confirmação</text><text x="648" y="119">Aerograma A-628</text></g>
+<g fill="#c3ccd0" font-size="14"><text x="40" y="149">Relato atribuído à Rádio Tupi</text><text x="40" y="169">preservado no FBIS</text><text x="344" y="149">Embaixada consulta o</text><text x="344" y="169">consulado em Salvador</text><text x="648" y="149">Reproduz resposta consular</text><text x="648" y="169">de 14 de novembro</text></g>
+<g stroke="#83c6cf" stroke-width="2.5" fill="none" marker-end="url(#arrow)"><path d="M 278 126 H 317"/><path d="M 582 126 H 621"/></g>
+<text x="28" y="230" fill="#d2d0c7" font-size="15">Documentos em sequência não são testemunhas independentes.</text>
+</g></svg>
