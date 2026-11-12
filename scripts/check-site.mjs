@@ -50,5 +50,18 @@ const fontSizes=[...diagramMobile.matchAll(/font-size="([0-9.]+)"/g)].map(match=
 assert.ok(fontSizes.length>0 && Math.min(...fontSizes)>=13,'Texto SVG móvel ilegível por redução excessiva');
 
 
+
+const stanislaw=read('stories/2026-11-12-o-humorista-que-encontrou-um-satelite-na-redacao/index.html');
+assert.match(stanislaw,/<figure\b/i,'Capitulo Stanislaw sem documento visual');
+assert.ok(stanislaw.includes('https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00477.pdf#page=7'),'Original de Ultima Hora nao foi incorporado');
+assert.ok(stanislaw.includes('frame-src https://hemeroteca-pdf.bn.gov.br'),'CSP impede fac-simile de Ultima Hora');
+assert.ok(stanislaw.includes('stanislaw-escalada.svg') && stanislaw.includes('stanislaw-escalada-mobile.svg'),'Diagrama comparativo sem variantes responsivas');
+assert.ok(existsSync('public/img/stanislaw-escalada.svg'),'SVG da crônica nao publicado');
+assert.ok(existsSync('public/img/stanislaw-escalada-mobile.svg'),'SVG vertical da crônica nao publicado');
+for(const name of ['stanislaw-escalada.svg','stanislaw-escalada-mobile.svg']) {
+ const svg=read('img/'+name);
+ for(const word of ['Stanislaw','FBIS','satélite']) assert.ok(svg.toLowerCase().includes(word.toLowerCase()),'Diagrama sem contexto: '+word);
+}
+
 assert.ok(chapters>0,'Nenhuma reportagem renderizada');
 console.log('PASS: '+chapters+' capítulos, índice, CSS, laboratório e rotas GitHub Pages.');
