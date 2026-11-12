@@ -1,0 +1,335 @@
+{
+  "schema": "conde.gaviao-audit-window/v1",
+  "auditor": "gaviao",
+  "date_utc": "2026-11-12",
+  "reviewed_from_main_sha": "609b352d382fc2d7b4ee48c06c9dc8b9cc1a2e05",
+  "reviewed_through_main_sha": "4ec4d61ab603924e355bdb55fead26b9a5ff32d1",
+  "first_parent_integrations": 13,
+  "conventional_merges": 2,
+  "squash_merges": 11,
+  "side_commits": 6,
+  "dag_total_commits": 19,
+  "unattributed_direct_first_parent_commits": 0,
+  "closed_without_merge_new_in_interval": [],
+  "note_on_closures": "Historical unmerged PRs #148/#249/#251/#254 predate the G26 window; #260 is OPEN at inspection. No new closure without merge found in GitHub PR search.",
+  "coverage": [
+    {
+      "sha": "2d80d4028dd51158d87e81f22988230de426a9f4",
+      "parents": [
+        "609b352d382fc2d7b4ee48c06c9dc8b9cc1a2e05"
+      ],
+      "kind": "squash",
+      "pr": 256,
+      "changed_files": [
+        ".github/workflows/documentary-dependence.yml",
+        "public/data/conde-scientific-bridges.json",
+        "research/provenance/DEPENDENCY_EXPORT.md",
+        "tests/test_contextual_scientific_bridges.py",
+        "tools/export_contextual_scientific_bridges.py"
+      ],
+      "side_commits": [],
+      "pr_head_pull_request_checks": {
+        "success": 16,
+        "others": 0,
+        "source": "GitHub Actions workflow runs filtered to PR HEAD"
+      },
+      "scientific_editorial_review": "Nine documentary/scientific bridge records remain inactive and traceable; source lineage is NOT a physical observation."
+    },
+    {
+      "sha": "839e7b772dfa54b05a3216c44602ccb6a0542e47",
+      "parents": [
+        "2d80d4028dd51158d87e81f22988230de426a9f4",
+        "e2b9a3f433132231aba864d42fc05157cb252969"
+      ],
+      "kind": "conventional_merge",
+      "pr": 259,
+      "changed_files": [
+        "research/geo/README.md",
+        "research/geo/conde_ibge_1960_topology_audit.json",
+        "research/geo/ibge_1960_topology_audit.md",
+        "tests/test_conde_ibge_1960_topology.py",
+        "tools/conde_ibge_1960_topology.py"
+      ],
+      "side_commits": [
+        "318331796c646f09cb402080cca7528bbf2fd272",
+        "e2b9a3f433132231aba864d42fc05157cb252969"
+      ],
+      "pr_head_pull_request_checks": {
+        "success": 16,
+        "others": 0,
+        "source": "GitHub Actions workflow runs filtered to PR HEAD"
+      },
+      "scientific_editorial_review": "1960 IBGE native mesh topology is retrospective; no certified 1963 Conde boundary or impact coordinates."
+    },
+    {
+      "sha": "5f1990c373e022757a6ede735a87717668b6efc9",
+      "parents": [
+        "839e7b772dfa54b05a3216c44602ccb6a0542e47"
+      ],
+      "kind": "squash",
+      "pr": 263,
+      "changed_files": [
+        ".github/workflows/integration-head.yml",
+        "scripts/integration-head.test.mjs"
+      ],
+      "side_commits": [],
+      "pr_head_pull_request_checks": {
+        "success": 16,
+        "others": 0,
+        "source": "GitHub Actions workflow runs filtered to PR HEAD"
+      },
+      "scientific_editorial_review": "Integration-head trigger deduplication alters CI dispatch, not scientific measurements."
+    },
+    {
+      "sha": "c01079eac47c497caf6e6049713a1b9504a846be",
+      "parents": [
+        "5f1990c373e022757a6ede735a87717668b6efc9"
+      ],
+      "kind": "squash",
+      "pr": 262,
+      "changed_files": [
+        "research/audits/gaviao-main-window-20261112-g25.json",
+        "research/audits/gaviao-main-window-20261112-g25.md",
+        "tests/test_raan_p3_quadratic_pair.py",
+        "tools/raan_p3_quadratic_pair.py"
+      ],
+      "side_commits": [],
+      "pr_head_pull_request_checks": {
+        "success": 17,
+        "others": 0,
+        "source": "GitHub Actions workflow runs filtered to PR HEAD"
+      },
+      "scientific_editorial_review": "G25 frozen-epoch holdout veto guards against validation/evaluation overlap; tests are synthetics."
+    },
+    {
+      "sha": "bf3f1167e3d176077f0f2a2328ae155092fdd133",
+      "parents": [
+        "c01079eac47c497caf6e6049713a1b9504a846be"
+      ],
+      "kind": "squash",
+      "pr": 265,
+      "changed_files": [
+        ".github/workflows/polvo-legacy-epoch-crossing.yml",
+        "research/constraints/C241-P5_legacy_raan_epoch_confounding.md",
+        "research/tle_custody/evidence_matrix_C241-P5_2026-11-12.md",
+        "tests/test_raan_legacy_epoch_crossing.py",
+        "tools/raan_legacy_epoch_crossing.py"
+      ],
+      "side_commits": [],
+      "pr_head_pull_request_checks": {
+        "success": 17,
+        "others": 0,
+        "source": "GitHub Actions workflow runs filtered to PR HEAD"
+      },
+      "scientific_editorial_review": "The 284.1520 degree RAAN crossing is two-sided interpolation of ONE secondary lineage, not 1963 instrument custody."
+    },
+    {
+      "sha": "a620497de35bafad5bbc864edf10ef097890140f",
+      "parents": [
+        "bf3f1167e3d176077f0f2a2328ae155092fdd133"
+      ],
+      "kind": "squash",
+      "pr": 264,
+      "changed_files": [
+        "research/constraints/raan_temporal_gauge_candidate_C241.json",
+        "research/statistics/TEMPORAL_GAUGE_IDENTIFIABILITY.md",
+        "research/statistics/raan_temporal_gauge_C241.json",
+        "tests/test_raan_temporal_gauge.py",
+        "tools/raan_temporal_gauge.py"
+      ],
+      "side_commits": [],
+      "pr_head_pull_request_checks": {
+        "success": 16,
+        "others": 0,
+        "source": "GitHub Actions workflow runs filtered to PR HEAD"
+      },
+      "scientific_editorial_review": "Two exact gauge null vectors are conditional on fixed but unspecified F_j(t); no likelihood, no historical posterior."
+    },
+    {
+      "sha": "21bd8a0c8019e115f2f2291adc2f2979a0be64f5",
+      "parents": [
+        "a620497de35bafad5bbc864edf10ef097890140f"
+      ],
+      "kind": "squash",
+      "pr": 266,
+      "changed_files": [
+        "research/meteorology/ncep_office_notes_1963_1968_locator.json",
+        "research/meteorology/ncep_office_notes_1963_1968_locator.md",
+        "tests/test_ncep_office_notes.py",
+        "tools/audit_ncep_office_notes.py"
+      ],
+      "side_commits": [],
+      "pr_head_pull_request_checks": {
+        "success": 16,
+        "others": 0,
+        "source": "GitHub Actions workflow runs filtered to PR HEAD"
+      },
+      "scientific_editorial_review": "NCEP ON20 locator is bibliographic; primary manual/PDF and a 1963 launch are NOT authenticated."
+    },
+    {
+      "sha": "f38aaf8daf657e3480338df7dc8cc0789207ef25",
+      "parents": [
+        "21bd8a0c8019e115f2f2291adc2f2979a0be64f5"
+      ],
+      "kind": "squash",
+      "pr": 267,
+      "changed_files": [
+        "research/constraints/orbit_cartesian_refinement_growth_g25.json",
+        "src/lib/orbitConvergence.ts",
+        "tests/orbitConvergence.test.mjs"
+      ],
+      "side_commits": [],
+      "pr_head_pull_request_checks": {
+        "success": 16,
+        "others": 0,
+        "source": "GitHub Actions workflow runs filtered to PR HEAD"
+      },
+      "scientific_editorial_review": "Cartesian r/v trend suppresses resolved growth; 64-ULP allowance is heuristic, not an absolute RK4 error guarantee."
+    },
+    {
+      "sha": "0a25fc961835a6d19d31ddb7e68f1407169c1852",
+      "parents": [
+        "f38aaf8daf657e3480338df7dc8cc0789207ef25"
+      ],
+      "kind": "squash",
+      "pr": 268,
+      "changed_files": [
+        "scripts/build_coastline_110m.py",
+        "src/components/OrbitalMap.tsx",
+        "src/components/map/OrbitalMapSvg.tsx",
+        "src/lib/coastline110mPart1.js",
+        "src/lib/coastline110mPart2.js",
+        "src/lib/coastline110mPart3.js",
+        "tests/natural-earth-coastline.test.mjs"
+      ],
+      "side_commits": [],
+      "pr_head_pull_request_checks": {
+        "success": 17,
+        "others": 0,
+        "source": "GitHub Actions workflow runs filtered to PR HEAD"
+      },
+      "scientific_editorial_review": "Natural Earth fixed 110m coastlines provide generalized visual context, no impact point; projectFlat wraps longitude."
+    },
+    {
+      "sha": "9d111439c304c2af65f1f8bfa42f9f8797d2b827",
+      "parents": [
+        "0a25fc961835a6d19d31ddb7e68f1407169c1852"
+      ],
+      "kind": "squash",
+      "pr": 269,
+      "changed_files": [
+        "src/components/PythonScriptModal.tsx",
+        "tests/ui_keyboard_smoke.mjs"
+      ],
+      "side_commits": [],
+      "pr_head_pull_request_checks": {
+        "success": 17,
+        "others": 0,
+        "source": "GitHub Actions workflow runs filtered to PR HEAD"
+      },
+      "scientific_editorial_review": "Keyboard-accessible export modal: distinguish user UI behavior from archival evidence."
+    },
+    {
+      "sha": "5dedb5f6c3fa3dba9e234998a4864deccbf344cf",
+      "parents": [
+        "9d111439c304c2af65f1f8bfa42f9f8797d2b827",
+        "54b5c0e25995cde00d369b95b939dc556f136d30"
+      ],
+      "kind": "conventional_merge",
+      "pr": 271,
+      "changed_files": [
+        "src/components/OrbitalMap.tsx",
+        "src/components/map/OrbitalMapSvg.tsx",
+        "tests/ui_keyboard_smoke.mjs"
+      ],
+      "side_commits": [
+        "a42bb4c18f14fe9eabaf5a3424f840ebd061bcbd",
+        "b6451e6679c691e0b1da59e9c3af109a98efa8bb",
+        "4a16f026559a42e45ad74ea4b106206cbebfbe59",
+        "54b5c0e25995cde00d369b95b939dc556f136d30"
+      ],
+      "pr_head_pull_request_checks": {
+        "success": 17,
+        "others": 0,
+        "source": "GitHub Actions workflow runs filtered to PR HEAD"
+      },
+      "scientific_editorial_review": "Map layers and scene connectors: raw longitude difference guard fails for UNWRAPPED 179->181 degrees (G26-F1)."
+    },
+    {
+      "sha": "00d609c4c97b4279dfc500dca71bcfa53e128a56",
+      "parents": [
+        "5dedb5f6c3fa3dba9e234998a4864deccbf344cf"
+      ],
+      "kind": "squash",
+      "pr": 270,
+      "changed_files": [
+        "stories/2026-11-12-a-resposta-que-veio-de-salvador.md"
+      ],
+      "side_commits": [],
+      "pr_head_pull_request_checks": {
+        "success": 16,
+        "others": 0,
+        "source": "GitHub Actions workflow runs filtered to PR HEAD"
+      },
+      "scientific_editorial_review": "A-628/consular denial is an indirect documentary counter-report, not a physical inspection; C197 NASA is date-only."
+    },
+    {
+      "sha": "4ec4d61ab603924e355bdb55fead26b9a5ff32d1",
+      "parents": [
+        "00d609c4c97b4279dfc500dca71bcfa53e128a56"
+      ],
+      "kind": "squash",
+      "pr": 273,
+      "changed_files": [
+        "src/components/PythonScriptModal.tsx",
+        "src/lib/clipboardCopy.js",
+        "tests/clipboardCopy.test.mjs"
+      ],
+      "side_commits": [],
+      "pr_head_pull_request_checks": {
+        "success": 16,
+        "others": 0,
+        "source": "GitHub Actions workflow runs filtered to PR HEAD"
+      },
+      "scientific_editorial_review": "Async clipboard fallback must not falsely announce copied result; metadata without observation."
+    }
+  ],
+  "scientific_claims": [
+    "No original instrument or RAAN frame authenticated in this window.",
+    "No .lean source changed; Lean 4.35 local compilation NOT_RUN.",
+    "No validated physical parameter-domain shrinkage for Conde.",
+    "NASA 1963-003B 8 November remains a catalogued day, not time/place of impact."
+  ],
+  "adversarial_finding": {
+    "id": "G26-F1",
+    "severity": "medium",
+    "class": "RENDERING_FALSE_TOPOLOGY_NOT_ORBITAL_PROOF",
+    "source": "src/components/map/OrbitalMapSvg.tsx scenario connection render in main HEAD",
+    "counterexample": "Synthetic 528 at longitude 179 degrees and sister at UNWRAPPED 181 degrees: raw delta 2, displayed x delta 954.67 px.",
+    "correction": "Wrap both longitudes before drawing flat-map connector; veto seam-spanning segment; test both directions and ordinary arcs.",
+    "empirical_historical_observation": false
+  },
+  "verification": {
+    "python": {
+      "status": "PASS",
+      "count": 41,
+      "suites": [
+        "test_contextual_scientific_bridges",
+        "test_conde_ibge_1960_topology",
+        "test_raan_legacy_epoch_crossing",
+        "test_ncep_office_notes",
+        "test_raan_temporal_gauge"
+      ]
+    },
+    "node_local": {
+      "status": "NOT_RUN_COMPLETED",
+      "reason": "Jatoba watchdog killed Node at 197 MB RSS under 180 MB budget"
+    },
+    "lean_4_35_local": {
+      "status": "NOT_RUN"
+    },
+    "original_facsims_new_authentication": "NOT_RUN",
+    "pr_head_checks": "All 13 PR author HEADs had 16 or 17 pull_request-triggered GitHub workflow runs marked success at inspection; see coverage for individual counts."
+  },
+  "physical_conclusion": "CONDE_INDETERMINATE"
+}
