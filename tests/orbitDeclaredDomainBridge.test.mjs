@@ -159,3 +159,86 @@ test('seeded, explicitly CONDiTIONAL physical propagation of rational branches i
   assert.equal(one.geographicInference,'NOT_SUPPORTED');
   assert.deepEqual(one.samples.map(x=>x.vKmS),again.samples.map(x=>x.vKmS));
 });
+
+
+test('rational endpoints with huge numerator AND denominator retain exact representable singleton', () => {
+  const audit=baseline();
+  const huge='1'+'0'.repeat(400); // each BigInt exceeds finite Number
+  audit.scenarios[0].parameters[0].admissible={min:huge+'/'+huge,max:huge+'/'+huge};
+  let out=run(audit);
+  assert.equal(out.records[0].status,'READY_CONDITIONALLY');
+  assert.deepEqual([
+    out.alternatives[0].scenario.bounds[0].lowerKmS,
+    out.alternatives[0].scenario.bounds[0].upperKmS,
+  ],[1,1]);
+  audit.scenarios[0].parameters[0].admissible={min:'-'+huge+'/'+huge,max:huge+'/'+huge};
+  out=run(audit);
+  assert.equal(out.records[0].status,'READY_CONDITIONALLY');
+  assert.deepEqual([
+    out.alternatives[0].scenario.bounds[0].lowerKmS,
+    out.alternatives[0].scenario.bounds[0].upperKmS,
+  ],[-1,1]);
+});
+
+test('exact subnormal singleton survives; unrepresentable half-ulp singleton does NOT', () => {
+  const audit=baseline();
+  const minDen=(1n<<1074n).toString();
+  audit.scenarios[0].parameters[0].admissible={min:'1/'+minDen,max:'1/'+minDen};
+  let out=run(audit);
+  assert.equal(out.records[0].status,'READY_CONDITIONALLY');
+  const x=out.alternatives[0].scenario.bounds[0];
+  assert.equal(x.lowerKmS,Number.MIN_VALUE);
+  assert.equal(x.upperKmS,Number.MIN_VALUE);
+  const halfDen=(1n<<1075n).toString();
+  audit.scenarios[0].parameters[0].admissible={min:'1/'+halfDen,max:'1/'+halfDen};
+  out=run(audit);
+  assert.equal(out.records[0].status,'NOT_RUN_FLOAT64_PRECISION');
+});
+
+test('exact rational intersection clips beyond both finite Float64 extremes without inventing witnesses', () => {
+  const audit=baseline(), huge='1'+'0'.repeat(400);
+  audit.scenarios[0].parameters[0].admissible={min:'2',max:huge};
+  let out=run(audit);
+  assert.equal(out.records[0].status,'READY_CONDITIONALLY');
+  assert.deepEqual([
+    out.alternatives[0].scenario.bounds[0].lowerKmS,
+    out.alternatives[0].scenario.bounds[0].upperKmS,
+  ],[2,Number.MAX_VALUE]);
+  audit.scenarios[0].parameters[0].admissible={min:'-'+huge,max:'-2'};
+  out=run(audit);
+  assert.equal(out.records[0].status,'READY_CONDITIONALLY');
+  assert.deepEqual([
+    out.alternatives[0].scenario.bounds[0].lowerKmS,
+    out.alternatives[0].scenario.bounds[0].upperKmS,
+  ],[-Number.MAX_VALUE,-2]);
+  audit.scenarios[0].parameters[0].admissible={min:huge,max:huge};
+  out=run(audit);
+  assert.equal(out.records[0].status,'NOT_RUN_FLOAT64_PRECISION');
+  audit.scenarios[0].parameters[0].admissible={min:'-'+huge,max:'-'+huge};
+  assert.equal(run(audit).records[0].status,'NOT_RUN_FLOAT64_PRECISION');
+});
+
+test('an ultra-narrow signed rational box containing zero has only the zero Float64 witness', () => {
+  const audit=baseline(),den='1'+'0'.repeat(400);
+  audit.scenarios[0].parameters[0].admissible={min:'-1/'+den,max:'1/'+den};
+  let out=run(audit);
+  assert.equal(out.records[0].status,'READY_CONDITIONALLY');
+  assert.deepEqual([
+    out.alternatives[0].scenario.bounds[0].lowerKmS,
+    out.alternatives[0].scenario.bounds[0].upperKmS,
+  ],[0,0]);
+  audit.scenarios[0].parameters[0].admissible={min:'1/'+den,max:'2/'+den};
+  out=run(audit);
+  assert.equal(out.records[0].status,'NOT_RUN_FLOAT64_PRECISION');
+  assert.equal(out.records[1].status,'READY_CONDITIONALLY');
+});
+
+test('Float64 endpoint search preserves exact negative fractional boundaries', () => {
+  const audit=baseline();
+  audit.scenarios[0].parameters[0].admissible={min:'-4/5',max:'-3/10'};
+  const out=run(audit);
+  assert.equal(out.records[0].status,'READY_CONDITIONALLY');
+  const b=out.alternatives[0].scenario.bounds[0];
+  assert.ok(b.lowerKmS >= -0.8 && b.upperKmS <= -0.3);
+  assert.ok(b.lowerKmS < b.upperKmS);
+});
