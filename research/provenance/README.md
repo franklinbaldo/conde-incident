@@ -5,12 +5,12 @@ A fonte de verdade desta exportação é a **matriz cumulativa congelada** em
 Git blob SHA-1 `a7978c3a75a153b16ab70118a92c434bba674cb7`. **O grafo não acrescenta
 medição de reentrada, hora, local ou testemunha.**
 
-O [registro curado de proveniência](lineages.json) descreve 14 fontes/documentos
-de sete famílias, suas dependências documentais explícitas, 24 citações
-para 24 ocorrências e três conexões com contratos de modelo. O compilador
+O [registro curado de proveniência](lineages.json) descreve 22 fontes/documentos
+de dez famílias, suas dependências documentais explícitas, 29 citações
+para 28 ocorrências e três conexões com contratos de modelo. O compilador
 [Python sem dependências externas](../../tools/provenance_graph.py) retém
 **todas as 241 ocorrências** da matriz (238 rótulos e C44/C45/C46 duplicados);
-as **217 não mapeadas ficam marcadas como não mapeadas**, sem inferência por
+as **213 não mapeadas ficam marcadas como não mapeadas**, sem inferência por
 similaridade de texto. Novas fontes podem expandir a cobertura aditivamente,
 mas não podem alterar silenciosamente o hash do corpus.
 
@@ -74,3 +74,15 @@ e os arquivos IGRA/meteorologia utilizam as proposicoes atuais.
 O bridge ja identifica o SHA da matriz; este PR nao reescreve dados
 fisicos de terceiros. O feed fornece snapshot_ref para integracoes
 futuras do site e Lean. Nao ha novo limite de orbita nem dado de queda.
+
+## Fatia NARA Blue Book e pista jornalística O Globo (12/11/2026)
+
+O [relatório custodial da Lontra](../archives/nara_bluebook_conde_naid_302531012_2026-11-12.md) registra uma unidade documental específica **NARA NAID 302531012**, série 597821, T1206 rolo 49. A Abelha consumiu essa análise da Lontra; não reivindica ter reinspecionado as três imagens JP2 ou recalculado os hashes do download.
+
+As imagens NARA 0809.jp2 (objectId 302531013, cartão administrativo Other/Hoax), 0810.jp2 (302531014, mensagem USAIRA 14/11) e 0811.jp2 (302531015, mensagem USAIRA 21/11) são **três documentos na mesma unidade arquivística**, não três testemunhos. Cada objeto tem URL, SHA-256 e tamanho registrados, sob aresta part_of_archival_unit. A mensagem posterior tem relação refers_to_prior_telegram com a primeira e reports_shared_consular_account com o despacho A-628, o que **não implica cópia literal do A-628**.
+
+O texto da mensagem USAIRA de 14/11 cita uma publicação **O Globo 08/11/1963** recebida de Salvador. O exemplar original ainda não foi inspecionado; não se conhece a hora, autoria, crédito, edição, ou se a notícia precedeu a Rádio Tupi de 8/11 às 23h30. Esse elo fica como nó sem URL e post_matrix_occurrences do G18 no feed estático, com **URL e SHA-256 da página NARA que fez a referência**, newspaper_publication_time nulo e journalistic_source_independence UNRESOLVED. Não cria nova ocorrência Cnn na matriz congelada e não implica fato físico.
+
+A exportação passou a incluir a curadoria explícita de C232#1 (índice The Black Vault e cotejo separado com cartão NARA), C233#1 (limite de leitura textual do índice), C234#1 (catálogo Dark Forest ainda **sem prova** de equivalência entre ID externo 9737078 e NAID 302531012) e C235#1 (guia institucional NARA). O antigo C237#1, busca então negativa, continua sem citação curada e não é tratado como inexistência de documento.
+
+Contabilidade: 241 ocorrências, 28 curadas, 213 pendentes, 29 arestas de citação, 22 fontes em 10 famílias. Duas citações para uma ocorrência não são duas observações. Nenhuma nova medição, posição, instante de reentrada, domínio Lean ou probabilidade foi produzida.
