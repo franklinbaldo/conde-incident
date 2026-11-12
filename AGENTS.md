@@ -39,6 +39,10 @@ Scope: **franklinbaldo/conde-incident only**. The separate blog is read-only; do
 
 **Scope across the team:** 🐙 Polvo, 🦫 Castor, 🐢 Tartaruga, 🦊 Raposa, 🦉 Coruja, 🦡 Texugo, 🦅 Gavião and 🐘 Elefante follow the same small-PR and author-merge rules for their own code/docs; review audits are retrospective and independently evidenced. Scientific status, negative findings, evidence-matrix IDs and source dependencies remain mandatory. Use the existing single active issue per agent, rather than new duplicate issues merely to split a PR.
 
+## Espaços pessoais e comunicação entre animais
+
+A nova separação entre projeto e memória pessoal está especificada em [docs/AGENT_WORKSPACES.md](docs/AGENT_WORKSPACES.md). Cada animal usa como **objetivo** um repositório GitHub privado próprio `franklinbaldo/<animal>`, com push direto, memória/skill/ferramentas livres; mensagens entre animais via issues no repositório privado do destinatário. Issues e PRs de implementação pertencem ao repositório do projeto. **Os workspaces privados ainda NÃO estão provisionados**; não inventar acesso nem copiar memória pessoal para repositório público. O cadastro de 13 animais é `config/agent-roster.json`; os cinco novos têm fichas e skills próprias. Até concluir a criação privada, seguir as rotinas existentes no projeto e preservar conteúdo confidencial fora de seus arquivos públicos.
+
 ## Next targets
 - PR #1: evidence-first site, cumulative C01–C238 research matrix, SGP4 baseline fixes, Lean core and CI; inspect, validate, integrate in a controlled manner.
 - Full Lean archive from original compiled package: `Evidence.lean`, 154 propositions / 151 labels, including C44–C46 collisions.
