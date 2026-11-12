@@ -14,3 +14,7 @@ O arquivo pode obedecer a conde.admissible-domain/v1 ou conde.alternative-domain
 Critérios: testes sintéticos de limites ativos, redundância, par inconsistente, conflito com o intervalo inicial, dois parâmetros, frações decimais arbitrariamente precisas, provenance, falsa prova Lean, cenários RAAN separados e CLI 0/1/2. Workflow Alternative evidence scenarios executa essas suítes no SHA do ramo; no merge, exige revisão independente do 🦅 Gavião e CI verde no HEAD.
 
 **Proveniência da decisão:** AGENTS.md e team/elefante.md de main consultados em 12/11/2026; matriz cumulativa C01–C238 na PR #1 consultada, com C197 corrigida pela PR #61, e contradição RAAN listada no documento. Dados de NORAD 527/528/529 são secundários/contestados e não entram como intervalos numéricos neste código. Fonte: https://github.com/franklinbaldo/conde-incident/pull/1 e https://github.com/franklinbaldo/conde-incident/pull/14. Nenhum dado histórico novo nem página publicada.
+
+## Integridade do SHA efetivamente testado
+
+Auditoria da primeira execução da PR #67: 43 testes passaram, porém o checkout padrão do pull_request usou o merge sintético ccbd907, e não o head e1dc92bd. Isso NÃO bastava para o gate de integração. A revisão do workflow fixa o ref do head real, assertiva do git SHA e regressão automatizada. Conferir a próxima execução antes de dizer que o head final passou.

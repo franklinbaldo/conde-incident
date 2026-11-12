@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, rmSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { auditDomainSensitivity, auditAlternativeSensitivity } from '../scripts/audit-domain-sensitivity.mjs';
@@ -140,4 +140,12 @@ test('CLI emits explicit contradiction exit status 2 and invalid input status 1'
     assert.equal(bad.status,1);
     assert.match(bad.stderr,/unsupported schema/);
   } finally {rmSync(dir,{recursive:true,force:true});}
+});
+
+test('workflow checks out and verifies actual PR head, not a synthetic merge', () => {
+  const ci=readFileSync(new URL('../.github/workflows/alternative-domains.yml',import.meta.url),'utf8');
+  assert.match(ci,/ref: \$\{\{ github\.event\.pull_request\.head\.sha \|\| github\.sha \}\}/);
+  assert.match(ci,/git rev-parse HEAD/);
+  assert.match(ci,/persist-credentials: false/);
+  assert.match(ci,/permissions:\s*\n  contents: read/);
 });

@@ -9,3 +9,5 @@
 - Ordem de dependências: #37 → #43 → esta PR; #1/#61/#64 e #3/SSG Rust exigem reconciliação e revisão do Gavião. #28 depende do CI comum da #58; priorizar custódia TLE 527–529 e RAAN, depois Lean, domínios, simulação e holdout.
 - Próxima dúvida: quais restrições com proveniência auditável permanecem individualmente pivôs após separar 198,5261° e 284,1520° por documento, época e frame? Nenhum desses valores é usado como observação verificada nesta entrega.
 - Revisão: aguardar Gavião independente e CI do HEAD final. Sem merge próprio, contato externo, alteração do blog, force-push ou rebase.
+
+- Auditoria adversarial de CI: run 43198286260 passou 43/43 testes, mas o log revelou checkout de merge sintético `ccbd907`, não HEAD `e1dc92bd`. Este resultado NÃO satisfaz o gate SHA exato. A alteração de workflow fixa HEAD em pull_request e acrescenta contraprova automática; conferir o run atualizado antes de integrar.
