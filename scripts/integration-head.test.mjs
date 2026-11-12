@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 const ci = readFileSync(new URL('../.github/workflows/integration-head.yml', import.meta.url), 'utf8');
+const prek = readFileSync(new URL('../.github/workflows/prek.yml', import.meta.url), 'utf8');
 
 test('CI runs on main pushes and all PRs, not duplicate feature-branch pushes', () => {
   const trigger = ci.split(/^permissions:/m)[0].trimEnd();
@@ -14,6 +15,20 @@ test('CI runs on main pushes and all PRs, not duplicate feature-branch pushes', 
     '    branches: [main]',
     '  pull_request:',
   ].join('\n'));
+});
+
+test('Prek gates all PRs and main pushes without duplicate feature-branch pushes', () => {
+  const trigger = prek.split(/^permissions:/m)[0].trimEnd();
+  assert.equal(trigger, [
+    'name: Prek policy (OKF and 20KB)',
+    'on:',
+    '  push:',
+    '    branches: [main]',
+    '  pull_request:',
+  ].join('\n'));
+  assert.match(prek, /persist-credentials: false/);
+  assert.match(prek, /git rev-parse HEAD/);
+  assert.match(prek, /prek run --all-files/);
 });
 
 test('both jobs checkout and verify the exact PR head SHA, not synthetic PR merge', () => {
