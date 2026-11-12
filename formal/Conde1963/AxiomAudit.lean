@@ -1,4 +1,4 @@
-import Conde1963.DocumentaryDay
+import Conde1963.MatrixEvidence
 
 /-! Explicit kernel-dependency report in CI, not an empirical validation. -/
 
