@@ -8,7 +8,7 @@ export type Vec3 = readonly [number, number, number];
 export interface State { readonly rKm: Vec3; readonly vKmS: Vec3; readonly tS: number }
 export interface Atmosphere {
   /** Source-identified density supplied by the caller. No historical defaults. */
-  readonly densityKgM3: (altitudeKm: number, tS: number) => number;
+  readonly densityKgM3: (altitudeKm: number, tS: number, state: State) => number;
   /** Cd*A/m, m^2/kg. Cannot be inferred from a NORAD identifier. */
   readonly cdAreaOverMassM2Kg: number;
   readonly source: string;
@@ -85,7 +85,7 @@ export function dragAccelerationKmS2(s: State, atmosphere: Atmosphere): Vec3 {
   if (typeof source !== 'string' || !source.trim() ||
       !Number.isFinite(cdAreaOverMassM2Kg) || cdAreaOverMassM2Kg < 0)
     throw new RangeError('Atmospheric model requires source and nonnegative Cd*A/m');
-  const rho = densityKgM3(r - EARTH.radiusKm, s.tS);
+  const rho = densityKgM3(r - EARTH.radiusKm, s.tS, s);
   if (!Number.isFinite(rho) || rho < 0) throw new RangeError('Density must be finite and nonnegative');
   const relative: Vec3 = [
     s.vKmS[0] + EARTH.spinRadS * s.rKm[1],
