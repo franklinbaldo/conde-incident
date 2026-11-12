@@ -205,6 +205,58 @@ class MatrixEvidenceTests(unittest.TestCase):
             interface["required_before_physical_use"],
         )
 
+
+    def test_joint_scenario_enclosures_require_global_coverage_not_one_branch(self):
+        out = contracts(self.rows)
+        bridge = out["scenario_enclosure_interface"]
+        self.assertEqual(bridge["version"], 1)
+        self.assertEqual(bridge["lean_module"],
+                         "Conde1963/ScenarioEnclosures.lean")
+        self.assertEqual(bridge["candidate_semantics"],
+                         "COMMON_AND_LEFT_OR_RIGHT")
+        self.assertEqual(bridge["branch_combination"],
+                         "UNION_UNTIL_VERIFIED_SOURCE_ADJUDICATION")
+        self.assertEqual(bridge["source_matrix_sha1"],
+                         out["matrix_git_blob_sha1"])
+        self.assertEqual(bridge["source_branches"], [
+            {"id": "SITE_RAAN_284_UNVERIFIED", "original_custody": "NOT_VERIFIED",
+             "matrix_occurrences": [], "is_hard_physical_constraint": False},
+            {"id": "AFSPC_MIRROR_RAAN_198_UNVERIFIED",
+             "original_custody": "NOT_VERIFIED_PRIMARY",
+             "matrix_occurrences": ["C25#1", "C179#1"],
+             "is_hard_physical_constraint": False},
+        ])
+        self.assertEqual(bridge["nasa_lineage"]["matrix_occurrences"],
+                         ["C131#1", "C197#1"])
+        self.assertEqual(bridge["nasa_lineage"]["source_count"], 1)
+        self.assertEqual(bridge["nasa_lineage"]
+                         ["instrumental_trajectory_measurements"], 0)
+        self.assertFalse(bridge["nasa_lineage"]
+                         ["physical_decay_time_or_location_established"])
+        self.assertEqual(set(bridge["lean_obligations"]), {
+            "exclusion", "forcing", "other_window",
+            "consistent_refinement_exclusion", "consistent_refinement_forcing",
+            "consistent_refinement_other", "one_branch_only_if_other_empty",
+            "opposed_branch_witnesses", "missing_gate_blocks_all",
+        })
+        self.assertIn("one_branch_only_if_other_is_proven_empty",
+                      bridge["mandatory_checks"])
+        self.assertIn("no_geographic_claim_while_surviving_branches_disagree",
+                      bridge["mandatory_checks"])
+
+    def test_joint_scenario_enclosure_contract_fails_closed(self):
+        bridge = contracts(self.rows)["scenario_enclosure_interface"]
+        self.assertIsNone(bridge["current_geographic_verdict"])
+        self.assertIsNone(bridge["predicted_ground_impact"])
+        self.assertIsNone(bridge["validated_error_enclosures"])
+        for gate in ("global_parameter_domain_certified",
+                     "source_branch_authenticity_certified",
+                     "independent_529_holdout_passed",
+                     "ground_impact_gate_verified"):
+            self.assertIs(bridge[gate], False)
+        self.assertEqual(bridge["historical_zip_154_propositions_151_labels"],
+                         "NOT_RUN")
+
     def test_export_preserves_all_rows_and_lineage_limits(self):
         out = contracts(self.rows)
         self.assertEqual(len(out["entries"]), 241)
