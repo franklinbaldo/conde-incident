@@ -67,7 +67,9 @@ class RaanEpochContractTests(unittest.TestCase):
         self.assertEqual(out["historical_frame_equivalence"], "NOT_VERIFIED")
         self.assertIsNone(out["model_rate_cap_deg_day"])
         self.assertIsNone(out["conde_region_or_impact"])
-        self.assertEqual(out["source_selection"], "UNRESOLVED")
+        self.assertEqual(out["source_selection"], "MIRROR_REFERENCE_ONLY_LEGACY_RETIRED")
+        self.assertEqual(out["legacy_input_role"], "HISTORICAL_FINGERPRINT_ONLY_NOT_MCMC_STATE")
+        self.assertTrue(out["physical_raan_is_free_parameter"])
         self.assertEqual(out["original_lean_zip_154_151"], "NOT_RUN")
 
 
