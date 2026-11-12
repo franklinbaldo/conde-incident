@@ -111,6 +111,48 @@ class MatrixEvidenceTests(unittest.TestCase):
             "NASA_CATALOGUED_DATE_HYPOTHESIS_NOT_HARD_FILTER"
             for e in out["entries"]), 2)
 
+    def test_enclosure_handoff_is_fail_closed_and_source_aware(self):
+        out = contracts(self.rows)
+        env = out["enclosure_interface"]
+        self.assertEqual(env["version"], 1)
+        self.assertEqual(env["kind"],
+                         "MODEL_ENCLOSURE_OBLIGATIONS_NOT_NUMERICAL_RESULTS")
+        self.assertEqual(env["lean_module"], "Conde1963/Enclosures.lean")
+        self.assertEqual(env["ground_impact_gate"], "GroundImpactAdmissible")
+        self.assertEqual(env["enclosure_soundness"],
+                         "ImpactEnvelope.soundForPredictions")
+        self.assertIsNone(env["current_result"])
+        self.assertIsNone(env["event_type"])
+        self.assertIsNone(env["numerical_epoch_window_utc"])
+        self.assertIsNone(env["numerical_spatial_enclosure"])
+        for key in (
+            "global_parameter_domain_verified",
+            "ground_impact_audit_verified",
+            "historical_input_custody_verified",
+            "independent_holdout_verified",
+            "numerical_error_coverage_verified",
+        ):
+            self.assertIs(env[key], False)
+        self.assertEqual(env["original_154_151_corpus_import"], "NOT_RUN")
+        self.assertEqual({c["code"] for c in env["conditional_certificates"]},
+                         {"CONDE_EXCLUDED", "CONDE_FORCED", "OTHER_WINDOW"})
+        self.assertEqual(env["conditional_certificates"][0]
+                         ["impact_elsewhere_implied"], False)
+        self.assertEqual(env["conditional_certificates"][2]
+                         ["impact_elsewhere_implied"], True)
+        self.assertIn("nonempty_full_admissible_parameter_domain",
+                      env["mandatory_proof_obligations"])
+        self.assertIn("proof_actual_predicted_event_is_inside_its_enclosure",
+                      env["mandatory_proof_obligations"])
+        self.assertEqual(env["source_lineage"][0]["matrix_occurrences"], ["C01#1"])
+        self.assertEqual(env["source_lineage"][1]["matrix_occurrences"],
+                         ["C131#1", "C197#1"])
+        self.assertEqual(env["source_lineage"][1]["independent_sources"], 1)
+        self.assertIs(env["source_lineage"][1]["physical_day_admitted"], False)
+        self.assertEqual(len(out["entries"]), 241)
+        self.assertTrue(all(x["numeric_error_bounds"] is None
+                            for x in out["entries"]))
+
     def test_export_preserves_all_rows_and_lineage_limits(self):
         out = contracts(self.rows)
         self.assertEqual(len(out["entries"]), 241)
