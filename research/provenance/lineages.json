@@ -42,16 +42,6 @@
       "kind": "radiosonde_archive",
       "independence": "MEASURED_IN_RECIFE_ONLY",
       "comment": "Radiosonde historical wind levels in Recife; not measured at Conde."
-    },
-    {
-      "id": "USAF_AIRA_BLUEBOOK",
-      "kind": "DOCUMENTARY_ADMINISTRATIVE_CHAIN",
-      "independence_limit": "Separate USAF document; may reproduce consular reporting; never count as physical or separate eyewitness observation."
-    },
-    {
-      "id": "RIO_PRESS_UNINSPECTED",
-      "kind": "NEWSPAPER_QUOTED_NOT_READ",
-      "independence_limit": "Original issue and informant not inspected; no independent witness or publication time established."
     }
   ],
   "sources": [
@@ -166,22 +156,6 @@
       "url": "https://www.ncei.noaa.gov/pub/data/igra/data/data-por/BRM00082900-data.txt.zip",
       "locator": "NOAA IGRA BRM00082900, 08/11/1963, 5 níveis 850–250 hPa; hora real RELTIME ausente",
       "status": "HISTORICAL_WIND_MEASUREMENT_RECIFE_NOT_CONDE"
-    },
-    {
-      "id": "NARA_AIRA_TELEGRAM_19631114",
-      "family": "USAF_AIRA_BLUEBOOK",
-      "work_id": "NARA_BLUEBOOK_CONDE_FILEUNIT_302531012",
-      "status": "ORIGINAL_DIGITAL_OBJECT_VISUALLY_INSPECTED_QUOTES_PRESS",
-      "locator": "NARA NAID 302531012 / digital object 302531014 / T1206 reel 49 / 0810.jp2; telegram USAIRA Rio 14 NOV 1963",
-      "url": "https://catalog.archives.gov/medialz/partners/dc-metro/rg-341/597821/T1206-ProjectBlueBook_0049/images/0810.jp2"
-    },
-    {
-      "id": "O_GLOBO_19631108_UNINSPECTED",
-      "family": "RIO_PRESS_UNINSPECTED",
-      "work_id": "O_GLOBO_19631108_ISSUE_UNLOCATED",
-      "status": "UNINSPECTED_NEWSPAPER_QUOTED_BY_USAIRA_NOT_AUTHENTICATED",
-      "locator": "O Globo, 08/11/1963; cited by USAIRA 14/11; original issue, page, edition and hour not inspected",
-      "url": null
     }
   ],
   "dependencies": [
@@ -219,11 +193,6 @@
       "from": "CELESTRAK_SPACE_WEATHER",
       "to": "NRC_F107_SERIES",
       "kind": "aggregates_from"
-    },
-    {
-      "from": "NARA_AIRA_TELEGRAM_19631114",
-      "to": "O_GLOBO_19631108_UNINSPECTED",
-      "kind": "quotes_uninspected_source"
     }
   ],
   "citations": [
@@ -231,145 +200,169 @@
       "occurrence": "C01#1",
       "source_id": "FBIS_EOP_UAP_D001",
       "relation": "reported_claim",
-      "scope": "TRANSMISSION_REPORTED_ONLY"
+      "scope": "TRANSMISSION_REPORTED_ONLY",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C01#1"
     },
     {
       "occurrence": "C02#1",
       "source_id": "FBIS_EOP_UAP_D001",
       "relation": "reported_claim",
-      "scope": "TRANSMISSION_REPORTED_ONLY"
+      "scope": "TRANSMISSION_REPORTED_ONLY",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C02#1"
     },
     {
       "occurrence": "C03#1",
       "source_id": "FBIS_EOP_UAP_D001",
       "relation": "reported_claim",
-      "scope": "TRANSMISSION_REPORTED_ONLY"
+      "scope": "TRANSMISSION_REPORTED_ONLY",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C03#1"
     },
     {
       "occurrence": "C05#1",
       "source_id": "DOS_A628_19631120",
       "relation": "quotes_uninspected_source",
-      "scope": "DENIAL_REPORTED_CLIPPING_MISSING"
+      "scope": "DENIAL_REPORTED_CLIPPING_MISSING",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C05#1"
     },
     {
       "occurrence": "C06#1",
       "source_id": "DOS_A628_19631120",
       "relation": "quotes_uninspected_source",
-      "scope": "JOURNALIST_ACCOUNT_REPORTED_CLIPPING_MISSING"
+      "scope": "JOURNALIST_ACCOUNT_REPORTED_CLIPPING_MISSING",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C06#1"
     },
     {
       "occurrence": "C17#1",
       "source_id": "GFZ_KP_AP_SERIES",
       "relation": "measured_index",
-      "scope": "SPACE_WEATHER_NOT_ORBIT"
+      "scope": "SPACE_WEATHER_NOT_ORBIT",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C17#1"
     },
     {
       "occurrence": "C18#1",
       "source_id": "GFZ_KP_AP_SERIES",
       "relation": "measured_index",
-      "scope": "SPACE_WEATHER_NOT_ORBIT"
+      "scope": "SPACE_WEATHER_NOT_ORBIT",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C18#1"
     },
     {
       "occurrence": "C19#1",
       "source_id": "NRC_F107_SERIES",
       "relation": "measured_index",
-      "scope": "SPACE_WEATHER_NOT_ORBIT"
+      "scope": "SPACE_WEATHER_NOT_ORBIT",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C19#1"
     },
     {
       "occurrence": "C23#1",
       "source_id": "CELESTRAK_SPACE_WEATHER",
       "relation": "refutes_independence",
-      "scope": "AGGREGATE_IS_NOT_THIRD_PRIMARY_OBSERVATION"
+      "scope": "AGGREGATE_IS_NOT_THIRD_PRIMARY_OBSERVATION",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C23#1"
     },
     {
       "occurrence": "C131#1",
       "source_id": "NASA_SSR_19631115",
       "relation": "catalogued_day",
-      "scope": "CATALOGUED_DAY_ONLY"
+      "scope": "CATALOGUED_DAY_ONLY",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C131#1"
     },
     {
       "occurrence": "C149#1",
       "source_id": "NOAA_IGRA_RECIFE_1963",
       "relation": "measured_environment",
-      "scope": "RECIFE_ONLY_NO_CONDE_INFERENCE"
+      "scope": "RECIFE_ONLY_NO_CONDE_INFERENCE",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C149#1"
     },
     {
       "occurrence": "C150#1",
       "source_id": "NOAA_IGRA_RECIFE_1963",
       "relation": "metadata_limit",
-      "scope": "RELTIME_UNKNOWN"
+      "scope": "RELTIME_UNKNOWN",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C150#1"
     },
     {
       "occurrence": "C151#1",
       "source_id": "NOAA_IGRA_RECIFE_1963",
       "relation": "measured_environment",
-      "scope": "RECIFE_ONLY_NO_CONDE_INFERENCE"
+      "scope": "RECIFE_ONLY_NO_CONDE_INFERENCE",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C151#1"
     },
     {
       "occurrence": "C179#1",
       "source_id": "AFSPC_MIRROR_528",
       "relation": "secondary_orbital_elements",
-      "scope": "MEAN_ELEMENTS_NOT_TRACKING_OBSERVATION"
+      "scope": "MEAN_ELEMENTS_NOT_TRACKING_OBSERVATION",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C179#1"
     },
     {
       "occurrence": "C180#1",
       "source_id": "AFSPC_MIRROR_529",
       "relation": "secondary_orbital_elements",
-      "scope": "NOT_COEPOCHAL_528"
+      "scope": "NOT_COEPOCHAL_528",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C180#1"
     },
     {
       "occurrence": "C182#1",
       "source_id": "NASA_SSR_19631115",
       "relation": "archival_status",
-      "scope": "IN_ORBIT_LIST_NOT_REENTRY_TIME"
+      "scope": "IN_ORBIT_LIST_NOT_REENTRY_TIME",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C182#1"
     },
     {
       "occurrence": "C183#1",
       "source_id": "NASA_SSR_19631130",
       "relation": "archival_status",
-      "scope": "NEW_EDITION_SAME_TRACKING_FAMILY"
+      "scope": "NEW_EDITION_SAME_TRACKING_FAMILY",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C183#1"
     },
     {
       "occurrence": "C184#1",
       "source_id": "NASA_SSR_19631115",
       "relation": "conditional_comparison",
-      "scope": "SUPERSEDED_BY_C197_C200"
+      "scope": "SUPERSEDED_BY_C197_C200",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C184#1"
     },
     {
       "occurrence": "C197#1",
       "source_id": "NASA_SSR_19631115",
       "relation": "catalogued_day",
-      "scope": "CATALOGUED_DAY_ONLY"
+      "scope": "CATALOGUED_DAY_ONLY",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C197#1"
     },
     {
       "occurrence": "C198#1",
       "source_id": "NTRS_19640001198",
       "relation": "archive_metadata",
-      "scope": "SAME_WORK_NOT_SECOND_INSTRUMENT"
+      "scope": "SAME_WORK_NOT_SECOND_INSTRUMENT",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C198#1"
     },
     {
       "occurrence": "C199#1",
       "source_id": "NASA_SSR_19631130",
       "relation": "edition_control",
-      "scope": "ADDITIVE_UPDATE_NOT_INDEPENDENT_SENSOR"
+      "scope": "ADDITIVE_UPDATE_NOT_INDEPENDENT_SENSOR",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C199#1"
     },
     {
       "occurrence": "C200#1",
       "source_id": "NASA_SSR_19631115",
       "relation": "corrects_prior_interpretation",
-      "scope": "CORRECTS_C182_C184"
+      "scope": "CORRECTS_C182_C184",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C200#1"
     },
     {
       "occurrence": "C201#1",
       "source_id": "NASA_SSR_19631115",
       "relation": "shared_upstream",
-      "scope": "COMPILED_NORAD_SAO_NO_INDEPENDENCE_PROVEN"
+      "scope": "COMPILED_NORAD_SAO_NO_INDEPENDENCE_PROVEN",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C201#1"
     },
     {
       "occurrence": "C238#1",
       "source_id": "NASA_SSR_19631115",
       "relation": "documentary_comparison",
-      "scope": "NO_LINK_TO_CONDE_PHYSICAL_EVENT"
+      "scope": "NO_LINK_TO_CONDE_PHYSICAL_EVENT",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C238#1"
     }
   ],
   "contracts": [
@@ -381,7 +374,11 @@
         "C197#1"
       ],
       "status": "CANDIDATE_NOT_ACTIVATED",
-      "scope": "Derived field graph and NASA date, no calibrated constraint"
+      "scope": "Derived field graph and NASA date, no calibrated constraint",
+      "snapshot_refs": [
+        "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C179#1",
+        "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C197#1"
+      ]
     },
     {
       "id": "C179_C151_BRIDGE",
@@ -391,7 +388,11 @@
         "C151#1"
       ],
       "status": "DERIVED_ONLY_NO_CONDE_TRANSFER",
-      "scope": "Kepler J2 proxy and Recife winds; never location."
+      "scope": "Kepler J2 proxy and Recife winds; never location.",
+      "snapshot_refs": [
+        "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C179#1",
+        "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C151#1"
+      ]
     },
     {
       "id": "C197_DOCUMENTARY",
@@ -403,44 +404,13 @@
         "C200#1"
       ],
       "status": "DOCUMENTARY_DAY_ONLY",
-      "scope": "NASA 8 NOV 63 is a catalogue date, not terminal observation."
-    }
-  ],
-  "post_matrix_occurrences": [
-    {
-      "id": "NARA-BB-CONDE-20261112-01",
-      "source_id": "NARA_AIRA_TELEGRAM_19631114",
-      "quoted_source_id": "O_GLOBO_19631108_UNINSPECTED",
-      "status": "CONNECTED_PENDING_DOCUMENTARY_VERIFICATION",
-      "observation_type": "DOCUMENTARY_CITATION_NOT_PHYSICAL_OBSERVATION",
-      "proposition": "Telegram USAIRA dated 14 Nov 1963 cites an O Globo issue dated 8 Nov with a story attributed to Salvador about an alleged metallic sphere in Conde.",
-      "nara_fileunit_naid": 302531012,
-      "nara_object_id": 302531014,
-      "image_filename": "0810.jp2",
-      "image_sha256": "136be026e23acdd5e7ff0a5307e04bef799249b48346072a43cae1506be37ce9",
-      "telegram_date": "1963-11-14",
-      "reported_newspaper_date": "1963-11-08",
-      "newspaper_page": null,
-      "newspaper_edition": null,
-      "newspaper_publication_time": null,
-      "journalistic_source_independence": "UNRESOLVED",
-      "physical_constraint": null,
-      "related_matrix_occurrences": [
-        "C232#1",
-        "C233#1",
-        "C234#1",
-        "C235#1",
-        "C236#1",
-        "C237#1",
-        "C238#1",
-        "C01#1",
-        "C02#1",
-        "C03#1"
-      ],
-      "relationship_to_matrix": "PROVENANCE_UPDATE_NO_CHANGE_TO_FROZEN_HISTORICAL_ROWS",
-      "verification": "NARA JP2 inspected and SHA256 recorded in the project archive report; O Globo original not read.",
-      "next_dependency": "Locate O Globo 08/11/1963 original issue/page and confirm printed credit, sourcing, edition and publication time; compare to Rádio Tupi 08/11 23:30 only after time provenance.",
-      "report_path": "research/archives/nara_bluebook_conde_naid_302531012_2026-11-12.md"
+      "scope": "NASA 8 NOV 63 is a catalogue date, not terminal observation.",
+      "snapshot_refs": [
+        "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C131#1",
+        "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C197#1",
+        "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C198#1",
+        "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C200#1"
+      ]
     }
   ]
 }
