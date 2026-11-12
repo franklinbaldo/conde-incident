@@ -32,6 +32,10 @@ A issue é a **mensagem/coordenação**; se resultar em código de produto, o de
 
 **Identidade:** automações usando a mesma conta GitHub aparecem como `franklinbaldo`; o campo `De:` é uma identificação operacional declarada, **não autenticação independente de quem escreveu**. Se for necessária autorização técnica separada por agente, criar identidades/apps distintos sob aprovação do proprietário.
 
+## Validação OKF obrigatória em cada workspace privado
+
+**Todo** arquivo Markdown pessoal, incluindo `README.md`, `AGENTS.md`, skills, templates, memórias, specs e diretórios ocultos, deve ter frontmatter `type`, `title`, `description` e spec normativa em `.okf/specs/{slug}.md`. A versão fixada é `okf-parser==0.48.2`. Push direto na `main` pessoal é permitido, mas a rodada só pode ser declarada concluída com workflow **`OKF all Markdown` aprovado para o HEAD da memória**. Não excluir arquivos por conveniência. O projeto público preserva `team/memory/` histórico, mas memórias novas ficam no privado. Uma nota privada não promove resultados ao projeto sem PR/issue baseada em fonte rastreável.
+
 ## Memória e skills
 
 Estrutura inicial sugerida por workspace:
@@ -39,8 +43,8 @@ Estrutura inicial sugerida por workspace:
 ```text
 README.md
 AGENTS.md
-memory/YYYY-MM-DD/<tema>.md
-.agents/skills/conde-<animal>/SKILL.md
+memory/YYYY-MM-DD-<tema>.md
+.agents/skills/<animal>/SKILL.md
 tools/
 experiments/
 .github/ISSUE_TEMPLATE/message.md
@@ -53,7 +57,7 @@ O animal pode reorganizar livremente esse workspace; a própria skill é sua res
 
 Quando o acesso GitHub permitir, provisionar primeiro os nomes do cadastro, exigir **privacidade confirmada**, habilitar issues e bootstrap inicial; verificar individualmente o acesso por GitHub e Jatobá. Só então atualizar `workspace_status` no cadastro e rotinas com os caminhos reais. **Agora**, usar cada repositório pessoal privado já verificado para memórias próprias e mensagens, mantendo PR/CI de código compartilhado em `conde-incident`. O bootstrap é **parcial**, e o trabalho do produto não depende de concluir as pastas restantes. Memórias privadas nunca devem ser copiadas para o repositório público por conveniência.
 
-Elefante mantém o cadastro de funções, a distribuição de mensagens e a saúde das filas, sem monopolizar issues ou merges. Gavião segue com revisão **retrospectiva do código de projeto integrado**, sem impor revisão aos commits pessoais privados. Cafezinho diário permanece no projeto enquanto a equipe não decidir outro local.
+Elefante mantém o cadastro de funções, a distribuição de mensagens e a saúde das filas, sem monopolizar issues ou merges. Gavião segue com revisão **retrospectiva do código de projeto integrado**, sem impor revisão aos commits pessoais privados. **Cafezinho migrado:** a convivência acontece **exclusivamente** em [franklinbaldo/cafezinho/issues](https://github.com/franklinbaldo/cafezinho/issues), repositório privado independente do Conde. A [issue antiga #72](https://github.com/franklinbaldo/conde-incident/issues/72) ficou encerrada; em 12/11/2026 a rodada ativa é [cafezinho#1](https://github.com/franklinbaldo/cafezinho/issues/1). Elefante verifica data de Rondônia e issues abertas **e** fechadas, não cria duplicata nem deduz expiração sem janela declarada. Conversa informal nunca é fonte de evidência.
 
 ## Bootstrap reproduzível (procedimento não atribuído ao provisionamento já observado)
 
