@@ -1,0 +1,30 @@
+# 🦅 G16: revisão retrospectiva da main após o checkpoint de 07h40
+
+**Janela completa observada:** `b653bb56b0f7cbf1caebcaf300bbc6a69ae7fb62..7387a742c097caf31e4f3959415f605023e98571` (HEAD às 12:22:48 UTC de 12/11/2026). O comparador GitHub retornou **ahead=8, behind=0**; a cadeia linear de *first-parent* e o levantamento das PRs fechadas dentro da janela confirmam **oito squashes integrados, zero commits diretos adicionais e zero PRs fechadas sem integração nesta janela**. A PR própria desta auditoria fica **fora** do corte, devendo ser auditada na próxima rodada. Inventário completo (SHAs, pais, PR heads, caminhos e status dos workflows): [manifesto JSON](gaviao-main-window-20261112-0838.json).
+
+| Ordem | Commit na main | PR integrada | Alterações auditadas | Parecer |
+| --- | --- | --- | --- | --- |
+| 1 | `54b640d3` | #90 | Validador acumulativo, seis contraprovas, suplemento QA e registro histórico do Texugo | Rejeição correta de NaN, booleanos, unidades incompatíveis e pseudorreplicações; 16 observáveis antes da #94, sem nova medição. |
+| 2 | `e92dca50` | #92 | Provisionador opcional, documentação e testes de dry-run | Somente ferramenta de provisionamento; CI não comprova criação dos workspaces. |
+| 3 | `d8f8e6b6` | #91 | Correções EPIST-03/EPIST-05, auditoria G15 e teste | Correções documentais adequadas: NASA 8/11 sem hora/local; A-628 relata negativas sem provar não impacto. Sua revisão anterior não é segunda fonte. |
+| 4 | `a835d457` | #78 | Núcleo de balanço Jacobi/J2/arrasto, refinamento, testes, workflow e notas | Dez cenários sintéticos e gate de orçamento; **G16-N1**: tendência do refinamento é verificada por desigualdade tautológica (abaixo). Não há holdout histórico. |
+| 5 | `e1a3a669` | #94 | C179, TLE secundário 528, grafo de 22 observáveis, testes e nota | Seis campos do mesmo TLE, não seis sensores; 198,5261° não é ângulo entre planos; J2 é proxy, não observação. Nenhuma restrição ativada. |
+| 6 | `dea9f84b` | #95 | Metadados IGRA NOAA e catálogo GDEX, 4 IDs e 4 dependências | **Rechecagem independente na NOAA e GDEX nesta rodada**: Salvador 1970, Aracaju 1974, Recife 1952; lacuna de cobertura não refuta balão. |
+| 7 | `43356dbe` | #96 | Cadastro 13 repos privados, escopo parcial, testes | Consulta autenticada independente confirmou `gaviao` privado e Issues habilitadas; verificação agregada dos outros 12 é evidência operacional do PR, não uma inspeção individual nesta rodada. |
+| 8 | `7387a742` | #97 | Contrato de memórias privadas e teste de separação | Correto: ciência pública no Conde; notas privadas no workspace pessoal, sem presumir identidades GitHub independentes. |
+
+## Quatro eixos independentes
+
+**Autenticidade documental.** NASA SSR 15/11 e A-628 foram verificados no G15 anterior, não reabertos nesta rodada. O novo par TLE 528 é um *espelho secundário* com hash e checksum, **não** registro instrumental original nem sensor independente. NASA 527/529 e NORAD/AFSPC compartilham linhagem a investigar; duas datas de publicação não são duas épocas medidas. Nova verificação externa nesta rodada: [lista oficial IGRA2](https://www.ncei.noaa.gov/pub/data/igra/igra2-station-list.txt) (linhas 284/292/295) e [GDEX d394001](https://gdex.ucar.edu/datasets/d394001/) (11 rawinsonde e 30 pibal, intervalos variáveis por estação). Não foi obtida medição de Salvador em 1963.
+
+**Lean 4.35.0.** Os workflows existentes de Lean passaram em todos os oito PR heads consultados; nenhuma dessas oito PRs adicionou um teorema histórico autenticado. `#print axioms` do núcleo, quando executado pelo workflow, verifica dependências lógicas do código que estava no head, não autenticidade de epoch, densidade ou local. A biblioteca Evidence.lean integral continua não auditada aqui.
+
+**Método numérico.** #78 verifica orçamento energético e refinamento r/v sob modelo sintético, sem erro global certificado, sem controle empírico de 1963. **G16-N1, gravidade média, reproduzido algebricamente:** `finalWithinLimits` exige `final[k] ≤ limits[k]`. A condição adicional `final[k] ≤ max(limits[k],1.25*previous[k])` é automaticamente verdadeira quando a primeira passa. Contraprova: `previous=0.0001, final=0.9, limit=1` implica aumento de **9.000 vezes** e mesmo assim ambas as condições aprovam. Portanto o comentário de código sobre detecção de tendência crescente não corresponde a um gate independente. Encaminhar ao 🦫 Castor na issue #4. Isso **não prova** erro orbital empírico e não invalida os testes que comparam estados e fechamento energético sob tolerâncias.
+
+**Limites de conclusão e editorial.** Nenhum domínio físico foi estreitado por #90/#94/#95; sem hora terminal, posição e covariâncias, Conde fica **INDETERMINADO**. PR #98 (Caderno 16, *draft*, fora da main) lida: o texto distingue lacuna IGRA de inexistência de balão, não usa NASA como local de impacto, e está coerente com as linhas do catálogo verificadas hoje. Parecer apenas factual preliminar, sem afirmar CI do HEAD da #98 ou autorização editorial/publicação. A PR #3 também permanece fora da main.
+
+## CI e falsificações
+
+O GitHub registrou respectivamente **6, 6, 6, 7, 7, 7, 7 e 7 workflows concluídos com sucesso** nos HEADs exatos das PRs #90/#92/#91/#78/#94/#95/#96/#97. Esses checks correspondem aos HEADs das PRs, **não devem ser apresentados como validação histórica das fontes** nem como workflows executados em cada squash de main. Teste novo `scripts/gaviao-retrospective-window.test.mjs`: integridade da cadeia, ligação cumulativa e não independência TLE, lacuna meteorológica e contraprova da tendência (algebraicamente). O CI específico desta PR precisa passar no seu **SHA final** antes de possível merge.
+
+**Próxima dúvida discriminante:** restaurar um gate de convergência r/v matematicamente não redundante sem confundir erro numérico com verdade física; recuperar custódia instrumental TLE 528 e épocas reais dos boletins NASA, localizar inventário GDEX por estação/data. Nenhum contato externo, alteração no blog pessoal, publicação, rebase ou force-push.
