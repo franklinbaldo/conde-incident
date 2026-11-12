@@ -15,10 +15,10 @@ SNAPSHOT_COMMIT = "38ee0f01134f6a1ee07c9346945d058d2ad3ce0b"
 REPO = "https://github.com/franklinbaldo/conde-incident"
 LEGACY = {
     "src/lib/astrodynamics.ts": "2e9cf26b2814d8c481b01e40dd9201f3df81f673",
-    "src/lib/monteCarlo.ts": "e52ca3b55a48371dadcfa6fe82092c665669e14f",
+    "src/lib/monteCarlo.ts": "c52a3f4c62bb9d96dcd91d1511714d01049c9d3b",
     "src/lib/inverseSolver.ts": "6f953efe001ed6d58afe6760d743b87250b2033b",
     "src/lib/constants.ts": "0284f1217557b0ea891b5e51b6ac56bd13529d3f",
-    "norad528_reconstruction.py": "00f6ad767a00ed9b0a166817913d02b4272e47b0",
+    "norad528_reconstruction.py": "efae8bfef02b5a638a699c88c41fdcf3d6eefb97",
 }
 CASTOR_REVIEW = {
     "pull_request": "https://github.com/franklinbaldo/conde-incident/pull/5",
