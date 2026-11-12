@@ -83,18 +83,35 @@ def validate(graph: dict) -> dict:
         })
     # Accumulate comparisons between published records without treating
     # publication timestamps as physical observation epochs.
+    derived_ids = set()
+    compared_pairs = set()
     for edge in graph.get("derived_connections", []):
+        edge_id = edge.get("id")
+        if not isinstance(edge_id, str) or not edge_id or edge_id in ids or edge_id in derived_ids:
+            raise ValueError(f"duplicate or invalid derived edge ID: {edge_id}")
+        derived_ids.add(edge_id)
         if edge.get("operator_id") != "difference_between_published_values":
-            raise ValueError(f"unexpected derived operator: {edge.get('id')}")
+            raise ValueError(f"unexpected derived operator: {edge_id}")
         inputs = edge.get("inputs", [])
         if len(inputs) != 2 or any(item not in ids for item in inputs):
-            raise ValueError(f"orphan derived edge: {edge.get('id')}")
+            raise ValueError(f"orphan derived edge: {edge_id}")
+        # Reversed subtraction of the same two rows is not a new observation.
+        pair = frozenset(inputs)
+        if len(pair) != 2 or pair in compared_pairs:
+            raise ValueError(f"duplicate derived observation pair: {edge_id}")
+        compared_pairs.add(pair)
         left, right = (next(o for o in obs if o["id"] == item) for item in inputs)
         if left["object_id"] != right["object_id"] or left["observable"] != right["observable"]:
-            raise ValueError(f"mixed comparison: {edge.get('id')}")
+            raise ValueError(f"mixed comparison: {edge_id}")
+        if left["unit"] != right["unit"] or edge.get("unit") != left["unit"]:
+            raise ValueError(f"mixed units in derived comparison: {edge_id}")
+        reported_delta = edge.get("derived_arithmetic")
+        if (isinstance(reported_delta, bool) or not isinstance(reported_delta, (int, float))
+                or not math.isfinite(reported_delta)):
+            raise ValueError(f"non-finite or nonnumeric derived arithmetic: {edge_id}")
         delta = right["value"] - left["value"]
-        if edge.get("unit") != left["unit"] or abs(delta - edge["derived_arithmetic"]) > 1e-8:
-            raise ValueError(f"invalid arithmetic or unit: {edge.get('id')}")
+        if abs(delta - reported_delta) > 1e-8:
+            raise ValueError(f"invalid arithmetic or unit: {edge_id}")
         if edge.get("status") != "CONNECTED_PENDING_EPOCH_AND_COVARIANCE":
             raise ValueError(f"comparison prematurely turned into a physical trend: {edge.get('id')}")
         if "source_specific_observation_epochs" not in edge.get("missing", []):
