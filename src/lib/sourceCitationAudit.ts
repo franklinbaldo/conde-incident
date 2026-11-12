@@ -58,6 +58,9 @@ export function citationContext(feed: CitationFeed, input: string) {
   return { state: 'mapped' as const, occurrence, record, sameWork };
 }
 
+// The curated citation feed pins original matrix Git blob a7978c3a75a153b16ab70118a92c434bba674cb7.
+// Link to the verified *commit*, not mutable main; otherwise a future inserted line
+// silently turns a source citation into a different claim.
 export function matrixOccurrenceUrl(matrixLine: number): string {
-  return 'https://github.com/franklinbaldo/conde-incident/blob/main/research/evidence_matrix_C001-C238_2026-11-11.md#L' + matrixLine;
+  return 'https://github.com/franklinbaldo/conde-incident/blob/faf4dd0fd8dfbdd825e4e934b3b30ebd81bf61df/research/evidence_matrix_C001-C238_2026-11-11.md#L' + matrixLine;
 }
