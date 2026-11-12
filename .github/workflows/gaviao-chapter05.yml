@@ -1,0 +1,36 @@
+name: Gaviao chapter 05 independent source recheck
+on:
+  pull_request:
+    paths:
+      - 'tools/gaviao_chapter05_recheck.py'
+      - 'tests/test_gaviao_chapter05.py'
+      - 'research/gaviao_chapter05_review.md'
+      - 'team/memory/gaviao/**'
+      - '.github/workflows/gaviao-chapter05.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independent-fingerprint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+      - name: Assert actual source HEAD
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+          echo "GAVIAO_SOURCE_HEAD=$(git rev-parse HEAD)"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Adversarial tests (SYNTHETIC only)
+        run: python -m unittest discover -s tests -p 'test_gaviao_chapter05.py' -v
+      - name: Install pinned read-only Parquet decoder
+        run: python -m pip install pyarrow==21.0.0
+      - name: Independently recheck pinned 1963 secondary Parquet
+        run: python tools/gaviao_chapter05_recheck.py --download --parquet "${{ runner.temp }}/tle_1963.parquet" --assert-story
