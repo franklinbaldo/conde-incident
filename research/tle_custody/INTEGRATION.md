@@ -26,3 +26,20 @@ documents the day 8 Nov 1963, not a full positional orbit.
 
 Verify with `node --test scripts/tle-528-provenance.test.mjs`
 under the existing exact-head integration workflow.
+
+
+## Auditor independente de sintaxe (C241-L1)
+
+O subconjunto `tools/tle_literal_layout.py` e `tests/test_tle_literal_layout.py`
+foi separado da PR histórica #14 sobre a `main` (sem importar outros
+scripts do Parquet nem alterar o único par literal). Para gerar relatório:
+
+```bash
+python -m unittest discover -s tests -p 'test_tle_literal_layout.py' -v
+python tools/tle_literal_layout.py \
+  --pair research/tle_custody/mirror_528_1963-10-27.tle \
+  --output /tmp/tle_528_literal_audit.json
+```
+
+O workflow `tle-literal-layout.yml` confere checkout no HEAD real e arquiva JSON.
+Isso testa o **formato da cópia moderna**, não checksum de 45 TLEs originais.

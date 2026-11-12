@@ -1,0 +1,54 @@
+name: Tartaruga - secondary 528 literal TLE layout
+
+on:
+  pull_request:
+    paths:
+      - tools/tle_literal_layout.py
+      - tests/test_tle_literal_layout.py
+      - research/tle_custody/mirror_528_1963-10-27.tle
+      - .github/workflows/tle-literal-layout.yml
+  push:
+    branches: [main]
+    paths:
+      - tools/tle_literal_layout.py
+      - tests/test_tle_literal_layout.py
+      - research/tle_custody/mirror_528_1963-10-27.tle
+      - .github/workflows/tle-literal-layout.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  literal-528:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify checkout is the actual head
+        run: |
+          expected="${{ github.event.pull_request.head.sha || github.sha }}"
+          actual="$(git rev-parse HEAD)"
+          echo "audited_head=$actual"
+          test "$actual" = "$expected"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Adversarial syntax controls (not historical verification)
+        run: python -m unittest discover -s tests -p 'test_tle_literal_layout.py' -v
+      - name: Verify pinned literal bytes and preserve forensic JSON
+        run: |
+          python tools/tle_literal_layout.py \
+            --pair research/tle_custody/mirror_528_1963-10-27.tle \
+            --output "${{ runner.temp }}/tle-528/literal_layout.json"
+          cat "${{ runner.temp }}/tle-528/literal_layout.json"
+      - name: Upload source-head audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: secondary-528-literal-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ${{ runner.temp }}/tle-528/
+          if-no-files-found: warn
+          retention-days: 30
