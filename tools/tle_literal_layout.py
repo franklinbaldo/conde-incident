@@ -73,7 +73,7 @@ def audit_pair(first, second, expected_sat=528):
     epoch = (datetime(1963, 1, 1, tzinfo=timezone.utc) +
              timedelta(days=ordinal - 1, microseconds=fraction_day * 864))
     _field(first, 32, 33, r" ", "line1 separator 32")
-    _field(first, 33, 43, r"[ +\-]\\.[0-9]{8}", "mean_motion_first_derivative_half")
+    _field(first, 33, 43, r"[ +\-]\.[0-9]{8}", "mean_motion_first_derivative_half")
     _field(first, 43, 44, r" ", "line1 separator 43")
     _field(first, 44, 52, r"[ +\-][0-9]{5}[+\-][0-9]", "mean_motion_second_derivative_sixth")
     _field(first, 52, 53, r" ", "line1 separator 52")
