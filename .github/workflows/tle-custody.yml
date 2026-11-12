@@ -47,6 +47,12 @@ jobs:
             --csv "${{ runner.temp }}/tle-audit/norad_527_528_529_1963_numeric.csv" \
             --output "${{ runner.temp }}/tle-audit/cross_object_epoch_support.json"
           cat "${{ runner.temp }}/tle-audit/cross_object_epoch_support.json"
+      - name: Audit 8-decimal TLE epoch grid without claiming original bytes
+        run: |
+          python tools/tle_epoch_grid_audit.py \
+            --csv "${{ runner.temp }}/tle-audit/norad_527_528_529_1963_numeric.csv" \
+            --output "${{ runner.temp }}/tle-audit/tle_epoch_grid_report.json"
+          cat "${{ runner.temp }}/tle-audit/tle_epoch_grid_report.json"
       - name: Preserve normalized source-derived rows and negative results
         if: always()
         uses: actions/upload-artifact@v4
