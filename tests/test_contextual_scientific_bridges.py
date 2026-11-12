@@ -31,6 +31,44 @@ class ScientificBridgeTests(unittest.TestCase):
         self.assertEqual(self.data["matrix_git_blob_sha1"],
                          "a7978c3a75a153b16ab70118a92c434bba674cb7")
 
+    def test_all_curated_citations_are_traced_without_activation(self):
+        cov = self.data["citation_coverage"]
+        counts = self.data["citation_coverage_counts"]
+        self.assertEqual((counts["curated_edges"], counts["curated_occurrences"],
+                          counts["unmapped_occurrences"]), (29, 28, 213))
+        self.assertEqual(counts["explicit_documentary_bridges"], 3)
+        self.assertEqual(counts["documentary_edges_not_assessed_for_lean"], 26)
+        self.assertEqual(len({(x["occurrence_ref"], x["source_id"]) for x in cov}), 29)
+        self.assertEqual(len({x["occurrence_ref"] for x in cov}), 28)
+        self.assertTrue(all(x["activation"] is False and x.get("simulator_value") is None
+                            and x["row_sha256"] and x["matrix_line"] > 0 for x in cov))
+        unmapped = [x for x in cov if x["bridge_record_id"] is None]
+        self.assertEqual(len(unmapped), 26)
+        self.assertTrue(all(x["hypothesis_link"] is None
+                            and x["simulator_parameter"] is None
+                            and x["lean_status"] == "DOCUMENTARY_ONLY_NOT_ASSESSED"
+                            for x in unmapped))
+
+    def test_c232_dual_custody_citation_is_one_occurrence_not_two_measurements(self):
+        cov = [x for x in self.data["citation_coverage"]
+               if x["occurrence_ref"].endswith(":C232#1")]
+        self.assertEqual({x["source_id"] for x in cov},
+                         {"BLUEBOOK_CASES_INDEX_1963", "NARA_BB_CARD_302531013"})
+        self.assertEqual(len({x["row_sha256"] for x in cov}), 1)
+        self.assertEqual({x["bridge_record_id"] for x in cov}, {None})
+
+    def test_coverage_joins_only_exact_documentary_citations(self):
+        documentary = bridge.depend.build(ROOT)
+        actual = {(x["occurrence_ref"], x["source_id"]): x
+                  for x in self.data["citation_coverage"]}
+        expected = {(x["snapshot_ref"], x["source_id"]): x
+                    for x in documentary["citation_lineages"]}
+        self.assertEqual(set(actual), set(expected))
+        for key, item in expected.items():
+            self.assertEqual(actual[key]["row_sha256"], item["row_sha256"])
+            self.assertEqual(actual[key]["matrix_line"], item["matrix_line"])
+            self.assertEqual(actual[key]["source_family"], item["family_id"])
+
     def test_nasa_and_catalogue_are_one_work_not_two_sensor_reads(self):
         pair = [self.by_id["NASA_DAY_C197_1"], self.by_id["NASA_DAY_C198_1"]]
         self.assertEqual(pair[0]["shared_work_id"], pair[1]["shared_work_id"])
