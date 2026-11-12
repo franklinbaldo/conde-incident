@@ -50,6 +50,13 @@ jobs:
             --csv "${{ runner.temp }}/source/norad_527_528_529_1963_numeric.csv" \
             --audit "${{ runner.temp }}/source/audit.json" \
             --output "${{ runner.temp }}/influence_529.json"
+      - name: POST-HOC UTC 14/28-day joint training-block falsification
+        run: |
+          python tools/texugo_block_529.py \
+            --parquet "${{ runner.temp }}/tle_1963.parquet" \
+            --csv "${{ runner.temp }}/source/norad_527_528_529_1963_numeric.csv" \
+            --audit "${{ runner.temp }}/source/audit.json" \
+            --output "${{ runner.temp }}/block_529.json"
       - name: Preserve source lineage, errors, negative results and all cutoffs
         if: always()
         uses: actions/upload-artifact@v4
@@ -61,5 +68,6 @@ jobs:
             ${{ runner.temp }}/holdout_529.json
             ${{ runner.temp }}/nested_529.json
             ${{ runner.temp }}/influence_529.json
+            ${{ runner.temp }}/block_529.json
           if-no-files-found: warn
           retention-days: 30
