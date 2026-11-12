@@ -1,0 +1,39 @@
+name: Gaviao Caderno 14 - independent catalog coverage
+on:
+  push:
+    branches: [gaviao/ch14-independent-coverage-20261112]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independent-coverage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Verify tested proposal SHA
+        run: |
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          echo "GAVIAO_CH14_TESTED_SHA=$GITHUB_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic adversarial regressions
+        run: python -m unittest discover -s tests -p 'test_gaviao_ch14_coverage_audit.py' -v
+      - name: Pin Parquet reader
+        run: python -m pip install --disable-pip-version-check pyarrow==21.0.0
+      - name: Replay actual historical mirror from SHA256-pinned source
+        run: |
+          python tools/gaviao_ch14_coverage_audit.py --download \
+            --parquet "$RUNNER_TEMP/tle_1963.parquet" \
+            --output "$RUNNER_TEMP/gaviao_ch14.json"
+      - name: Preserve results and residuals
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gaviao-ch14-audit
+          path: /tmp/gaviao_ch14.json
+          if-no-files-found: warn
