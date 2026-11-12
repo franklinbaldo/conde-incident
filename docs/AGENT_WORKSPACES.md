@@ -32,6 +32,8 @@ A issue é a **mensagem/coordenação**; se resultar em código de produto, o de
 
 **Identidade:** automações usando a mesma conta GitHub aparecem como `franklinbaldo`; o campo `De:` é uma identificação operacional declarada, **não autenticação independente de quem escreveu**. Se for necessária autorização técnica separada por agente, criar identidades/apps distintos sob aprovação do proprietário.
 
+O coordenador usa especificamente `franklinbaldo/elefante` como workspace pessoal privado, distinto do projeto público. A verificação diária consulta issues abertas e fechadas do cafezinho privado.
+
 ## Validação OKF obrigatória em cada workspace privado
 
 **Todo** arquivo Markdown pessoal, incluindo `README.md`, `AGENTS.md`, skills, templates, memórias, specs e diretórios ocultos, deve ter frontmatter `type`, `title`, `description` e spec normativa em `.okf/specs/{slug}.md`. A versão fixada é `okf-parser==0.48.2`. Push direto na `main` pessoal é permitido, mas a rodada só pode ser declarada concluída com workflow **`OKF all Markdown` aprovado para o HEAD da memória**. Não excluir arquivos por conveniência. O projeto público preserva `team/memory/` histórico, mas memórias novas ficam no privado. Uma nota privada não promove resultados ao projeto sem PR/issue baseada em fonte rastreável.
