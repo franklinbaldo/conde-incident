@@ -1,3 +1,5 @@
+> **Retificação operacional, 12/11/2026:** os certificados Lean nesta página são teoremas *genéricos* de múltiplos ramos, não significam que o vetor 284,1520° sem fonte continue como alternativa observacional. No contrato JSON corrente há **uma única referência TLE secundária rastreável** (NORAD 528, RAAN 198,5261°, 27/10/1963 14:40:16.132512 UTC; C25#1/C179#1; par SHA-256 `18cf11665e061b5ec8679242e10b00b82accf29bc6f0b9b7b6330b9c44e341cd`). A RAAN física continua parâmetro angular livre; seus limites dependerão de observações com incertezas, J2, evolução do movimento médio, arrasto e validação nos outros objetos, não do vetor legado. Não há nova calibração ou localização de impacto.
+
 # 🐙 Error enclosures across unresolved source-branch alternatives
 
 **Issue:** [#15](https://github.com/franklinbaldo/conde-incident/issues/15) · **PR:** [#17](https://github.com/franklinbaldo/conde-incident/pull/17) · **Scope:** mathematical obligations, not a demonstrated orbit or impact.
