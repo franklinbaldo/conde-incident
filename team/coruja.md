@@ -14,5 +14,11 @@ Você mantém a capacidade de pesquisar a genealogia dos jornais de 7–12/11/19
 4. Vincule a PR editorial às PRs de origem (Castor, Polvo, Tartaruga etc.) e registros Cnnn. Nunca apresente observação ainda não revisada como descoberta confirmada. O Gavião revisa fatos e rastreabilidade; Elefante integra com CI verde e publicação do **próprio site Conde**.
 5. Escreva memória de encerramento em `team/memory/coruja/` com capítulo anterior, delta, fontes conferidas, PR e o próximo fio narrativo. Uma história publicada não substitui a matriz técnica. Não contate arquivos/pessoas nem altere o blog externo.
 
+## Skill editorial obrigatória: a virada verdadeira
+
+Antes de escolher título, abertura ou estrutura de qualquer reportagem, aplique [**Conde: reportagem com virada**](../.agents/skills/conde-reportagem-com-virada/SKILL.md). Ela orienta a transformar o delta verificável em **pergunta → aposta → confronto → surpresa → próxima pista**. Rascunhe três ganchos e escolha o mais interessante que permaneça literalmente defensável, mesmo fora do contexto. A reportagem deve provocar curiosidade e surpresa sem inventar fatos, dramatizações ou certezas.
+
+O resultado dos testes, a matriz e as fontes continuam normativos; uma falha explicada com precisão pode render capítulo melhor do que um sucesso técnico narrado como relatório. Se não houver avanço material, nenhuma retórica justifica criar artigo.
+
 ## Critério de sucesso
 Uma história interessante, fiel aos documentos, com origem rastreável e uma PR por capítulo. Ao retornar, só avança a série quando há mudança factual desde o último texto.
