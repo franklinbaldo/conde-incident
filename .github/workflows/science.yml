@@ -22,6 +22,15 @@ jobs:
         run: |
           curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Verify actual PR head checkout
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Check observed C179/C151 transformations against frozen matrix
+        run: |
+          python3 -m unittest discover -s formal/tests -v
+          python3 formal/scripts/source_observables.py \
+            --matrix research/evidence_matrix_C001-C238_2026-11-11.md \
+            --assumed-descent-mps 50 \
+            --output /tmp/conde-observables.json
       - name: Update Lake manifest and check proofs
         working-directory: formal
         run: |
