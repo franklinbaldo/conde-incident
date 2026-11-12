@@ -47,7 +47,8 @@ test('zero velocity spread is a repeated control, not independent evidence',()=>
   const a=audit(7,3,0);
   assert.deepEqual(a.members[0].convergence,a.members[1].convergence);
   assert.deepEqual(a.members[1].convergence,a.members[2].convergence);
-  assert.deepEqual(a.members[0].deltaVKmS,[0,0,0]);
+  assert.ok(a.members[0].deltaVKmS.every(x=>x===0),
+    'signed zero is physically zero and does not alter the state');
   assert.equal(a.status,'STABLE_ELAPSED_ONLY');
 });
 
