@@ -499,3 +499,16 @@ os seis campos em uma única amostra, correspondência da época, e ângulo RAAN
 próximo, preservando a classificação **SECONDARY**, sem inferir órbita,
 propagação, impacto em Conde, identificação física da peça ou prova Lean
 orbital. O conflito 284,1520° / 198,5261° fica não resolvido primariamente.
+
+
+### Resultado medido de C241-T12 no espelho fixado
+
+O HEAD de código \`e0f4a37b7f03181cb0a9816c4fe174055a600e96\` passou [140 testes de custódia, run #43193047544](https://github.com/franklinbaldo/conde-incident/actions/runs/43193047544), e [científico #43193046835](https://github.com/franklinbaldo/conde-incident/actions/runs/43193046835) no mesmo SHA. O [artefato #13931392712](https://github.com/franklinbaldo/conde-incident/actions/runs/43193047544/artifacts/13931392712) inclui \`legacy_528_cross_catalog_c241_t12.json\` e hashes; digest ZIP SHA-256 **30c0c20c7f39f80c1c8b897f31bd22d1d7e6b95d2aec0cc713e767a86c6dab18**.
+
+| NORAD | Épocas distintas | Seis campos iguais em uma época | RAAN mais próxima de 284,1520° |
+|---|---:|---:|---|
+| 527 | 20 | **0** | 12,7079082° (27/08, linha 2968) |
+| 528 | 45 | **0** | 0,1790852° (12/08, linha 2998) |
+| 529 | 54 | **0** | 1,9628071° (12/08, linha 3041) |
+
+A série tem **123 registros físicos e 119 épocas catalogadas distintas**; nenhuma das épocas origina por cópia *integral* o vetor legado de seis campos no limite de arredondamento numérico do dataset. **Nenhuma** dessas distâncias de RAAN corresponde a prova de origem do 284,1520°, e não é possível juntar elementos de objetos ou épocas diferentes. Falha de teste no SHA inicial \`2c03d0b5\`: o resto \`Decimal %\` com dividendo negativo não produzia distância circular positiva, gerando falso positivo. Corrigido antes da execução citada e preservado em histórico. Qualquer novo commit, inclusive esta memória, exige novo CI no HEAD final.
