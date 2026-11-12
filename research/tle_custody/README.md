@@ -426,3 +426,22 @@ A fonte numérica é oxzoid 1963 Parquet rev 4b4fb3a SHA-256 **c4bf072a8fc108450
 
 
 **Execução observada C241-T9 no HEAD 30533c1b713b459811c3266b078977b302f94f33:** [custódia #43170566947](https://github.com/franklinbaldo/conde-incident/actions/runs/43170566947) **SUCCESS**, checkout verificou audited_source_head, **103/103 testes**, auditoria do Parquet no hash pinado, [artefato #13922410859](https://github.com/franklinbaldo/conde-incident/actions/runs/43170566947/artifacts/13922410859), ZIP sha256 ae1bc2904005d2d7447ec43fdfe0f2d468f62c10380f9732a09eadbdaff6e6ab; [scientific checks #43170567112](https://github.com/franklinbaldo/conde-incident/actions/runs/43170567112) SUCCESS no mesmo HEAD. Resultado **n-dot 528 na mesma época = 0,00686563**, idêntico ao **campo TLE codificado como metade da derivada**. A hipótese *de que a coluna do espelho traz sempre a derivada integral/dobrada* **não é compatível com esse par**; o espelho usa pelo menos nesse registro o valor literalmente codificado, não o dobro de 0,01373126. Isto só audita serialização de uma fonte secundária, **não prova a derivada física**. Nos **123 registros**, **BSTAR é zero nos 123/123**: 527 21/21, 528 45/45, 529 57/57. Por outro lado, **mean_motion_dot é não zero em 123/123**; intervalos publicados: 527 0,00000344–0,00005916; 528 0,0000039–0,00913699; 529 0,00000305–0,04059205 (unidade do campo, **não** estimativa física de aceleração). A linha literal 528 também tem BSTAR zero. A uniformidade BSTAR=0 demanda investigação de formato/origem e **não** autoriza concluir arrasto físico zero. NASA 08/11 continua data civil, não localização. Não altera conflito RAAN nem libera Lean físico. A memória final/novos commits documentais exigem novo CI no SHA final.
+
+
+### C241-T10 — controle da explicação por defasagem de 16 segundos (12/11/2026)
+
+Executar no checkout da PR #14, após a extração pinada:
+
+```sh
+python tools/tle_raan_epoch_offset_j2_audit.py \
+  --csv /tmp/tle-audit/norad_528_epochs_1963.csv \
+  --pair research/tle_custody/mirror_528_1963-10-27.tle \
+  --output /tmp/tle-audit/raan_epoch_offset_j2_conditional.json
+python -m unittest tests/test_tle_raan_epoch_offset_j2_audit.py -v
+```
+
+A ferramenta exige o SHA-256 `e3c946809d8e73d814bc1dfa424bf901a3b4331e63e4c85f82f81cf33b9c073e` do CSV 528, as 45 épocas, uma amostra na época do par literal, compatibilidade de RAAN com o par espelhado, SHA `18cf11665e061b5ec8679242e10b00b82accf29bc6f0b9b7b6330b9c44e341cd` e checksums das duas linhas. Armazena fontes, SHA, índices, números e status explícitos, sem recriar TLE primário. A trilha detalhada está em [C241-T10 na matriz](../evidence_matrix_C001-C238_2026-11-11.md).
+
+**Contraprova restringida, não uma órbita identificada:** o literal legado de época 27/10/1963 14:39:59,999904Z difere do secundário 14:40:16,132512Z em apenas 16,132608 s, mas suas RAANs estão separadas por 85,6259°. Se ambos fossem descrições do *mesmo nó no mesmo frame*, regidas neste intervalo apenas pela aproximação J2 secular de primeira ordem, o desvio estimado seria ~0,0002191°, e não 85,6259°. A hipótese **defasagem temporal de 16 s isoladamente** não passa nesse modelo. A origem do 284,1520° continua **não recuperada**; os dados não justificam equiparar aproximação J2 com a física histórica do satélite, nem usar isso como prova Lean de local/hora de reentrada. O relatório é condicional aos parâmetros do modelo e conserva as hipóteses rivais.
+
+**Gates de origem:** falta NORAD primário (45 pares, sensores, erro, frame), a peça física 528 identificada por documentação de engenharia e posição/hora terminal; sem observação primária não há domínio físico reduzido e não vazio a entregar ao simulador/Lean. A NASA só atesta dia de decaimento em C197. CI deve ser reexecutado no HEAD final da PR; resultado só confirmado por run real.
