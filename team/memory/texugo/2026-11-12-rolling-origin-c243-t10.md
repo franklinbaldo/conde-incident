@@ -7,3 +7,7 @@
 - Ausências: TLEs instrumentais completos e reconciliação RAAN. Domínio físico Lean/simulação de impacto: BLOQUEADOS. Conde INDETERMINADO.
 - Rastreio: https://github.com/franklinbaldo/conde-incident/issues/19 ; https://github.com/franklinbaldo/conde-incident/pull/20 ; HEAD anterior aprovado 74ff98f808f8657bdd9b3aa3445e7a732858d074. Anotar novo SHA e CI no parecer após execução.
 - Próximo: analisar vitórias e derrotas do novo controle, exigir CI no SHA final, Gavião revê, Elefante integra depois das dependências; sem merge, contato ou blog.
+
+
+- Encerramento observado: commit de implementação [054f605](https://github.com/franklinbaldo/conde-incident/commit/054f60509729a2807644ed37bc571b6953ddc160), [Actions #43172444338](https://github.com/franklinbaldo/conde-incident/actions/runs/43172444338) **SUCCESS 132 testes**, artefato #13922149343. 53 pares consecutivos, 51 pontuados, 2 NOT_RUN; quadrático vence 33, conjunto 18. RMSE: persistência 0,026903935; quadrático 0,074988368; conjunto 0,097122160 rev/dia. Achado negativo: melhora T9 não se mantém na previsão da próxima época e um baseline ingênuo supera ambos. A sequência reutiliza observações anteriores; não são 51 réplicas nem teste prospectivo.
+- Reconciliação: incluir C241-T9 da base #14 por merge verdadeiro (dois pais), copiando integralmente seus blobs de código/testes/custódia sem alterações. A validação desse novo HEAD exige novo Actions. Sem merge de PR, rebase, force push, publicação ou contato.

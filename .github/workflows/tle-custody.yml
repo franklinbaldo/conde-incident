@@ -102,6 +102,21 @@ jobs:
           print("Physical object 528:", report["physical_component_identity_528"])
           print("Conde:", report["status_for_conde"])
           PY
+      - name: Audit TLE n-dot factor-of-two and BSTAR lineage (C241-T9)
+        run: |
+          python tools/tle_drag_term_lineage_audit.py \
+            --csv "$RUNNER_TEMP/tle-audit/norad_527_528_529_1963_numeric.csv" \
+            --pair research/tle_custody/mirror_528_1963-10-27.tle \
+            --output "$RUNNER_TEMP/tle-audit/tle_line1_drag_terms.json"
+          python - <<'PY'
+          import json, os, pathlib
+          r = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) /
+                          "tle-audit/tle_line1_drag_terms.json").read_text())
+          print("n_dot_scale:", r["same_epoch_528"]["numeric_scale_test"])
+          print("bstar_same_epoch_match:", r["same_epoch_528"]["bstar_matches"])
+          print("all_three_catalogs:", r["by_norad"])
+          print("physical_lean:", r["lean_physical_premise"])
+          PY
       - name: Preserve normalized source-derived rows and negative results
         if: always()
         uses: actions/upload-artifact@v4
