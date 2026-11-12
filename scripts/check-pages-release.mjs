@@ -3,7 +3,7 @@
 import { pathToFileURL } from 'node:url';
 export const EXPECTED_SITE = 'https://franklinbaldo.github.io/conde-incident/';
 export function assessRelease({ sha, pages, runs = [], deployments = [], statuses = {}, sourceTree, site, upstreamConclusion,
-  mainHead, latestDeployments }) {
+  mainHead, latestDeployments, finalControl }) {
   const checks = [];
   const check = (label, ok, evidence) => checks.push({ label, status: ok ? 'PASS' : 'NOT_VERIFIED', evidence });
   check('exact SHA', typeof sha === 'string' && /^[0-9a-f]{40}$/.test(sha), sha || '(missing)');
@@ -98,6 +98,34 @@ export function assessRelease({ sha, pages, runs = [], deployments = [], statuse
     /\.masthead|\.story-card/.test(site.style.body || '');
   check('live editorial stylesheet available at repository base', Boolean(cssOk),
     site?.style ? 'HTTP ' + site.style.status : '(unreachable)');
+  // Check the control plane again AFTER all potentially slow public HTTP reads.
+  // The initial success snapshot alone is vulnerable to a mid-audit main advance,
+  // rerun, redeploy or Pages source-setting change.
+  const finalRun = (finalControl?.runs || []).filter(r =>
+    r.head_sha === sha && r.event === 'push' && r.head_branch === 'main' &&
+    r.name === 'Publish Conde site')[0];
+  const finalDeployment = finalControl?.latestDeployments?.[0];
+  check('main remained at audited SHA through end of HTTP inspection',
+    finalControl?.mainHead?.commit?.sha === sha && mainHead?.commit?.sha === sha,
+    finalControl?.mainHead?.commit?.sha || '(missing)');
+  check('Pages GitHub Actions configuration remained unchanged through inspection',
+    finalControl?.pages?.build_type === 'workflow' &&
+    finalControl?.pages?.html_url === EXPECTED_SITE &&
+    finalControl?.pages?.build_type === pages?.build_type &&
+    finalControl?.pages?.html_url === pages?.html_url,
+    finalControl?.pages?.build_type || '(missing)');
+  check('latest successful publish run remained identical through inspection',
+    Number.isSafeInteger(latestRun?.id) && latestRun.id > 0 &&
+    finalRun?.id === latestRun.id && finalRun?.status === 'completed' &&
+    finalRun?.conclusion === 'success',
+    finalRun ? String(finalRun.id) + '/' + finalRun.status + '/' + finalRun.conclusion : '(missing)');
+  check('newest deployment stayed successful through inspection',
+    Number.isSafeInteger(latestDeployment?.id) && latestDeployment.id > 0 &&
+    finalDeployment?.id === latestDeployment.id &&
+    finalDeployment?.sha === sha && finalDeployment?.environment === 'github-pages' &&
+    finalControl?.latestStatuses?.[0]?.state === 'success',
+    finalDeployment ? String(finalDeployment.id) + '/' +
+      (finalControl?.latestStatuses?.[0]?.state || '(missing status)') : '(missing)');
   return { status: checks.every(c => c.status === 'PASS') ? 'PASS' : 'NOT_VERIFIED', checks };
 }
 async function getJson(url, token) {
@@ -153,8 +181,23 @@ export async function auditFromGitHub({ repo, sha, token, upstreamConclusion, si
   }
   site.lab = await readPage('lab/');
   site.style = await readPage('css/site.css');
+  // Re-read at the end, rather than extrapolating the initial snapshot.
+  // A PASS means only that these independent reads remained consistent;
+  // GitHub APIs and the CDN do not provide an atomic cross-service snapshot.
+  const finalPages = await getJson(api + '/pages', token);
+  const finalMainHead = await getJson(api + '/branches/main', token);
+  const finalLatestDeployments = await getJson(api + '/deployments?environment=github-pages&per_page=1', token);
+  const finalRuns = await getJson(api + '/actions/workflows/pages.yml/runs?head_sha=' +
+    encodeURIComponent(sha) + '&event=push&per_page=30', token);
+  const finalDeployment = finalLatestDeployments[0];
+  const finalLatestStatuses = finalDeployment?.id
+    ? await getJson(api + '/deployments/' + finalDeployment.id + '/statuses?per_page=1', token)
+    : [];
   return assessRelease({ sha, pages, runs: result.workflow_runs, deployments, statuses,
-    sourceTree, site, upstreamConclusion, mainHead, latestDeployments });
+    sourceTree, site, upstreamConclusion, mainHead, latestDeployments,
+    finalControl: { pages: finalPages, mainHead: finalMainHead,
+      latestDeployments: finalLatestDeployments, runs: finalRuns.workflow_runs,
+      latestStatuses: finalLatestStatuses } });
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const repo = process.env.GITHUB_REPOSITORY || 'franklinbaldo/conde-incident';
