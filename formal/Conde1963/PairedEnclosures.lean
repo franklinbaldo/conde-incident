@@ -27,12 +27,12 @@ namespace Conde1963
 /-- For a modeled impact, two independently *proved* coverings both bound
     the SAME event. This is true even when their cells differ or overlap.
     No statistical or documentary independence follows from this theorem. -/
-theorem paired_certified_bounds_for_prediction {α κ λ : Type}
+theorem paired_certified_bounds_for_prediction {α κ κ₂ : Type}
     (model : ImpactEnvelope α)
     (common : List (ParameterConstraint α))
     (left right : ParameterConstraint α)
     (first : CertifiedCellCover α κ model common left right)
-    (second : CertifiedCellCover α λ model common left right)
+    (second : CertifiedCellCover α κ₂ model common left right)
     (p : α) (hp : AlternativeAllowed common left right p)
     (event : TimeLocation) (predicted : model.predict p = some event) :
     ∃ a b, a ∈ first.cells ∧ b ∈ second.cells ∧
@@ -48,12 +48,12 @@ theorem paired_certified_bounds_for_prediction {α κ λ : Type}
 /-- Joint separation can exclude Conde even if neither individual
     enclosure is narrow enough. A calibrated ground-impact gate and
     a nonempty parameter domain remain mandatory. -/
-theorem paired_enclosures_exclude_conde {α κ λ : Type}
+theorem paired_enclosures_exclude_conde {α κ κ₂ : Type}
     (model : ImpactEnvelope α)
     (common : List (ParameterConstraint α))
     (left right : ParameterConstraint α)
     (first : CertifiedCellCover α κ model common left right)
-    (second : CertifiedCellCover α λ model common left right)
+    (second : CertifiedCellCover α κ₂ model common left right)
     (inConde : TimeLocation → Prop)
     (gate : GroundImpactAdmissible model.audit)
     (survives : AlternativeHasCandidate common left right)
@@ -70,12 +70,12 @@ theorem paired_enclosures_exclude_conde {α κ λ : Type}
 
 /-- Bounds alone do not guarantee material survival or ground impact:
     a ground-impact prediction must exist for EVERY survivor. -/
-theorem paired_enclosures_force_conde {α κ λ : Type}
+theorem paired_enclosures_force_conde {α κ κ₂ : Type}
     (model : ImpactEnvelope α)
     (common : List (ParameterConstraint α))
     (left right : ParameterConstraint α)
     (first : CertifiedCellCover α κ model common left right)
-    (second : CertifiedCellCover α λ model common left right)
+    (second : CertifiedCellCover α κ₂ model common left right)
     (inConde : TimeLocation → Prop)
     (gate : GroundImpactAdmissible model.audit)
     (survives : AlternativeHasCandidate common left right)
@@ -95,12 +95,12 @@ theorem paired_enclosures_force_conde {α κ λ : Type}
 
 /-- A different impact window additionally needs proven disjointness
     from Conde, including the sound numerical error enclosures. -/
-theorem paired_enclosures_identify_other_window {α κ λ : Type}
+theorem paired_enclosures_identify_other_window {α κ κ₂ : Type}
     (model : ImpactEnvelope α)
     (common : List (ParameterConstraint α))
     (left right : ParameterConstraint α)
     (first : CertifiedCellCover α κ model common left right)
-    (second : CertifiedCellCover α λ model common left right)
+    (second : CertifiedCellCover α κ₂ model common left right)
     (inOtherWindow inConde : TimeLocation → Prop)
     (gate : GroundImpactAdmissible model.audit)
     (survives : AlternativeHasCandidate common left right)
@@ -123,12 +123,12 @@ theorem paired_enclosures_identify_other_window {α κ λ : Type}
 /-- If two sound covers have NO common possible event for any pair of
     listed cells, the shared model cannot predict an impact in the union.
     This is NOT proof that the underlying admissible parameter set is empty. -/
-theorem disjoint_paired_bounds_forbid_predicted_impact {α κ λ : Type}
+theorem disjoint_paired_bounds_forbid_predicted_impact {α κ κ₂ : Type}
     (model : ImpactEnvelope α)
     (common : List (ParameterConstraint α))
     (left right : ParameterConstraint α)
     (first : CertifiedCellCover α κ model common left right)
-    (second : CertifiedCellCover α λ model common left right)
+    (second : CertifiedCellCover α κ₂ model common left right)
     (incompatible : ∀ a b event, a ∈ first.cells → b ∈ second.cells →
       first.eventBounds a event → second.eventBounds b event → False)
     (p : α) (hp : AlternativeAllowed common left right p) :
@@ -144,12 +144,12 @@ theorem disjoint_paired_bounds_forbid_predicted_impact {α κ λ : Type}
 /-- A nonempty domain and universal impact prediction are incompatible
     with globally disjoint sound event bounds. The logical conflict
     demands auditing premises, not fabricating a new geographic answer. -/
-theorem incompatible_paired_bounds_refute_universal_impact {α κ λ : Type}
+theorem incompatible_paired_bounds_refute_universal_impact {α κ κ₂ : Type}
     (model : ImpactEnvelope α)
     (common : List (ParameterConstraint α))
     (left right : ParameterConstraint α)
     (first : CertifiedCellCover α κ model common left right)
-    (second : CertifiedCellCover α λ model common left right)
+    (second : CertifiedCellCover α κ₂ model common left right)
     (incompatible : ∀ a b event, a ∈ first.cells → b ∈ second.cells →
       first.eventBounds a event → second.eventBounds b event → False)
     (survives : AlternativeHasCandidate common left right)
@@ -166,12 +166,12 @@ theorem incompatible_paired_bounds_refute_universal_impact {α κ λ : Type}
 /-- Sound joint bounds persist when genuine new documentary/physical
     constraints narrow the union; nonemptiness NEVER follows from this
     implication and must be re-established after each restriction. -/
-theorem paired_bounds_survive_common_narrowing {α κ λ : Type}
+theorem paired_bounds_survive_common_narrowing {α κ κ₂ : Type}
     (model : ImpactEnvelope α)
     (common : List (ParameterConstraint α))
     (extra left right : ParameterConstraint α)
     (first : CertifiedCellCover α κ model common left right)
-    (second : CertifiedCellCover α λ model common left right)
+    (second : CertifiedCellCover α κ₂ model common left right)
     (p : α)
     (hp : AlternativeAllowed (extra :: common) left right p)
     (event : TimeLocation) (predicted : model.predict p = some event) :
