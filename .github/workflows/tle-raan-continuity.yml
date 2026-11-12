@@ -1,0 +1,79 @@
+name: Tartaruga - C241-L4 RAAN chronology and gaps
+
+on:
+  pull_request:
+    paths:
+      - tools/tle_raan_continuity_1963.py
+      - tests/test_tle_raan_continuity_1963.py
+      - research/tle_custody/evidence_matrix_C241-L4_2026-11-12.md
+      - .github/workflows/tle-raan-continuity.yml
+  push:
+    branches: [main]
+    paths:
+      - tools/tle_raan_continuity_1963.py
+      - tests/test_tle_raan_continuity_1963.py
+      - research/tle_custody/evidence_matrix_C241-L4_2026-11-12.md
+      - .github/workflows/tle-raan-continuity.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  raan-continuity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify exact source head
+        run: |
+          actual="$(git rev-parse HEAD)"
+          expected="${{ github.event.pull_request.head.sha || github.sha }}"
+          echo "audited_source_head=$actual"
+          test "$actual" = "$expected"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run synthetic adversarial controls and existing custody tests
+        run: |
+          python -m unittest discover -s tests -p 'test_tle_raan_continuity_1963.py' -v
+          python -m unittest discover -s tests -p 'test_tle_secondary_1963_ledger.py' -v
+          python -m unittest discover -s tests -p 'test_tle_literal_layout.py' -v
+          python -m unittest discover -s tests -p 'test_cross_object_epoch_support.py' -v
+      - name: Install fixed Parquet reader
+        run: python -m pip install --disable-pip-version-check pyarrow==21.0.0
+      - name: Produce and pin real secondary ledger and C241-L4 report
+        run: |
+          python tools/tle_secondary_1963_ledger.py --download \
+            --parquet "$RUNNER_TEMP/tle_1963.parquet" \
+            --literal research/tle_custody/mirror_528_1963-10-27.tle \
+            --output "$RUNNER_TEMP/c241-l4"
+          python tools/tle_raan_continuity_1963.py \
+            --csv "$RUNNER_TEMP/c241-l4/norad_527_528_529_numeric_1963.csv" \
+            --pair research/tle_custody/mirror_528_1963-10-27.tle \
+            --output "$RUNNER_TEMP/c241-l4/raan_continuity.json"
+      - name: Fail closed against known historical secondary series drift
+        run: |
+          python - <<'PY'
+          import json, os, pathlib
+          p=pathlib.Path(os.environ['RUNNER_TEMP'])/'c241-l4/raan_continuity.json'
+          r=json.loads(p.read_text())
+          assert (r['samples'],r['adjacent_intervals']) == (45,44)
+          assert (r['intervals_at_most_24h'],r['intervals_over_72h']) == (3,32)
+          assert 23.5 < r['max_gap_days'] < 23.6
+          assert r['literal_528']['same_epoch_source_rows'] == [3017]
+          assert r['legacy_284_1520_FORENSIC_NOT_OBSERVATION']['status'] == 'UNPROVEN_INACTIVE'
+          assert r['constraint_link']['physics_predicate_Lean_4_35_0'] == 'NOT_PROMOTED'
+          assert r['provenance']['original_45_TLE_pairs_checksum_frame_error'] == 'NOT_RECOVERED'
+          print('C241-L4 pinned secondary chronology:', r['samples'], r['adjacent_intervals'])
+          PY
+      - name: Upload exact-HEAD JSON and source-indexed CSV
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: c241-l4-raan-continuity-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ${{ runner.temp }}/c241-l4/
+          if-no-files-found: warn
+          retention-days: 30
