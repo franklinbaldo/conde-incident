@@ -69,7 +69,12 @@ class AltitudeLineageControls(unittest.TestCase):
     def test_circular_orbit_is_ambiguous_not_proven(self):
         r = audit([sample(e="0")], "SYNTHETIC")
         row = r["per_distinct_epoch"][0]
-        self.assertEqual(len(set(row["proxies_km"].values())), 1)
+        # Three proxies at the SAME WGS84 radius coincide for e=0.
+        # The separately tested 6371-km candidate must remain distinct.
+        wgs84 = {k: v for k, v in row["proxies_km"].items()
+                 if k != "perigee_using_mean_earth_radius_6371"}
+        self.assertEqual(len(set(wgs84.values())), 1)
+        self.assertEqual(len(set(row["proxies_km"].values())), 2)
         self.assertFalse(r["algorithm"]["independent_height_or_observation_claim"])
 
     def test_changed_reference_radius_gives_constant_but_wrong_radius(self):
