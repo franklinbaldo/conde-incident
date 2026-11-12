@@ -226,6 +226,42 @@ class CumulativeConstraintGraphTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unvalidated evidence link status"):
             validate(bad)
 
+    def test_relabeled_ssr_column_cannot_manufacture_new_observable(self):
+        bad = copy.deepcopy(self.graph)
+        forged = copy.deepcopy(bad["observations"][0])
+        forged["id"] = "FORGED-NEW-SSR-COLUMN"
+        forged["observable"] = "previously_unreported_sensor_channel"
+        forged["variable_id"] = "forged_sensor_channel_527"
+        bad["observations"].append(forged)
+        with self.assertRaisesRegex(ValueError, "mismatched SSR observable/operator/unit"):
+            validate(bad)
+
+    def test_ssr_operator_swap_cannot_launder_an_observation(self):
+        bad = copy.deepcopy(self.graph)
+        bad["observations"][0]["forward_operator_id"] = "apogee_model"
+        with self.assertRaisesRegex(ValueError, "mismatched SSR observable/operator/unit"):
+            validate(bad)
+
+    def test_ssr_unit_swap_is_not_a_new_physical_column(self):
+        bad = copy.deepcopy(self.graph)
+        bad["observations"][0]["unit"] = "km"
+        with self.assertRaisesRegex(ValueError, "mismatched SSR observable/operator/unit"):
+            validate(bad)
+
+    def test_ssr_529_cannot_be_linked_to_527_state(self):
+        bad = copy.deepcopy(self.graph)
+        row = next(o for o in bad["observations"] if o["id"] == "SSR-1963-11-15-NORAD529-nodal_period")
+        row["input_parameters"] = ["state_527_at_t", "t_observed_527_1963-11-15"]
+        with self.assertRaisesRegex(ValueError, "cross-object or cross-publication SSR parameter link"):
+            validate(bad)
+
+    def test_ssr_529_cannot_borrow_other_publication_epoch_parameter(self):
+        bad = copy.deepcopy(self.graph)
+        row = next(o for o in bad["observations"] if o["id"] == "SSR-1963-11-15-NORAD529-nodal_period")
+        row["input_parameters"][1] = "t_observed_529_1963-11-30"
+        with self.assertRaisesRegex(ValueError, "cross-object or cross-publication SSR parameter link"):
+            validate(bad)
+
     def test_finite_reported_value_cannot_overflow_to_infinite_canonical_value(self):
         bad = copy.deepcopy(self.graph)
         row = bad["observations"][0]
