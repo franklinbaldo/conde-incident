@@ -32,3 +32,51 @@ test('CI runs web checks, Node tests and actual Lean compilation if a package ex
     assert.ok(ci.includes(required), `missing CI contract: ${required}`);
   }
 });
+
+// Exercise the actual YAML shell block with synthetic directory fixtures, without
+// executing repo tests or confusing fixture tests with historical observations.
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { dirname, join } from 'node:path';
+import { spawnSync } from 'node:child_process';
+
+test('CI discovers root and nested Node suites in both scripts/ and tests/', () => {
+  const match = ci.match(/- name: Execute present Node regression suites\n\s*shell: bash\n\s*run: \|\n((?: {10}[^\n]*\n)+)/);
+  assert.ok(match, 'unable to extract the CI shell script');
+  const script = match[1].split('\n').map(line => line.replace(/^ {10}/, '')).join('\n');
+  assert.ok(script.includes('node --test "${tests[@]}"'));
+  const dryRun = script.replace('node --test "${tests[@]}"', 'printf "%s\\n" "${tests[@]}"');
+  const root = mkdtempSync(join(tmpdir(), 'conde-node-suite-'));
+  try {
+    const paths = [
+      'scripts/contract.test.mjs',
+      'scripts/nested/integration.test.mjs',
+      'tests/physics.test.mjs',
+      'tests/nested/holdout.test.mjs',
+    ];
+    for (const path of [...paths, 'tests/ignored.js']) {
+      const destination = join(root, path);
+      mkdirSync(dirname(destination), { recursive: true });
+      writeFileSync(destination, '', 'utf8');
+    }
+    const run = spawnSync('bash', ['-c', dryRun], { cwd: root, encoding: 'utf8' });
+    assert.equal(run.status, 0, run.stderr);
+    assert.deepEqual(run.stdout.trim().split(/\r?\n/).sort(), paths.sort());
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('CI explicitly says NO_NODE_TEST_FILES only for an empty workspace', () => {
+  const match = ci.match(/- name: Execute present Node regression suites\n\s*shell: bash\n\s*run: \|\n((?: {10}[^\n]*\n)+)/);
+  assert.ok(match);
+  const script = match[1].split('\n').map(line => line.replace(/^ {10}/, '')).join('\n');
+  const root = mkdtempSync(join(tmpdir(), 'conde-node-empty-'));
+  try {
+    const run = spawnSync('bash', ['-c', script], { cwd: root, encoding: 'utf8' });
+    assert.equal(run.status, 0, run.stderr);
+    assert.match(run.stdout, /NO_NODE_TEST_FILES/);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
