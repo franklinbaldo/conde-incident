@@ -1,0 +1,47 @@
+{
+  "id": "MET-NMC-NCEPON-20261112-02",
+  "linked_catalog_id": "MET-NMC-NCEPON-20261112-01",
+  "bibliographic_catalog": "https://www.emc.ncep.noaa.gov/officenotes/FullTOC.html",
+  "original_href": "http://www.ncep.noaa.gov/officenotes/NOAA-NPM-NCEPON-0001/013FD4DB.pdf",
+  "note_number": 20,
+  "published_year": 1964,
+  "author": "J. Neilon",
+  "title": "Upper Air ADP Records Format",
+  "preservation": {
+    "service": "Internet Archive Wayback",
+    "capture_utc": "2022-01-19T07:53:33Z",
+    "replay_url": "https://web.archive.org/web/20220119075333id_/http://www.ncep.noaa.gov/officenotes/NOAA-NPM-NCEPON-0001/013FD4DB.pdf",
+    "retrieval_date_utc": "2026-11-12",
+    "http_status": 200,
+    "content_type": "application/pdf",
+    "byte_length": 932414,
+    "sha256": "656984ac58ff1632e39b0f62ac80003785ddea0a0de32dfb19c8c612067aabbe",
+    "pdf_header": "%PDF-1.4",
+    "pdf_eof": true,
+    "page_object_count": 23,
+    "image_object_count": 23,
+    "page_tree_count_marker": 23
+  },
+  "checks": {
+    "old_host": "NETWORK_ERROR_UNDETERMINED_STATUS",
+    "emc_https_alias": "HTTP_404",
+    "wayback": "HTTP_200_FULL_BYTES"
+  },
+  "epistemic_status": "PDF_BYTES_RETRIEVED_CONTENT_NOT_YET_TRANSCRIBED",
+  "page_tree_independent_validation": "NOT_RUN",
+  "page_visual_inspection": "NOT_RUN",
+  "ocr_inspection": "NOT_RUN",
+  "printed_pagination": "UNKNOWN",
+  "revision_beginning_page_12": "CATALOG_CLAIM_NOT_VISUALLY_VERIFIED",
+  "applicability_to_1963": "NOT_ESTABLISHED",
+  "tape_decoded": false,
+  "station_day_matches": null,
+  "linked_pending_bridge": "research/constraints/nmc_y20175_pending_bridge.json",
+  "physical_constraint": "NOT_ACTIVATED",
+  "limitations": [
+    "Wayback capture time is not original publication date",
+    "SHA256 is of the Wayback retrieved copy, not independently confirmed NMC master",
+    "PDF page and image objects are structural markers, not verified folio numbers",
+    "1964 manual and later revision not automatically applicable to 1963"
+  ]
+}
