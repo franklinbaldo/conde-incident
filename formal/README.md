@@ -245,18 +245,16 @@ handoff to 🦫 Castor for joining documentary rows to any independently
 verified physical inputs. It contains **241** unambiguous citations and
 source text, with no invented coordinates, timestamps, TLEs or probabilities.
 
-Of those 241 entries, **239 are `contextOnly` as physical constraints**,
-which means *not yet mapped to a justified terminal orbital predicate*,
-**not** unimportant, false or unverified documentary evidence. C131 and
-C197 encode the *same* NASA 1963-003B day-of-decay record as two documentary
-citations but one physical calendar-day predicate, in a stated conditional
-scenario. No source is assumed independent merely because its ID differs.
-The associated Lean theorem
-`full_matrix_has_only_nasa_day_filter` shows that combining all **currently
-accepted, actually encoded** restrictions still yields only that calendar
-day; `full_matrix_does_not_identify_region` therefore rejects inference
-of a unique region from those premises. **This theorem does not assert**
-that the other 239 entries could never constrain a properly calibrated model.
+Of those 241 entries, **239 are `contextOnly` for terminal-state
+physics**, meaning *not yet mapped to a justified orbital predicate*, not
+false or unimportant documents. C131 and C197 cite the **same NASA catalogue
+day**; both are `scenarioOnly`, not admitted physical measurements.
+`every_row_is_nonphysical_without_additional_premises` proves that
+documentary indexing alone does not filter a candidate trajectory,
+`matrix_does_not_force_nasa_reported_day` gives a synthetic off-day
+countermodel, and `full_matrix_does_not_identify_region` rejects
+identifying a unique site from these inputs. None of this establishes
+that other records could never constrain a calibrated physical model.
 
 Promoting further rows requires a separate evidential review: direct
 inspection of an original, instrument/epoch/units, lineage, quantitative
@@ -294,8 +292,10 @@ bounds and independent dated observations, not hypothetical coordinates.
 
 **Source provenance:** these cross-links reuse the pinned matrix (Git blob
 `a7978c3a75a153b16ab70118a92c434bba674cb7`), not a new facsimile
-inspection. The only current admitted date predicate derives from NASA's
-15 Nov 1963 *Satellite Situation Report*, p. 8, NTRS 19640001198.
+inspection. NASA's 15 Nov 1963 *Satellite Situation Report*, p. 8,
+NTRS 19640001198, supplies only a **published catalogue date** here.
+The equality between that date and physical decay remains a
+`scenarioOnly` hypothesis and is NOT an admitted hard filter.
 C44–C46 have two distinct meanings each and require occurrence-specific
 provenance. No verified terminal state, uncertainty bound, ground impact
 or historical Lean `Evidence.lean` archive was added by this module.
