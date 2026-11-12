@@ -40,8 +40,8 @@ class ReviewTests(unittest.TestCase):
                       a.audit(fixture().replace(a.SOURCES["FBIS03"], ""), pinned=False))
 
     def test_missing_ax_state_id_fails(self):
-        self.assertIn("cumulative ID omitted: AX-STATE-20261111-03",
-                      a.audit(fixture().replace("AX-STATE-20261111-03", ""), pinned=False))
+        self.assertIn("cumulative ID omitted: AX-STATE-20261111-01–03",
+                      a.audit(fixture().replace("AX-STATE-20261111-01–03", ""), pinned=False))
 
     def test_missing_1964_typo_fails(self):
         self.assertIn("required bounded claim missing: old_subject_typo",
