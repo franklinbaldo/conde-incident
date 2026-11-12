@@ -374,30 +374,30 @@ O novo [auditor](../../tools/tle_identity_lineage_audit.py)
 usa o CSV de NORAD 527–529 produzido a partir do
 [Parquet oxzoid fixado](https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/main/data/tle_1963.parquet)
 (revisao 4b4fb3a, SHA256
-\`c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09\`,
+`c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09`,
 CSV SHA256
-\`3940715d7c15cf15c24e678a8c5b5fbb34a031b3ffd7e33c0580277377383231\`)
+`3940715d7c15cf15c24e678a8c5b5fbb34a031b3ffd7e33c0580277377383231`)
 e compara os campos textuais de designador de todas as 123 linhas aos
-IDs esperados, preservando \`source_row\`, grafia exata e duplicatas.
+IDs esperados, preservando `source_row`, grafia exata e duplicatas.
 Valida tambem o unico par literal preservado de 528 (SHA256
-\`18cf11665e061b5ec8679242e10b00b82accf29bc6f0b9b7b6330b9c44e341cd\`),
-conferindo o fragmento de linha1 \`63003  B\` por meio de
-\`tle_literal_layout.py\` e seus checksums. O programa gera
-\`tle_catalog_identity_lineage.json\`, com caminhos, SHA, contagem e
+`18cf11665e061b5ec8679242e10b00b82accf29bc6f0b9b7b6330b9c44e341cd`),
+conferindo o fragmento de linha1 `63003  B` por meio de
+`tle_literal_layout.py` e seus checksums. O programa gera
+`tle_catalog_identity_lineage.json`, com caminhos, SHA, contagem e
 rotulos de origem. Testes sintéticos de contraprova impedem troca A/B/C,
 contagem errada, source_row repetida e promocao de classe de catalogo
 a prova primaria.
 
 Reproducao, apos extrair o Parquet pelo workflow que confere SHA:
 
-\`\`\`bash
+```bash
 python -m unittest discover -s tests -p 'test_*.py' -v
 python tools/tle_identity_lineage_audit.py \
   --csv /tmp/tle-audit/norad_527_528_529_1963_numeric.csv \
   --ledger research/tle_custody/catalog_identity_527_529_2026-11-12.json \
   --pair research/tle_custody/mirror_528_1963-10-27.tle \
   --output /tmp/tle-audit/tle_catalog_identity_lineage.json
-\`\`\`
+```
 
 **Interpretacao crucial:** *FTV 2313 DEB* e um nome de catalogo, NAO uma
 folha de engenharia da peca nem prova de massa, dimensoes, material,
