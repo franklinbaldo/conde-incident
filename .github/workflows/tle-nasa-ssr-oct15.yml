@@ -45,7 +45,7 @@ jobs:
           python3 - "$RUNNER_TEMP/c241-l12.json" <<'PY'
           import json, sys
           r = json.load(open(sys.argv[1]))
-          assert (r["source_sha256"], r["source_bytes"]) in {\n    ("826f260524f6a7b83695e5c01d383025ff0da884656ebcc7fb98a1408c698ce3", 282624),\n    ("fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2", 286417),\n}
+          assert (r["source_sha256"], r["source_bytes"]) in {("826f260524f6a7b83695e5c01d383025ff0da884656ebcc7fb98a1408c698ce3", 282624), ("fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2", 286417)}
           assert len(r["catalog_rows"]) == 3
           assert r["transcription_verified_by_pixels_in_ci"] is False
           assert r["historical_tle_available"] is False
