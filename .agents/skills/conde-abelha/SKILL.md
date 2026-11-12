@@ -7,7 +7,7 @@ name: conde-abelha
 
 # 🐝 Skill compartilhada da Abelha
 
-**Projeto atual:** [conde-incident](https://github.com/franklinbaldo/conde-incident). Não é projeto permanente da equipe. **Workspace pessoal privado verificado:** [franklinbaldo/abelha](https://github.com/franklinbaldo/abelha), com acesso de leitura e escrita confirmado em 12/11/2026. O inventário de provisionamento (config/agent-roster.json, issue #93) ainda classifica o **bootstrap global como parcial**; não declarar todos os espaços inteiramente provisionados.
+**Projeto atual:** [conde-incident](https://github.com/franklinbaldo/conde-incident). Não é projeto permanente da equipe. **Workspace pessoal privado verificado:** [franklinbaldo/abelha](https://github.com/franklinbaldo/abelha), com acesso de leitura e escrita confirmado em 12/11/2026. O inventário de provisionamento (franklinbaldo/cafezinho/team/roster.json, issue #93) ainda classifica o **bootstrap global como parcial**; não declarar todos os espaços inteiramente provisionados.
 
 ## Responsabilidades e limites
 
@@ -19,7 +19,7 @@ name: conde-abelha
 
 ## Sequência de cada rodada
 
-1. Ler AGENTS.md, matriz cumulativa, team/abelha.md, issues/PRs abertas, e **em toda rodada** abelha/README.md, abelha/AGENTS.md, abelha/.agents/skills/abelha/SKILL.md, abelha/memory/INDEX.md e mensagens recebidas.
+1. Ler AGENTS.md, matriz cumulativa, franklinbaldo/cafezinho/team/abelha.md, issues/PRs abertas, e **em toda rodada** abelha/README.md, abelha/AGENTS.md, abelha/.agents/skills/abelha/SKILL.md, abelha/memory/INDEX.md e mensagens recebidas.
 2. Escolher uma única falha reproduzível ou uma linhagem documental comprovada, separando evento, publicação, cópia, documento e medição. Marcar explicitamente o não verificado.
 3. Reproduzir python3 tools/provenance_graph.py --check-site, python3 tools/export_documentary_dependence.py --check-site e os testes de proveniência, inclusive mutações adversariais. Não editar o corpus congelado só para mudar hashes.
 4. Entregar fatia pequena por PR no **projeto atual**, com CI do HEAD final e merge com guarda SHA apenas quando seguro; Gavião audita retrospectivamente.

@@ -1,0 +1,90 @@
+{
+  "schema": "conde.geo.retrospective-mesh-custody/v1",
+  "record_id": "CGEO-10",
+  "scope": "1960 statistical retrospective polygon (published in 2011; ZIP metadata indicates ArcGIS processing 2013)",
+  "project": "conde-incident",
+  "source": {
+    "publisher": "IBGE",
+    "official_product": "Evolução da Divisão Territorial do Brasil 1872-2010",
+    "official_product_url": "https://www.ibge.gov.br/geociencias/organizacao-do-territorio/estrutura-territorial/15771-memoria-institucional.html",
+    "url": "https://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/evolucao_da_divisao_territorial_do_brasil/evolucao_da_divisao_territorial_do_brasil_1872_2010/municipios_1872_1991/divisao_territorial_1872_1991/1960/05_malha_municipal_1960.zip",
+    "archive_year_label": 1960,
+    "publication_year": 2011,
+    "download_verified_utc": "2026-11-12",
+    "http_status": 200,
+    "binary": {
+      "source_zip_sha256": "261399b8557ee26c118e94b13cebf3b6b3e1c70e91b5e8438a348847b875120f",
+      "source_zip_bytes": 2222445,
+      "source_components": {
+        "05-malha municipal 1960.dbf": {
+          "bytes": 298826,
+          "sha256": "9487b8851864b5a66edcf49290dfff0e208a7aea649364f30d0b6bd22619fea2"
+        },
+        "05-malha municipal 1960.prj": {
+          "bytes": 354,
+          "sha256": "c90d581eaa847ae6dd5a94043893b99603186ae7d39a58f603e328d2284c2cf1"
+        },
+        "05-malha municipal 1960.sbn": {
+          "bytes": 27164,
+          "sha256": "6703a46c2a522bb8d07f501fa8322b00c5a0f1101c8cb108dfe5cb413b2cfc9d"
+        },
+        "05-malha municipal 1960.sbx": {
+          "bytes": 1284,
+          "sha256": "11da43c924ac6d214ad7aae2eda819f1adc1d7bd533d7c9a4d0e8cd3ac3c4653"
+        },
+        "05-malha municipal 1960.shp": {
+          "bytes": 4905344,
+          "sha256": "2ac08c065cea42ee0f45ff93545e94d0d29a164ccc9a7e6a6ac7616964256b9a"
+        },
+        "05-malha municipal 1960.shp.xml": {
+          "bytes": 1803,
+          "sha256": "4a76738c7890f75428bf224b4bb82a3316494303d8eda2e5ef8fa5cba2923bbc"
+        },
+        "05-malha municipal 1960.shx": {
+          "bytes": 22228,
+          "sha256": "3b47bddb84fce48a124fd7b82abe35829b6021ad6da9cd6a8437d25c0a412757"
+        }
+      },
+      "dbf_total_records": 2766,
+      "municipality_code": "2908606",
+      "municipality_name": "Conde",
+      "dbf_record_sha256": "02c8fa72ee175787632fcd81b237e03c9adb557751cfec3b0524b11133d39e60",
+      "shapefile_record_1based": 2449,
+      "dbf_record_index_0based": 2448,
+      "record_bytes": 808,
+      "record_sha256": "6258845cd887418a078fb507dda4b462dc12b44145f929775199cc80f5681b65",
+      "shape_type": 5,
+      "part_count": 1,
+      "vertex_count_including_closure": 47,
+      "ring_closed": true,
+      "projected_bbox_m": [
+        1761251.25,
+        -1390060.375,
+        1795968.5,
+        -1336775.625
+      ],
+      "planar_shoelace_area_km2_diagnostic_only": 983.184047,
+      "crs_wkt": "PROJCS[\"World_Polyconic\",GEOGCS[\"GCS_SIRGAS_2000\",DATUM[\"D_SIRGAS_2000\",SPHEROID[\"GRS_1980\",6378137.0,298.257222101]],PRIMEM[\"Greenwich\",0.0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Polyconic\"],PARAMETER[\"False_Easting\",0.0],PARAMETER[\"False_Northing\",0.0],PARAMETER[\"Central_Meridian\",-54.0],PARAMETER[\"Latitude_Of_Origin\",0.0],UNIT[\"Meter\",1.0]]"
+    }
+  },
+  "method_and_limits": {
+    "method": "SHP Polygon/DBF record extracted by original IBGE code 2908606, indexed through SHX; no reprojection",
+    "reconstruction": "IBGE says pre-1991 meshes were generated from the 1991 mesh using municipal polygon unions; NOT a surveyed 1960 contour",
+    "coordinate_epoch": "UNSPECIFIED; SIRGAS_2000 defined in embedded 2013 metadata",
+    "horizontal_accuracy_m": null,
+    "source_legal_boundary_1963": null,
+    "verified_intervening_legal_changes_1960_1963": false,
+    "admissible_historical_boundary_1963": false,
+    "orbital_constraint_activated": false,
+    "geographic_status": "RETROSPECTIVE_COARSE_PROXY_ONLY",
+    "independence": "IBGE/Stanford mirror of same IBGE reconstructed source; not independent field measurement",
+    "dependency_graph": "CGEO-10 -> 1960 retrospective proxy; CGEO-10 + original dated municipal acts + georeferenced survey (NOT_PRESENT) -> 1963 boundary (UNRESOLVED)",
+    "forbidden_inference": "Neither the diagnostic area nor the coarse 47-vertex polygon establishes the legal boundary on 1963-11-08."
+  },
+  "verification": {
+    "targeted_tests": "tests/test_ibge_1960_retro_mesh.py",
+    "reproducible_auditor": "scripts/archives/audit_ibge_1960_conde.py",
+    "fixture": "tests/fixtures/ibge_conde_1960_shp_record.b64",
+    "source_bytes_embedded": false
+  }
+}

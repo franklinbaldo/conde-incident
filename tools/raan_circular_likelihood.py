@@ -131,3 +131,98 @@ def predictive_log_density(fit: Iterable[Datum], future: Iterable[Datum]) -> flo
     if not training or not validation:
         raise ValueError("training and future observations must both be nonempty")
     return marginal_log_density(training + validation) - marginal_log_density(training)
+
+
+@dataclass(frozen=True)
+class OffsetAnchor:
+    """Hypothetical von Mises prior for lineage offset, not a measurement.
+
+    Source and independence basis are caller attestations, not verification.
+    A zero concentration is Haar-uniform regardless of its nominal mean.
+    """
+    lineage: str
+    mean_deg: float
+    concentration: float
+    source_ref: str
+    independence_basis: str
+
+
+def _checked_anchors(
+    lineages: set[str], anchors: Iterable[OffsetAnchor],
+) -> dict[str, OffsetAnchor]:
+    found: dict[str, OffsetAnchor] = {}
+    for a in anchors:
+        if not isinstance(a, OffsetAnchor):
+            raise ValueError("explicit OffsetAnchor required")
+        if not isinstance(a.lineage, str) or not a.lineage.strip():
+            raise ValueError("anchor lineage required")
+        if a.lineage in found:
+            raise ValueError("multiple anchors for one lineage would double-count a prior")
+        for ref in (a.source_ref, a.independence_basis):
+            if not isinstance(ref, str) or not ref.strip():
+                raise ValueError("anchor provenance and independence basis required")
+        for value in (a.mean_deg, a.concentration):
+            if isinstance(value, bool) or not isinstance(value, (int, float)):
+                raise ValueError("anchor angle and concentration must be numeric")
+            if not math.isfinite(value):
+                raise ValueError("nonfinite anchor angle or concentration")
+        if a.concentration < 0:
+            raise ValueError("negative anchor concentration")
+        found[a.lineage] = a
+    if set(found) != lineages:
+        raise ValueError("exactly one explicitly documented anchor per observed lineage")
+    return found
+
+
+def anchored_marginal_log_density(
+    rows: Iterable[Datum], anchors: Iterable[OffsetAnchor],
+) -> float:
+    """Conditional circular likelihood integrated over an anchored lineage offset.
+
+    p(b_g) = VM(b_g | m_g, lambda_g) and p(r_i|b_g) = VM(r_i|b_g, k_i).
+    Integrating b gives per lineage
+    log I0(|lambda exp(i*m) + sum_i k_i exp(i*r_i)|)
+      -log I0(lambda)-sum_i log I0(k_i)-n_g log(2*pi).
+
+    lambda=0 recovers the Haar model. A hypothetical prior can break gauge
+    symmetry in the model, but is NOT historical phase identification.
+    """
+    groups = _checked_grouped(rows)
+    by_lineage = _checked_anchors(set(groups), anchors)
+    contributions = []
+    for lineage, group in groups.items():
+        a = by_lineage[lineage]
+        m = math.radians(math.remainder(a.mean_deg, 360.0))
+        k0 = float(a.concentration)
+        try:
+            real = math.fsum([k0 * math.cos(m)] +
+                            [k * math.cos(r) for r, k in group])
+            imag = math.fsum([k0 * math.sin(m)] +
+                            [k * math.sin(r) for r, k in group])
+            radius = math.hypot(real, imag)
+        except OverflowError as exc:
+            raise ValueError("anchor resultant outside representable range") from exc
+        if not math.isfinite(radius):
+            raise ValueError("anchor resultant outside representable range")
+        contributions.append(log_i0(radius) - log_i0(k0)
+                             - math.fsum(log_i0(k) for _, k in group)
+                             - len(group) * LOG_TAU)
+    return math.fsum(contributions)
+
+
+def anchored_predictive_log_density(
+    fit: Iterable[Datum], future: Iterable[Datum],
+    anchors: Iterable[OffsetAnchor],
+) -> float:
+    """Predictive log density with frozen H, concentrations and offset anchors.
+
+    The prior is applied once to each shared offset; no refit or MCMC.
+    """
+    training, held_out, prior = tuple(fit), tuple(future), tuple(anchors)
+    if not training or not held_out:
+        raise ValueError("both chronological partitions required")
+    full = anchored_marginal_log_density(training + held_out, prior)
+    used = {d.lineage for d in training}
+    fit_prior = tuple(a for a in prior if a.lineage in used)
+    base = anchored_marginal_log_density(training, fit_prior)
+    return full - base

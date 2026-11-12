@@ -1,0 +1,335 @@
+{
+  "schema": "conde.igra-recife-conditional-dry-density/v1",
+  "source": {
+    "station_id": "BRM00082900",
+    "latitude_catalog_deg": -8.05,
+    "longitude_catalog_deg_east": -34.9167,
+    "station_elevation_catalog_m": 7,
+    "historical_location_verified": false,
+    "archive_url": "https://www.ncei.noaa.gov/pub/data/igra/data/data-por/BRM00082900-data.txt.zip",
+    "archive_sha256": "0655b3ea80312abe888a5474f82233affc0a2496ee1fd8bc678162924f52ecdc",
+    "archive_bytes": 7834492,
+    "excerpt_sha256": "577224172e19552f5ce87081897479255596dc44debacc674dfd9d9ec418207e",
+    "format_url": "https://www.ncei.noaa.gov/pub/data/igra/data/igra2-data-format.txt",
+    "upstream": "ncdc6301",
+    "dependence": "one station and one NCDC upstream; repeated days not independent source archives"
+  },
+  "epoch": {
+    "nominal_utc_date": "1963-11-08",
+    "nominal_hour_utc": 12,
+    "actual_release_utc": null,
+    "missing_time_code": 9999
+  },
+  "physical_link": {
+    "assumption_R_dry_J_kgK": 287.05,
+    "equation": "rho_proxy=p_Pa/(287.05*(273.15+T_C))",
+    "quantities_observed": [
+      "p",
+      "T",
+      "geopotential height",
+      "RH where present",
+      "QC flags"
+    ],
+    "quantity_derived": "dry ideal gas density proxy, not a measured actual moist-air density",
+    "geopotential_height_is_not_geometric": true,
+    "uncertainties": {
+      "instrumental_kg_m3": null,
+      "humidity_correction_kg_m3": null,
+      "regional_transfer_kg_m3": null,
+      "time_transfer_kg_m3": null
+    },
+    "conde_air_density_estimated": false,
+    "norad528_thermosphere_estimated": false,
+    "fragment_drift_estimated": false,
+    "uncertainty_is_not_numeric_zero": true,
+    "status": "RECIFE_PT_OBSERVED_DRY_PROXY_CONDITIONAL_NO_TRANSFER",
+    "evidence_ids": [
+      "C17",
+      "C18",
+      "C19",
+      "C20",
+      "C21",
+      "C22",
+      "C23",
+      "C144",
+      "C145",
+      "C146",
+      "C149",
+      "C150",
+      "C151",
+      "C193"
+    ]
+  },
+  "source_levels": 26,
+  "rh_levels": 6,
+  "common_isobaric_hpa": [
+    1000,
+    850,
+    700,
+    500,
+    300,
+    100
+  ],
+  "levels": [
+    {
+      "source_level_index": 0,
+      "pressure_hpa": 1016.0,
+      "geopotential_height_m_asl": 10,
+      "geopotential_height_flag": null,
+      "temperature_deg_c": 28.6,
+      "temperature_flag": "B",
+      "reported_rh_percent": 43.0,
+      "dry_density_proxy_kg_m3": 1.17297533
+    },
+    {
+      "source_level_index": 1,
+      "pressure_hpa": 1000.0,
+      "geopotential_height_m_asl": 151,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": 26.9,
+      "temperature_flag": "B",
+      "reported_rh_percent": 52.0,
+      "dry_density_proxy_kg_m3": 1.161044372
+    },
+    {
+      "source_level_index": 2,
+      "pressure_hpa": 945.0,
+      "geopotential_height_m_asl": 650,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": 20.7,
+      "temperature_flag": "B",
+      "reported_rh_percent": 84.0,
+      "dry_density_proxy_kg_m3": 1.120336699
+    },
+    {
+      "source_level_index": 3,
+      "pressure_hpa": 919.0,
+      "geopotential_height_m_asl": 880,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": 20.4,
+      "temperature_flag": "B",
+      "reported_rh_percent": 46.0,
+      "dry_density_proxy_kg_m3": 1.090626072
+    },
+    {
+      "source_level_index": 4,
+      "pressure_hpa": 850.0,
+      "geopotential_height_m_asl": 1560,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": 16.0,
+      "temperature_flag": "B",
+      "reported_rh_percent": 48.0,
+      "dry_density_proxy_kg_m3": 1.024090124
+    },
+    {
+      "source_level_index": 5,
+      "pressure_hpa": 828.0,
+      "geopotential_height_m_asl": 1780,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": 14.7,
+      "temperature_flag": "B",
+      "reported_rh_percent": 47.0,
+      "dry_density_proxy_kg_m3": 1.002089593
+    },
+    {
+      "source_level_index": 6,
+      "pressure_hpa": 700.0,
+      "geopotential_height_m_asl": 3197,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": 9.7,
+      "temperature_flag": "B",
+      "reported_rh_percent": null,
+      "dry_density_proxy_kg_m3": 0.862152925
+    },
+    {
+      "source_level_index": 7,
+      "pressure_hpa": 576.0,
+      "geopotential_height_m_asl": 4790,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": 2.8,
+      "temperature_flag": "B",
+      "reported_rh_percent": null,
+      "dry_density_proxy_kg_m3": 0.727167623
+    },
+    {
+      "source_level_index": 8,
+      "pressure_hpa": 500.0,
+      "geopotential_height_m_asl": 5917,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": -5.6,
+      "temperature_flag": "B",
+      "reported_rh_percent": null,
+      "dry_density_proxy_kg_m3": 0.651039738
+    },
+    {
+      "source_level_index": 9,
+      "pressure_hpa": 495.0,
+      "geopotential_height_m_asl": 6000,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": -6.1,
+      "temperature_flag": "B",
+      "reported_rh_percent": null,
+      "dry_density_proxy_kg_m3": 0.645736099
+    },
+    {
+      "source_level_index": 10,
+      "pressure_hpa": 433.0,
+      "geopotential_height_m_asl": 7040,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": -9.2,
+      "temperature_flag": "B",
+      "reported_rh_percent": null,
+      "dry_density_proxy_kg_m3": 0.571490057
+    },
+    {
+      "source_level_index": 11,
+      "pressure_hpa": 400.0,
+      "geopotential_height_m_asl": 7643,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": -15.0,
+      "temperature_flag": "B",
+      "reported_rh_percent": null,
+      "dry_density_proxy_kg_m3": 0.539796806
+    },
+    {
+      "source_level_index": 12,
+      "pressure_hpa": 300.0,
+      "geopotential_height_m_asl": 9745,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": -31.6,
+      "temperature_flag": "B",
+      "reported_rh_percent": null,
+      "dry_density_proxy_kg_m3": 0.432669879
+    },
+    {
+      "source_level_index": 13,
+      "pressure_hpa": 250.0,
+      "geopotential_height_m_asl": 11007,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": -41.7,
+      "temperature_flag": "B",
+      "reported_rh_percent": null,
+      "dry_density_proxy_kg_m3": 0.376292249
+    },
+    {
+      "source_level_index": 14,
+      "pressure_hpa": 200.0,
+      "geopotential_height_m_asl": 12478,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": -54.5,
+      "temperature_flag": "B",
+      "reported_rh_percent": null,
+      "dry_density_proxy_kg_m3": 0.318656633
+    },
+    {
+      "source_level_index": 15,
+      "pressure_hpa": 178.0,
+      "geopotential_height_m_asl": 13200,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": -61.1,
+      "temperature_flag": "B",
+      "reported_rh_percent": null,
+      "dry_density_proxy_kg_m3": 0.292431515
+    },
+    {
+      "source_level_index": 16,
+      "pressure_hpa": 150.0,
+      "geopotential_height_m_asl": 14258,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": -67.9,
+      "temperature_flag": "B",
+      "reported_rh_percent": null,
+      "dry_density_proxy_kg_m3": 0.254595394
+    },
+    {
+      "source_level_index": 17,
+      "pressure_hpa": 123.0,
+      "geopotential_height_m_asl": 15450,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": -75.9,
+      "temperature_flag": "B",
+      "reported_rh_percent": null,
+      "dry_density_proxy_kg_m3": 0.217235375
+    },
+    {
+      "source_level_index": 18,
+      "pressure_hpa": 100.0,
+      "geopotential_height_m_asl": 16613,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": -80.0,
+      "temperature_flag": "B",
+      "reported_rh_percent": null,
+      "dry_density_proxy_kg_m3": 0.180363119
+    },
+    {
+      "source_level_index": 19,
+      "pressure_hpa": 99.0,
+      "geopotential_height_m_asl": 16660,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": -82.5,
+      "temperature_flag": "B",
+      "reported_rh_percent": null,
+      "dry_density_proxy_kg_m3": 0.180900944
+    },
+    {
+      "source_level_index": 20,
+      "pressure_hpa": 70.0,
+      "geopotential_height_m_asl": 18668,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": -66.8,
+      "temperature_flag": "B",
+      "reported_rh_percent": null,
+      "dry_density_proxy_kg_m3": 0.118177831
+    },
+    {
+      "source_level_index": 21,
+      "pressure_hpa": 51.0,
+      "geopotential_height_m_asl": 20620,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": -56.2,
+      "temperature_flag": "B",
+      "reported_rh_percent": null,
+      "dry_density_proxy_kg_m3": 0.081894167
+    },
+    {
+      "source_level_index": 22,
+      "pressure_hpa": 50.0,
+      "geopotential_height_m_asl": 20754,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": -56.3,
+      "temperature_flag": "B",
+      "reported_rh_percent": null,
+      "dry_density_proxy_kg_m3": 0.080325424
+    },
+    {
+      "source_level_index": 23,
+      "pressure_hpa": 30.0,
+      "geopotential_height_m_asl": 24023,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": -51.7,
+      "temperature_flag": "B",
+      "reported_rh_percent": null,
+      "dry_density_proxy_kg_m3": 0.047194134
+    },
+    {
+      "source_level_index": 24,
+      "pressure_hpa": 20.0,
+      "geopotential_height_m_asl": 26693,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": -46.6,
+      "temperature_flag": "B",
+      "reported_rh_percent": null,
+      "dry_density_proxy_kg_m3": 0.030754479
+    },
+    {
+      "source_level_index": 25,
+      "pressure_hpa": 12.0,
+      "geopotential_height_m_asl": 30124,
+      "geopotential_height_flag": "B",
+      "temperature_deg_c": -41.8,
+      "temperature_flag": "A",
+      "reported_rh_percent": null,
+      "dry_density_proxy_kg_m3": 0.018069835
+    }
+  ]
+}

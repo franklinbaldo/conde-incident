@@ -33,6 +33,15 @@ por **família conservadora**. Não informam contagem instrumental real, nem
 a ausência de aresta indica independência. Todas as contagens de observações
 físicas independentes permanecem nulas.
 
+Cada entrada de citation_lineages inclui matrix_line e row_sha256 retirados
+diretamente da matriz congelada. A integridade é checada contra o feed
+canônico, não apenas pelo Cnn#ocorrência. Os mesmos campos estão no
+contract_citation_crosswalk, inclusive para ocorrência UNMAPPED_NOT_CLEARED:
+há linha documental, mas não há citação curada nem independência física
+certificada. Isso permite que Polvo/site verifiquem o SHA-256 da linha mesmo
+sem abrir o feed complementar e bloqueia mistura de versões da matriz
+(como a colisão histórica C151 Lean/matriz).
+
 contract_citation_crosswalk oferece ao Polvo e a outras ferramentas uma
 junção verificável entre contrato, ocorrência qualificada, ID da fonte e seus
 ancestrais declarados. Não há promoção automática para predicados físicos:

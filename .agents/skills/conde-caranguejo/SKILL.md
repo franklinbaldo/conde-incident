@@ -1,4 +1,6 @@
 ---
+type: Skill
+title: "Skill do Conde: caranguejo"
 name: conde-caranguejo
 description: Geografia histórica, GIS, limites e coordenadas no caso Conde, com trabalho independente e proveniência verificável.
 ---

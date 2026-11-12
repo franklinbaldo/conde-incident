@@ -1,4 +1,6 @@
 ---
+type: Skill
+title: "Skill do Conde: lagarto"
 name: conde-lagarto
 description: Meteorologia histórica e condições atmosféricas no caso Conde, com trabalho independente e proveniência verificável.
 ---

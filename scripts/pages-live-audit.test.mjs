@@ -20,6 +20,7 @@ const pages = {
 function fixture(overrides = {}) {
   const content = { ...pages, ...(overrides.content || {}) };
   const reads = [];
+  const metadataReads = [];
   const fetchImpl = async (url, opts) => {
     assert.equal(opts.method, "GET");
     assert.equal(opts.redirect, "error");
@@ -30,21 +31,27 @@ function fixture(overrides = {}) {
     return { ok: true, status: 200, url: overrides.redirect === url ? "https://untrusted.test/" : url,
       headers: { get: () => record[0] }, text: async () => record[1] };
   };
-  return { reads, args: {
+  return { reads, metadataReads, args: {
     sha: SHA, chapterPath: CHAPTER, fetchImpl,
-    metadataInspector: async () => ({
-      status: overrides.metadataStatus || "METADATA_ONLY_SITE_NOT_VERIFIED",
-      failures: overrides.metadataFailures || []
-    })
+    metadataInspector: async () => {
+      const index = metadataReads.length;
+      metadataReads.push(index);
+      return overrides.metadataResponses?.[index] ?? {
+        status: overrides.metadataStatus || "METADATA_ONLY_SITE_NOT_VERIFIED",
+        failures: overrides.metadataFailures || [],
+        evidence: { runId: 9, attempt: 1, deploymentId: 100, statusId: 501 }
+      };
+    }
   } };
 }
 
-test("live HTML, chapter, lab, CSS and JS after green metadata yield verified", async () => {
+test("green metadata plus live content still does not attest artifact bytes", async () => {
   const f = fixture();
   const result = await auditPublishedSite(f.args);
-  assert.equal(result.status, "VERIFIED_PUBLICATION");
+  assert.equal(result.status, "LIVE_CONTENT_PRESENT_UNATTESTED");
   assert.equal(result.failures.length, 0);
   assert.deepEqual(new Set(f.reads), new Set([SITE, CHAPTER, LAB, CSS, JS]));
+  assert.equal(f.metadataReads.length, 2, "must recheck metadata after HTTPS");
 });
 
 test("never fetch public site if publish metadata/deployment gate failed", async () => {
@@ -146,4 +153,115 @@ test("missing status 200 even when response.ok is truthy fails", async () => {
     })
   });
   assert.equal(result.status, "NOT_VERIFIED");
+});
+
+
+test("G21: comment/template-only navigation and asset references cannot verify publication", async () => {
+  const f = fixture({ content: {
+    [SITE]: ["text/html", '<!doctype html><html><!--<a href="/conde-incident/stories/chapter-one/">Caderno</a><a href="/conde-incident/lab/">Lab</a><link href="/conde-incident/assets/site.css">--><template><a href="/conde-incident/lab/">Lab</a></template></html>'],
+    [LAB]: ["text/html", '<html><!--<script src="/conde-incident/lab/assets/main.js"></script>--></html>'],
+    [CHAPTER]: ["text/html", '<html><article><h1>Real page</h1></article></html>'],
+  } });
+  const result = await auditPublishedSite(f.args);
+  assert.equal(result.status, "NOT_VERIFIED");
+  assert.match(result.failures.join(), /homepage has no laboratory link/);
+  assert.match(result.failures.join(), /homepage has no link to audited chapter/);
+  assert.match(result.failures.join(), /homepage has no local CSS asset/);
+  assert.match(result.failures.join(), /laboratory has no local JS asset/);
+});
+
+test("G21: script string and comment cannot masquerade as a rendered article", async () => {
+  const chapter = '<!doctype html><html><script>const ghost = "<article>fake</article>";</script><!--<article>also fake</article>--><template><article>hidden</article></template></html>';
+  const f = fixture({ content: { [CHAPTER]: ["text/html", chapter] } });
+  const result = await auditPublishedSite(f.args);
+  assert.equal(result.status, "NOT_VERIFIED");
+  assert.match(result.failures.join(), /chapter has no rendered article/);
+});
+
+test("G21: whitespace-only CSS and JS are not deployed bundles", async () => {
+  for (const [path, mime] of [[CSS, "text/css"], [JS, "application/javascript"]]) {
+    const f = fixture({ content: { [path]: [mime, " \n\t "] } });
+    const result = await auditPublishedSite(f.args);
+    assert.equal(result.status, "NOT_VERIFIED", path);
+    assert.match(result.failures.join(), /missing (css|js) body/);
+  }
+});
+
+test("G21: homepage links embedded in script strings do not count as navigation", async () => {
+  const f = fixture({ content: {
+    [SITE]: ["text/html", '<!doctype html><html><link rel="stylesheet" href="/conde-incident/assets/site.css"><script>const fake = \'<a href="/conde-incident/lab/">Lab</a><a href="/conde-incident/stories/chapter-one/">Story</a>\';</script></html>'],
+  } });
+  const result = await auditPublishedSite(f.args);
+  assert.equal(result.status, "NOT_VERIFIED");
+  assert.match(result.failures.join(), /homepage has no laboratory link/);
+  assert.match(result.failures.join(), /homepage has no link to audited chapter/);
+});
+
+test("G22: quoted HTML attribute payloads cannot impersonate navigation, CSS, article or JS", async () => {
+  const fakeHome = `<!doctype html><html><div data-snapshot='<a href="/conde-incident/stories/chapter-one/">ghost</a><a href="/conde-incident/lab/">ghost</a><link href="/conde-incident/assets/site.css">'>No links</div></html>`;
+  const fakeChapter = `<!doctype html><html><p title='<article>not rendered</article>'>Text only</p></html>`;
+  const fakeLab = `<!doctype html><html><div data-snapshot='<script src="/conde-incident/lab/assets/main.js"></script>'>No script</div></html>`;
+  const f = fixture({ content: {
+    [SITE]: ["text/html", fakeHome],
+    [CHAPTER]: ["text/html", fakeChapter],
+    [LAB]: ["text/html", fakeLab]
+  } });
+  const result = await auditPublishedSite(f.args);
+  assert.equal(result.status, "NOT_VERIFIED");
+  assert.match(result.failures.join(" | "), /homepage has no laboratory link/);
+  assert.match(result.failures.join(" | "), /homepage has no link to audited chapter/);
+  assert.match(result.failures.join(" | "), /homepage has no local CSS asset/);
+  assert.match(result.failures.join(" | "), /chapter has no rendered article/);
+  assert.match(result.failures.join(" | "), /laboratory has no local JS asset/);
+  assert.deepEqual(new Set(f.reads), new Set([SITE, CHAPTER, LAB]));
+});
+
+test("G22: real tags following a quoted fake tag remain inspectable", async () => {
+  const fake = `<div data-snapshot='<a href="/conde-incident/lab/">ghost</a>'>metadata only</div>`;
+  const f = fixture({ content: {
+    [SITE]: ["text/html", pages[SITE][1].replace("<body>", "<body>" + fake)]
+  } });
+  const result = await auditPublishedSite(f.args);
+  assert.equal(result.status, "LIVE_CONTENT_PRESENT_UNATTESTED");
+  assert.equal(result.failures.length, 0);
+});
+
+const GREEN = {
+  status: "METADATA_ONLY_SITE_NOT_VERIFIED",
+  failures: [], evidence: { runId: 9, attempt: 1, deploymentId: 100, statusId: 501 }
+};
+test("G21-F2: newer deployment during HTTPS scan invalidates live verdict", async () => {
+  const f = fixture({ metadataResponses: [
+    GREEN, { ...GREEN, evidence: { ...GREEN.evidence, deploymentId: 101, statusId: 502 } }
+  ] });
+  const result = await auditPublishedSite(f.args);
+  assert.equal(result.status, "NOT_VERIFIED");
+  assert.match(result.failures.join(), /identity changed/);
+  assert.equal(f.metadataReads.length, 2);
+});
+test("G21-F2: failed replacement run discovered after HTTPS invalidates verdict", async () => {
+  const f = fixture({ metadataResponses: [
+    GREEN, { status: "NOT_VERIFIED", failures: ["latest publish run is not completed/success"],
+      evidence: null }
+  ] });
+  const result = await auditPublishedSite(f.args);
+  assert.equal(result.status, "NOT_VERIFIED");
+  assert.match(result.failures.join(), /gate failed after HTTPS scan/);
+  assert.match(result.failures.join(), /not completed\/success/);
+});
+test("G21-F2: post-HTTPS metadata read error fails closed", async () => {
+  const f = fixture();
+  let calls = 0;
+  const result = await auditPublishedSite({ ...f.args, metadataInspector: async () => {
+    if (calls++ === 0) return GREEN;
+    throw Error("postscan unavailable");
+  } });
+  assert.equal(result.status, "NOT_VERIFIED");
+  assert.match(result.failures.join(), /postscan unavailable/);
+});
+test("G21-F2: missing deploy identity cannot verify content", async () => {
+  const f = fixture({ metadataResponses: [{ ...GREEN, evidence: null }] });
+  const result = await auditPublishedSite(f.args);
+  assert.equal(result.status, "NOT_VERIFIED");
+  assert.equal(f.reads.length, 0);
 });

@@ -1,0 +1,382 @@
+{
+  "schema": "conde.gaviao.retrospective-window/v4",
+  "reviewer": "gaviao",
+  "date_local": "2026-11-12",
+  "reviewed_from_main_sha": "5c2f610d624a79dab9b4b181851d8fe2883868f5",
+  "reviewed_through_main_sha": "86cf4e2cec271532b95a134623150539a0926b07",
+  "github_comparison": {
+    "status": "ahead",
+    "ahead_by": 13,
+    "behind_by": 0,
+    "total_commits": 13,
+    "unique_changed_paths": 42,
+    "all_commit_file_mentions": 44
+  },
+  "first_parent_chain": {
+    "squash_pr_merges": 13,
+    "direct_commits": 0,
+    "all_consecutive": true
+  },
+  "closed_unmerged_in_window": [
+    {
+      "pr": 171,
+      "closed_at": "2026-11-12T16:56:28Z",
+      "status": "CLOSED_WITHOUT_MERGE_NOT_MAIN_COMMIT"
+    }
+  ],
+  "commits": [
+    {
+      "order": 1,
+      "pr": 168,
+      "main_merge_sha": "69d88388a130c20e442cfa54d42b69d6b7a5c857",
+      "parent_main_sha": "5c2f610d624a79dab9b4b181851d8fe2883868f5",
+      "pr_final_head_sha": "1cb11740663473d0bda717dc14fca71f291a8751",
+      "github_actions_pr_head": {
+        "success": 12,
+        "total": 12,
+        "scope": "pull_request runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": "src/lib/sourceCitationAudit.ts"
+        },
+        {
+          "path": "tests/sourceCitationFeed.test.mjs"
+        }
+      ],
+      "scientific_scope": "C232 multi-source provenance"
+    },
+    {
+      "order": 2,
+      "pr": 169,
+      "main_merge_sha": "654f781a78b447a301a350d8c013ce9ede0b3498",
+      "parent_main_sha": "69d88388a130c20e442cfa54d42b69d6b7a5c857",
+      "pr_final_head_sha": "228e5d6383aec9103899f1d392e045e17e132f09",
+      "github_actions_pr_head": {
+        "success": 12,
+        "total": 12,
+        "scope": "pull_request runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": "formal/Conde1963.lean"
+        },
+        {
+          "path": "formal/Conde1963/ContractLineage.lean"
+        },
+        {
+          "path": "formal/scripts/compile_contract_lineage.py"
+        },
+        {
+          "path": "formal/tests/test_documentary_links.py"
+        },
+        {
+          "path": "research/constraints/C241-L6_contract_documentary_ancestry.md"
+        }
+      ],
+      "scientific_scope": "Lean contract documentary ancestry; no physical axiom"
+    },
+    {
+      "order": 3,
+      "pr": 170,
+      "main_merge_sha": "a3ab2d7ded05f810879c300d92786d98a49964c9",
+      "parent_main_sha": "654f781a78b447a301a350d8c013ce9ede0b3498",
+      "pr_final_head_sha": "fb6e6b1514ac6f8d2ed8991c466946a2208bc576",
+      "github_actions_pr_head": {
+        "success": 12,
+        "total": 12,
+        "scope": "pull_request runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": "research/meteorology/igra_recife_19631107_09_temporal_contrast.json"
+        },
+        {
+          "path": "research/meteorology/igra_recife_19631107_09_temporal_contrast.md"
+        },
+        {
+          "path": "research/meteorology/igra_recife_19631107_raw.txt.b64"
+        },
+        {
+          "path": "research/meteorology/igra_recife_19631109_raw.txt.b64"
+        },
+        {
+          "path": "tests/test_audit_igra_recife_winds.py"
+        },
+        {
+          "path": "tools/audit_igra_recife_window.py"
+        }
+      ],
+      "scientific_scope": "NOAA IGRA Recife 7/8/9 nominal wind; no Conde transfer"
+    },
+    {
+      "order": 4,
+      "pr": 158,
+      "main_merge_sha": "46f123dd5ae275e739eeeaa9ee6d69540d3b7a9a",
+      "parent_main_sha": "a3ab2d7ded05f810879c300d92786d98a49964c9",
+      "pr_final_head_sha": "78785a696bdb25a6bee628201681e194260fe9ef",
+      "github_actions_pr_head": {
+        "success": 12,
+        "total": 12,
+        "scope": "pull_request runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": "research/statistics/CIRCULAR_LIKELIHOOD_CONTRACT.md"
+        },
+        {
+          "path": "tests/test_raan_circular_likelihood.py"
+        },
+        {
+          "path": "tools/raan_circular_likelihood.py"
+        }
+      ],
+      "scientific_scope": "Conditional Haar-von Mises likelihood; no posterior"
+    },
+    {
+      "order": 5,
+      "pr": 173,
+      "main_merge_sha": "28066fa3c99276ece7c95447af55f9fdf58f4437",
+      "parent_main_sha": "46f123dd5ae275e739eeeaa9ee6d69540d3b7a9a",
+      "pr_final_head_sha": "9b63a555fd5d8e5ff4b4651cce6b868c57116903",
+      "github_actions_pr_head": {
+        "success": 12,
+        "total": 12,
+        "scope": "pull_request runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": "research/geo/README.md"
+        },
+        {
+          "path": "research/geo/uwm_aracaju_se_1954_1961_legend_review.json"
+        },
+        {
+          "path": "tests/test_conde_historical_legend.py"
+        },
+        {
+          "path": "tools/conde_historical_legend.py"
+        }
+      ],
+      "scientific_scope": "UWM map legend not 1963 Conde boundary"
+    },
+    {
+      "order": 6,
+      "pr": 174,
+      "main_merge_sha": "51d33a057f210b9d552ced795b7e8c5f9826e552",
+      "parent_main_sha": "28066fa3c99276ece7c95447af55f9fdf58f4437",
+      "pr_final_head_sha": "60c600d74d48a3b8b1f7fd4c50155afe61f39392",
+      "github_actions_pr_head": {
+        "success": 12,
+        "total": 12,
+        "scope": "pull_request runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": "research/audits/gaviao-main-window-20261112-1244.json"
+        },
+        {
+          "path": "research/audits/gaviao-main-window-20261112-1244.md"
+        },
+        {
+          "path": "scripts/gaviao-retrospective-g20.test.mjs"
+        },
+        {
+          "path": "src/lib/sourceCitationAudit.ts"
+        }
+      ],
+      "scientific_scope": "G20 ancestry validation and adversarial regression"
+    },
+    {
+      "order": 7,
+      "pr": 176,
+      "main_merge_sha": "6b5b0b926efd58fc48f52ce5539b499dd51140e2",
+      "parent_main_sha": "51d33a057f210b9d552ced795b7e8c5f9826e552",
+      "pr_final_head_sha": "1819b6c2f2232a948deae80a6a83ad3dd2f95ec9",
+      "github_actions_pr_head": {
+        "success": 12,
+        "total": 12,
+        "scope": "pull_request runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": "research/geo/uwm_aracaju_se_1954_1961_cartographic_custody.json"
+        },
+        {
+          "path": "scripts/archives/probe_uwm_jp2.py"
+        },
+        {
+          "path": "tests/test_probe_uwm_jp2.py"
+        },
+        {
+          "path": "tests/test_uwm_aracaju_cartographic_1963.py"
+        }
+      ],
+      "scientific_scope": "UWM JP2 endpoint; content digest absent"
+    },
+    {
+      "order": 8,
+      "pr": 175,
+      "main_merge_sha": "4a692369da53cc06e1821408ec8b36e8dd21c036",
+      "parent_main_sha": "6b5b0b926efd58fc48f52ce5539b499dd51140e2",
+      "pr_final_head_sha": "8591b47ade3e0e65386a4ae7f0222dbd781e0ce0",
+      "github_actions_pr_head": {
+        "success": 12,
+        "total": 12,
+        "scope": "pull_request runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": "formal/scripts/check_cumulative_connections.py"
+        },
+        {
+          "path": "research/constraints/texugo_negative_controls_06_2026-11-12.json"
+        },
+        {
+          "path": "tests/test_cumulative_constraints.py"
+        }
+      ],
+      "scientific_scope": "Negative controls for invented SSR epochs"
+    },
+    {
+      "order": 9,
+      "pr": 177,
+      "main_merge_sha": "7c87a687b9abaac2a6fd0b7081e26fac5f09a92c",
+      "parent_main_sha": "4a692369da53cc06e1821408ec8b36e8dd21c036",
+      "pr_final_head_sha": "6db826f04933f4d066f6e97b7123355acfb0a10c",
+      "github_actions_pr_head": {
+        "success": 12,
+        "total": 12,
+        "scope": "pull_request runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": "src/lib/orbitObservationIntake.ts"
+        },
+        {
+          "path": "tests/orbitObservationIntake.test.mjs"
+        }
+      ],
+      "scientific_scope": "Train/holdout record reuse conditional rejection"
+    },
+    {
+      "order": 10,
+      "pr": 178,
+      "main_merge_sha": "dcae1839fb5537a33bb62149b35f98f9bbb6ed1f",
+      "parent_main_sha": "7c87a687b9abaac2a6fd0b7081e26fac5f09a92c",
+      "pr_final_head_sha": "d88b0154034bb27723fcdf0d81865d2e7ccc72f1",
+      "github_actions_pr_head": {
+        "success": 12,
+        "total": 12,
+        "scope": "pull_request runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": "scripts/pages-live-audit.mjs"
+        },
+        {
+          "path": "scripts/pages-live-audit.test.mjs"
+        }
+      ],
+      "scientific_scope": "Pages audit; comment-markup false-positive G21-F1"
+    },
+    {
+      "order": 11,
+      "pr": 179,
+      "main_merge_sha": "3b4afe642fe8540a15e0a471960e3f32aed1f0d2",
+      "parent_main_sha": "dcae1839fb5537a33bb62149b35f98f9bbb6ed1f",
+      "pr_final_head_sha": "7c1eca8ba4d2edd9df17defcd6a180de6ac892ae",
+      "github_actions_pr_head": {
+        "success": 12,
+        "total": 12,
+        "scope": "pull_request runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": "src/components/SourceCitationFeed.tsx"
+        },
+        {
+          "path": "tests/sourceCitationFeed.test.mjs"
+        }
+      ],
+      "scientific_scope": "C232 cards separately displayed"
+    },
+    {
+      "order": 12,
+      "pr": 180,
+      "main_merge_sha": "f9d8ac9a528d319beaf989eace1e77bc4034db8d",
+      "parent_main_sha": "3b4afe642fe8540a15e0a471960e3f32aed1f0d2",
+      "pr_final_head_sha": "3ca59ead0ca490a6240cb73efd4325e93bf770a2",
+      "github_actions_pr_head": {
+        "success": 13,
+        "total": 13,
+        "scope": "pull_request runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": ".github/workflows/morcego-norad-source-audit.yml"
+        },
+        {
+          "path": "research/constraints/morcego_norad_1963_radar_source_audit.json"
+        },
+        {
+          "path": "tests/test_morcego_norad_date_provenance.py"
+        }
+      ],
+      "scientific_scope": "NORAD 688 window not 528; mislabeled 1964 records"
+    },
+    {
+      "order": 13,
+      "pr": 182,
+      "main_merge_sha": "86cf4e2cec271532b95a134623150539a0926b07",
+      "parent_main_sha": "f9d8ac9a528d319beaf989eace1e77bc4034db8d",
+      "pr_final_head_sha": "a289f2b9ed35458d51e6a28af1297edc863e681e",
+      "github_actions_pr_head": {
+        "success": 14,
+        "total": 14,
+        "scope": "pull_request runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": ".github/workflows/tle-numeric-precision.yml"
+        },
+        {
+          "path": "research/tle_custody/evidence_matrix_C241-L7_2026-11-12.md"
+        },
+        {
+          "path": "tests/test_tle_numeric_precision_audit.py"
+        },
+        {
+          "path": "tools/tle_numeric_precision_audit.py"
+        }
+      ],
+      "scientific_scope": "Parquet Arrow grid; not original TLE lexemes"
+    }
+  ],
+  "findings": [
+    {
+      "id": "G21-F1",
+      "introduced_by_pr": 178,
+      "severity": "medium",
+      "category": "live-publication-markup",
+      "counterexample": "Comment-only <a>/<link>/<script> and <article> in comments/templates/script strings satisfy raw regex checks; whitespace-only CSS and JS responses are truthy. Synthetic hostile HTTP fixture can return VERIFIED_PUBLICATION without real navigation/article/bundles.",
+      "remediation": "Ignore comments/templates/script raw content for markup checks, reject whitespace-only asset bodies; tests in scripts/pages-live-audit.test.mjs."
+    },
+    {
+      "id": "G21-F2",
+      "introduced_by_pr": 178,
+      "severity": "limitation-pending",
+      "category": "deployment-content-attestation",
+      "counterexample": "Metadata SHA gate precedes HTTPS body fetch; no content digest or embedded build SHA binds bytes to expected deployment; site can change after metadata check.",
+      "remediation": "Continue issue #6 for artifact digest or post-fetch metadata provenance; NOT solved in G21."
+    }
+  ],
+  "scientific_axes": {
+    "documentary_authenticity": "NORAD 08.pdf p2 facsimile visually re-read: SPADATS 688 Cosmos 21 decayed 12 Nov 22:10Z to 24:00Z; unrelated to NORAD 528. 07.pdf p3 mentions 687 and Shemya radar. Other source originals not independently re-downloaded.",
+    "lean": "ContractLineage is a compiled, pinned documentary graph. No new active physical Lean predicate or valid historical proof.",
+    "numerics": "IGRA Recife three nominal profiles, missing exact launch minute and no Conde transfer; circular likelihood conditional lacking historical kappa/forward model; 527/529 holdout synthetic only; Parquet grid not primary TLE lexemes.",
+    "editorial": "No stories/*.md merged in 13 first-parent commits; draft chapters #181 and #3 not published.",
+    "inference": "CONDE_INDETERMINATE_NO_TERMINAL_TIME_PLACE_OR_IMPACT_EVIDENCE"
+  },
+  "claims_limited": "CI on head does not certify authentic source bytes or impact location. Repository has_pages=false, so actual published site was NOT verified."
+}
