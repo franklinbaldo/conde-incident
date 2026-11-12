@@ -1,0 +1,79 @@
+name: Tartaruga - pinned 527-529 epoch availability
+
+on:
+  pull_request:
+    paths:
+      - tools/cross_object_epoch_support.py
+      - tests/test_cross_object_epoch_support.py
+      - research/tle_custody/evidence_matrix_C241-L3_2026-11-12.md
+      - research/constraints/norad_1963_epoch_availability_C241-L3.json
+      - .github/workflows/tle-cross-epoch-availability.yml
+  push:
+    branches: [main]
+    paths:
+      - tools/cross_object_epoch_support.py
+      - tests/test_cross_object_epoch_support.py
+      - research/tle_custody/evidence_matrix_C241-L3_2026-11-12.md
+      - research/constraints/norad_1963_epoch_availability_C241-L3.json
+      - .github/workflows/tle-cross-epoch-availability.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  epoch-availability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Confirm exact HEAD
+        run: |
+          actual="$(git rev-parse HEAD)"
+          expected="${{ github.event.pull_request.head.sha || github.sha }}"
+          echo "audited_source_head=$actual"
+          test "$actual" = "$expected"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic adversarial checks only
+        run: |
+          python -m unittest discover -s tests -p 'test_cross_object_epoch_support.py' -v
+          python -m unittest discover -s tests -p 'test_tle_secondary_1963_ledger.py' -v
+          python -m unittest discover -s tests -p 'test_tle_literal_layout.py' -v
+      - name: Install pinned decoder
+        run: python -m pip install --disable-pip-version-check pyarrow==21.0.0
+      - name: Read pinned Parquet, produce source-row indexed ledger and temporal joins
+        run: |
+          python tools/tle_secondary_1963_ledger.py --download \
+            --parquet "$RUNNER_TEMP/tle_1963.parquet" \
+            --literal research/tle_custody/mirror_528_1963-10-27.tle \
+            --output "$RUNNER_TEMP/tartaruga-c241-l3"
+          python tools/cross_object_epoch_support.py \
+            --csv "$RUNNER_TEMP/tartaruga-c241-l3/norad_527_528_529_numeric_1963.csv" \
+            --output "$RUNNER_TEMP/tartaruga-c241-l3/cross_object_epoch_support.json"
+      - name: Fail closed on changed historical overlap/uncertainty semantics
+        run: |
+          python - <<'PY'
+          import json, os, pathlib
+          d = json.loads((pathlib.Path(os.environ['RUNNER_TEMP']) /
+              'tartaruga-c241-l3/cross_object_epoch_support.json').read_text())
+          assert len(d['nearest_by_528_epoch']) == 45
+          assert d['count_of_exact_shared_epochs'] == {'527': 0, '529': 0, 'both': 0}
+          assert d['count_within_432us'] == {'527': 0, '529': 0, 'both': 0}
+          assert {w: v['both'] for w,v in d['count_of_528_epochs_with_nearby_527_529'].items()} == {'6h': 1, '24h': 2, '72h': 15}
+          assert d['unique_support_epochs_reused_at_most_72h'] == {'527': 13, '529': 28}
+          assert d['primary_1963_tle_lines_frame_and_errors'] == 'NOT_RECOVERED'
+          assert d['physical_joint_fit_and_holdouts'] == 'NOT_RUN'
+          print('C241-L3 secondary availability:', d['count_of_528_epochs_with_nearby_527_529'])
+          PY
+      - name: Preserve audited CSV, JSON and negative results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: c241-l3-temporal-availability-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ${{ runner.temp }}/tartaruga-c241-l3/
+          if-no-files-found: warn
+          retention-days: 30
