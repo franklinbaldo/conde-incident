@@ -1,0 +1,264 @@
+{
+  "schema": "conde.documentary-publication-control/v1",
+  "question": "Could silence/delay in NASA's published Situation Reports independently falsify a NORAD 528 detection, and where should primary instrument measurements be sought?",
+  "asof_research": "2026-11-12",
+  "source_families": [
+    {
+      "id": "MOR-NAVSPASUR-1962-MOA",
+      "document": "GSFC-NORAD Memorandum of Agreement, May 1962, exhibit 5 in House Report 197 (1965), printed pp.15-17",
+      "source_url": "https://www.govinfo.gov/content/pkg/SERIALSET-12667_05_00-002-0197-0000/pdf/SERIALSET-12667_05_00-002-0197-0000.pdf",
+      "source_class": "PRIMARY_1962_AGREEMENT_REPRODUCED_IN_OFFICIAL_1965_REPORT",
+      "verified": "TEXT_EXTRACTED_FROM_GOVINFO_PDF; VISUAL_SCREENSHOT_TIMED_OUT",
+      "sha256": null,
+      "dependence_family": "GSFC_NORAD_1962_AGREEMENT",
+      "existing_matrix_crossref": [
+        "C90#1",
+        "C132#1"
+      ],
+      "scope": "Primary for administrative rules; not measurement of 528"
+    },
+    {
+      "id": "MOR-NASA-1963-AP",
+      "document": "Walter R. Mears, Associated Press, NASA Official Tells Congressmen of Soviet Outer Space Flops; The Oregon Statesman (Salem), 24 May 1963, p.22",
+      "source_url": "https://oregonnews.uoregon.edu/lccn/sn85042470/1963-05-24/ed-1/seq-22.pdf",
+      "source_class": "PRIMARY_CONTEMPORARY_PUBLICATION_OF_1963_HEARING_REPORT",
+      "verified": "ONE_PAGE_ORIGINAL_NEWSPAPER_FACSIMILE_VISUALLY_INSPECTED",
+      "sha256": null,
+      "dependence_family": "NASA_HOUSE_HEARING_1963_SIMSPON_MOSS",
+      "existing_matrix_crossref": [
+        "C90#1"
+      ],
+      "scope": "Independent newspaper publication, but accounts same hearing as 1965 House summary; not separate sensor evidence"
+    },
+    {
+      "id": "MOR-HOUSE-1965",
+      "document": "US House Report 197, Satellite Information from the National Aeronautics and Space Administration, 22 March 1965, pp.4,7-9",
+      "source_url": "https://www.govinfo.gov/content/pkg/SERIALSET-12667_05_00-002-0197-0000/pdf/SERIALSET-12667_05_00-002-0197-0000.pdf",
+      "source_class": "PRIMARY_1965_CONGRESSIONAL_ASSESSMENT_OF_1963_HEARING",
+      "verified": "OFFICIAL_PDF_TEXT_EXTRACTED; VISUAL_SCREENSHOT_TIMED_OUT",
+      "sha256": null,
+      "dependence_family": "NASA_HOUSE_HEARING_1963_SIMSPON_MOSS",
+      "existing_matrix_crossref": [
+        "C90#1",
+        "C132#1"
+      ],
+      "scope": "Congressional testimony assessment; neither original radar printout nor proof of special suppression of 528"
+    }
+  ],
+  "observations": [
+    {
+      "id": "MOR-REL-20261112-01",
+      "source": "MOR-NAVSPASUR-1962-MOA",
+      "date_of_claim": "1962-05",
+      "field": "navspasur_tracking_observation_format",
+      "value": "station + observation_time + angle",
+      "units": "station_id + UTC? + angular_units_UNKNOWN",
+      "location_in_source": "Exhibit 5, section 3.a, printed p.15",
+      "classification": "DOCUMENT_RULE_DIRECTLY_EXTRACTED",
+      "errors": [
+        "Timestamp time scale and angle conventions not specified in excerpt"
+      ],
+      "physical_constraint_active": false
+    },
+    {
+      "id": "MOR-REL-20261112-02",
+      "source": "MOR-NAVSPASUR-1962-MOA",
+      "date_of_claim": "1962-05",
+      "field": "normal_tracking_request_window",
+      "value": 6,
+      "units": "hours",
+      "location_in_source": "Exhibit 5, section 3.a, printed p.15",
+      "classification": "NOMINAL_REQUEST_WINDOW_AFTER_SCIENTIFIC_LAUNCH_NOT_A_REENTRY_TIME",
+      "errors": [
+        "Scope limited to scientific satellite launches, not automatically 528 in Nov 1963"
+      ],
+      "physical_constraint_active": false
+    },
+    {
+      "id": "MOR-REL-20261112-03",
+      "source": "MOR-NAVSPASUR-1962-MOA",
+      "date_of_claim": "1962-05",
+      "field": "unclassified_catalog_release_channel",
+      "value": "NORAD/SPADATS compiled catalogue -> Goddard GSFC -> civilian releases",
+      "units": null,
+      "location_in_source": "Exhibit 5, section 4.a(1)(a,b), printed p.16",
+      "classification": "SOURCE_CHAIN_ADMINISTRATIVE",
+      "errors": [
+        "No item-specific custody link to 528 established"
+      ],
+      "physical_constraint_active": false
+    },
+    {
+      "id": "MOR-REL-20261112-04",
+      "source": "MOR-NAVSPASUR-1962-MOA",
+      "date_of_claim": "1962-05",
+      "field": "classification_decision_authority",
+      "value": "NORAD headquarters",
+      "units": null,
+      "location_in_source": "Exhibit 5, section 4.a(3), printed p.17",
+      "classification": "SOURCE_CHAIN_ADMINISTRATIVE",
+      "errors": [
+        "No evidence 528 record was classified or withheld"
+      ],
+      "physical_constraint_active": false
+    },
+    {
+      "id": "MOR-REL-20261112-05",
+      "source": "MOR-NASA-1963-AP",
+      "date_of_claim": "1963-05-23",
+      "publication_date": "1963-05-24",
+      "field": "soviet_orbit_reports_public_release_condition",
+      "value": "authorized Pentagon release OR UN registry + NORAD confirmation OR announced Soviet activity + NORAD confirmation",
+      "units": null,
+      "location_in_source": "original newspaper p.22, top left, Walter R. Mears AP",
+      "classification": "CONTEMPORARY_REPORT_OF_HEARING",
+      "errors": [
+        "Newspaper report about Soviet releases, not U.S. military object 528; same source event as House 1965 hearing narrative"
+      ],
+      "physical_constraint_active": false
+    },
+    {
+      "id": "MOR-REL-20261112-06",
+      "source": "MOR-HOUSE-1965",
+      "date_of_claim": "1963-05-23",
+      "publication_date": "1965-03-22",
+      "field": "official_witness_claim_about_1963_publication_dependency",
+      "value": "NASA Situation Report used NASA, NORAD and Smithsonian data; sometimes foreign launch information withheld on classification grounds",
+      "units": null,
+      "location_in_source": "House Report 197 printed pp.4,7-9",
+      "classification": "RETROSPECTIVE_CONGRESSIONAL_PRIMARY_REPORT_OF_HEARING",
+      "errors": [
+        "Not an observation and not evidence a particular 528 datum was censored"
+      ],
+      "physical_constraint_active": false
+    }
+  ],
+  "latent_variables": [
+    {
+      "id": "tracking_measurement_528",
+      "type": "optional_observation_record",
+      "known": false,
+      "required": [
+        "station",
+        "observation_time",
+        "angle",
+        "angle_frame",
+        "measurement_error",
+        "sensor_id"
+      ],
+      "physical": true
+    },
+    {
+      "id": "measurement_producer_528",
+      "type": "source_chain_label",
+      "known": false,
+      "physical": false
+    },
+    {
+      "id": "catalogue_source_528",
+      "type": "source_chain_label",
+      "known": false,
+      "physical": false
+    },
+    {
+      "id": "public_release_rule_1963",
+      "type": "documentary_policy_relation",
+      "known": true,
+      "physical": false
+    },
+    {
+      "id": "classification_decision_528",
+      "type": "event_specific_policy_decision",
+      "known": false,
+      "physical": false
+    },
+    {
+      "id": "sensor_error_model_528",
+      "type": "uncertainty_interval",
+      "known": false,
+      "physical": true
+    },
+    {
+      "id": "compiled_catalog_entry_528",
+      "type": "compiled_secondary_observable",
+      "known": true,
+      "physical": false
+    },
+    {
+      "id": "independent_radar_528",
+      "type": "primary_instrument_observation",
+      "known": false,
+      "physical": true
+    }
+  ],
+  "relationships": [
+    {
+      "id": "MOR-REL-EDGE-1",
+      "from": "MOR-REL-20261112-01",
+      "to": "tracking_measurement_528",
+      "kind": "OBSERVATION_SCHEMA_CANDIDATE",
+      "status": "PENDING_ACTUAL_528_RECORD",
+      "condition": "If a genuine Navspasur 528 observation was recorded, extract station/time/angle and original uncertainty; 1962 format is contextual only"
+    },
+    {
+      "id": "MOR-REL-EDGE-2",
+      "from": "MOR-REL-20261112-03",
+      "to": "catalogue_source_528",
+      "kind": "SOURCE_PROVENANCE_DEPENDENCY",
+      "status": "PENDING_ITEM_SPECIFIC_CUSTODY",
+      "condition": "A GSFC publication may relay the NORAD catalogue; establish 528 row lineage before claiming common sensor source"
+    },
+    {
+      "id": "MOR-REL-EDGE-3",
+      "from": "MOR-REL-20261112-04",
+      "to": "classification_decision_528",
+      "kind": "CLASSIFICATION_POWER_NOT_EVENT",
+      "status": "PENDING_528_CLASSIFICATION_RECORD",
+      "condition": "General authority does not imply actual restriction/suppression of 528"
+    },
+    {
+      "id": "MOR-REL-EDGE-4",
+      "from": "MOR-REL-20261112-05",
+      "to": "public_release_rule_1963",
+      "kind": "CONTEMPORANEOUS_PUBLISHING_POLICY_TESTIMONY",
+      "status": "DOCUMENTED_POLICY_SOVIET_CASES_ONLY",
+      "condition": "No transfer to US military 528 without evidence of rule application"
+    },
+    {
+      "id": "MOR-REL-EDGE-5",
+      "from": "MOR-REL-20261112-06",
+      "to": "MOR-REL-20261112-05",
+      "kind": "SAME_1963_HEARING_PROVENANCE",
+      "status": "DEPENDENT_NOT_INDEPENDENT_SENSORS",
+      "condition": "House retrospective and AP 1963 news report derive from May 23 congressional hearing, not separate sensor observations"
+    },
+    {
+      "id": "MOR-REL-EDGE-6",
+      "from": "MOR-REL-20261112-02",
+      "to": "tracking_measurement_528",
+      "kind": "NOT_A_REENTRY_INTERVAL",
+      "status": "BLOCK_NON_APPLICABLE_TIME_ASSUMPTION",
+      "condition": "Six-hour request window concerns launch support, not terminal object 528 reentry"
+    }
+  ],
+  "status": {
+    "new_primary_instrumental_measurement_528": false,
+    "observational_source_lineage_connected": true,
+    "physical_domain_reduced": "NOT_EVALUABLE_FROM_POLICY_DOCUMENTS",
+    "narrowing_predicate_lean": "PENDING_PRIMARY_STATION_TIME_ANGLE_RECORD",
+    "independent_newspaper_for_1963_publication_policy": true,
+    "independent_528_witness": false
+  },
+  "negative_searches": [
+    {
+      "query": "1963 Nov 7-9 SPADATS NORAD 528 primary station/time/angle",
+      "result": "No original instrument record found; only secondary catalogue or unrelated NORAD 688 messages"
+    },
+    {
+      "query": "NASA Satellite Situation Report volume 3 number 21 original October/November 1963",
+      "result": "No facsimile recovered in this session"
+    }
+  ],
+  "next_test": "Search actual 1963 NAVSPASUR/Space-Track logs or raw station time angle observations for SPADATS 528; source header must identify object and preserve instrument, epoch and uncertainty.",
+  "security_and_epistemics": "No location, decay-hour, physical impact, classification event or probability inferred from this policy graph."
+}
