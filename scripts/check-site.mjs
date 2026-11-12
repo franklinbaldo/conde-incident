@@ -8,6 +8,7 @@ for(const [name,html] of [['home',index],['stories',listing]]) {
   assert.match(html,/\/conde-incident\/stories\//,name+' sem rota Caderno');
   assert.match(html,/\/conde-incident\/lab\//,name+' sem rota laboratório');
   assert.match(html,/<html[^>]+lang=["']?pt-BR/i,name+' sem idioma pt-BR');
+  assert.doesNotMatch(html,/(?:src|href)=["']\/(?:assets|css)\//i,name+' referencia assets da raiz');
 }
 assert.match(lab,/\/conde-incident\/lab\/assets\//,'Assets Vite fora de /lab/');
 assert.doesNotMatch(lab,/(?:src|href)=["']\/assets\//,'Assets relativos à raiz, 404 no Pages');
