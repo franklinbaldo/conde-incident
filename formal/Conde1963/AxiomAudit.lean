@@ -1,4 +1,5 @@
 import Conde1963.TruthBridge
+import Conde1963.RaanEpochConstraint
 
 /-! Explicit kernel-dependency report in CI, not an empirical validation. -/
 
@@ -148,3 +149,8 @@ import Conde1963.TruthBridge
 #print axioms Conde1963.certified_truth_exclusion_persists_with_witness
 #print axioms Conde1963.absent_actual_impact_refutes_truth_forcing
 #print axioms Conde1963.self_sound_forecast_does_not_cover_unlinked_reality
+
+-- C241-T10: exact secondary-source RAAN epoch arithmetic, no historical orbit certified.
+#print axioms Conde1963.c241_raan_gap_floor_is_856258
+#print axioms Conde1963.c241_rate_458578_deg_day_cannot_explain
+#print axioms Conde1963.c241_rate_458579_deg_day_passes_numeric_gate
