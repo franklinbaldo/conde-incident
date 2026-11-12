@@ -4,6 +4,8 @@ import { join } from 'node:path';
 // stories/*.md is canonical; content/stories is generated, never edited.
 const output = 'content/stories';
 const required = ['title','date','summary','chapter','author','status'];
+// Keep legacy chapters readable while accepting the current OKF Story metadata.
+const allowed = [...required, 'type', 'description'];
 const files = readdirSync('stories').filter(name => /^\d{4}-\d{2}-\d{2}-[a-z0-9-]+\.md$/.test(name)).sort();
 if (files.length === 0) throw Error('Nenhum capítulo em stories/');
 
@@ -15,7 +17,7 @@ const stories = files.map(filename => {
   for (const line of match[1].split(/\r?\n/)) {
     if (!line.trim()) continue;
     const kv = /^([a-z]+):\s*(.+)$/.exec(line);
-    if (!kv || !required.includes(kv[1]) || Object.hasOwn(info,kv[1])) {
+    if (!kv || !allowed.includes(kv[1]) || Object.hasOwn(info,kv[1])) {
       throw Error('Campo inesperado/repetido em '+filename+': '+line);
     }
     const value = kv[2].trim();
@@ -23,6 +25,8 @@ const stories = files.map(filename => {
       value.startsWith("'") && value.endsWith("'") ? value.slice(1,-1) : value;
   }
   for (const field of required) if (!info[field]) throw Error('Campo obrigatório: '+filename+' / '+field);
+  if (info.type && info.type !== 'Story') throw Error('Tipo OKF inválido: '+filename);
+  if (info.type && !info.description) throw Error('Descrição OKF obrigatória: '+filename);
   if (!/^\d{4}-\d{2}-\d{2}$/.test(info.date) || !filename.startsWith(info.date+'-')) {
     throw Error('Data inconsistente: '+filename);
   }
