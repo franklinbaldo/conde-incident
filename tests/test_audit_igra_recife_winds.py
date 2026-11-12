@@ -80,3 +80,65 @@ class RecifeWindAuditTests(unittest.TestCase):
 
 
 if __name__=="__main__":unittest.main()
+
+
+class RecifeAdjacentDateAuditTests(unittest.TestCase):
+    """The existing IGRA CI workflow also exercises the three-day audit."""
+
+    def test_original_neighboring_profiles_pinned_and_all_5_levels(self):
+        import audit_igra_recife_window as w
+        result = w.build()
+        self.assertEqual([x["source_levels"] for x in result["soundings"]], [29, 26, 26])
+        self.assertEqual([x["complete_wind_levels"] for x in result["soundings"]], [15, 15, 15])
+        self.assertEqual([x["release_time_utc"] for x in result["soundings"]], [None] * 3)
+        for day in ("07", "08", "09"):
+            raw = w.load_original(day)
+            self.assertEqual(hashlib.sha256(raw).hexdigest(), w.DAYS[day][0])
+            self.assertEqual(
+                len(w.parse_day(raw, day)["standard_pressure_levels"]), 5
+            )
+        self.assertEqual(
+            json.loads(w.OUTPUT.read_text()), result
+        )
+
+    def test_real_nominal_date_contrasts_not_zero_or_independent(self):
+        import audit_igra_recife_window as w
+        result = w.build()
+        by_p = {c["pressure_hpa"]: c for c in result["inter_day_at_recife_nominal_date_contrasts"]}
+        self.assertAlmostEqual(by_p[850]["day_09_minus_08"]["vector_difference_m_s"], 5.883598)
+        self.assertAlmostEqual(by_p[250]["day_07_minus_08"]["vector_difference_m_s"], 8.931830)
+        meta = result["methodology"]
+        self.assertTrue(meta["comparisons_are_not_calibrated_uncertainty_bounds"])
+        self.assertTrue(meta["real_release_times_all_unknown"])
+        self.assertTrue(meta["sampling_is_not_spatially_transferable_to_conde"])
+        self.assertFalse(meta["balloon_drift_or_impact_location_estimated"])
+        self.assertFalse(meta["satellite_thermospheric_density_estimated"])
+        self.assertIsNone(result["source"]["recife_to_conde_transfer_error_m_s"])
+        self.assertIsNone(result["source"]["instrument_error_m_s"])
+
+    def test_reject_shifted_date_upstream_and_claimed_release_time(self):
+        import audit_igra_recife_window as w
+        original = w.load_original("07")
+        for old, new in (
+            (b"1963 11 07", b"1963 11 09"),
+            (b"12 9999", b"12 1159"),
+            (b"ncdc6301", b"ncdc6302"),
+            (b"BRM00082900", b"BRM00082999"),
+        ):
+            with self.subTest(old=old, new=new):
+                self.assertIn(old, original)
+                with self.assertRaises(ValueError):
+                    w.parse_day(original.replace(old, new, 1), "07")
+
+    def test_reject_partial_wind_and_truncated_record(self):
+        import audit_igra_recife_window as w
+        raw = w.load_original("09")
+        with self.assertRaises(ValueError):
+            w.parse_day(raw.rsplit(b"\n", 2)[0] + b"\n", "09")
+        lines = raw.decode().splitlines(keepends=True)
+        index = next(i for i, ln in enumerate(lines) if ln[9:15] == " 85000")
+        line = lines[index]
+        self.assertNotEqual(line[46:51], "-9999")
+        lines[index] = line[:46] + "-9999" + line[51:]
+        with self.assertRaises(ValueError):
+            w.parse_day("".join(lines).encode(), "09")
