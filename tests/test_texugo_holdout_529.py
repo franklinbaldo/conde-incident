@@ -346,7 +346,7 @@ class RollingTailSensitivityControls(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "nonfinite"):
             rolling_tail_sensitivity_diagnostics(broken)
         malformed = {**rolling, "pooled_rmse_rev_day": {
-            **rolling["pooled_rmse_rev_day"], "quadratic_529_only": 0}}
+            **rolling["pooled_rmse_rev_day"], "quadratic_529_only": 10.0}}
         with self.assertRaisesRegex(ValueError, "inconsistent pooled"):
             rolling_tail_sensitivity_diagnostics(malformed)
 
