@@ -34,8 +34,9 @@ class IndependentRecentAudit(unittest.TestCase):
     def test_real_utc_intervals_not_row_index(self):
         past = [(BASE+timedelta(days=d), 1+2*d) for d in (0,2,5)]
         predictions = recent_forecasts(past, BASE+timedelta(days=11))
-        for value in predictions.values():
-            self.assertAlmostEqual(value, 23, places=10)
+        for model in ("secant_2", "ols_3"):
+            self.assertAlmostEqual(predictions[model], 23, places=10)
+        self.assertAlmostEqual(predictions["persistence"], 11, places=10)
 
     def test_alternating_noise_can_make_secant_worse_than_persistence(self):
         out = audit(corpus(values=[15,16,15,16,15,16]))
