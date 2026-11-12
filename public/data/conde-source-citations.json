@@ -1,12 +1,64 @@
 {
   "schema": "conde.source-citations/v1",
   "matrix_git_blob_sha1": "a7978c3a75a153b16ab70118a92c434bba674cb7",
+  "matrix_snapshot_id": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7",
+  "legacy_alias_conflicts": [
+    {
+      "legacy_ref": "legacy-154:ac2c1982f2f9bc66d31f3d39cc0247dd02e8815bfef457c5d7ff5a8d6eb6f3ee:C144#1",
+      "matrix_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C144#1",
+      "equivalent_claim": false,
+      "legacy_source_status": "LOCAL_PRESERVED_FILE; ORIGINAL_ZIP_NOT_LOCATED"
+    },
+    {
+      "legacy_ref": "legacy-154:ac2c1982f2f9bc66d31f3d39cc0247dd02e8815bfef457c5d7ff5a8d6eb6f3ee:C145#1",
+      "matrix_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C145#1",
+      "equivalent_claim": false,
+      "legacy_source_status": "LOCAL_PRESERVED_FILE; ORIGINAL_ZIP_NOT_LOCATED"
+    },
+    {
+      "legacy_ref": "legacy-154:ac2c1982f2f9bc66d31f3d39cc0247dd02e8815bfef457c5d7ff5a8d6eb6f3ee:C146#1",
+      "matrix_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C146#1",
+      "equivalent_claim": false,
+      "legacy_source_status": "LOCAL_PRESERVED_FILE; ORIGINAL_ZIP_NOT_LOCATED"
+    },
+    {
+      "legacy_ref": "legacy-154:ac2c1982f2f9bc66d31f3d39cc0247dd02e8815bfef457c5d7ff5a8d6eb6f3ee:C147#1",
+      "matrix_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C147#1",
+      "equivalent_claim": false,
+      "legacy_source_status": "LOCAL_PRESERVED_FILE; ORIGINAL_ZIP_NOT_LOCATED"
+    },
+    {
+      "legacy_ref": "legacy-154:ac2c1982f2f9bc66d31f3d39cc0247dd02e8815bfef457c5d7ff5a8d6eb6f3ee:C148#1",
+      "matrix_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C148#1",
+      "equivalent_claim": false,
+      "legacy_source_status": "LOCAL_PRESERVED_FILE; ORIGINAL_ZIP_NOT_LOCATED"
+    },
+    {
+      "legacy_ref": "legacy-154:ac2c1982f2f9bc66d31f3d39cc0247dd02e8815bfef457c5d7ff5a8d6eb6f3ee:C149#1",
+      "matrix_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C149#1",
+      "equivalent_claim": false,
+      "legacy_source_status": "LOCAL_PRESERVED_FILE; ORIGINAL_ZIP_NOT_LOCATED"
+    },
+    {
+      "legacy_ref": "legacy-154:ac2c1982f2f9bc66d31f3d39cc0247dd02e8815bfef457c5d7ff5a8d6eb6f3ee:C150#1",
+      "matrix_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C150#1",
+      "equivalent_claim": false,
+      "legacy_source_status": "LOCAL_PRESERVED_FILE; ORIGINAL_ZIP_NOT_LOCATED"
+    },
+    {
+      "legacy_ref": "legacy-154:ac2c1982f2f9bc66d31f3d39cc0247dd02e8815bfef457c5d7ff5a8d6eb6f3ee:C151#1",
+      "matrix_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C151#1",
+      "equivalent_claim": false,
+      "legacy_source_status": "LOCAL_PRESERVED_FILE; ORIGINAL_ZIP_NOT_LOCATED"
+    }
+  ],
   "total_matrix_occurrences": 241,
   "curated_occurrences": 24,
   "unmapped_occurrences": 217,
   "records": [
     {
       "occurrence": "C01#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C01#1",
       "matrix_line": 19,
       "row_sha256": "c198bbbcf05bf4f92ac5f1fcbafc855ed995535139c25b92dea92a7493cd4c9b",
       "claim_text": "Esfera metálica em Conde",
@@ -22,6 +74,7 @@
     },
     {
       "occurrence": "C02#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C02#1",
       "matrix_line": 20,
       "row_sha256": "b64774385403c11962c63ae5283bf29fea6a54f511eb8e67493cf16de159eb64",
       "claim_text": "Cratera de quatro metros",
@@ -37,6 +90,7 @@
     },
     {
       "occurrence": "C03#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C03#1",
       "matrix_line": 21,
       "row_sha256": "2b61e1b520333e8228d95aa657c6efe349368dc97ff667e241fdcc0723e5aa51",
       "claim_text": "Corpo, roupa pesada, inscrições",
@@ -52,6 +106,7 @@
     },
     {
       "occurrence": "C05#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C05#1",
       "matrix_line": 23,
       "row_sha256": "df78ccb13d58a2ca854a8f725b572fdebe2816c4176ac29ed1388cd6f060822e",
       "claim_text": "Negativa de autoridades",
@@ -67,6 +122,7 @@
     },
     {
       "occurrence": "C06#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C06#1",
       "matrix_line": 24,
       "row_sha256": "4add90d1750e0f2ba15a47e9a02ea6f3049c5d08f02efbfc2df7788669305b66",
       "claim_text": "Repórter vai a Conde e só elogia telégrafo Morse",
@@ -82,6 +138,7 @@
     },
     {
       "occurrence": "C17#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C17#1",
       "matrix_line": 36,
       "row_sha256": "8367903bc865e438230b1cff5575de1bb39c065fca33360fe7cbc3efdf6f33ec",
       "claim_text": "Distúrbio geomagnético 29/10/1963: Kp 8 (21–24 UTC), Ap 74",
@@ -97,6 +154,7 @@
     },
     {
       "occurrence": "C18#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C18#1",
       "matrix_line": 37,
       "row_sha256": "9f46d8a6e4e14ecb6fa48af75e5faa36fefead25a6c2a25980fe0ee3d896ffb9",
       "claim_text": "Distúrbio 07–09/11, com Kp máximo 6 e Ap 46 em 08/11",
@@ -112,6 +170,7 @@
     },
     {
       "occurrence": "C19#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C19#1",
       "matrix_line": 38,
       "row_sha256": "d6ffc2bd197f5b4edc0ccf95de66f2372b04455f70dd4c5755fbac94da44b60f",
       "claim_text": "Fluxo solar F10.7 observado 89,0 em 27/10 e 75,4 em 08/11",
@@ -127,6 +186,7 @@
     },
     {
       "occurrence": "C23#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C23#1",
       "matrix_line": 42,
       "row_sha256": "287308a8d7f33f7767b97506bfbe6b8bdc3ec3fded2fd0adad029df3ff32ae36",
       "claim_text": "GFZ, Canadá e CelesTrak são três corroborações independentes",
@@ -142,6 +202,7 @@
     },
     {
       "occurrence": "C131#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C131#1",
       "matrix_line": 502,
       "row_sha256": "53a78f0aef6d3247958750317457bc5cc82a84221556009af96a6da8c41b5990",
       "claim_text": "**Primária contemporânea, fac-símile verificado**",
@@ -157,6 +218,7 @@
     },
     {
       "occurrence": "C149#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C149#1",
       "matrix_line": 604,
       "row_sha256": "08827f8763e62283104d0783a379a8e64c14e57d78fb405f65029235573fc93d",
       "claim_text": "Recife tem perfis nominais de 12 UTC em 7, 8, 9/11/1963, com 29, 26 e 26 níveis",
@@ -172,6 +234,7 @@
     },
     {
       "occurrence": "C150#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C150#1",
       "matrix_line": 605,
       "row_sha256": "0d59ec9f3e753773e96e8c511fa2e0ade8122dbcb16389bcfcc3ddf693f152ea",
       "claim_text": "Hora real de lançamento de Recife nesses três dias é conhecida",
@@ -187,6 +250,7 @@
     },
     {
       "occurrence": "C151#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C151#1",
       "matrix_line": 606,
       "row_sha256": "d2efe77c596b9fc28b6cf968467e8e696533d1d473fa5d93e0532c767326330b",
       "claim_text": "Ventos medidos em 8/11 em Recife incluem 850 hPa 100°/4m·s⁻¹; 700 hPa 236°/4m·s⁻¹; 500 hPa 159°/6m·s⁻¹; 300 hPa 129°/15m·s⁻¹; 250 hPa 102°/17m·s⁻¹",
@@ -202,6 +266,7 @@
     },
     {
       "occurrence": "C179#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C179#1",
       "matrix_line": 839,
       "row_sha256": "622d0d83f2a5bd21658013b596023fa61358ca4bc017624a699178ea026bf4d5",
       "claim_text": "TLE de **NORAD 00528 / 1963-003B**, fonte espelhada `https://www.itau.magnetic-declination.com/satellite/?s=528` (atribui elementos à AFSPC); referência de parâmetros `https://keeptrack.space/satellite/528`.",
@@ -217,6 +282,7 @@
     },
     {
       "occurrence": "C180#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C180#1",
       "matrix_line": 840,
       "row_sha256": "abee439dc0faef2bacd3cc9ac0f3e068000509dd5b5a4113053830e925944a81",
       "claim_text": "TLE de **NORAD 00529 / 1963-003C**, fonte espelhada `https://www.itau.magnetic-declination.com/satellite/?s=529`; parâmetros `https://keeptrack.space/satellite/529`.",
@@ -232,6 +298,7 @@
     },
     {
       "occurrence": "C182#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C182#1",
       "matrix_line": 842,
       "row_sha256": "9529da9e2d8fbc94e17cf2674087883a356d0b4edd57efa74284bde63e412c8d",
       "claim_text": "**NASA/Goddard**, *Satellite Situation Report*, vol.3 nº22, **15/11/1963**, TM-X-51205, página impressa 5/PDF índice 6, `https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf` e ficha `https://ntrs.nasa.gov/citations/19640001198`.",
@@ -247,6 +314,7 @@
     },
     {
       "occurrence": "C183#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C183#1",
       "matrix_line": 843,
       "row_sha256": "472bfe64792c20bf5ab61b28cb5a707e06297a28a38eaa1fdc9048e11a6107cb",
       "claim_text": "**NASA/Goddard**, *Satellite Situation Report*, vol.3 nº23, **30/11/1963**, TM-X-50510, página impressa 5/PDF índice 6, `https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf` e ficha `https://ntrs.nasa.gov/citations/19640002493`.",
@@ -262,6 +330,7 @@
     },
     {
       "occurrence": "C184#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C184#1",
       "matrix_line": 844,
       "row_sha256": "d9573fb85bf9d724e2dc18ed9a36e4352ef3ba87f424b6e739c6b33822cf858c",
       "claim_text": "Confronto NASA 1963 + GCAT C174–C175 + dados atribuídos à AFSPC C179.",
@@ -277,6 +346,7 @@
     },
     {
       "occurrence": "C197#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C197#1",
       "matrix_line": 905,
       "row_sha256": "c205464ee17e3d7c02f519d485e18a2339841560f84bd51f42654e69977329dc",
       "claim_text": "**Documento primário de 1963, fac-símile inspecionado visualmente.** NASA/Goddard, *Satellite Situation Report*, vol. 3 nº 22, 15/11/1963, p. impressa 8 / PDF índice 8, NASA-TM-X-51205, NTRS 19640001198. [PDF primário](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf).",
@@ -292,6 +362,7 @@
     },
     {
       "occurrence": "C198#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C198#1",
       "matrix_line": 906,
       "row_sha256": "7b23236e2aae9d4aac9f07ce5032b9a52525dc08f87fbf32c630a56170fefbdf",
       "claim_text": "**Verificação arquivística oficial.** [NTRS: ficha 19640001198](https://ntrs.nasa.gov/citations/19640001198) registra `Publication Date: November 15, 1963` e `NASA-TM-X-51205`, vol.3 nº22.",
@@ -307,6 +378,7 @@
     },
     {
       "occurrence": "C199#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C199#1",
       "matrix_line": 907,
       "row_sha256": "da324add976244d6d060284018bf1aa16223631417287640380426d2f221f6bc",
       "claim_text": "**Controle de edição aditiva.** [NASA/Goddard vol.3 nº23, 30/11/1963](https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf), inspecionado por imagem em página de atualização de órbita; o nº22 usa a expressão `PLEASE ADD`.",
@@ -322,6 +394,7 @@
     },
     {
       "occurrence": "C200#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C200#1",
       "matrix_line": 908,
       "row_sha256": "0dd8baa5a0905dc23492fb75051589cf9b867be0fe0edc6f17dc499fd208200e",
       "claim_text": "**Correção explícita C182/C184 e C196.** A rodada 7 analisara apenas `OBJECTS IN ORBIT` e concluíra que a data exata não era demonstrada por fonte de 1963.",
@@ -337,6 +410,7 @@
     },
     {
       "occurrence": "C201#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C201#1",
       "matrix_line": 909,
       "row_sha256": "4995e01b94483ce9c976207751f1c2cf15e2dd8f88f52eeef7560a8672f91097",
       "claim_text": "**Controle de proveniência e hipótese causal.** Na folha de rosto de 15/11, NASA declara compilação por Goddard, NORAD e Smithsonian Astrophysical Observatory. Catálogos atuais identificam 1963-003B como NORAD 00528.",
@@ -352,6 +426,7 @@
     },
     {
       "occurrence": "C238#1",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C238#1",
       "matrix_line": 1037,
       "row_sha256": "b9ba0dbf093c74d1c1db6d556c640c7bae5390210c8a16b5dd8fe309c3e2d307",
       "claim_text": "**Controle de escopo e órbita**, NASA *Satellite Situation Report* 15/11/1963 (C197–C202), https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf ; confrontado com Blue Book de novembro.",
