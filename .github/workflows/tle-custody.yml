@@ -59,17 +59,17 @@ jobs:
             --pair research/tle_custody/mirror_528_1963-10-27.tle \
             --output "${{ runner.temp }}/tle-audit/secondary_528_literal_fields.json"
           cat "${{ runner.temp }}/tle-audit/secondary_528_literal_fields.json"
-      - name: Audit lost mean-motion digits from binary32 mirror (C241-T6)
+      - name: Audit numeric Parquet schema and lossless field-grid projection (C241-T6)
         run: |
-          python tools/tle_float32_alias_audit.py \
-            --csv "${{ runner.temp }}/tle-audit/norad_527_528_529_1963_numeric.csv" \
-            --output "${{ runner.temp }}/tle-audit/tle_float32_alias_report.json"
+          python tools/tle_numeric_precision_audit.py \
+            --parquet "${{ runner.temp }}/tle_1963.parquet" \
+            --output "${{ runner.temp }}/tle-audit/tle_numeric_precision_report.json"
           python - <<'PY'
           import json, os, pathlib
           data = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) /
-                             "tle-audit/tle_float32_alias_report.json").read_text())
-          print("float32_alias_counts:", data["ambiguous_mean_motion_rows"])
-          print("literal_528:", data["literal_528"])
+                             "tle-audit/tle_numeric_precision_report.json").read_text())
+          print("numeric_roundtrips:", data["field_counts"])
+          print("not_preserved:", data["not_preserved_by_this_schema"])
           PY
       - name: Preserve normalized source-derived rows and negative results
         if: always()
