@@ -1,0 +1,247 @@
+/**
+ * Physics-side bridge from the DECLARED, exact-rational alternative-domain
+ * auditor proposed in PR #43. That auditor is not Lean, tracking data, nor a
+ * source authenticator. This bridge never promotes its labels into proof.
+ *
+ * The auditor reports reduced fractions but drops the parameter units and
+ * initial-domain source. Callers must explicitly supply both, and neither
+ * assertion is verified by this bridge. Only 527/529 Cartesian velocity
+ * boxes are supported, NOT TLE mean elements or an orbital fit.
+ */
+import type { State } from './orbitPhysics.ts';
+import type { AlternativeOrbitPremise } from './orbitAlternativeFits.ts';
+import type { VelocityAxis, ConditionalVelocityBound } from './orbitAdmissibility.ts';
+
+type RationalString = string;
+interface AuditInterval { min: RationalString; max: RationalString }
+interface AuditParameter {
+  name: string;
+  status: 'EMPTY' | 'REDUCED' | 'UNCHANGED';
+  admissible: AuditInterval | null;
+}
+interface AuditTrace {
+  parameter: string;
+  evidence_id: string;
+  occurrence: string;
+  source_uri: string;
+  independence_group_declared: string;
+  lean_ref_declared: string;
+  lean_status_declared: 'CLAIMED' | 'NOT_RUN';
+}
+interface AuditBranch {
+  id: string;
+  domain_status: 'CONTRADICTORY' | 'REDUCED' | 'UNCHANGED';
+  declared_evidence: 'SYNTHETIC_ONLY' | 'DECLARED_NOT_AUDITED';
+  lean_proofs: 'NOT_VERIFIED';
+  numerical_holdout: 'NOT_RUN';
+  parameters: readonly AuditParameter[];
+  trace: readonly AuditTrace[];
+}
+export interface DeclaredAlternativesAudit {
+  status: 'MULTIPLE_DECLARED_FEASIBLE' | 'ONE_DECLARED_FEASIBLE' | 'NO_DECLARED_FEASIBLE';
+  scenarios: readonly AuditBranch[];
+  scenario_set_exhaustive: 'NOT_VERIFIED';
+  matrix_occurrences: 'NOT_VERIFIED';
+  source_authenticity: 'NOT_VERIFIED';
+  source_independence_between_scenarios: 'NOT_VERIFIED';
+  lean_proofs: 'NOT_VERIFIED';
+  physical_feasibility: 'NOT_VERIFIED';
+  numerical_holdouts: 'NOT_RUN';
+  location_and_impact: 'NOT_INFERRED';
+}
+export interface InitialBranchState {
+  id: string;
+  initial: State;
+  /** Origin of initial velocity box, OMITTED by the declared-domain auditor. */
+  initialDomainSource: string;
+}
+export interface BridgeContext {
+  objectNorad: 527 | 529;
+  epochUtc: string;
+  inertialFrame: string;
+  /** Explicit caller assertion; the audit result contains NO units. */
+  assumedUnit: 'km/s';
+  initials: readonly InitialBranchState[];
+}
+export interface BridgeRecord {
+  id: string;
+  status: 'READY_CONDITIONALLY' | 'NOT_RUN_CONTRADICTORY' |
+    'NOT_RUN_INCOMPLETE' | 'NOT_RUN_UNTRACED' | 'NOT_RUN_FLOAT64_PRECISION';
+  reason: string;
+}
+export interface BridgeResult {
+  alternatives: readonly AlternativeOrbitPremise[];
+  records: readonly BridgeRecord[];
+  leanProof: 'NOT_VERIFIED';
+  sourceAuthenticity: 'NOT_VERIFIED';
+  sourceIndependence: 'NOT_VERIFIED';
+  unitFromAuditor: 'NOT_PRESENT';
+  assumedUnit: 'km/s';
+  frameTransformation: 'NOT_RUN';
+  geographicInference: 'NOT_SUPPORTED';
+  exhaustiveEnclosure: false;
+}
+
+const AXES: readonly VelocityAxis[] = ['vx', 'vy', 'vz'];
+const must = (ok: unknown, message: string): void => {
+  if (!ok) throw new RangeError(message);
+};
+interface Fraction { n: bigint; d: bigint }
+function rational(raw: string): Fraction {
+  must(typeof raw === 'string' && /^-?(?:0|[1-9]\d*)(?:\/[1-9]\d*)?$/.test(raw),
+    'Expected an exact integer/fraction from declared-domain auditor');
+  const [numerator, denominator = '1'] = raw.split('/');
+  const n = BigInt(numerator), d = BigInt(denominator);
+  must(d > 0n, 'Invalid rational denominator');
+  return { n, d };
+}
+const compare = (a: Fraction, b: Fraction): number =>
+  a.n * b.d < b.n * a.d ? -1 : a.n * b.d > b.n * a.d ? 1 : 0;
+
+const buffer = new DataView(new ArrayBuffer(8));
+const MASK = (1n << 52n) - 1n;
+function exactFloat(x: number): Fraction {
+  must(Number.isFinite(x), 'Finite Float64 required');
+  buffer.setFloat64(0, x);
+  const bits = buffer.getBigUint64(0);
+  const sign = bits >> 63n ? -1n : 1n;
+  const exp = Number((bits >> 52n) & 2047n);
+  const mantissa = (bits & MASK) + (exp === 0 ? 0n : 1n << 52n);
+  const power = exp === 0 ? -1074 : exp - 1075;
+  return power >= 0
+    ? { n: sign * mantissa * (1n << BigInt(power)), d: 1n }
+    : { n: sign * mantissa, d: 1n << BigInt(-power) };
+}
+function nextUp(x: number): number {
+  if (x === 0) return Number.MIN_VALUE;
+  if (x === Infinity) return Infinity;
+  buffer.setFloat64(0, x);
+  const bits = buffer.getBigUint64(0);
+  buffer.setBigUint64(0, x > 0 ? bits + 1n : bits - 1n);
+  return buffer.getFloat64(0);
+}
+const nextDown = (x: number): number => -nextUp(-x);
+
+/** Round INWARDS: every sampled Float64 velocity remains inside its rational box. */
+function finiteInside(box: AuditInterval): [number, number] | null {
+  const lo = rational(box.min), hi = rational(box.max);
+  must(compare(lo, hi) <= 0, 'Inverted exact rational interval');
+  let low = Number(lo.n) / Number(lo.d);
+  let high = Number(hi.n) / Number(hi.d);
+  if (!Number.isFinite(low) || !Number.isFinite(high)) return null;
+  if (compare(exactFloat(low), lo) < 0) low = nextUp(low);
+  if (compare(exactFloat(high), hi) > 0) high = nextDown(high);
+  if (!Number.isFinite(low) || !Number.isFinite(high) || low > high) return null;
+  // A singleton at an inexact rational value has no Float64 representative.
+  return [low, high];
+}
+
+/**
+ * Consumes PR #43's audit RESULT, not its primary declarations or Lean proof.
+ * Each branch is kept separate. A tiny exact interval with no Float64 member
+ * is NOT silently rounded into a false orbital witness.
+ */
+export function bridgeDeclaredAlternatives(
+  audit: DeclaredAlternativesAudit, context: BridgeContext,
+): BridgeResult {
+  must(audit && Array.isArray(audit.scenarios) && audit.scenarios.length > 0 &&
+    audit.scenarios.length <= 12 &&
+    audit.scenario_set_exhaustive === 'NOT_VERIFIED' &&
+    audit.matrix_occurrences === 'NOT_VERIFIED' &&
+    audit.source_authenticity === 'NOT_VERIFIED' &&
+    audit.source_independence_between_scenarios === 'NOT_VERIFIED' &&
+    audit.lean_proofs === 'NOT_VERIFIED' &&
+    audit.physical_feasibility === 'NOT_VERIFIED' &&
+    audit.numerical_holdouts === 'NOT_RUN' &&
+    audit.location_and_impact === 'NOT_INFERRED',
+  'Unsupported or falsely certified declared-domain audit');
+  must(context.assumedUnit === 'km/s' &&
+    (context.objectNorad === 527 || context.objectNorad === 529) &&
+    typeof context.epochUtc === 'string' && context.epochUtc.endsWith('Z') &&
+    typeof context.inertialFrame === 'string' && context.inertialFrame.trim() &&
+    Array.isArray(context.initials), 'Explicit Cartesian unit, epoch, target and frame required');
+  const ids = new Set<string>();
+  const initials = new Map(context.initials.map(s => [s.id, s]));
+  must(initials.size === context.initials.length, 'Duplicate initial-state IDs');
+  must(initials.size === audit.scenarios.length, 'Exactly one initial state per alternative required');
+
+  const alternatives: AlternativeOrbitPremise[] = [], records: BridgeRecord[] = [];
+  for (const branch of audit.scenarios) {
+    must(branch && /^[a-z0-9][a-z0-9-]{1,63}$/.test(branch.id) && !ids.has(branch.id) &&
+      ['SYNTHETIC_ONLY', 'DECLARED_NOT_AUDITED'].includes(branch.declared_evidence) &&
+      branch.lean_proofs === 'NOT_VERIFIED' && branch.numerical_holdout === 'NOT_RUN' &&
+      ['CONTRADICTORY', 'REDUCED', 'UNCHANGED'].includes(branch.domain_status) &&
+      Array.isArray(branch.parameters) && Array.isArray(branch.trace),
+    'Invalid branch identity, status or trace');
+    ids.add(branch.id);
+    const original = initials.get(branch.id);
+    must(original && original.initialDomainSource.trim() &&
+      original.initial.tS === 0 && original.initial.rKm?.length === 3 &&
+      original.initial.vKmS?.length === 3 &&
+      [...original.initial.rKm, ...original.initial.vKmS].every(Number.isFinite),
+    'Missing explicit finite initial Cartesian state or initial-domain lineage');
+    const stop = (status: BridgeRecord['status'], reason: string) =>
+      records.push({ id: branch.id, status, reason });
+    if (branch.domain_status === 'CONTRADICTORY') {
+      stop('NOT_RUN_CONTRADICTORY', 'Contradiction among declared premises only');
+      continue;
+    }
+    const bounds: ConditionalVelocityBound[] = [];
+    let failure: BridgeRecord | null = null;
+    const seenParams = new Set<string>();
+    for (const param of branch.parameters) {
+      must(typeof param.name === 'string' && !seenParams.has(param.name),
+        'Duplicate/invalid audit parameter');
+      seenParams.add(param.name);
+      must(AXES.includes(param.name as VelocityAxis),
+        'Unsupported non-velocity parameter; no implicit unit conversion');
+    }
+    for (const axis of AXES) {
+      const param = branch.parameters.find(p => p.name === axis);
+      if (!param?.admissible || param.status === 'EMPTY') {
+        failure = { id: branch.id, status: 'NOT_RUN_INCOMPLETE', reason: 'Missing rational interval for ' + axis };
+        break;
+      }
+      const lineage = branch.trace.filter(t => t.parameter === axis);
+      if (lineage.length === 0) {
+        failure = { id: branch.id, status: 'NOT_RUN_UNTRACED', reason: 'No declared restriction trace for ' + axis };
+        break;
+      }
+      for (const trace of lineage) {
+        must(trace.evidence_id?.trim() && trace.occurrence?.trim() &&
+          trace.source_uri?.trim() && trace.independence_group_declared?.trim() &&
+          trace.lean_ref_declared?.trim() &&
+          ['NOT_RUN', 'CLAIMED'].includes(trace.lean_status_declared),
+        'Invalid or falsely certified restriction trace');
+      }
+      const inside = finiteInside(param.admissible);
+      if (!inside) {
+        failure = { id: branch.id, status: 'NOT_RUN_FLOAT64_PRECISION',
+          reason: 'Exact interval has no representable finite Float64 velocity on ' + axis };
+        break;
+      }
+      bounds.push({
+        axis, lowerKmS: inside[0], upperKmS: inside[1],
+        evidenceOccurrence: lineage.map(t => t.evidence_id + '@' + t.occurrence).join('; '),
+        sourceLineage: 'Declared initial box: ' + original.initialDomainSource +
+          '; restrictions: ' + lineage.map(t => t.source_uri + ' [' + t.independence_group_declared + ']').join('; '),
+        leanPredicate: lineage.map(t => t.lean_ref_declared + ':' + t.lean_status_declared).join('; '),
+        premiseStatus: branch.declared_evidence === 'SYNTHETIC_ONLY' ? 'SYNTHETIC' : 'CONDITIONAL',
+        epochUtc: context.epochUtc, inertialFrame: context.inertialFrame,
+      });
+    }
+    if (failure) { records.push(failure); continue; }
+    alternatives.push({
+      alternativeId: branch.id, sourceLineage: 'Declared domain, not audited: ' + original.initialDomainSource,
+      scenario: { objectNorad: context.objectNorad, epochUtc: context.epochUtc,
+        inertialFrame: context.inertialFrame, initial: original.initial, bounds },
+    });
+    stop('READY_CONDITIONALLY', 'Finite representable subset only; no proof, physical enclosure or 1963 inference');
+  }
+  return {
+    alternatives, records, leanProof: 'NOT_VERIFIED', sourceAuthenticity: 'NOT_VERIFIED',
+    sourceIndependence: 'NOT_VERIFIED', unitFromAuditor: 'NOT_PRESENT',
+    assumedUnit: 'km/s', frameTransformation: 'NOT_RUN',
+    geographicInference: 'NOT_SUPPORTED', exhaustiveEnclosure: false,
+  };
+}
