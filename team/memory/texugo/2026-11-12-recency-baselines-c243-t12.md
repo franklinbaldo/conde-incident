@@ -16,3 +16,6 @@ Espelho numérico secundário oxzoid/Space-Track revisão 4b4fb3a (SHA256 c4bf07
 https://github.com/franklinbaldo/conde-incident/issues/19
 https://github.com/franklinbaldo/conde-incident/pull/20
 https://github.com/franklinbaldo/conde-incident/commit/6c96126627704810a211f06d17ff12a17e7e97a3
+
+## Verificação efetiva posterior à implementação
+CI https://github.com/franklinbaldo/conde-incident/actions/runs/43187482795 SUCCESS no SHA `69e603e351526f0450f6cfb8382b4d5d15fa5071`, 164 testes PASS e replay histórico no Parquet auditado; artefato https://github.com/franklinbaldo/conde-incident/actions/runs/43187482795/artifacts/13929476267. C243-T12: 51 alvos/2 NOT_RUN; RMSE secante 2 épocas 0,0109350675; OLS 3 épocas 0,0145442475; persistência 0,0269039352; quadrático global 0,0749883675; média conjunta 0,0971221597 rev/dia. O dado secundário não implica independência, força, órbita terminal, probabilidade ou impacto. A próxima reconciliação da base #14 cria novo HEAD e exige novo CI.
