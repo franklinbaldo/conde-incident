@@ -42,4 +42,5 @@ python tools/tle_literal_layout.py \
 ```
 
 O workflow `tle-literal-layout.yml` confere checkout no HEAD real e arquiva JSON.
+O ID **C241-L1** está no [suplemento cumulativo de custódia](evidence_matrix_C241-L1_2026-11-12.md), preservando a matriz primária C001–C238 imutável por hash e sem alterar os 241 registros históricos.
 Isso testa o **formato da cópia moderna**, não checksum de 45 TLEs originais.

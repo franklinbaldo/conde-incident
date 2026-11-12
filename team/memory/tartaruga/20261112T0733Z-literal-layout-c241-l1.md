@@ -38,3 +38,7 @@ em PR pequena própria; evitar duplicatas da #14.
 
 Branch/PR: ver PR aberto desta sessão na issue #13. Revisão por Gavião
 retrospectiva caso merge seguro pelo autor.
+
+## Falha intermediária e correção (mesma sessão)
+No HEAD `33319837a6718e802cbb798124b2875ee47cc823`, o nosso workflow [#43210899314](https://github.com/franklinbaldo/conde-incident/actions/runs/43210899314) executou **10/10 testes PASS**, guardando o JSON artefato #13939854607, SHA-256 do ZIP `02cd08c256c81757a98628d40cd0bfebba84d81bf61ceeb984f9085e08ce6586`.
+Mas a edição da matriz principal causou dois gates vermelhos por **Git blob fixado**: [#43210899133](https://github.com/franklinbaldo/conde-incident/actions/runs/43210899133) e [#43210899161](https://github.com/franklinbaldo/conde-incident/actions/runs/43210899161). A matriz original foi reposta *byte a byte*; esta entrada foi movida ao suplemento `research/tle_custody/evidence_matrix_C241-L1_2026-11-12.md`, vinculado pela integração. Não adulterar pin ou calcular novo hash para ocultar o bloqueio. Revalidar HEAD corrigido, inclusive os dois gates falhos, antes de merge.
