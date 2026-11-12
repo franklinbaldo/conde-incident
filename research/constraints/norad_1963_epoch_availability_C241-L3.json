@@ -1,0 +1,70 @@
+{
+  "id": "C241-L3",
+  "kind": "SECONDARY_TEMPORAL_AVAILABILITY",
+  "status": "CONNECTED_PENDING_CALIBRATION",
+  "source": {
+    "url": "https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/4b4fb3a/data/tle_1963.parquet",
+    "sha256": "c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09",
+    "derived_csv_sha256": "3940715d7c15cf15c24e678a8c5b5fbb34a031b3ffd7e33c0580277377383231",
+    "kind": "MODERN_SECONDARY_CATALOG",
+    "upstream": "Space-Track claimed; raw originating records not retrieved"
+  },
+  "occurrences": [
+    {
+      "object_norad": 527,
+      "rows": 21,
+      "distinct_epochs": 20
+    },
+    {
+      "object_norad": 528,
+      "rows": 45,
+      "distinct_epochs": 45
+    },
+    {
+      "object_norad": 529,
+      "rows": 57,
+      "distinct_epochs": 54
+    }
+  ],
+  "observable": {
+    "name": "nearest_catalog_epoch_separation_to_norad_528",
+    "unit": "microseconds",
+    "uncertainty": null,
+    "clock_reference": "UTC catalog epochs; sensor time NOT_AUTHENTICATED",
+    "frame": null,
+    "per_observation_values": "generated only at runtime by cross_object_epoch_support.py; do not replace with synthetic positions"
+  },
+  "candidate_forward_dependency": {
+    "target": "joint 527/528/529 orbital fitting",
+    "latent_parameters": [
+      "actual_tracking_epoch",
+      "instrumental_frame",
+      "sensor_bias",
+      "measurement_covariance",
+      "force_model"
+    ],
+    "equation": "Delta_t_catalog = t_catalog_neighbor - t_catalog_528; no equation linking this alone to simultaneous physical relative position",
+    "missing_bridge": [
+      "raw NORAD/Space-Track 1963 line-pairs and measurement epoch semantics",
+      "sensor and timing biases",
+      "reference frame and fit/model assumptions",
+      "uncertainty or covariance of each epoch/state"
+    ],
+    "lean_4_35_0": "PENDING_SOURCE_CALIBRATION",
+    "active_constraint": false,
+    "admissible_domain_change": "NOT_EVALUABLE",
+    "holdout": "NOT_RUN"
+  },
+  "exclusions": [
+    "NOT_A_MULTI_OBJECT_TRIANGULATION",
+    "NOT_AN_INDEPENDENT_RADAR_DETECTION",
+    "NO_CONDE_TERMINAL_INFERENCE"
+  ],
+  "related": [
+    "C241-L1",
+    "C241-L2",
+    "C241-T3",
+    "C179",
+    "C181"
+  ]
+}

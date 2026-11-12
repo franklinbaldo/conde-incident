@@ -1,0 +1,378 @@
+{
+  "schema": "conde.source-lineages/v1",
+  "families": [
+    {
+      "id": "RADIO_TUPI_FBIS",
+      "kind": "reported_claim",
+      "independence": "KNOWN_DERIVATIVE",
+      "comment": "FBIS transcribes Tupi; source chain does not measure a fallen object."
+    },
+    {
+      "id": "NORAD_NASA_TRACKING",
+      "kind": "orbital_catalogue",
+      "independence": "SHARED_UPSTREAM_POSSIBLE",
+      "comment": "NASA/NORAD/AFSPC/GCAT catalogues may share tracking; distinct releases not independent sensors."
+    },
+    {
+      "id": "DOS_CONSULAR",
+      "kind": "administrative_report",
+      "independence": "DOCUMENTARY_NOT_PHYSICAL",
+      "comment": "Diplomatic summary quotes other people/papers; attachment excerpts are not yet inspected."
+    },
+    {
+      "id": "GFZ_GEOMAGNETIC",
+      "kind": "instrumental_index",
+      "independence": "MEASURED_WEATHER_INDEX_ONLY",
+      "comment": "Ap/Kp are physical environmental indices, not 528 observations."
+    },
+    {
+      "id": "NRC_SOLAR_FLUX",
+      "kind": "instrumental_index",
+      "independence": "MEASURED_WEATHER_INDEX_ONLY",
+      "comment": "F10.7 measurement does not locate the reentry."
+    },
+    {
+      "id": "CELESTRAK_AGGREGATED",
+      "kind": "compiled_environment",
+      "independence": "KNOWN_DERIVATIVE",
+      "comment": "Repackages GFZ and NRC data, not a third primary series."
+    },
+    {
+      "id": "NOAA_IGRA_RECIFE",
+      "kind": "radiosonde_archive",
+      "independence": "MEASURED_IN_RECIFE_ONLY",
+      "comment": "Radiosonde historical wind levels in Recife; not measured at Conde."
+    }
+  ],
+  "sources": [
+    {
+      "id": "RADIO_TUPI_19631108",
+      "family": "RADIO_TUPI_FBIS",
+      "work_id": "TUPI_TRANSMISSION_19631108",
+      "url": null,
+      "locator": "Transmissão relatada às 23h30, 8/11/1963 (horário a auditar)",
+      "status": "ORIGINAL_AUDIO_NOT_RECOVERED"
+    },
+    {
+      "id": "FBIS_EOP_UAP_D001",
+      "family": "RADIO_TUPI_FBIS",
+      "work_id": "FBIS_TUPI_TRANSCRIPT",
+      "url": "https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf",
+      "locator": "Transcrição do boletim Tupi no dossiê NASC; leitura do documento em C01–C03",
+      "status": "ORIGINAL_DOCUMENT_REPORTS_BROADCAST_NOT_OBSERVATION"
+    },
+    {
+      "id": "DOS_A628_19631120",
+      "family": "DOS_CONSULAR",
+      "work_id": "DOS_A628_19631120",
+      "url": "https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D002_Diplomatic-Cable_Brazil_November-20-1963.pdf",
+      "locator": "Despacho A-628, 20/11/1963, cita jornais baianos sem anexos visíveis",
+      "status": "ORIGINAL_DIPLOMATIC_SUMMARY_CLIPPINGS_NOT_INSPECTED"
+    },
+    {
+      "id": "DN_SALVADOR_19631109",
+      "family": "DOS_CONSULAR",
+      "work_id": "DN_19631109",
+      "url": null,
+      "locator": "Diário de Notícias, Salvador, 09/11/1963, recorte mencionado no A-628",
+      "status": "CLIPPING_NOT_INSPECTED"
+    },
+    {
+      "id": "JB_SALVADOR_19631111",
+      "family": "DOS_CONSULAR",
+      "work_id": "JB_19631111",
+      "url": null,
+      "locator": "Jornal da Bahia, 11/11/1963, recorte mencionado no A-628",
+      "status": "CLIPPING_NOT_INSPECTED"
+    },
+    {
+      "id": "NASA_SSR_19631115",
+      "family": "NORAD_NASA_TRACKING",
+      "work_id": "NASA_SSR_VOL3_22",
+      "url": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf",
+      "locator": "NASA SSR vol.3 nº22, 15/11/1963, p. impressa 8, DECAYED OBJECTS",
+      "status": "1963_DOCUMENT_DATE_ONLY_NO_TERMINAL_PLACE"
+    },
+    {
+      "id": "NTRS_19640001198",
+      "family": "NORAD_NASA_TRACKING",
+      "work_id": "NASA_SSR_VOL3_22",
+      "url": "https://ntrs.nasa.gov/citations/19640001198",
+      "locator": "Ficha arquivística do MESMO vol.3 nº22; não segunda publicação física",
+      "status": "CATALOGUE_ENTRY_SAME_WORK"
+    },
+    {
+      "id": "NASA_SSR_19631130",
+      "family": "NORAD_NASA_TRACKING",
+      "work_id": "NASA_SSR_VOL3_23",
+      "url": "https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf",
+      "locator": "NASA SSR vol.3 nº23, 30/11/1963; atualização de lista",
+      "status": "ORIGINAL_DOCUMENT_NEW_EDITION_SHARED_TRACKING"
+    },
+    {
+      "id": "AFSPC_MIRROR_528",
+      "family": "NORAD_NASA_TRACKING",
+      "work_id": "AFSPC_TLE_528_19631027",
+      "url": "https://www.itau.magnetic-declination.com/satellite/?s=528",
+      "locator": "TLE secundário de NORAD 528, epoch 27/10/1963 14:40:16.132512 UTC",
+      "status": "SECONDARY_MIRROR_ORIGINAL_TRACKING_UNVERIFIED"
+    },
+    {
+      "id": "AFSPC_MIRROR_529",
+      "family": "NORAD_NASA_TRACKING",
+      "work_id": "AFSPC_TLE_529_19631230",
+      "url": "https://www.itau.magnetic-declination.com/satellite/?s=529",
+      "locator": "TLE secundário de NORAD 529, epoch 30/12/1963, não coetâneo com 528",
+      "status": "SECONDARY_MIRROR_DIFFERENT_OBJECT_EPOCH"
+    },
+    {
+      "id": "GFZ_KP_AP_SERIES",
+      "family": "GFZ_GEOMAGNETIC",
+      "work_id": "GFZ_KP_AP_HISTORICAL_SERIES",
+      "url": "https://www-app3.gfz-potsdam.de/kp_index/Kp_ap_Ap_SN_F107_since_1932.txt",
+      "locator": "Índices planetários 29/10 e 08/11/1963, Ap/Kp",
+      "status": "HISTORIC_INSTRUMENTAL_INDEX"
+    },
+    {
+      "id": "NRC_F107_SERIES",
+      "family": "NRC_SOLAR_FLUX",
+      "work_id": "NRC_F107_HISTORICAL_SERIES",
+      "url": "https://spaceweather.gc.ca/solar_flux_data/daily_flux_values/F107_1947_1996.txt",
+      "locator": "Fluxo solar F10.7 27/10 e 08/11/1963",
+      "status": "HISTORIC_INSTRUMENTAL_INDEX"
+    },
+    {
+      "id": "CELESTRAK_SPACE_WEATHER",
+      "family": "CELESTRAK_AGGREGATED",
+      "work_id": "CELESTRAK_SPACEWEATHER_AGGREGATION",
+      "url": "https://celestrak.org/SpaceData/SpaceWx-format.php",
+      "locator": "Documentação de agregação de Ap/Kp e F10.7 (não observação adicional)",
+      "status": "DERIVED_AGGREGATOR"
+    },
+    {
+      "id": "NOAA_IGRA_RECIFE_1963",
+      "family": "NOAA_IGRA_RECIFE",
+      "work_id": "IGRA_BRM00082900_PROFILE_19631108",
+      "url": "https://www.ncei.noaa.gov/pub/data/igra/data/data-por/BRM00082900-data.txt.zip",
+      "locator": "NOAA IGRA BRM00082900, 08/11/1963, 5 níveis 850–250 hPa; hora real RELTIME ausente",
+      "status": "HISTORICAL_WIND_MEASUREMENT_RECIFE_NOT_CONDE"
+    }
+  ],
+  "dependencies": [
+    {
+      "from": "FBIS_EOP_UAP_D001",
+      "to": "RADIO_TUPI_19631108",
+      "kind": "transcribes"
+    },
+    {
+      "from": "DOS_A628_19631120",
+      "to": "DN_SALVADOR_19631109",
+      "kind": "quotes_uninspected_source"
+    },
+    {
+      "from": "DOS_A628_19631120",
+      "to": "JB_SALVADOR_19631111",
+      "kind": "quotes_uninspected_source"
+    },
+    {
+      "from": "NTRS_19640001198",
+      "to": "NASA_SSR_19631115",
+      "kind": "catalogue_of_same_work"
+    },
+    {
+      "from": "NASA_SSR_19631130",
+      "to": "NASA_SSR_19631115",
+      "kind": "later_issue_same_series"
+    },
+    {
+      "from": "CELESTRAK_SPACE_WEATHER",
+      "to": "GFZ_KP_AP_SERIES",
+      "kind": "aggregates_from"
+    },
+    {
+      "from": "CELESTRAK_SPACE_WEATHER",
+      "to": "NRC_F107_SERIES",
+      "kind": "aggregates_from"
+    }
+  ],
+  "citations": [
+    {
+      "occurrence": "C01#1",
+      "source_id": "FBIS_EOP_UAP_D001",
+      "relation": "reported_claim",
+      "scope": "TRANSMISSION_REPORTED_ONLY"
+    },
+    {
+      "occurrence": "C02#1",
+      "source_id": "FBIS_EOP_UAP_D001",
+      "relation": "reported_claim",
+      "scope": "TRANSMISSION_REPORTED_ONLY"
+    },
+    {
+      "occurrence": "C03#1",
+      "source_id": "FBIS_EOP_UAP_D001",
+      "relation": "reported_claim",
+      "scope": "TRANSMISSION_REPORTED_ONLY"
+    },
+    {
+      "occurrence": "C05#1",
+      "source_id": "DOS_A628_19631120",
+      "relation": "quotes_uninspected_source",
+      "scope": "DENIAL_REPORTED_CLIPPING_MISSING"
+    },
+    {
+      "occurrence": "C06#1",
+      "source_id": "DOS_A628_19631120",
+      "relation": "quotes_uninspected_source",
+      "scope": "JOURNALIST_ACCOUNT_REPORTED_CLIPPING_MISSING"
+    },
+    {
+      "occurrence": "C17#1",
+      "source_id": "GFZ_KP_AP_SERIES",
+      "relation": "measured_index",
+      "scope": "SPACE_WEATHER_NOT_ORBIT"
+    },
+    {
+      "occurrence": "C18#1",
+      "source_id": "GFZ_KP_AP_SERIES",
+      "relation": "measured_index",
+      "scope": "SPACE_WEATHER_NOT_ORBIT"
+    },
+    {
+      "occurrence": "C19#1",
+      "source_id": "NRC_F107_SERIES",
+      "relation": "measured_index",
+      "scope": "SPACE_WEATHER_NOT_ORBIT"
+    },
+    {
+      "occurrence": "C23#1",
+      "source_id": "CELESTRAK_SPACE_WEATHER",
+      "relation": "refutes_independence",
+      "scope": "AGGREGATE_IS_NOT_THIRD_PRIMARY_OBSERVATION"
+    },
+    {
+      "occurrence": "C131#1",
+      "source_id": "NASA_SSR_19631115",
+      "relation": "catalogued_day",
+      "scope": "CATALOGUED_DAY_ONLY"
+    },
+    {
+      "occurrence": "C149#1",
+      "source_id": "NOAA_IGRA_RECIFE_1963",
+      "relation": "measured_environment",
+      "scope": "RECIFE_ONLY_NO_CONDE_INFERENCE"
+    },
+    {
+      "occurrence": "C150#1",
+      "source_id": "NOAA_IGRA_RECIFE_1963",
+      "relation": "metadata_limit",
+      "scope": "RELTIME_UNKNOWN"
+    },
+    {
+      "occurrence": "C151#1",
+      "source_id": "NOAA_IGRA_RECIFE_1963",
+      "relation": "measured_environment",
+      "scope": "RECIFE_ONLY_NO_CONDE_INFERENCE"
+    },
+    {
+      "occurrence": "C179#1",
+      "source_id": "AFSPC_MIRROR_528",
+      "relation": "secondary_orbital_elements",
+      "scope": "MEAN_ELEMENTS_NOT_TRACKING_OBSERVATION"
+    },
+    {
+      "occurrence": "C180#1",
+      "source_id": "AFSPC_MIRROR_529",
+      "relation": "secondary_orbital_elements",
+      "scope": "NOT_COEPOCHAL_528"
+    },
+    {
+      "occurrence": "C182#1",
+      "source_id": "NASA_SSR_19631115",
+      "relation": "archival_status",
+      "scope": "IN_ORBIT_LIST_NOT_REENTRY_TIME"
+    },
+    {
+      "occurrence": "C183#1",
+      "source_id": "NASA_SSR_19631130",
+      "relation": "archival_status",
+      "scope": "NEW_EDITION_SAME_TRACKING_FAMILY"
+    },
+    {
+      "occurrence": "C184#1",
+      "source_id": "NASA_SSR_19631115",
+      "relation": "conditional_comparison",
+      "scope": "SUPERSEDED_BY_C197_C200"
+    },
+    {
+      "occurrence": "C197#1",
+      "source_id": "NASA_SSR_19631115",
+      "relation": "catalogued_day",
+      "scope": "CATALOGUED_DAY_ONLY"
+    },
+    {
+      "occurrence": "C198#1",
+      "source_id": "NTRS_19640001198",
+      "relation": "archive_metadata",
+      "scope": "SAME_WORK_NOT_SECOND_INSTRUMENT"
+    },
+    {
+      "occurrence": "C199#1",
+      "source_id": "NASA_SSR_19631130",
+      "relation": "edition_control",
+      "scope": "ADDITIVE_UPDATE_NOT_INDEPENDENT_SENSOR"
+    },
+    {
+      "occurrence": "C200#1",
+      "source_id": "NASA_SSR_19631115",
+      "relation": "corrects_prior_interpretation",
+      "scope": "CORRECTS_C182_C184"
+    },
+    {
+      "occurrence": "C201#1",
+      "source_id": "NASA_SSR_19631115",
+      "relation": "shared_upstream",
+      "scope": "COMPILED_NORAD_SAO_NO_INDEPENDENCE_PROVEN"
+    },
+    {
+      "occurrence": "C238#1",
+      "source_id": "NASA_SSR_19631115",
+      "relation": "documentary_comparison",
+      "scope": "NO_LINK_TO_CONDE_PHYSICAL_EVENT"
+    }
+  ],
+  "contracts": [
+    {
+      "id": "C179_ORBITAL_GRAPH",
+      "path": "research/constraints/ssr_1963_observable_graph.json",
+      "occurrences": [
+        "C179#1",
+        "C197#1"
+      ],
+      "status": "CANDIDATE_NOT_ACTIVATED",
+      "scope": "Derived field graph and NASA date, no calibrated constraint"
+    },
+    {
+      "id": "C179_C151_BRIDGE",
+      "path": "formal/scripts/physical_observable_bridge.py",
+      "occurrences": [
+        "C179#1",
+        "C151#1"
+      ],
+      "status": "DERIVED_ONLY_NO_CONDE_TRANSFER",
+      "scope": "Kepler J2 proxy and Recife winds; never location."
+    },
+    {
+      "id": "C197_DOCUMENTARY",
+      "path": "research/evidence_matrix_C001-C238_2026-11-11.md",
+      "occurrences": [
+        "C131#1",
+        "C197#1",
+        "C198#1",
+        "C200#1"
+      ],
+      "status": "DOCUMENTARY_DAY_ONLY",
+      "scope": "NASA 8 NOV 63 is a catalogue date, not terminal observation."
+    }
+  ]
+}

@@ -13,6 +13,7 @@ import {
   HelpCircle,
 } from 'lucide-react';
 import { EPISTEMIC_AUDIT_LOG } from '../lib/constants';
+import { SourceCitationFeed } from './SourceCitationFeed';
 import { EpistemicClassification } from '../types/astrodynamics';
 
 interface DocumentArchiveProps {
@@ -149,6 +150,9 @@ export const DocumentArchive: React.FC<DocumentArchiveProps> = ({ lang }) => {
           </p>
         </div>
       </div>
+
+      {/* Curated documentary context is independent of the legacy illustrative dossier cards. */}
+      <SourceCitationFeed lang={lang} />
 
       {/* Epistemological Badges Legend */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">

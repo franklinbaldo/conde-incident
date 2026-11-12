@@ -167,5 +167,33 @@ class CumulativeConstraintGraphTests(unittest.TestCase):
             validate(bad)
 
 
+    def test_new_id_cannot_duplicate_same_published_observation(self):
+        bad = copy.deepcopy(self.graph)
+        forged = copy.deepcopy(bad["observations"][0])
+        forged["id"] = "SSR-FORGED-SECOND-COPY"
+        forged["variable_id"] = "forged_duplicate_variable"
+        forged["matrix_local_id"] = "FORGED-C999#1"
+        bad["observations"].append(forged)
+        with self.assertRaisesRegex(ValueError, "duplicate source/table observation"):
+            validate(bad)
+
+    def test_conflicting_values_from_same_source_table_are_not_independent(self):
+        bad = copy.deepcopy(self.graph)
+        forged = copy.deepcopy(bad["observations"][0])
+        forged["id"] = "SSR-FORGED-CONFLICT"
+        forged["value"] += 42.0
+        bad["observations"].append(forged)
+        with self.assertRaisesRegex(ValueError, "duplicate source/table observation"):
+            validate(bad)
+
+    def test_finite_reported_value_cannot_overflow_to_infinite_canonical_value(self):
+        bad = copy.deepcopy(self.graph)
+        row = bad["observations"][0]
+        self.assertEqual(row["unit"], "min")
+        row["value"] = 1e308
+        with self.assertRaisesRegex(ValueError, "non-finite canonical converted measurement"):
+            validate(bad)
+
+
 if __name__ == "__main__":
     unittest.main()

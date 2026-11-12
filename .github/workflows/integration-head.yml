@@ -31,6 +31,15 @@ jobs:
         run: bun run lint
       - name: Build Vite frontend
         run: bun run build
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Execute all Python unittest suites (fail closed)
+        shell: bash
+        run: |
+          # Do not report a green gate when test discovery finds no files.
+          test -n "$(find tests -type f -name 'test_*.py' -print -quit)"
+          python3 -m unittest discover -s tests -p 'test_*.py' -v
       - name: Execute present Node regression suites
         shell: bash
         run: |
