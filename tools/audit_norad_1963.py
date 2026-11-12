@@ -318,7 +318,7 @@ def write_outputs(rows: list[dict], report: dict, target: Path, checks: dict[str
         "url": SOURCE_URL, "source_format": "Parquet numérico espelhado",
         "hashes": checks, "original_tle_lines_available": False,
         "derived_from": "alegado Space-Track bulk export; origem primária não auditada",
-        "float_precision_warning": "float32 do espelho não restaura dígitos TLE originais",
+        "float_precision_warning": "angulos/e float32, mean_motion float64; seis valores podem preservar a grade decimal, mas NAO os bytes line1/line2, checksums e metadados NORAD; ver C241-T6",
     }
     (target / "audit.json").write_text(
         json.dumps(report, indent=2, ensure_ascii=False, sort_keys=True) + "\n", encoding="utf-8")
