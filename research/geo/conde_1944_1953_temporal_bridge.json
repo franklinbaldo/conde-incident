@@ -1,0 +1,90 @@
+{
+  "schema": "conde.gis.historical-statutes-bridge/v1",
+  "id": "CGEO-09",
+  "event_date": "1963-11-08",
+  "jurisdiction": {"name": "Conde", "state": "BA", "ibge_code": "2908606"},
+  "sources": [
+    {
+      "id": "BA-DEC-12978-1944-ANNEX2-LXXIII",
+      "act_date": "1944-06-01",
+      "kind": "NONOFFICIAL_DIGITAL_REPUBLICATION_OF_LAW",
+      "url": "https://leisestaduais.com.br/ba/decreto-n-12978-1944-bahia-retifica-o-decreto-lei-n-141-de-31-de-dezembro-de-1943-que-fixou-a-divisao-administrativa-e-judiciaria-do-estado-da-bahia-a-vigorar-sem-alteracao-ate-31-de-dezembro-de-1943",
+      "locator": "Anexo 2, LXXIII - Municipio de Jandaira, alinea a, limite municipal item 4 com Conde",
+      "inspection": "SEARCH_INDEXED_TRANSCRIPTION_ONLY",
+      "original_publication_pdf_sha256": null,
+      "original_facsimile_inspected": false,
+      "claim": "A divisa descrita sob Jandaira menciona foz do rio Itapicuru no oceano, rio Pirangi, riacho da Baixa da Vitorina, nascente do riacho das Pedras e marco no rio Caranguejo/Branco.",
+      "reliability_limit": "Reproducao pode conter erros de OCR, grafia e paginacao; custodia original e retificacoes pendentes."
+    },
+    {
+      "id": "BA-LEI-628-1953-TEXT",
+      "act_date": "1953-12-30",
+      "kind": "NONOFFICIAL_DIGITAL_REPUBLICATION_OF_LAW_WITHOUT_ANNEXES",
+      "url": "https://leisestaduais.com.br/ba/lei-ordinaria-n-628-1953-bahia-fixa-a-divisao-territorial-administrativa-do-estado-da-bahia-a-vigorar-de-01-de-janeiro-de-1954-a-31-de-dezembro-de-1958",
+      "locator": "Ementa e art. 1 (1954-1958); art. 2 (anexos I-VI); nota editorial de anexos na Assembleia",
+      "inspection": "SEARCH_INDEXED_TRANSCRIPTION_ONLY",
+      "original_publication_pdf_sha256": null,
+      "original_facsimile_inspected": false,
+      "annexes_present_in_republication": false,
+      "stated_division_period_start": "1954-01-01",
+      "stated_division_period_end": "1958-12-31",
+      "period_after_1958_legal_continuity_proven": false,
+      "claim": "Art.1 situa divisao administrativa de 1954 a 1958 e remete a quadro anexo; art.2 menciona anexos adicionais ausentes na transcricao consultada.",
+      "reliability_limit": "O periodo expresso nao prova cessacao material das divisas em 1959 nem permanencia inalterada em 1963."
+    },
+    {
+      "id": "BA-SEPLAN-SEI-2013-06-26",
+      "act_date": "2013-06-26",
+      "kind": "OFFICIAL_STATE_NEWS_SECONDARY_HISTORICAL_ACCOUNT",
+      "url": "https://www.ba.gov.br/seplan/noticias/sei-lanca-canal-de-informacoes-sobre-limites-intermunicipais",
+      "locator": "SEPLAN/SEI, noticia de 26/06/2013 sobre revisao dos limites",
+      "inspection": "SEARCH_INDEXED_OFFICIAL_PUBLICATION",
+      "original_publication_pdf_sha256": null,
+      "original_facsimile_inspected": false,
+      "claim": "A noticia atribui a 1953 a ultima revisao geral dos limites estaduais anteriores ao novo programa.",
+      "reliability_limit": "Fonte posterior ao evento nao substitui lei original/anexos e nao resolve atos pontuais."
+    }
+  ],
+  "boundary_1944_topology": {
+    "source_id": "BA-DEC-12978-1944-ANNEX2-LXXIII",
+    "named_jurisdiction_in_heading": "Jandaira",
+    "adjacent_jurisdiction_in_section": "Conde",
+    "route_order_hydronyms": [
+      "oceano Atlantico / foz do rio Itapicuru",
+      "rio Itapicuru / foz do rio Pirangi",
+      "rio Pirangi / foz do riacho da Baixa da Vitorina",
+      "riacho da Baixa da Vitorina / nascente",
+      "nascente do riacho das Pedras",
+      "marco a margem do riacho Caranguejo do rio Branco"
+    ],
+    "transcription_only": true,
+    "all_intermediate_vertices_available": false,
+    "coordinates": null,
+    "coordinate_datum": null,
+    "coordinate_epoch": null,
+    "positional_accuracy_m": null,
+    "geometry": null,
+    "georeferencing_authorized": false,
+    "relationship_to_2017": "Toponimos hidrograficos parcialmente coincidentes com CGEO-06, sem identidade geodesica demonstrada."
+  },
+  "dependency_graph": {
+    "prior_ids": ["C24", "CGEO-05", "CGEO-06", "CGEO-08"],
+    "links": [
+      {"source_id": "BA-DEC-12978-1944-ANNEX2-LXXIII", "target": "topology_of_jandaira_conde_border_1944", "type": "INDIRECT_TRANSCRIPTION"},
+      {"source_id": "BA-LEI-628-1953-TEXT", "target": "legal_division_1954_1958", "type": "INDIRECT_TRANSCRIPTION_MISSING_ANNEX"},
+      {"source_id": "BA-SEPLAN-SEI-2013-06-26", "target": "historical_account_last_general_revision_1953", "type": "OFFICIAL_LATE_SECONDARY"},
+      {"source_id": "BA-ALEBA-LEI-13720-2017-DO-22166", "target": "legal_2017_cgeo06", "type": "ALREADY_CUSTODIED_NOT_NEW_INDEPENDENT_OBSERVATION"}
+    ],
+    "requires_for_event_date": [
+      "authentic_1944_legal_annex_and_relevant_errata",
+      "authentic_1953_legal_annex_and_relevant_errata",
+      "relevant_1959_1963_intervening_acts_and_continuity",
+      "spatial_anchor_datum_georeferencing_and_error",
+      "event_position_and_reference_frame"
+    ],
+    "boundary_1963": null,
+    "can_constrain_orbital_reentry_1963": false,
+    "new_geometric_constraint_activated": false,
+    "status": "CONNECTED_PENDING_PRIMARY_ANNEX_CONTINUITY_AND_GEOREFERENCE"
+  }
+}
