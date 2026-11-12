@@ -1,0 +1,46 @@
+name: Gaviao Caderno 11 - independent next-epoch SVD audit
+on:
+  push:
+    branches: [gaviao/ch11-independent-prequential-20261112]
+  pull_request:
+    paths:
+      - 'tools/gaviao_ch11_prequential.py'
+      - 'tests/test_gaviao_ch11_prequential.py'
+      - 'research/gaviao_ch11_review.md'
+      - 'team/memory/gaviao/**'
+      - '.github/workflows/gaviao-ch11-independent.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check-next-epoch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+      - name: Verify exact proposed SHA, not synthetic merge
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          echo "TESTED_SHA=$(git rev-parse HEAD)"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pinned SVD and Parquet dependencies
+        run: python -m pip install --disable-pip-version-check numpy==2.2.6 pyarrow==21.0.0
+      - name: Independent synthetic and adversarial tests
+        run: python -m unittest discover -s tests -p 'test_gaviao_ch11_prequential.py' -v
+      - name: Original secondary Parquet SHA256-verified replay
+        run: python tools/gaviao_ch11_prequential.py --output "$RUNNER_TEMP/gaviao-ch11-independent.json"
+      - name: Preserve paired scores and irregular horizon strata
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gaviao-ch11-next-epoch-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ${{ runner.temp }}/gaviao-ch11-independent.json
+          if-no-files-found: warn
+          retention-days: 30
