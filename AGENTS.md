@@ -2,11 +2,12 @@
 
 Scope: **franklinbaldo/conde-incident only**. The separate blog is read-only; do not publish or alter it. Do not contact archives, researchers or individuals without specific authorization.
 
-## Decisão arquitetural editorial: Zola (11/11/2026)
-- O **Caderno de histórias / blog do Conde usa Zola** para conteúdo Markdown, templates e build estático. React/Vite permanece reservado às visualizações científicas interativas; não criar um segundo motor de publicação de histórias em React.
-- Usar GitHub Actions para validar e construir Zola; publicar no GitHub Pages somente a partir da `main` após merge, com `base_url` e caminhos compatíveis com `/conde-incident/`. Verificar a fonte Pages e o deploy real antes de afirmar que o site foi publicado.
-- Uma história por PR, com novidade verificável desde a publicação anterior, fontes e grau de certeza explícitos, revisão independente de Gavião e CI verde no SHA final. Reconciliação com a PR #1 deve preservar Evidências e Caderno.
-- A Coruja responde pelo texto e estrutura editorial Zola; Raposa responde pela apresentação e integração com visualizações React. Não modificar o blog pessoal.
+## Decisão arquitetural editorial: SSG em Rust (11/11/2026, substitui Zola)
+- O proprietário escolheu **SSG**, crate Rust `ssg` ([documentação](https://docs.rs/ssg/latest/ssg/)), para gerar o **Caderno de histórias e as páginas estáticas do Conde** a partir de Markdown com frontmatter YAML e templates MiniJinja. A decisão anterior por Zola foi revogada; **não** introduzir um pipeline Zola paralelo.
+- Preservar o aplicativo científico React/Vite sob `/conde-incident/lab/`; a saída estática do SSG fornece a navegação para Evidências e Caderno. Reconciliar as PRs #1 e #3 sem perder nenhuma seção.
+- A versão SSG é pré-1.0: fixar **versão exata** no workflow GitHub Actions, verificar o CLI efetivamente instalado no job e testar `ssg check`/`ssg build`/`ssg audit` com sintaxe conferida em `ssg --help`, sem supor compatibilidade entre atualizações.
+- GitHub Pages deve publicar **somente após merge/push em `main`**. Em PR, apenas build e verificações. Validar todos os capítulos, links, assets e subpath `/conde-incident/`, e confirmar fonte Pages por GitHub Actions e deployment público real no SHA de `main`; nunca declarar publicação sem isso.
+- Uma história nova por PR apenas com avanço verificável desde a anterior, fonte e grau de certeza, revisão independente do 🦅 Gavião e CI verde no SHA definitivo. 🦉 Coruja mantém os artigos e a migração editorial na PR #3; 🦊 Raposa mantém a navegação, apresentação e integração com o laboratório. Não modificar o blog pessoal.
 
 ## Source and epistemic rules
 - Prioritize original 1963 source facsimiles and raw historical Space-Track data; preserve exact URL, issue/date/page or TLE epoch, checksum and provenance.
