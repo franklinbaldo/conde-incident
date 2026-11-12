@@ -10,7 +10,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from audit_norad_1963 import (check_numeric, digest, epoch_utc, extract_rows, verified_bytes,
     tle_checksum, validate_raw_tle, tle_epoch_utc, angular_distance_deg,
     compare_secondary_528, legacy_raan_epoch_audit, TLE_EPOCH_QUANTUM_US,
-    TLE_EPOCH_HALF_QUANTUM_US, write_outputs)
+    TLE_EPOCH_HALF_QUANTUM_US, write_outputs, assert_audit_valid)
 
 
 class DummyTable:
@@ -172,6 +172,19 @@ class Custody(unittest.TestCase):
         self.assertEqual(meta["duplicate_epochs"]["528"], 1)
         self.assertEqual(len(meta["duplicate_epoch_conflicts"]), 1)
         self.assertEqual(meta["duplicate_epoch_conflicts"][0]["source_rows"], [1, 2])
+
+    def test_conflicting_duplicate_epoch_fails_gate_not_only_report(self):
+        rows, meta = extract_rows(DummyTable([
+            record(527), record(528), record(528, raan=284.152), record(529)
+        ]))
+        self.assertEqual(len(rows), 4)
+        with self.assertRaisesRegex(ValueError, "estados conflitantes"):
+            assert_audit_valid(meta)
+        clean_rows, clean_meta = extract_rows(DummyTable([
+            record(527), record(528), record(528), record(529)
+        ]))
+        self.assertEqual(len(clean_rows), 4)
+        assert_audit_valid(clean_meta)  # duplicata identica nao eh conflito
 
     def test_csv_528_ledger_has_own_reproducible_sha256(self):
         rows, meta = extract_rows(DummyTable([record(527), record(528), record(529)]))

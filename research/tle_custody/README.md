@@ -268,3 +268,76 @@ registros com timestamps iguais no espelho secundário pinado,
 não ausência de rastreamento histórico nem impossibilidade de ajuste
 conjunto. O conjunto de linhas próximas é documental, não restrição
 Lean física; não resolve o conflito RAAN nem prova impacto.
+
+
+## C241-T4: grade temporal TLE e gate para epocas contraditorias (12/11/2026 UTC)
+
+**Pergunta estrita:** os carimbos UTC do CSV secundario, sem recuperar line1/line2, sao *representaveis* pela grade de 8 casas decimais do dia do formato TLE (864 microssegundos por unidade a partir de 00:00 UTC)? A [especificacao CelesTrak](https://celestrak.org/columns/v04n03/) define o campo da linha 1, colunas 21–32; e **documentacao tecnica posterior**, nao um boletim NORAD de 1963.
+
+Fatia verificavel: [tools/tle_epoch_grid_audit.py](../../tools/tle_epoch_grid_audit.py), [seis contraprovas sinteticas](../../tests/test_tle_epoch_grid_audit.py) e um teste de contradicao de estados no extrator. A ferramenta exige o CSV integral SHA-256 `3940715d7c15cf15c24e678a8c5b5fbb34a031b3ffd7e33c0580277377383231`, conserva `source_row`, verifica UTC sem float e publica `tle_epoch_grid_report.json`. **Novo gate fail-closed:** estados numericos distintos para mesmo NORAD+epoca deixam `audit.json` rastreavel, mas agora impedem sucesso do script; duplicatas identicas nao falham.
+
+**Resultado empirico no arquivo fixado:** [CI custodia #43136329241](https://github.com/franklinbaldo/conde-incident/actions/runs/43136329241), commit de codigo `e96c54871c25de56336a042778071154eaa33d06`, **46/46 testes PASS**, Parquet e CSV fonte SHA-256 conferidos. Todos os **123/123 carimbos** caem *exatamente* na grade: 527 **21/21** (20 epocas distintas), 528 **45/45** (45), 529 **57/57** (54). Desvio maximo: **0 µs**, nenhum `OFF_GRID`; zero conflito de duplicata no espelho validado. [Verificacoes cientificas #43136329367](https://github.com/franklinbaldo/conde-incident/actions/runs/43136329367) aprovaram no mesmo SHA. Uma hipotese testavel (compatibilidade representacional com epoca codificada em 8 decimais) **nao foi falsificada**; isso **nao** demonstra que essas 123 linhas tenham sido originadas de TLEs primarios, e muito menos que 45 observacoes instrumentais individuais sobrevivam.
+
+```bash
+python -m unittest discover -s tests -p 'test_*.py' -v
+python tools/tle_epoch_grid_audit.py \
+  --csv /tmp/norad-1963-audit/norad_527_528_529_1963_numeric.csv \
+  --output /tmp/norad-1963-audit/tle_epoch_grid_report.json
+```
+
+**Linhagem de dados:** fonte secundaria [oxzoid Parquet 1963](https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/main/data/tle_1963.parquet) (revisao 4b4fb3a, SHA-256 `c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09`) → [extrator com verificacao de hash](../../tools/audit_norad_1963.py) → CSV fixado → analise exata em microssegundos → JSON arquivado por GitHub Actions. Nenhum ramo fornece aqui transcricao coeva independente. O [NASA Satellite Situation Report de 15/11/1963, p.8](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf) continua sendo documento primario **somente para o dia de decaimento** (08/11), nao para essas epocas ou um local de impacto. CelesTrak instrui o *formato* e nao atesta o acervo.
+
+**Nao inferir** origem original de line1/line2, checksum de 45 pares, TEME historico, frame, sistema de rastreamento, precisao observacional, componente material 528 ou derivadas orbitais. O dominio nao vazio encontrado e de **representacao documental**, sem restricao numerica fisica adicional em Lean 4.35.0 ou no simulador; nao ha dominio dinamico admissivel novo. O conflito **RAAN 198,5261° versus 284,1520° permanece aberto**. Faltam os originais NORAD/AFSPC com epocas, metadados de frame, incerteza e procedencia, a identidade fisica S00528 e observacoes terminais independentes. Resultado relativo a Conde: **INDETERMINADO**.
+
+
+## C241-T5 — integridade de colunas dos pares TLE literais (12/11/2026 UTC, 🐢)
+
+**Questão:** uma linha com checksum correto pode ainda conter um campo fisicamente inválido, corrupto ou deslocado? **Sim:** o algoritmo de checksum soma dígitos e sinais `-` em quaisquer posições, sem verificar significado, calendário, separadores, faixas ou consistência entre as duas linhas. Por isso `checksum == PASS` isoladamente não é validação do vetor. A nova contraprova modifica uma RAAN para `284.1520°`, recalcula o checksum e ainda obtém linha sintaticamente válida: **o dígito não decide qual RAAN veio do NORAD**.
+
+- Fonte numérica literal fixada: [espelho itau S00528](https://www.itau.magnetic-declination.com/satellite/?s=528), `research/tle_custody/mirror_528_1963-10-27.tle`, SHA-256 `18cf11665e061b5ec8679242e10b00b82accf29bc6f0b9b7b6330b9c44e341cd`; somente **um** par, a época de 27/10, não os 45 originais.
+- Especificação de representação utilizada: [CelesTrak, TLE format](https://celestrak.org/columns/v04n03/), **posterior a 1963**. Testa 69 colunas ASCII, prefixos 1/2, números de catálogo coincidentes, campos de designador/época com dia válido, separadores e quantização decimal, inclinação/RAAN/excentricidade, movimento médio positivo e notação compacta de n-double-dot/BSTAR; preserva os tokens brutos, `epoch_utc`, unidades, checksum lido/calculado e SHA-256 de ambas as linhas no JSON.
+- `tools/tle_literal_layout.py` **não** reconstitui linhas a partir de floats do Parquet. `validate_raw_tle`, usado no confronto dos espelhos, agora só admite par literal depois do gate de estrutura. `tests/test_tle_literal_layout.py` cria **somente mutações sintéticas com checksums recalculados** e as rejeita quando o conteúdo é inconsistente; diferenças de RAAN válidas são preservadas como conflito de origem.
+- Reproduzir: `python -m unittest discover -s tests -p 'test_*.py' -v` e `python tools/tle_literal_layout.py --pair research/tle_custody/mirror_528_1963-10-27.tle --output /tmp/secondary_528_literal_fields.json`. O workflow de custódia arquiva esse JSON sob o SHA do **HEAD** da PR. O JSON do caso literal registra 528, `63300.61129783`, `1963-10-27T14:40:16.132512Z`, RAAN `198.5261°`, checksum `0/4`, conflito `UNRESOLVED` e `NOT_VERIFIED` para origem NORAD/frame.
+- Dependência: espelho itau e Parquet oxzoid podem remontar ao mesmo sistema Space-Track. A especificação CelesTrak é regra de formato, não sensor independente. **Documentos primários ainda ausentes:** line1/line2 originais para cada época de 527/528/529, seus checksums históricos, indicação de quadro e metadados do rastreamento, documento de peça S00528, fonte de `284.1520°`. Nenhum desses itens foi inferido do teste. NASA C197 registra somente 08/11 como dia de decaimento. Sem restrição física nova, domínio orbital Lean, horário ou local de reentrada.
+
+**Status C241-T5:** auditoria de representação/testes de falha fechada; **não** validação histórica ou inferência dinâmica. CI do HEAD final deve ser citado separadamente após conclusão no GitHub Actions.
+
+
+## C241-T6 — prova de esquema e integridade das casas decimais
+
+O [viewer do espelho oxzoid](https://huggingface.co/datasets/oxzoid/space-track-tle-history) publica inclination, raan, eccentricity, arg_perigee e mean_anomaly em **float32**, mas mean_motion, mean_motion_dot e bstar em **float64**. A época é timestamp[us, tz=UTC]. A auditoria distingue os dois formatos. Em particular, não se deve alegar perda de dígitos do movimento médio por hipotética conversão a float32 que **não ocorreu no corpus**.
+
+A ferramenta [tle_numeric_precision_audit.py](../../tools/tle_numeric_precision_audit.py) recebe o Parquet 1963 já baixado e valida seu SHA-256 fixo c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09. Exige tipos exatos via PyArrow, avalia ida/volta de cada campo na grade decimal TLE (4 casas para quatro ângulos, 7 para excentricidade, 8 para movimento médio float64) e testa os valores decimais adjacentes para detectar representações colidentes. Gera JSON com source_row, época, tipo, status, resíduos e totais. Gate do CI falha com campo inconsistente, mas preserva saída para perícia. Os testes são sintéticos; o espelho não vira observação primária por passar no teste.
+
+Reprodução no workflow após o extrator: python tools/tle_numeric_precision_audit.py --parquet /tmp/tle_1963.parquet --output /tmp/norad-1963-audit/tle_numeric_precision_report.json.
+
+**Restrição epistemológica:** valores orbitais numericamente reversíveis não são os TLEs literais originais. O Parquet não preserva line1/line2, os dígitos de checksum, os metadados de coleta de 1963, número de conjunto, tipo de efeméride, número de revolução, frame histórico certificado, nem a identificação física da peça. Nenhum TLE foi fabricado. RAAN 198,5261° versus 284,1520° continua sem proveniência resolvida; nem reentrada geográfica nem impacto em Conde foram demonstrados.
+
+
+**Resultado empírico da C241-T6 (fonte fixada, HEAD 45c608a3db0f30c3ba1cf8ee5261085508e07a64):** [custódia #43150035578](https://github.com/franklinbaldo/conde-incident/actions/runs/43150035578) **SUCCESS**, 66/66 testes, [artefato #13912379474](https://github.com/franklinbaldo/conde-incident/actions/runs/43150035578/artifacts/13912379474) com digest SHA-256 717d8b9770e387d23ded6ec563c864f89826762e6e638b52a06f0e0f07e6fdf9; [scientific checks #43150035546](https://github.com/franklinbaldo/conde-incident/actions/runs/43150035546) **SUCCESS no mesmo HEAD**. Testou **123 registros, 738/738 projeções de campos orbitais** compatíveis com grade decimal TLE e sem colisões com vizinhos imediatos (por campo: 123/123). **Conclusão positiva limitada:** na precisão publicada do espelho, os seis *valores numéricos* não demonstram perda de dígitos TLE. **Conclusão negativa decisiva:** ausência dos bytes de line1/line2 e de metadados históricos impossibilita autenticar/reproduzir os 45 pares/checksums originais. O conflito de RAAN continua aberto; o arquivo não fornece sensor, frame, erro ou impacto. Um novo commit documental ou de código após esse SHA exige CI novamente.
+
+
+## C241-T7: Cronologia circular de RAAN, sem simular a órbita (12/11/2026)
+
+Esta auditoria separa **aritmética entre registros** de uma inferência dinâmica. O script [`tools/raan_epoch_continuity_audit.py`](../../tools/raan_epoch_continuity_audit.py) lê somente o CSV fixado das 45 épocas NORAD 528 (SHA-256 `e3c946809d8e73d814bc1dfa424bf901a3b4331e63e4c85f82f81cf33b9c073e`). Requer origem de 1963 em UTC, identificação por linha física `source_row` sem repetição, ordem estrita de épocas e ângulo RAAN no intervalo [0,360). Calcula diferenças circulares assinadas de menor arco e tempo transcorrido em microssegundos inteiros. Um arco exatamente de 180° tem dois sinais equivalentes e provoca falha explícita em vez de escolher direção. Expõe **todas** as diferenças entre registros consecutivos, lacunas de amostragem maiores que 72h, o maior intervalo, e os pontos de cobertura próximos da data de decaimento da NASA. Não interpola amostras, ajusta J2, transforma TEME/equinócio, calcula forças ou gera trajetórias.
+
+**Correção de representação horária:** o registro legado sem cadeia NORAD, `63300.61111111`, equivale literalmente a **1963-10-27 14:39:59.999904 UTC**, ao passo que `63300.61129783` no par secundário pinado equivale a **14:40:16.132512 UTC**. A separação é **16,132608 segundos**, bem maior que a meia unidade temporal TLE de 432 microssegundos. Mesmo a escrita coloquial `14:40:00` do legado já é um arredondamento de 96 microssegundos. As RAANs **284,1520° e 198,5261°** diferem 85,6259°; nenhuma atribuição instrumental, transformação de frame ou causa dessa divergência foi comprovada. Uma RAAN encontrada em outra data não é valor da época-alvo.
+
+**O salto até novembro é ausência de cobertura, não reentrada medida:** o boletim NASA de 15/11/1963, p. impressa 8 ([NTRS 19640001198](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf)) registra apenas *8 NOV 63* para 1963-003B. O script reporta a diferença entre a última amostra 528 do espelho e **o começo/fim do dia civil de 08/11**. Não escolhe 23:59 ou qualquer outro horário terminal; os dois limites civis não representam barras de erro físicas nem demonstram um local de queda. A origem observacional completa dos 45 pares, checksum individual, sensor, frame teórico e a identidade de engenharia de S00528 seguem **NOT_RECOVERED**. O ramo oxzoid e o par itau podem compartilhar a mesma extração de Space-Track.
+
+```bash
+python -m unittest discover -s tests -p 'test_*.py' -v
+python tools/raan_epoch_continuity_audit.py \
+  --csv /tmp/tle-audit/norad_528_epochs_1963.csv \
+  --pair research/tle_custody/mirror_528_1963-10-27.tle \
+  --output /tmp/tle-audit/raan_epoch_continuity.json
+```
+
+O arquivo CSV é produzido previamente pela extração Parquet de SHA fixado no mesmo workflow. O JSON de saída conserva `source_row`, UTC e deltas para revisão. **Os quocientes \u0394RAAN/\u0394tempo do relatório são números descritivos sobre registros médios/catálogo** e não um fit de precessão: intervalos com lacunas, diferenças de frame, ajustes de parâmetros e incerteza instrumental inexistente não podem virar limite físico. Assim, a sequência ciência primária → restrição Lean → domínio físico reduzido → simulação → holdout permanece **bloqueada** nesse ponto. Nenhuma conclusão sobre impacto em Conde.
+
+
+### C241-T7: saída observada no corpus pinado, não cenário (12/11/2026)
+
+Em [custódia #43155873680](https://github.com/franklinbaldo/conde-incident/actions/runs/43155873680), HEAD `f3cb5d056af51135959acb88b6813b3018b210d5`: **78/78 testes PASS**, hash fixado do Parquet verificado, **45 amostras, 44 intervalos**. São **32 intervalos acima de 72h** e apenas **3 até 24h** no conjunto de amostras do 528. A maior lacuna de registro é **23,53529262 dias**, de 06/02/1963 05:33:01.197504Z (linha 2978) a 01/03/1963 18:23:50.479872Z (linha 2979). A última amostra 528 permanece de 27/10/1963 14:40:16.132512Z. Entre essa amostra e os limites do dia civil 08/11/1963 decorrem **11,38870217 a 12,38870217 dias**. Essas distâncias temporais mostram a falta de observação terminal no arquivo, **não** intervalo calculado de incerteza de reentrada.
+
+O comparador registra `RAAN_legacy=284,1520°` e `RAAN_literal_mirror=198,5261°`, distância circular **85,6259°**, com **16.132.608 microssegundos** entre épocas textuais. A amostra mais próxima pelo ângulo permanece de **12/08/1963** (linha 2998, RAAN 284,331085°, a 0,179085°), e não na época de 27/10. Isso não resolve a identidade física do 528 nem o frame ou a genealogia do número legado. [Scientific checks #43155873831](https://github.com/franklinbaldo/conde-incident/actions/runs/43155873831) também passou no SHA testado. [Artefato auditável #13915508369](https://github.com/franklinbaldo/conde-incident/actions/runs/43155873680/artifacts/13915508369) contém o novo `raan_epoch_continuity.json`; SHA-256 do ZIP `11415cc6e4aef003158f1bab49f68abeede687fc5e417c5994899502d5a670c7`. Atualizações posteriores requerem novo CI no HEAD final.

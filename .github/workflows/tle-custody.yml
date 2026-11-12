@@ -47,6 +47,45 @@ jobs:
             --csv "${{ runner.temp }}/tle-audit/norad_527_528_529_1963_numeric.csv" \
             --output "${{ runner.temp }}/tle-audit/cross_object_epoch_support.json"
           cat "${{ runner.temp }}/tle-audit/cross_object_epoch_support.json"
+      - name: Audit 8-decimal TLE epoch grid without claiming original bytes
+        run: |
+          python tools/tle_epoch_grid_audit.py \
+            --csv "${{ runner.temp }}/tle-audit/norad_527_528_529_1963_numeric.csv" \
+            --output "${{ runner.temp }}/tle-audit/tle_epoch_grid_report.json"
+          cat "${{ runner.temp }}/tle-audit/tle_epoch_grid_report.json"
+      - name: Audit exact secondary 528 line columns and syntax only
+        run: |
+          python tools/tle_literal_layout.py \
+            --pair research/tle_custody/mirror_528_1963-10-27.tle \
+            --output "${{ runner.temp }}/tle-audit/secondary_528_literal_fields.json"
+          cat "${{ runner.temp }}/tle-audit/secondary_528_literal_fields.json"
+      - name: Audit numeric Parquet schema and lossless field-grid projection (C241-T6)
+        run: |
+          python tools/tle_numeric_precision_audit.py \
+            --parquet "${{ runner.temp }}/tle_1963.parquet" \
+            --output "${{ runner.temp }}/tle-audit/tle_numeric_precision_report.json"
+          python - <<'PY'
+          import json, os, pathlib
+          data = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) /
+                             "tle-audit/tle_numeric_precision_report.json").read_text())
+          print("numeric_roundtrips:", data["field_counts"])
+          print("not_preserved:", data["not_preserved_by_this_schema"])
+          PY
+      - name: Audit 528 circular RAAN chronology and time gaps (C241-T7)
+        run: |
+          python tools/raan_epoch_continuity_audit.py \
+            --csv "${{ runner.temp }}/tle-audit/norad_528_epochs_1963.csv" \
+            --pair research/tle_custody/mirror_528_1963-10-27.tle \
+            --output "${{ runner.temp }}/tle-audit/raan_epoch_continuity.json"
+          python - <<'PY'
+          import json, os, pathlib
+          report = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) /
+                    "tle-audit/raan_epoch_continuity.json").read_text())
+          print("secondary_sample_count:", report["samples"])
+          print("observed_intervals:", report["adjacent_intervals"])
+          print("coverage_gaps:", report["gaps"])
+          print("legacy_epoch_conflict:", report["legacy_conflict"])
+          PY
       - name: Preserve normalized source-derived rows and negative results
         if: always()
         uses: actions/upload-artifact@v4
