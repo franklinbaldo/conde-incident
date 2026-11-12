@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 from pathlib import Path
 import re
 import sys
@@ -251,6 +252,33 @@ def enclosure_interface() -> dict:
         ],
     }
 
+def j2_nodal_rate_deg_per_day(inclination_deg: float, eccentricity: float,
+                              mean_motion_rev_day: float) -> float:
+    """First-order J2 proxy: coupling of RAAN to sourced i, e and n.
+
+    This is model arithmetic, not an observed 1963 precession rate, a
+    calibrated uncertainty bound, or a posterior distribution.
+    """
+    if not (all(map(math.isfinite, (inclination_deg, eccentricity,
+                                  mean_motion_rev_day)))
+            and 0 <= inclination_deg <= 180
+            and 0 <= eccentricity < 1
+            and mean_motion_rev_day > 0):
+        raise ValueError("invalid orbital parameters for J2 RAAN rate")
+    mu_km3_s2 = 398600.4418
+    earth_equatorial_radius_km = 6378.137
+    j2 = 1.08262668e-3
+    n_rad_s = mean_motion_rev_day * 2 * math.pi / 86400.0
+    semi_major_axis_km = (mu_km3_s2 / n_rad_s ** 2) ** (1 / 3)
+    p_km = semi_major_axis_km * (1 - eccentricity ** 2)
+    if p_km <= earth_equatorial_radius_km:
+        raise ValueError("pericenter too low for this secular J2 proxy")
+    rate_rad_s = (-1.5 * j2 * n_rad_s *
+                  (earth_equatorial_radius_km / p_km) ** 2 *
+                  math.cos(math.radians(inclination_deg)))
+    return math.degrees(rate_rad_s) * 86400.0
+
+
 def unresolved_element_scenarios_interface() -> dict:
     """Sourced orbital baseline with a *free* RAAN parameter for inference.
 
@@ -279,6 +307,9 @@ def unresolved_element_scenarios_interface() -> dict:
         ],
         "source_authentication": "NOT_VERIFIED_PRIMARY",
         "reference_only_not_true_raan": True,
+        "nominal_first_order_j2_node_rate_deg_per_day": round(
+            j2_nodal_rate_deg_per_day(81.8615, 0.0017147, 15.74901460), 9),
+        "j2_rate_model_status": "CONDITIONAL_MEAN_MOTION_KEPLER_PROXY_NOT_CALIBRATED",
         "admitted_as_hard_constraint": False,
     }
     return {
