@@ -1,5 +1,65 @@
 # Lean 4: Conde 1963
 
+## 🐙 Model error envelopes and evidence-gated geographic claims (issue #15)
+
+`Conde1963/Enclosures.lean` specifies a **per-parameter predicted-event
+envelope**, not a statistical confidence interval or a historical impact
+observation. A future calibrated propagator must provide a proof obligation
+`ImpactEnvelope.soundForPredictions`: each event predicted under an
+admissible parameter choice must lie in that choice's error envelope.
+Merely listing grid outputs does **not** prove this property over the
+complete continuous domain.
+
+There are three explicitly *conditional* implications, all requiring
+`GroundImpactAdmissible` (custody, frame/epoch/units, holdout, quantified
+error, physical forces, **material survival and ground-impact event**) and
+`HasCandidate`:
+
+- `covered_envelope_excludes_conde`: all covered possible events are
+  outside Conde; does **not** assert an impact anywhere else.
+- `covered_envelope_forces_conde`: each survivor predicts an actual
+  ground-impact event and its entire envelope is inside Conde.
+- `covered_envelope_identifies_other_window`: every survivor predicts
+  a ground-impact event in a specified other window **proved disjoint**
+  from Conde, not an invented coordinate or date.
+
+Proofs also show that an envelope overlapping Conde cannot establish
+*uniform envelope separation*, the currently declared Castor threshold-only
+audit cannot satisfy the ground-impact gate, and observing `none` on a
+finite sample cannot establish global exclusion. These are logical
+obligations **conditional on the simulator and admitted assumptions**, not
+proofs of calibrated numerical integration, instrument custody, material
+survival or actual ground impact. A future `GroundImpactAdmissible`
+Boolean report must be independently checked, not trusted because its
+bits were set to `true`.
+
+The `conde-evidence-contracts` JSON now contains `enclosure_interface`
+with proof names and mandatory inputs for 🦫 Castor. Its region, UTC window,
+global coverage and empirical validation fields remain `null` / `false`.
+It does **not** promote the day recorded by NASA to a physical-day filter.
+
+**Document lineage reused rather than reinspected during this slice:**
+[C01 Tupi/FBIS](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L19)
+is evidence of a report, not physical impact;
+[C131](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L502)
+and [C197](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L905)
+both cite the **same** NASA/Goddard *Satellite Situation Report*,
+15/11/1963, printed p. 8
+([NTRS 19640001198](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf)).
+It records an 8 November decay **date** without a terminal time or site.
+The frozen research matrix is blob `a7978c3a75a153b16ab70118a92c434bba674cb7`;
+C44–C46 each appear twice with different meanings; all 241 occurrences
+remain preserved. The original compiled Lean 4.35.0 ZIP containing
+`Evidence.lean` / 154 propositions / 151 labels and independent custody
+digests is still absent: historical import `NOT_RUN`.
+
+CI at the actual PR head runs `lake build`, `lake env lean
+Conde1963/AxiomAudit.lean` (seven additional printed theorem dependencies),
+`python3 -m unittest discover -s tests -v`, full matrix registry export,
+and the Web lint/build. No physical result or historical confidence is
+returned by this addition.
+
+
 ## 🐙 Epistemic correction: catalogue date is NOT the physical event date
 
 **Current normative interpretation, superseding any older text below that
