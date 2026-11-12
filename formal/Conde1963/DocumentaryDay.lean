@@ -1,121 +1,165 @@
 import Conde1963.Constraints
 
 /-!
-# One actual documentary constraint; no synthetic historical measurements
+# NASA documentary record versus the latent physical decay day
 
-The contemporary NASA/Goddard Satellite Situation Report (15 Nov 1963,
-printed page 8, NTRS 19640001198), as indexed by matrix C131 and C197,
-records 1963-003B as decayed on 8 November 1963. The report does NOT
-supply terminal coordinates, a time-of-day or a ground impact.
+C131/C197 (same NASA/Goddard Satellite Situation Report, 15 Nov 1963,
+printed p.8, NTRS 19640001198) record the catalogued day 1963-11-08.
+They do not establish the method used to estimate decay or observe the
+true reentry day, terminal epoch, position or ground impact.
 
-These two matrix entries cite the SAME NASA report, not two independent
-sensors. This module turns only the reported calendar day into a
-*conditional* predicate. Hypothetical candidates below are logical
-countermodels, never reconstructed orbital trajectories.
+The archival reading is a proposition about the document; the proposed
+equality between physical and catalogued days is a distinct, falsifiable
+hypothesis. Neither of the two citations is admitted as a physical filter.
 -/
 
 namespace Conde1963
 
-/-- Date in the NASA report, not an inferred impact place or timestamp. -/
-def ReportedDecayDay (candidate : ReentryCandidate) : Prop :=
-  candidate.day = 19631108
+/-- A value transcribed from the period report, NOT measured reentry time. -/
+def NasaCatalogueDay : Nat := 19631108
 
-/-- Original contemporary report, matrix occurrence C131.
-    `admitted` means admitted within the explicitly chosen date-only
-    scenario, not a claim that a ground impact has been verified. -/
+/-- Documentary proposition: the published record states this day. -/
+def NasaRecordStatesNovemberEighth : Prop := NasaCatalogueDay = 19631108
+
+theorem nasa_record_states_november_eighth :
+    NasaRecordStatesNovemberEighth := by
+  rfl
+
+/-- Scientific hypothesis to TEST: a latent candidate's physical decay
+    day matches the catalogued day. This is not a documentary entailment. -/
+def PhysicalDayMatchesCatalogue (c : ReentryCandidate) : Prop :=
+  c.day = NasaCatalogueDay
+
+/-- Same source, same proposed physical hypothesis. Neither is a hard
+    input to the simulator before a justified observational error model. -/
 def nasaDayC131 : SourcedConstraint ReentryCandidate :=
   { matrixLabel := "C131"
     occurrence := 1
     chain := .noradNasaCatalog
     grade := .originalInspected
-    use := .admitted
-    condition := ReportedDecayDay }
+    use := .scenarioOnly
+    condition := PhysicalDayMatchesCatalogue }
 
-/-- C197 restates the *same* NASA report with additional facsimile
-    detail; preserving a separate matrix ID is NOT independent evidence. -/
 def nasaDayC197 : SourcedConstraint ReentryCandidate :=
   { matrixLabel := "C197"
     occurrence := 1
     chain := .noradNasaCatalog
     grade := .originalInspected
-    use := .admitted
-    condition := ReportedDecayDay }
+    use := .scenarioOnly
+    condition := PhysicalDayMatchesCatalogue }
 
 def nasaDayConstraints : List (SourcedConstraint ReentryCandidate) :=
   [nasaDayC131, nasaDayC197]
 
-/-- The only accepted restriction in this documentary scenario is the day.
-    The pair of entries cannot further shrink the domain relative to one
-    entry, even though there are two distinct matrix IDs. -/
-theorem nasa_repeat_is_same_day_predicate (c : ReentryCandidate) :
-    AllowedFromSources nasaDayConstraints c ↔ ReportedDecayDay c := by
+/-- Reading the report twice does not impose the physical day. -/
+theorem nasa_catalogue_is_not_a_hard_physical_filter
+    (c : ReentryCandidate) :
+    AllowedFromSources nasaDayConstraints c := by
   simp [AllowedFromSources, nasaDayConstraints, nasaDayC131, nasaDayC197]
 
-/-- A Boolean evaluator for Castor's *finite* candidate grid, with a
-    Lean correspondence proof. This is not a continuous orbital solver. -/
-def nasaReportedDayRule : ExecutableRule ReentryCandidate :=
+/-- Even if explicitly selected as a hypothesis, the two source citations
+    refer to the SAME equation, not two independent observations. -/
+theorem nasa_two_citations_one_conditional_equation
+    (c : ReentryCandidate) :
+    (PhysicalDayMatchesCatalogue c ∧ PhysicalDayMatchesCatalogue c) ↔
+      PhysicalDayMatchesCatalogue c := by
+  exact and_self_iff
+
+/-- A user may enable the hypothetical day-equality diagnostic.
+    The .scenarioOnly use ensures the standard filterCandidateGrid does
+    NOT turn the documentary reading into a hard physical input. -/
+def nasaHypotheticalDayRule : ExecutableRule ReentryCandidate :=
   { source := nasaDayC131
-    accepts := fun candidate => decide (candidate.day = 19631108)
+    accepts := fun candidate => decide (candidate.day = NasaCatalogueDay)
     corresponds := by
       intro candidate
-      simp [nasaDayC131, ReportedDecayDay] }
+      simp [nasaDayC131, PhysicalDayMatchesCatalogue] }
 
-/-- Regression: the two logical countermodels pass the same date filter.
-    This is a Boolean test, not a historical reconstruction. -/
-theorem nasa_day_rule_accepts_both_examples :
-    nasaReportedDayRule.accepts condeCandidate = true ∧
-    nasaReportedDayRule.accepts anotherCandidate = true := by
-  decide
-
-/-- Regression: a deliberately synthetic different-day candidate fails.
-    No actual NORAD epoch is invented by this example. -/
 def inventedOffDayExample : ReentryCandidate :=
   ⟨19631109, 900, .elsewhere, 90⟩
 
-theorem nasa_day_rule_rejects_off_day_example :
-    nasaReportedDayRule.accepts inventedOffDayExample = false := by
+theorem nasa_hypothetical_rule_accepts_illustrative_examples :
+    nasaHypotheticalDayRule.accepts condeCandidate = true ∧
+    nasaHypotheticalDayRule.accepts anotherCandidate = true := by
   decide
 
-/-- Identical catalog-report genealogy does not create an independent
-    tracking measurement. Source-chain assignments remain auditable claims. -/
+theorem nasa_hypothetical_rule_rejects_illustrative_off_day :
+    nasaHypotheticalDayRule.accepts inventedOffDayExample = false := by
+  decide
+
 theorem nasa_c131_c197_not_independent :
     ¬ Independent
       ⟨131, .originalInspected, .noradNasaCatalog⟩
       ⟨197, .originalInspected, .noradNasaCatalog⟩ := by
   simp [Independent]
 
-/-- Both illustrative, mutually incompatible regions survive the
-    *same* day-only document. These are NOT physical candidate orbits. -/
-theorem nasa_day_allows_both_regions :
-    AllowedFromSources nasaDayConstraints condeCandidate ∧
-    AllowedFromSources nasaDayConstraints anotherCandidate ∧
-    condeCandidate.region ≠ anotherCandidate.region := by
-  simp [nasa_repeat_is_same_day_predicate, ReportedDecayDay,
-        condeCandidate, anotherCandidate]
+/-- The actual day equality is not a logical consequence of the records.
+    The off-day model is synthetic and is NOT asserted historically true. -/
+theorem reported_day_does_not_prove_actual_day :
+    ¬ (∀ c, AllowedFromSources nasaDayConstraints c →
+      PhysicalDayMatchesCatalogue c) := by
+  intro h
+  have hc := h inventedOffDayExample
+    (nasa_catalogue_is_not_a_hard_physical_filter inventedOffDayExample)
+  have hbad : ¬ PhysicalDayMatchesCatalogue inventedOffDayExample := by decide
+  exact hbad hc
 
-/-- Since both regions remain logically possible, the NASA date alone
-    cannot identify one. An actual exclusion requires physical constraints. -/
-theorem nasa_day_cannot_identify_region :
-    ¬ UniquelyIdentifiesRegion ReportedDecayDay (fun _ => True) := by
-  apply two_admissible_regions_preclude_unique
-    ReportedDecayDay (fun _ => True) condeCandidate anotherCandidate
-  · exact ⟨rfl, True.intro⟩
-  · exact ⟨rfl, True.intro⟩
-  · exact date_alone_does_not_identify_place.2.2
+/-- Conditional scientific verdicts require a NONEMPTY calibrated domain.
+    They say what the model implies, not what happened in 1963. -/
+def ConditionallyForcesNasaDay
+    (admissible : ReentryCandidate → Prop) : Prop :=
+  (∃ c, admissible c) ∧
+  ∀ c, admissible c → PhysicalDayMatchesCatalogue c
 
-/-- No ground impact is observed in the date-only record. The constant
-    `none` is a LOGICAL COUNTERMODEL, not a prediction that no impact
-    occurred. It demonstrates why the date cannot FORCE ground impact. -/
-def countermodelWithoutGroundImpact (_ : ReentryCandidate) : Option TimeLocation :=
-  none
+def ConditionallyExcludesNasaDay
+    (admissible : ReentryCandidate → Prop) : Prop :=
+  (∃ c, admissible c) ∧
+  ∀ c, admissible c → ¬ PhysicalDayMatchesCatalogue c
 
-theorem nasa_day_does_not_force_ground_impact
-    (inConde : TimeLocation → Prop) :
-    ¬ ForcesConde [ReportedDecayDay] countermodelWithoutGroundImpact inConde := by
+def DayRemainsUnderdetermined
+    (admissible : ReentryCandidate → Prop) : Prop :=
+  (∃ c, admissible c ∧ PhysicalDayMatchesCatalogue c) ∧
+  (∃ c, admissible c ∧ ¬ PhysicalDayMatchesCatalogue c)
+
+/-- Distinct model predictions are incompatible with calling the
+    catalogue day forced for every surviving physical candidate. -/
+theorem contrasting_candidates_preclude_forced_day
+    (admissible : ReentryCandidate → Prop)
+    (outside : ReentryCandidate)
+    (hallowed : admissible outside)
+    (hoff : ¬ PhysicalDayMatchesCatalogue outside) :
+    ¬ ConditionallyForcesNasaDay admissible := by
   intro forced
-  have admitted : Allowed [ReportedDecayDay] condeCandidate := by
-    simp [Allowed, ReportedDecayDay, condeCandidate]
-  obtain ⟨event, hevent, _⟩ := forced.2 condeCandidate admitted
-  cases hevent
+  exact hoff (forced.2 outside hallowed)
+
+/-- No nonempty model can both force and exclude the same day. -/
+theorem forces_and_excludes_day_are_incompatible
+    (admissible : ReentryCandidate → Prop)
+    (forced : ConditionallyForcesNasaDay admissible)
+    (excluded : ConditionallyExcludesNasaDay admissible) : False := by
+  obtain ⟨c, hc⟩ := forced.1
+  exact excluded.2 c hc (forced.2 c hc)
+
+/-- The unfiltered documentary model has candidates on and off the
+    catalogued date. Both are illustration-only countermodels. -/
+theorem nasa_documentary_record_leaves_actual_day_underdetermined :
+    DayRemainsUnderdetermined
+      (AllowedFromSources nasaDayConstraints) := by
+  refine ⟨⟨condeCandidate, nasa_catalogue_is_not_a_hard_physical_filter _, ?_⟩,
+          ⟨inventedOffDayExample,
+             nasa_catalogue_is_not_a_hard_physical_filter _, ?_⟩⟩
+  · decide
+  · decide
+
+/-- Geography is also underidentified, independent of the date hypothesis. -/
+theorem nasa_documentary_record_does_not_identify_region :
+    ¬ UniquelyIdentifiesRegion
+       (AllowedFromSources nasaDayConstraints) (fun _ => True) := by
+  apply two_admissible_regions_preclude_unique
+    (AllowedFromSources nasaDayConstraints) (fun _ => True)
+    condeCandidate anotherCandidate
+  · exact ⟨nasa_catalogue_is_not_a_hard_physical_filter _, True.intro⟩
+  · exact ⟨nasa_catalogue_is_not_a_hard_physical_filter _, True.intro⟩
+  · exact date_alone_does_not_identify_place.2.2
 
 end Conde1963
