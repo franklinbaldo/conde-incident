@@ -18,4 +18,17 @@ description: "Teste temporal falsificável dos campos orbitais secundários do N
 
 **Reprodução:** python3 -m unittest discover -s tests -p test_raan_frozen_j2_holdout.py -v. O [workflow C241-P2](../../.github/workflows/polvo-j2-frozen-long.yml) baixa o Parquet com hash fixado via tools/tle_secondary_1963_ledger.py, executa tools/raan_frozen_j2_holdout.py, preserva relatório por época e executa lake build/auditoria de axiomas Lean 4.35.0 no HEAD. Os resultados numéricos e erros são preservados no artefato do CI.
 
-**Resultados:** aguardando execução do teste sobre o Parquet SHA-pinado. Nenhuma conclusão de ganho será feita antes de analisar os resíduos publicados.
+## Resultados auditados no primeiro HEAD
+
+Execução [GitHub Actions #43285011757](https://github.com/franklinbaldo/conde-incident/actions/runs/43285011757) do commit 1d39086909d9c240300a6ae0bc93d4018c142c10: fonte Parquet e CSV derivados aceitos pelos SHA-256 fixados; 7 testes adversariais e 8 regressões P1 passaram; compilação Lean 4.35.0 e auditoria de axiomas passaram. O JSON detalhado está no artefato polvo-j2-frozen do workflow.
+
+| NORAD | épocas de avaliação | taxa J2 fixada (°/dia) | taxa OLS fit-only (°/dia) | MAE persistência (°) | MAE OLS (°) | MAE J2 (°) | erro máximo J2 (°) |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| 527 | 4 | −1,083444 | −1,076704 | 104,571675 | **0,191882** | 0,511195 | 0,767903 |
+| 528 | 8 | −1,114910 | −1,092409 | 90,821137 | 2,908005 | **0,679537** | 1,057725 |
+| 529 | 23 | −1,104253 | −1,084459 | 127,333996 | 3,743723 | **1,137675** | 3,114390 |
+
+Na validação anterior à avaliação (também sem refit), o MAE J2 foi 527=0,162489°; 528=0,112204°; 529=0,111661°. O J2 foi melhor que a linha OLS **nos registros tardios 528 e 529, mas pior em 527**, que tem apenas 4 registros tardios. Isto refuta uma afirmação universal de superioridade J2 e não permite reutilizar o mesmo erro/força entre satélites. A persistência foi pior que ambos nas avaliações, mas não transforma nenhuma série de catálogo em rastreamento instrumental.
+
+**Resultado negativo e validade:** as diferenças são internas a uma mesma família de fonte secundária, não probabilidades, limites de erro de sensores nem observações independentes. O RAAN legado de 284,1520° (origem sem prova) não participa do ajuste. Os 35 holdouts tardios não constituem evidência autônoma do local de reentrada. Domínio orbital físico Θ: antes/depois **idêntico, sem volume/intervalo calibrado e sem demonstração de não-vazio novo**. Evidência necessária para uma redução genuína: pares TLE instrumentais de 1963 dos 527/528/529 com epoch, frame, checksum, fonte de sensor e sigma/covariância, seguidos de resíduos de propagação contra holdouts de origem independente.
+
