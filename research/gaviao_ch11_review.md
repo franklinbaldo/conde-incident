@@ -25,6 +25,22 @@ Seis modelos são pontuados **sobre os mesmos alvos**: persistência do 529, pol
 
 **Controle de ciência versus propaganda:** o capítulo 10 C243-T9 usava *quatro cortes com horizonte potencialmente longo*, e o C243-T10 *rolling origin* com um único próximo catálogo. Não é comparação controlada mantendo a mesma distribuição de horizontes e treinamento. Assim, a expressão "inversão do placar" só é válida **com a mudança de desenho**, não como prova de mecanismo físico ou de superioridade universal da persistência.
 
+
+### Replay independente observado (antes do fechamento documental)
+
+O [workflow #43177986592](https://github.com/franklinbaldo/conde-incident/actions/runs/43177986592) executou `TESTED_SHA=f6b4470b6d7526e7d9e5fc5eda663103c04162a8`, conferiu os bytes do Parquet com SHA-256, executou **14/14 testes adversariais** e reproduziu **53/51/2**, as seis RMSE publicadas e as contagens pareadas **33/18/0** usando SVD independente. [Artefato JSON integral #13925700424](https://github.com/franklinbaldo/conde-incident/actions/runs/43177986592/artifacts/13925700424). Esta verificação corresponde a esse SHA; qualquer commit posterior exige novo gate.
+
+**Novo achado específico de horizonte (estratificação pós-hoc, mesmos 51 alvos):**
+
+| Horizonte até a próxima época do 529 | Alvos | Persistência RMSE | Quadrático RMSE | Média 527+528 RMSE | Interpretação limitada |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Até 1 dia | 2 | **0,039439** | 0,207594 | 0,271683 | baseline simples melhor, amostra minúscula |
+| Mais de 1 até 7 dias | 31 | **0,030682** | 0,078843 | 0,103210 | baseline simples melhor neste estrato |
+| Mais de 7 até 30 dias | 18 | 0,016023 | 0,020939 | **0,013378** | **média dos doadores supera ambos neste estrato**, ao contrário do agregado |
+| Mais de 30 dias | 0 | NOT_RUN | NOT_RUN | NOT_RUN | nenhum dado; não inferir |
+
+A notícia #59 descreve corretamente o agregado, porém a omissão da **reversão no estrato 7–30 dias (18 alvos)** é relevante justamente porque enquadra a virada como efeito de horizonte. Recomenda-se que a Coruja inclua o contraponto quantitativo e chame explicitamente os estratos de diagnósticos pós-hoc, sem tratá-los como experimentos independentes nem provar vantagem física. Isso não reverte o resultado agregado de 51 alvos nem valida triangulação. **Parecer editorial da #59: correção solicitada antes de aprovação factual final.**
+
 ## 3. Coerência Lean 4.35.0, física e inferência
 
 Não há novo documento de observação orbital primária com época, frame, covariância e sensor. Os coeficientes quadráticos do movimento médio catalogado **não constituem** restrições instrumentais de estado r/v. Portanto, a cadeia proposta na PR #28 se interrompe antes da premissa física rastreável, do domínio orbital reduzido e não vazio, e do simulador terminal com erros/holdout. As provas Lean existentes certificariam apenas implicações **condicionais** às premissas inseridas, não autenticidade do espelho.
@@ -37,4 +53,4 @@ A reportagem #59 apresenta uma **novidade identificável** desde o capítulo 10:
 
 A PR #59 permanece draft e empilhada sobre #56; #56 depende da base #3, ainda divergente da decisão SSG Rust #22. A aprovação documental não supre CI verde ou a reconciliação arquitetural. Apenas 🐘 Elefante integra. Nenhum merge, publicação, contato externo nem edição do blog pessoal é autorizado.
 
-**Gate desta PR de auditoria:** executar os testes sintéticos e o replay independente real no **SHA do último commit** via `.github/workflows/gaviao-ch11-independent.yml`, preservar JSON com a separação por horizonte e registrar resultado observado na memória final. Até o run, os novos números derivados são **NOT_VERIFIED**.
+**Gate desta PR de auditoria:** executar os testes sintéticos e o replay independente real no **SHA do último commit** via `.github/workflows/gaviao-ch11-independent.yml`, preservar JSON com a separação por horizonte e registrar resultado observado na memória final. O replay acima é verificado no SHA registrado, e será reexecutado no HEAD final documental desta PR.
