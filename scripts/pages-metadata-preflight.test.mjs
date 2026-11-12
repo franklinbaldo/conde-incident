@@ -103,7 +103,7 @@ test("read-only collection checks Pages, workflow, deployment and second HEAD", 
     ["/branches/main", { commit: { sha: SHA } }],
     ["/actions/workflows/pages.yml/runs?branch=main&event=push&per_page=30", { workflow_runs: valid().runs }],
     ["/deployments?environment=github-pages&per_page=30", valid().deployments],
-    ["/deployments/100/statuses?per_page=1", [{ state: "success" }]]
+    ["/deployments/100/statuses?per_page=1", [{ id: 501, state: "success" }]]
   ]);
   const paths = [];
   const result = await inspectPagesMetadata({
