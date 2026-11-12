@@ -146,17 +146,17 @@ export const MonteCarloVisualizer: React.FC<MonteCarloVisualizerProps> = ({
           <div className="space-y-1 max-w-3xl">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-800 text-cyan-300 text-xs font-mono">
               <Activity className="w-3.5 h-3.5 text-cyan-400" />
-              <span>{isPt ? 'PROPAGAÇÃO ESTOCÁSTICA DE DECISÃO' : 'STOCHASTIC DECISION PROPAGATION'}</span>
+              <span>{isPt ? 'AMOSTRAGEM GEOMÉTRICA EXPLORATÓRIA' : 'EXPLORATORY GEOMETRIC SAMPLING'}</span>
             </div>
             <h2 className="text-lg font-bold text-zinc-100">
               {isPt
-                ? 'Simulação Monte Carlo: Teste de Falsificação H1 vs H0'
-                : 'Monte Carlo Simulation: Falsification Test H1 vs H0'}
+                ? 'Amostras sintéticas: não são probabilidades de impacto'
+                : 'Synthetic samples: not impact probabilities'}
             </h2>
             <p className="text-xs text-zinc-300 leading-relaxed">
               {isPt
-                ? 'Avaliamos a hipótese H1 (reentrada em Conde) contra a hipótese H0 (reentrada noutra região). Amostramos trajetórias estocásticas variando a época, arrasto balístico, escala de altura e flutuações solares de nov/1963, sem condicionar a amostra a priori a Conde.'
-                : 'We evaluate hypothesis H1 (reentry at Conde) versus hypothesis H0 (reentry elsewhere). We sample stochastic trajectories varying epoch, ballistic drag, scale height, and solar variations in Nov 1963, without conditioning the sample on Conde.'}
+                ? 'O algoritmo sorteia fase orbital e parâmetros hipotéticos; não ajusta a trajetória a observações independentes do NORAD 528. Cada ponto representa uma amostra de demonstração, não um lugar de reentrada observado nem uma distribuição calibrada.'
+                : 'The algorithm randomly samples orbital phase and hypothetical parameters; it is not fitted to independent NORAD 528 observations. Each point is a demonstration sample, not an observed reentry location or a calibrated distribution.'}
             </p>
           </div>
 
@@ -167,9 +167,9 @@ export const MonteCarloVisualizer: React.FC<MonteCarloVisualizerProps> = ({
               onChange={(e) => setSampleSize(Number(e.target.value))}
               className="bg-zinc-950 border border-zinc-800 text-zinc-300 text-xs rounded-lg px-3 py-2 font-mono cursor-pointer"
             >
-              <option value={1000}>N = 1.000 trajetórias</option>
-              <option value={2000}>N = 2.000 trajetórias</option>
-              <option value={5000}>N = 5.000 trajetórias</option>
+              <option value={1000}>N = 1.000 amostras</option>
+              <option value={2000}>N = 2.000 amostras</option>
+              <option value={5000}>N = 5.000 amostras</option>
             </select>
 
             <button
@@ -191,14 +191,14 @@ export const MonteCarloVisualizer: React.FC<MonteCarloVisualizerProps> = ({
             <BarChart3 className="w-4 h-4 text-cyan-400" />
             <span className="font-bold text-zinc-200">
               {isPt
-                ? 'Dispersão Global dos Pontos de Reentrada Terminal (<80 km)'
-                : 'Global Dispersion of Terminal Reentry Points (<80 km)'}
+                ? 'Distribuição sintética de coordenadas (limiar simulado de 80 km)'
+                : 'Synthetic coordinate distribution (modelled 80 km threshold)'}
             </span>
           </div>
           <div className="flex items-center gap-3 text-[11px] font-mono text-zinc-400">
             <span className="flex items-center gap-1">
               <span className="w-2.5 h-2.5 rounded-full bg-cyan-400/40 inline-block" />
-              <span>Reentrada Global (H0)</span>
+              <span>{isPt ? 'Amostra global' : 'Global sample'}</span>
             </span>
             <span className="flex items-center gap-1">
               <span className="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block" />
@@ -206,7 +206,7 @@ export const MonteCarloVisualizer: React.FC<MonteCarloVisualizerProps> = ({
             </span>
             <span className="flex items-center gap-1">
               <span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block" />
-              <span>Conde (&lt;100 km)</span>
+              <span>{isPt ? 'Dentro de 100 km (modelo)' : 'Within 100 km (model)'}</span>
             </span>
           </div>
         </div>
@@ -217,23 +217,30 @@ export const MonteCarloVisualizer: React.FC<MonteCarloVisualizerProps> = ({
             width={1000}
             height={480}
             className="w-full h-auto block select-none"
+            role="img"
+            aria-label={isPt ? "Gráfico de amostras sintéticas de latitude e longitude, não pontos observados de reentrada" : "Plot of synthetic latitude and longitude samples, not observed reentry points"}
           />
         </div>
+        <p className="text-xs text-zinc-300 leading-relaxed">
+          {isPt
+            ? "Visualização apenas geométrica. A marca de Conde indica a sede aproximada, não um local confirmado de impacto. As posições simuladas não possuem incerteza física ou validação por holdout."
+            : "Geometric visualization only. The Conde marker denotes the approximate town centre, not a confirmed impact site. Sampled positions lack physically calibrated uncertainty and holdout validation."}
+        </p>
       </div>
 
       {/* Metrics Table */}
       {summary && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs font-mono">
           <div className="p-3.5 rounded-xl bg-zinc-900 border border-zinc-800">
-            <div className="text-zinc-500">Trajetórias Amostradas:</div>
+            <div className="text-zinc-500">Amostras sintéticas:</div>
             <div className="text-lg font-bold text-zinc-100 mt-1">{summary.totalRuns}</div>
             <div className="text-[10px] text-zinc-500 mt-0.5">
-              Decaídas em 08/11: {summary.runsDecayedOnNov8} ({((summary.runsDecayedOnNov8/summary.totalRuns)*100).toFixed(1)}%)
+              Com data simulada 08/11: {summary.runsDecayedOnNov8} ({((summary.runsDecayedOnNov8/summary.totalRuns)*100).toFixed(1)}%)
             </div>
           </div>
 
           <div className="p-3.5 rounded-xl bg-zinc-900 border border-zinc-800">
-            <div className="text-zinc-500">Faixa de Latitude Conde:</div>
+            <div className="text-zinc-500">Faixa de latitude da sede:</div>
             <div className="text-lg font-bold text-cyan-300 mt-1">{summary.runsInCondeLatitudeBand}</div>
             <div className="text-[10px] text-zinc-500 mt-0.5">
               {((summary.runsInCondeLatitudeBand / summary.totalRuns) * 100).toFixed(2)}% da amostra
@@ -244,7 +251,7 @@ export const MonteCarloVisualizer: React.FC<MonteCarloVisualizerProps> = ({
             <div className="text-zinc-500">Dentro de 500 km de Conde:</div>
             <div className="text-lg font-bold text-amber-300 mt-1">{summary.runsWithin500Km}</div>
             <div className="text-[10px] text-zinc-500 mt-0.5">
-              Probabilidade empírica: {(summary.empiricalProbability500Km * 100).toFixed(3)}%
+              Fração das amostras: {(summary.empiricalProbability500Km * 100).toFixed(2)}%
             </div>
           </div>
 
@@ -252,30 +259,39 @@ export const MonteCarloVisualizer: React.FC<MonteCarloVisualizerProps> = ({
             <div className="text-zinc-500">Dentro de 100 km de Conde:</div>
             <div className="text-lg font-bold text-rose-400 mt-1">{summary.runsWithin100Km}</div>
             <div className="text-[10px] text-zinc-500 mt-0.5">
-              Probabilidade empírica: {(summary.empiricalProbability100Km * 100).toFixed(4)}%
+              Fração das amostras: {(summary.empiricalProbability100Km * 100).toFixed(2)}%
             </div>
           </div>
         </div>
       )}
 
-      {/* Epistemological Discussion */}
-      <div className="p-5 rounded-xl bg-zinc-900 border border-zinc-800 space-y-3">
-        <h4 className="text-xs font-bold text-zinc-200 flex items-center gap-2">
-          <Info className="w-4 h-4 text-cyan-400" />
-          <span>{isPt ? 'Conclusão Estatística e Falsificação Bayesiana' : 'Statistical & Bayesian Falsification Conclusion'}</span>
-        </h4>
-        <div className="text-xs text-zinc-300 space-y-2 leading-relaxed">
-          <p>
-            <strong className="text-zinc-100">1. A Densidade Geométrica Polar:</strong> Devido à inclinação de 81,86°, a velocidade angular em latitude é mínima próximo dos pontos de reversão (máxima latitude norte e sul). Isso faz com que a probabilidade de reentrada por unidade de latitude seja máxima nas regiões sub-polares e mínima no equador e trópicos (como Conde, a -11,8°).
-          </p>
-          <p>
-            <strong className="text-zinc-100">2. A Falácia da Hipótese Condicionada:</strong> Uma área circular de 100 km de raio representa apenas <strong>0,0062%</strong> da superfície da Terra coberta pela órbita (1 em cada 16.000 áreas equivalentes). Selecionar Conde a posteriori apenas porque houve uma transmissão de rádio no Rio de Janeiro sem rastreamento radar independente não constitui evidência astrodinâmica.
-          </p>
-          <p>
-            <strong className="text-zinc-100">3. Veredito Final:</strong> A hipótese H1 é matematicamente admissível dentro do espaço de fases, mas estatisticamente indistinguível de um ruído de fundo entre milhares de regiões desabitadas. Conjuntamente com o fato de que a Força Aérea Brasileira e o Consulado dos EUA constataram que não houve esfera, cratera ou restos em Conde, <strong>a hipótese de reentrada terminal em Conde permanece sem sustentação empírica</strong>.
-          </p>
+      {/* Interpretation depends on calibrated evidence, not visually persuasive samples. */}
+      <section aria-labelledby="montecarlo-limits" className="p-5 rounded-xl bg-zinc-900 border border-zinc-700 space-y-3">
+        <h3 id="montecarlo-limits" className="text-sm font-semibold text-zinc-100">
+          {isPt ? 'O que estes números não medem' : 'What these numbers do not measure'}
+        </h3>
+        <p className="text-sm text-zinc-300 leading-relaxed">
+          {isPt
+            ? 'As frações acima descrevem somente esta execução do gerador. Não são probabilidades de uma queda em Conde: a fase é sorteada, a escala de arrasto é hipotética, a RAAN histórica está em disputa e não houve ajuste temporal validado, domínio admissível comprovadamente não vazio ou teste cego de previsão.'
+            : 'The fractions describe this generator run only. They are not probabilities of a fall in Conde: orbital phase is random, drag settings are hypothetical, historical RAAN is disputed, and no validated temporal fit, proven nonempty admissible domain or blind prediction test is available.'}
+        </p>
+        <p className="text-sm text-amber-200">
+          {isPt
+            ? 'Resultado: indeterminado. A amostragem usa números aleatórios sem seed de reprodução; ela não testa nem rejeita a hipótese histórica.'
+            : 'Outcome: undetermined. Sampling uses unseeded random numbers and neither tests nor rejects the historical hypothesis.'}
+        </p>
+        <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
+          <a className="text-cyan-300 underline underline-offset-4 focus-visible:outline" href="#/research/c197">
+            {isPt ? 'C197–C202: decaimento NASA, somente dia' : 'C197–C202: NASA decay day only'}
+          </a>
+          <a className="text-cyan-300 underline underline-offset-4 focus-visible:outline" href="#/research/raan">
+            {isPt ? 'Conflito RAAN e premissas' : 'RAAN conflict and assumptions'}
+          </a>
+          <a className="text-cyan-300 underline underline-offset-4 focus-visible:outline" href="#/research/holdout529">
+            {isPt ? 'Controle e limites do holdout 529' : '529 holdout limits'}
+          </a>
         </div>
-      </div>
+      </section>
     </div>
   );
 };
