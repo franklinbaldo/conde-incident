@@ -1,0 +1,125 @@
+{
+  "schema": "conde.gaviao.chapter07/v1",
+  "story": {
+    "pr": 44,
+    "sha": "66d7943b4b8ee611e3b159e0fb42d42e4adc7847",
+    "blob_sha": "f46da6236a055b8d1429c3174b27b4e723a2e9ef",
+    "path": "stories/2026-11-12-o-carimbo-que-dizia-sem-providencias.md"
+  },
+  "source_status": "facsimiles visually inspected in publicly hosted mirror; independent hash equality to government originals NOT_VERIFIED",
+  "sources": [
+    {
+      "id": "FBIS03",
+      "url": "https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf",
+      "page": 1,
+      "chain": "radio-tupi-fbis",
+      "physical_observation": false
+    },
+    {
+      "id": "D001",
+      "url": "https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D001_Diplomatic-Cable_Brazil_November-14-1963.pdf",
+      "page": 1,
+      "chain": "state-diplomatic",
+      "physical_observation": false
+    },
+    {
+      "id": "A628",
+      "url": "https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D002_Diplomatic-Cable_Brazil_November-20-1963.pdf",
+      "page": 1,
+      "chain": "state-diplomatic",
+      "physical_observation": false
+    }
+  ],
+  "claims": [
+    {
+      "id": "G07-01",
+      "anchor": "a notícia atribuída à Rádio Tupi, em 8 de novembro de 1963",
+      "source": "FBIS03",
+      "occurrences": [
+        "C01",
+        "C02",
+        "C03"
+      ],
+      "classification": "retransmitted-report"
+    },
+    {
+      "id": "G07-02",
+      "anchor": "**14h20 de 14/11/1963**",
+      "source": "D001",
+      "occurrences": [
+        "C08",
+        "C15",
+        "C165"
+      ],
+      "classification": "typewritten-annotation"
+    },
+    {
+      "id": "G07-03",
+      "anchor": "telegrama **157** de **14/11**",
+      "source": "A628",
+      "occurrences": [
+        "C09",
+        "C10"
+      ],
+      "classification": "quoted-secondhand-report"
+    },
+    {
+      "id": "G07-04",
+      "anchor": "**1963 NOV 24**",
+      "source": "A628",
+      "occurrences": [
+        "AX-STATE-20261111-01"
+      ],
+      "classification": "administrative-mark"
+    },
+    {
+      "id": "G07-05",
+      "anchor": "**INTERNATIONAL SCIENTIFIC AFFAIRS / NOV 26 1963**",
+      "source": "A628",
+      "occurrences": [
+        "AX-STATE-20261111-02"
+      ],
+      "classification": "administrative-mark"
+    },
+    {
+      "id": "G07-06",
+      "anchor": "**NOTED - NO ACTION**",
+      "source": "A628",
+      "occurrences": [
+        "AX-STATE-20261111-03"
+      ],
+      "classification": "administrative-mark"
+    },
+    {
+      "id": "G07-07",
+      "anchor": "**“on November 8, 1964”**",
+      "source": "A628",
+      "occurrences": [
+        "C16"
+      ],
+      "classification": "documentary-year-anomaly"
+    },
+    {
+      "id": "G07-08",
+      "anchor": "não contém esses recortes",
+      "source": "A628",
+      "occurrences": [
+        "C05",
+        "C06"
+      ],
+      "classification": "bounded-negative"
+    },
+    {
+      "id": "G07-09",
+      "anchor": "nenhum domínio orbital admissível foi reduzido",
+      "source": "A628",
+      "occurrences": [
+        "AX-STATE-20261111-03"
+      ],
+      "classification": "logical-non-implication"
+    }
+  ],
+  "expected_findings": [
+    "false-exclusive-H-ARQ-H-SEG"
+  ]
+}
