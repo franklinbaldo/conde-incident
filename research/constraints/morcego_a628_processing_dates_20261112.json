@@ -1,0 +1,167 @@
+{
+  "schema": "conde.historical-provenance-event-graph/v1",
+  "question": "Which dates are directly visible on the 1963 A-628 diplomatic airgram, separately from its date of drafting, claimed 1964 event date, and the FBIS 8 Nov 1963 report?",
+  "source": {
+    "id": "DOS-UAP-D002_A-628_original_page_1",
+    "url": "https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D002_Diplomatic-Cable_Brazil_November-20-1963.pdf",
+    "mirrored_primary_facsímile": true,
+    "source_family": "US_DEPARTMENT_OF_STATE_A628",
+    "page_in_pdf": 1,
+    "sha256": null,
+    "sha256_status": "NOT_OBTAINED_MIRROR_BYTES_NOT_DOWNLOADED",
+    "verification": "PAGE_VISUALLY_INSPECTED_USING_WEB_SCREENSHOT_2026-11-12",
+    "independence": "Same diplomatic airgram as C05/C06/C09/C10/C16: not a new independent witness to the alleged event",
+    "original_clippings_in_public_pdf": false
+  },
+  "records": [
+    {
+      "id": "MOR-A628-PROCESSING-20261112-01",
+      "matrix_related": [
+        "C16#1",
+        "C05#1",
+        "C06#1"
+      ],
+      "kind": "DOCUMENT_DATE_TYPED",
+      "text_seen": "DATE: November 20, 1963",
+      "date_iso": "1963-11-20",
+      "page_location": "p1, right of FROM and above SUBJECT",
+      "date_semantics": "DATE_PRINTED_ON_AIRGRAM",
+      "confidence": "HIGH_FOR_VISIBLE_TEXT",
+      "physical_observation": false
+    },
+    {
+      "id": "MOR-A628-PROCESSING-20261112-02",
+      "matrix_related": [
+        "C16#1"
+      ],
+      "kind": "ADMINISTRATIVE_DATE_STAMP",
+      "text_seen": "1963 NOV 24",
+      "date_iso": "1963-11-24",
+      "page_location": "p1, top right above handling-indicator area",
+      "date_semantics": "VISIBLE_STAMP_UNKNOWN_OFFICE_AND_EVENT",
+      "confidence": "HIGH_FOR_DATE_MEDIUM_FOR_FUNCTION",
+      "physical_observation": false
+    },
+    {
+      "id": "MOR-A628-PROCESSING-20261112-03",
+      "matrix_related": [
+        "C16#1"
+      ],
+      "kind": "ADMINISTRATIVE_DATE_STAMP",
+      "text_seen": "NOV 26 1963",
+      "date_iso": "1963-11-26",
+      "page_location": "p1, bottom near 'FOR DEPT USE ONLY'",
+      "date_semantics": "VISIBLE_STAMP_UNKNOWN_OFFICE_AND_EVENT",
+      "confidence": "HIGH_FOR_DATE_MEDIUM_FOR_FUNCTION",
+      "physical_observation": false
+    },
+    {
+      "id": "MOR-A628-PROCESSING-20261112-04",
+      "matrix_related": [
+        "C16#1"
+      ],
+      "kind": "CONFLICTING_SUBJECT_EVENT_YEAR",
+      "text_seen": "Reportedly Sighted Near Salvador, Bahia on November 8, 1964.",
+      "date_iso": "1964-11-08",
+      "page_location": "p1 SUBJECT; directly conflicts with document dated 1963",
+      "date_semantics": "PROBABLE_TYPO_UNTRUSTED_AS_EVENT_DATE",
+      "confidence": "HIGH_FOR_TEXT; INTERPRETATION_CONDITIONAL",
+      "physical_observation": false
+    }
+  ],
+  "links": [
+    {
+      "id": "AIRGRAM_SEQUENCE_DATE",
+      "from": "MOR-A628-PROCESSING-20261112-01",
+      "to": "MOR-A628-PROCESSING-20261112-02",
+      "relation": "visible_record_dates_in_order",
+      "status": "DOCUMENTARY_ONLY_NO_DISPATCH_TIME_PROOF"
+    },
+    {
+      "id": "AIRGRAM_LATER_MARK",
+      "from": "MOR-A628-PROCESSING-20261112-02",
+      "to": "MOR-A628-PROCESSING-20261112-03",
+      "relation": "visible_record_dates_in_order",
+      "status": "DOCUMENTARY_ONLY_UNKNOWN_OFFICE"
+    },
+    {
+      "id": "CONFLICT_1964_SUBJECT",
+      "from": "MOR-A628-PROCESSING-20261112-04",
+      "to": "MOR-A628-PROCESSING-20261112-01",
+      "relation": "conflicting_years_same_page",
+      "status": "DOCUMENT_CONFLICT_CONTEXT_POINTS_TO_1963"
+    },
+    {
+      "id": "LINK_FBIS_CONSUL",
+      "from": "MOR-A628-PROCESSING-20261112-01",
+      "to": "C09#1",
+      "relation": "cites_consular_telegram_157_14_NOV_1963",
+      "status": "REPORTS_PREVIOUS_DOCUMENT_NOT_NEW_EYEWITNESS"
+    }
+  ],
+  "typed_variables": [
+    {
+      "name": "airgram_document_date",
+      "type": "civil_date",
+      "record_id": "MOR-A628-PROCESSING-20261112-01"
+    },
+    {
+      "name": "top_stamp_date",
+      "type": "civil_date",
+      "record_id": "MOR-A628-PROCESSING-20261112-02"
+    },
+    {
+      "name": "bottom_stamp_date",
+      "type": "civil_date",
+      "record_id": "MOR-A628-PROCESSING-20261112-03"
+    },
+    {
+      "name": "subject_claimed_event_date",
+      "type": "civil_date_unreliable",
+      "record_id": "MOR-A628-PROCESSING-20261112-04"
+    },
+    {
+      "name": "top_stamp_function",
+      "type": "unknown_administrative_action",
+      "value": null
+    },
+    {
+      "name": "bottom_stamp_function",
+      "type": "unknown_administrative_action",
+      "value": null
+    },
+    {
+      "name": "document_transit_dates",
+      "type": "unknown_instant_or_interval",
+      "value": null
+    }
+  ],
+  "interpretation": {
+    "confirmed": "The photographed page has the typed date 20-Nov-1963, visible 24-Nov-1963 and 26-Nov-1963 date marks, and an inconsistent 8-Nov-1964 SUBJECT.",
+    "not_confirmed": "Who stamped it, whether a stamp is a receipt/distribution/archive action, exact time of arrival in Washington, original press clippings, physical UFO/balloon/radar observation.",
+    "hypothesis_h1": "The 24/26-Nov marks are later administrative processing stamps on the 1963 airgram; compatible with page but functions not yet proved.",
+    "hypothesis_h2": "The subject year 1964 describes a distinct 1964 incident; contradicted by the airgram's 1963 date and references to 14-Nov-1963 telegrams and 9/11-Nov-1963 newspapers.",
+    "candidate_lean_restriction": {
+      "scope": "DOCUMENTARY_EVENT_GRAPH_ONLY",
+      "expression": "if verified_as_dispatch_or_receipt_stamp(mark) then corresponding chronological relation holds",
+      "status": "PENDING_STAMP_FUNCTION_PROVENANCE",
+      "activates_physical_orbital_constraints": false
+    },
+    "physical_feasible_domain_status": "UNCHANGED_NOT_EVALUATED",
+    "priority_next_test": "Find the original Airgram handling/copy control conventions (DS-323, 1963) or original archival cover sheet with arrival timestamp; do not infer arrival time from the marks alone."
+  },
+  "negative_searches": [
+    {
+      "queries": "NORAD 528 1963-003B 7-9 Nov SPADATS Space Intelligence Bulletins (targeted web searches, 12 Nov 2026)",
+      "result": "No primary sensor report naming object 528 recovered; mostly modern catalog derivatives and original messages about 687/688. Do not infer no such report exists."
+    },
+    {
+      "queries": "Diário de Notícias 9 Nov 1963 and Jornal da Bahia 11 Nov 1963 original page indexes",
+      "result": "Only modern 2026 retellings and references to A-628 encountered, not actual newspaper facsimiles."
+    },
+    {
+      "queries": "NASA SSR volume 3 issue 21 circa 30-31 Oct 1963 NTRS",
+      "result": "Specific facsimile not identified; issues 22 and 23 readily indexed."
+    }
+  ]
+}
