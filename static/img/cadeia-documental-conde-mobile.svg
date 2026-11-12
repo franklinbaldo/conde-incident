@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="340" height="616" viewBox="0 0 340 616" role="img" aria-labelledby="title desc">
+<title id="title">Três etapas da circulação documental de Conde em novembro de 1963</title>
+<desc id="desc">Ordem temporal: relato da Rádio Tupi monitorado no FBIS em 8 de novembro; consulta da embaixada ao consulado em 14 de novembro; aerograma de 20 de novembro reproduzindo a resposta consular. Os registros dependem uns dos outros e não são três testemunhas independentes.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L9 5L1 9Z" fill="#83c6cf"/></marker></defs>
+<rect width="340" height="616" rx="14" fill="#151b26"/>
+<g font-family="system-ui,Segoe UI,Arial,sans-serif">
+<text x="18" y="30" fill="#b8dce0" font-size="15" font-weight="700">A TRILHA DO RELATO</text>
+<g fill="#202d3a" stroke="#4f6570" stroke-width="1.5">
+<rect x="16" y="51" width="308" height="137" rx="10"/>
+<rect x="16" y="225" width="308" height="137" rx="10"/>
+<rect x="16" y="399" width="308" height="137" rx="10"/>
+</g>
+<g fill="#b8dce0" font-size="16" font-weight="700">
+<text x="31" y="78">8 NOV 1963</text>
+<text x="31" y="252">14 NOV 1963</text>
+<text x="31" y="426">20 NOV 1963</text>
+</g>
+<g fill="#f0f1ef" font-size="19" font-weight="600">
+<text x="31" y="111">Notícia monitorada</text>
+<text x="31" y="285">Pedido de confirmação</text>
+<text x="31" y="459">Aerograma A-628</text>
+</g>
+<g fill="#c3ccd0" font-size="15">
+<text x="31" y="139">Relato atribuído à Rádio Tupi</text>
+<text x="31" y="162">preservado no FBIS</text>
+<text x="31" y="313">Embaixada consulta o</text>
+<text x="31" y="336">consulado em Salvador</text>
+<text x="31" y="487">Reproduz resposta consular</text>
+<text x="31" y="510">de 14 de novembro</text>
+</g>
+<g stroke="#83c6cf" stroke-width="2.5" fill="none" marker-end="url(#arrow)">
+<path d="M170 194V217"/><path d="M170 368V391"/>
+</g>
+<g fill="#d2d0c7" font-size="13.5">
+<text x="18" y="569">Documentos em sequência não são</text>
+<text x="18" y="591">testemunhas independentes.</text>
+</g>
+</g>
+</svg>
