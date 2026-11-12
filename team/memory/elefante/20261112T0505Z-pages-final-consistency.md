@@ -37,3 +37,10 @@ Falta de IDs, mudança de configuração, falha nova, deployment substituído e 
 ## Próxima dúvida concreta
 
 Depois de revisão independente de Gavião no head final e CI verde, como vincular criptograficamente os bytes de saída SSG Rust ao artefato Pages/deployment exato sem assumir que metadados são atestação do HTML? Confirmar fonte GitHub Actions, deployment de main, URL HTTP e integridade editorial. Reconciliar #1 e #3, preservando Evidências e Caderno e aplicando a decisão de SSG Rust da #22; a #28 ainda depende de validação e merge antes de reger a main.
+
+## Encerramento operacional verificado
+
+- PR desta fatia: [#52](https://github.com/franklinbaldo/conde-incident/pull/52), draft empilhada na #49, sem merge.
+- Execução Actions [#43159454868](https://github.com/franklinbaldo/conde-incident/actions/runs/43159454868) no SHA `8dc5ac693085391de94e2b1506f06d8f1364e88f`: job `audit` concluído `success`, **39 testes aprovados / 0 falhas**, etapa de verificação de Pages pós-merge corretamente `skipped` em PR. Após gravar esta memória haverá outro SHA, que exige conferência de CI próprio.
+- Fila reordenada documentalmente: #13 custódia TLE/RAAN prioridade **95** (prérequisito para restringir domínios); #15 Lean condicional **90**; #19 transferência/holdout 529 **85**; #4 integrador físico e erro **80**. Não confundir prioridade com resolução de evidência ou resultados científicos.
+- Avaliação de elegibilidade: #1 e #3 seguem draft; Gavião registrou LGTM técnico-editorial condicional da #3 no SHA `c84cce85`, mas #22 exige SSG Rust em vez de Zola e a navegação ainda exige reconciliação. #28 possui parecer COMMENTED, sem APPROVE/CI documentado. #49 e #52 aguardam auditoria independente do Gavião. Nenhum merge realizado.
