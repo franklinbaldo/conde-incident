@@ -62,15 +62,42 @@ function tagsNamed(html, name) {
   return found;
 }
 
-function elements(html, tag, attribute) {
-  const found = [];
-  const tags = tagsNamed(html, tag);
-  const attributePattern = new RegExp("(?:^|\\s)" + attribute + "\\s*=\\s*(?:\"([^\"]+)\"|'([^']+)')", "i");
-  for (const item of tags) {
-    const match = item.match(attributePattern);
-    if (match) found.push(match[1] || match[2]);
+// Match attributes only where the HTML tokenizer is between attribute values.
+// A real <a data-note='href="/lab/"> is not a navigable anchor.
+function quotedAttribute(startTag, wanted) {
+  const opener = /^<[A-Za-z][\w:-]*(?=[\s/>])/.exec(startTag);
+  if (!opener) return null;
+  let cursor = opener[0].length;
+  while (cursor < startTag.length) {
+    while (/\s/.test(startTag[cursor] || "")) cursor++;
+    if (startTag[cursor] === ">" ||
+        (startTag[cursor] === "/" && startTag[cursor + 1] === ">")) break;
+    const name = /^[A-Za-z_:][A-Za-z0-9_.:-]*/.exec(startTag.slice(cursor));
+    if (!name) { cursor++; continue; }
+    cursor += name[0].length;
+    while (/\s/.test(startTag[cursor] || "")) cursor++;
+    if (startTag[cursor] !== "=") continue; // Boolean attribute.
+    cursor++;
+    while (/\s/.test(startTag[cursor] || "")) cursor++;
+    const quote = startTag[cursor];
+    if (quote !== "'" && quote !== '"') {
+      // Unquoted values are intentionally not accepted as proof of a link.
+      while (cursor < startTag.length && !/[\s>]/.test(startTag[cursor])) cursor++;
+      continue;
+    }
+    const end = startTag.indexOf(quote, ++cursor);
+    if (end < 0) break;
+    const value = startTag.slice(cursor, end);
+    cursor = end + 1;
+    if (name[0].toLowerCase() === wanted.toLowerCase() && value) return value;
   }
-  return found;
+  return null;
+}
+
+function elements(html, tag, attribute) {
+  return tagsNamed(html, tag)
+    .map(item => quotedAttribute(item, attribute))
+    .filter(Boolean);
 }
 
 function looksHtml(body) {
