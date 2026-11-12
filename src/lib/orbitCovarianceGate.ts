@@ -55,7 +55,7 @@ function whiten(c: Matrix3, s: Vec3): Whiten | null {
   const a: number[][] = [];
   for (let i=0;i<3;i++) {
     if (!Array.isArray(c[i]) || c[i].length !== 3) return null;
-    const row = c[i].map((x,j) => x/s[i]/s[j]);
+    const row = c[i].map((x: number, j: number) => x/s[i]/s[j]);
     if (!row.every(Number.isFinite)) return null;
     a.push(row);
   }
