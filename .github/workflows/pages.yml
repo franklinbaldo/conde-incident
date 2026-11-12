@@ -53,11 +53,15 @@ jobs:
         run: ssg build --config ssg.toml
       - name: Unite Vite lab and styles with SSG output
         run: |
-          mkdir -p public/lab public/css
+          mkdir -p public/lab public/css public/img
           cp -R dist/. public/lab/
           cp -R static/css/. public/css/
-      - name: SSG audit
-        run: ssg audit --output public --config ssg.toml --fail-on error
+          cp -R static/img/. public/img/
+      - name: Audit actual GitHub Pages prefix without weakening gates
+        run: |
+          mkdir -p "$RUNNER_TEMP/conde-audit-root/conde-incident"
+          cp -R public/. "$RUNNER_TEMP/conde-audit-root/conde-incident/"
+          ssg audit --output "$RUNNER_TEMP/conde-audit-root" --config ssg.toml --fail-on error
       - name: Verify every article and /conde-incident/ paths
         run: node scripts/check-site.mjs
       - name: Upload Pages artifact

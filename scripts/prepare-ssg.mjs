@@ -31,7 +31,7 @@ const stories=names.map(filename=>{
   assert.match(fm.chapter,/^\d+$/);
   const slug=filename.slice(0,-3);
   // The original body stays verbatim, except the duplicated first H1.
-  const body=found[2].replace(/^# [^\n]*\r?\n(?:\r?\n)?/,'');
+  const body=found[2].replace(/^\s*# [^\r\n]*\r?\n(?:\r?\n)?/,'');
   return {filename,slug,...fm,body};
 }).sort((a,b)=>Number(a.chapter)-Number(b.chapter));
 stories.forEach((s,i)=>{

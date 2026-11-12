@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="t d">
+<title id="t">Caderno Conde: arquivo e investigação</title>
+<desc id="d">Arte editorial abstrata de duas folhas e arcos; não reproduz o suposto objeto nem representa uma observação histórica.</desc>
+<rect width="1200" height="630" fill="#101722"/>
+<rect x="165" y="106" width="870" height="418" rx="26" fill="#1b2b3a" stroke="#7493a6" stroke-width="3"/>
+<path d="M261 174h328M261 217h430M261 260h330M261 303h370" stroke="#a2bdc7" stroke-width="14" stroke-linecap="round" opacity=".6"/>
+<circle cx="834" cy="278" r="110" stroke="#d6bb86" stroke-width="4" fill="none"/>
+<path d="M729 337c108-151 179-79 240-121" fill="none" stroke="#d6bb86" stroke-width="5"/>
+<circle cx="932" cy="225" r="11" fill="#d6bb86"/>
+<text x="261" y="410" font-size="48" fill="#f0e7d3" font-family="Georgia,serif">Caderno Conde</text>
+<text x="261" y="454" font-size="22" fill="#b2c7d0" font-family="sans-serif">Documentos · hipóteses · limites</text>
+</svg>

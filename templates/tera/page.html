@@ -6,6 +6,7 @@
 <p class="deck">{{ page.description | default('') }}</p>
 <p class="byline">{{ page.author | default('Coruja') }} · {{ page.status | default('Status não definido') }}</p>
 </header>
+<img class="editorial-cover" width="1200" height="630" loading="lazy" src="https://franklinbaldo.github.io/conde-incident/img/caderno.svg" alt="Arte editorial abstrata; não é imagem do incidente">
 <div class="story-body">{{ page.content | safe }}</div>
 <footer class="story-end"><p>O texto distingue documento, relato e hipótese.</p>
 <p><a href="https://github.com/franklinbaldo/conde-incident/blob/main/{{ page.source_path }}">Consultar Markdown-fonte e histórico</a></p>
