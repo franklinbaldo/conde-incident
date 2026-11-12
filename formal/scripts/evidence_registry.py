@@ -481,6 +481,63 @@ def certified_cell_interface() -> dict:
     }
 
 
+
+def paired_certified_enclosure_interface() -> dict:
+    """Conditional intersection of two sound cell enclosures for one model.
+
+    Two declared enclosures do not imply independent source observations;
+    every cell cover, numerical soundness certificate and input custody
+    must be independently established before any physical inference.
+    """
+    return {
+        "version": 1,
+        "kind": "PAIRED_SOUND_CELL_EVENT_INTERSECTION",
+        "lean_module": "Conde1963/PairedEnclosures.lean",
+        "source_matrix_sha1": MATRIX_SHA1,
+        "parameter_semantics": "COMMON_AND_LEFT_OR_RIGHT",
+        "unresolved_orbital_occurrences": ["C25#1", "C179#1"],
+        "same_nasa_document_occurrences": ["C131#1", "C197#1"],
+        "nasa_independent_instrumental_sources": 0,
+        "original_zip_154_151_import": "NOT_RUN",
+        "current_first_cover": None,
+        "current_second_cover": None,
+        "current_intersection": None,
+        "current_geographic_verdict": None,
+        "current_numeric_impact_window": None,
+        "primary_tle_custody_verified": False,
+        "both_continuous_domain_covers_verified": False,
+        "both_event_enclosures_proved_sound": False,
+        "same_physical_predictor_and_reference_frame_verified": False,
+        "nonempty_admissible_domain_proven": False,
+        "universal_ground_impact_predicted": False,
+        "calibrated_error_and_holdout_529_verified": False,
+        "ground_impact_audit_passed": False,
+        "lean_obligations": {
+            "common_prediction_soundness": "paired_certified_bounds_for_prediction",
+            "conditional_conde_excluded": "paired_enclosures_exclude_conde",
+            "conditional_conde_forced": "paired_enclosures_force_conde",
+            "conditional_other_window": "paired_enclosures_identify_other_window",
+            "disjoint_bounds_no_predicted_impact": "disjoint_paired_bounds_forbid_predicted_impact",
+            "incompatible_bounds_vs_universal_impact": "incompatible_paired_bounds_refute_universal_impact",
+            "narrowing_preserves_soundness": "paired_bounds_survive_common_narrowing",
+        },
+        "must_verify": [
+            "source_matrix_occurrence_identity_and_nonindependence",
+            "verified_primary_TLE_epoch_frame_units_and_provenance",
+            "global_parameter_cover_for_each_cell_family_not_grid_only",
+            "both_event_bounds_sound_for_every_surviving_candidate",
+            "both_covers_refer_to_exact_same_model_and_parameter_domain",
+            "intersection_error_propagation_and_model_calibration",
+            "nonempty_surviving_domain_after_each_narrowing",
+            "independent_physical_holdout_529",
+            "ground_impact_vs_altitude_crossing_and_material_survival",
+            "geographic_disjointness_with_validated_error",
+            "do_not_infer_measurement_independence_from_two_certificates",
+            "no_geographic_verdict_until_empirical_gates_pass",
+        ],
+    }
+
+
 def contracts(rows: list[dict]) -> dict:
     return {
         "schema_version": 2,
@@ -494,6 +551,7 @@ def contracts(rows: list[dict]) -> dict:
         "scenario_enclosure_interface": scenario_enclosure_interface(),
         "finite_coverage_interface": finite_coverage_interface(),
         "certified_cell_interface": certified_cell_interface(),
+        "paired_certified_enclosure_interface": paired_certified_enclosure_interface(),
         "scope": "241 actual rows, 238 distinct labels, no fabricated observations",
         "entries": [
             {

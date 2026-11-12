@@ -368,5 +368,54 @@ class MatrixEvidenceTests(unittest.TestCase):
 
 
 
+    def test_paired_cell_contract_requires_two_sound_covers_and_nonempty_domain(self):
+        out = contracts(self.rows)
+        paired = out["paired_certified_enclosure_interface"]
+        self.assertEqual(paired["version"], 1)
+        self.assertEqual(paired["kind"], "PAIRED_SOUND_CELL_EVENT_INTERSECTION")
+        self.assertEqual(paired["lean_module"], "Conde1963/PairedEnclosures.lean")
+        self.assertEqual(paired["source_matrix_sha1"], out["matrix_git_blob_sha1"])
+        self.assertEqual(paired["parameter_semantics"], "COMMON_AND_LEFT_OR_RIGHT")
+        self.assertEqual(paired["unresolved_orbital_occurrences"],
+                         ["C25#1", "C179#1"])
+        self.assertEqual(paired["same_nasa_document_occurrences"],
+                         ["C131#1", "C197#1"])
+        self.assertEqual(paired["nasa_independent_instrumental_sources"], 0)
+        self.assertEqual(paired["original_zip_154_151_import"], "NOT_RUN")
+        for key in ("current_first_cover", "current_second_cover",
+                    "current_intersection", "current_geographic_verdict",
+                    "current_numeric_impact_window"):
+            self.assertIsNone(paired[key])
+        for key in ("primary_tle_custody_verified",
+                    "both_continuous_domain_covers_verified",
+                    "both_event_enclosures_proved_sound",
+                    "same_physical_predictor_and_reference_frame_verified",
+                    "nonempty_admissible_domain_proven",
+                    "universal_ground_impact_predicted",
+                    "calibrated_error_and_holdout_529_verified",
+                    "ground_impact_audit_passed"):
+            self.assertIs(paired[key], False)
+
+    def test_paired_cell_contract_cannot_turn_disjoint_bounds_into_location(self):
+        paired = contracts(self.rows)["paired_certified_enclosure_interface"]
+        self.assertEqual(set(paired["lean_obligations"]), {
+            "common_prediction_soundness", "conditional_conde_excluded",
+            "conditional_conde_forced", "conditional_other_window",
+            "disjoint_bounds_no_predicted_impact",
+            "incompatible_bounds_vs_universal_impact",
+            "narrowing_preserves_soundness"
+        })
+        self.assertTrue(all(paired["lean_obligations"].values()))
+        required = set(paired["must_verify"])
+        self.assertIn("nonempty_surviving_domain_after_each_narrowing", required)
+        self.assertIn("both_event_bounds_sound_for_every_surviving_candidate",
+                      required)
+        self.assertIn("do_not_infer_measurement_independence_from_two_certificates",
+                      required)
+        self.assertIn("no_geographic_verdict_until_empirical_gates_pass", required)
+        self.assertIn("ground_impact_vs_altitude_crossing_and_material_survival",
+                      required)
+
+
 if __name__ == "__main__":
     unittest.main()

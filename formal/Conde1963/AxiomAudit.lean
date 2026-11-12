@@ -130,3 +130,12 @@ import Conde1963.CertifiedCells
 #print axioms Conde1963.covered_cells_identify_other_window
 #print axioms Conde1963.cell_cover_survives_common_narrowing
 #print axioms Conde1963.cell_bounds_survive_common_narrowing
+
+-- Jointly sound overlapping cell bounds, with no physical independence inferred.
+#print axioms Conde1963.paired_certified_bounds_for_prediction
+#print axioms Conde1963.paired_enclosures_exclude_conde
+#print axioms Conde1963.paired_enclosures_force_conde
+#print axioms Conde1963.paired_enclosures_identify_other_window
+#print axioms Conde1963.disjoint_paired_bounds_forbid_predicted_impact
+#print axioms Conde1963.incompatible_paired_bounds_refute_universal_impact
+#print axioms Conde1963.paired_bounds_survive_common_narrowing
