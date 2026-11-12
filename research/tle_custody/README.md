@@ -268,3 +268,23 @@ registros com timestamps iguais no espelho secundário pinado,
 não ausência de rastreamento histórico nem impossibilidade de ajuste
 conjunto. O conjunto de linhas próximas é documental, não restrição
 Lean física; não resolve o conflito RAAN nem prova impacto.
+
+
+## C241-T4: grade temporal TLE e gate para epocas contraditorias (12/11/2026 UTC)
+
+**Pergunta estrita:** os carimbos UTC do CSV secundario, sem recuperar line1/line2, sao *representaveis* pela grade de 8 casas decimais do dia do formato TLE (864 microssegundos por unidade a partir de 00:00 UTC)? A [especificacao CelesTrak](https://celestrak.org/columns/v04n03/) define o campo da linha 1, colunas 21–32; e **documentacao tecnica posterior**, nao um boletim NORAD de 1963.
+
+Fatia verificavel: [tools/tle_epoch_grid_audit.py](../../tools/tle_epoch_grid_audit.py), [seis contraprovas sinteticas](../../tests/test_tle_epoch_grid_audit.py) e um teste de contradicao de estados no extrator. A ferramenta exige o CSV integral SHA-256 `3940715d7c15cf15c24e678a8c5b5fbb34a031b3ffd7e33c0580277377383231`, conserva `source_row`, verifica UTC sem float e publica `tle_epoch_grid_report.json`. **Novo gate fail-closed:** estados numericos distintos para mesmo NORAD+epoca deixam `audit.json` rastreavel, mas agora impedem sucesso do script; duplicatas identicas nao falham.
+
+**Resultado empirico no arquivo fixado:** [CI custodia #43136329241](https://github.com/franklinbaldo/conde-incident/actions/runs/43136329241), commit de codigo `e96c54871c25de56336a042778071154eaa33d06`, **46/46 testes PASS**, Parquet e CSV fonte SHA-256 conferidos. Todos os **123/123 carimbos** caem *exatamente* na grade: 527 **21/21** (20 epocas distintas), 528 **45/45** (45), 529 **57/57** (54). Desvio maximo: **0 µs**, nenhum `OFF_GRID`; zero conflito de duplicata no espelho validado. [Verificacoes cientificas #43136329367](https://github.com/franklinbaldo/conde-incident/actions/runs/43136329367) aprovaram no mesmo SHA. Uma hipotese testavel (compatibilidade representacional com epoca codificada em 8 decimais) **nao foi falsificada**; isso **nao** demonstra que essas 123 linhas tenham sido originadas de TLEs primarios, e muito menos que 45 observacoes instrumentais individuais sobrevivam.
+
+```bash
+python -m unittest discover -s tests -p 'test_*.py' -v
+python tools/tle_epoch_grid_audit.py \
+  --csv /tmp/norad-1963-audit/norad_527_528_529_1963_numeric.csv \
+  --output /tmp/norad-1963-audit/tle_epoch_grid_report.json
+```
+
+**Linhagem de dados:** fonte secundaria [oxzoid Parquet 1963](https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/main/data/tle_1963.parquet) (revisao 4b4fb3a, SHA-256 `c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09`) → [extrator com verificacao de hash](../../tools/audit_norad_1963.py) → CSV fixado → analise exata em microssegundos → JSON arquivado por GitHub Actions. Nenhum ramo fornece aqui transcricao coeva independente. O [NASA Satellite Situation Report de 15/11/1963, p.8](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf) continua sendo documento primario **somente para o dia de decaimento** (08/11), nao para essas epocas ou um local de impacto. CelesTrak instrui o *formato* e nao atesta o acervo.
+
+**Nao inferir** origem original de line1/line2, checksum de 45 pares, TEME historico, frame, sistema de rastreamento, precisao observacional, componente material 528 ou derivadas orbitais. O dominio nao vazio encontrado e de **representacao documental**, sem restricao numerica fisica adicional em Lean 4.35.0 ou no simulador; nao ha dominio dinamico admissivel novo. O conflito **RAAN 198,5261° versus 284,1520° permanece aberto**. Faltam os originais NORAD/AFSPC com epocas, metadados de frame, incerteza e procedencia, a identidade fisica S00528 e observacoes terminais independentes. Resultado relativo a Conde: **INDETERMINADO**.
