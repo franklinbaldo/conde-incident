@@ -38,6 +38,9 @@ A correção **desconsidera comentários, conteúdo de templates e corpos de scr
 
 Na consulta autenticada à API GitHub nesta rodada, **`has_pages=false`** para o projeto. Logo, nenhum conteúdo Pages foi comprovado como publicado; os testes da PR usam HTTP e metadados sintéticos, não um deployment real.
 
+
+**Regressão observada no CI da integração:** a primeira tentativa da PR G21 [#187](https://github.com/franklinbaldo/conde-incident/pull/187), no HEAD `f801a19b`, encontrou o gate `Publish Conde site` vermelho no [run #43274184201](https://github.com/franklinbaldo/conde-incident/actions/runs/43274184201): apesar do ambiente `VITE_BASE_PATH=/conde-incident/`, o Vite 8 emitiu links `/assets/*`. A correção operacional **separada** [#190](https://github.com/franklinbaldo/conde-incident/pull/190) passou em 14/14 workflows no SHA `55036c8a0d1f2b8c0b9557e78261b44d04253b59` e foi integrada em `dbb6ed742e661b1b43c71dd710024b2e5281e269`, usando `bunx vite build --base /conde-incident/`. Esses checks aprovam o **build**, não um deploy real.
+
 ## Autenticidade, independência e contraprova histórica
 
 A [#180](https://github.com/franklinbaldo/conde-incident/pull/180) trouxe registros contemporâneos NORAD, sem observar diretamente o objeto 528. O [fac-símile 07.pdf](https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/07.pdf), página PDF 3 (índice zero 2), documenta o objeto **687** e detecção de Shemya. O [08.pdf](https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/08.pdf), página PDF 2 (índice zero 1), traz a janela de aproximadamente **110 minutos, 12/11/1963, 22:10–24:00 UTC**, **para SPADATS 688, Cosmos 21, não 528**. A evidência de capacidade de rastreamento do NORAD não vira uma localização da reentrada do NORAD 528.
