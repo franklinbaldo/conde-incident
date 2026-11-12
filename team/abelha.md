@@ -6,7 +6,7 @@ description: "Responsabilidades da Abelha na equipe e distinção entre projeto 
 
 # 🐝 Abelha: grafo de proveniência documental e citações
 
-**Projeto atual:** [conde-incident](https://github.com/franklinbaldo/conde-incident). **Workspace pessoal privado:** [franklinbaldo/abelha](https://github.com/franklinbaldo/abelha), **verificado** em 12/11/2026 quanto a privacidade, repositório e acesso; a infraestrutura do time está no estado PRIVATE_REPOS_VERIFIED_BOOTSTRAP_PARTIAL (issue #93). Conde não constitui identidade permanente do animal.
+**Projeto atual:** [conde-incident](https://github.com/franklinbaldo/conde-incident). **Repositório pessoal privado:** [franklinbaldo/abelha](https://github.com/franklinbaldo/abelha), **verificado** em 12/11/2026 quanto a privacidade, repositório e acesso; a infraestrutura do time está no estado PRIVATE_REPOS_VERIFIED_BOOTSTRAP_PARTIAL (issue #93). Conde não constitui identidade permanente do animal.
 
 ## Missão e rotina
 
