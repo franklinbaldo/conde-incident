@@ -1,0 +1,73 @@
+{
+  "archive_bytes": 117264384,
+  "archive_sha256": "afec7c443e0c912f8a742738bb82384197baecc7c743cfb00a2a8bda207b5de4",
+  "archive_url": "https://osdf-director.osg-htc.org/ncar-gdex/d353000/Y20175",
+  "candidate_forward_operator": "decode_station_day_profile_then_validate_station_epoch_height_and_spatial_transfer",
+  "candidate_latent_parameter": "wind_field_nov_1963_with_altitude_time_and_position",
+  "candidate_queries": [
+    {
+      "day_utc_candidate": "1963-11-07",
+      "query_status": "NOT_DECODED_NOT_OBSERVED",
+      "station_wmo_candidate": "83229"
+    },
+    {
+      "day_utc_candidate": "1963-11-08",
+      "query_status": "NOT_DECODED_NOT_OBSERVED",
+      "station_wmo_candidate": "83229"
+    },
+    {
+      "day_utc_candidate": "1963-11-09",
+      "query_status": "NOT_DECODED_NOT_OBSERVED",
+      "station_wmo_candidate": "83229"
+    },
+    {
+      "day_utc_candidate": "1963-11-07",
+      "query_status": "NOT_DECODED_NOT_OBSERVED",
+      "station_wmo_candidate": "83096"
+    },
+    {
+      "day_utc_candidate": "1963-11-08",
+      "query_status": "NOT_DECODED_NOT_OBSERVED",
+      "station_wmo_candidate": "83096"
+    },
+    {
+      "day_utc_candidate": "1963-11-09",
+      "query_status": "NOT_DECODED_NOT_OBSERVED",
+      "station_wmo_candidate": "83096"
+    },
+    {
+      "day_utc_candidate": "1963-11-07",
+      "query_status": "NOT_DECODED_NOT_OBSERVED",
+      "station_wmo_candidate": "82900"
+    },
+    {
+      "day_utc_candidate": "1963-11-08",
+      "query_status": "NOT_DECODED_NOT_OBSERVED",
+      "station_wmo_candidate": "82900"
+    },
+    {
+      "day_utc_candidate": "1963-11-09",
+      "query_status": "NOT_DECODED_NOT_OBSERVED",
+      "station_wmo_candidate": "82900"
+    }
+  ],
+  "comparison_relation": "C151_RECIFE_PROFILE_NOT_Y20175_OBSERVATION_OR_INDEPENDENT_HOLDOUT",
+  "comparison_source": "NOAA_IGRA_RECIFE_1963",
+  "inventory_id": "MET-NMC-20261112-09",
+  "manifest_path": "research/meteorology/nmc_y20175_1963_custody.json",
+  "manifest_sha256": "0988eb3d900a6b38e387122f098a730e797f78356b4e8589982f5e1b3ce9e862",
+  "matrix_context_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C151#1",
+  "matrix_context_row_sha256": "d2efe77c596b9fc28b6cf968467e8e696533d1d473fa5d93e0532c767326330b",
+  "numeric_observations_generated": 0,
+  "physical_domain": "UNCHANGED_NO_ACTIVE_CONSTRAINT",
+  "required_evidence_to_activate": [
+    "validated_1963_CRAY_RPTOUT_ON20_decoder",
+    "actual_station_day_hits_with_source_offsets_and_qc",
+    "time_height_position_reference_and_units",
+    "independent_observation_errors_and_correlation",
+    "validated_transfer_to_Conde_and_reentry_state"
+  ],
+  "schema": "conde.pending-nmc-wind-bridge/v1",
+  "source_independence": "UNKNOWN_NO_DECODE",
+  "source_role": "REAL_BINARY_ARCHIVE_WITH_UNDECODED_STATION_DAY_CONTENTS"
+}
