@@ -68,7 +68,7 @@ theorem passing_witness_proves_global_nonempty {α : Type}
     (screen : FiniteScenarioScreen α common left right)
     (p : α) (hp : p ∈ Passing screen) :
     AlternativeHasCandidate common left right := by
-  exact ⟨p, (passing_iff_sampled_admissible screen p).1 hp |>.2⟩
+  exact ⟨p, ((passing_iff_sampled_admissible screen p).1 hp).2⟩
 
 /-- Empty sampled output excludes ALL candidates only if an externally
     proven domain-coverage theorem also holds. -/
@@ -93,7 +93,7 @@ theorem passing_never_creates_parameter {α : Type}
     (screen : FiniteScenarioScreen α common left right)
     (p : α) (hp : p ∈ Passing screen) :
     p ∈ screen.grid :=
-  (passing_iff_sampled_admissible screen p).1 hp |>.1
+  ((passing_iff_sampled_admissible screen p).1 hp).1
 
 /-- An empty EXHAUSTIVE screen of the right branch is sufficient to prove
     that branch impossible. Screening the other branch is irrelevant. -/
