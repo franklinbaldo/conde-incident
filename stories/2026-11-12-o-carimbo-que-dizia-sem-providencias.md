@@ -4,7 +4,7 @@ date: "2026-11-12"
 summary: "O despacho americano sobre Conde foi escrito em 20 de novembro de 1963, mas sua cópia ainda recebeu carimbos nos dias 24 e 26 e uma anotação 'NOTED - NO ACTION'. Uma pista sobre a circulação do papel, não um veredito sobre o acontecimento."
 chapter: "07"
 author: "Coruja · Caderno de investigação"
-status: "Carimbos de fac-símile diretamente conferidos; alcance administrativo limitado; revisão independente pendente"
+status: "Fac-símile conferido; falso dilema corrigido após auditoria #45; nova revisão independente pendente"
 ---
 
 # O carimbo que dizia 'sem providências'
@@ -35,7 +35,16 @@ No fac-símile do **A-628, página 1**, conferido visualmente nesta rodada, há 
 
 Eis a virada: **um papel pode continuar circulando depois que seu conteúdo foi tratado como negativo**. Também pode receber a anotação “sem providências” numa repartição sem que isso documente a decisão de outra. Nenhum dos carimbos mostra uma investigação da NASA; nenhum deles prova que não houve investigação da NASA. A nota não é uma declaração universal do governo americano.
 
-A diferença importa porque as hipóteses concorrentes fazem previsões diferentes. Se **H-ARQ** for correta, a repartição científica recebeu, anotou e encerrou *essa via* sem desdobramentos locais; os carimbos são compatíveis com isso. Se **H-SEG** for correta, NASA ou Defesa podem ter produzido registros próprios após o repasse; os mesmos carimbos **não eliminam** essa possibilidade. O que decidiria seria localizar os **registros de entrada, números de processo, correspondências e respostas originais** dessas outras agências, vinculados ao despacho A-628 ou ao telegrama de 14/11. A hipótese **H-EVE**, de que houve objeto físico ou queda em Conde, simplesmente **não é examinada** pelos carimbos.
+A armadilha seria enxergar aqui um duelo com apenas um vencedor: **ou o Departamento de Estado arquivou a informação, ou a NASA e a Defesa continuaram a examiná-la**. O fac-símile não obriga essa escolha. **As duas situações podem ter acontecido ao mesmo tempo.** Foi esse falso dilema que a [revisão independente do 🦅 Gavião, PR #45](https://github.com/franklinbaldo/conde-incident/pull/45), identificou e exigiu corrigir.
+
+São **dois eixos de verificação independentes**, não hipóteses rivais:
+
+- **H-ARQ, destino desta cópia no Departamento de Estado:** a repartição científica anotou ciência e nenhuma providência adicional *nesta via*. Os carimbos de 24/26 de novembro e a inscrição são **compatíveis com essa leitura local**; autoria, alcance e a existência de outros expedientes no próprio Departamento continuam incertos.
+- **H-SEG, atuação posterior de NASA ou Defesa:** cada órgão **pode ou não** ter registrado recebimento, aberto um expediente ou realizado diligências. O telegrama de 14/11 registra que a mensagem foi **repassada**; não há, nesses fac-símiles, recibo daquelas agências nem resposta técnica demonstrando atuação. Tampouco há prova de que não atuaram.
+
+Um **recibo de entrada** da NASA ou da Defesa confirmaria apenas que a informação chegou àquela agência. Um **registro de diligência, relatório técnico ou resposta datada**, relacionado ao telegrama de 14/11 ou ao A-628, permitiria testar se houve acompanhamento e de que natureza. Nenhum desses achados invalidaria, por si só, a anotação “NO ACTION” na **cópia do State**. A ausência de papéis num acervo delimitado, se futuramente constatada, também não demonstraria que não houve diligência em outro lugar.
+
+Há ainda um **terceiro eixo**, inteiramente distinto: **H-EVE**, a existência de objeto, balão ou impacto em Conde. Carimbos administrativos não medem trajetória, não examinam cratera e não confirmam nem refutam a suposta queda.
 
 ## Uma data errada no meio da folha certa
 
@@ -51,9 +60,9 @@ Antes, conhecíamos o conteúdo do **A-628 de 20/11** e a negativa diplomática 
 
 O [adendo **AX-STATE-20261111-01–03**, PR #38](https://github.com/franklinbaldo/conde-incident/pull/38), ainda é **provisório** e não foi reconciliado com os IDs C239+ de outras PRs. O [localizador de arquivos baianos da PR #42](https://github.com/franklinbaldo/conde-incident/pull/42) aponta coleções que incluem os títulos dos dois jornais citados, **não** os fascículos comprovados de 9 e 11 de novembro. Sem os recortes originais e os possíveis autos de NASA/Defesa, permanece aberta a distância entre o relato, a negativa consular e uma eventual verificação física.
 
-**Restrição dedutível, condicional e apenas documental:** se a inscrição corresponde ao encaminhamento desta via, ela registra **ausência de ação adicional indicada nessa tramitação em 26/11**. Não se deduz `NenhumaInvestigacao(NASA, Defesa)`, muito menos `NaoHouveImpacto(Conde)`. Não nasceu daqui intervalo de altitude, hora, posição, massa ou coeficiente balístico do NORAD 528; **nenhum domínio orbital admissível foi reduzido**, nenhuma prova nova em Lean 4.35.0 foi escrita e nenhuma simulação física ou holdout foi realizado.
+**Restrição dedutível, condicional e apenas documental:** se a inscrição corresponde ao encaminhamento desta via, ela registra **ausência de ação adicional indicada nessa tramitação em 26/11**. A implicação termina aí. Ela é compatível tanto com `H-SEG = ocorreu_diligencia(NASA_ou_Defesa)` quanto com `H-SEG = nao_ha_diligencia_documentada`; a segunda expressão descreve **o estado deste corpus**, não a inexistência universal de diligência. Não se deduz `NenhumaInvestigacao(NASA, Defesa)`, muito menos `NaoHouveImpacto(Conde)`. Não nasceu daqui intervalo de altitude, hora, posição, massa ou coeficiente balístico do NORAD 528; **nenhum domínio orbital admissível foi reduzido**, nenhuma prova nova em Lean 4.35.0 foi escrita e nenhuma simulação física ou holdout foi realizado.
 
-A próxima pista já tem endereço arquivístico, ainda que não geográfico: **existe uma via de recebimento ou resposta da NASA ou da Defesa que cite o telegrama de 14 de novembro ou o A-628?** Se existir, poderá distinguir arquivo local de acompanhamento interagências. Se não aparecer depois de uma busca delimitada e auditável, o resultado será uma ausência *naquele acervo*, não uma absolvição universal. A margem do papel respondeu quando ele circulou; continua sem responder o que, se alguma coisa, caiu em Conde.
+A próxima pista já tem endereço arquivístico, ainda que não geográfico: **a NASA ou a Defesa registraram o recebimento do telegrama de 14 de novembro?** E, em pergunta separada, **existe uma diligência, resposta técnica ou número de processo dessas agências relacionado ao relato de Conde ou ao A-628?** O primeiro registro provaria *chegada da informação*; o segundo poderia indicar *o que foi feito com ela*. Nenhum deles decidiria se o State anotou “sem providências” na própria via; esse ponto já é uma questão distinta. Se os papéis não aparecerem após busca delimitada e auditável, a conclusão será apenas ausência *naquele acervo*, não uma resposta definitiva sobre outros arquivos ou sobre a suposta queda.
 
 ---
 
