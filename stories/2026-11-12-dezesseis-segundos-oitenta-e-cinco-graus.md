@@ -9,7 +9,7 @@ status: "C241-T10: refutação matemática condicional; procedência orbital pri
 
 # Dezesseis segundos contra oitenta e cinco graus
 
-**Dois registros atribuídos ao mesmo objeto podem ter apenas dezesseis segundos de diferença no relógio e, ainda assim, apontar para planos orbitais separados por mais de oitenta e cinco graus?** Essa discrepância acompanhava a investigação do NORAD 528 desde os primeiros cálculos. Havia uma explicação aparentemente simples a testar: talvez o ângulo tivesse mudado porque as duas linhas não se referiam exatamente ao mesmo instante. A 🐢 Tartaruga decidiu perguntar quanto uma diferença tão pequena poderia realmente explicar.
+**Dois registros atribuídos ao mesmo objeto podem estar separados por apenas dezesseis segundos no relógio e, ainda assim, apresentar valores de RAAN diferentes em 85,6259°?** Essa discrepância acompanhava a investigação do NORAD 528 desde os primeiros cálculos. Havia uma explicação aparentemente simples a testar: talvez o ângulo tivesse mudado porque as duas linhas não se referiam exatamente ao mesmo instante. A 🐢 Tartaruga decidiu perguntar quanto uma diferença tão pequena poderia realmente explicar.
 
 A resposta é uma das mais nítidas desta série, com uma condição importante: **num modelo declarado de precessão J2, se os registros usarem a mesma referência orbital e diferirem apenas na época, dezesseis segundos não chegam nem perto de explicar o desvio**. O cálculo elimina essa justificativa estreita. Não escolhe qual registro é verdadeiro.
 
@@ -24,7 +24,7 @@ Um [par TLE secundário arquivado pela Tartaruga](https://github.com/franklinbal
 | Vetor legado no simulador, sem procedência instrumental comprovada | 27/10/1963, 14:39:59,999904 | 284,1520° |
 | Par TLE de espelho secundário, custodiado | 27/10/1963, 14:40:16,132512 | 198,5261° |
 
-A distância angular mínima entre esses valores, respeitando a volta completa de 360°, é **85,6259°**. A diferença entre os horários é de **16,132608 segundos**. A Tartaruga já havia constatado o conflito nos cadernos anteriores. Agora o tornou uma hipótese numérica falsificável, **C241-T10**, na [PR científica #14](https://github.com/franklinbaldo/conde-incident/pull/14).
+A distância angular circular entre **esses valores de RAAN**, respeitando a volta completa de 360°, é **85,6259°**. Isso **não equivale ao ângulo entre dois planos orbitais**. A [contraprova independente do Gavião, G12-B1](https://github.com/franklinbaldo/conde-incident/pull/63) calcula, apenas se ambos os elementos estiverem no mesmo referencial e corresponderem a planos com inclinação textual de 81,8615°, um ângulo **entre normais de 84,5612921°**. Nem essa separação hipotética é medição da geometria orbital real: faltam referenciais e proveniência instrumental autenticados. A diferença entre os horários é de **16,132608 segundos**. A Tartaruga já havia constatado o conflito nos cadernos anteriores. Agora o tornou uma hipótese numérica falsificável, **C241-T10**, na [PR científica #14](https://github.com/franklinbaldo/conde-incident/pull/14).
 
 Também há diferenças em outros elementos dos vetores. Assim, a história não é simplesmente a de dois relógios apontando para a mesma medição. A autenticidade, o referencial e até a origem do ângulo legado continuam sem comprovação independente.
 
