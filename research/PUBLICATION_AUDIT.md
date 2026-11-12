@@ -32,3 +32,47 @@ A verificação anterior inspecionava apenas uma URL com data na **listagem**, q
 ## Auditoria integral da coleção editorial (fatia empilhada após #7)
 
 O gate deve seguir **todas** as URLs dos cartões da listagem Zola, e não apenas o primeiro capítulo. Cada cartão precisa ter permalink datado e único sob o domínio e base canônicos. Para cada URL, a auditoria faz GET, confere HTTP 200, corpo `full-story`/`story-body` e a ligação específica para `stories/<slug>.md` no repositório. Uma segunda reportagem 404, uma fonte de Markdown trocada, uma ligação para outro domínio ou um cartão duplicado fazem o resultado ficar `NOT_VERIFIED`. Para impedir uma varredura de rede ilimitada, uma listagem com mais de 100 cartões exige revisão explícita do limite. O teste utiliza HTML sintético para demonstrar falhas de detecção; **não** certifica a procedência histórica de cada reportagem, nem que sua narrativa contém notícia nova. O controle editorial da Coruja e a revisão factual independente do Gavião continuam obrigatórios.
+
+
+## Contraprova de inventário no commit publicado (12/11/2026)
+
+**Nova condição de publicação:** o auditor consulta somente leitura o endpoint
+`GET /repos/franklinbaldo/conde-incident/git/trees/<SHA>/recursive=1`
+(formato de consulta efetivo: `?recursive=1`). O GitHub fornece a árvore
+do **commit de 40 caracteres** que venceu os gates de run e deployment.
+O conjunto de `stories/YYYY-MM-DD-slug.md` precisa coincidir
+**exatamente** com os cartões de `/conde-incident/stories/` (não basta
+a existência de um capítulo). Árvore truncada, fontes não convencionais,
+duplicatas, capítulos ausentes/ocultos e links extras resultam em
+`NOT_VERIFIED`. O verificador continua a buscar cada artigo em HTTPS.
+
+O próprio artigo precisa apontar para
+`https://github.com/franklinbaldo/conde-incident/blob/<SHA>/stories/<slug>.md`,
+e não `blob/main`: a fonte do artigo publicado fica identificável
+**mesmo depois que main avançar**. Requer atualização do template da
+Coruja na PR #3, ainda **não implementada**; um teste sintético verde
+não representa deploy. A exceção explícita é `stories/README.md`, documentação editorial já
+presente na PR #3, que não representa capítulo publicável. Se houver outro
+Markdown intencionalmente não publicável, ele deve estar fora de `stories/`
+ou o contrato deve ser explicitamente revisto com avaliação independente,
+nunca ignorado silenciosamente.
+
+**Mudança editorial superveniente:** a PR #22 registra decisão do
+proprietário por SSG Rust em lugar de Zola. Este auditor é independente
+do executável gerador: exige a estrutura HTML pública estável
+`masthead`, `journal`, `story-card`, `full-story`, `story-body`,
+stylesheet em `/css/site.css` e laboratório em `/lab/`.
+A Coruja precisa preservar ou adaptar esse contrato no HTML SSG
+real antes da integração. Referências anteriores a Zola neste
+documento descrevem a revisão histórica, não autorização para
+publicar a versão Zola revogada.
+
+**Proveniência e independência:** o inventário é metadado primário
+do controle de versões lido via GitHub no SHA de `main`; não é
+evidência da reentrada de 1963 nem independente do código que produz
+o site. As páginas em HTTPS demonstram disponibilização no momento
+da auditoria, não autenticidade histórica ou checksum de artefato
+buildado. Testes usam somente árvore/HTML artificiais adversariais.
+Fonte da política: [AGENTS.md](../AGENTS.md),
+[PR #22](https://github.com/franklinbaldo/conde-incident/pull/22)
+e [API Git Trees](https://docs.github.com/en/rest/git/trees).
