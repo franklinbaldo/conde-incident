@@ -9,7 +9,7 @@ repos:
         always_run: true
       - id: okf-parser-check
         name: Check OKF documents and normative specs
-        entry: uvx --from okf-parser==0.48.2 okf-parser check . --require-spec '.okf/specs/{slug}.md' --normative-spec
+        entry: python3 scripts/check_okf_incremental.py
         language: system
         pass_filenames: false
         always_run: true
