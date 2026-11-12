@@ -1,4 +1,4 @@
-import Conde1963.SimulatorBridge
+import Conde1963.Enclosures
 
 /-! Explicit kernel-dependency report in CI, not an empirical validation. -/
 
@@ -77,3 +77,12 @@ import Conde1963.SimulatorBridge
 #print axioms Conde1963.countWithin_bounded_by_sample_size
 #print axioms Conde1963.cumulative_radii_monotone
 #print axioms Conde1963.scaled_drag_power_nonpositive
+
+-- Formal error envelopes: claims remain conditional on a justified numerical gate.
+#print axioms Conde1963.covered_envelope_excludes_conde
+#print axioms Conde1963.covered_envelope_forces_conde
+#print axioms Conde1963.covered_envelope_identifies_other_window
+#print axioms Conde1963.overlap_refutes_uniform_envelope_separation
+#print axioms Conde1963.missing_ground_audit_blocks_enclosure_exclusion
+#print axioms Conde1963.castor_declared_audit_blocks_enclosure_exclusion
+#print axioms Conde1963.finite_sample_nonimpact_does_not_exclude_globally
