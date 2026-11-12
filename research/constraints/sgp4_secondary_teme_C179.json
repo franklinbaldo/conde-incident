@@ -1,0 +1,40 @@
+{
+  "schema": "conde.sgp4-secondary-baseline-bridge/v1",
+  "id": "CASTOR-G26-SGP4-TEME-SECONDARY-20261112",
+  "status": "CONNECTED_PENDING_INSTRUMENTAL_CALIBRATION",
+  "classification": "COMPUTATIONAL_BASELINE_NOT_HISTORICAL_OBSERVATION",
+  "source_occurrences": ["C179#1", "C181#1", "C197#1"],
+  "primary_document": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf",
+  "primary_document_observable": "1963-003B catalogued decay date 1963-11-08 (day only, publication 1963-11-15), no position or hour",
+  "secondary_input": {
+    "object_norad": 528,
+    "literal_path": "research/tle_custody/mirror_528_1963-10-27.tle",
+    "sha256": "18cf11665e061b5ec8679242e10b00b82accf29bc6f0b9b7b6330b9c44e341cd",
+    "source": "https://www.itau.magnetic-declination.com/satellite/?s=528",
+    "epoch_utc": "1963-10-27T14:40:16.132512Z",
+    "source_independence": "ONE_RETROSPECTIVE_TLE_TRACKING_LINEAGE_NOT_PRIMARY_NORAD",
+    "source_uncertainty": null
+  },
+  "model_operator": "satellite.js@5.0.0 SGP4 from literal TLE; returns TEME r[km], v[km/s] at requested UTC",
+  "variables": [
+    {"id": "tle_528_mean_elements", "unit": "TLE", "source": "C179#1", "covariance": null},
+    {"id": "model_528_teme_r", "unit": "km", "is_measured": false},
+    {"id": "model_528_teme_v", "unit": "km/s", "is_measured": false},
+    {"id": "teme_to_rk4_inertial_transform", "unit": "frame_and_epoch", "calibrated": false},
+    {"id": "raw_instrumental_527_529_states", "unit": "km,km/s,UTC", "value": null},
+    {"id": "state_and_model_covariance", "unit": "km^2,(km/s)^2", "value": null}
+  ],
+  "conditional_edges": [
+    {"from": "tle_528_mean_elements", "to": "model_528_teme_r", "relation": "SGP4_model_not_direct_observation"},
+    {"from": "tle_528_mean_elements", "to": "model_528_teme_v", "relation": "SGP4_model_not_direct_observation"},
+    {"from": "model_528_teme_r", "to": "rk4_cartesian_comparison", "requires": "teme_to_rk4_inertial_transform_and_error"},
+    {"from": "raw_instrumental_527_529_states", "to": "historical_blind_holdout", "requires": "provenance_epoch_frame_calibration_covariance_nonleakage"},
+    {"from": "source_uncertainty_unknown", "to": "historical_likelihood", "relation": "not_estimable_from_mirror_alone"}
+  ],
+  "active_constraint": false,
+  "historical_holdout_527_529": "NOT_RUN",
+  "historical_fit": "NOT_RUN",
+  "geographic_domain_reduction": "NOT_EVALUABLE",
+  "impact_inference": "NOT_SUPPORTED",
+  "project_issue": 4
+}
