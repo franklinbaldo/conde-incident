@@ -1,0 +1,274 @@
+{
+  "schema": "conde.archive-observation-graph/v1",
+  "source": {
+    "id": "SIA-RU255-FINDING-AID",
+    "title": "Smithsonian Astrophysical Observatory, Moonwatch Division, Records 1956-1975, Record Unit 255",
+    "url": "https://sirismm.si.edu/EADpdfs/SIA.FARU0255.pdf",
+    "institutional_url": "https://siarchives.si.edu/collections/siris_arc_216819",
+    "publisher": "Smithsonian Institution Archives",
+    "document_kind": "institutional_finding_aid",
+    "grade": "PRIMARY_FOR_COLLECTION_DESCRIPTION_ONLY",
+    "direct_inspection": "ORIGINAL_INSTITUTIONAL_PDF_RENDERED_AND_SCREENSHOTS_CHECKED_2026-11-12",
+    "sha256": null,
+    "sha256_status": "SOURCE_BYTES_NOT_OBTAINED; exact PDF URL and page inspection retained",
+    "independence_family": "SMITHSONIAN_MOONWATCH_ARCHIVAL_DESCRIPTION",
+    "note": "Finding aid is not a 1963 observation. Distinct collection from RU259 but same Smithsonian institutional complex."
+  },
+  "observations": [
+    {
+      "id": "MW-RU255-20261112-01",
+      "subject": "Brazil_Moonwatch_station_files",
+      "location": "Record Unit 255, Series 3, box 10, printed page 19 (PDF screenshot page index 20)",
+      "year_span": "Bauru 1958-1963; Curvelo 1962-1964; Paraiba 1962-1969 and 1975; Porto Alegre 1962-1963; Sao Paulo 1957-1964 and 1967-1968",
+      "direct_record": "Collection lists station files for five named Brazilian locations in intervals including 1963.",
+      "uncertainty": "Correspondence/file existence does not prove operation or actual observation specifically on 8 Nov 1963.",
+      "observed_1963_11_08": null,
+      "source_occurrence": "RU255:Series3:Box10:page19",
+      "source_id": "SIA-RU255-FINDING-AID",
+      "status": "DOCUMENTED_ARCHIVAL_LOCATOR_NOT_OBJECT_OBSERVATION",
+      "independence_family": "SMITHSONIAN_MOONWATCH_ARCHIVAL_DESCRIPTION",
+      "physical_hard_constraint": false
+    },
+    {
+      "id": "MW-RU255-20261112-02",
+      "subject": "Moonwatch_monthly_reentry_reports",
+      "location": "Record Unit 255, Series 4, box 15, printed page 29 (PDF screenshot page index 30)",
+      "year_span": "1963-1969",
+      "direct_record": "Finding aid lists Monthly re-entry reports, 1963-1969.",
+      "uncertainty": "Month-specific issue/content and NORAD 528 mention unverified; potential dependencies on NORAD tracking remain unknown.",
+      "observed_1963_11_08": null,
+      "source_occurrence": "RU255:Series4:Box15:page29",
+      "source_id": "SIA-RU255-FINDING-AID",
+      "status": "DOCUMENTED_ARCHIVAL_LOCATOR_NOT_OBJECT_OBSERVATION",
+      "independence_family": "SMITHSONIAN_MOONWATCH_ARCHIVAL_DESCRIPTION",
+      "physical_hard_constraint": false
+    },
+    {
+      "id": "MW-RU255-20261112-03",
+      "subject": "VFON_pilot_visual_sightings",
+      "location": "Record Unit 255, Series 8, box 21, printed page 44 (PDF screenshot page index 45)",
+      "year_span": "1963-1964",
+      "direct_record": "Finding aid lists Sighting reports, 1963-1964.",
+      "uncertainty": "Reports not accessed; no pilot, route, object, time or location identified; VFON started in 1963, not necessarily relevant to Bahia.",
+      "observed_1963_11_08": null,
+      "source_occurrence": "RU255:Series8:Box21:page44",
+      "source_id": "SIA-RU255-FINDING-AID",
+      "status": "DOCUMENTED_ARCHIVAL_LOCATOR_NOT_OBJECT_OBSERVATION",
+      "independence_family": "SMITHSONIAN_MOONWATCH_ARCHIVAL_DESCRIPTION",
+      "physical_hard_constraint": false
+    },
+    {
+      "id": "MW-RU255-20261112-04",
+      "subject": "Moonwatch_contemporaneous_newsletters",
+      "location": "Record Unit 255, Series 10, box 22, printed page 46 (PDF screenshot page index 47)",
+      "year_span": "1963",
+      "direct_record": "Finding aid lists Bulletin for Visual Observers of Satellites (1956-1963) and Moonwatch newsletters, 1963.",
+      "uncertainty": "Specific November issue and article not verified; could discuss predictions, reporting conventions, or other satellites.",
+      "observed_1963_11_08": null,
+      "source_occurrence": "RU255:Series10:Box22:page46",
+      "source_id": "SIA-RU255-FINDING-AID",
+      "status": "DOCUMENTED_ARCHIVAL_LOCATOR_NOT_OBJECT_OBSERVATION",
+      "independence_family": "SMITHSONIAN_MOONWATCH_ARCHIVAL_DESCRIPTION",
+      "physical_hard_constraint": false
+    },
+    {
+      "id": "MW-RU255-20261112-05",
+      "subject": "Moonwatch_observer_instructions",
+      "location": "Record Unit 255, Series 4, box 15, printed page 29 (PDF screenshot page index 30)",
+      "year_span": "1962-1963",
+      "direct_record": "Finding aid lists Instructions for observers 1962-1963.",
+      "uncertainty": "May establish observational timing and frame conventions, but no instructions read.",
+      "observed_1963_11_08": null,
+      "source_occurrence": "RU255:Series4:Box15:page29",
+      "source_id": "SIA-RU255-FINDING-AID",
+      "status": "DOCUMENTED_ARCHIVAL_LOCATOR_NOT_OBJECT_OBSERVATION",
+      "independence_family": "SMITHSONIAN_MOONWATCH_ARCHIVAL_DESCRIPTION",
+      "physical_hard_constraint": false
+    }
+  ],
+  "variables": [
+    {
+      "id": "moonwatch_brazil_1963_station_file_exists",
+      "type": "catalog_boolean",
+      "value": true,
+      "source": "MW-RU255-20261112-01",
+      "scope": "Only existence of archive folders; not operational log."
+    },
+    {
+      "id": "moonwatch_528_observation_exists",
+      "type": "latent_boolean",
+      "value": null,
+      "source": "MW-RU255-20261112-01",
+      "scope": "May be resolved only by direct sighting records."
+    },
+    {
+      "id": "moonwatch_528_observation_time_utc",
+      "type": "latent_datetime",
+      "value": null,
+      "source": "MW-RU255-20261112-01",
+      "scope": "No time assigned."
+    },
+    {
+      "id": "moonwatch_528_station_location",
+      "type": "latent_geodetic_location",
+      "value": null,
+      "source": "MW-RU255-20261112-01",
+      "scope": "Station folders list city labels, not sighting sites."
+    },
+    {
+      "id": "moonwatch_528_topocentric_angles",
+      "type": "latent_vector2",
+      "value": null,
+      "unit": "deg",
+      "source": "MW-RU255-20261112-01",
+      "scope": "No measured RA/Dec or az/el."
+    },
+    {
+      "id": "moonwatch_528_angular_error",
+      "type": "latent_interval",
+      "value": null,
+      "unit": "deg",
+      "source": "MW-RU255-20261112-01",
+      "scope": "Not zero."
+    },
+    {
+      "id": "monthly_reentry_report_528_entry",
+      "type": "latent_catalog_record",
+      "value": null,
+      "source": "MW-RU255-20261112-02",
+      "scope": "Not a verified 528 observation; potential NORAD dependency."
+    },
+    {
+      "id": "vfon_1963_11_08_528_sighting",
+      "type": "latent_report",
+      "value": null,
+      "source": "MW-RU255-20261112-03",
+      "scope": "No records read."
+    },
+    {
+      "id": "moonwatch_1963_publication_528_reference",
+      "type": "latent_text_mention",
+      "value": null,
+      "source": "MW-RU255-20261112-04",
+      "scope": "Issue contents unknown."
+    },
+    {
+      "id": "moonwatch_observation_conventions",
+      "type": "latent_method",
+      "value": null,
+      "source": "MW-RU255-20261112-05",
+      "scope": "No procedural documents read."
+    }
+  ],
+  "edges": [
+    {
+      "id": "MW-RU255-optical-candidate",
+      "evidence_ids": [
+        "MW-RU255-20261112-01",
+        "MW-RU255-20261112-05"
+      ],
+      "input_variables": [
+        "moonwatch_528_observation_exists",
+        "moonwatch_528_observation_time_utc",
+        "moonwatch_528_station_location",
+        "moonwatch_528_topocentric_angles",
+        "moonwatch_528_angular_error",
+        "moonwatch_observation_conventions"
+      ],
+      "output_expression": "(satellite_state_528(t), earth_orientation(t), site_geodesy, calibration) -> topocentric_direction(t)",
+      "status": "CONNECTED_PENDING_ORIGINAL_OBSERVATION",
+      "hard_constraint": false,
+      "missing": [
+        "date_specific_observation",
+        "station_instrument_coordinates",
+        "UTC_and_time_standard",
+        "angle_frame_and_calibration",
+        "angular_error"
+      ]
+    },
+    {
+      "id": "MW-RU255-reentry-candidate",
+      "evidence_ids": [
+        "MW-RU255-20261112-02"
+      ],
+      "input_variables": [
+        "monthly_reentry_report_528_entry"
+      ],
+      "output_expression": "catalog_decay_record(528) -> date_or_interval_of_catalogued_decay",
+      "status": "CONNECTED_PENDING_CONTENT_AND_PROVENANCE",
+      "hard_constraint": false,
+      "missing": [
+        "actual_month_record",
+        "object_designation",
+        "source_lineage",
+        "observation_vs_prediction"
+      ]
+    },
+    {
+      "id": "MW-RU255-vfon-candidate",
+      "evidence_ids": [
+        "MW-RU255-20261112-03"
+      ],
+      "input_variables": [
+        "vfon_1963_11_08_528_sighting"
+      ],
+      "output_expression": "(reported_time, observer_route, reported_direction, identification_uncertainty) -> candidate_optical_report",
+      "status": "CONNECTED_PENDING_ORIGINAL_REPORT",
+      "hard_constraint": false,
+      "missing": [
+        "original_report",
+        "observer_location_route",
+        "UTC",
+        "identification",
+        "angular_uncertainty"
+      ]
+    },
+    {
+      "id": "MW-RU255-newsletter-candidate",
+      "evidence_ids": [
+        "MW-RU255-20261112-04"
+      ],
+      "input_variables": [
+        "moonwatch_1963_publication_528_reference"
+      ],
+      "output_expression": "newsletter_entry -> documentary_claim_with_citation_not_orbital_state",
+      "status": "CONNECTED_PENDING_ISSUE_CONTENT",
+      "hard_constraint": false,
+      "missing": [
+        "november_1963_edition",
+        "page",
+        "text",
+        "upstream_source"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "MW-H1",
+      "statement": "Any Brazilian Moonwatch team reported a 528 sighting in the week around 8 Nov 1963.",
+      "status": "OPEN_NOT_DEMONSTRATED",
+      "falsification": "Inspect actual dated report register in the RU255 station files and central sighting reports; absence in partial archive is not global falsification."
+    },
+    {
+      "id": "MW-H2",
+      "statement": "RU255 monthly reentry report includes a day/time/window for NORAD 528 beyond NASA day-only catalogue.",
+      "status": "OPEN_NOT_DEMONSTRATED",
+      "falsification": "Read full month issue, check designator 1963-003B / catalog 528, distinguish prediction and independent sensor report."
+    },
+    {
+      "id": "MW-H3",
+      "statement": "VFON files contain independent airborne sighting relevant to Condé or 528.",
+      "status": "OPEN_NOT_DEMONSTRATED",
+      "falsification": "Inspect original 1963 pilot reports, check time and spatial visibility before establishing event relationship."
+    }
+  ],
+  "negative_results": [
+    "The finding aid contains no directly inspected NORAD 528 observation, radar trace, plate, crater, impact report or 8-Nov Moonwatch measurement.",
+    "Independent full-text searches for 1963 Moonwatch newsletter 528/Conde did not retrieve the actual 1963 issue in this session.",
+    "SIA catalogue HTML endpoint rejects direct access in this session; the institutional PDF was inspectable via search and visual page rendering.",
+    "A direct byte download of the official Smithsonian PDF was unsuccessful; do not claim computed SHA256."
+  ],
+  "reduction_of_physical_domain": "NOT_EVALUABLE_WITH_CATALOG_METADATA",
+  "latest_inspection_date": "2026-11-12",
+  "scope": "Archival discovery only; no publication, contacts, impact claim, or measured orbit constraint."
+}
