@@ -83,6 +83,52 @@ class CumulativeConstraintGraphTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unknown physical unit"):
             validate(bad)
 
+    def test_different_reported_units_cannot_be_subtracted_as_same_unit(self):
+        bad = copy.deepcopy(self.graph)
+        # Both units are individually permitted. Only the cross-row comparison is forged.
+        other = bad["derived_connections"][0]["inputs"][1]
+        next(o for o in bad["observations"] if o["id"] == other)["unit"] = "km"
+        with self.assertRaisesRegex(ValueError, "mixed units in derived comparison"):
+            validate(bad)
+
+    def test_repeated_derived_id_cannot_inflate_connection_count(self):
+        bad = copy.deepcopy(self.graph)
+        bad["derived_connections"].append(copy.deepcopy(bad["derived_connections"][0]))
+        with self.assertRaisesRegex(ValueError, "duplicate or invalid derived edge ID"):
+            validate(bad)
+
+    def test_new_id_for_same_comparison_is_still_duplicate(self):
+        bad = copy.deepcopy(self.graph)
+        clone = copy.deepcopy(bad["derived_connections"][0])
+        clone["id"] = "FORGED-DERIVED-NUMBER-TWO"
+        bad["derived_connections"].append(clone)
+        with self.assertRaisesRegex(ValueError, "duplicate derived observation pair"):
+            validate(bad)
+
+    def test_reversed_difference_does_not_count_as_independent_edge(self):
+        bad = copy.deepcopy(self.graph)
+        clone = copy.deepcopy(bad["derived_connections"][0])
+        clone["id"] = "FORGED-DERIVED-REVERSE"
+        clone["inputs"].reverse()
+        clone["derived_arithmetic"] = -clone["derived_arithmetic"]
+        bad["derived_connections"].append(clone)
+        with self.assertRaisesRegex(ValueError, "duplicate derived observation pair"):
+            validate(bad)
+
+    def test_nan_derived_arithmetic_cannot_bypass_absolute_error_check(self):
+        bad = copy.deepcopy(self.graph)
+        bad["derived_connections"][0]["derived_arithmetic"] = float("nan")
+        with self.assertRaisesRegex(ValueError, "non-finite or nonnumeric derived arithmetic"):
+            validate(bad)
+
+    def test_boolean_zero_is_not_numeric_derived_evidence(self):
+        bad = copy.deepcopy(self.graph)
+        zero = next(e for e in bad["derived_connections"] if e["id"].endswith("527-inclination"))
+        self.assertEqual(zero["derived_arithmetic"], 0)
+        zero["derived_arithmetic"] = False
+        with self.assertRaisesRegex(ValueError, "non-finite or nonnumeric derived arithmetic"):
+            validate(bad)
+
 
 if __name__ == "__main__":
     unittest.main()
