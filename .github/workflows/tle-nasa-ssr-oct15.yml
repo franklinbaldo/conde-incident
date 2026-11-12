@@ -35,6 +35,10 @@ jobs:
           curl --fail --location --silent --show-error --retry 2 --max-time 60 \
             https://ntrs.nasa.gov/api/citations/19640000428/downloads/19640000428.pdf \
             -o "$RUNNER_TEMP/19640000428.pdf"
+          echo "Fetched PDF byte signature and digest (fail closed):"
+          wc -c "$RUNNER_TEMP/19640000428.pdf"
+          sha256sum "$RUNNER_TEMP/19640000428.pdf"
+          file "$RUNNER_TEMP/19640000428.pdf"
           python3 tools/tle_nasa_ssr_oct15_audit.py \
             --ledger research/tle_custody/nasa_ssr_1963_oct15_C241-L12.json \
             --pdf "$RUNNER_TEMP/19640000428.pdf" --output "$RUNNER_TEMP/c241-l12.json"
