@@ -1,3 +1,42 @@
+## 🐙 C241-T10: a numerical RAAN test instead of more generic simulator axioms
+
+[`RaanEpochConstraint.lean`](Conde1963/RaanEpochConstraint.lean) checks the *actual
+transcribed numerical discrepancy* from [Tartaruga's audited C241-T10,
+PR #14 at commit 1934198e](https://github.com/franklinbaldo/conde-incident/blob/1934198e260b9dae8c056587cc7a16c777d58d25/tools/tle_raan_epoch_offset_j2_audit.py).
+RAANs 284.1520° / 198.5261°, 16.132608 seconds of epoch difference, and
+0.0001° combined rounding tolerance imply **at least
+458,578.620394... degrees/day** to bridge the shortest circular gap by epoch
+offset alone. The Lean kernel checks that this required rate is strictly
+between 458,578 and 458,579 degrees/day. The Python
+[`raan_epoch_contract.py`](scripts/raan_epoch_contract.py) recomputes the
+threshold with exact `Fraction`, exports an explicit machine-readable
+contract, and tests angular wraparound and failure cases.
+
+**What was actually reduced:** the conditional explanatory family
+`same-object + same-node + same-frame + epoch-offset only`, *if* its independently
+justified maximum absolute RAAN rate is below that threshold. No physical
+orbit family has yet been eliminated: the legacy RAAN/frame has **no primary
+1963 provenance**, the secondary TLE is a single mirror chain, and no validated
+rate envelope has been imposed. Thus 284.1520° and 198.5261° remain
+unresolved alternatives, not averaged data or double observations. This test
+adds no proof of Conde, impact or reentry. It avoids repeat proofs about whether
+simulators demonstrate historical truth.
+
+Source lineage: [matrix C25#1 L118](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L118),
+[C179#1 L839](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L839),
+and [C241-T10 at source commit](https://github.com/franklinbaldo/conde-incident/blob/1934198e260b9dae8c056587cc7a16c777d58d25/research/evidence_matrix_C001-C238_2026-11-11.md).
+Original primary institutional documentary source:
+[NASA/Goddard Satellite Situation Report 15 Nov 1963 printed p. 8](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf)
+(C131#1/C197#1, one source): catalogued decay **day** only; not an
+independent orbital RAAN or impact observation. This session did not reinspect
+the NASA facsimile. The historical `Evidence.lean` archive remains NOT_RUN.
+
+CI on PR head: `cd formal && lake build && lake env lean Conde1963/AxiomAudit.lean`,
+`python3 -m unittest discover -s formal/tests -v`; workflow exports
+`conde-raan-epoch.json` for Castor in `conde-evidence-contracts`.
+
+---
+
 ## 🐙 Truth-to-simulation boundary: self-soundness is NOT historical impact
 
 **New:** [`Conde1963/TruthBridge.lean`](Conde1963/TruthBridge.lean) closes an
