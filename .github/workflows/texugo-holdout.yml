@@ -1,0 +1,93 @@
+name: Texugo temporal holdout 529 (negative controls)
+on:
+  pull_request:
+  # The stacked base #14 does not carry this PR-owned workflow. Run the
+  # actual proposed branch HEAD even when GitHub emits no PR workflow run.
+  push:
+    branches:
+      - texugo/holdout-529-quadratic-negative-controls-19
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  blind-holdout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Exact proposed HEAD, never GitHub's synthetic merge commit.
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Confirm literal proposed HEAD (no synthetic merge checkout)
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          echo "Expected: $EXPECTED_SHA"
+          echo "Actual: $(git rev-parse HEAD)"
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic falsifiers (both improvement and degradation)
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Install Parquet reader
+        run: python -m pip install --disable-pip-version-check pyarrow==21.0.0
+      - name: Verify provenance and derive original numeric mirror rows
+        run: |
+          python tools/audit_norad_1963.py --download \
+            --parquet "${{ runner.temp }}/tle_1963.parquet" \
+            --output "${{ runner.temp }}/source"
+      - name: Predeclared 529 temporal holdouts, no threshold demanding joint win
+        run: |
+          python tools/texugo_holdout_529.py \
+            --parquet "${{ runner.temp }}/tle_1963.parquet" \
+            --csv "${{ runner.temp }}/source/norad_527_528_529_1963_numeric.csv" \
+            --audit "${{ runner.temp }}/source/audit.json" \
+            --output "${{ runner.temp }}/holdout_529.json"
+          cat "${{ runner.temp }}/holdout_529.json"
+      - name: Post-hoc nested selection, inner chronology without outer oracle
+        run: |
+          python tools/texugo_nested_529.py \
+            --parquet "${{ runner.temp }}/tle_1963.parquet" \
+            --csv "${{ runner.temp }}/source/norad_527_528_529_1963_numeric.csv" \
+            --audit "${{ runner.temp }}/source/audit.json" \
+            --output "${{ runner.temp }}/nested_529.json"
+          cat "${{ runner.temp }}/nested_529.json"
+      - name: POST-HOC single-prior-epoch influence and selector instability
+        run: |
+          python tools/texugo_influence_529.py \
+            --parquet "${{ runner.temp }}/tle_1963.parquet" \
+            --csv "${{ runner.temp }}/source/norad_527_528_529_1963_numeric.csv" \
+            --audit "${{ runner.temp }}/source/audit.json" \
+            --output "${{ runner.temp }}/influence_529.json"
+      - name: POST-HOC UTC 14/28-day joint training-block falsification
+        run: |
+          python tools/texugo_block_529.py \
+            --parquet "${{ runner.temp }}/tle_1963.parquet" \
+            --csv "${{ runner.temp }}/source/norad_527_528_529_1963_numeric.csv" \
+            --audit "${{ runner.temp }}/source/audit.json" \
+            --output "${{ runner.temp }}/block_529.json"
+      - name: POST-HOC rotate target 527/528/529, negative outcomes preserved
+        run: |
+          python tools/texugo_rotate_target.py \
+            --parquet "${{ runner.temp }}/tle_1963.parquet" \
+            --csv "${{ runner.temp }}/source/norad_527_528_529_1963_numeric.csv" \
+            --audit "${{ runner.temp }}/source/audit.json" \
+            --output "${{ runner.temp }}/rotate_target.json"
+      - name: Preserve source lineage, errors, negative results and all cutoffs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: texugo-holdout-529-${{ github.event.pull_request.head.sha || github.sha }}
+          path: |
+            ${{ runner.temp }}/source/audit.json
+            ${{ runner.temp }}/source/norad_527_528_529_1963_numeric.csv
+            ${{ runner.temp }}/holdout_529.json
+            ${{ runner.temp }}/nested_529.json
+            ${{ runner.temp }}/influence_529.json
+            ${{ runner.temp }}/block_529.json
+            ${{ runner.temp }}/rotate_target.json
+          if-no-files-found: warn
+          retention-days: 30
