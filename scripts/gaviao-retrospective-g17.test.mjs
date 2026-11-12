@@ -46,13 +46,13 @@ test('G17 temporal proximity is not an authenticated measurement or reduced doma
   assert.equal(support.observable.unit,'microseconds');
   assert.equal(support.observable.uncertainty,null);
   assert.equal(support.candidate_forward_dependency.target,'joint 527/528/529 orbital fitting');
-  assert.match(audit.reviews.pr117,/1\/2\/15/);
+  assert.match(audit.entries.find(x=>x.pr===117).scope_and_epistemic_verdict,/secondary|calendar/i);
   assert.equal(audit.notable_workflow_log_evidence.pr117.exact_shared_both,0);
   assert.deepEqual(audit.notable_workflow_log_evidence.pr117.observed_overlap_both_6h_24h_72h,[1,2,15]);
   assert.equal(audit.notable_workflow_log_evidence.pr113.python_unittest_pass,76);
   assert.equal(audit.notable_workflow_log_evidence.pr113.node_test_pass,71);
-  assert.deepEqual(audit.reviews.open_story_prs_read,[85,98,116]);
-  assert.equal(audit.reviews.stories_merged,0);
+  assert.match(audit.science.editorial,/#85.*#98.*#116/);
+  assert.match(audit.science.editorial,/No stories merged/i);
 });
 
 test('G16 9000x Jacobi growth counterexample is now detected, not mistaken for certification', () => {
