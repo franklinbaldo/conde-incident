@@ -311,5 +311,54 @@ class CumulativeConstraintGraphTests(unittest.TestCase):
             validate(bad)
 
 
+
+    def test_fake_ssr_acquisition_timestamp_is_not_an_observed_epoch(self):
+        bad = copy.deepcopy(self.graph)
+        bad["observations"][0]["observed_at_utc"] = "1963-11-08T23:59:00Z"
+        with self.assertRaisesRegex(ValueError, "unverified SSR epoch/error promoted"):
+            validate(bad)
+
+    def test_fake_exact_ssr_error_cannot_hide_behind_pending_marker(self):
+        bad = copy.deepcopy(self.graph)
+        bad["observations"][0]["measurement_error"] = 0.0
+        with self.assertRaisesRegex(ValueError, "unverified SSR epoch/error promoted"):
+            validate(bad)
+
+    def test_ssr_reference_convention_cannot_be_declared_resolved(self):
+        bad = copy.deepcopy(self.graph)
+        bad["observations"][0]["reference_definition"] = "VERIFIED_OSCULATING"
+        with self.assertRaisesRegex(ValueError, "missing unresolved SSR caveats"):
+            validate(bad)
+
+    def test_missing_facsimile_recheck_marker_is_not_a_verified_source(self):
+        bad = copy.deepcopy(self.graph)
+        bad["observations"][0]["pending"].remove("source_row_facsímile_recheck")
+        with self.assertRaisesRegex(ValueError, "missing unresolved SSR caveats"):
+            validate(bad)
+
+    def test_unregistered_nasa_edition_is_not_independent_observation(self):
+        bad = copy.deepcopy(self.graph)
+        forged = copy.deepcopy(bad["sources"][0])
+        forged["id"] = "NASA-SSR-FAKE-1963-12-01"
+        forged["url"] = "https://example.org/fabricated-nasa-table.pdf"
+        forged["published_on"] = "1963-12-01"
+        bad["sources"].append(forged)
+        with self.assertRaisesRegex(ValueError, "unregistered NASA SSR document"):
+            validate(bad)
+
+    def test_derived_edge_cannot_erase_correlated_source_errors(self):
+        bad = copy.deepcopy(self.graph)
+        bad["derived_connections"][0]["missing"].remove("correlated_source_errors")
+        with self.assertRaisesRegex(ValueError, "missing covariance/model caveat"):
+            validate(bad)
+
+    def test_derived_edge_cannot_claim_measured_atmospheric_trend(self):
+        bad = copy.deepcopy(self.graph)
+        bad["derived_connections"][0]["physical_interpretation"] = (
+            "Measured orbital derivative proves atmospheric reentry over Conde"
+        )
+        with self.assertRaisesRegex(ValueError, "derived comparison claimed physical trend"):
+            validate(bad)
+
 if __name__ == "__main__":
     unittest.main()
