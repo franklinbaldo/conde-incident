@@ -361,3 +361,101 @@ The equality between that date and physical decay remains a
 C44–C46 have two distinct meanings each and require occurrence-specific
 provenance. No verified terminal state, uncertainty bound, ground impact
 or historical Lean `Evidence.lean` archive was added by this module.
+
+
+## 🐙 Simulator ↔ Lean bridge: source audit and conditional proof obligations
+
+### Source code examined (read only, not re-run against 1963 data)
+
+The actual legacy simulator under the [pinned scientific foundation](https://github.com/franklinbaldo/conde-incident/tree/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b)
+contains `src/lib/astrodynamics.ts`, `monteCarlo.ts`,
+`inverseSolver.ts`, `constants.ts` and `norad528_reconstruction.py`.
+`formal/scripts/simulation_bridge_audit.py` pins their *real Git blob
+SHA-1 values* and checks 10 known source patterns. It fails if a file drifts
+without an explicit renewed review. This is a **static code inspection**:
+passing does not validate SGP4, JavaScript execution, physical accuracy, or
+any orbital hypothesis.
+
+The legacy `propagateState(528)` gate stops after
+`1963-11-08T23:59:59Z`, although C131/C197 cite only the **NASA catalogued
+day**, not an observed terminal UTC instant. Other legacy limitations:
+
+- Synthetic phase and hardcoded RAAN 284.152° in `monteCarlo.ts`, versus
+  the mirror-derived 198.5261° in [C179](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L839).
+  Reported sampling frequencies must not be labeled historical probabilities.
+- `computeGroundTrackWithUncertainty` constructs illustrative envelopes
+  and a `sigmaKm` from **assumed growth formulas**, not calibrated
+  statistical coverage. The terms are an exploratory visualization.
+- `computeInterTrackProximity` can substitute illustrative positions on
+  absent points, including `distanceToCondeKm: 0`; `bracketingVerdict`
+  contains an unsupported certainty claim. Neither constitutes a
+  physically validated corridor around NORAD 528.
+- `computeInversePasses` explicitly marks an SGP4 closest approach as
+  **unvalidated**, not a terminal observed pass.
+
+The more physical model is in **Castor's draft [PR #5](https://github.com/franklinbaldo/conde-incident/pull/5)**,
+inspected at commit
+[`3074ae0f`](https://github.com/franklinbaldo/conde-incident/commit/3074ae0f014ce33a2c81dacb2a7400f92f4a4359).
+Its `orbitPhysics.ts` supports coupled osculating Cartesian r/v (km, km/s),
+central gravity, J2 and explicit source-supplied co-rotating atmosphere and
+`Cd*A/m`; it brackets the model's chosen descending altitude threshold.
+`orbitConvergence.ts` and `orbitEnergyAudit.ts` assess step-halving and
+Jacobi-like drag-work budgets. `orbitAdmissibility.ts` samples *bounded
+scenario boxes*, and `orbitHoldoutAudit.ts` explicitly guards against
+numerical ranking reversals on withheld data. These are **more meaningful
+numerical contracts**, not automatic historical calibration. Its types
+still report `NOT_RUN`/`NOT_VERIFIED` for historical holdouts,
+authenticity, independent observations and rigorous error enclosures.
+Nothing from Castor's unmerged branch was copied or modified here.
+
+### What enters Lean
+
+`Conde1963/SimulatorBridge.lean` adds a `SimulationAudit` typed gate:
+`HistoricallyAdmissible` requires a coupled Cartesian model, authentic
+dated source/epoch/frame, blind independent holdout, quantified numerical
+error and calibrated forces. `GroundImpactAdmissible` additionally
+requires a distinct ground-impact event and validated material survival.
+Theorems show that a synthetic terminal phase, unvalidated SGP4 baseline,
+failed custody/holdout, or a *chosen atmospheric threshold* cannot meet
+these obligations merely by arithmetic or by declaration.
+
+The exact mathematical part independently checkable today is limited:
+`countWithin_monotone` and `cumulative_radii_monotone` certify finite
+sample counts at radii 50/100/250/500 km; **they imply no posterior**.
+`scaled_drag_power_nonpositive` proves a signed-power algebraic invariant
+in exact integer-scaled variables corresponding *only to the sign* of
+Castor's `-500 rho (Cd A/m) ||v_rel||³` power when those factors are
+nonnegative. It is **not** a formal verification of RK4, the real-number
+force law, density measurements or the program's execution.
+
+### What flows back to Castor
+
+GitHub Actions exports `conde-simulation-bridge.json` alongside the
+existing 241-entry `conde-evidence-contracts.json`. Every code finding
+has a pinned source URL, Git blob SHA, related matrix IDs and a
+`blocking_limitation`, while the Castor adapter describes the exact
+source head and validation prerequisites. Physical results, time,
+coordinates and probability deliberately remain **null/NOT_RUN**.
+Until original Cartesian observations, explicit units/epoch, calibrated
+drag, holdout and numerical error are verified, neither script nor Lean
+permits an evidence-backed claim that Conde is forced or excluded.
+
+Repeat the gates on the **actual PR head**:
+
+```bash
+python3 formal/scripts/simulation_bridge_audit.py --root . --json /tmp/conde-simulation-bridge.json
+cd formal
+lake build
+lake env lean Conde1963/AxiomAudit.lean
+python3 -m unittest discover -s tests -v
+```
+
+**Source provenance:** the NASA/Goddard original publication of
+15 November 1963, printed p. 8,
+[NTRS 19640001198](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf),
+is represented by C131/C197, two references to one record; its facsimile
+was not re-inspected in this engineering slice. C25/C179–C185 from a
+Space-Track-derived mirror share tracking ancestry and are not fresh
+independent 1963 radar measurements. The ZIP archive
+`Evidence.lean` with 154 propositions/151 labels and custody digests
+is still **NOT_AVAILABLE / import NOT_RUN**.
