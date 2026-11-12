@@ -30,6 +30,11 @@ jobs:
           if grep -E 'sorryAx|unsafe|error:' core-axioms.log; then
             exit 1
           fi
+      - name: Verify curated documentary Cnn occurrence bridge to Lean
+        run: |
+          set -euo pipefail
+          python3 formal/scripts/compile_documentary_links.py --check
+          python3 -m unittest discover -s formal/tests -p 'test_documentary_links.py' -v
       - name: Audit restored 154-row legacy evidence and C144-C151 ID reuse
         run: |
           set -euo pipefail
