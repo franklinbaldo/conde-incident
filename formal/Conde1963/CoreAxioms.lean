@@ -1,0 +1,13 @@
+import Conde1963.Core
+
+/-! Audit core theorem axioms. Compiling a conditional implication does not
+authenticate observations, original 1963 TLEs, or a landing near Conde. -/
+
+#print axioms Conde1963.no_double_count_tupi
+#print axioms Conde1963.no_double_count_tracking
+#print axioms Conde1963.total_unique_epochs
+#print axioms Conde1963.last_528_before_decay
+#print axioms Conde1963.frequency_difference_e8
+#print axioms Conde1963.joint_model_did_not_beat_quadratic_on_holdout
+#print axioms Conde1963.date_alone_does_not_identify_place
+#print axioms Conde1963.more_constraints_never_expand
