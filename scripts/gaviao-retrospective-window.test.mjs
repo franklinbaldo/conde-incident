@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {checkRefinementTrend} from '../src/lib/orbitEnergyAudit.ts';
 const read = path => readFileSync(new URL('../'+path, import.meta.url), 'utf8');
 const m=JSON.parse(read('research/audits/gaviao-main-window-20261112-0838.json'));
 const graph=JSON.parse(read('research/constraints/ssr_1963_observable_graph.json'));
@@ -42,13 +43,19 @@ test('G16 NOAA archive gaps are not evidence of no historical balloon',()=>{
  assert.equal(weather.connectivity_delta.hard_physical_constraints_added,0);
  assert.match(weather.physical_domain_status,/NOT_YET_EVALUABLE/);
 });
-test('G16 flags mathematically vacuous refinement-trend guard, not a validated convergence trend',()=>{
+test('G16 preserves historical finding and tests Castor corrective trend guard',()=>{
+ // The G16 audit is an immutable historical snapshot: finding status was OPEN.
+ // Do not require the bug to remain in current HEAD after a corrective PR.
  const energy=read('src/lib/orbitEnergyAudit.ts');
- assert.match(energy,/final\[k\] <= Math\.max\(limits\[k\], 1\.25 \* previous\[k\]\)/);
+ assert.doesNotMatch(energy,/final\\[k\\] <= Math\\.max\\(limits\\[k\\], 1\\.25 \\* previous\\[k\\]\\)/);
  const previous=0.0001, final=0.9, limit=1;
  assert.ok(final<=limit);
  assert.ok(final<=Math.max(limit,1.25*previous));
  assert.ok(final>1000*previous);
+ const earlier={positionKm:previous,velocityKmS:0,epochS:0,jacobiKm2S2:0,modeledWorkKm2S2:0};
+ const latest={...earlier,positionKm:final};
+ const allowance={...earlier,positionKm:64*Number.EPSILON*7000};
+ assert.equal(checkRefinementTrend(earlier,latest,allowance).status,'GROWTH_BEYOND_ROUNDOFF');
  assert.equal(m.findings.find(f=>f.id==='G16-N1')?.status,'OPEN_TO_CASTOR_ISSUE_4');
  assert.equal(m.geographic_conclusion,'INDETERMINATE');
 });
