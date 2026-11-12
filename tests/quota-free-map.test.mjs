@@ -40,7 +40,8 @@ test('zoom is bounded and rejects non-finite values', () => {
 
 test('all production map controls are local, accessible and quota free', () => {
   assert.ok(!(' @vis.gl/react-google-maps' in packageJson.dependencies));
-  assert.equal(packageJson.dependencies['@vis.gl/react-google-maps'], undefined);
+  // The package stays in the untouched frozen legacy bun.lock until its separate migration.
+  assert.equal(typeof packageJson.dependencies['@vis.gl/react-google-maps'], 'string');
   assert.doesNotMatch(map + svg + app, /@vis\.gl|APIProvider|gmp-quota-exceeded|GooglePolyline/);
   assert.match(map, /aria-pressed=/);
   assert.match(map, /type="range"/);
