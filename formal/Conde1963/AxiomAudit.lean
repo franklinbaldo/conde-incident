@@ -26,18 +26,18 @@ import Conde1963.Interactions
 
 #print axioms Conde1963.filter_grid_never_creates_candidates
 
-#print axioms Conde1963.nasa_repeat_is_same_day_predicate
+#print axioms Conde1963.nasa_record_states_november_eighth
 #print axioms Conde1963.nasa_c131_c197_not_independent
-#print axioms Conde1963.nasa_day_allows_both_regions
-#print axioms Conde1963.nasa_day_cannot_identify_region
-#print axioms Conde1963.nasa_day_does_not_force_ground_impact
-#print axioms Conde1963.nasa_day_rule_accepts_both_examples
-#print axioms Conde1963.nasa_day_rule_rejects_off_day_example
+#print axioms Conde1963.nasa_two_citations_one_conditional_equation
+#print axioms Conde1963.nasa_documentary_record_does_not_identify_region
+#print axioms Conde1963.reported_day_does_not_prove_actual_day
+#print axioms Conde1963.nasa_hypothetical_rule_accepts_illustrative_examples
+#print axioms Conde1963.nasa_hypothetical_rule_rejects_illustrative_off_day
 
 #print axioms Conde1963.evidence_matrix_row_count
-#print axioms Conde1963.two_primary_nasa_matrix_occurrences
-#print axioms Conde1963.context_rows_add_no_orbital_information
-#print axioms Conde1963.full_matrix_has_only_nasa_day_filter
+#print axioms Conde1963.nasa_matrix_rows_explicitly_mark_uncertainty
+#print axioms Conde1963.tupi_report_is_not_ground_observation
+#print axioms Conde1963.every_row_is_nonphysical_without_additional_premises
 #print axioms Conde1963.full_matrix_does_not_identify_region
 
 #print axioms Conde1963.non_admitted_source_does_not_narrow
@@ -47,3 +47,9 @@ import Conde1963.Interactions
 #print axioms Conde1963.nasa_double_citation_not_strict
 #print axioms Conde1963.contrary_impact_witnesses_refute_decisive_conde
 #print axioms Conde1963.forcing_persists_under_consistent_narrowing
+
+#print axioms Conde1963.nasa_catalogue_is_not_a_hard_physical_filter
+#print axioms Conde1963.contrasting_candidates_preclude_forced_day
+#print axioms Conde1963.forces_and_excludes_day_are_incompatible
+#print axioms Conde1963.nasa_documentary_record_leaves_actual_day_underdetermined
+#print axioms Conde1963.matrix_does_not_force_nasa_reported_day
