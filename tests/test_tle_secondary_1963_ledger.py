@@ -122,6 +122,9 @@ class Secondary1963Ledger(unittest.TestCase):
         self.assertFalse(a['original_tle_checksums_verified'])
         self.assertFalse(a['physical_identity_528_verified'])
         self.assertEqual(a['physical_orbital_constraint'],'NOT_PROMOTED')
+        self.assertEqual(a['field_units_and_cautions']['mean_motion'], 'revolutions/day')
+        self.assertIn('NOT an independent', a['field_units_and_cautions']['altitude_km'])
+        self.assertIn('NOT_VERIFIED', a['field_units_and_cautions']['raan'])
         self.assertEqual(a['conde_impact'],'INDETERMINATE')
 
 
