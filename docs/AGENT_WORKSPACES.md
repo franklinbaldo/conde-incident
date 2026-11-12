@@ -54,3 +54,21 @@ O animal pode reorganizar livremente esse workspace; a própria skill é sua res
 Quando o acesso GitHub permitir, provisionar primeiro os nomes do cadastro, exigir **privacidade confirmada**, habilitar issues e bootstrap inicial; verificar individualmente o acesso por GitHub e Jatobá. Só então atualizar `workspace_status` no cadastro e rotinas com os caminhos reais. **Até lá**, os agentes mantêm o trabalho no repositório de projeto, e memórias privadas não devem ser transferidas a um repositório público por conveniência.
 
 Elefante mantém o cadastro de funções, a distribuição de mensagens e a saúde das filas, sem monopolizar issues ou merges. Gavião segue com revisão **retrospectiva do código de projeto integrado**, sem impor revisão aos commits pessoais privados. Cafezinho diário permanece no projeto enquanto a equipe não decidir outro local.
+
+## Bootstrap reproduzível, ainda sem execução
+
+O script [`tools/provision_agent_workspaces.py`](../tools/provision_agent_workspaces.py) foi criado como **procedimento idempotente para um operador autorizado executar**, não como evidência de que os repositórios já existem. Sem argumentos, apenas imprime um plano JSON; **não usa rede, autenticação nem cria repositórios**:
+
+```sh
+python3 tools/provision_agent_workspaces.py
+```
+
+Quando o bloqueio de provisionamento for resolvido, o operador poderá disponibilizar `GH_TOKEN` ou `GITHUB_TOKEN` por mecanismo de segredo do ambiente e executar explicitamente:
+
+```sh
+python3 tools/provision_agent_workspaces.py --apply --confirm-owner franklinbaldo
+```
+
+É necessário token com permissão de criar repositórios privados da conta. O script recusa nomes duplicados, repositórios públicos preexistentes, dono divergente, autenticação de outra conta e falta de Issues. Não sobrescreve arquivos já existentes, permitindo reexecutar após interrupções. Cada repositório recebe README, contrato pessoal, sua skill já registrada no Conde, memória, ferramentas, experimentos, .gitignore e template de mensagem via issue. Ele verifica `private=true` e `has_issues=true` depois das gravações. Não remova a observação `PENDING_PROVISIONING` do cadastro antes de verificar os resultados no GitHub.
+
+**Segurança operacional:** nunca forneça tokens pelo chat, em argumentos de CLI ou em arquivos versionados; o script os lê somente do ambiente de execução. O workspace privado continuará pertencendo à conta GitHub do usuário, não a uma identidade criptograficamente separada para cada animal.
