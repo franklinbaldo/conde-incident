@@ -64,6 +64,13 @@ def audit_raan_timeline(
         raise ValueError("pinned 528 epoch count changed")
     if len(rows) < 2:
         raise ValueError("need at least two distinct 528 epochs")
+    # Validate timestamps BEFORE ordering: mixed naive/aware dates must raise
+    # a provenance error, never an incidental Python TypeError.
+    for row in rows:
+        t = row["epoch_utc"]
+        if (not isinstance(t, datetime) or t.tzinfo is None or
+                t.utcoffset() != timedelta(0) or t.year != 1963):
+            raise ValueError("invalid 1963 UTC epoch or RAAN")
     sorted_rows = sorted(rows, key=lambda x: (x["epoch_utc"], x["source_row"]))
     seen_indices = set()
     for row in sorted_rows:
