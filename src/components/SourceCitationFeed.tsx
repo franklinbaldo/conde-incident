@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
-  citationContext, isCitationFeed, matrixOccurrenceUrl,
-  type CitationFeed,
+  citationContext, declaredLineageContext, isCitationFeed, isDeclaredDependenceFeed, matrixOccurrenceUrl,
+  type CitationFeed, type DeclaredDependenceFeed,
 } from '../lib/sourceCitationAudit';
 
 type Props = { lang: 'pt' | 'en' };
@@ -11,6 +11,8 @@ export function SourceCitationFeed({ lang }: Props) {
   const pt = lang === 'pt';
   const [feed, setFeed] = useState<CitationFeed | null>(null);
   const [error, setError] = useState(false);
+  const [dependenceFeed, setDependenceFeed] = useState<DeclaredDependenceFeed | null>(null);
+  const [dependenceError, setDependenceError] = useState(false);
   const [input, setInput] = useState('C197#1');
   const [selected, setSelected] = useState('C197#1');
 
@@ -32,7 +34,27 @@ export function SourceCitationFeed({ lang }: Props) {
     return () => controller.abort();
   }, []);
 
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`${import.meta.env.BASE_URL}data/conde-declared-dependence.json`, { signal: controller.signal })
+      .then(async (response) => {
+        if (!response.ok) throw new Error('documentary lineage HTTP error');
+        const content: unknown = await response.json();
+        if (!isDeclaredDependenceFeed(content)) throw new Error('unsupported documentary lineage feed');
+        setDependenceFeed(content);
+      })
+      .catch((reason: unknown) => {
+        if (!controller.signal.aborted) {
+          console.error('Could not load declared documentary lineage', reason);
+          setDependenceError(true);
+        }
+      });
+    return () => controller.abort();
+  }, []);
+
   const context = feed && citationContext(feed, selected);
+  const lineage = feed && dependenceFeed && context?.state === 'mapped'
+    ? declaredLineageContext(dependenceFeed, feed, context.record) : null;
   return (
     <section aria-labelledby="source-citations-heading" className="rounded-xl border border-cyan-900/70 bg-zinc-900 p-4 sm:p-6 space-y-4">
       <div className="space-y-2">
@@ -98,6 +120,40 @@ export function SourceCitationFeed({ lang }: Props) {
                 {pt ? 'Abrir linha da matriz' : 'Open matrix row'} {context.record.matrix_line}
               </a>
             </div>
+            <section aria-labelledby="citation-lineage-heading" className="rounded border border-zinc-700 p-3 space-y-2 text-xs">
+              <h4 id="citation-lineage-heading" className="font-semibold text-zinc-100">
+                {pt ? 'Ancestralidade documental declarada' : 'Declared documentary ancestry'}
+              </h4>
+              <p className="text-zinc-300">
+                {pt
+                  ? 'As setas representam relações documentadas entre fontes, não sensores ou testemunhas adicionais. A ausência de uma seta não comprova independência.'
+                  : 'Arrows represent declared relationships between sources, not additional sensors or witnesses. A missing arrow does not establish independence.'}
+              </p>
+              {lineage?.state === 'declared' && lineage.paths.length > 0 ? (
+                <ol className="space-y-2">
+                  {lineage.paths.map((path, index) => (
+                    <li key={`${path.upstream_source_id}-${index}`} className="rounded bg-zinc-950/70 p-2">
+                      <p className="text-zinc-400">{pt ? 'Origem declarada' : 'Declared upstream source'}: <code className="break-all text-zinc-200">{path.upstream_source_id}</code></p>
+                      <ul className="mt-1 space-y-1">
+                        {path.edges.map((edge, edgeIndex) => (
+                          <li key={`${edge.from}-${edge.to}-${edgeIndex}`} className="break-words text-zinc-200">
+                            <code>{edge.from}</code> → <code>{edge.to}</code> (<code>{edge.kind}</code>)
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                  ))}
+                </ol>
+              ) : (
+                <p className="text-amber-200" role="status">
+                  {dependenceError
+                    ? (pt ? 'Feed de genealogia indisponível ou inválido; nenhuma relação de independência pode ser inferida.' : 'Lineage feed unavailable or invalid; no independence relationship can be inferred.')
+                    : !dependenceFeed
+                      ? (pt ? 'Carregando genealogia…' : 'Loading ancestry…')
+                      : (pt ? 'Nenhuma cadeia ancestral verificável foi declarada para esta ocorrência neste snapshot. Independência desconhecida.' : 'No verifiable upstream chain is declared for this occurrence in this snapshot. Independence is unknown.')}
+                </p>
+              )}
+            </section>
             <details className="rounded border border-zinc-700 p-3 text-xs">
               <summary className="cursor-pointer font-medium text-zinc-200">{pt ? 'Ocorrências relacionadas à mesma obra, não novos testemunhos' : 'Related occurrences of the same work, not additional witnesses'} ({context.sameWork.length})</summary>
               <ul className="mt-2 space-y-1">

@@ -64,3 +64,73 @@ export function citationContext(feed: CitationFeed, input: string) {
 export function matrixOccurrenceUrl(matrixLine: number): string {
   return 'https://github.com/franklinbaldo/conde-incident/blob/faf4dd0fd8dfbdd825e4e934b3b30ebd81bf61df/research/evidence_matrix_C001-C238_2026-11-11.md#L' + matrixLine;
 }
+
+
+// Documentary ancestry is an explicit *declaration* by the provenance graph.
+// No declared path is not evidence that two sources are independent.
+export interface DeclaredUpstreamPath {
+  upstream_source_id: string;
+  edges: Array<{ from: string; to: string; kind: string }>;
+}
+
+export interface DeclaredLineageRecord {
+  snapshot_ref: string;
+  source_id: string;
+  family_id: string;
+  declared_upstream_paths: DeclaredUpstreamPath[];
+  independent_physical_observation_count: null;
+}
+
+export interface DeclaredDependenceFeed {
+  schema: 'conde.declared-documentary-dependence/v1';
+  canonical_citations_path: string;
+  matrix_git_blob_sha1: string;
+  epistemic_limits: {
+    absence_of_edge_does_not_prove_independence: true;
+    independent_physical_observation_count: null;
+  };
+  citation_lineages: DeclaredLineageRecord[];
+}
+
+export function isDeclaredDependenceFeed(value: unknown): value is DeclaredDependenceFeed {
+  if (!value || typeof value !== 'object') return false;
+  const feed = value as Partial<DeclaredDependenceFeed>;
+  return feed.schema === 'conde.declared-documentary-dependence/v1'
+    && feed.canonical_citations_path === 'public/data/conde-source-citations.json'
+    && typeof feed.matrix_git_blob_sha1 === 'string'
+    && feed.epistemic_limits?.absence_of_edge_does_not_prove_independence === true
+    && feed.epistemic_limits?.independent_physical_observation_count === null
+    && Array.isArray(feed.citation_lineages)
+    && feed.citation_lineages.every((record) =>
+      typeof record.snapshot_ref === 'string'
+      && typeof record.source_id === 'string'
+      && typeof record.family_id === 'string'
+      && record.independent_physical_observation_count === null
+      && Array.isArray(record.declared_upstream_paths)
+      && record.declared_upstream_paths.every((path) =>
+        typeof path.upstream_source_id === 'string'
+        && Array.isArray(path.edges)
+        && path.edges.every((edge) =>
+          typeof edge.from === 'string'
+          && typeof edge.to === 'string'
+          && typeof edge.kind === 'string')));
+}
+
+export function declaredLineageContext(
+  dependence: DeclaredDependenceFeed,
+  citations: CitationFeed,
+  citation: CitationRecord,
+) {
+  // Companion and canonical feeds must refer to the same immutable matrix.
+  if (dependence.matrix_git_blob_sha1 !== citations.matrix_git_blob_sha1) {
+    return { state: 'snapshot-mismatch' as const };
+  }
+  const snapshotRef = `matrix:${citations.matrix_git_blob_sha1}:${citation.occurrence}`;
+  const record = dependence.citation_lineages.find((item) => item.snapshot_ref === snapshotRef);
+  if (!record) return { state: 'unmapped' as const };
+  // Reject a misjoined row rather than displaying another document's ancestry.
+  if (record.source_id !== citation.source_id || record.family_id !== citation.source_family) {
+    return { state: 'source-mismatch' as const };
+  }
+  return { state: 'declared' as const, paths: record.declared_upstream_paths, sourceId: record.source_id };
+}
