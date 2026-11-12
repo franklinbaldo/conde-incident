@@ -9,3 +9,4 @@ import Conde1963.Outcome
 import Conde1963.SimulatorBridge
 import Conde1963.Enclosures
 import Conde1963.ScenarioAlternatives
+import Conde1963.ScenarioEnclosures
