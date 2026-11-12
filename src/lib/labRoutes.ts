@@ -2,7 +2,7 @@ import type { TabId } from '../components/Navigation';
 
 // A real URL fragment identifies a view; unknown routes must not silently claim a valid tab.
 const routes: ReadonlySet<TabId> = new Set([
-  'summary', 'map', 'inverse', 'triangulation', 'sensitivity',
+  'research', 'summary', 'map', 'inverse', 'triangulation', 'sensitivity',
   'montecarlo', 'tles', 'documents',
 ]);
 
