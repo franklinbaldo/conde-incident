@@ -12,8 +12,10 @@ jobs:
         with:
           # PR checks must run on the exact proposed head, not GitHub's synthetic merge commit.
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Confirm exact PR head
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - name: Physical conservation, inverse, conditional domain and seeded ensemble
-        run: node --experimental-strip-types --test tests/orbitPhysics.test.mjs tests/orbitHoldout.test.mjs tests/orbitConvergence.test.mjs tests/orbitAdmissibility.test.mjs
+        run: node --experimental-strip-types --test tests/orbitPhysics.test.mjs tests/orbitHoldout.test.mjs tests/orbitConvergence.test.mjs tests/orbitAdmissibility.test.mjs tests/orbitEnergyAudit.test.mjs
