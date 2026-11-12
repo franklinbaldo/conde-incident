@@ -209,3 +209,14 @@ Pelo inventário de T8 (28/24/21/20 épocas por futuro aninhado), os trechos dev
 | **RMSE agregado por 28 épocas, uma vez cada** | **28** | **0,188775134** | **0,181909995** | Média (pós-hoc) |
 
 RMSE em rev/dia. A transferência isolada do 528 no agregado foi **0,145072060** rev/dia, melhor que a média, novamente uma seleção apenas descritiva e pós-hoc. A média perde no primeiro trecho; sua vantagem agregada de ~0,006865 rev/dia depende fortemente de 20/28 épocas concentradas após o último corte. Ter eliminado a dupla contagem **não** criou medições independentes e o resultado não testa estado orbital, forças comuns ou localização de impacto. **Comparação documental com radar primário e restrição física Lean continuam NOT_RUN.** A confirmação é no SHA acima; toda alteração posterior exige revalidação do novo HEAD.
+
+
+## C243-T10: uma próxima época 529 por vez, controle prequential (12/11/2026)
+
+O controle rolling_origin_holdout no leitor já existente testa se a vantagem da curvatura média 527/528 persiste em horizontes curtos. Para cada origem igual à última época catalogada do 529, ajusta modelos com 529/527/528 somente até aquela origem e prevê a próxima época 529. Registra cada erro, horizonte, origem, alvo, baseline quadrático, linear, persistência, doadores isolados e média. Um alvo conta uma única vez; treino insuficiente ou singular gera NOT_RUN, nunca acerto artificial. Os testes sintéticos incluem doadores deliberadamente errados, detecção de vazamento temporal, duplicatas e baseline ingênuo.
+
+Este é experimento retrospectivo pós-hoc (decidido após C243-T9), não validação prospectiva. Alvos que já foram pontuados podem alimentar treino posterior; portanto os resultados não são réplicas independentes. O JSON auditado já é preservado no workflow existente; nenhuma nova regra obriga o modelo conjunto a ganhar. Resultado empírico no novo HEAD: NOT_RUN até Actions.
+
+Linhagem: espelho secundário oxzoid/Space-Track, revisão 4b4fb3a, arquivo tle_1963.parquet SHA-256 c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09; comparação independente entre seus bytes e cada linha CSV; não são três instrumentos autônomos. NASA Situation Report 15/11/1963 p.8 documenta apenas dia de decaimento do 1963-003B. Faltam os elementos instrumentais primários com época/frame/erro e resolução RAAN 198,5261 vs 284,1520 graus: nenhuma nova premissa orbital física habilitada para Lean 4.35.0, simulação de queda ou probabilidade.
+
+Reproduzir com python -m unittest discover -s tests -p test_texugo_holdout_529.py -v e o comando de auditoria+holdout indicado em C243-T9; examinar o campo rolling_origin_holdout e o artefato do Actions no SHA efetivo. Resultado quanto a Conde: INDETERMINADO.

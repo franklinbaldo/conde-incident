@@ -314,6 +314,93 @@ def disjoint_horizon_diagnostics(rows: list[Observation], results: list[dict]) -
     }
 
 
+
+def rolling_origin_diagnostics(rows: list[Observation]) -> dict:
+    """Retrospective next-529-epoch forecasts; each origin uses strictly past data.
+
+    Previously scored targets enter later fits (prequential, not independent).
+    This tests a different horizon, not a physical orbit or a terminal location.
+    """
+    target = sorted((o for o in rows if o.sat == 529), key=lambda o: o.epoch)
+    if len({o.epoch for o in target}) != len(target):
+        raise ValueError("rolling: epocas 529 duplicadas")
+    donors = {s: sorted((o for o in rows if o.sat == s), key=lambda o: o.epoch)
+              for s in (527, 528)}
+    names = ("quadratic_529_only", "shared_curvature_527_528_to_529",
+             "transfer_527_only", "transfer_528_only", "linear_529_only",
+             "persistence_529_last_epoch")
+    square_errors = {name: [] for name in names}
+    outcomes = {"JOINT_BETTER": 0, "BASELINE_BETTER": 0, "TIE": 0}
+    steps = []
+    for i in range(1, len(target)):
+        past529, future = target[:i], target[i]
+        origin = past529[-1].epoch
+        horizon = (future.epoch - origin).total_seconds() / 86400
+        if horizon <= 0:
+            raise ValueError("rolling: horizonte nao positivo")
+        donor_past = {s: [o for o in donors[s] if o.epoch <= origin]
+                      for s in donors}
+        counts = {"527": len(donor_past[527]), "528": len(donor_past[528]),
+                  "529": len(past529)}
+        step = {"origin_epoch_utc": origin.isoformat(),
+                "target_epoch_utc": future.epoch.isoformat(),
+                "horizon_days": horizon, "train_counts": counts,
+                "status": "NOT_RUN"}
+        if min(counts.values()) < 3:
+            step["reason"] = "fewer than 3 past epochs for one or more objects"
+            steps.append(step)
+            continue
+        target_train = [(x_at(o.epoch, origin), o.mean_motion) for o in past529]
+        donor_train = {s: [(x_at(o.epoch, origin), o.mean_motion)
+                           for o in donor_past[s]] for s in donors}
+        try:
+            c527, c528 = (polynomial_fit(donor_train[s], 2)[2] for s in (527, 528))
+            coef = {"quadratic_529_only": polynomial_fit(target_train, 2),
+                    "shared_curvature_527_528_to_529":
+                        fixed_curvature_fit(target_train, (c527 + c528) / 2),
+                    "transfer_527_only": fixed_curvature_fit(target_train, c527),
+                    "transfer_528_only": fixed_curvature_fit(target_train, c528),
+                    "linear_529_only": polynomial_fit(target_train, 1)}
+            xx = x_at(future.epoch, origin)
+            forecasts = {name: project(coeff, xx) for name, coeff in coef.items()}
+            forecasts["persistence_529_last_epoch"] = past529[-1].mean_motion
+            errors = {name: future.mean_motion - v for name, v in forecasts.items()}
+            if not all(math.isfinite(v) for v in [*forecasts.values(), *errors.values()]):
+                raise ValueError("rolling: nonfinite forecast or error")
+            squared = {name: value * value for name, value in errors.items()}
+            if not all(math.isfinite(v) for v in squared.values()):
+                raise ValueError("rolling: nonfinite squared error")
+        except (ValueError, OverflowError) as exc:
+            step["reason"] = str(exc)
+            steps.append(step)
+            continue
+        for name in names:
+            square_errors[name].append(squared[name])
+        b, j = abs(errors["quadratic_529_only"]), abs(errors["shared_curvature_527_528_to_529"])
+        result = ("JOINT_BETTER" if j < b - 1e-10 else
+                  "BASELINE_BETTER" if b < j - 1e-10 else "TIE")
+        outcomes[result] += 1
+        step.update({"status": "EVALUATED_RETROSPECTIVE_PREQUENTIAL",
+                     "observed_mean_motion_rev_day": future.mean_motion,
+                     "predicted_rev_day": forecasts, "error_rev_day": errors,
+                     "joint_vs_quadratic": result})
+        steps.append(step)
+    scored = sum(s["status"] != "NOT_RUN" for s in steps)
+    if any(len(e) != scored for e in square_errors.values()):
+        raise ValueError("rolling: unpaired model scores")
+    pooled = {name: math.sqrt(math.fsum(e) / scored) for name, e in square_errors.items()} if scored else None
+    return {"status": "EVALUATED_RETROSPECTIVE_PREQUENTIAL" if scored else "NOT_RUN",
+            "target_norad_id": 529,
+            "origin_rule": "previous 529 epoch; donor epochs <= origin; predict next 529 epoch",
+            "candidate_targets": len(steps), "scored_distinct_targets": scored,
+            "skipped_targets": len(steps) - scored, "pooled_rmse_rev_day": pooled,
+            "joint_vs_quadratic_one_step_counts": outcomes, "steps": steps,
+            "independent_replications_established": False,
+            "prospective_validation_established": False, "no_probability": True,
+            "interpretation": "POST_HOC single secondary source; earlier scored targets "
+                              "join later training. Not physical orbit, p-value or impact inference."}
+
+
 def run(rows: list[Observation]) -> dict:
     results = [evaluate(rows, date) for date in CUTOFFS]
     return {
@@ -325,6 +412,7 @@ def run(rows: list[Observation]) -> dict:
         "results": results,
         "holdout_overlap": overlap_diagnostics(rows, results),
         "disjoint_holdout": disjoint_horizon_diagnostics(rows, results),
+        "rolling_origin_holdout": rolling_origin_diagnostics(rows),
     }
 
 def main() -> None:

@@ -222,5 +222,60 @@ class HoldoutControls(unittest.TestCase):
         self.assertNotIn("Conde", str(report))
 
 
+
+class RollingOriginNegativeControls(unittest.TestCase):
+    """All samples below are synthetic, never historical TLE observations."""
+
+    def test_each_target_scored_once_and_simple_persistence_compared(self):
+        from texugo_holdout_529 import rolling_origin_diagnostics
+        s = samples()
+        r = rolling_origin_diagnostics(s)
+        n = sum(x.sat == 529 for x in s)
+        self.assertEqual(r["status"], "EVALUATED_RETROSPECTIVE_PREQUENTIAL")
+        self.assertEqual(r["candidate_targets"], n - 1)
+        self.assertEqual(r["scored_distinct_targets"], n - 3)
+        evaluated = [x for x in r["steps"] if x["status"] != "NOT_RUN"]
+        self.assertEqual(len({x["target_epoch_utc"] for x in evaluated}), len(evaluated))
+        self.assertTrue(all(x["origin_epoch_utc"] < x["target_epoch_utc"] for x in evaluated))
+        self.assertTrue(all(x["horizon_days"] > 0 for x in evaluated))
+        self.assertLess(r["pooled_rmse_rev_day"]["quadratic_529_only"], 1e-7)
+        self.assertLess(r["pooled_rmse_rev_day"]["shared_curvature_527_528_to_529"], 1e-7)
+        self.assertGreater(r["pooled_rmse_rev_day"]["persistence_529_last_epoch"], 0)
+        self.assertFalse(r["independent_replications_established"])
+        self.assertFalse(r["prospective_validation_established"])
+
+    def test_mismatched_donor_curvatures_lose_to_quadratic(self):
+        from texugo_holdout_529 import rolling_origin_diagnostics
+        r = rolling_origin_diagnostics(samples(c527=-0.4, c528=-0.4, c529=0.4))
+        self.assertLess(r["pooled_rmse_rev_day"]["quadratic_529_only"],
+                        r["pooled_rmse_rev_day"]["shared_curvature_527_528_to_529"])
+        self.assertGreater(r["joint_vs_quadratic_one_step_counts"]["BASELINE_BETTER"], 0)
+
+    def test_future_target_cannot_enter_its_own_forecast(self):
+        from texugo_holdout_529 import rolling_origin_diagnostics
+        s = samples(c527=0.2, c528=0.4, c529=0.3)
+        changed = sorted(x.epoch for x in s if x.sat == 529)[9]
+        altered = [Observation(x.sat, x.epoch,
+                   x.mean_motion + 3 if x.sat == 529 and x.epoch == changed
+                   else x.mean_motion) for x in s]
+        a, b = rolling_origin_diagnostics(s), rolling_origin_diagnostics(altered)
+        early = lambda r: [x for x in r["steps"] if x["target_epoch_utc"] < changed.isoformat()]
+        self.assertEqual(early(a), early(b))
+        one = lambda r: next(x for x in r["steps"] if x["target_epoch_utc"] == changed.isoformat())
+        self.assertEqual(one(a)["predicted_rev_day"], one(b)["predicted_rev_day"])
+        self.assertNotEqual(one(a)["error_rev_day"], one(b)["error_rev_day"])
+
+    def test_insufficient_input_and_duplicate_target_are_not_hidden(self):
+        from texugo_holdout_529 import rolling_origin_diagnostics
+        rows = [Observation(s, utc("1963-01-01T00:00:00Z"), 15) for s in (527, 528, 529)]
+        rows.append(Observation(529, utc("1963-02-01T00:00:00Z"), 15.2))
+        r = rolling_origin_diagnostics(rows)
+        self.assertEqual(r["status"], "NOT_RUN")
+        self.assertEqual(r["scored_distinct_targets"], 0)
+        self.assertIsNone(r["pooled_rmse_rev_day"])
+        self.assertEqual(r["skipped_targets"], 1)
+        with self.assertRaisesRegex(ValueError, "duplicadas"):
+            rolling_origin_diagnostics(rows + [rows[-1]])
+
 if __name__ == "__main__":
     unittest.main()
