@@ -80,3 +80,14 @@ test('CI explicitly says NO_NODE_TEST_FILES only for an empty workspace', () => 
     rmSync(root, { recursive: true, force: true });
   }
 });
+
+test('CI runs every Python unittest file at the exact checked-out head and fails closed on empty discovery', () => {
+  for (const marker of [
+    'actions/setup-python@v5',
+    'python-version: "3.12"',
+    "find tests -type f -name 'test_*.py' -print -quit",
+    "python3 -m unittest discover -s tests -p 'test_*.py' -v",
+  ]) {
+    assert.ok(ci.includes(marker), `missing Python CI contract: ${marker}`);
+  }
+});
