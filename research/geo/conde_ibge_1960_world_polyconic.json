@@ -1,0 +1,285 @@
+{
+  "dependency_graph": {
+    "edges": [
+      {
+        "kind": "RETROSPECTIVE_CARTOGRAPHIC_RECONSTRUCTION",
+        "source": "CGEO-10",
+        "target": "municipal_cartography_1960"
+      },
+      {
+        "kind": "NORMATIVE_CONTINUITY_PENDING",
+        "source": "CGEO-09",
+        "target": "legal_boundary_1963_LATENT"
+      },
+      {
+        "kind": "NOT_A_VALIDATED_TEMPORAL_BRIDGE",
+        "source": "municipal_cartography_1960",
+        "target": "legal_boundary_1963_LATENT"
+      }
+    ],
+    "nodes": [
+      "CGEO-10",
+      "CGEO-09",
+      "CGEO-01",
+      "CGEO-02",
+      "municipal_cartography_1960",
+      "legal_boundary_1963_LATENT"
+    ]
+  },
+  "historical_1963": {
+    "can_constrain_reentry": false,
+    "coordinate_transformation_to_event_frame": null,
+    "date_1963_membership": null,
+    "geodetic_epoch_and_horizontal_accuracy_m": null,
+    "legal_boundary_for_date": null,
+    "reason": "1960 retrospective municipal map is neither a verified 1963 legal boundary nor a 1963 event observation; CGEO-09 legal chronology remains unresolved.",
+    "requested_event_date": "1963-11-08"
+  },
+  "id": "CGEO-10",
+  "municipality": {
+    "ibge_code": "2908606",
+    "name": "Conde",
+    "uf": "BA"
+  },
+  "native_crs": {
+    "axis_order": [
+      "easting_m",
+      "northing_m"
+    ],
+    "central_meridian_deg": -54.0,
+    "datum": "SIRGAS_2000",
+    "ellipsoid": "GRS_1980",
+    "epsg_projected": null,
+    "latitude_of_origin_deg": 0.0,
+    "linear_unit": "metre",
+    "name": "World_Polyconic",
+    "prj_sha256": "c90d581eaa847ae6dd5a94043893b99603186ae7d39a58f603e328d2284c2cf1",
+    "projection": "Polyconic",
+    "wkt_source": "05-malha municipal 1960.prj"
+  },
+  "native_geometry": {
+    "bbox_xy_m": [
+      1761251.25,
+      -1390060.375,
+      1795968.5,
+      -1336775.625
+    ],
+    "coordinates_xy_m": [
+      [
+        [
+          1763580.375,
+          -1348622.0
+        ],
+        [
+          1765700.0,
+          -1348100.0
+        ],
+        [
+          1766888.375,
+          -1347093.125
+        ],
+        [
+          1768265.75,
+          -1343511.75
+        ],
+        [
+          1770609.125,
+          -1339791.75
+        ],
+        [
+          1771130.0,
+          -1337399.5
+        ],
+        [
+          1772339.5,
+          -1336775.625
+        ],
+        [
+          1775123.75,
+          -1337326.375
+        ],
+        [
+          1777420.75,
+          -1340469.125
+        ],
+        [
+          1779428.25,
+          -1342033.875
+        ],
+        [
+          1781687.75,
+          -1341987.0
+        ],
+        [
+          1782783.75,
+          -1340854.5
+        ],
+        [
+          1786072.25,
+          -1341656.375
+        ],
+        [
+          1788651.625,
+          -1344762.0
+        ],
+        [
+          1789530.125,
+          -1344313.875
+        ],
+        [
+          1791141.375,
+          -1346412.75
+        ],
+        [
+          1794343.0,
+          -1346182.75
+        ],
+        [
+          1794208.25,
+          -1347254.5
+        ],
+        [
+          1795609.375,
+          -1347525.5
+        ],
+        [
+          1795459.0,
+          -1349284.0
+        ],
+        [
+          1794527.5,
+          -1350239.75
+        ],
+        [
+          1795026.875,
+          -1350937.25
+        ],
+        [
+          1793008.875,
+          -1352424.375
+        ],
+        [
+          1793050.875,
+          -1354316.875
+        ],
+        [
+          1793972.625,
+          -1354169.75
+        ],
+        [
+          1795968.5,
+          -1351020.25
+        ],
+        [
+          1783076.75,
+          -1376744.25
+        ],
+        [
+          1782595.875,
+          -1379459.0
+        ],
+        [
+          1775033.625,
+          -1390060.375
+        ],
+        [
+          1774411.25,
+          -1388903.0
+        ],
+        [
+          1774781.25,
+          -1388232.0
+        ],
+        [
+          1769937.25,
+          -1384457.125
+        ],
+        [
+          1771315.0,
+          -1381988.75
+        ],
+        [
+          1771227.875,
+          -1381089.5
+        ],
+        [
+          1768281.375,
+          -1379607.25
+        ],
+        [
+          1769891.0,
+          -1376686.625
+        ],
+        [
+          1769025.75,
+          -1375460.0
+        ],
+        [
+          1768609.0,
+          -1376064.625
+        ],
+        [
+          1767697.875,
+          -1375316.625
+        ],
+        [
+          1768407.375,
+          -1363156.5
+        ],
+        [
+          1764877.25,
+          -1361329.5
+        ],
+        [
+          1764319.75,
+          -1359048.5
+        ],
+        [
+          1761251.25,
+          -1355549.375
+        ],
+        [
+          1761557.625,
+          -1352036.5
+        ],
+        [
+          1762220.0,
+          -1351428.5
+        ],
+        [
+          1762743.125,
+          -1349054.875
+        ],
+        [
+          1763580.375,
+          -1348622.0
+        ]
+      ]
+    ],
+    "ring_xy_sha256": "735bfbc0f36f6b97c17085824af6f6b4f56f268d94481c05dd75bf8a0a141e23",
+    "topological_quality": "NOT_SURVEY_GRADE_OR_LEGAL_BOUNDARY",
+    "type": "Polygon",
+    "vertex_count_with_closure": 47
+  },
+  "schema": "conde.gis.ibge-cartographic-1960/v1",
+  "source": {
+    "archive_url": "https://geoftp.ibge.gov.br/organizacao_do_territorio/estrutura_territorial/evolucao_da_divisao_territorial_do_brasil/evolucao_da_divisao_territorial_do_brasil_1872_2010/municipios_1872_1991/divisao_territorial_1872_1991/1960/05_malha_municipal_1960.zip",
+    "catalog": "Evolução da Divisão Territorial do Brasil 1872–2010",
+    "dbf_identifier": {
+      "codigo": "2908606",
+      "nome": "Conde"
+    },
+    "lineage": "Later cartographic reconstruction; archive metadata records ArcGIS projection definition in 2013 and directory file timestamp 2016; not a 1960 survey.",
+    "members_sha256": {
+      ".dbf": "9487b8851864b5a66edcf49290dfff0e208a7aea649364f30d0b6bd22619fea2",
+      ".prj": "c90d581eaa847ae6dd5a94043893b99603186ae7d39a58f603e328d2284c2cf1",
+      ".shp": "2ac08c065cea42ee0f45ff93545e94d0d29a164ccc9a7e6a6ac7616964256b9a",
+      ".shx": "3b47bddb84fce48a124fd7b82abe35829b6021ad6da9cd6a8437d25c0a412757"
+    },
+    "nominal_map_year": 1960,
+    "publisher": "IBGE",
+    "shapefile_record_index_zero_based": 2448,
+    "shapefile_record_sha256": "2970e4ee04d39e1c4865dbdb56ee1a21db9999d8c964ef0f08828c001783c601",
+    "zip_sha256": "261399b8557ee26c118e94b13cebf3b6b3e1c70e91b5e8438a348847b875120f"
+  }
+}
