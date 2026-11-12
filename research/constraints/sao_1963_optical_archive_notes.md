@@ -1,7 +1,7 @@
 ---
 type: Guide
-title: "Morcego · Localizadores óticos SAO de 1963 sem estação Natal inventada"
-description: "Nota de inventário Smithsonian com dependências, limites de custódia e observações físicas pendentes."
+title: "Acervos SAO de 1963: localizadores óticos e cronologia de estações"
+description: "Inventários institucionais Smithsonian para investigar rastreamento ótico sem tratar localizadores como medições físicas."
 ---
 
 # Morcego — SAO/Smithsonian: procurar rastreamento ótico em 1963 sem inventar uma estação em Natal
