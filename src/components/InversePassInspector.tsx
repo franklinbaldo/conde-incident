@@ -1,20 +1,15 @@
 import React, { useState, useMemo } from 'react';
 import {
-  MapPin,
-  Clock,
   Compass,
   ArrowUpRight,
   ArrowDownRight,
-  CheckCircle,
   AlertTriangle,
-  Flame,
   Gauge,
-  HelpCircle,
   ExternalLink,
 } from 'lucide-react';
 import { computeInversePasses } from '../lib/inverseSolver';
-import { CONDE_COORDINATES } from '../lib/constants';
-import { CandidatePass } from '../types/astrodynamics';
+import { matrixOccurrenceUrl } from '../lib/sourceCitationAudit';
+import { selectVisiblePass } from '../lib/inversePassSelection';
 
 interface InversePassInspectorProps {
   lang: 'pt' | 'en';
@@ -27,7 +22,7 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
 }) => {
   const isPt = lang === 'pt';
   const [filterDate, setFilterDate] = useState<'ALL' | '08' | '07' | '09'>('08');
-  const [selectedPass, setSelectedPass] = useState<CandidatePass | null>(null);
+  const [selectedPassEpoch, setSelectedPassEpoch] = useState<number | null>(null);
 
   // Compute all candidate passes near Conde across Nov 7-9, 1963
   const allPasses = useMemo(() => {
@@ -42,23 +37,11 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
     });
   }, [allPasses, filterDate]);
 
-  // Set default selected pass to the closest encounter on Nov 8 (Rev 14)
-  React.useEffect(() => {
-    if (!selectedPass && filteredPasses.length > 0) {
-      // Find pass with min distance on Nov 8
-      const nov8Passes = allPasses.filter(
-        (p) => new Date(p.epochMs).getUTCDate() === 8
-      );
-      if (nov8Passes.length > 0) {
-        const closest = nov8Passes.reduce((min, p) =>
-          p.closestApproachDistanceKm < min.closestApproachDistanceKm ? p : min
-        );
-        setSelectedPass(closest);
-      } else {
-        setSelectedPass(filteredPasses[0]);
-      }
-    }
-  }, [filteredPasses, allPasses, selectedPass]);
+  // A filter change must never expose an invisible pass from another day.
+  const selectedPass = useMemo(
+    () => selectVisiblePass(filteredPasses, selectedPassEpoch, filterDate === '08'),
+    [filteredPasses, selectedPassEpoch, filterDate]
+  );
 
   return (
     <div className="space-y-6">
@@ -68,7 +51,7 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
           <div>
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-800 text-cyan-300 text-xs font-mono mb-2">
               <Compass className="w-3.5 h-3.5 text-cyan-400" />
-              <span>{isPt ? 'MÉTODO DE FALSIFICAÇÃO INVERSA' : 'INVERSE FALSIFICATION METHOD'}</span>
+              <span>{isPt ? 'CENÁRIO INVERSO EXPLORATÓRIO' : 'EXPLORATORY INVERSE SCENARIO'}</span>
             </div>
             <h2 className="text-lg font-bold text-zinc-100">
               {isPt
@@ -77,8 +60,8 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
             </h2>
             <p className="text-xs text-zinc-300 mt-1 max-w-3xl leading-relaxed">
               {isPt
-                ? 'Em vez de propagar livremente no vácuo, impomos como hipótese de trabalho que o objeto 528 atingiu Conde em 08/11/1963. Calculamos então quais valores exatos de anomalia orbital, instante temporal, taxa de arrasto dn/dt e coeficiente balístico B seriam fisicamente necessários para forçar a reentrada no município.'
-                : 'Instead of freely propagating in a vacuum, we hypothesize that object 528 struck Conde on 08/11/1963. We then compute the exact along-track anomaly, timestamp, drag rate dn/dt, and ballistic coefficient B physically required to force terminal entry at this location.'}
+                ? 'Em vez de propagar livremente no vácuo, impomos como hipótese de trabalho que o objeto 528 atingiu Conde em 08/11/1963. A rotina legada gera valores exploratórios de fase, tempo e arrasto sob essa hipótese. Não há ajuste físico calibrado, erro observacional ou validação de impacto.'
+                : 'Instead of freely propagating in a vacuum, we hypothesize that object 528 struck Conde on 08/11/1963. The legacy routine generates exploratory phase, time and drag values under this assumption. No calibrated physical fit, observational error or impact validation is available.'}
             </p>
           </div>
 
@@ -86,6 +69,7 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
           <div className="flex items-center bg-zinc-950 p-1 rounded-lg border border-zinc-800 shrink-0 text-xs font-mono">
             <button
               onClick={() => setFilterDate('07')}
+              aria-pressed={filterDate === '07'}
               className={`px-3 py-1.5 rounded transition-colors cursor-pointer ${
                 filterDate === '07' ? 'bg-cyan-600 text-white font-semibold' : 'text-zinc-400 hover:text-zinc-200'
               }`}
@@ -94,14 +78,16 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
             </button>
             <button
               onClick={() => setFilterDate('08')}
+              aria-pressed={filterDate === '08'}
               className={`px-3 py-1.5 rounded transition-colors cursor-pointer ${
                 filterDate === '08' ? 'bg-cyan-600 text-white font-semibold' : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
-              08/11 (Catálogo)
+              {isPt ? '08/11 (catálogo)' : '08 Nov (catalogue)'}
             </button>
             <button
               onClick={() => setFilterDate('09')}
+              aria-pressed={filterDate === '09'}
               className={`px-3 py-1.5 rounded transition-colors cursor-pointer ${
                 filterDate === '09' ? 'bg-cyan-600 text-white font-semibold' : 'text-zinc-400 hover:text-zinc-200'
               }`}
@@ -110,15 +96,40 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
             </button>
             <button
               onClick={() => setFilterDate('ALL')}
+              aria-pressed={filterDate === 'ALL'}
               className={`px-3 py-1.5 rounded transition-colors cursor-pointer ${
                 filterDate === 'ALL' ? 'bg-cyan-600 text-white font-semibold' : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
-              Todas (07-09)
+              {isPt ? 'Todas (07–09)' : 'All (07–09)'}
             </button>
           </div>
         </div>
       </div>
+
+      <aside role="note" aria-label={isPt ? 'Limites e fontes do cenário' : 'Scenario sources and limits'}
+        className="rounded-xl border border-amber-700/70 bg-amber-950/25 p-4 text-sm text-amber-100">
+        <p className="leading-relaxed">
+          {isPt
+            ? 'Estas passagens são saídas de um modelo exploratório, não observações de 1963. Os rótulos de viabilidade são heurísticos legados e NÃO demonstram domínio físico admissível reduzido, hora de reentrada ou impacto. A NASA só fornece o dia de decaimento; o TLE secundário tem proveniência e época pendentes.'
+            : 'These passes are exploratory model outputs, not 1963 observations. Legacy feasibility labels are heuristic and do NOT establish a reduced physically admissible domain, reentry time or impact. NASA records only the decay date; the secondary TLE has unresolved provenance and epoch.'}
+        </p>
+        <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-xs">
+          <a href={matrixOccurrenceUrl(905)} target="_blank" rel="noopener noreferrer"
+            className="underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-300">
+            {isPt ? 'C197#1 · NASA (dia)' : 'C197#1 · NASA (day)'}
+          </a>
+          <a href={matrixOccurrenceUrl(839)} target="_blank" rel="noopener noreferrer"
+            className="underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-300">
+            {isPt ? 'C179#1 · TLE secundário' : 'C179#1 · secondary TLE'}
+          </a>
+          <a href="https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf#page=10"
+            target="_blank" rel="noopener noreferrer"
+            className="underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-300">
+            {isPt ? 'Documento NASA, 15/11/1963' : 'NASA document, 15 Nov 1963'}
+          </a>
+        </div>
+      </aside>
 
       {/* Main Grid: Pass Table + Deep Detail Inspector */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -127,11 +138,11 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
           <div className="p-4 border-b border-zinc-800 bg-zinc-950/60 flex items-center justify-between">
             <div className="text-xs font-bold text-zinc-200 uppercase tracking-wider font-mono">
               {isPt
-                ? `Passagens Regionais Identificadas (${filteredPasses.length})`
-                : `Identified Regional Passes (${filteredPasses.length})`}
+                ? `Cenários Regionais Gerados (${filteredPasses.length})`
+                : `Generated Regional Scenarios (${filteredPasses.length})`}
             </div>
             <span className="text-[11px] text-zinc-500 font-mono">
-              {isPt ? 'Clique para inspecionar' : 'Click to inspect'}
+              {isPt ? 'Selecione para inspecionar' : 'Select to inspect'}
             </span>
           </div>
 
@@ -140,17 +151,19 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
               const isSelected = selectedPass?.epochMs === p.epochMs;
               const isClose = p.closestApproachDistanceKm < 900;
               return (
-                <div
+                <button
                   key={p.epochMs}
-                  onClick={() => setSelectedPass(p)}
-                  className={`p-3.5 transition-colors cursor-pointer flex items-center justify-between gap-3 text-xs ${
+                  type="button"
+                  onClick={() => setSelectedPassEpoch(p.epochMs)}
+                  aria-pressed={isSelected}
+                  className={`p-3.5 w-full text-left transition-colors cursor-pointer flex items-center justify-between gap-3 text-xs focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-300 ${
                     isSelected
                       ? 'bg-cyan-950/40 border-l-4 border-cyan-400'
                       : 'hover:bg-zinc-800/50'
                   }`}
                 >
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
+                  <span className="block space-y-1">
+                    <span className="flex items-center gap-2">
                       <span className="font-mono font-bold text-zinc-200">
                         Rev #{p.revolutionNumber}
                       </span>
@@ -161,9 +174,9 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
                       <span className="text-[10px] text-zinc-500 font-mono">
                         ({p.localTimeString.substring(0, 5)} Bahia)
                       </span>
-                    </div>
+                    </span>
 
-                    <div className="flex items-center gap-3 text-[11px] text-zinc-400 font-mono">
+                    <span className="flex items-center gap-3 text-[11px] text-zinc-400 font-mono">
                       <span className="flex items-center gap-1">
                         {p.passType === 'ASCENDING' ? (
                           <ArrowUpRight className="w-3.5 h-3.5 text-emerald-400" />
@@ -174,12 +187,12 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
                       </span>
                       <span>Alt: {p.altitudeKm} km</span>
                       <span>Elev: {p.elevationDeg}°</span>
-                    </div>
-                  </div>
+                    </span>
+                  </span>
 
-                  <div className="text-right space-y-1">
-                    <div
-                      className={`font-mono font-bold ${
+                  <span className="block text-right space-y-1">
+                    <span
+                      className={`block font-mono font-bold ${
                         p.closestApproachDistanceKm < 500
                           ? 'text-rose-400'
                           : isClose
@@ -188,22 +201,13 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
                       }`}
                     >
                       {p.closestApproachDistanceKm} km
-                    </div>
-                    <span
-                      className={`text-[10px] px-2 py-0.5 rounded font-mono font-semibold border ${
-                        p.physicalFeasibility === 'ALTA'
-                          ? 'text-emerald-400 bg-emerald-950/60 border-emerald-800'
-                          : p.physicalFeasibility === 'MODERADA'
-                          ? 'text-cyan-400 bg-cyan-950/60 border-cyan-800'
-                          : p.physicalFeasibility === 'EXTREMA'
-                          ? 'text-amber-400 bg-amber-950/60 border-amber-800'
-                          : 'text-zinc-400 bg-zinc-950 border-zinc-800'
-                      }`}
-                    >
-                      {p.physicalFeasibility}
                     </span>
-                  </div>
-                </div>
+                    <span className="text-[10px] px-2 py-0.5 rounded font-mono border border-zinc-700 bg-zinc-950 text-zinc-300"
+                    >
+                      {isPt ? `heurística: ${p.physicalFeasibility}` : `heuristic: ${p.physicalFeasibility}`}
+                    </span>
+                  </span>
+                </button>
               );
             })}
           </div>
@@ -216,7 +220,7 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
               <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
                 <div>
                   <div className="text-xs font-mono text-zinc-500 uppercase">
-                    {isPt ? 'Diagnóstico Físico da Passagem' : 'Physical Pass Diagnostic'}
+                    {isPt ? 'Saída do Modelo Exploratório' : 'Exploratory Model Output'}
                   </div>
                   <h3 className="text-base font-bold text-zinc-100 font-mono">
                     Revolução #{selectedPass.revolutionNumber}
@@ -226,27 +230,27 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
                   onClick={() => onSelectPassTime(selectedPass.epochMs)}
                   className="px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-medium transition-colors flex items-center gap-1.5 cursor-pointer shadow"
                 >
-                  <span>Ver no Mapa</span>
+                  <span>{isPt ? 'Ver cenário no mapa' : 'View scenario on map'}</span>
                   <ExternalLink className="w-3.5 h-3.5" />
                 </button>
               </div>
 
-              {/* Timing & Geometry Cards */}
+              {/* Timing & Geometry Cards: model outputs, not measured epochs */}
               <div className="grid grid-cols-2 gap-2 text-xs font-mono">
                 <div className="p-2.5 rounded bg-zinc-950 border border-zinc-800">
-                  <div className="text-zinc-500">Horário UTC:</div>
+                  <div className="text-zinc-500">Tempo do cenário UTC:</div>
                   <div className="text-zinc-100 font-bold mt-0.5">{selectedPass.utcString}</div>
                 </div>
                 <div className="p-2.5 rounded bg-zinc-950 border border-zinc-800">
-                  <div className="text-zinc-500">Horário Local (BA):</div>
+                  <div className="text-zinc-500">Tempo do cenário (BA):</div>
                   <div className="text-cyan-300 font-bold mt-0.5">{selectedPass.localTimeString}</div>
                 </div>
                 <div className="p-2.5 rounded bg-zinc-950 border border-zinc-800">
-                  <div className="text-zinc-500">Distância Mínima:</div>
+                  <div className="text-zinc-500">Distância calculada:</div>
                   <div className="text-amber-400 font-bold mt-0.5">{selectedPass.closestApproachDistanceKm} km</div>
                 </div>
                 <div className="p-2.5 rounded bg-zinc-950 border border-zinc-800">
-                  <div className="text-zinc-500">Altitude na Passagem:</div>
+                  <div className="text-zinc-500">Altitude calculada:</div>
                   <div className="text-zinc-100 font-bold mt-0.5">{selectedPass.altitudeKm} km</div>
                 </div>
               </div>
@@ -255,7 +259,7 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
               <div className="p-4 rounded-lg bg-zinc-950 border border-zinc-800 space-y-3">
                 <div className="text-xs font-bold text-zinc-200 flex items-center gap-2">
                   <Gauge className="w-4 h-4 text-cyan-400" />
-                  <span>{isPt ? 'Condições Inversas Exigidas para Queda em Conde' : 'Inverse Conditions Required for Impact'}</span>
+                  <span>{isPt ? 'Parâmetros inversos gerados (não validados)' : 'Generated inverse parameters (unvalidated)'}</span>
                 </div>
 
                 <div className="space-y-2 text-xs">
@@ -282,17 +286,11 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
                   </div>
 
                   <div className="flex justify-between items-center text-zinc-300 font-mono">
-                    <span className="text-zinc-500">Viabilidade Física:</span>
+                    <span className="text-zinc-500">{isPt ? 'Heurística legada:' : 'Legacy heuristic:'}</span>
                     <span
-                      className={`font-bold ${
-                        selectedPass.physicalFeasibility === 'ALTA'
-                          ? 'text-emerald-400'
-                          : selectedPass.physicalFeasibility === 'MODERADA'
-                          ? 'text-cyan-400'
-                          : 'text-amber-400'
-                      }`}
+                      className="font-semibold text-zinc-300"
                     >
-                      {selectedPass.physicalFeasibility}
+                      {selectedPass.physicalFeasibility} ({isPt ? 'não validada' : 'unvalidated'})
                     </span>
                   </div>
                 </div>
@@ -301,14 +299,14 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
               {/* Notes */}
               <div className="p-3 rounded-lg bg-zinc-950/80 border border-zinc-800/80 text-xs text-zinc-300 space-y-1">
                 <div className="font-semibold text-zinc-400 text-[11px] uppercase tracking-wider">
-                  {isPt ? 'Análise do Especialista' : 'Expert Analysis'}
+                  {isPt ? 'Nota do algoritmo legado (não verificada)' : 'Legacy algorithm note (unverified)'}
                 </div>
                 <p className="leading-relaxed text-[11px]">{selectedPass.notes}</p>
               </div>
             </div>
           ) : (
             <div className="text-center py-16 text-zinc-500 text-xs font-mono">
-              Selecione uma passagem para inspecionar.
+              {isPt ? 'Nenhum cenário gerado para este filtro.' : 'No scenario generated for this filter.'}
             </div>
           )}
 
@@ -316,7 +314,10 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
           <div className="p-3 rounded-lg bg-amber-950/30 border border-amber-800/50 flex items-start gap-2.5 text-xs text-amber-200/90">
             <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
             <p className="text-[11px] leading-relaxed">
-              <strong className="text-amber-300">Regra de Falsificação:</strong> O fato de que os parâmetros físicos requeridos para cruzar Conde são admissíveis demonstra que o sobrevoo era geometricamente possível, mas <em>NÃO PROVA</em> que ocorreu em Conde, pois outras ~16 revoluções no mesmo dia também cruzavam latitudes povoadas com a mesma compatibilidade física.
+              <strong className="text-amber-300">{isPt ? 'Limite da inferência:' : 'Inference limit:'}</strong>{' '}
+              {isPt
+                ? 'Uma solução inversa geométrica não comprova admissibilidade física, sobrevoo real, reentrada ou queda em Conde. Faltam custódia dos elementos, épocas, incertezas e comparação com holdouts independentes.'
+                : 'A geometric inverse solution does not establish physical admissibility, an actual overpass, reentry or impact in Conde. Element custody, epochs, uncertainty and independent holdout comparisons are missing.'}
             </p>
           </div>
         </div>
