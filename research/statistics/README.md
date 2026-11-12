@@ -31,3 +31,7 @@ No arquivo disponível não existe TLE de 528 em 08/11. A evidência NASA C197 f
 ## Protocolo temporal de avaliação futura
 
 O [manifesto de partições por época e NORAD](raan_chronological_holdout_1963.json) e seu [contrato estatístico](CHRONOLOGICAL_HOLDOUT_PROTOCOL.md) congelam 61 épocas de ajuste, 23 de validação e 35 de avaliação após remover as quatro duplicatas do **mesmo** extrato. Os cortes 01/08 e 01/10 são operacionais, escolhidos após inspeção prévia: o bloco final **não é cego**, nem independente do catálogo; nenhum ajuste, likelihood ou MCMC foi executado. Para reexecutar, use python3 -m unittest discover -s tests -p 'test_raan_chronological_holdout.py' -v e o comando --check documentado no protocolo.
+
+## Identificabilidade estatística da fase e hipótese de erro comum
+
+O [certificado condicional de não-identificabilidade](LINEAGE_IDENTIFIABILITY.md) demonstra que uma fase RAAN livre por objeto e um viés angular hipotético comum da mesma linhagem têm uma simetria circular exata, irremovível pelo aumento de épocas sem referência independente. O [manifesto determinístico](raan_lineage_identifiability_1963.json) prova posto 3/4 no desenho idealizado e apresenta cenários **não empíricos** de correlação sobre uma única média escalar ancorada, nunca uma posterior ou ESS de MCMC. Fonte, hash, partição 61/23/35, limites e replay são verificáveis. Não executa a dinâmica do Castor nem muda o estado de inferência geográfica.

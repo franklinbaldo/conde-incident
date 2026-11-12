@@ -1,0 +1,541 @@
+{
+  "frozen_holdout": {
+    "not_blinded": true,
+    "path": "research/statistics/raan_chronological_holdout_1963.json",
+    "sha256": "a51ff61054da94587aa9c45631b3887572f238fe5967d2a8493c49d360c5e59f"
+  },
+  "gauge_transform": "phase_j += a (all 3 objects); b_source -= a",
+  "historical_likelihood_status": "NOT_CALIBRATED",
+  "hypothetical_error_correlation": "rho in {0,1/10,1/2,9/10} is a declared algebraic scenario, not fitted or sourced. n_eff concerns ONLY an anchored, homoscedastic one-mean tangent-space model; not orbital-state precision and not MCMC ESS.",
+  "inference_status": "STRUCTURAL_NONIDENTIFIABILITY_CONDITIONAL",
+  "model_hypothesis_NOT_EVIDENCE": "Omega_jt=wrap(f_j(t; theta_other) + phase_j + b_source + error_jt). With free phase_j and free common b_source, an arbitrary rotation phase_j+a, b_source-a is exactly observationally equivalent.",
+  "needs": [
+    "Primary tracking/sensor lineage and frame (Tartaruga)",
+    "Validated forward map from osculating state to catalog RAAN (Castor)",
+    "Independent angular reference or justified anchor for common-bias gauge",
+    "Instrumental covariance and selection model before likelihood"
+  ],
+  "per_split": {
+    "evaluation": {
+      "exact_rational_rank": 3,
+      "hypothetical_design_columns": [
+        "phase_527",
+        "phase_528",
+        "phase_529",
+        "source_bias"
+      ],
+      "null_direction": [
+        1,
+        1,
+        1,
+        -1
+      ],
+      "per_norad": {
+        "527": 4,
+        "528": 8,
+        "529": 23
+      },
+      "rank_deficiency": 1,
+      "rho_sensitivity_of_ONE_ANCHORED_SCALAR_MEAN_ONLY": {
+        "0": {
+          "separate_object_blocks": {
+            "527": {
+              "n": 4,
+              "n_effective_decimal_6_places": "4.000000",
+              "n_effective_scalar_mean": "4",
+              "relative_information": "1",
+              "rho": "0",
+              "variance_inflation": "1"
+            },
+            "528": {
+              "n": 8,
+              "n_effective_decimal_6_places": "8.000000",
+              "n_effective_scalar_mean": "8",
+              "relative_information": "1",
+              "rho": "0",
+              "variance_inflation": "1"
+            },
+            "529": {
+              "n": 23,
+              "n_effective_decimal_6_places": "23.000000",
+              "n_effective_scalar_mean": "23",
+              "relative_information": "1",
+              "rho": "0",
+              "variance_inflation": "1"
+            }
+          },
+          "single_common_source_block": {
+            "n": 35,
+            "n_effective_decimal_6_places": "35.000000",
+            "n_effective_scalar_mean": "35",
+            "relative_information": "1",
+            "rho": "0",
+            "variance_inflation": "1"
+          }
+        },
+        "1/10": {
+          "separate_object_blocks": {
+            "527": {
+              "n": 4,
+              "n_effective_decimal_6_places": "3.076923",
+              "n_effective_scalar_mean": "40/13",
+              "relative_information": "10/13",
+              "rho": "1/10",
+              "variance_inflation": "13/10"
+            },
+            "528": {
+              "n": 8,
+              "n_effective_decimal_6_places": "4.705882",
+              "n_effective_scalar_mean": "80/17",
+              "relative_information": "10/17",
+              "rho": "1/10",
+              "variance_inflation": "17/10"
+            },
+            "529": {
+              "n": 23,
+              "n_effective_decimal_6_places": "7.187500",
+              "n_effective_scalar_mean": "115/16",
+              "relative_information": "5/16",
+              "rho": "1/10",
+              "variance_inflation": "16/5"
+            }
+          },
+          "single_common_source_block": {
+            "n": 35,
+            "n_effective_decimal_6_places": "7.954545",
+            "n_effective_scalar_mean": "175/22",
+            "relative_information": "5/22",
+            "rho": "1/10",
+            "variance_inflation": "22/5"
+          }
+        },
+        "1/2": {
+          "separate_object_blocks": {
+            "527": {
+              "n": 4,
+              "n_effective_decimal_6_places": "1.600000",
+              "n_effective_scalar_mean": "8/5",
+              "relative_information": "2/5",
+              "rho": "1/2",
+              "variance_inflation": "5/2"
+            },
+            "528": {
+              "n": 8,
+              "n_effective_decimal_6_places": "1.777778",
+              "n_effective_scalar_mean": "16/9",
+              "relative_information": "2/9",
+              "rho": "1/2",
+              "variance_inflation": "9/2"
+            },
+            "529": {
+              "n": 23,
+              "n_effective_decimal_6_places": "1.916667",
+              "n_effective_scalar_mean": "23/12",
+              "relative_information": "1/12",
+              "rho": "1/2",
+              "variance_inflation": "12"
+            }
+          },
+          "single_common_source_block": {
+            "n": 35,
+            "n_effective_decimal_6_places": "1.944444",
+            "n_effective_scalar_mean": "35/18",
+            "relative_information": "1/18",
+            "rho": "1/2",
+            "variance_inflation": "18"
+          }
+        },
+        "9/10": {
+          "separate_object_blocks": {
+            "527": {
+              "n": 4,
+              "n_effective_decimal_6_places": "1.081081",
+              "n_effective_scalar_mean": "40/37",
+              "relative_information": "10/37",
+              "rho": "9/10",
+              "variance_inflation": "37/10"
+            },
+            "528": {
+              "n": 8,
+              "n_effective_decimal_6_places": "1.095890",
+              "n_effective_scalar_mean": "80/73",
+              "relative_information": "10/73",
+              "rho": "9/10",
+              "variance_inflation": "73/10"
+            },
+            "529": {
+              "n": 23,
+              "n_effective_decimal_6_places": "1.105769",
+              "n_effective_scalar_mean": "115/104",
+              "relative_information": "5/104",
+              "rho": "9/10",
+              "variance_inflation": "104/5"
+            }
+          },
+          "single_common_source_block": {
+            "n": 35,
+            "n_effective_decimal_6_places": "1.107595",
+            "n_effective_scalar_mean": "175/158",
+            "relative_information": "5/158",
+            "rho": "9/10",
+            "variance_inflation": "158/5"
+          }
+        }
+      },
+      "unique_catalogue_epochs": 35
+    },
+    "fit": {
+      "exact_rational_rank": 3,
+      "hypothetical_design_columns": [
+        "phase_527",
+        "phase_528",
+        "phase_529",
+        "source_bias"
+      ],
+      "null_direction": [
+        1,
+        1,
+        1,
+        -1
+      ],
+      "per_norad": {
+        "527": 15,
+        "528": 24,
+        "529": 22
+      },
+      "rank_deficiency": 1,
+      "rho_sensitivity_of_ONE_ANCHORED_SCALAR_MEAN_ONLY": {
+        "0": {
+          "separate_object_blocks": {
+            "527": {
+              "n": 15,
+              "n_effective_decimal_6_places": "15.000000",
+              "n_effective_scalar_mean": "15",
+              "relative_information": "1",
+              "rho": "0",
+              "variance_inflation": "1"
+            },
+            "528": {
+              "n": 24,
+              "n_effective_decimal_6_places": "24.000000",
+              "n_effective_scalar_mean": "24",
+              "relative_information": "1",
+              "rho": "0",
+              "variance_inflation": "1"
+            },
+            "529": {
+              "n": 22,
+              "n_effective_decimal_6_places": "22.000000",
+              "n_effective_scalar_mean": "22",
+              "relative_information": "1",
+              "rho": "0",
+              "variance_inflation": "1"
+            }
+          },
+          "single_common_source_block": {
+            "n": 61,
+            "n_effective_decimal_6_places": "61.000000",
+            "n_effective_scalar_mean": "61",
+            "relative_information": "1",
+            "rho": "0",
+            "variance_inflation": "1"
+          }
+        },
+        "1/10": {
+          "separate_object_blocks": {
+            "527": {
+              "n": 15,
+              "n_effective_decimal_6_places": "6.250000",
+              "n_effective_scalar_mean": "25/4",
+              "relative_information": "5/12",
+              "rho": "1/10",
+              "variance_inflation": "12/5"
+            },
+            "528": {
+              "n": 24,
+              "n_effective_decimal_6_places": "7.272727",
+              "n_effective_scalar_mean": "80/11",
+              "relative_information": "10/33",
+              "rho": "1/10",
+              "variance_inflation": "33/10"
+            },
+            "529": {
+              "n": 22,
+              "n_effective_decimal_6_places": "7.096774",
+              "n_effective_scalar_mean": "220/31",
+              "relative_information": "10/31",
+              "rho": "1/10",
+              "variance_inflation": "31/10"
+            }
+          },
+          "single_common_source_block": {
+            "n": 61,
+            "n_effective_decimal_6_places": "8.714286",
+            "n_effective_scalar_mean": "61/7",
+            "relative_information": "1/7",
+            "rho": "1/10",
+            "variance_inflation": "7"
+          }
+        },
+        "1/2": {
+          "separate_object_blocks": {
+            "527": {
+              "n": 15,
+              "n_effective_decimal_6_places": "1.875000",
+              "n_effective_scalar_mean": "15/8",
+              "relative_information": "1/8",
+              "rho": "1/2",
+              "variance_inflation": "8"
+            },
+            "528": {
+              "n": 24,
+              "n_effective_decimal_6_places": "1.920000",
+              "n_effective_scalar_mean": "48/25",
+              "relative_information": "2/25",
+              "rho": "1/2",
+              "variance_inflation": "25/2"
+            },
+            "529": {
+              "n": 22,
+              "n_effective_decimal_6_places": "1.913043",
+              "n_effective_scalar_mean": "44/23",
+              "relative_information": "2/23",
+              "rho": "1/2",
+              "variance_inflation": "23/2"
+            }
+          },
+          "single_common_source_block": {
+            "n": 61,
+            "n_effective_decimal_6_places": "1.967742",
+            "n_effective_scalar_mean": "61/31",
+            "relative_information": "1/31",
+            "rho": "1/2",
+            "variance_inflation": "31"
+          }
+        },
+        "9/10": {
+          "separate_object_blocks": {
+            "527": {
+              "n": 15,
+              "n_effective_decimal_6_places": "1.102941",
+              "n_effective_scalar_mean": "75/68",
+              "relative_information": "5/68",
+              "rho": "9/10",
+              "variance_inflation": "68/5"
+            },
+            "528": {
+              "n": 24,
+              "n_effective_decimal_6_places": "1.105991",
+              "n_effective_scalar_mean": "240/217",
+              "relative_information": "10/217",
+              "rho": "9/10",
+              "variance_inflation": "217/10"
+            },
+            "529": {
+              "n": 22,
+              "n_effective_decimal_6_places": "1.105528",
+              "n_effective_scalar_mean": "220/199",
+              "relative_information": "10/199",
+              "rho": "9/10",
+              "variance_inflation": "199/10"
+            }
+          },
+          "single_common_source_block": {
+            "n": 61,
+            "n_effective_decimal_6_places": "1.109091",
+            "n_effective_scalar_mean": "61/55",
+            "relative_information": "1/55",
+            "rho": "9/10",
+            "variance_inflation": "55"
+          }
+        }
+      },
+      "unique_catalogue_epochs": 61
+    },
+    "validation": {
+      "exact_rational_rank": 3,
+      "hypothetical_design_columns": [
+        "phase_527",
+        "phase_528",
+        "phase_529",
+        "source_bias"
+      ],
+      "null_direction": [
+        1,
+        1,
+        1,
+        -1
+      ],
+      "per_norad": {
+        "527": 1,
+        "528": 13,
+        "529": 9
+      },
+      "rank_deficiency": 1,
+      "rho_sensitivity_of_ONE_ANCHORED_SCALAR_MEAN_ONLY": {
+        "0": {
+          "separate_object_blocks": {
+            "527": {
+              "n": 1,
+              "n_effective_decimal_6_places": "1.000000",
+              "n_effective_scalar_mean": "1",
+              "relative_information": "1",
+              "rho": "0",
+              "variance_inflation": "1"
+            },
+            "528": {
+              "n": 13,
+              "n_effective_decimal_6_places": "13.000000",
+              "n_effective_scalar_mean": "13",
+              "relative_information": "1",
+              "rho": "0",
+              "variance_inflation": "1"
+            },
+            "529": {
+              "n": 9,
+              "n_effective_decimal_6_places": "9.000000",
+              "n_effective_scalar_mean": "9",
+              "relative_information": "1",
+              "rho": "0",
+              "variance_inflation": "1"
+            }
+          },
+          "single_common_source_block": {
+            "n": 23,
+            "n_effective_decimal_6_places": "23.000000",
+            "n_effective_scalar_mean": "23",
+            "relative_information": "1",
+            "rho": "0",
+            "variance_inflation": "1"
+          }
+        },
+        "1/10": {
+          "separate_object_blocks": {
+            "527": {
+              "n": 1,
+              "n_effective_decimal_6_places": "1.000000",
+              "n_effective_scalar_mean": "1",
+              "relative_information": "1",
+              "rho": "1/10",
+              "variance_inflation": "1"
+            },
+            "528": {
+              "n": 13,
+              "n_effective_decimal_6_places": "5.909091",
+              "n_effective_scalar_mean": "65/11",
+              "relative_information": "5/11",
+              "rho": "1/10",
+              "variance_inflation": "11/5"
+            },
+            "529": {
+              "n": 9,
+              "n_effective_decimal_6_places": "5.000000",
+              "n_effective_scalar_mean": "5",
+              "relative_information": "5/9",
+              "rho": "1/10",
+              "variance_inflation": "9/5"
+            }
+          },
+          "single_common_source_block": {
+            "n": 23,
+            "n_effective_decimal_6_places": "7.187500",
+            "n_effective_scalar_mean": "115/16",
+            "relative_information": "5/16",
+            "rho": "1/10",
+            "variance_inflation": "16/5"
+          }
+        },
+        "1/2": {
+          "separate_object_blocks": {
+            "527": {
+              "n": 1,
+              "n_effective_decimal_6_places": "1.000000",
+              "n_effective_scalar_mean": "1",
+              "relative_information": "1",
+              "rho": "1/2",
+              "variance_inflation": "1"
+            },
+            "528": {
+              "n": 13,
+              "n_effective_decimal_6_places": "1.857143",
+              "n_effective_scalar_mean": "13/7",
+              "relative_information": "1/7",
+              "rho": "1/2",
+              "variance_inflation": "7"
+            },
+            "529": {
+              "n": 9,
+              "n_effective_decimal_6_places": "1.800000",
+              "n_effective_scalar_mean": "9/5",
+              "relative_information": "1/5",
+              "rho": "1/2",
+              "variance_inflation": "5"
+            }
+          },
+          "single_common_source_block": {
+            "n": 23,
+            "n_effective_decimal_6_places": "1.916667",
+            "n_effective_scalar_mean": "23/12",
+            "relative_information": "1/12",
+            "rho": "1/2",
+            "variance_inflation": "12"
+          }
+        },
+        "9/10": {
+          "separate_object_blocks": {
+            "527": {
+              "n": 1,
+              "n_effective_decimal_6_places": "1.000000",
+              "n_effective_scalar_mean": "1",
+              "relative_information": "1",
+              "rho": "9/10",
+              "variance_inflation": "1"
+            },
+            "528": {
+              "n": 13,
+              "n_effective_decimal_6_places": "1.101695",
+              "n_effective_scalar_mean": "65/59",
+              "relative_information": "5/59",
+              "rho": "9/10",
+              "variance_inflation": "59/5"
+            },
+            "529": {
+              "n": 9,
+              "n_effective_decimal_6_places": "1.097561",
+              "n_effective_scalar_mean": "45/41",
+              "relative_information": "5/41",
+              "rho": "9/10",
+              "variance_inflation": "41/5"
+            }
+          },
+          "single_common_source_block": {
+            "n": 23,
+            "n_effective_decimal_6_places": "1.105769",
+            "n_effective_scalar_mean": "115/104",
+            "relative_information": "5/104",
+            "rho": "9/10",
+            "variance_inflation": "104/5"
+          }
+        }
+      },
+      "unique_catalogue_epochs": 23
+    }
+  },
+  "physical_domain_reduction": "NOT_COMPUTED",
+  "posterior_mcmc_status": "NOT_RUN",
+  "prior_status": "NOT_SPECIFIED",
+  "schema": "conde.raan-lineage-identifiability/v1",
+  "source": {
+    "evidence_ids": [
+      "C25#1",
+      "C179#1",
+      "C180#1",
+      "C181#1",
+      "C241-L3"
+    ],
+    "lineage": "Single historical Space-Track mirror, not independent NORAD measurements",
+    "original_track_and_instrument_model": "NOT_RECOVERED",
+    "path": "research/statistics/raan_527_528_529_1963.json",
+    "sha256": "b88564912c35167044d5fd4a0c1b50f6c624fcaf1066f82a7b70e503df8928f5"
+  }
+}

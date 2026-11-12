@@ -1,0 +1,54 @@
+{
+  "schema": "conde.nmc-y20175-binary-custody/v1",
+  "inspection_date_utc": "2026-11-12",
+  "inspector": "lontra",
+  "dataset": {
+    "repository": "NSF NCAR GDEX",
+    "id": "d353000",
+    "doi": "10.5065/R592-TX59",
+    "catalog_url": "https://gdex.ucar.edu/datasets/d353000/",
+    "description": "NMC B3 ADP Global Upper Air Observations, daily March 1962 to December 1972",
+    "type": "NCAR blocked CRAY RPTOUT / NMC Office Note 20 (ON20)",
+    "source_class": "historical operational-derived digitized archive, not independent station testimony"
+  },
+  "api_snapshot": {
+    "url": "https://gdex.ucar.edu/api/datasets/d353000/filelist/2/?filter_wfile=Y20175",
+    "http_status": 200,
+    "response_bytes": 1085,
+    "raw_response_sha256": "e0d0403fe132578b4c244a8cb2ccce1d47ca166eff35bead134018d5cc47bf91",
+    "group_index": 2,
+    "data_group": "Synoptic-Sort-raob",
+    "file_name": "Y20175",
+    "note_verbatim": "non-aircraft ua, 1963 , excluding all throws,",
+    "catalog_archive_date": "1998-09-28",
+    "data_format_column": null
+  },
+  "binary": {
+    "public_url": "https://osdf-director.osg-htc.org/ncar-gdex/d353000/Y20175",
+    "http_status_full_get": 200,
+    "byte_count": 117264384,
+    "sha256": "afec7c443e0c912f8a742738bb82384197baecc7c743cfb00a2a8bda207b5de4",
+    "first_64_bytes_hex": "00000000000001ff10000000000003cd01e0001d468fc4200e05c374c00b1800540010004017fffc0035800de00980007800147fffc001a801c1ffff0007c001",
+    "last_64_bytes_hex": "0003c002100000000000000000000000f08df96ee46b6a088000006fd4000000e000006fd4000000e000000000000000f0000000000000000000000000000000",
+    "download_complete": true,
+    "binary_checked_locally": true,
+    "bytes_in_repo": false
+  },
+  "station_day_audit": {
+    "status": "NOT_DECODED",
+    "dates_target": ["1963-11-07", "1963-11-08", "1963-11-09"],
+    "wmo_codes_target": ["83229", "83096", "82900"],
+    "records_parsed": null,
+    "matches": null,
+    "negative_station_claim": false,
+    "physical_constraint_status": "NOT_ACTIVATED",
+    "reason": "Full binary downloaded and byte-verified, but validated ON20/CRAY RPTOUT decoder has not run."
+  },
+  "prior_related_inventory_id": "MET-NMC-20261112-09",
+  "decoder_context": {
+    "report_title": "A Comprehensive Aerological Reference Data Set (CARDS)",
+    "report_url": "https://scispace.com/pdf/comprehensive-aerological-reference-data-set-cards-5fey360i6i.pdf",
+    "printed_pages": [43, 44, 45],
+    "scope_warning": "CARDS discusses 1971-1972 B-3; do not assume its decoder error rate or complete bit layout applies to Y20175 1963."
+  }
+}
