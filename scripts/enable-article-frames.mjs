@@ -20,3 +20,19 @@ html=html.replace(match[0],replacement);
 assert.ok(html.includes(allow));
 writeFileSync(file,html);
 console.log('PASS: CSP restrita do capitulo 03 autoriza mapa e fac-simile embutidos.');
+
+ 
+// A primary 1963 newspaper page is embedded in chapter 05. This exception
+// applies to that page only; the original document also remains a direct link.
+const newspaper='public/stories/2026-11-12-o-humorista-que-encontrou-um-satelite-na-redacao/index.html';
+let paperHtml=readFileSync(newspaper,'utf8');
+const requiredPaper='https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00477.pdf';
+assert.ok(paperHtml.includes(requiredPaper),'Hemeroteca original ausente do capitulo 05');
+const paperMatch=csp.exec(paperHtml);
+assert.ok(paperMatch,'CSP original da pagina 05 ausente');
+assert.ok(!paperMatch[1].includes('frame-src'),'CSP de pagina 05 mudou: auditar regra');
+const paperAllow='frame-src https://hemeroteca-pdf.bn.gov.br';
+paperHtml=paperHtml.replace(paperMatch[0],paperMatch[0].replace(paperMatch[1],paperMatch[1].replace(/;?\s*$/, '; ')+paperAllow+';'));
+assert.ok(paperHtml.includes(paperAllow));
+writeFileSync(newspaper,paperHtml);
+console.log('PASS: CSP restrita do capitulo 05 autoriza apenas a Hemeroteca em iframe.');

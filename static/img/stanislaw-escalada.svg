@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="274" viewBox="0 0 900 274" role="img" aria-labelledby="title desc">
+<title id="title">A escalada satírica que Stanislaw imaginou para a notícia de Conde</title>
+<desc id="desc">Quatro versões literárias de uma mesma história, da notícia de satélite à invasão marciana. A faixa inferior adverte que o documento FBIS do dia 8 já continha detalhes extraordinários. Não é cronologia comprovada.</desc>
+<defs><marker id="seta" markerWidth="7" markerHeight="7" refX="6" refY="3" orient="auto"><path d="M0 0 L6 3 L0 6" fill="none" stroke="#90d5df" stroke-width="1.5"/></marker></defs>
+<rect width="900" height="274" rx="16" fill="#121923"/>
+<g font-family="system-ui,Arial,sans-serif">
+<text x="26" y="31" fill="#b8dce0" font-size="17" font-weight="700">O EXAGERO IMAGINADO POR STANISLAW · 14 NOV 1963</text>
+<g fill="#243340" stroke="#5e7a86"><rect x="22" y="56" width="186" height="100" rx="12"/><rect x="244" y="56" width="186" height="100" rx="12"/><rect x="466" y="56" width="186" height="100" rx="12"/><rect x="688" y="56" width="190" height="100" rx="12"/></g>
+<g fill="#fff" font-size="18" font-weight="600" text-anchor="middle"><text x="115" y="98">Satélite</text><text x="337" y="91">Satélite</text><text x="337" y="117">tripulado</text><text x="559" y="98">Disco voador</text><text x="783" y="91">Invasão</text><text x="783" y="117">marciana</text></g>
+<g stroke="#90d5df" stroke-width="2" stroke-dasharray="5 5" marker-end="url(#seta)"><path d="M210 105 H239"/><path d="M432 105 H461"/><path d="M654 105 H683"/></g>
+<text x="26" y="185" fill="#f1d9a9" font-size="15" font-weight="700">ATENÇÃO: a sequência acima é uma construção satírica, não uma cadeia de telegramas recuperados.</text>
+<rect x="22" y="204" width="856" height="48" rx="8" fill="#2b353f"/>
+<text x="34" y="225" fill="#dcecf0" font-size="14" font-weight="700">FBIS/TUPI · 8 NOV 1963</text>
+<text x="34" y="243" fill="#c8d1d4" font-size="13">A transmissão já continha esfera, cratera e corpo. Não se conhece a ordem original dos relatos.</text>
+</g></svg>
