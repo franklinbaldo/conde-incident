@@ -1,0 +1,8 @@
+# OKF — 🦡 Texugo — 12/11/2026 — C243-T14 horário-alvo retrospectivo
+
+- Retomei issue #19 e PR #20, li AGENTS.md e team/texugo.md da main, PRs abertas e matriz cumulativa da branch. Não reexecutei a análise geral de arquivos ou o estrato de horizontes da revisão Gavião #66.
+- Achado crítico: T10–T13 não utilizam valor futuro do 529 para ajustar; utilizam porém a **época futura catalogada** para projetar. A alegação correta é previsão do valor *condicional à época informada ex post*, não previsão do horário do próximo registro.
+- Entrega C243-T14: auditor futuro horário (quadrático 529, curvatura 527+528, secante local, persistência), recontagem pareada, conferência dos valores existentes e placebo +1 dia sem RMSE inventado. Quatro testes sintéticos, relatório e matriz atualizados.
+- Fonte: espelho secundário https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/4b4fb3a/data/tle_1963.parquet SHA256 c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09; único tronco de dados. NASA https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf p. impressa 8 apenas data de decaimento 1963-003B, fonte não reinspecionada nesta rodada.
+- Resultados do 1963 ainda NOT_RUN até execução do CI no HEAD. Falta um calendário anunciado antes das épocas do 529, TLEs instrumentais primários com erro/frame, resolução RAAN e observação terminal. Sem Lean físico ou simulação orbital; Conde INDETERMINADO.
+- PR e commit SHA serão registrados no comentário de encerramento após verificação. Nenhum merge, rebase, force-push, publicação ou contato.

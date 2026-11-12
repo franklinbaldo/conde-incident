@@ -501,5 +501,63 @@ class DonorFreeCoverageFalsifiers(unittest.TestCase):
 
 
 
+
+class TimestampInputFalsifiers(unittest.TestCase):
+    """All rows are synthetic, no genuine 1963 observational claims."""
+
+    def test_timestamp_placebo_is_unscored_and_persistence_is_time_free(self):
+        from texugo_holdout_529 import rolling_origin_diagnostics, future_epoch_input_diagnostics
+        rows = samples()
+        result = rolling_origin_diagnostics(rows)
+        audit = future_epoch_input_diagnostics(rows, result)
+        self.assertEqual(audit["scored_catalog_next_epochs"], result["scored_distinct_targets"])
+        self.assertEqual(audit["candidate_catalog_next_epochs"], result["candidate_targets"])
+        self.assertFalse(audit["prospective_epoch_schedule_supplied"])
+        self.assertEqual(audit["observed_mean_motion_at_shifted_epoch"], "NOT_AVAILABLE_AND_NOT_SCORED")
+        shifts = audit["plus_one_day_unscored_time_shift_absolute_delta_rev_day"]
+        self.assertEqual(shifts["persistence_529_last_epoch"]["max"], 0)
+        self.assertGreater(shifts["recency_529_two_point_secant"]["nonzero"], 0)
+        self.assertGreater(shifts["quadratic_529_only"]["nonzero"], 0)
+
+    def test_future_y_changes_error_not_same_origin_prediction(self):
+        from texugo_holdout_529 import rolling_origin_diagnostics, future_epoch_input_diagnostics
+        rows = samples()
+        before = rolling_origin_diagnostics(rows)
+        idx = next(i for i,s in enumerate(before["steps"]) if s["status"] != "NOT_RUN")
+        epoch = utc(before["steps"][idx]["target_epoch_utc"])
+        changed = [Observation(o.sat, o.epoch, o.mean_motion + 2.0)
+                   if o.sat == 529 and o.epoch == epoch else o for o in rows]
+        after = rolling_origin_diagnostics(changed)
+        self.assertEqual(before["steps"][idx]["predicted_rev_day"],
+                         after["steps"][idx]["predicted_rev_day"])
+        self.assertNotEqual(before["steps"][idx]["error_rev_day"],
+                            after["steps"][idx]["error_rev_day"])
+        self.assertEqual(future_epoch_input_diagnostics(changed, after)["scored_catalog_next_epochs"],
+                         after["scored_distinct_targets"])
+
+    def test_refuses_tampered_time_or_forecast(self):
+        from texugo_holdout_529 import rolling_origin_diagnostics, future_epoch_input_diagnostics
+        rows = samples()
+        roll = rolling_origin_diagnostics(rows)
+        steps = [dict(s) for s in roll["steps"]]
+        steps[0]["target_epoch_utc"] = "1963-01-01T00:00:00+00:00"
+        with self.assertRaisesRegex(ValueError, "chronology"):
+            future_epoch_input_diagnostics(rows, {**roll, "steps": steps})
+        steps = [dict(s) for s in roll["steps"]]
+        idx = next(i for i,s in enumerate(steps) if s["status"] != "NOT_RUN")
+        steps[idx]["predicted_rev_day"] = {**steps[idx]["predicted_rev_day"],
+                                           "quadratic_529_only": -99.0}
+        with self.assertRaisesRegex(ValueError, "forecast mismatch"):
+            future_epoch_input_diagnostics(rows, {**roll, "steps": steps})
+
+    def test_no_eligible_history_is_not_run(self):
+        from texugo_holdout_529 import rolling_origin_diagnostics, future_epoch_input_diagnostics
+        rows = [o for o in samples() if o.sat != 529] + [
+            o for o in samples() if o.sat == 529][:3]
+        audit = future_epoch_input_diagnostics(rows, rolling_origin_diagnostics(rows))
+        self.assertEqual(audit["status"], "NOT_RUN")
+        self.assertIsNone(audit["horizon_days_min_median_max"])
+
+
 if __name__ == "__main__":
     unittest.main()

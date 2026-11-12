@@ -666,6 +666,94 @@ def donor_free_coverage_diagnostics(rows: list[Observation], rolling: dict) -> d
     }
 
 
+
+def future_epoch_input_diagnostics(rows: list[Observation], rolling: dict) -> dict:
+    """C243-T14: a future catalog EPOCH is an input, not a forecasted event.
+
+    Refit and cross-check fixed models against the original rolling scores.
+    Change the requested prediction time by +1 day without using a new value.
+    Never calculate loss against a fictitious measurement on this placebo day.
+    """
+    from datetime import timedelta
+    from statistics import median
+    target = sorted((o for o in rows if o.sat == 529), key=lambda o: o.epoch)
+    steps = rolling["steps"]
+    if len({o.epoch for o in target}) != len(target) or len(steps) != max(0, len(target) - 1):
+        raise ValueError("epoch input: duplicate epochs or inventory mismatch")
+    differences = {name: [] for name in (
+        "quadratic_529_only", "shared_curvature_527_528_to_529",
+        "recency_529_two_point_secant", "persistence_529_last_epoch")}
+    horizons = []
+    for i, (earlier, later) in enumerate(zip(target, target[1:]), start=1):
+        step = steps[i - 1]
+        origin = earlier.epoch
+        horizon = (later.epoch - origin).total_seconds() / 86400
+        if (step["origin_epoch_utc"] != origin.isoformat()
+                or step["target_epoch_utc"] != later.epoch.isoformat()
+                or horizon <= 0
+                or not math.isclose(horizon, step["horizon_days"], abs_tol=1e-9, rel_tol=0)):
+            raise ValueError("epoch input: chronology or horizon mismatch")
+        if step["status"] == "NOT_RUN":
+            continue
+        if step["status"] != "EVALUATED_RETROSPECTIVE_PREQUENTIAL":
+            raise ValueError("epoch input: unexpected status")
+        past = target[:i]
+        donors = {s: [o for o in rows if o.sat == s and o.epoch <= origin]
+                  for s in (527, 528)}
+        if min(len(past), len(donors[527]), len(donors[528])) < 3:
+            raise ValueError("epoch input: ineligible scored target")
+        train = [(x_at(o.epoch, origin), o.mean_motion) for o in past]
+        curv = [polynomial_fit([(x_at(o.epoch, origin), o.mean_motion)
+                                for o in donors[s]], 2)[2] for s in (527, 528)]
+        fits = {"quadratic_529_only": polynomial_fit(train, 2),
+                "shared_curvature_527_528_to_529":
+                    fixed_curvature_fit(train, math.fsum(curv) / 2),
+                "recency_529_two_point_secant": polynomial_fit(train[-2:], 1)}
+        at_actual = x_at(later.epoch, origin)
+        at_shifted = x_at(later.epoch + timedelta(days=1), origin)
+        for name in differences:
+            if name == "persistence_529_last_epoch":
+                original = shifted = past[-1].mean_motion
+            else:
+                original, shifted = project(fits[name], at_actual), project(fits[name], at_shifted)
+            recorded = step["predicted_rev_day"][name]
+            if not all(math.isfinite(v) for v in (original, shifted, recorded)):
+                raise ValueError("epoch input: nonfinite score")
+            if not math.isclose(original, recorded, rel_tol=1e-9, abs_tol=1e-8):
+                raise ValueError("epoch input: forecast mismatch")
+            differences[name].append(abs(original - shifted))
+        horizons.append(horizon)
+    n = len(horizons)
+    if n != rolling["scored_distinct_targets"]:
+        raise ValueError("epoch input: scored count mismatch")
+    if any(v != 0 for v in differences["persistence_529_last_epoch"]):
+        raise ValueError("epoch input: persistence time dependence")
+    return {
+        "status": "EVALUATED_POST_HOC_TIMESTAMP_INPUT" if n else "NOT_RUN",
+        "candidate_catalog_next_epochs": len(steps),
+        "scored_catalog_next_epochs": n,
+        "not_run": len(steps) - n,
+        "ex_post_target_timestamp_used_as_abscissa": True,
+        "prospective_epoch_schedule_supplied": False,
+        "future_target_value_used_in_fitting": False,
+        "observed_mean_motion_at_shifted_epoch": "NOT_AVAILABLE_AND_NOT_SCORED",
+        "horizon_days_min_median_max": [min(horizons), median(horizons), max(horizons)] if n else None,
+        "plus_one_day_unscored_time_shift_absolute_delta_rev_day": {
+            name: {"median": median(vals) if vals else None,
+                   "max": max(vals) if vals else None,
+                   "nonzero": sum(v > 1e-12 for v in vals)}
+            for name, vals in differences.items()},
+        "no_probability": True,
+        "independent_replications_established": False,
+        "unconditional_next_observation_time_prediction_established": False,
+        "interpretation": "Scores depend on the next catalog epoch supplied ex post, "
+                          "not its observed value. A fixed +1-day timestamp placebo "
+                          "changes time-aware projections, but is deliberately UNSCORED. "
+                          "Only persistence needs no future timestamp; no future "
+                          "observation time, orbit or physical impact was predicted.",
+    }
+
+
 def run(rows: list[Observation]) -> dict:
     results = [evaluate(rows, date) for date in CUTOFFS]
     rolling = rolling_origin_diagnostics(rows)
@@ -681,6 +769,7 @@ def run(rows: list[Observation]) -> dict:
         "rolling_origin_holdout": rolling,
         "rolling_tail_sensitivity": rolling_tail_sensitivity_diagnostics(rolling),
         "rolling_target_only_coverage": donor_free_coverage_diagnostics(rows, rolling),
+        "future_epoch_input_audit": future_epoch_input_diagnostics(rows, rolling),
     }
 
 def main() -> None:
