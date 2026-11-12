@@ -1,4 +1,4 @@
-import Conde1963.CertifiedCells
+import Conde1963.PairedEnclosures
 
 /-! Explicit kernel-dependency report in CI, not an empirical validation. -/
 
