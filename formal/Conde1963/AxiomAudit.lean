@@ -86,3 +86,16 @@ import Conde1963.Enclosures
 #print axioms Conde1963.missing_ground_audit_blocks_enclosure_exclusion
 #print axioms Conde1963.castor_declared_audit_blocks_enclosure_exclusion
 #print axioms Conde1963.finite_sample_nonimpact_does_not_exclude_globally
+
+-- Disjunctive unresolved orbital element scenarios (C25/C179; not original TLEs).
+#print axioms Conde1963.left_branch_in_alternatives
+#print axioms Conde1963.right_branch_in_alternatives
+#print axioms Conde1963.alternative_iff_either_branch
+#print axioms Conde1963.alternative_has_candidate_iff_branches
+#print axioms Conde1963.alternatives_empty_iff_both_branches_empty
+#print axioms Conde1963.alternative_common_narrowing
+#print axioms Conde1963.alternative_common_narrowing_requires_witness
+#print axioms Conde1963.branches_force_alternative
+#print axioms Conde1963.branches_exclude_alternative
+#print axioms Conde1963.conflicting_branch_witnesses_leave_alternative_indeterminate
+#print axioms Conde1963.intersecting_alternatives_can_falsely_erase_all_candidates
