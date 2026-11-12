@@ -1,0 +1,479 @@
+{
+  "schema": "conde.gaviao.retrospective-window/v3",
+  "reviewer": "gaviao",
+  "observed_local_date": "2026-11-12",
+  "reviewed_from_main_sha": "cdc32e402e7dee7378f1a92dabac672635a030cc",
+  "reviewed_through_main_sha": "dfefa93be7a3e6361c7a0ce35fa196d0ef036a65",
+  "github_comparison": {
+    "status": "ahead",
+    "ahead_by": 14,
+    "behind_by": 0,
+    "total_commits": 14
+  },
+  "first_parent_chain": {
+    "all_fourteen_consecutive_comparisons_ahead_one_behind_zero": true,
+    "squash_pr_merges": 14,
+    "direct_commits": 0,
+    "merged_pr_numbers": [
+      119,
+      112,
+      121,
+      120,
+      123,
+      124,
+      122,
+      125,
+      126,
+      127,
+      128,
+      129,
+      131,
+      132
+    ]
+  },
+  "closed_unmerged_search": {
+    "query": "repo:franklinbaldo/conde-incident is:pr is:closed is:unmerged closed:2026-11-12",
+    "matches": [],
+    "note": "Not a main commit; no matching closed-unmerged PR returned for query."
+  },
+  "commits": [
+    {
+      "index": 1,
+      "pr": 119,
+      "main_merge_sha": "6db344f1ff48ec8a2599f053bb94d1f92ec98efe",
+      "parent_main_sha": "cdc32e402e7dee7378f1a92dabac672635a030cc",
+      "pr_final_head_sha": "0ea473850a8434902140ec8a4ffb399d630f9a82",
+      "github_actions_pr_head": {
+        "success": 8,
+        "total": 8,
+        "observed": "GitHub Actions associated with exact PR head SHA; separate squash SHA"
+      },
+      "files": [
+        {
+          "path": "research/statistics/CHRONOLOGICAL_HOLDOUT_PROTOCOL.md"
+        },
+        {
+          "path": "research/statistics/README.md"
+        },
+        {
+          "path": "research/statistics/raan_chronological_holdout_1963.json"
+        },
+        {
+          "path": "tests/test_raan_chronological_holdout.py"
+        },
+        {
+          "path": "tools/raan_chronological_holdout.py"
+        }
+      ],
+      "scope_and_limit": "Chronological 61/23/35 secondary-RAAN split; retrospectively selected, not blinded."
+    },
+    {
+      "index": 2,
+      "pr": 112,
+      "main_merge_sha": "059b5df6a6c526bb075b404bef4129de2a45b600",
+      "parent_main_sha": "6db344f1ff48ec8a2599f053bb94d1f92ec98efe",
+      "pr_final_head_sha": "4f467d84da76fccf341a7bc1c992288f43fb56a9",
+      "github_actions_pr_head": {
+        "success": 8,
+        "total": 8,
+        "observed": "GitHub Actions associated with exact PR head SHA; separate squash SHA"
+      },
+      "files": [
+        {
+          "path": "research/geo/README.md"
+        },
+        {
+          "path": "research/geo/conde_ibge_2022_sirgas2000.json"
+        },
+        {
+          "path": "research/geo/conde_ibge_2025_sirgas2000.json"
+        },
+        {
+          "path": "tests/conde_gis_custody.test.mjs"
+        },
+        {
+          "path": "tests/test_conde_gis.py"
+        },
+        {
+          "path": "tools/conde_gis.py"
+        }
+      ],
+      "scope_and_limit": "IBGE 2022/2025 geometry; no 1963 legal boundary nor measured event location."
+    },
+    {
+      "index": 3,
+      "pr": 121,
+      "main_merge_sha": "ae8b7fb2afd04aebcabfea219ee8f41c512edbea",
+      "parent_main_sha": "059b5df6a6c526bb075b404bef4129de2a45b600",
+      "pr_final_head_sha": "ab9b63ba342ea5df7403fe5f48d0f489f4b0d894",
+      "github_actions_pr_head": {
+        "success": 8,
+        "total": 8,
+        "observed": "GitHub Actions associated with exact PR head SHA; separate squash SHA"
+      },
+      "files": [
+        {
+          "path": "research/provenance/lineages.json"
+        },
+        {
+          "path": "tests/test_provenance_graph.py"
+        },
+        {
+          "path": "tools/provenance_graph.py"
+        }
+      ],
+      "scope_and_limit": "NARA 0810.jp2 documentary occurrence added; not independent physical sighting."
+    },
+    {
+      "index": 4,
+      "pr": 120,
+      "main_merge_sha": "9771e5c6ebf4f368515cff42508c15299bd1f91d",
+      "parent_main_sha": "ae8b7fb2afd04aebcabfea219ee8f41c512edbea",
+      "pr_final_head_sha": "3b62a0dfa4ccb180eef8cf65f8bf3be3bb4b1fe6",
+      "github_actions_pr_head": {
+        "success": 8,
+        "total": 8,
+        "observed": "GitHub Actions associated with exact PR head SHA; separate squash SHA"
+      },
+      "files": [
+        {
+          "path": "formal/scripts/check_cumulative_connections.py"
+        },
+        {
+          "path": "research/constraints/texugo_negative_controls_03_2026-11-12.md"
+        },
+        {
+          "path": "tests/test_cumulative_constraints.py"
+        }
+      ],
+      "scope_and_limit": "Alias/lineage negative controls; no measurement added."
+    },
+    {
+      "index": 5,
+      "pr": 123,
+      "main_merge_sha": "1a1720dd740c87cb2340fb419b0784cb4fc6330b",
+      "parent_main_sha": "9771e5c6ebf4f368515cff42508c15299bd1f91d",
+      "pr_final_head_sha": "a7facc2a2cfe22ab60b8abfcfb25e069b3455279",
+      "github_actions_pr_head": {
+        "success": 9,
+        "total": 9,
+        "observed": "GitHub Actions associated with exact PR head SHA; separate squash SHA"
+      },
+      "files": [
+        {
+          "path": ".github/workflows/historical-space-weather.yml"
+        },
+        {
+          "path": "research/meteorology/space_weather_msise_inputs_1963_11_07_09.json"
+        },
+        {
+          "path": "research/meteorology/space_weather_msise_inputs_1963_11_07_09.md"
+        },
+        {
+          "path": "tools/validate_1963_space_weather.py"
+        }
+      ],
+      "scope_and_limit": "1963 F10.7/Kp/Ap conditional MSISE drivers, not local density observation."
+    },
+    {
+      "index": 6,
+      "pr": 124,
+      "main_merge_sha": "41af489af2fe83e44a2f20849286fb5d14eedbe1",
+      "parent_main_sha": "1a1720dd740c87cb2340fb419b0784cb4fc6330b",
+      "pr_final_head_sha": "4ff782172c71d01d001c6af38e325ab9d9f79042",
+      "github_actions_pr_head": {
+        "success": 8,
+        "total": 8,
+        "observed": "GitHub Actions associated with exact PR head SHA; separate squash SHA"
+      },
+      "files": [
+        {
+          "path": "public/data/conde-source-citations.json"
+        },
+        {
+          "path": "research/provenance/README.md"
+        },
+        {
+          "path": "research/provenance/lineages.json"
+        },
+        {
+          "path": "tests/test_provenance_graph.py"
+        },
+        {
+          "path": "tools/provenance_graph.py"
+        }
+      ],
+      "scope_and_limit": "Snapshot-qualified Lean aliases; accidentally removes #121 NARA source and occurrence."
+    },
+    {
+      "index": 7,
+      "pr": 122,
+      "main_merge_sha": "22c0fc2f939c53eea7760cf508129926a002d0f5",
+      "parent_main_sha": "41af489af2fe83e44a2f20849286fb5d14eedbe1",
+      "pr_final_head_sha": "ae9c4c4725da6681fd19f4da35fba8551e9ec0c0",
+      "github_actions_pr_head": {
+        "success": 8,
+        "total": 8,
+        "observed": "GitHub Actions associated with exact PR head SHA; separate squash SHA"
+      },
+      "files": [
+        {
+          "path": "research/audits/gaviao-main-window-20261112-0942.json"
+        },
+        {
+          "path": "research/audits/gaviao-main-window-20261112-0942.md"
+        },
+        {
+          "path": "scripts/gaviao-retrospective-g17.test.mjs"
+        },
+        {
+          "path": "src/lib/sourceCitationAudit.ts"
+        },
+        {
+          "path": "tests/sourceCitationFeed.test.mjs"
+        }
+      ],
+      "scope_and_limit": "G17 SHA-locked matrix deep links; own past PR audited retrospectively."
+    },
+    {
+      "index": 8,
+      "pr": 125,
+      "main_merge_sha": "e670fa117ab2b654f2aeb77d54d7f64c9aba8a2e",
+      "parent_main_sha": "22c0fc2f939c53eea7760cf508129926a002d0f5",
+      "pr_final_head_sha": "887925f44ef21d97f12d22d5bf58b0dd9efe836e",
+      "github_actions_pr_head": {
+        "success": 9,
+        "total": 9,
+        "observed": "GitHub Actions associated with exact PR head SHA; separate squash SHA"
+      },
+      "files": [
+        {
+          "path": ".github/workflows/lean-core.yml"
+        },
+        {
+          "path": "formal/Conde1963.lean"
+        },
+        {
+          "path": "formal/Conde1963/Documentary.lean"
+        },
+        {
+          "path": "formal/README.md"
+        },
+        {
+          "path": "formal/scripts/compile_documentary_links.py"
+        },
+        {
+          "path": "formal/tests/test_documentary_links.py"
+        }
+      ],
+      "scope_and_limit": "Lean 4.35.0 custody/data import; proofs conditional and no NARA post-matrix import."
+    },
+    {
+      "index": 9,
+      "pr": 126,
+      "main_merge_sha": "4515f8460224960d4521f96388bdd7eede0de0ad",
+      "parent_main_sha": "e670fa117ab2b654f2aeb77d54d7f64c9aba8a2e",
+      "pr_final_head_sha": "b271aff46d9f3d028b4af245d6fd51edd6ebc27c",
+      "github_actions_pr_head": {
+        "success": 9,
+        "total": 9,
+        "observed": "GitHub Actions associated with exact PR head SHA; separate squash SHA"
+      },
+      "files": [
+        {
+          "path": "research/ORBIT_HOLDOUT_AUDIT.md"
+        },
+        {
+          "path": "src/lib/orbitHoldoutAudit.ts"
+        },
+        {
+          "path": "tests/orbitHoldoutAudit.test.mjs"
+        }
+      ],
+      "scope_and_limit": "Synthetic chronological r/v holdout with refinement veto; no calibrated historical states."
+    },
+    {
+      "index": 10,
+      "pr": 127,
+      "main_merge_sha": "69cdbf501d4af5d7b2fdf70b6a8b75ab008d004a",
+      "parent_main_sha": "4515f8460224960d4521f96388bdd7eede0de0ad",
+      "pr_final_head_sha": "9e3404d2d08ec0af07aa452af56bb332ac03dd78",
+      "github_actions_pr_head": {
+        "success": 9,
+        "total": 9,
+        "observed": "GitHub Actions associated with exact PR head SHA; separate squash SHA"
+      },
+      "files": [
+        {
+          "path": ".agents/skills/conde-elefante/SKILL.md"
+        },
+        {
+          "path": "docs/AGENT_WORKSPACES.md"
+        },
+        {
+          "path": "scripts/elefante-workspace-contract.test.mjs"
+        },
+        {
+          "path": "team/elefante.md"
+        }
+      ],
+      "scope_and_limit": "Private coffee/OKF governance and test; not scientific observation."
+    },
+    {
+      "index": 11,
+      "pr": 128,
+      "main_merge_sha": "772bbdc77604ee35c977c624c7c3c59392adb197",
+      "parent_main_sha": "69cdbf501d4af5d7b2fdf70b6a8b75ab008d004a",
+      "pr_final_head_sha": "cf9c5d9a6264a1447c03edb8f01ea562fa014be2",
+      "github_actions_pr_head": {
+        "success": 9,
+        "total": 9,
+        "observed": "GitHub Actions associated with exact PR head SHA; separate squash SHA"
+      },
+      "files": [
+        {
+          "path": "scripts/archive-documentary-provenance.test.mjs"
+        },
+        {
+          "path": "src/components/DocumentArchive.tsx"
+        }
+      ],
+      "scope_and_limit": "Replaces invented archive transcript quotes with traceable citation feed; no primary reinspection."
+    },
+    {
+      "index": 12,
+      "pr": 129,
+      "main_merge_sha": "aa96adafe5ab2c21a9e9fe5d6e3ab81075668c39",
+      "parent_main_sha": "772bbdc77604ee35c977c624c7c3c59392adb197",
+      "pr_final_head_sha": "84e875002f81e86cb075748afe9df4e43f8d0ac2",
+      "github_actions_pr_head": {
+        "success": 9,
+        "total": 9,
+        "observed": "GitHub Actions associated with exact PR head SHA; separate squash SHA"
+      },
+      "files": [
+        {
+          "path": "research/constraints/moonwatch_ru255_1963_archival_graph.json"
+        },
+        {
+          "path": "research/constraints/moonwatch_ru255_1963_notes.md"
+        },
+        {
+          "path": "tests/test_moonwatch_ru255_archive_graph.py"
+        }
+      ],
+      "scope_and_limit": "Smithsonian RU255 finding-aid localizers; archive folders not 528 observations."
+    },
+    {
+      "index": 13,
+      "pr": 131,
+      "main_merge_sha": "ceac36f9ce7bf78c31114863afdbffbe0f3ee7c1",
+      "parent_main_sha": "aa96adafe5ab2c21a9e9fe5d6e3ab81075668c39",
+      "pr_final_head_sha": "003d93ec628ed932ecd3056de5532cd78b6a23bc",
+      "github_actions_pr_head": {
+        "success": 9,
+        "total": 9,
+        "observed": "GitHub Actions associated with exact PR head SHA; separate squash SHA"
+      },
+      "files": [
+        {
+          "path": "research/PAGES_METADATA_PREFLIGHT.md"
+        },
+        {
+          "path": "scripts/pages-metadata-preflight.mjs"
+        },
+        {
+          "path": "scripts/pages-metadata-preflight.test.mjs"
+        }
+      ],
+      "scope_and_limit": "Pages metadata-only gate; cannot verify a live published site."
+    },
+    {
+      "index": 14,
+      "pr": 132,
+      "main_merge_sha": "dfefa93be7a3e6361c7a0ce35fa196d0ef036a65",
+      "parent_main_sha": "ceac36f9ce7bf78c31114863afdbffbe0f3ee7c1",
+      "pr_final_head_sha": "66a0057e3e733483c1fa0b24ee868de60b91fc07",
+      "github_actions_pr_head": {
+        "success": 10,
+        "total": 10,
+        "observed": "GitHub Actions associated with exact PR head SHA; separate squash SHA"
+      },
+      "files": [
+        {
+          "path": ".github/workflows/tle-raan-continuity.yml"
+        },
+        {
+          "path": "research/tle_custody/evidence_matrix_C241-L4_2026-11-12.md"
+        },
+        {
+          "path": "tests/test_tle_raan_continuity_1963.py"
+        },
+        {
+          "path": "tools/tle_raan_continuity_1963.py"
+        }
+      ],
+      "scope_and_limit": "C241-L4 45 epochs and circular RAAN in secondary mirror, not primary astrometry."
+    }
+  ],
+  "findings": [
+    {
+      "id": "G18-F1",
+      "severity": "HIGH",
+      "status": "REPRODUCED_IN_MAIN",
+      "introduced_by_pr": 124,
+      "regressed_pr": 121,
+      "description": "After #121 introduced NARA-BB-CONDE-20261112-01 and its two source entities, #124 silently deleted the addendum, two source families, two sources, one dependent edge and three regression tests; merged CI stayed green because the tests were deleted.",
+      "evidence": "GitHub immutable snapshots ae8b7fb2 and dfefa93b; current lineages has no post_matrix_occurrences, tools/provenance_graph.py no validator/export and tests no addendum assertions.",
+      "proposed_fix": "Reinstate #121 addendum with snapshot-qualified Cnn#occurrence refs and a permanent removal regression."
+    },
+    {
+      "id": "G18-F2",
+      "severity": "LIMITATION",
+      "status": "OPEN",
+      "description": "RAAN, spacetime and r/v model inputs are synthetic or secondary; missing verified sensor epochs/frame/covariance and independent holdout. No new active empirical physical Lean constraint.",
+      "affected_prs": [
+        119,
+        123,
+        125,
+        126,
+        132
+      ]
+    },
+    {
+      "id": "G18-F3",
+      "severity": "LIMITATION",
+      "status": "OPEN",
+      "description": "Smithsonian inventory is primary only for declared collection; historic Conde boundary and O Globo original still unauthenticated; metadata does not show physical event.",
+      "affected_prs": [
+        112,
+        121,
+        129
+      ]
+    },
+    {
+      "id": "G18-F4",
+      "severity": "CORRECTED",
+      "status": "MERGED",
+      "description": "Archive editorial pseudoquotes removed by #128 and main citation permalink fixed by #122. No stories files merged.",
+      "affected_prs": [
+        122,
+        128,
+        131
+      ]
+    }
+  ],
+  "editorial": {
+    "story_17_pr": 116,
+    "story_18_pr": 130,
+    "primary_archive_status": "NARA source report existing; Smithsonian finding aid catalog only; no new direct reinspection of facsimile by reviewer",
+    "merged_stories_in_window": 0,
+    "not_published": true
+  },
+  "scientific_result": "INDETERMINATE_NO_TERMINAL_TIME_OR_POSITION_OR_VERIFIED_CONDE_IMPACT",
+  "limitations": [
+    "Tests/Lean build cannot certify sensor acquisition or orbital solution.",
+    "No live Pages site verification.",
+    "A NARA telegram quoting O Globo is not a located newspaper or independent physical observation."
+  ]
+}
