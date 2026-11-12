@@ -120,6 +120,7 @@ def validate(graph: dict) -> dict:
         raise ValueError("graph missing elements or duplicate source/parameter/operator IDs")
     output = []
     ids = set()
+    observation_signatures = set()
     families = set()
     upstream = set()
     for o in obs:
@@ -127,6 +128,16 @@ def validate(graph: dict) -> dict:
         if oid in ids:
             raise ValueError(f"duplicate observation ID: {oid}")
         ids.add(oid)
+        # Two IDs for the same source/table field are not independent samples.
+        # A distinct measurement must have a distinct traced source or epoch.
+        signature = (
+            o["source_id"], o["object_id"], o["observable"],
+            o.get("published_on"), o.get("observed_at_utc"),
+            o.get("element_epoch_utc"),
+        )
+        if signature in observation_signatures:
+            raise ValueError(f"duplicate source/table observation with new ID: {oid}")
+        observation_signatures.add(signature)
         if o["source_id"] not in sources:
             raise ValueError(f"orphan observation source: {oid}")
         src = sources[o["source_id"]]
@@ -154,6 +165,9 @@ def validate(graph: dict) -> dict:
                 raise ValueError(f"cannot activate an underdetermined constraint: {oid}")
             raise ValueError(f"active scientific constraints require a separately validated physical solver: {oid}")
         canonical_unit, factor = CANONICAL[o["unit"]]
+        canonical_value = number * factor
+        if not math.isfinite(canonical_value):
+            raise ValueError(f"non-finite canonical converted measurement: {oid}")
         output.append({
             "observation": oid,
             "evidence": o["matrix_local_id"],
@@ -164,7 +178,7 @@ def validate(graph: dict) -> dict:
             "input_parameters": o["input_parameters"],
             "reported_value": number,
             "reported_unit": o["unit"],
-            "canonical_value": number * factor,
+            "canonical_value": canonical_value,
             "canonical_unit": canonical_unit,
             "observed_at_utc": o["observed_at_utc"],
             "element_epoch_utc": o.get("element_epoch_utc"),
