@@ -18,6 +18,16 @@ function internal(raw, base = SITE) {
   }
 }
 
+// A comment, template or JS string is not a visible HTML link or article.
+// This lightweight check is conservative, not a substitute for DOM parsing.
+function inspectableMarkup(html) {
+  return html
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/<template\b[^>]*>[\s\S]*?<\/template\s*>/gi, "")
+    .replace(/<(script|style|textarea)\b([^>]*)>[\s\S]*?<\/\1\s*>/gi,
+      (_, tag, attributes) => `<${tag}${attributes}></${tag}>`);
+}
+
 function elements(html, tag, attribute) {
   const found = [];
   const tags = html.match(new RegExp("<" + tag + "\\b[^>]*>", "gi")) || [];
@@ -74,7 +84,7 @@ export async function auditPublishedSite({
         kind === "css" ? /text\/css/i : /javascript|ecmascript/i;
       if (!expected.test(mime)) failures.push("unexpected " + kind + " content-type: " + url);
       const body = await response.text();
-      if (!body || (kind === "html" && !looksHtml(body)))
+      if (!body?.trim() || (kind === "html" && !looksHtml(body)))
         failures.push("missing " + kind + " body: " + url);
       return body;
     } catch (error) {
@@ -84,18 +94,18 @@ export async function auditPublishedSite({
   }
 
   const home = await get(SITE, "html");
-  const homeLinks = elements(home, "a", "href").map(x => internal(x)).filter(Boolean);
+  const homeLinks = elements(inspectableMarkup(home), "a", "href").map(x => internal(x)).filter(Boolean);
   const lab = internal("lab/");
   if (!homeLinks.includes(lab)) failures.push("homepage has no laboratory link");
   if (!homeLinks.includes(chapter)) failures.push("homepage has no link to audited chapter");
-  const styles = elements(home, "link", "href").map(x => internal(x)).filter(Boolean)
+  const styles = elements(inspectableMarkup(home), "link", "href").map(x => internal(x)).filter(Boolean)
     .filter(x => /\.css(?:\?|$)/i.test(x));
   if (!styles.length) failures.push("homepage has no local CSS asset");
   const chapterHtml = await get(chapter, "html");
-  if (!/<article[\s>]/i.test(chapterHtml))
+  if (!/<article[\s>]/i.test(inspectableMarkup(chapterHtml)))
     failures.push("chapter has no rendered article");
   const labHtml = await get(lab, "html");
-  const scripts = elements(labHtml, "script", "src").map(x => internal(x, lab)).filter(Boolean)
+  const scripts = elements(inspectableMarkup(labHtml), "script", "src").map(x => internal(x, lab)).filter(Boolean)
     .filter(x => /\.m?js(?:\?|$)/i.test(x));
   if (!scripts.length) failures.push("laboratory has no local JS asset");
   for (const css of [...new Set(styles)]) await get(css, "css");
