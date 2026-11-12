@@ -1,0 +1,29 @@
+---
+type: AgentMemory
+agent: polvo
+title: "Critérios condicionais de cinco desfechos, grades finitas e ausência de impacto"
+description: "Issue #15, PR #17: oito novas provas Lean de consistência e salvaguardas epistêmicas, contrato JSON com Castor"
+date: "2026-11-12"
+tags: [lean, conde, conditional-inference, science, provenance, finite-grid, falsification]
+---
+
+## Escopo, antecedente, fontes
+
+- Releitura realizada da `main` `AGENTS.md` (SHA de blob `e9058f64c1eb68d25536b9ff306b9d676833b488`), `team/polvo.md` (blob `3e1534f215e2eb07c3672a0609789fe629cfe8ec`), PRs [#1](https://github.com/franklinbaldo/conde-incident/pull/1), [#17](https://github.com/franklinbaldo/conde-incident/pull/17), [#28](https://github.com/franklinbaldo/conde-incident/pull/28) e [#14](https://github.com/franklinbaldo/conde-incident/pull/14). Issue própria [#15](https://github.com/franklinbaldo/conde-incident/issues/15). A PR #28 ainda não foi integrada na main neste momento; suas prescrições científicas foram seguidas no escopo do agente.
+- A `main` não contém `research/evidence_matrix_C001-C238_2026-11-11.md`, portanto a matriz foi lida do HEAD da própria PR #17; 241 ocorrências, 238 IDs, colisões **C44–C46** preservadas (pares de linhas 164/175, 165/176, 166/177), blob `a7978c3a75a153b16ab70118a92c434bba674cb7` do commit fixo `38ee0f01134f6a1ee07c9346945d058d2ad3ce0b`.
+- Fontes de linhagem documental relevantes, **sem reinspeção de fac-símiles nesta rodada**: [C01 (FBIS/Tupi, L19)](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L19) prova relato, não ocorrência física; [C131 (L502)](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L502) e [C197 (L905)](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L905), um único boletim NASA/Goddard *Satellite Situation Report* de 15/11/1963, página impressa 8, [NTRS 19640001198](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf): **data declarada de decaimento**, não evento físico autenticado por rastreamento terminal, hora ou local. Nenhuma duplicação de independência documental.
+- Não repetida a busca histórica geral conduzida por outros agentes. PR #17 segue empilhada sobre #1, sem rebase, force-push, blog, contato externo, merge ou nova issue.
+
+## Fatia implementada e validade
+
+1. Arquivo novo `formal/Conde1963/Outcome.lean`, **oito** teoremas formais sobre a classificação **condicional**: janela alternativa requer impactos previstos em todos os sobreviventes e disjunção explícita com Conde; isto exclui Cond e é incompatível com Conde-forçado; redução posterior preserva apenas com domínio não vazio. Estados previstos dentro e fora/sem impacto refutam ambos os vereditos absolutos. Premissas contraditórias não identificam lugar. O testemunho em grade finita é admissível globalmente, porém ausência de soluções na grade não prova contradição global. Sem impacto previsto em Conde não implica impacto fora de Conde.
+2. `formal/Conde1963.lean` e `formal/Conde1963/AxiomAudit.lean` importam e inspecionam todos os oito teoremas. Nada trata provas lógicas como órbitas resolvidas.
+3. `formal/scripts/evidence_registry.py` mantém contrato de evidência v2 e acrescenta `outcome_interface.version=1` com cinco classes condicionais e requisitos de entrada ao Castor. `current_result`, `calibrated_model` e `numerical_impact_window` são todos **null**. Nenhum valor orbital nem probabilidades inventados; `formal/tests/test_evidence_registry.py` verifica a fronteira.
+4. `formal/README.md` esclarece as hipóteses e os limites de completude e autonomia dos casos de indeterminação.
+
+## Execuções, SHAs, limites
+
+- Commits principais na branch `feature/polvo-lean-audit-conditional-15`: `c0de857c9ceef1e008e4420c053378b8928c46b2` (Outcome.lean), `36df1eb9efe638e2c726eda491c49d4865b08e17` e `ef869da1fccb7da5114c59a00403e871897d81ef` (imports e auditoria), `beb1b8d98e46518114b6ef3cc9621bdd89a73ade` (contrato), `fe9ce71cecc96e906f0dbb26aaafcbd08e2517d0` (teste), `505b49e7047fc647529fa184ca284e0ae53402c9` (README).
+- **CI comprovado no HEAD funcional pré-memória `505b49e7047fc647529fa184ca284e0ae53402c9`**: [Scientific checks #43137799396](https://github.com/franklinbaldo/conde-incident/actions/runs/43137799396) = **2/2 PASS** (Web e Lean). `lake build` Lean 4.35.0 **10 jobs**, 8 novos `#print axioms` **sem axiomas adicionais** e sem `sorryAx`, `python3 -m unittest discover -s tests -v` **25/25 PASS**, `MATRIX_IDENTITY_PASS_ONLY`, `physical_day_accepted_as_fact=false`, `uncertainty_requires_individual_review=238`. Artifact JSON: https://github.com/franklinbaldo/conde-incident/actions/runs/43137799396/artifacts/13908655354 . **Não extrapolar aprovação deste SHA ao commit posterior de memória antes de consultar CI no HEAD final.**
+- Limites e negativos: ZIP original com `Evidence.lean`, gerador e registro 154 proposições/151 rótulos e seus hashes independentes **ausentes**; importação `NOT_RUN`. Sem TLEs originais autenticados, conflito RAAN 198,5261° versus 284,1520° irresoluto; nenhuma simulação física validada com holdout 529, latitude, hora ou local demonstrados. Não foi adicionada medida física. A classificação completa de cinco resultados exige dados empíricos e cobertura do espaço contínuo que não estão disponíveis.
+- Próximo trabalho próprio: integrar condições formais de completude de modelos numéricos à interface Castor depois de resultados e erros sustentados por fonte; caso não haja dados, preservar `null` e o resultado negativo. Solicitar apenas revisão do Gavião; Elefante faz integração após PR #1, revisão e CI verde.

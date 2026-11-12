@@ -9,6 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify checkout equals actual head SHA
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
       - run: bun run lint
@@ -18,12 +22,60 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify checkout equals actual head SHA
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
       - name: Install elan
         run: |
           curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
           echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Audit entire C01-C238 matrix and typed evidence contracts
+        run: |
+          python3 formal/scripts/evidence_registry.py \
+            --check formal/Conde1963/MatrixEvidence.lean \
+            --json /tmp/conde-evidence-contracts.json
+      - name: Review pinned simulator sources and export Lean bridge contract
+        run: |
+          python3 formal/scripts/simulation_bridge_audit.py \
+            --root . \
+            --json /tmp/conde-simulation-bridge.json
       - name: Update Lake manifest and check proofs
         working-directory: formal
         run: |
           lake update
           lake build
+      - name: Report theorem axioms (no sorry allowed)
+        working-directory: formal
+        run: |
+          set -euo pipefail
+          lake env lean Conde1963/AxiomAudit.lean | tee axiom-audit.log
+          if grep -E 'sorryAx|unsafe|error\(|error:' axiom-audit.log; then
+            echo 'Unexpected trusted-admission dependency in proof audit' >&2
+            exit 1
+          fi
+      - name: Test original-ZIP intake gate (synthetic corpus ONLY)
+        working-directory: formal
+        run: python3 -m unittest discover -s tests -v
+      - name: Verify pinned matrix rows and Git blob (not historical provenance)
+        run: python3 formal/scripts/verify_matrix_refs.py research/evidence_matrix_C001-C238_2026-11-11.md
+      - name: Export conditional C241 RAAN discriminator
+        run: |
+          python3 formal/scripts/raan_epoch_contract.py --output /tmp/conde-raan-epoch.json
+      - name: Export sourced orbital/weather observable crosswalk for Castor
+        run: |
+          python3 formal/scripts/physical_observable_bridge.py \
+            --matrix research/evidence_matrix_C001-C238_2026-11-11.md \
+            --descent-vertical-speed-mps 50 \
+            --output /tmp/conde-physical-observables.json
+      - name: Export pinned evidence contracts for Castor
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: conde-evidence-contracts
+          path: |
+            /tmp/conde-evidence-contracts.json
+            /tmp/conde-simulation-bridge.json
+            /tmp/conde-raan-epoch.json
+            /tmp/conde-physical-observables.json
+          retention-days: 30

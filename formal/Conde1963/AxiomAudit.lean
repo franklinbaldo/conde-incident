@@ -1,0 +1,156 @@
+import Conde1963.TruthBridge
+import Conde1963.RaanEpochConstraint
+
+/-! Explicit kernel-dependency report in CI, not an empirical validation. -/
+
+#print axioms Conde1963.no_double_count_tupi
+#print axioms Conde1963.total_unique_epochs
+#print axioms Conde1963.date_alone_does_not_identify_place
+#print axioms Conde1963.two_admissible_regions_preclude_unique
+#print axioms Conde1963.date_only_precludes_unique_region
+#print axioms Conde1963.surviving_candidates_preclude_unique_after_constraint
+#print axioms Conde1963.witness_and_exhaustive_region_bound_imply_unique
+#print axioms Conde1963.shared_chain_is_not_independent
+#print axioms Conde1963.radio_reprint_is_not_independent
+
+#print axioms Conde1963.same_observation_precludes_total_region_decoder
+#print axioms Conde1963.day_only_precludes_total_region_decoder
+
+#print axioms Conde1963.narrowing_never_adds_parameters
+#print axioms Conde1963.contradiction_has_no_candidate
+#print axioms Conde1963.exclusion_persists_under_consistent_narrowing
+#print axioms Conde1963.unique_impact_entails_window
+#print axioms Conde1963.counterexample_refutes_forced_conde
+
+#print axioms Conde1963.source_narrowing_never_adds_parameters
+#print axioms Conde1963.forced_and_excluded_conde_conflict
+
+#print axioms Conde1963.filter_grid_never_creates_candidates
+
+#print axioms Conde1963.nasa_record_states_november_eighth
+#print axioms Conde1963.nasa_c131_c197_not_independent
+#print axioms Conde1963.nasa_two_citations_one_conditional_equation
+#print axioms Conde1963.nasa_documentary_record_does_not_identify_region
+#print axioms Conde1963.reported_day_does_not_prove_actual_day
+#print axioms Conde1963.nasa_hypothetical_rule_accepts_illustrative_examples
+#print axioms Conde1963.nasa_hypothetical_rule_rejects_illustrative_off_day
+
+#print axioms Conde1963.evidence_matrix_row_count
+#print axioms Conde1963.nasa_matrix_rows_explicitly_mark_uncertainty
+#print axioms Conde1963.tupi_report_is_not_ground_observation
+#print axioms Conde1963.every_row_is_nonphysical_without_additional_premises
+#print axioms Conde1963.full_matrix_does_not_identify_region
+
+#print axioms Conde1963.non_admitted_source_does_not_narrow
+#print axioms Conde1963.repeated_filter_preserves_domain
+#print axioms Conde1963.repeated_filter_not_strict
+#print axioms Conde1963.witnessed_filter_strictly_reduces
+#print axioms Conde1963.nasa_double_citation_not_strict
+#print axioms Conde1963.contrary_impact_witnesses_refute_decisive_conde
+#print axioms Conde1963.forcing_persists_under_consistent_narrowing
+
+#print axioms Conde1963.nasa_catalogue_is_not_a_hard_physical_filter
+#print axioms Conde1963.contrasting_candidates_preclude_forced_day
+#print axioms Conde1963.forces_and_excludes_day_are_incompatible
+#print axioms Conde1963.nasa_documentary_record_leaves_actual_day_underdetermined
+#print axioms Conde1963.matrix_does_not_force_nasa_reported_day
+
+-- Five conditional outcomes: proof obligations, not physical predictions.
+#print axioms Conde1963.other_window_conditionally_excludes_conde
+#print axioms Conde1963.other_window_and_forced_conde_conflict
+#print axioms Conde1963.other_window_persists_under_consistent_narrowing
+#print axioms Conde1963.mixed_outcomes_refute_both_decisive_conde_claims
+#print axioms Conde1963.contradictory_premises_preclude_decisive_classifications
+#print axioms Conde1963.grid_witness_implies_global_witness
+#print axioms Conde1963.grid_empty_does_not_mean_contradictory_premises
+#print axioms Conde1963.no_predicted_impact_excludes_conde_but_identifies_no_other_window
+
+-- Simulator ↔ Lean bridge: provenance gates and exact sample invariants only.
+#print axioms Conde1963.synthetic_terminal_geometry_cannot_certify_history
+#print axioms Conde1963.retrospective_sgp4_cannot_certify_history
+#print axioms Conde1963.absent_independent_holdout_precludes_history
+#print axioms Conde1963.numerical_agreement_does_not_replace_input_custody
+#print axioms Conde1963.altitude_threshold_not_ground_impact
+#print axioms Conde1963.missing_survival_model_not_ground_impact
+#print axioms Conde1963.castor_current_declared_status_blocks_historical_claim
+#print axioms Conde1963.castor_current_threshold_blocks_ground_impact
+#print axioms Conde1963.countWithin_monotone
+#print axioms Conde1963.countWithin_bounded_by_sample_size
+#print axioms Conde1963.cumulative_radii_monotone
+#print axioms Conde1963.scaled_drag_power_nonpositive
+
+-- Formal error envelopes: claims remain conditional on a justified numerical gate.
+#print axioms Conde1963.covered_envelope_excludes_conde
+#print axioms Conde1963.covered_envelope_forces_conde
+#print axioms Conde1963.covered_envelope_identifies_other_window
+#print axioms Conde1963.overlap_refutes_uniform_envelope_separation
+#print axioms Conde1963.missing_ground_audit_blocks_enclosure_exclusion
+#print axioms Conde1963.castor_declared_audit_blocks_enclosure_exclusion
+#print axioms Conde1963.finite_sample_nonimpact_does_not_exclude_globally
+
+-- Disjunctive unresolved orbital element scenarios (C25/C179; not original TLEs).
+#print axioms Conde1963.left_branch_in_alternatives
+#print axioms Conde1963.right_branch_in_alternatives
+#print axioms Conde1963.alternative_iff_either_branch
+#print axioms Conde1963.alternative_has_candidate_iff_branches
+#print axioms Conde1963.alternatives_empty_iff_both_branches_empty
+#print axioms Conde1963.alternative_common_narrowing
+#print axioms Conde1963.alternative_common_narrowing_requires_witness
+#print axioms Conde1963.branches_force_alternative
+#print axioms Conde1963.branches_exclude_alternative
+#print axioms Conde1963.conflicting_branch_witnesses_leave_alternative_indeterminate
+#print axioms Conde1963.intersecting_alternatives_can_falsely_erase_all_candidates
+
+-- Error envelopes across disjoint unresolved source scenarios: no physical location inferred.
+#print axioms Conde1963.covered_alternative_envelope_excludes_conde
+#print axioms Conde1963.covered_alternative_envelope_forces_conde
+#print axioms Conde1963.covered_alternative_envelope_identifies_other_window
+#print axioms Conde1963.alternative_enclosure_exclusion_persists_with_witness
+#print axioms Conde1963.alternative_enclosure_forcing_persists_with_witness
+#print axioms Conde1963.alternative_enclosure_other_window_persists_with_witness
+#print axioms Conde1963.proven_empty_right_branch_allows_left_exclusion
+#print axioms Conde1963.opposing_branch_witnesses_block_gated_verdicts
+#print axioms Conde1963.missing_ground_audit_blocks_all_alternative_verdicts
+#print axioms Conde1963.castor_declared_audit_blocks_all_alternative_verdicts
+
+-- Exhaustive-domain proof obligation versus sampled finite screens.
+#print axioms Conde1963.passing_iff_sampled_admissible
+#print axioms Conde1963.passing_witness_proves_global_nonempty
+#print axioms Conde1963.empty_passing_implies_empty_domain_with_coverage
+#print axioms Conde1963.passing_never_creates_parameter
+#print axioms Conde1963.exhaustive_empty_right_screen_eliminates_right_branch
+#print axioms Conde1963.exhaustive_right_screen_licenses_left_exclusion
+#print axioms Conde1963.empty_sample_does_not_eliminate_unseen_branch
+
+-- Finite cell coverings of continuous parameters: not finite point-grid completeness.
+#print axioms Conde1963.predicted_event_has_certified_cell_bound
+#print axioms Conde1963.nonempty_domain_requires_listed_cell
+#print axioms Conde1963.empty_certified_cells_imply_empty_domain
+#print axioms Conde1963.covered_cells_exclude_conde
+#print axioms Conde1963.covered_cells_force_conde
+#print axioms Conde1963.covered_cells_identify_other_window
+#print axioms Conde1963.cell_cover_survives_common_narrowing
+#print axioms Conde1963.cell_bounds_survive_common_narrowing
+
+-- Jointly sound overlapping cell bounds, with no physical independence inferred.
+#print axioms Conde1963.paired_certified_bounds_for_prediction
+#print axioms Conde1963.paired_enclosures_exclude_conde
+#print axioms Conde1963.paired_enclosures_force_conde
+#print axioms Conde1963.paired_enclosures_identify_other_window
+#print axioms Conde1963.disjoint_paired_bounds_forbid_predicted_impact
+#print axioms Conde1963.incompatible_paired_bounds_refute_universal_impact
+#print axioms Conde1963.paired_bounds_survive_common_narrowing
+
+-- Empirical truth bridge is an additional UNINSTANTIATED premise, not forecast self-soundness.
+#print axioms Conde1963.hypothetical_actual_event_has_certified_cell_bound
+#print axioms Conde1963.certified_truth_excludes_conde
+#print axioms Conde1963.certified_truth_forces_conde
+#print axioms Conde1963.certified_truth_identifies_other_window
+#print axioms Conde1963.certified_truth_exclusion_persists_with_witness
+#print axioms Conde1963.absent_actual_impact_refutes_truth_forcing
+#print axioms Conde1963.self_sound_forecast_does_not_cover_unlinked_reality
+
+-- C241-T10: exact secondary-source RAAN epoch arithmetic, no historical orbit certified.
+#print axioms Conde1963.c241_raan_gap_floor_is_856258
+#print axioms Conde1963.c241_rate_458578_deg_day_cannot_explain
+#print axioms Conde1963.c241_rate_458579_deg_day_passes_numeric_gate
