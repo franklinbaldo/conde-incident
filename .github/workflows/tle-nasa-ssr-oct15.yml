@@ -1,0 +1,58 @@
+name: Tartaruga - C241-L12 NASA SSR Oct 15 primary facsimile
+on:
+  pull_request:
+    paths:
+      - tools/tle_nasa_ssr_oct15_audit.py
+      - tests/test_tle_nasa_ssr_oct15_audit.py
+      - research/tle_custody/nasa_ssr_1963_oct15_C241-L12.json
+      - research/tle_custody/evidence_matrix_C241-L12_2026-11-12.md
+      - .github/workflows/tle-nasa-ssr-oct15.yml
+  push:
+    branches: [main]
+    paths:
+      - tools/tle_nasa_ssr_oct15_audit.py
+      - tests/test_tle_nasa_ssr_oct15_audit.py
+      - research/tle_custody/nasa_ssr_1963_oct15_C241-L12.json
+      - research/tle_custody/evidence_matrix_C241-L12_2026-11-12.md
+      - .github/workflows/tle-nasa-ssr-oct15.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  nasa-ssr-oct15:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify checked-out exact head and synthetic/adversarial tests
+        run: |
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+          python3 -m unittest discover -s tests -p test_tle_nasa_ssr_oct15_audit.py -v
+      - name: Fetch pinned 1963 NASA primary facsimile and audit custody
+        run: |
+          curl --fail --location --silent --show-error --retry 2 --max-time 60 \
+            https://ntrs.nasa.gov/api/citations/19640000428/downloads/19640000428.pdf \
+            -o "$RUNNER_TEMP/19640000428.pdf"
+          python3 tools/tle_nasa_ssr_oct15_audit.py \
+            --ledger research/tle_custody/nasa_ssr_1963_oct15_C241-L12.json \
+            --pdf "$RUNNER_TEMP/19640000428.pdf" --output "$RUNNER_TEMP/c241-l12.json"
+          python3 - "$RUNNER_TEMP/c241-l12.json" <<'PY'
+          import json, sys
+          r = json.load(open(sys.argv[1]))
+          assert r["source_bytes"] == 282624
+          assert len(r["catalog_rows"]) == 3
+          assert r["transcription_verified_by_pixels_in_ci"] is False
+          assert r["historical_tle_available"] is False
+          assert r["observed_terminal_state"] is None
+          assert r["conde_outcome"] == "INDETERMINATE"
+          PY
+      - name: Archive scientific metadata only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: c241-l12-nasa-ssr-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ${{ runner.temp }}/c241-l12.json
+          if-no-files-found: warn
+          retention-days: 30
