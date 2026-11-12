@@ -39,6 +39,9 @@ for (const [index, {name, slug}] of chapters.entries()) {
   const toc = article.split('<nav class="story-toc"')[1]?.split('</nav>')[0] ?? '';
   assert.ok(toc.includes('<details>') && toc.includes('<summary>'),
     'chapter TOC must use native disclosure controls: '+name);
+  const renderedBody = article.split('<div class="story-body">')[1] ?? '';
+  assert.doesNotMatch(renderedBody, /^\s*<h1\b/,
+    'Markdown repeated the page title as a second H1: '+name);
   const targetIds = new Set([...article.matchAll(/<h[2-6]\b[^>]*\bid="([^"]+)"/g)].map(m => m[1]));
   const tocIds = [...toc.matchAll(/href="[^"]*#([^"]+)"/g)].map(m => decodeURIComponent(m[1]));
   assert.ok(tocIds.length > 0, 'chapter TOC missing Markdown heading links: '+name);
