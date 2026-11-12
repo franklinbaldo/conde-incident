@@ -25,6 +25,8 @@ jobs:
           python3 -m unittest discover -s tests -p 'test_provenance_graph.py' -v
           python3 -m unittest discover -s tests -p 'test_documentary_dependence.py' -v
           python3 -m unittest discover -s tests -p 'test_norad_documentary_context.py' -v
+          python3 -m unittest discover -s tests -p 'test_cgeo10_provenance.py' -v
           python3 tools/provenance_graph.py --check-site
           python3 tools/export_documentary_dependence.py --check-site
           python3 tools/export_norad_context.py --check-site
+          python3 tools/export_cgeo10_provenance.py --check-site

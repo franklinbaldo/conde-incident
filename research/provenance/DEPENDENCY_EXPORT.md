@@ -58,3 +58,43 @@ Após alterar os dados curados, regenere o companion com
     python3 tools/export_documentary_dependence.py --write-site
 
 O workflow dedicado no GitHub Actions verifica o SHA exato da PR.
+
+## CGEO-10: ligação retrospectiva, separada da matriz congelada
+
+A [ponte documental CGEO-10](../../public/data/conde-cgeo10-provenance.json)
+é gerada por tools/export_cgeo10_provenance.py, conferindo os **dois
+manifestos** independentes de auditoria de arquivos no repositório, que
+referenciam o **mesmo ZIP IBGE**, e o contrato jurídico CGEO-09. Ela
+identifica a ocorrência complementar
+CGEO-10:CONDE-BA:2908606:SHP-2449, com URL oficial, SHA-256 do ZIP,
+índice SHP/DBF, hash do registro de bytes e hash da geometria extraída.
+Esses hashes possuem **escopos diferentes** e não devem ser igualados.
+
+A cadeia exportada é: ZIP oficial IBGE → método de reconstrução da malha
+anterior a 1991 → registro SHP/DBF Conde/BA → afirmação cartográfica
+CGEO-10 → *proxy* nominal 1960 → **limite jurídico de 1963 pendente**,
+também dependente de CGEO-09 → predicado Lean **condicional não promovido**
+→ parâmetro latente de simulação (null). O ZIP de 1960 foi
+retrospectivamente confeccionado com polígonos posteriores, não é uma
+medição de 1960, nem a fronteira jurídica provada de 08/11/1963.
+A consulta ao espelho Stanford/UTexas não acrescenta testemunha
+independente. Nem a família documental IBGE nem o procedimento de
+reconstrução constituem um novo sensor.
+
+**Não existe ocorrência Cnn adicional na matriz C001–C238**, que
+permanece 241 linhas com snapshot imutável. A ponte declara
+CONNECTED_PENDING_CALIBRATION, lean_status=NOT_PROMOTED,
+simulation_status=CANDIDATE_NOT_ACTIVATED, e quatro condições
+faltantes: atos legais datados e alterações até 1963, limite original
+georreferenciado com incerteza, compatibilidade de datum/frame/época e
+posição independente de um evento. Coordenadas XY nativas
+World_Polyconic não são latitude/longitude.
+
+Reprodução offline, sem novos downloads nem alteração do domínio:
+
+    python3 tools/export_cgeo10_provenance.py --check-site
+    python3 -m unittest discover -s tests -p test_cgeo10_provenance.py -v
+
+Para alterações justificadas na custódia original, regenere com
+--write-site; o workflow documentary-lineage faz verificação
+byte-a-byte do contrato publicado no SHA exato da PR.
