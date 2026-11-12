@@ -1,0 +1,166 @@
+{
+  "schema": "conde.gaviao.retrospective-window/v2",
+  "base_sha": "b653bb56b0f7cbf1caebcaf300bbc6a69ae7fb62",
+  "observed_main_head_sha": "7387a742c097caf31e4f3959415f605023e98571",
+  "observed_main_head_time_utc": "2026-11-12T12:22:48Z",
+  "comparison_status": "ahead",
+  "ahead_by": 8,
+  "behind_by": 0,
+  "completeness_method": "GitHub compare+main first-parent commit list+all closed PRs within interval+per-commit changed file inventories",
+  "closed_without_merge_in_interval": [],
+  "direct_commits_in_interval": [],
+  "entries": [
+    {
+      "pr": 90,
+      "main_sha": "54b640d3b21a8eb0940aa175a3ba387996b5ae87",
+      "parent_main_sha": "b653bb56b0f7cbf1caebcaf300bbc6a69ae7fb62",
+      "pr_head_sha": "43c2c89e44a9d93d89ae33b6b20956cfb5239755",
+      "head_ci_checked_at_sha": "43c2c89e44a9d93d89ae33b6b20956cfb5239755",
+      "reported_successful_workflows": 6,
+      "all_reported_workflows_success": true,
+      "scope": "science-validator",
+      "changed_files": [
+        "formal/scripts/check_cumulative_connections.py",
+        "research/constraints/texugo_negative_controls_2026-11-12.md",
+        "team/memory/texugo/2026-11-12-qa-derived-edges.md",
+        "tests/test_cumulative_constraints.py"
+      ]
+    },
+    {
+      "pr": 92,
+      "main_sha": "e92dca50588789b45264a755bce035ea79aaf201",
+      "parent_main_sha": "54b640d3b21a8eb0940aa175a3ba387996b5ae87",
+      "pr_head_sha": "9ea6bd92f080cc7c5c063d2d615fe9009b9bf76e",
+      "head_ci_checked_at_sha": "9ea6bd92f080cc7c5c063d2d615fe9009b9bf76e",
+      "reported_successful_workflows": 6,
+      "all_reported_workflows_success": true,
+      "scope": "bootstrap-script",
+      "changed_files": [
+        "docs/AGENT_WORKSPACES.md",
+        "scripts/provision-workspaces.test.mjs",
+        "tools/provision_agent_workspaces.py"
+      ]
+    },
+    {
+      "pr": 91,
+      "main_sha": "d8f8e6b6f52f98a0487f5de07fec7b5867d02a0f",
+      "parent_main_sha": "e92dca50588789b45264a755bce035ea79aaf201",
+      "pr_head_sha": "0feedebfb899233967391c76d29ef089b4189046",
+      "head_ci_checked_at_sha": "0feedebfb899233967391c76d29ef089b4189046",
+      "reported_successful_workflows": 6,
+      "all_reported_workflows_success": true,
+      "scope": "retrospective-epistemology",
+      "changed_files": [
+        "research/audits/gaviao-main-window-20261112-0740.json",
+        "research/audits/gaviao-main-window-20261112-0740.md",
+        "scripts/gaviao-retrospective.test.mjs",
+        "src/lib/constants.ts",
+        "team/memory/gaviao/20261112T0740-RO-retrospective-main-checkpoint.md"
+      ]
+    },
+    {
+      "pr": 78,
+      "main_sha": "a835d457ded3c97b315e946bdda464b9894f4102",
+      "parent_main_sha": "d8f8e6b6f52f98a0487f5de07fec7b5867d02a0f",
+      "pr_head_sha": "0210937a2edfe8d3f896548c5ecc1754e7d84f03",
+      "head_ci_checked_at_sha": "0210937a2edfe8d3f896548c5ecc1754e7d84f03",
+      "reported_successful_workflows": 7,
+      "all_reported_workflows_success": true,
+      "scope": "conditional-numerics",
+      "changed_files": [
+        ".github/workflows/orbit-energy-budget.yml",
+        "research/ORBIT_ENERGY_BUDGET.md",
+        "src/lib/orbitEnergyAudit.ts",
+        "team/memory/castor/20261112T1115Z-jacobi-budget-extraction.md",
+        "team/memory/castor/20261112T1205Z-jacobi-refinement-state-consistency.md",
+        "tests/orbitEnergyAudit.test.mjs"
+      ]
+    },
+    {
+      "pr": 94,
+      "main_sha": "e1a3a6690211eb239ec3b0638aace687337dba36",
+      "parent_main_sha": "a835d457ded3c97b315e946bdda464b9894f4102",
+      "pr_head_sha": "8ca488e80f5345689edf9744ed5d3af2b9b7b64b",
+      "head_ci_checked_at_sha": "8ca488e80f5345689edf9744ed5d3af2b9b7b64b",
+      "reported_successful_workflows": 7,
+      "all_reported_workflows_success": true,
+      "scope": "tle-cumulative-graph",
+      "changed_files": [
+        "formal/scripts/check_cumulative_connections.py",
+        "research/constraints/C179_528_TLE_to_nasa_graph.md",
+        "research/constraints/ssr_1963_observable_graph.json",
+        "team/memory/polvo/20261112-c179-tle-graph-handoff.md",
+        "tests/test_cumulative_constraints.py"
+      ]
+    },
+    {
+      "pr": 95,
+      "main_sha": "dea9f84b7bebcd45711aca8a662a10daeda57a9d",
+      "parent_main_sha": "e1a3a6690211eb239ec3b0638aace687337dba36",
+      "pr_head_sha": "738f641ff90605061f22cef6cbaaa8567b189231",
+      "head_ci_checked_at_sha": "738f641ff90605061f22cef6cbaaa8567b189231",
+      "reported_successful_workflows": 7,
+      "all_reported_workflows_success": true,
+      "scope": "archive-coverage",
+      "changed_files": [
+        "research/constraints/igra_bahia_1963_coverage.json",
+        "research/meteorology/igra_bahia_coverage_2026-11-12.md",
+        "team/memory/investigacao-geral/2026-11-12_0808-igra-bahia.md"
+      ]
+    },
+    {
+      "pr": 96,
+      "main_sha": "43356dbedf00ad0efcded2ee46973970f007137e",
+      "parent_main_sha": "dea9f84b7bebcd45711aca8a662a10daeda57a9d",
+      "pr_head_sha": "6acc73d1e90b5d976cc8363ab3b64e54984e1457",
+      "head_ci_checked_at_sha": "6acc73d1e90b5d976cc8363ab3b64e54984e1457",
+      "reported_successful_workflows": 7,
+      "all_reported_workflows_success": true,
+      "scope": "workspace-verification",
+      "changed_files": [
+        "AGENTS.md",
+        "config/agent-roster.json",
+        "docs/AGENT_WORKSPACES.md",
+        "scripts/agent-workspaces.test.mjs"
+      ]
+    },
+    {
+      "pr": 97,
+      "main_sha": "7387a742c097caf31e4f3959415f605023e98571",
+      "parent_main_sha": "43356dbedf00ad0efcded2ee46973970f007137e",
+      "pr_head_sha": "b66d05cb1cab8b12e5667cc50ab98bd35bd91be3",
+      "head_ci_checked_at_sha": "b66d05cb1cab8b12e5667cc50ab98bd35bd91be3",
+      "reported_successful_workflows": 7,
+      "all_reported_workflows_success": true,
+      "scope": "private-workspace-policy",
+      "changed_files": [
+        "AGENTS.md",
+        "scripts/personal-agent-workspaces.test.mjs"
+      ]
+    }
+  ],
+  "epistemic_controls": {
+    "original_NASA_1963_11_15": "Decay date 1963-11-08 only, no terminal hour or location; earlier G15 facsimile review, not independently reopened here",
+    "TLE_528": "Secondary hash-pinned syntax and 1963-10-27 element reference epoch, not original tracking nor independent sensor",
+    "NASA_527_529": "Two tabulated reports with unknown acquisition epochs/error, same upstream lineage; no physical constraints active",
+    "NOAA_IGRA": "Station archive listing directly rechecked 2026-11-12: Recife 1952, Aracaju 1974, Salvador 1970",
+    "GDEX": "Collection metadata only, no station/day 1963 verified",
+    "Lean": "Existing conditional core; no new historical proof in interval; CI green on PR heads",
+    "simulation": "Synthetic Jacobi/RK4 tests, no historical calibration/holdouts, no geographic conclusion",
+    "story": "PR #98 draft checked against NOAA and GDEX; not in main, no publication"
+  },
+  "findings": [
+    {
+      "id": "G16-N1",
+      "severity": "medium",
+      "status": "OPEN_TO_CASTOR_ISSUE_4",
+      "commit": "a835d457ded3c97b315e946bdda464b9894f4102",
+      "path": "src/lib/orbitEnergyAudit.ts",
+      "description": "Refinement trend guard final<=max(limit,1.25*previous) is a tautology whenever finalWithinLimits is true; does not independently enforce decreasing differences.",
+      "reproducer": "prev=0.0001,final=0.9,limit=1 -> both checks true although last difference grew 9000x. This does not invalidate reported synthetic work-balance checks but invalidates the stated independent trend gate."
+    }
+  ],
+  "geographic_conclusion": "INDETERMINATE",
+  "historical_calibration": "NOT_RUN",
+  "physical_domain_reduction": "NOT_DEMONSTRATED"
+}
