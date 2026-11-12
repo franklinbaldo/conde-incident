@@ -35,7 +35,10 @@ A história já chegava à diplomacia acompanhada de uma pergunta incômoda: o q
 
 
 <figure class="story-visual story-diagram">
-  <img src="/conde-incident/img/cadeia-documental-conde.svg" alt="Linha documental: notícia atribuída à Rádio Tupi, monitorada pelo FBIS em 8 de novembro; pedido de confirmação da embaixada em 14 de novembro; resposta consular de 14 de novembro reproduzida em aerograma de 20 de novembro. Esses registros não equivalem a três testemunhas independentes." width="900" height="260" loading="lazy">
+  <picture>
+    <source media="(max-width: 620px)" srcset="/conde-incident/img/cadeia-documental-conde-mobile.svg">
+    <img src="/conde-incident/img/cadeia-documental-conde.svg" alt="Linha documental: notícia atribuída à Rádio Tupi, monitorada pelo FBIS em 8 de novembro; pedido de confirmação da embaixada em 14 de novembro; resposta consular de 14 de novembro reproduzida em aerograma de 20 de novembro. Esses registros não equivalem a três testemunhas independentes." width="900" height="260" loading="lazy">
+  </picture>
   <figcaption><strong>Três registros, uma cadeia de circulação.</strong> As setas indicam uma sequência de documentos e pedidos de verificação, não três observações independentes nem uma trajetória de satélite. Fontes: <a href="https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf">FBIS</a>, <a href="https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D001_Diplomatic-Cable_Brazil_November-14-1963.pdf">telegrama</a> e <a href="https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D002_Diplomatic-Cable_Brazil_November-20-1963.pdf">aerograma</a>.</figcaption>
 </figure>
 
