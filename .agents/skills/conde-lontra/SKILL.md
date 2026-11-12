@@ -1,4 +1,6 @@
 ---
+type: Skill
+title: "Skill do Conde: lontra"
 name: conde-lontra
 description: Inventários de acervos, fac-símiles e metadados no caso Conde, com trabalho independente e proveniência verificável.
 ---
