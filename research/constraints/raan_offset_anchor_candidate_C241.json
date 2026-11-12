@@ -1,0 +1,46 @@
+{
+  "schema": "conde.statistical-prior-bridge/v1",
+  "id": "CERVO-RAAN-ANCHOR-20261112",
+  "status": "CONNECTED_PENDING_EXTERNAL_ANCHOR_AND_CALIBRATION",
+  "classification": "CONDITIONAL_MODEL_NOT_OBSERVED_DATA",
+  "source_occurrences": ["C25#1", "C179#1", "C180#1", "C181#1", "C241-L3"],
+  "source_lineage": "SECONDARY_SPACE_TRACK_MIRROR_SHARED_TRACKING",
+  "source_path": "research/statistics/raan_527_528_529_1963.json",
+  "original_instrumental_source": null,
+  "external_independent_anchor": null,
+  "candidate_variables": [
+    {"id": "r_i", "type": "observed_minus_predicted_circular_angle", "unit": "rad", "observed_value": null},
+    {"id": "H_i(theta)", "type": "orbital_forward_catalog_raan", "unit": "rad", "frame": null},
+    {"id": "b_g", "type": "latent_lineage_offset", "unit": "rad", "prior_family": "von_Mises"},
+    {"id": "mu_g", "type": "offset_prior_circular_mean", "unit": "rad", "observed_value": null},
+    {"id": "lambda_g", "type": "offset_prior_concentration", "unit": "dimensionless", "calibrated_value": null},
+    {"id": "kappa_i", "type": "measurement_error_concentration", "unit": "dimensionless", "calibrated_value": null}
+  ],
+  "conditional_dependencies": [
+    {"from": "SECONDARY_SPACE_TRACK_MIRROR_SHARED_TRACKING", "to": "r_i", "relationship": "derivative_with_unknown_instrumental_lineage"},
+    {"from": "H_i(theta)", "to": "r_i", "relationship": "predicted_catalog_raan_at_observation_epoch"},
+    {"from": "b_g", "to": "r_i", "relationship": "shared_offset_latent_model"},
+    {"from": "mu_g", "to": "b_g", "relationship": "von_mises_prior_location"},
+    {"from": "lambda_g", "to": "b_g", "relationship": "von_mises_prior_concentration"},
+    {"from": "kappa_i", "to": "r_i", "relationship": "conditional_von_mises_error_concentration"}
+  ],
+  "mathematical_identity": "log_I0(norm(lambda_g*exp(i*mu_g)+sum_i kappa_i*exp(i*r_i)))-log_I0(lambda_g)-sum_i log_I0(kappa_i)-n_g*log(2*pi)",
+  "original_haar_recovered_at": {"lambda_g": 0},
+  "anchor_identification_status": "NOT_HISTORICALLY_IDENTIFIED",
+  "missing_bridges": [
+    "original_instrument_frame_and_epoch",
+    "independent_angular_anchor_provenance",
+    "external_prior_strength_calibration",
+    "forward_operator_matching_tle_mean_elements",
+    "temporal_error_dependence_and_selection_process"
+  ],
+  "active_constraint": false,
+  "historical_posterior": null,
+  "feasible_domain_delta": "NOT_EVALUABLE",
+  "new_connectivity": [
+    "circular_prior_anchor_to_lineage_offset",
+    "anchor_strength_to_gauge_identifiability",
+    "external_calibration_dependency_to_candidate_likelihood"
+  ],
+  "related_project_issue": 202
+}
