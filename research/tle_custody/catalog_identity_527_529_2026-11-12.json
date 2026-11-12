@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "capture_date_utc": "2026-11-12",
+  "classification": "TRANSCRIBED_CATALOG_LABELS_NOT_INSTRUMENTAL_RECORDS",
+  "sources": {
+    "itau_527": {
+      "url": "https://www.itau.magnetic-declination.com/satellite/?s=527",
+      "catalog": 527, "international_designator": "1963-003A",
+      "display_name": "FTV 2313", "catalog_class": "payload",
+      "launch_day": "1963-01-16", "decay_day": "1969-01-09",
+      "kind": "MODERN_SECONDARY_CATALOG"
+    },
+    "itau_528": {
+      "url": "https://www.itau.magnetic-declination.com/satellite/?s=528",
+      "catalog": 528, "international_designator": "1963-003B",
+      "display_name": "FTV 2313 DEB", "catalog_class": "satellite debris",
+      "launch_day": "1963-01-16", "decay_day": "1963-11-08",
+      "kind": "MODERN_SECONDARY_CATALOG"
+    },
+    "itau_529": {
+      "url": "https://www.itau.magnetic-declination.com/satellite/?s=529",
+      "catalog": 529, "international_designator": "1963-003C",
+      "display_name": "FTV 2313 DEB", "catalog_class": "satellite debris",
+      "launch_day": "1963-01-16", "decay_day": "1963-12-31",
+      "kind": "MODERN_SECONDARY_CATALOG"
+    },
+    "keeptrack_528": {
+      "url": "https://keeptrack.space/satellite/00528",
+      "catalog": 528, "international_designator": "1963-003B",
+      "display_name": "FTV 2313 DEB", "catalog_class": "debris",
+      "launch_day": "1963-01-16", "decay_day": "1963-11-08",
+      "kind": "MODERN_SECONDARY_AGGREGATOR"
+    },
+    "keeptrack_529": {
+      "url": "https://keeptrack.space/satellite/00529",
+      "catalog": 529, "international_designator": "1963-003C",
+      "display_name": "FTV 2313 DEB", "catalog_class": "debris",
+      "launch_day": "1963-01-16", "decay_day": "1963-12-31",
+      "kind": "MODERN_SECONDARY_AGGREGATOR"
+    }
+  },
+  "primary_date_only_record": {
+    "url": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf",
+    "document_id": "NASA NTRS 19640001198",
+    "publication_date": "1963-11-15",
+    "printed_page": 8,
+    "catalog_designator_printed": "1963 3B",
+    "decay_day": "1963-11-08",
+    "kind": "CONTEMPORARY_PRIMARY_REPORT_OF_CATALOG_DECAY_DAY",
+    "extraction_status": "VISUALLY_REINSPECTED_PDF_PAGE_9_PRINTED_8_2026-11-12",
+    "not_evidence_of": ["material composition", "mass", "fragment geometry", "terminal position", "terminal hour", "impact"]
+  },
+  "provenance": {
+    "same_catalog_lineage_possible": true,
+    "independent_radar_observations_demonstrated": false,
+    "original_1963_line1_line2_for_all_epochs": false,
+    "original_fragment_engineering_record": false,
+    "nro_engineering_identity_or_mass_for_528": "NOT_RECOVERED",
+    "historical_frame_error_and_sensor": "NOT_RECOVERED",
+    "legacy_raan_284_1520_document": "NOT_RECOVERED"
+  },
+  "interpretation": "FTV 2313 DEB e uma etiqueta de catalogo secundario: nao identifica peca, dimensoes, material, massa, origem fisica exata ou objeto recuperado em Conde. 527/528/529 compartilham a designacao de lancamento 1963-003, mas nao constituem tres sensores independentes."
+}
