@@ -168,3 +168,65 @@ research matrix, blob SHA-1 `a7978c3a75a153b16ab70118a92c434bba674cb7`.
 The original historical `Evidence.lean` / 154-proposition ZIP and
 its independent custody hashes remain unavailable: historical import
 **NOT_RUN**.
+
+
+## 🐙 All 241 documentary occurrences tracked (C01–C238)
+
+The **pinned** 2026-11-11 matrix has 238 distinct numeric IDs but **241
+actual Markdown evidence rows**. C44, C45 and C46 each occur twice with
+*different meanings*. Neither deduplication nor arbitrary renumbering is
+acceptable. `Conde1963/MatrixEvidence.lean` retains every exact tuple
+`(labelNumber, occurrence, matrixLine, physicalRole)`, so each item links
+to the primary research *matrix* at pinned commit
+`38ee0f01134f6a1ee07c9346945d058d2ad3ce0b`
+(blob `a7978c3a75a153b16ab70118a92c434bba674cb7`).
+
+Each occurrence is a **traceability record, not a proven measurement**.
+The precise Markdown row and its original described verification/lineage
+remain intact in the source matrix. The JSON export preserves each entire
+row and its section, with a SHA-pinned citation and an explicitly unverified
+status for **new primary-source inspection in this run**:
+
+```bash
+python3 formal/scripts/evidence_registry.py \
+  --check formal/Conde1963/MatrixEvidence.lean \
+  --json /tmp/conde-evidence-contracts.json
+cd formal
+lake build
+lake env lean Conde1963/AxiomAudit.lean
+python3 -m unittest discover -s tests -v
+```
+
+The `conde-evidence-contracts` JSON artifact from GitHub Actions is a typed
+handoff to 🦫 Castor for joining documentary rows to any independently
+verified physical inputs. It contains **241** unambiguous citations and
+source text, with no invented coordinates, timestamps, TLEs or probabilities.
+
+Of those 241 entries, **239 are `contextOnly` as physical constraints**,
+which means *not yet mapped to a justified terminal orbital predicate*,
+**not** unimportant, false or unverified documentary evidence. C131 and
+C197 encode the *same* NASA 1963-003B day-of-decay record as two documentary
+citations but one physical calendar-day predicate, in a stated conditional
+scenario. No source is assumed independent merely because its ID differs.
+The associated Lean theorem
+`full_matrix_has_only_nasa_day_filter` shows that combining all **currently
+accepted, actually encoded** restrictions still yields only that calendar
+day; `full_matrix_does_not_identify_region` therefore rejects inference
+of a unique region from those premises. **This theorem does not assert**
+that the other 239 entries could never constrain a properly calibrated model.
+
+Promoting further rows requires a separate evidential review: direct
+inspection of an original, instrument/epoch/units, lineage, quantitative
+mapping with errors, nonempty and reduced feasible domain, coupled physical
+simulation with holdouts, and a new reviewed Lean predicate. Documentary
+date is not impact date; a recorded decay is not a crater. Results
+`CONDE_EXCLUDED`, `CONDE_FORCED`, `OTHER_WINDOW`,
+`INDETERMINATE` or `CONTRADICTORY_PREMISES` remain conditional
+classifications, not claimed findings here.
+
+**Negative results:** full original Lean ZIP (`Evidence.lean`, 154
+propositions / 151 labels and generator) remains unavailable; import
+`NOT_RUN`. No original 1963 facsimile was reinspected for this registry;
+historical source authentication `NOT_RUN`. Physical orbit holdouts and
+ground-impact determination `NOT_RUN`. CI validates ID preservation,
+regression logic, generated contracts and conditional proof kernel only.
