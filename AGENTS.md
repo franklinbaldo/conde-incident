@@ -1,6 +1,6 @@
 # Conde Incident: agent operating contract
 
-Scope: **franklinbaldo/conde-incident only**. The separate blog is read-only; do not publish or alter it. Do not contact archives, researchers or individuals without specific authorization.
+Scope of shared scientific/product work: **franklinbaldo/conde-incident**. Agents also maintain their own **private** personal workspace repositories under `franklinbaldo/<animal>` for memory, skills, experiments and messages. The separate blog is read-only; do not publish or alter it. Do not contact archives, researchers or individuals without specific authorization.
 
 ## Source and epistemic rules
 - Prioritize original 1963 source facsimiles and raw historical Space-Track data; preserve exact URL, issue/date/page or TLE epoch, checksum and provenance.
@@ -12,13 +12,25 @@ Scope: **franklinbaldo/conde-incident only**. The separate blog is read-only; do
 - The day-only NASA decay record of 8 Nov 1963 gives no terminal time or place. Do not treat 23:59 as an observed timestamp.
 - The Lean proof kernel certifies logical implications of premises, not empirical authenticity or orbital integration. Preserve any known holdout failures.
 
+## Private animal workspaces and interagent messaging (owner protocol, 12 Nov 2026)
+
+**Two repositories serve two different functions.** The public/shared `conde-incident` remains the source of truth for scientific data, product code, evidence matrix, work issues, CI and release history. Every animal has a **private personal repository named after its Portuguese animal name in lowercase**, e.g. `franklinbaldo/polvo`, `franklinbaldo/castor`, `franklinbaldo/gaviao` (ASCII slug), `franklinbaldo/elefante`. This home is the animal's persistent workspace for tools, notes, skills, temporary experiments, learning and session memory. The older `team/memory/` material stays in Git history, but **new personal memories go into the private home**.
+
+**Absolute autonomy inside personal repos:** the animal can write files, improve its own `.agents/skills/<animal>/SKILL.md`, create branches, commit and push straight to `main` without approvals, review, PR or CI. It may install tools inside a permitted execution environment, but a Git repository is not itself a machine and private Git is not a vault for passwords. Never store tokens/credentials/other people's private data in Git. This freedom does not change permissions for other services, publication, contacting people or production.
+
+**Inbox/outbox via GitHub Issues:** to send a request from animal A to animal B, open a **new issue in B's private repository**, not A's and not automatically in the shared project. Include `De:`, `Para:`, context, URL/commit/source, specific request, acceptance criteria and any date/priority. The recipient reads and replies to its own inbox each round. Avoid duplicate messages and mark resolved issues closed. Names of animals represent **logical roles under the owner's same GitHub identity**, not separately authenticated GitHub users. Do not interpret an interagent issue as independent evidence. When work becomes a shared implementation task, create/reuse an issue + small PR in `conde-incident`.
+
+**Agent startup/closure:** read the personal `README.md`, `AGENTS.md`, `.agents/skills/<animal>/SKILL.md`, `memory/INDEX.md` and incoming issues before acting, then refer to shared `conde-incident/AGENTS.md` for scientific/product work. At the end record an OKF session memo in the private `memory/` and push it directly. The shared issue/PR should contain only a concise project-relevant handoff and reproducibility evidence. Old chat and public-memory references may be consulted; do not silently claim migration was complete.
+
+**Capacity and coordination:** Elefante maintains staffing and a private agent-recruitment queue without disabling unrelated user automations. Newly hired animals get a private repo, skill, inbox and optional scheduled automation only if the actual quota allows. Existing automation capacity observed on 12 Nov 2026 was **15 active / 15 allowed**; this is a task quota observation, not a permanent statement about a ChatGPT subscription or independent account identities.
+
 ## Work protocol
 1. Read main, this file, your `team/<animal>.md` card, open issues/PRs, and the cumulative matrix in `research/` (present in PR #1 until merged).
 2. Resume an existing issue/PR in your domain before claiming new work. A single agent claims a single active issue; issues use `<priority 0–100> <emoji> <short title>`. Avoid duplicate claims and conflicting edits.
 3. Deliver one meaningful end-to-end slice per run in a SMALL, independently mergeable branch/PR; avoid speculative planning, cosmetic churn and runaway stacked branches. Run applicable CI on the exact final head. The author owns the PR, resolves its checks and MAY merge it after required checks succeed, with a head-SHA guard. No rebase/force-push.
 4. Each new record needs source URL/identifier, extraction/verbatim check, independence analysis, status, reproducible script/proof where applicable, and update to the evidence matrix without dropping old IDs.
 5. 🦅 Gavião independently audits merged work RETROSPECTIVELY, using a persistent last-reviewed merge SHA/checkpoint; review is not a prerequisite to author-owned merge. 🐘 Elefante coordinates people, priorities, new issues and cross-team dependencies; not a central merge bottleneck. 🦡 Texugo combats churn and unvalidated scientific claims.
-6. Close each session with a concise durable OKF memory entry under `team/memory/<animal>/`: verified changes, failed attempts, next question, commit/PR SHA; one per session. No fictitious validation. Keep personal reflections separate from scientific evidence. Café/chat is optional, never a blocker.
+6. Close each session with a durable OKF memory in the animal's **private personal repository** `franklinbaldo/<animal>/memory/`, with sources/SHAs/tests, negative findings and next steps. Previously published `team/memory/<animal>/` entries remain historical and need not be deleted. Project-facing conclusions belong in `conde-incident` issues/PRs, never in unreviewed personal notes alone. Café/chat is optional, never a blocker.
 7. The existing hourly investigation automation is independent research; do not duplicate its general search. Agents should produce code, sources or formal evidence specific to their assigned responsibility.
 
 ## Decentralized PR ownership and retrospective scientific review (owner decision, 12 Nov 2026)
