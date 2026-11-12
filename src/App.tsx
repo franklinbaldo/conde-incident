@@ -86,7 +86,7 @@ export default function App() {
       />
 
       {/* Main Content Body */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-6" id="main-content">
+      <main tabIndex={-1} className="flex-1 max-w-7xl w-full mx-auto px-4 py-6" id="main-content">
         {route.invalidHash !== null && (
           <p role="status" aria-live="polite" className="mb-5 rounded-md border border-amber-700 bg-amber-950/40 p-3 text-sm text-amber-100">
             {lang === 'pt'
