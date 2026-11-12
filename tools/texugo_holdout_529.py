@@ -401,6 +401,138 @@ def rolling_origin_diagnostics(rows: list[Observation]) -> dict:
                               "join later training. Not physical orbit, p-value or impact inference."}
 
 
+
+
+def rolling_tail_sensitivity_diagnostics(rolling: dict) -> dict:
+    """Paired post-hoc target deletions; NO refitting or independence claim.
+
+    Unlike training-epoch exclusions, these remove *scored target epochs*.
+    The same six forecasts remain fixed. Every candidate is evaluated on
+    exactly the same remaining targets, including overlapping 28-day blocks.
+    """
+    steps = rolling.get("steps", [])
+    selected = [s for s in steps if s["status"] != "NOT_RUN"]
+    if not selected:
+        return {"status": "NOT_RUN", "reason": "no paired next-epoch forecasts",
+                "no_probability": True}
+    if any(s["status"] != "EVALUATED_RETROSPECTIVE_PREQUENTIAL" for s in selected):
+        raise ValueError("tail sensitivity: unknown scored status")
+    declared = rolling.get("pooled_rmse_rev_day")
+    required = {"quadratic_529_only", "shared_curvature_527_528_to_529",
+                "persistence_529_last_epoch"}
+    if not declared or not required.issubset(declared):
+        raise ValueError("tail sensitivity: missing paired benchmark models")
+    names = tuple(declared)
+    scores = []
+    seen = set()
+    for step in selected:
+        epoch = utc(step["target_epoch_utc"])
+        if epoch in seen:
+            raise ValueError("tail sensitivity: duplicated scored target epoch")
+        seen.add(epoch)
+        errors = step.get("error_rev_day", {})
+        if set(errors) != set(names) or not all(
+                isinstance(errors[k], (int, float)) and math.isfinite(errors[k])
+                for k in names):
+            raise ValueError("tail sensitivity: nonfinite or unpaired errors")
+        if not isinstance(step.get("horizon_days"), (int, float)) or (
+                not math.isfinite(step["horizon_days"]) or step["horizon_days"] <= 0):
+            raise ValueError("tail sensitivity: invalid time horizon")
+        scores.append((epoch, errors))
+    if len(scores) != rolling.get("scored_distinct_targets"):
+        raise ValueError("tail sensitivity: scored inventory differs from rolling origin")
+    n = len(scores)
+    mae = {}
+    medae = {}
+    top_sse_share = {}
+    top_sse_epoch = {}
+    for name in names:
+        absolute = sorted(abs(e[name]) for _, e in scores)
+        mae[name] = math.fsum(absolute) / n
+        mid = n // 2
+        medae[name] = (absolute[mid] if n % 2 else
+                       (absolute[mid - 1] + absolute[mid]) / 2)
+        sse = [e[name] ** 2 for _, e in scores]
+        total = math.fsum(sse)
+        recomputed_rmse = math.sqrt(total / n)
+        if not math.isclose(recomputed_rmse, declared[name], rel_tol=1e-9, abs_tol=1e-10):
+            raise ValueError("tail sensitivity: inconsistent pooled RMSE")
+        dominant = max(range(n), key=lambda i: sse[i])
+        top_sse_share[name] = sse[dominant] / total if total else 0.0
+        top_sse_epoch[name] = scores[dominant][0].isoformat() if total else None
+
+    baseline = "quadratic_529_only"
+    joint = "shared_curvature_527_528_to_529"
+
+    def winner(survivors: list[tuple]) -> str:
+        if not survivors:
+            return "NOT_RUN"
+        b = math.sqrt(math.fsum(e[baseline] ** 2 for _, e in survivors) / len(survivors))
+        j = math.sqrt(math.fsum(e[joint] ** 2 for _, e in survivors) / len(survivors))
+        return ("JOINT_BETTER" if j < b - 1e-10 else
+                "BASELINE_BETTER" if b < j - 1e-10 else "TIE")
+
+    original = winner(scores)
+    single = []
+    for i, (epoch, _) in enumerate(scores):
+        verdict = winner(scores[:i] + scores[i + 1:])
+        single.append((epoch, verdict))
+    from datetime import timedelta
+    calendar = []
+    for anchor, _ in scores:
+        remain = [(t, e) for t, e in scores
+                  if not (anchor <= t < anchor + timedelta(days=28))]
+        calendar.append((anchor, n - len(remain), winner(remain)))
+    paired_deltas = [(epoch, e[joint] ** 2 - e[baseline] ** 2) for epoch, e in scores]
+    delta_abs_sum = math.fsum(abs(delta) for _, delta in paired_deltas)
+    leaders = sorted(paired_deltas, key=lambda item: abs(item[1]), reverse=True)[:3]
+    return {
+        "status": "EVALUATED_POST_HOC_PAIRED_DELETIONS",
+        "scored_distinct_target_epochs": n,
+        "original_joint_vs_quadratic": original,
+        "model_mae_rev_day": mae,
+        "model_median_absolute_error_rev_day": medae,
+        "largest_one_target_sse_fraction_by_model": top_sse_share,
+        "largest_one_target_sse_epoch_utc_by_model": top_sse_epoch,
+        "paired_joint_minus_quadratic_total_sse": math.fsum(d for _, d in paired_deltas),
+        "top_three_absolute_paired_sse_contributors": [
+            {"target_epoch_utc": epoch.isoformat(),
+             "joint_minus_quadratic_squared_error": delta,
+             "fraction_of_absolute_paired_sse_differences":
+                 abs(delta) / delta_abs_sum if delta_abs_sum else 0.0}
+            for epoch, delta in leaders],
+        "single_scored_target_deletion": {
+            "evaluated": sum(verdict != "NOT_RUN" for _, verdict in single),
+            "not_run": sum(verdict == "NOT_RUN" for _, verdict in single),
+            "ranking_changes": sum(verdict != original and verdict != "NOT_RUN"
+                                   for _, verdict in single),
+            "first_three_changes": [
+                {"removed_target_epoch_utc": epoch.isoformat(), "remaining_winner": verdict}
+                for epoch, verdict in single if verdict != original and verdict != "NOT_RUN"
+            ][:3],
+        },
+        "forward_28_day_scored_target_block_deletion": {
+            "calendar_anchors": len(calendar),
+            "evaluated": sum(verdict != "NOT_RUN" for _, _, verdict in calendar),
+            "not_run": sum(verdict == "NOT_RUN" for _, _, verdict in calendar),
+            "ranking_changes": sum(verdict != original and verdict != "NOT_RUN"
+                                   for _, _, verdict in calendar),
+            "first_three_changes": [
+                {"block_start_utc": anchor.isoformat(),
+                 "removed_targets": removed, "remaining_winner": verdict}
+                for anchor, removed, verdict in calendar
+                if verdict != original and verdict != "NOT_RUN"
+            ][:3],
+        },
+        "training_refit_performed": False,
+        "independent_replications_established": False,
+        "prospective_validation_established": False,
+        "no_probability": True,
+        "interpretation": "Post-hoc loss concentration and paired target deletions from "
+                          "one secondary TLE lineage. Overlapping blocks are not independent "
+                          "trials; no physical reconstruction, p-value or impact inference.",
+    }
+
 def run(rows: list[Observation]) -> dict:
     results = [evaluate(rows, date) for date in CUTOFFS]
     return {
@@ -413,6 +545,7 @@ def run(rows: list[Observation]) -> dict:
         "holdout_overlap": overlap_diagnostics(rows, results),
         "disjoint_holdout": disjoint_horizon_diagnostics(rows, results),
         "rolling_origin_holdout": rolling_origin_diagnostics(rows),
+        "rolling_tail_sensitivity": rolling_tail_sensitivity_diagnostics(rolling_origin_diagnostics(rows)),
     }
 
 def main() -> None:

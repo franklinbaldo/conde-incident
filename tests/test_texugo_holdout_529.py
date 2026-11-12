@@ -277,5 +277,79 @@ class RollingOriginNegativeControls(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "duplicadas"):
             rolling_origin_diagnostics(rows + [rows[-1]])
 
+
+
+class RollingTailSensitivityControls(unittest.TestCase):
+    """All constructed observations/errors are SYNTHETIC, not NORAD 1963 data."""
+
+    def test_reconstructs_paired_score_and_medians_without_extra_holdout(self):
+        from texugo_holdout_529 import rolling_tail_sensitivity_diagnostics
+        rolling = run(samples())["rolling_origin_holdout"]
+        report = rolling_tail_sensitivity_diagnostics(rolling)
+        self.assertEqual(report["status"], "EVALUATED_POST_HOC_PAIRED_DELETIONS")
+        self.assertEqual(report["scored_distinct_target_epochs"],
+                         rolling["scored_distinct_targets"])
+        self.assertEqual(report["single_scored_target_deletion"]["evaluated"],
+                         rolling["scored_distinct_targets"])
+        self.assertEqual(report["forward_28_day_scored_target_block_deletion"]["calendar_anchors"],
+                         rolling["scored_distinct_targets"])
+        self.assertEqual(set(report["model_mae_rev_day"]),
+                         set(rolling["pooled_rmse_rev_day"]))
+        self.assertFalse(report["independent_replications_established"])
+        self.assertFalse(report["training_refit_performed"])
+        self.assertTrue(report["no_probability"])
+
+    def test_one_extreme_target_can_flip_pairwise_rmse_and_calendar_block(self):
+        # Quadratic loses pooled (one huge mistake), but wins after one target
+        # is removed. The joint model wins pooled and loses in a 28-day deletion.
+        from texugo_holdout_529 import rolling_tail_sensitivity_diagnostics
+        values = [("1963-01-01T00:00:00Z", 10.0, 0.0),
+                  ("1963-01-15T00:00:00Z", 0.0, 1.0),
+                  ("1963-02-01T00:00:00Z", 0.0, 1.0),
+                  ("1963-02-15T00:00:00Z", 0.0, 1.0)]
+        steps = [{
+            "status": "EVALUATED_RETROSPECTIVE_PREQUENTIAL",
+            "target_epoch_utc": epoch, "horizon_days": 1.0,
+            "error_rev_day": {
+                "quadratic_529_only": base,
+                "shared_curvature_527_528_to_529": joint,
+                "persistence_529_last_epoch": 0.0}
+        } for epoch, base, joint in values]
+        rolling = {"steps": steps, "scored_distinct_targets": 4,
+                   "pooled_rmse_rev_day": {
+                       "quadratic_529_only": 5.0,
+                       "shared_curvature_527_528_to_529": (3 / 4) ** 0.5,
+                       "persistence_529_last_epoch": 0.0}}
+        result = rolling_tail_sensitivity_diagnostics(rolling)
+        self.assertEqual(result["original_joint_vs_quadratic"], "JOINT_BETTER")
+        self.assertEqual(result["single_scored_target_deletion"]["ranking_changes"], 1)
+        self.assertGreaterEqual(
+            result["forward_28_day_scored_target_block_deletion"]["ranking_changes"], 1)
+        self.assertEqual(result["largest_one_target_sse_fraction_by_model"]["quadratic_529_only"], 1.0)
+        self.assertEqual(
+            result["top_three_absolute_paired_sse_contributors"][0]["target_epoch_utc"],
+            "1963-01-01T00:00:00+00:00")
+
+    def test_not_run_and_duplicate_or_malformed_scores_fail_closed(self):
+        from texugo_holdout_529 import rolling_tail_sensitivity_diagnostics
+        blank = {"steps": [{"status": "NOT_RUN"}], "scored_distinct_targets": 0,
+                 "pooled_rmse_rev_day": None}
+        self.assertEqual(rolling_tail_sensitivity_diagnostics(blank)["status"], "NOT_RUN")
+        rolling = run(samples())["rolling_origin_holdout"]
+        valid = next(step for step in rolling["steps"] if step["status"] != "NOT_RUN")
+        duplicate = {**rolling, "steps": [valid, valid], "scored_distinct_targets": 2}
+        with self.assertRaisesRegex(ValueError, "duplicated"):
+            rolling_tail_sensitivity_diagnostics(duplicate)
+        broken = {**rolling, "steps": [
+            {**valid, "error_rev_day": {**valid["error_rev_day"],
+                 "quadratic_529_only": float("nan")}}], "scored_distinct_targets": 1}
+        with self.assertRaisesRegex(ValueError, "nonfinite"):
+            rolling_tail_sensitivity_diagnostics(broken)
+        malformed = {**rolling, "pooled_rmse_rev_day": {
+            **rolling["pooled_rmse_rev_day"], "quadratic_529_only": 0}}
+        with self.assertRaisesRegex(ValueError, "inconsistent pooled"):
+            rolling_tail_sensitivity_diagnostics(malformed)
+
+
 if __name__ == "__main__":
     unittest.main()
