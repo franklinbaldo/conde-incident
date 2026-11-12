@@ -29,5 +29,15 @@ for(const name of readdirSync('stories').filter(s=>/^\d{4}-\d{2}-\d{2}-.+\.md$/.
   assert.ok(article.includes('https://') && source.includes('https://'),'Sem referência externa: '+slug);
   chapters++;
 }
+
+const chapter03=read('stories/2026-11-12-a-resposta-que-veio-de-salvador/index.html');
+assert.match(chapter03,/<figure\b/i,'Capítulo 03 sem figuras incorporadas');
+assert.match(chapter03,/<iframe\b[^>]*src=[\"']https:\/\/www\.openstreetmap\.org\/export\/embed/i,'Mapa ausente no HTML final');
+assert.match(chapter03,/<iframe\b[^>]*src=[\"']https:\/\/media\.ondisclosure\.org\/[^\s\"']+\.pdf/i,'Documento PDF não incorporado');
+assert.match(chapter03,/cadeia-documental-conde\.svg/,'Diagrama ausente');
+assert.match(chapter03,/frame-src[^<]*www\.openstreetmap\.org/,'CSP impede mapa incorporado');
+assert.match(chapter03,/frame-src[^<]*media\.ondisclosure\.org/,'CSP impede documento incorporado');
+assert.ok(existsSync('public/img/cadeia-documental-conde.svg'),'Asset do diagrama não copiado');
+
 assert.ok(chapters>0,'Nenhuma reportagem renderizada');
 console.log('PASS: '+chapters+' capítulos, índice, CSS, laboratório e rotas GitHub Pages.');
