@@ -99,6 +99,41 @@ test('unknown, stale and source-mismatched genealogy never silently attaches to 
   assert.equal(isDeclaredDependenceFeed(malformed), false);
 });
 
+test('C232#1 binds each curated document to its OWN lineage by (snapshot, source)', () => {
+  const context = citationContext(feed, 'C232#1');
+  assert.equal(context.state, 'mapped');
+  assert.deepEqual(context.records.map((row) => row.source_id), [
+    'BLUEBOOK_CASES_INDEX_1963', 'NARA_BB_CARD_302531013',
+  ]);
+  const index = declaredLineageContext(dependence, feed, context.records[0]);
+  const card = declaredLineageContext(dependence, feed, context.records[1]);
+  assert.equal(index.state, 'declared');
+  assert.deepEqual(index.paths, []);
+  assert.equal(card.state, 'declared');
+  assert.deepEqual(card.paths.map((p) => p.upstream_source_id), ['NARA_BB_UNIT_302531012']);
+  assert.equal(card.paths[0].edges[0].kind, 'part_of_archival_unit');
+  assert.notEqual(context.records[0].work_id, context.records[1].work_id);
+  assert.ok(context.records.every((r) => r.not_a_verified_conde_physical_event));
+  assert.equal(dependence.epistemic_limits.independent_physical_observation_count, null);
+});
+
+test('duplicate and swapped multi-source lineage is rejected, not promoted', () => {
+  const { records } = citationContext(feed, 'C232#1');
+  const index = dependence.citation_lineages.find((r) =>
+    r.source_id === 'BLUEBOOK_CASES_INDEX_1963' && r.snapshot_ref.endsWith('C232#1'));
+  const card = dependence.citation_lineages.find((r) =>
+    r.source_id === 'NARA_BB_CARD_302531013' && r.snapshot_ref.endsWith('C232#1'));
+  assert.ok(index && card);
+  const duplicated = { ...dependence, citation_lineages: [
+    ...dependence.citation_lineages, { ...card },
+  ] };
+  assert.equal(declaredLineageContext(duplicated, feed, records[1]).state, 'source-mismatch');
+  const swapped = { ...dependence, citation_lineages: dependence.citation_lineages.map((r) =>
+    r === card ? { ...r, family_id: index.family_id } : r),
+  };
+  assert.equal(declaredLineageContext(swapped, feed, records[1]).state, 'source-mismatch');
+});
+
 test('archive UI loads optional companion with accessible ancestry and unknown state', () => {
   assert.match(component, /conde-declared-dependence\.json/);
   assert.match(component, /isDeclaredDependenceFeed/);

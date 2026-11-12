@@ -51,11 +51,12 @@ export function isCitationFeed(value: unknown): value is CitationFeed {
 export function citationContext(feed: CitationFeed, input: string) {
   const occurrence = normalizeOccurrence(input);
   if (!occurrence) return { state: 'invalid' as const };
-  const record = feed.records.find((item) => item.occurrence === occurrence);
+  const records = feed.records.filter((item) => item.occurrence === occurrence);
+  const record = records[0];
   if (!record) return { state: 'unmapped' as const, occurrence };
   // A work can yield multiple matrix citations, but is NOT several witnesses.
   const sameWork = feed.records.filter((item) => item.work_id === record.work_id);
-  return { state: 'mapped' as const, occurrence, record, sameWork };
+  return { state: 'mapped' as const, occurrence, record, records, sameWork };
 }
 
 // The curated citation feed pins original matrix Git blob a7978c3a75a153b16ab70118a92c434bba674cb7.
@@ -126,11 +127,15 @@ export function declaredLineageContext(
     return { state: 'snapshot-mismatch' as const };
   }
   const snapshotRef = `matrix:${citations.matrix_git_blob_sha1}:${citation.occurrence}`;
-  const record = dependence.citation_lineages.find((item) => item.snapshot_ref === snapshotRef);
-  if (!record) return { state: 'unmapped' as const };
-  // Reject a misjoined row rather than displaying another document's ancestry.
-  if (record.source_id !== citation.source_id || record.family_id !== citation.source_family) {
+  const candidates = dependence.citation_lineages.filter((item) => item.snapshot_ref === snapshotRef);
+  if (!candidates.length) return { state: 'unmapped' as const };
+  // One matrix occurrence may cite several independent *documents*, not
+  // independent physical witnesses (C232#1 has both an index and a NARA card).
+  // Never join a citation to the ancestry of whichever source occurs first.
+  const matches = candidates.filter((item) => item.source_id === citation.source_id);
+  if (matches.length !== 1 || matches[0].family_id !== citation.source_family) {
     return { state: 'source-mismatch' as const };
   }
+  const record = matches[0];
   return { state: 'declared' as const, paths: record.declared_upstream_paths, sourceId: record.source_id };
 }
