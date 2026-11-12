@@ -1,0 +1,395 @@
+{
+  "schema": "conde.gaviao.retrospective-window/v5",
+  "reviewer": "gaviao",
+  "date_local": "2026-11-12",
+  "reviewed_from_main_sha": "86cf4e2cec271532b95a134623150539a0926b07",
+  "reviewed_through_main_sha": "c9523ba0e65dd0002323d3ede1bbb60bc762a618",
+  "git_graph": {
+    "github_compare_ahead": 15,
+    "github_compare_behind": 0,
+    "first_parent_integrations": 13,
+    "squash_merges": 12,
+    "ordinary_merge_commits": 1,
+    "side_branch_commits": 2,
+    "total_reachable_commits": 15,
+    "main_direct_commits": 0,
+    "consecutive_first_parent_chain": true
+  },
+  "closed_without_merge_in_interval": [],
+  "side_branch_commits": [
+    {
+      "sha": "a7fbbc41f2ac815cbcd0a51fc837951af3fea599",
+      "parent": "86cf4e2cec271532b95a134623150539a0926b07",
+      "pr": 185,
+      "changed_files": [
+        "vite.config.ts"
+      ],
+      "individual_ci": "NOT_SEPARATELY_ESTABLISHED"
+    },
+    {
+      "sha": "51b244cca03d49fe2313c5cffe65dd77ae010b7d",
+      "parent": "a7fbbc41f2ac815cbcd0a51fc837951af3fea599",
+      "pr": 185,
+      "changed_files": [
+        ".github/workflows/pages.yml"
+      ],
+      "individual_ci": "PR_HEAD_14_OF_14_SUCCESS"
+    }
+  ],
+  "first_parent_integrations": [
+    {
+      "order": 1,
+      "pr": 184,
+      "merge_sha": "6cf4b24a2327fddc5547810f2d031ce18bb9302a",
+      "first_parent": "86cf4e2cec271532b95a134623150539a0926b07",
+      "parents": [
+        "86cf4e2cec271532b95a134623150539a0926b07"
+      ],
+      "merge_mode": "squash",
+      "pr_head_sha": "cdc498baac55a55cf7e2b8d02367f902574716f2",
+      "ci": {
+        "scope": "pull_request at exact PR head",
+        "success": 13,
+        "total": 13,
+        "cancelled": 0,
+        "cancelled_workflow": null
+      },
+      "changed_files": [
+        "research/meteorology/igra_recife_19631107_09_vertical_shear.json",
+        "research/meteorology/igra_recife_19631107_09_vertical_shear.md",
+        "tests/test_igra_recife_shear.py",
+        "tools/audit_igra_recife_shear.py"
+      ],
+      "review_scope": "42 recorded finite differences in Recife; no regional transfer"
+    },
+    {
+      "order": 2,
+      "pr": 185,
+      "merge_sha": "0d1bbbae84a9bd44fd3ee91453ac941d53ca5a89",
+      "first_parent": "6cf4b24a2327fddc5547810f2d031ce18bb9302a",
+      "parents": [
+        "6cf4b24a2327fddc5547810f2d031ce18bb9302a",
+        "51b244cca03d49fe2313c5cffe65dd77ae010b7d"
+      ],
+      "merge_mode": "merge",
+      "pr_head_sha": "51b244cca03d49fe2313c5cffe65dd77ae010b7d",
+      "ci": {
+        "scope": "pull_request at exact PR head",
+        "success": 14,
+        "total": 14,
+        "cancelled": 0,
+        "cancelled_workflow": null
+      },
+      "changed_files": [
+        "vite.config.ts",
+        ".github/workflows/pages.yml"
+      ],
+      "review_scope": "GitHub Pages workflow; merge commit with two branch commits; no proof site published"
+    },
+    {
+      "order": 3,
+      "pr": 186,
+      "merge_sha": "16b420211f64484ff95960449532e59b357c45d2",
+      "first_parent": "0d1bbbae84a9bd44fd3ee91453ac941d53ca5a89",
+      "parents": [
+        "0d1bbbae84a9bd44fd3ee91453ac941d53ca5a89"
+      ],
+      "merge_mode": "squash",
+      "pr_head_sha": "3c69bea7ce257e96374180b1aee1992d72111e07",
+      "ci": {
+        "scope": "pull_request at exact PR head",
+        "success": 13,
+        "total": 13,
+        "cancelled": 0,
+        "cancelled_workflow": null
+      },
+      "changed_files": [
+        "research/geo/uwm_aracaju_se_iiif_tile_custody_2026-11-12.json",
+        "scripts/archives/audit_uwm_iiif_tiles.py",
+        "tests/test_uwm_iiif_tile_custody.py"
+      ],
+      "review_scope": "80 IIIF derivative JPEG tiles, not original JP2 or 1963 boundary"
+    },
+    {
+      "order": 4,
+      "pr": 190,
+      "merge_sha": "dbb6ed742e661b1b43c71dd710024b2e5281e269",
+      "first_parent": "16b420211f64484ff95960449532e59b357c45d2",
+      "parents": [
+        "16b420211f64484ff95960449532e59b357c45d2"
+      ],
+      "merge_mode": "squash",
+      "pr_head_sha": "55036c8a0d1f2b8c0b9557e78261b44d04253b59",
+      "ci": {
+        "scope": "pull_request at exact PR head",
+        "success": 14,
+        "total": 14,
+        "cancelled": 0,
+        "cancelled_workflow": null
+      },
+      "changed_files": [
+        ".github/workflows/pages.yml"
+      ],
+      "review_scope": "Vite --base fix after failed Pages artifact path check"
+    },
+    {
+      "order": 5,
+      "pr": 193,
+      "merge_sha": "3bb39380bc146e20ffa88e85ff11904382bb8a9b",
+      "first_parent": "dbb6ed742e661b1b43c71dd710024b2e5281e269",
+      "parents": [
+        "dbb6ed742e661b1b43c71dd710024b2e5281e269"
+      ],
+      "merge_mode": "squash",
+      "pr_head_sha": "c8536deb6b496e980ac2b2f3000a4bdcf3d21610",
+      "ci": {
+        "scope": "pull_request at exact PR head",
+        "success": 13,
+        "total": 14,
+        "cancelled": 1,
+        "cancelled_workflow": "Publish Conde site"
+      },
+      "changed_files": [
+        "research/statistics/CIRCULAR_MCMC_DIAGNOSTICS.md",
+        "tests/test_raan_chain_diagnostics.py",
+        "tools/raan_chain_diagnostics.py"
+      ],
+      "review_scope": "Synthetic R-hat/ESS diagnostic; not a historical posterior"
+    },
+    {
+      "order": 6,
+      "pr": 192,
+      "merge_sha": "3d04515170338eabcd1827ed1fdaaf5b7f2cd957",
+      "first_parent": "3bb39380bc146e20ffa88e85ff11904382bb8a9b",
+      "parents": [
+        "3bb39380bc146e20ffa88e85ff11904382bb8a9b"
+      ],
+      "merge_mode": "squash",
+      "pr_head_sha": "49b1a298768c6f5aec51a8eb4c5dc44ae189f529",
+      "ci": {
+        "scope": "pull_request at exact PR head",
+        "success": 14,
+        "total": 14,
+        "cancelled": 0,
+        "cancelled_workflow": null
+      },
+      "changed_files": [
+        "research/statistics/raan_frozen_trend_holdout_C241-P1.json",
+        "research/tle_custody/evidence_matrix_C241-P1_2026-11-12.md",
+        "tests/test_raan_frozen_trend_holdout.py",
+        "tools/raan_frozen_trend_holdout.py"
+      ],
+      "review_scope": "Secondary RAAN frozen temporal split; nonblind/lineage-dependent"
+    },
+    {
+      "order": 7,
+      "pr": 189,
+      "merge_sha": "20195b71b640954202d5c777e8bdc2cc10880f19",
+      "first_parent": "3d04515170338eabcd1827ed1fdaaf5b7f2cd957",
+      "parents": [
+        "3d04515170338eabcd1827ed1fdaaf5b7f2cd957"
+      ],
+      "merge_mode": "squash",
+      "pr_head_sha": "de7c3999af20eaa182b6980fedb2b636a13e01da",
+      "ci": {
+        "scope": "pull_request at exact PR head",
+        "success": 14,
+        "total": 14,
+        "cancelled": 0,
+        "cancelled_workflow": null
+      },
+      "changed_files": [
+        ".agents/skills/conde-abelha/SKILL.md",
+        ".okf/specs/skill.md",
+        ".okf/specs/teamcard.md",
+        "config/legacy-nonokf-markdown.json",
+        "team/abelha.md"
+      ],
+      "review_scope": "Public team skill and OKF schema; private provision is separate"
+    },
+    {
+      "order": 8,
+      "pr": 194,
+      "merge_sha": "38e5193aced10bab2952f9a5702fb65f1ca0ac19",
+      "first_parent": "20195b71b640954202d5c777e8bdc2cc10880f19",
+      "parents": [
+        "20195b71b640954202d5c777e8bdc2cc10880f19"
+      ],
+      "merge_mode": "squash",
+      "pr_head_sha": "3e3e26ad6cc5eebf5b5200e481a8e74e3c4c01db",
+      "ci": {
+        "scope": "pull_request at exact PR head",
+        "success": 13,
+        "total": 14,
+        "cancelled": 1,
+        "cancelled_workflow": "Publish Conde site"
+      },
+      "changed_files": [
+        ".github/workflows/cumulative-connections.yml",
+        "formal/scripts/check_cumulative_connections.py",
+        "formal/scripts/texugo_ssr_facsimile_erratum.py",
+        "research/constraints/texugo_nasa_ssr_facsimile_qa_07.json",
+        "tests/test_texugo_ssr_facsimile_qa.py"
+      ],
+      "review_scope": "SSR NASA 3A nodal period erratum 94.8→94.6 min; no epoch of tracking"
+    },
+    {
+      "order": 9,
+      "pr": 195,
+      "merge_sha": "d368bc2340f49cd637fa2b88a00bc47dfd91018d",
+      "first_parent": "38e5193aced10bab2952f9a5702fb65f1ca0ac19",
+      "parents": [
+        "38e5193aced10bab2952f9a5702fb65f1ca0ac19"
+      ],
+      "merge_mode": "squash",
+      "pr_head_sha": "e369bb10961253a2976f17ffae9b2991df8efc75",
+      "ci": {
+        "scope": "pull_request at exact PR head",
+        "success": 13,
+        "total": 14,
+        "cancelled": 1,
+        "cancelled_workflow": "Publish Conde site"
+      },
+      "changed_files": [
+        "src/lib/orbitPrecisionGate.ts",
+        "tests/orbitPrecisionGate.test.mjs"
+      ],
+      "review_scope": "Synthetic numerical tolerance relative to declared sigma, no historical holdout"
+    },
+    {
+      "order": 10,
+      "pr": 196,
+      "merge_sha": "cbca5959d656cb05fdd6493824ffb0ea4e331fe7",
+      "first_parent": "d368bc2340f49cd637fa2b88a00bc47dfd91018d",
+      "parents": [
+        "d368bc2340f49cd637fa2b88a00bc47dfd91018d"
+      ],
+      "merge_mode": "squash",
+      "pr_head_sha": "755c9b7b53465d67f1103ecbeaa2c22eabf6ccbc",
+      "ci": {
+        "scope": "pull_request at exact PR head",
+        "success": 14,
+        "total": 14,
+        "cancelled": 0,
+        "cancelled_workflow": null
+      },
+      "changed_files": [
+        "scripts/executive-summary-claims.test.mjs",
+        "src/components/ExecutiveSummary.tsx"
+      ],
+      "review_scope": "Removed unsupported terminal hour/probability/verdicts from summary"
+    },
+    {
+      "order": 11,
+      "pr": 197,
+      "merge_sha": "de637fb414b1d154275303cc39f88471681d0a34",
+      "first_parent": "cbca5959d656cb05fdd6493824ffb0ea4e331fe7",
+      "parents": [
+        "cbca5959d656cb05fdd6493824ffb0ea4e331fe7"
+      ],
+      "merge_mode": "squash",
+      "pr_head_sha": "76870025c5027e9bc644ffe45ec11fc437f9902e",
+      "ci": {
+        "scope": "pull_request at exact PR head",
+        "success": 15,
+        "total": 15,
+        "cancelled": 0,
+        "cancelled_workflow": null
+      },
+      "changed_files": [
+        ".github/workflows/morcego-a628-dates.yml",
+        "research/constraints/morcego_a628_processing_dates_20261112.json",
+        "tests/test_morcego_a628_processing_dates.py"
+      ],
+      "review_scope": "A-628 typed date Nov 20 and visible Nov 24/26 stamps, function unknown"
+    },
+    {
+      "order": 12,
+      "pr": 199,
+      "merge_sha": "f357a7a57aa167a88ba0b5c5be59f53f2de9e955",
+      "first_parent": "de637fb414b1d154275303cc39f88471681d0a34",
+      "parents": [
+        "de637fb414b1d154275303cc39f88471681d0a34"
+      ],
+      "merge_mode": "squash",
+      "pr_head_sha": "3d5b7f0e1e6739cec8a3b91ed189cf918ef39004",
+      "ci": {
+        "scope": "pull_request at exact PR head",
+        "success": 16,
+        "total": 16,
+        "cancelled": 0,
+        "cancelled_workflow": null
+      },
+      "changed_files": [
+        ".github/workflows/tle-cross-catalog-legacy.yml",
+        "research/tle_custody/evidence_matrix_C241-L8_2026-11-12.md",
+        "tests/test_tle_cross_catalog_legacy_audit.py",
+        "tools/tle_cross_catalog_legacy_audit.py"
+      ],
+      "review_scope": "Secondary six-field catalog fingerprint vs legacy 528, not original radar"
+    },
+    {
+      "order": 13,
+      "pr": 187,
+      "merge_sha": "c9523ba0e65dd0002323d3ede1bbb60bc762a618",
+      "first_parent": "f357a7a57aa167a88ba0b5c5be59f53f2de9e955",
+      "parents": [
+        "f357a7a57aa167a88ba0b5c5be59f53f2de9e955"
+      ],
+      "merge_mode": "squash",
+      "pr_head_sha": "7b9d545fa2111c34dddb8c4b1675cf4ef1f6dbda",
+      "ci": {
+        "scope": "pull_request at exact PR head",
+        "success": 14,
+        "total": 14,
+        "cancelled": 0,
+        "cancelled_workflow": null
+      },
+      "changed_files": [
+        "research/audits/gaviao-main-window-20261112-g21.json",
+        "research/audits/gaviao-main-window-20261112-g21.md",
+        "scripts/pages-live-audit.mjs",
+        "scripts/pages-live-audit.test.mjs"
+      ],
+      "review_scope": "G21 retrospect and Pages markup falsification; audited only until 86cf"
+    }
+  ],
+  "findings": [
+    {
+      "id": "G22-F1",
+      "category": "publication-false-positive",
+      "severity": "medium",
+      "introduced_by_pr": 178,
+      "not_prevented_by_pr": 187,
+      "counterexample": "HTML attribute values data-snapshot='<a href=...><link ...><article>' and data-snapshot='<script src=...>' are not DOM elements, but raw regex counted them as navigation/assets/article.",
+      "correction": "quote-aware start-tag scanner and two hostile fixtures in Pages auditor"
+    },
+    {
+      "id": "G22-F2",
+      "category": "CI-provenance",
+      "severity": "documentation",
+      "prs": [
+        193,
+        194,
+        195
+      ],
+      "observation": "13/14 PR workflow runs SUCCESS; one Publish Conde site CANCELLED per head. Other PR checks succeeded, but cannot call 14/14 green."
+    },
+    {
+      "id": "G22-F3",
+      "category": "Git-DAG",
+      "severity": "coverage",
+      "pr": 185,
+      "observation": "First-parent merges 13, compare commits 15 because #185 is a true two-parent merge with two side-branch commits; do not classify as 15 main merges or two direct main edits."
+    }
+  ],
+  "verification": {
+    "primary_facsims_retrieved_this_round": false,
+    "pinned_repo_sources_and_code_reviewed": true,
+    "pre_merge_ci_head_metadata_checked": true,
+    "physical_instrumental_528_tracking_original": "NOT_RECOVERED",
+    "lean_4_35_physical_location": "NOT_PROVED",
+    "numeric_historical_holdout": "NOT_VALIDATED",
+    "conde_impact": "INDETERMINATE"
+  }
+}

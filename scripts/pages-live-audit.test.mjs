@@ -189,3 +189,32 @@ test("G21: homepage links embedded in script strings do not count as navigation"
   assert.match(result.failures.join(), /homepage has no laboratory link/);
   assert.match(result.failures.join(), /homepage has no link to audited chapter/);
 });
+
+test("G22: quoted HTML attribute payloads cannot impersonate navigation, CSS, article or JS", async () => {
+  const fakeHome = `<!doctype html><html><div data-snapshot='<a href="/conde-incident/stories/chapter-one/">ghost</a><a href="/conde-incident/lab/">ghost</a><link href="/conde-incident/assets/site.css">'>No links</div></html>`;
+  const fakeChapter = `<!doctype html><html><p title='<article>not rendered</article>'>Text only</p></html>`;
+  const fakeLab = `<!doctype html><html><div data-snapshot='<script src="/conde-incident/lab/assets/main.js"></script>'>No script</div></html>`;
+  const f = fixture({ content: {
+    [SITE]: ["text/html", fakeHome],
+    [CHAPTER]: ["text/html", fakeChapter],
+    [LAB]: ["text/html", fakeLab]
+  } });
+  const result = await auditPublishedSite(f.args);
+  assert.equal(result.status, "NOT_VERIFIED");
+  assert.match(result.failures.join(" | "), /homepage has no laboratory link/);
+  assert.match(result.failures.join(" | "), /homepage has no link to audited chapter/);
+  assert.match(result.failures.join(" | "), /homepage has no local CSS asset/);
+  assert.match(result.failures.join(" | "), /chapter has no rendered article/);
+  assert.match(result.failures.join(" | "), /laboratory has no local JS asset/);
+  assert.deepEqual(new Set(f.reads), new Set([SITE, CHAPTER, LAB]));
+});
+
+test("G22: real tags following a quoted fake tag remain inspectable", async () => {
+  const fake = `<div data-snapshot='<a href="/conde-incident/lab/">ghost</a>'>metadata only</div>`;
+  const f = fixture({ content: {
+    [SITE]: ["text/html", pages[SITE][1].replace("<body>", "<body>" + fake)]
+  } });
+  const result = await auditPublishedSite(f.args);
+  assert.equal(result.status, "VERIFIED_PUBLICATION");
+  assert.equal(result.failures.length, 0);
+});

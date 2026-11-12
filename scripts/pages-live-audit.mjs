@@ -28,9 +28,36 @@ function inspectableMarkup(html) {
       (_, tag, attributes) => `<${tag}${attributes}></${tag}>`);
 }
 
+// Attribute strings containing "<a ...>" or "<article>" are not elements.
+// Read real start tags only, finding '>' outside HTML attribute quotes.
+// This remains a conservative tokenizer, not a complete HTML parser.
+function tagsNamed(html, name) {
+  const found = [];
+  let cursor = 0;
+  while (cursor < html.length) {
+    const start = html.indexOf("<", cursor);
+    if (start < 0) break;
+    const match = /^<([A-Za-z][\w:-]*)(?=[\s/>])/i.exec(html.slice(start));
+    if (!match) { cursor = start + 1; continue; }
+    let quote = null, end = start + match[0].length;
+    for (; end < html.length; end++) {
+      const ch = html[end];
+      if (quote) { if (ch === quote) quote = null; }
+      else if (ch === "'" || ch === '"') quote = ch;
+      else if (ch === ">") break;
+    }
+    if (end >= html.length) break; // An unclosed tag proves nothing.
+    if (match[1].toLowerCase() === name.toLowerCase()) {
+      found.push(html.slice(start, end + 1));
+    }
+    cursor = end + 1;
+  }
+  return found;
+}
+
 function elements(html, tag, attribute) {
   const found = [];
-  const tags = html.match(new RegExp("<" + tag + "\\b[^>]*>", "gi")) || [];
+  const tags = tagsNamed(html, tag);
   const attributePattern = new RegExp("(?:^|\\s)" + attribute + "\\s*=\\s*(?:\"([^\"]+)\"|'([^']+)')", "i");
   for (const item of tags) {
     const match = item.match(attributePattern);
@@ -102,7 +129,7 @@ export async function auditPublishedSite({
     .filter(x => /\.css(?:\?|$)/i.test(x));
   if (!styles.length) failures.push("homepage has no local CSS asset");
   const chapterHtml = await get(chapter, "html");
-  if (!/<article[\s>]/i.test(inspectableMarkup(chapterHtml)))
+  if (!tagsNamed(inspectableMarkup(chapterHtml), "article").length)
     failures.push("chapter has no rendered article");
   const labHtml = await get(lab, "html");
   const scripts = elements(inspectableMarkup(labHtml), "script", "src").map(x => internal(x, lab)).filter(Boolean)
