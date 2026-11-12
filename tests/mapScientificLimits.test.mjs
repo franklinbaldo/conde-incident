@@ -34,16 +34,16 @@ test('laboratory startup does not select a fabricated terminal timestamp', () =>
   const app = readFileSync(new URL('../src/App.tsx', import.meta.url), 'utf8');
   const map = readFileSync(new URL('../src/components/OrbitalMap.tsx', import.meta.url), 'utf8');
   assert.doesNotMatch(app, /1963-11-08T19:48:00Z|19:48.*[Ii]mpact/);
-  assert.match(app, /useState<number \\| undefined>\\(undefined\\)/);
-  assert.match(map, /externalTimeMs \\|\\| LAUNCH_MS/);
+  assert.match(app, /useState<number \| undefined>\(undefined\)/);
+  assert.match(map, /externalTimeMs \|\| LAUNCH_MS/);
   assert.match(app, /posição terminal não validada/);
 });
 
 test('navigation does not mistake a catalogue day, checksum, or town reference for an observed impact', () => {
   const nav = readFileSync(new URL('../src/components/Navigation.tsx', import.meta.url), 'utf8');
-  assert.match(nav, /Dia catalogado: 08\\/11\\/1963/);
+  assert.match(nav, /Dia catalogado: 08\/11\/1963/);
   assert.match(nav, /Sede aproximada de Conde/);
-  assert.match(nav, /aria-pressed=\\{lang === 'pt'\\}/);
-  assert.match(nav, /aria-pressed=\\{lang === 'en'\\}/);
+  assert.match(nav, /aria-pressed=\{lang === 'pt'\}/);
+  assert.match(nav, /aria-pressed=\{lang === 'en'\}/);
   assert.doesNotMatch(nav, /Checksums 100%|7 Respostas|Desclassificados|Veredito & Resumo/);
 });
