@@ -180,6 +180,77 @@ def outcome_interface() -> dict:
     }
 
 
+
+
+def enclosure_interface() -> dict:
+    """Castor handoff for *conditional* numerical error envelopes.
+
+    A geographic verdict needs a nonempty GLOBAL feasible domain, a sound
+    enclosure for every survivor and an independently established ground-
+    impact audit. Neither a generated proof template nor Boolean status
+    declarations certify model calibration or historical observations.
+    """
+    return {
+        "version": 1,
+        "kind": "MODEL_ENCLOSURE_OBLIGATIONS_NOT_NUMERICAL_RESULTS",
+        "lean_module": "Conde1963/Enclosures.lean",
+        "current_result": None,
+        "event_type": None,
+        "numerical_epoch_window_utc": None,
+        "numerical_spatial_enclosure": None,
+        "global_parameter_domain_verified": False,
+        "ground_impact_audit_verified": False,
+        "historical_input_custody_verified": False,
+        "independent_holdout_verified": False,
+        "numerical_error_coverage_verified": False,
+        "original_154_151_corpus_import": "NOT_RUN",
+        "ground_impact_gate": "GroundImpactAdmissible",
+        "enclosure_soundness": "ImpactEnvelope.soundForPredictions",
+        "mandatory_proof_obligations": [
+            "ground_impact_gate_independently_justified_not_claimed_by_bool_alone",
+            "source_provenance_with_matrix_label_and_occurrence",
+            "nonempty_full_admissible_parameter_domain",
+            "verified_error_enclosure_for_every_surviving_parameter",
+            "proof_actual_predicted_event_is_inside_its_enclosure",
+            "finite_grid_completeness_or_explicitly_limited_scope",
+            "validated_units_epoch_reference_frame_holdouts",
+            "independent_ground_impact_not_just_altitude_crossing",
+        ],
+        "conditional_certificates": [
+            {
+                "code": "CONDE_EXCLUDED",
+                "lean": "covered_envelope_excludes_conde",
+                "extra": "all covered events disjoint from Conde",
+                "impact_elsewhere_implied": False,
+            },
+            {
+                "code": "CONDE_FORCED",
+                "lean": "covered_envelope_forces_conde",
+                "extra": "every surviving state predicts ground impact and enclosure lies in Conde",
+                "impact_elsewhere_implied": False,
+            },
+            {
+                "code": "OTHER_WINDOW",
+                "lean": "covered_envelope_identifies_other_window",
+                "extra": "all survivors impact in a bounded alternative window disjoint from Conde",
+                "impact_elsewhere_implied": True,
+            },
+        ],
+        "source_lineage": [
+            {
+                "matrix_occurrences": ["C01#1"],
+                "chain": "TUPI_F BIS_TRANSCRIPTION_REPORT_ONLY".replace(" ", ""),
+                "physical_observation": False,
+            },
+            {
+                "matrix_occurrences": ["C131#1", "C197#1"],
+                "chain": "NASA_GODDARD_SSR_1963_11_15_P8",
+                "independent_sources": 1,
+                "physical_day_admitted": False,
+            },
+        ],
+    }
+
 def contracts(rows: list[dict]) -> dict:
     return {
         "schema_version": 2,
@@ -188,6 +259,7 @@ def contracts(rows: list[dict]) -> dict:
         "matrix_commit": MATRIX_COMMIT,
         "original_lean_zip_status": "NOT_RUN",
         "outcome_interface": outcome_interface(),
+        "enclosure_interface": enclosure_interface(),
         "scope": "241 actual rows, 238 distinct labels, no fabricated observations",
         "entries": [
             {
