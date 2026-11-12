@@ -2,10 +2,6 @@
   "policy": "Frozen legacy Markdown exempt from current normative OKF check only at its exact Git blob SHA. Every added or modified Markdown is checked by prek and okf-parser. Remove entries as files are migrated.",
   "legacy_markdown": [
     {
-      "path": ".agents/skills/conde-abelha/SKILL.md",
-      "git_blob_sha": "43663253d18fbaf75fba37781efc344f5cb6f752"
-    },
-    {
       "path": ".agents/skills/conde-caranguejo/SKILL.md",
       "git_blob_sha": "7c88ae966d9034e01d97331479c7fca76b3f0bc6"
     },
@@ -244,10 +240,6 @@
     {
       "path": "research/tle_custody/evidence_matrix_C241-L4_2026-11-12.md",
       "git_blob_sha": "d14d98d8631b372a2543d86225d5a33a80d18705"
-    },
-    {
-      "path": "team/abelha.md",
-      "git_blob_sha": "abca2130c3819d1ead85d76b4b59046e51005462"
     },
     {
       "path": "team/caranguejo.md",
