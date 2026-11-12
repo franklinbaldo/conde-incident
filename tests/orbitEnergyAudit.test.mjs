@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { EARTH, dragJacobiPowerKm2S3, rotatingFrameIntegralKm2S2 } from '../src/lib/orbitPhysics.ts';
-import { auditPhysicalBudget, auditRefinedPhysicalBudget } from '../src/lib/orbitEnergyAudit.ts';
+import { auditPhysicalBudget, auditRefinedPhysicalBudget, checkRefinementTrend } from '../src/lib/orbitEnergyAudit.ts';
 
 // All states and density functions below are SYNTHETIC, not 1963 tracking.
 const radiusKm = EARTH.radiusKm + 500;
@@ -143,4 +143,56 @@ test('refinement controls are dimensioned, finite and bounded for reproducibilit
   const x = run(looseRefinement, 2);
   const y = run(looseRefinement, 2);
   assert.deepEqual(x, y, 'identical seed-free state/model/controls must be repeatable');
+});
+
+test('G16 adversarial: limits cannot mask 9000x growth in refinement differences', () => {
+  // Gavião issue franklinbaldo/castor#2: the previous condition
+  // final <= max(limit, 1.25 * previous) is implied by final <= limit.
+  const previous = {
+    positionKm: 0.0001, velocityKmS: 0, epochS: 0,
+    jacobiKm2S2: 0, modeledWorkKm2S2: 0,
+  };
+  const final = { ...previous, positionKm: 0.9 };
+  const callerLimitKm = 1;
+  assert.ok(final.positionKm <= callerLimitKm);
+  assert.ok(final.positionKm <= Math.max(callerLimitKm, 1.25 * previous.positionKm),
+    'the old supposed trend gate incorrectly approves this growth');
+  const roundoff = {
+    positionKm: 64 * Number.EPSILON * 7000, velocityKmS: 1e-12,
+    epochS: 1e-12, jacobiKm2S2: 1e-12, modeledWorkKm2S2: 1e-12,
+  };
+  const trend = checkRefinementTrend(previous, final, roundoff);
+  assert.equal(trend.status, 'GROWTH_BEYOND_ROUNDOFF');
+  assert.deepEqual(trend.growingMetrics, ['positionKm']);
+  assert.deepEqual(trend.roundoffAllowance, roundoff);
+  assert.equal(trend.method, 'HEURISTIC_64_EPS_SCALE_NOT_ERROR_BOUND');
+});
+
+test('near-roundoff growth is reported as unresolved trend rather than a numerical proof', () => {
+  const previous = {
+    positionKm: 0, velocityKmS: 0, epochS: 0,
+    jacobiKm2S2: 0, modeledWorkKm2S2: 0,
+  };
+  const final = { ...previous, positionKm: 1e-12 };
+  const floor = { ...previous, positionKm: 1e-10 };
+  const trend = checkRefinementTrend(previous, final, floor);
+  assert.equal(trend.status, 'NO_RESOLVED_GROWTH');
+  assert.deepEqual(trend.growingMetrics, []);
+  assert.throws(() => checkRefinementTrend(previous, final,
+    { ...floor, jacobiKm2S2: -1 }), /nonnegative finite/);
+  assert.throws(() => checkRefinementTrend(previous, final,
+    { ...floor, epochS: Infinity }), /nonnegative finite/);
+});
+
+test('coupled refinement exposes a separate, dimensioned growth audit', () => {
+  const audit = auditRefinedPhysicalBudget(
+    initial, 1200, 200, 80, 5, looseRefinement, 2, { j2: true, atmosphere: drag });
+  assert.equal(audit.trend.method, 'HEURISTIC_64_EPS_SCALE_NOT_ERROR_BOUND');
+  assert.ok(Object.values(audit.trend.roundoffAllowance).every(
+    x => Number.isFinite(x) && x > 0));
+  assert.ok(audit.trend.growingMetrics.every(k => Object.hasOwn(audit.limits, k)));
+  if (audit.trend.status === 'GROWTH_BEYOND_ROUNDOFF') {
+    assert.equal(audit.status, 'REFINEMENT_UNRESOLVED');
+  }
+  assert.equal(audit.interpretation, 'NUMERICAL_ONLY_NOT_HISTORICAL');
 });

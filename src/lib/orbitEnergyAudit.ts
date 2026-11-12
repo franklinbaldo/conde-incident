@@ -136,6 +136,40 @@ export interface BudgetRefinementDifference {
   readonly jacobiKm2S2: number;
   readonly modeledWorkKm2S2: number;
 }
+export interface RefinementTrendAudit {
+  readonly status: 'NO_RESOLVED_GROWTH' | 'GROWTH_BEYOND_ROUNDOFF';
+  /** Unit-matched 64*EPSILON*scale heuristic, NOT a certified error bound. */
+  readonly roundoffAllowance: BudgetRefinementDifference;
+  readonly growingMetrics: readonly (keyof BudgetRefinementLimits)[];
+  readonly method: 'HEURISTIC_64_EPS_SCALE_NOT_ERROR_BOUND';
+}
+
+/**
+ * A distinct trend check: neither an absolute tolerance nor budget closure
+ * can excuse resolved growth after step halving. Compare quantities of the
+ * SAME physical dimension and permit only an explicitly reported floating-
+ * point scale allowance, not the much larger user acceptance limits.
+ */
+export function checkRefinementTrend(
+  previous: BudgetRefinementDifference,
+  final: BudgetRefinementDifference,
+  roundoffAllowance: BudgetRefinementDifference,
+): RefinementTrendAudit {
+  const keys: readonly (keyof BudgetRefinementLimits)[] =
+    ['positionKm', 'velocityKmS', 'epochS', 'jacobiKm2S2', 'modeledWorkKm2S2'];
+  if (keys.some(k => ![previous[k], final[k], roundoffAllowance[k]].every(
+    x => Number.isFinite(x) && x >= 0,
+  ))) throw new RangeError('Trend differences/roundoff allowances must be nonnegative finite');
+  const growingMetrics = keys.filter(k =>
+    final[k] > previous[k] + roundoffAllowance[k]);
+  return {
+    status: growingMetrics.length ? 'GROWTH_BEYOND_ROUNDOFF' : 'NO_RESOLVED_GROWTH',
+    roundoffAllowance,
+    growingMetrics,
+    method: 'HEURISTIC_64_EPS_SCALE_NOT_ERROR_BOUND',
+  };
+}
+
 export interface RefinedPhysicalBudget {
   readonly status: 'NOT_EVALUATED' | 'EVENT_CONFLICT' | 'BUDGET_UNRESOLVED' |
     'REFINEMENT_UNRESOLVED' | 'REFINEMENT_CONSISTENT';
@@ -143,13 +177,16 @@ export interface RefinedPhysicalBudget {
   /** Difference of levels i and i+1; last entry compares the two finest runs. */
   readonly differences: readonly BudgetRefinementDifference[];
   readonly limits: BudgetRefinementLimits;
+  /** Independent resolved-growth diagnostic, not numerical certification. */
+  readonly trend: RefinementTrendAudit;
   readonly interpretation: 'NUMERICAL_ONLY_NOT_HISTORICAL';
 }
 
 /**
  * Independently repropagate the SAME initial r/v and force model with h, h/2,
  * h/4 (optionally finer). Require stable event classification, Jacobi balance
- * at BOTH finest resolutions, final-state agreement and decreasing residuals.
+ * at BOTH finest resolutions, final-state agreement and no resolved growth
+ * beyond a separately reported floating-point roundoff heuristic.
  * Neither a small energy budget nor agreement of two RK4 steps by itself
  * constitutes an error bound or empirical orbit determination.
  */
@@ -190,16 +227,30 @@ export function auditRefinedPhysicalBudget(
   const final = differences.at(-1)!;
   const previous = differences.at(-2)!;
   const finalWithinLimits = keys.every(k => final[k] <= limits[k]);
-  // Prevent a misleading 'stable' label when the final difference grows
-  // materially relative to the preceding halving (beyond declared resolution).
-  const trendSupported = keys.every(k =>
-    final[k] <= Math.max(limits[k], 1.25 * previous[k]));
+  // Heuristic numerical scale from actual state/diagnostic values, with
+  // dimensional units matching each difference. 64*EPSILON is a conservative
+  // roundoff allowance, NOT a rigorous upper bound on accumulated RK4 error.
+  // Crucially it is INDEPENDENT of the caller's acceptance limits.
+  const roundoff = (values: readonly number[]) => {
+    const scale = Math.max(1, ...values.map(Math.abs));
+    const allowance = 64 * Number.EPSILON * scale;
+    if (!Number.isFinite(allowance))
+      throw new RangeError('Nonfinite refinement roundoff scale');
+    return allowance;
+  };
+  const trend = checkRefinementTrend(previous, final, {
+    positionKm: roundoff(levels.map(l => Math.hypot(...l.final.rKm))),
+    velocityKmS: roundoff(levels.map(l => Math.hypot(...l.final.vKmS))),
+    epochS: roundoff(levels.map(l => l.final.tS)),
+    jacobiKm2S2: roundoff(levels.map(l => l.deltaJacobiKm2S2)),
+    modeledWorkKm2S2: roundoff(levels.map(l => l.modeledWorkKm2S2)),
+  });
   const latestBalances = levels.slice(-2).every(l => l.status === 'NUMERICALLY_CONSISTENT');
   const status: RefinedPhysicalBudget['status'] =
     levels.every(l => l.status === 'NOT_EVALUATED') ? 'NOT_EVALUATED' :
     !eventsAgree ? 'EVENT_CONFLICT' :
     !latestBalances ? 'BUDGET_UNRESOLVED' :
-    !finalWithinLimits || !trendSupported ? 'REFINEMENT_UNRESOLVED' :
-    'REFINEMENT_CONSISTENT';
-  return { status, levels, differences, limits, interpretation: 'NUMERICAL_ONLY_NOT_HISTORICAL' };
+    !finalWithinLimits || trend.status === 'GROWTH_BEYOND_ROUNDOFF'
+      ? 'REFINEMENT_UNRESOLVED' : 'REFINEMENT_CONSISTENT';
+  return { status, levels, differences, limits, trend, interpretation: 'NUMERICAL_ONLY_NOT_HISTORICAL' };
 }
