@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="340" height="616" viewBox="0 0 340 616" role="img" aria-labelledby="title desc">
+<title id="title">Versões do caso Conde imaginadas na sátira de Stanislaw</title>
+<desc id="desc">Sequência vertical de satélite, satélite tripulado, disco voador e invasão marciana, marcada como recurso literário. O FBIS de 8 de novembro já continha detalhes extraordinários.</desc>
+<rect width="340" height="616" rx="16" fill="#121923"/>
+<g font-family="system-ui,Arial,sans-serif">
+<text x="17" y="29" fill="#b8dce0" font-size="14" font-weight="700">A ESCALADA SATÍRICA DE STANISLAW</text>
+<text x="17" y="48" fill="#becdd3" font-size="13">Crônica de 14 NOV 1963</text>
+<g stroke="#5e7a86" fill="#243340"><rect x="17" y="66" width="306" height="68" rx="10"/><rect x="17" y="162" width="306" height="68" rx="10"/><rect x="17" y="258" width="306" height="68" rx="10"/><rect x="17" y="354" width="306" height="68" rx="10"/></g>
+<g fill="#f5f6f4" font-size="19" font-weight="700" text-anchor="middle"><text x="170" y="107">Satélite</text><text x="170" y="203">Satélite tripulado</text><text x="170" y="299">Disco voador</text><text x="170" y="395">Invasão marciana</text></g>
+<g fill="none" stroke="#90d5df" stroke-dasharray="5 4" stroke-width="2"><path d="M170 136 V157"/><path d="M170 232 V253"/><path d="M170 328 V349"/></g>
+<g fill="#f1d9a9" font-size="13" font-weight="700"><text x="17" y="450">Não é uma cronologia comprovada.</text><text x="17" y="470">É um recurso literário da crônica.</text></g>
+<rect x="17" y="490" width="306" height="106" rx="9" fill="#2b353f"/>
+<g fill="#c8d1d4" font-size="13"><text x="28" y="514" font-weight="700" fill="#dcecf0">FBIS/TUPI · 8 NOV 1963</text><text x="28" y="535">O relato já continha esfera,</text><text x="28" y="553">cratera e corpo. A ordem real</text><text x="28" y="571">das primeiras versões ainda</text><text x="28" y="589">precisa ser documentada.</text></g>
+</g></svg>
