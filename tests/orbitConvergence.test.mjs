@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { EARTH } from '../src/lib/orbitPhysics.ts';
-import { assessNumericalConvergence } from '../src/lib/orbitConvergence.ts';
+import { assessNumericalConvergence, checkCartesianRefinementTrend } from '../src/lib/orbitConvergence.ts';
 
 // All states below are synthetic numerical controls, never 1963 observations.
 const circular = {
@@ -59,4 +59,54 @@ test('invalid step-halving controls are refused before physical prediction', () 
   assert.throws(() => assessNumericalConvergence(circular, 100, 10, 80, controls(11)), /halvings/);
   assert.throws(() => assessNumericalConvergence(circular, 100, 10, 80, controls(3, NaN)), /tolerances/);
   assert.throws(() => assessNumericalConvergence(circular, 100, -1, 80, controls(3)), /step/);
+});
+
+test('resolved Cartesian refinement growth cannot hide inside generous tolerances', () => {
+  // SYNTHETIC differences: both adjacent comparisons could satisfy a
+  // 1 km user tolerance even though refinement grows from 0.0001 to 0.9 km.
+  const previous = { eventAgrees: true, positionKm: 0.0001,
+    velocityKmS: 1e-7, epochS: 1e-8, withinTolerance: true };
+  const finest = { eventAgrees: true, positionKm: 0.9,
+    velocityKmS: 2e-7, epochS: 1e-8, withinTolerance: true };
+  const trend = checkCartesianRefinementTrend(previous, finest, {
+    positionKm: 1e-10, velocityKmS: 1e-12, epochS: 1e-10,
+  });
+  assert.equal(trend.status, 'GROWTH_BEYOND_ROUNDOFF');
+  assert.deepEqual(trend.growingMetrics, ['positionKm', 'velocityKmS']);
+  assert.equal(trend.interpretation, 'HEURISTIC_64_EPS_SCALE_NOT_ERROR_BOUND');
+});
+
+test('roundoff-scale jitter is not declared resolved Cartesian growth', () => {
+  const previous = { eventAgrees: true, positionKm: 2e-11,
+    velocityKmS: 3e-15, epochS: 2e-12, withinTolerance: true };
+  const finest = { ...previous, positionKm: 2.1e-11,
+    velocityKmS: 3.1e-15, epochS: 2.1e-12 };
+  const trend = checkCartesianRefinementTrend(previous, finest, {
+    positionKm: 1e-10, velocityKmS: 1e-12, epochS: 1e-10,
+  });
+  assert.equal(trend.status, 'NO_RESOLVED_GROWTH');
+  assert.deepEqual(trend.growingMetrics, []);
+});
+
+test('nonfinite differences and invalid dimensional allowances fail closed', () => {
+  const valid = { eventAgrees: true, positionKm: 1,
+    velocityKmS: 1, epochS: 1, withinTolerance: true };
+  const allowance = { positionKm: 1e-9, velocityKmS: 1e-9, epochS: 1e-9 };
+  assert.equal(checkCartesianRefinementTrend(valid,
+    { ...valid, positionKm: Infinity }, allowance).status, 'NONFINITE_DIFFERENCE');
+  assert.throws(() => checkCartesianRefinementTrend(valid, valid,
+    { ...allowance, epochS: -1 }), /allowances/);
+  assert.throws(() => checkCartesianRefinementTrend(valid, valid,
+    { ...allowance, positionKm: NaN }), /allowances/);
+});
+
+test('coupled RK4/J2 convergence returns independently auditable trend metadata', () => {
+  const out = assessNumericalConvergence(
+    circular, 600, 100, 80, controls(5), { j2: true });
+  assert.equal(out.status, 'STABLE');
+  assert.equal(out.trend.status, 'NO_RESOLVED_GROWTH');
+  assert.ok(out.trend.roundoffAllowance.positionKm > 0);
+  assert.ok(out.trend.roundoffAllowance.velocityKmS > 0);
+  assert.ok(out.trend.roundoffAllowance.epochS > 0);
+  assert.ok(out.trend.growingMetrics.length === 0);
 });
