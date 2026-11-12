@@ -46,5 +46,8 @@ test('UI exposes provenance, real source links, accessibility and partial-covera
   assert.match(component, /not independent witnesses|não são testemunhos independentes/);
   assert.match(archive, /<SourceCitationFeed lang=\{lang\} \/>/);
   assert.ok(matrixOccurrenceUrl(901).endsWith('#L901'));
+  assert.equal(matrixOccurrenceUrl(901), 'https://github.com/franklinbaldo/conde-incident/blob/faf4dd0fd8dfbdd825e4e934b3b30ebd81bf61df/research/evidence_matrix_C001-C238_2026-11-11.md#L901');
+  assert.ok(!matrixOccurrenceUrl(901).includes('/blob/main/'));
+  assert.equal(feed.matrix_git_blob_sha1, 'a7978c3a75a153b16ab70118a92c434bba674cb7');
   assert.equal(isCitationFeed({ schema: 'unknown', records: [] }), false);
 });
