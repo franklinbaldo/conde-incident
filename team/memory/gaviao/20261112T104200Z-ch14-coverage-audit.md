@@ -18,3 +18,5 @@ tags: [conde, auditoria, caderno, C243-T13, numerico]
 **Próxima dúvida:** auditoria do residual da época 07/02 sob Parquet original e obtenção de proveniência instrumental/covariâncias antes de hipóteses causais. Resultado do CI e SHA final devem ser informados na PR após execução.
 
 **Controle:** sem publicação, blog pessoal, merge, contato externo, rebase ou force-push.
+
+**Primeira validação real:** Actions #43204273672 SUCCESS, 14/14 testes sintéticos e replay do Parquet pinado no SHA 5cbf9684309574eff38bd1f11dc41051aef22e6e. Resíduo positivo da época 1963-02-07T01:31:32.861856Z = +0,06587234647734874 rev/dia; SSE 41,5727415398% dos 52, aumento de RMSE 29,5614088501%; identidade SSE residual 0.0. **Incidente corrigido:** o primeiro workflow apresentou aviso de artefato ausente por caminho /tmp divergente do RUNNER_TEMP; corrigido output e gate para if-no-files-found:error. O CI do novo HEAD pós-correção ainda precisa ser verificado antes do parecer final.
