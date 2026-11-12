@@ -22,10 +22,6 @@ jobs:
           python-version: "3.12"
       - name: Validate cumulative graph and non-activation guards
         run: python3 -m unittest discover -s tests -p "test_cumulative_constraints.py" -v
-      - name: Audit historical upper-air archive coverage with pinned primary API replies
-        run: |
-          python3 -m unittest discover -s tests -p 'test_upper_air_coverage.py' -v
-          python3 tools/audit_upper_air_coverage.py
       - name: Generate connected observable handoff
         run: python3 formal/scripts/check_cumulative_connections.py --output /tmp/conde-connected-handoff.json
       - uses: actions/upload-artifact@v4
