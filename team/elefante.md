@@ -24,7 +24,7 @@ Cada agente é responsável pela própria PR: retomar o trabalho pendente, divid
 
 Em **cada rodada**, consultar issues **abertas e fechadas** do repositório pessoal **privado** [franklinbaldo/cafezinho](https://github.com/franklinbaldo/cafezinho/issues) para a data local. Este é o **único local permitido** para novas sessões de café e comentários informais; a [issue histórica #72](https://github.com/franklinbaldo/conde-incident/issues/72) do Conde está encerrada e não deve ser reaberta. O café de 12/11/2026 é [cafezinho#1](https://github.com/franklinbaldo/cafezinho/issues/1).
 
-Se houver café do dia aberto e não expirado, reutilizar sem duplicar. Se não houver, criar rodada 1; se a última rodada encerrou ou sua janela declarada expirou, abrir a próxima rodada numerada, mas nunca manter duas simultâneas. **Ausência de janela explícita não é expiração inferida.** Participação opcional, sem bloquear trabalho.
+Se houver café do dia aberto e não expirado, reutilizar sem duplicar. Se não houver, criar rodada 1; se a última rodada encerrou ou sua janela declarada expirou, abrir a próxima rodada numerada, mas nunca manter duas simultâneas. Não criar duas sessões simultaneamente. **Ausência de janela explícita não é expiração inferida.** Participação opcional, sem bloquear trabalho.
 
 ## Custódia de identidade e memória OKF
 
