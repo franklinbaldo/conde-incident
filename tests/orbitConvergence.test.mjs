@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { EARTH } from '../src/lib/orbitPhysics.ts';
@@ -109,4 +110,19 @@ test('coupled RK4/J2 convergence returns independently auditable trend metadata'
   assert.ok(out.trend.roundoffAllowance.velocityKmS > 0);
   assert.ok(out.trend.roundoffAllowance.epochS > 0);
   assert.ok(out.trend.growingMetrics.length === 0);
+});
+
+test('G25 conditional graph links the guard without manufacturing a historical bound', () => {
+  const graph = JSON.parse(readFileSync(
+    new URL('../research/constraints/orbit_cartesian_refinement_growth_g25.json',
+      import.meta.url), 'utf8'));
+  assert.equal(graph.classification,
+    'NUMERICAL_FALSIFICATION_NOT_EMPIRICAL_ORBITAL_CONSTRAINT');
+  assert.equal(graph.epsilon_coefficient, 64);
+  assert.ok(graph.source_occurrences.includes('C197#1'));
+  assert.equal(graph.historical_initial_state, null);
+  assert.equal(graph.authenticated_527_529_holdout, null);
+  assert.equal(graph.historical_trajectory_domain_reduced, false);
+  assert.equal(graph.sgp4_baseline_validated, false);
+  assert.equal(graph.confidence_or_impact_probability, null);
 });
