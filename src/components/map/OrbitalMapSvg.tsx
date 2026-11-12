@@ -79,12 +79,13 @@ export function OrbitalMapSvg({
     zoom + ') translate(-480 -240)';
 
   const pointerDown = (event: React.PointerEvent<SVGSVGElement>) => {
-    if (event.button !== 0) return;
+    // Let browsers handle touch scrolling; pan remains available through buttons.
+    if (event.button !== 0 || event.pointerType === 'touch') return;
     start.current = { x: event.clientX, y: event.clientY };
     event.currentTarget.setPointerCapture(event.pointerId);
   };
   const pointerMove = (event: React.PointerEvent<SVGSVGElement>) => {
-    if (!start.current) return;
+    if (!start.current || event.pointerType === 'touch') return;
     const rect = event.currentTarget.getBoundingClientRect();
     onPan(
       (event.clientX - start.current.x) * 960 / Math.max(rect.width, 1),
@@ -102,12 +103,11 @@ export function OrbitalMapSvg({
       height="480"
       role="img"
       aria-labelledby="orbital-map-title orbital-map-desc"
-      style={{ touchAction: 'none', maxHeight: '65vh' }}
+      style={{ touchAction: 'pan-y', maxHeight: '65vh' }}
       onPointerDown={pointerDown}
       onPointerMove={pointerMove}
       onPointerUp={pointerUp}
       onPointerCancel={pointerUp}
-      onWheel={(event) => { if (event.ctrlKey) return; onZoom(zoom + (event.deltaY < 0 ? 0.25 : -0.25)); }}
     >
       <title id="orbital-map-title">{mapTitle}</title>
       <desc id="orbital-map-desc">{mapDesc}</desc>
@@ -135,7 +135,7 @@ export function OrbitalMapSvg({
               {lines(tracks[id], COLORS[id], id === 528 ? 2.6 : 1.5)}
             </g>
           ))}
-          {showConnections && positions[528] && (
+          {showConnections && showSisters && positions[528] && (
             <g>
               {([527, 529] as const).map(id => {
                 const from = project(positions[528]!.longitude, positions[528]!.latitude);
