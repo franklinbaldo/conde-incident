@@ -11,3 +11,4 @@ import Conde1963.Enclosures
 import Conde1963.ScenarioAlternatives
 import Conde1963.ScenarioEnclosures
 import Conde1963.FiniteCoverage
+import Conde1963.CertifiedCells
