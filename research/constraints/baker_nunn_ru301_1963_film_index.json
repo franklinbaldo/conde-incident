@@ -1,0 +1,463 @@
+{
+  "schema": "conde.archival-instrument-crosswalk/v1",
+  "question": "Does an original Smithsonian archived Baker-Nunn film inventory identify dated station observations near 8 Nov 1963, with recoverable data sheets?",
+  "source": {
+    "id": "SIA-FARU0301",
+    "title": "Smithsonian Astrophysical Observatory, Satellite Tracking Program, Baker-Nunn Films, 1955–1969",
+    "type": "institutional_finding_aid",
+    "original_url": "https://sirismm.si.edu/EADpdfs/SIA.FARU0301.pdf",
+    "catalog_url": "https://siarchives.si.edu/collections/siris_arc_216870",
+    "primary_for": "inventory of curated original film holdings with individual film data sheets",
+    "not_primary_for": "contents or instrument observations of NORAD 528",
+    "source_independence_family": "SMITHSONIAN_SAO_INSTITUTIONAL_ARCHIVE",
+    "source_sha256": null,
+    "source_sha256_note": "Raw PDF byte download failed in this runtime due DNS; direct PDF pages 7 and 35 visually verified via screenshot. Never invent checksum.",
+    "selection_note": "Institutional description states this unit holds selected Baker-Nunn films with accompanying data sheets; absence of a listed 8-Nov film is not a complete no-observation claim."
+  },
+  "document_occurrences": [
+    {
+      "id": "BN-RU301-20261112-01",
+      "item": "Collection description",
+      "location": "official PDF zero-index p2 / printed p1",
+      "finding": "Selected Baker-Nunn films and accompanying data sheets; archival index not continuous nightly tracking.",
+      "grade": "PRIMARY_FOR_ARCHIVAL_HOLDINGS"
+    },
+    {
+      "id": "BN-RU301-20261112-02",
+      "item": "SC-8 observation entries 14881–14902 curated selection, part A",
+      "location": "box 2, official PDF zero-index p7 / printed p6",
+      "finding": "10 dated SC-8 film identifiers 1–5 Nov 1963",
+      "grade": "PRIMARY_FOR_ARCHIVAL_INDEX"
+    },
+    {
+      "id": "BN-RU301-20261112-03",
+      "item": "SC-8 observation entries part B",
+      "location": "box 17, official PDF zero-index p35 / printed p34",
+      "finding": "5 additional dated SC-8 film identifiers 3 and 5 Nov 1963",
+      "grade": "PRIMARY_FOR_ARCHIVAL_INDEX"
+    }
+  ],
+  "film_index_entries": [
+    {
+      "id": "RU301:SC8:14881",
+      "station_code": "SC-8",
+      "observation_number": 14881,
+      "catalog_record_date": "1963-11-01",
+      "observation_epoch_utc": null,
+      "object_catalog_id": null,
+      "film_sheet_content_inspected": false,
+      "source_occurrence": "RU301:box2:printed6",
+      "status": "ORIGINAL_FILM_INDEX_METADATA_NOT_SENSOR_OBSERVATION",
+      "object_identity_status": "UNKNOWN_NOT_ATTRIBUTABLE_TO_NORAD528",
+      "frame": null,
+      "angular_values": null,
+      "angular_uncertainty": null,
+      "independence_family": "SMITHSONIAN_SAO_INSTITUTIONAL_ARCHIVE",
+      "hard_physical_constraint": false
+    },
+    {
+      "id": "RU301:SC8:14882",
+      "station_code": "SC-8",
+      "observation_number": 14882,
+      "catalog_record_date": "1963-11-02",
+      "observation_epoch_utc": null,
+      "object_catalog_id": null,
+      "film_sheet_content_inspected": false,
+      "source_occurrence": "RU301:box2:printed6",
+      "status": "ORIGINAL_FILM_INDEX_METADATA_NOT_SENSOR_OBSERVATION",
+      "object_identity_status": "UNKNOWN_NOT_ATTRIBUTABLE_TO_NORAD528",
+      "frame": null,
+      "angular_values": null,
+      "angular_uncertainty": null,
+      "independence_family": "SMITHSONIAN_SAO_INSTITUTIONAL_ARCHIVE",
+      "hard_physical_constraint": false
+    },
+    {
+      "id": "RU301:SC8:14883",
+      "station_code": "SC-8",
+      "observation_number": 14883,
+      "catalog_record_date": "1963-11-03",
+      "observation_epoch_utc": null,
+      "object_catalog_id": null,
+      "film_sheet_content_inspected": false,
+      "source_occurrence": "RU301:box2:printed6",
+      "status": "ORIGINAL_FILM_INDEX_METADATA_NOT_SENSOR_OBSERVATION",
+      "object_identity_status": "UNKNOWN_NOT_ATTRIBUTABLE_TO_NORAD528",
+      "frame": null,
+      "angular_values": null,
+      "angular_uncertainty": null,
+      "independence_family": "SMITHSONIAN_SAO_INSTITUTIONAL_ARCHIVE",
+      "hard_physical_constraint": false
+    },
+    {
+      "id": "RU301:SC8:14884",
+      "station_code": "SC-8",
+      "observation_number": 14884,
+      "catalog_record_date": "1963-11-03",
+      "observation_epoch_utc": null,
+      "object_catalog_id": null,
+      "film_sheet_content_inspected": false,
+      "source_occurrence": "RU301:box17:printed34",
+      "status": "ORIGINAL_FILM_INDEX_METADATA_NOT_SENSOR_OBSERVATION",
+      "object_identity_status": "UNKNOWN_NOT_ATTRIBUTABLE_TO_NORAD528",
+      "frame": null,
+      "angular_values": null,
+      "angular_uncertainty": null,
+      "independence_family": "SMITHSONIAN_SAO_INSTITUTIONAL_ARCHIVE",
+      "hard_physical_constraint": false
+    },
+    {
+      "id": "RU301:SC8:14885",
+      "station_code": "SC-8",
+      "observation_number": 14885,
+      "catalog_record_date": "1963-11-03",
+      "observation_epoch_utc": null,
+      "object_catalog_id": null,
+      "film_sheet_content_inspected": false,
+      "source_occurrence": "RU301:box17:printed34",
+      "status": "ORIGINAL_FILM_INDEX_METADATA_NOT_SENSOR_OBSERVATION",
+      "object_identity_status": "UNKNOWN_NOT_ATTRIBUTABLE_TO_NORAD528",
+      "frame": null,
+      "angular_values": null,
+      "angular_uncertainty": null,
+      "independence_family": "SMITHSONIAN_SAO_INSTITUTIONAL_ARCHIVE",
+      "hard_physical_constraint": false
+    },
+    {
+      "id": "RU301:SC8:14886",
+      "station_code": "SC-8",
+      "observation_number": 14886,
+      "catalog_record_date": "1963-11-03",
+      "observation_epoch_utc": null,
+      "object_catalog_id": null,
+      "film_sheet_content_inspected": false,
+      "source_occurrence": "RU301:box2:printed6",
+      "status": "ORIGINAL_FILM_INDEX_METADATA_NOT_SENSOR_OBSERVATION",
+      "object_identity_status": "UNKNOWN_NOT_ATTRIBUTABLE_TO_NORAD528",
+      "frame": null,
+      "angular_values": null,
+      "angular_uncertainty": null,
+      "independence_family": "SMITHSONIAN_SAO_INSTITUTIONAL_ARCHIVE",
+      "hard_physical_constraint": false
+    },
+    {
+      "id": "RU301:SC8:14887",
+      "station_code": "SC-8",
+      "observation_number": 14887,
+      "catalog_record_date": "1963-11-03",
+      "observation_epoch_utc": null,
+      "object_catalog_id": null,
+      "film_sheet_content_inspected": false,
+      "source_occurrence": "RU301:box2:printed6",
+      "status": "ORIGINAL_FILM_INDEX_METADATA_NOT_SENSOR_OBSERVATION",
+      "object_identity_status": "UNKNOWN_NOT_ATTRIBUTABLE_TO_NORAD528",
+      "frame": null,
+      "angular_values": null,
+      "angular_uncertainty": null,
+      "independence_family": "SMITHSONIAN_SAO_INSTITUTIONAL_ARCHIVE",
+      "hard_physical_constraint": false
+    },
+    {
+      "id": "RU301:SC8:14892",
+      "station_code": "SC-8",
+      "observation_number": 14892,
+      "catalog_record_date": "1963-11-04",
+      "observation_epoch_utc": null,
+      "object_catalog_id": null,
+      "film_sheet_content_inspected": false,
+      "source_occurrence": "RU301:box2:printed6",
+      "status": "ORIGINAL_FILM_INDEX_METADATA_NOT_SENSOR_OBSERVATION",
+      "object_identity_status": "UNKNOWN_NOT_ATTRIBUTABLE_TO_NORAD528",
+      "frame": null,
+      "angular_values": null,
+      "angular_uncertainty": null,
+      "independence_family": "SMITHSONIAN_SAO_INSTITUTIONAL_ARCHIVE",
+      "hard_physical_constraint": false
+    },
+    {
+      "id": "RU301:SC8:14894",
+      "station_code": "SC-8",
+      "observation_number": 14894,
+      "catalog_record_date": "1963-11-04",
+      "observation_epoch_utc": null,
+      "object_catalog_id": null,
+      "film_sheet_content_inspected": false,
+      "source_occurrence": "RU301:box2:printed6",
+      "status": "ORIGINAL_FILM_INDEX_METADATA_NOT_SENSOR_OBSERVATION",
+      "object_identity_status": "UNKNOWN_NOT_ATTRIBUTABLE_TO_NORAD528",
+      "frame": null,
+      "angular_values": null,
+      "angular_uncertainty": null,
+      "independence_family": "SMITHSONIAN_SAO_INSTITUTIONAL_ARCHIVE",
+      "hard_physical_constraint": false
+    },
+    {
+      "id": "RU301:SC8:14896",
+      "station_code": "SC-8",
+      "observation_number": 14896,
+      "catalog_record_date": "1963-11-05",
+      "observation_epoch_utc": null,
+      "object_catalog_id": null,
+      "film_sheet_content_inspected": false,
+      "source_occurrence": "RU301:box2:printed6",
+      "status": "ORIGINAL_FILM_INDEX_METADATA_NOT_SENSOR_OBSERVATION",
+      "object_identity_status": "UNKNOWN_NOT_ATTRIBUTABLE_TO_NORAD528",
+      "frame": null,
+      "angular_values": null,
+      "angular_uncertainty": null,
+      "independence_family": "SMITHSONIAN_SAO_INSTITUTIONAL_ARCHIVE",
+      "hard_physical_constraint": false
+    },
+    {
+      "id": "RU301:SC8:14897",
+      "station_code": "SC-8",
+      "observation_number": 14897,
+      "catalog_record_date": "1963-11-05",
+      "observation_epoch_utc": null,
+      "object_catalog_id": null,
+      "film_sheet_content_inspected": false,
+      "source_occurrence": "RU301:box2:printed6",
+      "status": "ORIGINAL_FILM_INDEX_METADATA_NOT_SENSOR_OBSERVATION",
+      "object_identity_status": "UNKNOWN_NOT_ATTRIBUTABLE_TO_NORAD528",
+      "frame": null,
+      "angular_values": null,
+      "angular_uncertainty": null,
+      "independence_family": "SMITHSONIAN_SAO_INSTITUTIONAL_ARCHIVE",
+      "hard_physical_constraint": false
+    },
+    {
+      "id": "RU301:SC8:14898",
+      "station_code": "SC-8",
+      "observation_number": 14898,
+      "catalog_record_date": "1963-11-05",
+      "observation_epoch_utc": null,
+      "object_catalog_id": null,
+      "film_sheet_content_inspected": false,
+      "source_occurrence": "RU301:box17:printed34",
+      "status": "ORIGINAL_FILM_INDEX_METADATA_NOT_SENSOR_OBSERVATION",
+      "object_identity_status": "UNKNOWN_NOT_ATTRIBUTABLE_TO_NORAD528",
+      "frame": null,
+      "angular_values": null,
+      "angular_uncertainty": null,
+      "independence_family": "SMITHSONIAN_SAO_INSTITUTIONAL_ARCHIVE",
+      "hard_physical_constraint": false
+    },
+    {
+      "id": "RU301:SC8:14899",
+      "station_code": "SC-8",
+      "observation_number": 14899,
+      "catalog_record_date": "1963-11-05",
+      "observation_epoch_utc": null,
+      "object_catalog_id": null,
+      "film_sheet_content_inspected": false,
+      "source_occurrence": "RU301:box17:printed34",
+      "status": "ORIGINAL_FILM_INDEX_METADATA_NOT_SENSOR_OBSERVATION",
+      "object_identity_status": "UNKNOWN_NOT_ATTRIBUTABLE_TO_NORAD528",
+      "frame": null,
+      "angular_values": null,
+      "angular_uncertainty": null,
+      "independence_family": "SMITHSONIAN_SAO_INSTITUTIONAL_ARCHIVE",
+      "hard_physical_constraint": false
+    },
+    {
+      "id": "RU301:SC8:14900",
+      "station_code": "SC-8",
+      "observation_number": 14900,
+      "catalog_record_date": "1963-11-05",
+      "observation_epoch_utc": null,
+      "object_catalog_id": null,
+      "film_sheet_content_inspected": false,
+      "source_occurrence": "RU301:box17:printed34",
+      "status": "ORIGINAL_FILM_INDEX_METADATA_NOT_SENSOR_OBSERVATION",
+      "object_identity_status": "UNKNOWN_NOT_ATTRIBUTABLE_TO_NORAD528",
+      "frame": null,
+      "angular_values": null,
+      "angular_uncertainty": null,
+      "independence_family": "SMITHSONIAN_SAO_INSTITUTIONAL_ARCHIVE",
+      "hard_physical_constraint": false
+    },
+    {
+      "id": "RU301:SC8:14902",
+      "station_code": "SC-8",
+      "observation_number": 14902,
+      "catalog_record_date": "1963-11-05",
+      "observation_epoch_utc": null,
+      "object_catalog_id": null,
+      "film_sheet_content_inspected": false,
+      "source_occurrence": "RU301:box2:printed6",
+      "status": "ORIGINAL_FILM_INDEX_METADATA_NOT_SENSOR_OBSERVATION",
+      "object_identity_status": "UNKNOWN_NOT_ATTRIBUTABLE_TO_NORAD528",
+      "frame": null,
+      "angular_values": null,
+      "angular_uncertainty": null,
+      "independence_family": "SMITHSONIAN_SAO_INSTITUTIONAL_ARCHIVE",
+      "hard_physical_constraint": false
+    }
+  ],
+  "variables": [
+    {
+      "id": "baker_nunn_SC8_film_catalogued_1963_11_01_to_05",
+      "kind": "archive_catalog_count",
+      "value": 15,
+      "unit": "indexed_items",
+      "source": "BN-RU301-20261112-02+03",
+      "not_a_measurement_of": "NORAD528"
+    },
+    {
+      "id": "SC8_instrument_site_geodesy_1963",
+      "kind": "latent_geodetic_site",
+      "value": null,
+      "source": "BN-RU301-20261112-02+03"
+    },
+    {
+      "id": "SC8_instrument_time_standard_1963",
+      "kind": "latent_time_standard",
+      "value": null,
+      "source": "BN-RU301-20261112-02+03"
+    },
+    {
+      "id": "RU301_SC8_target_object_per_film",
+      "kind": "latent_object_identity",
+      "value": null,
+      "source": "BN-RU301-20261112-02+03"
+    },
+    {
+      "id": "RU301_SC8_film_true_exposure_time",
+      "kind": "latent_utc_time",
+      "value": null,
+      "source": "BN-RU301-20261112-02+03"
+    },
+    {
+      "id": "RU301_SC8_direction_or_astrometric_solution",
+      "kind": "latent_angular_measurement",
+      "unit": "rad_or_degrees_unresolved",
+      "value": null,
+      "source": "BN-RU301-20261112-02+03"
+    },
+    {
+      "id": "RU301_SC8_astrometric_error_interval",
+      "kind": "latent_interval",
+      "value": null,
+      "source": "BN-RU301-20261112-02+03"
+    },
+    {
+      "id": "RU301_1963_11_08_film_in_selected_archive",
+      "kind": "catalog_list_exact_date",
+      "value": false,
+      "source": "BN-RU301-20261112-01+02+03",
+      "scope": "Only dates in institutional RU301 finding aid, not a universal negative"
+    },
+    {
+      "id": "SAO_SC8_measurement_of_528_exists",
+      "kind": "latent_boolean",
+      "value": null,
+      "source": "BN-RU301-20261112-02+03"
+    }
+  ],
+  "edges": [
+    {
+      "id": "RU301-film-index-to-datasheet",
+      "type": "ARCHIVE_RETRIEVAL",
+      "source_ids": [
+        "BN-RU301-20261112-01",
+        "BN-RU301-20261112-02",
+        "BN-RU301-20261112-03"
+      ],
+      "input_variables": [
+        "RU301_SC8_target_object_per_film",
+        "RU301_SC8_film_true_exposure_time"
+      ],
+      "status": "CONNECTED_PENDING_PRIMARY_DATASHEET",
+      "hard_constraint": false,
+      "missing": [
+        "digitized_film_or_original_datasheet",
+        "NORAD_target_identification",
+        "complete_time_reference"
+      ]
+    },
+    {
+      "id": "RU301-if-same-target-optical-forward",
+      "type": "CONDITIONAL_PHYSICAL_OBSERVABLE",
+      "source_ids": [
+        "BN-RU301-20261112-02",
+        "BN-RU301-20261112-03"
+      ],
+      "input_variables": [
+        "SC8_instrument_site_geodesy_1963",
+        "SC8_instrument_time_standard_1963",
+        "RU301_SC8_target_object_per_film",
+        "RU301_SC8_film_true_exposure_time",
+        "RU301_SC8_direction_or_astrometric_solution",
+        "RU301_SC8_astrometric_error_interval"
+      ],
+      "expression": "(r_NORAD528(t), EOP(t), station_geodesy, exposure_UTC, instrument_calibration) -> predicted_topocentric_direction; angular_residual=measured-predicted",
+      "status": "CONNECTED_PENDING_AUTHENTIC_528_MEASUREMENT",
+      "hard_constraint": false,
+      "missing": [
+        "proof_that_film_depicts_528",
+        "site_geodesy",
+        "UTC",
+        "angles",
+        "frame",
+        "uncertainty",
+        "astrometric_calibration"
+      ]
+    },
+    {
+      "id": "RU301-late-Nov-coverage-negative",
+      "type": "NEGATIVE_IN_SELECTED_INDEX_ONLY",
+      "source_ids": [
+        "BN-RU301-20261112-01",
+        "BN-RU301-20261112-02",
+        "BN-RU301-20261112-03"
+      ],
+      "input_variables": [
+        "RU301_1963_11_08_film_in_selected_archive",
+        "SAO_SC8_measurement_of_528_exists"
+      ],
+      "expression": "No listed selected film with date 1963-11-08 does not imply no 528 observation in any other original log.",
+      "status": "INDEX_SCOPE_ONLY",
+      "hard_constraint": false,
+      "missing": [
+        "complete_station_operational_observation_log"
+      ]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "BN-H1",
+      "statement": "One of the film data sheets reveals a previously unrecognized 528 observation with epoch/angles.",
+      "status": "UNTESTED",
+      "falsification": "Inspect 15 original film/data sheets, verify object IDs and instrument time standard; negative only for these selected exposures."
+    },
+    {
+      "id": "BN-H2",
+      "statement": "SC-8 had a 528 observation on 8 Nov 1963.",
+      "status": "OPEN",
+      "falsification": "Requires full operational logs for all active stations; absence in a curated example set cannot reject."
+    },
+    {
+      "id": "BN-H3",
+      "statement": "Selected films provide methods and timing reference to interpret other SAO 1963 observation records.",
+      "status": "OPEN",
+      "falsification": "Check data sheets and handbook for calibration/time convention; do not assume."
+    }
+  ],
+  "provenance_dependencies": [
+    "RU301 and earlier RU259/RU255 derive from Smithsonian cataloguing; counted as a new archival locator, not a new independent radar/optical measurement.",
+    "Film identifier SC-8 is a station code, NOT NORAD satellite number 8; station geographic mapping unverified."
+  ],
+  "negative_results": [
+    "No RU301 entry explicitly labelled 1963-11-08 found in full public finding aid for this selected film collection.",
+    "No image or accompanying film data sheet exposed in online catalogue for these film numbers.",
+    "No authenticated NORAD 528 identification, optical angles, radar range, or time recovered from RU301 finding aid.",
+    "PDF SHA256 unavailable because raw bytes could not be fetched in this environment; URL and page images verified."
+  ],
+  "prior_related_public_graphs": [
+    "research/constraints/moonwatch_ru255_1963_archival_graph.json",
+    "research/constraints/sao_1963_optical_archive_locators.json"
+  ],
+  "retrieval_grade": "PRIMARY_INSTITUTIONAL_ARCHIVAL_FINDING_AID_NOT_1963_SENSOR_DATA",
+  "physical_domain": "NOT_EVALUABLE_FROM_METADATA",
+  "checked_on": "2026-11-12"
+}
