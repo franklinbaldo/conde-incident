@@ -11,6 +11,13 @@ inductive Grade where
   | conditionalInference | stillUnverified
   deriving Repr, DecidableEq, BEq, Inhabited
 
+-- Compatibility type for the preserved 154-row Evidence.lean snapshot.
+-- This enum describes documentary status; it is not a physical conclusion.
+inductive Outcome where
+  | confirmedAsDocument | corroboratedAsMetadata | modelResult
+  | contradicted | remainsOpen | accessBlocked
+  deriving Repr, DecidableEq, BEq, Inhabited
+
 inductive Chain where
   | radioTupiFbis | diplomaticFollowup | noradNasaCatalog
   | jornalBahia | diarioNoticiasSalvador | jornalBrasil
