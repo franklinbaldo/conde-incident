@@ -1,0 +1,43 @@
+name: Gaviao Caderno 10 - independent Parquet and SSE audit
+on:
+  push:
+    branches: [gaviao/ch10-independent-overlap-sse-20261112]
+  pull_request:
+    paths:
+      - 'tools/gaviao_ch10_independent.py'
+      - 'tests/test_gaviao_ch10_independent.py'
+      - 'research/gaviao_ch10_review.md'
+      - 'team/memory/gaviao/**'
+      - '.github/workflows/gaviao-ch10-independent.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independent:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+      - name: Confirm actual tested SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          echo "TESTED_SHA=$(git rev-parse HEAD)"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install independent SVD and Parquet reader
+        run: python -m pip install numpy==2.2.6 pyarrow==21.0.0
+      - name: Twelve adverse synthetic controls
+        run: python -m unittest discover -s tests -p 'test_gaviao_ch10_independent.py' -v
+      - name: Actual pinned secondary Parquet replay, no Texugo imports
+        run: python tools/gaviao_ch10_independent.py --output "$RUNNER_TEMP/gaviao-ch10-independent.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gaviao-ch10-independent
+          path: ${{ runner.temp }}/gaviao-ch10-independent.json
+          if-no-files-found: error
