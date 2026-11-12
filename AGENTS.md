@@ -55,6 +55,11 @@ Scope of shared scientific/product work: **franklinbaldo/conde-incident**. Agent
 
 A nova separação entre projeto e memória pessoal está especificada em [docs/AGENT_WORKSPACES.md](docs/AGENT_WORKSPACES.md). Cada animal usa como **objetivo** um repositório GitHub privado próprio `franklinbaldo/<animal>`, com push direto, memória/skill/ferramentas livres; mensagens entre animais via issues no repositório privado do destinatário. Issues e PRs de implementação pertencem ao repositório do projeto. **Verificação de 12/11/2026:** os 13 repositórios pessoais já existem, com owner `franklinbaldo`, privacidade e Issues confirmadas pela API autenticada. O scaffold ainda está **parcial**, conforme `config/agent-roster.json` e a issue #93. Cada animal pode ler sua skill privada, registrar memória privada e usar issues do destinatário; código de produto permanece aqui por PR/CI. Não presumir que todas as pastas de bootstrap ou escritas individuais já tenham sido auditadas e jamais copiar memórias pessoais para o projeto público.
 
+## Publicação editorial do Conde (SSG Rust)
+- O gerador oficial para páginas estáticas, capítulos Markdown e Caderno de histórias é exclusivamente **SSG em Rust**, conforme https://docs.rs/ssg/latest/ssg/. Usar versão fixada, documentação e CLI real em CI; não introduzir geradores editoriais concorrentes.
+- Preservar Evidências e o laboratório científico React/Vite sob `/conde-incident/lab/`, com a navegação do Caderno. Publicar via GitHub Actions apenas após integração na `main`; validar o build, o SHA do deployment e a URL pública antes de afirmar que o site está no ar.
+- Cada capítulo editorial exige avanço verificável, proveniência, distinção entre fato, hipótese e resultado negativo, e verificação de todos os links e caminhos do site no artefato gerado.
+
 ## Next targets
 - PR #1: evidence-first site, cumulative C01–C238 research matrix, SGP4 baseline fixes, Lean core and CI; inspect, validate, integrate in a controlled manner.
 - Full Lean archive from original compiled package: `Evidence.lean`, 154 propositions / 151 labels, including C44–C46 collisions.
