@@ -45,10 +45,10 @@ def entry_orbit(c179: str) -> dict:
         return float(m.group(1).replace(",", "."))
 
     # Values are the transcribed AFSPC-mirror values in the frozen matrix.
-    n = number("mean motion", r"movimento médio\s+([\d,]+) rev/dia")
-    inclination = number("inclination", r"inclinação\s+([\d,]+)°")
-    raan = number("RAAN", r"nó\s+([\d,]+)°")
-    eccentricity = number("eccentricity", r"excentricidade\s+([\d,]+)")
+    n = number("mean motion", r"movimento médio\s+([0-9]+(?:[.,][0-9]+)?) rev/dia")
+    inclination = number("inclination", r"inclinação\s+([0-9]+(?:[.,][0-9]+)?)°")
+    raan = number("RAAN", r"nó\s+([0-9]+(?:[.,][0-9]+)?)°")
+    eccentricity = number("eccentricity", r"excentricidade\s+([0-9]+(?:[.,][0-9]+)?)")
     if not 0 <= raan < 360 or not 0 <= eccentricity < 1 or not 0 <= inclination <= 180 or n <= 0:
         raise ValueError("incompatible transcribed orbital elements")
     n_rads = 2 * math.pi * n / 86400
