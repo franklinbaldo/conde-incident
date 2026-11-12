@@ -139,3 +139,12 @@ import Conde1963.PairedEnclosures
 #print axioms Conde1963.disjoint_paired_bounds_forbid_predicted_impact
 #print axioms Conde1963.incompatible_paired_bounds_refute_universal_impact
 #print axioms Conde1963.paired_bounds_survive_common_narrowing
+
+-- Empirical truth bridge is an additional UNINSTANTIATED premise, not forecast self-soundness.
+#print axioms Conde1963.hypothetical_actual_event_has_certified_cell_bound
+#print axioms Conde1963.certified_truth_excludes_conde
+#print axioms Conde1963.certified_truth_forces_conde
+#print axioms Conde1963.certified_truth_identifies_other_window
+#print axioms Conde1963.certified_truth_exclusion_persists_with_witness
+#print axioms Conde1963.absent_actual_impact_refutes_truth_forcing
+#print axioms Conde1963.self_sound_forecast_does_not_cover_unlinked_reality
