@@ -88,6 +88,17 @@ export const Navigation: React.FC<NavigationProps> = ({
 
   return (
     <header className="border-b border-zinc-800 bg-zinc-950/90 backdrop-blur sticky top-0 z-50">
+      {/* First keyboard stop: do not change the hash, which is the SPA router. */}
+      <a
+        href="#main-content"
+        onClick={(event) => {
+          event.preventDefault();
+          document.getElementById('main-content')?.focus();
+        }}
+        className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[100] focus:rounded-md focus:border-2 focus:border-amber-300 focus:bg-zinc-950 focus:px-4 focus:py-3 focus:text-sm focus:font-semibold focus:text-white focus:outline-none"
+      >
+        {lang === 'pt' ? 'Pular para o conteúdo principal' : 'Skip to main content'}
+      </a>
       {/* Top Banner */}
       <div className="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs border-b border-zinc-900">
         <div className="flex items-center gap-2 text-zinc-300">
@@ -110,8 +121,8 @@ export const Navigation: React.FC<NavigationProps> = ({
           {/* Python Export Button */}
           <button
             onClick={onOpenPython}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900 hover:bg-zinc-800 border border-zinc-700/80 text-zinc-300 hover:text-cyan-400 transition-colors font-mono cursor-pointer"
-            title="Exportar código Python reprodutível"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900 hover:bg-zinc-800 border border-zinc-700/80 text-zinc-300 hover:text-cyan-400 transition-colors font-mono cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300"
+            title={lang === 'pt' ? 'Exportar código Python reprodutível' : 'Export reproducible Python code'}
           >
             <Code className="w-3.5 h-3.5 text-cyan-400" />
             <span>Python Script</span>
@@ -124,7 +135,7 @@ export const Navigation: React.FC<NavigationProps> = ({
               type="button"
               aria-pressed={lang === 'pt'}
               aria-label="Português (Brasil)"
-              className={`px-2 py-0.5 rounded text-[11px] font-semibold transition-colors ${
+              className={`px-2 py-0.5 rounded text-[11px] font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 ${
                 lang === 'pt' ? 'bg-cyan-600 text-white' : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
@@ -155,7 +166,7 @@ export const Navigation: React.FC<NavigationProps> = ({
               key={tab.id}
               href={tabHref(tab.id)}
               aria-current={isActive ? 'page' : undefined}
-              className={`flex items-center gap-2 px-3 py-2 rounded-md text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
+              className={`flex items-center gap-2 px-3 py-2 rounded-md text-xs font-medium whitespace-nowrap transition-all cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-300 ${
                 isActive
                   ? 'bg-zinc-800 text-cyan-300 border border-cyan-800/60 shadow-sm'
                   : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900/80 border border-transparent'
