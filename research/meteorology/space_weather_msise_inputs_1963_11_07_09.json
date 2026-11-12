@@ -1,0 +1,693 @@
+{
+  "schema": "conde.1963-conditional-msise-drivers/v1",
+  "captured_on_utc": "2026-11-12",
+  "investigation_scope": "Nov 7-9 1963; NO inferred reentry or meteorological balloon trajectory or Conde-local conditions.",
+  "source_documents": {
+    "F107": {
+      "url": "https://www.spaceweather.gc.ca/solar_flux_data/daily_flux_values/F107_1947_1996.txt",
+      "sha256": "60c51e8878dc70561e615b5cefb26315c201116fe4560799ec19237bed691c61",
+      "bytes": 1184761,
+      "raw_series_retained_in_snapshot": "subset_by_epoch"
+    },
+    "Ap": {
+      "url": "https://kp.gfz.de/app/json/?start=1963-11-04T00:00:00Z&end=1963-11-10T23:59:59Z&index=Ap&status=def",
+      "sha256": "9a70ce37decb7b42db774f62864581f9adbe7618fb364dd3ee4036e079e8d9a7",
+      "bytes": 325,
+      "raw_series_retained_in_snapshot": "subset_by_epoch"
+    },
+    "ap": {
+      "url": "https://kp.gfz.de/app/json/?start=1963-11-04T00:00:00Z&end=1963-11-10T23:59:59Z&index=ap&status=def",
+      "sha256": "923db2e0a68a3f348ee088da9ad679f7b1f6393fec6368356b8776f82c9ac9ad",
+      "bytes": 1971,
+      "raw_series_retained_in_snapshot": "subset_by_epoch"
+    },
+    "Kp": {
+      "url": "https://kp.gfz.de/app/json/?start=1963-11-04T00:00:00Z&end=1963-11-10T23:59:59Z&index=Kp&status=def",
+      "sha256": "3003fe666c86561d2b54fa82baadde6cafdba988fe5aa1915d0ff45ac93dcafa",
+      "bytes": 2017,
+      "raw_series_retained_in_snapshot": "subset_by_epoch"
+    }
+  },
+  "independence": {
+    "gfz": "planetary geomagnetic activity; GFZ Ap, ap and Kp are same upstream and NOT three independent physical records",
+    "nrc": "Canadian solar 10.7 cm monitoring, distinct observable from GFZ; CelesTrak derived indices are not independent validations",
+    "noaa_igra": "Recife wind profile C151 is a different altitude regime; NOT a density or local wind measurement; not counted in space-weather indices"
+  },
+  "locations_and_vertical_scopes": {
+    "gfz": "planetary index compiled from geomagnetic observatories, not a site reading in Conde or local altitude-resolved density",
+    "nrc": "solar radio flux archived by Canada; 1963 Ottawa-era station, original table lacks measurement clock precision",
+    "altitude_resolution": "none; numerical altitude is a model scenario input, not observed in drivers"
+  },
+  "reference_units": {
+    "F107": "solar flux unit (10^-22 W m^-2 Hz^-1)",
+    "Ap": "planetary daily linear geomagnetic index (dimensionless)",
+    "ap": "3-hour planetary linear geomagnetic index (dimensionless)",
+    "Kp": "3-hour quasi-logarithmic planetary index (dimensionless)"
+  },
+  "measurement_uncertainty": null,
+  "date_grid": {
+    "gfz_start": "1963-11-04",
+    "gfz_end": "1963-11-10",
+    "nrc_subset_start": "1963-09-27",
+    "nrc_subset_end": "1963-12-20",
+    "f107A_window_days": 81,
+    "f107A_center_includes_future_day_in_retrospective_calculation": true
+  },
+  "raw_series": {
+    "F107_observed_daily": {
+      "1963-09-27": {
+        "observed_sfu": 78.1,
+        "adjusted_sfu": 78.4,
+        "ursi_d_sfu": 70.6
+      },
+      "1963-09-28": {
+        "observed_sfu": 73.9,
+        "adjusted_sfu": 74.2,
+        "ursi_d_sfu": 66.8
+      },
+      "1963-09-29": {
+        "observed_sfu": 70.9,
+        "adjusted_sfu": 71.1,
+        "ursi_d_sfu": 64.0
+      },
+      "1963-09-30": {
+        "observed_sfu": 69.4,
+        "adjusted_sfu": 69.6,
+        "ursi_d_sfu": 62.6
+      },
+      "1963-10-01": {
+        "observed_sfu": 68.3,
+        "adjusted_sfu": 68.4,
+        "ursi_d_sfu": 61.6
+      },
+      "1963-10-02": {
+        "observed_sfu": 69.4,
+        "adjusted_sfu": 69.5,
+        "ursi_d_sfu": 62.6
+      },
+      "1963-10-03": {
+        "observed_sfu": 70.7,
+        "adjusted_sfu": 70.8,
+        "ursi_d_sfu": 63.7
+      },
+      "1963-10-04": {
+        "observed_sfu": 70.9,
+        "adjusted_sfu": 70.9,
+        "ursi_d_sfu": 63.8
+      },
+      "1963-10-05": {
+        "observed_sfu": 73.3,
+        "adjusted_sfu": 73.3,
+        "ursi_d_sfu": 66.0
+      },
+      "1963-10-06": {
+        "observed_sfu": 77.5,
+        "adjusted_sfu": 77.4,
+        "ursi_d_sfu": 69.7
+      },
+      "1963-10-07": {
+        "observed_sfu": 79.1,
+        "adjusted_sfu": 79.0,
+        "ursi_d_sfu": 71.1
+      },
+      "1963-10-08": {
+        "observed_sfu": 85.7,
+        "adjusted_sfu": 85.5,
+        "ursi_d_sfu": 77.0
+      },
+      "1963-10-09": {
+        "observed_sfu": 86.4,
+        "adjusted_sfu": 86.2,
+        "ursi_d_sfu": 77.6
+      },
+      "1963-10-10": {
+        "observed_sfu": 87.0,
+        "adjusted_sfu": 86.7,
+        "ursi_d_sfu": 78.1
+      },
+      "1963-10-11": {
+        "observed_sfu": 87.8,
+        "adjusted_sfu": 87.5,
+        "ursi_d_sfu": 78.7
+      },
+      "1963-10-12": {
+        "observed_sfu": 84.7,
+        "adjusted_sfu": 84.3,
+        "ursi_d_sfu": 75.9
+      },
+      "1963-10-13": {
+        "observed_sfu": 84.9,
+        "adjusted_sfu": 84.5,
+        "ursi_d_sfu": 76.0
+      },
+      "1963-10-14": {
+        "observed_sfu": 86.1,
+        "adjusted_sfu": 85.6,
+        "ursi_d_sfu": 77.1
+      },
+      "1963-10-15": {
+        "observed_sfu": 88.8,
+        "adjusted_sfu": 88.3,
+        "ursi_d_sfu": 79.5
+      },
+      "1963-10-16": {
+        "observed_sfu": 87.9,
+        "adjusted_sfu": 87.3,
+        "ursi_d_sfu": 78.6
+      },
+      "1963-10-17": {
+        "observed_sfu": 84.9,
+        "adjusted_sfu": 84.3,
+        "ursi_d_sfu": 75.9
+      },
+      "1963-10-18": {
+        "observed_sfu": 83.7,
+        "adjusted_sfu": 83.1,
+        "ursi_d_sfu": 74.8
+      },
+      "1963-10-19": {
+        "observed_sfu": 88.5,
+        "adjusted_sfu": 87.8,
+        "ursi_d_sfu": 79.0
+      },
+      "1963-10-20": {
+        "observed_sfu": 89.4,
+        "adjusted_sfu": 88.6,
+        "ursi_d_sfu": 79.8
+      },
+      "1963-10-21": {
+        "observed_sfu": 94.5,
+        "adjusted_sfu": 93.6,
+        "ursi_d_sfu": 84.3
+      },
+      "1963-10-22": {
+        "observed_sfu": 96.2,
+        "adjusted_sfu": 95.3,
+        "ursi_d_sfu": 85.7
+      },
+      "1963-10-23": {
+        "observed_sfu": 94.2,
+        "adjusted_sfu": 93.2,
+        "ursi_d_sfu": 83.9
+      },
+      "1963-10-24": {
+        "observed_sfu": 95.0,
+        "adjusted_sfu": 94.0,
+        "ursi_d_sfu": 84.6
+      },
+      "1963-10-25": {
+        "observed_sfu": 96.7,
+        "adjusted_sfu": 95.6,
+        "ursi_d_sfu": 86.0
+      },
+      "1963-10-26": {
+        "observed_sfu": 96.8,
+        "adjusted_sfu": 95.6,
+        "ursi_d_sfu": 86.1
+      },
+      "1963-10-27": {
+        "observed_sfu": 89.0,
+        "adjusted_sfu": 87.9,
+        "ursi_d_sfu": 79.1
+      },
+      "1963-10-28": {
+        "observed_sfu": 84.9,
+        "adjusted_sfu": 83.8,
+        "ursi_d_sfu": 75.4
+      },
+      "1963-10-29": {
+        "observed_sfu": 85.5,
+        "adjusted_sfu": 84.3,
+        "ursi_d_sfu": 75.9
+      },
+      "1963-10-30": {
+        "observed_sfu": 86.0,
+        "adjusted_sfu": 84.8,
+        "ursi_d_sfu": 76.3
+      },
+      "1963-10-31": {
+        "observed_sfu": 82.7,
+        "adjusted_sfu": 81.5,
+        "ursi_d_sfu": 73.3
+      },
+      "1963-11-01": {
+        "observed_sfu": 88.2,
+        "adjusted_sfu": 86.9,
+        "ursi_d_sfu": 78.2
+      },
+      "1963-11-02": {
+        "observed_sfu": 85.5,
+        "adjusted_sfu": 84.2,
+        "ursi_d_sfu": 75.7
+      },
+      "1963-11-03": {
+        "observed_sfu": 83.6,
+        "adjusted_sfu": 82.2,
+        "ursi_d_sfu": 74.0
+      },
+      "1963-11-04": {
+        "observed_sfu": 83.9,
+        "adjusted_sfu": 82.5,
+        "ursi_d_sfu": 74.2
+      },
+      "1963-11-05": {
+        "observed_sfu": 81.0,
+        "adjusted_sfu": 79.6,
+        "ursi_d_sfu": 71.6
+      },
+      "1963-11-06": {
+        "observed_sfu": 78.6,
+        "adjusted_sfu": 77.2,
+        "ursi_d_sfu": 69.5
+      },
+      "1963-11-07": {
+        "observed_sfu": 76.6,
+        "adjusted_sfu": 75.2,
+        "ursi_d_sfu": 67.7
+      },
+      "1963-11-08": {
+        "observed_sfu": 75.4,
+        "adjusted_sfu": 74.0,
+        "ursi_d_sfu": 66.6
+      },
+      "1963-11-09": {
+        "observed_sfu": 76.4,
+        "adjusted_sfu": 74.9,
+        "ursi_d_sfu": 67.4
+      },
+      "1963-11-10": {
+        "observed_sfu": 76.0,
+        "adjusted_sfu": 74.5,
+        "ursi_d_sfu": 67.1
+      },
+      "1963-11-11": {
+        "observed_sfu": 77.2,
+        "adjusted_sfu": 75.7,
+        "ursi_d_sfu": 68.1
+      },
+      "1963-11-12": {
+        "observed_sfu": 77.3,
+        "adjusted_sfu": 75.7,
+        "ursi_d_sfu": 68.1
+      },
+      "1963-11-13": {
+        "observed_sfu": 78.1,
+        "adjusted_sfu": 76.5,
+        "ursi_d_sfu": 68.8
+      },
+      "1963-11-14": {
+        "observed_sfu": 78.7,
+        "adjusted_sfu": 77.0,
+        "ursi_d_sfu": 69.3
+      },
+      "1963-11-15": {
+        "observed_sfu": 81.7,
+        "adjusted_sfu": 79.9,
+        "ursi_d_sfu": 71.9
+      },
+      "1963-11-16": {
+        "observed_sfu": 82.2,
+        "adjusted_sfu": 80.4,
+        "ursi_d_sfu": 72.3
+      },
+      "1963-11-17": {
+        "observed_sfu": 81.2,
+        "adjusted_sfu": 79.4,
+        "ursi_d_sfu": 71.4
+      },
+      "1963-11-18": {
+        "observed_sfu": 83.4,
+        "adjusted_sfu": 81.5,
+        "ursi_d_sfu": 73.3
+      },
+      "1963-11-19": {
+        "observed_sfu": 86.7,
+        "adjusted_sfu": 84.7,
+        "ursi_d_sfu": 76.2
+      },
+      "1963-11-20": {
+        "observed_sfu": 85.4,
+        "adjusted_sfu": 83.4,
+        "ursi_d_sfu": 75.0
+      },
+      "1963-11-21": {
+        "observed_sfu": 86.8,
+        "adjusted_sfu": 84.7,
+        "ursi_d_sfu": 76.2
+      },
+      "1963-11-22": {
+        "observed_sfu": 87.2,
+        "adjusted_sfu": 85.1,
+        "ursi_d_sfu": 76.5
+      },
+      "1963-11-23": {
+        "observed_sfu": 85.1,
+        "adjusted_sfu": 83.0,
+        "ursi_d_sfu": 74.7
+      },
+      "1963-11-24": {
+        "observed_sfu": 84.3,
+        "adjusted_sfu": 82.2,
+        "ursi_d_sfu": 73.9
+      },
+      "1963-11-25": {
+        "observed_sfu": 82.8,
+        "adjusted_sfu": 80.7,
+        "ursi_d_sfu": 72.6
+      },
+      "1963-11-26": {
+        "observed_sfu": 82.9,
+        "adjusted_sfu": 80.7,
+        "ursi_d_sfu": 72.7
+      },
+      "1963-11-27": {
+        "observed_sfu": 82.2,
+        "adjusted_sfu": 80.0,
+        "ursi_d_sfu": 72.0
+      },
+      "1963-11-28": {
+        "observed_sfu": 79.9,
+        "adjusted_sfu": 77.8,
+        "ursi_d_sfu": 70.0
+      },
+      "1963-11-29": {
+        "observed_sfu": 80.0,
+        "adjusted_sfu": 77.8,
+        "ursi_d_sfu": 70.0
+      },
+      "1963-11-30": {
+        "observed_sfu": 80.2,
+        "adjusted_sfu": 78.0,
+        "ursi_d_sfu": 70.2
+      },
+      "1963-12-01": {
+        "observed_sfu": 79.7,
+        "adjusted_sfu": 77.5,
+        "ursi_d_sfu": 69.7
+      },
+      "1963-12-02": {
+        "observed_sfu": 81.4,
+        "adjusted_sfu": 79.1,
+        "ursi_d_sfu": 71.2
+      },
+      "1963-12-03": {
+        "observed_sfu": 80.2,
+        "adjusted_sfu": 77.9,
+        "ursi_d_sfu": 70.1
+      },
+      "1963-12-04": {
+        "observed_sfu": 78.7,
+        "adjusted_sfu": 76.4,
+        "ursi_d_sfu": 68.8
+      },
+      "1963-12-05": {
+        "observed_sfu": 76.7,
+        "adjusted_sfu": 74.5,
+        "ursi_d_sfu": 67.0
+      },
+      "1963-12-06": {
+        "observed_sfu": 77.4,
+        "adjusted_sfu": 75.1,
+        "ursi_d_sfu": 67.6
+      },
+      "1963-12-07": {
+        "observed_sfu": 77.9,
+        "adjusted_sfu": 75.6,
+        "ursi_d_sfu": 68.0
+      },
+      "1963-12-08": {
+        "observed_sfu": 78.2,
+        "adjusted_sfu": 75.9,
+        "ursi_d_sfu": 68.3
+      },
+      "1963-12-09": {
+        "observed_sfu": 79.7,
+        "adjusted_sfu": 77.3,
+        "ursi_d_sfu": 69.6
+      },
+      "1963-12-10": {
+        "observed_sfu": 80.0,
+        "adjusted_sfu": 77.6,
+        "ursi_d_sfu": 69.8
+      },
+      "1963-12-11": {
+        "observed_sfu": 81.5,
+        "adjusted_sfu": 79.0,
+        "ursi_d_sfu": 71.1
+      },
+      "1963-12-12": {
+        "observed_sfu": 83.1,
+        "adjusted_sfu": 80.5,
+        "ursi_d_sfu": 72.5
+      },
+      "1963-12-13": {
+        "observed_sfu": 82.1,
+        "adjusted_sfu": 79.6,
+        "ursi_d_sfu": 71.6
+      },
+      "1963-12-14": {
+        "observed_sfu": 80.3,
+        "adjusted_sfu": 77.8,
+        "ursi_d_sfu": 70.0
+      },
+      "1963-12-15": {
+        "observed_sfu": 81.9,
+        "adjusted_sfu": 79.3,
+        "ursi_d_sfu": 71.4
+      },
+      "1963-12-16": {
+        "observed_sfu": 79.6,
+        "adjusted_sfu": 77.1,
+        "ursi_d_sfu": 69.4
+      },
+      "1963-12-17": {
+        "observed_sfu": 79.8,
+        "adjusted_sfu": 77.3,
+        "ursi_d_sfu": 69.5
+      },
+      "1963-12-18": {
+        "observed_sfu": 80.0,
+        "adjusted_sfu": 77.5,
+        "ursi_d_sfu": 69.7
+      },
+      "1963-12-19": {
+        "observed_sfu": 79.7,
+        "adjusted_sfu": 77.2,
+        "ursi_d_sfu": 69.4
+      },
+      "1963-12-20": {
+        "observed_sfu": 80.1,
+        "adjusted_sfu": 77.5,
+        "ursi_d_sfu": 69.8
+      }
+    },
+    "Ap": {
+      "1963-11-04T00:00:00Z": 6,
+      "1963-11-05T00:00:00Z": 2,
+      "1963-11-06T00:00:00Z": 12,
+      "1963-11-07T00:00:00Z": 39,
+      "1963-11-08T00:00:00Z": 46,
+      "1963-11-09T00:00:00Z": 33,
+      "1963-11-10T00:00:00Z": 29
+    },
+    "ap": {
+      "1963-11-04T00:00:00Z": 5,
+      "1963-11-04T03:00:00Z": 9,
+      "1963-11-04T06:00:00Z": 6,
+      "1963-11-04T09:00:00Z": 6,
+      "1963-11-04T12:00:00Z": 6,
+      "1963-11-04T15:00:00Z": 4,
+      "1963-11-04T18:00:00Z": 9,
+      "1963-11-04T21:00:00Z": 5,
+      "1963-11-05T00:00:00Z": 2,
+      "1963-11-05T03:00:00Z": 3,
+      "1963-11-05T06:00:00Z": 2,
+      "1963-11-05T09:00:00Z": 2,
+      "1963-11-05T12:00:00Z": 2,
+      "1963-11-05T15:00:00Z": 2,
+      "1963-11-05T18:00:00Z": 0,
+      "1963-11-05T21:00:00Z": 2,
+      "1963-11-06T00:00:00Z": 6,
+      "1963-11-06T03:00:00Z": 5,
+      "1963-11-06T06:00:00Z": 9,
+      "1963-11-06T09:00:00Z": 7,
+      "1963-11-06T12:00:00Z": 18,
+      "1963-11-06T15:00:00Z": 12,
+      "1963-11-06T18:00:00Z": 15,
+      "1963-11-06T21:00:00Z": 27,
+      "1963-11-07T00:00:00Z": 18,
+      "1963-11-07T03:00:00Z": 39,
+      "1963-11-07T06:00:00Z": 22,
+      "1963-11-07T09:00:00Z": 48,
+      "1963-11-07T12:00:00Z": 27,
+      "1963-11-07T15:00:00Z": 39,
+      "1963-11-07T18:00:00Z": 80,
+      "1963-11-07T21:00:00Z": 39,
+      "1963-11-08T00:00:00Z": 56,
+      "1963-11-08T03:00:00Z": 67,
+      "1963-11-08T06:00:00Z": 80,
+      "1963-11-08T09:00:00Z": 32,
+      "1963-11-08T12:00:00Z": 32,
+      "1963-11-08T15:00:00Z": 39,
+      "1963-11-08T18:00:00Z": 32,
+      "1963-11-08T21:00:00Z": 27,
+      "1963-11-09T00:00:00Z": 32,
+      "1963-11-09T03:00:00Z": 22,
+      "1963-11-09T06:00:00Z": 32,
+      "1963-11-09T09:00:00Z": 18,
+      "1963-11-09T12:00:00Z": 32,
+      "1963-11-09T15:00:00Z": 32,
+      "1963-11-09T18:00:00Z": 48,
+      "1963-11-09T21:00:00Z": 48,
+      "1963-11-10T00:00:00Z": 48,
+      "1963-11-10T03:00:00Z": 32,
+      "1963-11-10T06:00:00Z": 18,
+      "1963-11-10T09:00:00Z": 27,
+      "1963-11-10T12:00:00Z": 18,
+      "1963-11-10T15:00:00Z": 39,
+      "1963-11-10T18:00:00Z": 22,
+      "1963-11-10T21:00:00Z": 27
+    },
+    "Kp": {
+      "1963-11-04T00:00:00Z": 1.333,
+      "1963-11-04T03:00:00Z": 2.333,
+      "1963-11-04T06:00:00Z": 1.667,
+      "1963-11-04T09:00:00Z": 1.667,
+      "1963-11-04T12:00:00Z": 1.667,
+      "1963-11-04T15:00:00Z": 1.0,
+      "1963-11-04T18:00:00Z": 2.333,
+      "1963-11-04T21:00:00Z": 1.333,
+      "1963-11-05T00:00:00Z": 0.333,
+      "1963-11-05T03:00:00Z": 0.667,
+      "1963-11-05T06:00:00Z": 0.333,
+      "1963-11-05T09:00:00Z": 0.333,
+      "1963-11-05T12:00:00Z": 0.333,
+      "1963-11-05T15:00:00Z": 0.333,
+      "1963-11-05T18:00:00Z": 0.0,
+      "1963-11-05T21:00:00Z": 0.333,
+      "1963-11-06T00:00:00Z": 1.667,
+      "1963-11-06T03:00:00Z": 1.333,
+      "1963-11-06T06:00:00Z": 2.333,
+      "1963-11-06T09:00:00Z": 2.0,
+      "1963-11-06T12:00:00Z": 3.333,
+      "1963-11-06T15:00:00Z": 2.667,
+      "1963-11-06T18:00:00Z": 3.0,
+      "1963-11-06T21:00:00Z": 4.0,
+      "1963-11-07T00:00:00Z": 3.333,
+      "1963-11-07T03:00:00Z": 4.667,
+      "1963-11-07T06:00:00Z": 3.667,
+      "1963-11-07T09:00:00Z": 5.0,
+      "1963-11-07T12:00:00Z": 4.0,
+      "1963-11-07T15:00:00Z": 4.667,
+      "1963-11-07T18:00:00Z": 6.0,
+      "1963-11-07T21:00:00Z": 4.667,
+      "1963-11-08T00:00:00Z": 5.333,
+      "1963-11-08T03:00:00Z": 5.667,
+      "1963-11-08T06:00:00Z": 6.0,
+      "1963-11-08T09:00:00Z": 4.333,
+      "1963-11-08T12:00:00Z": 4.333,
+      "1963-11-08T15:00:00Z": 4.667,
+      "1963-11-08T18:00:00Z": 4.333,
+      "1963-11-08T21:00:00Z": 4.0,
+      "1963-11-09T00:00:00Z": 4.333,
+      "1963-11-09T03:00:00Z": 3.667,
+      "1963-11-09T06:00:00Z": 4.333,
+      "1963-11-09T09:00:00Z": 3.333,
+      "1963-11-09T12:00:00Z": 4.333,
+      "1963-11-09T15:00:00Z": 4.333,
+      "1963-11-09T18:00:00Z": 5.0,
+      "1963-11-09T21:00:00Z": 5.0,
+      "1963-11-10T00:00:00Z": 5.0,
+      "1963-11-10T03:00:00Z": 4.333,
+      "1963-11-10T06:00:00Z": 3.333,
+      "1963-11-10T09:00:00Z": 4.0,
+      "1963-11-10T12:00:00Z": 3.333,
+      "1963-11-10T15:00:00Z": 4.667,
+      "1963-11-10T18:00:00Z": 3.667,
+      "1963-11-10T21:00:00Z": 4.0
+    }
+  },
+  "model_inputs": [
+    {
+      "epoch_utc": "1963-11-07T12:00:00Z",
+      "epoch_role": "ARBITRARY_MODEL_EVALUATION_EPOCH_NOT_REENTRY_OR_BALLOON_LAUNCH",
+      "location": null,
+      "altitude_km": null,
+      "local_apparent_solar_time_hours": null,
+      "F107_previous_day_observed_sfu": 78.6,
+      "F107A_81day_centered_observed_sfu": 82.190123,
+      "Ap_daily_planetary": 39,
+      "ap_history_planetary": [
+        39,
+        27,
+        48,
+        22,
+        39,
+        13.875,
+        2.375
+      ],
+      "Kp_at_epoch": 4.0,
+      "input_uncertainty": null,
+      "density_kg_m3": null,
+      "density_uncertainty": null,
+      "status": "DRIVERS_READY_POSITION_AND_MODEL_PARAMETERS_UNKNOWN_NO_DENSITY_INFERENCE"
+    },
+    {
+      "epoch_utc": "1963-11-08T12:00:00Z",
+      "epoch_role": "ARBITRARY_MODEL_EVALUATION_EPOCH_NOT_REENTRY_OR_BALLOON_LAUNCH",
+      "location": null,
+      "altitude_km": null,
+      "local_apparent_solar_time_hours": null,
+      "F107_previous_day_observed_sfu": 76.6,
+      "F107A_81day_centered_observed_sfu": 82.265432,
+      "Ap_daily_planetary": 46,
+      "ap_history_planetary": [
+        46,
+        32,
+        32,
+        80,
+        67,
+        43.75,
+        13.875
+      ],
+      "Kp_at_epoch": 4.333,
+      "input_uncertainty": null,
+      "density_kg_m3": null,
+      "density_uncertainty": null,
+      "status": "DRIVERS_READY_POSITION_AND_MODEL_PARAMETERS_UNKNOWN_NO_DENSITY_INFERENCE"
+    },
+    {
+      "epoch_utc": "1963-11-09T12:00:00Z",
+      "epoch_role": "ARBITRARY_MODEL_EVALUATION_EPOCH_NOT_REENTRY_OR_BALLOON_LAUNCH",
+      "location": null,
+      "altitude_km": null,
+      "local_apparent_solar_time_hours": null,
+      "F107_previous_day_observed_sfu": 75.4,
+      "F107A_81day_centered_observed_sfu": 82.374074,
+      "Ap_daily_planetary": 33,
+      "ap_history_planetary": [
+        33,
+        32,
+        18,
+        32,
+        22,
+        42.625,
+        43.75
+      ],
+      "Kp_at_epoch": 4.333,
+      "input_uncertainty": null,
+      "density_kg_m3": null,
+      "density_uncertainty": null,
+      "status": "DRIVERS_READY_POSITION_AND_MODEL_PARAMETERS_UNKNOWN_NO_DENSITY_INFERENCE"
+    }
+  ],
+  "input_conventions_reference": "https://github.com/NCAR/GLOW/blob/master/nrlmsise00.f",
+  "physical_constraint_status": "CONNECTED_PENDING_CALIBRATION",
+  "missing_bridge": [
+    "historical_or_conditional_position_time_trajectory",
+    "chosen density model and settings",
+    "parameter errors and model discrepancy",
+    "observation epochs or tracking constraints for 528",
+    "no link from planetary index to geographic impact"
+  ]
+}
