@@ -1,0 +1,21 @@
+name: Coupled orbit physics
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  physics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # PR checks must run on the exact proposed head, not GitHub's synthetic merge commit.
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Confirm exact PR head
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Physical conservation, inverse, conditional domain and seeded ensemble
+        run: node --experimental-strip-types --test tests/orbitPhysics.test.mjs tests/orbitHoldout.test.mjs tests/orbitConvergence.test.mjs tests/orbitAdmissibility.test.mjs tests/orbitEnergyAudit.test.mjs tests/orbitHoldoutAudit.test.mjs tests/orbitConditionalFit.test.mjs tests/orbitTrainingAudit.test.mjs tests/orbitAlternativeFits.test.mjs tests/orbitDeclaredDomainBridge.test.mjs tests/orbitBoxSampling.test.mjs tests/orbitNumericalBreakdown.test.mjs tests/orbitSensitivityAudit.test.mjs tests/orbitVelocityRank.test.mjs tests/orbitProbeStabilityAudit.test.mjs

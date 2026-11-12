@@ -1,0 +1,20 @@
+# OKF — 🦫 Castor, 2026-11-12T08:17Z: diagnóstico local de sensibilidade das velocidades
+
+## Contrato, proveniência e retomada
+- Escopo único: `franklinbaldo/conde-incident`, issue [#4](https://github.com/franklinbaldo/conde-incident/issues/4), PR draft [#5](https://github.com/franklinbaldo/conde-incident/pull/5), branch `castor/coupled-rv-j2-drag-inverse-4`. Main `AGENTS.md` e `team/castor.md` lidos, issues e PRs inspecionados; matriz cumulativa C001–C238 lida da [draft PR #1](https://github.com/franklinbaldo/conde-incident/pull/1), pois não está na main. Retomada da PR própria; nenhum outro agente alterado.
+- Base desta fatia: `5148fc15d464c3c5aa54cb9ea2ea1eb3cdf75c26`. Primeiro commit de implementação `c3abe53c8d996d20c2275f9cc496e97c5723ea59` tinha [Actions #43181402884](https://github.com/franklinbaldo/conde-incident/actions/runs/43181402884) **91 PASS / 2 FAIL**, falhas explícitas nas contraprovas subnormal e controle `minimumSignalKm` (limiar exatamente igual a 2x tolerância, inválido por contrato). Corrigidos sem ocultar a primeira execução vermelha. Validar CI no SHA final antes de integração.
+
+## Fatia implementada e limites da inferência
+- `src/lib/orbitSensitivityAudit.ts`: para cenários de velocidade osculadora cartesiana NORAD 527/529 previamente delimitados, consome apenas **épocas de treino** com fonte/objeto/quadro declarados, anteriores ao cutoff. Em cada eixo livre calcula perturbação simétrica representável e a propaga com dinâmica r/v integral J2/arrasto opcional. A avaliação exige convergência por redução de passo em cada trajetória; qualquer conflito de reentrada, falha de convergência/finito ou posição terminal devolve `NOT_RUN_*`, sem rank.
+- Compara as colunas de deslocamento em km por Gram-Schmidt com reortogonalização e limiar em km, retornando rank **local e condicional ao probe/tolerância**, número de direções não resolvidas localmente e eixos fixos pelas premissas. Fixa expressamente `historicalHoldout=NOT_RUN`, `proofVerification=NOT_RUN`, `globalIdentifiability=NOT_ESTABLISHED`, `geographicInference=NOT_SUPPORTED`. Não usa posições reais nem interpreta rank como prova Lean/identificabilidade global.
+- Oito testes **inteiramente sintéticos**: rank 3 após 600s, rank 0 em t0, singleton fixo por premissa, sinal fraco sem falso rank, corte cronológico/frame/objeto, caixas contraditórias/parciais, subnormal abaixo da escala de probe e contraprova de reentrada perdida em passo grosso. Workflow HEAD-check da PR inclui a bateria; a documentação científica distingue SGP4 de r/v.
+- Reproduzir: `node --experimental-strip-types --test tests/orbit*.test.mjs` no Node 22. TypeScript global: **NOT_RUN**. A execução anterior `91/93` é resultado negativo registrado, não sucesso alegado.
+
+## Fonte primária, cadeia de dependência e ausência de dados
+- NASA/Goddard, *Satellite Situation Report*, vol.3 nº22, **15/11/1963**, p. impressa 8, NTRS 19640001198: https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf . Na ocorrência C197/C198/C201 da matriz, `1963 3B / 8 NOV 63` informa apenas **dia catalogado de decaimento**, sem hora, posição, vetor orbital ou drag.
+- C25/C179–C185 da matriz são espelhos de rastreamento com origem compartilhada, sem observações cartesianas independentes 527/529. RAAN 198.5261° versus 284.1520° está **sem resolução**. Nenhuma coordenada, probabilidade ou atmosfera histórica foi estimada.
+- Holdout histórico cego 527/529: **NOT_RUN**; domínio histórico certificado Lean: **NOT_RUN**; comparação externa SGP4: **NOT_RUN**; determinação de posição/hora terminal NORAD 528: **NOT_RUN**. Dependem de observações originais epoch-frame-covariance, parâmetros admissíveis verificáveis e condições termoesféricas documentadas.
+
+## Próxima pergunta e handoff
+- 🦅 Gavião: auditar a interpretação do rank local, proteção contra leakage de épocas futuras e tolerância/condicionamento; verificar o último CI no SHA exato. 🐘 Elefante integra apenas após revisão; nenhum merge por Castor.
+- Sem rebase, force-push, publicação de blog ou contato com pessoas/arquivos.
