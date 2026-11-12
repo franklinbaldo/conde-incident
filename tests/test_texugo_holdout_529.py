@@ -419,5 +419,87 @@ class RecentTrendNegativeControls(unittest.TestCase):
         self.assertIsNone(report["pooled_rmse_rev_day"])
 
 
+
+class DonorFreeCoverageFalsifiers(unittest.TestCase):
+    """C243-T13: all constructed NORAD-like observations are SYNTHETIC."""
+
+    def test_target_only_models_score_their_own_eligible_origins(self):
+        from texugo_holdout_529 import donor_free_coverage_diagnostics, rolling_origin_diagnostics
+        rows = samples()
+        rolling = rolling_origin_diagnostics(rows)
+        audit = donor_free_coverage_diagnostics(rows, rolling)
+        n = len([o for o in rows if o.sat == 529])
+        self.assertEqual(audit["candidate_next_epochs"], n - 1)
+        self.assertEqual(audit["target_only_scored_counts"],
+                         {"persistence_529_last_epoch": n - 1,
+                          "recency_529_two_point_secant": n - 2,
+                          "recency_529_three_point_linear": n - 3})
+        self.assertEqual(audit["joint_protocol_scored_count"],
+                         rolling["scored_distinct_targets"])
+        self.assertEqual(audit["on_joint_protocol_targets_rmse_rev_day"],
+                         {k: rolling["pooled_rmse_rev_day"][k]
+                          for k in audit["minimum_past_target_epochs"]})
+        self.assertFalse(audit["uses_527_or_528"])
+        self.assertTrue(audit["no_probability"])
+
+    def test_absent_donors_do_not_censor_target_only_forecasts(self):
+        from texugo_holdout_529 import donor_free_coverage_diagnostics, rolling_origin_diagnostics
+        rows = [o for o in samples() if o.sat == 529] + [
+            o for s in (527, 528)
+            for o in sorted((x for x in samples() if x.sat == s), key=lambda x: x.epoch)[:2]]
+        rolling = rolling_origin_diagnostics(rows)
+        self.assertEqual(rolling["status"], "NOT_RUN")
+        audit = donor_free_coverage_diagnostics(rows, rolling)
+        n = len([o for o in rows if o.sat == 529])
+        self.assertEqual(audit["joint_protocol_scored_count"], 0)
+        self.assertEqual(audit["target_only_scored_counts"]["recency_529_three_point_linear"], n - 3)
+        self.assertEqual(len(audit["additional_epochs_without_joint_protocol"]
+                             ["recency_529_two_point_secant"]), n - 2)
+
+    def test_target_value_cannot_leak_into_its_own_forecast(self):
+        from texugo_holdout_529 import donor_free_coverage_diagnostics, rolling_origin_diagnostics
+        rows = samples()
+        when = sorted(o.epoch for o in rows if o.sat == 529)[7]
+        altered = [Observation(o.sat, o.epoch, o.mean_motion + 1)
+                   if o.sat == 529 and o.epoch == when else o for o in rows]
+        def at_target(observations):
+            result = donor_free_coverage_diagnostics(
+                observations, rolling_origin_diagnostics(observations))
+            return next(x for x in result["steps"] if x["target_epoch_utc"] == when.isoformat())
+        before, after = at_target(rows), at_target(altered)
+        for name in before["models"]:
+            self.assertEqual(before["models"][name]["prediction_rev_day"],
+                             after["models"][name]["prediction_rev_day"])
+            self.assertNotEqual(before["models"][name]["error_rev_day"],
+                                after["models"][name]["error_rev_day"])
+
+    def test_tampered_rolling_inventory_and_duplicates_fail_closed(self):
+        from texugo_holdout_529 import donor_free_coverage_diagnostics, rolling_origin_diagnostics
+        rows = samples()
+        rolling = rolling_origin_diagnostics(rows)
+        with self.assertRaisesRegex(ValueError, "chronology mismatch"):
+            donor_free_coverage_diagnostics(rows, {
+                **rolling, "steps": [{**rolling["steps"][0], "target_epoch_utc": "1963-01-01T00:00:00+00:00"}]
+                + rolling["steps"][1:]})
+        with self.assertRaisesRegex(ValueError, "paired prediction mismatch"):
+            scored = next(i for i, s in enumerate(rolling["steps"]) if s["status"] != "NOT_RUN")
+            changed = [dict(s) for s in rolling["steps"]]
+            changed[scored]["predicted_rev_day"] = {
+                **changed[scored]["predicted_rev_day"],
+                "recency_529_two_point_secant": 999.0}
+            donor_free_coverage_diagnostics(rows, {**rolling, "steps": changed})
+        with self.assertRaisesRegex(ValueError, "duplicate 529"):
+            donor_free_coverage_diagnostics(rows + [
+                next(o for o in rows if o.sat == 529)], rolling)
+
+    def test_empty_target_returns_not_run_without_fabricating_scores(self):
+        from texugo_holdout_529 import donor_free_coverage_diagnostics, rolling_origin_diagnostics
+        rows = [Observation(529, utc("1963-06-01T00:00:00Z"), 14.0)]
+        audit = donor_free_coverage_diagnostics(rows, rolling_origin_diagnostics(rows))
+        self.assertEqual(audit["status"], "NOT_RUN")
+        self.assertIsNone(audit["target_only_rmse_rev_day"]["persistence_529_last_epoch"])
+
+
+
 if __name__ == "__main__":
     unittest.main()

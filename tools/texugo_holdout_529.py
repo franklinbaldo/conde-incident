@@ -550,6 +550,122 @@ def rolling_tail_sensitivity_diagnostics(rolling: dict) -> dict:
                           "trials; no physical reconstruction, p-value or impact inference.",
     }
 
+
+def donor_free_coverage_diagnostics(rows: list[Observation], rolling: dict) -> dict:
+    """Audit eligibility without letting donor coverage censor target-only controls.
+
+    C243-T13: a model which uses only 529 must not depend on 527/528 availability.
+    These are retrospective next-catalog-epoch scores, NOT orbit predictions.
+    """
+    target = sorted((o for o in rows if o.sat == 529), key=lambda o: o.epoch)
+    if len({o.epoch for o in target}) != len(target):
+        raise ValueError("donor-free coverage: duplicate 529 target epochs")
+    original_steps = rolling.get("steps", [])
+    if len(original_steps) != max(0, len(target) - 1):
+        raise ValueError("donor-free coverage: missing or surplus rolling targets")
+    minimum = {"persistence_529_last_epoch": 1,
+               "recency_529_two_point_secant": 2,
+               "recency_529_three_point_linear": 3}
+    errors = {k: [] for k in minimum}
+    joint_matched_errors = {k: [] for k in minimum}
+    joint_scored_epochs = set()
+    target_only_epochs = {k: set() for k in minimum}
+    details = []
+    for i in range(1, len(target)):
+        past, future = target[:i], target[i]
+        origin = past[-1].epoch
+        previous = original_steps[i - 1]
+        if (previous.get("origin_epoch_utc") != origin.isoformat()
+                or previous.get("target_epoch_utc") != future.epoch.isoformat()):
+            raise ValueError("donor-free coverage: rolling chronology mismatch")
+        horizon = (future.epoch - origin).total_seconds() / 86400
+        if not math.isfinite(horizon) or horizon <= 0:
+            raise ValueError("donor-free coverage: invalid horizon")
+        xx = x_at(future.epoch, origin)
+        samples = [(x_at(o.epoch, origin), o.mean_motion) for o in past]
+        forecasts = {"persistence_529_last_epoch": past[-1].mean_motion}
+        if i >= 2:
+            forecasts["recency_529_two_point_secant"] = project(
+                polynomial_fit(samples[-2:], 1), xx)
+        if i >= 3:
+            forecasts["recency_529_three_point_linear"] = project(
+                polynomial_fit(samples[-3:], 1), xx)
+        if not all(math.isfinite(v) for v in forecasts.values()):
+            raise ValueError("donor-free coverage: nonfinite prediction")
+        actual = future.mean_motion
+        if not math.isfinite(actual):
+            raise ValueError("donor-free coverage: nonfinite observation")
+        row = {"origin_epoch_utc": origin.isoformat(),
+               "target_epoch_utc": future.epoch.isoformat(),
+               "horizon_days": horizon, "past_529_count": i,
+               "joint_protocol_status": previous["status"],
+               "models": {}}
+        for name, requirement in minimum.items():
+            if i < requirement:
+                row["models"][name] = {"status": "NOT_RUN",
+                                        "reason": "insufficient past 529 epochs"}
+                continue
+            predicted = forecasts[name]
+            error = actual - predicted
+            if not math.isfinite(error) or not math.isfinite(error * error):
+                raise ValueError("donor-free coverage: nonfinite score")
+            errors[name].append(error)
+            target_only_epochs[name].add(future.epoch)
+            row["models"][name] = {"status": "EVALUATED_RETROSPECTIVE",
+                                   "prediction_rev_day": predicted,
+                                   "error_rev_day": error}
+        if previous["status"] == "EVALUATED_RETROSPECTIVE_PREQUENTIAL":
+            joint_scored_epochs.add(future.epoch)
+            for name in minimum:
+                if name not in forecasts:
+                    raise ValueError("donor-free coverage: joint scored ineligible target")
+                previous_prediction = previous["predicted_rev_day"].get(name)
+                if not isinstance(previous_prediction, (int, float)) or not math.isclose(
+                        forecasts[name], previous_prediction, rel_tol=1e-10, abs_tol=1e-9):
+                    raise ValueError("donor-free coverage: paired prediction mismatch")
+                joint_matched_errors[name].append(actual - forecasts[name])
+        elif previous["status"] != "NOT_RUN":
+            raise ValueError("donor-free coverage: unexpected rolling status")
+        details.append(row)
+
+    def score(values: list[float]) -> float | None:
+        return math.sqrt(math.fsum(v * v for v in values) / len(values)) if values else None
+
+    paired_rmse = {k: score(v) for k, v in joint_matched_errors.items()}
+    rolling_rmse = rolling.get("pooled_rmse_rev_day")
+    if joint_scored_epochs:
+        if not isinstance(rolling_rmse, dict):
+            raise ValueError("donor-free coverage: missing rolling pooled scores")
+        for name, value in paired_rmse.items():
+            if name not in rolling_rmse or not math.isclose(
+                    value, rolling_rmse[name], rel_tol=1e-9, abs_tol=1e-10):
+                raise ValueError("donor-free coverage: paired RMSE mismatch")
+    if len(joint_scored_epochs) != rolling.get("scored_distinct_targets"):
+        raise ValueError("donor-free coverage: joint inventory mismatch")
+    return {
+        "status": "EVALUATED_POST_HOC_COVERAGE" if details else "NOT_RUN",
+        "target_norad_id": 529, "candidate_next_epochs": len(details),
+        "minimum_past_target_epochs": minimum,
+        "target_only_scored_counts": {k: len(v) for k, v in errors.items()},
+        "target_only_rmse_rev_day": {k: score(v) for k, v in errors.items()},
+        "joint_protocol_scored_count": len(joint_scored_epochs),
+        "on_joint_protocol_targets_rmse_rev_day": paired_rmse,
+        "additional_epochs_without_joint_protocol": {
+            k: sorted(t.isoformat() for t in ts - joint_scored_epochs)
+            for k, ts in target_only_epochs.items()},
+        "steps": details,
+        "strictly_past_529_only": True,
+        "uses_527_or_528": False,
+        "independent_replications_established": False,
+        "prospective_validation_established": False,
+        "no_probability": True,
+        "interpretation": "POST_HOC coverage audit: target-only model eligibility is "
+                          "not conditioned on donor availability; paired comparison "
+                          "with joint models retains only the original joint-scored "
+                          "epochs. One secondary catalog, not primary sensor evidence.",
+    }
+
+
 def run(rows: list[Observation]) -> dict:
     results = [evaluate(rows, date) for date in CUTOFFS]
     rolling = rolling_origin_diagnostics(rows)
@@ -564,6 +680,7 @@ def run(rows: list[Observation]) -> dict:
         "disjoint_holdout": disjoint_horizon_diagnostics(rows, results),
         "rolling_origin_holdout": rolling,
         "rolling_tail_sensitivity": rolling_tail_sensitivity_diagnostics(rolling),
+        "rolling_target_only_coverage": donor_free_coverage_diagnostics(rows, rolling),
     }
 
 def main() -> None:
