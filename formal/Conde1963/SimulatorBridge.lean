@@ -200,6 +200,6 @@ theorem scaled_drag_power_nonpositive
     (nonnegativeFactor speedSquared : Nat) :
     scaledDragPower nonnegativeFactor speedSquared ≤ 0 := by
   unfold scaledDragPower
-  split <;> simp
+  split <;> omega
 
 end Conde1963
