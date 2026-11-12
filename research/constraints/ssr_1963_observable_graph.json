@@ -596,5 +596,159 @@
     "Null observation epoch/error is UNKNOWN, not zero.",
     "Publication day is not measurement time.",
     "Connecting evidence is progress even if the admissible domain has not yet been computed."
+  ],
+  "derived_connections": [
+    {
+      "id": "SSR-PUBLICATIONS-DELTA-527-nodal_period",
+      "inputs": [
+        "SSR-1963-11-15-NORAD527-nodal_period",
+        "SSR-1963-11-30-NORAD527-nodal_period"
+      ],
+      "operator_id": "difference_between_published_values",
+      "expression": "reported_value(30-Nov publication) - reported_value(15-Nov publication)",
+      "derived_arithmetic": 0.2,
+      "unit": "min",
+      "status": "CONNECTED_PENDING_EPOCH_AND_COVARIANCE",
+      "physical_interpretation": "Difference between published tabulated values, NOT a measured time derivative or causal atmospheric trend.",
+      "missing": [
+        "source_specific_observation_epochs",
+        "correlated_source_errors",
+        "validated_forward_model"
+      ],
+      "next_model_relation": "predict_nodal_period_of_527(t_new)-predict_nodal_period_of_527(t_old)"
+    },
+    {
+      "id": "SSR-PUBLICATIONS-DELTA-527-inclination",
+      "inputs": [
+        "SSR-1963-11-15-NORAD527-inclination",
+        "SSR-1963-11-30-NORAD527-inclination"
+      ],
+      "operator_id": "difference_between_published_values",
+      "expression": "reported_value(30-Nov publication) - reported_value(15-Nov publication)",
+      "derived_arithmetic": 0,
+      "unit": "deg",
+      "status": "CONNECTED_PENDING_EPOCH_AND_COVARIANCE",
+      "physical_interpretation": "Difference between published tabulated values, NOT a measured time derivative or causal atmospheric trend.",
+      "missing": [
+        "source_specific_observation_epochs",
+        "correlated_source_errors",
+        "validated_forward_model"
+      ],
+      "next_model_relation": "predict_inclination_of_527(t_new)-predict_inclination_of_527(t_old)"
+    },
+    {
+      "id": "SSR-PUBLICATIONS-DELTA-527-apogee",
+      "inputs": [
+        "SSR-1963-11-15-NORAD527-apogee",
+        "SSR-1963-11-30-NORAD527-apogee"
+      ],
+      "operator_id": "difference_between_published_values",
+      "expression": "reported_value(30-Nov publication) - reported_value(15-Nov publication)",
+      "derived_arithmetic": -3,
+      "unit": "km",
+      "status": "CONNECTED_PENDING_EPOCH_AND_COVARIANCE",
+      "physical_interpretation": "Difference between published tabulated values, NOT a measured time derivative or causal atmospheric trend.",
+      "missing": [
+        "source_specific_observation_epochs",
+        "correlated_source_errors",
+        "validated_forward_model"
+      ],
+      "next_model_relation": "predict_apogee_of_527(t_new)-predict_apogee_of_527(t_old)"
+    },
+    {
+      "id": "SSR-PUBLICATIONS-DELTA-527-perigee",
+      "inputs": [
+        "SSR-1963-11-15-NORAD527-perigee",
+        "SSR-1963-11-30-NORAD527-perigee"
+      ],
+      "operator_id": "difference_between_published_values",
+      "expression": "reported_value(30-Nov publication) - reported_value(15-Nov publication)",
+      "derived_arithmetic": 4,
+      "unit": "km",
+      "status": "CONNECTED_PENDING_EPOCH_AND_COVARIANCE",
+      "physical_interpretation": "Difference between published tabulated values, NOT a measured time derivative or causal atmospheric trend.",
+      "missing": [
+        "source_specific_observation_epochs",
+        "correlated_source_errors",
+        "validated_forward_model"
+      ],
+      "next_model_relation": "predict_perigee_of_527(t_new)-predict_perigee_of_527(t_old)"
+    },
+    {
+      "id": "SSR-PUBLICATIONS-DELTA-529-nodal_period",
+      "inputs": [
+        "SSR-1963-11-15-NORAD529-nodal_period",
+        "SSR-1963-11-30-NORAD529-nodal_period"
+      ],
+      "operator_id": "difference_between_published_values",
+      "expression": "reported_value(30-Nov publication) - reported_value(15-Nov publication)",
+      "derived_arithmetic": -0.4,
+      "unit": "min",
+      "status": "CONNECTED_PENDING_EPOCH_AND_COVARIANCE",
+      "physical_interpretation": "Difference between published tabulated values, NOT a measured time derivative or causal atmospheric trend.",
+      "missing": [
+        "source_specific_observation_epochs",
+        "correlated_source_errors",
+        "validated_forward_model"
+      ],
+      "next_model_relation": "predict_nodal_period_of_529(t_new)-predict_nodal_period_of_529(t_old)"
+    },
+    {
+      "id": "SSR-PUBLICATIONS-DELTA-529-inclination",
+      "inputs": [
+        "SSR-1963-11-15-NORAD529-inclination",
+        "SSR-1963-11-30-NORAD529-inclination"
+      ],
+      "operator_id": "difference_between_published_values",
+      "expression": "reported_value(30-Nov publication) - reported_value(15-Nov publication)",
+      "derived_arithmetic": -0.01,
+      "unit": "deg",
+      "status": "CONNECTED_PENDING_EPOCH_AND_COVARIANCE",
+      "physical_interpretation": "Difference between published tabulated values, NOT a measured time derivative or causal atmospheric trend.",
+      "missing": [
+        "source_specific_observation_epochs",
+        "correlated_source_errors",
+        "validated_forward_model"
+      ],
+      "next_model_relation": "predict_inclination_of_529(t_new)-predict_inclination_of_529(t_old)"
+    },
+    {
+      "id": "SSR-PUBLICATIONS-DELTA-529-apogee",
+      "inputs": [
+        "SSR-1963-11-15-NORAD529-apogee",
+        "SSR-1963-11-30-NORAD529-apogee"
+      ],
+      "operator_id": "difference_between_published_values",
+      "expression": "reported_value(30-Nov publication) - reported_value(15-Nov publication)",
+      "derived_arithmetic": -30,
+      "unit": "km",
+      "status": "CONNECTED_PENDING_EPOCH_AND_COVARIANCE",
+      "physical_interpretation": "Difference between published tabulated values, NOT a measured time derivative or causal atmospheric trend.",
+      "missing": [
+        "source_specific_observation_epochs",
+        "correlated_source_errors",
+        "validated_forward_model"
+      ],
+      "next_model_relation": "predict_apogee_of_529(t_new)-predict_apogee_of_529(t_old)"
+    },
+    {
+      "id": "SSR-PUBLICATIONS-DELTA-529-perigee",
+      "inputs": [
+        "SSR-1963-11-15-NORAD529-perigee",
+        "SSR-1963-11-30-NORAD529-perigee"
+      ],
+      "operator_id": "difference_between_published_values",
+      "expression": "reported_value(30-Nov publication) - reported_value(15-Nov publication)",
+      "derived_arithmetic": -8,
+      "unit": "km",
+      "status": "CONNECTED_PENDING_EPOCH_AND_COVARIANCE",
+      "physical_interpretation": "Difference between published tabulated values, NOT a measured time derivative or causal atmospheric trend.",
+      "missing": [
+        "source_specific_observation_epochs",
+        "correlated_source_errors",
+        "validated_forward_model"
+      ],
+      "next_model_relation": "predict_perigee_of_529(t_new)-predict_perigee_of_529(t_old)"
+    }
   ]
 }
