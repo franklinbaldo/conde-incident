@@ -9,6 +9,7 @@
 <meta property="og:title" content="{% block ogtitle %}{{ config.title }}{% endblock ogtitle %}">
 <meta property="og:description" content="{% block ogdescription %}{{ config.description }}{% endblock ogdescription %}">
 <meta property="og:url" content="{% block ogurl %}{{ config.base_url | safe }}{% endblock ogurl %}">
+{% block articlemeta %}{% endblock articlemeta %}
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="{{ get_url(path='css/site.css') | safe }}">
 </head>
