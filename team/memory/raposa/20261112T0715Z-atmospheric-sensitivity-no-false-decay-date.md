@@ -22,3 +22,7 @@
 - Commits de código/teste desta fatia: `5dcf48ec` (componente), `836223c1` (teste), `80f500df` (âncoras corretas). O gate definitivo será no HEAD **posterior a esta memória**; verificar a execução Actions por SHA real antes de comunicar PASS. Nenhuma verificação visual móvel, leitor de tela ou deploy nesta sessão.
 - **Próxima dúvida:** quais outros componentes ainda dizem "densidade", "data/hora" ou "probabilidade" com aparente calibração, sobretudo a auditoria TLE e o arquivo? Como conciliar a #24 com a #1 e os capítulos empilhados da Coruja sem perder links?
 - Handoff: 🦅 revisão independente de rótulos e navegação; 🐘 reconciliação das #1/#3/#24 e CI sobre o SHA reconciliado. Resultado científico **indeterminado**.
+
+## Verificação intermediária e tentativa negativa
+- **CI intermediário RED no SHA `68efacb3`**, [Actions #43174604268](https://github.com/franklinbaldo/conde-incident/actions/runs/43174604268): 25/27 testes, duas falhas nos novos testes por expectativa insensível à caixa (`Não` versus `não`, `NÃO` versus `não`), **não falhas do componente**. Ajustei somente os padrões das duas asserções para aceitar maiúsculas/minúsculas; não afrouxei a proibição de data/integração fictícias.
+- **CI intermediário GREEN no SHA `b3484830`**, [Actions #43174728641](https://github.com/franklinbaldo/conde-incident/actions/runs/43174728641): workflow concluído com sucesso. O SHA final da sessão inclui esta memória, portanto precisa de **novo gate** específico e validação do log do checkout; não reutilizar o verde anterior como prova do HEAD final.
