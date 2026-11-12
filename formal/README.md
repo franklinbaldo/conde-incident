@@ -1,3 +1,52 @@
+## 🐙 Truth-to-simulation boundary: self-soundness is NOT historical impact
+
+**New:** [`Conde1963/TruthBridge.lean`](Conde1963/TruthBridge.lean) closes an
+epistemic gap in the prior model envelopes. `ImpactEnvelope.soundForPredictions`
+only proves that a simulator's OWN prediction lies inside a reported
+enclosure. It does not prove that the unknown 1963 physical outcome lies
+inside that enclosure. A symbolic countermodel formally demonstrates the
+difference without fabricated coordinates.
+
+The distinct `TruthLink.actualCovered` premise must be justified externally
+for every admissible state before an enclosure can say anything about a
+**hypothetical actual** ground-impact event. Seven audited Lean theorems give
+conditional exclusion, forcing and other-window criteria, monotonicity under
+consistent refinement, and the necessity of an actual ground-impact event
+to force a location. The truth link has **not been instantiated**, and the
+existing `GroundImpactAdmissible` Boolean record is a declared audit, not an
+empirically authenticated certificate. Neither layer proves a historical
+event merely by being syntactically accepted or compiled.
+
+The `truth_bridge_interface` in the exported Castor JSON fails closed:
+no actual event or window, no proof of the physical link, no verified
+continuous global coverage, no authenticated primary TLE custody or
+independent 529 holdout. Its theorem names are checked against the
+`#print axioms` audit by `test_truth_bridge_contract.py`. It is a
+typed obligation to implement and validate, **not** a new orbital result.
+
+**Documentary lineage, unchanged and not freshly re-inspected:**
+[C01#1](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L19)
+records a Tupi/FBIS report, not a ground observation;
+[C25#1](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L118)
+and [C179#1](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L839)
+reflect reproduced AFSPC-orbital material, not independent primary TLEs;
+[C131#1](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L502)
+and [C197#1](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L905)
+cite **one** NASA/Goddard *Satellite Situation Report*, 15 Nov 1963,
+printed p. 8, [NTRS 19640001198](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf),
+which records a decay date but no impact location/time. The registry still
+preserves 241 occurrences and C44-C46 duplicate labels. Original
+historical `Evidence.lean` ZIP / 154 propositions / 151 labels and
+authenticated original digests remain **NOT_RECOVERED / NOT_RUN**.
+
+Run on the PR's actual head:
+
+```bash
+python3 formal/scripts/evidence_registry.py --check formal/Conde1963/MatrixEvidence.lean --json /tmp/conde-evidence-contracts.json
+cd formal && lake build && lake env lean Conde1963/AxiomAudit.lean
+python3 -m unittest discover -s tests -v
+```
+
 # New: exhaustive-grid proof boundary
 
 See [FiniteCoverage](finite_coverage.md) for seven formal obligations separating a verified *finite* screen from proof of a globally empty admissible domain, including a synthetic false-negative countermodel and a fail-closed Castor JSON handoff.
