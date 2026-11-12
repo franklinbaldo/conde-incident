@@ -1,4 +1,4 @@
-import Conde1963.Interactions
+import Conde1963.Outcome
 
 /-! Explicit kernel-dependency report in CI, not an empirical validation. -/
 
@@ -53,3 +53,13 @@ import Conde1963.Interactions
 #print axioms Conde1963.forces_and_excludes_day_are_incompatible
 #print axioms Conde1963.nasa_documentary_record_leaves_actual_day_underdetermined
 #print axioms Conde1963.matrix_does_not_force_nasa_reported_day
+
+-- Five conditional outcomes: proof obligations, not physical predictions.
+#print axioms Conde1963.other_window_conditionally_excludes_conde
+#print axioms Conde1963.other_window_and_forced_conde_conflict
+#print axioms Conde1963.other_window_persists_under_consistent_narrowing
+#print axioms Conde1963.mixed_outcomes_refute_both_decisive_conde_claims
+#print axioms Conde1963.contradictory_premises_preclude_decisive_classifications
+#print axioms Conde1963.grid_witness_implies_global_witness
+#print axioms Conde1963.grid_empty_does_not_mean_contradictory_premises
+#print axioms Conde1963.no_predicted_impact_excludes_conde_but_identifies_no_other_window
