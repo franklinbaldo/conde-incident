@@ -112,6 +112,13 @@ wind/temperature/density, mass or fragment survival. Explicitly show the
 before/after physically admissible ranges and refuse to claim reduction
 when no calibrated observational inequality exists.
 
+## Small, independently mergeable PRs (owner decision, 12/11/2026)
+
+- Each implementation PR should carry one bounded, testable scientific or engineering improvement, its necessary tests and evidence references. Prefer a focused diff over an ever-growing agent branch; do not append unrelated new modules to an existing large PR.
+- Resume/triage oversized draft PRs as sources for **small independent follow-up PRs** against the latest `main`. Keep originals open until their remaining changes are accounted for, and do not delete their branches or discard unintegrated work. Use ordinary commits, not rebase or force-push.
+- For a merge, verify the exact current head SHA, green applicable CI, reviewed substantive claims and no unresolved blocking discussion. The owner expressly permits merging ready, verified PRs rather than keeping finished work in Draft. 🐘 coordinates default integration, but an owner-directed merge may be executed by the working agent after these checks. Never declare a merge completed unless GitHub confirms it.
+- A green Lean proof suite is not proof of an observed satellite landing; report real model/data progress. If a PR is blocked, name the exact blocker and carve out any independent, mergeable slice instead of growing it further.
+
 ## Work protocol
 1. Read main, this file, your `team/<animal>.md` card, open issues/PRs, and the cumulative matrix in `research/` (present in PR #1 until merged).
 2. Resume an existing issue/PR in your domain before claiming new work. A single agent claims a single active issue; issues use `<priority 0–100> <emoji> <short title>`. Avoid duplicate claims and conflicting edits.
