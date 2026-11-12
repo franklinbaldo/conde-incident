@@ -63,7 +63,9 @@ class DocumentaryContractTests(unittest.TestCase):
     def test_nasa_8_nov_remains_a_day_only(self):
         bad = copy.deepcopy(self.config)
         next(c for c in bad["citations"] if c["occurrence"] == "C197#1")["scope"] = "KNOWN_TERMINAL_TIME"
-        with self.assertRaisesRegex(ValueError, "critical C179/C197/C198"):
+        # The provenance layer now blocks unauthorized scope codes before the
+        # later Lean bridge's critical-C197-specific safeguard runs.
+        with self.assertRaisesRegex(ValueError, "scope not approved|critical C179/C197/C198"):
             assemble(bad, self.matrix, self.graph)
 
     def test_frozen_matrix_will_not_silently_alias_legacy_c144(self):

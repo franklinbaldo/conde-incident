@@ -88,6 +88,38 @@ class DocumentaryProvenanceTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "required cumulative"):
             pg.build(config, self.raw)
 
+    def test_post_matrix_source_image_crosswalk_rejects_well_formed_wrong_ids(self):
+        # Valid-looking alternatives previously passed format checks and appeared
+        # on the site as an incorrectly attributed NARA scan.
+        cases = {
+            "another_valid_sha256": ("image_sha256", "0" * 64),
+            "another_nara_object": ("nara_object_id", 302531015),
+            "another_nara_unit": ("nara_fileunit_naid", 302531011),
+            "another_image_name": ("image_filename", "0811.jp2"),
+            "existing_but_wrong_report": ("report_path", "AGENTS.md"),
+        }
+        for label, (field, altered) in cases.items():
+            with self.subTest(label=label):
+                config = copy.deepcopy(self.config)
+                config["post_matrix_occurrences"][0][field] = altered
+                with self.assertRaisesRegex(ValueError, "source/image/custody crosswalk mismatch"):
+                    pg.build(config, self.raw)
+
+    def test_unreviewed_physical_sounding_citation_scopes_are_rejected(self):
+        for label in ("OBSERVED_CONDE_CRATER", "CONFIRMED_TERMINAL_POSITION",
+                      "PRIMARY_FIELD_SIGHTING"):
+            with self.subTest(scope=label):
+                config = copy.deepcopy(self.config)
+                config["citations"][0]["scope"] = label
+                with self.assertRaisesRegex(ValueError, "scope not approved"):
+                    pg.build(config, self.raw)
+
+    def test_citation_scope_must_match_its_documentary_relation(self):
+        config = copy.deepcopy(self.config)
+        config["citations"][0]["scope"] = "CATALOGUED_DAY_ONLY"
+        with self.assertRaisesRegex(ValueError, "scope not approved"):
+            pg.build(config, self.raw)
+
     def test_real_mapping_coverage_is_not_inflated_by_unmapped_default_dict(self):
         self.assertEqual(self.citations["curated_occurrences"], 28)
         self.assertEqual(self.citations["unmapped_occurrences"], 213)

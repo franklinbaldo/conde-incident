@@ -86,3 +86,19 @@ O texto da mensagem USAIRA de 14/11 cita uma publicação **O Globo 08/11/1963**
 A exportação passou a incluir a curadoria explícita de C232#1 (índice The Black Vault e cotejo separado com cartão NARA), C233#1 (limite de leitura textual do índice), C234#1 (catálogo Dark Forest ainda **sem prova** de equivalência entre ID externo 9737078 e NAID 302531012) e C235#1 (guia institucional NARA). O antigo C237#1, busca então negativa, continua sem citação curada e não é tratado como inexistência de documento.
 
 Contabilidade: 241 ocorrências, 28 curadas, 213 pendentes, 29 arestas de citação, 22 fontes em 10 famílias. Duas citações para uma ocorrência não são duas observações. Nenhuma nova medição, posição, instante de reentrada, domínio Lean ou probabilidade foi produzida.
+
+## Integridade do crosswalk de citações (12/11/2026)
+
+Cada `scope` de citação precisa pertencer à lista revisada de estados **documentais**
+em `tools/provenance_graph.py`, também compatível com sua `relation`.
+Novos valores exigem alteração deliberada do contrato e teste; códigos físicos
+inventados (como `OBSERVED_CONDE_CRATER`) não atravessam o exportador.
+
+A ocorrência posterior `NARA-BB-CONDE-20261112-01` agora precisa vincular
+seu `image_sha256`, `nara_object_id`, `nara_fileunit_naid`, nome de arquivo e
+`report_path` aos **mesmos identificadores do objeto digital** e da unidade
+fonte. Um SHA-256 sintaticamente válido, mas de outra página, não passa.
+Essa validação é de **consistência interna da custódia curada**: não significa
+que a Abelha baixou as imagens, autenticou sua cadeia externa ou encontrou
+um novo testemunho físico. O feed continua com 241 ocorrências, 28 curadas,
+29 citações e 213 ocorrências sem curadoria.

@@ -78,6 +78,26 @@ CITATION_RELATIONS = {
     "conditional_comparison", "archive_metadata", "edition_control",
     "corrects_prior_interpretation", "shared_upstream", "documentary_comparison",
 }
+# Explicitly reviewed documentary scopes. A future curator must update this
+# allowlist with a concrete source and regression test; any arbitrary new scope
+# (including new phrasings of alleged physical proof) otherwise remains rejected.
+DOCUMENTARY_SCOPES = {
+    "archival_status": {"BLUEBOOK_INDEX_HOAX_ADMINISTRATIVE_ONLY", "IN_ORBIT_LIST_NOT_REENTRY_TIME", "NEW_EDITION_SAME_TRACKING_FAMILY"},
+    "archive_metadata": {"EXTERNAL_9737078_NARA_CROSSWALK_NOT_PROVEN", "GENERAL_NARA_HOLDINGS_NOT_CASE_PROOF", "SAME_WORK_NOT_SECOND_INSTRUMENT"},
+    "catalogued_day": {"CATALOGUED_DAY_ONLY"},
+    "conditional_comparison": {"SUPERSEDED_BY_C197_C200"},
+    "corrects_prior_interpretation": {"CORRECTS_C182_C184"},
+    "documentary_comparison": {"NARA_CASE_CARD_HOAX_NO_FIELD_VERIFICATION", "NO_LINK_TO_CONDE_PHYSICAL_EVENT"},
+    "edition_control": {"ADDITIVE_UPDATE_NOT_INDEPENDENT_SENSOR"},
+    "measured_environment": {"RECIFE_ONLY_NO_CONDE_INFERENCE"},
+    "measured_index": {"SPACE_WEATHER_NOT_ORBIT"},
+    "metadata_limit": {"EXTRACTED_TEXT_NO_INDEX_FACSIMILE_REVIEW", "RELTIME_UNKNOWN"},
+    "quotes_uninspected_source": {"DENIAL_REPORTED_CLIPPING_MISSING", "JOURNALIST_ACCOUNT_REPORTED_CLIPPING_MISSING"},
+    "refutes_independence": {"AGGREGATE_IS_NOT_THIRD_PRIMARY_OBSERVATION"},
+    "reported_claim": {"TRANSMISSION_REPORTED_ONLY"},
+    "secondary_orbital_elements": {"MEAN_ELEMENTS_NOT_TRACKING_OBSERVATION", "NOT_COEPOCHAL_528"},
+    "shared_upstream": {"COMPILED_NORAD_SAO_NO_INDEPENDENCE_PROVEN"},
+}
 # Nothing in this export is evidence of debris, craters, bodies or impact.
 FORBIDDEN_PHYSICAL_SCOPE = {"PHYSICAL_IMPACT_CONFIRMED", "OBSERVED_TERMINAL_LOCATION"}
 PINNED_GROUPS = {
@@ -232,11 +252,13 @@ def validate_lineages(config: dict, rows: list[dict], root: Path = ROOT) -> None
         if link.get("snapshot_ref") != matrix_ref(occurrence):
             raise ValueError("citation snapshot mismatch or missing: " + occurrence)
         by_occurrence[occurrence].append(link)
-        if link["relation"] not in CITATION_RELATIONS:
-            raise ValueError("undocumented citation relation " + link["relation"])
-        if (link["scope"] in FORBIDDEN_PHYSICAL_SCOPE or
-            not link["scope"] or link.get("physically_verified") is True):
+        relation, scope = link["relation"], link.get("scope")
+        if relation not in CITATION_RELATIONS:
+            raise ValueError("undocumented citation relation " + relation)
+        if scope in FORBIDDEN_PHYSICAL_SCOPE or link.get("physically_verified") is True:
             raise ValueError("physical observation promoted by a citation " + occurrence)
+        if scope not in DOCUMENTARY_SCOPES.get(relation, set()):
+            raise ValueError("citation scope not approved for documentary use: " + repr((occurrence, relation, scope)))
     if ([(x["source_id"], x["relation"]) for x in by_occurrence["C197#1"]] !=
         [("NASA_SSR_19631115", "catalogued_day")]):
         raise ValueError("NASA 8 NOV 63 must be source-identified as catalogued DAY only")
@@ -284,6 +306,16 @@ def validate_lineages(config: dict, rows: list[dict], root: Path = ROOT) -> None
             raise ValueError("unverified newspaper or physical assumption introduced " + uid)
         if not re.fullmatch("[0-9a-f]{64}", update.get("image_sha256", "")):
             raise ValueError("post-matrix digital object missing SHA-256 " + uid)
+        # Bind the published post-matrix citation to the actual curated scan.
+        # A correctly shaped SHA or NARA ID is not proof it belongs to this page.
+        reporter = sources[update["source_id"]]
+        unit = sources.get(reporter.get("file_unit_id"))
+        if (unit is None or update.get("nara_fileunit_naid") != unit.get("naid")
+                or update.get("nara_object_id") != reporter.get("nara_object_id")
+                or update["image_sha256"] != reporter.get("sha256_reported")
+                or update.get("image_filename") != reporter.get("url", "").rsplit("/", 1)[-1]
+                or update.get("report_path") != reporter.get("custody_note_path")):
+            raise ValueError("post-matrix source/image/custody crosswalk mismatch " + uid)
         report = Path(update.get("report_path", ""))
         if not report.parts or report.is_absolute() or ".." in report.parts or (
                 not (root / report).is_file()):
