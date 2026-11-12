@@ -121,7 +121,7 @@ export function stageDocumentedCartesianPositions(
         datum.inertialFrame !== context.inertialFrame) {
       reason = 'INCOMPATIBLE_TARGET_OR_FRAME';
     } else if (!validVec(datum.rKm) || !validVec(datum.sigmaKm) ||
-        !datum.sigmaKm.every(x => x > 0)) {
+        !datum.sigmaKm.every((x: number) => x > 0)) {
       reason = 'INVALID_POSITION_OR_UNCERTAINTY';
     } else if (!hasText(datum.instrumentRecordId) ||
         !hasText(datum.calibrationReference)) {
