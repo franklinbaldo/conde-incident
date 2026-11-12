@@ -39,5 +39,16 @@ assert.match(chapter03,/frame-src[^<]*www\.openstreetmap\.org/,'CSP impede mapa 
 assert.match(chapter03,/frame-src[^<]*media\.ondisclosure\.org/,'CSP impede documento incorporado');
 assert.ok(existsSync('public/img/cadeia-documental-conde.svg'),'Asset do diagrama não copiado');
 
+assert.match(chapter03,/<picture>[\s\S]*?<source\s+media=["']\(max-width:\s*620px\)["']\s+srcset=["']\/conde-incident\/img\/cadeia-documental-conde-mobile\.svg["']/,
+  'Genealogia documental não possui variante móvel');
+assert.ok(existsSync('public/img/cadeia-documental-conde-mobile.svg'),'SVG móvel ausente na publicação');
+const diagramMobile=read('img/cadeia-documental-conde-mobile.svg');
+assert.match(diagramMobile,/viewBox="0 0 340 616"/,'Diagrama móvel não é vertical');
+for(const stamp of ['8 NOV 1963','14 NOV 1963','20 NOV 1963','testemunhas independentes'])
+  assert.ok(diagramMobile.includes(stamp),'Etapa documental ausente no diagrama móvel: '+stamp);
+const fontSizes=[...diagramMobile.matchAll(/font-size="([0-9.]+)"/g)].map(match=>Number(match[1]));
+assert.ok(fontSizes.length>0 && Math.min(...fontSizes)>=13,'Texto SVG móvel ilegível por redução excessiva');
+
+
 assert.ok(chapters>0,'Nenhuma reportagem renderizada');
 console.log('PASS: '+chapters+' capítulos, índice, CSS, laboratório e rotas GitHub Pages.');
