@@ -535,6 +535,7 @@ def rolling_tail_sensitivity_diagnostics(rolling: dict) -> dict:
 
 def run(rows: list[Observation]) -> dict:
     results = [evaluate(rows, date) for date in CUTOFFS]
+    rolling = rolling_origin_diagnostics(rows)
     return {
         "status": "EXPLORATORY_NUMERIC_MIRROR_NOT_ORBITAL_VALIDATION",
         "source_url": EXPECTED_URL, "source_sha256": EXPECTED_SHA256,
@@ -544,8 +545,8 @@ def run(rows: list[Observation]) -> dict:
         "results": results,
         "holdout_overlap": overlap_diagnostics(rows, results),
         "disjoint_holdout": disjoint_horizon_diagnostics(rows, results),
-        "rolling_origin_holdout": rolling_origin_diagnostics(rows),
-        "rolling_tail_sensitivity": rolling_tail_sensitivity_diagnostics(rolling_origin_diagnostics(rows)),
+        "rolling_origin_holdout": rolling,
+        "rolling_tail_sensitivity": rolling_tail_sensitivity_diagnostics(rolling),
     }
 
 def main() -> None:
