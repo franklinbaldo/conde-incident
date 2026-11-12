@@ -173,7 +173,7 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
     jumpToTime(ev.timestampMs, ev);
   };
 
-  // Animation Loop with Auto-Pause on Conde Impact & NORAD Historical Observations
+  // Explore epochs without treating a day-only decay as an observed terminal instant
   useEffect(() => {
     if (!isPlaying) return;
 
@@ -1446,23 +1446,17 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
               {showObservationMarkers &&
                 noradObservationMarkers.map((marker) => {
                   const isCurrent = marker.isCurrent;
-                  const isReentryOrBahia =
-                    marker.event.id === 'OBS-07' || marker.event.id === 'OBS-08';
                   const is527 =
                     marker.event.focalObject === 527 ||
                     marker.event.id === 'OBS-05' ||
                     marker.event.id === 'OBS-09';
                   const is529 =
                     marker.event.focalObject === 529 ||
-                    marker.event.id === 'OBS-10' ||
-                    marker.event.id === 'OBS-11';
+                    marker.event.id === 'OBS-10';
 
                   let badgeStyle = 'bg-cyan-950/95 border-cyan-400 text-cyan-200';
                   let dotStyle = 'bg-cyan-400';
-                  if (isReentryOrBahia) {
-                    badgeStyle = 'bg-amber-950/95 border-amber-400 text-amber-200';
-                    dotStyle = 'bg-amber-400';
-                  } else if (is527) {
+                  if (is527) {
                     badgeStyle = 'bg-emerald-950/95 border-emerald-400 text-emerald-200';
                     dotStyle = 'bg-emerald-400';
                   } else if (is529) {
@@ -1703,24 +1697,19 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
             <div className="flex-1 overflow-y-auto space-y-2 pr-1 custom-scrollbar">
               {noradObservationMarkers.map((marker) => {
                 const isCurrent = marker.isCurrent;
-                const isReentry = marker.event.id === 'OBS-07' || marker.event.id === 'OBS-08';
                 const is527 =
                   marker.event.focalObject === 527 ||
                   marker.event.id === 'OBS-05' ||
                   marker.event.id === 'OBS-09';
                 const is529 =
                   marker.event.focalObject === 529 ||
-                  marker.event.id === 'OBS-10' ||
-                  marker.event.id === 'OBS-11';
+                  marker.event.id === 'OBS-10';
 
                 let borderStyle = 'border-zinc-800 hover:border-cyan-700 bg-zinc-900/70';
                 let badgeStyle = 'bg-cyan-950 text-cyan-300 border-cyan-700';
                 if (isCurrent) {
                   borderStyle = 'border-amber-500 bg-amber-950/30 ring-1 ring-amber-500';
                   badgeStyle = 'bg-amber-950 text-amber-200 border-amber-500 font-bold';
-                } else if (isReentry) {
-                  borderStyle = 'border-amber-800/80 hover:border-amber-600 bg-amber-950/20';
-                  badgeStyle = 'bg-amber-950 text-amber-300 border-amber-700';
                 } else if (is527) {
                   borderStyle = 'border-emerald-900/80 hover:border-emerald-600 bg-emerald-950/20';
                   badgeStyle = 'bg-emerald-950 text-emerald-300 border-emerald-700';
@@ -2053,28 +2042,24 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
                 Math.min(100, ((ev.timestampMs - LAUNCH_MS) / (END_OF_1963_MS - LAUNCH_MS)) * 100)
               );
               const isCurrent = displayedMilestones[currentObsIndex]?.id === ev.id;
-              const is528Reentry = ev.id === 'OBS-07' || ev.id === 'OBS-08';
-              const isLaunch = ev.id === 'OBS-01';
-
               // Visual styling per event criticality
               let pinBg = 'bg-cyan-500/80 hover:bg-cyan-400';
               let ringColor = 'border-cyan-400';
-              if (is528Reentry) {
-                pinBg = 'bg-amber-400 hover:bg-amber-300 animate-pulse';
-                ringColor = 'border-amber-300';
-              } else if (ev.focalObject === 527) {
+              if (ev.focalObject === 527) {
                 pinBg = 'bg-emerald-500/80 hover:bg-emerald-400';
                 ringColor = 'border-emerald-400';
-              } else if (ev.focalObject === 529 || ev.id === 'OBS-10' || ev.id === 'OBS-11') {
+              } else if (ev.focalObject === 529 || ev.id === 'OBS-10') {
                 pinBg = 'bg-purple-500/80 hover:bg-purple-400';
                 ringColor = 'border-purple-400';
               }
 
               return (
-                <div
+                <button
+                  type="button"
                   key={ev.id}
                   style={{ left: `${pct}%` }}
-                  className="absolute -top-1 -translate-x-1/2 flex flex-col items-center group cursor-pointer z-10"
+                  className="absolute -top-1 -translate-x-1/2 flex flex-col items-center group cursor-pointer z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300"
+                  aria-label={`${isPt ? 'Marco de simulação' : 'Model milestone'} ${ev.order}: ${isPt ? ev.titlePt : ev.titleEn}, ${ev.utcString.substring(0, 10)}`}
                   onClick={() => {
                     setIsPlaying(false);
                     jumpToTime(ev.timestampMs, ev);
@@ -2099,7 +2084,7 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
                   />
                   {/* Stem line down to the track */}
                   <div className={`w-0.5 h-3 ${isCurrent ? 'bg-cyan-400' : 'bg-zinc-700'}`} />
-                </div>
+                </button>
               );
             })}
 
