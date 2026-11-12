@@ -240,6 +240,80 @@ def overlap_diagnostics(rows: list[Observation], results: list[dict]) -> dict:
     }
 
 
+
+def disjoint_horizon_diagnostics(rows: list[Observation], results: list[dict]) -> dict:
+    """Re-score existing pre-cutoff fits over disjoint future epochs, POST_HOC.
+
+    Earlier evaluations score the same future 529 epochs up to four times.
+    Here each epoch belongs to exactly one (cutoff_i, cutoff_i+1]
+    window, with the last window unbounded. Fits are never refit on
+    any test epoch. Pooled RMSE weights each distinct epoch once.
+    Distinct scores do not imply independent sensors or prospective proof.
+    """
+    target = sorted((o for o in rows if o.sat == 529), key=lambda o: o.epoch)
+    if len({o.epoch for o in target}) != len(target):
+        raise ValueError("épocas futuras 529 duplicadas")
+    by_cutoff = {r["cutoff_utc_end_of_day"]: r for r in results}
+    if len(by_cutoff) != len(results):
+        raise ValueError("cortes repetidos na avaliação")
+    pooled_sq: dict[str, list[float]] = {}
+    segments = []
+    for i, day in enumerate(CUTOFFS):
+        lower = utc(day + "T23:59:59Z")
+        next_day = CUTOFFS[i + 1] if i + 1 < len(CUTOFFS) else None
+        upper = utc(next_day + "T23:59:59Z") if next_day else None
+        future = [o for o in target if o.epoch > lower and (upper is None or o.epoch <= upper)]
+        segment = {"training_cutoff": day, "scoring_until_cutoff_inclusive": next_day,
+                   "future_count": len(future),
+                   "future_epochs_utc": [o.epoch.isoformat() for o in future],
+                   "status": "NOT_RUN"}
+        fit = by_cutoff.get(day)
+        if not future:
+            segment["reason"] = "no target observation inside this disjoint interval"
+        elif fit is None or fit.get("status") == "NOT_RUN" or "coefficients" not in fit:
+            segment["reason"] = "past-only fit unavailable for this cutoff"
+        else:
+            coeffs = fit["coefficients"]
+            xs = [x_at(o.epoch, lower) for o in future]
+            ys = [o.mean_motion for o in future]
+            squared = {name: [(y - project(coeff, x)) ** 2 for y, x in zip(ys, xs)]
+                       for name, coeff in coeffs.items()}
+            segment["rmse_rev_day"] = {
+                name: rmse(ys, [project(coeff, x) for x in xs])
+                for name, coeff in coeffs.items()
+            }
+            segment["status"] = "EVALUATED_POST_HOC_DISJOINT"
+            segment["joint_minus_quadratic_rmse_rev_day"] = (
+                segment["rmse_rev_day"]["shared_curvature_527_528_to_529"] -
+                segment["rmse_rev_day"]["quadratic_529_only"])
+            if pooled_sq and pooled_sq.keys() != squared.keys():
+                raise ValueError("modelos inconsistentes entre cortes")
+            for name, values in squared.items():
+                pooled_sq.setdefault(name, []).extend(values)
+        segments.append(segment)
+    available = sum(r["future_count"] for r in segments)
+    expected = sum(o.epoch > utc(CUTOFFS[0] + "T23:59:59Z") for o in target)
+    if available != expected:
+        raise ValueError("corte disjunto perdeu ou duplicou épocas do 529")
+    scored = sum(r["future_count"] for r in segments if r["status"] != "NOT_RUN")
+    if any(len(v) != scored for v in pooled_sq.values()):
+        raise ValueError("escores não pareados no agregado disjunto")
+    pooled = {name: math.sqrt(math.fsum(errors) / scored)
+              for name, errors in pooled_sq.items()} if scored else None
+    return {
+        "status": "EVALUATED_POST_HOC" if scored else "NOT_RUN",
+        "available_unique_future_epochs": available,
+        "scored_unique_future_epochs": scored,
+        "unscored_unique_future_epochs": available - scored,
+        "pooled_rmse_rev_day": pooled,
+        "segments": segments,
+        "independent_replications_established": False,
+        "no_probability": True,
+        "interpretation": "Disjoint observation assignments eliminate repeated scoring, "
+                          "not single-source dependence; POST_HOC not orbital validation",
+    }
+
+
 def run(rows: list[Observation]) -> dict:
     results = [evaluate(rows, date) for date in CUTOFFS]
     return {
@@ -250,6 +324,7 @@ def run(rows: list[Observation]) -> dict:
         "no_probability": True,
         "results": results,
         "holdout_overlap": overlap_diagnostics(rows, results),
+        "disjoint_holdout": disjoint_horizon_diagnostics(rows, results),
     }
 
 def main() -> None:

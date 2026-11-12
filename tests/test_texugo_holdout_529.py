@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
-from texugo_holdout_529 import Observation, CUTOFFS, EXPECTED_SHA256, EXPECTED_URL, evaluate, load_audited, parse_csv, require_same_bindings, rmse, run
+from texugo_holdout_529 import Observation, CUTOFFS, EXPECTED_SHA256, EXPECTED_URL, evaluate, load_audited, parse_csv, require_same_bindings, rmse, run, utc
 
 
 def samples(c527=0.4, c528=0.4, c529=0.4, noisy_target=False):
@@ -160,6 +160,58 @@ class HoldoutControls(unittest.TestCase):
         self.assertEqual(report["total_scored_epoch_occurrences"], 7)
         self.assertEqual(report["distinct_future_epochs"], 4)
         self.assertEqual(overlap_diagnostics(observations, [])["status"], "NOT_RUN")
+
+
+    def test_disjoint_horizons_score_every_future_epoch_once(self):
+        # SYNTHETIC quadratic observations, no 1963 NORAD claim.
+        report = run(samples())
+        disjoint = report["disjoint_holdout"]
+        self.assertEqual(disjoint["status"], "EVALUATED_POST_HOC")
+        self.assertEqual(disjoint["available_unique_future_epochs"],
+                         report["holdout_overlap"]["distinct_future_epochs"])
+        self.assertEqual(disjoint["scored_unique_future_epochs"],
+                         disjoint["available_unique_future_epochs"])
+        epochs = [epoch for segment in disjoint["segments"]
+                  for epoch in segment["future_epochs_utc"]]
+        self.assertEqual(len(epochs), len(set(epochs)))
+        self.assertEqual(len(epochs), disjoint["scored_unique_future_epochs"])
+        self.assertLess(disjoint["pooled_rmse_rev_day"]["quadratic_529_only"], 1e-8)
+        self.assertFalse(disjoint["independent_replications_established"])
+
+    def test_disjoint_pooled_rmse_weights_epochs_not_windows_and_keeps_not_run(self):
+        # SYNTHETIC four observations, each in a distinct temporal interval.
+        from texugo_holdout_529 import disjoint_horizon_diagnostics
+        target = [
+            Observation(529, utc(timestamp), value)
+            for timestamp, value in (
+                ("1963-09-01T00:00:00Z", 1.0),
+                ("1963-10-01T00:00:00Z", 2.0),
+                ("1963-10-15T00:00:00Z", 3.0),
+                ("1963-11-01T00:00:00Z", 4.0),
+            )
+        ]
+        coefficients = {"quadratic_529_only": [0.0],
+                        "shared_curvature_527_528_to_529": [5.0]}
+        results = [{"cutoff_utc_end_of_day": day, "status": "TIE",
+                    "coefficients": coefficients} for day in CUTOFFS]
+        report = disjoint_horizon_diagnostics(target, results)
+        self.assertEqual([s["future_count"] for s in report["segments"]], [1, 1, 1, 1])
+        self.assertEqual(report["scored_unique_future_epochs"], 4)
+        self.assertAlmostEqual(report["pooled_rmse_rev_day"]["quadratic_529_only"],
+                               (30 / 4) ** 0.5)
+        self.assertEqual(len({epoch for part in report["segments"]
+                              for epoch in part["future_epochs_utc"]}), 4)
+        results[1]["status"] = "NOT_RUN"
+        incomplete = disjoint_horizon_diagnostics(target, results)
+        self.assertEqual(incomplete["scored_unique_future_epochs"], 3)
+        self.assertEqual(incomplete["unscored_unique_future_epochs"], 1)
+        self.assertEqual(incomplete["segments"][1]["status"], "NOT_RUN")
+        self.assertAlmostEqual(incomplete["pooled_rmse_rev_day"]["quadratic_529_only"],
+                               (1 + 9 + 16) ** 0.5 / 3 ** 0.5)
+        with self.assertRaisesRegex(ValueError, "duplicadas"):
+            disjoint_horizon_diagnostics(target + [target[0]], results)
+        with self.assertRaisesRegex(ValueError, "repetidos"):
+            disjoint_horizon_diagnostics(target, results + [results[0]])
 
     def test_no_likelihood_or_geography_in_report(self):
         report = run(samples())
