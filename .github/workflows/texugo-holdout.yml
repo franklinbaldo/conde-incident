@@ -45,10 +45,10 @@ jobs:
           cat "${{ runner.temp }}/nested_529.json"
       - name: POST-HOC single-prior-epoch influence and selector instability
         run: |
-          python tools/texugo_influence_529.py \\
-            --parquet "${{ runner.temp }}/tle_1963.parquet" \\
-            --csv "${{ runner.temp }}/source/norad_527_528_529_1963_numeric.csv" \\
-            --audit "${{ runner.temp }}/source/audit.json" \\
+          python tools/texugo_influence_529.py \
+            --parquet "${{ runner.temp }}/tle_1963.parquet" \
+            --csv "${{ runner.temp }}/source/norad_527_528_529_1963_numeric.csv" \
+            --audit "${{ runner.temp }}/source/audit.json" \
             --output "${{ runner.temp }}/influence_529.json"
       - name: Preserve source lineage, errors, negative results and all cutoffs
         if: always()
