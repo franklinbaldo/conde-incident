@@ -286,7 +286,7 @@ Regressões sintéticas verificam a separação de elegibilidade mesmo quando do
 
 ### C243-T13, resultado observado no espelho secundário após a reconciliação
 
-No SHA [\`546e6bd3936ba5af26e1c469291637fea9b43e1c\`](https://github.com/franklinbaldo/conde-incident/commit/546e6bd3936ba5af26e1c469291637fea9b43e1c), o [workflow Texugo #43196380743](https://github.com/franklinbaldo/conde-incident/actions/runs/43196380743) passou com **181 testes Python**, leitura independente do Parquet SHA-256 pinado e correspondência completa CSV. [Artefato #13933546145](https://github.com/franklinbaldo/conde-incident/actions/runs/43196380743/artifacts/13933546145), campo \`rolling_target_only_coverage\`, preserva cada previsão, erro, \`NOT_RUN\` e alvo contado.
+No SHA [\`546e6bd3936ba5af26e1c469291637fea9b43e1c\`](https://github.com/franklinbaldo/conde-incident/commit/546e6bd3936ba5af26e1c469291637fea9b43e1c), o [workflow Texugo #43196380743](https://github.com/franklinbaldo/conde-incident/actions/runs/43196380743) passou com **194 testes Python**, leitura independente do Parquet SHA-256 pinado e correspondência completa CSV. [Artefato #13933546145](https://github.com/franklinbaldo/conde-incident/actions/runs/43196380743/artifacts/13933546145), campo \`rolling_target_only_coverage\`, preserva cada previsão, erro, \`NOT_RUN\` e alvo contado.
 
 | Modelo alvo-only | Épocas pontuadas sem qualquer filtro 527/528 | RMSE universo próprio (rev/dia) | RMSE nos 51 alvos conjuntos (rev/dia) |
 |---|---:|---:|---:|
