@@ -13,6 +13,21 @@ export const evidenceRecordIds = [
 export type EvidenceRecordId = (typeof evidenceRecordIds)[number];
 const evidenceIds: ReadonlySet<string> = new Set(evidenceRecordIds);
 
+export const documentRecordIds = [
+  'doc-01', 'doc-02', 'doc-03', 'doc-04', 'doc-05', 'doc-06', 'doc-07', 'doc-08',
+] as const;
+const documentIds: ReadonlySet<string> = new Set(documentRecordIds);
+
+export function documentRecordFromHash(hash: string): string | null {
+  const match = /^#\/documents\/(doc-[0-9]{2})\/?$/.exec(hash);
+  return match && documentIds.has(match[1]) ? match[1] : null;
+}
+
+export function hashForDocumentRecord(id: string): string {
+  if (!documentIds.has(id)) throw new Error('Documento desconhecido: ' + id);
+  return '#/documents/' + id;
+}
+
 export function evidenceRecordFromHash(hash: string): EvidenceRecordId | null {
   const match = /^#\/research\/([a-z0-9-]+)\/?$/.exec(hash);
   if (!match || !evidenceIds.has(match[1])) return null;
@@ -27,6 +42,7 @@ export function hashForEvidenceRecord(id: EvidenceRecordId): string {
 export function resolveLabHash(hash: string): TabId | null {
   if (hash === '' || hash === '#') return 'summary';
   if (evidenceRecordFromHash(hash)) return 'research';
+  if (documentRecordFromHash(hash)) return 'documents';
   const match = /^#\/([a-z]+)\/?$/.exec(hash);
   if (!match || !routes.has(match[1] as TabId)) return null;
   return match[1] as TabId;
