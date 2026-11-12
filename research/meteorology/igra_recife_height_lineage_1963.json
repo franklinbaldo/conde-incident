@@ -1,0 +1,83 @@
+{
+  "schema": "conde.igra-recife-height-lineage/v1",
+  "id": "LAG-NCEI-HEIGHT-1963-01",
+  "modern_document": {
+    "publisher": "NOAA/NCEI",
+    "date": "2023-01",
+    "title": "IGRA v2.2 Product Description Supplement",
+    "url": "https://www.ncei.noaa.gov/pub/data/igra/igra2-product-description-supplement.pdf",
+    "printed_pages": [
+      12,
+      20
+    ],
+    "classification": "institutional documentation published after 1963, not specific instrument manual"
+  },
+  "historical_source": {
+    "station_id": "BRM00082900",
+    "upstream": "ncdc6301",
+    "archive_url": "https://www.ncei.noaa.gov/pub/data/igra/data/data-por/BRM00082900-data.txt.zip",
+    "archive_sha256": "0655b3ea80312abe888a5474f82233affc0a2496ee1fd8bc678162924f52ecdc",
+    "independent_archival_families": 1
+  },
+  "place": {
+    "name": "Recife",
+    "catalog_lat_deg": -8.05,
+    "catalog_lon_deg": -34.9167,
+    "catalog_elevation_m": 7,
+    "location_1963_verified": false,
+    "location_uncertainty_1963_m": null,
+    "measured_at_conde": false
+  },
+  "height_origin": {
+    "quantity": "reported geopotential height, meters above sea level",
+    "noaa_general_historical_practice": "ground station traditionally inferred geopotential height from pressure, temperature and humidity",
+    "noaa_igra_created_estimates": false,
+    "verified_for_1963_recife": false,
+    "source_specific_procedure": null,
+    "common_report_precisions_m": [
+      1,
+      10
+    ],
+    "report_precision_is_accuracy": false,
+    "instrumental_sigma_m": null,
+    "pressure_temperature_height_independent": false
+  },
+  "epochs": [
+    {
+      "nominal_utc": "1963-11-07T12:00:00Z",
+      "release_time_utc": null,
+      "levels": 29,
+      "layers": 28,
+      "prior_json": "igra_recife_19631107_hypsometric_consistency.json"
+    },
+    {
+      "nominal_utc": "1963-11-08T12:00:00Z",
+      "release_time_utc": null,
+      "levels": 26,
+      "layers": 25,
+      "prior_json": "igra_recife_19631108_hypsometric_consistency.json"
+    },
+    {
+      "nominal_utc": "1963-11-09T12:00:00Z",
+      "release_time_utc": null,
+      "levels": 26,
+      "layers": 25,
+      "prior_json": "igra_recife_19631109_hypsometric_consistency.json"
+    }
+  ],
+  "inference": {
+    "model_residual_is_independent_instrument_calibration": false,
+    "hypsometric_residual_is_instrument_error": false,
+    "residual_sigma_m": null,
+    "recife_conde_transfer_sigma_m": null,
+    "terminal_time_or_position_inferred": false,
+    "physical_constraint_activated": false,
+    "links": [
+      "C149-C151: p,T,GPH -> conditional layer residual -> uncertainty of shared processing -> drag scenario PENDING",
+      "C144-C146: surface charts, not independent co-located vertical profiles",
+      "C17-C23: solar and geomagnetic indices, separate physical layer",
+      "C193: Explorer XVII, different time and altitude"
+    ],
+    "next_test": "Investigate station history and original 1963 receiver computation before calibrating any hypsometric residual"
+  }
+}
