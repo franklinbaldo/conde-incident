@@ -12,7 +12,7 @@ The audit also handles a numerically detected **descending altitude threshold**,
 
 ## Reproduce
 
-`node --experimental-strip-types --test tests/orbitEnergyAudit.test.mjs` (Node 22), as pinned by `.github/workflows/orbit-energy-budget.yml`. Ten **synthetic** controls (five baseline and five refinement controls): conservative budget, dissipative drag and quadrature residual, coarse-versus-refined negative result, threshold event truncation, invalid inputs/source.
+`node --experimental-strip-types --test tests/orbitEnergyAudit.test.mjs` (Node 22), as pinned by `.github/workflows/orbit-energy-budget.yml`. Thirteen **synthetic** controls (five baseline and five refinement controls): conservative budget, dissipative drag and quadrature residual, coarse-versus-refined negative result, threshold event truncation, invalid inputs/source.
 
 ## Primary record and dependency chain
 
@@ -30,8 +30,26 @@ velocity (km/s), event epoch (seconds), Jacobi change (km²/s²) and integrated
 drag work (km²/s²). Its separately declared tolerances have dimensions and
 must be positive and finite. Two finest work budgets must independently pass;
 the last pair of states and work integrals must agree within limits; differences
-must not grow substantially beyond declared resolution. An event classification
+must not exhibit resolved growth beyond a separate 64×machine-epsilon scale allowance. This allowance is derived from the absolute diagnostic scale in each physical unit (km, km/s, seconds, km²/s²) and is *not* a certified error bound, formal convergence order or physically calibrated tolerance. An event classification
 conflict is explicit rather than averaged away.
+
+**G16 retrospective correction (12 Nov 2026).** The previous second condition
+`finalDifference <= max(absoluteLimit, 1.25 * previousDifference)`
+was logically implied by `finalDifference <= absoluteLimit` and therefore
+provided **no second protection**. The Gavião counterexample in private
+[Castor inbox #2](https://github.com/franklinbaldo/castor/issues/2)
+(`previous=0.0001 km`, `final=0.9 km`, `limit=1 km`)
+passed both checks despite **9000× growth**. The new independent trend audit
+requires `final <= previous + 64 * EPSILON * max(1, scale)` for each
+metric, where `scale` comes from actual per-level state or budget values and
+is expressed in the metric's unit. Reports `growingMetrics` and
+`roundoffAllowance` explicitly; growth beyond this heuristic returns
+`REFINEMENT_UNRESOLVED` even when the caller's absolute limits pass.
+64×machine epsilon is a conservative floating-point *diagnostic heuristic*,
+not a mathematically established global rounding-error bound. Monotone
+pairwise differences alone still do not certify RK4 convergence or impact.
+[Adversarial regression](../tests/orbitEnergyAudit.test.mjs) tests the actual
+logical independence of the two gates using the original 9000× counterexample.
 
 **Reproducible negative control:** even if coarse and refined work balances
 pass an intentionally permissive energy tolerance, a much tighter position
