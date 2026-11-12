@@ -70,6 +70,31 @@ class PairingTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unordered or repeated"):
             compare(p, q)
 
+    def test_reject_cross_block_leakage_even_when_models_agree(self):
+        # SYNTHETIC adversary: duplicate a valid validation date in evaluation.
+        # The old comparator checked order only *inside* each block and passed.
+        p, q = fixture()
+        for sat in ("528",):
+            duplicate = p["objects"][sat]["validation"]["details"][0]["epoch_utc"]
+            p["objects"][sat]["evaluation"]["details"][0]["epoch_utc"] = duplicate
+            q["objects"][sat]["evaluation"]["per_epoch"][0]["epoch_utc"] = duplicate
+        with self.assertRaisesRegex(ValueError, "boundary violation"):
+            compare(p, q)
+
+    def test_reject_early_evaluation_and_late_validation(self):
+        for block, bad_epoch in (("evaluation", "1963-09-30T23:59:59Z"),
+                                 ("validation", "1963-10-01T00:00:00Z"),
+                                 ("evaluation", "1964-01-01T00:00:00Z"),
+                                 ("validation", "1963-07-31T23:59:59Z")):
+            p, q = fixture()
+            for field in (p["objects"]["527"][block]["details"][0],
+                          q["objects"]["527"][block]["per_epoch"][0]):
+                field["epoch_utc"] = bad_epoch
+            with self.subTest(block=block), self.assertRaisesRegex(
+                ValueError, "boundary violation"
+            ):
+                compare(p, q)
+
     def test_reject_corrupt_residual_and_reported_loss(self):
         p, q = fixture()
         p["objects"]["528"]["evaluation"]["details"][0]["signed_residual_deg"] = 1.5
