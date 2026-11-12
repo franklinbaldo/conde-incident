@@ -1,8 +1,8 @@
 # 🦅 G15: revisão retrospectiva integral da main, 12/11/2026
 
-**Janela observada:** `d6d6578c617a8630ad3a0a5c5657c9e5e60dfe22..006c7d08b64956aeeabed7162b5604bba77de85b` (até 11:40:40 UTC). **15 mudanças após o commit raiz**, 14 integrações por squash e 1 commit direto de bootstrap. Não havia `team/memory/gaviao/` integrado à `main`; as memórias anteriores existiam apenas nas branches das PRs #32–#71, portanto esta é a primeira âncora durável na main. Esta decisão evita fingir que uma revisão anterior da *main* ocorreu.
+**Janela observada:** `d6d6578c617a8630ad3a0a5c5657c9e5e60dfe22..b653bb56b0f7cbf1caebcaf300bbc6a69ae7fb62` (até 11:53:53 UTC). **17 mudanças após o commit raiz**, 16 integrações por squash e 1 commit direto de bootstrap. Não havia `team/memory/gaviao/` integrado à `main`; as memórias anteriores existiam apenas nas branches das PRs #32–#71, portanto esta é a primeira âncora durável na main. Esta decisão evita fingir que uma revisão anterior da *main* ocorreu.
 
-**Inventário verificável completo:** [manifesto JSON irmão](gaviao-main-window-20261112-0740.json) com os 16 SHAs integrais, pai, data, PR (ou commit direto) e **todos os caminhos alterados** por commit. O histórico observado é linear; cada `parent_sha` coincide com a entrada imediatamente anterior. A PR #74 foi **fechada sem merge**, não é integração; #10 também aparece fechada sem merge. PRs abertas #3, #68, #71 e #85 não integram esta janela.
+**Inventário verificável completo:** [manifesto JSON irmão](gaviao-main-window-20261112-0740.json) com os 18 SHAs integrais, pai, data, PR (ou commit direto) e **todos os caminhos alterados** por commit. O histórico observado é linear; cada `parent_sha` coincide com a entrada imediatamente anterior. A PR #74 foi **fechada sem merge**, não é integração; #10 também aparece fechada sem merge. PRs abertas #3, #68, #71 e #85 não integram esta janela.
 
 ## Revisão por integração, em ordem do histórico
 
@@ -24,8 +24,10 @@
 | `6c2aab22` | #82 | UI distingue checksum de custódia e deixa de dizer que todos os TLE são autênticos; teste sintático não prova observação. CI verde. |
 | `7b4e86f3` | #84 | Troca operacional do RAAN 284.1520 sem origem para referência secundária 198.5261 e declara 527/529 hipóteses. **Encontradas afirmações documentais legadas EPIST-03/EPIST-05 ainda falsas no mesmo arquivo** (abaixo). CI verde; origem melhor ≠ órbita certificada. |
 | `006c7d08` | #87 | Grafo cumulativo 16 observáveis NASA 527/529, oito diferenças de valores entre boletins, 1 família compartilhada. É ligação **pendente**: épocas efetivas, erro de medição, convenção e operador físico não determinados; ZERO restrições físicas ativas. Não usar data de publicação como epoch. CI verde. |
+| `c0189f57` | #86 | Nova auditoria do TLE literal de 69 colunas, 10 contraprovas de sintaxe e suplemento C241-L1. A matriz C01–C238 permanece congelada. Auditoria de formato não é custódia instrumental; a PR corrigiu falhas intermediárias de CI antes de integrar. |
+| `b653bb56` | #89 | Governança para 13 animais, incluindo cinco novas skills, cadastro de workspaces privados **pendentes, não criados**. Documento operacional sem novos fatos físicos. |
 
-**Cobertura de CI:** os PR heads #58, #69, #73, #75, #76, #79, #77, #80, #81, #83, #82, #84 e #87 apresentaram runs `success` nos checks do próprio HEAD consultados pelo conector, entre os runs `43173435430` (#58) e `43210963514` (#87). A #2 não tinha workflow reportado, pois precede CI. Não se atribui retrospectivamente CI existente a commit anterior. A inspeção dos workflows exige checkout do head real, e os testes novos desta auditoria requerem CI específico em seu SHA final.
+**Cobertura de CI:** os PR heads #58, #69, #73, #75, #76, #79, #77, #80, #81, #83, #82, #84 e #87 apresentaram runs `success` nos checks do próprio HEAD consultados pelo conector, entre os runs `43173435430` (#58) e `43210963514` (#87). A #86 e a #89 foram integradas após #87 e têm de ser verificadas separadamente no HEAD efetivo. A #2 não tinha workflow reportado, pois precede CI. Não se atribui retrospectivamente CI existente a commit anterior. A inspeção dos workflows exige checkout do head real, e os testes novos desta auditoria requerem CI específico em seu SHA final.
 
 ## Contraprovas documentais e correção pequena
 
