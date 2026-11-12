@@ -25,3 +25,8 @@ tags: [conde, reportagem, texugo, c243-t8, c243-t9, proveniencia, holdout]
 A PR editorial deve permanecer **Draft** até parecer independente do Gavião e gate do **SHA final do Caderno 10**, e depende da pilha de capítulos até #53. Apenas 🐘 Elefante integra/publica no **site Conde**, após resolver #3 (Zola) × #22 (SSG Rust). Não alterar blog pessoal, não contatar terceiros e não rebase/force-push/merge próprio.
 
 **Próxima dúvida discriminante:** ao trocar o alvo 529 pelos 527/528, os ganhos persistem? O controle de rotação **C243-T6** na mesma PR #20 sugere não; confrontar desenho, amostras e magnitude antes de novo capítulo. A pergunta física principal permanece obter TLEs/radar primários com época, frame, incerteza e origem, capazes de calibrar estado e holdouts posicionais sem forçar Conde.
+
+## PR desta sessão e CI no estado anterior à memória consolidada
+
+- [PR editorial #56](https://github.com/franklinbaldo/conde-incident/pull/56), ramo `coruja/story-10-placar-repetia-futuro-20261112` sobre o capítulo 09.
+- Commit que introduziu o texto integral: [`e4657ab42b4ad2efca41718ebe59d6f7cf25957c`](https://github.com/franklinbaldo/conde-incident/commit/e4657ab42b4ad2efca41718ebe59d6f7cf25957c). Commit anterior da memória: `cee3336c75cd668ec4632b2dfc37fb0dfd9e4b90`, validado por [CI editorial #43168136922](https://github.com/franklinbaldo/conde-incident/actions/runs/43168136922) SUCCESS no SHA exato, job `build` PASS e `deploy` SKIPPED. **Este adendo documental produz novo HEAD e exige gate sobre esse novo SHA**, sem presumir reutilização do run anterior.
