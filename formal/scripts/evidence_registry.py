@@ -119,6 +119,67 @@ def render_lean(rows: list[dict]) -> str:
     return HEADER + body + FOOTER
 
 
+
+def outcome_interface() -> dict:
+    """Typed *empty* handoff to Castor, not a fitted dynamics result.
+
+    These are proof-obligation names in the compiled Lean kernel.
+    A simulator must independently supply a physical model, uncertainty
+    bounds, source identity, holdout checks and a nonempty feasible domain.
+    Finite-search exhaustion is never global physical contradiction.
+    """
+    return {
+        "version": 1,
+        "kind": "CONDITIONAL_OUTCOME_PROOF_OBLIGATIONS_NOT_OBSERVATIONS",
+        "lean_module": "Conde1963/Outcome.lean",
+        "current_result": None,
+        "calibrated_model": None,
+        "numerical_impact_window": None,
+        "required_inputs": [
+            "source_matrix_ids_with_occurrence_and_pinned_citation",
+            "independently_reviewed_provenance_and_chain",
+            "evidence_uncertainty_and_physical_mapping",
+            "justified_accepted_constraints_not_exploratory_scenarios",
+            "nonempty_admissible_domain_with_strict_reduction_witness",
+            "documented_orbit_model_units_epochs_error_and_holdouts",
+            "global_coverage_proof_or_explicit_finite_grid_scope",
+            "ground_impact_model_distinct_from_orbital_decay",
+        ],
+        "conditional_outcomes": [
+            {
+                "code": "CONTRADICTORY_PREMISES",
+                "lean": "not HasCandidate",
+                "scope": "global_model_only",
+                "warning": "An empty finite grid is NOT proof of global contradiction.",
+            },
+            {
+                "code": "CONDE_FORCED",
+                "lean": "ForcesConde",
+                "scope": "nonempty_admissible_model_only",
+                "warning": "Every candidate must predict a ground impact in Conde.",
+            },
+            {
+                "code": "CONDE_EXCLUDED",
+                "lean": "ExcludesConde",
+                "scope": "nonempty_admissible_model_only",
+                "warning": "No impact in Conde does NOT establish an impact elsewhere.",
+            },
+            {
+                "code": "OTHER_WINDOW",
+                "lean": "IdentifiesOtherWindow",
+                "scope": "nonempty_admissible_model_only",
+                "warning": "Requires a predicted impact for every survivor and proven geographic disjointness from Conde.",
+            },
+            {
+                "code": "INDETERMINATE",
+                "lean": "MixedCondeOutcomes",
+                "scope": "sufficient_mixed_outcomes_witness_not_exhaustive",
+                "warning": "Other unresolved cases exist; the predicate is sufficient, not necessary.",
+            },
+        ],
+    }
+
+
 def contracts(rows: list[dict]) -> dict:
     return {
         "schema_version": 2,
@@ -126,6 +187,7 @@ def contracts(rows: list[dict]) -> dict:
         "matrix_git_blob_sha1": MATRIX_SHA1,
         "matrix_commit": MATRIX_COMMIT,
         "original_lean_zip_status": "NOT_RUN",
+        "outcome_interface": outcome_interface(),
         "scope": "241 actual rows, 238 distinct labels, no fabricated observations",
         "entries": [
             {
