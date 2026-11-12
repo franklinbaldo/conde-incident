@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import { Navigation, TabId } from './components/Navigation';
 import { ExecutiveSummary } from './components/ExecutiveSummary';
+import { ResearchLedger } from './components/ResearchLedger';
 import { OrbitalMap } from './components/OrbitalMap';
 import { InversePassInspector } from './components/InversePassInspector';
 import { TriangulationDashboard } from './components/TriangulationDashboard';
@@ -17,7 +18,7 @@ import { PythonScriptModal } from './components/PythonScriptModal';
 import { Satellite, Shield, Globe, Terminal, ExternalLink } from 'lucide-react';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<TabId>('summary');
+  const [activeTab, setActiveTab] = useState<TabId>('research');
   const [lang, setLang] = useState<'pt' | 'en'>('pt');
   const [sharedTimeMs, setSharedTimeMs] = useState<number>(
     new Date('1963-11-08T19:48:00Z').getTime()
@@ -67,6 +68,8 @@ export default function App() {
 
       {/* Main Content Body */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-6">
+        {activeTab === 'research' && <ResearchLedger lang={lang} />}
+        {activeTab !== 'research' && <div className="mb-5 rounded-xl border border-amber-800/40 bg-amber-950/20 px-5 py-4 text-sm text-amber-200" role="status">{lang === 'pt' ? 'Módulo exploratório: as passagens, probabilidades e TLEs exibidos abaixo ainda não foram validados como reconstrução histórica. Consulte a aba Evidências antes de interpretar os resultados.' : 'Exploratory module: passes, probabilities and TLEs below are not validated historical reconstructions. Read Evidence before interpreting results.'}</div>}
         {activeTab === 'summary' && (
           <ExecutiveSummary
             lang={lang}

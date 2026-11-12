@@ -92,10 +92,6 @@ export interface CandidatePass {
   elevationDeg: number;
   azimuthDeg: number;
   passType: 'ASCENDING' | 'DESCENDING';
-  requiredMeanAnomalyDeltaDeg: number;
-  requiredMeanMotionDerivative: number; // rev/day^2
-  requiredBallisticCoeff: number; // m^2 / kg
-  physicalFeasibility: 'ALTA' | 'MODERADA' | 'EXTREMA' | 'INCOMPATIVEL';
   notes: string;
 }
 

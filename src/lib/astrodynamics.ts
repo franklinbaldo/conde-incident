@@ -171,10 +171,6 @@ export function propagateState(
   if (!satrec) return null;
 
   // Calculate elapsed time in days from TLE epoch
-  const data = HISTORICAL_ORBITAL_DATA[noradId];
-  const dtDaysFromEpoch = (curMs - data.epochDate.getTime()) / (1000 * 86400);
-  const daysSinceLaunch = (curMs - launchMs) / (1000 * 86400);
-
   // Baseline SGP4 propagation
   const positionAndVelocity = satellite.propagate(satrec, date);
   if (!positionAndVelocity) return null;
@@ -199,39 +195,13 @@ export function propagateState(
   const velZ = (velocityEci as satellite.EciVec3<number>).z;
   const velMag = Math.sqrt(velX * velX + velY * velY + velZ * velZ);
 
-  // Realistic Altitude Histories across full 1963 timeline:
-  if (noradId === 528) {
-    if (dtDaysFromEpoch > 0) {
-      // Between 27 Oct and 08 Nov: accelerated terminal plunge
-      const H = options?.customScaleHeight || 45;
-      const decayFactor = Math.pow(Math.min(dtDaysFromEpoch, 12.38) / 12.38, 3.2);
-      const altitudeDropKm = 345 * decayFactor;
-      altKm = Math.max(0, altKm - altitudeDropKm);
-
-      // Along-track phase lead
-      const dndt = options?.customDecayRate !== undefined ? options.customDecayRate : 0.0055;
-      const phaseDeltaRevs = 0.5 * dndt * dtDaysFromEpoch * dtDaysFromEpoch;
-      const timeLeadSec = (phaseDeltaRevs / 15.75) * 86400;
-      const earthRotShiftDeg = (timeLeadSec / 86400) * 360;
-      lonDeg = ((lonDeg + earthRotShiftDeg + 180) % 360) - 180;
-    } else {
-      // Before 27 Oct: started at ~360 km at launch, gradually lost ~15 km over 284 days
-      const daysBeforeEpoch = -dtDaysFromEpoch;
-      const gradualAltitudeGain = (daysBeforeEpoch / 284.0) * 15.0;
-      altKm = Math.min(365, altKm + gradualAltitudeGain);
-    }
-  } else if (noradId === 529) {
-    // 529 decayed on 31/12/1963. Started at ~350 km at launch, down to 247 km in late Dec
-    const fracOfYear = Math.max(0, Math.min(1, daysSinceLaunch / 350.0));
-    altKm = 350 - fracOfYear * (350 - 247);
-    if (daysSinceLaunch > 348) {
-      altKm = Math.max(0, 247 - (daysSinceLaunch - 348) * 120);
-    }
-  } else if (noradId === 527) {
-    // 527 (OPS 0180): stable orbit at ~485 km throughout 1963
-    altKm = 485.7;
-  }
-
+  // Scientific integrity: retain the position, altitude and velocity computed by SGP4.
+  // Prior code independently modified altitude and longitude using prescribed
+  // terminal-drop and along-track shifts, producing a nonphysical state vector.
+  // SGP4 extrapolation 12+ days beyond an historical TLE is NOT a validated
+  // reconstruction of terminal reentry: display as an uncalibrated baseline.
+  // customDecayRate/customScaleHeight are retained only for API compatibility;
+  // neither is applied until a coupled dynamical propagation is implemented.
   // Ensure longitude in [-180, 180]
   while (lonDeg > 180) lonDeg -= 360;
   while (lonDeg < -180) lonDeg += 360;
