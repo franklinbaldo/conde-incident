@@ -1,0 +1,21 @@
+---
+type: Guide
+title: "C241-L8: confronto dos seis elementos orbitais 527–529"
+description: "Contraprova verificável do vetor TLE legado sem confundir catálogos secundários com observações NORAD."
+---
+
+# C241-L8: impressão digital do vetor legado em três catálogos
+
+**Ocorrência C241-L8**, suplemento aditivo à [matriz C001–C238](../evidence_matrix_C001-C238_2026-11-11.md), às ocorrências [C241-L2](evidence_matrix_C241-L2_2026-11-12.md), [C241-L6](evidence_matrix_C241-L6_2026-11-12.md) e [C241-L7](evidence_matrix_C241-L7_2026-11-12.md), vinculado à [issue #13](https://github.com/franklinbaldo/conde-incident/issues/13). Extrai C241-T12 da [draft #14](https://github.com/franklinbaldo/conde-incident/pull/14) em fatia independente.
+
+**Linhagem e classificação.** Os bytes da antiga constante `src/lib/constants.ts` foram conferidos no blob Git `0284f1217557b0ea891b5e51b6ac56bd13529d3f`: seu TLE construído para 528 contém RAAN `284.1520°`, excentricidade `0.0084200`, época `63300.61111111`. Checksum aritmeticamente válido **não** demonstra emissão NORAD; esta é uma impressão digital forense `UNVERIFIED_LEGACY_CONSTRUCTED_PAIR`, **não observação ativa**. O [par literal secundário 528](mirror_528_1963-10-27.tle), SHA-256 `18cf11665e061b5ec8679242e10b00b82accf29bc6f0b9b7b6330b9c44e341cd`, registra RAAN 198,5261° na época 63300.61129783. A diferença circular numérica é 85,6259°, sem assumir frame comum ou que uma amostra de outra época substitua essa observação.
+
+**Fonte secundária fixada:** [Parquet oxzoid 1963 rev. 4b4fb3a](https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/4b4fb3a/data/tle_1963.parquet), SHA-256 `c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09`. CSV derivado indexado por `source_row`, SHA-256 `3940715d7c15cf15c24e678a8c5b5fbb34a031b3ffd7e33c0580277377383231`. São 123 linhas e 119 épocas distintas: 527=20, 528=45, 529=54. Duplicatas idênticas retêm todos os índices, sem multiplicar testemunhos.
+
+**Método e contraprova.** Em **uma mesma época de um mesmo NORAD**, compara-se inclinação, RAAN, excentricidade, argumento do perigeu, anomalia média e movimento médio. Ângulos de RAAN/ω/M usam diferença circular módulo 360°; tolerâncias referem-se somente à serialização decimal e binária, não ao erro orbital. Nunca costurar os seis elementos entre registros distintos. O ensaio prévio C241-T12 da draft #14 encontrou 0 coincidências integrais nas 119 épocas, inclusive 0 nos 527 e 529. O novo CI verifica de novo esse número no HEAD da PR e preserva índices de origem e registros mais próximos.
+
+**Independência/incerteza.** Espelhos derivados do alegado Space-Track podem compartilhar origem instrumental e cadeia ETL. Faltam os 45 pares instrumentais originais do 528, TLEs originais 527/529, checksums históricos, frame de 1963, sensores, sigma/covariância, identidade de engenharia da peça e a fonte do ângulo legado. Resultado negativo exclui **apenas** cópia integral de um registro disponível neste espelho, não uma origem externa, uma transformação orbital ou um resultado físico. NASA [Satellite Situation Report 15/11/1963, p. impressa 8](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf), inspecionada anteriormente em C197, documenta o **dia** 08/11/1963 de decaimento de 1963-003B, sem hora ou lugar.
+
+**Grafo cumulativo:** `CONNECTED_PENDING_CALIBRATION`; ocorrência `C241-L8:legacy_fingerprint_per_catalog_epoch`; observável são as diferenças seis-campos por registro com `source_row`. Frame histórico e `measurement_sigma=null`, independência `NOT_ESTABLISHED`. Predicado físico Lean 4.35.0 `NOT_PROMOTED`; domínio físico não reduzido; holdout físico `NOT_RUN`; Conde `INDETERMINATE`.
+
+**Reproduzir:** `python -m unittest discover -s tests -p 'test_tle_cross_catalog_legacy_audit.py' -v`. Instalar `pyarrow==21.0.0`; executar `python tools/tle_secondary_1963_ledger.py --download --parquet /tmp/tle_1963.parquet --literal research/tle_custody/mirror_528_1963-10-27.tle --output /tmp/c241-l8` e `python tools/tle_cross_catalog_legacy_audit.py --csv /tmp/c241-l8/norad_527_528_529_numeric_1963.csv --output /tmp/c241-l8/cross_catalog_c241_l8.json`. [Workflow](../../.github/workflows/tle-cross-catalog-legacy.yml): executa testes, confirma HEAD, SHA dos dados e negativos. Não é previsão de impacto.
