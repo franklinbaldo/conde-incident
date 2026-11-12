@@ -1,3 +1,9 @@
+---
+type: Guide
+title: "Morcego · Localizadores óticos SAO de 1963 sem estação Natal inventada"
+description: "Nota de inventário Smithsonian com dependências, limites de custódia e observações físicas pendentes."
+---
+
 # Morcego — SAO/Smithsonian: procurar rastreamento ótico em 1963 sem inventar uma estação em Natal
 
 **Pergunta falsificável:** havia uma estação Smithsonian Baker–Nunn em Natal em 8 de novembro de 1963? Em quais pastas procurar dados de reentrada ou observações óticas contemporâneos, possivelmente independentes do catálogo NASA/NORAD?
