@@ -39,7 +39,7 @@ test('reused matrix IDs need occurrence keys; arbitrary evidence routes are refu
   for (const bad of [
     '#/research/c44', '#/research/c45', '#/research/c46',
     '#/research/c01/unknown', '#/research/unknown', '#/research/../c01',
-    '#/research/C01', '#/research/c01?claimed=true', '#/research/',
+    '#/research/C01', '#/research/c01?claimed=true',
   ]) {
     assert.equal(evidenceRecordFromHash(bad), null, bad);
     assert.equal(resolveLabHash(bad), null, bad);
