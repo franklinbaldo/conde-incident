@@ -462,3 +462,40 @@ Referências de proveniência e independência: [formato TLE CelesTrak](https://
 ### Resultado executado de C241-T11
 
 No SHA 5441a766699a8be948f13d6f7f37d32c647c4314, a [custódia #43184618144](https://github.com/franklinbaldo/conde-incident/actions/runs/43184618144) passou com **127/127 testes**, hash do espelho fixado e [artefato #13928076806](https://github.com/franklinbaldo/conde-incident/actions/runs/43184618144/artifacts/13928076806) (ZIP SHA-256 2160622183928d694b41be5d57cd422dd0976cae930d5cc3543a4249a390025e); [científico #43184618041](https://github.com/franklinbaldo/conde-incident/actions/runs/43184618041) passou no mesmo SHA. Os **116 intervalos** entre 119 épocas únicas revelaram **4** casos de n-dot positivo nas duas pontas com delta de n negativo; para intervalos até **72 h**, 527: **1/0**, 528: **12/1**, 529: **16/1** (intervalos/ocorrências). Esses números são **secantes de dados ajustados**, não medições de aceleração. O controle ingênuo de midpoint não é um holdout calibrado e seus residuais nunca devem ser usados como incerteza orbital ou extrapolação de reentrada. O CSV/JSON contém rastreamento por source_row e dados das duplicatas. Novos commits requerem CI no HEAD final.
+
+
+## C241-T12: controle negativo de troca de identificador entre três catálogos
+
+O [auditor C241-T12](../../tools/tle_cross_catalog_legacy_audit.py) estende
+a contraprova de seis campos da etapa T2: em vez de examinar somente as 45 épocas
+do 528, percorre todas as 20/45/54 épocas **distintas** do espelho secundário
+527/528/529, preservando as 21/45/57 linhas físicas com duplicatas e índices.
+O número exato de registros é validado por SHA e contagens no CI.
+
+Um resultado positivo de seis campos no 527 ou no 529 seria **compatibilidade
+numérica**, NÃO evidência de atribuição equivocada pelo NORAD, porque seria
+necessário verificar o arquivo original, o frame, o sensor, o erro e a origem
+do TLE legado. Resultado negativo só elimina a *cópia integral do registro*
+dentre os registros que este espelho contém, **não** uma fonte fora dele.
+A busca de RAAN isolada serve para localizar candidatos, nunca para fabricar
+um estado combinando épocas e objetos diferentes.
+
+Linhagem: [Parquet oxzoid rev 4b4fb3a](https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/4b4fb3a/data/tle_1963.parquet),
+SHA-256 c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09;
+CSV derivado de três catálogos SHA-256
+3940715d7c15cf15c24e678a8c5b5fbb34a031b3ffd7e33c0580277377383231;
+TLE legado do Git blob 0284f1217557b0ea891b5e51b6ac56bd13529d3f,
+**não** autenticado; [CelesTrak](https://celestrak.org/columns/v04n03/)
+define apenas formato. NASA NTRS 19640001198, p.8, documenta dia de decaimento
+08/11 (não hora/local). **Nenhum novo documento primário foi recuperado.**
+
+Após extração pinada, reproduzir:
+
+    python -m unittest discover -s tests -p 'test_*.py' -v
+    python tools/tle_cross_catalog_legacy_audit.py --csv /tmp/tle-audit/norad_527_528_529_1963_numeric.csv --output /tmp/tle-audit/legacy_528_cross_catalog_c241_t12.json
+
+Status de observação: calcular no CI do HEAD final. O JSON distingue todos
+os seis campos em uma única amostra, correspondência da época, e ângulo RAAN
+próximo, preservando a classificação **SECONDARY**, sem inferir órbita,
+propagação, impacto em Conde, identificação física da peça ou prova Lean
+orbital. O conflito 284,1520° / 198,5261° fica não resolvido primariamente.

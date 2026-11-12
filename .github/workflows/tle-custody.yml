@@ -147,6 +147,23 @@ jobs:
           print("unresolved:", r["raan_198_5261_vs_284_1520"],
                 r["provenance"]["primary_1963_TLE_pairs"], r["conde"])
           PY
+      - name: Cross-catalog six-field legacy fingerprint 527/528/529 (C241-T12)
+        run: |
+          python tools/tle_cross_catalog_legacy_audit.py \
+            --csv "$RUNNER_TEMP/tle-audit/norad_527_528_529_1963_numeric.csv" \
+            --output "$RUNNER_TEMP/tle-audit/legacy_528_cross_catalog_c241_t12.json"
+          python - <<'PY'
+          import json, os, pathlib
+          r = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) /
+                          "tle-audit/legacy_528_cross_catalog_c241_t12.json").read_text())
+          print("C241-T12:", r["comparison"]["full_legacy_vector_any_catalog_hypothesis"])
+          print("527/528/529:", {k: {
+              "n": v["distinct_epochs"],
+              "six_fields": v["all_six_any_epoch_count"],
+              "closest_raan": v["closest_raan_same_record"][:1]}
+              for k, v in r["comparison"]["by_catalog"].items()})
+          print("no_physical_claim:", r["lean_physical_restriction"], r["conde_impact"])
+          PY
       - name: Preserve normalized source-derived rows and negative results
         if: always()
         uses: actions/upload-artifact@v4
