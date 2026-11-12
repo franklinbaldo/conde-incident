@@ -192,16 +192,14 @@ theorem cumulative_radii_monotone (distances : List Nat) :
     -500*rho*(CdA/m)*|v_rel|^3; it does not certify floating-point RK4,
     dimensional conversion, density values, or integrated orbital energy. -/
 def scaledDragPower (nonnegativeFactor speedSquared : Nat) : Int :=
-  -(Int.ofNat (nonnegativeFactor * speedSquared))
+  match nonnegativeFactor * speedSquared with
+  | 0 => 0
+  | n + 1 => Int.negSucc n
 
 theorem scaled_drag_power_nonpositive
     (nonnegativeFactor speedSquared : Nat) :
     scaledDragPower nonnegativeFactor speedSquared ≤ 0 := by
-  change -(Int.ofNat (nonnegativeFactor * speedSquared)) ≤ 0
-  have castNonnegative : (0 : Int) ≤
-      Int.ofNat (nonnegativeFactor * speedSquared) := by
-    generalize hprod : nonnegativeFactor * speedSquared = n
-    omega
-  omega
+  unfold scaledDragPower
+  split <;> simp
 
 end Conde1963
