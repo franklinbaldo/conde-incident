@@ -53,6 +53,12 @@ jobs:
             --csv "${{ runner.temp }}/tle-audit/norad_527_528_529_1963_numeric.csv" \
             --output "${{ runner.temp }}/tle-audit/tle_epoch_grid_report.json"
           cat "${{ runner.temp }}/tle-audit/tle_epoch_grid_report.json"
+      - name: Audit exact secondary 528 line columns and syntax only
+        run: |
+          python tools/tle_literal_layout.py \
+            --pair research/tle_custody/mirror_528_1963-10-27.tle \
+            --output "${{ runner.temp }}/tle-audit/secondary_528_literal_fields.json"
+          cat "${{ runner.temp }}/tle-audit/secondary_528_literal_fields.json"
       - name: Preserve normalized source-derived rows and negative results
         if: always()
         uses: actions/upload-artifact@v4
