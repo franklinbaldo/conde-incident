@@ -1,4 +1,4 @@
-import Conde1963.Enclosures
+import Conde1963.ScenarioAlternatives
 
 /-! Explicit kernel-dependency report in CI, not an empirical validation. -/
 
