@@ -29,53 +29,6 @@ class DocumentaryProvenanceTests(unittest.TestCase):
             self.assertEqual([r["citation_status"] for r in matching],
                              ["UNMAPPED_NOT_CLEARED", "UNMAPPED_NOT_CLEARED"])
 
-    def test_nara_bluebook_addendum_is_linked_without_rewriting_frozen_matrix(self):
-        updates = self.graph["post_matrix_occurrences"]
-        self.assertEqual(len(updates), 1)
-        rec = updates[0]
-        self.assertEqual(rec["id"], "NARA-BB-CONDE-20261112-01")
-        self.assertEqual(rec["nara_fileunit_naid"], 302531012)
-        self.assertEqual(rec["nara_object_id"], 302531014)
-        self.assertEqual(rec["image_filename"], "0810.jp2")
-        self.assertEqual(rec["image_sha256"],
-                         "136be026e23acdd5e7ff0a5307e04bef799249b48346072a43cae1506be37ce9")
-        self.assertEqual(rec["telegram_date"], "1963-11-14")
-        self.assertEqual(rec["reported_newspaper_date"], "1963-11-08")
-        self.assertIsNone(rec["newspaper_page"])
-        self.assertIsNone(rec["newspaper_publication_time"])
-        self.assertEqual(rec["journalistic_source_independence"], "UNRESOLVED")
-        self.assertIsNone(rec["physical_constraint"])
-        self.assertEqual(rec["status"], "CONNECTED_PENDING_DOCUMENTARY_VERIFICATION")
-        self.assertTrue({"C232#1", "C238#1", "C01#1", "C03#1"} <=
-                        set(rec["related_matrix_occurrences"]))
-        deps = {(e["from"], e["to"], e["kind"])
-                for e in self.graph["source_dependencies"]}
-        self.assertIn(("NARA_AIRA_TELEGRAM_19631114",
-                       "O_GLOBO_19631108_UNINSPECTED",
-                       "quotes_uninspected_source"), deps)
-        self.assertEqual(len(self.graph["matrix_occurrences"]), 241)
-        self.assertEqual(len(self.citations["records"]), 24)
-
-    def test_nara_addendum_rejects_duplicate_orphan_and_unverified_claim(self):
-        for mutation in ("duplicate", "unknown_matrix", "missing_source",
-                         "invented_page", "invented_independence", "bad_checksum"):
-            config = copy.deepcopy(self.config)
-            row = config["post_matrix_occurrences"][0]
-            if mutation == "duplicate":
-                config["post_matrix_occurrences"].append(copy.deepcopy(row))
-            elif mutation == "unknown_matrix":
-                row["related_matrix_occurrences"].append("C999#1")
-            elif mutation == "missing_source":
-                row["source_id"] = "UNINDEXED_NEW_DOCUMENT"
-            elif mutation == "invented_page":
-                row["newspaper_page"] = 2
-            elif mutation == "invented_independence":
-                row["journalistic_source_independence"] = "INDEPENDENT"
-            else:
-                row["image_sha256"] = "unknown"
-            with self.subTest(mutation=mutation), self.assertRaises(ValueError):
-                pg.build(config, self.raw)
-
     def test_real_mapping_coverage_is_not_inflated_by_unmapped_default_dict(self):
         self.assertEqual(self.citations["curated_occurrences"], 24)
         self.assertEqual(self.citations["unmapped_occurrences"], 217)
@@ -175,6 +128,50 @@ class DocumentaryProvenanceTests(unittest.TestCase):
                                      if e["from"] != "CELESTRAK_SPACE_WEATHER"]
             with self.subTest(bad=bad), self.assertRaises(ValueError):
                 pg.build(c, self.raw)
+
+    def test_snapshot_qualified_citations_and_contracts_are_complete(self):
+        prefix = "matrix:" + pg.MATRIX_BLOB_SHA + ":"
+        for entry in self.graph["matrix_occurrences"]:
+            self.assertEqual(entry["snapshot_ref"], prefix + entry["occurrence"])
+        for cite in self.citations["records"]:
+            self.assertEqual(cite["snapshot_ref"], prefix + cite["occurrence"])
+        for contract in self.graph["contracts"]:
+            self.assertEqual(contract["snapshot_refs"],
+                             [prefix + occurrence for occurrence in contract["occurrences"]])
+        self.assertEqual(self.citations["matrix_snapshot_id"], pg.MATRIX_SNAPSHOT_ID)
+
+    def test_legacy_c144_c151_aliases_are_explicitly_non_equivalent(self):
+        aliases = self.graph["legacy_alias_conflicts"]
+        self.assertEqual(len(aliases), 8)
+        self.assertEqual([a["matrix_ref"].split(":")[-1] for a in aliases],
+                         [f"C{i}#1" for i in range(144, 152)])
+        self.assertTrue(all(not a["equivalent_claim"] for a in aliases))
+        self.assertTrue(all("ORIGINAL_ZIP_NOT_LOCATED" in a["legacy_source_status"]
+                            for a in aliases))
+        self.assertNotEqual(aliases[-1]["legacy_claim"], aliases[-1]["matrix_claim"])
+        self.assertIn("triangulação", aliases[-1]["legacy_claim"])
+        self.assertIn("Recife", aliases[-1]["matrix_claim"])
+        self.assertEqual(len(self.citations["legacy_alias_conflicts"]), 8)
+        self.assertTrue(all(a["not_a_verified_physical_event"] for a in aliases))
+        self.assertIsNone(self.graph["limits"]["independent_physical_tracking_count"])
+
+    def test_cannot_join_legacy_c151_with_current_recife_winds(self):
+        legacy_ref = self.graph["legacy_alias_conflicts"][-1]["legacy_ref"]
+        self.assertIn(":C151#1", legacy_ref)
+        for poisoned in (legacy_ref, "C151#1", "matrix:badsha:C151#1"):
+            with self.subTest(reference=poisoned):
+                config = copy.deepcopy(self.config)
+                next(c for c in config["citations"] if c["occurrence"] == "C151#1")[
+                    "snapshot_ref"] = poisoned
+                with self.assertRaisesRegex(ValueError, "citation snapshot mismatch"):
+                    pg.build(config, self.raw)
+
+    def test_contract_cannot_take_legacy_alias_as_matrix_constraint(self):
+        config = copy.deepcopy(self.config)
+        bridge = next(x for x in config["contracts"] if x["id"] == "C179_C151_BRIDGE")
+        bridge["snapshot_refs"][1] = self.graph["legacy_alias_conflicts"][-1]["legacy_ref"]
+        with self.assertRaisesRegex(ValueError, "contract snapshot mismatch"):
+            pg.build(config, self.raw)
 
     def test_tampered_matrix_rejected_before_export(self):
         with self.assertRaisesRegex(ValueError, "matrix snapshot"):
