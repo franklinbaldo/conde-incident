@@ -1,0 +1,98 @@
+{
+  "record_id": "C241-L12",
+  "source": {
+    "agency": "NASA / Goddard Space Flight Center",
+    "ntrs_id": "19640000428",
+    "citation_url": "https://ntrs.nasa.gov/citations/19640000428",
+    "pdf_url": "https://ntrs.nasa.gov/api/citations/19640000428/downloads/19640000428.pdf",
+    "publication_date": "1963-10-15",
+    "series": "Satellite Situation Report",
+    "volume": 3,
+    "number": 20,
+    "report_number_printed": "X-533-63-1",
+    "ntrs_metadata_report_number": "X-583-63-1",
+    "report_number_disagreement": "UNRESOLVED_INDEX_VS_FACSIMILE",
+    "nasa_tm": "NASA-TM-X-51120",
+    "page_index_zero_based": 6,
+    "page_in_pdf_one_based": 7,
+    "page_printed": 5,
+    "sha256": "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+    "bytes": 286417,
+    "transcription_method": "HUMAN_VISUAL_FACSIMILE_NOT_PDF_TEXT_EXTRACTION",
+    "printed_table": "OBJECTS IN ORBIT",
+    "measurement_lineage": "NASA_PUBLICATION_COMPILED_FROM_TRACKING_NOT_RAW_SENSOR_RECORD",
+    "retrieval_variants": [
+      {
+        "sha256": "826f260524f6a7b83695e5c01d383025ff0da884656ebcc7fb98a1408c698ce3",
+        "bytes": 282624,
+        "observed": "2026-11-12",
+        "role": "EARLIER_OFFICIAL_URL_RESPONSE"
+      },
+      {
+        "sha256": "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+        "bytes": 286417,
+        "observed": "2026-11-12",
+        "role": "CURRENT_OFFICIAL_URL_RESPONSE_AND_GITHUB_CI"
+      }
+    ],
+    "variant_equivalence": "SAME_OFFICIAL_URL_NOT_CLAIMED_BYTE_IDENTICAL_OR_INDEPENDENT; only the newly served PDF's catalog table was visually reinspected after discrepancy"
+  },
+  "catalog_rows": [
+    {
+      "international_designator": "1963-003A",
+      "printed": "1963 3A",
+      "launch": "1963-01-16",
+      "source": "US",
+      "nodal_period_min_printed": "94.6",
+      "inclination_deg_printed": "81.89",
+      "apogee_km_printed": 531,
+      "perigee_km_printed": 462
+    },
+    {
+      "international_designator": "1963-003B",
+      "printed": "1963 3B",
+      "launch": "1963-01-16",
+      "source": "US",
+      "nodal_period_min_printed": "92.4",
+      "inclination_deg_printed": "81.87",
+      "apogee_km_printed": 401,
+      "perigee_km_printed": 376
+    },
+    {
+      "international_designator": "1963-003C",
+      "printed": "1963 3C",
+      "launch": "1963-01-16",
+      "source": "US",
+      "nodal_period_min_printed": "93.3",
+      "inclination_deg_printed": "81.87",
+      "apogee_km_printed": 458,
+      "perigee_km_printed": 408
+    }
+  ],
+  "cross_edition": {
+    "later_ntrs_id": "19640001198",
+    "later_publication_date": "1963-11-15",
+    "later_reported_1963_3B_decay_day": "1963-11-08",
+    "edition_21": "NOT_RECOVERED",
+    "catalog_membership_oct15": "IN_ORBIT_LIST",
+    "instrumental_independence": "NOT_ESTABLISHED"
+  },
+  "epistemic": {
+    "raw_tle_pairs": null,
+    "historical_tle_checksum": null,
+    "raan_deg": null,
+    "physical_reference_frame": null,
+    "observation_epoch": null,
+    "sensor": null,
+    "sigma": null,
+    "terminal_time": null,
+    "terminal_location": null,
+    "physical_identity_528": null,
+    "legacy_raan_2841520_as_observation": false,
+    "secondary_raan_1985261_as_primary": false,
+    "publication_is_tracking_epoch": false,
+    "lean_physical_constraint": "NOT_PROMOTED",
+    "graph_state": "CONNECTED_PENDING_CALIBRATION",
+    "conde_outcome": "INDETERMINATE"
+  }
+}
