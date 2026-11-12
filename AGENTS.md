@@ -39,8 +39,33 @@ Scope: **franklinbaldo/conde-incident only**. The separate blog is read-only; do
 
 **Scope across the team:** 🐙 Polvo, 🦫 Castor, 🐢 Tartaruga, 🦊 Raposa, 🦉 Coruja, 🦡 Texugo, 🦅 Gavião and 🐘 Elefante follow the same small-PR and author-merge rules for their own code/docs; review audits are retrospective and independently evidenced. Scientific status, negative findings, evidence-matrix IDs and source dependencies remain mandatory. Use the existing single active issue per agent, rather than new duplicate issues merely to split a PR.
 
+## Espaços pessoais e comunicação entre animais
+
+A nova separação entre projeto e memória pessoal está especificada em [docs/AGENT_WORKSPACES.md](docs/AGENT_WORKSPACES.md). Cada animal usa como **objetivo** um repositório GitHub privado próprio `franklinbaldo/<animal>`, com push direto, memória/skill/ferramentas livres; mensagens entre animais via issues no repositório privado do destinatário. Issues e PRs de implementação pertencem ao repositório do projeto. **Os workspaces privados ainda NÃO estão provisionados**; não inventar acesso nem copiar memória pessoal para repositório público. O cadastro de 13 animais é `config/agent-roster.json`; os cinco novos têm fichas e skills próprias. Até concluir a criação privada, seguir as rotinas existentes no projeto e preservar conteúdo confidencial fora de seus arquivos públicos.
+
 ## Next targets
 - PR #1: evidence-first site, cumulative C01–C238 research matrix, SGP4 baseline fixes, Lean core and CI; inspect, validate, integrate in a controlled manner.
 - Full Lean archive from original compiled package: `Evidence.lean`, 154 propositions / 151 labels, including C44–C46 collisions.
 - Original TLEs: 527/528/529 historical epochs and provenance, calibrated dynamics, holdout baseline versus coupled multi-target fit.
 - Genealogy: *Diário de Notícias* (Salvador) 9 Nov, *Jornal da Bahia* 11 Nov, *O Jornal* (Rio) 7–12 Nov, FBIS and diplomatic A-628 attachments; avoid counting repetition as confirmation.
+
+
+## Scientific correction: cumulative constraint graph before immediate narrowing (owner decision, 12 Nov 2026)
+
+**Recording a useful constraint is progress even when it cannot yet shrink a numerical parameter domain.**
+Do NOT use "no immediate domain reduction" as a reason to omit evidence from equations, parameter variables, or cumulative analysis. The discovery process is incremental and eventually multiple individually weak constraints may jointly discriminate hypotheses.
+
+For *each* new source datum, carry the full chain:
+
+`source + occurrence + provenance/independence -> typed datum/variable (including uncertainty/unknown) -> model observable + equation/dependency edge -> candidate restriction or explicit pending dependency -> future Lean predicate/solver input -> predictions/holdout`.
+
+- **Always persist the link.** For numerical data, register observed value, unit, source, uncertainty status, physical reference convention, actual observation epoch (separate from publication date), object, forward observable, latent parameters and the missing conditions needed to use it. Provenance-only or textual historical facts also become source-/narrative-graph variables, but NEVER silently hard constraints on satellite physics. Negative documents constrain the claims or observation process they actually address, not the absence of any possible physical event.
+- **Retain a pending candidate.** If observation epoch, source custody, calibration, measurement interval or forward model is missing, record `CONNECTED_PENDING_CALIBRATION` and the needed bridge. `null` means unknown, never zero. Do not invent a tolerance, covariance, likelihood or pointwise equality. These pending links must remain queryable when later documents arrive.
+- **Promote only with justification.** Once needed information exists, derive a physically dimensioned predicate `C_i(θ)`, cite the source occurrence and conditional assumptions, check numerical errors and witnesses, and then include it in the active `Θ_n = {θ | ∧ active C_i(θ)}` conjunction. Retain alternative branches when independent provenance or interpretations conflict.
+- **Separate two progress measures:** (a) connectivity delta: newly recorded observables, variables, equations, provenance/independence edges, unresolved bridge requirements; (b) admissible-domain delta: independently validated numerical narrowing or falsification **if and when available**. A new useful source may advance (a) without (b). Report that accurately, without calling the whole investigation "no advance" or manufacturing a numerical shrinkage.
+- **Integrate across time and instruments.** The NASA 15/30 Nov 1963 tabulations for 527/529 already provide a concrete example: preserve their published nodal period, inclination, apogee and perigee as observables linked to latent observation epochs and a shared force model; use their future combination as possible control/holdout. The report date alone does not justify a dynamic derivative or a known observation timestamp.
+- **Research routines and animals:** a session may properly end with `NEW_CONNECTED_EDGES, DOMAIN_NOT_YET_EVALUABLE`; pass the record to Polvo for eventual conditional Lean representation and to Castor for future calibrated forward-model evaluation. No forced theorem per source. Coruja and Tartaruga preserve original context; Gavião checks that cumulative links are not silently lost; Texugo checks that "no shrink" is not used as a dismissal.
+
+Reference implementation of this rule: `research/constraints/ssr_1963_observable_graph.json` and `formal/scripts/check_cumulative_connections.py`. The linked graph is not a proof of physical reentry or a posterior probability.
+
+**Conflict-resolution note for PR #28:** its proposed immediate before/after numeric admissibility gate must be interpreted as applying to a *claim of narrowing*, not to ingestion and linking of evidence. Do not reject or defer cumulative source integration merely because a numerical restriction cannot yet be evaluated.

@@ -1,0 +1,33 @@
+name: Source-linked physical observables
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  physical-crosswalk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify tested HEAD
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test numeric transformations and fail-closed provenance
+        run: python3 -m unittest discover -s formal/tests -p 'test_physical_observable_bridge.py' -v
+      - name: Export conservative Castor handoff
+        run: |
+          python3 formal/scripts/physical_observable_bridge.py --matrix research/evidence_matrix_C001-C238_2026-11-11.md --descent-vertical-speed-mps 50 --output /tmp/conde-physical-observables.json
+          python3 -m json.tool /tmp/conde-physical-observables.json >/dev/null
+      - uses: actions/upload-artifact@v4
+        with:
+          name: conde-physical-observables
+          path: /tmp/conde-physical-observables.json
+          retention-days: 30
