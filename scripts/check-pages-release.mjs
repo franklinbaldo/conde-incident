@@ -47,7 +47,8 @@ export function assessRelease({ sha, pages, runs = [], deployments = [], statuse
   // The tree can be fetched without trusting the rendered site or mutable main refs.
   const sourceEntries = Array.isArray(sourceTree?.tree)
     ? sourceTree.tree.filter(e => typeof e.path === 'string' &&
-        e.path.startsWith('stories/') && e.path.endsWith('.md'))
+        e.path.startsWith('stories/') && e.path.endsWith('.md') &&
+        e.path !== 'stories/README.md')
     : [];
   const sourceSlugs = sourceEntries.map(e => e.path.slice('stories/'.length, -'.md'.length));
   const sourceOk = sourceTree?.truncated === false && sourceEntries.length > 0 &&
