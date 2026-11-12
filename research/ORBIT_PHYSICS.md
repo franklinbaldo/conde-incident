@@ -380,3 +380,54 @@ Cartesian 527/529 observations. **Historical 527/529 holdout: NOT_RUN;
 historical Lean-exported boxes: NOT_RUN; 1963 atmosphere: NOT_RUN;
 impact/reentry coordinates: NOT_RUN**. Even if a synthetic local rank is three,
 a globally unique historical trajectory has not been established.
+
+
+## Pivoted local velocity rank: axis-order falsification (12 Nov 2026, Castor)
+
+The conditional sensitivity audit in `src/lib/orbitSensitivityAudit.ts` now
+uses `pivotVelocityResponseRank` (`src/lib/orbitVelocityRank.ts`) rather
+than assigning numerical rank in the arbitrary `vx,vy,vz` order.
+Its inputs are **stacked differences of Cartesian positions in km**, obtained
+from paired, independently step-refined physical r/v propagations at
+predeclared training epochs only. It selects the largest remaining orthogonal
+response by two-pass modified Gram-Schmidt before applying the caller's
+`minimumSignalKm` threshold.
+
+**Falsification case (synthetic):** displacement columns `[1,0,0]` km
+and `[10,0.11,0]` km are nearly parallel. With a declared 0.1 km
+threshold, unpivoted Gram-Schmidt can assign rank **2** when the
+weaker column happens to be considered first, although reversing the
+input order gives **1**. Pivoting chooses the stronger column and
+reports **rank 1 in both input orders**; adding an independent
+`[0,0,2]` km column gives rank 2 under either permutation.
+Independent three-axis responses remain rank 3.
+A zero-position-change schedule remains rank 0. Nonfinite norms or
+projections produce `NOT_RUN_NUMERICAL_BREAKDOWN` in the physical
+auditor, never a false zero rank.
+
+**Reproduce:** `node --experimental-strip-types --test
+tests/orbitVelocityRank.test.mjs tests/orbitSensitivityAudit.test.mjs`;
+the pinned `orbit-physics.yml` workflow also runs both at the exact PR head.
+
+This pivot removes a real order-dependent diagnostic artifact but does
+**not** certify singular values, observability at other probe sizes,
+the global uniqueness of the inverse solution, a probabilistic uncertainty,
+or an error enclosure. Rank still depends explicitly on the chosen km
+threshold, probe amplitude, epochs, dynamics and numerical convergence.
+The selected basis axes are a **computational pivot choice**, not a claim
+that other physical velocity components are intrinsically unobservable.
+No observed NORAD 527/529 Cartesian states have been authenticated.
+
+**Source chain:** documentary C197 in the [cumulative evidence matrix
+of PR #1](https://github.com/franklinbaldo/conde-incident/pull/1)
+refers to the original NASA/Goddard *Satellite Situation Report*,
+15 Nov 1963, printed p.8,
+[NTRS 19640001198](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf).
+The original supplies the **day of cataloged decay**, 8 Nov 1963,
+for 1963-003B, not epoch/position/impact. C25 and C179–C185
+describe derivative TLE/mirror lineage with unresolved RAAN conflict,
+not independent position sensors. Hence Lean-verified historical bounds,
+blind observed holdout 527/529, calibrated 1963 drag, SGP4 comparison
+and a terminal position for 528 remain **NOT_RUN**. No
+new documentary occurrence is created by these synthetic calculations;
+no historical hypothesis or location is selected.
