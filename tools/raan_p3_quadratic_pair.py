@@ -15,6 +15,10 @@ from pathlib import Path
 SCHEMA = "conde.raan-p3-quadratic-paired/v1"
 IDS = ("527", "528", "529")
 BLOCKS = ("validation", "evaluation")
+# C241-L3 chronological frozen split, not a tunable fit hyperparameter.
+FIT_END_UTC = datetime(1963, 8, 1, tzinfo=timezone.utc)
+EVALUATION_END_UTC = datetime(1964, 1, 1, tzinfo=timezone.utc)
+EVALUATION_FROM_UTC = datetime(1963, 10, 1, tzinfo=timezone.utc)
 COUNTS = {"527": 4, "528": 8, "529": 23}
 
 
@@ -92,6 +96,10 @@ def compare(p3: dict, quadratic: dict) -> dict:
                 t = valid_time(ld["epoch_utc"])
                 if t <= last_epoch:
                     raise ValueError("holdout leakage, unordered or repeated epoch")
+                if (block == "validation" and not FIT_END_UTC <= t < EVALUATION_FROM_UTC) or (
+                    block == "evaluation" and not EVALUATION_FROM_UTC <= t < EVALUATION_END_UTC
+                ):
+                    raise ValueError("frozen validation/evaluation boundary violation")
                 last_epoch = t
                 pe = finite_angle(ld["signed_residual_deg"])
                 qe = finite_angle(rd["quadratic_signed_error_deg"])
