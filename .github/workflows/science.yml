@@ -59,6 +59,9 @@ jobs:
         run: python3 -m unittest discover -s tests -v
       - name: Verify pinned matrix rows and Git blob (not historical provenance)
         run: python3 formal/scripts/verify_matrix_refs.py research/evidence_matrix_C001-C238_2026-11-11.md
+      - name: Export conditional C241 RAAN discriminator
+        run: |
+          python3 formal/scripts/raan_epoch_contract.py --output /tmp/conde-raan-epoch.json
       - name: Export pinned evidence contracts for Castor
         if: success()
         uses: actions/upload-artifact@v4
@@ -67,4 +70,5 @@ jobs:
           path: |
             /tmp/conde-evidence-contracts.json
             /tmp/conde-simulation-bridge.json
+            /tmp/conde-raan-epoch.json
           retention-days: 30
