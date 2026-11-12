@@ -154,39 +154,57 @@ class MatrixEvidenceTests(unittest.TestCase):
                             for x in out["entries"]))
 
 
-    def test_unresolved_raan_branches_are_fail_closed_and_disjunctive(self):
+    def test_sourced_raan_is_single_reference_and_free_mcmc_parameter(self):
         interface = contracts(self.rows)["unresolved_element_scenarios_interface"]
-        self.assertEqual(interface["version"], 1)
+        self.assertEqual(interface["version"], 2)
+        self.assertEqual(interface["kind"],
+                         "SOURCED_REFERENCE_PLUS_INFERRED_ORBITAL_PARAMETERS")
+        self.assertEqual(interface["active_source_lineages"], 1)
         self.assertEqual(interface["admissible_semantics"],
-                         "COMMON_AND_LEFT_OR_RIGHT")
+                         "SINGLE_SOURCED_REFERENCE_WITH_FREE_PARAMETERS")
         self.assertEqual(interface["branch_combination_allowed"],
-                         "DISJUNCTION_ONLY_UNTIL_SOURCE_ADJUDICATION")
-        self.assertIsNone(interface["current_scenario"])
-        self.assertIsNone(interface["chosen_physical_constraints"])
-        self.assertIsNone(interface["numerically_supported_bounds"])
-        self.assertEqual(interface["historical_orbit_validation"], "NOT_RUN")
+                         "OTHER_BRANCH_ONLY_IF_NEW_DOCUMENTED_SOURCE")
+        self.assertEqual(interface["current_scenario"],
+                         "AFSPC_MIRROR_528_1963_10_27")
+        self.assertEqual(len(interface["alternatives"]), 1)
+        source = interface["alternatives"][0]
+        self.assertEqual(source["id"], interface["current_scenario"])
+        self.assertEqual(source["raan_degrees_reported"], "198.5261")
+        self.assertEqual(source["epoch_utc"],
+                         "1963-10-27T14:40:16.132512Z")
+        self.assertEqual(source["literal_pair_sha256"],
+                         "18cf11665e061b5ec8679242e10b00b82accf29bc6f0b9b7b6330b9c44e341cd")
+        self.assertEqual(source["source_authentication"], "NOT_VERIFIED_PRIMARY")
+        self.assertFalse(source["admitted_as_hard_constraint"])
+        self.assertTrue(source["reference_only_not_true_raan"])
+        self.assertEqual(source["matrix_occurrences"], ["C25#1", "C179#1"])
         self.assertEqual(interface["original_tle_custody"], "NOT_VERIFIED")
-        self.assertEqual(interface["independent_source_lineages"],
-                         "NOT_ESTABLISHED")
-        self.assertFalse(interface["physical_reference_frame_reconciled"])
-        self.assertFalse(interface["holdout_529_passed"])
-        self.assertFalse(interface["all_branch_error_enclosures_verified"])
-        self.assertEqual({x["id"] for x in interface["alternatives"]}, {
-            "SITE_RAAN_284_UNVERIFIED", "AFSPC_MIRROR_RAAN_198_UNVERIFIED"
-        })
-        self.assertEqual([x["raan_degrees_reported"]
-                          for x in interface["alternatives"]],
-                         ["284.1520", "198.5261"])
-        self.assertTrue(all(not x["admitted_as_hard_constraint"]
-                            for x in interface["alternatives"]))
-        self.assertEqual(interface["alternatives"][0]["matrix_occurrences"], [])
-        self.assertEqual(interface["alternatives"][1]["matrix_occurrences"],
-                         ["C25#1", "C179#1"])
+        self.assertEqual(interface["historical_orbit_validation"], "NOT_RUN")
+        self.assertEqual(interface["obsolete_legacy_input"],
+                         "RETIRED_FROM_ACTIVE_INFERENCE_RETRIEVABLE_FROM_GIT")
+        self.assertNotIn("SITE_RAAN_284_UNVERIFIED",
+                         [x["id"] for x in interface["alternatives"]])
+        theta = interface["raan_parameter"]
+        self.assertEqual(theta["name"], "raan_at_reference_epoch_deg")
+        self.assertEqual(theta["topology"], "CIRCLE_MOD_360")
+        self.assertEqual(theta["full_search_domain_deg"], ["0", "360"])
+        self.assertTrue(theta["upper_endpoint_exclusive"])
+        self.assertIsNone(theta["physical_uncertainty_deg"])
+        self.assertIsNone(theta["hard_admissible_interval_deg"])
+        self.assertEqual(theta["prior_distribution"],
+                         "UNSPECIFIED_NOT_SYNTHESIZED")
+        self.assertEqual(interface["mcmc_contract"]["sampler"],
+                         "NOT_IMPLEMENTED_BY_LEAN")
+        self.assertTrue(interface["mcmc_contract"]
+                        ["no_empirical_uncertainty_no_posterior_claim"])
+        self.assertIn("FIRST_ORDER_J2_NODAL_PRECESSION",
+                      [x["relation"] for x in
+                       interface["physical_dependencies_to_explore"]])
 
-    def test_unresolved_raan_sources_cite_exact_original_matrix_rows(self):
+    def test_sourced_raan_reference_cites_exact_original_matrix_rows(self):
         out = contracts(self.rows)
         interface = out["unresolved_element_scenarios_interface"]
-        mirror = interface["alternatives"][1]
+        mirror = interface["alternatives"][0]
         for key, line in [("C25#1", 118), ("C179#1", 839)]:
             n, occurrence = key.split("#")
             found = [x for x in out["entries"]
@@ -198,13 +216,8 @@ class MatrixEvidenceTests(unittest.TestCase):
             self.assertEqual(
                 found[0]["physical_encoding"],
                 "NOT_ADMITTED_AS_TERMINAL_STATE_CONSTRAINT")
-        self.assertTrue(all(x["source_authentication"].startswith("NOT_VERIFIED")
-                            for x in interface["alternatives"]))
-        self.assertIn(
-            "prove_all_surviving_scenarios_agree_before_global_geographic_verdict",
-            interface["required_before_physical_use"],
-        )
-
+        self.assertIn("derive_raan_restrictions_from_j2_and_multi_epoch_observations",
+                      interface["required_before_physical_use"])
 
     def test_joint_scenario_enclosures_require_global_coverage_not_one_branch(self):
         out = contracts(self.rows)
@@ -213,15 +226,13 @@ class MatrixEvidenceTests(unittest.TestCase):
         self.assertEqual(bridge["lean_module"],
                          "Conde1963/ScenarioEnclosures.lean")
         self.assertEqual(bridge["candidate_semantics"],
-                         "COMMON_AND_LEFT_OR_RIGHT")
+                         "SINGLE_SOURCED_REFERENCE_WITH_FREE_PARAMETERS")
         self.assertEqual(bridge["branch_combination"],
-                         "UNION_UNTIL_VERIFIED_SOURCE_ADJUDICATION")
+                         "ONE_ACTIVE_SOURCE_UNLESS_NEW_DOCUMENTED_SOURCE")
         self.assertEqual(bridge["source_matrix_sha1"],
                          out["matrix_git_blob_sha1"])
         self.assertEqual(bridge["source_branches"], [
-            {"id": "SITE_RAAN_284_UNVERIFIED", "original_custody": "NOT_VERIFIED",
-             "matrix_occurrences": [], "is_hard_physical_constraint": False},
-            {"id": "AFSPC_MIRROR_RAAN_198_UNVERIFIED",
+            {"id": "AFSPC_MIRROR_528_1963_10_27",
              "original_custody": "NOT_VERIFIED_PRIMARY",
              "matrix_occurrences": ["C25#1", "C179#1"],
              "is_hard_physical_constraint": False},
