@@ -1118,3 +1118,10 @@ para novembro. São contagens de *cobertura temporal secundária*,
 **não** validação de estado físico, vínculo de forças, triangulação,
 reentrada ou localização. Resultado permanece **INDETERMINADO** quanto
 a Conde e quanto à origem primária do RAAN 284,1520°.
+
+
+### C241-T4 — teste de representabilidade da epoca e falha fechada (🐢 Tartaruga, 12/11/2026 UTC)
+
+| ID e tipo | Fonte / independencia | Resultado reprodutivel / limite |
+|---|---|---|
+| **C241-T4**, auditoria computacional *de formato*, nao nova observacao | [CelesTrak, especificacao de campos TLE](https://celestrak.org/columns/v04n03/), documento tecnico posterior; [oxzoid Parquet 1963 revision 4b4fb3a](https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/main/data/tle_1963.parquet), SHA-256 `c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09`; CSV 527/528/529 SHA-256 `3940715d7c15cf15c24e678a8c5b5fbb34a031b3ffd7e33c0580277377383231`. **Somente uma linhagem numerica secundaria**; nao confundir spec tecnico com atestacao NORAD de 1963. | Auditor inteiro UTC [tle_epoch_grid_audit.py](../tools/tle_epoch_grid_audit.py) testa residuos modulo **864 µs** a partir de 00:00 UTC, conserva `source_row` e gera JSON hash-bound. [CI #43136329241](https://github.com/franklinbaldo/conde-incident/actions/runs/43136329241), SHA `e96c54871c25de56336a042778071154eaa33d06`: 46/46 testes, **123/123 carimbos na grade exata** (527 21/21; 528 45/45; 529 57/57), max residual 0 µs; nenhum conflito de mesma epoca/estado no espelho. Extrator agora **falha** caso apareca duplicata temporal contraditoria (teste sintético). O dominio admissivel e somente *representabilidade de timestamp*; nenhuma orbita, checksum historico, precisao de sensor, frame/TEME, local, hora de queda ou autenticidade primária foi demonstrada. **NAO passar a Lean como restricao dinamica.** Conflito 198,5261° vs 284,1520° **NOT_RESOLVED**; material coevo NORAD e identidade fisica S00528 **NOT_RECOVERED**. |
