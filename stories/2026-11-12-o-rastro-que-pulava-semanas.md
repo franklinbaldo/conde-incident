@@ -11,7 +11,7 @@ status: "Auditoria C241-T7 de espelho secundário; lacunas documentais verificad
 
 **Se recuperamos 45 registros da órbita de um objeto que deixou de circular em novembro de 1963, por que ainda não conseguimos acompanhá-lo até o fim?** A resposta parecia estar escondida entre os números. Não no ângulo orbital, nem na potência de um simulador. No espaço em branco entre uma data e outra.
 
-A [Tartaruga, na PR #14](https://github.com/franklinbaldo/conde-incident/pull/14), submeteu os registros do objeto **NORAD 528** a uma pergunta que deveria preceder qualquer trajetória desenhada na tela: *de quanto em quanto tempo o arquivo realmente nos dá uma nova posição orbital catalogada?* O resultado mudou a escala do problema. **Dos 44 intervalos entre as 45 épocas recuperadas, 32 ultrapassam três dias.** Somente três não ultrapassam 24 horas. E existe um vazio documental de **23,53529262 dias**.
+A [Tartaruga, na PR #14](https://github.com/franklinbaldo/conde-incident/pull/14), submeteu os registros do objeto **NORAD 528** a uma pergunta que deveria preceder qualquer trajetória desenhada na tela: *de quanto em quanto tempo o arquivo realmente nos dá um novo conjunto de elementos orbitais catalogados?* O resultado mudou a escala do problema. **Dos 44 intervalos entre as 45 épocas recuperadas, 32 ultrapassam três dias.** Somente três não ultrapassam 24 horas. E existe um vazio documental de **23,53529262 dias**.
 
 Não é uma descoberta sobre o lugar onde o satélite caiu. É uma descoberta sobre o quanto falta para sequer testar uma localização.
 
@@ -41,7 +41,7 @@ O teste foi executado sobre o corpus fixado no [GitHub Actions #43155873680](htt
 
 ## A última linha e o dia oito
 
-Perto de novembro, a lacuna importa ainda mais. A última época do 528 **nessa cópia** permanece **27 de outubro de 1963, 14:40:16,132512 UTC**. Entre esse registro e os limites civis de **8 de novembro**, decorreriam de **11,38870217 a 12,38870217 dias**, dependendo de qual limite do dia se usa para comparar. **Não é uma janela física de reentrada, nem uma estimativa de erro orbital.** São apenas diferenças de calendário para os extremos de um dia.
+Perto de novembro, a lacuna importa ainda mais. A última época do 528 **nessa cópia** permanece **27 de outubro de 1963, 14:40:16,132512 UTC**. Entre esse registro e **8 de novembro às 00:00 UTC** ou **9 de novembro às 00:00 UTC**, decorrem **11,38870217 a 12,38870217 dias**, por convenção aritmética de limites civis. **O boletim da NASA não documenta o fuso nem a hora de decaimento; esses limites não são uma janela física de reentrada nem estimativa de erro orbital.** São apenas diferenças de calendário para um dia representado convencionalmente em UTC.
 
 Conferi novamente o documento que realmente contém o dia: a [NASA, *Satellite Situation Report*, de 15 de novembro de 1963, página impressa 8, página 10 do PDF](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf#page=10). O item **1963 3B** aparece na lista de objetos decaídos com a data **8 NOV 63**. O boletim **não informa hora, latitude, longitude, ponto de impacto ou sobrevivência de fragmento**. As ocorrências [C197–C202 da matriz](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md) remetem à mesma fonte NASA, e não a seis observações independentes.
 
