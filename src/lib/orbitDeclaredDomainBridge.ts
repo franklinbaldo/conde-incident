@@ -112,28 +112,46 @@ function exactFloat(x: number): Fraction {
     ? { n: sign * mantissa * (1n << BigInt(power)), d: 1n }
     : { n: sign * mantissa, d: 1n << BigInt(-power) };
 }
-function nextUp(x: number): number {
-  if (x === 0) return Number.MIN_VALUE;
-  if (x === Infinity) return Infinity;
-  buffer.setFloat64(0, x);
-  const bits = buffer.getBigUint64(0);
-  buffer.setBigUint64(0, x > 0 ? bits + 1n : bits - 1n);
+// Monotone keys enumerate *all and only* finite IEEE-754 binary64 values.
+// Negative keys invert the bits; nonnegative keys flip the sign bit.
+// This avoids Number(BigInt) overflow/underflow or double rounding when
+// the exact rational numerator and denominator are individually enormous.
+const SIGN64 = 1n << 63n;
+const ALL64 = (1n << 64n) - 1n;
+const MIN_FINITE_KEY = 0x0010000000000000n; // -Number.MAX_VALUE
+const MAX_FINITE_KEY = 0xffefffffffffffffn; // +Number.MAX_VALUE
+function floatAtKey(key: bigint): number {
+  buffer.setBigUint64(0, (key & SIGN64) ? (key & ~SIGN64) : (ALL64 ^ key));
   return buffer.getFloat64(0);
 }
-const nextDown = (x: number): number => -nextUp(-x);
 
-/** Round INWARDS: every sampled Float64 velocity remains inside its rational box. */
+/** Find the first finite Float64 >= bound (inclusive), or > bound (exclusive).
+ * A sentinel one past +MAX_VALUE means that no such float exists.
+ * Every comparison is exact rational arithmetic, including subnormals.
+ */
+function firstFiniteKey(bound: Fraction, inclusive: boolean): bigint {
+  let low = MIN_FINITE_KEY, high = MAX_FINITE_KEY + 1n;
+  while (low < high) {
+    const mid = (low + high) >> 1n;
+    const relation = compare(exactFloat(floatAtKey(mid)), bound);
+    if (relation > 0 || (inclusive && relation === 0)) high = mid;
+    else low = mid + 1n;
+  }
+  return low;
+}
+
+/** Intersect the exact rational box with finite Float64, rounding INWARDS.
+ * This is an exact *representable subset*, not an enclosure of the whole
+ * rational interval or of physical trajectories.
+ */
 function finiteInside(box: AuditInterval): [number, number] | null {
   const lo = rational(box.min), hi = rational(box.max);
   must(compare(lo, hi) <= 0, 'Inverted exact rational interval');
-  let low = Number(lo.n) / Number(lo.d);
-  let high = Number(hi.n) / Number(hi.d);
-  if (!Number.isFinite(low) || !Number.isFinite(high)) return null;
-  if (compare(exactFloat(low), lo) < 0) low = nextUp(low);
-  if (compare(exactFloat(high), hi) > 0) high = nextDown(high);
-  if (!Number.isFinite(low) || !Number.isFinite(high) || low > high) return null;
-  // A singleton at an inexact rational value has no Float64 representative.
-  return [low, high];
+  const first = firstFiniteKey(lo, true);
+  const last = firstFiniteKey(hi, false) - 1n;
+  if (first > last || first > MAX_FINITE_KEY || last < MIN_FINITE_KEY) return null;
+  const a = floatAtKey(first), b = floatAtKey(last);
+  return [Object.is(a, -0) ? 0 : a, Object.is(b, -0) ? 0 : b];
 }
 
 /**
