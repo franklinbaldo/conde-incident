@@ -1,0 +1,308 @@
+{
+  "id": "MET-NMC-NCEPON-20261112-03",
+  "related": "MET-NMC-NCEPON-20261112-02",
+  "document": "James R. Neilon, Upper Air ADP Record Format, June 1964, NMC Office Note 20",
+  "source_url": "https://web.archive.org/web/20220119075333id_/http://www.ncep.noaa.gov/officenotes/NOAA-NPM-NCEPON-0001/013FD4DB.pdf",
+  "capture_utc": "2022-01-19T07:53:33Z",
+  "pdf_bytes": 932414,
+  "pdf_sha256": "656984ac58ff1632e39b0f62ac80003785ddea0a0de32dfb19c8c612067aabbe",
+  "page_tree_count": 23,
+  "page_streams": [
+    {
+      "pdf_page": 1,
+      "page_object": 25,
+      "image_object": 22,
+      "width": 2528,
+      "height": 3264,
+      "ccitt_bytes": 12684,
+      "ccitt_sha256": "4849419757096945f7f728a2f4ade37de42ac3a5627c5cbf069fa44866355c96"
+    },
+    {
+      "pdf_page": 2,
+      "page_object": 34,
+      "image_object": 32,
+      "width": 2368,
+      "height": 3104,
+      "ccitt_bytes": 11990,
+      "ccitt_sha256": "b4cc45a262dde9256d8863c9673965ab2c2f2f9dc133e0d08e48e5c4f9907781"
+    },
+    {
+      "pdf_page": 3,
+      "page_object": 43,
+      "image_object": 41,
+      "width": 2368,
+      "height": 3136,
+      "ccitt_bytes": 29737,
+      "ccitt_sha256": "c3f8cb4c5b7bd79a241a6d645f3c1ba2248a983b3f4cb60b921506c9c0046321"
+    },
+    {
+      "pdf_page": 4,
+      "page_object": 52,
+      "image_object": 50,
+      "width": 2368,
+      "height": 3136,
+      "ccitt_bytes": 27614,
+      "ccitt_sha256": "385958d5aaec5aaa72717927615014d5b1d40d101a6d71f8440f48c1f297b462"
+    },
+    {
+      "pdf_page": 5,
+      "page_object": 61,
+      "image_object": 59,
+      "width": 2368,
+      "height": 3136,
+      "ccitt_bytes": 28696,
+      "ccitt_sha256": "d6558b62ff2e92811e2e01352b5d6df15220b5002503f485906c9a90c4e946c9"
+    },
+    {
+      "pdf_page": 6,
+      "page_object": 70,
+      "image_object": 68,
+      "width": 2368,
+      "height": 3104,
+      "ccitt_bytes": 22114,
+      "ccitt_sha256": "5064d1361c1c72ebfc400ee317a99d99d5600a589ea495c61c655f7a75e80b29"
+    },
+    {
+      "pdf_page": 7,
+      "page_object": 79,
+      "image_object": 77,
+      "width": 2368,
+      "height": 3136,
+      "ccitt_bytes": 20594,
+      "ccitt_sha256": "02db38f5abafc0b26e3cb0b9eb17fecb729304377d44f7f8e06102610e827409"
+    },
+    {
+      "pdf_page": 8,
+      "page_object": 88,
+      "image_object": 86,
+      "width": 2368,
+      "height": 3104,
+      "ccitt_bytes": 21325,
+      "ccitt_sha256": "94bb17996b11dffbbdc632dfbf3e4f8c4f107f5ca6b159d1a8cf7dea3cd515de"
+    },
+    {
+      "pdf_page": 9,
+      "page_object": 97,
+      "image_object": 95,
+      "width": 2368,
+      "height": 3136,
+      "ccitt_bytes": 29341,
+      "ccitt_sha256": "56fcb62af608f1aeeeb301cb1a388fa17ca55641dcc5216bbc7a3ea7c2e868d5"
+    },
+    {
+      "pdf_page": 10,
+      "page_object": 106,
+      "image_object": 104,
+      "width": 2368,
+      "height": 3104,
+      "ccitt_bytes": 29143,
+      "ccitt_sha256": "698b970fc5a7e924f3b8607d3c8ec62005940cc0c480dd23e577bf6978808afe"
+    },
+    {
+      "pdf_page": 11,
+      "page_object": 116,
+      "image_object": 113,
+      "width": 2368,
+      "height": 3136,
+      "ccitt_bytes": 24737,
+      "ccitt_sha256": "2a87c99245316394440a4503b63c79501f924fadf2eff00ee5991a8f3b1b8525"
+    },
+    {
+      "pdf_page": 12,
+      "page_object": 125,
+      "image_object": 123,
+      "width": 2368,
+      "height": 3136,
+      "ccitt_bytes": 12626,
+      "ccitt_sha256": "3ec8e0fce6754806dc4f8869f6374e2d42902b148dab50dfed43cf2015122b83"
+    },
+    {
+      "pdf_page": 13,
+      "page_object": 134,
+      "image_object": 132,
+      "width": 2368,
+      "height": 3136,
+      "ccitt_bytes": 57461,
+      "ccitt_sha256": "c98faccca177cca375d2296d5721931af0936d846994a0a13cfaa6947a789b68"
+    },
+    {
+      "pdf_page": 14,
+      "page_object": 143,
+      "image_object": 141,
+      "width": 2368,
+      "height": 3136,
+      "ccitt_bytes": 48440,
+      "ccitt_sha256": "0bbc093bd10ed078c684e0ad428d1c4fcd214cd23c9985bb122a371e99d00c8c"
+    },
+    {
+      "pdf_page": 15,
+      "page_object": 152,
+      "image_object": 150,
+      "width": 2368,
+      "height": 3136,
+      "ccitt_bytes": 51871,
+      "ccitt_sha256": "17622affb2b7bc715557df7b48812076801d828f3057dd191f4931eeb6a48b4f"
+    },
+    {
+      "pdf_page": 16,
+      "page_object": 161,
+      "image_object": 159,
+      "width": 2368,
+      "height": 3136,
+      "ccitt_bytes": 59884,
+      "ccitt_sha256": "bb5c0b13953bebc4ce2bd8d06f7063cba69d538098941d6bf87e6dacd0e2992d"
+    },
+    {
+      "pdf_page": 17,
+      "page_object": 170,
+      "image_object": 168,
+      "width": 2368,
+      "height": 3136,
+      "ccitt_bytes": 56204,
+      "ccitt_sha256": "86a7dbf96e465ab25aa0c1275b816f1b36716be77a5db8f373b62cf849bcebf1"
+    },
+    {
+      "pdf_page": 18,
+      "page_object": 179,
+      "image_object": 177,
+      "width": 2368,
+      "height": 3136,
+      "ccitt_bytes": 58807,
+      "ccitt_sha256": "9040a3c2acded36d6482e497fcc9e8e4bd02c176c94815e826bf858aa4c978b7"
+    },
+    {
+      "pdf_page": 19,
+      "page_object": 188,
+      "image_object": 186,
+      "width": 2368,
+      "height": 3136,
+      "ccitt_bytes": 52116,
+      "ccitt_sha256": "64d31ccdb28139d71dca78794bdbbe14db79e78be24693137042dc99ac307850"
+    },
+    {
+      "pdf_page": 20,
+      "page_object": 197,
+      "image_object": 195,
+      "width": 2368,
+      "height": 3136,
+      "ccitt_bytes": 50904,
+      "ccitt_sha256": "1ca0aaf9cc8a29423b018d11f8a88d6b6f1c2ac7e3f5d8783179c6392a4ad0c7"
+    },
+    {
+      "pdf_page": 21,
+      "page_object": 207,
+      "image_object": 204,
+      "width": 2368,
+      "height": 3136,
+      "ccitt_bytes": 52668,
+      "ccitt_sha256": "3c535c64790c48204956d52d9b1dd0f707c2e3e9a0e5d9b91089bd93264be474"
+    },
+    {
+      "pdf_page": 22,
+      "page_object": 216,
+      "image_object": 214,
+      "width": 2368,
+      "height": 3136,
+      "ccitt_bytes": 64099,
+      "ccitt_sha256": "cb5a022b9d08b9446317af762b81b992945db71b3e591d56c2f703e4858a31a0"
+    },
+    {
+      "pdf_page": 23,
+      "page_object": 225,
+      "image_object": 223,
+      "width": 2368,
+      "height": 3136,
+      "ccitt_bytes": 55664,
+      "ccitt_sha256": "e958f37f3ef7beef81ddb6a5f35be0c497403b7132063bfe11922953921399c1"
+    }
+  ],
+  "inspected_folios": [
+    {
+      "pdf_pages": [
+        1
+      ],
+      "observation": "Later NOAA/NWS-style wrapper cover, no printed revision date on this folio"
+    },
+    {
+      "pdf_pages": [
+        2,
+        15
+      ],
+      "observation": "Original cover identifies James R. Neilon and June 1964; two image versions"
+    },
+    {
+      "pdf_pages": [
+        3,
+        16
+      ],
+      "observation": "Original text describes 50 to 150 machine words per upper-air report, including locators in first three words"
+    },
+    {
+      "pdf_pages": [
+        11,
+        13
+      ],
+      "observation": "Revision to NMC Office Note #20 explicitly dated 11/27/64 and amends Note 4 quality flags, bits S through 11"
+    },
+    {
+      "pdf_pages": [
+        12,
+        14
+      ],
+      "observation": "Continuation headed Revision Office Note #20, bits 12 through 17"
+    }
+  ],
+  "revision": {
+    "date_seen_on_pdf_pages": "1964-11-27",
+    "beginning_pdf_page": 11,
+    "continuation_pdf_page": 12,
+    "duplicate_scan_image_pairs": [
+      [
+        11,
+        13
+      ],
+      [
+        12,
+        14
+      ]
+    ],
+    "catalog_page_label": "12; referent not independently established"
+  },
+  "apparent_repeated_content_pairs": [
+    [
+      2,
+      15
+    ],
+    [
+      3,
+      16
+    ],
+    [
+      11,
+      13
+    ],
+    [
+      12,
+      14
+    ]
+  ],
+  "image_stream_byte_identical_duplicates": false,
+  "structural_integrity": "PDF_SHA_AND_PAGE_TREE_CCITT_STREAMS_VERIFIED",
+  "ocr": "NOT_RUN",
+  "machine_transcription": "NOT_RUN",
+  "page_text": "SELECTIVE_DIRECT_VISUAL_READING",
+  "layout_report_words": [
+    50,
+    150
+  ],
+  "reported_bit_positions": "S-35 (36 bit positions in manual; does not establish Y20175 storage encoding)",
+  "applicability_to_1963": "NOT_ESTABLISHED",
+  "y20175_station_day_query": "NOT_RUN",
+  "physical_constraint": "NOT_ACTIVATED",
+  "limitations": [
+    "Per-page SHA identifies CCITTFax compressed stream, not normalized rendered page",
+    "Repeated textual content need not imply identical binary streams or independent editions",
+    "November 1964 revision postdates 7-9 November 1963 by more than a year",
+    "No justified transfer of 36-bit report format to 1963 Y20175 CRAY/COS records without independent conversion mapping"
+  ]
+}
