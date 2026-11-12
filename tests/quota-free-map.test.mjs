@@ -21,6 +21,28 @@ test('world map does not draw spurious transcontinental antimeridian lines', () 
   assert.equal(projectedSegments(points, projectFlat).length, 2);
 });
 
+test('unwrapped longitudes never draw a false antimeridian chord', () => {
+  // Both sequences cross the 180° seam, even without prewrapped input.
+  const eastbound = [
+    { longitude: 179, latitude: 0 },
+    { longitude: 181, latitude: 1 },
+    { longitude: 190, latitude: 2 },
+  ];
+  const westbound = [
+    { longitude: -179, latitude: 0 },
+    { longitude: -181, latitude: 1 },
+    { longitude: -190, latitude: 2 },
+  ];
+  assert.deepEqual(splitDateline(eastbound).map(s => s.length), [1, 2]);
+  assert.deepEqual(splitDateline(westbound).map(s => s.length), [1, 2]);
+  assert.deepEqual(splitDateline(eastbound)[1].map(p => p.longitude), [-179, -170]);
+  assert.equal(projectedSegments(eastbound, projectFlat).length, 1);
+  assert.equal(projectedSegments(westbound, projectFlat).length, 1);
+  // Expected to remain one contiguous line if no seam is crossed.
+  assert.deepEqual(splitDateline([{ longitude: 181, latitude: 0 },
+    { longitude: 190, latitude: 1 }]).map(s => s.length), [2]);
+});
+
 test('invalid coordinates are discarded instead of painted as evidence', () => {
   assert.deepEqual(splitDateline([{ longitude: 1, latitude: 2 }, { longitude: NaN, latitude: 1 }, { longitude: 4, latitude: 5 }]).map(s => s.length), [1, 1]);
   assert.equal(projectedSegments([{ longitude: 1, latitude: 2 }], projectFlat).length, 0);
