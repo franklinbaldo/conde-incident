@@ -1,0 +1,47 @@
+{
+  "schema": "conde.statistical-observation-design-bridge/v1",
+  "id": "CERVO-RAAN-DISCRIMINATING-OBSERVATION-20261112",
+  "status": "CONNECTED_MISSING_CALIBRATED_INDEPENDENT_ANGULAR_ANCHOR",
+  "classification": "CONDITIONAL_EXACT_STRUCTURAL_RANK_NOT_EMPIRICAL_CONSTRAINT",
+  "source_occurrences": ["C25#1", "C179#1", "C180#1", "C181#1", "C241-L3", "C197"],
+  "source_path": "research/statistics/raan_527_528_529_1963.json",
+  "frozen_holdout_manifest": "research/statistics/raan_chronological_holdout_1963.json",
+  "reproducible_result": "research/statistics/raan_observation_design_C241.json",
+  "original_tracking_provenance": null,
+  "independent_absolute_angular_anchor": null,
+  "mean_TLE_forward_operator": null,
+  "measurement_error_covariance": null,
+  "candidate_variables": [
+    {"id": "phase_527", "type": "circular_phase", "unit": "deg", "historical_absolute_value": null},
+    {"id": "phase_528", "type": "circular_phase", "unit": "deg", "historical_absolute_value": null},
+    {"id": "phase_529", "type": "circular_phase", "unit": "deg", "historical_absolute_value": null},
+    {"id": "offset_catalog", "type": "shared_documentary_angular_offset", "unit": "deg", "calibrated_value": null},
+    {"id": "offset_new_lineage", "type": "counterfactual_uncalibrated_independent_lineage_offset", "unit": "deg", "observed_value": null},
+    {"id": "absolute_angular_anchor", "type": "counterfactual_calibrated_raan_measurement", "unit": "deg", "observed_value": null}
+  ],
+  "conditional_dependencies": [
+    {"from": "phase_527", "to": "catalog_raan_527", "relation": "phase_plus_shared_bias"},
+    {"from": "phase_528", "to": "catalog_raan_528", "relation": "phase_plus_shared_bias"},
+    {"from": "phase_529", "to": "catalog_raan_529", "relation": "phase_plus_shared_bias"},
+    {"from": "offset_catalog", "to": "catalog_raan_527_528_529", "relation": "same_lineage_common_offset"},
+    {"from": "offset_new_lineage", "to": "hypothetical_second_lineage", "relation": "new_unknown_zero_preserves_global_gauge"},
+    {"from": "absolute_angular_anchor", "to": "phase_528", "relation": "independent_absolute_reference_would_break_gauge_if_validated"}
+  ],
+  "null_direction_initial": [1, 1, 1, -1],
+  "rank_initial": 3,
+  "dimension_initial": 4,
+  "rank_with_uncalibrated_second_lineage": 4,
+  "dimension_with_uncalibrated_second_lineage": 5,
+  "rank_with_independent_absolute_phase": 4,
+  "dimension_with_independent_absolute_phase": 4,
+  "active_constraint": false,
+  "historical_posterior": null,
+  "geographic_domain_reduction": "NOT_EVALUABLE",
+  "new_connectivity": [
+    "document_lineage_to_unknown_angular_zero",
+    "uncalibrated_second_lineage_to_persistent_S1_gauge",
+    "calibrated_absolute_reference_to_conditional_rank_completion",
+    "temporal_holdout_to_rank_control_not_blinded_prediction"
+  ],
+  "related_project_issue": 242
+}
