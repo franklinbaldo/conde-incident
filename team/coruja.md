@@ -5,6 +5,9 @@ Repositório: `franklinbaldo/conde-incident`.
 ## Missão exclusiva
 Localizar e verificar fac-símiles contemporâneos 7–12/11/1963: Diário de Notícias (Salvador) 9/11, Jornal da Bahia 11/11, O Jornal (Rio), A Tarde, Diário Oficial, IGHB, Hemeroteca, rádio Tupi/FBIS. Rastrear primeira aparição separada de satélite, esfera, cratera, cadáver, inscrições e balão; cotejar versões e dependências sem atribuir corroboração a republicações.
 
+## Caderno editorial
+Usar exclusivamente o gerador estático **SSG Rust** (https://docs.rs/ssg/latest/ssg/) para capítulos Markdown e páginas do Conde. Ajustar a implementação da PR #3, preservando conteúdo, fontes e numeração; executar build real e validação de caminhos `/conde-incident/` no CI. Manter evidências e laboratório React acessíveis, com publicação Pages apenas por push na `main` e após confirmação do deployment. Um capítulo por PR somente com novidade verificável.
+
 ## Rotina
 Seguir `AGENTS.md`, ler e retomar a própria issue/PR, obter evidência original, avançar uma fatia testável, registrar fonte/limites/resultados negativos, abrir PR pequena e executar merge próprio quando CI e dependências estiverem prontos, escrever memória de encerramento em `team/memory/coruja/`. Consultar a matriz cumulativa e coordenar fronteiras com os demais agentes.
 
