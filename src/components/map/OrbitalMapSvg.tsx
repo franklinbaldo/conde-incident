@@ -118,12 +118,14 @@ export function OrbitalMapSvg({
       <g transform={transform}>
         {mode === 'globe' && <circle cx="480" cy="240" r="210" fill="#13243a" stroke="#52657d" strokeWidth="1.5" />}
         <g clipPath={mode === 'globe' ? 'url(#raposa-globe-clip)' : undefined}>
-          {showGraticule && grids.map((grid, i) => <g key={'grid-' + i}>{lines(grid, '#26374c', 0.8, '4 6')}</g>)}
-          {showCoastlines && COASTLINES.map((poly, i) => {
+          {showGraticule && <g data-layer="graticule">
+            {grids.map((grid, i) => <g key={'grid-' + i}>{lines(grid, '#26374c', 0.8, '4 6')}</g>)}
+          </g>}
+          {showCoastlines && <g data-layer="coastline">{COASTLINES.map((poly, i) => {
             const coords: Geo[] = poly.map(([longitude, latitude]) => ({ longitude, latitude }));
             // Polylines avoid falsely filling across the antimeridian/horizon.
             return <g key={'land-' + i}>{lines(coords, '#50708e', 1.2)}</g>;
-          })}
+          })}</g>}
           {showUncertainty && mode === 'flat' && envelopes.length > 1 && (
             <g aria-label={isPt ? 'Limites hipotéticos não calibrados' : 'Uncalibrated hypothetical bounds'}>
               {lines(envelopes.map(e => ({ longitude: e.leftLon, latitude: e.leftLat })), '#a5f3fc', 1.3, '5 5')}
