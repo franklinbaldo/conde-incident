@@ -147,3 +147,45 @@ test("missing status 200 even when response.ok is truthy fails", async () => {
   });
   assert.equal(result.status, "NOT_VERIFIED");
 });
+
+
+test("G21: comment/template-only navigation and asset references cannot verify publication", async () => {
+  const f = fixture({ content: {
+    [SITE]: ["text/html", '<!doctype html><html><!--<a href="/conde-incident/stories/chapter-one/">Caderno</a><a href="/conde-incident/lab/">Lab</a><link href="/conde-incident/assets/site.css">--><template><a href="/conde-incident/lab/">Lab</a></template></html>'],
+    [LAB]: ["text/html", '<html><!--<script src="/conde-incident/lab/assets/main.js"></script>--></html>'],
+    [CHAPTER]: ["text/html", '<html><article><h1>Real page</h1></article></html>'],
+  } });
+  const result = await auditPublishedSite(f.args);
+  assert.equal(result.status, "NOT_VERIFIED");
+  assert.match(result.failures.join(), /homepage has no laboratory link/);
+  assert.match(result.failures.join(), /homepage has no link to audited chapter/);
+  assert.match(result.failures.join(), /homepage has no local CSS asset/);
+  assert.match(result.failures.join(), /laboratory has no local JS asset/);
+});
+
+test("G21: script string and comment cannot masquerade as a rendered article", async () => {
+  const chapter = '<!doctype html><html><script>const ghost = "<article>fake</article>";</script><!--<article>also fake</article>--><template><article>hidden</article></template></html>';
+  const f = fixture({ content: { [CHAPTER]: ["text/html", chapter] } });
+  const result = await auditPublishedSite(f.args);
+  assert.equal(result.status, "NOT_VERIFIED");
+  assert.match(result.failures.join(), /chapter has no rendered article/);
+});
+
+test("G21: whitespace-only CSS and JS are not deployed bundles", async () => {
+  for (const [path, mime] of [[CSS, "text/css"], [JS, "application/javascript"]]) {
+    const f = fixture({ content: { [path]: [mime, " \n\t "] } });
+    const result = await auditPublishedSite(f.args);
+    assert.equal(result.status, "NOT_VERIFIED", path);
+    assert.match(result.failures.join(), /missing (css|js) body/);
+  }
+});
+
+test("G21: homepage links embedded in script strings do not count as navigation", async () => {
+  const f = fixture({ content: {
+    [SITE]: ["text/html", '<!doctype html><html><link rel="stylesheet" href="/conde-incident/assets/site.css"><script>const fake = \'<a href="/conde-incident/lab/">Lab</a><a href="/conde-incident/stories/chapter-one/">Story</a>\';</script></html>'],
+  } });
+  const result = await auditPublishedSite(f.args);
+  assert.equal(result.status, "NOT_VERIFIED");
+  assert.match(result.failures.join(), /homepage has no laboratory link/);
+  assert.match(result.failures.join(), /homepage has no link to audited chapter/);
+});
