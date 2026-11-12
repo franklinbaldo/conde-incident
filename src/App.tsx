@@ -82,7 +82,7 @@ export default function App() {
       >
         {lang === 'pt' ? 'Pular para o conteúdo do laboratório' : 'Skip to laboratory content'}
       </button>
-      {/* Top Header & Navigation */
+      {/* Top Header & Navigation */}
       <Navigation
         activeTab={activeTab}
         setActiveTab={navigateTab}
