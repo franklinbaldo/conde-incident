@@ -1,0 +1,286 @@
+{
+  "schema": "conde.gaviao.retrospective-window/v3",
+  "reviewer": "gaviao",
+  "observed_at_utc": "2026-11-12T13:41:59Z",
+  "reviewed_from_main_sha": "7387a742c097caf31e4f3959415f605023e98571",
+  "reviewed_through_main_sha": "cdc32e402e7dee7378f1a92dabac672635a030cc",
+  "github_comparison": {
+    "status": "ahead",
+    "ahead_by": 12,
+    "behind_by": 0,
+    "total_commits": 12,
+    "first_parent_chain_complete": true,
+    "method": "Authenticated compare and commits first-parent, PR merged_sha match, per-commit modified paths, closed-PR interval search, exact PR-head workflow completions"
+  },
+  "direct_commits_in_window": [],
+  "closed_without_merge_in_window": [],
+  "boundary_closed_pr_excluded": [
+    97
+  ],
+  "entries": [
+    {
+      "order": 1,
+      "pr": 99,
+      "main_sha": "c2f55577408a020be816389e950ecb607e5887d9",
+      "parent_main_sha": "7387a742c097caf31e4f3959415f605023e98571",
+      "pr_head_sha": "e8966c57ac8a009ef0dd17810e733831b04fa3ee",
+      "completed_successful_workflows_on_pr_head": 8,
+      "changed_files": [
+        ".github/workflows/tle-secondary-epochs.yml",
+        "research/tle_custody/evidence_matrix_C241-L2_2026-11-12.md",
+        "tests/test_tle_secondary_1963_ledger.py",
+        "tools/tle_secondary_1963_ledger.py"
+      ],
+      "scope_and_epistemic_verdict": "SHA-pinned secondary Parquet, 45 NORAD 528 epochs; no original instrumental TLE"
+    },
+    {
+      "order": 2,
+      "pr": 100,
+      "main_sha": "8a0abd62d4e8106abb0f93986259183625e451ad",
+      "parent_main_sha": "c2f55577408a020be816389e950ecb607e5887d9",
+      "pr_head_sha": "fcb408ea4016c90de8dc66028a3be55d4f855873",
+      "completed_successful_workflows_on_pr_head": 7,
+      "changed_files": [
+        "research/audits/gaviao-main-window-20261112-0838.json",
+        "research/audits/gaviao-main-window-20261112-0838.md",
+        "scripts/gaviao-retrospective-window.test.mjs"
+      ],
+      "scope_and_epistemic_verdict": "Own prior G16 retrospective snapshot, including G16-N1 later repaired by #111"
+    },
+    {
+      "order": 3,
+      "pr": 103,
+      "main_sha": "9e0ee70c2242db2a1d512bf4cfb37ff459329a30",
+      "parent_main_sha": "8a0abd62d4e8106abb0f93986259183625e451ad",
+      "pr_head_sha": "b343d0eeadf07199d7356aaf7d019323e6bc5352",
+      "completed_successful_workflows_on_pr_head": 7,
+      "changed_files": [
+        "research/statistics/README.md",
+        "research/statistics/raan_527_528_529_1963.json",
+        "research/statistics/raan_coepoch_1963_report.json",
+        "tests/raanCoepochAudit.test.mjs",
+        "tests/test_raan_coepoch_audit.py",
+        "tools/raan_coepoch_audit.py"
+      ],
+      "scope_and_epistemic_verdict": "123 rows, 119 unique epochs, 4 duplicates; circular RAAN and secondary intermediate data"
+    },
+    {
+      "order": 4,
+      "pr": 104,
+      "main_sha": "4c8e405badf80d07fd049a9c2e711c493359721f",
+      "parent_main_sha": "9e0ee70c2242db2a1d512bf4cfb37ff459329a30",
+      "pr_head_sha": "1043e43bf91e6d53c8fbb3ee3e483c5409e1a40b",
+      "completed_successful_workflows_on_pr_head": 7,
+      "changed_files": [
+        "research/meteorology/gdex_1963_api_snapshot_2026-11-12.json",
+        "research/meteorology/gdex_uadb_1963_coverage_2026-11-12.json",
+        "research/meteorology/gdex_uadb_1963_coverage_2026-11-12.md",
+        "tests/test_upper_air_coverage.py",
+        "tools/audit_upper_air_coverage.py"
+      ],
+      "scope_and_epistemic_verdict": "18,646 archived UADB station headers; negative only for 3 files, not historical non-launch"
+    },
+    {
+      "order": 5,
+      "pr": 106,
+      "main_sha": "12b882a592cacfa2d6011b7d894c2879cfee0349",
+      "parent_main_sha": "4c8e405badf80d07fd049a9c2e711c493359721f",
+      "pr_head_sha": "3265d0daecab2499c7076fb321badca6bb097a96",
+      "completed_successful_workflows_on_pr_head": 7,
+      "changed_files": [
+        "formal/scripts/check_cumulative_connections.py",
+        "research/constraints/texugo_negative_controls_02_2026-11-12.md",
+        "tests/test_cumulative_constraints.py"
+      ],
+      "scope_and_epistemic_verdict": "Deduplicate evidence and block nonfinite unit conversion"
+    },
+    {
+      "order": 6,
+      "pr": 107,
+      "main_sha": "04934fc5b476bfc06cb5cd372362fe3ca356c052",
+      "parent_main_sha": "12b882a592cacfa2d6011b7d894c2879cfee0349",
+      "pr_head_sha": "4834cbce0efd1ce9a17ca37b463a303c3601aeca",
+      "completed_successful_workflows_on_pr_head": 8,
+      "changed_files": [
+        ".github/workflows/documentary-provenance.yml",
+        "public/data/conde-source-citations.json",
+        "research/provenance/README.md",
+        "research/provenance/lineages.json",
+        "tests/test_provenance_graph.py",
+        "tools/provenance_graph.py"
+      ],
+      "scope_and_epistemic_verdict": "241 matrix occurrences, only 24 curated links and 217 UNMAPPED; dependencies not independent witnesses"
+    },
+    {
+      "order": 7,
+      "pr": 109,
+      "main_sha": "fd2dd400f999ca9416fe7f1d9a946bb4d7f7c682",
+      "parent_main_sha": "04934fc5b476bfc06cb5cd372362fe3ca356c052",
+      "pr_head_sha": "d0ec6cbf58f2e87a1ed3ca03e54f3137fe76a1d2",
+      "completed_successful_workflows_on_pr_head": 8,
+      "changed_files": [
+        ".github/workflows/lean-core.yml",
+        "formal/Conde1963.lean",
+        "formal/Conde1963/Core.lean",
+        "formal/Conde1963/Evidence.lean",
+        "formal/README.md",
+        "formal/scripts/audit_legacy_154.py",
+        "formal/tests/test_legacy_evidence.py",
+        "research/constraints/legacy_evidence_154_custody.md"
+      ],
+      "scope_and_epistemic_verdict": "Lean local archive 154 entries/151 IDs, C144-C151 semantic reuse; ZIP not found"
+    },
+    {
+      "order": 8,
+      "pr": 108,
+      "main_sha": "e1c73dfdc06888673348b98fbef8bbd6428db425",
+      "parent_main_sha": "fd2dd400f999ca9416fe7f1d9a946bb4d7f7c682",
+      "pr_head_sha": "b77509bd4a1567950657af948b064d749bd2b0da",
+      "completed_successful_workflows_on_pr_head": 8,
+      "changed_files": [
+        "research/archives/nara_bluebook_conde_naid_302531012_2026-11-12.md"
+      ],
+      "scope_and_epistemic_verdict": "Three NARA Blue Book images; O Globo citation only, newspaper issue not inspected"
+    },
+    {
+      "order": 9,
+      "pr": 111,
+      "main_sha": "d0eb2f9ead48842bf04913248ef1d7f6b5e8a0eb",
+      "parent_main_sha": "e1c73dfdc06888673348b98fbef8bbd6428db425",
+      "pr_head_sha": "c07df54aaed2aecf6e9c03ea87b999fd060d0857",
+      "completed_successful_workflows_on_pr_head": 8,
+      "changed_files": [
+        "research/ORBIT_ENERGY_BUDGET.md",
+        "scripts/gaviao-retrospective-window.test.mjs",
+        "src/lib/orbitEnergyAudit.ts",
+        "tests/orbitEnergyAudit.test.mjs"
+      ],
+      "scope_and_epistemic_verdict": "Jacobi numerical trend repair G16-N1, roundoff heuristic, not certified orbit error"
+    },
+    {
+      "order": 10,
+      "pr": 113,
+      "main_sha": "caaf01a47579fb5c7fab30eb922887c8b3d4b1f7",
+      "parent_main_sha": "d0eb2f9ead48842bf04913248ef1d7f6b5e8a0eb",
+      "pr_head_sha": "71fd1f0ba8ebb1411d99809f8c9518cc78f75f2d",
+      "completed_successful_workflows_on_pr_head": 8,
+      "changed_files": [
+        ".github/workflows/integration-head.yml",
+        "research/CI_INTEGRATION.md",
+        "scripts/integration-head.test.mjs"
+      ],
+      "scope_and_epistemic_verdict": "Exact PR HEAD Python unittest 76, Node 71 confirmed from Actions logs; formal tests separately"
+    },
+    {
+      "order": 11,
+      "pr": 115,
+      "main_sha": "56042746485062b1a0ae3316cf07b445b5218216",
+      "parent_main_sha": "caaf01a47579fb5c7fab30eb922887c8b3d4b1f7",
+      "pr_head_sha": "3b2a2a105c0da303bcf12a1580e7aec226109418",
+      "completed_successful_workflows_on_pr_head": 8,
+      "changed_files": [
+        "src/components/DocumentArchive.tsx",
+        "src/components/SourceCitationFeed.tsx",
+        "src/lib/sourceCitationAudit.ts",
+        "tests/sourceCitationFeed.test.mjs"
+      ],
+      "scope_and_epistemic_verdict": "UI documentary feed; mutable matrix line permalink defect G17-F1"
+    },
+    {
+      "order": 12,
+      "pr": 117,
+      "main_sha": "cdc32e402e7dee7378f1a92dabac672635a030cc",
+      "parent_main_sha": "56042746485062b1a0ae3316cf07b445b5218216",
+      "pr_head_sha": "40153f6d382fe85f3b0c668ad66b2a308cfe880e",
+      "completed_successful_workflows_on_pr_head": 9,
+      "changed_files": [
+        ".github/workflows/tle-cross-epoch-availability.yml",
+        "research/constraints/norad_1963_epoch_availability_C241-L3.json",
+        "research/tle_custody/evidence_matrix_C241-L3_2026-11-12.md",
+        "tests/test_cross_object_epoch_support.py",
+        "tools/cross_object_epoch_support.py"
+      ],
+      "scope_and_epistemic_verdict": "Secondary 527/528/529 calendar overlap and pinned live checks; zero coepoch"
+    }
+  ],
+  "notable_workflow_log_evidence": {
+    "pr113": {
+      "run_id": 43223979479,
+      "job_id": 131202304971,
+      "head_sha": "71fd1f0ba8ebb1411d99809f8c9518cc78f75f2d",
+      "python_unittest_pass": 76,
+      "node_test_pass": 71,
+      "node_fail": 0,
+      "lean_status": "SUCCESS"
+    },
+    "pr109": {
+      "run_id": 43222973640,
+      "job_id": 131198942184,
+      "lean_build": "SUCCESS_5_JOBS",
+      "formal_legacy_python_tests": 5
+    },
+    "pr117": {
+      "run_id": 43229649772,
+      "job_id": 131221233037,
+      "python_test_batches": [
+        9,
+        12,
+        10
+      ],
+      "real_pinned_parquet": "PASS",
+      "observed_overlap_both_6h_24h_72h": [
+        1,
+        2,
+        15
+      ],
+      "exact_shared_both": 0,
+      "within_432us_both": 0
+    }
+  },
+  "findings": [
+    {
+      "id": "G17-F1",
+      "priority": "P2",
+      "status": "FIX_IN_G17_PR",
+      "pr": 115,
+      "issue": "feed points to mutable /blob/main/ line anchor despite its immutable matrix blob; future edits can silently retarget claim",
+      "counterexample": "Insert a line before a cited matrix row on main while keeping the versioned citation feed; a link #Lxxx no longer shows the original claim",
+      "correction": "Pin to faf4dd0fd8dfbdd825e4e934b3b30ebd81bf61df with verified original blob a7978c3a75a153b16ab70118a92c434bba674cb7"
+    },
+    {
+      "id": "G17-F2",
+      "priority": "P2",
+      "status": "OPEN_IN_EXISTING_ISSUE_88",
+      "pr": 108,
+      "issue": "NARA-BB-CONDE-20261112-01 documented in archival report but not promoted to independent versioned matrix occurrence/source DAG",
+      "correction": "Polvo add source ID/occurrence with dependency chain and uncertainty, without rewriting frozen blob, crosscheck Coruja #116"
+    },
+    {
+      "id": "G17-F3",
+      "priority": "RESOLVED",
+      "status": "PR111_FIXED",
+      "pr": 111,
+      "issue": "G16-N1 Jacobi refinement gate admitted 9000x growth under acceptance limit",
+      "counterexample": "previous=.0001km, final=.9km, limit=1km",
+      "correction": "checkRefinementTrend independent growth and dimensional heuristic"
+    },
+    {
+      "id": "G17-F4",
+      "priority": "SCIENTIFIC_GUARD",
+      "status": "TESTED_CONDITIONAL",
+      "pr": 109,
+      "issue": "Legacy Lean C144-C151 collide semantically with current C144-C151",
+      "counterexample": "legacy C151 triangulation versus current Recife IGRA; legacy C148 J2 versus current UFRJ",
+      "correction": "Snapshot-qualified legacy-154 IDs vs matrix-a7978c3 IDs; ZIP historic not authenticated"
+    }
+  ],
+  "science": {
+    "documentary": "NARA primary records verify existence of institutional correspondence, not an occurrence; O Globo original not recovered; NASA SSR 08/11 date only; dependent FBIS and consular chains; in G17 used repository custodial report, not independently re-downloaded NARA JP2.",
+    "lean": "Lean 4.35 compilation of a local recovered evidence registry is conditional; no original ZIP, physical narrowing or terminal proof.",
+    "numerical": "Secondary TLE mirror for 527/528/529 not instrumental; calendar proximity is not sigma or synchronized orbit. 123 lines/119 epochs. Corrected Jacobi growth checks numerical behavior, not validated terminal fit.",
+    "editorial": "No stories merged in 12 commits. Drafts #85 Caderno15, #98 Caderno16, #116 Caderno17 reviewed; #116 correctly marks newspaper precedence unknown and ID not yet in matrix. #3 Zola/SSG editorial architecture still pending.",
+    "geographic": "No verified terminal time or coordinates, no error envelope or holdout; Conde indeterminate"
+  },
+  "conclusion": "INDETERMINATE",
+  "no_blog_publication": true
+}
