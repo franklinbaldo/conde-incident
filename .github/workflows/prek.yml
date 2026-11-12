@@ -24,3 +24,26 @@ jobs:
           python-version: "3.12"
       - name: Run prek hooks over all tracked files
         run: uvx --from prek==0.5.10 prek run --all-files
+      - name: Generate all 13 private workspace scaffolds without network
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from tools.provision_agent_workspaces import bootstrap_files, read_roster
+
+          root = Path("/tmp/conde-generated-workspaces")
+          owner, animals = read_roster()
+          for animal in animals:
+              home = root / animal["slug"]
+              for name, content in bootstrap_files(owner, animal).items():
+                  dest = home / name
+                  dest.parent.mkdir(parents=True, exist_ok=True)
+                  dest.write_text(content, encoding="utf-8")
+          print("Generated", len(animals), "isolated workspaces for OKF CI")
+          PY
+      - name: Validate every generated Markdown with normative okf-parser 0.48.2
+        shell: bash
+        run: |
+          set -euo pipefail
+          for home in /tmp/conde-generated-workspaces/*; do
+            uv tool run --from okf-parser==0.48.2 okf-parser check "$home" --require-spec '.okf/specs/{slug}.md' --normative-spec
+          done

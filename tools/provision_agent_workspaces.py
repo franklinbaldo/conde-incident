@@ -63,6 +63,16 @@ tokens.json
 """
 
 
+def okf_doc(kind: str, title: str, description: str, body: str, **extra: str) -> str:
+    """Make generated Markdown valid OKF, including GitHub issue templates."""
+    fields = {"type": kind, "title": title, "description": description, **extra}
+    header = "\n".join(
+        f"{key}: {json.dumps(value, ensure_ascii=False)}"
+        for key, value in fields.items()
+    )
+    return f"---\n{header}\n---\n\n{body.strip()}\n"
+
+
 def bootstrap_files(owner: str, animal: dict) -> dict[str, str]:
     slug, role, emoji = animal["slug"], animal["role"], animal["emoji"]
     skill_path = ROOT / ".agents" / "skills" / f"conde-{slug}" / "SKILL.md"
@@ -89,10 +99,10 @@ Este é o repositório **privado de trabalho permanente** de {display}.
 - Pode instalar ferramentas, guardar notas, scripts, experimentos, skills,
   memórias OKF e fazer **push direto** sem pedir aprovação prévia.
 - No início de cada sessão, verificar Issues abertas, skill e memória anterior.
-- Em cada sessão, manter um registro conciso em \`memory/\`: decisões,
+- Em cada sessão, manter um registro conciso em memory/: decisões,
   evidências, resultados negativos, links para commits/PRs e próximo passo.
 - Para comunicar-se com outro animal: abrir Issue no repositório privado
-  \`{owner}/<destinatario>\` e incluir remetente, projeto, evidências e pedido.
+  {owner}/<destinatario> e incluir remetente, projeto, evidências e pedido.
   Não escrever em repositório de colega apenas para enviar recado.
 - Código destinado a projetos deve ir para PR no repositório de projeto.
 - Não colocar segredos, tokens, chaves ou dados pessoais sensíveis no Git,
@@ -100,15 +110,11 @@ Este é o repositório **privado de trabalho permanente** de {display}.
 - Uma nota ou hipótese nunca se transforma em observação por ter sido
   guardada aqui. Preserve proveniência e incertezas.
 """
-    issue_template = """---
-name: Mensagem entre animais
-about: Pedido de colaboração, pergunta, bloqueio ou evidência
-title: "[recado] remetente → destinatário: "
-labels: ""
-assignees: ""
----
-
-**De (animal):**
+    project_skill = skill_path.read_text(encoding="utf-8")
+    skill_body = re.sub(r"\A---\r?\n.*?\r?\n---\r?\n", "", project_skill, count=1, flags=re.S)
+    if skill_body == project_skill:
+        raise ProvisionError(f"Project skill lacks frontmatter: {skill_path}")
+    issue_body = """**De (animal):**
 
 **Para (animal proprietário deste repositório):**
 
@@ -122,16 +128,51 @@ assignees: ""
 
 **Resultado esperado:**
 """
-    return {
-        "README.md": readme,
-        "AGENTS.md": contract,
+    files = {
+        "README.md": okf_doc("Workspace", f"{emoji} {display}", role, readme),
+        "AGENTS.md": okf_doc(
+            "AgentContract", f"{emoji} {display} · contrato pessoal",
+            f"Governança e segurança do workspace privado de {display}.", contract
+        ),
         ".gitignore": gitignore(),
-        f".agents/skills/conde-{slug}/SKILL.md": skill_path.read_text(encoding="utf-8"),
-        ".github/ISSUE_TEMPLATE/message.md": issue_template,
-        "memory/README.md": "# Memórias OKF\n\nRegistros cumulativos privados do agente, um por sessão ou decisão significativa. Não sobrescrever sem histórico.\n",
-        "tools/README.md": "# Ferramentas\n\nScripts e ferramentas de uso pessoal do agente, sem exigência de PR.\n",
-        "experiments/README.md": "# Experimentos\n\nExperimentos reproduzíveis, dados derivados e resultados negativos; não confundir modelos com observações.\n",
+        f".agents/skills/conde-{slug}/SKILL.md": okf_doc(
+            "Skill", f"{emoji} {display} · skill pessoal",
+            f"Método e especialidade de {display}: {role}.",
+            skill_body, name=f"conde-{slug}"
+        ),
+        ".github/ISSUE_TEMPLATE/message.md": okf_doc(
+            "IssueTemplate", "[recado] remetente → destinatário: ",
+            "Pedido de colaboração, pergunta, bloqueio ou evidência.",
+            issue_body, name="Mensagem entre animais",
+            about="Pedido de colaboração, pergunta, bloqueio ou evidência.",
+            labels="", assignees=""
+        ),
+        "memory/README.md": okf_doc(
+            "WorkspaceNote", "Memórias OKF",
+            "Registros cumulativos privados do agente.",
+            "# Memórias OKF\n\nUm registro por sessão ou decisão, sem apagar história."
+        ),
+        "tools/README.md": okf_doc(
+            "WorkspaceNote", "Ferramentas",
+            "Scripts pessoais e experimentos privados do agente.",
+            "# Ferramentas\n\nFerramentas pessoais, sem necessidade de PR."
+        ),
+        "experiments/README.md": okf_doc(
+            "WorkspaceNote", "Experimentos",
+            "Experimentos reproduzíveis e limites do conhecimento.",
+            "# Experimentos\n\nSeparar simulações, resultados negativos e observações."
+        ),
     }
+    # Every generated Markdown, including hidden templates and the specs
+    # themselves, must be covered by a normative .okf/specs/{slug}.md.
+    for kind in ("Workspace", "AgentContract", "Skill", "IssueTemplate", "WorkspaceNote", "Spec"):
+        files[f".okf/specs/{kind.lower()}.md"] = okf_doc(
+            "Spec", f"Especificação {kind}", f"Contrato OKF de {kind}",
+            f"# Tipo {kind}\n\nExige type, title e description; preservar chaves adicionais."
+        )
+    if any(len(content.encode("utf-8")) > 20_000 for content in files.values()):
+        raise ProvisionError(f"Generated workspace file exceeds 20,000 bytes: {slug}")
+    return files
 
 
 class GitHubAPI:
