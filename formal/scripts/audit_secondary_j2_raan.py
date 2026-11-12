@@ -15,6 +15,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "tools"))  # legacy tools import siblings absolutely
 from tools.cross_object_epoch_support import (  # noqa: E402
     EXPECTED_CSV_SHA256, SOURCE_SHA256, SOURCE_URL, FIELDS,
     normalize, read_pinned_csv,
