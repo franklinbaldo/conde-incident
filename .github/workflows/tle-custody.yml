@@ -86,6 +86,22 @@ jobs:
           print("coverage_gaps:", report["gaps"])
           print("legacy_epoch_conflict:", report["legacy_conflict"])
           PY
+      - name: Join NORAD/COSPAR identities with attributed catalog labels (C241-T8)
+        run: |
+          python tools/tle_identity_lineage_audit.py \
+            --csv "${{ runner.temp }}/tle-audit/norad_527_528_529_1963_numeric.csv" \
+            --ledger research/tle_custody/catalog_identity_527_529_2026-11-12.json \
+            --pair research/tle_custody/mirror_528_1963-10-27.tle \
+            --output "${{ runner.temp }}/tle-audit/tle_catalog_identity_lineage.json"
+          python - <<'PY'
+          import json, os, pathlib
+          report = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) /
+                    "tle-audit/tle_catalog_identity_lineage.json").read_text())
+          print("COSPAR identity join:", {k: v["cospar"] for k, v in report["catalog_join"].items()})
+          print("Source lineage:", report["ledger_status"])
+          print("Physical object 528:", report["physical_component_identity_528"])
+          print("Conde:", report["status_for_conde"])
+          PY
       - name: Preserve normalized source-derived rows and negative results
         if: always()
         uses: actions/upload-artifact@v4

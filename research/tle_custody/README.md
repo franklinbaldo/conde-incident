@@ -341,3 +341,72 @@ O arquivo CSV é produzido previamente pela extração Parquet de SHA fixado no 
 Em [custódia #43155873680](https://github.com/franklinbaldo/conde-incident/actions/runs/43155873680), HEAD `f3cb5d056af51135959acb88b6813b3018b210d5`: **78/78 testes PASS**, hash fixado do Parquet verificado, **45 amostras, 44 intervalos**. São **32 intervalos acima de 72h** e apenas **3 até 24h** no conjunto de amostras do 528. A maior lacuna de registro é **23,53529262 dias**, de 06/02/1963 05:33:01.197504Z (linha 2978) a 01/03/1963 18:23:50.479872Z (linha 2979). A última amostra 528 permanece de 27/10/1963 14:40:16.132512Z. Entre essa amostra e os limites do dia civil 08/11/1963 decorrem **11,38870217 a 12,38870217 dias**. Essas distâncias temporais mostram a falta de observação terminal no arquivo, **não** intervalo calculado de incerteza de reentrada.
 
 O comparador registra `RAAN_legacy=284,1520°` e `RAAN_literal_mirror=198,5261°`, distância circular **85,6259°**, com **16.132.608 microssegundos** entre épocas textuais. A amostra mais próxima pelo ângulo permanece de **12/08/1963** (linha 2998, RAAN 284,331085°, a 0,179085°), e não na época de 27/10. Isso não resolve a identidade física do 528 nem o frame ou a genealogia do número legado. [Scientific checks #43155873831](https://github.com/franklinbaldo/conde-incident/actions/runs/43155873831) também passou no SHA testado. [Artefato auditável #13915508369](https://github.com/franklinbaldo/conde-incident/actions/runs/43155873680/artifacts/13915508369) contém o novo `raan_epoch_continuity.json`; SHA-256 do ZIP `11415cc6e4aef003158f1bab49f68abeede687fc5e417c5994899502d5a670c7`. Atualizações posteriores requerem novo CI no HEAD final.
+
+
+## C241-T8: NORAD 527/528/529 e o limite da identidade fisica
+
+**Pergunta:** os tres objetos numericamente rastreados podem ser ligados a
+identificadores COSPAR e rotulos de catalogo sem confundir rotulo secundario
+com reconhecimento material de destroco? Sim, como verificacao de **chaves**,
+nao como autenticacao de observacoes ou de objeto fisico.
+
+Fontes consultadas em 12/11/2026, transcritas com URLs e data em
+[catalog_identity_527_529_2026-11-12.json](catalog_identity_527_529_2026-11-12.json):
+
+| SATCAT | COSPAR | Nome em catalogo secundario | Tipo atribuido pelo catalogo |
+|---|---|---|---|
+| 527 | 1963-003A | FTV 2313 | payload |
+| 528 | 1963-003B | FTV 2313 DEB | satellite debris |
+| 529 | 1963-003C | FTV 2313 DEB | satellite debris |
+
+As tres fichas de [Itau (527)](https://www.itau.magnetic-declination.com/satellite/?s=527),
+[Itau (528)](https://www.itau.magnetic-declination.com/satellite/?s=528) e
+[Itau (529)](https://www.itau.magnetic-declination.com/satellite/?s=529)
+apresentam mesmo dia de lancamento 16/01/1963. Os agregadores
+[KeepTrack 528](https://keeptrack.space/satellite/00528) e
+[529](https://keeptrack.space/satellite/00529) repetem nome, tipo e COSPAR,
+mas nao constituem instrumento de radar ou reconstrucoes independentes.
+O boletim contemporaneo [NASA 15/11/1963, p.8](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf)
+ja conferido em C197 informa o dia 08/11 para 1963 3B, sem horario
+ou local. Nesta rodada, o fac-simile NASA nao foi reinspecionado.
+
+O novo [auditor](../../tools/tle_identity_lineage_audit.py)
+usa o CSV de NORAD 527–529 produzido a partir do
+[Parquet oxzoid fixado](https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/main/data/tle_1963.parquet)
+(revisao 4b4fb3a, SHA256
+`c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09`,
+CSV SHA256
+`3940715d7c15cf15c24e678a8c5b5fbb34a031b3ffd7e33c0580277377383231`)
+e compara os campos textuais de designador de todas as 123 linhas aos
+IDs esperados, preservando `source_row`, grafia exata e duplicatas.
+Valida tambem o unico par literal preservado de 528 (SHA256
+`18cf11665e061b5ec8679242e10b00b82accf29bc6f0b9b7b6330b9c44e341cd`),
+conferindo o fragmento de linha1 `63003  B` por meio de
+`tle_literal_layout.py` e seus checksums. O programa gera
+`tle_catalog_identity_lineage.json`, com caminhos, SHA, contagem e
+rotulos de origem. Testes sintéticos de contraprova impedem troca A/B/C,
+contagem errada, source_row repetida e promocao de classe de catalogo
+a prova primaria.
+
+Reproducao, apos extrair o Parquet pelo workflow que confere SHA:
+
+```bash
+python -m unittest discover -s tests -p 'test_*.py' -v
+python tools/tle_identity_lineage_audit.py \
+  --csv /tmp/tle-audit/norad_527_528_529_1963_numeric.csv \
+  --ledger research/tle_custody/catalog_identity_527_529_2026-11-12.json \
+  --pair research/tle_custody/mirror_528_1963-10-27.tle \
+  --output /tmp/tle-audit/tle_catalog_identity_lineage.json
+```
+
+**Interpretacao crucial:** *FTV 2313 DEB* e um nome de catalogo, NAO uma
+folha de engenharia da peca nem prova de massa, dimensoes, material,
+anteparo, estagio ou componente desprendido. A ficha 527 ('payload')
+nao permite atribuir sua geometria, ano de reentrada ou outro metadado
+fisico ao 528. Nem NASA/Itau/KeepTrack sao tres sensores independentes.
+**Resultado negativo**: ate aqui nao foi localizada uma folha tecnica
+NRO/NORAD que relacione S00528 a uma peca concreta, seu serial, massa,
+mecanismo de separacao ou propriedades balisticas. Sem tal documento e
+sem 45 TLEs instrumentais/frame/incertezas, nao ha restricao dinamica
+nova admissivel em Lean 4.35.0. O conflito RAAN e a localizacao de
+reentrada permanecem **NAO RESOLVIDOS**; Conde **INDETERMINADO**.
