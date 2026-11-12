@@ -159,7 +159,6 @@ export function OrbitalMap({ lang, selectedTimeMs, onTimeChange }: Props) {
           showSisters={showSisters} showUncertainty={showUncertainty}
           showConnections={showConnections}
           onPan={(dx, dy) => setPan(p => ({ x: Math.max(-600, Math.min(600, p.x + dx)), y: Math.max(-400, Math.min(400, p.y + dy)) }))}
-          onZoom={next => setZoom(clampZoom(next))}
         />
         <div className="flex flex-wrap items-center gap-2 pt-3" role="group"
           aria-label={lang === 'pt' ? 'Controles acessíveis do mapa' : 'Accessible map controls'}>
