@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { splitDateline, projectedSegments, projectFlat, projectGlobe, clampZoom } from '../src/lib/mapGeometry.js';
+import { splitDateline, projectedSegments, projectFlat, projectGlobe, clampZoom, canDrawFlatConnection } from '../src/lib/mapGeometry.js';
 
 const read = path => readFileSync(new URL('../' + path, import.meta.url), 'utf8');
 const map = read('src/components/OrbitalMap.tsx');
@@ -41,6 +41,23 @@ test('unwrapped longitudes never draw a false antimeridian chord', () => {
   // Expected to remain one contiguous line if no seam is crossed.
   assert.deepEqual(splitDateline([{ longitude: 181, latitude: 0 },
     { longitude: 190, latitude: 1 }]).map(s => s.length), [2]);
+});
+
+test('synthetic scenario connectors obey the wrapped flat-map seam in both directions', () => {
+  const p = longitude => ({ longitude, latitude: 0 });
+  // These cross the antimeridian despite RAW longitude gaps of only 2 degrees.
+  for (const [a, b] of [[179, 181], [-179, -181], [179, -179], [-179, 179],
+                        [539, 541]]) {
+    assert.equal(canDrawFlatConnection(p(a), p(b)), false, `${a} to ${b}`);
+  }
+  for (const [a, b] of [[171, 179], [181, 190], [-179, -170], [0, 20]]) {
+    assert.equal(canDrawFlatConnection(p(a), p(b)), true, `${a} to ${b}`);
+  }
+  assert.equal(canDrawFlatConnection(p(NaN), p(5)), false);
+  assert.equal(canDrawFlatConnection(p(4), { longitude: 5, latitude: 91 }), false);
+  // Verify production actually invokes the guard, rather than only testing a helper.
+  assert.match(svg, /canDrawFlatConnection\(positions\[528\]!, other\)/);
+  assert.doesNotMatch(svg, /Math\.abs\(other\.longitude - positions\[528\]!\.longitude\)/);
 });
 
 test('invalid coordinates are discarded instead of painted as evidence', () => {

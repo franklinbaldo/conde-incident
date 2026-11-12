@@ -29,6 +29,16 @@ export function splitDateline(points) {
   return segments;
 }
 
+/** Suppress a scenario connector that would jump across the flat-map seam.
+ * Compare DISPLAY longitudes, not raw inputs: 179 -> 181 crosses the seam.
+ * This is a rendering guard, never a geographic or orbital inference.
+ */
+export function canDrawFlatConnection(one, two) {
+  return [one, two].every(point => Number.isFinite(point.longitude) &&
+    Number.isFinite(point.latitude) && Math.abs(point.latitude) <= 90) &&
+    Math.abs(wrapLongitude(one.longitude) - wrapLongitude(two.longitude)) <= 180;
+}
+
 /** Full-continent, deterministic equirectangular display; x/y in a 960x480 viewBox. */
 export const projectFlat = (lon, lat) => ({
   x: (wrapLongitude(lon) + 180) * (960 / 360),
