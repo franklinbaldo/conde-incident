@@ -251,6 +251,74 @@ def enclosure_interface() -> dict:
         ],
     }
 
+def unresolved_element_scenarios_interface() -> dict:
+    """Fail-closed alternative-ephemeris contract for Castor.
+
+    This is a typed *choice of scenarios*, not a TLE reconstruction. In
+    particular the site RAAN 284.1520 deg has no source primary lineage
+    verified here; the AFSPC-mirrored 198.5261 deg is retrospective and
+    not independently corroborated by the other mirrors. Do not intersect
+    mutually exclusive unresolved element histories or infer a terminal fix.
+    """
+    return {
+        "version": 1,
+        "kind": "UNRESOLVED_ELEMENT_LINEAGES_DISJUNCTION_NOT_ORBIT_SOLUTION",
+        "lean_module": "Conde1963/ScenarioAlternatives.lean",
+        "admissible_semantics": "COMMON_AND_LEFT_OR_RIGHT",
+        "lean_predicates": {
+            "domain": "AlternativeAllowed",
+            "nonempty": "AlternativeHasCandidate",
+            "branch_identity": "alternative_iff_either_branch",
+            "empty_iff_both_empty": "alternatives_empty_iff_both_branches_empty",
+            "forced": "AlternativeForcesConde",
+            "excluded": "AlternativeExcludesConde",
+            "conflicting_witnesses": "conflicting_branch_witnesses_leave_alternative_indeterminate",
+            "false_contradiction": "intersecting_alternatives_can_falsely_erase_all_candidates",
+        },
+        "current_scenario": None,
+        "chosen_physical_constraints": None,
+        "numerically_supported_bounds": None,
+        "historical_orbit_validation": "NOT_RUN",
+        "original_tle_custody": "NOT_VERIFIED",
+        "independent_source_lineages": "NOT_ESTABLISHED",
+        "physical_reference_frame_reconciled": False,
+        "holdout_529_passed": False,
+        "all_branch_error_enclosures_verified": False,
+        "branch_combination_allowed": "DISJUNCTION_ONLY_UNTIL_SOURCE_ADJUDICATION",
+        "alternatives": [
+            {
+                "id": "SITE_RAAN_284_UNVERIFIED",
+                "raan_degrees_reported": "284.1520",
+                "origin": "AGENTS.md conflict statement; original site's raw source NOT authenticated",
+                "matrix_occurrences": [],
+                "source_authentication": "NOT_VERIFIED",
+                "admitted_as_hard_constraint": False,
+            },
+            {
+                "id": "AFSPC_MIRROR_RAAN_198_UNVERIFIED",
+                "raan_degrees_reported": "198.5261",
+                "origin": "retrospective catalog mirror, not original 1963 observational TLE",
+                "matrix_occurrences": ["C25#1", "C179#1"],
+                "matrix_citations": [
+                    f"{SOURCE_REPO}/blob/{MATRIX_COMMIT}/{MATRIX_PATH}#L118",
+                    f"{SOURCE_REPO}/blob/{MATRIX_COMMIT}/{MATRIX_PATH}#L839",
+                ],
+                "source_authentication": "NOT_VERIFIED_PRIMARY",
+                "admitted_as_hard_constraint": False,
+            },
+        ],
+        "required_before_physical_use": [
+            "identify_original_element_set_source_and_complete_epoch",
+            "validate_reference_frame_epoch_units_and_checksum",
+            "establish_relation_of_mirror_to_primary_source",
+            "separately_fit_each_physical_scenario_with_calibrated_error",
+            "preserve_holdout_529_and_nonempty_global_feasible_domain",
+            "prove_all_surviving_scenarios_agree_before_global_geographic_verdict",
+        ],
+        "warning": "Numerical RAAN strings identify conflicting claims, not two verified measurements or impact locations.",
+    }
+
+
 def contracts(rows: list[dict]) -> dict:
     return {
         "schema_version": 2,
@@ -260,6 +328,7 @@ def contracts(rows: list[dict]) -> dict:
         "original_lean_zip_status": "NOT_RUN",
         "outcome_interface": outcome_interface(),
         "enclosure_interface": enclosure_interface(),
+        "unresolved_element_scenarios_interface": unresolved_element_scenarios_interface(),
         "scope": "241 actual rows, 238 distinct labels, no fabricated observations",
         "entries": [
             {
