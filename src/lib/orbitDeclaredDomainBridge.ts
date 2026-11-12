@@ -83,9 +83,9 @@ export interface BridgeResult {
 }
 
 const AXES: readonly VelocityAxis[] = ['vx', 'vy', 'vz'];
-const must = (ok: unknown, message: string): void => {
+function must(ok: unknown, message: string): asserts ok {
   if (!ok) throw new RangeError(message);
-};
+}
 interface Fraction { n: bigint; d: bigint }
 function rational(raw: string): Fraction {
   must(typeof raw === 'string' && /^-?(?:0|[1-9]\d*)(?:\/[1-9]\d*)?$/.test(raw),
