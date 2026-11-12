@@ -177,6 +177,8 @@ def validate(graph: dict) -> dict:
         if family in upstream_by_family and upstream_by_family[family] != origin:
             raise ValueError("conflicting upstream tracking lineage within source family")
         upstream_by_family[family] = origin
+        if family == NASA_SSR_FAMILY and source["id"] not in PINNED_NASA_SSR_SOURCES:
+            raise ValueError("unregistered NASA SSR document requires custody review")
     output = []
     ids = set()
     observation_signatures = set()
@@ -227,6 +229,12 @@ def validate(graph: dict) -> dict:
             ]
             if o.get("input_parameters") != expected_inputs:
                 raise ValueError(f"cross-object or cross-publication SSR parameter link: {oid}")
+            if o.get("observed_at_utc") is not None or o.get("measurement_error") is not None:
+                raise ValueError(f"unverified SSR epoch/error promoted: {oid}")
+            if (o.get("reference_definition") != "UNRESOLVED_FROM_SOURCE_TABLE" or
+                not {"observed_epoch", "error_interval", "forward_model_validation",
+                     "source_row_facsímile_recheck"}.issubset(o.get("pending", []))):
+                raise ValueError(f"missing unresolved SSR caveats: {oid}")
         if not o.get("input_parameters") or any(p not in params for p in o["input_parameters"]):
             raise ValueError(f"orphan parameter link: {oid}")
         number = o["value"]
@@ -299,6 +307,12 @@ def validate(graph: dict) -> dict:
             raise ValueError(f"comparison prematurely turned into a physical trend: {edge.get('id')}")
         if "source_specific_observation_epochs" not in edge.get("missing", []):
             raise ValueError(f"missing time caveat in comparison: {edge.get('id')}")
+        if not {"correlated_source_errors", "validated_forward_model"}.issubset(edge.get("missing", [])):
+            raise ValueError(f"missing covariance/model caveat: {edge_id}")
+        if edge.get("physical_interpretation") != (
+            "Difference between published tabulated values, NOT a measured time derivative or causal atmospheric trend."
+        ):
+            raise ValueError(f"derived comparison claimed physical trend: {edge_id}")
     for edge in graph.get("couplings", []):
         if not edge["parameters"] or any(p not in params for p in edge["parameters"]):
             raise ValueError(f"orphan coupling: {edge['id']}")
