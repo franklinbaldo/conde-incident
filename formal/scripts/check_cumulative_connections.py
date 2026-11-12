@@ -10,13 +10,101 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT = ROOT / "research/constraints/ssr_1963_observable_graph.json"
-CANONICAL = {"min": ("s", 60.0), "deg": ("rad", math.pi / 180), "km": ("m", 1000.0)}
+CANONICAL = {
+    "min": ("s", 60.0), "deg": ("rad", math.pi / 180), "km": ("m", 1000.0),
+    "dimensionless": ("1", 1.0), "rev/day": ("rad/s", 2 * math.pi / 86400),
+}
 PENDING = "CANDIDATE_NOT_ACTIVATED"
 
+
+
+def validate_528_tle_bridge(graph: dict, sources: dict, observations: list[dict]) -> list[dict]:
+    """Connect 528 to 527/529 without interpreting TLE checksums as 1963 sensors."""
+    bridges = graph.get("physical_bridges", [])
+    if len(bridges) != 1 or bridges[0].get("id") != "C179-528-Kepler-J2-proxy":
+        raise ValueError("missing C179 physical bridge")
+    bridge = bridges[0]
+    source = sources.get(bridge["source_id"])
+    if not source or source.get("evidence_occurrence") != "C179#1":
+        raise ValueError("untraced C179 source")
+    if source.get("upstream_tracking_family") != "NORAD_AFS_SHARED_TRACKING_NOT_INDEPENDENT":
+        raise ValueError("invalid C179 shared source lineage")
+    # The original 1963 NORAD tracking data is NOT the mirror. This checker
+    # compares a pinned literal source against the graph's six typed fields.
+    sys.path.insert(0, str(ROOT))
+    from tools.tle_literal_layout import audit_literal_file
+    from physical_observable_bridge import orbital_observables, audit, parse_rows
+    literal = audit_literal_file(ROOT / "research/tle_custody/mirror_528_1963-10-27.tle")
+    if source.get("literal_sha256") != literal["source"]["sha256"]:
+        raise ValueError("C179 source hash mismatch")
+    data = (ROOT / "research/evidence_matrix_C001-C238_2026-11-11.md").read_bytes()
+    rows = parse_rows(data)
+    audit(data, rows)
+    if len([r for r in rows if r["number"] == 179]) != 1:
+        raise ValueError("C179 matrix occurrence missing")
+    records = [o for o in observations if o["source_id"] == bridge["source_id"]]
+    byname = {o["observable"]: o for o in records}
+    if set(byname) != set(literal["values"]) or len(records) != len(byname):
+        raise ValueError("incomplete or duplicate C179 TLE fields")
+    for label, field in literal["values"].items():
+        o = byname[label]
+        if (o["object_id"] != 528 or o["matrix_local_id"] != "C179#1" or
+            o["unit"] != field["unit"] or
+            o.get("element_epoch_utc") != literal["epoch_utc"] or
+            o.get("observed_at_utc") is not None or
+            "observed_epoch" not in o["pending"] or
+            "error_interval" not in o["pending"] or
+            "frame_conversion_and_fit_covariance" not in o["pending"] or
+            o["constraint_status"] != PENDING or
+            float(field["decimal"]) != o["value"]):
+            raise ValueError("C179 TLE value/epoch/unit/custody mismatch: " + label)
+    legacy = graph.get("legacy_candidates", [])
+    if len(legacy) != 1 or legacy[0].get("status") != "SOURCELESS_SYNTHETIC_RETRACTED_NOT_IN_MEASUREMENT_SET":
+        raise ValueError("legacy unsourced candidate cannot be measured constraint")
+    if (legacy[0].get("origin_commit") != "807a118939fac50b48d649b1045461bfcc79b140" or
+        not math.isclose(legacy[0]["value_deg"] - byname["raan"]["value"],
+                         legacy[0]["difference_from_C179_deg"], abs_tol=1e-9)):
+        raise ValueError("legacy RAAN source conflict lost")
+    if (set(bridge["input_observations"]) !=
+        {byname[k]["id"] for k in ("mean_motion", "eccentricity", "inclination")} or
+        bridge["physical_domain"] != "NOT_NARROWED_UNCALIBRATED_SOURCE" or
+        bridge["validation"] != "NUMERICALLY_RECOMPUTED_FROM_HASH_PINNED_TLE_WITHOUT_PROPAGATION"):
+        raise ValueError("unjustified C179 physical fit")
+    # Both independent arithmetic and the existing Polvo physical operator
+    # use a fixed Kepler/J2 proxy. No SGP4/drag/terminal location is inferred.
+    n = byname["mean_motion"]["value"] * 2 * math.pi / 86400
+    e = byname["eccentricity"]["value"]
+    inclination = math.radians(byname["inclination"]["value"])
+    mu, radius, j2 = 398600.4418, 6378.137, 1.08262668e-3
+    a = (mu / n**2)**(1/3)
+    hp = a * (1-e) - radius
+    omega = -1.5*j2*n * (radius/(a*(1-e*e)))**2 * math.cos(inclination) * 86400 * 180/math.pi
+    previous = orbital_observables()
+    for name, computed in (
+        ("derived_kepler_proxy_semimajor_km", a),
+        ("derived_kepler_proxy_perigee_altitude_km", hp),
+        ("derived_first_order_j2_raan_rate_deg_per_day", omega),
+    ):
+        if not math.isclose(computed, previous[name], abs_tol=1e-8):
+            raise ValueError("C179 two orbital operators diverged: " + name)
+    return [{
+        "id": bridge["id"], "source_occurrence": "C179#1",
+        "source_sha256": literal["source"]["sha256"],
+        "element_epoch_utc": literal["epoch_utc"],
+        "observed_tracking_epoch": "UNKNOWN_NOT_SAME_AS_ELEMENT_REFERENCE_EPOCH",
+        "semimajor_km_kepler_proxy": a,
+        "perigee_altitude_km_kepler_proxy": hp,
+        "raan_rate_deg_per_day_first_order_j2_proxy": omega,
+        "legacy_raan_delta_deg": legacy[0]["difference_from_C179_deg"],
+        "physical_domain": bridge["physical_domain"],
+        "missing": bridge["requires"],
+        "upstream_tracking_family": source["upstream_tracking_family"],
+    }]
 
 def validate(graph: dict) -> dict:
     if graph.get("schema") != "conde.cumulative-constraint-graph/v1":
@@ -33,6 +121,7 @@ def validate(graph: dict) -> dict:
     output = []
     ids = set()
     families = set()
+    upstream = set()
     for o in obs:
         oid = o["id"]
         if oid in ids:
@@ -44,6 +133,7 @@ def validate(graph: dict) -> dict:
         if o["source_independence_family"] != src["source_family"]:
             raise ValueError(f"source lineage mismatch: {oid}")
         families.add(src["source_family"])
+        upstream.add(src.get("upstream_tracking_family", src["source_family"]))
         if o["forward_operator_id"] not in ops:
             raise ValueError(f"unmapped forward operator: {oid}")
         if not o.get("input_parameters") or any(p not in params for p in o["input_parameters"]):
@@ -77,6 +167,7 @@ def validate(graph: dict) -> dict:
             "canonical_value": number * factor,
             "canonical_unit": canonical_unit,
             "observed_at_utc": o["observed_at_utc"],
+            "element_epoch_utc": o.get("element_epoch_utc"),
             "measurement_error": o["measurement_error"],
             "pending": o["pending"],
             "status": PENDING,
@@ -121,15 +212,19 @@ def validate(graph: dict) -> dict:
             raise ValueError(f"orphan coupling: {edge['id']}")
         if edge.get("hard_constraint_active"):
             raise ValueError(f"unvalidated coupling active: {edge['id']}")
+    checked_bridges = validate_528_tle_bridge(graph, sources, obs)
     # Information accumulates even without narrowing; this is not a 'not run' failure.
     return {
         "schema": "conde.cumulative-constraint-handoff/v1",
         "input_observations": len(obs),
         "connected_observations": len(output),
         "unique_source_families": len(families),
+        "upstream_tracking_families": len(upstream),
         "latent_parameters": len(params),
         "candidate_constraints_recorded": len(output),
         "derived_connections_recorded": len(graph.get("derived_connections", [])),
+        "physical_bridges_recorded": len(checked_bridges),
+        "physical_bridges": checked_bridges,
         "constraints_activated": 0,
         "physical_domain_status": "PENDING_CALIBRATION_NOT_DISCARDED",
         "observations": output,

@@ -8,7 +8,8 @@
       "published_on": "1963-11-15",
       "source_family": "NASA_GODDARD_COMPILED_FROM_TRACKING",
       "verification": "TABLE_FROM_PRIOR_INVESTIGATION_NOT_REVERIFIED_THIS_COMMIT",
-      "limitation": "Report date is not observation epoch; source family shared with NORAD."
+      "limitation": "Report date is not observation epoch; source family shared with NORAD.",
+      "upstream_tracking_family": "NORAD_AFS_SHARED_TRACKING_NOT_INDEPENDENT"
     },
     {
       "id": "NASA-SSR-1963-11-30",
@@ -16,7 +17,20 @@
       "published_on": "1963-11-30",
       "source_family": "NASA_GODDARD_COMPILED_FROM_TRACKING",
       "verification": "TABLE_FROM_PRIOR_INVESTIGATION_NOT_REVERIFIED_THIS_COMMIT",
-      "limitation": "Report date is not observation epoch; source family shared with NORAD."
+      "limitation": "Report date is not observation epoch; source family shared with NORAD.",
+      "upstream_tracking_family": "NORAD_AFS_SHARED_TRACKING_NOT_INDEPENDENT"
+    },
+    {
+      "id": "AFSPC-SECONDARY-528-1963-10-27",
+      "url": "https://www.itau.magnetic-declination.com/satellite/?s=528",
+      "published_on": "UNVERIFIED",
+      "source_family": "SECONDARY_MIRROR_AFSPC_ATTRIBUTED_TLE",
+      "upstream_tracking_family": "NORAD_AFS_SHARED_TRACKING_NOT_INDEPENDENT",
+      "evidence_occurrence": "C179#1",
+      "literal_sha256": "18cf11665e061b5ec8679242e10b00b82accf29bc6f0b9b7b6330b9c44e341cd",
+      "custody_crosscheck": "research/tle_custody/evidence_matrix_C241-L1_2026-11-12.md",
+      "verification": "PINNED_LITERAL_CHECKSUM_CORRECT_SOURCE_NOT_PRIMARY",
+      "limitation": "TLE element fit epoch differs from unknown observation epochs; no original 1963 tracker record, covariance, frame conversion or independent sensor."
     }
   ],
   "parameters": [
@@ -81,6 +95,32 @@
       "type": "shared_force",
       "units": "kg/m³",
       "scope": "527+529"
+    },
+    {
+      "id": "tle_mean_elements_528_1963-10-27",
+      "type": "historical_tle_mean_elements",
+      "units": "angle degrees; mean motion rev/day; dimensionless e",
+      "frame": "NORAD_TLE_MEAN_ELEMENT_CONVENTION_SOURCE_UNVERIFIED",
+      "scope": "NORAD 528; element reference epoch 1963-10-27T14:40:16.132512Z"
+    },
+    {
+      "id": "tracking_observation_epoch_528",
+      "type": "latent_epoch",
+      "units": "UTC",
+      "scope": "NORAD 528; epoch(s) actually measured not published"
+    },
+    {
+      "id": "state_528_at_t",
+      "type": "physical_state_vector",
+      "units": "km,km/s",
+      "frame": "UNKNOWN_FROM_C179",
+      "scope": "NORAD 528"
+    },
+    {
+      "id": "ballistic_528",
+      "type": "object_specific",
+      "units": "m²/kg",
+      "scope": "NORAD 528"
     }
   ],
   "operators": [
@@ -122,6 +162,16 @@
         "epoch",
         "instrument_error",
         "earth_model"
+      ]
+    },
+    {
+      "id": "tle_serialized_mean_field_528",
+      "expression": "literal TLE columns -> reference-epoch mean orbital element (not observed Cartesian physical state)",
+      "requires": [
+        "secondary_mirror_hash",
+        "mean_element_frame_reference",
+        "original_track_epoch",
+        "observation_covariance"
       ]
     }
   ],
@@ -573,6 +623,186 @@
         "source_row_facsímile_recheck"
       ],
       "source_independence_family": "NASA_GODDARD_COMPILED_FROM_TRACKING"
+    },
+    {
+      "id": "TLE-1963-10-27-NORAD528-inclination",
+      "source_id": "AFSPC-SECONDARY-528-1963-10-27",
+      "matrix_local_id": "C179#1",
+      "object_id": 528,
+      "observable": "inclination",
+      "value": 81.8615,
+      "unit": "deg",
+      "element_epoch_utc": "1963-10-27T14:40:16.132512Z",
+      "observed_at_utc": null,
+      "published_on": "UNVERIFIED",
+      "measurement_error": null,
+      "reference_definition": "TLE_REFERENCE_EPOCH_MEAN_ELEMENT_NOT_VERIFIED_1963_PHYSICAL_FRAME",
+      "variable_id": "catalogued_tle_mean_inclination_528_1963-10-27",
+      "forward_operator_id": "tle_serialized_mean_field_528",
+      "input_parameters": [
+        "tle_mean_elements_528_1963-10-27",
+        "tracking_observation_epoch_528",
+        "state_528_at_t"
+      ],
+      "constraint_status": "CANDIDATE_NOT_ACTIVATED",
+      "link_status": "CONNECTED_PENDING_CALIBRATION",
+      "pending": [
+        "observed_epoch",
+        "error_interval",
+        "original_1963_tracking_source",
+        "frame_conversion_and_fit_covariance"
+      ],
+      "source_independence_family": "SECONDARY_MIRROR_AFSPC_ATTRIBUTED_TLE"
+    },
+    {
+      "id": "TLE-1963-10-27-NORAD528-raan",
+      "source_id": "AFSPC-SECONDARY-528-1963-10-27",
+      "matrix_local_id": "C179#1",
+      "object_id": 528,
+      "observable": "raan",
+      "value": 198.5261,
+      "unit": "deg",
+      "element_epoch_utc": "1963-10-27T14:40:16.132512Z",
+      "observed_at_utc": null,
+      "published_on": "UNVERIFIED",
+      "measurement_error": null,
+      "reference_definition": "TLE_REFERENCE_EPOCH_MEAN_ELEMENT_NOT_VERIFIED_1963_PHYSICAL_FRAME",
+      "variable_id": "catalogued_tle_mean_raan_528_1963-10-27",
+      "forward_operator_id": "tle_serialized_mean_field_528",
+      "input_parameters": [
+        "tle_mean_elements_528_1963-10-27",
+        "tracking_observation_epoch_528",
+        "state_528_at_t"
+      ],
+      "constraint_status": "CANDIDATE_NOT_ACTIVATED",
+      "link_status": "CONNECTED_PENDING_CALIBRATION",
+      "pending": [
+        "observed_epoch",
+        "error_interval",
+        "original_1963_tracking_source",
+        "frame_conversion_and_fit_covariance"
+      ],
+      "source_independence_family": "SECONDARY_MIRROR_AFSPC_ATTRIBUTED_TLE"
+    },
+    {
+      "id": "TLE-1963-10-27-NORAD528-eccentricity",
+      "source_id": "AFSPC-SECONDARY-528-1963-10-27",
+      "matrix_local_id": "C179#1",
+      "object_id": 528,
+      "observable": "eccentricity",
+      "value": 0.0017147,
+      "unit": "dimensionless",
+      "element_epoch_utc": "1963-10-27T14:40:16.132512Z",
+      "observed_at_utc": null,
+      "published_on": "UNVERIFIED",
+      "measurement_error": null,
+      "reference_definition": "TLE_REFERENCE_EPOCH_MEAN_ELEMENT_NOT_VERIFIED_1963_PHYSICAL_FRAME",
+      "variable_id": "catalogued_tle_mean_eccentricity_528_1963-10-27",
+      "forward_operator_id": "tle_serialized_mean_field_528",
+      "input_parameters": [
+        "tle_mean_elements_528_1963-10-27",
+        "tracking_observation_epoch_528",
+        "state_528_at_t"
+      ],
+      "constraint_status": "CANDIDATE_NOT_ACTIVATED",
+      "link_status": "CONNECTED_PENDING_CALIBRATION",
+      "pending": [
+        "observed_epoch",
+        "error_interval",
+        "original_1963_tracking_source",
+        "frame_conversion_and_fit_covariance"
+      ],
+      "source_independence_family": "SECONDARY_MIRROR_AFSPC_ATTRIBUTED_TLE"
+    },
+    {
+      "id": "TLE-1963-10-27-NORAD528-arg_perigee",
+      "source_id": "AFSPC-SECONDARY-528-1963-10-27",
+      "matrix_local_id": "C179#1",
+      "object_id": 528,
+      "observable": "arg_perigee",
+      "value": 104.7477,
+      "unit": "deg",
+      "element_epoch_utc": "1963-10-27T14:40:16.132512Z",
+      "observed_at_utc": null,
+      "published_on": "UNVERIFIED",
+      "measurement_error": null,
+      "reference_definition": "TLE_REFERENCE_EPOCH_MEAN_ELEMENT_NOT_VERIFIED_1963_PHYSICAL_FRAME",
+      "variable_id": "catalogued_tle_mean_arg_perigee_528_1963-10-27",
+      "forward_operator_id": "tle_serialized_mean_field_528",
+      "input_parameters": [
+        "tle_mean_elements_528_1963-10-27",
+        "tracking_observation_epoch_528",
+        "state_528_at_t"
+      ],
+      "constraint_status": "CANDIDATE_NOT_ACTIVATED",
+      "link_status": "CONNECTED_PENDING_CALIBRATION",
+      "pending": [
+        "observed_epoch",
+        "error_interval",
+        "original_1963_tracking_source",
+        "frame_conversion_and_fit_covariance"
+      ],
+      "source_independence_family": "SECONDARY_MIRROR_AFSPC_ATTRIBUTED_TLE"
+    },
+    {
+      "id": "TLE-1963-10-27-NORAD528-mean_anomaly",
+      "source_id": "AFSPC-SECONDARY-528-1963-10-27",
+      "matrix_local_id": "C179#1",
+      "object_id": 528,
+      "observable": "mean_anomaly",
+      "value": 255.4423,
+      "unit": "deg",
+      "element_epoch_utc": "1963-10-27T14:40:16.132512Z",
+      "observed_at_utc": null,
+      "published_on": "UNVERIFIED",
+      "measurement_error": null,
+      "reference_definition": "TLE_REFERENCE_EPOCH_MEAN_ELEMENT_NOT_VERIFIED_1963_PHYSICAL_FRAME",
+      "variable_id": "catalogued_tle_mean_mean_anomaly_528_1963-10-27",
+      "forward_operator_id": "tle_serialized_mean_field_528",
+      "input_parameters": [
+        "tle_mean_elements_528_1963-10-27",
+        "tracking_observation_epoch_528",
+        "state_528_at_t"
+      ],
+      "constraint_status": "CANDIDATE_NOT_ACTIVATED",
+      "link_status": "CONNECTED_PENDING_CALIBRATION",
+      "pending": [
+        "observed_epoch",
+        "error_interval",
+        "original_1963_tracking_source",
+        "frame_conversion_and_fit_covariance"
+      ],
+      "source_independence_family": "SECONDARY_MIRROR_AFSPC_ATTRIBUTED_TLE"
+    },
+    {
+      "id": "TLE-1963-10-27-NORAD528-mean_motion",
+      "source_id": "AFSPC-SECONDARY-528-1963-10-27",
+      "matrix_local_id": "C179#1",
+      "object_id": 528,
+      "observable": "mean_motion",
+      "value": 15.7490146,
+      "unit": "rev/day",
+      "element_epoch_utc": "1963-10-27T14:40:16.132512Z",
+      "observed_at_utc": null,
+      "published_on": "UNVERIFIED",
+      "measurement_error": null,
+      "reference_definition": "TLE_REFERENCE_EPOCH_MEAN_ELEMENT_NOT_VERIFIED_1963_PHYSICAL_FRAME",
+      "variable_id": "catalogued_tle_mean_mean_motion_528_1963-10-27",
+      "forward_operator_id": "tle_serialized_mean_field_528",
+      "input_parameters": [
+        "tle_mean_elements_528_1963-10-27",
+        "tracking_observation_epoch_528",
+        "state_528_at_t"
+      ],
+      "constraint_status": "CANDIDATE_NOT_ACTIVATED",
+      "link_status": "CONNECTED_PENDING_CALIBRATION",
+      "pending": [
+        "observed_epoch",
+        "error_interval",
+        "original_1963_tracking_source",
+        "frame_conversion_and_fit_covariance"
+      ],
+      "source_independence_family": "SECONDARY_MIRROR_AFSPC_ATTRIBUTED_TLE"
     }
   ],
   "couplings": [
@@ -589,6 +819,27 @@
       ],
       "hard_constraint_active": false,
       "description": "Bodies share some force models but not phase, ballistic coefficient, or orbit. Joint fit requires original epochs and independent holdout."
+    },
+    {
+      "id": "527-528-529-shared-environment-conditional",
+      "parameters": [
+        "state_527_at_t",
+        "state_528_at_t",
+        "state_529_at_t",
+        "shared_J2_gravity",
+        "shared_atmosphere_1963",
+        "ballistic_527",
+        "ballistic_528",
+        "ballistic_529"
+      ],
+      "relation": "three distinct physical objects, shared gravity and atmosphere, but independent ballistic parameters and phase",
+      "hard_constraint_active": false,
+      "pending": [
+        "synchronized_historical_element_epochs",
+        "source_frame_errors",
+        "multi_target_holdout",
+        "Cd*A/m_per_object"
+      ]
     }
   ],
   "notes": [
@@ -749,6 +1000,48 @@
         "validated_forward_model"
       ],
       "next_model_relation": "predict_perigee_of_529(t_new)-predict_perigee_of_529(t_old)"
+    }
+  ],
+  "physical_bridges": [
+    {
+      "id": "C179-528-Kepler-J2-proxy",
+      "source_id": "AFSPC-SECONDARY-528-1963-10-27",
+      "input_observations": [
+        "TLE-1963-10-27-NORAD528-mean_motion",
+        "TLE-1963-10-27-NORAD528-eccentricity",
+        "TLE-1963-10-27-NORAD528-inclination"
+      ],
+      "source_evidence": "C179#1",
+      "operator": "n=2*pi*n_rev_day/86400; a=(mu/n^2)^(1/3); hp=a*(1-e)-R_equator; RAAN_dot=-1.5*J2*n*(R_equator/(a*(1-e^2)))^2*cos(i)",
+      "input_parameters": [
+        "tle_mean_elements_528_1963-10-27",
+        "shared_J2_gravity",
+        "state_528_at_t"
+      ],
+      "model": "FIRST_ORDER_KEPLER_J2_PROXY_TLE_MEAN_ELEMENTS_NOT_OSCULATING",
+      "validation": "NUMERICALLY_RECOMPUTED_FROM_HASH_PINNED_TLE_WITHOUT_PROPAGATION",
+      "physical_domain": "NOT_NARROWED_UNCALIBRATED_SOURCE",
+      "requires": [
+        "primary_tle_custody",
+        "TLE_mean_to_osculating_frame",
+        "orbit_fit_error",
+        "multi_epoch_holdout"
+      ]
+    }
+  ],
+  "legacy_candidates": [
+    {
+      "id": "528-RAAN-284.1520",
+      "value_deg": 284.152,
+      "origin_commit": "807a118939fac50b48d649b1045461bfcc79b140",
+      "origin_file": "src/lib/constants.ts",
+      "origin_date": "2026-11-11",
+      "original_comment": "Reconstructed nodal angle at epoch",
+      "original_epoch_text": "63300.61111111",
+      "difference_from_C179_deg": 85.6259,
+      "status": "SOURCELESS_SYNTHETIC_RETRACTED_NOT_IN_MEASUREMENT_SET",
+      "reference": "https://github.com/franklinbaldo/conde-incident/commit/807a118939fac50b48d649b1045461bfcc79b140",
+      "limitation": "The Git commit supplies code provenance, not 1963 astronomical provenance. Different element epochs and missing original source prohibit a physical differential-RAAN inference."
     }
   ]
 }
