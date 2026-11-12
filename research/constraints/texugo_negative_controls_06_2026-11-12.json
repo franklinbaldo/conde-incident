@@ -1,0 +1,57 @@
+{
+  "id": "QA-TX-20261112-06",
+  "type": "synthetic_negative_control_no_new_historical_observation",
+  "recorded_on": "2026-11-12",
+  "owner": "🦡 Texugo",
+  "project_issue": "https://github.com/franklinbaldo/conde-incident/issues/19",
+  "historical_matrix": {
+    "file": "research/evidence_matrix_C001-C238_2026-11-11.md",
+    "git_blob_sha": "a7978c3a75a153b16ab70118a92c434bba674cb7",
+    "action": "unchanged_pinned_historical_snapshot; supplemental QA occurrence"
+  },
+  "primary_publications_already_registered": [
+    {
+      "id": "NASA-SSR-1963-11-15",
+      "url": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf",
+      "inspection_in_this_patch": "NOT_REINSPECTED"
+    },
+    {
+      "id": "NASA-SSR-1963-11-30",
+      "url": "https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf",
+      "inspection_in_this_patch": "NOT_REINSPECTED"
+    }
+  ],
+  "provenance": "Both NASA SSR publications compile shared NORAD/AFS upstream tracking; two editions are not two independent sensors. C179#1 is a hash-pinned secondary TLE literal, not a primary acquisition record.",
+  "negative_controls": [
+    "forged observation epoch",
+    "invented zero measurement error",
+    "invented reference convention",
+    "deleted facsimile recheck requirement",
+    "invented NASA source edition",
+    "suppressed correlated source errors",
+    "forged physical trend from published arithmetic"
+  ],
+  "corpus_baseline": {
+    "connected_observations": 22,
+    "derived_connections": 8,
+    "upstream_tracking_families": 1,
+    "active_physical_constraints": 0
+  },
+  "domain_delta": "NOT_EVALUABLE_UNCALIBRATED",
+  "missing": [
+    "primary acquisition epochs",
+    "instrumental error covariance",
+    "verified original 1963 TLE",
+    "resolved RAAN conflict",
+    "validated terminal forward model"
+  ],
+  "no_claims": [
+    "Conde impact location",
+    "terminal time",
+    "posterior probability"
+  ],
+  "reproduce": [
+    "python3 -m unittest discover -s tests -p test_cumulative_constraints.py -v",
+    "python3 formal/scripts/check_cumulative_connections.py --output /tmp/texugo-qa06.json"
+  ]
+}
