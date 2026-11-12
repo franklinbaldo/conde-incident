@@ -27,6 +27,7 @@ jobs:
         run: |
           node --test scripts/verify-source-anchor.test.mjs
           node scripts/verify-source-anchor.mjs
+          node --test scripts/check-dual-navigation.test.mjs
 
   lean:
     runs-on: ubuntu-latest
