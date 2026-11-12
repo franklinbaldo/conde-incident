@@ -11,6 +11,8 @@ infer authenticity from this registry. Only C131/C197 encode an accepted
 justified as terminal-state restrictions. No ground impact is asserted.
 -/
 
+set_option maxRecDepth 4096
+
 namespace Conde1963
 
 inductive RowPhysicalRole where
@@ -306,9 +308,10 @@ theorem full_matrix_has_only_nasa_day_filter
   · intro h
     exact h _ two_primary_nasa_matrix_occurrences.1
   · intro h row _
-    cases row.role with
-    | contextOnly => trivial
-    | nasaReportedDecayDay => exact h
+    cases hrole : row.role with
+    | contextOnly => simp [acceptedMatrixPredicate, hrole]
+    | nasaReportedDecayDay =>
+        simpa [acceptedMatrixPredicate, hrole] using h
 
 /-- Both illustrative regions remain possible under currently encoded
     restrictions. No claim about an actual 1963 orbit or impact follows. -/
