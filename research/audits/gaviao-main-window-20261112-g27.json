@@ -1,0 +1,436 @@
+{
+  "schema": "conde.gaviao-retrospective-window/v1",
+  "audit": "G27",
+  "checkpoint_sha": "4ec4d61ab603924e355bdb55fead26b9a5ff32d1",
+  "reviewed_through_main_sha": "20240adddaf9df0e703d894bc2a7dba73fc8b855",
+  "cut_kind": "main first-parent",
+  "first_parent_integrations": 14,
+  "squash_merges": 14,
+  "conventional_merges": 0,
+  "lateral_commits": 0,
+  "direct_main_commits": 0,
+  "dag_commits": 14,
+  "closed_without_merge_in_window": [],
+  "source_policy": "CI proves execution, not empirical authenticity; documentary lineages not independent without raw measurements",
+  "no_new_reentry_location": true,
+  "reviewed": [
+    {
+      "sha": "c8bde143e5912921f5382a4a43d74c25b94c4ae0",
+      "first_parent": "4ec4d61ab603924e355bdb55fead26b9a5ff32d1",
+      "parent_count": 1,
+      "integration_type": "SQUASH",
+      "pr": 274,
+      "author_head_sha_at_merge": "7f885bce5c704065c1108d662a6bdf087483b0ff",
+      "commit_subject": "85 🦅 G26: auditar 13 integrações e vetar conexões falsas no antimeridiano (#274)",
+      "commit_local_iso": "2026-11-12T18:49:30-04:00",
+      "files": [
+        "research/audits/gaviao-main-window-20261112-g26.json",
+        "research/audits/gaviao-main-window-20261112-g26.md",
+        "src/components/map/OrbitalMapSvg.tsx",
+        "src/lib/mapGeometry.js",
+        "tests/quota-free-map.test.mjs"
+      ],
+      "review_area": "audit",
+      "finding_scope": "G26 antimeridian guards are a display test, not a geographic observation",
+      "integration_ci": {
+        "queried_commit": "c8bde143e5912921f5382a4a43d74c25b94c4ae0",
+        "state": "QUERIED",
+        "total_runs": 16,
+        "success": 15,
+        "cancelled": 1,
+        "failed": 0,
+        "skipped": 0,
+        "other": [],
+        "non_green": [
+          {
+            "name": "Publish Conde site",
+            "url": "https://github.com/franklinbaldo/conde-incident/actions/runs/43323447428",
+            "conclusion": "cancelled"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "dcc0de0afb7a4bd6668145e52165ccfa50048992",
+      "first_parent": "c8bde143e5912921f5382a4a43d74c25b94c4ae0",
+      "parent_count": 1,
+      "integration_type": "SQUASH",
+      "pr": 260,
+      "author_head_sha_at_merge": "00fa311ae02b6d5eeb2b1c588c524c0caafba4b4",
+      "commit_subject": "🦎 C149–C151: auditoria de 42 indicadores secos de estabilidade e cisalhamento (#260)",
+      "commit_local_iso": "2026-11-12T18:49:55-04:00",
+      "files": [
+        "research/meteorology/igra_recife_19631107_09_dry_richardson.json",
+        "research/meteorology/igra_recife_19631107_09_dry_richardson.md",
+        "tests/test_igra_recife_dry_richardson.py",
+        "tools/audit_igra_recife_dry_richardson.py"
+      ],
+      "review_area": "meteorology",
+      "finding_scope": "dry finite-layer Richardson uses same sounding and no Conde transfer",
+      "integration_ci": {
+        "queried_commit": "dcc0de0afb7a4bd6668145e52165ccfa50048992",
+        "state": "QUERIED",
+        "total_runs": 18,
+        "success": 18,
+        "cancelled": 0,
+        "failed": 0,
+        "skipped": 0,
+        "other": []
+      }
+    },
+    {
+      "sha": "4f4791c153f1af86a0abbbeb4b98637e827cfdf6",
+      "first_parent": "dcc0de0afb7a4bd6668145e52165ccfa50048992",
+      "parent_count": 1,
+      "integration_type": "SQUASH",
+      "pr": 277,
+      "author_head_sha_at_merge": "3c2b6b264772c7f6f379f51b06a7b898a91f31d1",
+      "commit_subject": "🐝 Include complete curated citation coverage in scientific bridge feed (#277)",
+      "commit_local_iso": "2026-11-12T18:52:32-04:00",
+      "files": [
+        "public/data/conde-scientific-bridges.json",
+        "tests/test_contextual_scientific_bridges.py",
+        "tools/export_contextual_scientific_bridges.py"
+      ],
+      "review_area": "evidence",
+      "finding_scope": "29 curated citations; documentary edges remain inactive, no independence multiplication",
+      "integration_ci": {
+        "queried_commit": "4f4791c153f1af86a0abbbeb4b98637e827cfdf6",
+        "state": "QUERIED",
+        "total_runs": 16,
+        "success": 15,
+        "cancelled": 1,
+        "failed": 0,
+        "skipped": 0,
+        "other": [],
+        "non_green": [
+          {
+            "name": "Publish Conde site",
+            "url": "https://github.com/franklinbaldo/conde-incident/actions/runs/43323900912",
+            "conclusion": "cancelled"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "b83646845d4c1d444d1db677e6249a6b446fc4eb",
+      "first_parent": "4f4791c153f1af86a0abbbeb4b98637e827cfdf6",
+      "parent_count": 1,
+      "integration_type": "SQUASH",
+      "pr": 276,
+      "author_head_sha_at_merge": "d15b8b91f45b2587cd69165e3ea91ca91922e067",
+      "commit_subject": "🐢 C241-L11: custody NASA SSR 1963 decay-list chronology (#276)",
+      "commit_local_iso": "2026-11-12T18:52:38-04:00",
+      "files": [
+        ".github/workflows/tle-nasa-ssr-delta.yml",
+        "research/tle_custody/evidence_matrix_C241-L11_2026-11-12.md",
+        "research/tle_custody/nasa_ssr_1963_incremental_lineage_C241-L11.json",
+        "tests/test_tle_nasa_ssr_delta_audit.py",
+        "tools/tle_nasa_ssr_delta_audit.py"
+      ],
+      "review_area": "NASA",
+      "finding_scope": "SSR publication chronology: day-only C197, non-repetition in later edition is not negation",
+      "integration_ci": {
+        "queried_commit": "b83646845d4c1d444d1db677e6249a6b446fc4eb",
+        "state": "QUERIED",
+        "total_runs": 18,
+        "success": 18,
+        "cancelled": 0,
+        "failed": 0,
+        "skipped": 0,
+        "other": []
+      }
+    },
+    {
+      "sha": "00e300c1986efe676fab3c728fd1007a33af298b",
+      "first_parent": "b83646845d4c1d444d1db677e6249a6b446fc4eb",
+      "parent_count": 1,
+      "integration_type": "SQUASH",
+      "pr": 279,
+      "author_head_sha_at_merge": "9b6c5a646f31e3c9df14d4074f706852625bf58a",
+      "commit_subject": "🐙 C241-P6: sidereal frame rotation does not reconcile legacy 528 RAAN (#279)",
+      "commit_local_iso": "2026-11-12T18:54:02-04:00",
+      "files": [
+        "research/constraints/C241-P6_gmst_legacy_raan_control.md",
+        "tests/test_tle_legacy_sidereal_rotation.py",
+        "tools/tle_legacy_sidereal_rotation.py"
+      ],
+      "review_area": "Lean/RAAN",
+      "finding_scope": "sidereal proxy 60s negative test; UT1 calibration missing, no new physical Lean axiom",
+      "integration_ci": {
+        "queried_commit": "00e300c1986efe676fab3c728fd1007a33af298b",
+        "state": "QUERIED",
+        "total_runs": 16,
+        "success": 15,
+        "cancelled": 1,
+        "failed": 0,
+        "skipped": 0,
+        "other": [],
+        "non_green": [
+          {
+            "name": "Publish Conde site",
+            "url": "https://github.com/franklinbaldo/conde-incident/actions/runs/43324121347",
+            "conclusion": "cancelled"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "503b4efc024c2885e915bf778621e180f4e1837c",
+      "first_parent": "00e300c1986efe676fab3c728fd1007a33af298b",
+      "parent_count": 1,
+      "integration_type": "SQUASH",
+      "pr": 280,
+      "author_head_sha_at_merge": "84e7860878b8c00f9a465bede4943fb60de79f79",
+      "commit_subject": "stat(cervo): certify frozen RAAN holdout estimability (#280)",
+      "commit_local_iso": "2026-11-12T18:54:18-04:00",
+      "files": [
+        "research/constraints/raan_holdout_estimability_candidate_C241.json",
+        "research/statistics/raan_holdout_estimability_C241.json",
+        "tests/test_raan_holdout_estimability.py",
+        "tools/raan_holdout_estimability.py"
+      ],
+      "review_area": "statistics",
+      "finding_scope": "exact rational row-space rank; no calibrated physical inference",
+      "integration_ci": {
+        "queried_commit": "503b4efc024c2885e915bf778621e180f4e1837c",
+        "state": "QUERIED",
+        "total_runs": 17,
+        "success": 17,
+        "cancelled": 0,
+        "failed": 0,
+        "skipped": 0,
+        "other": []
+      }
+    },
+    {
+      "sha": "740badf69e4491c48c1c4d480d623b1e9549ec3b",
+      "first_parent": "503b4efc024c2885e915bf778621e180f4e1837c",
+      "parent_count": 1,
+      "integration_type": "SQUASH",
+      "pr": 281,
+      "author_head_sha_at_merge": "9f2661aa5f6657204140eb57de4348855f1a59fa",
+      "commit_subject": "80 🦡 Eliminar duplicação push/PR do gate Prek mantendo cobertura (#281)",
+      "commit_local_iso": "2026-11-12T18:55:17-04:00",
+      "files": [
+        ".github/workflows/prek.yml",
+        "scripts/integration-head.test.mjs"
+      ],
+      "review_area": "CI",
+      "finding_scope": "Prek push only main + PR event; duplicate-run fix must not bypass author head gate",
+      "integration_ci": {
+        "queried_commit": "740badf69e4491c48c1c4d480d623b1e9549ec3b",
+        "state": "QUERIED",
+        "total_runs": 16,
+        "success": 16,
+        "cancelled": 0,
+        "failed": 0,
+        "skipped": 0,
+        "other": []
+      }
+    },
+    {
+      "sha": "b12a43f02055958524d4d59d8abea2bb3303bf28",
+      "first_parent": "740badf69e4491c48c1c4d480d623b1e9549ec3b",
+      "parent_count": 1,
+      "integration_type": "SQUASH",
+      "pr": 282,
+      "author_head_sha_at_merge": "91bb5bcc7023be823699fc6de87056110ae97088",
+      "commit_subject": "docs(lontra): custodiar fac-símile ON20 resgatado do Wayback (#282)",
+      "commit_local_iso": "2026-11-12T18:57:07-04:00",
+      "files": [
+        "research/meteorology/ncep_on20_wayback_custody_20261112.json",
+        "research/meteorology/ncep_on20_wayback_custody_20261112.md",
+        "tests/test_ncep_on20_archive.py",
+        "tools/verify_ncep_on20_archived_pdf.py"
+      ],
+      "review_area": "document",
+      "finding_scope": "ON20 1964 Wayback captured bytes; document date is not a 1963 observation",
+      "integration_ci": {
+        "queried_commit": "b12a43f02055958524d4d59d8abea2bb3303bf28",
+        "state": "QUERIED",
+        "total_runs": 16,
+        "success": 16,
+        "cancelled": 0,
+        "failed": 0,
+        "skipped": 0,
+        "other": []
+      }
+    },
+    {
+      "sha": "095d45ca99f74941af8dc8b11041db52216e34bb",
+      "first_parent": "b12a43f02055958524d4d59d8abea2bb3303bf28",
+      "parent_count": 1,
+      "integration_type": "SQUASH",
+      "pr": 283,
+      "author_head_sha_at_merge": "c30cb6e5eb6c0e56fe386d42aa86e8446165302b",
+      "commit_subject": "CGEO-13: custódia das fichas MME 1985 SPU Conde/Jandaíra (#283)",
+      "commit_local_iso": "2026-11-12T18:59:07-04:00",
+      "files": [
+        "research/geo/cgeo13_spu_mme_1985_catalogue.json",
+        "research/geo/cgeo13_spu_mme_1985_catalogue.md",
+        "tests/test_cgeo13_spu_mme.py",
+        "tools/cgeo13_spu_mme.py"
+      ],
+      "review_area": "geography",
+      "finding_scope": "1985 catalogue maps do not constrain 1963 physical crater or municipal boundary",
+      "integration_ci": {
+        "queried_commit": "095d45ca99f74941af8dc8b11041db52216e34bb",
+        "state": "QUERIED",
+        "total_runs": 16,
+        "success": 16,
+        "cancelled": 0,
+        "failed": 0,
+        "skipped": 0,
+        "other": []
+      }
+    },
+    {
+      "sha": "ec03c9682216490207343d28802c4e80b988fbf0",
+      "first_parent": "095d45ca99f74941af8dc8b11041db52216e34bb",
+      "parent_count": 1,
+      "integration_type": "SQUASH",
+      "pr": 284,
+      "author_head_sha_at_merge": "7578f4626db5431f93f638afc352224f6e1ca7ab",
+      "commit_subject": "83 🦫 G26: referência SGP4 TEME com custódia e teste cinemático (#284)",
+      "commit_local_iso": "2026-11-12T19:05:02-04:00",
+      "files": [
+        "research/constraints/sgp4_secondary_teme_C179.json",
+        "src/lib/orbitSgp4Baseline.ts",
+        "tests/orbitSgp4Baseline.test.mjs"
+      ],
+      "review_area": "SGP4",
+      "finding_scope": "C179 secondary TLE and C197 day-only; TEME r[km]/v[km/s], never RK4 frame/impact",
+      "integration_ci": {
+        "queried_commit": "ec03c9682216490207343d28802c4e80b988fbf0",
+        "state": "QUERIED",
+        "total_runs": 16,
+        "success": 16,
+        "cancelled": 0,
+        "failed": 0,
+        "skipped": 0,
+        "other": []
+      }
+    },
+    {
+      "sha": "d0de418f05ec673434bba2aa99bd0e48d1fd4e9d",
+      "first_parent": "ec03c9682216490207343d28802c4e80b988fbf0",
+      "parent_count": 1,
+      "integration_type": "SQUASH",
+      "pr": 285,
+      "author_head_sha_at_merge": "1a95a85d0edecc0a1cbe3e4f79cf19b95b1276e6",
+      "commit_subject": "🦉 Caderno: elementos visuais documentais no capítulo 03",
+      "commit_local_iso": "2026-11-12T19:06:51-04:00",
+      "files": [
+        ".github/workflows/pages.yml",
+        "scripts/check-site.mjs",
+        "scripts/enable-article-frames.mjs",
+        "static/css/site.css",
+        "static/img/cadeia-documental-conde.svg",
+        "stories/2026-11-12-a-resposta-que-veio-de-salvador.md"
+      ],
+      "review_area": "editorial",
+      "finding_scope": "chapter 03 documentary iframe and CSP, not archival or impact verification",
+      "integration_ci": {
+        "queried_commit": "d0de418f05ec673434bba2aa99bd0e48d1fd4e9d",
+        "state": "QUERIED",
+        "total_runs": 16,
+        "success": 16,
+        "cancelled": 0,
+        "failed": 0,
+        "skipped": 0,
+        "other": []
+      }
+    },
+    {
+      "sha": "236a22703103070c8897222c2a9ac088cf4fde22",
+      "first_parent": "d0de418f05ec673434bba2aa99bd0e48d1fd4e9d",
+      "parent_count": 1,
+      "integration_type": "SQUASH",
+      "pr": 286,
+      "author_head_sha_at_merge": "e950efadca0516f9a91de46cb57bc9517a4c8fe3",
+      "commit_subject": "75 🦇 Caderno 03: diagrama documental legível no celular (#286)",
+      "commit_local_iso": "2026-11-12T19:13:34-04:00",
+      "files": [
+        "scripts/check-site.mjs",
+        "static/img/cadeia-documental-conde-mobile.svg",
+        "stories/2026-11-12-a-resposta-que-veio-de-salvador.md"
+      ],
+      "review_area": "UI/editorial",
+      "finding_scope": "responsive genealogy image: visuals represent source dependence, not independent witnesses",
+      "integration_ci": {
+        "queried_commit": "236a22703103070c8897222c2a9ac088cf4fde22",
+        "state": "QUERIED",
+        "total_runs": 16,
+        "success": 16,
+        "cancelled": 0,
+        "failed": 0,
+        "skipped": 0,
+        "other": []
+      }
+    },
+    {
+      "sha": "55f16f3f9507fb015f7e3dec4fae25c723b3e02b",
+      "first_parent": "236a22703103070c8897222c2a9ac088cf4fde22",
+      "parent_count": 1,
+      "integration_type": "SQUASH",
+      "pr": 287,
+      "author_head_sha_at_merge": "2b43f4c5263b91257462fe03fe86840816946856",
+      "commit_subject": "🦊 Shareable map calculation instants with strict UTC links (#287)",
+      "commit_local_iso": "2026-11-12T19:19:09-04:00",
+      "files": [
+        "src/App.tsx",
+        "src/components/OrbitalMap.tsx",
+        "src/lib/tabRoutes.ts",
+        "tests/labDeepLinks.test.mjs",
+        "tests/ui_keyboard_smoke.mjs"
+      ],
+      "review_area": "UI",
+      "finding_scope": "UTC deep link selects model instant, not observed historical pass",
+      "integration_ci": {
+        "queried_commit": "55f16f3f9507fb015f7e3dec4fae25c723b3e02b",
+        "state": "QUERIED",
+        "total_runs": 16,
+        "success": 16,
+        "cancelled": 0,
+        "failed": 0,
+        "skipped": 0,
+        "other": []
+      }
+    },
+    {
+      "sha": "20240adddaf9df0e703d894bc2a7dba73fc8b855",
+      "first_parent": "55f16f3f9507fb015f7e3dec4fae25c723b3e02b",
+      "parent_count": 1,
+      "integration_type": "SQUASH",
+      "pr": 288,
+      "author_head_sha_at_merge": "9bbd790bf317054fe9df28a2eb2bf242060d624f",
+      "commit_subject": "🦉 Caderno 04: cento e dez minutos para o satélite errado",
+      "commit_local_iso": "2026-11-12T19:27:09-04:00",
+      "files": [
+        "stories/2026-11-12-cento-e-dez-minutos-para-o-satelite-errado.md"
+      ],
+      "review_area": "editorial",
+      "finding_scope": "NORAD SPADATS 688 has 110 minute window; NOT NORAD 528; 1964 miscatalogues corrected",
+      "integration_ci": {
+        "queried_commit": "20240adddaf9df0e703d894bc2a7dba73fc8b855",
+        "state": "QUERIED",
+        "total_runs": 16,
+        "success": 16,
+        "cancelled": 0,
+        "failed": 0,
+        "skipped": 0,
+        "other": []
+      }
+    }
+  ],
+  "notes": {
+    "NORAD_528": "secondary mirror only; checksum and declared digest do not independently authenticate original tracking",
+    "NASA_C197": "1963-003B decay date 1963-11-08 only; terminal UTC and location absent",
+    "C241_P6": "sidereal proxy counterexample conditional, no physical frame transfer",
+    "C241_estimability": "row space exact but physical calibration absent",
+    "Lean": "no new Lean file changed in this window; core theorem claims remain conditional",
+    "reportage": "#288 cross-check: 14 Nov NORAD p.2 is SPADATS 688, 12 Nov 22:10-24:00 UTC; 528 not claimed",
+    "SGP4_control": "new independent fixture/checksum/epoch test in the same audit PR"
+  }
+}
