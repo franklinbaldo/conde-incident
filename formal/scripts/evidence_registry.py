@@ -18,8 +18,8 @@ MATRIX_COMMIT = "38ee0f01134f6a1ee07c9346945d058d2ad3ce0b"
 MATRIX_PATH = "research/evidence_matrix_C001-C238_2026-11-11.md"
 SOURCE_REPO = "https://github.com/franklinbaldo/conde-incident"
 ROW = re.compile(r"^\|\s*(?:\*\*)?(C[0-9]+)(?:\*\*)?\s*\|")
-HEADER = "import Conde1963.DocumentaryDay\n\n/-!\n# Complete C01-C238 matrix identity, NOT a model of 241 measured orbits\n\nEvery actual markdown evidence row has a unique tuple (numeric ID,\noccurrence, pinned line). C44-C46 legitimately occur twice. Its documentary\ntext, status and lineage remain at the pinned matrix citation. Lean does not\ninfer authenticity from this registry. Only C131/C197 encode an accepted\n*conditional* NASA-reported decay-day filter; other rows have not yet been\njustified as terminal-state restrictions. No ground impact is asserted.\n-/\n\nset_option maxRecDepth 4096\n\nnamespace Conde1963\n\ninductive RowPhysicalRole where\n  | contextOnly\n  | nasaReportedDecayDay\n  deriving Repr, DecidableEq\n\nstructure MatrixEvidenceRef where\n  labelNumber : Nat\n  occurrence : Nat\n  matrixLine : Nat\n  role : RowPhysicalRole\n  deriving Repr, DecidableEq\n\ndef evidenceMatrixRows : List MatrixEvidenceRef := [\n"
-FOOTER = "]\n\n/-- An entry with no independently justified physical mapping constrains\n    nothing. The NASA case constrains only the reported decay calendar day\n    in a specifically chosen scenario, never a ground-impact date. -/\ndef acceptedMatrixPredicate\n    (row : MatrixEvidenceRef) (candidate : ReentryCandidate) : Prop :=\n  match row.role with\n  | .contextOnly => True\n  | .nasaReportedDecayDay => ReportedDecayDay candidate\n\n/-- Conjunction of all *currently encoded* restrictions, not all possible\n    implications of all historical texts. -/\ndef AllMatrixEvidence (candidate : ReentryCandidate) : Prop :=\n  ∀ row, row ∈ evidenceMatrixRows → acceptedMatrixPredicate row candidate\n\ntheorem evidence_matrix_row_count : evidenceMatrixRows.length = 241 := by decide\n\ntheorem two_primary_nasa_matrix_occurrences :\n    (⟨131, 1, 502, .nasaReportedDecayDay⟩ : MatrixEvidenceRef) ∈ evidenceMatrixRows ∧\n    (⟨197, 1, 905, .nasaReportedDecayDay⟩ : MatrixEvidenceRef) ∈ evidenceMatrixRows := by\n  decide\n\ntheorem context_rows_add_no_orbital_information\n    (row : MatrixEvidenceRef) (candidate : ReentryCandidate)\n    (h : row.role = .contextOnly) :\n    acceptedMatrixPredicate row candidate := by\n  simp [acceptedMatrixPredicate, h]\n\n/-- 241 indexed occurrences, but only one distinct day filter currently\n    accepted. This is a coverage statement, NOT a finding that other\n    primary observations are unimportant or false. -/\ntheorem full_matrix_has_only_nasa_day_filter\n    (candidate : ReentryCandidate) :\n    AllMatrixEvidence candidate ↔ ReportedDecayDay candidate := by\n  constructor\n  · intro h\n    exact h _ two_primary_nasa_matrix_occurrences.1\n  · intro h row _\n    cases hrole : row.role with\n    | contextOnly => simp [acceptedMatrixPredicate, hrole]\n    | nasaReportedDecayDay =>\n        simpa [acceptedMatrixPredicate, hrole] using h\n\n/-- Both illustrative regions remain possible under currently encoded\n    restrictions. No claim about an actual 1963 orbit or impact follows. -/\ntheorem full_matrix_does_not_identify_region :\n    ¬ UniquelyIdentifiesRegion AllMatrixEvidence (fun _ => True) := by\n  apply two_admissible_regions_preclude_unique\n    AllMatrixEvidence (fun _ => True) condeCandidate anotherCandidate\n  · exact ⟨(full_matrix_has_only_nasa_day_filter condeCandidate).2 rfl, True.intro⟩\n  · exact ⟨(full_matrix_has_only_nasa_day_filter anotherCandidate).2 rfl, True.intro⟩\n  · exact date_alone_does_not_identify_place.2.2\n\nend Conde1963\n"
+HEADER = "import Conde1963.DocumentaryDay\n\n/-!\n# Typed identity AND explicit uncertainty of all 241 matrix occurrences\n\nNo row directly establishes a physical decay day, hour, location or impact.\nC131/C197 refer to ONE historical catalogue publication. Only the\nDOCUMENTARY statement of a catalogued date is proven from the source.\nC01 preserves the radio report as a report, not an observed crater.\n\nAll other rows explicitly say \"individual uncertainty not yet assessed\nin this formal transfer\", not \"false\" or \"unverified evidence\".\nNo documentary row in this registry is a hard physical predicate.\n-/\n\nset_option maxRecDepth 4096\n\nnamespace Conde1963\n\ninductive RowPhysicalRole where\n  | contextOnly\n  | nasaReportedDecayDay\n  deriving Repr, DecidableEq\n\ninductive EpistemicUncertainty where\n  | requiresIndividualAssessment\n  | reportExistsPhysicalOccurrenceUnverified\n  | reportedCatalogueDayActualDayUnknown\n  deriving Repr, DecidableEq\n\nstructure MatrixEvidenceRef where\n  labelNumber : Nat\n  occurrence : Nat\n  matrixLine : Nat\n  role : RowPhysicalRole\n  uncertainty : EpistemicUncertainty\n  deriving Repr, DecidableEq\n\ndef evidenceMatrixRows : List MatrixEvidenceRef := [\n"
+FOOTER = "]\n\n/-- Membership in a catalogue of documentary claims imposes NO physical\n    restriction until separately reviewed and explicitly admitted with\n    a calibrated observational error model. -/\ndef acceptedMatrixPredicate\n    (_row : MatrixEvidenceRef) (_candidate : ReentryCandidate) : Prop :=\n  True\n\ndef AllMatrixEvidence (candidate : ReentryCandidate) : Prop :=\n  ∀ row, row ∈ evidenceMatrixRows → acceptedMatrixPredicate row candidate\n\ntheorem evidence_matrix_row_count : evidenceMatrixRows.length = 241 := by decide\n\ntheorem nasa_matrix_rows_explicitly_mark_uncertainty :\n    (⟨131, 1, 502, .nasaReportedDecayDay,\n       .reportedCatalogueDayActualDayUnknown⟩ : MatrixEvidenceRef) ∈ evidenceMatrixRows ∧\n    (⟨197, 1, 905, .nasaReportedDecayDay,\n       .reportedCatalogueDayActualDayUnknown⟩ : MatrixEvidenceRef) ∈ evidenceMatrixRows := by\n  decide\n\ntheorem tupi_report_is_not_ground_observation :\n    (⟨1, 1, 19, .contextOnly,\n       .reportExistsPhysicalOccurrenceUnverified⟩ : MatrixEvidenceRef) ∈ evidenceMatrixRows := by\n  decide\n\ntheorem every_row_is_nonphysical_without_additional_premises\n    (candidate : ReentryCandidate) :\n    AllMatrixEvidence candidate := by\n  intro row _\n  trivial\n\n/-- Even an illustrated off-day state survives documentary indexing.\n    This is an epistemic countermodel, not a historical prediction. -/\ntheorem matrix_does_not_force_nasa_reported_day :\n    AllMatrixEvidence inventedOffDayExample ∧\n    ¬ PhysicalDayMatchesCatalogue inventedOffDayExample := by\n  exact ⟨every_row_is_nonphysical_without_additional_premises _, by decide⟩\n\ntheorem full_matrix_does_not_identify_region :\n    ¬ UniquelyIdentifiesRegion AllMatrixEvidence (fun _ => True) := by\n  apply two_admissible_regions_preclude_unique\n    AllMatrixEvidence (fun _ => True) condeCandidate anotherCandidate\n  · exact ⟨every_row_is_nonphysical_without_additional_premises _, True.intro⟩\n  · exact ⟨every_row_is_nonphysical_without_additional_premises _, True.intro⟩\n  · exact date_alone_does_not_identify_place.2.2\n\nend Conde1963\n"
 
 
 class InventoryError(ValueError):
@@ -48,6 +48,11 @@ def parse_rows(data: bytes) -> list[dict]:
             "occurrence": occurrence,
             "line": line_number,
             "role": "nasaReportedDecayDay" if number in (131, 197) else "contextOnly",
+            "uncertainty": (
+                "reportExistsPhysicalOccurrenceUnverified" if number == 1
+                else "reportedCatalogueDayActualDayUnknown" if number in (131, 197)
+                else "requiresIndividualAssessment"
+            ),
             "row_markdown": line,
             "section": section,
         })
@@ -71,6 +76,13 @@ def audit(data: bytes, rows: list[dict], *, strict_hash: bool = True) -> dict:
             raise InventoryError(f"invalid occurrence for C{n}")
         if r["role"] != ("nasaReportedDecayDay" if n in (131, 197) else "contextOnly"):
             raise InventoryError(f"unreviewed physical promotion at C{n}")
+        expected_uncertainty = (
+            "reportExistsPhysicalOccurrenceUnverified" if n == 1
+            else "reportedCatalogueDayActualDayUnknown" if n in (131, 197)
+            else "requiresIndividualAssessment"
+        )
+        if r.get("uncertainty") != expected_uncertainty:
+            raise InventoryError(f"unreviewed epistemic uncertainty promotion at C{n}")
     if len(rows) != 241 or set(counts) != set(range(1, 239)):
         raise InventoryError("matrix must have 241 rows covering C01-C238")
     if {n: count for n, count in counts.items() if count != 1} != {
@@ -88,7 +100,11 @@ def audit(data: bytes, rows: list[dict], *, strict_hash: bool = True) -> dict:
         "occurrences": len(rows),
         "unique_labels": len(counts),
         "collision_labels": ["C44", "C45", "C46"],
-        "admitted_day_rows": ["C131#1", "C197#1"],
+        "catalogued_day_hypothesis_rows": ["C131#1", "C197#1"],
+        "physical_day_accepted_as_fact": False,
+        "uncertainty_requires_individual_review": sum(
+            r["uncertainty"] == "requiresIndividualAssessment" for r in rows
+        ),
         "historical_source_authentication": "NOT_RUN",
         "original_154_proposition_lean_zip": "NOT_RUN",
         "physical_orbit_holdout": "NOT_RUN",
@@ -97,7 +113,7 @@ def audit(data: bytes, rows: list[dict], *, strict_hash: bool = True) -> dict:
 
 def render_lean(rows: list[dict]) -> str:
     body = "".join(
-        f'  ⟨{r["number"]}, {r["occurrence"]}, {r["line"]}, .{r["role"]}⟩,\n'
+        f'  ⟨{r["number"]}, {r["occurrence"]}, {r["line"]}, .{r["role"]}, .{r["uncertainty"]}⟩,\n'
         for r in rows
     )
     return HEADER + body + FOOTER
@@ -105,7 +121,7 @@ def render_lean(rows: list[dict]) -> str:
 
 def contracts(rows: list[dict]) -> dict:
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "kind": "DOCUMENTARY_TRACEABILITY_NOT_PHYSICAL_TRAJECTORIES",
         "matrix_git_blob_sha1": MATRIX_SHA1,
         "matrix_commit": MATRIX_COMMIT,
@@ -118,10 +134,20 @@ def contracts(rows: list[dict]) -> dict:
                 "line": r["line"],
                 "citation": f'{SOURCE_REPO}/blob/{MATRIX_COMMIT}/{MATRIX_PATH}#L{r["line"]}',
                 "source_status": "MATRIX_ONLY_NOT_REINSPECTED_THIS_RUN",
+                "epistemic_uncertainty": r["uncertainty"],
+                "uncertainty_basis": (
+                    "Historical text says a claim was broadcast; physical occurrence unverified."
+                    if r["uncertainty"] == "reportExistsPhysicalOccurrenceUnverified"
+                    else "NASA publication records a decay date; actual physical decay date, timing, and method unknown."
+                    if r["uncertainty"] == "reportedCatalogueDayActualDayUnknown"
+                    else "Row-level uncertainty not yet individually assessed in Lean transfer; preserve source matrix's own qualifiers."
+                ),
+                "numeric_error_bounds": None,
+                "ground_impact_verification": "NOT_ESTABLISHED",
                 "section": r["section"],
                 "row_markdown": r["row_markdown"],
                 "physical_encoding": (
-                    "NASA_REPORTED_DECAY_DAY_SCENARIO_ONLY"
+                    "NASA_CATALOGUED_DATE_HYPOTHESIS_NOT_HARD_FILTER"
                     if r["role"] == "nasaReportedDecayDay"
                     else "NOT_ADMITTED_AS_TERMINAL_STATE_CONSTRAINT"
                 ),
