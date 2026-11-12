@@ -1,0 +1,36 @@
+name: Documentary provenance and citation custody
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  evidence-citations:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact HEAD
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate 241 source occurrences and documentary dependencies
+        run: python3 -m unittest discover -s tests -p 'test_provenance_graph.py' -v
+      - name: Export crosswalk for Polvo and site (no asserted physical landing)
+        run: |
+          python3 tools/provenance_graph.py --check-site --output /tmp/conde-documentary-provenance.json --citations /tmp/conde-documentary-citations.json
+          python3 -m json.tool /tmp/conde-documentary-provenance.json >/dev/null
+          python3 -m json.tool /tmp/conde-documentary-citations.json >/dev/null
+      - uses: actions/upload-artifact@v4
+        with:
+          name: conde-documentary-provenance
+          path: |
+            /tmp/conde-documentary-provenance.json
+            /tmp/conde-documentary-citations.json
+          retention-days: 30
