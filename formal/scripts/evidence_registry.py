@@ -538,6 +538,64 @@ def paired_certified_enclosure_interface() -> dict:
     }
 
 
+
+def truth_bridge_interface() -> dict:
+    """Physical event truth is NOT implied by model self-soundness.
+
+    Nothing here asserts that a real ground impact occurred, nor even
+    that a sound bridge to hypothetical true events has been established.
+    The separate TruthLink.actualCovered premise is uninstantiated.
+    """
+    return {
+        "version": 1,
+        "kind": "EXTERNAL_TRUTH_LINK_REQUIRED_NOT_SIMULATOR_SELF_SOUNDED",
+        "lean_module": "Conde1963/TruthBridge.lean",
+        "source_matrix_sha1": MATRIX_SHA1,
+        "source_matrix_commit": MATRIX_COMMIT,
+        "unverified_orbital_element_occurrences": ["C25#1", "C179#1"],
+        "reported_incident_occurrence": "C01#1",
+        "single_nasa_document_occurrences": ["C131#1", "C197#1"],
+        "nasa_documentary_lineage_count": 1,
+        "nasa_independent_terminal_measurements": 0,
+        "source_scenarios": "UNRESOLVED_OR_UNION_NOT_INTERSECTION",
+        "historical_zip_154_151": "NOT_RUN",
+        "forecast_output": None,
+        "hypothetical_actual_ground_impact": None,
+        "physical_time_window": None,
+        "physical_geographic_region": None,
+        "truth_link_proof": None,
+        "primary_tle_custody_verified": False,
+        "independent_physical_holdout_529_passed": False,
+        "numerical_error_enclosure_verified": False,
+        "full_continuous_domain_cover_verified": False,
+        "ground_impact_and_material_survival_verified": False,
+        "simulator_prediction_soundness_proves_physical_truth": False,
+        "current_physical_outcome": None,
+        "lean_obligations": {
+            "actual_event_cover": "hypothetical_actual_event_has_certified_cell_bound",
+            "conditional_actual_exclusion": "certified_truth_excludes_conde",
+            "conditional_actual_forcing": "certified_truth_forces_conde",
+            "conditional_other_window": "certified_truth_identifies_other_window",
+            "nonempty_refinement": "certified_truth_exclusion_persists_with_witness",
+            "nonimpact_counterexample": "absent_actual_impact_refutes_truth_forcing",
+            "self_soundness_counterexample": "self_sound_forecast_does_not_cover_unlinked_reality",
+        },
+        "must_verify": [
+            "matrix_occurrence_and_documentary_lineage_are_exact",
+            "historical_input_TLE_source_custody_epoch_frame_units",
+            "source_alternatives_are_union_until_independent_adjudication",
+            "all_surviving_parameters_have_sound_continuous_cell_cover",
+            "predicted_event_enclosure_does_not_certify_actual_event",
+            "external_truth_link_for_every_admissible_physical_state",
+            "independent_529_holdout_and_calibrated_numerical_error",
+            "ground_contact_and_material_survival_not_altitude_threshold",
+            "nonempty_surviving_domain_with_universal_ground_impact_for_forcing",
+            "separate_proof_of_geographic_window_disjointness",
+            "no_physical_verdict_until_every_external_gate_is_justified",
+        ],
+    }
+
+
 def contracts(rows: list[dict]) -> dict:
     return {
         "schema_version": 2,
@@ -552,6 +610,7 @@ def contracts(rows: list[dict]) -> dict:
         "finite_coverage_interface": finite_coverage_interface(),
         "certified_cell_interface": certified_cell_interface(),
         "paired_certified_enclosure_interface": paired_certified_enclosure_interface(),
+        "truth_bridge_interface": truth_bridge_interface(),
         "scope": "241 actual rows, 238 distinct labels, no fabricated observations",
         "entries": [
             {
