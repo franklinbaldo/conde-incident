@@ -1,0 +1,36 @@
+name: Gaviao Caderno 09 - independent timeline audit
+on:
+  pull_request:
+    paths:
+      - 'tools/gaviao_ch09_timeline.py'
+      - 'tests/test_gaviao_ch09_timeline.py'
+      - 'research/gaviao_ch09_review.md'
+      - 'team/memory/gaviao/**'
+      - '.github/workflows/gaviao-ch09-timeline.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  recheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+      - name: Confirm actual tested PR HEAD
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          echo "TESTED_SHA=$(git rev-parse HEAD)"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Eighteen adversarial synthetic tests
+        run: python -m unittest discover -s tests -p 'test_gaviao_ch09_timeline.py' -v
+      - name: Install pinned Parquet reader
+        run: python -m pip install pyarrow==21.0.0
+      - name: Independent raw Parquet and chapter blob audit
+        run: python tools/gaviao_ch09_timeline.py --pinned
