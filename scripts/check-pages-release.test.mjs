@@ -7,6 +7,8 @@ function good() {
   return {
     sha: SHA, upstreamConclusion: 'success',
     pages: { build_type: 'workflow', html_url: EXPECTED_SITE },
+    mainHead: { commit: { sha: SHA } },
+    latestDeployments: [{ id: 12, sha: SHA, environment: 'github-pages' }],
     runs: [{ name: 'Publish Conde site', head_sha: SHA, head_branch: 'main',
       event: 'push', status: 'completed', conclusion: 'success' }],
     deployments: [{ id: 12, sha: SHA, environment: 'github-pages' }],
@@ -216,4 +218,36 @@ test('canonical stories README is editorial documentation, not a missing chapter
   assert.equal(assessRelease(x).status, 'PASS');
   x.sourceTree.tree.push({ path: 'stories/unexpected.md', type: 'blob' });
   assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+
+test('published SHA is not current main HEAD: stale successful run cannot pass', () => {
+  const x = good();
+  x.mainHead.commit.sha = 'b'.repeat(40);
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+  assert.ok(assessRelease(x).checks.some(c =>
+    c.label === 'current main HEAD is the audited release SHA' && c.status === 'NOT_VERIFIED'));
+});
+test('newer Pages deployment supersedes an older successful deployment', () => {
+  const x = good();
+  x.latestDeployments = [{ id: 13, sha: 'b'.repeat(40), environment: 'github-pages' }];
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+test('latest deployment pending, old success on same SHA must not be accepted', () => {
+  const x = good();
+  x.latestDeployments = [{ id: 13, sha: SHA, environment: 'github-pages' }];
+  x.deployments.unshift(x.latestDeployments[0]);
+  x.statuses[13] = [{ state: 'pending' }];
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+test('newer failed publication run cannot be masked by previous successful run', () => {
+  const x = good();
+  x.runs.unshift({ name: 'Publish Conde site', head_sha: SHA, head_branch: 'main',
+    event: 'push', status: 'completed', conclusion: 'failure' });
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+test('missing freshest-main and latest-deployment evidence fails closed', () => {
+  const x = good(); delete x.mainHead;
+  const y = good(); delete y.latestDeployments;
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+  assert.equal(assessRelease(y).status, 'NOT_VERIFIED');
 });
