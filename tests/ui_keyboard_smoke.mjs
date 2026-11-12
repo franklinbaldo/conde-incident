@@ -46,7 +46,14 @@ try {
     assert.match(current || '', /Rastreamento & Mapa/);
     // Audit map behavior in the real Chromium browser on this PR HEAD.
     const mapSvg = page.locator('svg[aria-labelledby="orbital-map-title"]');
-    await mapSvg.waitFor();
+    try {
+      await mapSvg.waitFor({ timeout: 10000 });
+    } catch (reason) {
+      // Fail with useful diagnostic context instead of quietly dropping browser assertions.
+      const mainText = (await page.locator('#main-content').textContent())?.slice(0, 800);
+      throw new Error(`Map SVG missing in ${viewport.name}; hash=${new URL(page.url()).hash}; ` +
+        `main=${mainText}; errors=${errors.join(' | ')}`, { cause: reason });
+    }
     assert.equal(await mapSvg.evaluate(el => getComputedStyle(el).touchAction), 'pan-y',
       'mobile/native vertical scrolling should remain available over the map');
     await page.getByRole('checkbox', { name: 'Conexões geométricas de cenários' }).check();
