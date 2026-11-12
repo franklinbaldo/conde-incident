@@ -70,6 +70,14 @@ and uncertainty on the case site. The independent historical-research routine
 may contribute new sources but never invent a formal restriction.
 Keep publication and archive-contact restrictions from this file.
 
+## Scientific progress gate: no circular proof churn
+
+**Progress is measured by discriminating evidence and reduced uncertainty, not the number of Lean theorems, empty JSON interfaces or passing CI alone.** The distinction between a simulator and historical observation is already settled: do not create additional standalone proofs reasserting it. Formalize an implication only when it has a specific new empirical constraint, testable numerical consequence, concrete bug regression or historical archive import.
+
+For each scientific PR, report: (1) source matrix ID plus occurrence, document lineage, epoch/frame/units and uncertainty; (2) the exact question and rival scenarios; (3) reproducible **before/after** admissible bounds, eliminated/surviving scenarios, and test/holdout errors with units; (4) nonempty domain/witness when claiming restriction; (5) negative result and specific missing measurement when not measurable. A narrowing assertion without actual numeric evidence must be **NOT_RUN**, not presented as achievement. Do not generate new formal gates whose inputs are all unverified and null merely to increase coverage.
+
+Immediate discriminating targets: recover full epoch, source and reference conventions for the conflicting 528 RAAN reports (284.1520° and 198.5261°), then quantitatively compare viable element histories against available 527/528/529 time series, established baselines and holdouts. Cross-object mean-motion fits are retrospective model comparisons, not proof of physical coupling. If no empirical reduction is possible, pause tautological theorem expansion and produce a concise blocker specifying the missing data and its intended test. 🦡 Texugo should treat repeated restatement of known caveats as churn.
+
 ## Work protocol
 1. Read main, this file, your `team/<animal>.md` card, open issues/PRs, and the cumulative matrix in `research/` (present in PR #1 until merged).
 2. Resume an existing issue/PR in your domain before claiming new work. A single agent claims a single active issue; issues use `<priority 0–100> <emoji> <short title>`. Avoid duplicate claims and conflicting edits.
