@@ -370,16 +370,17 @@ def scenario_enclosure_interface() -> dict:
     """Proof obligations for calibrated error envelopes across source alternatives.
 
     NO real trajectory, calibrated interval or terminal observation is asserted.
-    The two alternative RAAN claims are neither independently authenticated
-    nor safely intersectable. NASA C131/C197 share one documentary lineage.
+    The unsourced legacy site vector is retired from active source scenarios.
+    The remaining RAAN baseline is a secondary literal with unknown physical
+    uncertainty. NASA C131/C197 share one documentary lineage.
     """
     scenarios = unresolved_element_scenarios_interface()
     return {
         "version": 1,
         "kind": "CONDITIONAL_DISJUNCTIVE_ENCLOSURES_NOT_HISTORICAL_PREDICTIONS",
         "lean_module": "Conde1963/ScenarioEnclosures.lean",
-        "candidate_semantics": "COMMON_AND_LEFT_OR_RIGHT",
-        "branch_combination": "UNION_UNTIL_VERIFIED_SOURCE_ADJUDICATION",
+        "candidate_semantics": scenarios["admissible_semantics"],
+        "branch_combination": "ONE_ACTIVE_SOURCE_UNLESS_NEW_DOCUMENTED_SOURCE",
         "source_branches": [
             {
                 "id": branch["id"],
