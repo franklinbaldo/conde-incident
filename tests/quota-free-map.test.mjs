@@ -50,8 +50,8 @@ test('all production map controls are local, accessible and quota free', () => {
   assert.match(svg, /role="img"/);
   assert.match(svg, /onPointerDown=/);
   assert.match(svg, /onPointerCancel=/);
-  assert.match(svg, /onPan=/);
-  assert.match(svg, /onZoom=/);
+  assert.match(svg, /onPan\(/);
+  assert.match(svg, /onZoom\(/);
 });
 
 test('unknown reentry coordinates are not pinned; sources and limitations visible in both languages', () => {
