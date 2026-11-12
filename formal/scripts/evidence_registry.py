@@ -239,7 +239,7 @@ def enclosure_interface() -> dict:
         "source_lineage": [
             {
                 "matrix_occurrences": ["C01#1"],
-                "chain": "TUPI_F BIS_TRANSCRIPTION_REPORT_ONLY".replace(" ", ""),
+                "chain": "TUPI_FBIS_TRANSCRIPTION_REPORT_ONLY",
                 "physical_observation": False,
             },
             {
