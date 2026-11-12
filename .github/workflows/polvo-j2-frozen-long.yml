@@ -1,0 +1,96 @@
+name: Polvo - C241-P2 frozen J2 versus drift holdout
+on:
+  pull_request:
+    paths:
+      - tools/raan_frozen_j2_holdout.py
+      - tests/test_raan_frozen_j2_holdout.py
+      - research/constraints/C241-P2_j2_frozen_long_holdout.md
+      - research/tle_custody/evidence_matrix_C241-P2_2026-11-12.md
+      - .github/workflows/polvo-j2-frozen-long.yml
+  push:
+    branches: [main]
+    paths:
+      - tools/raan_frozen_j2_holdout.py
+      - tests/test_raan_frozen_j2_holdout.py
+      - research/constraints/C241-P2_j2_frozen_long_holdout.md
+      - research/tle_custody/evidence_matrix_C241-P2_2026-11-12.md
+      - .github/workflows/polvo-j2-frozen-long.yml
+permissions:
+  contents: read
+jobs:
+  frozen-j2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify source HEAD
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Seven adversarial controls and existing P1 tests
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p 'test_raan_frozen_j2_holdout.py' -v
+          python3 -m unittest discover -s tests -p 'test_raan_frozen_trend_holdout.py' -v
+      - name: Recover pinned secondary snapshot and compare future holdouts
+        run: |
+          set -euo pipefail
+          python3 -m pip install --disable-pip-version-check pyarrow==21.0.0
+          python3 tools/tle_secondary_1963_ledger.py --download \
+            --parquet "$RUNNER_TEMP/tle_1963.parquet" \
+            --literal research/tle_custody/mirror_528_1963-10-27.tle \
+            --output "$RUNNER_TEMP/c241-p2"
+          python3 tools/raan_frozen_j2_holdout.py \
+            --csv "$RUNNER_TEMP/c241-p2/norad_527_528_529_numeric_1963.csv" \
+            --output "$RUNNER_TEMP/c241-p2/polvo_j2_frozen_holdout.json"
+          python3 - <<'PY'
+          import json,os,pathlib,sys
+          sys.path.insert(0,"tools")
+          from raan_frozen_j2_holdout import align_rows
+          from cross_object_epoch_support import read_pinned_csv
+          from raan_frozen_trend_holdout import SOURCE
+          report=json.loads((pathlib.Path(os.environ["RUNNER_TEMP"])/"c241-p2/polvo_j2_frozen_holdout.json").read_text())
+          objs=report["objects"]
+          assert {k:objs[k]["evaluation"]["n"] for k in ("527","528","529")}=={"527":4,"528":8,"529":23}
+          assert report["method"]["physical_domain_reduction"]=="NOT_ACTIVATED"
+          assert all(objs[k]["fit_n"]>0 for k in objs)
+          raw=read_pinned_csv(pathlib.Path(os.environ["RUNNER_TEMP"])/"c241-p2/norad_527_528_529_numeric_1963.csv")
+          target=next(r for r in raw if r["norad_id"]=="528")
+          target["raan"]=str((float(target["raan"])+2)%360)
+          try: align_rows(raw,json.loads(SOURCE.read_bytes()))
+          except ValueError as e: assert "RAAN conflict" in str(e),str(e)
+          else:raise AssertionError("adversarial cross-extract corruption accepted")
+          print("C241_P2_REPORT",json.dumps({k:{
+            "n":v["evaluation"]["n"],
+            "j2_fit_rate_deg_day":v["anchor"]["rate_deg_per_day"],
+            "ols_fit_rate_deg_day":v["fitonly_linear_rate_deg_per_day"],
+            "j2_validation_mae_deg":v["validation"]["models"]["last_fit_j2_proxy"]["mae_deg"],
+            "j2_evaluation_mae_deg":v["evaluation"]["models"]["last_fit_j2_proxy"]["mae_deg"],
+            "linear_evaluation_mae_deg":v["evaluation"]["models"]["fitonly_linear"]["mae_deg"],
+            "j2_better":v["evaluation"]["j2_better_than_linear_mae"],
+            "j2_eval_max_abs_error_deg":v["evaluation"]["models"]["last_fit_j2_proxy"]["max_abs_error_deg"]}
+            for k,v in objs.items()},sort_keys=True))
+          PY
+      - name: Lean 4.35.0 build and axiom audit (unchanged corpus)
+        run: |
+          set -euo pipefail
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          export PATH="$HOME/.elan/bin:$PATH"
+          cd formal
+          lake build
+          lake env lean Conde1963/CoreAxioms.lean | tee /tmp/polvo-c241-p2-axioms.log
+          if grep -E 'sorryAx|unsafe|error:' /tmp/polvo-c241-p2-axioms.log; then exit 1; fi
+      - name: Persist numeric report for audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: polvo-j2-frozen-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ${{ runner.temp }}/c241-p2/
+          retention-days: 30
+          if-no-files-found: warn
