@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import { Navigation, type TabId } from './components/Navigation';
 import { parseLabRoute, tabHref } from './lib/tabRoutes';
+import { skipToMain } from './lib/skipToMain';
 import { ExecutiveSummary } from './components/ExecutiveSummary';
 import { OrbitalMap } from './components/OrbitalMap';
 import { InversePassInspector } from './components/InversePassInspector';
@@ -53,6 +54,17 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans selection:bg-cyan-500 selection:text-black">
+
+      {/* A hash link would replace #/map with #main-content and reset the SPA route.
+          Keep its href accessible, but focus <main> without changing navigation. */}
+      <a
+        href="#main-content"
+        onClick={event => skipToMain(event, document)}
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-cyan-300 focus:px-4 focus:py-2 focus:font-semibold focus:text-zinc-950 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-white"
+      >
+        {lang === 'pt' ? 'Pular para o conteúdo' : 'Skip to main content'}
+      </a>
+
       {/* Top Header & Navigation */}
       <Navigation
         activeTab={activeTab}
@@ -62,7 +74,7 @@ export default function App() {
       />
 
       {/* Main Content Body */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-6" id="main-content">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-6 focus:outline-none" id="main-content" tabIndex={-1}>
         {route.invalidHash !== null && (
           <p role="status" aria-live="polite" className="mb-5 rounded-md border border-amber-700 bg-amber-950/40 p-3 text-sm text-amber-100">
             {lang === 'pt'
