@@ -98,3 +98,38 @@ Reprodução offline, sem novos downloads nem alteração do domínio:
 Para alterações justificadas na custódia original, regenere com
 --write-site; o workflow documentary-lineage faz verificação
 byte-a-byte do contrato publicado no SHA exato da PR.
+
+
+## Índice de pontes documentais candidatas para Polvo e site
+
+O companion [conde-scientific-bridges.json](../../public/data/conde-scientific-bridges.json)
+faz a junção **validada byte a byte** de três feeds existentes: dependências
+curadas da matriz, contexto NORAD do Morcego e cartografia retrospectiva CGEO-10.
+Em vez de criar observações, registra nove vínculos rastreáveis:
+uma ocorrência da transcrição Tupi/FBIS (C01#1), duas citações do **mesmo
+trabalho NASA/NTRS** (C197#1 e C198#1), cinco ocorrências MOR-NOR
+de **contexto sem rastreamento demonstrado do 528** e uma ocorrência
+complementar CGEO-10, fora da matriz original. Preserva row_sha256 e
+linha nas três ocorrências Cnn, o source_audit_sha256 dos cinco registros
+NORAD e o SHA-256 de cada feed integral na raiz do export.
+
+A exportação transporta afirmação documental -> hipótese -> premissa Lean
+pendente -> parâmetro latente do simulador, sem ativação. O catálogo
+NASA fornece somente um dia, não instante terminal (valor null);
+as notícias de 1963 dos objetos 687/688 e os documentos originais de
+**1964** referentes ao objeto 943 são controles negativos, não medições
+528. A política de 1961 apenas torna *possível* a troca NASA/NORAD,
+sem provar ancestralidade de uma medição particular. A fronteira
+jurídica de 1963 permanece NOT_PROMOTED, sem Cnn inventado.
+
+A junção não altera as 241 ocorrências da matriz nem soma sensores.
+Zero restrições físicas ativadas e zero novas medições do 528.
+A contagem de observações independentes permanece null (desconhecida),
+não equivale a zero observado; nenhuma prova Lean nova é reivindicada.
+
+    python3 tools/export_contextual_scientific_bridges.py --check-site
+    python3 -m unittest discover -s tests -p test_contextual_scientific_bridges.py -v
+
+Alterações nos arquivos de origem exigem recalcular os três feeds antes
+de gerar o índice com --write-site. O workflow documental executa os
+testes adversariais e a comparação byte a byte no HEAD da PR.
