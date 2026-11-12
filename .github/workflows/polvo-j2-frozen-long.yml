@@ -4,10 +4,14 @@ on:
     paths:
       - tools/raan_frozen_j2_holdout.py
       - tools/raan_fitfield_j2_holdout.py
+      - tools/raan_p3_quadratic_pair.py
       - tests/test_raan_frozen_j2_holdout.py
       - tests/test_raan_fitfield_j2_holdout.py
+      - tests/test_raan_p3_quadratic_pair.py
       - research/constraints/C241-P2_j2_frozen_long_holdout.md
       - research/constraints/C241-P3_fitfield_j2_forward_holdout.md
+      - research/constraints/C241-P4_paired_J2_drift_vs_quadratic.md
+      - research/tle_custody/evidence_matrix_C241-P4_2026-11-12.md
       - research/tle_custody/evidence_matrix_C241-P3_2026-11-12.md
       - research/tle_custody/evidence_matrix_C241-P2_2026-11-12.md
       - .github/workflows/polvo-j2-frozen-long.yml
@@ -16,10 +20,14 @@ on:
     paths:
       - tools/raan_frozen_j2_holdout.py
       - tools/raan_fitfield_j2_holdout.py
+      - tools/raan_p3_quadratic_pair.py
       - tests/test_raan_frozen_j2_holdout.py
       - tests/test_raan_fitfield_j2_holdout.py
+      - tests/test_raan_p3_quadratic_pair.py
       - research/constraints/C241-P2_j2_frozen_long_holdout.md
       - research/constraints/C241-P3_fitfield_j2_forward_holdout.md
+      - research/constraints/C241-P4_paired_J2_drift_vs_quadratic.md
+      - research/tle_custody/evidence_matrix_C241-P4_2026-11-12.md
       - research/tle_custody/evidence_matrix_C241-P3_2026-11-12.md
       - research/tle_custody/evidence_matrix_C241-P2_2026-11-12.md
       - .github/workflows/polvo-j2-frozen-long.yml
@@ -47,6 +55,7 @@ jobs:
           python3 -m unittest discover -s tests -p 'test_raan_frozen_j2_holdout.py' -v
           python3 -m unittest discover -s tests -p 'test_raan_frozen_trend_holdout.py' -v
           python3 -m unittest discover -s tests -p 'test_raan_fitfield_j2_holdout.py' -v
+          python3 -m unittest discover -s tests -p 'test_raan_p3_quadratic_pair.py' -v
       - name: Recover pinned secondary snapshot and compare future holdouts
         run: |
           set -euo pipefail
@@ -61,6 +70,23 @@ jobs:
           python3 tools/raan_fitfield_j2_holdout.py \
             --csv "$RUNNER_TEMP/c241-p2/norad_527_528_529_numeric_1963.csv" \
             --output "$RUNNER_TEMP/c241-p2/polvo_fitfield_j2_holdout.json"
+          python3 tools/texugo_quadratic_raan_ablation.py \
+            --csv "$RUNNER_TEMP/c241-p2/norad_527_528_529_numeric_1963.csv" \
+            --output "$RUNNER_TEMP/c241-p2/texugo_quadratic_raan.json"
+          python3 tools/raan_p3_quadratic_pair.py \
+            --p3 "$RUNNER_TEMP/c241-p2/polvo_fitfield_j2_holdout.json" \
+            --quadratic "$RUNNER_TEMP/c241-p2/texugo_quadratic_raan.json" \
+            --output "$RUNNER_TEMP/c241-p2/c241_p4_paired_holdout.json"
+          python3 - <<'PY_P4'
+          import json,os,pathlib
+          report=json.loads((pathlib.Path(os.environ["RUNNER_TEMP"])/"c241-p2/c241_p4_paired_holdout.json").read_text())
+          assert report["physical_domain_change"]=="NONE_NOT_CALIBRATED"
+          assert {k:report["objects"][k]["evaluation"]["n"] for k in ("527","528","529")}=={"527":4,"528":8,"529":23}
+          for k in ("527","528","529"):
+              d=report["objects"][k]["evaluation"]
+              assert d["n"]==d["p3_better_epoch_count"]+d["quadratic_better_epoch_count"]+d["equal_epoch_count"]
+              print("P4_PAIRED_HOLDOUT",k,d["n"],"P3_MAE_DEG",d["p3_mae_deg"],"QUAD_MAE_DEG",d["quadratic_mae_deg"],"DELTA_DEG",d["p3_minus_quadratic_mae_deg"])
+          PY_P4
           python3 - <<'PY_P3'
           import json,os,pathlib
           p=pathlib.Path(os.environ["RUNNER_TEMP"])/"c241-p2/polvo_fitfield_j2_holdout.json"
