@@ -16,7 +16,9 @@ test('rejects historically wrong zero-based PDF index 8', () => {
 });
 
 test('rejects removal of exact NASA primary URL', () => {
-  const bad = matrix.replace(anchor.url, 'https://example.invalid/secondary');
+  const sourceRow = matrix.split('\n').find(line => line.startsWith('| **C197** |'));
+  assert.ok(sourceRow?.includes(anchor.url));
+  const bad = matrix.replace(sourceRow, sourceRow.replace(anchor.url, 'https://example.invalid/secondary'));
   assert.ok(verifyNASAAnchor(bad, anchor).some(e => e.includes('facsimile')));
 });
 
