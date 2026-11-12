@@ -18,7 +18,6 @@ type Props = {
   showUncertainty: boolean;
   showConnections: boolean;
   onPan: (dx: number, dy: number) => void;
-  onZoom: (next: number) => void;
 };
 
 type Geo = { longitude: number; latitude: number };
@@ -39,7 +38,7 @@ const COLORS: Record<SatelliteId, string> = { 527: '#34d399', 528: '#22d3ee', 52
 
 export function OrbitalMapSvg({
   lang, mode, zoom, pan, rotation, positions, tracks, envelopes,
-  showSisters, showUncertainty, showConnections, onPan, onZoom,
+  showSisters, showUncertainty, showConnections, onPan,
 }: Props) {
   const start = useRef<{ x: number; y: number } | null>(null);
   const isPt = lang === 'pt';
