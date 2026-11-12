@@ -92,28 +92,53 @@ export interface DeclaredDependenceFeed {
   citation_lineages: DeclaredLineageRecord[];
 }
 
+// Fail closed on malformed declared ancestry: a syntactically shaped edge does
+// not establish a path from the cited source to its claimed upstream source.
+const nonblank = (value: unknown): value is string =>
+  typeof value === 'string' && value.trim().length > 0;
+
+function coherentDeclaredPath(sourceId: string, path: DeclaredUpstreamPath): boolean {
+  if (!path || !nonblank(path.upstream_source_id) ||
+      !Array.isArray(path.edges) || path.edges.length === 0) return false;
+  let cursor = sourceId;
+  const visited = new Set([sourceId]);
+  for (const edge of path.edges) {
+    if (!edge || !nonblank(edge.from) || !nonblank(edge.to) ||
+        !nonblank(edge.kind) || edge.from !== cursor || visited.has(edge.to)) {
+      return false;
+    }
+    visited.add(edge.to);
+    cursor = edge.to;
+  }
+  return cursor === path.upstream_source_id;
+}
+
 export function isDeclaredDependenceFeed(value: unknown): value is DeclaredDependenceFeed {
   if (!value || typeof value !== 'object') return false;
   const feed = value as Partial<DeclaredDependenceFeed>;
-  return feed.schema === 'conde.declared-documentary-dependence/v1'
-    && feed.canonical_citations_path === 'public/data/conde-source-citations.json'
-    && typeof feed.matrix_git_blob_sha1 === 'string'
-    && feed.epistemic_limits?.absence_of_edge_does_not_prove_independence === true
-    && feed.epistemic_limits?.independent_physical_observation_count === null
-    && Array.isArray(feed.citation_lineages)
-    && feed.citation_lineages.every((record) =>
-      typeof record.snapshot_ref === 'string'
-      && typeof record.source_id === 'string'
-      && typeof record.family_id === 'string'
-      && record.independent_physical_observation_count === null
-      && Array.isArray(record.declared_upstream_paths)
-      && record.declared_upstream_paths.every((path) =>
-        typeof path.upstream_source_id === 'string'
-        && Array.isArray(path.edges)
-        && path.edges.every((edge) =>
-          typeof edge.from === 'string'
-          && typeof edge.to === 'string'
-          && typeof edge.kind === 'string')));
+  if (feed.schema !== 'conde.declared-documentary-dependence/v1' ||
+      feed.canonical_citations_path !== 'public/data/conde-source-citations.json' ||
+      !nonblank(feed.matrix_git_blob_sha1) ||
+      !/^[a-f0-9]{40}$/.test(feed.matrix_git_blob_sha1) ||
+      feed.epistemic_limits?.absence_of_edge_does_not_prove_independence !== true ||
+      feed.epistemic_limits?.independent_physical_observation_count !== null ||
+      !Array.isArray(feed.citation_lineages)) return false;
+
+  const seen = new Set<string>();
+  return feed.citation_lineages.every((record) => {
+    if (!record || !nonblank(record.snapshot_ref) ||
+        !nonblank(record.source_id) || !nonblank(record.family_id) ||
+        record.independent_physical_observation_count !== null ||
+        !Array.isArray(record.declared_upstream_paths)) return false;
+    const prefix = `matrix:${feed.matrix_git_blob_sha1}:`;
+    const occurrence = record.snapshot_ref.startsWith(prefix)
+      ? normalizeOccurrence(record.snapshot_ref.slice(prefix.length)) : null;
+    if (!occurrence || record.snapshot_ref !== prefix + occurrence ||
+        seen.has(record.snapshot_ref)) return false;
+    seen.add(record.snapshot_ref);
+    return record.declared_upstream_paths.every((path) =>
+      coherentDeclaredPath(record.source_id, path));
+  });
 }
 
 export function declaredLineageContext(
