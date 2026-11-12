@@ -428,6 +428,59 @@ def finite_coverage_interface() -> dict:
     }
 
 
+
+def certified_cell_interface() -> dict:
+    """Finite cells may cover a continuous domain, unlike sampled points.
+
+    The Lean theorems are conditional on a proof of coverage and sound
+    event bounds for *every* surviving physical parameter in the union of
+    unresolved source scenarios. No actual cell decomposition is supplied.
+    """
+    return {
+        "version": 1,
+        "kind": "CONTINUOUS_PARAMETER_CELL_COVER_NOT_POINT_GRID",
+        "lean_module": "Conde1963/CertifiedCells.lean",
+        "source_matrix_sha1": MATRIX_SHA1,
+        "parameter_semantics": "COMMON_AND_LEFT_OR_RIGHT",
+        "orbital_scenario_rows": ["C25#1", "C179#1"],
+        "orbital_primary_tle_status": "NOT_AUTHENTICATED",
+        "nasa_one_document_two_occurrences": ["C131#1", "C197#1"],
+        "nasa_independent_instrumental_sources": 0,
+        "original_zip_154_151_import": "NOT_RUN",
+        "current_cells": None,
+        "current_event_bounds": None,
+        "current_geographic_verdict": None,
+        "current_numeric_epoch_window_utc": None,
+        "current_numeric_spatial_enclosure": None,
+        "continuous_parameter_coverage_proven": False,
+        "sound_event_bounds_for_every_cell_proven": False,
+        "nonempty_global_domain_proven": False,
+        "validated_ground_impact_gate_proven": False,
+        "calibrated_numerical_errors_proven": False,
+        "independent_529_holdout_passed": False,
+        "lean_obligations": {
+            "event_soundness": "predicted_event_has_certified_cell_bound",
+            "nonempty_requires_cell": "nonempty_domain_requires_listed_cell",
+            "empty_cells_requires_full_cover": "empty_certified_cells_imply_empty_domain",
+            "exclude_conditional": "covered_cells_exclude_conde",
+            "force_conditional": "covered_cells_force_conde",
+            "other_window_conditional": "covered_cells_identify_other_window",
+            "narrowed_cover": "cell_cover_survives_common_narrowing",
+            "narrowed_event_bounds": "cell_bounds_survive_common_narrowing",
+        },
+        "must_verify": [
+            "authentic_primary_tle_epochs_and_coordinate_frames",
+            "independent_proof_all_admissible_parameters_lie_in_listed_cells",
+            "sound_numerical_event_bounds_for_all_parameters_in_each_cell",
+            "nonempty_surviving_domain_after_each_narrowing",
+            "independent_holdout_529_and_quantified_integrator_error",
+            "ground_impact_model_not_just_catalogue_decay_or_altitude_crossing",
+            "all_surviving_RAAN_scenarios_in_union_not_intersection",
+            "other_window_disjoint_from_conde_with_error_bounds",
+        ],
+    }
+
+
 def contracts(rows: list[dict]) -> dict:
     return {
         "schema_version": 2,
@@ -440,6 +493,7 @@ def contracts(rows: list[dict]) -> dict:
         "unresolved_element_scenarios_interface": unresolved_element_scenarios_interface(),
         "scenario_enclosure_interface": scenario_enclosure_interface(),
         "finite_coverage_interface": finite_coverage_interface(),
+        "certified_cell_interface": certified_cell_interface(),
         "scope": "241 actual rows, 238 distinct labels, no fabricated observations",
         "entries": [
             {
