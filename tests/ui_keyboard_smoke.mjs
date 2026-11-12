@@ -64,6 +64,24 @@ try {
     assert.equal(await mapSvg.locator('rect[fill="#fb7185"]').count(), 1,
       'Conde must remain a square reference marker, not an impact circle');
 
+    // Scenario permalink must survive a reload and browser Back/Forward, without
+    // claiming the timestamp is a historical observation.
+    const dateInput = page.locator('input[type="date"]');
+    await dateInput.fill('1963-10-28');
+    const link = page.getByRole('link', { name: /Link para este instante do cenário/ });
+    const href = await link.getAttribute('href');
+    assert.match(href || '', /^#\/map\?at=1963-10-28T12%3A00%3A00\.000Z$/);
+    await link.click();
+    assert.equal(new URL(page.url()).hash, href);
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    await page.getByRole('heading', { name: 'Mapa orbital exploratório' }).waitFor();
+    assert.equal(await page.locator('input[type="date"]').inputValue(), '1963-10-28');
+    await page.goBack({ waitUntil: 'domcontentloaded' });
+    await page.getByRole('heading', { name: 'Mapa orbital exploratório' }).waitFor();
+    await page.goForward({ waitUntil: 'domcontentloaded' });
+    await page.getByRole('heading', { name: 'Mapa orbital exploratório' }).waitFor();
+    assert.equal(await page.locator('input[type="date"]').inputValue(), '1963-10-28');
+
     await page.getByRole('button', { name: 'English' }).click();
     assert.equal(await page.locator('html').getAttribute('lang'), 'en');
     assert.equal(await page.getByRole('link', { name: 'Skip to main content' }).count(), 1);

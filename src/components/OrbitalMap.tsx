@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { OrbitalMapSvg } from './map/OrbitalMapSvg';
 import { clampZoom } from '../lib/mapGeometry';
+import { mapTimeHref, MAP_TIME_START, MAP_TIME_END } from '../lib/tabRoutes';
 import { CONDE_COORDINATES, HISTORICAL_ORBITAL_DATA } from '../lib/constants';
 import { propagateState, generateGroundTrack, computeGroundTrackWithUncertainty } from '../lib/astrodynamics';
 import type { GroundTrackPoint } from '../types/astrodynamics';
@@ -8,8 +9,8 @@ import type { GroundTrackPoint } from '../types/astrodynamics';
 type Lang = 'pt' | 'en';
 type Id = 527 | 528 | 529;
 type Props = { lang: Lang; selectedTimeMs?: number; onTimeChange?: (value: number) => void };
-const START = Date.parse('1963-01-16T21:59:00Z');
-const END = Date.parse('1963-11-08T23:59:59Z');
+const START = MAP_TIME_START;
+const END = MAP_TIME_END;
 const EPOCH = HISTORICAL_ORBITAL_DATA[528].epochDate.getTime();
 // Fixed historical sources; these are DOCUMENTS, not impact coordinates.
 const MATRIX = 'https://github.com/franklinbaldo/conde-incident/blob/a7978c3a75a153b16ab70118a92c434bba674cb7/research/evidence_matrix_C001-C238_2026-11-11.md';
@@ -39,6 +40,7 @@ const copy = {
     nodecay: 'O intervalo do controle não estima a hora de decaimento. Após 08/11, não é propagado o 528.',
     sources: 'Matriz C179#1 / C197#1', nasa: 'Boletim NASA 15/11/1963 (dia apenas)', custody: 'Auditoria TLE',
     land: 'Litoral Natural Earth 1:110m (domínio público)',
+    permalink: 'Link para este instante do cenário (não é uma hora observada)',
     coastlines: 'Mostrar litoral generalizado', graticule: 'Mostrar grade geográfica',
   },
   en: {
@@ -63,6 +65,7 @@ const copy = {
     nodecay: 'This control does not estimate decay time. After 8 Nov, 528 is not propagated.',
     sources: 'Matrix C179#1 / C197#1', nasa: 'NASA bulletin 15 Nov 1963 (day only)', custody: 'TLE custody audit',
     land: 'Natural Earth 1:110m coastlines (public domain)',
+    permalink: 'Link to this scenario instant (not an observed time)',
     coastlines: 'Show generalized coastline', graticule: 'Show geographic grid',
   },
 };
@@ -203,6 +206,7 @@ export function OrbitalMap({ lang, selectedTimeMs, onTimeChange }: Props) {
           {viewButton(t.resetTime, () => { setRunning(false); changeTime(EPOCH); })}
         </div>
         <p className="text-xs text-slate-400">{t.nodecay}</p>
+        <a href={mapTimeHref(time)} className="inline-block rounded text-sm text-cyan-300 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300">{t.permalink}</a>
       </section>
 
       <section className="space-y-3 rounded-lg border border-slate-800 bg-slate-900 p-3" aria-label={t.legend}>

@@ -5,7 +5,7 @@
 
 import React, { useState } from 'react';
 import { Navigation, type TabId } from './components/Navigation';
-import { parseLabRoute, tabHref } from './lib/tabRoutes';
+import { mapTimeHref, parseLabRoute, tabHref } from './lib/tabRoutes';
 import { skipToMain } from './lib/skipToMain';
 import { ExecutiveSummary } from './components/ExecutiveSummary';
 import { OrbitalMap } from './components/OrbitalMap';
@@ -23,14 +23,18 @@ export default function App() {
   const activeTab = route.tab;
   const [lang, setLang] = useState<'pt' | 'en'>('pt');
   const [sharedTimeMs, setSharedTimeMs] = useState<number>(
-    new Date('1963-10-27T14:40:16.132Z').getTime()
+    route.timeMs ?? new Date('1963-10-27T14:40:16.132Z').getTime()
   );
   const [isPythonModalOpen, setIsPythonModalOpen] = useState<boolean>(false);
 
   // Hash URLs are stable even after reload and follow native Back/Forward navigation.
   // Only already-shipped lab tabs are recognized. Unavailable SSG routes remain explicit.
   React.useEffect(() => {
-    const handleHashChange = () => setRoute(parseLabRoute(window.location.hash));
+    const handleHashChange = () => {
+      const next = parseLabRoute(window.location.hash);
+      setRoute(next);
+      if (next.timeMs !== undefined) setSharedTimeMs(next.timeMs);
+    };
     window.addEventListener('hashchange', handleHashChange);
     handleHashChange();
     return () => window.removeEventListener('hashchange', handleHashChange);
@@ -49,7 +53,9 @@ export default function App() {
   // When a pass is selected in the Inverse Inspector, jump directly to Map at that time
   const handleSelectPassFromInverse = (timeMs: number) => {
     setSharedTimeMs(timeMs);
-    navigateTab('map');
+    const target = mapTimeHref(timeMs);
+    if (window.location.hash !== target) window.location.hash = target;
+    setRoute(parseLabRoute(target));
   };
 
   return (
