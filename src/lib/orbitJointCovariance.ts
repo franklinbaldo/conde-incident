@@ -64,7 +64,7 @@ function jointWhiten(c: JointCovarianceMatrix, sigmas: readonly Vec3[]): Whiten 
   const a:number[][]=[];
   for (let i=0;i<n;i++) {
     if (!Array.isArray(c[i]) || c[i].length!==n) return null;
-    const row=c[i].map((x,j)=>x/s[i]/s[j]);
+    const row=c[i].map((x:number,j:number)=>x/s[i]/s[j]);
     if (!row.every(Number.isFinite) || !near(row[i],1)) return null;
     a.push(row);
   }
