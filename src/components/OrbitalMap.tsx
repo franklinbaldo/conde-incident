@@ -14,7 +14,6 @@ import {
   ChevronRight,
   ChevronLeft,
   Calendar,
-  AlertTriangle,
   CheckCircle2,
   Info,
   Radio,
@@ -43,6 +42,7 @@ import {
   NORAD_OBSERVATION_EVENTS,
   LAUNCH_MISSION,
 } from '../lib/constants';
+import { publicMilestones } from '../lib/publicMilestones';
 import {
   propagateState,
   generateGroundTrack,
@@ -83,6 +83,8 @@ const WORLD_LANDMASS_OUTLINES = [
 
 const LAUNCH_MS = new Date('1963-01-16T21:59:00Z').getTime();
 const END_OF_1963_MS = new Date('1963-12-31T23:59:59Z').getTime();
+// Day-only catalogue entries and a claimed Conde encounter are not measured fixes.
+const displayedMilestones = publicMilestones(NORAD_OBSERVATION_EVENTS);
 
 export const OrbitalMap: React.FC<OrbitalMapProps> = ({
   lang,
@@ -103,8 +105,8 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
   const [mapMode, setMapMode] = useState<'google-earth' | '2D' | '3D'>('google-earth');
   const [showSisterSatellites, setShowSisterSatellites] = useState<boolean>(true);
   const [showHorizonMasks, setShowHorizonMasks] = useState<boolean>(true);
-  const [showUncertaintyBuffer, setShowUncertaintyBuffer] = useState<boolean>(true);
-  const [showObservationMarkers, setShowObservationMarkers] = useState<boolean>(true);
+  const [showUncertaintyBuffer, setShowUncertaintyBuffer] = useState<boolean>(false);
+  const [showObservationMarkers, setShowObservationMarkers] = useState<boolean>(false);
   const [showInterTrackVectors, setShowInterTrackVectors] = useState<boolean>(true);
 
   // Google Maps specific camera control
@@ -118,17 +120,11 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
   const [hoveredObsEvent, setHoveredObsEvent] = useState<NoradObservationEvent | null>(null);
 
   // Auto-pause on NORAD observations feature
-  const [pauseOnObservations, setPauseOnObservations] = useState<boolean>(true);
-  const [pauseOnCondeImpact, setPauseOnCondeImpact] = useState<boolean>(true);
+  const [pauseOnObservations, setPauseOnObservations] = useState<boolean>(false);
   const [activeObservationModal, setActiveObservationModal] = useState<NoradObservationEvent | null>(null);
-  const [showImpactBanner, setShowImpactBanner] = useState<boolean>(false);
   const [showAnchorsListDrawer, setShowAnchorsListDrawer] = useState<boolean>(false);
   const [selectedObsMarker, setSelectedObsMarker] = useState<any | null>(null);
   const lastTriggeredObsIdRef = useRef<string | null>(null);
-  const hasTriggeredImpactRef = useRef<boolean>(false);
-
-  // Critical Conde encounter timestamp: 1963-11-08 19:48:00 UTC (Rev #14)
-  const CONDE_IMPACT_PASS_MS = new Date('1963-11-08T19:48:00Z').getTime();
 
   // 3D globe rotation angles (canvas 3D mode)
   const [globeRotY, setGlobeRotY] = useState<number>(40);
@@ -159,8 +155,8 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
   // Find current nearest or active observation milestone
   const currentObsIndex = useMemo(() => {
     let idx = 0;
-    for (let i = 0; i < NORAD_OBSERVATION_EVENTS.length; i++) {
-      if (simTimeMs >= NORAD_OBSERVATION_EVENTS[i].timestampMs) {
+    for (let i = 0; i < displayedMilestones.length; i++) {
+      if (simTimeMs >= displayedMilestones[i].timestampMs) {
         idx = i;
       }
     }
@@ -171,8 +167,8 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
   const stepObservation = (direction: 'next' | 'prev') => {
     let targetIdx = direction === 'next' ? currentObsIndex + 1 : currentObsIndex - 1;
     if (targetIdx < 0) targetIdx = 0;
-    if (targetIdx >= NORAD_OBSERVATION_EVENTS.length) targetIdx = NORAD_OBSERVATION_EVENTS.length - 1;
-    const ev = NORAD_OBSERVATION_EVENTS[targetIdx];
+    if (targetIdx >= displayedMilestones.length) targetIdx = displayedMilestones.length - 1;
+    const ev = displayedMilestones[targetIdx];
     setIsPlaying(false);
     jumpToTime(ev.timestampMs, ev);
   };
@@ -186,25 +182,9 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
         const stepMs = (playbackSpeed * 1000) / 10;
         const next = prev + stepMs;
 
-        // 1. Check for Auto-Pause on Conde Impact Moment (08/11/1963 19:48:00 UTC / 16:48 Bahia)
-        if (pauseOnCondeImpact && !hasTriggeredImpactRef.current) {
-          if (prev < CONDE_IMPACT_PASS_MS && next >= CONDE_IMPACT_PASS_MS) {
-            hasTriggeredImpactRef.current = true;
-            setIsPlaying(false);
-            setShowImpactBanner(true);
-            // Snap camera to Conde on impact pause
-            setGmapCenter({
-              lat: CONDE_COORDINATES.latitude,
-              lng: CONDE_COORDINATES.longitude,
-            });
-            setGmapZoom(7);
-            return CONDE_IMPACT_PASS_MS;
-          }
-        }
-
-        // 2. Check for Auto-Pause on NORAD Historical Observations
+        // Auto-pause on exploratory timeline marks, never on a claimed impact.
         if (pauseOnObservations) {
-          for (const ev of NORAD_OBSERVATION_EVENTS) {
+          for (const ev of displayedMilestones) {
             if (
               prev < ev.timestampMs &&
               next >= ev.timestampMs &&
@@ -227,7 +207,7 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
     }, 100);
 
     return () => clearInterval(interval);
-  }, [isPlaying, playbackSpeed, pauseOnObservations, pauseOnCondeImpact, CONDE_IMPACT_PASS_MS]);
+  }, [isPlaying, playbackSpeed, pauseOnObservations]);
 
   // Current Satellites Telemetry
   const curDate = useMemo(() => new Date(simTimeMs), [simTimeMs]);
@@ -341,7 +321,7 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
 
   // Pre-calculate positions and anchoring benchmarks for each historical NORAD observation epoch
   const noradObservationMarkers = useMemo(() => {
-    return NORAD_OBSERVATION_EVENTS.map((ev) => {
+    return displayedMilestones.map((ev) => {
       const d = new Date(ev.timestampMs);
       const p528 = propagateState(528, d);
       const p527 = propagateState(527, d);
@@ -401,22 +381,6 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
           shortLabel = 'Última Efeméride NORAD 528';
           trackingStation = 'Space-Track / USAF SPADATS 63300.61';
           break;
-        case 'OBS-07':
-          // Critical Bahia Pass (Rev #14)
-          lat = -11.8139;
-          lng = -29.8;
-          altKm = 91;
-          shortLabel = 'Passagem Conde (Rev #14)';
-          trackingStation = 'Corredor Mesosférico (Atlântico Sul)';
-          break;
-        case 'OBS-08':
-          // NORAD 528 official cataloged reentry
-          lat = p528 ? p528.latitude : -32.5;
-          lng = p528 ? p528.longitude : -44.1;
-          altKm = p528 ? p528.altitudeKm : 65;
-          shortLabel = 'Reentrada Catalogada 528';
-          trackingStation = 'Catálogo Oficial de Decaimento NORAD';
-          break;
         case 'OBS-09':
           // NASA SSR Vol 3 #22
           lat = p527 ? p527.latitude : -18.2;
@@ -432,14 +396,6 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
           altKm = p529 ? p529.altitudeKm : 247;
           shortLabel = 'Último TLE NORAD 529';
           trackingStation = 'Space-Track / SPADATS 63364.47';
-          break;
-        case 'OBS-11':
-          // NORAD 529 Reentry
-          lat = -15.0;
-          lng = -55.0;
-          altKm = 70;
-          shortLabel = 'Reentrada Catalogada 529';
-          trackingStation = 'Catálogo Oficial de Decaimento NORAD';
           break;
         default:
           lat = p528 ? p528.latitude : 0;
@@ -474,7 +430,7 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
         p527,
         p529,
         isPast: simTimeMs >= ev.timestampMs,
-        isCurrent: currentObsIndex === ev.order - 1,
+        isCurrent: displayedMilestones[currentObsIndex]?.id === ev.id,
       };
     });
   }, [simTimeMs, currentObsIndex]);
@@ -658,7 +614,7 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
       }
     }
 
-    // Draw Epistemic Uncertainty Buffer / Cone of Probability for NORAD 528
+    // Draw exploratory spread only: not a probability or calibrated interval
     if (showUncertaintyBuffer && envelopes528.length > 1) {
       for (let i = 0; i < envelopes528.length - 1; i++) {
         const e1 = envelopes528[i];
@@ -1005,6 +961,15 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
 
   return (
     <div className="space-y-4">
+      <aside role="note" aria-label={isPt ? 'Limites do mapa orbital' : 'Orbital map limitations'} className="rounded-xl border border-amber-700/60 bg-amber-950/20 px-4 py-3 text-sm leading-relaxed text-amber-100">
+        <p>{isPt
+          ? 'Visualização exploratória, não reconstrução de queda: posições, horários do cursor e faixas são resultados de modelo, não medições terminais. A NASA registrou apenas o dia 8/11/1963 para o decaimento do 528; hora e local não estão determinados. Marcos ilustrativos ocultos por padrão.'
+          : 'Exploratory visualization, not a crash reconstruction: cursor times, positions and bands are model outputs, not terminal measurements. NASA records only November 8, 1963 as the decay date for 528; time and location are undetermined. Illustrative markers are hidden by default.'}</p>
+        <p className="mt-2 flex flex-wrap gap-x-5 gap-y-2">
+          <a className="text-cyan-200 underline underline-offset-4 focus-visible:outline" href="#/research/c197">{isPt ? 'C197–C202: NASA e limite da data' : 'C197–C202: NASA date evidence'}</a>
+          <a className="text-cyan-200 underline underline-offset-4 focus-visible:outline" href="#/research/raan">{isPt ? 'Conflito RAAN e proveniência' : 'RAAN and provenance conflict'}</a>
+        </p>
+      </aside>
       {/* Top Map Toolbar */}
       <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-3 flex flex-wrap items-center justify-between gap-3 text-xs">
         {/* Left: Mode toggles */}
@@ -1060,23 +1025,7 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
             />
             <span className="font-mono text-[11px] flex items-center gap-1">
               <Compass className="w-3 h-3 text-cyan-400" />
-              <span>Buffer de Incerteza (TLE)</span>
-            </span>
-          </label>
-
-          <label className="flex items-center gap-1.5 px-2.5 py-1.5 rounded bg-amber-950/70 border border-amber-700 text-amber-300 cursor-pointer select-none font-mono text-[11px]">
-            <input
-              type="checkbox"
-              checked={pauseOnCondeImpact}
-              onChange={(e) => {
-                setPauseOnCondeImpact(e.target.checked);
-                hasTriggeredImpactRef.current = false;
-              }}
-              className="accent-amber-400 rounded"
-            />
-            <span className="flex items-center gap-1">
-              <Crosshair className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
-              <span>Pausar no Impacto em Conde</span>
+              <span>Faixa sintética (não calibrada)</span>
             </span>
           </label>
 
@@ -1089,7 +1038,7 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
             />
             <span className="flex items-center gap-1">
               <Radio className="w-3 h-3 text-cyan-400 animate-pulse" />
-              <span>Pausar em Obs. NORAD</span>
+              <span>Pausar em marcos simulados</span>
             </span>
           </label>
 
@@ -1102,7 +1051,7 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
             />
             <span className="flex items-center gap-1">
               <Anchor className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Âncoras NORAD ({noradObservationMarkers.length})</span>
+              <span>Marcos ilustrativos ({noradObservationMarkers.length})</span>
             </span>
           </label>
 
@@ -1163,23 +1112,23 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
           <button
             onClick={() => stepObservation('prev')}
             className="px-2.5 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-mono text-[11px] flex items-center gap-1 cursor-pointer"
-            title="Observação Anterior da NORAD"
+            title="Marco exploratório anterior"
           >
             <ChevronLeft className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Obs. Anterior</span>
+            <span className="hidden sm:inline">Marco anterior</span>
           </button>
 
           <select
             value={currentObsIndex}
             onChange={(e) => {
               const idx = Number(e.target.value);
-              const ev = NORAD_OBSERVATION_EVENTS[idx];
+              const ev = displayedMilestones[idx];
               setIsPlaying(false);
               jumpToTime(ev.timestampMs, ev);
             }}
             className="bg-zinc-950 border border-zinc-800 text-cyan-300 text-xs rounded-lg px-2.5 py-1 font-mono cursor-pointer max-w-[200px] sm:max-w-[260px] truncate"
           >
-            {NORAD_OBSERVATION_EVENTS.map((ev, i) => (
+            {displayedMilestones.map((ev, i) => (
               <option key={ev.id} value={i}>
                 #{ev.order} ({ev.utcString.substring(0, 10)}): {ev.titlePt}
               </option>
@@ -1189,9 +1138,9 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
           <button
             onClick={() => stepObservation('next')}
             className="px-2.5 py-1 rounded bg-cyan-950 border border-cyan-700 text-cyan-300 font-mono text-[11px] flex items-center gap-1 cursor-pointer font-semibold hover:bg-cyan-900"
-            title="Próxima Observação da NORAD"
+            title="Próximo marco exploratório"
           >
-            <span className="hidden sm:inline">Próx. Obs.</span>
+            <span className="hidden sm:inline">Próx. marco</span>
             <ChevronRight className="w-3.5 h-3.5" />
           </button>
         </div>
@@ -1298,7 +1247,7 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
                   />
                 ))}
 
-              {/* Epistemic Uncertainty Buffer Rails (Cone of Probability) for NORAD 528 */}
+              {/* Uncalibrated illustrative band for NORAD 528 */}
               {showUncertaintyBuffer && (
                 <>
                   {googleUncertaintyRails.leftSegments.map((seg, idx) => (
@@ -1493,7 +1442,7 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
                 </>
               )}
 
-              {/* NORAD Historical Observation Markers (11 Radar / Ephemeris Anchors) on Google Earth */}
+              {/* Illustrative model milestones: never claimed as radar fixes */}
               {showObservationMarkers &&
                 noradObservationMarkers.map((marker) => {
                   const isCurrent = marker.isCurrent;
@@ -1592,17 +1541,17 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
 
                     <div className="space-y-1 text-[10px] font-mono text-zinc-300 bg-zinc-900/90 p-2 rounded border border-zinc-800">
                       <div className="flex justify-between">
-                        <span className="text-zinc-400">Horário UTC:</span>
+                        <span className="text-zinc-400">Hora do modelo:</span>
                         <span className="text-cyan-300 font-bold">
                           {selectedObsMarker.event.utcString.substring(11, 19)} UTC
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-zinc-400">Horário Bahia:</span>
+                        <span className="text-zinc-400">Conversão Bahia:</span>
                         <span className="text-zinc-200">{selectedObsMarker.event.localTimeString}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-zinc-400">Coordenadas:</span>
+                        <span className="text-zinc-400">Posição ilustrativa:</span>
                         <span className="text-amber-300">{selectedObsMarker.formattedCoord}</span>
                       </div>
                       <div className="flex justify-between">
@@ -1627,7 +1576,7 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
                         }}
                         className="w-full py-1 rounded bg-cyan-600 hover:bg-cyan-500 text-white font-mono text-[10px] font-bold text-center cursor-pointer transition-colors"
                       >
-                        Ver Detalhes da Medição
+                        Ver contexto da simulação
                       </button>
                     </div>
                   </div>
@@ -1647,111 +1596,14 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
           />
         )}
 
-        {/* Hypothetical Conde Impact Event Overlay Drawer / Modal */}
-        {showImpactBanner && (
-          <div className="absolute top-3 left-3 right-3 sm:right-auto sm:max-w-xl bg-zinc-950/95 backdrop-blur-md border-2 border-amber-500/90 rounded-xl p-4 shadow-2xl space-y-3 z-30 animate-in fade-in duration-200">
-            <div className="flex items-start justify-between gap-2 border-b border-amber-900/60 pb-2">
-              <div className="space-y-0.5">
-                <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded bg-amber-950 border border-amber-600 text-amber-300 font-mono font-bold text-[10px] flex items-center gap-1">
-                    <Crosshair className="w-3 h-3 text-amber-400 animate-spin" />
-                    <span>PAUSA AUTOMÁTICA: MOMENTO DO IMPACTO / PASSAGEM EM CONDE</span>
-                  </span>
-                  <span className="text-zinc-500 font-mono text-[10px]">|</span>
-                  <span className="text-[10px] text-amber-400 font-mono font-semibold">
-                    REV #14 (08/11/1963)
-                  </span>
-                </div>
-                <h4 className="text-sm font-bold text-zinc-100 flex items-center gap-2">
-                  <span>Reconstrução Terminal: NORAD 528 sobre a Costa Norte da Bahia</span>
-                </h4>
-              </div>
-              <button
-                onClick={() => setShowImpactBanner(false)}
-                className="text-zinc-400 hover:text-zinc-200 p-1 rounded cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <div className="text-xs text-zinc-300 space-y-2.5">
-              <div className="flex items-center gap-2 text-[11px] font-mono text-amber-300 bg-amber-950/50 p-2 rounded border border-amber-800/50">
-                <Clock className="w-4 h-4 text-amber-400 shrink-0" />
-                <span>1963-11-08 19:48:00 UTC</span>
-                <span className="text-zinc-500">•</span>
-                <span className="text-amber-200 font-bold">16:48:00 (Horário Local da Bahia / UTC-3)</span>
-              </div>
-
-              {/* Physical Parameters of the Conde Encounter */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 font-mono text-[11px]">
-                <div className="p-2 rounded bg-zinc-900 border border-zinc-800">
-                  <div className="text-[9px] text-zinc-500 uppercase">Distância a Conde</div>
-                  <div className="text-amber-300 font-bold text-sm">~844 km</div>
-                  <div className="text-[9px] text-zinc-400">Sobre o Atlântico Sul</div>
-                </div>
-
-                <div className="p-2 rounded bg-zinc-900 border border-zinc-800">
-                  <div className="text-[9px] text-zinc-500 uppercase">Altitude Estimada</div>
-                  <div className="text-rose-400 font-bold text-sm">~91 km</div>
-                  <div className="text-[9px] text-zinc-400">Frenagem Mesosférica</div>
-                </div>
-
-                <div className="p-2 rounded bg-zinc-900 border border-zinc-800 col-span-2 sm:col-span-1">
-                  <div className="text-[9px] text-zinc-500 uppercase">Ajuste Necessário</div>
-                  <div className="text-cyan-300 font-bold text-sm">ΔM = +44,8°</div>
-                  <div className="text-[9px] text-zinc-400">B = 0,022 m²/kg</div>
-                </div>
-              </div>
-
-              {/* Rigorous Epistemological Conclusion */}
-              <div className="p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 text-[11px] space-y-1">
-                <div className="text-zinc-300 font-semibold flex items-center gap-1.5">
-                  <AlertTriangle className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                  <span>Veredito de Falsificação Astrodinâmica:</span>
-                </div>
-                <p className="text-zinc-400 leading-relaxed text-[10px]">
-                  A geometria da órbita polar (<span className="text-cyan-300 font-mono">i = 81,86°</span>) permite que a trajetória cruze a latitude de Conde. Se o objeto de fato caiu em Conde nesta data, esta passagem das <strong className="text-zinc-200">16h48 locais (19h48 UTC)</strong> é o <em>único corredor fisicamente plausível</em> com arrasto balístico típico de alumínio. Sem radares SPADATS após 27/10, a incerteza de fase ao longo da órbita dispersa o ponto em ±1 volta completa (probabilidade empírica de <span className="text-amber-300 font-mono">~0,006%</span>).
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between pt-1 border-t border-zinc-900 text-xs">
-              <button
-                onClick={() => {
-                  setShowImpactBanner(false);
-                  setIsPlaying(true);
-                }}
-                className="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-500 text-black font-bold text-xs flex items-center gap-1.5 cursor-pointer shadow"
-              >
-                <Play className="w-3.5 h-3.5 text-black" />
-                <span>Continuar Simulação</span>
-              </button>
-
-              <button
-                onClick={() => {
-                  setGmapCenter({
-                    lat: CONDE_COORDINATES.latitude,
-                    lng: CONDE_COORDINATES.longitude,
-                  });
-                  setGmapZoom(8);
-                }}
-                className="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs flex items-center gap-1.5 cursor-pointer font-mono"
-              >
-                <Crosshair className="w-3.5 h-3.5 text-rose-400" />
-                <span>Focar em Conde</span>
-              </button>
-            </div>
-          </div>
-        )}
-
         {/* Active NORAD Observation Event Overlay Drawer / Banner */}
-        {activeObservationModal && !showImpactBanner && (
+        {activeObservationModal && (
           <div className="absolute top-3 left-3 right-3 sm:right-auto sm:max-w-lg bg-zinc-950/95 backdrop-blur-md border border-cyan-800/80 rounded-xl p-4 shadow-2xl space-y-3 z-30 animate-in fade-in duration-200">
             <div className="flex items-start justify-between gap-2 border-b border-zinc-800 pb-2">
               <div className="space-y-0.5">
                 <div className="flex items-center gap-2">
                   <span className="px-2 py-0.5 rounded bg-cyan-950 border border-cyan-700 text-cyan-300 font-mono font-bold text-[10px]">
-                    OBSERVAÇÃO HISTÓRICA NORAD #{activeObservationModal.order}
+                    MARCO DE SIMULAÇÃO #{activeObservationModal.order}
                   </span>
                   <span className="text-zinc-500 font-mono text-[10px]">|</span>
                   <span className="text-[10px] text-zinc-400 font-mono">
@@ -1785,7 +1637,7 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
               {/* Status of All 3 Objects at this Observation */}
               <div className="p-2.5 rounded-lg bg-zinc-900 border border-zinc-800/80 space-y-1 font-mono text-[10px]">
                 <div className="text-zinc-400 uppercase tracking-wider font-bold text-[9px] mb-1">
-                  Status Instantâneo dos 3 Corpos:
+                  Estado do modelo (3 corpos):
                 </div>
                 <div className="flex justify-between text-cyan-300">
                   <span>NORAD 528 (Alvo):</span>
@@ -1833,10 +1685,10 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
               <div className="space-y-0.5">
                 <div className="flex items-center gap-1.5 text-cyan-400 font-mono text-xs font-bold">
                   <Anchor className="w-4 h-4 text-cyan-400" />
-                  <span>ÂNCORAS HISTÓRICAS NORAD (11 MEDIÇÕES)</span>
+                  <span>MARCOS DE SIMULAÇÃO (NÃO MEDIÇÕES)</span>
                 </div>
                 <p className="text-[11px] text-zinc-400 leading-tight">
-                  Pontos geodésicos e temporais confirmados por radares SPADATS, efemérides USAF e relatórios NASA em 1963.
+                  Tempos e posições ilustrativos, sem comprovação de medição radar nesses pontos. Não usar como trajetória terminal.
                 </p>
               </div>
               <button
@@ -1900,7 +1752,7 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
                       {isPt ? marker.event.titlePt : marker.event.titleEn}
                     </div>
 
-                    {/* Geodetic anchor coordinates & Radar station */}
+                    {/* Model positions, not original radar observations */}
                     <div className="grid grid-cols-2 gap-1 text-[10px] font-mono bg-zinc-950/80 p-1.5 rounded border border-zinc-800/80">
                       <div>
                         <span className="text-zinc-500">Coord: </span>
@@ -1946,7 +1798,7 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
 
             {/* Footer Summary */}
             <div className="pt-2 border-t border-zinc-800 flex items-center justify-between text-[11px] font-mono text-zinc-400">
-              <span>Total: 11 observações amarradas</span>
+              <span>Marcos ilustrativos: {displayedMilestones.length}</span>
               <button
                 onClick={() => {
                   setShowAnchorsListDrawer(false);
@@ -2077,13 +1929,13 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
             {showUncertaintyBuffer && (
               <div className="flex items-center gap-1.5">
                 <span className="w-2.5 h-1 border border-dashed border-cyan-400 bg-cyan-400/20 inline-block" />
-                <span className="text-cyan-200">Buffer de Incerteza TLE (±1σ)</span>
+                <span className="text-cyan-200">Faixa sintética (sem cobertura calibrada)</span>
               </div>
             )}
             {showObservationMarkers && (
               <div className="flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rotate-45 bg-amber-400 border border-white inline-block" />
-                <span className="text-amber-200 font-semibold">11 Âncoras NORAD SPADATS</span>
+                <span className="text-amber-200 font-semibold">{displayedMilestones.length} marcos simulados</span>
               </div>
             )}
             <div className="flex items-center gap-1.5">
@@ -2186,17 +2038,21 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
           </div>
         </div>
 
+        <p className="text-xs leading-relaxed text-zinc-300">
+          {isPt ? '08/11/1963 é uma data documental, não um horário selecionável de impacto ou de radar.' : 'November 8, 1963 is a documentary date, not a selectable impact or radar timestamp.'}{' '}
+          <a href="#/research/c197" className="text-cyan-300 underline underline-offset-4">{isPt ? 'Examinar o registro NASA C197–C202' : 'Read NASA record C197–C202'}</a>
+        </p>
         {/* Full Year 1963 Time Slider with Milestones & Date Indicators */}
         <div className="space-y-3 pt-1">
           {/* Timeline Track with Interactive Date Pins / Indicators */}
           <div className="relative pt-6 pb-2">
             {/* Markers placed above the slider line for relevant historical dates */}
-            {NORAD_OBSERVATION_EVENTS.map((ev) => {
+            {displayedMilestones.map((ev) => {
               const pct = Math.max(
                 0,
                 Math.min(100, ((ev.timestampMs - LAUNCH_MS) / (END_OF_1963_MS - LAUNCH_MS)) * 100)
               );
-              const isCurrent = currentObsIndex === ev.order - 1;
+              const isCurrent = displayedMilestones[currentObsIndex]?.id === ev.id;
               const is528Reentry = ev.id === 'OBS-07' || ev.id === 'OBS-08';
               const isLaunch = ev.id === 'OBS-01';
 
@@ -2287,30 +2143,9 @@ export const OrbitalMap: React.FC<OrbitalMapProps> = ({
                 color: 'text-cyan-300 border-cyan-700 bg-cyan-950/60 font-semibold',
                 timeMs: new Date('1963-10-27T14:40:00Z').getTime(),
               },
-              {
-                id: 'OBS-07',
-                date: '08/11/1963 (16:48)',
-                label: 'Passagem Conde (Rev #14)',
-                color: 'text-amber-300 border-amber-600 bg-amber-950/70 font-bold',
-                timeMs: new Date('1963-11-08T19:48:00Z').getTime(),
-              },
-              {
-                id: 'OBS-08',
-                date: '08/11/1963 (23:59)',
-                label: 'Decaimento Oficial 528',
-                color: 'text-rose-400 border-rose-700 bg-rose-950/70 font-bold',
-                timeMs: new Date('1963-11-08T23:59:00Z').getTime(),
-              },
-              {
-                id: 'OBS-11',
-                date: '31/12/1963',
-                label: 'Decaimento NORAD 529',
-                color: 'text-purple-400 border-purple-800/80 bg-purple-950/40',
-                timeMs: new Date('1963-12-31T23:59:00Z').getTime(),
-              },
             ].map((badge) => {
               const isActive = Math.abs(simTimeMs - badge.timeMs) < 12 * 3600 * 1000;
-              const obs = NORAD_OBSERVATION_EVENTS.find((o) => o.id === badge.id);
+              const obs = displayedMilestones.find((o) => o.id === badge.id);
               return (
                 <button
                   key={badge.id}
