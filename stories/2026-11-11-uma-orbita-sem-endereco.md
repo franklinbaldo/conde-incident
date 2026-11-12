@@ -1,46 +1,66 @@
 ---
 type: Story
-description: "Capítulo 02 do Caderno Conde: integrador r/v sintético, limitações da validação orbital e distinção entre simulação e evidência histórica."
 title: "Uma órbita sem endereço"
+description: "A data de decaimento do NORAD 528 não revela onde terminou sua trajetória nem demonstra relação com a notícia da esfera em Conde."
 date: "2026-11-11"
-summary: "Um novo cálculo acompanha posição e velocidade ao mesmo tempo. Sete testes passaram; nenhum deles ainda diz onde o objeto 528 reentrou."
+summary: "O registro da NASA informa o dia em que um objeto deixou a órbita. Por que isso ainda não permite dizer se algo caiu em Conde?"
 chapter: "02"
 author: "Coruja · Caderno de investigação"
-status: "Modelo experimental; localização não demonstrada"
+status: "Reconstrução orbital inconclusiva; impacto não demonstrado"
 ---
 
 # Uma órbita sem endereço
 
-**Como reconstruir os últimos movimentos de um objeto espacial quando o documento mais seguro informa apenas o dia em que ele deixou a órbita?** A pergunta atravessou o [primeiro capítulo](https://github.com/franklinbaldo/conde-incident/blob/main/stories/2026-11-11-o-dia-em-que-dois-relatos-se-cruzaram.md). Ali estavam dois fios que não se tocavam: o registro de decaimento de um componente orbital e a notícia de uma esfera em Conde, na Bahia. Agora apareceu uma ferramenta para submeter uma das possíveis ligações a testes mais rigorosos. Ainda não apareceu a ligação propriamente dita.
+**Se sabemos o dia em que um satélite deixou a órbita, por que ainda não sabemos onde ele terminou sua viagem?** A pergunta parece simples. É também uma das mais difíceis da investigação sobre a esfera que teria surgido em Conde, na Bahia, em novembro de 1963.
 
-## O passo que faltava ao cálculo
+Uma notícia atribuída à Rádio Tupi descreveu uma esfera metálica e uma cratera. Um boletim da NASA registrou que o objeto espacial conhecido como **NORAD 528** teve seu decaimento orbital catalogado em **8 de novembro de 1963**. A coincidência é sugestiva. Mas, para descobrir se as duas histórias podem ter uma origem comum, falta precisamente o que um mapa exigiria: **posição e hora confiáveis ao longo da trajetória final**.
 
-Na [PR experimental #5 do Castor](https://github.com/franklinbaldo/conde-incident/pull/5), foi implementado na branch um núcleo inicial que calcula **posição e velocidade juntas**, a cada passo. Em vez de escolher uma longitude ou ajustar a fase orbital até passar sobre Conde, o programa integra o movimento em coordenadas cartesianas inerciais. A gravidade terrestre é seu ponto de partida; a deformação gravitacional representada por *J2* pode ser incluída. O arrasto atmosférico só entra se alguém fornecer uma função de densidade, o parâmetro aerodinâmico e a procedência desses dados.
+## O que o boletim não contou
 
-Parece um detalhe técnico. Não é. Ao forçar o modelo a carregar simultaneamente posição, velocidade, forças e condições iniciais, fica mais difícil esconder uma escolha arbitrária dentro de um mapa convincente. O código também distingue um **limiar de altitude definido pelo pesquisador** do impacto no solo: cruzar uma superfície matemática não comprova onde caiu qualquer destroço.
+Na [página impressa 8 do *Satellite Situation Report*, de 15 de novembro de 1963](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf), a NASA registra o objeto **1963-003B** entre os que decaíram, com a data de 8 de novembro. É um registro contemporâneo importante, mas de alcance delimitado.
 
-A implementação está disponível em [`orbitPhysics.ts`](https://github.com/franklinbaldo/conde-incident/blob/3f68ed2ed245efa84818e032a70fc2be11825de2/src/lib/orbitPhysics.ts), com [protocolo de hipóteses e limitações](https://github.com/franklinbaldo/conde-incident/blob/3f68ed2ed245efa84818e032a70fc2be11825de2/research/ORBIT_PHYSICS.md). Ela não substitui o SGP4 já usado no projeto: elementos orbitais médios de um TLE não são, automaticamente, a posição e a velocidade osculadoras exigidas por esse novo integrador. **Atualização editorial:** uma fatia independente de integração e refinamento r/v foi posteriormente [incorporada à `main` na PR #78](https://github.com/franklinbaldo/conde-incident/pull/78); a implementação e os sete testes narrados aqui são os da versão histórica identificada por SHA, não uma contagem dos testes atuais.
+Ele não diz em que instante o objeto atravessou as camadas densas da atmosfera, não informa sua posição terminal e não registra fragmentos recolhidos no litoral brasileiro.
 
-## Sete verificações. Nenhuma coordenada de queda.
+Para enxergar o tamanho dessa lacuna, pense em uma embarcação cujo diário informa apenas o dia em que deixou de aparecer nos registros. Saber o dia não permite identificar em que trecho de um oceano ela estava. Na órbita terrestre, o problema tem ainda outras variáveis: velocidade, orientação do caminho, perturbações gravitacionais e resistência atmosférica.
 
-Os [sete testes automatizados](https://github.com/franklinbaldo/conde-incident/blob/3f68ed2ed245efa84818e032a70fc2be11825de2/tests/orbitPhysics.test.mjs) exercitam situações construídas para conferir consistência do programa: conservação de energia e momento angular sem arrasto, comportamento do termo J2, efeito dissipativo de uma atmosfera sintética, refinamento do instante em que se cruza uma altitude, rejeição de entradas inválidas, reprodução de uma amostra com a mesma semente e recuperação aproximada de velocidade a partir de posições **geradas pelo próprio modelo**. A [execução no GitHub Actions](https://github.com/franklinbaldo/conde-incident/actions/runs/43093340793) passou no commit `3f68ed2`.
+O **dia do decaimento** é uma pista. Não é um endereço.
 
-Isso comprova que os controles escolhidos foram satisfeitos pelo código naquela versão. **Não comprova uma trajetória de 1963.** O último teste é especialmente instrutivo: recuperar parâmetros quando a resposta foi produzida pelo mesmo simulador não equivale a prevê-los diante de observações históricas desconhecidas. O teste cego com os objetos **527 e 529** ainda não foi realizado; os dados observacionais originais necessários não foram estabelecidos com proveniência e referencial compatíveis.
+## Dois companheiros poderiam indicar o caminho?
 
-## O documento que continua impondo o limite
+O 528 não era o único objeto daquele lançamento. Os números de catálogo **527 e 529** identificam outros dois objetos que continuaram em órbita depois de 8 de novembro. À primeira vista, eles parecem oferecer uma saída: se partiram da mesma missão, talvez seus movimentos revelem o percurso do terceiro.
 
-Na [página impressa 8 do *Satellite Situation Report* da NASA, de 15 de novembro de 1963](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf), a entrada **1963 3B** aparece na lista de objetos decaídos com a data **8 NOV 63**. É uma fonte contemporânea diretamente inspecionável. **Não traz hora, posição terminal ou registro de recuperação em Conde.**
+A ideia é plausível como hipótese de investigação, não como triangulação pronta. Objetos lançados juntos podem adquirir velocidades e trajetórias ligeiramente diferentes. Com o passar do tempo, essas diferenças acumulam separações grandes. Encontrar os outros dois em determinado ponto **não revela onde o 528 estava naquele mesmo instante**.
 
-Além disso, a [matriz histórica C001–C238 da PR #1](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md) registra um conflito ainda não resolvido: a orientação orbital expressa por RAAN surge como cerca de **198,5261°** em uma série derivada e **284,1520°** na configuração anterior do site. Os valores não podem ser combinados nem reduzidos a uma média. Antes de calcular a última passagem, é preciso saber a época, a origem e a natureza de cada conjunto de elementos.
+Eles podem ajudar a estudar condições orbitais comuns, desde que existam observações datadas, referenciais compatíveis e erros conhecidos. Sem isso, a origem compartilhada é contexto, não medição da posição perdida.
 
-E as hipóteses concorrentes? A ideia de uma reentrada associada à notícia baiana continua **possível, mas não demonstrada**. A hipótese de um boato jornalístico e a de um acontecimento local banal ampliado pelo noticiário não são decididas por um teste numérico de conservação de energia. Nenhuma dessas alternativas ganhou uma testemunha física nesta rodada. O índice administrativo do [Project Blue Book, C232–C238](https://github.com/franklinbaldo/conde-incident/pull/1) classifica o caso como `Other (HOAX)`. **Atualização documental:** o [dossiê original foi localizado e documentado no NARA na PR #108](https://github.com/franklinbaldo/conde-incident/pull/108), com a [referência arquivística NAID 302531012](https://catalog.archives.gov/id/302531012). Essa rubrica administrativa não certifica a origem da notícia nem decide, sozinha, o que aconteceu no solo. Os documentos pertencem a uma cadeia de apuração, não a um instrumento de rastreamento orbital.
+## O perigo de escolher Conde antes de calcular
 
-## A próxima prova precisa vir de fora do simulador
+É possível desenhar trajetórias matematicamente coerentes. Considerar a gravidade da Terra, sua distribuição desigual de massa e a resistência do ar permite explorar caminhos possíveis. Esses cálculos são úteis para testar se um cenário contradiz a física.
 
-O avanço é real, porém metodológico: existe agora um cálculo que permite testar trajetórias inteiras sem lhes atribuir um endereço antecipadamente. O próximo salto exigirá **épocas e elementos originais rastreáveis para 527, 528 e 529**, estados compatíveis, condições atmosféricas justificadas e uma previsão confrontada com dados reservados fora do ajuste. Se o modelo não resistir a esse confronto, o fracasso será parte da reportagem.
+Mas uma trajetória calculada **não se torna histórica só porque o desenho atravessa a Bahia**.
 
-Por enquanto, o objeto 528 tem uma data documental de decaimento. **Não tem, nesta investigação, uma coordenada de reentrada demonstrada.**
+Para reconstruir um movimento real, o ponto de partida precisa vir de observações verificáveis, não de uma coordenada escolhida para coincidir com o relato. É necessário saber a época dos elementos orbitais, sua procedência, o referencial utilizado e a incerteza da medida. Se o modelo utiliza dados produzidos por ele mesmo para conferir a resposta, demonstra consistência matemática, não a localização de um objeto de 1963.
+
+O cenário fica ainda mais delicado quando diferentes conjuntos de elementos atribuídos ao 528 não concordam integralmente. A investigação precisa estabelecer a origem de cada registro antes de decidir qual pode representar a trajetória histórica. Fazer uma média de números de procedência incerta não recuperaria uma observação perdida.
+
+**A pergunta não é se conseguimos produzir uma rota que chegue a Conde. É se os registros obrigam, permitem ou excluem essa rota.** Até agora, essa distinção não foi resolvida.
+
+## E a esfera mencionada no rádio?
+
+O [registro FBIS da transmissão atribuída à Rádio Tupi, página 1](https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf) conserva o relato de uma esfera, uma cratera e outros detalhes extraordinários. Ele documenta a circulação de uma notícia, **não uma medição da trajetória de um satélite** nem um exame autenticado de destroços.
+
+Mesmo que se demonstrasse uma reentrada sobre uma região próxima à Bahia, ainda faltaria verificar se algum fragmento sobreviveu até o solo e se poderia ser identificado com o objeto descrito pelo noticiário. Também permanece aberta a possibilidade de que a notícia tenha outra origem, sem ligação física com o 528.
+
+Essas alternativas precisam de provas diferentes; nenhuma deve vencer por ser a mais atraente.
+
+## A observação que pode mudar o caso
+
+O caminho mais promissor é recuperar **elementos de rastreamento originais do NORAD 528 próximos de 8 de novembro de 1963**, com data, estação, referencial e margem de erro. Uma trajetória reconstruída a partir desses elementos poderia então ser confrontada com registros independentes que não tenham sido usados no ajuste.
+
+Se o percurso assim sustentado for incompatível com Conde, a hipótese orbital perderá força. Se for compatível, isso ainda não provará a esfera ou o impacto: será necessário procurar evidências no solo e estabelecer que pertencem àquele objeto.
+
+**Existe, em algum arquivo de rastreamento, uma última observação do 528 capaz de aproximar a data registrada pela NASA de um lugar real no mapa?**
 
 ---
 
-**Nota de verificação e atualização:** este capítulo documenta a experiência inicial da PR #5 e o conjunto de sete testes no commit citado. O avanço posterior da PR #78 e a recuperação documental da PR #108 foram anotados para não conservar afirmações vencidas. A aprovação sintética não equivale à validação histórica da órbita, à confirmação de destroços em Conde ou a uma coordenada de reentrada.
+**Fontes e limites da apuração:** [NASA, *Satellite Situation Report*, 15/11/1963, p. impressa 8](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf); [FBIS/EOP-UAP-D001, p. 1](https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf). A [análise orbital reproduzível](https://github.com/franklinbaldo/conde-incident/blob/3f68ed2ed245efa84818e032a70fc2be11825de2/research/ORBIT_PHYSICS.md) descreve hipóteses de dinâmica e suas limitações; cálculos exploratórios e verificações sintéticas não substituem observações instrumentais. A [matriz histórica](https://github.com/franklinbaldo/conde-incident/blob/main/research/evidence_matrix_C001-C238_2026-11-11.md) preserva a genealogia documental. Não se demonstrou hora, latitude, longitude ou impacto em Conde.
