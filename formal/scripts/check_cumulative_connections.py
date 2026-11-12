@@ -239,12 +239,12 @@ def validate(graph: dict) -> dict:
         if o["measurement_error"] is None and "error_interval" not in o["pending"]:
             raise ValueError(f"unknown uncertainty not tracked: {oid}")
         if src["source_family"] == NASA_SSR_FAMILY:
-        if o.get("observed_at_utc") is not None or o.get("measurement_error") is not None:
-            raise ValueError(f"unverified SSR epoch/error promoted: {oid}")
-        if (o.get("reference_definition") != "UNRESOLVED_FROM_SOURCE_TABLE" or
-            not {"observed_epoch", "error_interval", "forward_model_validation",
-                 "source_row_facsímile_recheck"}.issubset(o.get("pending", []))):
-            raise ValueError(f"missing unresolved SSR caveats: {oid}")
+            if o.get("observed_at_utc") is not None or o.get("measurement_error") is not None:
+                raise ValueError(f"unverified SSR epoch/error promoted: {oid}")
+            if (o.get("reference_definition") != "UNRESOLVED_FROM_SOURCE_TABLE" or
+                not {"observed_epoch", "error_interval", "forward_model_validation",
+                     "source_row_facsímile_recheck"}.issubset(o.get("pending", []))):
+                raise ValueError(f"missing unresolved SSR caveats: {oid}")
         if not o.get("matrix_local_id") or not o.get("source_independence_family"):
             raise ValueError(f"missing evidence lineage: {oid}")
         if o["constraint_status"] != PENDING:
