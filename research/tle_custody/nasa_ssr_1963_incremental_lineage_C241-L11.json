@@ -1,0 +1,41 @@
+{
+  "record_id": "C241-L11",
+  "catalog_object": "1963-003B",
+  "norad_catalog_id_modern_secondary": 528,
+  "source_role": "PRIMARY_PERIOD_DOCUMENTARY_FACSIMILES_NOT_ORIGINAL_TLE_LINES",
+  "sources": [
+    {
+      "ntrs_id": "19640001198",
+      "url": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf",
+      "publication_date": "1963-11-15",
+      "report_series": "X-533-63-1_VOL_3_NO_22",
+      "sha256": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+      "page_index_zero_based": 9,
+      "page_printed": 8,
+      "reading_method": "HUMAN_VISUAL_SCAN_NOT_MACHINE_OCR",
+      "human_table_observation": {
+        "heading": "PLEASE ADD THE FOLLOWING TO THE DECAYED OBJECTS LIST",
+        "kind": "ADDITION_TO_DECAYED_OBJECTS_LIST",
+        "object_printed": "1963 3B",
+        "decay_day": "1963-11-08"
+      }
+    },
+    {
+      "ntrs_id": "19640002493",
+      "url": "https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf",
+      "publication_date": "1963-11-30",
+      "report_series": "X-533-63-1_VOL_3_NO_23",
+      "sha256": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+      "page_index_zero_based": 9,
+      "page_printed": 8,
+      "reading_method": "HUMAN_VISUAL_SCAN_NOT_MACHINE_OCR",
+      "human_table_observation": {
+        "heading": "PLEASE ADD THE FOLLOWING TO THE DECAYED OBJECTS LIST",
+        "kind": "INCREMENTAL_DECAYED_OBJECTS_ADDITIONS",
+        "listed_objects": ["1962 SIGMA 1", "1963 9B", "1963 45A"],
+        "1963_3B_in_additions": false
+      }
+    }
+  ],
+  "epistemic_limit": "Document inclusion and omission in successive increment-only lists are not two radar confirmations; 8 Nov is day-only and no terminal event is observed."
+}
