@@ -241,3 +241,53 @@ cartesianas primárias independentes e com RAAN conflitante. As premissas
 racionais da PR #43 são declaradas, **não** domínios históricos
 certificados por Lean. Os testes não fornecem holdouts originais dos objetos
 527/529, densidade de 1963 nem ponto/hora da reentrada do 528: **NOT_RUN**.
+
+
+## Auditoria de integridade da saída de domínios declarados (Castor, 12/11/2026)
+
+**Falha evitada:** a ponte física aceitava a lista `parameters[*].admissible`
+de um JSON supostamente produzido pela [PR #43](https://github.com/franklinbaldo/conde-incident/pull/43)
+sem verificar os respectivos intervalos **originais**, os rótulos por
+parâmetro ou a contagem/status global dos cenários. Bastava alterar
+`admissible` após a auditoria para **alargar o domínio** ou falsificar
+`CONTRADICTORY`/`ONE_DECLARED_FEASIBLE`. Isso permitiria propagar
+velocidades não justificadas nem mesmo pelas premissas numéricas declaradas.
+
+A ponte agora exige, para cada `vx/vy/vz`, `initial` e `admissible` em
+frações racionais exatas. Verifica com `BigInt` a inclusão
+`initial.min <= admissible.min <= admissible.max <= initial.max`,
+recalcula `EMPTY/REDUCED/UNCHANGED`, reconcilia
+`CONTRADICTORY/REDUCED/UNCHANGED` do cenário e reconcilia
+`scenarios_declared`, `scenarios_with_nonempty_intervals` e o resumo
+`MULTIPLE/ONE/NO_DECLARED_FEASIBLE`. A rastreabilidade só permite
+componentes de velocidade; uma etiqueta `SYNTHETIC_ONLY` exige URI
+`synthetic:`, e `DECLARED_NOT_AUDITED` exige HTTPS e ID estilo Cxxx.
+Entradas inconsistentes falham **antes** de qualquer simulação. Domínios
+contraditórios coerentemente reportados continuam isolados por cenário.
+
+**Limite:** essa segunda checagem detecta adulteração de status e expansão,
+mas não verifica se cada restrição original foi efetivamente aplicada.
+O campo `trace` vindo da #43 não carrega os próprios intervalos das
+restrições; para auditoria end-to-end será necessário o input original com
+SHA, a identidade documental, sua independência e uma certificação Lean
+4.35.0 verificável. Nem o JSON declarado nem a interseção numérica são
+provas de que tais intervalos descrevam o objeto histórico.
+
+Os testes adversariais são **SINTÉTICOS**, em
+`tests/orbitDeclaredDomainBridge.test.mjs`: aumento racional de domínio
+(inclusive alteração menor que uma ULP), troca de rótulo por parâmetro,
+contradição falsa, contagem de cenários falsificada, `initial` ausente ou
+invertido e linhagem sintética reetiquetada como histórica. A suíte anterior
+de interseção IEEE-754, propagação J2 e seed continua presente.
+Executar com Node 22 e o workflow `orbit-physics.yml` no HEAD da PR #5.
+
+**Linhagem documental:** matriz cumulativa C197, [PR #1](https://github.com/franklinbaldo/conde-incident/pull/1),
+remete à edição original NASA/Goddard *Satellite Situation Report*
+vol. 3 nº 22 (15/11/1963), p. impressa 8, [NTRS 19640001198](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf).
+Registra somente **08/11/1963** para decaimento de 1963-003B.
+C179–C185 trazem elementos espelhados de linhagem AFSPC/NORAD que
+não são medições independentes, e há conflito de RAAN 198.5261°
+versus 284.1520°. Não se inferem hora, local de reentrada, impacto
+nem probabilidade. **Holdout histórico original 527/529, certificação
+Lean de caixas históricas, modelo de arrasto de 1963 e SGP4 baseline
+comparável: NOT_RUN.**
