@@ -52,6 +52,12 @@
       "id": "RIO_PRESS_UNINSPECTED",
       "kind": "NEWSPAPER_QUOTED_NOT_READ",
       "independence_limit": "Original issue and informant not inspected; no independent witness or publication time established."
+    },
+    {
+      "id": "BLUEBOOK_DERIVATIVE_CATALOGUES",
+      "kind": "index_or_external_metadata",
+      "independence": "ARCHIVAL_INDICES_NOT_SENSORS",
+      "comment": "Case index and secondary web catalogue are not direct observation; external 9737078 to NARA NAID identity remains UNVERIFIED."
     }
   ],
   "sources": [
@@ -173,7 +179,12 @@
       "work_id": "NARA_BLUEBOOK_CONDE_FILEUNIT_302531012",
       "status": "ORIGINAL_DIGITAL_OBJECT_VISUALLY_INSPECTED_QUOTES_PRESS",
       "locator": "NARA NAID 302531012 / digital object 302531014 / T1206 reel 49 / 0810.jp2; telegram USAIRA Rio 14 NOV 1963",
-      "url": "https://catalog.archives.gov/medialz/partners/dc-metro/rg-341/597821/T1206-ProjectBlueBook_0049/images/0810.jp2"
+      "url": "https://catalog.archives.gov/medialz/partners/dc-metro/rg-341/597821/T1206-ProjectBlueBook_0049/images/0810.jp2",
+      "file_unit_id": "NARA_BB_UNIT_302531012",
+      "nara_object_id": 302531014,
+      "sha256_reported": "136be026e23acdd5e7ff0a5307e04bef799249b48346072a43cae1506be37ce9",
+      "bytes_reported": 1865459,
+      "custody_note_path": "research/archives/nara_bluebook_conde_naid_302531012_2026-11-12.md"
     },
     {
       "id": "O_GLOBO_19631108_UNINSPECTED",
@@ -182,6 +193,68 @@
       "status": "UNINSPECTED_NEWSPAPER_QUOTED_BY_USAIRA_NOT_AUTHENTICATED",
       "locator": "O Globo, 08/11/1963; cited by USAIRA 14/11; original issue, page, edition and hour not inspected",
       "url": null
+    },
+    {
+      "id": "BLUEBOOK_CASES_INDEX_1963",
+      "family": "BLUEBOOK_DERIVATIVE_CATALOGUES",
+      "work_id": "PBB_CASES_1959_1965_INDEX",
+      "url": "https://documents.theblackvault.com/bluebookdesk/pbbcases-1959-1965.pdf",
+      "locator": "Texto extraído: 1-30 NOVEMBER 1963 SIGHTINGS; 8 | Conde, Bahia, Brazil | Civilian | Other (HOAX); fac-símile da página não inspecionado na matriz",
+      "status": "SECONDARY_HOSTED_INDEX_TEXT_ONLY"
+    },
+    {
+      "id": "DARK_FOREST_CASE_9737078",
+      "family": "BLUEBOOK_DERIVATIVE_CATALOGUES",
+      "work_id": "DARK_FOREST_CASE_CATALOG_9737078",
+      "url": "https://darkforestarchive.com/catalog/doc/1963-11-9737078-Conde-Bahia-BRAZIL.pdf",
+      "locator": "Página HTML de metadados externos: pages 1-3, USAF AIRA; ID 9737078 NÃO conciliado documentalmente ao NAID 302531012",
+      "status": "EXTERNAL_METADATA_NOT_ORIGINAL_AND_NOT_CROSSWALKED"
+    },
+    {
+      "id": "NARA_BLUEBOOK_RG341_GUIDE",
+      "family": "USAF_AIRA_BLUEBOOK",
+      "work_id": "NARA_BLUEBOOK_GENERAL_HOLDINGS_GUIDE",
+      "url": "https://www.archives.gov/research/military/air-force/ufos",
+      "locator": "Guia custodiante geral; não identifica sozinho o item externo 9737078",
+      "status": "OFFICIAL_GENERAL_ARCHIVAL_GUIDE"
+    },
+    {
+      "id": "NARA_BB_UNIT_302531012",
+      "family": "USAF_AIRA_BLUEBOOK",
+      "work_id": "NARA_FILEUNIT_302531012",
+      "url": "https://catalog.archives.gov/id/302531012",
+      "locator": "NARA RG341; series NAID 597821; fileUnit 302531012; T1206 roll 49; 3 digital objects",
+      "status": "NARA_FILEUNIT_METADATA_CHECKED_BY_LONTRA_NOT_NEW_FIELD_REPORT",
+      "naid": 302531012,
+      "series_naid": 597821,
+      "microfilm": "T1206 roll 49",
+      "custody_note_path": "research/archives/nara_bluebook_conde_naid_302531012_2026-11-12.md"
+    },
+    {
+      "id": "NARA_BB_CARD_302531013",
+      "family": "USAF_AIRA_BLUEBOOK",
+      "work_id": "NARA_BB_CARD_302531013",
+      "file_unit_id": "NARA_BB_UNIT_302531012",
+      "url": "https://catalog.archives.gov/medialz/partners/dc-metro/rg-341/597821/T1206-ProjectBlueBook_0049/images/0809.jp2",
+      "locator": "PROJECT 10073 RECORD CARD / HOAX, 08 Nov 1963; classificação administrativa sem inspeção local",
+      "status": "NARA_ORIGINAL_DIGITAL_OBJECT_VISUALLY_INSPECTED_BY_LONTRA_NOT_FIELD_OBSERVATION",
+      "nara_object_id": 302531013,
+      "sha256_reported": "4e8e460cfe8dfa0f0d6ea6b02017e6ff63915935dc5be5bde8e96f52faf6f326",
+      "bytes_reported": 1756950,
+      "custody_note_path": "research/archives/nara_bluebook_conde_naid_302531012_2026-11-12.md"
+    },
+    {
+      "id": "NARA_USAIRA_C116_302531015",
+      "family": "USAF_AIRA_BLUEBOOK",
+      "work_id": "NARA_USAIRA_C116_302531015",
+      "file_unit_id": "NARA_BB_UNIT_302531012",
+      "url": "https://catalog.archives.gov/medialz/partners/dc-metro/rg-341/597821/T1206-ProjectBlueBook_0049/images/0811.jp2",
+      "locator": "USAIRA Rio, 21 Nov 1963; referência C-113, repete apuração consular não verificada",
+      "status": "NARA_ORIGINAL_DIGITAL_OBJECT_VISUALLY_INSPECTED_BY_LONTRA_NOT_FIELD_OBSERVATION",
+      "nara_object_id": 302531015,
+      "sha256_reported": "f9c55ab0b14d6e121a4419bef72519a68db29a9ceea6c5bca5ea31fb826cdce7",
+      "bytes_reported": 1852266,
+      "custody_note_path": "research/archives/nara_bluebook_conde_naid_302531012_2026-11-12.md"
     }
   ],
   "dependencies": [
@@ -224,6 +297,31 @@
       "from": "NARA_AIRA_TELEGRAM_19631114",
       "to": "O_GLOBO_19631108_UNINSPECTED",
       "kind": "quotes_uninspected_source"
+    },
+    {
+      "from": "NARA_BB_CARD_302531013",
+      "to": "NARA_BB_UNIT_302531012",
+      "kind": "part_of_archival_unit"
+    },
+    {
+      "from": "NARA_AIRA_TELEGRAM_19631114",
+      "to": "NARA_BB_UNIT_302531012",
+      "kind": "part_of_archival_unit"
+    },
+    {
+      "from": "NARA_USAIRA_C116_302531015",
+      "to": "NARA_BB_UNIT_302531012",
+      "kind": "part_of_archival_unit"
+    },
+    {
+      "from": "NARA_USAIRA_C116_302531015",
+      "to": "NARA_AIRA_TELEGRAM_19631114",
+      "kind": "refers_to_prior_telegram"
+    },
+    {
+      "from": "NARA_USAIRA_C116_302531015",
+      "to": "DOS_A628_19631120",
+      "kind": "reports_shared_consular_account"
     }
   ],
   "citations": [
@@ -394,6 +492,41 @@
       "relation": "documentary_comparison",
       "scope": "NO_LINK_TO_CONDE_PHYSICAL_EVENT",
       "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C238#1"
+    },
+    {
+      "occurrence": "C232#1",
+      "source_id": "BLUEBOOK_CASES_INDEX_1963",
+      "relation": "archival_status",
+      "scope": "BLUEBOOK_INDEX_HOAX_ADMINISTRATIVE_ONLY",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C232#1"
+    },
+    {
+      "occurrence": "C232#1",
+      "source_id": "NARA_BB_CARD_302531013",
+      "relation": "documentary_comparison",
+      "scope": "NARA_CASE_CARD_HOAX_NO_FIELD_VERIFICATION",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C232#1"
+    },
+    {
+      "occurrence": "C233#1",
+      "source_id": "BLUEBOOK_CASES_INDEX_1963",
+      "relation": "metadata_limit",
+      "scope": "EXTRACTED_TEXT_NO_INDEX_FACSIMILE_REVIEW",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C233#1"
+    },
+    {
+      "occurrence": "C234#1",
+      "source_id": "DARK_FOREST_CASE_9737078",
+      "relation": "archive_metadata",
+      "scope": "EXTERNAL_9737078_NARA_CROSSWALK_NOT_PROVEN",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C234#1"
+    },
+    {
+      "occurrence": "C235#1",
+      "source_id": "NARA_BLUEBOOK_RG341_GUIDE",
+      "relation": "archive_metadata",
+      "scope": "GENERAL_NARA_HOLDINGS_NOT_CASE_PROOF",
+      "snapshot_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C235#1"
     }
   ],
   "contracts": [

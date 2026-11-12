@@ -68,7 +68,8 @@ def snapshot_aliases(report: dict, rows: list[dict]) -> list[dict]:
 ROW = re.compile(r"^\|\s*(?:\*\*)?(C[0-9]+)(?:\*\*)?\s*\|")
 VALID_RELATIONS = {
     "transcribes", "quotes_uninspected_source", "catalogue_of_same_work",
-    "later_issue_same_series", "aggregates_from",
+    "later_issue_same_series", "aggregates_from", "part_of_archival_unit",
+    "refers_to_prior_telegram", "reports_shared_consular_account",
 }
 CITATION_RELATIONS = {
     "reported_claim", "quotes_uninspected_source", "measured_index",
@@ -87,12 +88,23 @@ PINNED_GROUPS = {
     "NTRS_19640001198": "NORAD_NASA_TRACKING",
     "AFSPC_MIRROR_528": "NORAD_NASA_TRACKING",
     "AFSPC_MIRROR_529": "NORAD_NASA_TRACKING",
+    "NARA_BB_UNIT_302531012": "USAF_AIRA_BLUEBOOK",
+    "NARA_BB_CARD_302531013": "USAF_AIRA_BLUEBOOK",
+    "NARA_AIRA_TELEGRAM_19631114": "USAF_AIRA_BLUEBOOK",
+    "NARA_USAIRA_C116_302531015": "USAF_AIRA_BLUEBOOK",
+    "O_GLOBO_19631108_UNINSPECTED": "RIO_PRESS_UNINSPECTED",
 }
 PINNED_EDGE_KINDS = {
     ("FBIS_EOP_UAP_D001", "RADIO_TUPI_19631108"): "transcribes",
     ("NTRS_19640001198", "NASA_SSR_19631115"): "catalogue_of_same_work",
     ("CELESTRAK_SPACE_WEATHER", "GFZ_KP_AP_SERIES"): "aggregates_from",
     ("CELESTRAK_SPACE_WEATHER", "NRC_F107_SERIES"): "aggregates_from",
+    ("NARA_AIRA_TELEGRAM_19631114", "O_GLOBO_19631108_UNINSPECTED"): "quotes_uninspected_source",
+    ("NARA_BB_CARD_302531013", "NARA_BB_UNIT_302531012"): "part_of_archival_unit",
+    ("NARA_AIRA_TELEGRAM_19631114", "NARA_BB_UNIT_302531012"): "part_of_archival_unit",
+    ("NARA_USAIRA_C116_302531015", "NARA_BB_UNIT_302531012"): "part_of_archival_unit",
+    ("NARA_USAIRA_C116_302531015", "NARA_AIRA_TELEGRAM_19631114"): "refers_to_prior_telegram",
+    ("NARA_USAIRA_C116_302531015", "DOS_A628_19631120"): "reports_shared_consular_account",
 }
 
 
@@ -157,6 +169,29 @@ def validate_lineages(config: dict, rows: list[dict], root: Path = ROOT) -> None
             raise ValueError("lineage grouping regression: " + sid)
     if sources["NTRS_19640001198"]["work_id"] != sources["NASA_SSR_19631115"]["work_id"]:
         raise ValueError("catalogue page cannot masquerade as an independent document")
+
+    # Digital objects under one NARA archival unit are not field witnesses.
+    # Custody sizes/hashes were independently reported in Lontra's audit.
+    fileunit = "NARA_BB_UNIT_302531012"
+    expected_objects = {
+        "NARA_BB_CARD_302531013": (302531013, 1756950,
+            "4e8e460cfe8dfa0f0d6ea6b02017e6ff63915935dc5be5bde8e96f52faf6f326"),
+        "NARA_AIRA_TELEGRAM_19631114": (302531014, 1865459,
+            "136be026e23acdd5e7ff0a5307e04bef799249b48346072a43cae1506be37ce9"),
+        "NARA_USAIRA_C116_302531015": (302531015, 1852266,
+            "f9c55ab0b14d6e121a4419bef72519a68db29a9ceea6c5bca5ea31fb826cdce7"),
+    }
+    for sid, (naid, byte_count, digest) in expected_objects.items():
+        source = sources[sid]
+        if (source.get("file_unit_id") != fileunit
+            or source.get("nara_object_id") != naid
+            or source.get("bytes_reported") != byte_count
+            or source.get("sha256_reported") != digest):
+            raise ValueError("NARA object identity/custody changed: " + sid)
+    if sources["O_GLOBO_19631108_UNINSPECTED"].get("url") is not None or (
+        sources["O_GLOBO_19631108_UNINSPECTED"].get("status")
+        != "UNINSPECTED_NEWSPAPER_QUOTED_BY_USAIRA_NOT_AUTHENTICATED"):
+        raise ValueError("uninspected newspaper must not appear inspected")
 
     seen_edges, adj = set(), defaultdict(list)
     for edge in config["dependencies"]:
@@ -309,6 +344,22 @@ def build(config: dict, raw: bytes, root: Path = ROOT) -> tuple[dict, dict]:
             "snapshot_ref": row["snapshot_ref"]
         })
         export.append(record)
+    # Expose G18's cumulative lead to the site with exact NARA citation.
+    # Do not create a second pseudo-Cnn, witness, or newspaper observation.
+    post_matrix_export = []
+    for item in config["post_matrix_occurrences"]:
+        reporter = source_by_id[item["source_id"]]
+        post_matrix_export.append({
+            **item,
+            "related_matrix_snapshot_refs": [
+                matrix_ref(occ) for occ in item["related_matrix_occurrences"]
+            ],
+            "report_citation_url": reporter["url"],
+            "report_locator": reporter["locator"],
+            "report_object_sha256": reporter.get("sha256_reported"),
+            "report_file_unit_id": reporter.get("file_unit_id"),
+            "not_a_verified_conde_physical_event": True,
+        })
     mapped_count = len(by_occurrence)
     # Preserve every row, including the three ambiguous labels whose occurrences
     # have unrelated meanings; unmapped entries stay explicitly unmapped.
@@ -319,6 +370,7 @@ def build(config: dict, raw: bytes, root: Path = ROOT) -> tuple[dict, dict]:
         "schema": "conde.source-citations/v1",
         "matrix_git_blob_sha1": MATRIX_BLOB_SHA,
         "matrix_snapshot_id": MATRIX_SNAPSHOT_ID,
+        "post_matrix_occurrences": post_matrix_export,
         "legacy_alias_conflicts": [{
             "legacy_ref": a["legacy_ref"],
             "matrix_ref": a["matrix_ref"],
@@ -348,11 +400,7 @@ def build(config: dict, raw: bytes, root: Path = ROOT) -> tuple[dict, dict]:
         "sources": config["sources"],
         "source_dependencies": config["dependencies"],
         "matrix_occurrences": records,
-        "post_matrix_occurrences": [
-            {**item, "related_matrix_snapshot_refs": [
-                matrix_ref(occ) for occ in item["related_matrix_occurrences"]
-            ]} for item in config.get("post_matrix_occurrences", [])
-        ],
+        "post_matrix_occurrences": post_matrix_export,
         "contracts": config["contracts"],
         "citation_summary": {
             "matrix_occurrences": len(records),

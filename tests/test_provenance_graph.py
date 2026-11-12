@@ -56,7 +56,7 @@ class DocumentaryProvenanceTests(unittest.TestCase):
                        "O_GLOBO_19631108_UNINSPECTED",
                        "quotes_uninspected_source"), deps)
         self.assertEqual(len(self.graph["matrix_occurrences"]), 241)
-        self.assertEqual(len(self.citations["records"]), 24)
+        self.assertEqual(len(self.citations["records"]), 29)
 
     def test_nara_addendum_rejects_duplicate_orphan_and_unverified_claim(self):
         for mutation in ("duplicate", "unknown_matrix", "missing_source",
@@ -89,11 +89,11 @@ class DocumentaryProvenanceTests(unittest.TestCase):
             pg.build(config, self.raw)
 
     def test_real_mapping_coverage_is_not_inflated_by_unmapped_default_dict(self):
-        self.assertEqual(self.citations["curated_occurrences"], 24)
-        self.assertEqual(self.citations["unmapped_occurrences"], 217)
-        self.assertEqual(len(self.citations["records"]), 24)
-        self.assertEqual(self.graph["citation_summary"]["curated_occurrences"], 24)
-        self.assertEqual(self.graph["citation_summary"]["unmapped_occurrences"], 217)
+        self.assertEqual(self.citations["curated_occurrences"], 28)
+        self.assertEqual(self.citations["unmapped_occurrences"], 213)
+        self.assertEqual(len(self.citations["records"]), 29)
+        self.assertEqual(self.graph["citation_summary"]["curated_occurrences"], 28)
+        self.assertEqual(self.graph["citation_summary"]["unmapped_occurrences"], 213)
 
     def test_every_citation_resolves_source_and_exact_matrix_line_and_hash(self):
         src = {s["id"] for s in self.graph["sources"]}
@@ -231,6 +231,69 @@ class DocumentaryProvenanceTests(unittest.TestCase):
         bridge["snapshot_refs"][1] = self.graph["legacy_alias_conflicts"][-1]["legacy_ref"]
         with self.assertRaisesRegex(ValueError, "contract snapshot mismatch"):
             pg.build(config, self.raw)
+
+    def test_bluebook_c232_c235_crosswalk_and_coverage(self):
+        for occurrence in ("C232#1", "C233#1", "C234#1", "C235#1"):
+            citations = [c for c in self.citations["records"] if c["occurrence"] == occurrence]
+            self.assertTrue(citations)
+            self.assertTrue(all(c["not_a_verified_conde_physical_event"] for c in citations))
+            self.assertTrue(all(c["snapshot_ref"] == pg.matrix_ref(occurrence)
+                                for c in citations))
+        c232 = [c for c in self.citations["records"] if c["occurrence"] == "C232#1"]
+        self.assertEqual({c["source_id"] for c in c232},
+                         {"BLUEBOOK_CASES_INDEX_1963", "NARA_BB_CARD_302531013"})
+        self.assertNotIn("C237#1", {c["occurrence"] for c in self.citations["records"]})
+
+    def test_three_nara_scans_are_one_case_and_share_consular_account(self):
+        sources = {s["id"]: s for s in self.graph["sources"]}
+        unit = "NARA_BB_UNIT_302531012"
+        children = [s for s in sources.values() if s.get("file_unit_id") == unit]
+        self.assertEqual({s["nara_object_id"] for s in children},
+                         {302531013, 302531014, 302531015})
+        self.assertEqual(len({s["sha256_reported"] for s in children}), 3)
+        self.assertEqual({s["family"] for s in children}, {"USAF_AIRA_BLUEBOOK"})
+        edges = {(e["from"], e["to"], e["kind"]) for e in self.graph["source_dependencies"]}
+        self.assertEqual(len([e for e in edges if e[1] == unit and
+                              e[2] == "part_of_archival_unit"]), 3)
+        self.assertIn(("NARA_USAIRA_C116_302531015", "NARA_AIRA_TELEGRAM_19631114",
+                       "refers_to_prior_telegram"), edges)
+        self.assertIn(("NARA_USAIRA_C116_302531015", "DOS_A628_19631120",
+                       "reports_shared_consular_account"), edges)
+
+    def test_site_exports_same_g18_nara_lead_with_citable_report(self):
+        lead, = self.citations["post_matrix_occurrences"]
+        self.assertEqual(lead["id"], "NARA-BB-CONDE-20261112-01")
+        self.assertEqual(self.graph["post_matrix_occurrences"], self.citations["post_matrix_occurrences"])
+        self.assertEqual(lead["source_id"], "NARA_AIRA_TELEGRAM_19631114")
+        self.assertTrue(lead["report_citation_url"].endswith("/0810.jp2"))
+        self.assertEqual(lead["report_object_sha256"],
+                         "136be026e23acdd5e7ff0a5307e04bef799249b48346072a43cae1506be37ce9")
+        self.assertEqual(lead["report_file_unit_id"], "NARA_BB_UNIT_302531012")
+        self.assertIsNone(lead["newspaper_publication_time"])
+        self.assertEqual(lead["journalistic_source_independence"], "UNRESOLVED")
+        self.assertIsNone(lead["physical_constraint"])
+        self.assertTrue(lead["not_a_verified_conde_physical_event"])
+
+    def test_nara_object_and_consular_adversarial_mutations_fail(self):
+        for bad in ("nara_family", "scan_hash", "missing_unit_edge",
+                    "lost_consular_shared_upstream", "invented_time"):
+            c = copy.deepcopy(self.config)
+            if bad == "nara_family":
+                next(s for s in c["sources"] if s["id"] == "NARA_BB_CARD_302531013")[
+                    "family"] = "DOS_CONSULAR"
+            elif bad == "scan_hash":
+                next(s for s in c["sources"] if s["id"] == "NARA_AIRA_TELEGRAM_19631114")[
+                    "sha256_reported"] = "0" * 64
+            elif bad == "missing_unit_edge":
+                c["dependencies"] = [e for e in c["dependencies"]
+                                     if e["from"] != "NARA_BB_CARD_302531013"]
+            elif bad == "lost_consular_shared_upstream":
+                c["dependencies"] = [e for e in c["dependencies"]
+                                     if e["kind"] != "reports_shared_consular_account"]
+            else:
+                c["post_matrix_occurrences"][0]["newspaper_publication_time"] = "20:00"
+            with self.subTest(bad=bad), self.assertRaises(ValueError):
+                pg.build(c, self.raw)
 
     def test_tampered_matrix_rejected_before_export(self):
         with self.assertRaisesRegex(ValueError, "matrix snapshot"):
