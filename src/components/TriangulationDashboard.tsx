@@ -1,550 +1,220 @@
 import React, { useState } from 'react';
-import {
-  Layers,
-  Satellite,
-  Compass,
-  TrendingDown,
-  Info,
-  Calendar,
-  CheckCircle2,
-  AlertTriangle,
-  Flame,
-  GitCommit,
-  ArrowRightLeft,
-  Crosshair,
-  ShieldCheck,
-} from 'lucide-react';
-import {
-  HISTORICAL_ORBITAL_DATA,
-  LAUNCH_MISSION,
-  CONDE_COORDINATES,
-} from '../lib/constants';
-import {
-  getNodalPrecessionRateDegDay,
-  getTriangulationState,
-  computeInterTrackProximity,
-  propagateState,
-} from '../lib/astrodynamics';
+import { ArrowLeftRight, BookOpen, Compass, ExternalLink, FlaskConical, ShieldAlert } from 'lucide-react';
+
+type Language = 'pt' | 'en';
+type SatelliteId = '527' | '528' | '529';
+type Localized = { pt: string; en: string };
 
 interface TriangulationDashboardProps {
-  lang: 'pt' | 'en';
+  lang: Language;
 }
 
-export const TriangulationDashboard: React.FC<TriangulationDashboardProps> = ({
-  lang,
-}) => {
-  const isPt = lang === 'pt';
-  const [selectedDayOffset, setSelectedDayOffset] = useState<number>(295); // Days from launch (Nov 8 ~ 295 days)
-  const [activeAnalysisTab, setActiveAnalysisTab] = useState<'tracks' | 'objects' | 'equations'>('tracks');
+const matrix = 'https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md';
+const nasa = 'https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf';
 
-  const sat527 = HISTORICAL_ORBITAL_DATA[527];
-  const sat528 = HISTORICAL_ORBITAL_DATA[528];
-  const sat529 = HISTORICAL_ORBITAL_DATA[529];
+const objects: readonly {
+  id: SatelliteId;
+  designation: string;
+  role: Localized;
+  supported: Localized;
+  unknown: Localized;
+  evidence: string;
+}[] = [
+  {
+    id: '527',
+    designation: '1963-003A',
+    role: { pt: 'Objeto de comparação', en: 'Comparison object' },
+    supported: {
+      pt: 'Usado como objeto relacionado na análise orbital exploratória. Sua trajetória pode fornecer um controle, após verificar épocas e custódia.',
+      en: 'Used as a related object in exploratory orbital analysis. Its trajectory may supply a control after epochs and provenance are checked.',
+    },
+    unknown: {
+      pt: 'Sua posição posterior não é uma fronteira geográfica para o 528. Não há ajuste dinâmico conjunto validado.',
+      en: 'Its later position is not a geographic fence for 528. No validated joint dynamical fit is available.',
+    },
+    evidence: '#/research/raan',
+  },
+  {
+    id: '528',
+    designation: '1963-003B',
+    role: { pt: 'Objeto investigado', en: 'Object under investigation' },
+    supported: {
+      pt: 'O boletim NASA de 15/11/1963 registra o dia 08/11/1963 como data de decaimento. Não registra uma hora ou posição terminal.',
+      en: 'The November 15, 1963 NASA bulletin lists November 8 as its decay date. It provides no terminal time or position.',
+    },
+    unknown: {
+      pt: 'A trajetória terminal, a relação com o relato de Conde e os parâmetros de arrasto continuam indeterminados.',
+      en: 'The terminal trajectory, any relation to the Conde report and drag parameters remain undetermined.',
+    },
+    evidence: '#/research/c197',
+  },
+  {
+    id: '529',
+    designation: '1963-003C',
+    role: { pt: 'Controle fora da amostra', en: 'Out-of-sample control' },
+    supported: {
+      pt: 'O 529 é tratado como controle de previsão nas análises do repositório. Os erros de teste devem ser examinados independentemente.',
+      en: 'Object 529 is treated as a prediction control in repository analyses. Holdout errors must be examined independently.',
+    },
+    unknown: {
+      pt: 'Um teorema sobre erros fornecidos ao Lean não valida a trajetória do 529 nem a previsão do 528.',
+      en: 'A theorem about error values supplied to Lean does not validate the trajectory of 529 or predict 528.',
+    },
+    evidence: '#/research/holdout529',
+  },
+];
 
-  // Nodal precession rates
-  const rate527 = getNodalPrecessionRateDegDay(sat527.meanMotionRevDay, sat527.inclinationDeg, sat527.semiMajorAxisKm, sat527.eccentricity);
-  const rate528 = getNodalPrecessionRateDegDay(sat528.meanMotionRevDay, sat528.inclinationDeg, sat528.semiMajorAxisKm, sat528.eccentricity);
-  const rate529 = getNodalPrecessionRateDegDay(sat529.meanMotionRevDay, sat529.inclinationDeg, sat529.semiMajorAxisKm, sat529.eccentricity);
+const conditions: readonly { label: Localized; detail: Localized; href: string }[] = [
+  {
+    label: { pt: '1. Custódia dos elementos orbitais', en: '1. Orbital-element provenance' },
+    detail: {
+      pt: 'Há conflito de RAAN entre séries (~198,5261° e 284,1520°). Comparar épocas e registros originais antes de selecionar uma solução.',
+      en: 'RAAN conflicts between series (~198.5261° and 284.1520°). Compare epochs and original records before selecting any solution.',
+    },
+    href: '#/research/raan',
+  },
+  {
+    label: { pt: '2. Restrições formais e premissas', en: '2. Formal constraints and assumptions' },
+    detail: {
+      pt: 'Lean 4.35.0 verifica implicações condicionais. As ocorrências orbitais C44–C46 são distintas das ocorrências geográficas homônimas.',
+      en: 'Lean 4.35.0 checks conditional implications. The orbital C44–C46 entries differ from the geographic entries with reused IDs.',
+    },
+    href: '#/research/c44-orbital',
+  },
+  {
+    label: { pt: '3. Domínio admissível e simulação', en: '3. Admissible domain and simulation' },
+    detail: {
+      pt: 'Ainda não há domínio físico não vazio e reduzido, intervalos de hora/local calibrados ou erro de integração validado. Os contratos da PR #43 são cenários, não medidas.',
+      en: 'No validated nonempty, reduced physical domain, calibrated time/place intervals or integration error exists. PR #43 contains scenario contracts, not measurements.',
+    },
+    href: 'https://github.com/franklinbaldo/conde-incident/pull/43',
+  },
+  {
+    label: { pt: '4. Contraprova independente', en: '4. Independent holdout' },
+    detail: {
+      pt: 'Avaliar o 529 fora da amostra antes de afirmar que uma triangulação restringe a reentrada. A PR #20 documenta controles e resultados negativos.',
+      en: 'Evaluate 529 out of sample before claiming that triangulation constrains reentry. PR #20 tracks controls and negative results.',
+    },
+    href: '#/research/holdout529',
+  },
+];
 
-  // Dynamic triangulation date based on slider
-  const launchEpochMs = new Date(LAUNCH_MISSION.launchEpochUtc).getTime();
-  const currentDate = new Date(launchEpochMs + selectedDayOffset * 86400 * 1000);
-  const triState = getTriangulationState(currentDate);
-
-  // Inter-Track Proximity for Conde Encounter (08/11/1963 19:48:00 UTC)
-  const condeDate = new Date('1963-11-08T19:48:00Z');
-  const conde528Point = propagateState(528, condeDate);
-  const condeProximity = computeInterTrackProximity(
-    conde528Point ? conde528Point.latitude : CONDE_COORDINATES.latitude,
-    conde528Point ? conde528Point.longitude : CONDE_COORDINATES.longitude,
-    conde528Point ? conde528Point.altitudeKm : 91,
-    condeDate
-  );
-
-  // Dynamic Inter-Track Proximity for Current Slider Date
-  const current528Point = propagateState(528, currentDate);
-  const currentProximity = current528Point
-    ? computeInterTrackProximity(
-        current528Point.latitude,
-        current528Point.longitude,
-        current528Point.altitudeKm,
-        currentDate
-      )
-    : null;
+export const TriangulationDashboard: React.FC<TriangulationDashboardProps> = ({ lang }) => {
+  const [selectedId, setSelectedId] = useState<SatelliteId>('528');
+  const selected = objects.find((object) => object.id === selectedId) ?? objects[1];
+  const pt = lang === 'pt';
 
   return (
-    <div className="space-y-6">
-      {/* Overview Banner */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
-          <div className="space-y-1 max-w-3xl">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-800 text-cyan-300 text-xs font-mono">
-              <Layers className="w-3.5 h-3.5 text-cyan-400" />
-              <span>{isPt ? 'DINÂMICA CONJUNTA MULTI-CORPO' : 'JOINT MULTI-BODY DYNAMICS'}</span>
-            </div>
-            <h2 className="text-lg font-bold text-zinc-100">
-              {isPt
-                ? 'Triangulação Dinâmica dos Objetos 527, 528 e 529'
-                : 'Dynamic Triangulation of Objects 527, 528 and 529'}
-            </h2>
-            <p className="text-xs text-zinc-300 leading-relaxed">
-              {isPt
-                ? 'Os três objetos foram inseridos conjuntamente pelo foguete Thor-Agena D em 16/01/1963 numa órbita polar comum de 81,85°. A comparação entre o satélite principal e os componentes irmãos permite verificar a estabilidade do plano orbital e calibrar o modelo de arrasto, delimitando com rigor o que pode e o que não pode ser inferido.'
-                : 'All three objects were jointly injected by the Thor-Agena D on 16/01/1963 into a common 81.85° polar orbit. Comparing the main satellite and sister components verifies orbital plane stability and calibrates atmospheric drag, rigorously defining what can and cannot be inferred.'}
-            </p>
-          </div>
+    <section aria-labelledby="triangulation-title" className="space-y-7 pb-12">
+      <header className="rounded-2xl border border-cyan-900/70 bg-zinc-900 p-5 sm:p-8">
+        <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-cyan-300">
+          <Compass aria-hidden="true" className="h-4 w-4" />
+          {pt ? 'Comparação orbital sob auditoria' : 'Orbital comparison under audit'}
+        </p>
+        <h1 id="triangulation-title" className="mt-3 text-2xl font-semibold leading-tight text-zinc-50 sm:text-3xl">
+          {pt ? 'Três objetos não determinam sozinhos uma queda' : 'Three objects do not determine an impact on their own'}
+        </h1>
+        <p className="mt-4 max-w-3xl text-sm leading-7 text-zinc-300">
+          {pt
+            ? '527, 528 e 529 são candidatos úteis a um ajuste conjunto. A origem orbital relacionada não preserva uma posição relativa fixa durante meses. Este painel apresenta evidências e condições para um teste; não mostra uma triangulação histórica já calibrada.'
+            : '527, 528 and 529 are useful candidates for a joint fit. Related orbital origin does not preserve a fixed relative position over months. This panel presents evidence and test conditions, not a calibrated historical triangulation.'}
+        </p>
+        <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm">
+          <a className="text-cyan-300 underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300" href="#/research/c197">
+            {pt ? 'NASA: dia registrado (C197–C202)' : 'NASA: recorded day (C197–C202)'}
+          </a>
+          <a className="text-cyan-300 underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300" href="#/research/raan">
+            {pt ? 'Conflito RAAN' : 'RAAN conflict'}
+          </a>
+          <a className="text-cyan-300 underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300" href="#/map">
+            {pt ? 'Mapa exploratório' : 'Exploratory map'}
+          </a>
         </div>
-      </div>
+      </header>
 
-      {/* Comparison Table of the 3 Objects */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {/* NORAD 527 */}
-        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex flex-col justify-between space-y-4">
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 font-mono text-xs font-bold">
-                NORAD 527
-              </span>
-              <span className="text-[10px] text-emerald-400 font-mono px-2 py-0.5 rounded bg-emerald-950/60 border border-emerald-800">
-                Ativo até 1969
-              </span>
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-zinc-100">OPS 0180 (1963-003A)</h3>
-              <p className="text-xs text-zinc-400">Satélite militar principal NRO 7153 (Ferret 3 / ELINT)</p>
-            </div>
-            <div className="space-y-1.5 text-xs font-mono">
-              <div className="flex justify-between text-zinc-400 border-b border-zinc-800/80 pb-1">
-                <span>Inclinação:</span>
-                <span className="text-zinc-200">81,8540°</span>
-              </div>
-              <div className="flex justify-between text-zinc-400 border-b border-zinc-800/80 pb-1">
-                <span>Altitude Média:</span>
-                <span className="text-zinc-200">~485 km</span>
-              </div>
-              <div className="flex justify-between text-zinc-400 border-b border-zinc-800/80 pb-1">
-                <span>Movimento Médio:</span>
-                <span className="text-zinc-200">15,268 rev/dia</span>
-              </div>
-              <div className="flex justify-between text-zinc-400 border-b border-zinc-800/80 pb-1">
-                <span>Regressão Nodal J2:</span>
-                <span className="text-zinc-200">{rate527.toFixed(3)}°/dia</span>
-              </div>
-              <div className="flex justify-between text-zinc-400">
-                <span>Data de Decaimento:</span>
-                <span className="text-zinc-200">09/01/1969</span>
-              </div>
-            </div>
-          </div>
-          <div className="p-2.5 rounded bg-zinc-950 text-[11px] text-zinc-400">
-            {isPt
-              ? 'Permaneceu em órbita estável por 6 anos. Calibra o plano de referência e atesta ausência de tempestades destrutivas de arrasto em 1963.'
-              : 'Remained in stable orbit for 6 years. Calibrates reference plane and verifies absence of extreme drag storms in 1963.'}
-          </div>
+      <section aria-labelledby="objects-title">
+        <div className="mb-4 flex items-center gap-2">
+          <ArrowLeftRight aria-hidden="true" className="h-5 w-5 text-cyan-300" />
+          <h2 id="objects-title" className="text-lg font-semibold text-zinc-100">
+            {pt ? 'Compare o papel de cada objeto' : 'Compare each object’s role'}
+          </h2>
         </div>
-
-        {/* NORAD 528 (Target) */}
-        <div className="bg-zinc-900 border-2 border-cyan-800/80 rounded-xl p-5 flex flex-col justify-between space-y-4 shadow-lg shadow-cyan-950/40 relative">
-          <div className="absolute top-2 right-2">
-            <span className="px-2 py-0.5 rounded-full bg-cyan-950 text-cyan-300 font-mono text-[10px] font-bold border border-cyan-700">
-              ALVO DE ESTUDO
-            </span>
-          </div>
-          <div className="space-y-3">
-            <div className="flex items-center">
-              <span className="px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 font-mono text-xs font-bold border border-cyan-800">
-                NORAD 528
-              </span>
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-cyan-200">1963-003B (Debris/Adapter)</h3>
-              <p className="text-xs text-zinc-400">Componente separado do Thor-Agena D</p>
-            </div>
-            <div className="space-y-1.5 text-xs font-mono">
-              <div className="flex justify-between text-zinc-400 border-b border-zinc-800/80 pb-1">
-                <span>Inclinação:</span>
-                <span className="text-cyan-300 font-bold">81,8615°</span>
-              </div>
-              <div className="flex justify-between text-zinc-400 border-b border-zinc-800/80 pb-1">
-                <span>Altitude Inicial:</span>
-                <span className="text-zinc-200">~345 km</span>
-              </div>
-              <div className="flex justify-between text-zinc-400 border-b border-zinc-800/80 pb-1">
-                <span>Movimento Médio:</span>
-                <span className="text-zinc-200">15,749 rev/dia</span>
-              </div>
-              <div className="flex justify-between text-zinc-400 border-b border-zinc-800/80 pb-1">
-                <span>Regressão Nodal J2:</span>
-                <span className="text-cyan-300 font-bold">{rate528.toFixed(3)}°/dia</span>
-              </div>
-              <div className="flex justify-between text-zinc-400">
-                <span>Data de Decaimento:</span>
-                <span className="text-amber-400 font-bold">08/11/1963</span>
-              </div>
-            </div>
-          </div>
-          <div className="p-2.5 rounded bg-cyan-950/50 border border-cyan-900 text-[11px] text-cyan-300">
-            {isPt
-              ? 'Decaiu após 295 dias em órbita. Altitude terminal (120-80 km) atingida em 08/11/1963, compatível com fragmento de alumínio de B ≈ 0,022 m²/kg.'
-              : 'Decayed after 295 days. Terminal altitude (120-80 km) reached on 08/11/1963, consistent with aluminum fragment of B ≈ 0.022 m²/kg.'}
-          </div>
-        </div>
-
-        {/* NORAD 529 */}
-        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex flex-col justify-between space-y-4">
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 font-mono text-xs font-bold">
-                NORAD 529
-              </span>
-              <span className="text-[10px] text-zinc-400 font-mono px-2 py-0.5 rounded bg-zinc-800">
-                Decaiu 31/12/1963
-              </span>
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-zinc-100">1963-003C (Componente C)</h3>
-              <p className="text-xs text-zinc-400">Outro componente descartável do estágio</p>
-            </div>
-            <div className="space-y-1.5 text-xs font-mono">
-              <div className="flex justify-between text-zinc-400 border-b border-zinc-800/80 pb-1">
-                <span>Inclinação:</span>
-                <span className="text-zinc-200">81,8215°</span>
-              </div>
-              <div className="flex justify-between text-zinc-400 border-b border-zinc-800/80 pb-1">
-                <span>Altitude (em dez):</span>
-                <span className="text-zinc-200">~247 km</span>
-              </div>
-              <div className="flex justify-between text-zinc-400 border-b border-zinc-800/80 pb-1">
-                <span>Movimento Médio:</span>
-                <span className="text-zinc-200">16,098 rev/dia</span>
-              </div>
-              <div className="flex justify-between text-zinc-400 border-b border-zinc-800/80 pb-1">
-                <span>Regressão Nodal J2:</span>
-                <span className="text-zinc-200">{rate529.toFixed(3)}°/dia</span>
-              </div>
-              <div className="flex justify-between text-zinc-400">
-                <span>Data de Decaimento:</span>
-                <span className="text-zinc-200">31/12/1963</span>
-              </div>
-            </div>
-          </div>
-          <div className="p-2.5 rounded bg-zinc-950 text-[11px] text-zinc-400">
-            {isPt
-              ? 'Decaiu 53 dias após o 528. Demonstra que a separação estrutural conferiu características balísticas intermediárias entre 528 e 527.'
-              : 'Decayed 53 days after 528. Demonstrates that structural separation imparted ballistic properties between 528 and 527.'}
-          </div>
-        </div>
-      </div>
-
-      {/* Inter-Track Ground Proximity (Past & Future Bracket Analysis) */}
-      <div className="bg-zinc-900 border-2 border-emerald-800/80 rounded-xl p-6 space-y-5 shadow-xl shadow-emerald-950/20">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-zinc-800 pb-3">
-          <div className="space-y-1">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-700 text-emerald-300 text-xs font-mono font-bold">
-              <GitCommit className="w-3.5 h-3.5 text-emerald-400" />
-              <span>{isPt ? 'MÉTODO DE ENQUADRAMENTO DE TRAJETÓRIAS (BRACKET)' : 'GROUND TRACK BRACKETING METHOD'}</span>
-            </div>
-            <h3 className="text-base font-bold text-zinc-100 flex items-center gap-2">
-              <span>{isPt ? 'Medição de Trajetórias Passadas e Futuras (528 vs 527 & 529)' : 'Past and Future Track Measurement (528 vs 527 & 529)'}</span>
-            </h3>
-            <p className="text-xs text-zinc-300 max-w-3xl leading-relaxed">
-              {isPt
-                ? 'Em vez de medir distâncias pontuais instantâneas entre satélites (sujeitas a oscilações keplerianas velozes), mede-se a distância ortodrômica entre as trilhas terrestres. A trajetória do 528 é rigorosamente balizada pela passagem anterior e pela próxima passagem de 527 e 529 no mesmo meridiano/paralelo.'
-                : 'Instead of measuring instantaneous point-to-point 3D satellite distances, we measure the great-circle distance between ground tracks. NORAD 528’s track is strictly bounded by the preceding and subsequent passes of 527 and 529 across the geographic meridian/parallel.'}
-            </p>
-          </div>
-
-          <div className="flex items-center gap-2 bg-zinc-950 p-1 rounded-lg border border-zinc-800 font-mono text-xs">
+        <div role="group" aria-label={pt ? 'Selecionar objeto orbital para leitura' : 'Choose orbital object to inspect'} className="grid gap-3 sm:grid-cols-3">
+          {objects.map((object) => (
             <button
-              onClick={() => setActiveAnalysisTab('tracks')}
-              className={`px-3 py-1.5 rounded cursor-pointer transition-colors ${
-                activeAnalysisTab === 'tracks'
-                  ? 'bg-emerald-600 text-white font-bold'
-                  : 'text-zinc-400 hover:text-zinc-200'
-              }`}
+              key={object.id}
+              type="button"
+              aria-pressed={selectedId === object.id}
+              aria-controls="triangulation-object-detail"
+              onClick={() => setSelectedId(object.id)}
+              className={'min-w-0 rounded-xl border px-4 py-4 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 ' + (
+                selectedId === object.id
+                  ? 'border-cyan-400 bg-cyan-950/40 text-white'
+                  : 'border-zinc-700 bg-zinc-900 text-zinc-200 hover:border-zinc-400'
+              )}
             >
-              Passagem Conde (08/11)
+              <span className="block text-lg font-semibold">NORAD {object.id}</span>
+              <span className="mt-1 block text-xs text-zinc-300">{object.designation}</span>
+              <span className="mt-3 block text-sm">{object.role[lang]}</span>
             </button>
-            <button
-              onClick={() => setActiveAnalysisTab('objects')}
-              className={`px-3 py-1.5 rounded cursor-pointer transition-colors ${
-                activeAnalysisTab === 'objects'
-                  ? 'bg-emerald-600 text-white font-bold'
-                  : 'text-zinc-400 hover:text-zinc-200'
-              }`}
-            >
-              Data do Slider (T+{selectedDayOffset}d)
-            </button>
-          </div>
+          ))}
         </div>
+        <article id="triangulation-object-detail" aria-live="polite" aria-atomic="true" className="mt-4 rounded-xl border border-zinc-700 bg-zinc-900/70 p-5 sm:p-6">
+          <h3 className="text-lg font-semibold text-zinc-50">NORAD {selected.id}: {selected.role[lang]}</h3>
+          <p className="mt-3 text-sm leading-7 text-zinc-300">{selected.supported[lang]}</p>
+          <p className="mt-3 flex gap-2 text-sm leading-7 text-amber-200">
+            <ShieldAlert aria-hidden="true" className="mt-1 h-4 w-4 shrink-0" />
+            <span><strong>{pt ? 'Não demonstrado: ' : 'Not established: '}</strong>{selected.unknown[lang]}</span>
+          </p>
+          <a href={selected.evidence} className="mt-4 inline-block text-sm font-medium text-cyan-300 underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300">
+            {pt ? 'Abrir ocorrência e premissas na aba Evidence' : 'Open record and assumptions in Evidence'}
+          </a>
+        </article>
+      </section>
 
-        {/* Selected Case Inspection */}
-        {(() => {
-          const proxData = activeAnalysisTab === 'tracks' ? condeProximity : currentProximity;
-          if (!proxData) {
-            return (
-              <div className="p-4 rounded-lg bg-zinc-950 border border-zinc-800 text-xs text-zinc-400 font-mono">
-                Satélite fora do período ativo para este dia.
-              </div>
-            );
-          }
-
-          return (
-            <div className="space-y-4">
-              {/* Reference Header */}
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 p-3 rounded-lg bg-zinc-950 border border-zinc-800 text-xs font-mono">
-                <div className="flex items-center gap-2 text-cyan-300">
-                  <Crosshair className="w-4 h-4 text-cyan-400 shrink-0" />
-                  <span>
-                    Ponto Central NORAD 528: <strong className="text-white">{proxData.referencePoint.latitude.toFixed(2)}°, {proxData.referencePoint.longitude.toFixed(2)}°</strong> (Alt: ~{proxData.referencePoint.altitudeKm.toFixed(0)} km)
-                  </span>
-                </div>
-                <div className="text-emerald-400 font-bold">
-                  Largura do Corredor 527: ~{proxData.corridorWidth527Km.toLocaleString()} km
-                </div>
-              </div>
-
-              {/* 4 Bracketing Tracks Diagram & Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
-                {/* 1. 527 Passagem Passada */}
-                <div className="p-3.5 rounded-lg bg-emerald-950/30 border border-emerald-800/80 space-y-2">
-                  <div className="flex items-center justify-between text-[11px] font-mono">
-                    <span className="text-emerald-400 font-bold flex items-center gap-1">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                      527 Trilha Passada
-                    </span>
-                    <span className="text-emerald-300 font-semibold">{proxData.past527.deltaMinutes} min</span>
-                  </div>
-                  <div className="space-y-1 font-mono text-[11px]">
-                    <div className="text-zinc-400">
-                      Distância à Trilha: <strong className="text-emerald-200 text-sm">~{proxData.past527.distanceKm} km</strong>
-                    </div>
-                    <div className="text-zinc-400">
-                      Horário: <span className="text-zinc-300">{proxData.past527.time.toISOString().substring(11, 16)} UTC</span>
-                    </div>
-                    <div className="text-zinc-400">
-                      Ponto Mais Próximo: <span className="text-zinc-300">{proxData.past527.latitude.toFixed(2)}°, {proxData.past527.longitude.toFixed(2)}°</span>
-                    </div>
-                  </div>
-                  <div className="text-[10px] text-zinc-400 leading-tight border-t border-emerald-900/60 pt-1.5">
-                    Trilha oeste anterior delimitadora.
-                  </div>
-                </div>
-
-                {/* 2. 527 Próxima Passagem */}
-                <div className="p-3.5 rounded-lg bg-emerald-950/30 border border-emerald-600/80 space-y-2">
-                  <div className="flex items-center justify-between text-[11px] font-mono">
-                    <span className="text-emerald-300 font-bold flex items-center gap-1">
-                      <span className="w-2 h-2 rounded-full bg-emerald-300" />
-                      527 Trilha Futura
-                    </span>
-                    <span className="text-emerald-200 font-semibold">+{proxData.future527.deltaMinutes} min</span>
-                  </div>
-                  <div className="space-y-1 font-mono text-[11px]">
-                    <div className="text-zinc-400">
-                      Distância à Trilha: <strong className="text-emerald-100 text-sm">~{proxData.future527.distanceKm} km</strong>
-                    </div>
-                    <div className="text-zinc-400">
-                      Horário: <span className="text-zinc-300">{proxData.future527.time.toISOString().substring(11, 16)} UTC</span>
-                    </div>
-                    <div className="text-zinc-400">
-                      Ponto Mais Próximo: <span className="text-zinc-300">{proxData.future527.latitude.toFixed(2)}°, {proxData.future527.longitude.toFixed(2)}°</span>
-                    </div>
-                  </div>
-                  <div className="text-[10px] text-zinc-400 leading-tight border-t border-emerald-900/60 pt-1.5">
-                    Trilha leste subsequente delimitadora.
-                  </div>
-                </div>
-
-                {/* 3. 529 Passagem Passada */}
-                <div className="p-3.5 rounded-lg bg-purple-950/30 border border-purple-800/80 space-y-2">
-                  <div className="flex items-center justify-between text-[11px] font-mono">
-                    <span className="text-purple-400 font-bold flex items-center gap-1">
-                      <span className="w-2 h-2 rounded-full bg-purple-400" />
-                      529 Trilha Passada
-                    </span>
-                    <span className="text-purple-300 font-semibold">{proxData.past529.deltaMinutes} min</span>
-                  </div>
-                  <div className="space-y-1 font-mono text-[11px]">
-                    <div className="text-zinc-400">
-                      Distância à Trilha: <strong className="text-purple-200 text-sm">~{proxData.past529.distanceKm} km</strong>
-                    </div>
-                    <div className="text-zinc-400">
-                      Horário: <span className="text-zinc-300">{proxData.past529.time.toISOString().substring(11, 16)} UTC</span>
-                    </div>
-                    <div className="text-zinc-400">
-                      Ponto Mais Próximo: <span className="text-zinc-300">{proxData.past529.latitude.toFixed(2)}°, {proxData.past529.longitude.toFixed(2)}°</span>
-                    </div>
-                  </div>
-                  <div className="text-[10px] text-zinc-400 leading-tight border-t border-purple-900/60 pt-1.5">
-                    Passagem do corpo C anterior.
-                  </div>
-                </div>
-
-                {/* 4. 529 Próxima Passagem */}
-                <div className="p-3.5 rounded-lg bg-purple-950/30 border border-purple-600/80 space-y-2">
-                  <div className="flex items-center justify-between text-[11px] font-mono">
-                    <span className="text-purple-300 font-bold flex items-center gap-1">
-                      <span className="w-2 h-2 rounded-full bg-purple-300" />
-                      529 Trilha Futura
-                    </span>
-                    <span className="text-purple-200 font-semibold">+{proxData.future529.deltaMinutes} min</span>
-                  </div>
-                  <div className="space-y-1 font-mono text-[11px]">
-                    <div className="text-zinc-400">
-                      Distância à Trilha: <strong className="text-purple-100 text-sm">~{proxData.future529.distanceKm} km</strong>
-                    </div>
-                    <div className="text-zinc-400">
-                      Horário: <span className="text-zinc-300">{proxData.future529.time.toISOString().substring(11, 16)} UTC</span>
-                    </div>
-                    <div className="text-zinc-400">
-                      Ponto Mais Próximo: <span className="text-zinc-300">{proxData.future529.latitude.toFixed(2)}°, {proxData.future529.longitude.toFixed(2)}°</span>
-                    </div>
-                  </div>
-                  <div className="text-[10px] text-zinc-400 leading-tight border-t border-purple-900/60 pt-1.5">
-                    Passagem do corpo C subsequente.
-                  </div>
-                </div>
-              </div>
-
-              {/* Physical Takeaway Box */}
-              <div className="p-4 rounded-lg bg-zinc-950 border border-emerald-900/70 text-xs text-zinc-300 space-y-2">
-                <div className="font-bold text-emerald-300 flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                  <span>Conclusão Epistêmica do Enquadramento de Trajetórias:</span>
-                </div>
-                <p className="leading-relaxed text-zinc-300">
-                  {proxData.bracketingVerdict} Como os três objetos mantêm uma <strong>relação nodal estrita</strong> governada pela mesma física de injeção polar, a passagem anterior e posterior do satélite principal 527 funcionam como <em>"balizas geográficas"</em> intransponíveis.
-                </p>
-                <p className="leading-relaxed text-zinc-400 text-[11px]">
-                  Isso valida o raciocínio: a órbita do 528 não podia estar deslocada lateralmente em centenas de quilômetros fora dessa faixa. O seu plano transversal era extremamente fixo, delimitando com firmeza a longitude do cruzamento da Bahia.
-                </p>
-              </div>
-            </div>
-          );
-        })()}
-      </div>
-
-      {/* Dynamic Triangulation Mathematical Inspector */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 space-y-4">
-        <h3 className="text-sm font-bold text-zinc-100 flex items-center gap-2">
-          <Compass className="w-4 h-4 text-cyan-400" />
-          <span>{isPt ? 'Evolução Temporal da Separação Nodal e de Fase' : 'Temporal Evolution of Nodal & Phase Separation'}</span>
-        </h3>
-
-        {/* Slider for days since launch */}
-        <div className="space-y-2">
-          <div className="flex justify-between text-xs font-mono">
-            <span className="text-zinc-400">
-              {isPt ? 'Data Simulada:' : 'Simulated Date:'}{' '}
-              <strong className="text-cyan-300">
-                {currentDate.toISOString().substring(0, 10)} (Dia T+{selectedDayOffset})
-              </strong>
-            </span>
-            <span className="text-zinc-500">16/01/1963 → 31/12/1963</span>
-          </div>
-
-          <input
-            type="range"
-            min={0}
-            max={350}
-            value={selectedDayOffset}
-            onChange={(e) => setSelectedDayOffset(Number(e.target.value))}
-            className="w-full accent-cyan-500 cursor-pointer h-2 bg-zinc-950 rounded-lg appearance-none"
-          />
-        </div>
-
-        {/* Real-time calculated separation metrics */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs font-mono">
-          <div className="p-3 rounded-lg bg-zinc-950 border border-zinc-800">
-            <div className="text-zinc-500">Separação Nodal ΔΩ (528 - 527):</div>
-            <div className="text-base font-bold text-cyan-300 mt-1">
-              {triState.deltaRaan528_527.toFixed(2)}°
-            </div>
-            <div className="text-[10px] text-zinc-500 mt-0.5">Divergência de planos</div>
-          </div>
-          <div className="p-3 rounded-lg bg-zinc-950 border border-zinc-800">
-            <div className="text-zinc-500">Diferença de Voltas Acumuladas:</div>
-            <div className="text-base font-bold text-amber-300 mt-1">
-              {(selectedDayOffset * (sat528.meanMotionRevDay - sat527.meanMotionRevDay)).toFixed(1)} revs
-            </div>
-            <div className="text-[10px] text-zinc-500 mt-0.5">Dispersão de anomalia</div>
-          </div>
-          <div className="p-3 rounded-lg bg-zinc-950 border border-zinc-800">
-            <div className="text-zinc-500">Altitude Estimada do 528:</div>
-            <div className="text-base font-bold text-zinc-100 mt-1">
-              {triState.sat528.altitudeKm.toFixed(1)} km
-            </div>
-            <div className="text-[10px] text-zinc-500 mt-0.5">Decaimento atmosférico</div>
-          </div>
-          <div className="p-3 rounded-lg bg-zinc-950 border border-zinc-800">
-            <div className="text-zinc-500">Status do Satélite 527:</div>
-            <div className="text-base font-bold text-emerald-400 mt-1">
-              {triState.sat527.altitudeKm.toFixed(0)} km (Estável)
-            </div>
-            <div className="text-[10px] text-zinc-500 mt-0.5">Órbita de 6 anos</div>
-          </div>
-        </div>
-      </div>
-
-      {/* Deep-Dive: A Aparente Constante de Distância vs. Deriva de Fase Real */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 space-y-4">
-        <div className="flex items-center gap-2">
-          <Layers className="w-5 h-5 text-amber-400" />
-          <h3 className="text-base font-bold text-zinc-100">
-            {isPt
-              ? 'Análise Crítica: Por que a Distância Parece Constante no Mapa (E o que a Física Revela)?'
-              : 'Critical Analysis: Why Distance Seems Constant on the Map (And What Physics Reveals)?'}
-          </h3>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-zinc-300">
-          <div className="p-4 rounded-lg bg-zinc-950 border border-zinc-800 space-y-2">
-            <h4 className="font-bold text-cyan-300 flex items-center gap-1.5">
-              <span>1. A Ilusão Visual do Plano Geométrico Comum</span>
-            </h4>
-            <p className="leading-relaxed">
-              Ao observar o mapa em rotação ou estático, os três objetos aparentam manter uma distância regular ou proporcional (função trigonométrica suave). Isso ocorre porque <strong>eles compartilham praticamente a mesma inclinação orbital (~81,85°)</strong> e foram ejetados no mesmo plano inicial (mesmo Nó Ascendente RAAN inicial).
-            </p>
-            <p className="leading-relaxed text-zinc-400">
-              No plano transversal (cross-track), a separação lateral entre as órbitas é de fato muito pequena e cresce lentamente pela regressão diferencial de $J_2$ (~0,04° por dia). Isso garante que o <em>corredor geográfico</em> das órbitas seja rigidamente compartilhado pelos 3 corpos.
-            </p>
-          </div>
-
-          <div className="p-4 rounded-lg bg-zinc-950 border border-zinc-800 space-y-2">
-            <h4 className="font-bold text-amber-300 flex items-center gap-1.5">
-              <span>2. O Desacoplamento Along-Track (141,9 Voltas de Diferença)</span>
-            </h4>
-            <p className="leading-relaxed">
-              Pela Terceira Lei de Kepler (T = 2π √(a³/μ)), o objeto mais baixo (528 a 345 km) orbita mais rápido (n = 15,749 rev/dia) que o mais alto (527 a 485 km, n = 15,268 rev/dia).
-            </p>
-            <div className="p-2.5 rounded bg-zinc-900 font-mono text-[11px] text-amber-200 border border-zinc-800">
-              Δn = 15,749 - 15,268 = +0,481 rev/dia (+173° de fase por dia)
-              <br />
-              Em 295 dias (16/01 → 08/11): Δfase = 295 × 0,481 = 141,9 revoluções completas!
-            </div>
-            <p className="leading-relaxed text-zinc-400">
-              Isso significa que, a cada ~2 dias, o 528 dava uma volta inteira de vantagem sobre o 527. A distância 3D entre eles oscila continuamente entre um mínimo de ~280 km (quando se cruzam) até um máximo de ~10.000 km (em lados opostos da Terra), repetindo um ciclo periódico de 50 horas.
-            </p>
-          </div>
-        </div>
-
-        {/* Practical Conclusion on Triangulation */}
-        <div className="p-4 rounded-lg bg-cyan-950/40 border border-cyan-800/80 text-xs text-zinc-300 space-y-2">
-          <div className="font-bold text-cyan-200 flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-cyan-400" />
-            <span>O que a Triangulação com 527 e 529 Prova (e o que ela Não Pode Provar):</span>
-          </div>
-          <ul className="list-disc list-inside space-y-1.5 leading-relaxed text-zinc-300 pl-1">
-            <li>
-              <strong className="text-zinc-100">O que PROVA:</strong> Como o 527 e o 529 têm elementos bem calibrados antes e depois de novembro de 1963, nós temos <em>certeza absoluta</em> de que não houve manobra orbital, impacto catastrófico externo ou tempestade geomagnética fora da escala solar em 1963. O plano orbital do 528 que cruza Conde é um fato astrodinâmico inquestionável.
+      <section aria-labelledby="conditions-title" className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5 sm:p-7">
+        <h2 id="conditions-title" className="flex items-center gap-2 text-lg font-semibold text-zinc-100">
+          <FlaskConical aria-hidden="true" className="h-5 w-5 text-cyan-300" />
+          {pt ? 'O que falta para uma triangulação quantitativa' : 'What quantitative triangulation still requires'}
+        </h2>
+        <ol className="mt-5 grid gap-3 md:grid-cols-2">
+          {conditions.map((condition) => (
+            <li key={condition.label.pt} className="rounded-lg border border-zinc-700 bg-zinc-950/50 p-4">
+              <h3 className="font-semibold text-zinc-100">{condition.label[lang]}</h3>
+              <p className="mt-2 text-sm leading-6 text-zinc-300">{condition.detail[lang]}</p>
+              <a href={condition.href} className="mt-3 inline-block text-sm text-cyan-300 underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300">
+                {pt ? 'Ver fonte e restrição' : 'View source and constraint'}
+              </a>
             </li>
-            <li>
-              <strong className="text-zinc-100">O que NÃO PODE FIXAR:</strong> Sabendo a posição exata do satélite 527 às 19:48 UTC de 08/11/1963, não é possível deduzir a posição do 528 sem conhecer com precisão de frações de porcentagem o arrasto acumulado ao longo de 141 voltas de defasagem. Um erro de apenas 0,05% no arrasto ao longo de 12 dias altera a posição do 528 em milhares de quilômetros ao longo do trilho.
-            </li>
-          </ul>
+          ))}
+        </ol>
+        <p className="mt-5 text-sm leading-7 text-amber-200">
+          <strong>{pt ? 'Resultado: indeterminado.' : 'Result: undetermined.'}</strong>{' '}
+          {pt
+            ? 'Não há hora, coordenadas, largura de corredor, probabilidade ou intervalo físico de impacto validado a exibir. A data de decaimento não identifica lugar ou impacto.'
+            : 'There is no validated impact time, coordinates, corridor width, probability or physical interval to display. A decay date does not identify a location or impact.'}
+        </p>
+      </section>
+
+      <aside className="rounded-xl border border-zinc-700 p-5 text-sm leading-7 text-zinc-300">
+        <h2 className="flex items-center gap-2 font-semibold text-zinc-100">
+          <BookOpen aria-hidden="true" className="h-4 w-4" />
+          {pt ? 'Fontes e grau de verificação' : 'Sources and verification level'}
+        </h2>
+        <p className="mt-2">
+          {pt
+            ? 'Esta apresentação deriva da matriz cumulativa C001–C238 da PR #1, ainda em revisão. Trata-se de auditoria da interface e do código, não de nova inspeção dos TLEs originais. O vínculo NASA/NORAD pode compartilhar a mesma cadeia de rastreamento.'
+            : 'This presentation is based on the cumulative C001–C238 matrix in the unmerged PR #1. It is a UI and code audit, not a new inspection of original TLEs. NASA/NORAD may share a tracking chain.'}
+        </p>
+        <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+          <a href={matrix} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-cyan-300 underline underline-offset-4">
+            {pt ? 'Matriz cumulativa (snapshot)' : 'Cumulative matrix (snapshot)'} <ExternalLink aria-hidden="true" className="h-3 w-3" />
+          </a>
+          <a href={nasa} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-cyan-300 underline underline-offset-4">
+            {pt ? 'Boletim NASA, 15/11/1963' : 'NASA bulletin, Nov 15, 1963'} <ExternalLink aria-hidden="true" className="h-3 w-3" />
+          </a>
         </div>
-      </div>
-    </div>
+      </aside>
+    </section>
   );
 };
