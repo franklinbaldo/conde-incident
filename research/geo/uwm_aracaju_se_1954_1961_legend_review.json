@@ -1,0 +1,110 @@
+{
+  "schema": "conde.historical-cartographic-legend-review/v1",
+  "record_id": "CGEO-08",
+  "reviewed_utc": "2026-11-12",
+  "reviewer": "caranguejo",
+  "parent_occurrence_id": "ARCH-UWM-ARACAJU-SE-10814-20261112",
+  "same_underlying_source_not_new_independent_survey": true,
+  "source": {
+    "institution": "University of Wisconsin-Milwaukee, American Geographical Society Library",
+    "original_cartographer": "Conselho Nacional de Geografia / IBGE",
+    "catalogue_item_id": "10814",
+    "catalogue_url": "https://collections.lib.uwm.edu/digital/collection/agdm/id/10814/",
+    "parent_custody_file": "research/geo/uwm_aracaju_se_1954_1961_cartographic_custody.json",
+    "scale_denominator_printed": 500000,
+    "printed_sheet_name": "ARACAJU-SE",
+    "original_jp2_verified_in_this_review": false,
+    "original_jp2_sha256": null,
+    "full_sheet_inspected_at_original_pixel_resolution": false
+  },
+  "visually_inspected_iiif_derivatives": [
+    {
+      "role": "legend_limits",
+      "url": "https://collections.lib.uwm.edu/digital/iiif/agdm/10814/780,6080,3100,1410/2800,/0/default.jpg",
+      "http_status": 200,
+      "bytes": 308989,
+      "sha256": "ef3c6754e39ed0364bb14f405f6da93d4a55b8bba61aaebf67a96ba7a72cdb33"
+    },
+    {
+      "role": "marginal_imprint",
+      "url": "https://collections.lib.uwm.edu/digital/iiif/agdm/10814/650,5890,5800,370/2200,/0/default.jpg",
+      "http_status": 200,
+      "bytes": 48662,
+      "sha256": "e114640d9aed9544e06eac11ba5fbe6108c7c0b322bb001185812240ba2cc617"
+    },
+    {
+      "role": "conde_and_coast",
+      "url": "https://collections.lib.uwm.edu/digital/iiif/agdm/10814/4300,3650,2700,2250/1900,/0/default.jpg",
+      "http_status": 200,
+      "bytes": 532998,
+      "sha256": "9ebbb45431e445ea1304d25d285b5aff8ed1272b544d424f35f8fe28d47af927"
+    }
+  ],
+  "literal_readings": {
+    "map_imprint_1954": "Organizada, desenhada, fotolitografada e editada pelo CONSELHO NACIONAL DE GEOGRAFIA - Dezembro de 1954",
+    "transport_layer_note_1961": "Atualização das vias de comunicação em 1961",
+    "projection_caption": "Projeção policônica da Carta Internacional ao milionésimo",
+    "scale_caption": "ESCALA 1:500 000",
+    "legend_title": "LIMITES",
+    "legend_boundary_classes_observed": ["Internacional", "Interestadual", "Marco de fronteira"],
+    "municipal_boundary_class_in_inspected_legend": false,
+    "toponym_conde_visible": true,
+    "other_toponyms_in_inspected_crop": ["Rio Real", "Mangue Sêco"]
+  },
+  "cartographic_interpretation": {
+    "projection_family_printed": "POLYCONIC",
+    "projection_full_parameters": null,
+    "crs_authority": null,
+    "datum": null,
+    "georeferencing_control_points": null,
+    "positional_accuracy_m": null,
+    "municipal_boundary_graphically_identifiable_by_legend": false,
+    "municipal_boundary_1963": null,
+    "historical_boundary_year_1963_proven": false,
+    "city_label_conde_is_municipal_perimeter": false,
+    "source_publishing_impression_date_verified": null,
+    "temporal_interpretation": "1954 was printed for original edition; 1961 modifies communication lines only. Neither proves complete 1961 revision or municipal limits as of 1963.",
+    "legend_interpretation": "The inspected LIMITES panel has international and interstate boundary symbols and a frontier marker, with no municipal-boundary legend class. This concerns the printed symbol key, not proof of absence of every line anywhere on the map.",
+    "allowed_scientific_use": [
+      "historical_toponym_presence_CONDE",
+      "qualitative_hydrographic_and_coastal_context_with_unquantified_positional_error",
+      "historical_map_projection_family_as_printed_but_not_complete_CRS"
+    ],
+    "forbidden_scientific_use": [
+      "infer_1963_conde_municipal_polygon",
+      "assign_EPSG_4674_or_WGS84_without_transform",
+      "extract_reentry_coordinate_or_clock",
+      "treat_map_and_parent_custody_as_independent_evidence",
+      "infer_accuracy_from_scale_alone"
+    ]
+  },
+  "castor_contract": {
+    "target_date": "1963-11-08",
+    "historical_municipal_boundary_polygon": null,
+    "observed_reentry_coordinates": null,
+    "event_spatial_membership": null,
+    "datum": null,
+    "can_constrain_reentry_1963": false,
+    "forward_operator_active": false,
+    "status": "CONNECTED_PENDING_CALIBRATION",
+    "latent_variables": [
+      "municipal_boundary_1963",
+      "complete_map_CRS_and_datum",
+      "map_print_or_update_history",
+      "spatial_control_points_and_error"
+    ],
+    "missing_bridges": [
+      "original Lei 628/1953 and any intervening changes through 1963",
+      "legend-supported historical municipal linework or original municipal limits map",
+      "map provenance and publication/version verification",
+      "geodetic datum and calibrated control points with uncertainty"
+    ],
+    "candidate_graph_edges": [
+      "ARCH-UWM-ARACAJU-SE-10814-20261112 -> CGEO-08 same source -> topographic locality labels",
+      "CGEO-08 projection caption -> polyconic map family -> CRSs and parameters still latent",
+      "CGEO-08 limits legend -> no municipal symbol class in inspected panel -> 1963 polygon cannot be read",
+      "verified legal boundary plus calibrated historic map -> latent municipal_boundary_1963 -> possible conditional spatial test"
+    ]
+  },
+  "negative_scope": "Only the three IIIF crops were inspected. The original JP2 and legal annexes were not authenticated. No date-specific polygon, positional accuracy, reentry time or reentry place was inferred."
+}
