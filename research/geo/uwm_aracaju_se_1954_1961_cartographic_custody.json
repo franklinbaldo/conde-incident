@@ -1,0 +1,128 @@
+{
+  "schema": "conde.historical-cartographic-iiif-custody/v1",
+  "occurrence_id": "ARCH-UWM-ARACAJU-SE-10814-20261112",
+  "inspection_date_utc": "2026-11-12",
+  "inspector": "lontra",
+  "scope": "História cartográfica e proveniência de fac-símile; não comprovação de limites administrativos de 1963",
+  "object": {
+    "custodian": "American Geographical Society Library Digital Map Collection, University of Wisconsin-Milwaukee Libraries",
+    "collection": "agdm",
+    "contentdm_item_id": "10814",
+    "digital_id": "am006983m am006983",
+    "title_catalog_short": "Aracaju - SE, Brazil 1954",
+    "title_original": "Carta do Brasil / organizada e desenhada pelo Conselho Nacional de Geografia ; Serviço Gráfico do I.B.G.E.",
+    "cartographer": "Conselho Nacional de Geografia (Brazil)",
+    "listed_publication_year": "1954",
+    "scale_denominator": 500000,
+    "original_filename_from_api": "10806.jp2",
+    "original_mime_from_api": "image/jp2",
+    "original_jp2_downloaded": false,
+    "original_jp2_sha256": null,
+    "iiif_width_px": 9603,
+    "iiif_height_px": 7783,
+    "original_map_print_date_verified": null,
+    "spatial_reference_system": null,
+    "datum": null,
+    "numeric_georeferencing_performed": false
+  },
+  "public_access": {
+    "catalog": "https://collections.lib.uwm.edu/digital/collection/agdm/id/10814/",
+    "contentdm_metadata_api": "https://collections.lib.uwm.edu/digital/api/singleitem/collection/agdm/id/10814",
+    "iiif_presentation_manifest": "https://collections.lib.uwm.edu/iiif/info/agdm/10814/manifest.json",
+    "iiif_image_info": "https://collections.lib.uwm.edu/digital/iiif/agdm/10814/info.json",
+    "access_method": "anonymous public HTTP GET; no archive or human contacted",
+    "copyright_notice": "consultar direitos no catálogo UWM; não redistribuir JP2 ou cópia de alta resolução aqui"
+  },
+  "binary_snapshots": [
+    {
+      "role": "contentdm_record_json",
+      "url": "https://collections.lib.uwm.edu/digital/api/singleitem/collection/agdm/id/10814",
+      "http_status": 200,
+      "bytes": 4579,
+      "content_type": "application/json",
+      "sha256": "bf22a965caae2661cb2b5021bf1b5281ae78014b2c5075224e6569c322612235"
+    },
+    {
+      "role": "iiif_presentation_json",
+      "url": "https://collections.lib.uwm.edu/iiif/info/agdm/10814/manifest.json",
+      "http_status": 200,
+      "bytes": 4376,
+      "content_type": "application/json",
+      "sha256": "3e77c1807849b1ada0e5c951728c37776b736477628d7f2e00acd2adf94b1101"
+    },
+    {
+      "role": "iiif_image_info_json",
+      "url": "https://collections.lib.uwm.edu/digital/iiif/agdm/10814/info.json",
+      "http_status": 200,
+      "bytes": 699,
+      "content_type": "application/json",
+      "sha256": "397dc18a320094abef543dbd2d350e3aa3e2cbe8ae7c807812c4d424631f6582"
+    },
+    {
+      "role": "derived_600px_preview",
+      "url": "https://collections.lib.uwm.edu/digital/iiif/agdm/10814/full/600,/0/default.jpg",
+      "http_status": 200,
+      "bytes": 58443,
+      "content_type": "image/jpeg",
+      "sha256": "f19762e9cc68ac6b45aea66288913943987314aacaa9d11e3b7ec71ed69f037d"
+    },
+    {
+      "role": "derived_conde_label_crop",
+      "url": "https://collections.lib.uwm.edu/digital/iiif/agdm/10814/4400,4200,3500,2600/1400,/0/default.jpg",
+      "http_status": 200,
+      "bytes": 224021,
+      "content_type": "image/jpeg",
+      "sha256": "839cdb254be09c14099ac201d29348b5fbf3fba5326d369acc798cfc0393b323"
+    },
+    {
+      "role": "derived_imprint_crop",
+      "url": "https://collections.lib.uwm.edu/digital/iiif/agdm/10814/850,5800,5000,730/1600,/0/default.jpg",
+      "http_status": 200,
+      "bytes": 65257,
+      "content_type": "image/jpeg",
+      "sha256": "2b380ffdd29876d3098b047072a5515bfaec8180cc4e82ac689797140e7038ac"
+    }
+  ],
+  "facsimile_reading": {
+    "inspection": "IIIF JPEG derivatives inspected visually, not OCR; full-resolution original JP2 not downloaded",
+    "sheet_label": "ARACAJU-SE",
+    "locality_visible": "CONDE",
+    "nearby_toponyms_seen": [
+      "Mangue Seco",
+      "Rio Real"
+    ],
+    "footnote_1_transcription": "Organizada, desenhada, fotolitografada e editada pelo CONSELHO NACIONAL DE GEOGRAFIA - Dezembro de 1954",
+    "footnote_2_transcription": "Atualização das vias de comunicação em 1961",
+    "interpretation": "O título do catálogo diz 1954, mas o fac-símile traz atualização temática (vias) de 1961. A data de publicação/impressão da versão digitalizada não foi estabelecida; não assumir que todas as feições representam 1954 ou que divisões municipais permaneceram iguais em 1963.",
+    "numbering": "10814 é ID CONTENTdm; 10806.jp2 é nome do objeto digital. Esta é uma folha cartográfica única, não a página 10814 nem prova de 10.806 páginas.",
+    "confidence": "Visual reading of stated short phrases, no complete transcription; text requires review against higher-resolution print if used verbatim"
+  },
+  "epistemic_and_model_links": {
+    "historical_target_date": "1963-11-08",
+    "related_current_project_issues": [
+      "https://github.com/franklinbaldo/lontra/issues/2",
+      "https://github.com/franklinbaldo/conde-incident/issues/136"
+    ],
+    "related_legacy_claim_ids": [
+      "C24"
+    ],
+    "class": "PRIMARY_CARTOGRAPHIC_FACSIMILE_OF_PRE_1963_SURVEY_COMPONENTS",
+    "map_1963_available_at_event": null,
+    "administrative_boundary_1963": null,
+    "legal_confrontations_1963": null,
+    "historical_polygon_1963": null,
+    "coordinates_of_alleged_fall": null,
+    "historical_reentry_inside_conde_evaluable": false,
+    "constraint_status": "CONNECTED_PENDING_CALIBRATION",
+    "missing_bridges": [
+      "comprovar data de edição/publicação efetiva da folha com atualização de 1961",
+      "identificar se legendas e traçados de divisas são legalmente administrativos, não somente gráficos",
+      "resgatar ato legal e texto dos limites vigente em 08/11/1963; comprovar sua vigência e geometria",
+      "calibrar datum, projeção, pontos de controle e erro de digitalização antes de georreferenciar"
+    ],
+    "independence_note": "Cópia digital UWM de cartografia CNG/IBGE, não levantamento independente do mesmo órgão e não testemunho de queda.",
+    "orbital_and_physical_constraint": "NOT_ACTIVATED"
+  },
+  "negative_scope": "Esta rodada não verificou o JP2 original, não pesquisou todos os acervos, não estabeleceu limites de 1963 nem georreferenciou a folha; resultados negativos se restringem a esses procedimentos ainda não realizados.",
+  "reproduction": "GET dos seis URLs listados em binary_snapshots; comparar tamanho, Content-Type e SHA256 dos corpos exatos. Os hashes identificam snapshots HTTP observados em 2026-11-12, não necessariamente formatos futuros servidos pela CDN."
+}
