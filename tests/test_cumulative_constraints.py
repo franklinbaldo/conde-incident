@@ -216,7 +216,7 @@ class CumulativeConstraintGraphTests(unittest.TestCase):
     def test_same_source_family_cannot_split_into_fake_tracking_lineages(self):
         bad = copy.deepcopy(self.graph)
         bad["sources"][0]["upstream_tracking_family"] = "FORGED_NEW_SENSOR"
-        with self.assertRaisesRegex(ValueError, "conflicting upstream tracking lineage"):
+        with self.assertRaisesRegex(ValueError, "pinned NASA SSR source identity"):
             validate(bad)
 
     def test_pending_observation_cannot_fake_active_link_status(self):
