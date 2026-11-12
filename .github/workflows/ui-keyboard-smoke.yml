@@ -1,0 +1,50 @@
+name: UI keyboard and mobile smoke
+on:
+  pull_request:
+    paths:
+      - 'src/App.tsx'
+      - 'src/components/Navigation.tsx'
+      - 'tests/ui_keyboard_smoke.mjs'
+      - '.github/workflows/ui-keyboard-smoke.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  ui-keyboard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Confirm exact PR HEAD
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install application and browser test runner
+        run: |
+          npm install --no-audit --no-fund
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Start local PR build
+        run: |
+          npm run dev -- --port 3000 --host 127.0.0.1 > /tmp/conde-ui-dev.log 2>&1 &
+          for i in $(seq 1 50); do
+            if curl --fail --silent http://127.0.0.1:3000/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/conde-ui-dev.log
+          exit 1
+      - name: Browser keyboard and responsive evidence
+        run: node tests/ui_keyboard_smoke.mjs
+      - name: Upload screenshots and findings even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ui-keyboard-mobile-audit
+          path: test-results/ui/
+          if-no-files-found: ignore
