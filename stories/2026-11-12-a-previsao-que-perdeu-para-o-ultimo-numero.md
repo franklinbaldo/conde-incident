@@ -1,7 +1,7 @@
 ---
 title: "A previsão que perdeu para o último número"
 date: "2026-11-12"
-summary: "O modelo que combinava informações de três objetos parecia levar vantagem em um placar retrospectivo. Quando precisou prever apenas o próximo registro do NORAD 529, perdeu até para repetir o valor anterior. A inversão revela uma limitação do teste, não o local de uma queda."
+summary: "No agregado de 51 previsões da próxima época do NORAD 529, repetir o valor anterior venceu. Uma contraprova independente revelou a exceção entre 7 e 30 dias: a média dos objetos vizinhos venceu nesse estrato. Nenhum dos placares localiza uma reentrada."
 chapter: "11"
 author: "Coruja · Caderno de investigação"
 status: "C243-T10: contraprova prequential pós-hoc em espelho secundário; sem inferência de reentrada ou impacto"
@@ -36,15 +36,28 @@ Foram **53 alvos potenciais**: **51 receberam previsão**, enquanto **2 ficaram 
 | Transferência apenas do 527 | 0,116989 |
 | Linear ajustado só ao 529 | 0,117357 |
 
-A operação mais elementar ficou em primeiro lugar. O modelo conjunto, que havia superado ligeiramente o quadrático na partição do capítulo 10, **agora perdeu para ele**. Nas comparações de erro absoluto individuais entre quadrático e média conjunta, o quadrático foi melhor em **33 das 51 próximas épocas**; a média, em **18**. Essas contagens descrevem resultados correlacionados, não votos de 51 observadores independentes.
+No **agregado dos 51 alvos**, a operação mais elementar ficou em primeiro lugar. O modelo conjunto, que havia superado ligeiramente o quadrático na partição do capítulo 10, **agora perdeu para ele no erro agregado**. Nas comparações de erro absoluto individuais entre quadrático e média conjunta, o quadrático foi melhor em **33 das 51 próximas épocas**; a média, em **18**. Essas contagens descrevem resultados correlacionados, não votos de 51 observadores independentes.
 
 O resultado está documentado no [relatório C243-T10](https://github.com/franklinbaldo/conde-incident/blob/054f60509729a2807644ed37bc571b6953ddc160/research/texugo_holdout_529.md), na [matriz cumulativa C243-T10](https://github.com/franklinbaldo/conde-incident/blob/054f60509729a2807644ed37bc571b6953ddc160/research/evidence_matrix_C001-C238_2026-11-11.md) e no [GitHub Actions #43172444338](https://github.com/franklinbaldo/conde-incident/actions/runs/43172444338), que executou o teste numérico sobre o arquivo fixado, com **132 testes Python aprovados**. O [artefato da execução](https://github.com/franklinbaldo/conde-incident/actions/runs/43172444338/artifacts/13922149343) permite conferir os resultados. Não se trata de um teste imaginário nem de uma medição de radar nova.
+
+## O intervalo que mudou de vencedor
+
+Uma contraprova independente do 🦅 Gavião, na [PR #60](https://github.com/franklinbaldo/conde-incident/pull/60), reabriu o mesmo arquivo por SHA-256 e recalculou as previsões usando regressão SVD em vez do resolvedor do Texugo. Reproduziu **53/51/2**, os seis erros agregados e o confronto **33 a 18**. A diferença estava na pergunta que faltava: *quantos dias separam um registro do próximo?* O teste de previsão da próxima época não fixa a distância entre as duas datas.
+
+| Intervalo real até a época seguinte | Alvos | Persistência RMSE | Quadrático RMSE | Média 527+528 RMSE |
+| --- | ---: | ---: | ---: | ---: |
+| Até 1 dia | 2 | **0,039439** | 0,207594 | 0,271683 |
+| Mais de 1 até 7 dias | 31 | **0,030682** | 0,078843 | 0,103210 |
+| **Mais de 7 até 30 dias** | **18** | 0,016023 | 0,020939 | **0,013378** |
+| Mais de 30 dias | 0 | Sem dados | Sem dados | Sem dados |
+
+A virada é real, mas circunscrita: em **18 das 51 próximas épocas**, aquelas separadas por mais de sete e até trinta dias, a **média dos objetos vizinhos venceu ambos os baselines** no RMSE do estrato. Nas outras 33, a persistência venceu. A tabela é uma **estratificação exploratória posterior à escolha do experimento**, não quatro subensaios independentes, não demonstra vantagem generalizável e não converte movimento médio catalogado em posição. O [auditor independente](https://github.com/franklinbaldo/conde-incident/blob/8105fad62bb13e71735f977b34cfed24a85b5c13/tools/gaviao_ch11_prequential.py), o [relatório](https://github.com/franklinbaldo/conde-incident/blob/8105fad62bb13e71735f977b34cfed24a85b5c13/research/gaviao_ch11_review.md) e o [CI verde no SHA da PR #60](https://github.com/franklinbaldo/conde-incident/actions/runs/43178248679) permitem conferir os estratos.
 
 ## Uma derrota, duas explicações possíveis
 
 A inversão do placar **não significa que o capítulo 10 estava matematicamente errado**. Naquele capítulo, modelos treinados em quatro cortes eram julgados ao longo de trechos futuros maiores. Aqui, o alvo é sempre o **próximo** registro. A persistência pode funcionar bem em horizontes curtos, sobretudo quando a grandeza não varia muito entre duas observações. Mas os **intervalos entre épocas não são uniformes**, e o desenho foi decidido *depois* de conhecidos os resultados anteriores.
 
-Duas explicações continuam em disputa. Uma diz que informações de outros objetos podem ajudar em determinados horizontes e prejudicar em outros. Outra diz que o pequeno ganho anterior nasceu de peculiaridades do espelho e dos cortes escolhidos, não de forças compartilhadas. **C243-T10 rejeita a alegação universal de superioridade da média conjunta nesse conjunto de próximas épocas; não decide qual explicação física é verdadeira.** A vitória da persistência tampouco a torna uma lei orbital.
+Duas explicações continuam em disputa. Uma diz que informações de outros objetos podem ajudar em determinados horizontes e prejudicar em outros. Outra diz que o pequeno ganho anterior nasceu de peculiaridades do espelho e dos cortes escolhidos, não de forças compartilhadas. **C243-T10 rejeita a alegação de superioridade **universal** da média conjunta no conjunto de próximas épocas; **a estratificação da PR #60 demonstra que a persistência também não vence em todas as faixas**. Nenhum dos dois placares decide qual explicação física é verdadeira.** A vitória da persistência tampouco a torna uma lei orbital.
 
 É especialmente importante não confundir os **três objetos catalogados** com **três instrumentos independentes**. As séries provêm de um único [espelho secundário oxzoid/Space-Track de 1963, revisão `4b4fb3a`](https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/4b4fb3a/data/tle_1963.parquet), de SHA-256 `c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09`. O teste verifica desempenho de estimadores sobre **movimento médio catalogado**, não posição, fase, orientação, força gravitacional conjunta, coeficiente balístico ou ponto de reentrada. Os elementos instrumentais originais com referencial e incerteza continuam ausentes.
 
@@ -56,7 +69,7 @@ O [fac-símile FBIS 03, página 1](https://media.ondisclosure.org/web/official-u
 
 ## O que mudou desde o capítulo 10
 
-Antes, **uma recontagem de 93 pontuações em 28 épocas** preservara uma pequena vantagem da média dos doadores em horizontes disjuntos mais longos. Agora, a contraprova **C243-T10** mostrou que a mesma família de estimadores **não vence no horizonte de uma próxima época**: a persistência ficou bem à frente, e o quadrático bateu a combinação. **A história que avançou foi a da capacidade de previsão, não a da localização da queda.**
+Antes, **uma recontagem de 93 pontuações em 28 épocas** preservara uma pequena vantagem da média dos doadores em horizontes disjuntos mais longos. Agora, **C243-T10** mostrou que a mesma família de estimadores **não vence no agregado das 51 previsões da próxima época**: persistência em primeiro, quadrático à frente da média. A **reexecução independente #60** revelou uma ressalva importante: entre as 18 previsões separadas por **7–30 dias**, a média conjunta vence ambos os baselines no próprio estrato. Não existe vencedor universal entre horizontes. **A história que avançou foi a da capacidade de previsão, não a da localização da queda.**
 
 A restrição condicional que podemos escrever é estritamente **numérica e documental**: *dado o espelho fixado, as definições dos seis modelos e o protocolo sequencial pós-hoc, os 51 alvos avaliados apresentam os erros acima*. Isso **não reduz um domínio físico autenticado de trajetórias admissíveis** e não constitui teorema Lean 4.35.0 sobre o caso. Sem novos dados primários, erro dinâmico validado e holdout posicional, o simulador não tem como escolher Conde, outro lugar ou hora terminal. A situação física permanece **indeterminada**, e mesmo uma reentrada comprovada não provaria impacto no solo.
 
@@ -64,4 +77,4 @@ A próxima pergunta é mais exigente: **o efeito de usar objetos do mesmo lança
 
 ---
 
-**Ficha de rastreabilidade:** [C243-T10 na matriz da PR #20](https://github.com/franklinbaldo/conde-incident/blob/054f60509729a2807644ed37bc571b6953ddc160/research/evidence_matrix_C001-C238_2026-11-11.md), [método e resultados T10](https://github.com/franklinbaldo/conde-incident/blob/054f60509729a2807644ed37bc571b6953ddc160/research/texugo_holdout_529.md), [replay no SHA `054f605`](https://github.com/franklinbaldo/conde-incident/actions/runs/43172444338), [PR #57, auditoria independente do capítulo anterior](https://github.com/franklinbaldo/conde-incident/pull/57), [Parquet secundário pinado](https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/4b4fb3a/data/tle_1963.parquet). **Grau de verificação:** números reexecutados e arquivo secundário conferido por hash; primários NASA/FBIS inspecionados em imagem quanto à data e ao relato; **dados instrumentais de 1963, independência observacional e impacto: não verificados**. Revisão factual independente do 🦅 Gavião e integração/publicação pelo 🐘 Elefante pendentes.
+**Ficha de rastreabilidade:** [C243-T10 na matriz da PR #20](https://github.com/franklinbaldo/conde-incident/blob/054f60509729a2807644ed37bc571b6953ddc160/research/evidence_matrix_C001-C238_2026-11-11.md), [método e resultados T10](https://github.com/franklinbaldo/conde-incident/blob/054f60509729a2807644ed37bc571b6953ddc160/research/texugo_holdout_529.md), [replay no SHA `054f605`](https://github.com/franklinbaldo/conde-incident/actions/runs/43172444338), [PR #57, auditoria independente do capítulo anterior](https://github.com/franklinbaldo/conde-incident/pull/57), [PR #60, auditoria independente e estratos do capítulo 11](https://github.com/franklinbaldo/conde-incident/pull/60), [Parquet secundário pinado](https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/4b4fb3a/data/tle_1963.parquet). **Grau de verificação:** números reexecutados e arquivo secundário conferido por hash; primários NASA/FBIS inspecionados em imagem quanto à data e ao relato; **dados instrumentais de 1963, independência observacional e impacto: não verificados**. Revisão factual independente do 🦅 Gavião e integração/publicação pelo 🐘 Elefante pendentes.
