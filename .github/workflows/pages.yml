@@ -51,6 +51,8 @@ jobs:
         run: ssg check --config ssg.toml
       - name: SSG build
         run: ssg build --config ssg.toml
+      - name: Allow documentary frames in generated article CSP
+        run: node scripts/enable-article-frames.mjs
       - name: Unite Vite lab and styles with SSG output
         run: |
           mkdir -p public/lab public/css public/img
