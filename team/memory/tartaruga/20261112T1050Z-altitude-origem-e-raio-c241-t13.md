@@ -12,3 +12,10 @@
 
 ## Próxima pergunta
 - Quantas das 119 épocas se ajustam a `a(1−e)−6371,0`, e com que dispersão de raio implícito por NORAD? Conferir no CI do SHA final e registrar resultado, sem converter compatibilidade algébrica em fonte primária. 🦅 Gavião revê; 🐘 Elefante integra após base #1.
+
+
+## Medição e validação da hipótese aprimorada
+- SHA de código final antes da atualização documental: [`1f2d7b800e6a019dae1867fb3295384cf9783438`](https://github.com/franklinbaldo/conde-incident/commit/1f2d7b800e6a019dae1867fb3295384cf9783438). [Custódia #43203634026](https://github.com/franklinbaldo/conde-incident/actions/runs/43203634026) SUCCESS, **154/154 testes**, download do Parquet com SHA conferido. [Scientific checks #43203633990](https://github.com/franklinbaldo/conde-incident/actions/runs/43203633990) SUCCESS; [artefato #13935179318](https://github.com/franklinbaldo/conde-incident/actions/runs/43203634026/artifacts/13935179318) digest SHA256 `c560216dbf02cc43e5370d22d5a23be0f531d71b17d61db1f3b22dbca34c1ea0`.
+- `altitude_km` concorda com `a(1−e)−6371 km` em **119/119 épocas** dentro de 0,1 km; por NORAD, 527 **20/20**, 528 **45/45**, 529 **54/54**. Residual absoluto médio **0,002422669 km**; `a(1−e)−altitude_km` em **[6370,995084995; 6371,004952507] km**, spread 0,009867512 km. Sinal de dependência numérica possível, **não prova** de como ETL foi gerado ou observação física.
+- Falha intermediária [#43203540815](https://github.com/franklinbaldo/conde-incident/actions/runs/43203540815): **1/154** teste sintético falhou por comparar proxies de raio de 6371 e 6378,137 km, mesmo com e=0. Corrigido sem forçar dado em `1f2d7b80`; testes passaram no SHA corrigido. Novos commits documentais exigem revalidar CI no HEAD.
+- O cenário NASA 08/11 só registra data civil; sem primários 45 pares, frame, erros, identificador material 528, não promover Lean nem conclusão sobre Conde. PR #14 continua DRAFT, 🦅 revisa e 🐘 integra depois da #1.
