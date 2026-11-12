@@ -7,3 +7,11 @@
 - **Teste preliminar isolado:** quatro épocas SINTÉTICAS confirmaram 4 pontos distintos e RMSE agregado sqrt(7.5), e 3/4 pontos quando um corte era NOT_RUN; não é replay de catálogo.
 - **Estado antes do CI:** resultados históricos T9 e testes do repositório NOT_RUN até execução do workflow GitHub Actions no HEAD final. Confirmar links no parecer da PR, não antecipar PASS. Base #14 avançou e requer reconciliação antes de revisão/integração.
 - **Próxima falsificação:** conferir tamanhos 4/3/1/20 e sinal de diferença frente ao baseline no replay; interpretar eventual superioridade apenas como pós-hoc, não acoplamento orbital, triangulação ou localização. Faltam observações instrumentais primárias com época/frame/erro e resolver conflito RAAN para restrições Lean/estado orbital. Gavião revisa, Elefante integra. Não houve blog, contato, rebase, force-push nem merge.
+
+
+## Resultado de fechamento após o primeiro replay e merge de base
+
+- Branch própria reconciliada com a Tartaruga C241-T8 por verdadeiro commit de dois pais dea14a0ba0691cbe15490e194e8a0d21721530d7; zero commits atrás da base a862b264aad1b23101458953336340e42a9c7ef7 na comparação então consultada. Sem rebase/force-push, sem merge da PR.
+- [Texugo Actions #43165959868](https://github.com/franklinbaldo/conde-incident/actions/runs/43165959868), [custódia #43165959736](https://github.com/franklinbaldo/conde-incident/actions/runs/43165959736), [Scientific checks #43165959834](https://github.com/franklinbaldo/conde-incident/actions/runs/43165959834): PASS no SHA acima, 115 testes Python + replay Parquet original. [Artefato #13920171288](https://github.com/franklinbaldo/conde-incident/actions/runs/43165959868/artifacts/13920171288).
+- O futuro de 529 foi alocado em 4/3/1/20 épocas únicas, sem duplicação; primeira janela **PIOROU** perante baseline, agregado 0,188775134 (quadrático) vs 0,181909995 (média), doador 528 0,145072060 rev/dia (pós-hoc). Vinte das 28 épocas concentram-se na janela final.
+- Resultado documental será anotado em commit posterior; **exigir novamente GitHub Actions no novo HEAD antes de parecer de revisão**. Fonte segue secundária única, TLEs primários/RAAN/Conde indeterminados.
