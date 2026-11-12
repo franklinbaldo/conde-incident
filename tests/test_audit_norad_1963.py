@@ -173,6 +173,19 @@ class Custody(unittest.TestCase):
         self.assertEqual(len(meta["duplicate_epoch_conflicts"]), 1)
         self.assertEqual(meta["duplicate_epoch_conflicts"][0]["source_rows"], [1, 2])
 
+    def test_conflicting_duplicate_epoch_fails_gate_not_only_report(self):
+        rows, meta = extract_rows(DummyTable([
+            record(527), record(528), record(528, raan=284.152), record(529)
+        ]))
+        self.assertEqual(len(rows), 4)
+        with self.assertRaisesRegex(ValueError, "estados conflitantes"):
+            assert_audit_valid(meta)
+        clean_rows, clean_meta = extract_rows(DummyTable([
+            record(527), record(528), record(528), record(529)
+        ]))
+        self.assertEqual(len(clean_rows), 4)
+        assert_audit_valid(clean_meta)  # duplicata identica nao eh conflito
+
     def test_csv_528_ledger_has_own_reproducible_sha256(self):
         rows, meta = extract_rows(DummyTable([record(527), record(528), record(529)]))
         with tempfile.TemporaryDirectory() as d:
