@@ -60,6 +60,29 @@ class MatrixEvidenceTests(unittest.TestCase):
         with self.assertRaisesRegex(InventoryError, "unreviewed physical promotion"):
             audit(self.raw, corrupted, strict_hash=False)
 
+
+    def test_uncertainty_is_explicit_for_every_record(self):
+        out = contracts(self.rows)
+        self.assertEqual(out["schema_version"], 2)
+        self.assertEqual(len(out["entries"]), 241)
+        self.assertEqual(
+            sum(x["epistemic_uncertainty"] == "requiresIndividualAssessment"
+                for x in out["entries"]), 238
+        )
+        self.assertTrue(all(x["epistemic_uncertainty"] and x["uncertainty_basis"]
+                            for x in out["entries"]))
+        self.assertTrue(all(x["numeric_error_bounds"] is None
+                            for x in out["entries"]))
+        self.assertEqual([x["id"] for x in out["entries"]
+                          if x["epistemic_uncertainty"] ==
+                          "reportedCatalogueDayActualDayUnknown"], ["C131", "C197"])
+
+    def test_promoting_uncertainty_without_review_is_rejected(self):
+        altered = [dict(row) for row in self.rows]
+        altered[0]["uncertainty"] = "reportedCatalogueDayActualDayUnknown"
+        with self.assertRaisesRegex(InventoryError, "uncertainty promotion"):
+            audit(self.raw, altered, strict_hash=False)
+
     def test_export_preserves_all_rows_and_lineage_limits(self):
         out = contracts(self.rows)
         self.assertEqual(len(out["entries"]), 241)
@@ -71,7 +94,7 @@ class MatrixEvidenceTests(unittest.TestCase):
         self.assertTrue(all(x["source_status"] == "MATRIX_ONLY_NOT_REINSPECTED_THIS_RUN"
                             for x in out["entries"]))
         self.assertEqual(sum(x["physical_encoding"] ==
-            "NASA_REPORTED_DECAY_DAY_SCENARIO_ONLY" for x in out["entries"]), 2)
+            "NASA_CATALOGUED_DATE_HYPOTHESIS_NOT_HARD_FILTER" for x in out["entries"]), 2)
 
 
 if __name__ == "__main__":
