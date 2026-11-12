@@ -29,9 +29,9 @@ REQUIRED = {
     "unverified_hash": "equivalência byte a byte com a URL governamental de origem **não foi estabelecida",
     "no_orbital_reduction": "**nenhum domínio orbital admissível foi reduzido**",
 }
-REFS = ("C01", "C02", "C03", "C05", "C06", "C08", "C09", "C10",
-        "C15", "C16", "C165", "AX-STATE-20261111-01",
-        "AX-STATE-20261111-02", "AX-STATE-20261111-03")
+# Validate precisely how ranges are written by the author, not imaginary individual tokens.
+REFS = ("C01–C03", "C05", "C06", "C08", "C09", "C10",
+        "C15", "C16", "C165", "AX-STATE-20261111-01–03")
 
 def admissible_worlds():
     """Logical options, never observed or given statistical weights.
