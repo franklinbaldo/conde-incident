@@ -67,6 +67,20 @@ def read_contract(path: Path = CONTRACT) -> dict:
             or topo.get("all_intermediate_vertices_available") is not False
             or topo.get("georeferencing_authorized") is not False):
         raise ValueError("cannot upgrade description to a complete georeferenced boundary")
+    bridge = data.get("legal_1944_1953_bridge", {})
+    if (bridge.get("law_source_id") != SOURCES[1]
+            or bridge.get("linked_source_id") != SOURCES[0]
+            or bridge.get("provision") != "art. 2"
+            or bridge.get("exact_short_excerpt") != "Continuam em vigor os dispositivos do Decreto n. 12.978"
+            or bridge.get("explicit_preservation_in_1953") is not True
+            or bridge.get("modified_by_1953_and_annexes") is not True
+            or bridge.get("annexes_ii_vi_inspected") is not False
+            or bridge.get("conde_jandaira_segment_identity_proven") is not False
+            or bridge.get("continuing_unchanged_until_1963_proven") is not False
+            or bridge.get("legal_scope_for_1963", "missing") is not None
+            or bridge.get("boundary_geometry_for_1963", "missing") is not None
+            or bridge.get("graph_status") != "CONNECTED_PENDING_1953_ANNEX_ALTERATIONS_AND_LATER_ACTS"):
+        raise ValueError("unverified 1944-to-1953 legal carryover promotion")
     graph = data.get("dependency_graph", {})
     if (graph.get("prior_ids") != ["C24", "CGEO-05", "CGEO-06", "CGEO-08"]
             or graph.get("requires_for_event_date") != list(MISSING)
@@ -75,6 +89,12 @@ def read_contract(path: Path = CONTRACT) -> dict:
             or graph.get("new_geometric_constraint_activated") is not False
             or graph.get("status") != "CONNECTED_PENDING_PRIMARY_ANNEX_CONTINUITY_AND_GEOREFERENCE"):
         raise ValueError("missing historical bridge must remain explicit")
+    carryovers = [link for link in graph.get("links", [])
+                  if link.get("type") == "EXPLICIT_ART2_NORMATIVE_CARRYOVER_WITH_1953_MODIFICATIONS"]
+    if (len(carryovers) != 1 or carryovers[0].get("source_id") != SOURCES[1]
+            or carryovers[0].get("target") != SOURCES[0]
+            or "1963" not in carryovers[0].get("scope", "")):
+        raise ValueError("normative carryover graph edge missing")
     if set(link["source_id"] for link in graph.get("links", [])) != set(SOURCES) | {"BA-ALEBA-LEI-13720-2017-DO-22166"}:
         raise ValueError("provenance lineage incomplete")
     return data
@@ -95,6 +115,7 @@ def evaluate(day: str, data: dict) -> dict:
         "requested_date": target.isoformat(),
         "stated_1953_division_period_end": end.isoformat(),
         "temporal_status": status,
+        "1944_statute_carryover_in_1953": data["legal_1944_1953_bridge"]["graph_status"],
         "legal_boundary_for_date": None,
         "point_membership": None,
         "coordinate_reference_system": None,
