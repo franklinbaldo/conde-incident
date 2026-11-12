@@ -8,6 +8,7 @@ import {
   Code,
 } from 'lucide-react';
 import { PYTHON_REPRODUCIBILITY_SCRIPT } from '../lib/pythonScriptExport';
+import { copyTextToClipboard } from '../lib/clipboardCopy';
 
 interface PythonScriptModalProps {
   isOpen: boolean;
@@ -21,7 +22,7 @@ export const PythonScriptModal: React.FC<PythonScriptModalProps> = ({
   lang,
 }) => {
   const isPt = lang === 'pt';
-  const [copied, setCopied] = useState<boolean>(false);
+  const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>('idle');
   const titleId = React.useId();
   const dialogRef = React.useRef<HTMLDivElement>(null);
   const closeButtonRef = React.useRef<HTMLButtonElement>(null);
@@ -70,12 +71,15 @@ export const PythonScriptModal: React.FC<PythonScriptModalProps> = ({
     };
   }, [isOpen]);
 
+  React.useEffect(() => {
+    if (!isOpen) setCopyState('idle');
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(PYTHON_REPRODUCIBILITY_SCRIPT);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const handleCopy = async () => {
+    const succeeded = await copyTextToClipboard(PYTHON_REPRODUCIBILITY_SCRIPT, navigator.clipboard);
+    setCopyState(succeeded ? 'copied' : 'failed');
   };
 
   const handleDownload = () => {
@@ -117,8 +121,8 @@ export const PythonScriptModal: React.FC<PythonScriptModalProps> = ({
               onClick={handleCopy}
               className="px-3 py-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer"
             >
-              {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-              <span>{copied ? (isPt ? 'Copiado!' : 'Copied!') : (isPt ? 'Copiar código' : 'Copy code')}</span>
+              {copyState === 'copied' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+              <span>{copyState === 'copied' ? (isPt ? 'Copiado!' : 'Copied!') : (isPt ? 'Copiar código' : 'Copy code')}</span>
             </button>
 
             <button
@@ -146,6 +150,14 @@ export const PythonScriptModal: React.FC<PythonScriptModalProps> = ({
           <span>{isPt ? 'Como executar:' : 'Run:'} <code className="text-cyan-300">python3 norad528_reconstruction.py</code></span>
           <span className="text-zinc-500">{isPt ? 'Dependências:' : 'Dependencies:'} numpy, scipy</span>
         </div>
+
+        {copyState === 'failed' && (
+          <p role="alert" className="border-b border-rose-800 bg-rose-950/50 px-4 py-2 text-xs text-rose-100">
+            {isPt
+              ? 'Não foi possível copiar automaticamente. Selecione o código abaixo e copie manualmente.'
+              : 'Automatic copying failed. Select the code below and copy it manually.'}
+          </p>
+        )}
 
         {/* Code View */}
         <div className="p-4 overflow-y-auto flex-1 font-mono text-xs text-zinc-300 bg-zinc-950 scrollbar-thin">
