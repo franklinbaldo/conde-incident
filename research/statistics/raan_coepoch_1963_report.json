@@ -1,0 +1,289 @@
+{
+  "cases": [
+    {
+      "count": 0,
+      "earliest_pair": null,
+      "latest_pair": null,
+      "left": 527,
+      "median_abs_circular_raan_difference_deg": null,
+      "median_abs_epoch_gap_s": null,
+      "right": 528,
+      "window_minutes": 10
+    },
+    {
+      "count": 1,
+      "earliest_pair": {
+        "abs_delta_raan_deg": 0.019,
+        "delta_raan_deg_signed": -0.019,
+        "delta_t_s": 666.45072,
+        "left_utc": "1963-01-23T18:57:45.801216Z",
+        "right_utc": "1963-01-23T18:46:39.350496Z"
+      },
+      "latest_pair": {
+        "abs_delta_raan_deg": 0.019,
+        "delta_raan_deg_signed": -0.019,
+        "delta_t_s": 666.45072,
+        "left_utc": "1963-01-23T18:57:45.801216Z",
+        "right_utc": "1963-01-23T18:46:39.350496Z"
+      },
+      "left": 527,
+      "median_abs_circular_raan_difference_deg": 0.019,
+      "median_abs_epoch_gap_s": 666.45072,
+      "right": 528,
+      "window_minutes": 60
+    },
+    {
+      "count": 2,
+      "earliest_pair": {
+        "abs_delta_raan_deg": 0.0889,
+        "delta_raan_deg_signed": 0.0889,
+        "delta_t_s": 5556.555072,
+        "left_utc": "1963-01-18T04:56:19.682304Z",
+        "right_utc": "1963-01-18T06:28:56.237376Z"
+      },
+      "latest_pair": {
+        "abs_delta_raan_deg": 0.019,
+        "delta_raan_deg_signed": -0.019,
+        "delta_t_s": 666.45072,
+        "left_utc": "1963-01-23T18:57:45.801216Z",
+        "right_utc": "1963-01-23T18:46:39.350496Z"
+      },
+      "left": 527,
+      "median_abs_circular_raan_difference_deg": 0.05395,
+      "median_abs_epoch_gap_s": 3111.502896,
+      "right": 528,
+      "window_minutes": 360
+    },
+    {
+      "count": 5,
+      "earliest_pair": {
+        "abs_delta_raan_deg": 0.6316,
+        "delta_raan_deg_signed": 0.6316,
+        "delta_t_s": 51025.123584,
+        "left_utc": "1963-01-17T02:07:47.226720Z",
+        "right_utc": "1963-01-17T16:18:12.350304Z"
+      },
+      "latest_pair": {
+        "abs_delta_raan_deg": 3.506,
+        "delta_raan_deg_signed": 3.506,
+        "delta_t_s": 79006.43664,
+        "left_utc": "1963-07-04T06:47:24.213696Z",
+        "right_utc": "1963-07-05T04:44:10.650336Z"
+      },
+      "left": 527,
+      "median_abs_circular_raan_difference_deg": 0.6316,
+      "median_abs_epoch_gap_s": 28008.112608,
+      "right": 528,
+      "window_minutes": 1440
+    },
+    {
+      "count": 1,
+      "earliest_pair": {
+        "abs_delta_raan_deg": 0.0014,
+        "delta_raan_deg_signed": 0.0014,
+        "delta_t_s": 129.6,
+        "left_utc": "1963-01-17T16:18:12.350304Z",
+        "right_utc": "1963-01-17T16:20:21.950304Z"
+      },
+      "latest_pair": {
+        "abs_delta_raan_deg": 0.0014,
+        "delta_raan_deg_signed": 0.0014,
+        "delta_t_s": 129.6,
+        "left_utc": "1963-01-17T16:18:12.350304Z",
+        "right_utc": "1963-01-17T16:20:21.950304Z"
+      },
+      "left": 528,
+      "median_abs_circular_raan_difference_deg": 0.0014,
+      "median_abs_epoch_gap_s": 129.6,
+      "right": 529,
+      "window_minutes": 10
+    },
+    {
+      "count": 3,
+      "earliest_pair": {
+        "abs_delta_raan_deg": 0.0014,
+        "delta_raan_deg_signed": 0.0014,
+        "delta_t_s": 129.6,
+        "left_utc": "1963-01-17T16:18:12.350304Z",
+        "right_utc": "1963-01-17T16:20:21.950304Z"
+      },
+      "latest_pair": {
+        "abs_delta_raan_deg": 2.7005,
+        "delta_raan_deg_signed": -2.7005,
+        "delta_t_s": 930.2256,
+        "left_utc": "1963-09-25T13:06:20.907648Z",
+        "right_utc": "1963-09-25T13:21:51.133248Z"
+      },
+      "left": 528,
+      "median_abs_circular_raan_difference_deg": 0.4721,
+      "median_abs_epoch_gap_s": 930.2256,
+      "right": 529,
+      "window_minutes": 60
+    },
+    {
+      "count": 6,
+      "earliest_pair": {
+        "abs_delta_raan_deg": 0.0014,
+        "delta_raan_deg_signed": 0.0014,
+        "delta_t_s": 129.6,
+        "left_utc": "1963-01-17T16:18:12.350304Z",
+        "right_utc": "1963-01-17T16:20:21.950304Z"
+      },
+      "latest_pair": {
+        "abs_delta_raan_deg": 3.2439,
+        "delta_raan_deg_signed": -3.2439,
+        "delta_t_s": 4910.16816,
+        "left_utc": "1963-10-17T11:05:09.990816Z",
+        "right_utc": "1963-10-17T09:43:19.822656Z"
+      },
+      "left": 528,
+      "median_abs_circular_raan_difference_deg": 1.1279,
+      "median_abs_epoch_gap_s": 3669.468048,
+      "right": 529,
+      "window_minutes": 360
+    },
+    {
+      "count": 15,
+      "earliest_pair": {
+        "abs_delta_raan_deg": 0.0014,
+        "delta_raan_deg_signed": 0.0014,
+        "delta_t_s": 129.6,
+        "left_utc": "1963-01-17T16:18:12.350304Z",
+        "right_utc": "1963-01-17T16:20:21.950304Z"
+      },
+      "latest_pair": {
+        "abs_delta_raan_deg": 2.8122,
+        "delta_raan_deg_signed": -2.8122,
+        "delta_t_s": 51095.94048,
+        "left_utc": "1963-10-27T14:40:16.132512Z",
+        "right_utc": "1963-10-28T04:51:52.072992Z"
+      },
+      "left": 528,
+      "median_abs_circular_raan_difference_deg": 1.7837,
+      "median_abs_epoch_gap_s": 35583.899616,
+      "right": 529,
+      "window_minutes": 1440
+    },
+    {
+      "count": 0,
+      "earliest_pair": null,
+      "latest_pair": null,
+      "left": 527,
+      "median_abs_circular_raan_difference_deg": null,
+      "median_abs_epoch_gap_s": null,
+      "right": 529,
+      "window_minutes": 10
+    },
+    {
+      "count": 1,
+      "earliest_pair": {
+        "abs_delta_raan_deg": 0.2275,
+        "delta_raan_deg_signed": 0.2275,
+        "delta_t_s": 763.474464,
+        "left_utc": "1963-04-16T16:20:46.514688Z",
+        "right_utc": "1963-04-16T16:08:03.040224Z"
+      },
+      "latest_pair": {
+        "abs_delta_raan_deg": 0.2275,
+        "delta_raan_deg_signed": 0.2275,
+        "delta_t_s": 763.474464,
+        "left_utc": "1963-04-16T16:20:46.514688Z",
+        "right_utc": "1963-04-16T16:08:03.040224Z"
+      },
+      "left": 527,
+      "median_abs_circular_raan_difference_deg": 0.2275,
+      "median_abs_epoch_gap_s": 763.474464,
+      "right": 529,
+      "window_minutes": 60
+    },
+    {
+      "count": 3,
+      "earliest_pair": {
+        "abs_delta_raan_deg": 0.1275,
+        "delta_raan_deg_signed": -0.1275,
+        "delta_t_s": 5572.35504,
+        "left_utc": "1963-01-18T04:56:19.682304Z",
+        "right_utc": "1963-01-18T03:23:27.327264Z"
+      },
+      "latest_pair": {
+        "abs_delta_raan_deg": 7.3946,
+        "delta_raan_deg_signed": 7.3946,
+        "delta_t_s": 15901.100064,
+        "left_utc": "1963-12-17T05:43:24.184704Z",
+        "right_utc": "1963-12-17T10:08:25.284768Z"
+      },
+      "left": 527,
+      "median_abs_circular_raan_difference_deg": 0.2275,
+      "median_abs_epoch_gap_s": 5572.35504,
+      "right": 529,
+      "window_minutes": 360
+    },
+    {
+      "count": 7,
+      "earliest_pair": {
+        "abs_delta_raan_deg": 0.633,
+        "delta_raan_deg_signed": 0.633,
+        "delta_t_s": 51154.723584,
+        "left_utc": "1963-01-17T02:07:47.226720Z",
+        "right_utc": "1963-01-17T16:20:21.950304Z"
+      },
+      "latest_pair": {
+        "abs_delta_raan_deg": 7.3946,
+        "delta_raan_deg_signed": 7.3946,
+        "delta_t_s": 15901.100064,
+        "left_utc": "1963-12-17T05:43:24.184704Z",
+        "right_utc": "1963-12-17T10:08:25.284768Z"
+      },
+      "left": 527,
+      "median_abs_circular_raan_difference_deg": 0.6532,
+      "median_abs_epoch_gap_s": 39693.081024,
+      "right": 529,
+      "window_minutes": 1440
+    }
+  ],
+  "exact_duplicate_epoch_rows_per_object": {
+    "527": 1,
+    "528": 0,
+    "529": 3
+  },
+  "inference_status": "DESCRIPTIVE_ONLY_NOT_POSTERIOR",
+  "method": "one-to-one minimum-epoch-gap greedy pairs; no dynamic transport, no covariance, no likelihood",
+  "physical_domain_reduction": "NOT_RUN_NO_FRAME_ERROR_OR_EPOCH_PROPAGATION",
+  "raw_rows_per_object": {
+    "527": 21,
+    "528": 45,
+    "529": 57
+  },
+  "raw_total_rows": 123,
+  "schema": "conde.raan-coepoch-audit/v1",
+  "source": {
+    "caveat": "Parquet checksum is recorded from the existing extract metadata; the original parquet bytes were not re-fetched or independently hashed in this run.",
+    "claimed_parquet_sha256_from_preexisting_extract": "c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09",
+    "columns_extracted": [
+      "norad_id",
+      "epoch",
+      "raan"
+    ],
+    "evidence_ids": [
+      "C25#1",
+      "C179#1",
+      "C180#1",
+      "C181#1"
+    ],
+    "intermediate_local_json_sha256": "9f6710dd008c5e65845672a6e535ccf991c2832492c4ecd30399122155fcb24b",
+    "lineage": "Single historical Space-Track mirror, not independent NORAD measurements",
+    "source_url": "https://huggingface.co/datasets/oxzoid/space-track-tle-history/resolve/main/data/tle_1963.parquet",
+    "status": "SECONDARY_CATALOGUE_DERIVED_NOT_ORIGINAL_TRACK",
+    "units": {
+      "epoch_utc": "UTC",
+      "raan_deg": "degrees [0,360)"
+    }
+  },
+  "unique_epoch_total": 119,
+  "unique_epochs_per_object": {
+    "527": 20,
+    "528": 45,
+    "529": 54
+  },
+  "unmatched_samples_are_not_negative_observations": true
+}
