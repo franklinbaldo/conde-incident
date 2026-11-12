@@ -30,3 +30,9 @@ jobs:
           if grep -E 'sorryAx|unsafe|error:' core-axioms.log; then
             exit 1
           fi
+      - name: Audit restored 154-row legacy evidence and C144-C151 ID reuse
+        run: |
+          set -euo pipefail
+          python3 formal/scripts/audit_legacy_154.py > legacy-audit.json
+          python3 -m unittest discover -s formal/tests -p 'test_legacy_evidence.py' -v
+          cat legacy-audit.json
