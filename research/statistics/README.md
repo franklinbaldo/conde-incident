@@ -27,3 +27,7 @@ No arquivo disponível não existe TLE de 528 em 08/11. A evidência NASA C197 f
 **Próximo elo:** Tartaruga deverá obter custódia, frame e limites instrumentais/covariância dos elementos. Castor terá de propagar estados ao mesmo instante e quantificar erro em holdouts 527/529 versus baseline. Cervo então implementará likelihood circular com erro comum por linhagem, priors auditáveis e diagnósticos de cadeias, sem inferir coeficiente balístico ou impacto a partir de amostragem arbitrária.
 
 **Reprodução local e no CI:** executar Python unittest no arquivo tests/test_raan_coepoch_audit.py, depois tools/raan_coepoch_audit.py com as opções --input research/statistics/raan_527_528_529_1963.json e --check research/statistics/raan_coepoch_1963_report.json. Nenhuma dependência externa nem busca de rede é necessária.
+
+## Protocolo temporal de avaliação futura
+
+O [manifesto de partições por época e NORAD](raan_chronological_holdout_1963.json) e seu [contrato estatístico](CHRONOLOGICAL_HOLDOUT_PROTOCOL.md) congelam 61 épocas de ajuste, 23 de validação e 35 de avaliação após remover as quatro duplicatas do **mesmo** extrato. Os cortes 01/08 e 01/10 são operacionais, escolhidos após inspeção prévia: o bloco final **não é cego**, nem independente do catálogo; nenhum ajuste, likelihood ou MCMC foi executado. Para reexecutar, use python3 -m unittest discover -s tests -p 'test_raan_chronological_holdout.py' -v e o comando --check documentado no protocolo.
