@@ -1,0 +1,36 @@
+name: Gaviao chapter 06 independent calendar audit
+on:
+  pull_request:
+    paths:
+      - 'tools/gaviao_chapter06_recheck.py'
+      - 'tests/test_gaviao_chapter06.py'
+      - 'research/gaviao_chapter06_review.md'
+      - 'team/memory/gaviao/**'
+      - '.github/workflows/gaviao-chapter06.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  pinned-secondary-data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+      - name: Verify exact branch source commit
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+          echo "GAVIAO_CH06_HEAD=$(git rev-parse HEAD)"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run independent adversarial calendar tests
+        run: python -m unittest discover -s tests -p 'test_gaviao_chapter06.py' -v
+      - name: Install pinned Parquet decoder
+        run: python -m pip install pyarrow==21.0.0
+      - name: Independently audit original SHA-pinned secondary Parquet
+        run: python tools/gaviao_chapter06_recheck.py --download --parquet "${{ runner.temp }}/tle_1963.parquet" --assert-story
