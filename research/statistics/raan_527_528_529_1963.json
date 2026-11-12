@@ -1,0 +1,643 @@
+{
+  "provenance": {
+    "caveat": "Parquet checksum is recorded from the existing extract metadata; the original parquet bytes were not re-fetched or independently hashed in this run.",
+    "claimed_parquet_sha256_from_preexisting_extract": "c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09",
+    "columns_extracted": [
+      "norad_id",
+      "epoch",
+      "raan"
+    ],
+    "evidence_ids": [
+      "C25#1",
+      "C179#1",
+      "C180#1",
+      "C181#1"
+    ],
+    "intermediate_local_json_sha256": "9f6710dd008c5e65845672a6e535ccf991c2832492c4ecd30399122155fcb24b",
+    "lineage": "Single historical Space-Track mirror, not independent NORAD measurements",
+    "source_url": "https://huggingface.co/datasets/oxzoid/space-track-tle-history/resolve/main/data/tle_1963.parquet",
+    "status": "SECONDARY_CATALOGUE_DERIVED_NOT_ORIGINAL_TRACK",
+    "units": {
+      "epoch_utc": "UTC",
+      "raan_deg": "degrees [0,360)"
+    }
+  },
+  "records": [
+    {
+      "epoch_utc": "1963-01-17T02:07:47.226720Z",
+      "norad": 527,
+      "raan_deg": 151.3296
+    },
+    {
+      "epoch_utc": "1963-01-18T04:56:19.682304Z",
+      "norad": 527,
+      "raan_deg": 150.2773
+    },
+    {
+      "epoch_utc": "1963-01-23T18:57:45.801216Z",
+      "norad": 527,
+      "raan_deg": 144.2607
+    },
+    {
+      "epoch_utc": "1963-01-28T18:50:41.742240Z",
+      "norad": 527,
+      "raan_deg": 138.9694
+    },
+    {
+      "epoch_utc": "1963-02-02T02:58:36.407136Z",
+      "norad": 527,
+      "raan_deg": 134.1949
+    },
+    {
+      "epoch_utc": "1963-02-08T18:19:41.228832Z",
+      "norad": 527,
+      "raan_deg": 127.0618
+    },
+    {
+      "epoch_utc": "1963-02-17T18:28:27.254496Z",
+      "norad": 527,
+      "raan_deg": 117.3913
+    },
+    {
+      "epoch_utc": "1963-02-26T21:46:22.293408Z",
+      "norad": 527,
+      "raan_deg": 107.5008
+    },
+    {
+      "epoch_utc": "1963-03-12T12:20:52.667808Z",
+      "norad": 527,
+      "raan_deg": 92.8941
+    },
+    {
+      "epoch_utc": "1963-03-26T12:22:40.279008Z",
+      "norad": 527,
+      "raan_deg": 77.8299
+    },
+    {
+      "epoch_utc": "1963-04-16T16:20:46.514688Z",
+      "norad": 527,
+      "raan_deg": 55.0177
+    },
+    {
+      "epoch_utc": "1963-05-14T13:09:55.695456Z",
+      "norad": 527,
+      "raan_deg": 25.0423
+    },
+    {
+      "epoch_utc": "1963-06-09T05:52:45.885792Z",
+      "norad": 527,
+      "raan_deg": 357.3461
+    },
+    {
+      "epoch_utc": "1963-07-04T06:47:24.213696Z",
+      "norad": 527,
+      "raan_deg": 330.3723
+    },
+    {
+      "epoch_utc": "1963-07-31T18:00:51.725088Z",
+      "norad": 527,
+      "raan_deg": 300.7545
+    },
+    {
+      "epoch_utc": "1963-08-27T22:53:07.181376Z",
+      "norad": 527,
+      "raan_deg": 271.4441
+    },
+    {
+      "epoch_utc": "1963-10-01T10:44:17.819808Z",
+      "norad": 527,
+      "raan_deg": 234.2665
+    },
+    {
+      "epoch_utc": "1963-10-16T10:14:13.188192Z",
+      "norad": 527,
+      "raan_deg": 218.0564
+    },
+    {
+      "epoch_utc": "1963-11-19T20:21:49.593024Z",
+      "norad": 527,
+      "raan_deg": 180.9299
+    },
+    {
+      "epoch_utc": "1963-12-17T05:43:24.184704Z",
+      "norad": 527,
+      "raan_deg": 151.4785
+    },
+    {
+      "epoch_utc": "1963-12-17T05:43:24.184704Z",
+      "norad": 527,
+      "raan_deg": 151.4785
+    },
+    {
+      "epoch_utc": "1963-01-17T16:18:12.350304Z",
+      "norad": 528,
+      "raan_deg": 150.698
+    },
+    {
+      "epoch_utc": "1963-01-18T06:28:56.237376Z",
+      "norad": 528,
+      "raan_deg": 150.1884
+    },
+    {
+      "epoch_utc": "1963-01-23T18:46:39.350496Z",
+      "norad": 528,
+      "raan_deg": 144.2797
+    },
+    {
+      "epoch_utc": "1963-02-04T01:36:33.983136Z",
+      "norad": 528,
+      "raan_deg": 132.0177
+    },
+    {
+      "epoch_utc": "1963-02-04T17:20:42.607968Z",
+      "norad": 528,
+      "raan_deg": 131.3232
+    },
+    {
+      "epoch_utc": "1963-02-06T05:33:01.197504Z",
+      "norad": 528,
+      "raan_deg": 129.695
+    },
+    {
+      "epoch_utc": "1963-03-01T18:23:50.479872Z",
+      "norad": 528,
+      "raan_deg": 104.1966
+    },
+    {
+      "epoch_utc": "1963-03-12T20:07:40.780416Z",
+      "norad": 528,
+      "raan_deg": 92.1766
+    },
+    {
+      "epoch_utc": "1963-03-17T05:25:57.655200Z",
+      "norad": 528,
+      "raan_deg": 87.428
+    },
+    {
+      "epoch_utc": "1963-03-23T04:26:04.630848Z",
+      "norad": 528,
+      "raan_deg": 80.9708
+    },
+    {
+      "epoch_utc": "1963-03-27T15:16:17.295456Z",
+      "norad": 528,
+      "raan_deg": 76.0283
+    },
+    {
+      "epoch_utc": "1963-04-12T03:28:32.320128Z",
+      "norad": 528,
+      "raan_deg": 59.2542
+    },
+    {
+      "epoch_utc": "1963-04-15T06:48:57.116160Z",
+      "norad": 528,
+      "raan_deg": 55.7926
+    },
+    {
+      "epoch_utc": "1963-04-20T10:46:18.011712Z",
+      "norad": 528,
+      "raan_deg": 50.0272
+    },
+    {
+      "epoch_utc": "1963-05-08T13:02:08.443392Z",
+      "norad": 528,
+      "raan_deg": 30.3688
+    },
+    {
+      "epoch_utc": "1963-05-18T14:10:24.318336Z",
+      "norad": 528,
+      "raan_deg": 19.3715
+    },
+    {
+      "epoch_utc": "1963-05-21T06:20:25.228032Z",
+      "norad": 528,
+      "raan_deg": 16.4331
+    },
+    {
+      "epoch_utc": "1963-06-02T06:11:56.383872Z",
+      "norad": 528,
+      "raan_deg": 3.2518
+    },
+    {
+      "epoch_utc": "1963-06-12T00:43:50.165472Z",
+      "norad": 528,
+      "raan_deg": 352.4331
+    },
+    {
+      "epoch_utc": "1963-06-18T19:15:00.030816Z",
+      "norad": 528,
+      "raan_deg": 344.9435
+    },
+    {
+      "epoch_utc": "1963-07-05T04:44:10.650336Z",
+      "norad": 528,
+      "raan_deg": 326.8663
+    },
+    {
+      "epoch_utc": "1963-07-18T04:41:36.399552Z",
+      "norad": 528,
+      "raan_deg": 312.5436
+    },
+    {
+      "epoch_utc": "1963-07-22T02:13:04.268928Z",
+      "norad": 528,
+      "raan_deg": 308.2535
+    },
+    {
+      "epoch_utc": "1963-07-26T02:49:36.245568Z",
+      "norad": 528,
+      "raan_deg": 303.8207
+    },
+    {
+      "epoch_utc": "1963-08-03T16:23:49.393248Z",
+      "norad": 528,
+      "raan_deg": 294.316
+    },
+    {
+      "epoch_utc": "1963-08-12T13:35:30.863616Z",
+      "norad": 528,
+      "raan_deg": 284.3311
+    },
+    {
+      "epoch_utc": "1963-08-16T09:22:14.196576Z",
+      "norad": 528,
+      "raan_deg": 280.1124
+    },
+    {
+      "epoch_utc": "1963-08-20T22:13:52.382208Z",
+      "norad": 528,
+      "raan_deg": 275.1081
+    },
+    {
+      "epoch_utc": "1963-08-23T17:04:16.821120Z",
+      "norad": 528,
+      "raan_deg": 271.9671
+    },
+    {
+      "epoch_utc": "1963-08-31T20:49:14.452896Z",
+      "norad": 528,
+      "raan_deg": 262.8121
+    },
+    {
+      "epoch_utc": "1963-09-06T13:26:26.340576Z",
+      "norad": 528,
+      "raan_deg": 256.4337
+    },
+    {
+      "epoch_utc": "1963-09-15T11:32:23.646336Z",
+      "norad": 528,
+      "raan_deg": 246.4395
+    },
+    {
+      "epoch_utc": "1963-09-15T14:38:18.509280Z",
+      "norad": 528,
+      "raan_deg": 246.2918
+    },
+    {
+      "epoch_utc": "1963-09-18T07:44:09.682656Z",
+      "norad": 528,
+      "raan_deg": 243.2441
+    },
+    {
+      "epoch_utc": "1963-09-25T13:06:20.907648Z",
+      "norad": 528,
+      "raan_deg": 235.0308
+    },
+    {
+      "epoch_utc": "1963-09-27T02:12:27.871200Z",
+      "norad": 528,
+      "raan_deg": 233.4153
+    },
+    {
+      "epoch_utc": "1963-09-28T09:07:00.883776Z",
+      "norad": 528,
+      "raan_deg": 231.8731
+    },
+    {
+      "epoch_utc": "1963-10-02T16:35:51.689472Z",
+      "norad": 528,
+      "raan_deg": 227.006
+    },
+    {
+      "epoch_utc": "1963-10-04T02:33:48.802176Z",
+      "norad": 528,
+      "raan_deg": 225.4097
+    },
+    {
+      "epoch_utc": "1963-10-09T04:27:44.744256Z",
+      "norad": 528,
+      "raan_deg": 219.6203
+    },
+    {
+      "epoch_utc": "1963-10-11T11:57:48.241728Z",
+      "norad": 528,
+      "raan_deg": 216.989
+    },
+    {
+      "epoch_utc": "1963-10-17T11:05:09.990816Z",
+      "norad": 528,
+      "raan_deg": 210.1442
+    },
+    {
+      "epoch_utc": "1963-10-21T14:51:52.226208Z",
+      "norad": 528,
+      "raan_deg": 205.3998
+    },
+    {
+      "epoch_utc": "1963-10-25T13:47:47.539392Z",
+      "norad": 528,
+      "raan_deg": 200.9014
+    },
+    {
+      "epoch_utc": "1963-10-27T14:40:16.132512Z",
+      "norad": 528,
+      "raan_deg": 198.5261
+    },
+    {
+      "epoch_utc": "1963-01-17T16:20:21.950304Z",
+      "norad": 529,
+      "raan_deg": 150.6966
+    },
+    {
+      "epoch_utc": "1963-01-18T03:23:27.327264Z",
+      "norad": 529,
+      "raan_deg": 150.4048
+    },
+    {
+      "epoch_utc": "1963-02-07T01:31:32.861856Z",
+      "norad": 529,
+      "raan_deg": 128.9386
+    },
+    {
+      "epoch_utc": "1963-02-20T17:34:34.554432Z",
+      "norad": 529,
+      "raan_deg": 114.2105
+    },
+    {
+      "epoch_utc": "1963-02-26T09:10:18.865920Z",
+      "norad": 529,
+      "raan_deg": 108.1248
+    },
+    {
+      "epoch_utc": "1963-02-26T10:44:49.212384Z",
+      "norad": 529,
+      "raan_deg": 108.154
+    },
+    {
+      "epoch_utc": "1963-03-02T17:12:59.328576Z",
+      "norad": 529,
+      "raan_deg": 103.4693
+    },
+    {
+      "epoch_utc": "1963-03-10T22:13:53.539104Z",
+      "norad": 529,
+      "raan_deg": 94.5634
+    },
+    {
+      "epoch_utc": "1963-03-15T20:24:13.937184Z",
+      "norad": 529,
+      "raan_deg": 89.2856
+    },
+    {
+      "epoch_utc": "1963-03-21T13:27:47.298240Z",
+      "norad": 529,
+      "raan_deg": 83.1641
+    },
+    {
+      "epoch_utc": "1963-03-27T15:56:46.063392Z",
+      "norad": 529,
+      "raan_deg": 76.5004
+    },
+    {
+      "epoch_utc": "1963-04-16T16:08:03.040224Z",
+      "norad": 529,
+      "raan_deg": 54.7902
+    },
+    {
+      "epoch_utc": "1963-04-18T15:20:12.741504Z",
+      "norad": 529,
+      "raan_deg": 52.7447
+    },
+    {
+      "epoch_utc": "1963-04-27T14:50:16.459584Z",
+      "norad": 529,
+      "raan_deg": 42.9857
+    },
+    {
+      "epoch_utc": "1963-05-10T04:40:28.464096Z",
+      "norad": 529,
+      "raan_deg": 29.3872
+    },
+    {
+      "epoch_utc": "1963-05-28T01:26:24.324000Z",
+      "norad": 529,
+      "raan_deg": 9.9507
+    },
+    {
+      "epoch_utc": "1963-06-05T18:12:27.860256Z",
+      "norad": 529,
+      "raan_deg": 0.4635
+    },
+    {
+      "epoch_utc": "1963-06-13T17:38:36.099456Z",
+      "norad": 529,
+      "raan_deg": 351.7616
+    },
+    {
+      "epoch_utc": "1963-06-21T06:00:58.830624Z",
+      "norad": 529,
+      "raan_deg": 343.4949
+    },
+    {
+      "epoch_utc": "1963-07-06T17:30:43.449120Z",
+      "norad": 529,
+      "raan_deg": 326.5883
+    },
+    {
+      "epoch_utc": "1963-07-21T16:09:58.375584Z",
+      "norad": 529,
+      "raan_deg": 310.2839
+    },
+    {
+      "epoch_utc": "1963-07-28T17:12:27.086688Z",
+      "norad": 529,
+      "raan_deg": 302.559
+    },
+    {
+      "epoch_utc": "1963-08-04T00:58:21.847296Z",
+      "norad": 529,
+      "raan_deg": 295.5933
+    },
+    {
+      "epoch_utc": "1963-08-12T16:58:26.652288Z",
+      "norad": 529,
+      "raan_deg": 286.1148
+    },
+    {
+      "epoch_utc": "1963-08-21T22:57:57.735072Z",
+      "norad": 529,
+      "raan_deg": 275.9243
+    },
+    {
+      "epoch_utc": "1963-08-25T16:02:10.522176Z",
+      "norad": 529,
+      "raan_deg": 271.8566
+    },
+    {
+      "epoch_utc": "1963-09-10T19:19:35.302944Z",
+      "norad": 529,
+      "raan_deg": 253.9593
+    },
+    {
+      "epoch_utc": "1963-09-16T11:05:52.011456Z",
+      "norad": 529,
+      "raan_deg": 247.7659
+    },
+    {
+      "epoch_utc": "1963-09-25T13:21:51.133248Z",
+      "norad": 529,
+      "raan_deg": 237.7313
+    },
+    {
+      "epoch_utc": "1963-09-27T12:05:31.770816Z",
+      "norad": 529,
+      "raan_deg": 235.5366
+    },
+    {
+      "epoch_utc": "1963-09-30T10:09:47.809728Z",
+      "norad": 529,
+      "raan_deg": 232.3234
+    },
+    {
+      "epoch_utc": "1963-10-03T11:19:43.218336Z",
+      "norad": 529,
+      "raan_deg": 228.9308
+    },
+    {
+      "epoch_utc": "1963-10-06T04:41:52.222848Z",
+      "norad": 529,
+      "raan_deg": 225.9117
+    },
+    {
+      "epoch_utc": "1963-10-17T09:43:19.822656Z",
+      "norad": 529,
+      "raan_deg": 213.3881
+    },
+    {
+      "epoch_utc": "1963-10-24T09:23:00.917376Z",
+      "norad": 529,
+      "raan_deg": 205.617
+    },
+    {
+      "epoch_utc": "1963-10-26T07:54:28.463040Z",
+      "norad": 529,
+      "raan_deg": 203.4567
+    },
+    {
+      "epoch_utc": "1963-10-28T04:51:52.072992Z",
+      "norad": 529,
+      "raan_deg": 201.3383
+    },
+    {
+      "epoch_utc": "1963-10-31T11:52:58.388736Z",
+      "norad": 529,
+      "raan_deg": 197.6384
+    },
+    {
+      "epoch_utc": "1963-11-01T12:39:28.450368Z",
+      "norad": 529,
+      "raan_deg": 196.4703
+    },
+    {
+      "epoch_utc": "1963-11-02T21:10:02.692704Z",
+      "norad": 529,
+      "raan_deg": 194.796
+    },
+    {
+      "epoch_utc": "1963-11-05T04:52:35.190912Z",
+      "norad": 529,
+      "raan_deg": 192.1699
+    },
+    {
+      "epoch_utc": "1963-11-17T11:57:46.718496Z",
+      "norad": 529,
+      "raan_deg": 178.4224
+    },
+    {
+      "epoch_utc": "1963-11-20T20:08:28.217472Z",
+      "norad": 529,
+      "raan_deg": 174.5998
+    },
+    {
+      "epoch_utc": "1963-11-25T03:20:08.501856Z",
+      "norad": 529,
+      "raan_deg": 169.6514
+    },
+    {
+      "epoch_utc": "1963-11-26T10:06:28.820160Z",
+      "norad": 529,
+      "raan_deg": 168.2642
+    },
+    {
+      "epoch_utc": "1963-11-29T08:49:54.580512Z",
+      "norad": 529,
+      "raan_deg": 164.8812
+    },
+    {
+      "epoch_utc": "1963-12-05T22:57:29.015712Z",
+      "norad": 529,
+      "raan_deg": 157.3204
+    },
+    {
+      "epoch_utc": "1963-12-12T21:47:05.199648Z",
+      "norad": 529,
+      "raan_deg": 149.3027
+    },
+    {
+      "epoch_utc": "1963-12-17T10:08:25.284768Z",
+      "norad": 529,
+      "raan_deg": 144.0839
+    },
+    {
+      "epoch_utc": "1963-12-21T20:38:58.243776Z",
+      "norad": 529,
+      "raan_deg": 138.7724
+    },
+    {
+      "epoch_utc": "1963-12-21T20:38:58.243776Z",
+      "norad": 529,
+      "raan_deg": 138.7724
+    },
+    {
+      "epoch_utc": "1963-12-24T04:45:48.413664Z",
+      "norad": 529,
+      "raan_deg": 136.089
+    },
+    {
+      "epoch_utc": "1963-12-24T04:45:48.413664Z",
+      "norad": 529,
+      "raan_deg": 136.089
+    },
+    {
+      "epoch_utc": "1963-12-28T05:25:04.281600Z",
+      "norad": 529,
+      "raan_deg": 131.2378
+    },
+    {
+      "epoch_utc": "1963-12-28T05:25:04.281600Z",
+      "norad": 529,
+      "raan_deg": 131.2378
+    },
+    {
+      "epoch_utc": "1963-12-29T20:28:24.196512Z",
+      "norad": 529,
+      "raan_deg": 129.2394
+    },
+    {
+      "epoch_utc": "1963-12-30T11:25:41.443104Z",
+      "norad": 529,
+      "raan_deg": 128.5933
+    }
+  ],
+  "schema": "conde.raan-secondary-catalogue-snapshot/v1"
+}
