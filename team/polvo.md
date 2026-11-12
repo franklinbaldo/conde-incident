@@ -47,6 +47,32 @@ Em **cada nova fatia**:
 
 Uma PR científica deve ter seção **"O que foi aprendido que não sabíamos?"**, com delta empírico/operacional e teste reproduzível. Aumento de linhas, teoremas compilados, gates triviais e CI verde isoladamente não constituem evidência de progresso.
 
+## Buscar restrições por mudanças de variável (12/11/2026)
+
+A cada parâmetro livre, mapear observáveis por equações físicas com unidades,
+época, quadro de referência, localização/altura e erro: `n (rev/dia)` ->
+`n (rad/s)` -> `a, h_p` -> `dotΩ_J2`; `p (hPa)` ->
+`p (Pa)`, `p+T` -> `ρ`, `vento direção/de onde + velocidade` ->
+`u_leste,v_norte`; `m,Cd,A` -> `β=m/(Cd·A)`; `ρ,v_rel,β` ->
+`a_drag`; `vento(z), v_descida(z)` -> deriva horizontal condicional.
+Usar observações documentadas para limitar esses observáveis sem confundir
+unidade nova com evidência nova. Identificar causalidade, status dos dados
+e operação inversa para o Castor e somente depois atualizar intervalos de
+parâmetros fisicamente admissíveis.
+
+Material já existente: C144–C146 cartas sinóticas da Marinha (8–9/11/1963);
+C149–C151 perfis meteorológicos instrumentais NOAA IGRA de Recife para
+7–9/11/1963. **Recife NÃO é Conde**: os ventos de Recife só restringem um
+modelo para Conde mediante transferência espacial/temporal demonstrada e
+limites de erro, ainda ausentes; o próprio perfil não informa hora real
+de lançamento. Vento forte em Conde afeta potencial deriva baixa ou balão,
+não altera automaticamente a geometria orbital do 528 nem exclui impacto.
+O experimento numérico `formal/scripts/physical_observable_bridge.py` da
+PR #17 exporta C179/C151 ao Castor com domínio 528 inalterado, não
+faz calibração atmosférica histórica ou inferência de hora/local. O próximo
+passo útil é medir a redução real do domínio com observações colocalizadas
+e confrontá-la com os holdouts.
+
 ## Parâmetros latentes e Monte Carlo/MCMC (12/11/2026)
 
 - A fonte secundária de 528 publicada em https://www.itau.magnetic-declination.com/satellite/?s=528 registra **RAAN=198,5261°** na época **1963-10-27 14:40:16.132512 UTC**, com i=81,8615°, e=0,0017147 e n=15,74901460 rev/dia. Custódia literal e confronto com Parquet estão na PR #14 (C25#1/C179#1; par SHA-256 `18cf11665e061b5ec8679242e10b00b82accf29bc6f0b9b7b6330b9c44e341cd`). É referência de **uma única linhagem de catálogo secundária**, com erro físico não calibrado.
