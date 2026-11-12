@@ -107,3 +107,29 @@ O contrato [CGEO-09](conde_1944_1953_temporal_bridge.json) registra a aresta nor
 ## CGEO-11: origem retrospectiva em 1991 e falta de precisão declarada
 
 O IBGE explicita na [Apresentação de sua série histórica, p. 1](ibge_1991_based_mesh_lineage_2026-11-12.md) que as malhas municipais históricas derivam de polígonos-base de **1991** e **não apresentam precisão cartográfica**. CGEO-10 é reconstrução nominal de 1960, não observação independente daquela época. O contrato [CGEO-11](ibge_1872_1991_methodology_2026-11-12.json), validador em tools/conde_ibge_lineage.py e onze testes impedem tratá-la como limite legal medido ou filtro de reentrada em 1963.
+
+## CGEO-12: auditoria topológica nativa da malha retrospectiva 1960
+
+O arquivo research/geo/conde_ibge_1960_topology_audit.json deriva **somente** de
+CGEO-10, com a mesma cadeia IBGE/CGEO-11, sem alegar uma nova observação.
+O algoritmo tools/conde_ibge_1960_topology.py usa aritmética decimal exata
+para shoelace no plano projetado **World_Polyconic**, confere anel fechado,
+orientação, duplicatas e cruzamentos entre segmentos não adjacentes.
+
+O polígono retrospectivo de Conde (47 coordenadas, 46 arestas) é simples na
+geometria publicada: 0 cruzamentos não adjacentes, orientação horária e área
+plana calculada **983.1840473046875 km²**. Esse número é uma *propriedade
+algébrica dos vértices nativos* em metros projetados, **não** área territorial
+jurídica, área geodésica calibrada ou precisão de 1960/1963. Não comparar
+diretamente a área plana CGEO-12 com o atributo oficial de 931,106 km² das
+edições IBGE 2022/2025 para inferir mudança de limites: as bases, datas,
+resoluções, metodologia e eventual distorção de projeção não são controladas.
+
+Exportação determinística ao Castor:
+python3 -m tools.conde_ibge_1960_topology --check
+
+Permanecem nulos o limite jurídico 1963, a posição do evento, sua pertinência e
+orçamento de erro. Arestas explícitas
+CGEO-10 → CGEO-12 (COMPUTED_FROM_SAME_PINNED_VERTICES_NOT_NEW_SOURCE)
+e CGEO-12 → LEGAL_BOUNDARY_CONDE_1963_LATENT
+(NOT_A_VALIDATED_TEMPORAL_BRIDGE) impedem dupla contagem como fonte independente.
