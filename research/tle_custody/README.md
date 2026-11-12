@@ -301,3 +301,14 @@ python tools/tle_epoch_grid_audit.py \
 - Dependência: espelho itau e Parquet oxzoid podem remontar ao mesmo sistema Space-Track. A especificação CelesTrak é regra de formato, não sensor independente. **Documentos primários ainda ausentes:** line1/line2 originais para cada época de 527/528/529, seus checksums históricos, indicação de quadro e metadados do rastreamento, documento de peça S00528, fonte de `284.1520°`. Nenhum desses itens foi inferido do teste. NASA C197 registra somente 08/11 como dia de decaimento. Sem restrição física nova, domínio orbital Lean, horário ou local de reentrada.
 
 **Status C241-T5:** auditoria de representação/testes de falha fechada; **não** validação histórica ou inferência dinâmica. CI do HEAD final deve ser citado separadamente após conclusão no GitHub Actions.
+
+
+## C241-T6 — prova de esquema e integridade das casas decimais
+
+O [viewer do espelho oxzoid](https://huggingface.co/datasets/oxzoid/space-track-tle-history) publica inclination, raan, eccentricity, arg_perigee e mean_anomaly em **float32**, mas mean_motion, mean_motion_dot e bstar em **float64**. A época é timestamp[us, tz=UTC]. A auditoria distingue os dois formatos. Em particular, não se deve alegar perda de dígitos do movimento médio por hipotética conversão a float32 que **não ocorreu no corpus**.
+
+A ferramenta [tle_numeric_precision_audit.py](../../tools/tle_numeric_precision_audit.py) recebe o Parquet 1963 já baixado e valida seu SHA-256 fixo c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09. Exige tipos exatos via PyArrow, avalia ida/volta de cada campo na grade decimal TLE (4 casas para quatro ângulos, 7 para excentricidade, 8 para movimento médio float64) e testa os valores decimais adjacentes para detectar representações colidentes. Gera JSON com source_row, época, tipo, status, resíduos e totais. Gate do CI falha com campo inconsistente, mas preserva saída para perícia. Os testes são sintéticos; o espelho não vira observação primária por passar no teste.
+
+Reprodução no workflow após o extrator: python tools/tle_numeric_precision_audit.py --parquet /tmp/tle_1963.parquet --output /tmp/norad-1963-audit/tle_numeric_precision_report.json.
+
+**Restrição epistemológica:** valores orbitais numericamente reversíveis não são os TLEs literais originais. O Parquet não preserva line1/line2, os dígitos de checksum, os metadados de coleta de 1963, número de conjunto, tipo de efeméride, número de revolução, frame histórico certificado, nem a identificação física da peça. Nenhum TLE foi fabricado. RAAN 198,5261° versus 284,1520° continua sem proveniência resolvida; nem reentrada geográfica nem impacto em Conde foram demonstrados.
