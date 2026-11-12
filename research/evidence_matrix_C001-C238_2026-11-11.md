@@ -1095,6 +1095,35 @@ O relatório normalizado registra ainda `legacy_raan_temporal_audit`: consulta d
 
 **Encadeamento e domínio:** `main/src/lib/constants.ts` legado **sem proveniência instrumental** → vetor de texto/epoch e checksum `PASS_syntax_only` → contraste adversarial com 45 linhas da **mesma** linhagem numérica secundária → domínio de *igualdade de registros completos* = vazio, domínio do espelho na época **27/10 14:40:16.132512Z** = não vazio (linha 3017); ambos são domínios **documentais**, não conjunto físico orbital autenticado. **Não elevar a premissa a Lean/SGP4 como verdade histórica** antes de obter fonte primária, frame e incerteza real. Testes/código/método no [README de custódia](tle_custody/README.md) e [PR #14](https://github.com/franklinbaldo/conde-incident/pull/14). Conflito RAAN instrumental ainda **NOT_VERIFIED**; reentrada específica, objeto físico e Conde continuam **indeterminados**.
 
+
+
+### C241-T3 — cobertura cronológica 527/528/529 antes do ajuste conjunto (🐢, 12/11/2026 UTC)
+
+| ID e classificação | Fonte e linhagem | Resultado e restrições |
+|---|---|---|
+| **C241-T3**, inferência de disponibilidade documental, NÃO observação instrumental nova | [Parquet oxzoid 1963, revisão 4b4fb3a](https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/main/data/tle_1963.parquet), SHA-256 c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09; CSV geral derivado SHA-256 3940715d7c15cf15c24e678a8c5b5fbb34a031b3ffd7e33c0580277377383231. Espelho de possível linhagem Space-Track única, sem independência instrumental identificada. | [Ferramenta](../tools/cross_object_epoch_support.py) calcula, para as 45 épocas numéricas 528, os vizinhos 527/529 em UTC e as bandas fixas 6/24/72 h, exato 0 µs e ≤432 µs (meia quantização TLE). Preserva source_row e duplicatas idênticas; falha em estados conflitantes. É somente seleção de pares cronológicos, sem interpolar estados entre datas, obter fase, erro observacional, vetor r/v, impacto, ou novo domínio físico admissível. O resultado empírico depende de execução CI no HEAD. |
+
+**Cautela formal:** a falta de sobreposição neste espelho não demonstra inexistência de trajetória conjunta, e a presença dela não comprova sensor independente ou observação simultânea. Não converter em restrição Lean física até haver TLEs NORAD primários, quadro/época/erro por linha, identificação da peça S00528 e integração calibrada com holdouts. A diferença RAAN 198,5261° versus 284,1520° permanece não resolvida em fontes primárias. NASA C197 indica dia de decaimento, sem hora/local; nenhuma queda foi demonstrada. [Relatório detalhado](tle_custody/README.md).
+
+
+**Resultado observado C241-T3 (12/11 UTC, HEAD 4ed7c635600f1b7510e2132fea8ea3b583620ea6):**
+[CI de custódia #43130028928](https://github.com/franklinbaldo/conde-incident/actions/runs/43130028928)
+**SUCCESS**, 39/39 testes PASS, hashes do Parquet/CSV idênticos a C240,
+[artefato #13904024160](https://github.com/franklinbaldo/conde-incident/actions/runs/43130028928/artifacts/13904024160);
+[verificações científicas #43130028914](https://github.com/franklinbaldo/conde-incident/actions/runs/43130028914)
+**SUCCESS no mesmo source HEAD**. Em 45 épocas 528: janela até **6h**
+encontra 2 com 527, 6 com 529, 1 com ambos; até **24h**: 5, 18,
+**2 com ambos**; até **72h**: 16, 35, **15 com ambos**. **Zero** épocas
+528 coincidem exatamente (0 µs) com 527 ou 529 ou estão dentro de
+432 µs. Os vizinhos dentro de 72h reutilizam somente **13 épocas
+distintas 527** e **28 529**. A última época 528 do espelho é
+27/10/1963 14:40:16.132512 UTC, sem estado observado nesta fonte
+para novembro. São contagens de *cobertura temporal secundária*,
+**não** validação de estado físico, vínculo de forças, triangulação,
+reentrada ou localização. Resultado permanece **INDETERMINADO** quanto
+a Conde e quanto à origem primária do RAAN 284,1520°.
+
+
 ## C242 — controle temporal pré-registrado: 527/528 → 529, sem prova de órbita (11/11/2026, 🦡 Texugo)
 
 | ID | Base documental e procedimento | Dependência, teste e resultado | Limite físico e dado ausente |

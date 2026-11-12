@@ -165,3 +165,106 @@ python tools/legacy_528_fingerprint.py --csv /tmp/tle-audit/norad_528_epochs_196
 ```
 
 O `legacy_528_fingerprint.json` é arquivado com o CSV e `audit.json` pelo workflow. Ainda **NOT_RECOVERED**: 45 pares TLE primários e seus checksums originais, elementos/frame NORAD por época, boletins de radar, identidade de engenharia da peça 528 e observação terminal UTC/geográfica. Nenhum contato, publicação no blog ou merge.
+
+
+## C241-T3 — disponibilidade temporal cruzada 527/528/529 (12/11/2026 UTC, 🐢)
+
+**Questão delimitada:** em cada uma das 45 épocas do NORAD 528 no
+espelho numérico de 1963, qual é a época registrada mais próxima para
+527 e 529? Há coincidência exata (0 µs), proximidade de meia unidade
+de época TLE (432 µs), ou disponibilidade em bandas de 6, 24 e 72 horas?
+As bandas são **perguntas pré-fixadas sobre cobertura do catálogo**,
+NÃO erros instrumentais, medições simultâneas ou uma interpolação
+orbital autorizada. Um vetor catalogado num dia não fornece o vetor
+físico de outro objeto numa hora distinta.
+
+Ferramenta: [auditoria temporal](../../tools/cross_object_epoch_support.py).
+Ela verifica o SHA-256 do CSV geral derivado
+3940715d7c15cf15c24e678a8c5b5fbb34a031b3ffd7e33c0580277377383231
+antes de ler os registros, além dos controles prévios do extrator
+sobre o Parquet de origem. Preserva cada source_row física; conserva
+duplicatas equivalentes e **falha** se a mesma época/objeto contiver
+estados divergentes. Rejeita épocas sem UTC, campos não finitos e
+índices físicos duplicados. Relata sinal e distância absoluta em µs
+até cada vizinho de 527/529, inclusive quando o vizinho esteja depois
+da época 528, e conta fontes cronológicas distintas reutilizadas
+para não inflar o número de testemunhos. Empates vão para a época anterior.
+O JSON preserva uma linha 528 por época e as datas limites do acervo.
+
+Reprodução no HEAD da PR #14:
+
+~~~sh
+python -m unittest discover -s tests -p 'test_*.py' -v
+python -m pip install pyarrow==21.0.0
+python tools/audit_norad_1963.py --download --parquet /tmp/tle_1963.parquet --output /tmp/tle-audit
+python tools/cross_object_epoch_support.py --csv /tmp/tle-audit/norad_527_528_529_1963_numeric.csv --output /tmp/tle-audit/cross_object_epoch_support.json
+~~~
+
+O workflow de custódia anexa cross_object_epoch_support.json com os
+CSVs auditados. **Os números reais das janelas dependem de CI do HEAD
+final**: testes sintéticos só mostram o funcionamento do método, não
+a cobertura da série histórica. A contagem completa de 45 épocas
+continua C241-T2 e é uma contagem da cópia, não de transcrições
+instrumentais primárias.
+
+Fonte da árvore de dependências: [espelho oxzoid 1963, revisão
+4b4fb3a](https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/main/data/tle_1963.parquet),
+Parquet SHA-256 c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09.
+NORAD 527/528/529 neste arquivo podem compartilhar a mesma cadeia
+Space-Track. A versão de 528 do [espelho itau](https://www.itau.magnetic-declination.com/satellite/?s=528)
+não certifica independência física da medida. O [NASA Satellite
+Situation Report 15 Nov 1963, p. 8](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf)
+registra o dia 8/11, não hora ou local terminal.
+
+**Fluxo até o simulador:** estes são apenas pares de épocas
+*documentalmente* admissíveis para solicitar eventual ajuste conjunto.
+Não são restrições físicas Lean certificáveis nem um domínio dinâmico
+não vazio. Para transformá-los em limite orbital, permanecem
+indispensáveis a série NORAD primária com frame, época, tipo de elemento
+e erro instrumental, seguida de propagação e holdouts numéricos
+calibrados. Não escolher 284,1520° ou 198,5261° por conveniência,
+não inferir fase/posição geográfica, e não tratar reentrada como
+queda confirmada em Conde. Identidade física da peça S00528 segue
+sem documentação primária de engenharia.
+
+
+### C241-T3: resultados do acervo pinado, observados em CI do HEAD 4ed7c63
+
+[Custódia Actions #43130028928](https://github.com/franklinbaldo/conde-incident/actions/runs/43130028928)
+concluiu **SUCCESS no source HEAD 4ed7c635600f1b7510e2132fea8ea3b583620ea6**,
+registrado também como audited_source_head no log; **39/39 testes PASS**,
+Parquet e CSV com SHA-256 conferidos e saída JSON arquivada no
+[artefato #13904024160](https://github.com/franklinbaldo/conde-incident/actions/runs/43130028928/artifacts/13904024160),
+digest ZIP SHA-256 902766df555d796458fae5f730bdea64b25f86cdb26ca04025109931131f46ed.
+[Scientific checks #43130028914](https://github.com/franklinbaldo/conde-incident/actions/runs/43130028914)
+também SUCCESS no mesmo HEAD.
+
+| Janela de proximidade temporal | Épocas 528 com 527 próximo | Épocas 528 com 529 próximo | 527 **e** 529 próximos, cada um |
+|---|---:|---:|---:|
+| até 6 horas | 2 | 6 | **1** |
+| até 24 horas | 5 | 18 | **2** |
+| até 72 horas | 16 | 35 | **15** |
+| mesma época UTC, delta 0 µs | 0 | 0 | **0** |
+| proximidade ≤432 µs | 0 | 0 | **0** |
+
+**Novo resultado negativo importante:** das 45 épocas 528 deste arquivo,
+**nenhuma** tem horário **exatamente igual** ao de 527 ou 529, nem
+correspondência dentro de meia unidade de quantização temporal TLE.
+As 15 épocas 528 que têm *ambos* os outros objetos a até 72 h
+não são 15 observações instrumentais simultâneas. Dentro de 72 h,
+os vizinhos mais próximos efetivamente reutilizam apenas **13 épocas
+distintas do 527** e **28 do 529**. Tratar todos como medidas
+independentes inflaria artificialmente a informação.
+
+Extremos da série secundária: 528 de **17/01/1963
+16:18:12.350304 UTC** até **27/10/1963 14:40:16.132512 UTC**; 527
+até **17/12/1963** e 529 até **30/12/1963**. Não há no espelho fixado
+época posterior a 27/10 para 528: qualquer extrapolação até 08/11 exige
+modelo, erro acumulado e validação, e **não é observação terminal**.
+A data NASA do dia 08/11 segue sem horário ou posição.
+
+**Limite epistêmico:** zero coincidências exatas significa apenas zero
+registros com timestamps iguais no espelho secundário pinado,
+não ausência de rastreamento histórico nem impossibilidade de ajuste
+conjunto. O conjunto de linhas próximas é documental, não restrição
+Lean física; não resolve o conflito RAAN nem prova impacto.
