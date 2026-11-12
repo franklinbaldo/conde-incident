@@ -1,58 +1,56 @@
 ---
 type: Story
-description: "Capítulo inicial do Caderno Conde, com distinção entre relato FBIS/Tupi e registro NASA de decaimento orbital."
-title: "O dia em que duas histórias se encontraram"
+description: "O relato transmitido pela Rádio Tupi e a anotação orbital da NASA em novembro de 1963: duas fontes, uma coincidência e uma pergunta ainda aberta."
+title: "A esfera de Conde e a data que veio do espaço"
 date: "2026-11-11"
-summary: "Em 8 de novembro de 1963, um componente espacial deixou a órbita. Na Bahia, uma notícia extraordinária ganhou as ondas do rádio. Seriam a mesma história?"
+summary: "Uma notícia falava de uma esfera metálica na Bahia. Um boletim americano registrava o fim de uma órbita no mesmo dia. O que realmente une as duas histórias?"
 chapter: "01"
 author: "Coruja · Caderno de investigação"
-status: "História documental"
+status: "Reportagem documental; ligação entre os episódios não demonstrada"
 ---
 
-# O dia em que duas histórias se encontraram
+# A esfera de Conde e a data que veio do espaço
 
-Em algum momento de **8 de novembro de 1963**, um objeto construído pelo ser humano terminou sua trajetória orbital. Não sabemos sobre que país, oceano ou latitude ocorreu sua reentrada. Sabemos apenas que, sete dias depois, a NASA já registrava no seu *Satellite Situation Report* o decaimento do objeto **1963-003B**, hoje conhecido como NORAD 528, naquela data.
+Uma esfera metálica teria caído no centro de Conde, no litoral norte da Bahia. Havia janelas cobertas por vidro grosso, inscrições indecifráveis e até um corpo em seu interior. A notícia é de novembro de **1963**. E há uma razão para ela continuar provocando perguntas: na mesma data atribuída à transmissão, um objeto espacial aparece como decaído em um boletim americano.
 
-Na mesma semana, outra história percorria o Brasil. Uma transmissão da **Rádio Tupi**, preservada nos boletins de monitoramento do **FBIS**, falava de uma esfera metálica em **Conde**, no litoral norte da Bahia. O próprio registro já reunia alegações extraordinárias: cratera, inscrições, roupa pesada e um corpo. Não há prova documental de que esses pormenores tenham sido adicionados posteriormente.
+A coincidência parece feita para resolver um mistério. Mas os dois documentos contam histórias diferentes, e nenhum registra o momento em que elas teriam se encontrado.
 
-Dois registros contemporâneos de naturezas diferentes, um catálogo orbital e uma notícia retranscrita. Uma coincidência de calendário. E uma pergunta capaz de contaminar toda a investigação: *será que eram o mesmo acontecimento?*
+## A esfera que conhecemos pelo rádio
 
-## Primeira pista: uma data escrita pela NASA
+A primeira pista é uma folha de monitoramento de transmissões estrangeiras. Nela, o serviço americano **FBIS** transcreveu em inglês um texto atribuído à **Rádio Tupi, do Rio de Janeiro**. O cabeçalho registra `2330 8 NOV 63 W`. O significado exato do indicativo de horário e sua conversão para a hora local de Conde não foram estabelecidos nesta investigação.
 
-No boletim de **15 de novembro de 1963**, na seção dos objetos que deixaram a órbita, a NASA relaciona **1963-003B** ao dia **8 de novembro**. O detalhe só aparece quando se procura na lista de *decaimentos*, não na tabela dos objetos ainda orbitando.
+O relato fala de uma esfera que teria aberto um buraco de quatro metros, de aberturas cobertas por vidro, de uma pessoa com vestes pesadas e de autoridades informadas. Os detalhes extraordinários **já estão nessa versão antiga**. Não é necessário imaginar que foram acrescentados por narradores décadas depois.
 
-É uma peça documental valiosa, mas seu alcance é limitado. O boletim não informa a hora, o local, a existência de destroços em solo nem o motivo exato da perda de rastreamento. Não é correto transformar a data em uma posição no mapa.
+Mas existe uma diferença decisiva entre documentar uma notícia e documentar o acontecimento noticiado. A folha não identifica uma testemunha presencial, não traz fotografia da esfera, não contém laudo sobre o terreno e não é a gravação original da rádio. Ela prova que **o relato circulou** na época. Não prova que uma esfera ou um corpo tenham sido encontrados.
 
-Fonte primária: [NASA, *Satellite Situation Report*, 15/11/1963, página impressa 8](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf).
+[Leia o fac-símile FBIS 03, conservado no documento EOP-UAP-D001](https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf).
 
-## Segunda pista: uma história no rádio
+## A data que aparece no boletim espacial
 
-O [fac-símile do FBIS 03, documento EOP-UAP-D001](https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf) registra uma notícia atribuída à **Rádio Tupi do Rio**, com o cabeçalho `2330 8 NOV 63 W`. **O fuso horário desse cabeçalho ainda não foi provado**, e o boletim não informa a hora da suposta queda. O texto contém, desde o início, alegações de esfera, cratera de quatro metros, vidro, vestes e inscrições. A fonte comprova a circulação monitorada do relato; não é áudio original nem observação física da cena.
+Há outra folha, produzida para uma finalidade completamente distinta. Na página impressa **8** do *Satellite Situation Report*, datado de **15 de novembro de 1963**, a NASA acrescenta à lista de objetos decaídos a identificação **1963 3B**, com a data **8 NOV 63**. Esse componente é associado, nos catálogos orbitais posteriores, ao número **528**.
 
-Há um obstáculo adicional: a Rádio Tupi e o **Diário de Notícias**, de Salvador, integravam o grupo Diários Associados. Notícias repetidas por veículos da mesma rede podem ser apenas versões de uma única reportagem, não testemunhos independentes.
+O boletim não diz onde ele estava quando foi registrado como decaído. Tampouco informa a hora exata, a longitude, a possibilidade de fragmentos terem atingido o solo ou qualquer ligação com uma cidade da Bahia. Uma data de decaimento em catálogo **não é uma observação de queda em Conde**.
 
-Por isso, os recortes do **Diário de Notícias de 9 de novembro**, do **Jornal da Bahia de 11 de novembro** e das edições de **O Jornal**, no Rio, continuam centrais. Ainda não possuímos, neste conjunto, confirmação visual suficiente de todos os textos dessas páginas.
+[Veja o boletim original da NASA, página impressa 8](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf).
 
-Pistas documentais: [Biblioteca Nacional, *O Jornal*, página identificada de 9/11](https://memoria.bn.gov.br/DocReader/110523_06/31712) e [acervo do IGHB](https://www.ighb.org.br/biblioteca).
+## O perigo de contar a mesma notícia duas vezes
 
-## Terceira pista: o que três satélites podem dizer
+Outra pista está nos jornais. `Diário de Notícias`, de Salvador, `O Jornal`, do Rio, e `Jornal da Bahia` são caminhos para descobrir **quem publicou o quê e quando**. Isso pode revelar se a história ganhou detalhes, se uma redação reproduziu a outra e se alguma reportagem se apoiou em testemunho independente.
 
-O NORAD **528** não estava sozinho. Foi catalogado no mesmo lançamento que os objetos **527** e **529**. Os outros dois permaneceram em órbita depois do dia 8, o que permite estudar parâmetros compartilhados, como a orientação orbital e algumas perturbações gravitacionais.
+É preciso cuidado: a Rádio Tupi e o *Diário de Notícias* pertenciam à rede dos Diários Associados. Duas versões impressas ou transmitidas de uma mesma notícia não se tornam, por isso, duas confirmações do acontecimento. Antes de estabelecer a sequência das publicações, é necessário ler suas páginas, e não apenas repetir referências bibliográficas.
 
-Mas *ter uma origem comum* não significa permanecer junto durante meses. Pequenas diferenças de velocidade acumulam grandes diferenças de posição. Os outros dois objetos ajudam a estudar o ambiente orbital; ainda não recuperam, sozinhos, a fase terminal do 528. Registros NASA e NORAD podem depender da mesma cadeia de rastreamento: instituições distintas não equivalem necessariamente a medições independentes.
+O [acervo de *O Jornal* na Biblioteca Nacional](https://memoria.bn.gov.br/DocReader/110523_06/31712) e a [hemeroteca do Instituto Geográfico e Histórico da Bahia](https://www.ighb.org.br/biblioteca), que reúne *Diário de Notícias* e *Jornal da Bahia*, são pontos concretos dessa busca. A leitura integral dos exemplares relevantes ainda precisa ser confrontada e documentada.
 
-A investigação encontrou também conjuntos de elementos orbitais com **valores conflitantes de orientação do plano**. Isso exige recuperar a procedência e as épocas das linhas originais, antes de apresentar uma trajetória como reconstrução histórica.
+## Onde as duas histórias se separam
 
-## O que mudou, afinal?
+De um lado, **um relato contemporâneo transmitido pelo rádio** sobre uma queda extraordinária. De outro, **uma anotação contemporânea de decaimento orbital** com a mesma data. É legítimo perguntar se existe ligação entre elas. Não é legítimo usá-las uma para autenticar a outra.
 
-**Confirmado documentalmente:** a NASA já registrava em novembro de 1963 a data de decaimento do componente 1963-003B como 8 de novembro; a notícia da esfera circulou pelo rádio e chegou ao monitoramento do FBIS.
+A próxima peça decisiva não será uma ilustração vistosa de uma trajetória. Serão os registros de observação do objeto 528 perto de 8 de novembro, com horários e origem verificáveis, e as páginas de jornal que permitam reconstituir a primeira circulação da notícia.
 
-**Ainda não confirmado:** a hora e a longitude da reentrada; a existência material da esfera, da cratera, das inscrições e do corpo; qualquer ligação causal entre os dois acontecimentos.
+Até lá, o mistério está exatamente onde começou: **o que aconteceu em Conde, e de onde veio a história que disse explicá-lo?**
 
-**O próximo teste:** recuperar os jornais originais e os elementos de rastreamento próximos de 8 de novembro. Eles podem dizer se a narrativa nasceu primeiro no rádio ou no papel, e se a posição final do objeto espacial pode ser restringida sem pressupor que chegou à Bahia.
+## Fontes e limites
 
-A história continua. Nesta investigação, a melhor descoberta nem sempre é encontrar uma resposta: às vezes é descobrir exatamente qual pergunta os documentos ainda permitem fazer.
-
----
-
-**Nota editorial:** este capítulo narra resultados acumulados até 11/11/2026. Não comunica uma descoberta nova de impacto. Links para fontes não equivalem a confirmação de todos os elementos dos relatos. Atualizações e correções devem ficar documentadas no repositório.
+- [FBIS 03 / EOP-UAP-D001](https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf): registro contemporâneo de uma notícia atribuída à Rádio Tupi, não prova material do evento.
+- [NASA, *Satellite Situation Report*, 15/11/1963, p. 8](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf): registra dia de decaimento de 1963 3B, sem horário ou local.
+- [IGHB, acervo de periódicos](https://www.ighb.org.br/biblioteca): localizador de jornais; a existência de um título no acervo não substitui a leitura da edição específica.
