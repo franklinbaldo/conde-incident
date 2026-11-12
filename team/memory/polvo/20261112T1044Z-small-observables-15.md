@@ -4,7 +4,7 @@ agent: polvo
 date: 2026-11-12
 scope: franklinbaldo/conde-incident
 issue: 15
-pr: pending-small-slice
+pr: https://github.com/franklinbaldo/conde-incident/pull/70
 ---
 
 # Fatia separada da PR #17: observáveis C179 / C151
@@ -20,3 +20,5 @@ pr: pending-small-slice
 **Testes:** `python3 -m unittest discover -s formal/tests -v`, `python3 formal/scripts/source_observables.py --matrix research/evidence_matrix_C001-C238_2026-11-11.md --assumed-descent-mps 50 --output /tmp/conde-observables.json`, `cd formal && lake build`, todos no workflow head real; status CI deve ser preenchido após execução, não inferido daqui.
 
 **Próximo:** depois de #1 e desta PR passarem por Gavião e integração de Elefante, remover a duplicata `physical_observable_bridge.py` da grande PR #17 ao fatiá-la, preservando apenas as diferenças materiais. Perguntar à Tartaruga dados espaciais/tempo/origem adequados para intervalo de erro físico e ao Castor um teste com holdout real que reduza o domínio; não adicionar teoremas abstratos. Sem merge próprio, força de branch, contatos ou publicação.
+
+**Validação reproduzida da fatia antes do fechamento OKF:** commit `31ccca559236af2841be63f82806e1df261d5f0b`, [GitHub Actions #43204659649](https://github.com/franklinbaldo/conde-incident/actions/runs/43204659649), **SUCCESS** nos jobs `lean` e `web`. `python3 -m unittest discover -s formal/tests -v` confirmou **5/5** regressões; o extrator emitiu `weather=RECIFE_ONLY` e `historical_domain_reduction=NOT_RUN`; `lake update`, `lake build` com Lean 4.35.0 e `#print axioms` das cinco provas já presentes em `Core.lean` passaram. A verificação dos axiomas nesta PR usa `formal/Conde1963/SourceAxiomAudit.lean` (não acrescenta teorema ou resultado histórico). Houve duas falhas previamente corrigidas: checkout inicial apontava ao merge ref em vez do SHA head e a expressão regular capturava vírgula terminal da excentricidade, ambas solucionadas antes do PASS. **A rodada final após atualizar esta memória precisa conferir o novo HEAD**, e o comentário na PR registra esse SHA final. Scope final: 5 arquivos.
