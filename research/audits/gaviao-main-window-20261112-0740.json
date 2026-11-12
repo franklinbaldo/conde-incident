@@ -6,9 +6,9 @@
   "checkpoint_in_main_before_window": null,
   "initial_history_root_sha": "d6d6578c617a8630ad3a0a5c5657c9e5e60dfe22",
   "reviewed_base_sha": "d6d6578c617a8630ad3a0a5c5657c9e5e60dfe22",
-  "reviewed_through_sha": "006c7d08b64956aeeabed7162b5604bba77de85b",
-  "main_commits_total": 16,
-  "post_base_changes": 15,
+  "reviewed_through_sha": "b653bb56b0f7cbf1caebcaf300bbc6a69ae7fb62",
+  "main_commits_total": 18,
+  "post_base_changes": 17,
   "merged_prs": [
     2,
     58,
@@ -23,7 +23,9 @@
     83,
     82,
     84,
-    87
+    87,
+    86,
+    89
   ],
   "direct_commits_since_base": [
     "807a118939fac50b48d649b1045461bfcc79b140"
@@ -379,6 +381,54 @@
       ],
       "source_url": "https://github.com/franklinbaldo/conde-incident/commit/006c7d08b64956aeeabed7162b5604bba77de85b",
       "review_status": "INSPECTED_BY_GAVIAO_CROSSCHECK_SOURCE_AND_CI_WHERE_APPLICABLE"
+    },
+    {
+      "order": 16,
+      "sha": "c0189f57e45b36ee41fa7cd122434771bccd5e1e",
+      "parent_sha": "006c7d08b64956aeeabed7162b5604bba77de85b",
+      "committer_date_utc": "2026-11-12T11:43:52Z",
+      "kind": "squash-merge-pr",
+      "pr_number": 86,
+      "category": "528 literal syntax and provenance controls",
+      "message": "🐢 Integrar auditor sintático TLE 528 com custódia e testes (#86)",
+      "changed_files": [
+        ".github/workflows/tle-literal-layout.yml",
+        "research/tle_custody/INTEGRATION.md",
+        "research/tle_custody/evidence_matrix_C241-L1_2026-11-12.md",
+        "team/memory/tartaruga/20261112T0733Z-literal-layout-c241-l1.md",
+        "tests/test_tle_literal_layout.py",
+        "tools/tle_literal_layout.py"
+      ],
+      "source_url": "https://github.com/franklinbaldo/conde-incident/commit/c0189f57e45b36ee41fa7cd122434771bccd5e1e",
+      "review_status": "INSPECTED_BY_GAVIAO_CROSSCHECK_SOURCE_AND_CI_WHERE_APPLICABLE"
+    },
+    {
+      "order": 17,
+      "sha": "b653bb56b0f7cbf1caebcaf300bbc6a69ae7fb62",
+      "parent_sha": "c0189f57e45b36ee41fa7cd122434771bccd5e1e",
+      "committer_date_utc": "2026-11-12T11:53:53Z",
+      "kind": "squash-merge-pr",
+      "pr_number": 89,
+      "category": "agent-workspace governance",
+      "message": "team: protocolo de workspaces privados para os 13 animais (#89)",
+      "changed_files": [
+        ".agents/skills/conde-abelha/SKILL.md",
+        ".agents/skills/conde-caranguejo/SKILL.md",
+        ".agents/skills/conde-cervo/SKILL.md",
+        ".agents/skills/conde-lagarto/SKILL.md",
+        ".agents/skills/conde-lontra/SKILL.md",
+        "AGENTS.md",
+        "config/agent-roster.json",
+        "docs/AGENT_WORKSPACES.md",
+        "scripts/agent-workspaces.test.mjs",
+        "team/abelha.md",
+        "team/caranguejo.md",
+        "team/cervo.md",
+        "team/lagarto.md",
+        "team/lontra.md"
+      ],
+      "source_url": "https://github.com/franklinbaldo/conde-incident/commit/b653bb56b0f7cbf1caebcaf300bbc6a69ae7fb62",
+      "review_status": "INSPECTED_BY_GAVIAO_CROSSCHECK_SOURCE_AND_CI_WHERE_APPLICABLE"
     }
   ],
   "scientific_findings": [
@@ -386,7 +436,9 @@
     "G15-F2 A-628 quotes Midkiff telegram #157 on 14 Nov and newspaper reports; it does not establish physical inspection or prove absence of impact. EPIST-05 overstates",
     "G15-F3 SSR 15/30 Nov comparison edges lack actual observation epochs and error intervals; CANDIDATE_NOT_ACTIVATED remains correct",
     "G15-F4 TLE 528 secondary mirror SHA and checksum do not authenticate original NORAD provenance; 527/529 remain hypothetical",
-    "G15-F5 Lean checks are conditional; numerical RK4 unit tests are synthetic, no terminal calibration or impact claim"
+    "G15-F5 Lean checks are conditional; numerical RK4 unit tests are synthetic, no terminal calibration or impact claim",
+    "G15-F6 PR #86 added 10 syntactic TLE 528 checks and supplementary C241-L1 without modifying the pinned 241-row matrix; first failing intermediate head subsequently fixed; audit does not establish primary NORAD custody",
+    "G15-F7 PR #89 declares 13 private workspaces as pending/unprovisioned and separates personal memory from shared public implementation; did not create repos, no new scientific evidence"
   ],
   "physical_geography_status": "INDETERMINATE",
   "confidence_scope": "Each integrated file enumerated. Selected scientific/UI statements cross-checked against primary NASA/A-628 facsimiles. CI success is not historical authentication."
