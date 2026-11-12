@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { stageDocumentedCartesianPositions } from '../src/lib/orbitObservationIntake.ts';
+import { stageDocumentedCartesianPositions, stageDocumentedChronologicalSplit } from '../src/lib/orbitObservationIntake.ts';
 
 // ALL Cartesian measurements below are synthetic controls, not 1963 tracks.
 // C197 is a REAL original document, but only for the catalogue decay day.
@@ -121,4 +121,96 @@ test('training observations are accepted only before predeclared cutoff', () => 
     synthetic('1963-10-29T00:00:00Z'),
   ], training);
   assert.equal(future.traces[0].reason, 'OUTSIDE_PREDECLARED_SPLIT');
+});
+
+
+const splitContext = (({phase, ...base}) => base)(context);
+const record = (epoch, id, fields = {}) =>
+  synthetic(epoch, {instrumentRecordId: id, ...fields});
+
+test('chronological split accepts distinct synthetic records from SAME lineage without claiming independence', () => {
+  const result = stageDocumentedChronologicalSplit([
+    record('1963-10-27T16:00:00Z', 'record-1'),
+    record('1963-10-27T18:00:00Z', 'record-2'),
+  ], [record('1963-10-29T00:00:00Z', 'record-3')], splitContext);
+  assert.equal(result.status, 'CONDITIONAL_UNWEIGHTED_INPUTS');
+  assert.equal(result.trainingPositions.length, 2);
+  assert.equal(result.holdoutPositions.length, 1);
+  assert.deepEqual(result.reusedRecords, []);
+  assert.equal(result.independentInstrumentObservationsVerified, false);
+  assert.equal(result.historicalHoldoutValidated, false);
+  assert.equal(result.uncertaintyUsedInFit, false);
+});
+
+test('same instrument record reused across split under a new epoch and matrix occurrence blocks BOTH samples', () => {
+  const result = stageDocumentedChronologicalSplit([
+    record('1963-10-27T16:00:00Z', 'one-measurement', {matrixOccurrence: 'TEST#1'}),
+  ], [
+    record('1963-10-29T00:00:00Z', 'one-measurement', {matrixOccurrence: 'TEST#2'}),
+  ], splitContext);
+  assert.equal(result.trainingTraces[0].reason, null);
+  assert.equal(result.holdoutTraces[0].reason, null);
+  assert.equal(result.status, 'CONNECTED_PENDING_CALIBRATION');
+  assert.deepEqual(result.trainingPositions, []);
+  assert.deepEqual(result.holdoutPositions, []);
+  assert.deepEqual(result.reusedRecords, [{
+    firstPhase: 'TRAINING', repeatedPhase: 'HOLDOUT',
+    firstOccurrence: 'TEST#1', repeatedOccurrence: 'TEST#2',
+    matchingKey: 'LINEAGE_RECORD',
+  }]);
+});
+
+test('renaming a lineage cannot hide repeated record if documentary URL and record ID coincide', () => {
+  const result = stageDocumentedChronologicalSplit([
+    record('1963-10-27T16:00:00Z', 'same-record', {lineageRoot: 'COPY_A'}),
+  ], [
+    record('1963-10-29T00:00:00Z', 'same-record', {lineageRoot: 'COPY_B'}),
+  ], splitContext);
+  assert.equal(result.status, 'CONNECTED_PENDING_CALIBRATION');
+  assert.equal(result.reusedRecords[0].matchingKey, 'DOCUMENT_RECORD');
+  assert.deepEqual(result.holdoutPositions, []);
+});
+
+test('two epochs of a recycled source record within training cannot inflate the fitted sample', () => {
+  const result = stageDocumentedChronologicalSplit([
+    record('1963-10-27T16:00:00Z', 'duplicate-record'),
+    record('1963-10-27T18:00:00Z', 'duplicate-record'),
+  ], [record('1963-10-29T00:00:00Z', 'distinct-record')], splitContext);
+  assert.equal(result.status, 'CONNECTED_PENDING_CALIBRATION');
+  assert.equal(result.reusedRecords.length, 1);
+  assert.equal(result.reusedRecords[0].firstPhase, 'TRAINING');
+  assert.equal(result.reusedRecords[0].repeatedPhase, 'TRAINING');
+  assert.deepEqual(result.trainingPositions, []);
+  assert.deepEqual(result.holdoutPositions, []);
+});
+
+test('one C197 day-only datum vetoes whole split: it cannot supply a historical Cartesian target', () => {
+  const nasa = record(null, 'decay-day', {
+    kind: 'CATALOG_DECAY_DAY', objectNorad: 528, matrixOccurrence: 'C197#1',
+    documentUrl: 'https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf',
+    lineageRoot: 'NASA_NORAD_COMPILATION',
+    rKm: null, sigmaKm: null, instrumentRecordId: null,
+    calibrationReference: null, custody: 'CATALOG',
+  });
+  const result = stageDocumentedChronologicalSplit([
+    record('1963-10-27T16:00:00Z', 'record-1'),
+  ], [nasa], splitContext);
+  assert.equal(result.status, 'CONNECTED_PENDING_CALIBRATION');
+  assert.equal(result.holdoutTraces[0].reason, 'NOT_ORIGINAL_CARTESIAN');
+  assert.deepEqual(result.trainingPositions, []);
+  assert.deepEqual(result.holdoutPositions, []);
+});
+
+test('cross-split chronology and frame checks are preserved under joint admission', () => {
+  const result = stageDocumentedChronologicalSplit([
+    record('1963-10-27T16:00:00Z', 'record-1'),
+  ], [
+    record('1963-10-27T17:00:00Z', 'record-2'),
+    record('1963-10-29T00:00:00Z', 'record-3', {inertialFrame: 'TEME'}),
+  ], splitContext);
+  assert.equal(result.status, 'CONNECTED_PENDING_CALIBRATION');
+  assert.equal(result.holdoutTraces[0].reason, 'OUTSIDE_PREDECLARED_SPLIT');
+  assert.equal(result.holdoutTraces[1].reason, 'INCOMPATIBLE_TARGET_OR_FRAME');
+  assert.deepEqual(result.trainingPositions, []);
+  assert.deepEqual(result.holdoutPositions, []);
 });
