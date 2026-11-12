@@ -1,0 +1,188 @@
+name: NORAD 527-529 custody (historical numeric mirror)
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  tle-custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      # pull_request defaults to refs/pull/N/merge; custody must test the exact head.
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Assert checked-out SHA is the exact source head
+        run: |
+          expected="${{ github.event.pull_request.head.sha || github.sha }}"
+          actual="$(git rev-parse HEAD)"
+          echo "audited_source_head=$actual"
+          test "$actual" = "$expected"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic controls (no historical claims)
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Install read-only Parquet decoder
+        run: python -m pip install --disable-pip-version-check pyarrow==21.0.0
+      - name: Fetch pinned 1963 source, verify SHA256, audit 527/528/529
+        run: |
+          python tools/audit_norad_1963.py \
+            --parquet "${{ runner.temp }}/tle_1963.parquet" --download \
+            --output "${{ runner.temp }}/tle-audit"
+          cat "${{ runner.temp }}/tle-audit/audit.json"
+      - name: Falsify legacy 528 six-field vector against pinned epochs
+        run: |
+          python tools/legacy_528_fingerprint.py \
+            --csv "${{ runner.temp }}/tle-audit/norad_528_epochs_1963.csv" \
+            --output "${{ runner.temp }}/tle-audit/legacy_528_fingerprint.json"
+          cat "${{ runner.temp }}/tle-audit/legacy_528_fingerprint.json"
+      - name: Test 527-529 epoch support without orbital interpolation
+        run: |
+          python tools/cross_object_epoch_support.py \
+            --csv "${{ runner.temp }}/tle-audit/norad_527_528_529_1963_numeric.csv" \
+            --output "${{ runner.temp }}/tle-audit/cross_object_epoch_support.json"
+          cat "${{ runner.temp }}/tle-audit/cross_object_epoch_support.json"
+      - name: Audit 8-decimal TLE epoch grid without claiming original bytes
+        run: |
+          python tools/tle_epoch_grid_audit.py \
+            --csv "${{ runner.temp }}/tle-audit/norad_527_528_529_1963_numeric.csv" \
+            --output "${{ runner.temp }}/tle-audit/tle_epoch_grid_report.json"
+          cat "${{ runner.temp }}/tle-audit/tle_epoch_grid_report.json"
+      - name: Audit exact secondary 528 line columns and syntax only
+        run: |
+          python tools/tle_literal_layout.py \
+            --pair research/tle_custody/mirror_528_1963-10-27.tle \
+            --output "${{ runner.temp }}/tle-audit/secondary_528_literal_fields.json"
+          cat "${{ runner.temp }}/tle-audit/secondary_528_literal_fields.json"
+      - name: Audit numeric Parquet schema and lossless field-grid projection (C241-T6)
+        run: |
+          python tools/tle_numeric_precision_audit.py \
+            --parquet "${{ runner.temp }}/tle_1963.parquet" \
+            --output "${{ runner.temp }}/tle-audit/tle_numeric_precision_report.json"
+          python - <<'PY'
+          import json, os, pathlib
+          data = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) /
+                             "tle-audit/tle_numeric_precision_report.json").read_text())
+          print("numeric_roundtrips:", data["field_counts"])
+          print("not_preserved:", data["not_preserved_by_this_schema"])
+          PY
+      - name: Audit 528 circular RAAN chronology and time gaps (C241-T7)
+        run: |
+          python tools/raan_epoch_continuity_audit.py \
+            --csv "${{ runner.temp }}/tle-audit/norad_528_epochs_1963.csv" \
+            --pair research/tle_custody/mirror_528_1963-10-27.tle \
+            --output "${{ runner.temp }}/tle-audit/raan_epoch_continuity.json"
+          python - <<'PY'
+          import json, os, pathlib
+          report = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) /
+                    "tle-audit/raan_epoch_continuity.json").read_text())
+          print("secondary_sample_count:", report["samples"])
+          print("observed_intervals:", report["adjacent_intervals"])
+          print("coverage_gaps:", report["gaps"])
+          print("legacy_epoch_conflict:", report["legacy_conflict"])
+          PY
+      - name: Join NORAD/COSPAR identities with attributed catalog labels (C241-T8)
+        run: |
+          python tools/tle_identity_lineage_audit.py \
+            --csv "${{ runner.temp }}/tle-audit/norad_527_528_529_1963_numeric.csv" \
+            --ledger research/tle_custody/catalog_identity_527_529_2026-11-12.json \
+            --pair research/tle_custody/mirror_528_1963-10-27.tle \
+            --output "${{ runner.temp }}/tle-audit/tle_catalog_identity_lineage.json"
+          python - <<'PY'
+          import json, os, pathlib
+          report = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) /
+                    "tle-audit/tle_catalog_identity_lineage.json").read_text())
+          print("COSPAR identity join:", {k: v["cospar"] for k, v in report["catalog_join"].items()})
+          print("Source lineage:", report["ledger_status"])
+          print("Physical object 528:", report["physical_component_identity_528"])
+          print("Conde:", report["status_for_conde"])
+          PY
+      - name: Audit TLE n-dot factor-of-two and BSTAR lineage (C241-T9)
+        run: |
+          python tools/tle_drag_term_lineage_audit.py \
+            --csv "$RUNNER_TEMP/tle-audit/norad_527_528_529_1963_numeric.csv" \
+            --pair research/tle_custody/mirror_528_1963-10-27.tle \
+            --output "$RUNNER_TEMP/tle-audit/tle_line1_drag_terms.json"
+          python - <<'PY'
+          import json, os, pathlib
+          r = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) /
+                          "tle-audit/tle_line1_drag_terms.json").read_text())
+          print("n_dot_scale:", r["same_epoch_528"]["numeric_scale_test"])
+          print("bstar_same_epoch_match:", r["same_epoch_528"]["bstar_matches"])
+          print("all_three_catalogs:", r["by_norad"])
+          print("physical_lean:", r["lean_physical_premise"])
+          PY
+      - name: Test whether a 16-second epoch offset explains the 528 RAAN conflict under J2 (C241-T10)
+        run: |
+          python tools/tle_raan_epoch_offset_j2_audit.py \
+            --csv "$RUNNER_TEMP/tle-audit/norad_528_epochs_1963.csv" \
+            --pair research/tle_custody/mirror_528_1963-10-27.tle \
+            --output "$RUNNER_TEMP/tle-audit/raan_epoch_offset_j2_conditional.json"
+          python - <<'PY'
+          import json, os, pathlib
+          r = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) /
+                          "tle-audit/raan_epoch_offset_j2_conditional.json").read_text())
+          print("J2 conditional result:", r["diagnostic"]["epoch_offset_only_j2_model"])
+          print("RAAN original provenance:", r["diagnostic"]["physical_1963_raan_origin"])
+          print("Lean and impact:", r["lean_4_35_physical_restriction"], r["reentry_and_conde"])
+          PY
+      - name: Audit mean-motion secants without accepting n-dot as a measured derivative (C241-T11)
+        run: |
+          python tools/tle_mean_motion_secant_audit.py \
+            --csv "$RUNNER_TEMP/tle-audit/norad_527_528_529_1963_numeric.csv" \
+            --output "$RUNNER_TEMP/tle-audit/mean_motion_secants_c241_t11.json"
+          python - <<'PY'
+          import json, os, pathlib
+          r = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) /
+                          "tle-audit/mean_motion_secants_c241_t11.json").read_text())
+          print("C241-T11:", r["global"])
+          print("527/528/529 72h windows:", {
+              key: val["up_to_72h"]
+              for key, val in r["by_norad"].items()})
+          print("unresolved:", r["raan_198_5261_vs_284_1520"],
+                r["provenance"]["primary_1963_TLE_pairs"], r["conde"])
+          PY
+      - name: Cross-catalog six-field legacy fingerprint 527/528/529 (C241-T12)
+        run: |
+          python tools/tle_cross_catalog_legacy_audit.py \
+            --csv "$RUNNER_TEMP/tle-audit/norad_527_528_529_1963_numeric.csv" \
+            --output "$RUNNER_TEMP/tle-audit/legacy_528_cross_catalog_c241_t12.json"
+          python - <<'PY'
+          import json, os, pathlib
+          r = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) /
+                          "tle-audit/legacy_528_cross_catalog_c241_t12.json").read_text())
+          print("C241-T12:", r["comparison"]["full_legacy_vector_any_catalog_hypothesis"])
+          print("527/528/529:", {k: {
+              "n": v["distinct_epochs"],
+              "six_fields": v["all_six_any_epoch_count"],
+              "closest_raan": v["closest_raan_same_record"][:1]}
+              for k, v in r["comparison"]["by_catalog"].items()})
+          print("no_physical_claim:", r["lean_physical_restriction"], r["conde_impact"])
+          PY
+      - name: Audit whether altitude_km could be derived from mean_motion (C241-T13)
+        run: |
+          python tools/tle_altitude_lineage_audit.py \
+            --csv "$RUNNER_TEMP/tle-audit/norad_527_528_529_1963_numeric.csv" \
+            --output "$RUNNER_TEMP/tle-audit/altitude_lineage_c241_t13.json"
+          python - <<'PY'
+          import json, os, pathlib
+          r = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) /
+                          "tle-audit/altitude_lineage_c241_t13.json").read_text())
+          print("C241-T13:", r["overall"])
+          print("independent altitude observation:", r["source"]["independent_altitude_measurement"])
+          print("frame and primary:", r["source"]["historical_frame_sensor_and_error"], r["source"]["original_1963_NORAD_TLE_pairs"])
+          print("RAAN/Conde:", r["raan_198_5261_vs_284_1520"], r["conde_impact"])
+          PY
+      - name: Preserve normalized source-derived rows and negative results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: norad-1963-numeric-custody-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ${{ runner.temp }}/tle-audit/
+          if-no-files-found: warn
+          retention-days: 30

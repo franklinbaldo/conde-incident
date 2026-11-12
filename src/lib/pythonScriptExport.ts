@@ -9,6 +9,9 @@ Licenca: MIT / Dominio Publico para fins de pesquisa cientifica
 Requisitos:
     pip install numpy scipy
     (Opcional para TLE nativo: pip install sgp4 skyfield)
+
+    AVISO: parametros 528 de espelho secundario. Simulacao exploratoria,
+    sem autenticacao primaria NORAD ou localizacao de reentrada.
 """
 
 import math
@@ -28,14 +31,14 @@ CONDE_LAT = -11.8139   # graus Sul
 CONDE_LON = -37.6108   # graus Oeste
 CONDE_ALT_KM = 0.015
 
-# NORAD 528 (1963-003B) - Epoca historica: 27/10/1963 ~14:40:00 UTC
-EPOCH_528 = datetime(1963, 10, 27, 14, 40, 0, tzinfo=timezone.utc)
+# NORAD 528: par TLE de espelho SECUNDARIO 27/10/1963 14:40:16.132512 UTC.\n# Fonte: https://www.itau.magnetic-declination.com/satellite/?s=528\n# SHA256 do par literal: 18cf11665e061b5ec8679242e10b00b82accf29bc6f0b9b7b6330b9c44e341cd\n# Concordancia numerica com espelho Parquet: NAO autentica origem NORAD de 1963.
+EPOCH_528 = datetime(1963, 10, 27, 14, 40, 16, 132512, tzinfo=timezone.utc)
 INCLINATION_528_DEG = 81.8615
-MEAN_MOTION_528_REV_DAY = 15.7490
-RAAN_528_DEG = 284.1520
-ECCENTRICITY_528 = 0.00842
-ARG_PERIGEE_528_DEG = 142.3150
-MEAN_ANOMALY_528_DEG = 218.4210
+MEAN_MOTION_528_REV_DAY = 15.74901460
+RAAN_528_DEG = 198.5261
+ECCENTRICITY_528 = 0.0017147
+ARG_PERIGEE_528_DEG = 104.7477
+MEAN_ANOMALY_528_DEG = 255.4423
 CATALOG_DECAY_DATE = datetime(1963, 11, 8, tzinfo=timezone.utc)
 
 # ==============================================================================

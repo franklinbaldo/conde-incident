@@ -1,0 +1,22 @@
+# OKF 🐢 Tartaruga — C241-T6, 12/11/2026 UTC
+
+**Escopo:** franklinbaldo/conde-incident. **Issue única:** [#13](https://github.com/franklinbaldo/conde-incident/issues/13), prioridade 75. **PR em andamento:** [#14](https://github.com/franklinbaldo/conde-incident/pull/14), branch feature/tartaruga-tle-custody-1963, draft, empilhada sobre research/scientific-integrity-foundation (#1), sem merge ou force-push.
+
+## Entrega auditada
+
+- Li main/AGENTS.md, main/team/tartaruga.md, PRs/issues (incluindo #1, #14, #28) e matriz cumulativa preservada nesta branch. A matriz ainda não está na main.
+- A fonte [oxzoid/space-track-tle-history, arquivo tle_1963.parquet](https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/main/data/tle_1963.parquet), commit 4b4fb3a, SHA-256 c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09, é espelho numérico SECUNDÁRIO da linhagem alegada Space-Track. Seu [viewer de esquema](https://huggingface.co/datasets/oxzoid/space-track-tle-history) distingue cinco campos em float32, movimento médio em float64 e UTC timestamp[us]. Nunca se supôs sensor independente.
+- Criei tools/tle_numeric_precision_audit.py e testes/test_tle_numeric_precision_audit.py. O código verifica esquema real, hash e se os seis campos orbitais são representáveis univocamente nas grades decimais padronizadas (4/7/8 casas), conservando source_row. Produz JSON auditável, falha se encontrar valores fora de grade ou ambiguidades e não fabrica nenhuma linha TLE.
+- **Resultado medido:** [CI de custódia #43150035578](https://github.com/franklinbaldo/conde-incident/actions/runs/43150035578), SHA 45c608a3db0f30c3ba1cf8ee5261085508e07a64, SUCCESS, **66/66 testes**. Cobertura 21/45/57 registros 527/528/529; **738 de 738 verificações numéricas** (123 por cada um dos 6 elementos) deram roundtrip de grade e unicidade de vizinhos. [Scientific checks #43150035546](https://github.com/franklinbaldo/conde-incident/actions/runs/43150035546) SUCCESS no mesmo HEAD. [Artefato #13912379474](https://github.com/franklinbaldo/conde-incident/actions/runs/43150035578/artifacts/13912379474), ZIP digest SHA-256 717d8b9770e387d23ded6ec563c864f89826762e6e638b52a06f0e0f07e6fdf9, inclui tle_numeric_precision_report.json.
+- Atualizei .github/workflows/tle-custody.yml, C241-T6 na matriz e README técnico, e corrigi a frase enganosa do extrator sobre perda de dígitos float32, depois do primeiro CI PASS. Após estes commits, **exigir novo CI no HEAD definitivo**, sem alegar que o resultado anterior o validou. HEAD antes desta memória: cd53aee88a1ad2f24ebb4c5cbb89218d75f0b053.
+
+## Erro identificado e resultado negativo
+
+- A primeira hipótese de teste foi que mean_motion teria sido convertido para float32, o que geraria dezenas de grafias TLE equivalentes. A consulta ao esquema revelou que **mean_motion é float64**; a ferramenta experimental baseada na hipótese errada foi eliminada **antes** de declarar resultado empírico. Registrado como resultado de falsificação: não atribuir perda de precisão a uma coerção que não ocorreu.
+- No arquivo fixado, os **seis números** retêm informação suficiente para suas grafias decimais típicas, mas o Parquet não carrega bytes originais line1/line2, checksum, sensor, quadro de referência certificado, segunda derivada textual, número da efeméride, sequência e revoluções. Portanto não há 45 pares originais auditados, nem prova de qual peça física corresponde ao 528. Integridade de número derivado NÃO é autenticidade de rastreamento em 1963.
+- RAAN 198,5261° versus 284,1520° continua conflito de proveniência não resolvido. NASA Situation Report 15/11/1963, p.8 (https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf), citado pela matriz C197, só informa o dia 08/11 para decaimento 1963-003B, não instante/local. Nenhuma restrição orbital física nova para Lean 4.35.0, simulação terminal, raio de impacto ou previsão.
+- Sem contato com arquivos/pessoas, sem alterações/publicação do blog, sem rebase, force-push ou merge.
+
+## Próxima falsificação e handoff
+
+Buscar **documento instrumental primário** com pares NORAD 527/528/529, frame e incertezas em cada época, além de documento de engenharia que identifique a peça física S00528. Até lá, C241-T6 fornece diagnóstico digital e não domínio orbital empírico. 🦅 Gavião deve revisar a distinção grade decimal × original TLE e a correção float64; 🐘 Elefante integra após revisão, base #1 e CI no SHA exato.
