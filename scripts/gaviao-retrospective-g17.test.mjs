@@ -29,8 +29,11 @@ test('G17 exhausts 12 unique main first-parent squash integrations including aft
 
 test('G17 independently preserves source families and immutable documentary links', () => {
   assert.equal(feed.total_matrix_occurrences,241);
-  assert.equal(feed.curated_occurrences,24);
-  assert.equal(feed.unmapped_occurrences,217);
+  // G17 historically audited 24 rows. Later verified curation is additive;
+  // do not freeze a current, regenerable feed to the G17-era count.
+  assert.ok(feed.curated_occurrences >= 24);
+  assert.equal(feed.curated_occurrences + feed.unmapped_occurrences,241);
+  assert.ok(feed.records.length >= feed.curated_occurrences);
   assert.equal(feed.matrix_git_blob_sha1,'a7978c3a75a153b16ab70118a92c434bba674cb7');
   assert.ok(matrixOccurrenceUrl(100).includes('/blob/faf4dd0fd8dfbdd825e4e934b3b30ebd81bf61df/'));
   assert.ok(!matrixOccurrenceUrl(100).includes('/blob/main/'));
