@@ -6,6 +6,9 @@ on:
       - 'scripts/audit-alternative-domains.mjs'
       - 'tests/admissible-domain.test.mjs'
       - 'tests/alternative-domains.test.mjs'
+      - 'tests/domain-sensitivity.test.mjs'
+      - 'scripts/audit-domain-sensitivity.mjs'
+      - 'research/DOMAIN_SENSITIVITY.md'
       - 'research/ALTERNATIVE_DOMAINS.md'
       - '.github/workflows/alternative-domains.yml'
   push:
@@ -15,6 +18,9 @@ on:
       - 'scripts/audit-alternative-domains.mjs'
       - 'tests/admissible-domain.test.mjs'
       - 'tests/alternative-domains.test.mjs'
+      - 'tests/domain-sensitivity.test.mjs'
+      - 'scripts/audit-domain-sensitivity.mjs'
+      - 'research/DOMAIN_SENSITIVITY.md'
       - 'research/ALTERNATIVE_DOMAINS.md'
       - '.github/workflows/alternative-domains.yml'
 permissions:
@@ -28,4 +34,4 @@ jobs:
         with:
           node-version: '22'
       - name: Audit exact domains and competing source scenarios
-        run: node --test tests/admissible-domain.test.mjs tests/alternative-domains.test.mjs
+        run: node --test tests/admissible-domain.test.mjs tests/alternative-domains.test.mjs tests/domain-sensitivity.test.mjs
