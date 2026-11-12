@@ -1,0 +1,257 @@
+{
+  "schema": "conde.igra-recife-c151-wind-profile/v1",
+  "source": {
+    "custodian": "NOAA/NCEI IGRA2.2 full-period-of-record archive",
+    "full_station_zip_url": "https://www.ncei.noaa.gov/pub/data/igra/data/data-por/BRM00082900-data.txt.zip",
+    "full_station_zip_sha256": "0655b3ea80312abe888a5474f82233affc0a2496ee1fd8bc678162924f52ecdc",
+    "full_station_zip_bytes": 7834492,
+    "format_url": "https://www.ncei.noaa.gov/pub/data/igra/data/igra2-data-format.txt",
+    "format_sha256": "dfd7b4d2dd18a255477455a7caefd12cb21c30549a1e70cbc3a51db9f41c1dfe",
+    "station_list_url": "https://www.ncei.noaa.gov/pub/data/igra/igra2-station-list.txt",
+    "station_list_sha256": "5a277ba4036544cb79d07e3f503f7ca1aaa2d81a304dbea5f79ac24808d2dc34",
+    "verbatim_1963_profile_sha256": "577224172e19552f5ce87081897479255596dc44debacc674dfd9d9ec418207e",
+    "archive_access_utc_date": "2026-11-12",
+    "upstream_pressure_source_code": "ncdc6301",
+    "provenance_family": "ONE sounding, NOT independent of archive repackagings using the same rawindsonde",
+    "instrumental_measurement_error": "UNKNOWN; reported 0.1 m/s wind-speed increments are not error bounds"
+  },
+  "station": {
+    "id": "BRM00082900",
+    "station_list_name": "RECIFE (82900-0)",
+    "archive_latitude_deg": -8.05,
+    "archive_longitude_deg_east": -34.9167,
+    "station_elevation_m_asl": 7.0,
+    "coordinates_historical_reconstruction": "NOT VERIFIED; IGRA fixed-station coordinates do not reconstruct 1963 relocations"
+  },
+  "sounding": {
+    "date_nominal_utc": "1963-11-08",
+    "nominal_hour_utc": 12,
+    "release_time_hhmm": null,
+    "release_time_raw_missing_code": 9999,
+    "source_level_count": 26,
+    "levels_with_reported_wind": 15,
+    "max_reported_wind_height_m_asl": 26693,
+    "wind_direction_convention": "meteorological degrees FROM north; u=-speed*sin(dir); v=-speed*cos(dir)"
+  },
+  "wind_observables_at_recife": [
+    {
+      "level_index_zero_based": 0,
+      "level_type": 2,
+      "pressure_hpa": 1016.0,
+      "geopotential_height_m_asl": 10,
+      "geopotential_height_quality_flag": null,
+      "wind_from_deg": 130,
+      "wind_speed_m_s": 4.0,
+      "eastward_u_m_s": -3.064178,
+      "northward_v_m_s": 2.57115
+    },
+    {
+      "level_index_zero_based": 1,
+      "level_type": 1,
+      "pressure_hpa": 1000.0,
+      "geopotential_height_m_asl": 151,
+      "geopotential_height_quality_flag": "B",
+      "wind_from_deg": 126,
+      "wind_speed_m_s": 4.0,
+      "eastward_u_m_s": -3.236068,
+      "northward_v_m_s": 2.351141
+    },
+    {
+      "level_index_zero_based": 4,
+      "level_type": 1,
+      "pressure_hpa": 850.0,
+      "geopotential_height_m_asl": 1560,
+      "geopotential_height_quality_flag": "B",
+      "wind_from_deg": 100,
+      "wind_speed_m_s": 4.0,
+      "eastward_u_m_s": -3.939231,
+      "northward_v_m_s": 0.694593
+    },
+    {
+      "level_index_zero_based": 6,
+      "level_type": 1,
+      "pressure_hpa": 700.0,
+      "geopotential_height_m_asl": 3197,
+      "geopotential_height_quality_flag": "B",
+      "wind_from_deg": 236,
+      "wind_speed_m_s": 4.0,
+      "eastward_u_m_s": 3.31615,
+      "northward_v_m_s": 2.236772
+    },
+    {
+      "level_index_zero_based": 8,
+      "level_type": 1,
+      "pressure_hpa": 500.0,
+      "geopotential_height_m_asl": 5917,
+      "geopotential_height_quality_flag": "B",
+      "wind_from_deg": 159,
+      "wind_speed_m_s": 6.0,
+      "eastward_u_m_s": -2.150208,
+      "northward_v_m_s": 5.601483
+    },
+    {
+      "level_index_zero_based": 11,
+      "level_type": 1,
+      "pressure_hpa": 400.0,
+      "geopotential_height_m_asl": 7643,
+      "geopotential_height_quality_flag": "B",
+      "wind_from_deg": 137,
+      "wind_speed_m_s": 13.0,
+      "eastward_u_m_s": -8.865979,
+      "northward_v_m_s": 9.507598
+    },
+    {
+      "level_index_zero_based": 12,
+      "level_type": 1,
+      "pressure_hpa": 300.0,
+      "geopotential_height_m_asl": 9745,
+      "geopotential_height_quality_flag": "B",
+      "wind_from_deg": 129,
+      "wind_speed_m_s": 15.0,
+      "eastward_u_m_s": -11.657189,
+      "northward_v_m_s": 9.439806
+    },
+    {
+      "level_index_zero_based": 13,
+      "level_type": 1,
+      "pressure_hpa": 250.0,
+      "geopotential_height_m_asl": 11007,
+      "geopotential_height_quality_flag": "B",
+      "wind_from_deg": 102,
+      "wind_speed_m_s": 17.0,
+      "eastward_u_m_s": -16.628509,
+      "northward_v_m_s": 3.534499
+    },
+    {
+      "level_index_zero_based": 14,
+      "level_type": 1,
+      "pressure_hpa": 200.0,
+      "geopotential_height_m_asl": 12478,
+      "geopotential_height_quality_flag": "B",
+      "wind_from_deg": 120,
+      "wind_speed_m_s": 9.0,
+      "eastward_u_m_s": -7.794229,
+      "northward_v_m_s": 4.5
+    },
+    {
+      "level_index_zero_based": 16,
+      "level_type": 1,
+      "pressure_hpa": 150.0,
+      "geopotential_height_m_asl": 14258,
+      "geopotential_height_quality_flag": "B",
+      "wind_from_deg": 179,
+      "wind_speed_m_s": 11.0,
+      "eastward_u_m_s": -0.191976,
+      "northward_v_m_s": 10.998325
+    },
+    {
+      "level_index_zero_based": 18,
+      "level_type": 1,
+      "pressure_hpa": 100.0,
+      "geopotential_height_m_asl": 16613,
+      "geopotential_height_quality_flag": "B",
+      "wind_from_deg": 120,
+      "wind_speed_m_s": 7.0,
+      "eastward_u_m_s": -6.062178,
+      "northward_v_m_s": 3.5
+    },
+    {
+      "level_index_zero_based": 20,
+      "level_type": 1,
+      "pressure_hpa": 70.0,
+      "geopotential_height_m_asl": 18668,
+      "geopotential_height_quality_flag": "B",
+      "wind_from_deg": 85,
+      "wind_speed_m_s": 8.0,
+      "eastward_u_m_s": -7.969558,
+      "northward_v_m_s": -0.697246
+    },
+    {
+      "level_index_zero_based": 22,
+      "level_type": 1,
+      "pressure_hpa": 50.0,
+      "geopotential_height_m_asl": 20754,
+      "geopotential_height_quality_flag": "B",
+      "wind_from_deg": 41,
+      "wind_speed_m_s": 4.0,
+      "eastward_u_m_s": -2.624236,
+      "northward_v_m_s": -3.018838
+    },
+    {
+      "level_index_zero_based": 23,
+      "level_type": 1,
+      "pressure_hpa": 30.0,
+      "geopotential_height_m_asl": 24023,
+      "geopotential_height_quality_flag": "B",
+      "wind_from_deg": 94,
+      "wind_speed_m_s": 6.0,
+      "eastward_u_m_s": -5.985384,
+      "northward_v_m_s": 0.418539
+    },
+    {
+      "level_index_zero_based": 24,
+      "level_type": 1,
+      "pressure_hpa": 20.0,
+      "geopotential_height_m_asl": 26693,
+      "geopotential_height_quality_flag": "B",
+      "wind_from_deg": 346,
+      "wind_speed_m_s": 5.0,
+      "eastward_u_m_s": 1.209609,
+      "northward_v_m_s": -4.851479
+    }
+  ],
+  "missing_wind_levels": [
+    {
+      "level_index_zero_based": 2,
+      "pressure_hpa": 945.0
+    },
+    {
+      "level_index_zero_based": 3,
+      "pressure_hpa": 919.0
+    },
+    {
+      "level_index_zero_based": 5,
+      "pressure_hpa": 828.0
+    },
+    {
+      "level_index_zero_based": 7,
+      "pressure_hpa": 576.0
+    },
+    {
+      "level_index_zero_based": 9,
+      "pressure_hpa": 495.0
+    },
+    {
+      "level_index_zero_based": 10,
+      "pressure_hpa": 433.0
+    },
+    {
+      "level_index_zero_based": 15,
+      "pressure_hpa": 178.0
+    },
+    {
+      "level_index_zero_based": 17,
+      "pressure_hpa": 123.0
+    },
+    {
+      "level_index_zero_based": 19,
+      "pressure_hpa": 99.0
+    },
+    {
+      "level_index_zero_based": 21,
+      "pressure_hpa": 51.0
+    },
+    {
+      "level_index_zero_based": 25,
+      "pressure_hpa": 12.0
+    }
+  ],
+  "physical_links": {
+    "C149_C150_C151": "same archived Recife sounding; not three independent observations",
+    "balloon_fragment_drift": "CONDITIONAL_ONLY; requires launch location/time, vertical trajectory, descent/drag, spatiotemporal wind transfer and errors",
+    "density_drag_satellite": "NOT_A_THERMOSPHERIC_DENSITY_OBSERVATION; no constraint on NORAD 528 without independent transfer model",
+    "C144_C146": "independent CHM surface pressure maps; NOT same vertical wind measurement",
+    "C193": "Explorer XVII April–June 1963 thermospheric observations, different altitude/month and cannot calibrate these winds directly",
+    "physical_constraint_status": "CONNECTED_PENDING_SPATIOTEMPORAL_TRANSFER"
+  }
+}
