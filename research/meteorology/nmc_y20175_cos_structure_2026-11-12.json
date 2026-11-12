@@ -1,0 +1,64 @@
+{
+  "schema": "conde.nmc-y20175-cos-structure/v1",
+  "inventory_id": "MET-NMC-COS-20261112-01",
+  "report_date_utc": "2026-11-12",
+  "inspector": "lontra",
+  "upstream_custody_id": "MET-NMC-20261112-09",
+  "dataset_id": "GDEX d353000",
+  "dataset_doi": "10.5065/R592-TX59",
+  "archive_url": "https://osdf-director.osg-htc.org/ncar-gdex/d353000/Y20175",
+  "archive_bytes": 117264384,
+  "archive_sha256": "afec7c443e0c912f8a742738bb82384197baecc7c743cfb00a2a8bda207b5de4",
+  "catalog_url": "https://gdex.ucar.edu/datasets/d353000/",
+  "encoding_reference_url": "https://h41374.www4.it.hpe.com/docs/24.11/getting_started/CPE-CCE-Fortran.html",
+  "encoding_reference_locator": "Section: cos or blocked File Structure; 512-word sectors, 64-bit BCW and RCW, EOR/EOF/EOD, FWI (bits 55-63); documentation is generic modern COS and is not an ON20 station decoder",
+  "methods": "Full local 117264384-byte binary checked by SHA-256; big-endian control words traversed by FWI; validated every 512-word BCW number and every RCW mode; confirmed one terminal EOD and zero padding. Script tools/audit_nmc_y20175_cos.py, replay --manifest this JSON.",
+  "archive_observation": "ORIGINAL_BINARY_LOCAL_REPLAY_WITH_CHECKSUM",
+  "word_endianness": "big",
+  "sector_bytes": 4096,
+  "controls": {
+    "BCW": 28629,
+    "EOR": 14889,
+    "EOF": 2,
+    "EOD": 1
+  },
+  "control_words_total": 43521,
+  "eor_first_five_byte_offsets": [
+    7800,
+    15744,
+    23704,
+    31432,
+    39336
+  ],
+  "eof_byte_offsets": [
+    117264352,
+    117264360
+  ],
+  "eod_byte_offset": 117264368,
+  "trailing_zero_padding_bytes": 8,
+  "control_bad_data_flag_count": 0,
+  "structural_status": "COS_CONTROL_CHAIN_VERIFIED",
+  "on20_station_record_decoding": "NOT_RUN",
+  "station_day_matches": null,
+  "station_day_absences": null,
+  "physical_orbital_constraint": "NOT_ACTIVATED",
+  "dependencies": {
+    "existing_binary_manifest": "research/meteorology/nmc_y20175_1963_custody.json",
+    "candidate_physics_bridge": "research/constraints/nmc_y20175_pending_bridge.json",
+    "station_day_candidate_set": {
+      "dates_utc": [
+        "1963-11-07",
+        "1963-11-08",
+        "1963-11-09"
+      ],
+      "wmo_codes": [
+        "83229",
+        "83096",
+        "82900"
+      ]
+    },
+    "scope": "Only the external COS/CRAY record framing is verified. Do not equate 14889 EOR delimiters with 14889 unique weather reports and do not infer any station, day, level, UTC timestamp or meteorological measurement.",
+    "independent_observations_added": 0
+  },
+  "next_blocker": "Validated 1963 NMC Office Note 20 (ON20) data-body layout and report interpretation, including station/day keys, units, missing values and QC semantics. Only then scan the 14889 physically-delimited payloads."
+}
