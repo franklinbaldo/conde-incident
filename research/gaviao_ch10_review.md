@@ -26,7 +26,9 @@ O [verificador independente](../tools/gaviao_ch10_independent.py) **não importa
 - Excluído apenas o último trecho, agregando as primeiras oito épocas, obtêm-se `0,0118105861` (quadrático) e `0,0114631246` (média), ambos rev/dia. Essa exclusão é diagnóstico pós-hoc; não valida a escolha do modelo nem compara independência temporal.
 - O modelo conjunto piora no primeiro trecho (`0,011014283 > 0,010525039`). O terceiro tem apenas uma época; a escolha isolada do 528 (`0,145072060`) é retrospectiva.
 
-**Estado dos níveis de verificação:** tabela e fórmulas = inspecionadas/calculadas; replay independente do Parquet = exigido via workflow, confirmar conclusão e SHA antes de aceitar; sensor de 1963 = NÃO VERIFICADO; uma *joint physical fit* com holdout posicional e erro = NÃO EXECUTADA.
+**Reexecução independente concluída no HEAD de código/documentação `b9e95142d3cef2059cd92b94eec448d77b471fc6`:** [GitHub Actions #43171030913](https://github.com/franklinbaldo/conde-incident/actions/runs/43171030913) SUCCESS, `TESTED_SHA` verificado, **12/12 testes sintéticos** e leitura do Parquet pinado com `numpy.linalg.lstsq` sem import de Texugo. O JSON do artefato [#13921987815](https://github.com/franklinbaldo/conde-incident/actions/runs/43171030913/artifacts/13921987815) registra 93 usos, 28 épocas, 4/3/1/20, RMSE `0.188775133548` e `0.181909995184` rev/dia, participação de SSE no último trecho 0.9988816306 e 0.9988654468. Outros sete workflows herdados ficaram verdes **no mesmo SHA**. Alterações documentais posteriores requerem gate novamente no HEAD final.
+
+**Estado dos níveis de verificação:** tabela, contas e replay independente do Parquet = verificados como computação do espelho; sensor de 1963 = NÃO VERIFICADO; uma *joint physical fit* com holdout posicional e erro = NÃO EXECUTADA.
 
 ## 3. Lean 4.35.0, física e limites de inferência
 
