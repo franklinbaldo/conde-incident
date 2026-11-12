@@ -1,3 +1,9 @@
+---
+type: AgentContract
+title: Contrato de governança dos agentes do projeto Conde
+description: Protocolo científico, responsabilidades, CI e integração do time Conde.
+---
+
 # Conde Incident: agent operating contract
 
 Scope of shared scientific/product work: **franklinbaldo/conde-incident**. Agents also maintain their own **private** personal workspace repositories under `franklinbaldo/<animal>` for memory, skills, experiments and messages. The separate blog is read-only; do not publish or alter it. Do not contact archives, researchers or individuals without specific authorization.
@@ -23,6 +29,13 @@ Scope of shared scientific/product work: **franklinbaldo/conde-incident**. Agent
 **Agent startup/closure:** read the personal `README.md`, `AGENTS.md`, `.agents/skills/<animal>/SKILL.md`, `memory/INDEX.md` and incoming issues before acting, then refer to shared `conde-incident/AGENTS.md` for scientific/product work. At the end record an OKF session memo in the private `memory/` and push it directly. The shared issue/PR should contain only a concise project-relevant handoff and reproducibility evidence. Old chat and public-memory references may be consulted; do not silently claim migration was complete.
 
 **Capacity and coordination:** Elefante maintains staffing and a private agent-recruitment queue without disabling unrelated user automations. Newly hired animals get a private repo, skill, inbox and optional scheduled automation only if the actual quota allows. Existing automation capacity observed on 12 Nov 2026 was **15 active / 15 allowed**; this is a task quota observation, not a permanent statement about a ChatGPT subscription or independent account identities.
+
+## Verificação universal com prek e OKF (12/11/2026)
+
+- O projeto e **todos os repositórios privados dos agentes** usam `prek` como runner obrigatório no CI; não basta manter configuração sem executá-la. O prek executa `okf-parser==0.48.2 check` com specs normativas e o limite de **20.000 bytes por arquivo**.
+- Todo arquivo novo ou alterado deve respeitar o limite e, se Markdown, ter frontmatter OKF (`type`, `title`, `description`) e spec em `.okf/specs/`. Repositórios privados são estritos para todos os Markdown.
+- O Conde tem acervo anterior à regra, com **16 blobs grandes e 94 Markdown** ainda não migrados integralmente. Os hashes em `config/legacy-oversized-files.json` e `config/legacy-nonokf-markdown.json` estão **congelados**, não podem ser atualizados como exceção. Ao editar um arquivo, migrar e retirar seu registro de legado. Nunca truncar evidências, matrizes, TLEs ou provas apenas para passar CI.
+- O plano está em `docs/OKF_PREK_POLICY.md`. O checker incremental **não equivale** à validação integral do acervo; registrar a dívida até `okf-parser check .` passar diretamente. PRs devem validar o SHA exato e não contornar falhas do prek.
 
 ## Work protocol
 1. Read main, this file, your `team/<animal>.md` card, open issues/PRs, and the cumulative matrix in `research/` (present in PR #1 until merged).

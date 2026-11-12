@@ -1,0 +1,15 @@
+repos:
+  - repo: local
+    hooks:
+      - id: file-size-20kb
+        name: Enforce 20,000-byte file ceiling (frozen legacy hashes only)
+        entry: python3 scripts/check_file_size.py
+        language: system
+        pass_filenames: false
+        always_run: true
+      - id: okf-parser-check
+        name: Check OKF documents and normative specs
+        entry: python3 scripts/check_okf_incremental.py
+        language: system
+        pass_filenames: false
+        always_run: true
