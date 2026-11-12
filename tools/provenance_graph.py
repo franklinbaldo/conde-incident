@@ -21,6 +21,8 @@ LINEAGES = ROOT / "research/provenance/lineages.json"
 SITE = ROOT / "public/data/conde-source-citations.json"
 MATRIX_BLOB_SHA = "a7978c3a75a153b16ab70118a92c434bba674cb7"
 MATRIX_SNAPSHOT_ID = f"matrix:{MATRIX_BLOB_SHA}"
+# Cumulative ledger: a later snapshot merge must not silently erase NARA custody.
+REQUIRED_POST_MATRIX_IDS = {"NARA-BB-CONDE-20261112-01"}
 
 
 def matrix_ref(occurrence: str) -> str:
@@ -251,6 +253,9 @@ def validate_lineages(config: dict, rows: list[dict], root: Path = ROOT) -> None
         if not report.parts or report.is_absolute() or ".." in report.parts or (
                 not (root / report).is_file()):
             raise ValueError("post-matrix report missing or unsafe " + uid)
+
+    if not REQUIRED_POST_MATRIX_IDS.issubset(seen_addenda):
+        raise ValueError("required cumulative post-matrix documentary occurrence erased")
 
     contract_ids = set()
     for item in config["contracts"]:
