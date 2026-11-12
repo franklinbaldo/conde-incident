@@ -252,30 +252,43 @@ def enclosure_interface() -> dict:
     }
 
 def unresolved_element_scenarios_interface() -> dict:
-    """Fail-closed alternative-ephemeris contract for Castor.
+    """Sourced orbital baseline with a *free* RAAN parameter for inference.
 
-    This is a typed *choice of scenarios*, not a TLE reconstruction. In
-    particular the site RAAN 284.1520 deg has no source primary lineage
-    verified here; the AFSPC-mirrored 198.5261 deg is retrospective and
-    not independently corroborated by the other mirrors. Do not intersect
-    mutually exclusive unresolved element histories or infer a terminal fix.
+    The legacy site vector without a traceable TLE is NOT an active scenario.
+    Source values are a baseline from ONE secondary catalogue lineage, not
+    exact physical constraints. MCMC needs independently justified residual
+    uncertainties before any posterior or hard exclusion can be claimed.
     """
+    source = {
+        "id": "AFSPC_MIRROR_528_1963_10_27",
+        "raan_degrees_reported": "198.5261",
+        "epoch_utc": "1963-10-27T14:40:16.132512Z",
+        "inclination_deg": "81.8615",
+        "eccentricity": "0.0017147",
+        "arg_perigee_deg": "104.7477",
+        "mean_anomaly_deg": "255.4423",
+        "mean_motion_rev_day": "15.74901460",
+        "source_url": "https://www.itau.magnetic-declination.com/satellite/?s=528",
+        "literal_pair_sha256": "18cf11665e061b5ec8679242e10b00b82accf29bc6f0b9b7b6330b9c44e341cd",
+        "secondary_numeric_parquet_sha256": "c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09",
+        "source_audit_pr": "https://github.com/franklinbaldo/conde-incident/pull/14",
+        "matrix_occurrences": ["C25#1", "C179#1"],
+        "matrix_citations": [
+            f"{SOURCE_REPO}/blob/{MATRIX_COMMIT}/{MATRIX_PATH}#L118",
+            f"{SOURCE_REPO}/blob/{MATRIX_COMMIT}/{MATRIX_PATH}#L839",
+        ],
+        "source_authentication": "NOT_VERIFIED_PRIMARY",
+        "reference_only_not_true_raan": True,
+        "admitted_as_hard_constraint": False,
+    }
     return {
-        "version": 1,
-        "kind": "UNRESOLVED_ELEMENT_LINEAGES_DISJUNCTION_NOT_ORBIT_SOLUTION",
+        "version": 2,
+        "kind": "SOURCED_REFERENCE_PLUS_INFERRED_ORBITAL_PARAMETERS",
         "lean_module": "Conde1963/ScenarioAlternatives.lean",
-        "admissible_semantics": "COMMON_AND_LEFT_OR_RIGHT",
-        "lean_predicates": {
-            "domain": "AlternativeAllowed",
-            "nonempty": "AlternativeHasCandidate",
-            "branch_identity": "alternative_iff_either_branch",
-            "empty_iff_both_empty": "alternatives_empty_iff_both_branches_empty",
-            "forced": "AlternativeForcesConde",
-            "excluded": "AlternativeExcludesConde",
-            "conflicting_witnesses": "conflicting_branch_witnesses_leave_alternative_indeterminate",
-            "false_contradiction": "intersecting_alternatives_can_falsely_erase_all_candidates",
-        },
-        "current_scenario": None,
+        "active_source_lineages": 1,
+        "admissible_semantics": "SINGLE_SOURCED_REFERENCE_WITH_FREE_PARAMETERS",
+        "branch_combination_allowed": "OTHER_BRANCH_ONLY_IF_NEW_DOCUMENTED_SOURCE",
+        "current_scenario": source["id"],
         "chosen_physical_constraints": None,
         "numerically_supported_bounds": None,
         "historical_orbit_validation": "NOT_RUN",
@@ -284,38 +297,71 @@ def unresolved_element_scenarios_interface() -> dict:
         "physical_reference_frame_reconciled": False,
         "holdout_529_passed": False,
         "all_branch_error_enclosures_verified": False,
-        "branch_combination_allowed": "DISJUNCTION_ONLY_UNTIL_SOURCE_ADJUDICATION",
-        "alternatives": [
+        "alternatives": [source],
+        "obsolete_legacy_input": "RETIRED_FROM_ACTIVE_INFERENCE_RETRIEVABLE_FROM_GIT",
+        "raan_parameter": {
+            "name": "raan_at_reference_epoch_deg",
+            "topology": "CIRCLE_MOD_360",
+            "full_search_domain_deg": ["0", "360"],
+            "upper_endpoint_exclusive": True,
+            "reference_value_deg": source["raan_degrees_reported"],
+            "reference_epoch_utc": source["epoch_utc"],
+            "source_id": source["id"],
+            "physical_uncertainty_deg": None,
+            "hard_admissible_interval_deg": None,
+            "prior_distribution": "UNSPECIFIED_NOT_SYNTHESIZED",
+            "inferential_status": "FREE_PARAMETER_UNTIL_JUSTIFIED_CONSTRAINTS",
+        },
+        "physical_dependencies_to_explore": [
             {
-                "id": "SITE_RAAN_284_UNVERIFIED",
-                "raan_degrees_reported": "284.1520",
-                "origin": "AGENTS.md conflict statement; original site's raw source NOT authenticated",
-                "matrix_occurrences": [],
-                "source_authentication": "NOT_VERIFIED",
-                "admitted_as_hard_constraint": False,
+                "relation": "FIRST_ORDER_J2_NODAL_PRECESSION",
+                "variables": ["raan_at_reference_epoch_deg", "inclination_deg",
+                              "eccentricity", "mean_motion_rev_day", "epoch_utc"],
+                "interpretation": "Omega(t)=Omega0+integral(dotOmega_J2)dt modulo 360; physical model approximation",
+                "calibrated_error": None,
             },
             {
-                "id": "AFSPC_MIRROR_RAAN_198_UNVERIFIED",
-                "raan_degrees_reported": "198.5261",
-                "origin": "retrospective catalog mirror, not original 1963 observational TLE",
-                "matrix_occurrences": ["C25#1", "C179#1"],
-                "matrix_citations": [
-                    f"{SOURCE_REPO}/blob/{MATRIX_COMMIT}/{MATRIX_PATH}#L118",
-                    f"{SOURCE_REPO}/blob/{MATRIX_COMMIT}/{MATRIX_PATH}#L839",
-                ],
-                "source_authentication": "NOT_VERIFIED_PRIMARY",
-                "admitted_as_hard_constraint": False,
+                "relation": "OBSERVED_RAAN_RESIDUALS_WITH_CIRCULAR_WRAP",
+                "variables": ["raan_at_reference_epoch_deg", "other_528_epochs",
+                              "reference_frame", "observational_error"],
+                "interpretation": "Compare predictions with tracked epochs, preserving source dependence",
+                "calibrated_error": None,
+            },
+            {
+                "relation": "CROSS_OBJECT_HOLDOUT_527_529",
+                "variables": ["527_epoch_and_elements", "529_epoch_and_elements",
+                              "common_dynamics", "independent_holdout"],
+                "interpretation": "Validate transferable dynamics, not impose identical RAAN or same orbit",
+                "calibrated_error": None,
+            },
+            {
+                "relation": "ATMOSPHERIC_DRAG_AND_SEMI_MAJOR_AXIS",
+                "variables": ["density", "cd_area_over_mass", "solar_geomagnetic_inputs",
+                              "semi_major_axis", "mean_motion_rev_day"],
+                "interpretation": "Fit secular evolution without inventing drag or density measurements",
+                "calibrated_error": None,
             },
         ],
+        "mcmc_contract": {
+            "sampler": "NOT_IMPLEMENTED_BY_LEAN",
+            "status": "CONDITIONAL_PARAMETER_EXPLORATION_NOT_POSTERIOR",
+            "requires": [
+                "identified_epoch_frame_and_literal_source",
+                "angular_residuals_of_actual_528_epoch_series",
+                "calibrated_observation_and_model_errors_for_likelihood",
+                "justified_prior_and_covered_parameter_domain",
+                "reproducible_chain_diagnostics_and_predictive_holdouts",
+            ],
+            "no_empirical_uncertainty_no_posterior_claim": True,
+        },
         "required_before_physical_use": [
-            "identify_original_element_set_source_and_complete_epoch",
-            "validate_reference_frame_epoch_units_and_checksum",
-            "establish_relation_of_mirror_to_primary_source",
-            "separately_fit_each_physical_scenario_with_calibrated_error",
-            "preserve_holdout_529_and_nonempty_global_feasible_domain",
-            "prove_all_surviving_scenarios_agree_before_global_geographic_verdict",
+            "validate_original_element_source_frame_epoch_units_and_checksum",
+            "quantify_error_distribution_or_keep_raan_free",
+            "derive_raan_restrictions_from_j2_and_multi_epoch_observations",
+            "validate_holdout_527_529_with_shared_dynamics_without_trajectory_identity",
+            "calibrated_atmospheric_drag_and_nonempty_admissible_domain",
         ],
-        "warning": "Numerical RAAN strings identify conflicting claims, not two verified measurements or impact locations.",
+        "warning": "The only active RAAN baseline is the sourced secondary 528 catalogue record; its error is unknown. The previous unsourced site vector is archived in Git, not a competing observation.",
     }
 
 
