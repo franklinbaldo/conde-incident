@@ -1,0 +1,425 @@
+{
+  "schema": "conde.gaviao-first-parent-audit/v1",
+  "date": "2026-11-12",
+  "auditor": "gaviao",
+  "reviewed_from_main_sha": "c9523ba0e65dd0002323d3ede1bbb60bc762a618",
+  "reviewed_through_main_sha": "07e9a820aa769c2e5fc643511badb9c9449f8271",
+  "first_parent_integrations": 15,
+  "commit_graph_total": 15,
+  "direct_main_commits": 0,
+  "all_integrations_reconciled_to_github_prs": true,
+  "closed_unmerged_query": "GitHub closed/unmerged PR search returned no matches at review time",
+  "findings": [
+    {
+      "id": "G23-F1",
+      "severity": "moderate",
+      "source_pr": 204,
+      "relevant_pr": 212,
+      "issue": 6,
+      "description": "HTML attributes scanned by regex could be borrowed from quoted value of a different attribute inside real a/link/script tags; false link/asset claims even after G22 tokenizer patch",
+      "fix": "quotedAttribute token-aware scan; adversarial and positive tests"
+    },
+    {
+      "id": "G23-CI1",
+      "severity": "ci-caveat",
+      "source_pr": 207,
+      "description": "Author head 14 SUCCESS, 1 Publish Conde site CANCELLED, not 15 green; avoid inferring publication"
+    }
+  ],
+  "scientific_status": "INDETERMINATE; no authenticated terminal timestamp/place, no independently calibrated physical holdout, no theta reduction",
+  "entries": [
+    {
+      "main_sha": "fea1857a2a6087d1501e0654833be16e1c3e6fcc",
+      "first_parent": "c9523ba0e65dd0002323d3ede1bbb60bc762a618",
+      "pr_number": 200,
+      "pr_url": "https://github.com/franklinbaldo/conde-incident/pull/200",
+      "author_head_sha": "fc794e0577fe58d74257e6dbaa8c89f159564b8a",
+      "merge_style": "squash",
+      "subject": "Equipe permanente no cafezinho; Conde apenas projeto atual (#200)",
+      "files": [
+        "AGENTS.md",
+        "docs/AGENT_WORKSPACES.md"
+      ],
+      "author_head_ci": {
+        "success": 15,
+        "cancelled": 0,
+        "total_returned": 15,
+        "checked_from": "GitHub commit workflow runs (PR event)"
+      },
+      "scientific_review": "Permits permanent private animal houses; rules only, not an observation."
+    },
+    {
+      "main_sha": "b3d0e1fc222ce46e3d6e89a3e7a3071873ac6995",
+      "first_parent": "fea1857a2a6087d1501e0654833be16e1c3e6fcc",
+      "pr_number": 203,
+      "pr_url": "https://github.com/franklinbaldo/conde-incident/pull/203",
+      "author_head_sha": "517430fad72a9d9e7e8127ace3b2e7d063974ff1",
+      "merge_style": "squash",
+      "subject": "75 🦀 CGEO-09: ligar decreto 1944 e lei 628/1953 sem inferir perímetro de 1963 (#203)",
+      "files": [
+        "research/geo/README.md",
+        "research/geo/conde_1944_1953_temporal_bridge.json",
+        "tests/test_conde_historical_statutes.py",
+        "tools/conde_historical_statutes.py"
+      ],
+      "author_head_ci": {
+        "success": 15,
+        "cancelled": 0,
+        "total_returned": 15,
+        "checked_from": "GitHub commit workflow runs (PR event)"
+      },
+      "scientific_review": "1944/1953 Bahia territorial text, not authenticated 1963 perimeter."
+    },
+    {
+      "main_sha": "83302e93c0e9ff2f9683cb860c65b626ee6daa1f",
+      "first_parent": "b3d0e1fc222ce46e3d6e89a3e7a3071873ac6995",
+      "pr_number": 205,
+      "pr_url": "https://github.com/franklinbaldo/conde-incident/pull/205",
+      "author_head_sha": "68831a244d2c9dd9d3abece4bc09070690f800de",
+      "merge_style": "squash",
+      "subject": "85 🦎 MET: auditoria condicional p/T e densidade ideal seca Recife (PR #205)",
+      "files": [
+        "research/meteorology/igra_recife_19631107_09_dry_density_proxy.md",
+        "research/meteorology/igra_recife_19631107_dry_density_proxy.json",
+        "research/meteorology/igra_recife_19631108_dry_density_proxy.json",
+        "research/meteorology/igra_recife_19631109_dry_density_proxy.json",
+        "tests/test_igra_recife_dry_density.py",
+        "tools/audit_igra_recife_dry_density.py"
+      ],
+      "author_head_ci": {
+        "success": 15,
+        "cancelled": 0,
+        "total_returned": 15,
+        "checked_from": "GitHub commit workflow runs (PR event)"
+      },
+      "scientific_review": "81 Recife p/T/height pairs across three profiles, same station/lineage; dry ideal-gas density proxy conditional."
+    },
+    {
+      "main_sha": "136fc39fa1465afa415629486fd3cb66877dbac2",
+      "first_parent": "83302e93c0e9ff2f9683cb860c65b626ee6daa1f",
+      "pr_number": 204,
+      "pr_url": "https://github.com/franklinbaldo/conde-incident/pull/204",
+      "author_head_sha": "e23030e07170a1ced7d855d8910a5d3567233ce9",
+      "merge_style": "squash",
+      "subject": "🦅 G22: audit merge DAG and reject attribute-only Pages ghosts (#204)",
+      "files": [
+        "research/audits/gaviao-main-window-20261112-g22.json",
+        "research/audits/gaviao-main-window-20261112-g22.md",
+        "scripts/gaviao-retrospective-g22.test.mjs",
+        "scripts/pages-live-audit.mjs",
+        "scripts/pages-live-audit.test.mjs"
+      ],
+      "author_head_ci": {
+        "success": 15,
+        "cancelled": 0,
+        "total_returned": 15,
+        "checked_from": "GitHub commit workflow runs (PR event)"
+      },
+      "scientific_review": "Prior G22 first-parent audit and HTML tokenizer correction; inherited nested-attribute flaw G23-F1."
+    },
+    {
+      "main_sha": "aec46ce711cfc7c96da8c95eb24e1d8f4dc4e0e6",
+      "first_parent": "136fc39fa1465afa415629486fd3cb66877dbac2",
+      "pr_number": 206,
+      "pr_url": "https://github.com/franklinbaldo/conde-incident/pull/206",
+      "author_head_sha": "666dea85b1c51a5ee1e968c383cd7cfa460fb4f0",
+      "merge_style": "squash",
+      "subject": "80 🦌 Modelar sensibilidade à âncora circular de RAAN sem posterior (#206)",
+      "files": [
+        "research/constraints/raan_offset_anchor_candidate_C241.json",
+        "research/statistics/ANCHORED_OFFSET_SENSITIVITY.md",
+        "tests/test_raan_anchored_sensitivity.py",
+        "tools/raan_circular_likelihood.py"
+      ],
+      "author_head_ci": {
+        "success": 15,
+        "cancelled": 0,
+        "total_returned": 15,
+        "checked_from": "GitHub commit workflow runs (PR event)"
+      },
+      "scientific_review": "von Mises circular bias prior conditional, no external angular anchor or historical posterior."
+    },
+    {
+      "main_sha": "16fd885fb4827daf152f83812a8f829175b67407",
+      "first_parent": "aec46ce711cfc7c96da8c95eb24e1d8f4dc4e0e6",
+      "pr_number": 207,
+      "pr_url": "https://github.com/franklinbaldo/conde-incident/pull/207",
+      "author_head_sha": "cb69ae77c6140de311be09eb36309227a467e01f",
+      "merge_style": "squash",
+      "subject": "fix(provenance): pin matrix row identities in documentary crosswalk (#207)",
+      "files": [
+        "public/data/conde-declared-dependence.json",
+        "research/provenance/DEPENDENCY_EXPORT.md",
+        "tests/test_documentary_dependence.py",
+        "tools/export_documentary_dependence.py"
+      ],
+      "author_head_ci": {
+        "success": 14,
+        "cancelled": 1,
+        "total_returned": 15,
+        "checked_from": "GitHub commit workflow runs (PR event)"
+      },
+      "scientific_review": "Pins matrix row hashes and citations; does not make dependent sources independent."
+    },
+    {
+      "main_sha": "ef0f50ae5a6603a1975dc8e44566d832b53bdca5",
+      "first_parent": "16fd885fb4827daf152f83812a8f829175b67407",
+      "pr_number": 208,
+      "pr_url": "https://github.com/franklinbaldo/conde-incident/pull/208",
+      "author_head_sha": "d8e154936d52c520a0951285a86d862ec7a52cb4",
+      "merge_style": "squash",
+      "subject": "research(archives): CGEO-10 IBGE 1960 retrospective mesh custody",
+      "files": [
+        "research/geo/ibge_1960_retro_mesh_2026-11-12.md",
+        "research/geo/ibge_conde_1960_retro_mesh_2026-11-12.json",
+        "scripts/archives/audit_ibge_1960_conde.py",
+        "tests/fixtures/ibge_conde_1960_shp_record.b64",
+        "tests/test_ibge_1960_retro_mesh.py"
+      ],
+      "author_head_ci": {
+        "success": 15,
+        "cancelled": 0,
+        "total_returned": 15,
+        "checked_from": "GitHub commit workflow runs (PR event)"
+      },
+      "scientific_review": "IBGE 1960 GIS mesh custody; cannot infer 1963 Conde jurisdiction automatically."
+    },
+    {
+      "main_sha": "f21f52f7dedb2be8924ef13be75c5f83e8ffba45",
+      "first_parent": "ef0f50ae5a6603a1975dc8e44566d832b53bdca5",
+      "pr_number": 210,
+      "pr_url": "https://github.com/franklinbaldo/conde-incident/pull/210",
+      "author_head_sha": "a89385b88ebd6606aac193022ebf99cee61a9527",
+      "merge_style": "squash",
+      "subject": "85 🦡 QA08: pin NASA facsimile handoff identities (#210)",
+      "files": [
+        "formal/scripts/texugo_ssr_facsimile_erratum.py",
+        "research/constraints/texugo_nasa_ssr_facsimile_qa_08.json",
+        "tests/test_texugo_ssr_facsimile_qa.py"
+      ],
+      "author_head_ci": {
+        "success": 15,
+        "cancelled": 0,
+        "total_returned": 15,
+        "checked_from": "GitHub commit workflow runs (PR event)"
+      },
+      "scientific_review": "NASA SSR cell/name identity QA; no terminal timestamp or site from bulletin."
+    },
+    {
+      "main_sha": "a66dd0d820206046bd3b8396e65fdc1f86fc1847",
+      "first_parent": "f21f52f7dedb2be8924ef13be75c5f83e8ffba45",
+      "pr_number": 209,
+      "pr_url": "https://github.com/franklinbaldo/conde-incident/pull/209",
+      "author_head_sha": "72320f011763562a7dd004986241ce8d347dbe14",
+      "merge_style": "squash",
+      "subject": "feat(polvo): frozen J2 nodal-rate holdouts for 527/528/529 (#209)",
+      "files": [
+        ".github/workflows/polvo-j2-frozen-long.yml",
+        "research/constraints/C241-P2_j2_frozen_long_holdout.md",
+        "research/tle_custody/evidence_matrix_C241-P2_2026-11-12.md",
+        "tests/test_raan_frozen_j2_holdout.py",
+        "tools/raan_frozen_j2_holdout.py"
+      ],
+      "author_head_ci": {
+        "success": 16,
+        "cancelled": 0,
+        "total_returned": 16,
+        "checked_from": "GitHub commit workflow runs (PR event)"
+      },
+      "scientific_review": "35 post-fit holdouts on secondary RAAN corpus: J2 better 528/529, worse 527; no independent sensor."
+    },
+    {
+      "main_sha": "eeac8d2cdb963d3ab6eb3470b46a9ff04147de75",
+      "first_parent": "a66dd0d820206046bd3b8396e65fdc1f86fc1847",
+      "pr_number": 211,
+      "pr_url": "https://github.com/franklinbaldo/conde-incident/pull/211",
+      "author_head_sha": "482c43e9fd3f7ddff08a3be5f4683661b8363129",
+      "merge_style": "squash",
+      "subject": "feat(castor): conditional 3D covariance holdout diagnostic (#211)",
+      "files": [
+        "src/lib/orbitCovarianceGate.ts",
+        "tests/orbitCovarianceGate.test.mjs"
+      ],
+      "author_head_ci": {
+        "success": 15,
+        "cancelled": 0,
+        "total_returned": 15,
+        "checked_from": "GitHub commit workflow runs (PR event)"
+      },
+      "scientific_review": "3x3 covariance diagnostics with source requirements, synthetic/conditional holdout, no real orbital covariance."
+    },
+    {
+      "main_sha": "0408cce72a47f2158b0ee0fa56654c9b9ce9b300",
+      "first_parent": "eeac8d2cdb963d3ab6eb3470b46a9ff04147de75",
+      "pr_number": 212,
+      "pr_url": "https://github.com/franklinbaldo/conde-incident/pull/212",
+      "author_head_sha": "0bce1b8e5656c07ec3f49202a60785bfc1ceb101",
+      "merge_style": "squash",
+      "subject": "fix(pages): recheck post-HTTPS deployment and stop unattested publication claims (#212)",
+      "files": [
+        "scripts/pages-live-audit.mjs",
+        "scripts/pages-live-audit.test.mjs",
+        "scripts/pages-metadata-preflight.mjs",
+        "scripts/pages-metadata-preflight.test.mjs"
+      ],
+      "author_head_ci": {
+        "success": 15,
+        "cancelled": 0,
+        "total_returned": 15,
+        "checked_from": "GitHub commit workflow runs (PR event)"
+      },
+      "scientific_review": "Pages control-plane double read and post-HTTPS recheck; correctly labels live content unattested; inherited G23-F1 nested attr false link."
+    },
+    {
+      "main_sha": "40cc2b08bb3823a63735c7b4f4f51b4fd21ab2c6",
+      "first_parent": "0408cce72a47f2158b0ee0fa56654c9b9ce9b300",
+      "pr_number": 214,
+      "pr_url": "https://github.com/franklinbaldo/conde-incident/pull/214",
+      "author_head_sha": "e3c7190cd2875a71e4b56d104847487350ee5f44",
+      "merge_style": "squash",
+      "subject": "70 🦇 MORCEGO: rastrear política NASA/NORAD 1962-63 sem confundir catálogo com sensor (#214)",
+      "files": [
+        ".github/workflows/morcego-release-policy.yml",
+        "research/constraints/morcego_1963_tracking_release_policy.json",
+        "tests/test_morcego_release_policy.py"
+      ],
+      "author_head_ci": {
+        "success": 16,
+        "cancelled": 0,
+        "total_returned": 16,
+        "checked_from": "GitHub commit workflow runs (PR event)"
+      },
+      "scientific_review": "1962 NORAD/GSFC release-chain policy (one source shared); no 528-specific tracker or suppression evidence."
+    },
+    {
+      "main_sha": "379f20198f5daa511b225762f09401902098d3d5",
+      "first_parent": "40cc2b08bb3823a63735c7b4f4f51b4fd21ab2c6",
+      "pr_number": 215,
+      "pr_url": "https://github.com/franklinbaldo/conde-incident/pull/215",
+      "author_head_sha": "eb758e6784cc0f1030f555819a55d62bd144be94",
+      "merge_style": "squash",
+      "subject": "fix(ux): qualify inverse scenarios and restore accessible selection (#215)",
+      "files": [
+        "scripts/inverse-pass-selection.test.mjs",
+        "src/components/InversePassInspector.tsx",
+        "src/lib/inversePassSelection.js"
+      ],
+      "author_head_ci": {
+        "success": 16,
+        "cancelled": 0,
+        "total_returned": 16,
+        "checked_from": "GitHub commit workflow runs (PR event)"
+      },
+      "scientific_review": "Inverse UI marks scenarios simulated, not actual trajectories; accessible selection restored."
+    },
+    {
+      "main_sha": "91ffcf4438d9b47447c6cfa49387234727143e42",
+      "first_parent": "379f20198f5daa511b225762f09401902098d3d5",
+      "pr_number": 216,
+      "pr_url": "https://github.com/franklinbaldo/conde-incident/pull/216",
+      "author_head_sha": "8e9f76abd4918d68f20a83b4724bef8dec203241",
+      "merge_style": "squash",
+      "subject": "Remove obsolete team tests and duplicated team files (#201) (#216)",
+      "files": [
+        ".agents/skills/conde-abelha/SKILL.md",
+        ".agents/skills/conde-caranguejo/SKILL.md",
+        ".agents/skills/conde-castor/SKILL.md",
+        ".agents/skills/conde-cervo/SKILL.md",
+        ".agents/skills/conde-coruja/SKILL.md",
+        ".agents/skills/conde-elefante/SKILL.md",
+        ".agents/skills/conde-gaviao/SKILL.md",
+        ".agents/skills/conde-lagarto/SKILL.md",
+        ".agents/skills/conde-lontra/SKILL.md",
+        ".agents/skills/conde-polvo/SKILL.md",
+        ".agents/skills/conde-raposa/SKILL.md",
+        ".agents/skills/conde-tartaruga/SKILL.md",
+        ".agents/skills/conde-texugo/SKILL.md",
+        ".github/workflows/prek.yml",
+        "AGENTS.md",
+        "config/agent-roster.json",
+        "docs/AGENT_WORKSPACES.md",
+        "scripts/agent-owned-merges.test.mjs",
+        "scripts/agent-skills.test.mjs",
+        "scripts/agent-workspaces.test.mjs",
+        "scripts/elefante-workspace-contract.test.mjs",
+        "scripts/personal-agent-workspaces.test.mjs",
+        "scripts/provision-workspaces.test.mjs",
+        "team/abelha.md",
+        "team/caranguejo.md",
+        "team/castor.md",
+        "team/cervo.md",
+        "team/coruja.md",
+        "team/elefante.md",
+        "team/gaviao.md",
+        "team/lagarto.md",
+        "team/lontra.md",
+        "team/memory/castor/20261112-convergence-independent-slice.md",
+        "team/memory/castor/20261112-first-kernel-merge-slice.md",
+        "team/memory/castor/20261112T1115Z-jacobi-budget-extraction.md",
+        "team/memory/castor/20261112T1205Z-jacobi-refinement-state-consistency.md",
+        "team/memory/elefante/20261112T0702Z-ci-head-bootstrap.md",
+        "team/memory/elefante/20261112T0713-RO-ci-suite-coverage.md",
+        "team/memory/gaviao/20261112T0740-RO-retrospective-main-checkpoint.md",
+        "team/memory/investigacao-geral/2026-11-12_0808-igra-bahia.md",
+        "team/memory/polvo/20261112-autonomia-merges-gaviao-retro.md",
+        "team/memory/polvo/20261112-c179-tle-graph-handoff.md",
+        "team/memory/polvo/20261112-lean-core-independent-slice.md",
+        "team/memory/polvo/20261112-matrix-independent-slice.md",
+        "team/memory/polvo/20261112-observable-independent-integration.md",
+        "team/memory/polvo/20261112T0700Z-skills-bootstrap.md",
+        "team/memory/raposa/20261112T1112Z-tle-custody-standalone-main.md",
+        "team/memory/tartaruga/20261112-literal-528-incremental.md",
+        "team/memory/tartaruga/20261112-operational-reference-528.md",
+        "team/memory/tartaruga/20261112T0733Z-literal-layout-c241-l1.md",
+        "team/memory/texugo/2026-11-12-qa-derived-edges.md",
+        "team/polvo.md",
+        "team/raposa.md",
+        "team/tartaruga.md",
+        "team/texugo.md",
+        "tools/provision_agent_workspaces.py"
+      ],
+      "author_head_ci": {
+        "success": 16,
+        "cancelled": 0,
+        "total_returned": 16,
+        "checked_from": "GitHub commit workflow runs (PR event)"
+      },
+      "scientific_review": "Removes obsolete duplicated team markdown/tests; private cafezinho is canonical, scientific tests remain separate."
+    },
+    {
+      "main_sha": "07e9a820aa769c2e5fc643511badb9c9449f8271",
+      "first_parent": "91ffcf4438d9b47447c6cfa49387234727143e42",
+      "pr_number": 198,
+      "pr_url": "https://github.com/franklinbaldo/conde-incident/pull/198",
+      "author_head_sha": "b5128125484094cb3985d57eda1d2669e3c4a1e1",
+      "merge_style": "squash",
+      "subject": "feat(caderno): SSG Rust, canonical articles and audited routes",
+      "files": [
+        ".github/workflows/pages.yml",
+        ".okf/specs/story.md",
+        "index.html",
+        "scripts/check-site.mjs",
+        "scripts/prepare-ssg.mjs",
+        "ssg.toml",
+        "static/css/site.css",
+        "static/img/caderno.svg",
+        "stories/2026-11-11-o-dia-em-que-dois-relatos-se-cruzaram.md",
+        "templates/index.html",
+        "templates/page.html",
+        "templates/post.html",
+        "templates/template.html",
+        "templates/tera/base.html",
+        "templates/tera/index.html",
+        "templates/tera/page.html",
+        "templates/tera/post.html"
+      ],
+      "author_head_ci": {
+        "success": 16,
+        "cancelled": 0,
+        "total_returned": 16,
+        "checked_from": "GitHub commit workflow runs (PR event)"
+      },
+      "scientific_review": "SSG Rust caderno story: NASA decay date and FBIS radio report explicitly non-causal; site availability not artifact attestation."
+    }
+  ]
+}
