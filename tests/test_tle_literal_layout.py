@@ -1,5 +1,4 @@
 """Contraprovas de representacao TLE em linhas LITERAIS; nao autentica sensor NORAD."""
-import copy
 import hashlib
 import json
 import sys
@@ -80,15 +79,8 @@ class TLEFieldLayout(unittest.TestCase):
                     audit_pair(mutate(self.first, 20, field), self.second)
 
     def test_fields_not_just_checksum_of_line1(self):
-        for index, bad in ((33, " x00686563"), (44, " +00000a0"),
-                           (53, " +00000-9"), (62, "X")):
-            # BSTAR exponent 9 is syntactically valid; choose invalid letter.
-            if index == 53:
-                bad = " +00000-x"
-            if index == 44:
-                bad = " +00000x0"
-            if index == 33:
-                bad = " x00686563"
+        for index, bad in ((33, " x00686563"), (44, "+00000-x"),
+                           (53, "+00000-x"), (62, "X")):
             self.assertEqual(len(bad), {33: 10, 44: 8, 53: 8, 62: 1}[index])
             with self.subTest(column=index):
                 with self.assertRaisesRegex(ValueError, "field invalid"):
