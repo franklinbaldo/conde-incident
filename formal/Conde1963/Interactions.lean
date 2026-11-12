@@ -7,8 +7,9 @@ A second citation, an independent source and a genuinely discriminating
 physical restriction are three different things. These implications certify
 only the stated predicates, never a historical measurement or a fitted orbit.
 
-The currently admitted documentary predicate is NASA's reported DECAY DAY
-(C131/C197, the same report). Neither the Conde story (C01) nor a source-ID
+NASA's recorded decay day (C131/C197) is documentary metadata, NOT a
+hard physical-day filter. Even a same-day hypothesis must be tested against
+calibrated physical models. Neither the Conde story (C01) nor a source-ID
 count supplies an independently measured terminal orbital position.
 -/
 
@@ -87,12 +88,13 @@ theorem witnessed_filter_strictly_reduces {α : Type}
   · intro h
     exact eliminatedNew (h extra (by simp))
 
-/-- NASA rows C131 and C197 describe the same reported date;
-    counting that observation twice cannot constitute strict reduction. -/
+/-- If an analyst ELECTS the unproven physical-day-equality scenario, then
+    entering the same hypothetical equation twice does not shrink it further.
+    Neither citation is an unconditional physical restriction. -/
 theorem nasa_double_citation_not_strict :
-    ¬ StrictReduction [ReportedDecayDay]
-        [ReportedDecayDay, ReportedDecayDay] := by
-  exact repeated_filter_not_strict [] ReportedDecayDay
+    ¬ StrictReduction [PhysicalDayMatchesCatalogue]
+        [PhysicalDayMatchesCatalogue, PhysicalDayMatchesCatalogue] := by
+  exact repeated_filter_not_strict [] PhysicalDayMatchesCatalogue
 
 /-- Surviving modelled ground impacts both inside and outside Conde
     refute BOTH decisive classifications. This is an indeterminate
