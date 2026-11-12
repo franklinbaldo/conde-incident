@@ -111,3 +111,12 @@ import Conde1963.ScenarioEnclosures
 #print axioms Conde1963.opposing_branch_witnesses_block_gated_verdicts
 #print axioms Conde1963.missing_ground_audit_blocks_all_alternative_verdicts
 #print axioms Conde1963.castor_declared_audit_blocks_all_alternative_verdicts
+
+-- Exhaustive-domain proof obligation versus sampled finite screens.
+#print axioms Conde1963.passing_iff_sampled_admissible
+#print axioms Conde1963.passing_witness_proves_global_nonempty
+#print axioms Conde1963.empty_passing_implies_empty_domain_with_coverage
+#print axioms Conde1963.passing_never_creates_parameter
+#print axioms Conde1963.exhaustive_empty_right_screen_eliminates_right_branch
+#print axioms Conde1963.exhaustive_right_screen_licenses_left_exclusion
+#print axioms Conde1963.empty_sample_does_not_eliminate_unseen_branch

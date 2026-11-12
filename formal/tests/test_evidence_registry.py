@@ -271,5 +271,45 @@ class MatrixEvidenceTests(unittest.TestCase):
             "NASA_CATALOGUED_DATE_HYPOTHESIS_NOT_HARD_FILTER" for x in out["entries"]), 2)
 
 
+    def test_finite_coverage_requires_global_proof_before_branch_elimination(self):
+        out = contracts(self.rows)
+        gate = out["finite_coverage_interface"]
+        self.assertEqual(gate["version"], 1)
+        self.assertEqual(gate["kind"],
+                         "GLOBAL_COVERAGE_REQUIRED_BEFORE_EMPTY_GRID_EXCLUDES_BRANCH")
+        self.assertEqual(gate["lean_module"], "Conde1963/FiniteCoverage.lean")
+        self.assertEqual(gate["parameter_semantics"], "COMMON_AND_LEFT_OR_RIGHT")
+        self.assertEqual(gate["source_matrix_sha1"], out["matrix_git_blob_sha1"])
+        self.assertEqual(gate["source_matrix_occurrences"], ["C25#1", "C179#1"])
+        self.assertEqual(gate["nasa_same_primary_source"], ["C131#1", "C197#1"])
+        self.assertEqual(gate["nasa_independent_source_count"], 1)
+        for key in ("current_screen", "current_global_domain_conclusion",
+                    "current_geographic_verdict", "verified_numeric_enclosures"):
+            self.assertIsNone(gate[key])
+        for key in ("pointwise_classifier_equivalence_proven",
+                    "full_domain_coverage_proven", "primary_tle_custody_proven",
+                    "independent_529_holdout_passed", "ground_impact_gate_proven"):
+            self.assertIs(gate[key], False)
+        self.assertEqual(gate["original_zip_154_151_import"], "NOT_RUN")
+
+    def test_finite_coverage_contract_cannot_confuse_screen_and_full_domain(self):
+        obligations = contracts(self.rows)["finite_coverage_interface"]
+        named = obligations["lean_obligations"]
+        self.assertEqual(set(named), {
+            "pointwise_iff", "surviving_witness", "no_fabrication",
+            "empty_only_with_coverage", "branch_elimination",
+            "left_result_only_after_branch_elimination",
+            "sampled_empty_counterexample"
+        })
+        self.assertIn("proof_every_global_admissible_state_is_covered",
+                      obligations["must_verify"])
+        self.assertIn("pointwise_screen_equivalence_for_each_sample",
+                      obligations["must_verify"])
+        self.assertIn("no_physical_claim_from_synthetic_countermodel",
+                      obligations["must_verify"])
+        self.assertEqual([x["line"] for x in contracts(self.rows)["entries"]
+                          if x["id"] in {"C25", "C179"}], [118, 839])
+
+
 if __name__ == "__main__":
     unittest.main()

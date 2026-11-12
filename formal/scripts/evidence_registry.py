@@ -383,6 +383,51 @@ def scenario_enclosure_interface() -> dict:
     }
 
 
+def finite_coverage_interface() -> dict:
+    """Typed proof obligations for finite grids, NOT a global orbit survey.
+
+    A correct pointwise classifier does not show exhaustive physical-domain
+    coverage. An empty grid has no evidential effect without such coverage.
+    """
+    return {
+        "version": 1,
+        "kind": "GLOBAL_COVERAGE_REQUIRED_BEFORE_EMPTY_GRID_EXCLUDES_BRANCH",
+        "lean_module": "Conde1963/FiniteCoverage.lean",
+        "source_matrix_sha1": MATRIX_SHA1,
+        "parameter_semantics": "COMMON_AND_LEFT_OR_RIGHT",
+        "source_matrix_occurrences": ["C25#1", "C179#1"],
+        "nasa_same_primary_source": ["C131#1", "C197#1"],
+        "nasa_independent_source_count": 1,
+        "original_zip_154_151_import": "NOT_RUN",
+        "current_screen": None,
+        "current_global_domain_conclusion": None,
+        "current_geographic_verdict": None,
+        "verified_numeric_enclosures": None,
+        "pointwise_classifier_equivalence_proven": False,
+        "full_domain_coverage_proven": False,
+        "primary_tle_custody_proven": False,
+        "independent_529_holdout_passed": False,
+        "ground_impact_gate_proven": False,
+        "lean_obligations": {
+            "pointwise_iff": "passing_iff_sampled_admissible",
+            "surviving_witness": "passing_witness_proves_global_nonempty",
+            "no_fabrication": "passing_never_creates_parameter",
+            "empty_only_with_coverage": "empty_passing_implies_empty_domain_with_coverage",
+            "branch_elimination": "exhaustive_empty_right_screen_eliminates_right_branch",
+            "left_result_only_after_branch_elimination": "exhaustive_right_screen_licenses_left_exclusion",
+            "sampled_empty_counterexample": "empty_sample_does_not_eliminate_unseen_branch",
+        },
+        "must_verify": [
+            "explicit_source_scenario_and_matrix_occurrence",
+            "pointwise_screen_equivalence_for_each_sample",
+            "proof_every_global_admissible_state_is_covered",
+            "nonempty_remaining_branch_with_error_bounded_ground_impact_model",
+            "no_independent_source_inference_from_duplicate_NASA_citations",
+            "no_physical_claim_from_synthetic_countermodel",
+        ],
+    }
+
+
 def contracts(rows: list[dict]) -> dict:
     return {
         "schema_version": 2,
@@ -394,6 +439,7 @@ def contracts(rows: list[dict]) -> dict:
         "enclosure_interface": enclosure_interface(),
         "unresolved_element_scenarios_interface": unresolved_element_scenarios_interface(),
         "scenario_enclosure_interface": scenario_enclosure_interface(),
+        "finite_coverage_interface": finite_coverage_interface(),
         "scope": "241 actual rows, 238 distinct labels, no fabricated observations",
         "entries": [
             {

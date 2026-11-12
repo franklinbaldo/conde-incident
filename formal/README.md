@@ -1,3 +1,7 @@
+# New: exhaustive-grid proof boundary
+
+See [FiniteCoverage](finite_coverage.md) for seven formal obligations separating a verified *finite* screen from proof of a globally empty admissible domain, including a synthetic false-negative countermodel and a fail-closed Castor JSON handoff.
+
 # Lean 4: Conde 1963
 
 ## 🐙 Model error envelopes and evidence-gated geographic claims (issue #15)
