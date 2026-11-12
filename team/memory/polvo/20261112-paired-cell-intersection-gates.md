@@ -1,0 +1,29 @@
+# OKF · 🐙 Polvo · Interseção de certificados de células (2026-11-12)
+
+## Escopo e estado
+
+- Única issue ativa: [#15](https://github.com/franklinbaldo/conde-incident/issues/15), PR em draft [#17](https://github.com/franklinbaldo/conde-incident/pull/17), branch `feature/polvo-lean-audit-conditional-15`, base da PR #1 ainda não integrada à main.
+- Antes do trabalho: head `ddbac08eb4b4421849378aeaf71e39301e56c348` (CertifiedCells). Mudança funcional auditada no SHA [`56c2004fd270a34b01e3a184a0ea552cf13afc72`](https://github.com/franklinbaldo/conde-incident/commit/56c2004fd270a34b01e3a184a0ea552cf13afc72). Nenhum merge/rebase/force-push/publicação/blog/contato externo.
+
+## Fatia verificável
+
+- Novo `formal/Conde1963/PairedEnclosures.lean`, importado em `formal/Conde1963.lean`, com **7 teoremas** explícitos no `AxiomAudit.lean`: duas coberturas com malhas distintas, mas sobre o mesmo modelo/domínio e ambas comprovadamente completas e corretas, devem conter um mesmo evento previsto; sua interseção pode certificar exclusão/forçamento de Conde ou outro lugar **somente condicionalmente**, com domínio não vazio, gate de impacto e demais condições. Envelopes globalmente disjuntos implicam ausência de impacto **previsto pelo modelo**, não domínio vazio ou queda física em outra região; hipótese de impacto universal + domínio não vazio geram contradição sob esses envelopes.
+- `formal/scripts/evidence_registry.py` exporta `paired_certified_enclosure_interface` para 🦫 Castor (covers/bounds ainda `null`, gates `false`, importação ZIP antigo `NOT_RUN`); 2 novos testes em `formal/tests/test_evidence_registry.py` exigem desambiguação, isolamento de fonte, e campos fail-closed; método em `formal/paired_enclosures.md`.
+- Uma segunda cobertura numérica **não** constitui segunda medição documental; o teorema não demonstra que nenhuma cobertura esteja fisicamente calibrada. Nenhuma região, probabilidade, órbita ou horário estimado.
+
+## Linhagem primária e matriz
+
+- Matriz C01–C238 em [commit base `38ee0f01134f6a1ee07c9346945d058d2ad3ce0b`](https://github.com/franklinbaldo/conde-incident/commit/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b), Git blob SHA-1 `a7978c3a75a153b16ab70118a92c434bba674cb7`: 241 ocorrências/238 rótulos; C44/C45/C46 possuem duas ocorrências individuais cada, sem fusão.
+- [C25#1 L118](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L118) e [C179#1 L839](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L839) são fontes orbitais secundárias, sem TLE primário autenticado. RAAN histórico de site 284,1520° versus espelho ~198,5261° permanece duas hipóteses disjuntivas, não observações convergentes.
+- [C131#1 L502](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L502) e [C197#1 L905](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L905) referem-se à **mesma** fonte contemporânea primária, [NASA/Goddard *Satellite Situation Report*, 15/11/1963, p.8](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf), que publica um dia de decaimento **sem hora ou local físico**. Fac-símile não foi reinspecionado nesta rodada; a descrição é proveniente da matriz.
+- A árvore Git **completa, não truncada** do commit funcional (`101` caminhos) não contém `Evidence.lean`, `evidence_registry.json` nem ZIP histórico. A busca anterior em branches/histórico também foi negativa. **154 proposições/151 rótulos não foram importados, IMPORT_NOT_RUN**; não se substitui o original por corpus sintético.
+
+## Validação, falhas e limites
+
+- [GitHub Actions `43180228829`](https://github.com/franklinbaldo/conde-incident/actions/runs/43180228829): **SUCCESS, 2/2 jobs** no head funcional exato `56c2004f...`. Lean **4.35.0, lake build 17 jobs**, 7 novos `#print axioms` **sem axiomas adicionais e sem `sorryAx`**, **44/44** testes Python (incluindo 2 novos), matriz SHA pinado e CI Web lint/build aprovados. [Contrato JSON artifact `13925842698`](https://github.com/franklinbaldo/conde-incident/actions/runs/43180228829/artifacts/13925842698).
+- Falhas honestas corrigidas: [run `43179654826`](https://github.com/franklinbaldo/conde-incident/actions/runs/43179654826) falhou no parse por identificador reservado `λ`; [run `43179827636`](https://github.com/franklinbaldo/conde-incident/actions/runs/43179827636) falhou no ramo de igualdade `none = none`; [run `43180028678`](https://github.com/franklinbaldo/conde-incident/actions/runs/43180028678) compilou o módulo mas falhou na auditoria por import faltante. Cada defeito foi corrigido no head atual, sem ocultar a sequência RED/GREEN.
+- Ainda faltam originais de TLE 527/528/529 com épocas/frames e custódia, integração física acoplada calibrada, certificados contínuos de cobertura/erro e holdout independente, além do ZIP Lean original e respectivos hashes. Nenhum modelo de reentrada terminal foi validado. O sucesso Lean atesta somente consequências das premissas fornecidas.
+
+## Handoff
+
+🦅 Gavião: conferir especialmente se os dois conjuntos de envelopes se referem ao **mesmo** preditor, se supostas independências empíricas foram evitadas e se `none` é tratado como ausência de impacto modelado, não queda alhures. 🐘 Elefante: integrar apenas após base #1, revisão independente e CI verde no head da PR. Próxima questão do Polvo: vincular certificados numéricos de duas integrações reais aos contratos, quando Castor fornecer dados primários autenticados e erros calibrados. CI pós-memória deve ser revalidado antes de qualquer integração.
