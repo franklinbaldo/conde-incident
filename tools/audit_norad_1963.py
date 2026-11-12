@@ -33,32 +33,28 @@ COLUMNS = (
 
 
 def tle_checksum(line: str) -> int:
-    """NORAD 69 colunas: dígitos + sinais '-'; apenas integridade sintática."""
-    if len(line) != 69 or line[0] not in "12":
-        raise ValueError("linha TLE sem 69 colunas/identificador")
-    return sum(int(c) if c.isdigit() else 1 if c == "-" else 0 for c in line[:68]) % 10
+    """Soma de checksum da representacao ASCII, sem autenticar o emissor."""
+    if (len(line) != 69 or line[:2] not in ("1 ", "2 ") or
+            not line.isascii() or any(ord(c) < 32 or ord(c) > 126 for c in line) or
+            line[-1] not in "0123456789"):
+        raise ValueError("linha TLE sem 69 colunas ASCII ou checksum numerico")
+    return sum((ord(c) - 48 if "0" <= c <= "9" else 1 if c == "-" else 0)
+               for c in line[:68]) % 10
 
 
 def validate_raw_tle(first: str, second: str, expected_sat: int) -> dict:
-    """Para linhas futuras obtidas da fonte; NÃO criar linhas com o Parquet."""
-    if len(first) != 69 or len(second) != 69 or first[0] != "1" or second[0] != "2":
-        raise ValueError("par TLE exige linhas 1 e 2")
-    if any(tle_checksum(line) != int(line[-1]) for line in (first, second)):
-        raise ValueError("checksum TLE inválido")
-    a, b = int(first[2:7]), int(second[2:7])
-    if a != b or a != expected_sat:
-        raise ValueError("NORAD inconsistente")
-    if first[18:20] != "63":
-        raise ValueError("ano inesperado")
-    doy = float(first[20:32])
-    if not 1 <= doy < 366:
-        raise ValueError("dia de época inválido")
-    tle_epoch_utc(first)  # também rejeita dia inválido para ano não bissexto
-    return {"norad_id": a, "epoch_year": 1963, "epoch_day": doy,
-            "raan_deg": float(second[17:25]),
-            "eccentricity": float("0." + second[26:33]),
-            "mean_motion_rev_day": float(second[52:63]),
-            "checksum": "PASS_syntax_only"}
+    """Gate de sintaxe de PAR LITERAL, nao autenticacao de elementos de 1963."""
+    from tle_literal_layout import audit_pair
+
+    parsed = audit_pair(first, second, expected_sat=expected_sat)
+    return {
+        "norad_id": parsed["catalog"], "epoch_year": 1963,
+        "epoch_day": float(Decimal(first[20:32])),
+        "raan_deg": float(Decimal(parsed["values"]["raan"]["decimal"])),
+        "eccentricity": float(Decimal(parsed["values"]["eccentricity"]["decimal"])),
+        "mean_motion_rev_day": float(Decimal(parsed["values"]["mean_motion"]["decimal"])),
+        "checksum": "PASS_syntax_only",
+    }
 
 
 def tle_epoch_utc(line: str) -> datetime:
