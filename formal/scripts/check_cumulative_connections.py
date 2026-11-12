@@ -81,6 +81,24 @@ def validate(graph: dict) -> dict:
             "pending": o["pending"],
             "status": PENDING,
         })
+    # Accumulate comparisons between published records without treating
+    # publication timestamps as physical observation epochs.
+    for edge in graph.get("derived_connections", []):
+        if edge.get("operator_id") != "difference_between_published_values":
+            raise ValueError(f"unexpected derived operator: {edge.get('id')}")
+        inputs = edge.get("inputs", [])
+        if len(inputs) != 2 or any(item not in ids for item in inputs):
+            raise ValueError(f"orphan derived edge: {edge.get('id')}")
+        left, right = (next(o for o in obs if o["id"] == item) for item in inputs)
+        if left["object_id"] != right["object_id"] or left["observable"] != right["observable"]:
+            raise ValueError(f"mixed comparison: {edge.get('id')}")
+        delta = right["value"] - left["value"]
+        if edge.get("unit") != left["unit"] or abs(delta - edge["derived_arithmetic"]) > 1e-8:
+            raise ValueError(f"invalid arithmetic or unit: {edge.get('id')}")
+        if edge.get("status") != "CONNECTED_PENDING_EPOCH_AND_COVARIANCE":
+            raise ValueError(f"comparison prematurely turned into a physical trend: {edge.get('id')}")
+        if "source_specific_observation_epochs" not in edge.get("missing", []):
+            raise ValueError(f"missing time caveat in comparison: {edge.get('id')}")
     for edge in graph.get("couplings", []):
         if not edge["parameters"] or any(p not in params for p in edge["parameters"]):
             raise ValueError(f"orphan coupling: {edge['id']}")
@@ -94,10 +112,12 @@ def validate(graph: dict) -> dict:
         "unique_source_families": len(families),
         "latent_parameters": len(params),
         "candidate_constraints_recorded": len(output),
+        "derived_connections_recorded": len(graph.get("derived_connections", [])),
         "constraints_activated": 0,
         "physical_domain_status": "PENDING_CALIBRATION_NOT_DISCARDED",
         "observations": output,
         "couplings": graph.get("couplings", []),
+        "derived_connections": graph.get("derived_connections", []),
         "next_action": "Resolve epochs/error/forward operators; then activate interval constraints and cross-check independent 527/529 holdouts.",
     }
 
@@ -115,6 +135,7 @@ def main() -> None:
     print(json.dumps({
         "connected": validated["connected_observations"],
         "candidate": validated["candidate_constraints_recorded"],
+        "derived_connections": validated["derived_connections_recorded"],
         "activated": validated["constraints_activated"],
         "status": validated["physical_domain_status"],
     }, ensure_ascii=False))
