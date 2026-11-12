@@ -128,3 +128,40 @@ A reconciliação de tolerância temporal (432 µs) também passou no conjunto r
 O GitHub Actions acionado por `pull_request` usa por padrão o ref sintético `refs/pull/N/merge`; uma execução com `github.sha` nesse evento demonstra o **merge de teste**, não necessariamente o SHA do HEAD de origem. Por isso o workflow de custódia agora faz checkout explícito de `${{ github.event.pull_request.head.sha || github.sha }}`, verifica que `git rev-parse HEAD` é exatamente esse SHA, imprime `audited_source_head=`, e nomeia o artefato com a mesma identidade. Há teste automatizado de não regressão desta configuração. `workflow_dispatch` continua a usar o SHA fornecido pelo evento, igualmente atestado.
 
 As execuções anteriores, inclusive [#43113160100](https://github.com/franklinbaldo/conde-incident/actions/runs/43113160100), **continuam demonstrando os dados e controles naquela versão**, mas não devem ser rotuladas como atestação do checkout do HEAD exato. A nova atestação só vale após CI verde do commit que contém esta correção. O **workflow científico separado** mantém seu próprio escopo/gate; esta correção não alega ter mudado seu checkout.
+
+
+## Confronto adversarial dos seis campos legados, sem trocar épocas (C241-T2, 11/11/2026)
+
+**Pergunta falsificável:** a aparente aproximação angular entre `RAAN=284,1520°` e um registro do espelho em agosto significa que o **vetor completo** do simulador antigo foi extraído de alguma das 45 épocas numéricas do NORAD 528? O teste não escolhe o registro mais conveniente nem monta um vetor somando campos de datas diferentes.
+
+**Cadeias e objetos distintos:**
+
+- **Origem do vetor alegado:** `src/lib/constants.ts` **anterior à PR #14**, blob Git SHA-1 `0284f1217557b0ea891b5e51b6ac56bd13529d3f`, continha as linhas literais `63300.61111111`, `284.1520`, `0084200`, `142.3150`, `218.4210` e `15.74900000`. O programa [`tools/legacy_528_fingerprint.py`](../../tools/legacy_528_fingerprint.py) conserva essas duas linhas **rotuladas como legado não autenticado**, com checksums de formato válidos. Um checksum válido pode acompanhar dados digitados manualmente; **não** comprova emissão NORAD.
+- **Série testada:** `norad_528_epochs_1963.csv`, SHA-256 `e3c946809d8e73d814bc1dfa424bf901a3b4331e63e4c85f82f81cf33b9c073e`, derivado das **45 épocas** do único [Parquet oxzoid pinado](https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/main/data/tle_1963.parquet), SHA-256 `c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09`. O material-fonte continua secundário e não constitui radar adicional.
+- **Checagem:** simultaneamente `inclination`, `raan`, `eccentricity`, `arg_perigee`, `mean_anomaly`, `mean_motion`; índices de linha e época são mantidos. Tolerâncias de **serialização textual/float32 apenas**, detalhadas no código, não são erro orbital: 0,00008° nos ângulos, 0,00000006 em excentricidade e 0,000000006 rev/dia em movimento médio. A época é confrontada separadamente no limiar de 432 µs. Não se confunde coincidência de uma coluna com coincidência dos seis campos.
+
+**Resultado realmente executado:** [NORAD custody #43122019452](https://github.com/franklinbaldo/conde-incident/actions/runs/43122019452), SHA de fonte `cb52253845f607d835f98839423b091d730cfda6`, **SUCCESS, 30 testes PASS**; [Scientific checks #43122019297](https://github.com/franklinbaldo/conde-incident/actions/runs/43122019297) também SUCCESS. O log audita `audited_source_head=` igual ao SHA de fonte, download Parquet e comparação adversarial. **Zero das 45 épocas coincide com os seis campos**, e **zero coincide com a época literal legada** (27/10 às 14:39:59,999904 UTC, distinta da linha rastreável 27/10 às 14:40:16,132512 UTC).
+
+| Campo no registro *mais próximo por RAAN* (`source_row=2998`, 12/08/1963 13:35:30,863616 UTC) | Desvio absoluto para o vetor legado |
+|---|---:|
+| Inclinação | 0,007701660156° |
+| RAAN | **0,179085205078°** |
+| Excentricidade | 0,005076799922 |
+| Argumento do perigeu | 97,491898956299° |
+| Anomalia média | 97,025411132813° |
+| Movimento médio | 0,300998650000 rev/dia |
+
+**Conclusão restrita:** a hipótese simples de que **a linha de agosto inteira** originou o vetor legado fica **refutada dentro das 45 linhas do espelho**: no próprio candidato selecionado exclusivamente por RAAN, os demais elementos discordam muito além do arredondamento. Isso **não refuta** que 284,1520° tenha sido tirado isoladamente de outro registro, quadro de referência ou fonte ainda não recuperada; tampouco demonstra uma origem manual específica. Um par inventado pode passar checksum, e um espelho pode repetir informação instrumental antiga sem comprová-la.
+
+**Handoff para o fluxo científico:** C241-T2 é um **controle de coerência de proveniência**, não uma nova medição e não uma restrição dinâmica autenticada em Lean. O conjunto de candidatos de igualdade literal entre o vetor legado e as 45 épocas secundárias é **vazio**; o subconjunto rastreável para 27/10 do *espelho* continua **não vazio** (linha 3017) e distinto. Esses domínios se referem à identificação de registros digitais, **não** a parâmetros físicos admissíveis da reentrada. Não passar 284,1520° ao simulador físico como medição de 1963; qualquer formalização Lean posterior deverá ser **condicional** à autenticação do quadro, da época, das linhas NORAD originais e às dependências. Nem a existência do vetor 528 comprova colisão com o solo.
+
+**Reproduzir no checkout da PR #14:**
+
+```bash
+python -m unittest discover -s tests -p 'test_*.py' -v
+python -m pip install pyarrow==21.0.0
+python tools/audit_norad_1963.py --download --parquet /tmp/tle_1963.parquet --output /tmp/tle-audit
+python tools/legacy_528_fingerprint.py --csv /tmp/tle-audit/norad_528_epochs_1963.csv --output /tmp/tle-audit/legacy_528_fingerprint.json
+```
+
+O `legacy_528_fingerprint.json` é arquivado com o CSV e `audit.json` pelo workflow. Ainda **NOT_RECOVERED**: 45 pares TLE primários e seus checksums originais, elementos/frame NORAD por época, boletins de radar, identidade de engenharia da peça 528 e observação terminal UTC/geográfica. Nenhum contato, publicação no blog ou merge.

@@ -1085,6 +1085,16 @@ O relatório normalizado registra ainda `legacy_raan_temporal_audit`: consulta d
 
 ---
 
+
+
+### C241-T2: fingerprint orbital legado versus 45 épocas do 528 (🐢 Tartaruga, 11/11/2026)
+
+| ID | Observação / teste | Fonte, custódia e independência | Incerteza, resultado negativo e próximo estágio |
+|---|---|---|---|
+| **C241-T2** | **Teste de consistência digital, NÃO observação física:** confrontar simultaneamente inclinação, RAAN, excentricidade, argumento do perigeu, anomalia média e movimento médio das duas linhas TLE legadas para o 528 com cada uma das **45 épocas secundárias**; manter época e índice físicos originais, não combinar elementos de épocas diferentes. As linhas legadas têm **checksum sintático válido**, embora não tenham fonte instrumental autenticada. | Legado do app no blob Git SHA-1 `0284f1217557b0ea891b5e51b6ac56bd13529d3f` de `src/lib/constants.ts`; arquivo Parquet do [espelho oxzoid](https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/main/data/tle_1963.parquet), SHA-256 `c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09`; CSV 45 épocas SHA-256 `e3c946809d8e73d814bc1dfa424bf901a3b4331e63e4c85f82f81cf33b9c073e`. Um único ramo de rastreamento alegado, **sem 45 linhas primárias ou independência instrumental**. | **0/45 correspondências integrais** dentro dos limites de serialização; **0 registros** com a época literal legada. Melhor vizinho pela RAAN: **linha 2998, 12/08/1963 13:35:30.863616Z**, RAAN 284,331085°, ΔRAAN **0,179085°**, Δe **0,0050768**, Δargumento do perigeu **97,4919°**, Δanomalia média **97,0254°**, Δmovimento médio **0,30099865 rev/dia**. Assim, copiar o **vetor inteiro** desse registro de agosto fica incompatível com o espelho; a **origem isolada de 284,1520° continua indeterminada**. Reproduzido em [CI #43122019452](https://github.com/franklinbaldo/conde-incident/actions/runs/43122019452), SHA `cb52253845f607d835f98839423b091d730cfda6`, 30 testes PASS, com `legacy_528_fingerprint.json` e dados rastreáveis. Não provar impacto. |
+
+**Encadeamento e domínio:** `main/src/lib/constants.ts` legado **sem proveniência instrumental** → vetor de texto/epoch e checksum `PASS_syntax_only` → contraste adversarial com 45 linhas da **mesma** linhagem numérica secundária → domínio de *igualdade de registros completos* = vazio, domínio do espelho na época **27/10 14:40:16.132512Z** = não vazio (linha 3017); ambos são domínios **documentais**, não conjunto físico orbital autenticado. **Não elevar a premissa a Lean/SGP4 como verdade histórica** antes de obter fonte primária, frame e incerteza real. Testes/código/método no [README de custódia](tle_custody/README.md) e [PR #14](https://github.com/franklinbaldo/conde-incident/pull/14). Conflito RAAN instrumental ainda **NOT_VERIFIED**; reentrada específica, objeto físico e Conde continuam **indeterminados**.
+
 ## C242 — controle temporal pré-registrado: 527/528 → 529, sem prova de órbita (11/11/2026, 🦡 Texugo)
 
 | ID | Base documental e procedimento | Dependência, teste e resultado | Limite físico e dado ausente |

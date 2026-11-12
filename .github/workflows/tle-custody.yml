@@ -35,6 +35,12 @@ jobs:
             --parquet "${{ runner.temp }}/tle_1963.parquet" --download \
             --output "${{ runner.temp }}/tle-audit"
           cat "${{ runner.temp }}/tle-audit/audit.json"
+      - name: Falsify legacy 528 six-field vector against pinned epochs
+        run: |
+          python tools/legacy_528_fingerprint.py \
+            --csv "${{ runner.temp }}/tle-audit/norad_528_epochs_1963.csv" \
+            --output "${{ runner.temp }}/tle-audit/legacy_528_fingerprint.json"
+          cat "${{ runner.temp }}/tle-audit/legacy_528_fingerprint.json"
       - name: Preserve normalized source-derived rows and negative results
         if: always()
         uses: actions/upload-artifact@v4
