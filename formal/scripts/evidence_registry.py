@@ -319,6 +319,70 @@ def unresolved_element_scenarios_interface() -> dict:
     }
 
 
+
+def scenario_enclosure_interface() -> dict:
+    """Proof obligations for calibrated error envelopes across source alternatives.
+
+    NO real trajectory, calibrated interval or terminal observation is asserted.
+    The two alternative RAAN claims are neither independently authenticated
+    nor safely intersectable. NASA C131/C197 share one documentary lineage.
+    """
+    scenarios = unresolved_element_scenarios_interface()
+    return {
+        "version": 1,
+        "kind": "CONDITIONAL_DISJUNCTIVE_ENCLOSURES_NOT_HISTORICAL_PREDICTIONS",
+        "lean_module": "Conde1963/ScenarioEnclosures.lean",
+        "candidate_semantics": "COMMON_AND_LEFT_OR_RIGHT",
+        "branch_combination": "UNION_UNTIL_VERIFIED_SOURCE_ADJUDICATION",
+        "source_branches": [
+            {
+                "id": branch["id"],
+                "original_custody": branch["source_authentication"],
+                "matrix_occurrences": branch["matrix_occurrences"],
+                "is_hard_physical_constraint": False,
+            } for branch in scenarios["alternatives"]
+        ],
+        "nasa_lineage": {
+            "matrix_occurrences": ["C131#1", "C197#1"],
+            "source_count": 1,
+            "instrumental_trajectory_measurements": 0,
+            "physical_decay_time_or_location_established": False,
+        },
+        "source_matrix_sha1": MATRIX_SHA1,
+        "current_geographic_verdict": None,
+        "predicted_ground_impact": None,
+        "validated_error_enclosures": None,
+        "global_parameter_domain_certified": False,
+        "source_branch_authenticity_certified": False,
+        "independent_529_holdout_passed": False,
+        "ground_impact_gate_verified": False,
+        "historical_zip_154_propositions_151_labels": "NOT_RUN",
+        "lean_obligations": {
+            "exclusion": "covered_alternative_envelope_excludes_conde",
+            "forcing": "covered_alternative_envelope_forces_conde",
+            "other_window": "covered_alternative_envelope_identifies_other_window",
+            "consistent_refinement_exclusion": "alternative_enclosure_exclusion_persists_with_witness",
+            "consistent_refinement_forcing": "alternative_enclosure_forcing_persists_with_witness",
+            "consistent_refinement_other": "alternative_enclosure_other_window_persists_with_witness",
+            "one_branch_only_if_other_empty": "proven_empty_right_branch_allows_left_exclusion",
+            "opposed_branch_witnesses": "opposing_branch_witnesses_block_gated_verdicts",
+            "missing_gate_blocks_all": "missing_ground_audit_blocks_all_alternative_verdicts",
+        },
+        "mandatory_checks": [
+            "source_row_identity_and_occurrence_in_pinned_matrix",
+            "instrumental_lineage_frame_epoch_units_and_checksum",
+            "do_not_intersect_incompatible_source_branches",
+            "nonempty_global_domain_and_proven_strict_reduction",
+            "sound_numerical_event_enclosure_for_every_survivor_in_each_branch",
+            "calibrated_coupled_model_with_error_holdouts_including_529",
+            "validated_ground_impact_not_just_altitude_threshold",
+            "geographic_disjointness_with_numerical_error_enclosure",
+            "one_branch_only_if_other_is_proven_empty",
+            "no_geographic_claim_while_surviving_branches_disagree",
+        ],
+    }
+
+
 def contracts(rows: list[dict]) -> dict:
     return {
         "schema_version": 2,
@@ -329,6 +393,7 @@ def contracts(rows: list[dict]) -> dict:
         "outcome_interface": outcome_interface(),
         "enclosure_interface": enclosure_interface(),
         "unresolved_element_scenarios_interface": unresolved_element_scenarios_interface(),
+        "scenario_enclosure_interface": scenario_enclosure_interface(),
         "scope": "241 actual rows, 238 distinct labels, no fabricated observations",
         "entries": [
             {
