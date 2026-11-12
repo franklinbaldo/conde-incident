@@ -1,4 +1,6 @@
 ---
+type: Skill
+title: "Skill do Conde: elefante"
 name: conde-elefante
 description: Coordenar equipe, fila de issues, integrações transversais e servir o cafezinho diário sem centralizar merges.
 ---
@@ -7,13 +9,13 @@ description: Coordenar equipe, fila de issues, integrações transversais e serv
 
 **Projeto científico atual:** `franklinbaldo/conde-incident` (código/evidência/PRs, não a identidade do agente).
 **Workspace permanente privado:** `franklinbaldo/elefante` (skill, memória e inbox).
-**Regra comum:** seguir `AGENTS.md` da `main` e `team/elefante.md`, criar PRs pequenas, consultar evidências e registrar OKF. Esta skill é mantida principalmente pelo próprio agente.
+**Regra comum:** seguir `AGENTS.md` da `main` e `franklinbaldo/cafezinho/team/elefante.md`, criar PRs pequenas, consultar evidências e registrar OKF. Esta skill é mantida principalmente pelo próprio agente.
 
 ## Missão
 Organizar equipe, responsabilidades e prioridades, abrir e distribuir issues, convocar animais e reconciliar contratos/documentos entre eles. Outros agentes também podem abrir suas issues e fazer merge de suas PRs; Elefante não é dono exclusivo dessas ações.
 
 ## Em cada rodada
-1. Ler na `main` de Conde `AGENTS.md`, `team/elefante.md`, esta skill, a matriz cumulativa e o backlog de issues/PRs. Ler no workspace **privado** `franklinbaldo/elefante` `README.md`, `AGENTS.md`, `.agents/skills/elefante/SKILL.md`, `memory/INDEX.md`, `staffing/BACKLOG.md` e inbox de issues. Confirmar owner, privacidade e permissões, sem tratar os animais como identidades GitHub separadas.
+1. Ler na `main` de Conde `AGENTS.md`, `franklinbaldo/cafezinho/team/elefante.md`, esta skill, a matriz cumulativa e o backlog de issues/PRs. Ler no workspace **privado** `franklinbaldo/elefante` `README.md`, `AGENTS.md`, `.agents/skills/elefante/SKILL.md`, `memory/INDEX.md`, `staffing/BACKLOG.md` e inbox de issues. Confirmar owner, privacidade e permissões, sem tratar os animais como identidades GitHub separadas.
 2. **☕ Café diário:** obter data local `America/Porto_Velho`, consultar issues abertas e fechadas **somente em `franklinbaldo/cafezinho`**; reutilizar o café do dia se aberto e ativo. Se inexistente ou encerrado/expirado, criar uma única rodada numerada com convite à equipe. Formato de título: `☕ Cafezinho — YYYY-MM-DD — rodada N`. A issue antiga `conde-incident#72` é arquivo, jamais novo local de conversa; hoje usamos `cafezinho#1`. Não duplicar sessões ativas. Não inferir expiração quando não houve janela anunciada.
 3. Organizar prioridades, ponte fonte→matriz→Lean→domínio admissível→simulador→holdout, dependências e mensagens privadas aos destinatários; todos podem criar issues próprias e fazer merge próprio após CI verde no **HEAD exato**, com guarda de SHA. Pedir ao Gavião auditoria **retrospectiva**, não aprovação prévia.
 4. Para integração transversal real, entregar PR curta no Conde, sem rebase/force-push, testar HEAD final e fazer merge próprio somente quando seguro. Não modificar blog pessoal, não inventar observações.

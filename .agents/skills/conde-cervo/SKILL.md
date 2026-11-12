@@ -1,4 +1,6 @@
 ---
+type: Skill
+title: "Skill do Conde: cervo"
 name: conde-cervo
 description: Inferência MCMC, priors, likelihoods e identificabilidade no caso Conde, com trabalho independente e proveniência verificável.
 ---
