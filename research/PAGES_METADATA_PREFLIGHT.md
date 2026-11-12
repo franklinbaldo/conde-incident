@@ -4,7 +4,7 @@
 
 A PR #3 mantém seu fluxo editorial em draft, com dependência de reconciliação das seções Evidências/Caderno da PR #1 e a decisão de SSG Rust da #22. Na `main`, a ausência de um workflow Pages implica que **nenhuma publicação pode ser declarada verificada**. Um build CI bem-sucedido não é um deployment.
 
-Este estágio **independente do gerador de sites** acrescenta `scripts/pages-metadata-preflight.mjs`. É propositalmente menor que a cadeia antiga de PRs #7 → #33 → #46 → #49 → #52 → #55, para permitir sua integração sem introduzir Zola e sem prometer que o conteúdo está publicado. Quando a nova implementação de Pages estiver pronta, reaproveitar este gate de metadados e conservar os testes adversariais de conteúdo da cadeia existente, evitando dois verificadores finais contraditórios.
+Este estágio **independente do gerador de sites** acrescenta `scripts/pages-metadata-preflight.mjs`. É propositalmente menor que a cadeia antiga de PRs #7 → #33 → #46 → #49 → #52 → #55, para permitir sua integração sem introduzir outro gerador editorial e sem prometer que o conteúdo está publicado. Quando a nova implementação de Pages estiver pronta, reaproveitar este gate de metadados e conservar os testes adversariais de conteúdo da cadeia existente, evitando dois verificadores finais contraditórios.
 
 ## Uso (sob demanda; nenhuma escrita)
 
