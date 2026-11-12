@@ -4,7 +4,8 @@
  */
 
 import React, { useState } from 'react';
-import { Navigation, TabId } from './components/Navigation';
+import { Navigation, type TabId } from './components/Navigation';
+import { parseLabRoute, tabHref } from './lib/tabRoutes';
 import { ExecutiveSummary } from './components/ExecutiveSummary';
 import { OrbitalMap } from './components/OrbitalMap';
 import { InversePassInspector } from './components/InversePassInspector';
@@ -17,7 +18,8 @@ import { PythonScriptModal } from './components/PythonScriptModal';
 import { Satellite, Shield, Globe, Terminal, ExternalLink } from 'lucide-react';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<TabId>('summary');
+  const [route, setRoute] = useState(() => parseLabRoute(window.location.hash));
+  const activeTab = route.tab;
   const [lang, setLang] = useState<'pt' | 'en'>('pt');
   const [sharedTimeMs, setSharedTimeMs] = useState<number>(
     new Date('1963-11-08T19:48:00Z').getTime()
@@ -31,10 +33,29 @@ export default function App() {
     return () => window.removeEventListener('gmp-quota-exceeded', handleQuotaExceeded);
   }, []);
 
+  // Hash URLs are stable even after reload and follow native Back/Forward navigation.
+  // Only already-shipped lab tabs are recognized. Unavailable SSG routes remain explicit.
+  React.useEffect(() => {
+    const handleHashChange = () => setRoute(parseLabRoute(window.location.hash));
+    window.addEventListener('hashchange', handleHashChange);
+    handleHashChange();
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  React.useEffect(() => {
+    document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
+  }, [lang]);
+
+  const navigateTab = (tab: TabId) => {
+    const target = tabHref(tab);
+    if (window.location.hash !== target) window.location.hash = target;
+    setRoute(parseLabRoute(target));
+  };
+
   // When a pass is selected in the Inverse Inspector, jump directly to Map at that time
   const handleSelectPassFromInverse = (timeMs: number) => {
     setSharedTimeMs(timeMs);
-    setActiveTab('map');
+    navigateTab('map');
   };
 
   return (
@@ -59,18 +80,24 @@ export default function App() {
       {/* Top Header & Navigation */}
       <Navigation
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
         lang={lang}
         setLang={setLang}
         onOpenPython={() => setIsPythonModalOpen(true)}
       />
 
       {/* Main Content Body */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-6" id="main-content">
+        {route.invalidHash !== null && (
+          <p role="status" aria-live="polite" className="mb-5 rounded-md border border-amber-700 bg-amber-950/40 p-3 text-sm text-amber-100">
+            {lang === 'pt'
+              ? 'Seção não disponível neste laboratório. Exibindo a síntese; escolha uma aba existente.'
+              : 'This section is not available in the laboratory. Showing the summary; choose an existing tab.'}
+          </p>
+        )}
         {activeTab === 'summary' && (
           <ExecutiveSummary
             lang={lang}
-            onJumpToTab={(tab: TabId) => setActiveTab(tab)}
+            onJumpToTab={navigateTab}
           />
         )}
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { tabHref, type LabTab } from '../lib/tabRoutes';
 import {
   Satellite,
   Compass,
@@ -13,20 +14,10 @@ import {
   Binary,
 } from 'lucide-react';
 
-export type TabId =
-  | 'summary'
-  | 'map'
-  | 'inverse'
-  | 'triangulation'
-  | 'sensitivity'
-  | 'montecarlo'
-  | 'tles'
-  | 'documents'
-  | 'python';
+export type TabId = LabTab;
 
 interface NavigationProps {
   activeTab: TabId;
-  setActiveTab: (tab: TabId) => void;
   lang: 'pt' | 'en';
   setLang: (lang: 'pt' | 'en') => void;
   onOpenPython: () => void;
@@ -34,7 +25,6 @@ interface NavigationProps {
 
 export const Navigation: React.FC<NavigationProps> = ({
   activeTab,
-  setActiveTab,
   lang,
   setLang,
   onOpenPython,
@@ -42,10 +32,10 @@ export const Navigation: React.FC<NavigationProps> = ({
   const tabs = [
     {
       id: 'summary' as TabId,
-      labelPt: 'Veredito & Resumo',
-      labelEn: 'Verdict & Summary',
+      labelPt: 'Síntese e limites',
+      labelEn: 'Summary & limits',
       icon: ShieldCheck,
-      badge: '7 Respostas',
+      badge: 'Fontes',
     },
     {
       id: 'map' as TabId,
@@ -56,15 +46,15 @@ export const Navigation: React.FC<NavigationProps> = ({
     },
     {
       id: 'inverse' as TabId,
-      labelPt: 'Teste Inverso Conde',
-      labelEn: 'Inverse Test Conde',
+      labelPt: 'Cenários inversos',
+      labelEn: 'Inverse scenarios',
       icon: MapPin,
       badge: '08/11/1963',
     },
     {
       id: 'triangulation' as TabId,
-      labelPt: 'Triangulação (527-529)',
-      labelEn: 'Triangulation (527-529)',
+      labelPt: 'Comparação (527–529)',
+      labelEn: 'Comparison (527–529)',
       icon: Layers,
     },
     {
@@ -75,24 +65,24 @@ export const Navigation: React.FC<NavigationProps> = ({
     },
     {
       id: 'montecarlo' as TabId,
-      labelPt: 'Monte Carlo & Falsificação',
-      labelEn: 'Monte Carlo & Falsification',
+      labelPt: 'Amostragem exploratória',
+      labelEn: 'Exploratory sampling',
       icon: Activity,
-      badge: 'N=5000',
+      badge: 'Sintético',
     },
     {
       id: 'tles' as TabId,
       labelPt: 'Auditoria de TLEs',
       labelEn: 'TLEs & Checksums',
       icon: Binary,
-      badge: 'Checksums 100%',
+      badge: 'Sintaxe ≠ origem',
     },
     {
       id: 'documents' as TabId,
-      labelPt: 'Arquivo & Epistemologia',
-      labelEn: 'Archive & Epistemology',
+      labelPt: 'Arquivo e proveniência',
+      labelEn: 'Archive & provenance',
       icon: FileText,
-      badge: 'Desclassificados',
+      badge: 'Documental',
     },
   ];
 
@@ -112,17 +102,11 @@ export const Navigation: React.FC<NavigationProps> = ({
           <span className="text-zinc-600 hidden sm:inline">|</span>
           <div className="flex items-center gap-1 text-amber-400/90 font-mono">
             <Calendar className="w-3.5 h-3.5" />
-            <span>Decaimento: 08/11/1963</span>
+            <span>{lang === 'pt' ? 'NASA: dia catalogado 08/11/1963' : 'NASA: catalogued day 08 Nov 1963'}</span>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Target Reference */}
-          <div className="hidden md:flex items-center gap-1.5 px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400 font-mono">
-            <MapPin className="w-3 h-3 text-rose-400" />
-            <span>Conde-BA: 11.81° S, 37.61° O</span>
-          </div>
-
           {/* Python Export Button */}
           <button
             onClick={onOpenPython}
@@ -137,6 +121,9 @@ export const Navigation: React.FC<NavigationProps> = ({
           <div className="flex items-center bg-zinc-900 rounded border border-zinc-800 p-0.5">
             <button
               onClick={() => setLang('pt')}
+              type="button"
+              aria-pressed={lang === 'pt'}
+              aria-label="Português (Brasil)"
               className={`px-2 py-0.5 rounded text-[11px] font-semibold transition-colors ${
                 lang === 'pt' ? 'bg-cyan-600 text-white' : 'text-zinc-400 hover:text-zinc-200'
               }`}
@@ -145,6 +132,9 @@ export const Navigation: React.FC<NavigationProps> = ({
             </button>
             <button
               onClick={() => setLang('en')}
+              type="button"
+              aria-pressed={lang === 'en'}
+              aria-label="English"
               className={`px-2 py-0.5 rounded text-[11px] font-semibold transition-colors ${
                 lang === 'en' ? 'bg-cyan-600 text-white' : 'text-zinc-400 hover:text-zinc-200'
               }`}
@@ -156,14 +146,15 @@ export const Navigation: React.FC<NavigationProps> = ({
       </div>
 
       {/* Main Navigation Tabs */}
-      <nav className="max-w-7xl mx-auto px-4 flex space-x-1 overflow-x-auto py-1.5 scrollbar-thin">
+      <nav aria-label={lang === 'pt' ? 'Seções do laboratório' : 'Laboratory sections'} className="max-w-7xl mx-auto px-4 flex space-x-1 overflow-x-auto py-1.5 scrollbar-thin">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
           return (
-            <button
+            <a
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              href={tabHref(tab.id)}
+              aria-current={isActive ? 'page' : undefined}
               className={`flex items-center gap-2 px-3 py-2 rounded-md text-xs font-medium whitespace-nowrap transition-all cursor-pointer ${
                 isActive
                   ? 'bg-zinc-800 text-cyan-300 border border-cyan-800/60 shadow-sm'
@@ -183,7 +174,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                   {tab.badge}
                 </span>
               )}
-            </button>
+            </a>
           );
         })}
       </nav>
