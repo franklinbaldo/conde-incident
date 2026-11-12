@@ -1,0 +1,27 @@
+name: IGRA Recife C151 wind audit
+on:
+  pull_request:
+  push:
+    branches:
+      - 'lagarto/**'
+permissions:
+  contents: read
+jobs:
+  igramet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Ensure exact head revision
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify pinned original NOAA sounding and JSON
+        run: python3 tools/audit_igra_recife_winds.py --check
+      - name: Run independent pressure, vector and negative controls
+        run: python3 -m unittest discover -s tests -p 'test_audit_igra_recife_winds.py' -v
