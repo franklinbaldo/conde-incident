@@ -17,3 +17,13 @@ h1,h2,h3{line-height:1.16;letter-spacing:-.025em}h1{font-size:clamp(2.4rem,5vw,4
 .story-end{margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--line);color:var(--muted);font-size:.88rem}
 .site-footer{border-top:1px solid var(--line);padding:1.8rem 0;color:var(--muted);font:.78rem system-ui,sans-serif}
 @media(max-width:620px){.masthead-inner{align-items:flex-start;flex-direction:column}nav{gap:1rem}.intro{padding:3.4rem 0 2rem}.full-story{padding-top:2rem}.story-body{font-size:1.03rem}}
+/* Elementos de leitura documental entre parágrafos, sem depender de scripts. */
+.story-body .story-visual{margin:2.4rem 0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel)}
+.story-visual iframe,.story-visual img{display:block;width:100%;border:0;background:#11141b}
+.story-visual img{height:auto}
+.story-visual iframe{height:420px}
+.story-document iframe{height:610px}
+.story-visual figcaption{padding:1rem 1.2rem;color:#c7c8cd;font:400 .87rem/1.65 system-ui,sans-serif}
+.story-visual figcaption strong{color:var(--ink)}
+.story-visual figcaption a{overflow-wrap:anywhere}
+@media(max-width:620px){.story-visual iframe{height:320px}.story-document iframe{height:480px}.story-visual figcaption{padding:.85rem 1rem;font-size:.81rem}}
