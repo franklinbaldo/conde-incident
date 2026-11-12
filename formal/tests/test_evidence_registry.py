@@ -311,5 +311,62 @@ class MatrixEvidenceTests(unittest.TestCase):
                           if x["id"] in {"C25", "C179"}], [118, 839])
 
 
+    def test_certified_cells_cover_continuous_parameters_fail_closed(self):
+        output = contracts(self.rows)
+        cells = output["certified_cell_interface"]
+        self.assertEqual(cells["version"], 1)
+        self.assertEqual(cells["kind"],
+                         "CONTINUOUS_PARAMETER_CELL_COVER_NOT_POINT_GRID")
+        self.assertEqual(cells["lean_module"], "Conde1963/CertifiedCells.lean")
+        self.assertEqual(cells["parameter_semantics"], "COMMON_AND_LEFT_OR_RIGHT")
+        self.assertEqual(cells["source_matrix_sha1"],
+                         output["matrix_git_blob_sha1"])
+        self.assertEqual(cells["orbital_scenario_rows"], ["C25#1", "C179#1"])
+        self.assertEqual(cells["orbital_primary_tle_status"], "NOT_AUTHENTICATED")
+        self.assertEqual(cells["nasa_one_document_two_occurrences"],
+                         ["C131#1", "C197#1"])
+        self.assertEqual(cells["nasa_independent_instrumental_sources"], 0)
+        self.assertEqual(cells["original_zip_154_151_import"], "NOT_RUN")
+        for key in ("current_cells", "current_event_bounds",
+                    "current_geographic_verdict", "current_numeric_epoch_window_utc",
+                    "current_numeric_spatial_enclosure"):
+            self.assertIsNone(cells[key])
+        for key in ("continuous_parameter_coverage_proven",
+                    "sound_event_bounds_for_every_cell_proven",
+                    "nonempty_global_domain_proven",
+                    "validated_ground_impact_gate_proven",
+                    "calibrated_numerical_errors_proven",
+                    "independent_529_holdout_passed"):
+            self.assertIs(cells[key], False)
+
+    def test_certified_cell_obligations_do_not_equate_grid_and_cover(self):
+        output = contracts(self.rows)
+        cells = output["certified_cell_interface"]
+        points = output["finite_coverage_interface"]
+        self.assertNotEqual(cells["kind"], points["kind"])
+        self.assertIsNone(cells["current_cells"])
+        self.assertIsNone(points["current_screen"])
+        self.assertEqual(set(cells["lean_obligations"]), {
+            "event_soundness", "nonempty_requires_cell",
+            "empty_cells_requires_full_cover", "exclude_conditional",
+            "force_conditional", "other_window_conditional",
+            "narrowed_cover", "narrowed_event_bounds"
+        })
+        for theorem in cells["lean_obligations"].values():
+            self.assertTrue(theorem)
+        obligations = set(cells["must_verify"])
+        self.assertIn("independent_proof_all_admissible_parameters_lie_in_listed_cells",
+                      obligations)
+        self.assertIn("sound_numerical_event_bounds_for_all_parameters_in_each_cell",
+                      obligations)
+        self.assertIn("nonempty_surviving_domain_after_each_narrowing",
+                      obligations)
+        self.assertIn("ground_impact_model_not_just_catalogue_decay_or_altitude_crossing",
+                      obligations)
+        self.assertIn("all_surviving_RAAN_scenarios_in_union_not_intersection",
+                      obligations)
+
+
+
 if __name__ == "__main__":
     unittest.main()
