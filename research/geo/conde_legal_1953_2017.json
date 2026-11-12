@@ -1,0 +1,185 @@
+{
+  "schema": "conde.gis.legal-boundary-custody/v1",
+  "jurisdiction": {
+    "municipality": "Conde",
+    "state": "BA",
+    "ibge_code": "2908606"
+  },
+  "sources": [
+    {
+      "id": "SEI-BA-EMB-2013-v4n1-p149",
+      "publisher": "SEI / Governo do Estado da Bahia",
+      "kind": "OFFICIAL_STATE_STATISTICAL_COMPILATION",
+      "published_on": "2013",
+      "url": "https://www.ba.gov.br/sei/sites/site-sei/files/migracao_2024/arquivos/images/publicacoes/download/estatisticas_municipios/litoral_norte_2013.pdf",
+      "pdf_sha256": "e4364fc77070053481184f2c606b9fb18dcd87d5c2da603ec1f7617720fe2c57",
+      "pdf_bytes": 18424158,
+      "occurrence": "Estatísticas dos Municípios Baianos, v.4 n.1 (2013), p.149; item 1.2",
+      "inspection": "TEXT_INDEX_INSPECTED_SCREENSHOT_REMOTE_TOO_LARGE",
+      "dependency": "Secondary SEI legal metadata; not the 1953 annex/primary act"
+    },
+    {
+      "id": "BA-ALEBA-LEI-13720-2017-DO-22166",
+      "publisher": "Assembleia Legislativa do Estado da Bahia",
+      "kind": "OFFICIAL_LAW_FACSIMILE",
+      "enacted_on": "2017-04-27",
+      "published_on": "2017-04-28",
+      "url": "https://ftp.sei.ba.gov.br/Geoinformacao/leis/lim_mun/aprov/lei-no-13720-de-27-de-abril-de-2017.pdf",
+      "pdf_sha256": "76134441592ebc234dbd3856560ed6375f956f8e126c8ecced5244b9a38d89d9",
+      "pdf_bytes": 354121,
+      "occurrence": "Diário Oficial ALEBA n.22.166, 28-04-2017, art.1 §8, incisos I-IV, pp.9-10; arts.2-3 p.15",
+      "inspection": "ORIGINAL_PUBLICATION_SCREENCAP_P9_AND_TEXT_VERIFIED",
+      "dependency": "Refers to Lei 628/1953, but does not reproduce original 1953 boundary text"
+    }
+  ],
+  "historical_1953_reference": {
+    "law": "BA Lei 628, 1953-12-30",
+    "seI_2013_attribution": "Lei Vigente: 628 de 30/12/1953; publicacao DOE Conde 11/02/1954",
+    "original_1953_annex_located": false,
+    "original_1953_annex_checked": false,
+    "intervening_changes_through_1963_checked": false,
+    "valid_geometry_on_1963_11_08": null,
+    "source_ids": [
+      "SEI-BA-EMB-2013-v4n1-p149",
+      "BA-ALEBA-LEI-13720-2017-DO-22166"
+    ],
+    "interpretation": "2013 SEI attributes Conde's prior municipal limits to Lei 628/1953, which the 2017 act later updates. Neither alone verifies the exact boundary as of 1963."
+  },
+  "legal_2017": {
+    "law": "BA Lei 13720, 2017-04-27",
+    "published_on": "2017-04-28",
+    "effective_on": "2017-04-28",
+    "law_clause": "art.1 §8 I-IV; art.3",
+    "source_id": "BA-ALEBA-LEI-13720-2017-DO-22166",
+    "parent_law_reference": "BA Lei 628/1953",
+    "textual_boundary_only": true,
+    "complete_described_boundary_reconstructed": false,
+    "coordinate_text_format": "SIGNED_DMS_SECONDS_COMMA_DECIMAL_LATITUDE_LONGITUDE",
+    "coordinate_reference_system": null,
+    "coordinate_datum": null,
+    "coordinate_epoch": null,
+    "published_positional_accuracy_m": null,
+    "control_point_georeferencing": null,
+    "mapping_to_EPSG_4674_authorized": false,
+    "retroprojection_to_1963_authorized": false,
+    "adjacent_units": [
+      "Jandaíra",
+      "Oceano Atlântico",
+      "Esplanada",
+      "Rio Real"
+    ],
+    "vertices": [
+      {
+        "id": "v_salobrinho_branco",
+        "description": "foz do riacho Salobrinho no rio Branco",
+        "latitude_dms": "-11° 39' 45,89\"",
+        "longitude_dms": "-37° 44' 50,27\""
+      },
+      {
+        "id": "v_itapicuru_atlantic",
+        "description": "foz do rio Itapicuru no oceano Atlântico",
+        "latitude_dms": "-11° 44' 27,80\"",
+        "longitude_dms": "-37° 30' 40,44\""
+      },
+      {
+        "id": "v_inhambupe_atlantic",
+        "description": "foz do rio Inhambupe no oceano Atlântico",
+        "latitude_dms": "-12° 05' 54,08\"",
+        "longitude_dms": "-37° 41' 09,25\""
+      },
+      {
+        "id": "v_mangues_itapicuru",
+        "description": "foz do riacho dos Manguês no rio Itapicuru",
+        "latitude_dms": "-11° 44' 16,86\"",
+        "longitude_dms": "-37° 48' 44,48\""
+      }
+    ],
+    "legs": [
+      {
+        "paragraph": "I",
+        "adjacent_unit": "Jandaíra",
+        "from": "v_salobrinho_branco",
+        "to": "v_itapicuru_atlantic",
+        "intermediate_controls_omitted": true
+      },
+      {
+        "paragraph": "II",
+        "adjacent_unit": "Oceano Atlântico",
+        "from": "v_itapicuru_atlantic",
+        "to": "v_inhambupe_atlantic",
+        "intermediate_controls_omitted": true
+      },
+      {
+        "paragraph": "III",
+        "adjacent_unit": "Esplanada",
+        "from": "v_inhambupe_atlantic",
+        "to": "v_mangues_itapicuru",
+        "intermediate_controls_omitted": true
+      },
+      {
+        "paragraph": "IV",
+        "adjacent_unit": "Rio Real",
+        "from": "v_mangues_itapicuru",
+        "to": "v_salobrinho_branco",
+        "intermediate_controls_omitted": true
+      }
+    ]
+  },
+  "constraint_graph": {
+    "ancestor_matrix_ids": [
+      "C24"
+    ],
+    "source_links": [
+      {
+        "source_id": "SEI-BA-EMB-2013-v4n1-p149",
+        "claim": "prior_legal_reference",
+        "variable": "municipal_statutory_boundary_history_1953_2013"
+      },
+      {
+        "source_id": "BA-ALEBA-LEI-13720-2017-DO-22166",
+        "claim": "replacement_boundary_2017",
+        "variable": "municipal_boundary_legal_description_2017"
+      }
+    ],
+    "forward_operator": {
+      "name": "point_membership_1963",
+      "requires": [
+        "verified_legal_boundary_at_1963",
+        "complete_boundary_coordinates",
+        "source_datum_or_validated_transformation",
+        "positional_error_model",
+        "event_point_time_and_frame"
+      ]
+    },
+    "latent_variables": [
+      {
+        "id": "municipal_boundary_1963",
+        "value": null,
+        "unit": "polygon",
+        "crs": null,
+        "uncertainty": null
+      },
+      {
+        "id": "datum_2017_legal_coords",
+        "value": null,
+        "unit": "reference_system"
+      },
+      {
+        "id": "intervening_law_changes_1954_to_1963",
+        "value": null,
+        "unit": "normative_record_set"
+      }
+    ],
+    "link_status": "CONNECTED_PENDING_HISTORICAL_CUSTODY",
+    "activated_spatial_constraint": false,
+    "missing": [
+      "1953 law annexes as published (Conde, Jandaíra, Esplanada, Rio Real)",
+      "intervening limits acts to 1963",
+      "1963 map with documented datum, precision and custody",
+      "2017 coordinate datum plus complete legal linework, if later modern comparison desired"
+    ],
+    "can_constrain_reentry_1963": false,
+    "source_independence": "2013 SEI metadata and 2017 ALEBA statute are documentary lineage, not independent witnesses to 1963 observed falls."
+  },
+  "methodological_warning": "The four 2017 corner vertices are excerpts of a legal memorial with intermediate hydrographic and other controls OMITTED, not a closed measured GIS polygon. Coordinates without datum must NOT be labelled EPSG:4674, WGS84, or 1963."
+}

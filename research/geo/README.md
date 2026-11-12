@@ -49,3 +49,30 @@ Equações/arestas relevantes para a cadeia de evidências:
 A segunda e a terceira aresta **não estão fechadas**, portanto nenhuma inferência de exclusão/localização de reentrada e nenhuma probabilidade de pouso são autorizadas. A diferença entre edições modernas é útil como teste de estabilidade da geometria publicada, não demonstra imóvel limite em 1963.
 
 **Próximo dado discriminante:** legislação de confrontações municipais vigente em novembro de 1963, mapa oficial de época georreferenciado com pontos de controle e precisão, ou coordenadas de uma observação local independente, com referência espacial explícita. Depois disso o Castor poderá definir um polígono histórico com incerteza e confrontá-lo com trajetória e envelope de erros verdadeiramente calibrados.
+
+
+## Custódia da transição legal 1953–2017: CGEO-05 e CGEO-06
+
+A geometria moderna de CGEO-01/02 **não** é retroprojetável para 1963. Esta fatia adiciona fontes históricas com ocorrências específicas, sem converter coordenadas legislativas em um polígono inventado. O índice C24 da matriz cumulativa permanece preservado; esta seção e conde_legal_1953_2017.json complementam sua proveniência.
+
+| ID | Constatação documental, tempo e origem | Limite epistemológico |
+| --- | --- | --- |
+| **CGEO-05** | [SEI Bahia, *Estatísticas dos Municípios Baianos*, 2013, v.4 n.1, p.149](https://www.ba.gov.br/sei/sites/site-sei/files/migracao_2024/arquivos/images/publicacoes/download/estatisticas_municipios/litoral_norte_2013.pdf), seção 1.2, indica **Lei 628 de 30/12/1953** como vigente em 2013 e referências a Esplanada, Rio Real e Jandaíra. PDF SHA256 e4364fc77070053481184f2c606b9fb18dcd87d5c2da603ec1f7617720fe2c57 (18.424.158 bytes). | Fonte compilada **de 2013**, não o anexo da Lei 628/1953, nem prova contínua de validade espacial entre 1954 e novembro de 1963. Texto indexado e bytes inspecionados; screenshot remoto indisponível por tamanho do PDF. |
+| **CGEO-06** | [Lei baiana 13.720, de 27/04/2017, DOE ALEBA n. 22.166 em 28/04/2017, art. 1º §8º, incisos I–IV, pp.9–10](https://ftp.sei.ba.gov.br/Geoinformacao/leis/lim_mun/aprov/lei-no-13720-de-27-de-abril-de-2017.pdf), que **atualiza** os limites de Conde antes estabelecidos pela Lei 628/1953; art. 3º fixa vigência na data da publicação. PDF SHA256 76134441592ebc234dbd3856560ed6375f956f8e126c8ecced5244b9a38d89d9 (354.121 bytes). | Ato de **2017**, sem efeito retroativo demonstrado. Quatro confrontações Jandaíra, Atlântico, Esplanada e Rio Real; muitos pontos intermediários **não** formam polígono simples de quatro vértices. O texto inspecionado não identifica datum nem precisão dos ângulos. |
+
+A diferença de atributo de área entre SEI 2013 (**964,7 km²** no indicador geográfico), CONDER não custodiada em CGEO-04 (**964,40032361 km²**) e IBGE 2022/2025 (**931,106 km²**) é **discrepância de fontes, datas e critérios**, não prova de modificação legal de divisa. O mesmo volume SEI 2013 traz na tabela do Censo outra área para 2010 (**954,70 km²**); não fundir atributos de origens distintas em uma medição.
+
+### Contrato verificável para 🦫 Castor
+
+- research/geo/conde_legal_1953_2017.json guarda duas fontes (URL, página, hash), relações de dependência e quatro **extremos** das confrontações de 2017 em DMS literal, com coordinate_datum=null e published_positional_accuracy_m=null. Não são coordenadas observacionais da queda.
+- tools/conde_legal_boundary.py confere as quatro extremidades e a continuidade **textual** das confrontações, nunca a geometria física. Faz conversão angular DMS para graus decimais **sem presumir datum** e não exporta geometria para GIS.
+- tests/test_conde_legal_boundary.py verifica fontes, quatro seções, integridade da transcrição, intervalos DMS, veto à identificação automática de EPSG:4674 e impedimento de usar o memorial de 2017 para 1963. Executado pela descoberta integral no workflow Integration checks (exact head).
+
+Para revalidar os bytes da lei, adquirir o PDF oficial e executar:
+
+    python3 tools/conde_legal_boundary.py --date 1963-11-08 --verify-pdf /tmp/lei-13720-2017.pdf --source-id BA-ALEBA-LEI-13720-2017-DO-22166
+    python3 -m unittest tests/test_conde_legal_boundary.py -v
+
+O retorno com boundary_polygon_for_date=null e can_constrain_reentry_1963=false é contratual. Para datas após 28/04/2017, o memorial ainda **não** valida datum, completude cartográfica ou permanência da lei na data solicitada.
+
+**Arestas preservadas:** CGEO-05 → lei_base_1953 (custódia pendente) → limites_vigentes_1963 (latente); CGEO-06 → memorial_2017 (texto, vértices com datum nulo) → alinhamento geodésico condicional; CGEO-01/02 → malhas modernas, *sem ponte temporal*. Status CONNECTED_PENDING_HISTORICAL_CUSTODY; nenhum novo corte do domínio admissível de 1963. Faltam anexos autênticos da Lei 628/1953, atos intervenientes, mapa/datum de época e orçamento de erro. O pedido à 🦦 Lontra [no inbox #2](https://github.com/franklinbaldo/lontra/issues/2) já cobre essa custódia.
