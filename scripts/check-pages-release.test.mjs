@@ -11,6 +11,9 @@ function good() {
       event: 'push', status: 'completed', conclusion: 'success' }],
     deployments: [{ id: 12, sha: SHA, environment: 'github-pages' }],
     statuses: { 12: [{ state: 'success' }] },
+    sourceTree: { truncated: false, tree: [
+      { path: 'stories/2026-11-11-primeira-historia.md', type: 'blob' },
+    ] },
     site: {
       status: 200,
       body: '<header class="masthead"></header><section class="journal"></section>' +
@@ -20,7 +23,7 @@ function good() {
         '<a href="/conde-incident/stories/2026-11-11-primeira-historia/">Chapter</a></article></section>' },
       chapters: [{ status: 200, path: '/conde-incident/stories/2026-11-11-primeira-historia/',
         body: '<article class="full-story"><div class="story-body"><p>Documented advance.</p></div>' +
-          '<a href="https://github.com/franklinbaldo/conde-incident/blob/main/stories/2026-11-11-primeira-historia.md">' +
+          '<a href="https://github.com/franklinbaldo/conde-incident/blob/' + SHA + '/stories/2026-11-11-primeira-historia.md">' +
           'Consultar Markdown-fonte e histórico editorial</a></article>' }],
       lab: { status: 200, body: '<div id="root"></div>' +
         '<script src="/conde-incident/lab/assets/main-xyz.js"></script>' },
@@ -122,6 +125,7 @@ test('an external host must not be followed as a first-party chapter', () => {
 
 function withTwoChapters() {
   const x = good();
+  x.sourceTree.tree.push({ path: 'stories/2026-11-12-segunda-historia.md', type: 'blob' });
   const slug = '2026-11-12-segunda-historia';
   const path = '/conde-incident/stories/' + slug + '/';
   x.site.stories.body = x.site.stories.body.replace('</section>',
@@ -129,7 +133,7 @@ function withTwoChapters() {
   x.site.chapters.push({
     path, status: 200,
     body: '<article class="full-story"><div class="story-body"><p>Independent new lead.</p></div>' +
-      '<a href="https://github.com/franklinbaldo/conde-incident/blob/main/stories/' + slug + '.md">' +
+      '<a href="https://github.com/franklinbaldo/conde-incident/blob/' + SHA + '/stories/' + slug + '.md">' +
       'Consultar Markdown-fonte e histórico editorial</a></article>',
   });
   return x;
@@ -168,4 +172,40 @@ test('duplicate story links and untrusted external chapter links fail', () => {
     'href="/conde-incident/stories/2026-11-12',
     'href="https://external.example/conde-incident/stories/2026-11-12');
   assert.equal(assessRelease(y).status, 'NOT_VERIFIED');
+});
+
+test('source tree for the exact release is mandatory and cannot be truncated', () => {
+  const missing = good(); delete missing.sourceTree;
+  const partial = good(); partial.sourceTree.truncated = true;
+  const empty = good(); empty.sourceTree.tree = [];
+  for (const x of [missing, partial, empty]) {
+    assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+  }
+});
+test('a source chapter omitted from a seemingly healthy live listing fails', () => {
+  const x = good();
+  x.sourceTree.tree.push({ path: 'stories/2026-11-12-nao-publicada.md', type: 'blob' });
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+test('extra chapter card not present at source commit fails', () => {
+  const x = withTwoChapters();
+  x.sourceTree.tree.pop();
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+test('source tree rejects duplicate or malformed chapter source filenames', () => {
+  const a = good(); a.sourceTree.tree.push(a.sourceTree.tree[0]);
+  const b = good(); b.sourceTree.tree[0].path = 'stories/README.md';
+  const c = good(); c.sourceTree.tree[0].type = 'tree';
+  for (const x of [a,b,c]) assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+test('each published story links to immutable exact-SHA source, not moving main or another SHA', () => {
+  const a = good(); a.site.chapters[0].body = a.site.chapters[0].body.replace(
+    '/blob/' + SHA + '/stories/', '/blob/main/stories/');
+  const b = good(); b.site.chapters[0].body = b.site.chapters[0].body.replace(
+    '/blob/' + SHA + '/stories/', '/blob/' + 'b'.repeat(40) + '/stories/');
+  for (const x of [a,b]) assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+test('two chapters with immutable matching source references pass the source ledger check', () => {
+  const x = withTwoChapters();
+  assert.equal(assessRelease(x).status, 'PASS');
 });
