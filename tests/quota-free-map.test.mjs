@@ -92,3 +92,19 @@ test('no verified observation is turned into a point from a documentary-only dec
   assert.match(map, /noMarkers/);
   assert.match(map, /NONE|NÃO|Nenhuma/);
 });
+
+
+test('map keeps document scroll for touch and wheel while retaining accessible pan buttons', () => {
+  // Source contract only; browser coverage is in ui_keyboard_smoke.mjs.
+  assert.match(svg, /touchAction: 'pan-y'/);
+  assert.match(svg, /event\.pointerType === 'touch'/);
+  assert.doesNotMatch(svg, /onWheel=/);
+  assert.match(map, /A roda do mouse rola a página/);
+  assert.match(map, /The mouse wheel scrolls the page/);
+  assert.match(map, /t\.left/);
+  assert.match(map, /t\.right/);
+});
+
+test('hidden 527\/529 scenarios cannot leave their connection lines visible', () => {
+  assert.match(svg, /showConnections && showSisters && positions\[528\]/);
+});
