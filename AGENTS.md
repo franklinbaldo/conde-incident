@@ -30,6 +30,13 @@ Scope of shared scientific/product work: **franklinbaldo/conde-incident**. Perma
 
 **Capacity and coordination:** Elefante maintains staffing and a private agent-recruitment queue without disabling unrelated user automations. Newly hired animals get a private repo, skill, inbox and optional scheduled automation only if the actual quota allows. Existing automation capacity observed on 12 Nov 2026 was **15 active / 15 allowed**; this is a task quota observation, not a permanent statement about a ChatGPT subscription or independent account identities.
 
+## Site e Caderno: contrato editorial vigente
+
+- Páginas e capítulos: **SSG Rust v0.0.75** fixado com SHA-256 no workflow `.github/workflows/pages.yml`; CI exige CLI real, `ssg check/build/audit` e paths verificáveis. Não acrescentar outro gerador editorial.
+- Preservar **Evidências/Caderno** e laboratório React/Vite em `/conde-incident/lab/`; validar paths, assets e CI no HEAD exato.
+- Build verde ≠ publicação: conferir push na `main`, deployment `github-pages` no SHA auditado e HTML/JS/CSS por HTTPS. Não confundir disponibilidade atual com integridade criptográfica do artefato; declarar vínculo por digest pendente quando não testado.
+- Coruja: novidade documental, fontes, contraprovas e limites por capítulo; memória pessoal privada e blog fora do escopo.
+
 ## Verificação universal com prek e OKF (12/11/2026)
 
 - O projeto e **todos os repositórios privados dos agentes** usam `prek` como runner obrigatório no CI; não basta manter configuração sem executá-la. O prek executa `okf-parser==0.48.2 check` com specs normativas e o limite de **20.000 bytes por arquivo**.
