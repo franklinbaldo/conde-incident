@@ -287,7 +287,6 @@ def validate(graph: dict) -> dict:
         inputs = edge.get("inputs", [])
         if len(inputs) != 2 or any(item not in ids for item in inputs):
             raise ValueError(f"orphan derived edge: {edge_id}")
-        # Reversed subtraction of the same two rows is not a new observation.
         pair = frozenset(inputs)
         if len(pair) != 2 or pair in compared_pairs:
             raise ValueError(f"duplicate derived observation pair: {edge_id}")
@@ -320,8 +319,8 @@ def validate(graph: dict) -> dict:
         if edge.get("hard_constraint_active"):
             raise ValueError(f"unvalidated coupling active: {edge['id']}")
     checked_bridges = validate_528_tle_bridge(graph, sources, obs)
-    # Information accumulates even without narrowing; this is not a 'not run' failure.
-    return {
+    from texugo_ssr_facsimile_erratum import reconcile_handoff
+    return reconcile_handoff(graph, {
         "schema": "conde.cumulative-constraint-handoff/v1",
         "input_observations": len(obs),
         "connected_observations": len(output),
@@ -338,7 +337,7 @@ def validate(graph: dict) -> dict:
         "couplings": graph.get("couplings", []),
         "derived_connections": graph.get("derived_connections", []),
         "next_action": "Resolve epochs/error/forward operators; then activate interval constraints and cross-check independent 527/529 holdouts.",
-    }
+    })
 
 
 def main() -> None:

@@ -1,0 +1,36 @@
+{
+  "id": "QA-TX-20261112-07",
+  "kind": "primary_facsimile_reinspection_and_erratum",
+  "owner": "🦡 Texugo",
+  "issue": "https://github.com/franklinbaldo/conde-incident/issues/19",
+  "sources": [
+    {
+      "url": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf#page=7",
+      "pdf_page_index": 6,
+      "printed_page": 5,
+      "code_rows": [
+        "1963 3A",
+        "1963 3C"
+      ]
+    },
+    {
+      "url": "https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf#page=7",
+      "pdf_page_index": 6,
+      "printed_page": 5,
+      "code_rows": [
+        "1963 3A",
+        "1963 3C"
+      ]
+    }
+  ],
+  "reinspection": "Visual comparison of sixteen NASA tabulated cells. One disagreement: NASA 30 Nov 1963 3A nodal period 94.6 min versus 94.8 in old graph. 15 Nov 3A also 94.6 min, so derived difference is zero rather than +0.2 min.",
+  "lineage": "NASA editions share NORAD/AFS upstream. 3A-to-527 and 3C-to-529 are inherited catalogue crosswalks, not printed IDs in these pages.",
+  "legacy_policy": "Do not rewrite frozen 38kB legacy graph under immutable oversized exception. Correct validated handoff and require separate migration/sharding later.",
+  "uncertainty": "Original tracking epoch, covariance and terminal dynamics still absent. Documentary differences are not time derivatives.",
+  "negative_controls": [
+    "forged plausible value plus coherent derived value rejected",
+    "silent changed legacy raw blob rejected"
+  ],
+  "physical_constraints_activated": 0,
+  "conde_status": "INDETERMINATE"
+}
