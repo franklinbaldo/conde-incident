@@ -1,0 +1,58 @@
+{
+  "schema": "conde.statistical-holdout-estimability-bridge/v1",
+  "id": "CERVO-C241-HOLDOUT-ESTIMABILITY-20261112",
+  "classification": "CONDITIONAL_EXACT_LOCAL_LINEAR_IDENTIFIABILITY_NOT_HISTORICAL_INFERENCE",
+  "source_occurrences": ["C25#1", "C179#1", "C180#1", "C181#1", "C241-L3"],
+  "source_path": "research/statistics/raan_527_528_529_1963.json",
+  "holdout_manifest": "research/statistics/raan_chronological_holdout_1963.json",
+  "reproducible_result": "research/statistics/raan_holdout_estimability_C241.json",
+  "source_independence": "ONE_SECONDARY_DOCUMENTARY_LINEAGE",
+  "variables": [
+    {"id": "phase_527", "unit": "deg", "historical_value": null},
+    {"id": "rate_527", "unit": "deg/day", "historical_value": null},
+    {"id": "epoch_527_validation", "unit": "UTC", "source": "frozen_1963_holdout_manifest"},
+    {"id": "one_counterfactual_527_second_epoch", "unit": "UTC", "historically_observed": false},
+    {"id": "physical_mean_TLE_operator_F527", "calibrated_value": null},
+    {"id": "source_angular_offset_and_drift", "calibrated_value": null},
+    {"id": "instrument_covariance_and_selection", "calibrated_value": null}
+  ],
+  "conditional_dependencies": [
+    {
+      "from": "epoch_527_validation",
+      "to": "linearized_phase_rate_rowspace",
+      "relation": "one_527_epoch_cannot_separate_phase_527_from_rate_527"
+    },
+    {
+      "from": "one_counterfactual_527_second_epoch",
+      "to": "linearized_phase_rate_rowspace",
+      "relation": "distinct_epoch_would_improve_local_design_rank_by_one_if_measurement_exists"
+    },
+    {
+      "from": "physical_mean_TLE_operator_F527",
+      "to": "holdout_predictive_score",
+      "relation": "required_forward_operator_not_available"
+    },
+    {
+      "from": "instrument_covariance_and_selection",
+      "to": "holdout_predictive_score",
+      "relation": "required_calibrated_error_and_selection_not_available"
+    },
+    {
+      "from": "source_angular_offset_and_drift",
+      "to": "absolute_angular_inference",
+      "relation": "two_unidentified_global_gauges_remain"
+    }
+  ],
+  "training_validation_only_rank": 5,
+  "training_validation_plus_second_527_epoch_rank_counterfactual": 6,
+  "evaluation_527_design_rows_estimable_from_validation_only": 0,
+  "evaluation_527_design_rows_total": 4,
+  "fit_to_evaluation_design_rows_estimable": 35,
+  "fit_to_evaluation_design_rows_total": 35,
+  "holdout_blinded": false,
+  "historical_posterior": null,
+  "historical_predictive_score": null,
+  "active_constraint": false,
+  "geographic_domain_reduction": "NOT_EVALUABLE",
+  "related_project_issue": 275
+}
