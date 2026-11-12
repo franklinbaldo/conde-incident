@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "owner": "franklinbaldo",
+  "project_repository": "franklinbaldo/conde-incident",
+  "desired_visibility": "private",
+  "issues_enabled": true,
+  "workspace_provisioning": "BLOCKED_NOT_CREATED",
+  "agents": [
+    {
+      "slug": "polvo",
+      "emoji": "🐙",
+      "role": "Formalização Lean, restrições e contratos tipados",
+      "workspace": "franklinbaldo/polvo",
+      "expected_visibility": "private",
+      "workspace_status": "PENDING_PROVISIONING"
+    },
+    {
+      "slug": "castor",
+      "emoji": "🦫",
+      "role": "Dinâmica orbital r/v, J2, arrasto e validação",
+      "workspace": "franklinbaldo/castor",
+      "expected_visibility": "private",
+      "workspace_status": "PENDING_PROVISIONING"
+    },
+    {
+      "slug": "tartaruga",
+      "emoji": "🐢",
+      "role": "Custódia TLE, épocas, fontes e checksums",
+      "workspace": "franklinbaldo/tartaruga",
+      "expected_visibility": "private",
+      "workspace_status": "PENDING_PROVISIONING"
+    },
+    {
+      "slug": "coruja",
+      "emoji": "🦉",
+      "role": "Narrativa histórica e jornalismo científico",
+      "workspace": "franklinbaldo/coruja",
+      "expected_visibility": "private",
+      "workspace_status": "PENDING_PROVISIONING"
+    },
+    {
+      "slug": "raposa",
+      "emoji": "🦊",
+      "role": "Interface científica, mapa e acessibilidade",
+      "workspace": "franklinbaldo/raposa",
+      "expected_visibility": "private",
+      "workspace_status": "PENDING_PROVISIONING"
+    },
+    {
+      "slug": "texugo",
+      "emoji": "🦡",
+      "role": "Auditoria antichurn e falsificação de modelos",
+      "workspace": "franklinbaldo/texugo",
+      "expected_visibility": "private",
+      "workspace_status": "PENDING_PROVISIONING"
+    },
+    {
+      "slug": "gaviao",
+      "emoji": "🦅",
+      "role": "Revisão retrospectiva independente dos merges",
+      "workspace": "franklinbaldo/gaviao",
+      "expected_visibility": "private",
+      "workspace_status": "PENDING_PROVISIONING"
+    },
+    {
+      "slug": "elefante",
+      "emoji": "🐘",
+      "role": "Coordenação, distribuição de issues e cafezinho",
+      "workspace": "franklinbaldo/elefante",
+      "expected_visibility": "private",
+      "workspace_status": "PENDING_PROVISIONING"
+    },
+    {
+      "slug": "lagarto",
+      "emoji": "🦎",
+      "role": "Meteorologia histórica e condições atmosféricas",
+      "workspace": "franklinbaldo/lagarto",
+      "expected_visibility": "private",
+      "workspace_status": "PENDING_PROVISIONING"
+    },
+    {
+      "slug": "cervo",
+      "emoji": "🦌",
+      "role": "Inferência MCMC, priors, likelihoods e identificabilidade",
+      "workspace": "franklinbaldo/cervo",
+      "expected_visibility": "private",
+      "workspace_status": "PENDING_PROVISIONING"
+    },
+    {
+      "slug": "abelha",
+      "emoji": "🐝",
+      "role": "Grafo de proveniência documental e citações",
+      "workspace": "franklinbaldo/abelha",
+      "expected_visibility": "private",
+      "workspace_status": "PENDING_PROVISIONING"
+    },
+    {
+      "slug": "caranguejo",
+      "emoji": "🦀",
+      "role": "Geografia histórica, GIS, limites e coordenadas",
+      "workspace": "franklinbaldo/caranguejo",
+      "expected_visibility": "private",
+      "workspace_status": "PENDING_PROVISIONING"
+    },
+    {
+      "slug": "lontra",
+      "emoji": "🦦",
+      "role": "Inventários de acervos, fac-símiles e metadados",
+      "workspace": "franklinbaldo/lontra",
+      "expected_visibility": "private",
+      "workspace_status": "PENDING_PROVISIONING"
+    }
+  ]
+}
