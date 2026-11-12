@@ -22,6 +22,10 @@ jobs:
           python-version: "3.12"
       - name: Validate 241 source occurrences and documentary dependencies
         run: python3 -m unittest discover -s tests -p 'test_provenance_graph.py' -v
+      - name: Audit Y20175 binary-custody manifest (offline; NOT_DECODED)
+        run: |
+          python3 -m unittest discover -s tests -p 'test_nmc_y20175_custody.py' -v
+          python3 tools/verify_nmc_y20175.py
       - name: Export crosswalk for Polvo and site (no asserted physical landing)
         run: |
           python3 tools/provenance_graph.py --check-site --output /tmp/conde-documentary-provenance.json --citations /tmp/conde-documentary-citations.json
