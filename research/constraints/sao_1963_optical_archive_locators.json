@@ -1,0 +1,235 @@
+{
+  "schema": "conde.archival-optical-evidence-link/v1",
+  "researched_on": "2026-11-12",
+  "research_scope": "Smithsonian SAO optical tracking archives relevant to 1963; excludes TLE custody delegated to Tartaruga",
+  "existing_matrix_links": [
+    "C195#1",
+    "C196#1"
+  ],
+  "global_matrix_id_status": "LOCAL_IDS_AWAIT_RECONCILIATION",
+  "metadata_sources": [
+    {
+      "id": "SOVA-FARU0259",
+      "url": "https://sova.si.edu/components/SIA.FARU0259",
+      "title": "Smithsonian Institution Archives, SIA.FARU0259, Records 1956–1967",
+      "source_type": "INSTITUTIONAL_FINDING_AID",
+      "verified_scope": "Box/folder descriptions on public HTML inventory, not underlying files",
+      "content_sha256": null,
+      "sha_status": "SOURCE_ITEM_NOT_DOWNLOADED",
+      "source_family": "SMITHSONIAN_ARCHIVAL_DESCRIPTION"
+    },
+    {
+      "id": "SOVA-FARU0259-REENTRY",
+      "url": "https://sova.si.edu/record/sia.faru0259/refIDd1e1440",
+      "title": "SIA.FARU0259 box 9 folder 4 Satellite Re-entry, 1963",
+      "source_type": "INSTITUTIONAL_FINDING_AID",
+      "verified_scope": "SOVA item title and box/folder reference only",
+      "content_sha256": null,
+      "sha_status": "SOURCE_ITEM_NOT_DOWNLOADED",
+      "source_family": "SMITHSONIAN_ARCHIVAL_DESCRIPTION"
+    },
+    {
+      "id": "SIA-RU263",
+      "url": "https://siarchives.si.edu/collections/siris_arc_216832",
+      "title": "Record Unit 263 Satellite Tracking Station Records 1953–1968",
+      "source_type": "INSTITUTIONAL_FINDING_AID",
+      "verified_scope": "Indexed finding aid station-history and box lists, including relocation in 1966",
+      "content_sha256": null,
+      "sha_status": "SOURCE_ITEM_NOT_DOWNLOADED",
+      "source_family": "SMITHSONIAN_ARCHIVAL_DESCRIPTION"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "SAO-ARCH-20261112-01",
+      "source_ids": [
+        "SOVA-FARU0259",
+        "SOVA-FARU0259-REENTRY"
+      ],
+      "claim": "Institutional finding aid lists a folder Satellite Re-entry, 1963.",
+      "archive_locator": "SIA.FARU0259 box 9 folder 4",
+      "classification": "DIRECTLY_VERIFIED_INSTITUTIONAL_METADATA",
+      "independence": "A folder description is not a new physical witness or observation.",
+      "observed_at_utc": null,
+      "published_on": null,
+      "physical_units": null,
+      "uncertainty": "Contents uninspected; 528 relevance unknown",
+      "links_to": [
+        "unknown_sao_528_observation_record"
+      ],
+      "candidate_constraint_status": "PENDING_SOURCE_CONTENT"
+    },
+    {
+      "id": "SAO-ARCH-20261112-02",
+      "source_ids": [
+        "SOVA-FARU0259"
+      ],
+      "claim": "Finding aid lists Brazil 1962-1964 and Curacao 1960-1964 folders, plus Apr-Nov 1963 mail logs and 1963 TWX logs.",
+      "archive_locator": "SIA.FARU0259 box 20 folder 3; box 20 folders 4-5; box 10 folders 5-8 and 10-11",
+      "classification": "DIRECTLY_VERIFIED_INSTITUTIONAL_METADATA",
+      "independence": "Related folders in same archival collection, not independent sighting evidence.",
+      "observed_at_utc": null,
+      "published_on": null,
+      "physical_units": null,
+      "uncertainty": "Cannot infer satellite tracking from correspondence titles",
+      "links_to": [
+        "sao_brazil_1963_correspondence_exists",
+        "unknown_sao_528_observation_record"
+      ],
+      "candidate_constraint_status": "ARCHIVAL_LINK_PENDING_INSPECTION"
+    },
+    {
+      "id": "SAO-ARCH-20261112-03",
+      "source_ids": [
+        "SIA-RU263"
+      ],
+      "claim": "Smithsonian STP historical note dates transfer of Baker-Nunn Curacao camera station to Natal, Brazil, to 1966.",
+      "archive_locator": "Smithsonian Record Unit 263 historical note; station history",
+      "classification": "DIRECTLY_VERIFIED_INSTITUTIONAL_RETROSPECTIVE_HISTORY",
+      "independence": "Archive chronology, not satellite observation.",
+      "observed_at_utc": null,
+      "published_on": null,
+      "physical_units": null,
+      "uncertainty": "Constrained to this Smithsonian Baker-Nunn STP station; does not exclude other observers in Brazil in 1963",
+      "links_to": [
+        "sao_baker_nunn_natal_operational_1963_11_08"
+      ],
+      "candidate_constraint_status": "ACTIVE_DOCUMENTARY_ONLY"
+    },
+    {
+      "id": "SAO-ARCH-20261112-04",
+      "source_ids": [
+        "SIA-RU263"
+      ],
+      "claim": "RU263 has Curacao engineering operations files beginning 1963.",
+      "archive_locator": "Record Unit 263 series 9, box 73, Curacao, #420 Operations 1963–1967",
+      "classification": "DIRECTLY_VERIFIED_INSTITUTIONAL_METADATA",
+      "independence": "Not a measured 528 track.",
+      "observed_at_utc": null,
+      "published_on": null,
+      "physical_units": null,
+      "uncertainty": "Only a candidate location for operational procedures/records, not confirmed observation logs",
+      "links_to": [
+        "unknown_sao_528_observation_record"
+      ],
+      "candidate_constraint_status": "PENDING_CONTENT_VERIFICATION"
+    }
+  ],
+  "variables": [
+    {
+      "id": "sao_baker_nunn_natal_operational_1963_11_08",
+      "value": false,
+      "value_type": "boolean",
+      "scope": "the Smithsonian Baker-Nunn station transferred from Curacao in 1966 only",
+      "kind": "DOCUMENTARY_FACT_WITH_QUALIFIER",
+      "physical_constraint": false
+    },
+    {
+      "id": "sao_brazil_1963_correspondence_exists",
+      "value": true,
+      "value_type": "boolean",
+      "scope": "SIA.FARU0259 folder 3 Brazil 1962-64 exists, contents unknown",
+      "kind": "ARCHIVAL_METADATA",
+      "physical_constraint": false
+    },
+    {
+      "id": "unknown_sao_528_observation_record",
+      "value": null,
+      "value_type": "exists/none/unknown",
+      "kind": "POTENTIAL_FUTURE_OBSERVATION",
+      "physical_constraint": false
+    },
+    {
+      "id": "sao_528_observation_epoch_utc",
+      "value": null,
+      "value_type": "timestamp",
+      "kind": "POTENTIAL_FUTURE_OBSERVATION",
+      "physical_constraint": false
+    },
+    {
+      "id": "sao_528_optical_angles_radec_rad",
+      "value": null,
+      "value_type": "pair_real",
+      "unit": "rad",
+      "frame": "TO_BE_DETERMINED",
+      "kind": "POTENTIAL_FUTURE_OBSERVATION",
+      "physical_constraint": false
+    },
+    {
+      "id": "sao_528_angle_covariance_rad2",
+      "value": null,
+      "value_type": "matrix2x2",
+      "unit": "rad²",
+      "kind": "POTENTIAL_FUTURE_OBSERVATION",
+      "physical_constraint": false
+    }
+  ],
+  "model_links": [
+    {
+      "id": "conditional_optical_projection",
+      "kind": "PENDING_FORWARD_OPERATOR",
+      "inputs": [
+        "state_528_at_t",
+        "station_geodetic_position",
+        "sao_528_observation_epoch_utc"
+      ],
+      "outputs": [
+        "sao_528_optical_angles_radec_rad"
+      ],
+      "equation": "(alpha,delta)=project_station_topocentric(state_528(t),station(t),earth_orientation,refraction_if_applicable)",
+      "physical_constraint_active": false,
+      "missing": [
+        "source_plate_or_observation_log",
+        "object_identification",
+        "UTC_epoch",
+        "station_coordinates_and_frame",
+        "photometric_or_astrometric_reduction",
+        "angular_error_bounds"
+      ]
+    },
+    {
+      "id": "documentary_station_timeline",
+      "kind": "EVIDENCE_TO_ARCHIVE_HYPOTHESIS",
+      "inputs": [
+        "SAO-ARCH-20261112-03"
+      ],
+      "outputs": [
+        "sao_baker_nunn_natal_operational_1963_11_08"
+      ],
+      "physical_constraint_active": false,
+      "scope": "station history only"
+    }
+  ],
+  "hypothesis_tests": [
+    {
+      "id": "H_SAO_BRAZIL_1963",
+      "hypothesis": "This particular Smithsonian Baker-Nunn Natal station operated 1963-11-08",
+      "status": "CONTRADICTED_BY_STATION_RELOCATION_CHRONOLOGY",
+      "scope": "does not exclude other Brazilian tracking systems"
+    },
+    {
+      "id": "H_SAO_TRACK_528",
+      "hypothesis": "An independently reduced SAO optical observation of 528 exists near November 1963",
+      "status": "OPEN",
+      "test": "Find and inspect dated camera plate or observation log identifying 1963-003B/528 and station; trace reductions to NASA/NORAD lineages"
+    },
+    {
+      "id": "H_SAO_REENTRY_FOLDER_528",
+      "hypothesis": "FARU0259 1963 re-entry folder mentions 528",
+      "status": "OPEN",
+      "test": "Read folder contents, not just catalog title"
+    }
+  ],
+  "negative_results": [
+    "No 1963 NORAD 528 plate, radar observation or time-tagged astrometry retrieved from those finding aids.",
+    "The Smithsonian main siarchives finding-aid page returned Request Rejected on direct navigation; indexed station-history excerpt available.",
+    "SOVA folder pages exposed catalog metadata but no digitized primary records to inspect.",
+    "Do not infer absence of all 1963 Brazilian optical/radar stations from the later move of the specific Smithsonian Baker-Nunn camera."
+  ],
+  "numerical_domain_effect": "NOT_EVALUABLE_METADATA_ONLY",
+  "connectivity_delta": {
+    "new_archive_locators": 4,
+    "new_documentary_variable_edges": 4,
+    "measurement_constraints_activated": 0
+  }
+}
