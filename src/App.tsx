@@ -22,9 +22,9 @@ import { Satellite, Shield, Globe, Terminal, ExternalLink } from 'lucide-react';
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabId | null>(() => resolveLabHash(window.location.hash));
   const [lang, setLang] = useState<'pt' | 'en'>('pt');
-  const [sharedTimeMs, setSharedTimeMs] = useState<number>(
-    new Date('1963-11-08T19:48:00Z').getTime()
-  );
+  // No observed terminal clock is known; the map supplies its exploratory launch default.
+  // A time is shared only after an explicit visitor action (e.g. inverse-model selection).
+  const [sharedTimeMs, setSharedTimeMs] = useState<number | undefined>(undefined);
   const [isPythonModalOpen, setIsPythonModalOpen] = useState<boolean>(false);
   const [quotaExceeded, setQuotaExceeded] = useState<boolean>(false);
 
@@ -154,12 +154,12 @@ export default function App() {
           <div className="flex items-center gap-2">
             <Satellite className="w-4 h-4 text-cyan-400" />
             <span>
-              NORAD 528 (1963-003B) &amp; Caso Conde (1963) — Reconstrução Astrodinâmica
+              NORAD 528 (1963-003B) &amp; Conde (1963) — Laboratório orbital exploratório
             </span>
           </div>
 
           <div className="flex items-center gap-4 text-[11px]">
-            <span>Modelos: SGP4, WGS84, J2, Termosfera Solar-Min 1963</span>
+            <span>{lang === 'pt' ? 'Modelos exploratórios; posição terminal não validada' : 'Exploratory models; terminal position unverified'}</span>
             <span className="text-zinc-700">|</span>
             <button
               onClick={() => setIsPythonModalOpen(true)}
