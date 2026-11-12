@@ -56,9 +56,20 @@ def build(root: Path = ROOT) -> dict:
     if pg.serialize(citations) != existing:
         raise ValueError("canonical citation feed out of sync; update it first")
     records = citations["records"]
+    matrix_rows = {item["snapshot_ref"]: item
+                   for item in graph["matrix_occurrences"]}
     by_source = {s["id"]: s for s in graph["sources"]}
+    # A row's hash and line come from the pinned matrix, never inferred from
+    # citation text, a reused Cnn label, or a downstream consumer.
+    for item in records:
+        matrix = matrix_rows[item["snapshot_ref"]]
+        if (item["matrix_line"], item["row_sha256"]) != (
+                matrix["matrix_line"], matrix["row_sha256"]):
+            raise ValueError("citation row identity differs from pinned matrix")
     trace = [{
         "snapshot_ref": item["snapshot_ref"],
+        "matrix_line": matrix_rows[item["snapshot_ref"]]["matrix_line"],
+        "row_sha256": matrix_rows[item["snapshot_ref"]]["row_sha256"],
         "source_id": item["source_id"],
         "family_id": item["source_family"],
         "declared_upstream_paths": declared_paths(
@@ -95,6 +106,8 @@ def build(root: Path = ROOT) -> dict:
             matched = cited_by_occurrence[ref]
             rows.append({
                 "snapshot_ref": ref,
+                "matrix_line": matrix_rows[ref]["matrix_line"],
+                "row_sha256": matrix_rows[ref]["row_sha256"],
                 "citation_status": "CURATED" if matched else "UNMAPPED_NOT_CLEARED",
                 "cited_source_ids": sorted({r["source_id"] for r in matched}),
                 "declared_upstream_source_ids": sorted({

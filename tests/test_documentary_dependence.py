@@ -2,6 +2,7 @@
 import json
 from pathlib import Path
 import sys
+import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -28,6 +29,61 @@ class DocumentaryDependenceTests(unittest.TestCase):
         self.assertEqual(self.payload["curated_occurrences"], 28)
         self.assertEqual(self.payload["unmapped_occurrences"], 213)
         self.assertEqual(self.payload["matrix_snapshot_id"], pg.MATRIX_SNAPSHOT_ID)
+
+    def test_lineage_row_hash_and_line_match_pinned_matrix_and_canonical(self):
+        matrix = {r["snapshot_ref"]: r for r in
+                  pg.matrix_occurrences(pg.MATRIX.read_bytes())}
+        self.assertEqual(len(self.by_citation), 29)
+        for item in self.canonical["records"]:
+            key = (item["snapshot_ref"], item["source_id"])
+            exported = self.by_citation[key]
+            pinned = matrix[item["snapshot_ref"]]
+            self.assertEqual(
+                (exported["matrix_line"], exported["row_sha256"]),
+                (pinned["matrix_line"], pinned["row_sha256"]))
+            self.assertEqual(
+                (exported["matrix_line"], exported["row_sha256"]),
+                (item["matrix_line"], item["row_sha256"]))
+
+    def test_c232_two_distinct_citations_keep_same_row_identity(self):
+        ref = pg.matrix_ref("C232#1")
+        rows = [r for r in self.payload["citation_lineages"]
+                if r["snapshot_ref"] == ref]
+        self.assertEqual({r["source_id"] for r in rows},
+                         {"BLUEBOOK_CASES_INDEX_1963", "NARA_BB_CARD_302531013"})
+        self.assertEqual(len({(r["matrix_line"], r["row_sha256"])
+                              for r in rows}), 1)
+        self.assertEqual(len({r["source_id"] for r in rows}), 2)
+        self.assertTrue(all(r["independent_physical_observation_count"] is None
+                            for r in rows))
+
+    def test_contract_rows_are_addressed_even_when_uncurated(self):
+        matrix = {r["snapshot_ref"]: r for r in
+                  pg.matrix_occurrences(pg.MATRIX.read_bytes())}
+        for contract in self.payload["contract_citation_crosswalk"]:
+            for row in contract["occurrences"]:
+                pinned = matrix[row["snapshot_ref"]]
+                self.assertEqual(
+                    (row["matrix_line"], row["row_sha256"]),
+                    (pinned["matrix_line"], pinned["row_sha256"]))
+                self.assertIn(row["citation_status"],
+                              {"CURATED", "UNMAPPED_NOT_CLEARED"})
+                self.assertIsNone(row["independent_physical_observation_count"])
+
+    def test_mutated_row_hash_in_canonical_feed_fails_closed(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            (root / "research").symlink_to(ROOT / "research", target_is_directory=True)
+            (root / "formal").symlink_to(ROOT / "formal", target_is_directory=True)
+            out = root / "public/data"
+            out.mkdir(parents=True)
+            bad = json.loads(pg.SITE.read_text())
+            bad["records"][0]["row_sha256"] = "0" * 64
+            (out / "conde-source-citations.json").write_text(
+                pg.serialize(bad), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError,
+                                        "canonical citation feed out of sync"):
+                depend.build(root)
 
     def test_fbis_is_a_transcription_not_second_radio_witness(self):
         row = self.by_citation[pg.matrix_ref("C01#1"), "FBIS_EOP_UAP_D001"]
