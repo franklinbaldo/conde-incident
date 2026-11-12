@@ -44,6 +44,23 @@ try {
     const current = await page.getByRole('navigation', { name: 'Seções do laboratório' })
       .locator('[aria-current="page"]').textContent();
     assert.match(current || '', /Rastreamento & Mapa/);
+    // Audit map behavior in the real Chromium browser on this PR HEAD.
+    const mapSvg = page.locator('svg[aria-labelledby="orbital-map-title"]');
+    await mapSvg.waitFor();
+    assert.equal(await mapSvg.evaluate(el => getComputedStyle(el).touchAction), 'pan-y',
+      'mobile/native vertical scrolling should remain available over the map');
+    await page.getByRole('checkbox', { name: 'Conexões geométricas de cenários' }).check();
+    await page.getByRole('checkbox', { name: 'Cenários 527/529' }).uncheck();
+    assert.equal(await mapSvg.locator('line').count(), 0,
+      'hidden sibling scenarios must not leave any connection lines');
+    const beforeZoom = await mapSvg.locator('g[transform]').first().getAttribute('transform');
+    await mapSvg.scrollIntoViewIfNeeded();
+    await mapSvg.hover({ position: { x: 40, y: 40 } });
+    const beforeScroll = await page.evaluate(() => window.scrollY);
+    await page.mouse.wheel(0, 180);
+    await page.waitForFunction(y => window.scrollY > y, beforeScroll);
+    const afterZoom = await mapSvg.locator('g[transform]').first().getAttribute('transform');
+    assert.equal(afterZoom, beforeZoom, 'wheel scrolling must not silently zoom the map');
     await page.getByRole('button', { name: 'English' }).click();
     assert.equal(await page.locator('html').getAttribute('lang'), 'en');
     assert.equal(await page.getByRole('link', { name: 'Skip to main content' }).count(), 1);
