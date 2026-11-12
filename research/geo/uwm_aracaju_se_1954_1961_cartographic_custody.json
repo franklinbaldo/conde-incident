@@ -31,7 +31,9 @@
     "iiif_presentation_manifest": "https://collections.lib.uwm.edu/iiif/info/agdm/10814/manifest.json",
     "iiif_image_info": "https://collections.lib.uwm.edu/digital/iiif/agdm/10814/info.json",
     "access_method": "anonymous public HTTP GET; no archive or human contacted",
-    "copyright_notice": "consultar direitos no catálogo UWM; não redistribuir JP2 ou cópia de alta resolução aqui"
+    "copyright_notice": "consultar direitos no catálogo UWM; não redistribuir JP2 ou cópia de alta resolução aqui",
+    "download_uri_from_custodian_api": "https://collections.lib.uwm.edu/digital/api/collection/agdm/id/10814/download",
+    "original_jp2_download_http_verification": "HEAD 200 and 32-byte GET 200; full checksum unavailable"
   },
   "binary_snapshots": [
     {
@@ -118,11 +120,37 @@
       "comprovar data de edição/publicação efetiva da folha com atualização de 1961",
       "identificar se legendas e traçados de divisas são legalmente administrativos, não somente gráficos",
       "resgatar ato legal e texto dos limites vigente em 08/11/1963; comprovar sua vigência e geometria",
-      "calibrar datum, projeção, pontos de controle e erro de digitalização antes de georreferenciar"
+      "calibrar datum, projeção, pontos de controle e erro de digitalização antes de georreferenciar",
+      "obter download integral e hash SHA-256 do JP2 no executor apropriado; não promover a assinatura de prefixo a integridade global"
     ],
     "independence_note": "Cópia digital UWM de cartografia CNG/IBGE, não levantamento independente do mesmo órgão e não testemunho de queda.",
     "orbital_and_physical_constraint": "NOT_ACTIVATED"
   },
-  "negative_scope": "Esta rodada não verificou o JP2 original, não pesquisou todos os acervos, não estabeleceu limites de 1963 nem georreferenciou a folha; resultados negativos se restringem a esses procedimentos ainda não realizados.",
-  "reproduction": "GET dos seis URLs listados em binary_snapshots; comparar tamanho, Content-Type e SHA256 dos corpos exatos. Os hashes identificam snapshots HTTP observados em 2026-11-12, não necessariamente formatos futuros servidos pela CDN."
+  "negative_scope": "Esta rodada não verificou o JP2 original, não pesquisou todos os acervos, não estabeleceu limites de 1963 nem georreferenciou a folha; resultados negativos se restringem a esses procedimentos ainda não realizados. Uma verificação posterior encontrou o URL de download original na API e bytes iniciais JP2 válidos; a leitura integral expirou após 200 segundos, portanto o SHA-256 e o comprimento completos permanecem desconhecidos. HTTP Range não foi confirmado.",
+  "reproduction": "GET dos seis URLs listados em binary_snapshots; comparar tamanho, Content-Type e SHA256 dos corpos exatos. Os hashes identificam snapshots HTTP observados em 2026-11-12, não necessariamente formatos futuros servidos pela CDN.",
+  "original_binary_probe": {
+    "probe_date_utc": "2026-11-12",
+    "endpoint_source": "CONTENTdm singleitem JSON downloadUri for collection agdm, id 10814",
+    "url": "https://collections.lib.uwm.edu/digital/api/collection/agdm/id/10814/download",
+    "head_status": 200,
+    "head_content_type": "image/jp2",
+    "head_content_disposition": "attachment; filename=\"agdm_10814.jp2\"",
+    "head_content_length": null,
+    "get_status": 200,
+    "range_header_requested": "bytes=0-31",
+    "get_content_range": null,
+    "get_content_length": null,
+    "get_content_type": "image/jp2",
+    "bytes_of_body_read": 32,
+    "body_prefix_hex": "0000000c6a5020200d0a870a00000014667479706a703220000000006a703220",
+    "jp2_magic_header_confirmed": true,
+    "range_support_observed": false,
+    "partial_response_only": true,
+    "full_body_sha256": null,
+    "full_body_byte_count": null,
+    "whole_file_transfer_attempt": "TIMEOUT_200S",
+    "whole_file_transfer_error": "Jatobá watchdog ended a whole-body streaming attempt after 200 seconds, without producing a complete digest or byte count. Not evidence of file corruption.",
+    "interpretation": "O URL de download vem diretamente da ficha oficial. HEAD e GET retornaram HTTP 200 e MIME image/jp2; os primeiros 32 bytes têm a assinatura JP2. O servidor não confirmou suporte a HTTP Range: respondeu 200 sem Content-Range. Isso NÃO confere o arquivo integral; o nome de download agdm_10814.jp2 difere de 10806.jp2 na ficha, sem provar que são objetos distintos.",
+    "reproduction": "Run python3 scripts/archives/probe_uwm_jp2.py --prefix-bytes 32; never treat a prefix digest as the original file checksum."
+  }
 }
