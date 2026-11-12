@@ -1,0 +1,87 @@
+{
+  "active_constraint": false,
+  "calibrated_historical_mcmc": "NOT_RUN",
+  "classification": "CONDITIONAL_EXACT_GLOBAL_S1_ALIAS_NOT_HISTORICAL_POSTERIOR",
+  "conde_admissible_geography_change": "NOT_EVALUABLE",
+  "counterfactual_designs": [
+    {
+      "candidate": "COUNTERFACTUAL_SECOND_527_EPOCH_NO_MEASUREMENT",
+      "conditional_prior_width_criterion": "Only with noise-free precisely timed angles and a justified rate interval narrower than this alias spacing can at most one integer winding branch lie inside the interval.",
+      "delta_days": "1/2",
+      "design_wrapped_prediction_shifts_deg": [
+        "0/1",
+        "0/1"
+      ],
+      "evaluation_527_changed_count": 4,
+      "evaluation_527_wrapped_shifts_deg": [
+        "444485817/1250000",
+        "425687571/1250000",
+        "88860447/312500",
+        "128213559/625000"
+      ],
+      "global_rate_unique_from_two_circular_points": false,
+      "k_1_phase_shift_deg": "-107529099903/625000",
+      "k_1_rate_shift_deg_per_day": "720/1",
+      "rank_after_second_epoch": 6,
+      "rank_before_second_epoch": 5,
+      "rate_alias_spacing_deg_per_day": "720/1",
+      "remaining_global_winding_aliases_without_rate_bound": "COUNTABLY_INFINITE"
+    },
+    {
+      "candidate": "COUNTERFACTUAL_SECOND_527_EPOCH_NO_MEASUREMENT",
+      "conditional_prior_width_criterion": "Only with noise-free precisely timed angles and a justified rate interval narrower than this alias spacing can at most one integer winding branch lie inside the interval.",
+      "delta_days": "1/1",
+      "design_wrapped_prediction_shifts_deg": [
+        "0/1",
+        "0/1"
+      ],
+      "evaluation_527_changed_count": 4,
+      "evaluation_527_wrapped_shifts_deg": [
+        "444485817/2500000",
+        "425687571/2500000",
+        "201360447/625000",
+        "128213559/1250000"
+      ],
+      "global_rate_unique_from_two_circular_points": false,
+      "k_1_phase_shift_deg": "-107529099903/1250000",
+      "k_1_rate_shift_deg_per_day": "360/1",
+      "rank_after_second_epoch": 6,
+      "rank_before_second_epoch": 5,
+      "rate_alias_spacing_deg_per_day": "360/1",
+      "remaining_global_winding_aliases_without_rate_bound": "COUNTABLY_INFINITE"
+    }
+  ],
+  "forward_physical_operator": null,
+  "frozen_manifest": {
+    "evaluation_527_epoch_utc": [
+      "1963-10-01T10:44:17.819808Z",
+      "1963-10-16T10:14:13.188192Z",
+      "1963-11-19T20:21:49.593024Z",
+      "1963-12-17T05:43:24.184704Z"
+    ],
+    "path": "research/statistics/raan_chronological_holdout_1963.json",
+    "retrospective_not_blinded": true,
+    "sha256": "a51ff61054da94587aa9c45631b3887572f238fe5967d2a8493c49d360c5e59f",
+    "sole_527_validation_epoch_utc": "1963-08-27T22:53:07.181376Z",
+    "unique_epochs": 119
+  },
+  "historical_angular_error": null,
+  "historical_epoch_error": null,
+  "historical_holdout_logscore": "NOT_RUN",
+  "historical_rate_prior": null,
+  "hypothesis": "wrap(F_527(t)+alpha_527+beta_527*t+source_offset+source_drift*t); F_527(t) fixed but unknown, offset and drift uncalibrated. At two exact times, shifting beta by 360*k/Delta_t and alpha by -t0*360*k/Delta_t leaves both wrapped angles unchanged.",
+  "schema": "conde.raan-527-global-circular-alias/v1",
+  "source": {
+    "calibrated_sensor": null,
+    "documentary_lineages": 1,
+    "occurrence_ids": [
+      "C25#1",
+      "C179#1",
+      "C180#1",
+      "C181#1",
+      "C241-L3"
+    ],
+    "path": "research/statistics/raan_527_528_529_1963.json",
+    "sha256": "b88564912c35167044d5fd4a0c1b50f6c624fcaf1066f82a7b70e503df8928f5"
+  }
+}
