@@ -82,7 +82,7 @@ class PrecisionAuditTests(unittest.TestCase):
         rounded_binary32 = cast_stored(15.74901460, "float")
         self.assertNotEqual(rounded_binary32, 15.74901460)
         with self.assertRaisesRegex(ValueError, "dtype efetivo"):
-            candidate_token(rounded_binary32, "double", 8) if False else candidate_token(15.74901460, "float", 8)
+            candidate_token(15.74901460, "float", 8)
 
     def test_off_grid_values_are_reported_not_forged(self):
         value = cast_stored(198.52615, "float")
