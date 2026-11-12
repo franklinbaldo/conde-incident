@@ -32,9 +32,9 @@ jobs:
       - name: TypeScript check
         run: bun run lint
       - name: Build public site under repository path
-        env:
-          VITE_BASE_PATH: /conde-incident/
-        run: bun run build
+        # Supply base explicitly: the previous CI build rendered root /assets/*
+        # despite VITE_BASE_PATH being exported and failed its own assert.
+        run: bunx vite build --base /conde-incident/
       - name: Verify published entrypoint and asset paths
         run: |
           node --input-type=module <<'NODE'
