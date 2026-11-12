@@ -141,3 +141,45 @@ lineage and the RAAN discrepancy is unresolved. Lean-certified empirical
 admissible r/v intervals, original holdout observations (epochs/frame/uncertainty),
 atmospheric 1963 drag calibration, terminal 528 coordinates and impact claims:
 **NOT_RUN/NOT_SUPPORTED**.
+
+
+## Alternative-premise conditional physics comparison (🦫, 12 Nov 2026 UTC)
+
+The new \`src/lib/orbitAlternativeFits.ts\` consumes **already-separated** conditional
+Cartesian (r,v) scenarios for the same NORAD 527 or 529, UTC initial epoch,
+inertial frame, and shared chronological predeclared training/holdout partition.
+It calls the existing \`fitConditionalVelocity\` and independent step-halving
+training/holdout audits **separately for each alternative**. Initial positions
+may differ; velocity boxes and documentary ancestral chains are NEVER
+intersected across alternatives. A contradictory or unbounded branch produces
+its own negative \`NOT_RUN_*\` result, without contaminating another branch.
+
+The result exposes *every* branch's conditional calibration/negative holdout,
+but never selects a "winner" based on withheld data:
+\`selectedAlternativeId=null\`, \`branchSetExhaustive=false\`,
+\`historicLocation=INDETERMINATE\`, \`groundImpact=NOT_SUPPORTED\`.
+This is a numerical **consumer**, not a substitute for the still-unmerged
+exact-rational source-alternative split in [PR #43](https://github.com/franklinbaldo/conde-incident/pull/43)
+or a verified historical Lean 4.35.0 constraint export. The branch labels and
+lineage strings are **declarations**, not proof of provenance or independence.
+SGP4 is not calculated in this module; the internal unfitted Cartesian
+baseline must never be renamed SGP4.
+
+Run synthetic controls (plus the pre-existing physics suite) in GitHub Actions
+using \`node --experimental-strip-types --test tests/orbit*.test.mjs\`.
+The tests explicitly show two mutually exclusive **synthetic** velocity boxes
+that are each nonempty, an inconsistent branch that does not remove a surviving
+one, an unbounded box that cannot create a trajectory, future deterioration
+despite better training, identity/frame/epoch rejection and heldout leakage.
+
+**Primary documentary anchor:** NASA/Goddard, *Satellite Situation Report*,
+vol. 3 nº 22, 15 November 1963, printed p. 8,
+[NTRS 19640001198](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf),
+occurrence **C197** in [cumulative matrix PR #1](https://github.com/franklinbaldo/conde-incident/pull/1).
+It documents only 8 November as decay date for 1963-003B and has no UTC time,
+position or density record. C25/C179–C185/C240–C241 are secondary orbit-lineage
+material, not independent 527/529 observations; the competing 528 RAAN values
+remain unresolved. **Historical Lean export/verification, NORAD 527/529
+original blind holdout, 1963 atmosphere calibration and NORAD 528 terminal
+place/time: NOT_RUN.** Neither a conditional orbital trajectory nor atmospheric
+reentry establishes a terrestrial impact, especially not at Conde.
