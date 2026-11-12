@@ -153,6 +153,58 @@ class MatrixEvidenceTests(unittest.TestCase):
         self.assertTrue(all(x["numeric_error_bounds"] is None
                             for x in out["entries"]))
 
+
+    def test_unresolved_raan_branches_are_fail_closed_and_disjunctive(self):
+        interface = contracts(self.rows)["unresolved_element_scenarios_interface"]
+        self.assertEqual(interface["version"], 1)
+        self.assertEqual(interface["admissible_semantics"],
+                         "COMMON_AND_LEFT_OR_RIGHT")
+        self.assertEqual(interface["branch_combination_allowed"],
+                         "DISJUNCTION_ONLY_UNTIL_SOURCE_ADJUDICATION")
+        self.assertIsNone(interface["current_scenario"])
+        self.assertIsNone(interface["chosen_physical_constraints"])
+        self.assertIsNone(interface["numerically_supported_bounds"])
+        self.assertEqual(interface["historical_orbit_validation"], "NOT_RUN")
+        self.assertEqual(interface["original_tle_custody"], "NOT_VERIFIED")
+        self.assertEqual(interface["independent_source_lineages"],
+                         "NOT_ESTABLISHED")
+        self.assertFalse(interface["physical_reference_frame_reconciled"])
+        self.assertFalse(interface["holdout_529_passed"])
+        self.assertFalse(interface["all_branch_error_enclosures_verified"])
+        self.assertEqual({x["id"] for x in interface["alternatives"]}, {
+            "SITE_RAAN_284_UNVERIFIED", "AFSPC_MIRROR_RAAN_198_UNVERIFIED"
+        })
+        self.assertEqual([x["raan_degrees_reported"]
+                          for x in interface["alternatives"]],
+                         ["284.1520", "198.5261"])
+        self.assertTrue(all(not x["admitted_as_hard_constraint"]
+                            for x in interface["alternatives"]))
+        self.assertEqual(interface["alternatives"][0]["matrix_occurrences"], [])
+        self.assertEqual(interface["alternatives"][1]["matrix_occurrences"],
+                         ["C25#1", "C179#1"])
+
+    def test_unresolved_raan_sources_cite_exact_original_matrix_rows(self):
+        out = contracts(self.rows)
+        interface = out["unresolved_element_scenarios_interface"]
+        mirror = interface["alternatives"][1]
+        for key, line in [("C25#1", 118), ("C179#1", 839)]:
+            n, occurrence = key.split("#")
+            found = [x for x in out["entries"]
+                     if x["id"] == n and x["occurrence"] == int(occurrence)]
+            self.assertEqual(len(found), 1)
+            self.assertEqual(found[0]["line"], line)
+            self.assertIn(found[0]["citation"], mirror["matrix_citations"])
+            self.assertIsNone(found[0]["numeric_error_bounds"])
+            self.assertEqual(
+                found[0]["physical_encoding"],
+                "NOT_ADMITTED_AS_TERMINAL_STATE_CONSTRAINT")
+        self.assertTrue(all(x["source_authentication"].startswith("NOT_VERIFIED")
+                            for x in interface["alternatives"]))
+        self.assertIn(
+            "prove_all_surviving_scenarios_agree_before_global_geographic_verdict",
+            interface["required_before_physical_use"],
+        )
+
     def test_export_preserves_all_rows_and_lineage_limits(self):
         out = contracts(self.rows)
         self.assertEqual(len(out["entries"]), 241)
