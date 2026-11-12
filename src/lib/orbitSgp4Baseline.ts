@@ -78,11 +78,21 @@ export function sgp4ReferenceAtUtc(input: Sgp4TleInput, epochUtc: string): Sgp4R
   const satrec = satellite.twoline2satrec(input.line1, input.line2);
   if (!Number.isFinite(satrec.jdsatepoch) || satrec.error !== 0)
     return result('SGP4_UNRESOLVED', null, null);
-  const ageDays = satellite.jday(new Date(milliseconds)) - satrec.jdsatepoch;
+  // TLE YYDDD.dddddddd UTC epoch is already encoded in the source bytes.
+  // Do not reinterpret a bulletin publication or decay DAY as a TLE epoch.
+  const yy = Number(input.line1.slice(18, 20));
+  const dayOfYear = Number(input.line1.slice(20, 32));
+  const year = yy < 57 ? 2000 + yy : 1900 + yy;
+  const daysInYear = (Date.UTC(year + 1, 0, 1) - Date.UTC(year, 0, 1)) / 86400000;
+  if (!Number.isFinite(dayOfYear) || dayOfYear < 1 || dayOfYear >= daysInYear + 1)
+    return result('SGP4_UNRESOLVED', null, null);
+  const tleEpochMs = Date.UTC(year, 0, 1) + (dayOfYear - 1) * 86400000;
+  const ageDays = (milliseconds - tleEpochMs) / 86400000;
   if (!Number.isFinite(ageDays)) return result('SGP4_UNRESOLVED', null, null);
   const model = satellite.sgp4(satrec, ageDays * 1440);
   const p = model.position, v = model.velocity;
-  if (!p || !v || ![p.x, p.y, p.z, v.x, v.y, v.z].every(Number.isFinite))
+  if (!p || !v || typeof p !== 'object' || typeof v !== 'object' ||
+      ![p.x, p.y, p.z, v.x, v.y, v.z].every(Number.isFinite))
     return result('SGP4_UNRESOLVED', ageDays, null);
   const rKm: Vec3 = [p.x, p.y, p.z];
   const vKmS: Vec3 = [v.x, v.y, v.z];
