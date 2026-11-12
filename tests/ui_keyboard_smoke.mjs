@@ -56,6 +56,28 @@ try {
     assert(horizontal.document <= horizontal.viewport + 1,
       `body overflow on ${viewport.name}: ${JSON.stringify(horizontal)}`);
     await page.screenshot({ path: `${out}/${viewport.name}-summary.png`, fullPage: true });
+
+    // Verify modal name, focus entry/loop, Escape dismissal and trigger focus restoration.
+    const exportTrigger = page.getByRole('button', { name: 'Python Script' }).first();
+    await exportTrigger.click();
+    const dialog = page.getByRole('dialog', { name: 'norad528_reconstruction.py' });
+    await dialog.waitFor();
+    const close = dialog.getByRole('button', { name: 'Close export dialog' });
+    const copy = dialog.getByRole('button', { name: 'Copy code' });
+    assert(await close.evaluate(element => document.activeElement === element),
+      'opening the export dialog must focus its close control');
+    await page.keyboard.press('Tab');
+    assert(await copy.evaluate(element => document.activeElement === element),
+      'Tab from last control must wrap to first control');
+    await page.keyboard.press('Shift+Tab');
+    assert(await close.evaluate(element => document.activeElement === element),
+      'Shift+Tab from first control must wrap to last control');
+    await page.screenshot({ path: `${out}/${viewport.name}-python-dialog.png` });
+    await page.keyboard.press('Escape');
+    await dialog.waitFor({ state: 'hidden' });
+    assert(await exportTrigger.evaluate(element => document.activeElement === element),
+      'Escape must close export dialog and restore trigger focus');
+
     assert.equal(errors.length, 0, `uncaught page errors: ${errors.join('; ')}`);
     findings.push({ viewport: viewport.name, skip_target: focused.id, hash_preserved: true, nav_hash: '#/map', html_lang: 'en', overflow_px: horizontal.document - horizontal.viewport });
     await page.close();
