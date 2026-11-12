@@ -101,7 +101,8 @@ theorem reported_day_does_not_prove_actual_day :
   intro h
   have hc := h inventedOffDayExample
     (nasa_catalogue_is_not_a_hard_physical_filter inventedOffDayExample)
-  have hbad : ¬ PhysicalDayMatchesCatalogue inventedOffDayExample := by decide
+  have hbad : ¬ PhysicalDayMatchesCatalogue inventedOffDayExample := by
+    simp [PhysicalDayMatchesCatalogue, inventedOffDayExample, NasaCatalogueDay]
   exact hbad hc
 
 /-- Conditional scientific verdicts require a NONEMPTY calibrated domain.
@@ -148,8 +149,8 @@ theorem nasa_documentary_record_leaves_actual_day_underdetermined :
   refine ⟨⟨condeCandidate, nasa_catalogue_is_not_a_hard_physical_filter _, ?_⟩,
           ⟨inventedOffDayExample,
              nasa_catalogue_is_not_a_hard_physical_filter _, ?_⟩⟩
-  · decide
-  · decide
+  · simp [PhysicalDayMatchesCatalogue, condeCandidate, NasaCatalogueDay]
+  · simp [PhysicalDayMatchesCatalogue, inventedOffDayExample, NasaCatalogueDay]
 
 /-- Geography is also underidentified, independent of the date hypothesis. -/
 theorem nasa_documentary_record_does_not_identify_region :

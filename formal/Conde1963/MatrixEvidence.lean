@@ -315,7 +315,8 @@ theorem every_row_is_nonphysical_without_additional_premises
 theorem matrix_does_not_force_nasa_reported_day :
     AllMatrixEvidence inventedOffDayExample ∧
     ¬ PhysicalDayMatchesCatalogue inventedOffDayExample := by
-  exact ⟨every_row_is_nonphysical_without_additional_premises _, by decide⟩
+  exact ⟨every_row_is_nonphysical_without_additional_premises _, by
+    simp [PhysicalDayMatchesCatalogue, inventedOffDayExample, NasaCatalogueDay]⟩
 
 theorem full_matrix_does_not_identify_region :
     ¬ UniquelyIdentifiesRegion AllMatrixEvidence (fun _ => True) := by
