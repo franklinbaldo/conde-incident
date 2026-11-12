@@ -185,11 +185,69 @@ def build(root: Path = ROOT) -> dict:
 
     expect(len({r["id"] for r in records}) == len(records) == 9,
            "duplicate or missing scientific crosswalk entries")
+
+    # A complete citation inventory is not a complete inventory of physical
+    # constraints. Keep every curated source->occurrence edge visible to
+    # Polvo/site, including the second C232#1 archival citation. The only
+    # existing scientific bridges are the three explicit documentary records
+    # above; every other citation remains unassessed, not independent.
+    direct = {(r["occurrence_ref"], r["source_id"]): r for r in records
+              if r["occurrence_ref"].startswith(pg.MATRIX_SNAPSHOT_ID + ":")}
+    expect(len(direct) == 3, "unexpected direct matrix bridge coverage")
+    coverage = []
+    for item in sorted(citations, key=lambda x: (x["snapshot_ref"], x["source_id"])):
+        key = item["snapshot_ref"], item["source_id"]
+        bridge = direct.get(key)
+        expect(item["matrix_line"] > 0 and len(item["row_sha256"]) == 64
+               and item["independent_physical_observation_count"] is None,
+               "invalid curated citation identity or physical status")
+        coverage.append({
+            "occurrence_ref": item["snapshot_ref"],
+            "matrix_line": item["matrix_line"],
+            "row_sha256": item["row_sha256"],
+            "source_id": item["source_id"],
+            "source_family": item["family_id"],
+            "declared_upstream_source_ids": sorted({
+                path["upstream_source_id"]
+                for path in item["declared_upstream_paths"]}),
+            "bridge_record_id": bridge["id"] if bridge else None,
+            "hypothesis_link": bridge["hypothesis_link"] if bridge else None,
+            "lean_status": (bridge["lean_status"] if bridge
+                            else "DOCUMENTARY_ONLY_NOT_ASSESSED"),
+            "simulator_parameter": bridge["simulator_parameter"] if bridge else None,
+            # The underlying bridge record already stores its null value;
+            # do not duplicate it for every source->occurrence edge.
+            "activation": False,
+        })
+    expect(len(coverage) == documentary["citation_edges"]
+           and len({(x["occurrence_ref"], x["source_id"]) for x in coverage})
+               == len(coverage)
+           and len({x["occurrence_ref"] for x in coverage})
+               == documentary["curated_occurrences"]
+           and len(coverage) - sum(x["bridge_record_id"] is not None
+                                   for x in coverage) == 26,
+           "citation coverage does not match curated documentary graph")
+    # C232#1 is one matrix occurrence with two *documentary* citations,
+    # not two sightings. Preserve their separate source IDs without cloning
+    # an observation or silently collapsing one citation.
+    c232 = [x for x in coverage if x["occurrence_ref"] == pg.matrix_ref("C232#1")]
+    expect(len(c232) == 2 and len({x["source_id"] for x in c232}) == 2
+           and len({x["row_sha256"] for x in c232}) == 1
+           and all(x["bridge_record_id"] is None for x in c232),
+           "C232 two-source documentary identity collapsed/promoted")
     return {
         "schema": "conde.scientific-documentary-bridge-index/v1",
         "matrix_git_blob_sha1": MATRIX,
         "source_feeds_sha256": input_hashes,
         "records": records,
+        "citation_coverage": coverage,
+        "citation_coverage_counts": {
+            "curated_edges": len(coverage),
+            "curated_occurrences": documentary["curated_occurrences"],
+            "unmapped_occurrences": documentary["unmapped_occurrences"],
+            "explicit_documentary_bridges": len(direct),
+            "documentary_edges_not_assessed_for_lean": len(coverage) - len(direct),
+        },
         "epistemic_limits": {
             "new_528_instrumental_observations": 0,
             "activated_constraints": 0,
