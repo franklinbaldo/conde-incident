@@ -1,0 +1,153 @@
+{
+  "schema": "conde.historical-archive-observable-graph/v1",
+  "question": "Are IGRA upper-air observations locally available for Salvador or Aracaju in 1963, and does their absence refute the balloon hypothesis?",
+  "captured_on": "2026-11-12",
+  "sources": [
+    {
+      "id": "NOAA-IGRA2-STATION-LIST-20261112",
+      "url": "https://www.ncei.noaa.gov/pub/data/igra/igra2-station-list.txt",
+      "source_kind": "CURRENT_PRIMARY_ARCHIVE_INVENTORY_NOT_1963_OBSERVATION",
+      "line_range_web": [
+        284,
+        295
+      ],
+      "file_sha256": null,
+      "access_note": "Text content independently opened from NOAA NCEI via web; direct download for hash unavailable in runtime.",
+      "independence_family": "NOAA_NCEI_IGRA2_METADATA",
+      "raw_snippets": [
+        "BRM00082900  -8.0500  -34.9167    7.0    RECIFE (82900-0)               1952 2019  14977",
+        "BRM00083096 -10.9170  -37.0500    5.0    ARACAJU                        1974 1979    417",
+        "BRM00083229 -13.0167  -38.5167   52.0    SALVADOR (83229-0)             1970 2018   7954"
+      ]
+    },
+    {
+      "id": "NCAR-GDEX-D394001-METADATA-20261112",
+      "url": "https://gdex.ucar.edu/datasets/d394001/",
+      "doi": "10.5065/BYQV-RZ12",
+      "source_kind": "PRIMARY_ARCHIVE_DATASET_DESCRIPTION_NOT_STATION_DAY_MEASUREMENT",
+      "file_sha256": null,
+      "independence_family": "FAB_NCDC_GDEX_UPPER_AIR_ARCHIVE",
+      "shared_upstream_possible_with": "NOAA_NCEI_IGRA2_METADATA",
+      "raw_statement": "Eleven Brazilian rawinsonde stations and thirty pibal stations over general period Jan 1950-Nov 1986; actual station period varies.",
+      "verification": "Repository metadata verified; file-level station list not recovered."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "MET-IGRA-20261112-01",
+      "source_id": "NOAA-IGRA2-STATION-LIST-20261112",
+      "station_id": "BRM00083229",
+      "station_name": "SALVADOR",
+      "record_first_year": 1970,
+      "record_last_year": 2018,
+      "query_year": 1963,
+      "variable_id": "IGRA2_catalogue_coverage_Salvador_1963",
+      "value": false,
+      "unit": "boolean",
+      "type": "ARCHIVE_COVERAGE_NOT_BALLOON_EXISTENCE",
+      "uncertainty": "Catalogue first year reported 1970; current station identifier/location and historical site identity may require station-history check.",
+      "status": "ARCHIVE_GAP_CONFIRMED_BY_INVENTORY",
+      "physical_constraint_status": "NOT_APPLICABLE"
+    },
+    {
+      "id": "MET-IGRA-20261112-02",
+      "source_id": "NOAA-IGRA2-STATION-LIST-20261112",
+      "station_id": "BRM00083096",
+      "station_name": "ARACAJU",
+      "record_first_year": 1974,
+      "record_last_year": 1979,
+      "query_year": 1963,
+      "variable_id": "IGRA2_catalogue_coverage_Aracaju_1963",
+      "value": false,
+      "unit": "boolean",
+      "type": "ARCHIVE_COVERAGE_NOT_BALLOON_EXISTENCE",
+      "uncertainty": "Same station-list limitation.",
+      "status": "ARCHIVE_GAP_CONFIRMED_BY_INVENTORY",
+      "physical_constraint_status": "NOT_APPLICABLE"
+    },
+    {
+      "id": "MET-IGRA-20261112-03",
+      "source_id": "NOAA-IGRA2-STATION-LIST-20261112",
+      "station_id": "BRM00082900",
+      "station_name": "RECIFE",
+      "record_first_year": 1952,
+      "record_last_year": 2019,
+      "query_year": 1963,
+      "variable_id": "IGRA2_catalogue_period_compatibility_Recife_1963",
+      "value": true,
+      "unit": "boolean",
+      "type": "PERIOD_ELIGIBILITY_ONLY_NOT_DAILY_SONDE",
+      "uncertainty": "Per-station period span alone does not establish 8 November or proximity to Conde; existing C151#1 documents separate 8 November Recife wind observations.",
+      "status": "PERIOD_ELIGIBLE_C151_PRIOR_OBSERVATION",
+      "physical_constraint_status": "NOT_ACTIVATED"
+    },
+    {
+      "id": "MET-IGRA-20261112-04",
+      "source_id": "NCAR-GDEX-D394001-METADATA-20261112",
+      "archive_id": "d394001",
+      "earliest_date": "1949-12-08",
+      "latest_date": "1986-11-17",
+      "variable_id": "GDEX_d394001_station_day_Salvador_1963_11_08",
+      "value": null,
+      "unit": "boolean",
+      "type": "UNKNOWN_STATION_SPECIFIC_COVERAGE",
+      "uncertainty": "Dataset temporal span is aggregate and says nothing about Salvador on 8 November; station/file inventory missing.",
+      "status": "PENDING_FILE_LIST",
+      "physical_constraint_status": "NOT_ACTIVATED"
+    }
+  ],
+  "dependencies": [
+    {
+      "id": "link-NOAA-IGRA-SALVADOR-1963",
+      "from": "MET-IGRA-20261112-01",
+      "to": "latent_wind_profile_Salvador_1963_11_08",
+      "relation": "CANNOT_POPULATE_FROM_IGRA2_STATION_ID_FOR_YEAR",
+      "missing_bridge": "Original FAB/Distrito de Meteorologia ou fonte alterna",
+      "does_not_constrain": "balloon_launched_or_observed"
+    },
+    {
+      "id": "link-NOAA-IGRA-ARACAJU-1963",
+      "from": "MET-IGRA-20261112-02",
+      "to": "latent_wind_profile_Aracaju_1963_11_08",
+      "relation": "CANNOT_POPULATE_FROM_IGRA2_STATION_ID_FOR_YEAR",
+      "does_not_constrain": "balloon_launched_or_observed"
+    },
+    {
+      "id": "link-RECIFE-C151",
+      "from": "MET-IGRA-20261112-03",
+      "to": "C151#1",
+      "relation": "ARCHIVE_PERIOD_COMPATIBLE_WITH_ALREADY_REPORTED_RECIFE_WINDS",
+      "missing_bridge": "Spatiotemporal transfer error to Conde and balloon/fragment dynamical assumptions",
+      "does_not_constrain": "Conde_upper_air_winds"
+    },
+    {
+      "id": "link-GDEX-ALTERNATIVE",
+      "from": "MET-IGRA-20261112-04",
+      "to": "latent_wind_profile_Salvador_1963_11_08",
+      "relation": "POTENTIAL_ALTERNATIVE_ARCHIVE_REQUIRES_STATION_DATE_FILES",
+      "missing_bridge": "GDEX d394001 per-station file list for 7-9 Nov 1963",
+      "does_not_constrain": "balloon_launched_or_observed"
+    }
+  ],
+  "candidate_formalisms": [
+    {
+      "predicate": "archive_year_eligible(source,station,year) := first_year <= year ∧ year <= last_year",
+      "kind": "ARCHIVE_INDEX_FILTER_ONLY",
+      "lean_status": "NOT_IMPLEMENTED_HISTORICAL_RESEARCH_BOUNDARY",
+      "claim": "False for IGRA2 Salvador and Aracaju for 1963, true for period eligibility of Recife, no implication about historical releases."
+    },
+    {
+      "predicate": "if valid_sounding_at(station,t,z) ∧ certified_transfer(station,Conde,t,z,error) then wind_envelope_Conde(t,z)",
+      "kind": "CONDITIONAL_PHYSICAL_OBSERVATION",
+      "lean_status": "PENDING_REAL_WIND_PROFILE_AND_SPATIAL_ERROR",
+      "claim": "No numeric or hard constraint from present metadata."
+    }
+  ],
+  "connectivity_delta": {
+    "new_evidence_occurrences": 4,
+    "source_families": 2,
+    "dependencies": 4,
+    "hard_physical_constraints_added": 0
+  },
+  "physical_domain_status": "NOT_YET_EVALUABLE_WITH_THESE_METADATA"
+}
