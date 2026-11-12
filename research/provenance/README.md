@@ -50,3 +50,27 @@ Para ampliar cobertura, registrar primeiro a ocorrência exata e a fonte concret
 (URL/custódia, edição, localização/página, classe e upstream), sua relação
 e limite. Adicionar teste contra dupla contagem ou promoção indevida.
 Mantêm-se os registros negativos e correções C182/C184/C200.
+
+## Identidades por snapshot: C144 a C151, legado versus matriz
+
+O arquivo local Lean formal/Conde1963/Evidence.lean (154 registros) reutiliza
+C144 a C151 para outras oito proposicoes. Nao e uma segunda fonte fisica.
+O compilador consome formal/scripts/audit_legacy_154.py, com hashes
+verificados e comparacao literal, para exportar legacy_alias_conflicts
+ao grafo e uma lista de conflitos segura ao feed do site.
+O ZIP original continua sem autenticacao documental.
+
+Cada citacao e contrato curado exige chave completa
+matrix:<git-blob-sha1>:Cnn#ocorrencia, por exemplo
+matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C151#1.
+O outro snapshot usa legacy-154:<sha256>:C151#1, referindo-se
+a TRIANGULACAO no documento local antigo, nao aos ventos de Recife.
+Unir pelo simples C151 ou C151#1 e incorreto, mesmo que os dois
+arquivos mencionem o mesmo numero. C44 a C46 exigem #1 ou #2.
+
+Auditoria de consumidores em 12/11/2026: formal/Conde1963/Evidence.lean
+contem as proposicoes legadas; formal/scripts/physical_observable_bridge.py
+e os arquivos IGRA/meteorologia utilizam as proposicoes atuais.
+O bridge ja identifica o SHA da matriz; este PR nao reescreve dados
+fisicos de terceiros. O feed fornece snapshot_ref para integracoes
+futuras do site e Lean. Nao ha novo limite de orbita nem dado de queda.

@@ -13,12 +13,56 @@ import json
 from collections import Counter, defaultdict
 from pathlib import Path
 import re
+import runpy
 
 ROOT = Path(__file__).resolve().parents[1]
 MATRIX = ROOT / "research/evidence_matrix_C001-C238_2026-11-11.md"
 LINEAGES = ROOT / "research/provenance/lineages.json"
 SITE = ROOT / "public/data/conde-source-citations.json"
 MATRIX_BLOB_SHA = "a7978c3a75a153b16ab70118a92c434bba674cb7"
+MATRIX_SNAPSHOT_ID = f"matrix:{MATRIX_BLOB_SHA}"
+
+
+def matrix_ref(occurrence: str) -> str:
+    """Full content-addressed claim reference; a Cnn ID is never a global key."""
+    return f"{MATRIX_SNAPSHOT_ID}:{occurrence}"
+
+
+def legacy_alias_audit(raw: bytes, root: Path = ROOT) -> dict:
+    """Consume Polvo's byte-pinned audit, not a duplicate parser or physical claim."""
+    script = root / "formal/scripts/audit_legacy_154.py"
+    audit = runpy.run_path(str(script))["audit"]
+    report = audit((root / "formal/Conde1963/Evidence.lean").read_bytes(), raw)
+    if len(report["claim_aliases_requiring_snapshot_qualified_ids"]) != 8:
+        raise ValueError("legacy snapshot alias inventory differs from C144-C151")
+    return report
+
+
+def snapshot_aliases(report: dict, rows: list[dict]) -> list[dict]:
+    current_rows = {r["occurrence"]: r for r in rows}
+    aliases = []
+    for item in report["claim_aliases_requiring_snapshot_qualified_ids"]:
+        occurrence = item["old_key"] + "#1"
+        current = current_rows[occurrence]
+        aliases.append({
+            "legacy_ref": (
+                f"legacy-154:{report['archived_bytes_sha256']}:{occurrence}"
+            ),
+            "matrix_ref": current["snapshot_ref"],
+            "legacy_claim": item["old_claim"],
+            "matrix_claim": item["current_claim"],
+            "matrix_line": current["matrix_line"],
+            "matrix_row_sha256": current["row_sha256"],
+            "equivalent_claim": False,
+            "legacy_source_status": report["source_status"],
+            "not_a_verified_physical_event": True,
+        })
+    if [x["matrix_ref"].rsplit(":", 1)[-1] for x in aliases] != [
+        f"C{i}#1" for i in range(144, 152)
+    ]:
+        raise ValueError("snapshot alias list changed")
+    return aliases
+
 ROW = re.compile(r"^\|\s*(?:\*\*)?(C[0-9]+)(?:\*\*)?\s*\|")
 VALID_RELATIONS = {
     "transcribes", "quotes_uninspected_source", "catalogue_of_same_work",
@@ -67,6 +111,7 @@ def matrix_occurrences(raw: bytes) -> list[dict]:
             raise ValueError(f"blank matrix claim at line {line_no}")
         entries.append({
             "occurrence": f"{label}#{counts[label]}",
+            "snapshot_ref": matrix_ref(f"{label}#{counts[label]}"),
             "label": label,
             "index": counts[label],
             "matrix_line": line_no,
@@ -147,6 +192,8 @@ def validate_lineages(config: dict, rows: list[dict], root: Path = ROOT) -> None
         if occurrence not in occurrences or source not in sources or key in seen_citations:
             raise ValueError("orphan/duplicate/ambiguous citation " + repr(key))
         seen_citations.add(key)
+        if link.get("snapshot_ref") != matrix_ref(occurrence):
+            raise ValueError("citation snapshot mismatch or missing: " + occurrence)
         by_occurrence[occurrence].append(link)
         if link["relation"] not in CITATION_RELATIONS:
             raise ValueError("undocumented citation relation " + link["relation"])
@@ -166,44 +213,6 @@ def validate_lineages(config: dict, rows: list[dict], root: Path = ROOT) -> None
     if {x["source_id"] for x in by_occurrence["C179#1"]} != {"AFSPC_MIRROR_528"}:
         raise ValueError("unverified mirror cannot be asserted as original tracking")
 
-    # Post-snapshot source occurrences are append-only typed addenda. They must not
-    # rewrite or renumber the 241 frozen rows and cannot imply physical corroboration.
-    addenda = config.get("post_matrix_occurrences", [])
-    if not isinstance(addenda, list):
-        raise ValueError("post_matrix_occurrences must be an array")
-    seen_addenda = set()
-    for update in addenda:
-        uid = update.get("id")
-        if not isinstance(uid, str) or not uid or uid in seen_addenda or uid in occurrences:
-            raise ValueError("duplicate or missing post-matrix occurrence ID")
-        seen_addenda.add(uid)
-        if update.get("source_id") not in sources or update.get("quoted_source_id") not in sources:
-            raise ValueError("post-matrix occurrence orphan source " + uid)
-        if ((update["source_id"], update["quoted_source_id"]) not in seen_edges
-                or any(edge["kind"] != "quotes_uninspected_source"
-                       for edge in config["dependencies"]
-                       if (edge["from"], edge["to"]) ==
-                       (update["source_id"], update["quoted_source_id"]))):
-            raise ValueError("post-matrix source has no explicit uninspected quotation edge " + uid)
-        related = update.get("related_matrix_occurrences")
-        if not isinstance(related, list) or not related or len(related) != len(set(related)) or (
-                set(related) - occurrences):
-            raise ValueError("post-matrix occurrence has missing/duplicate/unknown matrix links " + uid)
-        if update.get("status") != "CONNECTED_PENDING_DOCUMENTARY_VERIFICATION" or (
-                update.get("observation_type") != "DOCUMENTARY_CITATION_NOT_PHYSICAL_OBSERVATION"):
-            raise ValueError("post-matrix must remain pending documentary evidence " + uid)
-        if (update.get("newspaper_page") is not None or
-            update.get("newspaper_publication_time") is not None or
-            update.get("journalistic_source_independence") != "UNRESOLVED" or
-            update.get("physical_constraint") is not None):
-            raise ValueError("unverified newspaper or physical assumption introduced " + uid)
-        if not re.fullmatch("[0-9a-f]{64}", update.get("image_sha256", "")):
-            raise ValueError("post-matrix digital object missing SHA-256 " + uid)
-        report = Path(update.get("report_path", ""))
-        if not report.parts or report.is_absolute() or ".." in report.parts or (
-                not (root / report).is_file()):
-            raise ValueError("post-matrix report missing or unsafe " + uid)
-
     contract_ids = set()
     for item in config["contracts"]:
         if not item["id"] or item["id"] in contract_ids:
@@ -214,6 +223,10 @@ def validate_lineages(config: dict, rows: list[dict], root: Path = ROOT) -> None
             raise ValueError("contract missing or path escapes checkout: " + str(path))
         if any(occ not in occurrences for occ in item["occurrences"]):
             raise ValueError("contract has unindexed evidence occurrence")
+        if item.get("snapshot_refs") != [
+            matrix_ref(occ) for occ in item["occurrences"]
+        ]:
+            raise ValueError("contract snapshot mismatch or missing: " + item["id"])
         if item["status"] in FORBIDDEN_PHYSICAL_SCOPE:
             raise ValueError("contract overclaims physical corroboration")
 
@@ -221,6 +234,10 @@ def validate_lineages(config: dict, rows: list[dict], root: Path = ROOT) -> None
 def build(config: dict, raw: bytes, root: Path = ROOT) -> tuple[dict, dict]:
     records = matrix_occurrences(raw)
     validate_lineages(config, records, root)
+    # The old 154-row Lean library is preserved locally, not authenticated.
+    # Do not join documentary rows on recycled Cnn labels.
+    legacy_report = legacy_alias_audit(raw, root)
+    alias_conflicts = snapshot_aliases(legacy_report, records)
     source_by_id = {s["id"]: s for s in config["sources"]}
     by_occurrence: dict[str, list[dict]] = defaultdict(list)
     export = []
@@ -229,6 +246,7 @@ def build(config: dict, raw: bytes, root: Path = ROOT) -> tuple[dict, dict]:
         row = next(r for r in records if r["occurrence"] == cite["occurrence"])
         record = {
             "occurrence": row["occurrence"],
+            "snapshot_ref": row["snapshot_ref"],
             "matrix_line": row["matrix_line"],
             "row_sha256": row["row_sha256"],
             "claim_text": row["claim_text"],
@@ -243,7 +261,8 @@ def build(config: dict, raw: bytes, root: Path = ROOT) -> tuple[dict, dict]:
             "not_a_verified_conde_physical_event": True,
         }
         by_occurrence[row["occurrence"]].append({
-            "source_id": src["id"], "relation": cite["relation"], "scope": cite["scope"]
+            "source_id": src["id"], "relation": cite["relation"], "scope": cite["scope"],
+            "snapshot_ref": row["snapshot_ref"]
         })
         export.append(record)
     mapped_count = len(by_occurrence)
@@ -255,6 +274,13 @@ def build(config: dict, raw: bytes, root: Path = ROOT) -> tuple[dict, dict]:
     citations = {
         "schema": "conde.source-citations/v1",
         "matrix_git_blob_sha1": MATRIX_BLOB_SHA,
+        "matrix_snapshot_id": MATRIX_SNAPSHOT_ID,
+        "legacy_alias_conflicts": [{
+            "legacy_ref": a["legacy_ref"],
+            "matrix_ref": a["matrix_ref"],
+            "equivalent_claim": False,
+            "legacy_source_status": a["legacy_source_status"],
+        } for a in alias_conflicts],
         "total_matrix_occurrences": len(records),
         "curated_occurrences": mapped_count,
         "unmapped_occurrences": len(records) - mapped_count,
@@ -263,6 +289,9 @@ def build(config: dict, raw: bytes, root: Path = ROOT) -> tuple[dict, dict]:
     graph = {
         "schema": "conde.documentary-provenance-graph/v1",
         "matrix_git_blob_sha1": MATRIX_BLOB_SHA,
+        "matrix_snapshot_id": MATRIX_SNAPSHOT_ID,
+        "legacy_snapshot_status": legacy_report["source_status"],
+        "legacy_alias_conflicts": alias_conflicts,
         "limits": {
             "inference": "documentary_only; sources not inferred from free text",
             "independent_physical_tracking_count": None,
@@ -275,7 +304,6 @@ def build(config: dict, raw: bytes, root: Path = ROOT) -> tuple[dict, dict]:
         "sources": config["sources"],
         "source_dependencies": config["dependencies"],
         "matrix_occurrences": records,
-        "post_matrix_occurrences": config.get("post_matrix_occurrences", []),
         "contracts": config["contracts"],
         "citation_summary": {
             "matrix_occurrences": len(records),
