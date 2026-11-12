@@ -119,3 +119,87 @@ export function auditPhysicalBudget(
     geographicInference: 'NOT_SUPPORTED',
   };
 }
+
+
+/** Independent step-halving is a falsification check, not a certified error enclosure. */
+export interface BudgetRefinementLimits {
+  readonly positionKm: number;
+  readonly velocityKmS: number;
+  readonly epochS: number;
+  readonly jacobiKm2S2: number;
+  readonly modeledWorkKm2S2: number;
+}
+export interface BudgetRefinementDifference {
+  readonly positionKm: number;
+  readonly velocityKmS: number;
+  readonly epochS: number;
+  readonly jacobiKm2S2: number;
+  readonly modeledWorkKm2S2: number;
+}
+export interface RefinedPhysicalBudget {
+  readonly status: 'NOT_EVALUATED' | 'EVENT_CONFLICT' | 'BUDGET_UNRESOLVED' |
+    'REFINEMENT_UNRESOLVED' | 'REFINEMENT_CONSISTENT';
+  readonly levels: readonly PhysicalBudget[];
+  /** Difference of levels i and i+1; last entry compares the two finest runs. */
+  readonly differences: readonly BudgetRefinementDifference[];
+  readonly limits: BudgetRefinementLimits;
+  readonly interpretation: 'NUMERICAL_ONLY_NOT_HISTORICAL';
+}
+
+/**
+ * Independently repropagate the SAME initial r/v and force model with h, h/2,
+ * h/4 (optionally finer). Require stable event classification, Jacobi balance
+ * at BOTH finest resolutions, final-state agreement and decreasing residuals.
+ * Neither a small energy budget nor agreement of two RK4 steps by itself
+ * constitutes an error bound or empirical orbit determination.
+ */
+export function auditRefinedPhysicalBudget(
+  initial: State, durationS: number, stepS: number, terminationAltitudeKm: number,
+  closureToleranceKm2S2: number, limits: BudgetRefinementLimits,
+  halvings = 2, dynamics: Dynamics = {},
+): RefinedPhysicalBudget {
+  const keys: readonly (keyof BudgetRefinementLimits)[] =
+    ['positionKm', 'velocityKmS', 'epochS', 'jacobiKm2S2', 'modeledWorkKm2S2'];
+  if (!Number.isInteger(halvings) || halvings < 2 || halvings > 5 ||
+      !limits || keys.some(k => !Number.isFinite(limits[k]) || limits[k] <= 0))
+    throw new RangeError('Refinement requires 2..5 halvings and positive finite dimensional limits');
+  const levels: PhysicalBudget[] = [];
+  for (let i = 0; i <= halvings; i++) {
+    levels.push(auditPhysicalBudget(
+      initial, durationS, stepS / 2 ** i, terminationAltitudeKm,
+      closureToleranceKm2S2, dynamics,
+    ));
+  }
+  const differences: BudgetRefinementDifference[] = [];
+  for (let i = 1; i < levels.length; i++) {
+    const a = levels[i - 1], b = levels[i];
+    const diff = (x: readonly number[], y: readonly number[]) =>
+      Math.hypot(...x.map((v, j) => v - y[j]));
+    const difference = {
+      positionKm: diff(a.final.rKm, b.final.rKm),
+      velocityKmS: diff(a.final.vKmS, b.final.vKmS),
+      epochS: Math.abs(a.final.tS - b.final.tS),
+      jacobiKm2S2: Math.abs(a.deltaJacobiKm2S2 - b.deltaJacobiKm2S2),
+      modeledWorkKm2S2: Math.abs(a.modeledWorkKm2S2 - b.modeledWorkKm2S2),
+    };
+    if (keys.some(k => !Number.isFinite(difference[k])))
+      throw new RangeError('Nonfinite numerical refinement difference');
+    differences.push(difference);
+  }
+  const eventsAgree = levels.every(l => l.terminationEvent === levels[0].terminationEvent);
+  const final = differences.at(-1)!;
+  const previous = differences.at(-2)!;
+  const finalWithinLimits = keys.every(k => final[k] <= limits[k]);
+  // Prevent a misleading 'stable' label when the final difference grows
+  // materially relative to the preceding halving (beyond declared resolution).
+  const trendSupported = keys.every(k =>
+    final[k] <= Math.max(limits[k], 1.25 * previous[k]));
+  const latestBalances = levels.slice(-2).every(l => l.status === 'NUMERICALLY_CONSISTENT');
+  const status: RefinedPhysicalBudget['status'] =
+    levels.every(l => l.status === 'NOT_EVALUATED') ? 'NOT_EVALUATED' :
+    !eventsAgree ? 'EVENT_CONFLICT' :
+    !latestBalances ? 'BUDGET_UNRESOLVED' :
+    !finalWithinLimits || !trendSupported ? 'REFINEMENT_UNRESOLVED' :
+    'REFINEMENT_CONSISTENT';
+  return { status, levels, differences, limits, interpretation: 'NUMERICAL_ONLY_NOT_HISTORICAL' };
+}
