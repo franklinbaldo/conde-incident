@@ -47,7 +47,7 @@ test('G16 preserves historical finding and tests Castor corrective trend guard',
  // The G16 audit is an immutable historical snapshot: finding status was OPEN.
  // Do not require the bug to remain in current HEAD after a corrective PR.
  const energy=read('src/lib/orbitEnergyAudit.ts');
- assert.doesNotMatch(energy,/final\\[k\\] <= Math\\.max\\(limits\\[k\\], 1\\.25 \\* previous\\[k\\]\\)/);
+ assert.ok(!energy.includes('final[k] <= Math.max(limits[k], 1.25 * previous[k])'));
  const previous=0.0001, final=0.9, limit=1;
  assert.ok(final<=limit);
  assert.ok(final<=Math.max(limit,1.25*previous));
