@@ -55,7 +55,9 @@ if (!process.argv.includes('--check')) {
       'source_path = '+q('stories/'+s.filename),
       '+++',''
     ];
-    const body = s.body.replace(/^# [^\n]*\r?\n(?:\r?\n)?/,'');
+    // The canonical Markdown starts after a YAML newline; remove a repeated first H1
+    // even if the author separates it from front matter with blank lines.
+    const body = s.body.replace(/^(?:\r?\n)*# [^\r\n]*\r?\n(?:\r?\n)*/, '');
     writeFileSync(join(output,s.filename),lines.join('\n')+body);
   }
 }
