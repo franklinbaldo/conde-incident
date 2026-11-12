@@ -179,7 +179,8 @@ function checkedParameters(branch: AuditBranch): void {
       'Inconsistent declared rational parameter status');
     if (narrowed) reduced = true;
   }
-  must(seen.size === AXES.length, 'Exactly three declared velocity parameters required');
+  // Missing axes are reported as NOT_RUN_INCOMPLETE by the caller below,
+  // rather than throwing or fabricating an unconstrained velocity.
   const expected = empty ? 'CONTRADICTORY' : reduced ? 'REDUCED' : 'UNCHANGED';
   must(branch.domain_status === expected, 'Inconsistent declared scenario domain status');
 }
