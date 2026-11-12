@@ -37,6 +37,46 @@ class HistoricalStatutesTest(unittest.TestCase):
         self.assertEqual(result["temporal_status"], "AFTER_EXPLICIT_1953_DIVISION_PERIOD_CONTINUITY_UNVERIFIED")
         self.assertFalse(result["can_constrain_reentry"])
 
+    def test_1953_art2_explicitly_preserves_1944_but_not_1963(self):
+        bridge = self.data["legal_1944_1953_bridge"]
+        self.assertEqual(bridge["provision"], "art. 2")
+        self.assertTrue(bridge["explicit_preservation_in_1953"])
+        self.assertTrue(bridge["modified_by_1953_and_annexes"])
+        self.assertFalse(bridge["annexes_ii_vi_inspected"])
+        self.assertFalse(bridge["conde_jandaira_segment_identity_proven"])
+        self.assertFalse(bridge["continuing_unchanged_until_1963_proven"])
+        self.assertIsNone(bridge["boundary_geometry_for_1963"])
+        link = [edge for edge in self.data["dependency_graph"]["links"]
+                if edge["type"] == "EXPLICIT_ART2_NORMATIVE_CARRYOVER_WITH_1953_MODIFICATIONS"]
+        self.assertEqual(len(link), 1)
+        self.assertEqual(link[0]["target"], "BA-DEC-12978-1944-ANNEX2-LXXIII")
+        result = evaluate("1963-11-08", self.data)
+        self.assertEqual(result["1944_statute_carryover_in_1953"],
+                         "CONNECTED_PENDING_1953_ANNEX_ALTERATIONS_AND_LATER_ACTS")
+        self.assertIsNone(result["legal_boundary_for_date"])
+
+    def test_prevent_unverified_1963_continuity_promotion(self):
+        for field, value in (
+            ("continuing_unchanged_until_1963_proven", True),
+            ("conde_jandaira_segment_identity_proven", True),
+            ("annexes_ii_vi_inspected", True),
+            ("boundary_geometry_for_1963", {"type": "Polygon", "coordinates": []}),
+        ):
+            with self.subTest(field=field):
+                mutant = copy.deepcopy(self.data)
+                mutant["legal_1944_1953_bridge"][field] = value
+                with self.assertRaisesRegex(ValueError, "legal carryover promotion"):
+                    self.load_mutant(mutant)
+
+    def test_prevent_art2_dependency_edge_deletion(self):
+        mutant = copy.deepcopy(self.data)
+        mutant["dependency_graph"]["links"] = [
+            edge for edge in mutant["dependency_graph"]["links"]
+            if edge["type"] != "EXPLICIT_ART2_NORMATIVE_CARRYOVER_WITH_1953_MODIFICATIONS"
+        ]
+        with self.assertRaisesRegex(ValueError, "normative carryover graph edge missing"):
+            self.load_mutant(mutant)
+
     def test_no_geometry_even_within_1953_explicit_period(self):
         for day in ("1944-06-01", "1954-01-01", "1958-12-31", "1963-11-08", "2017-04-28"):
             with self.subTest(day=day):
