@@ -28,3 +28,33 @@ those eight codes without specifying a snapshot. See
 
 The Lean import is a compilation check of a historical *data registry*, not
 154 independently proved propositions and not a restriction on the impact site.
+
+
+## Documentary-to-Lean bridge (Cnn#occurrence, 12 Nov 2026)
+
+The generator in formal/scripts/compile_documentary_links.py deterministically
+imports the curated lineage records, frozen C001-C238 matrix, and six secondary
+NORAD-528 elements from the cumulative physical graph into
+formal/Conde1963/Documentary.lean.
+
+Reproduce:
+
+    python3 formal/scripts/compile_documentary_links.py --check
+    python3 -m unittest discover -s formal/tests -p test_documentary_links.py -v
+    cd formal && lake build && lake env lean Conde1963/CoreAxioms.lean
+
+The typed contract records 24 curated source-to-occurrence citations out of
+241 matrix occurrences (217 unmapped) and six secondary orbital fields
+(inclination, RAAN, eccentricity, argument of perigee, mean anomaly and mean
+motion), all under C179#1. Snapshot SHA, line SHA, work ID, source family,
+units and TLE epoch are retained. C197#1 provides catalogued decay DAY only;
+NTRS C198#1 is metadata for the same NASA work, not an independent sensor.
+
+Falsification and negative result: sources cannot be promoted to original
+1963 tracking. No instrument observation epoch, frame calibration, covariance
+or new 527/529 dynamic holdout is available. Before/after admissible domain:
+unchanged; physical constraints activated: zero; numerical holdout: NOT_RUN.
+Next: find an authenticated full 528 primary tracking element set (epoch,
+frame, checksum, measurement covariance) for calibrated fitting with
+527/529 controls and error in physical units. Lean compilation validates
+the data types, not the historical occurrence of an impact.
