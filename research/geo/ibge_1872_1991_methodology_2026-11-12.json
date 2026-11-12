@@ -1,0 +1,76 @@
+{
+  "schema": "conde.gis.ibge-retrospective-lineage/v1",
+  "id": "CGEO-11",
+  "documentary_evidence": {
+    "classification": "OFFICIAL_PRIMARY_METHOD_STATEMENT",
+    "publisher": "IBGE",
+    "title": "Evolução da divisão territorial do Brasil 1872–2010: conteúdo digital",
+    "section": "Apresentação",
+    "page_1_based": 1,
+    "pdf_url": "https://geoftp.ibge.gov.br/metodos_e_outros_documentos_de_referencia/outros_documentos_tecnicos/municipios_1872_1991_documentacao/Evolucao_da_divisao_territorial_do_Brasil_1872%20a%202010_apresentacao_do_conteudo_digital.pdf",
+    "pdf_sha256": "5886a4a481f51299818082beb5fb43d7deda60f4d2ad09a31eb598579d6e0fab",
+    "pdf_size_bytes": 15484,
+    "accessed_date_utc": "2026-11-12",
+    "page_inspection": "VISUALLY_INSPECTED_PAGE_1_AND_BINARY_VERIFIED",
+    "claim_locator": "Apresentação, paragraph beginning As malhas municipais"
+  },
+  "official_methodology": {
+    "product_family": "IBGE Evolução da Divisão Territorial do Brasil 1872–2010, historic municipality meshes",
+    "base_mesh_nominal_year": 1991,
+    "construction_method": "Historic municipality polygons assembled from the 1991 municipality mesh for the history of municipal emancipation",
+    "cartographic_precision_claimed": false,
+    "numeric_horizontal_accuracy_m": null,
+    "nominal_year_of_derived_conde_record": 1960,
+    "source_geometry_record_id": "CGEO-10",
+    "independence_from_1991_topology": false,
+    "does_not_establish_geodetic_epoch_of_1960_survey": true,
+    "does_not_establish_1963_legal_perimeter": true,
+    "notes": "IBGE method statement is product-wide, not vertex-level ancestry, 1963 law or numeric accuracy."
+  },
+  "dependency_graph": {
+    "nodes": [
+      "CGEO-11",
+      "CGEO-10",
+      "IBGE_HISTORICAL_MESH_FAMILY",
+      "IBGE_1991_MESH_BASE",
+      "CONDE_RETROSPECTIVE_1960",
+      "LEGAL_BOUNDARY_CONDE_1963_LATENT"
+    ],
+    "edges": [
+      {
+        "source": "CGEO-11",
+        "target": "IBGE_HISTORICAL_MESH_FAMILY",
+        "kind": "DOCUMENTS_PRODUCT_WIDE_CONSTRUCTION_METHOD"
+      },
+      {
+        "source": "IBGE_1991_MESH_BASE",
+        "target": "CONDE_RETROSPECTIVE_1960",
+        "kind": "REPORTED_CARTOGRAPHIC_DERIVATION_NOT_AN_INDEPENDENT_1960_SURVEY"
+      },
+      {
+        "source": "CGEO-10",
+        "target": "CONDE_RETROSPECTIVE_1960",
+        "kind": "IDENTIFIES_SOURCE_POLYGON_AND_NOMINAL_YEAR"
+      },
+      {
+        "source": "CONDE_RETROSPECTIVE_1960",
+        "target": "LEGAL_BOUNDARY_CONDE_1963_LATENT",
+        "kind": "NOT_A_VALIDATED_TEMPORAL_OR_PRECISION_BRIDGE"
+      }
+    ]
+  },
+  "castor_export": {
+    "reference_polygon_id": "CGEO-10",
+    "polygon_coordinates_in_this_record": null,
+    "projected_crs": "SEE_CGEO-10_NATIVE_WORLD_POLYCONIC",
+    "reference_year_is_nominal": true,
+    "legal_boundary_for_1963": null,
+    "event_point_1963": null,
+    "position_uncertainty_m": null,
+    "point_membership_1963": null,
+    "can_use_as_survey_grade_polygon": false,
+    "can_filter_1963_reentry_positions": false,
+    "can_compute_1963_location_probability": false,
+    "status": "METHOD_DOCUMENTED_PRECISION_ABSENT_HISTORICAL_BOUNDARY_UNRESOLVED"
+  }
+}
