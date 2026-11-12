@@ -25,3 +25,25 @@ A [reportagem #65](https://github.com/franklinbaldo/conde-incident/pull/65) tem 
 Sem NORAD primário com proveniência, frame e covariância; sem medida de posição terminal, simulador calibrado, holdout posicional ou objeto no solo autenticado. Resultado físico: **Conde indeterminado**. O conflito entre RAAN legado 284,1520° e 198,5261° secundário segue sem genealogia instrumental. Uma reentrada catalogada não demonstra impacto.
 
 **Pendente:** consultar o workflow independente no HEAD final para fixar resultados/horizontes; informar G13-E1 na PR #65. A [PR #3](https://github.com/franklinbaldo/conde-incident/pull/3) ainda implementa Zola, incompatível com a decisão SSG Rust da [PR #22](https://github.com/franklinbaldo/conde-incident/pull/22). CI editorial verde não libera a arquitetura. Sem merge, deploy, contatos ou alteração de blog pessoal.
+
+
+## Resultado efetivo do replay independente no corpus pinado (12/11/2026)
+
+O [workflow G13 #43194855578](https://github.com/franklinbaldo/conde-incident/actions/runs/43194855578), executado no SHA de implementação 1a474361da3417faac3686a635bc5171e035c078, concluiu **SUCCESS**: 12/12 testes sintéticos adversariais, download Parquet com SHA-256 conferido, leitura independente, 53 candidatos / **51 alvos pontuados e dois NOT_RUN**, reprodução das três famílias numéricas. Artefato JSON com previsões e erros por alvo: [#13932641520](https://github.com/franklinbaldo/conde-incident/actions/runs/43194855578/artifacts/13932641520), digest ZIP SHA-256 1f1e6bdeec9d0aa765ca16b2e67c60c2962811154e7937a1fb28cb747ac3cbac.
+
+**RMSE agregado independente (rev/dia):** secante 2 pontos 0,0109350674861, OLS 3 pontos 0,0145442475385, persistência 0,0269039352225. Concordam com os valores C243-T12 publicados.
+
+| Horizonte até próxima época 529 | Alvos | Secante 2 | OLS 3 | Persistência |
+|---|---:|---:|---:|---:|
+| Até 1 dia | 2 | **0,01428507** | 0,03763420 | 0,03943882 |
+| >1 até 7 dias | 31 | **0,01289445** | 0,01547540 | 0,03068191 |
+| >7 até 30 dias | 18 | 0,00545670 | **0,00543395** | 0,01602309 |
+| >30 dias | 0 | NOT_RUN | NOT_RUN | NOT_RUN |
+
+**Achado G13-E2:** a secante mantém vantagem sobre a persistência nos três estratos examinados, mas **não é a melhor das duas retas locais no estrato >7–30 dias**, em que OLS de três épocas vence marginalmente (0,00543395 vs 0,00545670 rev/dia). Como o estrato foi analisado após os resultados, isso não demonstra seleção prospectiva nem superioridade generalizável. Qualificar a expressão “vencedora” como **agregada**, e não universal por horizonte.
+
+A **deleção de cada um dos 51 alvos, sem reajuste**, manteve a secante melhor que persistência e OLS em 51/51 comparações cada. Todavia o erro quadrático da secante é concentrado: o registro catalogado em 1963-12-29T20:28:24.196512Z responde por **47,65%** da sua soma de erros quadráticos. Esses diagnósticos são compatíveis: maior contribuição individual não significa que remover esse registro inverta o ranking. Deleções sobrepostas não são réplicas independentes.
+
+**Incidente do CI:** o primeiro workflow #43194708524 falhou por erro **no teste sintético do próprio auditor**: esperava 23 na persistência de um exemplo linear em que o último valor correto era 11. A implementação estava correta; alterei o teste para verificar secante/OLS 23 e persistência 11 no commit 1a474361. O replay histórico e os 12 testes passaram depois. A alteração documental deste relatório ainda exige **novo CI no SHA final**.
+
+Conclusão em quatro eixos mantém as classes: documentos NASA/FBIS autenticam apenas registros administrativos/jornalísticos limitados; dados Parquet são numericamente verificáveis, porém não instrumentais originais; sem restrição física Lean ou domínio reduzido; sem propagação calibrada nem localização. **INDETERMINADO**.
