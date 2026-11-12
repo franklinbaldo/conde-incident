@@ -1,270 +1,196 @@
-import React, { useState, useMemo } from 'react';
-import {
-  Wind,
-  Sun,
-  Activity,
-  Layers,
-  Gauge,
-  AlertTriangle,
-  Info,
-  Calendar,
-} from 'lucide-react';
-import {
-  SPACE_ENVIRONMENT_NOV_1963,
-  HISTORICAL_ORBITAL_DATA,
-} from '../lib/constants';
+import React, { useMemo, useState } from 'react';
+import { Activity, AlertTriangle, ExternalLink, Layers, Wind } from 'lucide-react';
 import { getThermosphericDensity } from '../lib/astrodynamics';
 
-interface AtmosphereSensitivityProps {
-  lang: 'pt' | 'en';
-}
+type Language = 'pt' | 'en';
+interface AtmosphereSensitivityProps { lang: Language }
 
-export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
-  lang,
-}) => {
-  const isPt = lang === 'pt';
+const matrix = 'https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md';
+const lean = 'https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/formal/Conde1963/Core.lean';
+const nasa = 'https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf#page=10';
+const altitudesKm = [120, 160, 200, 240, 280, 320] as const;
+const labels = {
+  pt: {
+    badge: 'DEMONSTRAÇÃO ALGÉBRICA · NÃO CALIBRADA',
+    heading: 'Sensibilidade atmosférica: o que o modelo permite mostrar',
+    intro: 'O decaimento de NORAD 528 depende de condições e parâmetros ainda não identificados. Esta tela compara apenas o formato de uma lei exponencial de densidade já presente no código. Não integra uma trajetória, não prevê a chegada a 120 km e não ajusta a data do boletim NASA.',
+    control: 'Altura de escala hipotética (H)',
+    help: '35–65 km são limites do controle didático, não um intervalo de confiança, uma medição de novembro de 1963 ou um domínio admissível calculado.',
+    figure: 'Perfil relativo do modelo exponencial',
+    ratio: 'Razão em relação à densidade do próprio modelo a 200 km',
+    altitude: 'Altitude de exemplo',
+    visual: 'Barra relativa ao maior valor nesta tabela',
+    caveat: 'As barras e as razões são saídas algébricas de uma função parametrizada, não medições históricas. A amplitude gráfica depende das altitudes escolhidas.',
+    sourceTitle: 'Cadeia de evidências e restrições',
+    sourceIntro: 'Os identificadores abaixo remetem a ocorrências da matriz em revisão. Registros derivados da mesma cadeia não constituem observações independentes.',
+    chain: [
+      ['C191', 'Parâmetros derivados de TLE: não são medições diretas de arrasto.', matrix + '#L846-L872'],
+      ['C192', 'H = 44,8–48,9 km é uma faixa hipotética de um modelo anterior, NÃO um intervalo físico validado.', matrix + '#L846-L872'],
+      ['C193', 'Explorer XVII: medidas de abril a junho de 1963, não condições termoesféricas de novembro.', matrix + '#L846-L872'],
+      ['C194', 'NASA e NORAD podem compartilhar rastreamento; não duplicar peso estatístico.', matrix + '#L846-L872'],
+      ['C197–C202', 'Boletim NASA: dia de decaimento 08/11, sem horário, altitude terminal ou local.', matrix + '#L899-L912'],
+    ],
+    limitsTitle: 'Limites do fluxo científico',
+    limits: 'Não existe nesta interface um conjunto não vazio e reduzido de parâmetros, ajuste orbital com custódia RAAN reconciliada, propagação calibrada ou holdout físico que permita usar estas curvas para localizar o objeto.',
+    bst: 'BSTAR = 0 em uma linha de elementos não é medição de arrasto nulo. Tampouco autoriza afirmar por si só qual procedimento histórico produziu o campo.',
+    unknown: 'Resultado científico para o local e a hora: indeterminado.',
+    evidence: 'Abrir Evidence · dia NASA',
+    raan: 'Abrir Evidence · conflito RAAN',
+    premise: 'Premissas Lean (condicionais)',
+    domain: 'Contraprovas de domínio (#37)',
+    scenario: 'Cenários TLE alternativos (#43)',
+    map: 'Mapa exploratório',
+    provenance: 'Verificação: leitura da matriz e do código; perfil calculado apenas pelo código. Condições termoesféricas, TLEs primários e valores físicos de novembro não foram aqui verificados.',
+  },
+  en: {
+    badge: 'ALGEBRAIC DEMONSTRATION · NOT CALIBRATED',
+    heading: 'Atmospheric sensitivity: what this model can show',
+    intro: 'NORAD 528 decay depends on environmental conditions and parameters that have not been established. This view only compares the shape of an exponential density law already in the code. It does not integrate a trajectory, predict crossing 120 km, or fit the NASA bulletin date.',
+    control: 'Hypothetical scale height (H)',
+    help: '35–65 km is the range of this teaching control, not a confidence interval, a November 1963 measurement, or a calculated admissible domain.',
+    figure: 'Relative exponential-model profile',
+    ratio: 'Ratio to this same model’s density at 200 km',
+    altitude: 'Example altitude',
+    visual: 'Bar relative to the highest entry in this table',
+    caveat: 'The bars and ratios are algebraic outputs of a parameterized function, not historical measurements. The visual range depends on the chosen altitudes.',
+    sourceTitle: 'Evidence and constraint chain',
+    sourceIntro: 'These identifiers link to occurrences in the matrix under review. Derivatives of a shared source must not count as independent observations.',
+    chain: [
+      ['C191', 'TLE-derived parameters: not direct drag measurements.', matrix + '#L846-L872'],
+      ['C192', 'H = 44.8–48.9 km is a hypothetical range from a previous model, NOT a validated physical interval.', matrix + '#L846-L872'],
+      ['C193', 'Explorer XVII measurements: April–June 1963, not November thermospheric conditions.', matrix + '#L846-L872'],
+      ['C194', 'NASA and NORAD can share tracking provenance; do not double count.', matrix + '#L846-L872'],
+      ['C197–C202', 'NASA bulletin: decay day November 8, without a terminal time, altitude or location.', matrix + '#L899-L912'],
+    ],
+    limitsTitle: 'Scientific pipeline limits',
+    limits: 'This view contains no certified nonempty reduced parameter domain, reconciled RAAN custody, calibrated orbit propagation or physical holdout that could use these curves to locate the object.',
+    bst: 'BSTAR = 0 in an element line does not measure zero physical drag. Nor does it alone identify the historical recording procedure.',
+    unknown: 'Scientific outcome for place and time: undetermined.',
+    evidence: 'Open Evidence · NASA day',
+    raan: 'Open Evidence · RAAN conflict',
+    premise: 'Lean premises (conditional)',
+    domain: 'Domain counterexamples (#37)',
+    scenario: 'Alternative TLE scenarios (#43)',
+    map: 'Exploratory map',
+    provenance: 'Verification: matrix and code examined; profile computed from code only. November atmospheric conditions, primary TLEs and physical values have not been independently verified here.',
+  },
+} as const;
 
-  const [scaleHeightKm, setScaleHeightKm] = useState<number>(45);
-  const [solarFluxF107, setSolarFluxF107] = useState<number>(76.5);
-  const [ballisticCoeff, setBallisticCoeff] = useState<number>(0.022);
-  const [geomagneticAp, setGeomagneticAp] = useState<number>(9.0);
-
-  // Compute simulated arrival at 120 km interface based on sliders
-  const simulatedDecayDays = useMemo(() => {
-    // Reference: H = 45 km, B = 0.022, F10.7 = 76.5 -> 12 days (08/11/1963)
-    const bRatio = 0.022 / Math.max(0.005, ballisticCoeff);
-    const hRatio = scaleHeightKm / 45.0;
-    const fRatio = 76.5 / Math.max(65, solarFluxF107);
-    return 12.0 * Math.pow(bRatio, 0.28) * Math.pow(hRatio, 0.25) * Math.pow(fRatio, 0.18);
-  }, [scaleHeightKm, ballisticCoeff, solarFluxF107]);
-
-  const simulatedDecayDate = useMemo(() => {
-    const epochMs = HISTORICAL_ORBITAL_DATA[528].epochDate.getTime();
-    return new Date(epochMs + simulatedDecayDays * 86400 * 1000);
-  }, [simulatedDecayDays]);
-
-  // Historical Reference Table from the Handoff
-  const sensitivityTable = [
-    {
-      scale: 40,
-      arrivalDate: '06/11/1963',
-      matchStatus: 'Anterior ao Catálogo (-2 dias)',
-      matchColor: 'text-zinc-400',
-    },
-    {
-      scale: 45,
-      arrivalDate: '08/11/1963',
-      matchStatus: 'EXATA CONCORDÂNCIA COM CATÁLOGO',
-      matchColor: 'text-emerald-400 font-bold',
-    },
-    {
-      scale: 50,
-      arrivalDate: '09/11/1963',
-      matchStatus: 'Posterior ao Catálogo (+1 dia)',
-      matchColor: 'text-amber-400',
-    },
-    {
-      scale: 60,
-      arrivalDate: '11/11/1963',
-      matchStatus: 'Posterior ao Catálogo (+3 dias)',
-      matchColor: 'text-zinc-400',
-    },
-  ];
-
-  // Atmospheric altitude curve points (80 km to 350 km)
-  const altitudeProfile = useMemo(() => {
-    const points = [];
-    for (let alt = 350; alt >= 80; alt -= 30) {
-      const rho = getThermosphericDensity(alt, scaleHeightKm);
-      points.push({ alt, rho });
-    }
-    return points;
+export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({ lang }) => {
+  const t = labels[lang];
+  const [scaleHeightKm, setScaleHeightKm] = useState(45);
+  const profile = useMemo(() => {
+    const reference = getThermosphericDensity(200, scaleHeightKm);
+    return altitudesKm.map(altitude => ({
+      altitude,
+      ratio: getThermosphericDensity(altitude, scaleHeightKm) / reference,
+    }));
   }, [scaleHeightKm]);
+  const maximum = profile[0].ratio;
 
   return (
-    <div className="space-y-6">
-      {/* Intro Header */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
-        <div className="space-y-1 max-w-3xl">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-800 text-cyan-300 text-xs font-mono">
-            <Wind className="w-3.5 h-3.5 text-cyan-400" />
-            <span>{isPt ? 'MODELAGEM TERMOESFÉRICA & ARRASTO' : 'THERMOSPHERIC DRAG MODELING'}</span>
-          </div>
-          <h2 className="text-lg font-bold text-zinc-100">
-            {isPt
-              ? 'Análise de Sensibilidade do Decaimento Atmosférico'
-              : 'Atmospheric Decay Sensitivity Analysis'}
+    <section className="space-y-6" aria-labelledby="atmosphere-heading">
+      <header className="rounded-xl border border-amber-800/70 bg-zinc-900 p-5 sm:p-6">
+        <p className="inline-flex items-center gap-2 text-xs font-semibold text-amber-300">
+          <AlertTriangle size={16} aria-hidden="true" /> {t.badge}
+        </p>
+        <h1 id="atmosphere-heading" className="mt-3 text-xl font-semibold text-zinc-100">{t.heading}</h1>
+        <p className="mt-3 max-w-3xl text-sm leading-6 text-zinc-200">{t.intro}</p>
+      </header>
+
+      <div className="grid gap-5 lg:grid-cols-2">
+        <section className="rounded-xl border border-zinc-700 bg-zinc-900 p-5 sm:p-6" aria-labelledby="atmosphere-control-heading">
+          <h2 id="atmosphere-control-heading" className="flex items-center gap-2 text-base font-semibold text-zinc-100">
+            <Wind size={18} aria-hidden="true" /> {t.control}
           </h2>
-          <p className="text-xs text-zinc-300 leading-relaxed">
-            {isPt
-              ? 'A 345 km de altitude, o decaimento orbital do NORAD 528 é governado pelo arrasto molecular da alta termosfera. Novembro de 1963 coincidiu com o mínimo do Ciclo Solar 19, caracterizado por fluxo solar calmo (F10.7 ≈ 76 sfu) e baixa densidade exosférica. Ajuste os parâmetros físicos para inspecionar a data prevista de quebra a 120 km.'
-              : 'At 345 km altitude, the orbital decay of NORAD 528 is governed by high thermospheric molecular drag. November 1963 coincided with the Solar Cycle 19 minimum, characterized by quiet solar flux (F10.7 ≈ 76 sfu) and low exospheric density. Tune physical parameters to inspect predicted breakup date at 120 km.'}
-          </p>
-        </div>
+          <label htmlFor="atmosphere-height" className="mt-5 block text-sm text-cyan-200">
+            H = <output htmlFor="atmosphere-height">{scaleHeightKm} km</output>
+          </label>
+          <input
+            id="atmosphere-height"
+            className="mt-3 w-full cursor-pointer accent-cyan-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300"
+            type="range"
+            min={35}
+            max={65}
+            step={1}
+            value={scaleHeightKm}
+            onChange={event => setScaleHeightKm(Number(event.target.value))}
+            aria-describedby="atmosphere-height-help"
+            aria-valuetext={`${scaleHeightKm} km`}
+          />
+          <div className="mt-1 flex justify-between text-xs text-zinc-400"><span>35 km</span><span>65 km</span></div>
+          <p id="atmosphere-height-help" className="mt-4 text-sm leading-6 text-zinc-300">{t.help}</p>
+        </section>
+
+        <aside className="rounded-xl border border-zinc-700 bg-zinc-900 p-5 sm:p-6" aria-labelledby="atmosphere-limits-heading">
+          <h2 id="atmosphere-limits-heading" className="flex items-center gap-2 text-base font-semibold text-zinc-100">
+            <Activity size={18} aria-hidden="true" /> {t.limitsTitle}
+          </h2>
+          <p className="mt-3 text-sm leading-6 text-zinc-300">{t.limits}</p>
+          <p className="mt-3 text-sm leading-6 text-zinc-300">{t.bst}</p>
+          <p className="mt-4 border-t border-zinc-700 pt-3 text-sm font-semibold text-amber-200">{t.unknown}</p>
+        </aside>
       </div>
 
-      {/* Sliders & Active Projection */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Controls (7 Cols) */}
-        <div className="lg:col-span-7 bg-zinc-900 border border-zinc-800 rounded-xl p-6 space-y-5">
-          <h3 className="text-sm font-bold text-zinc-100 flex items-center gap-2">
-            <Gauge className="w-4 h-4 text-cyan-400" />
-            <span>{isPt ? 'Parâmetros Físicos e Ambientais de 1963' : '1963 Physical & Environmental Parameters'}</span>
-          </h3>
-
-          {/* Scale Height Slider */}
-          <div className="space-y-2">
-            <div className="flex justify-between text-xs font-mono">
-              <span className="text-zinc-300">
-                {isPt ? 'Escala de Altura Termoesférica (H):' : 'Thermospheric Scale Height (H):'}{' '}
-                <strong className="text-cyan-300">{scaleHeightKm} km</strong>
-              </span>
-              <span className="text-zinc-500">Padrão solar mínimo: 45 km</span>
-            </div>
-            <input
-              type="range"
-              min={35}
-              max={65}
-              step={1}
-              value={scaleHeightKm}
-              onChange={(e) => setScaleHeightKm(Number(e.target.value))}
-              className="w-full accent-cyan-500 cursor-pointer h-2 bg-zinc-950 rounded-lg appearance-none"
-            />
-          </div>
-
-          {/* Solar Flux F10.7 Slider */}
-          <div className="space-y-2">
-            <div className="flex justify-between text-xs font-mono">
-              <span className="text-zinc-300">
-                {isPt ? 'Fluxo Solar F10.7 (comprimento 10,7 cm):' : 'Solar Flux F10.7 (10.7 cm):'}{' '}
-                <strong className="text-amber-300">{solarFluxF107} sfu</strong>
-              </span>
-              <span className="text-zinc-500">Média nov/1963: 76,5 sfu</span>
-            </div>
-            <input
-              type="range"
-              min={65}
-              max={120}
-              step={0.5}
-              value={solarFluxF107}
-              onChange={(e) => setSolarFluxF107(Number(e.target.value))}
-              className="w-full accent-amber-500 cursor-pointer h-2 bg-zinc-950 rounded-lg appearance-none"
-            />
-          </div>
-
-          {/* Ballistic Coefficient B */}
-          <div className="space-y-2">
-            <div className="flex justify-between text-xs font-mono">
-              <span className="text-zinc-300">
-                {isPt ? 'Coeficiente Balístico B (C_D · A / m):' : 'Ballistic Coefficient B (C_D · A / m):'}{' '}
-                <strong className="text-emerald-300">{ballisticCoeff.toFixed(4)} m²/kg</strong>
-              </span>
-              <span className="text-zinc-500">Agena debris: 0,015 - 0,035</span>
-            </div>
-            <input
-              type="range"
-              min={0.008}
-              max={0.05}
-              step={0.001}
-              value={ballisticCoeff}
-              onChange={(e) => setBallisticCoeff(Number(e.target.value))}
-              className="w-full accent-emerald-500 cursor-pointer h-2 bg-zinc-950 rounded-lg appearance-none"
-            />
-          </div>
-
-          {/* Simulated Decay Output Card */}
-          <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 space-y-2 font-mono text-xs">
-            <div className="text-zinc-500 uppercase tracking-wider text-[10px]">
-              {isPt ? 'Resultado da Integração Numérica' : 'Numerical Integration Result'}
-            </div>
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <div>
-                <span className="text-zinc-400">Chegada simulada a 120 km:</span>{' '}
-                <span className="text-base font-bold text-zinc-100">
-                  {simulatedDecayDate.toISOString().substring(0, 10)}
-                </span>
-              </div>
-              <span
-                className={`text-[11px] px-2.5 py-0.5 rounded font-semibold border ${
-                  simulatedDecayDate.toISOString().substring(0, 10) === '1963-11-08'
-                    ? 'text-emerald-400 bg-emerald-950/60 border-emerald-800'
-                    : 'text-amber-400 bg-amber-950/60 border-amber-800'
-                }`}
-              >
-                {simulatedDecayDate.toISOString().substring(0, 10) === '1963-11-08'
-                  ? '✓ CONVERGE COM CATÁLOGO NORAD (08/11)'
-                  : 'DIVERGE DO CATÁLOGO HISTÓRICO'}
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Reference Table (5 Cols) */}
-        <div className="lg:col-span-5 bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex flex-col justify-between space-y-4">
-          <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-cyan-400" />
-              <h3 className="text-sm font-bold text-zinc-100">
-                {isPt ? 'Tabela Histórica de Sensibilidade (Handoff)' : 'Historical Sensitivity Table (Handoff)'}
-              </h3>
-            </div>
-            <p className="text-xs text-zinc-400">
-              {isPt
-                ? 'Resultados da integração partindo de 27/10/1963 sob diferentes escalas de altura:'
-                : 'Integration outcomes starting from 27/10/1963 across various scale heights:'}
-            </p>
-
-            <div className="space-y-2">
-              {sensitivityTable.map((row) => (
-                <div
-                  key={row.scale}
-                  className={`p-3 rounded-lg border text-xs font-mono flex items-center justify-between ${
-                    row.scale === 45
-                      ? 'bg-cyan-950/40 border-cyan-800'
-                      : 'bg-zinc-950 border-zinc-800/80'
-                  }`}
-                >
-                  <div>
-                    <div className="text-zinc-200 font-bold">H = {row.scale} km</div>
-                    <div className="text-[11px] text-zinc-400">Decaimento: {row.arrivalDate}</div>
+      <section className="rounded-xl border border-zinc-700 bg-zinc-900 p-5 sm:p-6" aria-labelledby="atmosphere-profile-heading">
+        <h2 id="atmosphere-profile-heading" className="flex items-center gap-2 text-base font-semibold text-zinc-100">
+          <Layers size={18} aria-hidden="true" /> {t.figure}
+        </h2>
+        <p className="mt-2 text-sm text-zinc-300">{t.ratio}</p>
+        <div className="mt-4 overflow-x-auto">
+          <table className="w-full min-w-[320px] border-collapse text-left text-sm">
+            <caption className="sr-only">{t.figure} · H = {scaleHeightKm} km</caption>
+            <thead><tr className="border-b border-zinc-700 text-zinc-300">
+              <th scope="col" className="py-3 pr-4">{t.altitude}</th>
+              <th scope="col" className="py-3 pr-4">{t.ratio}</th>
+              <th scope="col" className="py-3">{t.visual}</th>
+            </tr></thead>
+            <tbody>{profile.map(point => (
+              <tr key={point.altitude} className="border-b border-zinc-800">
+                <th scope="row" className="py-3 pr-4 font-normal text-zinc-200">{point.altitude} km</th>
+                <td className="py-3 pr-4 font-mono text-cyan-200">{point.ratio.toFixed(3)}×</td>
+                <td className="w-2/5 py-3" aria-hidden="true">
+                  <div className="h-2 rounded bg-zinc-800">
+                    <div className="h-2 rounded bg-cyan-500" style={{ width: `${(point.ratio / maximum) * 100}%` }} />
                   </div>
-                  <span className={`text-[10px] ${row.matchColor}`}>
-                    {row.matchStatus}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="p-3 rounded-lg bg-zinc-950 border border-zinc-800 text-[11px] text-zinc-400 space-y-1">
-            <strong className="text-zinc-200 block font-semibold">
-              {isPt ? 'Conclusão sobre o parâmetro BSTAR = 0:' : 'Conclusion on BSTAR = 0 field:'}
-            </strong>
-            <p className="leading-relaxed">
-              {isPt
-                ? 'O valor BSTAR = 0 no catálogo de 27/10/1963 NÃO indica ausência de arrasto físico. Trata-se de convenção de registro não-ajustado em catálogos manuais da era pré-computação automatizada. Com H = 45 km e B ≈ 0,022 m²/kg, o decaimento físico coincide exatamente com o dia 8 de novembro catalogado.'
-                : 'The BSTAR = 0 field in the 27/10/1963 record does NOT represent zero physical drag. It is an uncalibrated catalog artifact from early manual tracking procedures. With H = 45 km and B ≈ 0.022 m²/kg, real physical decay lands precisely on November 8.'}
-            </p>
-          </div>
+                </td>
+              </tr>
+            ))}</tbody>
+          </table>
         </div>
-      </div>
+        <p className="mt-3 text-xs leading-5 text-zinc-400">{t.caveat}</p>
+      </section>
 
-      {/* Thermospheric Density Profile Card */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 space-y-3">
-        <h3 className="text-sm font-bold text-zinc-100 flex items-center gap-2">
-          <Layers className="w-4 h-4 text-cyan-400" />
-          <span>{isPt ? 'Perfil de Densidade Atmosférica (80 a 350 km)' : 'Atmospheric Density Profile (80 to 350 km)'}</span>
-        </h3>
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 font-mono text-xs">
-          {altitudeProfile.map((pt) => (
-            <div key={pt.alt} className="p-2.5 rounded-lg bg-zinc-950 border border-zinc-800">
-              <div className="text-zinc-500 font-semibold">{pt.alt} km</div>
-              <div className="text-cyan-300 font-bold mt-1">{pt.rho.toExponential(2)}</div>
-              <div className="text-[10px] text-zinc-500">kg/m³</div>
-            </div>
+      <section className="rounded-xl border border-zinc-700 bg-zinc-900 p-5 sm:p-6" aria-labelledby="atmosphere-evidence-heading">
+        <h2 id="atmosphere-evidence-heading" className="text-base font-semibold text-zinc-100">{t.sourceTitle}</h2>
+        <p className="mt-2 text-sm text-zinc-300">{t.sourceIntro}</p>
+        <ul className="mt-4 space-y-3">
+          {t.chain.map(([id, description, href]) => (
+            <li key={id} className="border-l-2 border-cyan-800 pl-4 text-sm leading-6">
+              <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-mono font-semibold text-cyan-200 underline underline-offset-2 focus-visible:outline-2 focus-visible:outline-cyan-200">
+                {id} <ExternalLink size={13} aria-hidden="true" />
+              </a>
+              <span className="ml-2 text-zinc-300">{description}</span>
+            </li>
           ))}
-        </div>
-      </div>
-    </div>
+        </ul>
+        <nav aria-label={t.sourceTitle} className="mt-5 flex flex-wrap gap-3 text-sm">
+          {[
+            ['#/research/c197', t.evidence], ['#/research/raan', t.raan],
+            [lean, t.premise], ['https://github.com/franklinbaldo/conde-incident/pull/37', t.domain],
+            ['https://github.com/franklinbaldo/conde-incident/pull/43', t.scenario],
+            ['#/map', t.map],
+          ].map(([href, label]) => (
+            <a key={href} href={href} className="rounded-md border border-cyan-800/70 px-3 py-2 text-cyan-200 underline underline-offset-2 hover:bg-cyan-950/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
+              {label}
+            </a>
+          ))}
+        </nav>
+        <p className="mt-4 text-xs leading-5 text-zinc-400">
+          {t.provenance}{' '}
+          <a href={nasa} target="_blank" rel="noopener noreferrer" className="text-cyan-200 underline underline-offset-2">NASA SSR, 15/11/1963, p. 8</a>
+        </p>
+      </section>
+    </section>
   );
 };
