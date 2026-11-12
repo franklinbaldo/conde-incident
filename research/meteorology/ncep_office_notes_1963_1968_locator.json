@@ -1,0 +1,73 @@
+{
+  "id": "MET-NMC-NCEPON-20261112-01",
+  "catalog": {
+    "url": "https://www.emc.ncep.noaa.gov/officenotes/FullTOC.html",
+    "http_status": 200,
+    "byte_length": 135389,
+    "sha256": "e25d963fcddd42891c2bead34da1411d2326880ecb31bcc2d51670941b8ee3d2",
+    "last_modified_header": "Mon, 30 Apr 2012 17:14:41 GMT"
+  },
+  "notes": [
+    {
+      "number": 16,
+      "year_as_catalogued": "1960 1963*",
+      "author_as_catalogued": "Dent G. R.",
+      "title_as_catalogued": "Hydrostatic and Wind Check in the ADP Program (1963) (*revised) (.PDF file)",
+      "pdf_catalog_link": "http://www.ncep.noaa.gov/officenotes/NOAA-NPM-NCEPON-0001/013FD4C3.pdf",
+      "pdf_downloaded": false,
+      "pdf_sha256": null,
+      "pdf_probe": {
+        "status": null,
+        "error": "URLError",
+        "detail": "unavailable endpoint / network error"
+      }
+    },
+    {
+      "number": 20,
+      "year_as_catalogued": "1964",
+      "author_as_catalogued": "Neilon J.",
+      "title_as_catalogued": "Upper Air ADP Records Format (including subsequent revision beginning on page 12) (.PDF file)",
+      "pdf_catalog_link": "http://www.ncep.noaa.gov/officenotes/NOAA-NPM-NCEPON-0001/013FD4DB.pdf",
+      "pdf_downloaded": false,
+      "pdf_sha256": null,
+      "pdf_probe": {
+        "status": null,
+        "error": "URLError",
+        "detail": "unavailable endpoint / network error"
+      }
+    },
+    {
+      "number": 22,
+      "year_as_catalogued": "1964",
+      "author_as_catalogued": "Automation Division Staff",
+      "title_as_catalogued": "ADP 3rd Word (.PDF file)",
+      "pdf_catalog_link": "http://www.ncep.noaa.gov/officenotes/NOAA-NPM-NCEPON-0001/013FD4E4.pdf",
+      "pdf_downloaded": false,
+      "pdf_sha256": null,
+      "pdf_probe": {
+        "status": null,
+        "error": "URLError",
+        "detail": "unavailable endpoint / network error"
+      }
+    },
+    {
+      "number": 26,
+      "year_as_catalogued": "1968",
+      "author_as_catalogued": "Loman L.",
+      "title_as_catalogued": "Structure of the NMC B3 Data Tape (.PDF file)",
+      "pdf_catalog_link": "http://www.ncep.noaa.gov/officenotes/NOAA-NPM-NCEPON-0001/013FD507.pdf",
+      "pdf_downloaded": false,
+      "pdf_sha256": null,
+      "pdf_probe": {
+        "status": null,
+        "error": "URLError",
+        "detail": "unavailable endpoint / network error"
+      }
+    }
+  ],
+  "observations_decoded": null,
+  "decode_state": "NOT_RUN",
+  "linked_pending_bridge": "research/constraints/nmc_y20175_pending_bridge.json",
+  "documentation_not_tape": true,
+  "physical_constraint": "NOT_ACTIVATED"
+}
