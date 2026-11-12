@@ -83,7 +83,7 @@ class BakerNunnRU301Inventory(unittest.TestCase):
 
     def test_no_false_independence_or_corroboration(self):
         self.assertEqual(len({f["independence_family"] for f in self.graph["film_index_entries"]}), 1)
-        self.assertIn("same", self.graph["provenance_dependencies"][0].lower())
+        self.assertIn("smithsonian", self.graph["provenance_dependencies"][0].lower())
         self.assertFalse(any(f["object_identity_status"].endswith("CONFIRMED") for f in self.graph["film_index_entries"]))
 
 
