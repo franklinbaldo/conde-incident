@@ -109,3 +109,32 @@ Teste reproduzível:
 `node --test scripts/check-pages-release.test.mjs`.
 A fonte Pages via GitHub Actions e o deploy real **seguem NOT_VERIFIED**
 até consultas e respostas de produção no `main` integrado.
+
+
+## Contraprova de corrida durante a verificação pública (12/11/2026)
+
+**Falha específica:** o auditor da PR #49 fotografava o HEAD da `main`,
+o run e o deployment antes de buscar, sequencialmente, todos os capítulos
+via HTTPS. Uma publicação ou nova falha entre o primeiro GET de metadados
+e o último GET público podia transformar o resultado em falso `PASS`.
+
+A fatia seguinte exige **segunda leitura do plano de controle ao final
+das visitas HTTP**. O segundo HEAD deve seguir igual ao SHA auditado;
+a configuração Pages precisa continuar `build_type=workflow` e URL
+canônica; o **ID do run mais recente** do workflow de publicação no SHA
+deve ser o mesmo e continuar `completed/success`; o **ID do deployment
+mais recente** deve continuar o mesmo, no SHA e ambiente esperados, e
+seu **último status** ainda deve ser `success`. Run sem ID, leituras
+finais ausentes, mudança de configuração, run novo, deployment substituído
+ou status tornado `pending` falham fechados. Testes adversariais
+reproduzem cada transição, sem acesso externo ou geração de fatos
+históricos. A segunda leitura só ocorre após as verificações dos artigos,
+incluindo o último capítulo.
+
+**Limite:** duas leituras de API + HTTP não formam snapshot atômico entre
+GitHub e CDN. Uma alteração posterior à segunda leitura pode ocorrer,
+e o auditor não compara hashes de bytes de HTML. O resultado `PASS`
+significa concordância das observações nos dois instantes, **não**
+garantia perpétua de publicação. Um `NOT_VERIFIED` pode ser transitório
+durante deploy legítimo. A publicação real ainda depende do merge e de
+confirmar Pages, Actions, deployment e URL de produção.
