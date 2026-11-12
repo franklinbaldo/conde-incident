@@ -186,6 +186,46 @@ class CumulativeConstraintGraphTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "duplicate source/table observation"):
             validate(bad)
 
+    def test_document_alias_cannot_inflate_independent_sources(self):
+        for suffix in ("", "#page=8"):
+            with self.subTest(suffix=suffix):
+                bad = copy.deepcopy(self.graph)
+                alias = copy.deepcopy(bad["sources"][0])
+                alias["id"] = "FORGED-NASA-ALIAS"
+                alias["source_family"] = "FORGED_INDEPENDENT_FAMILY"
+                alias["url"] += suffix
+                bad["sources"].append(alias)
+                duplicated = copy.deepcopy(bad["observations"][0])
+                duplicated["id"] = "FORGED-NASA-ALIAS-ROW"
+                duplicated["source_id"] = alias["id"]
+                duplicated["source_independence_family"] = alias["source_family"]
+                duplicated["variable_id"] = "forged_alias_observable"
+                bad["observations"].append(duplicated)
+                with self.assertRaisesRegex(ValueError, "duplicate source document URL"):
+                    validate(bad)
+
+    def test_publication_date_cannot_be_laundered_to_evade_row_deduplication(self):
+        bad = copy.deepcopy(self.graph)
+        clone = copy.deepcopy(bad["observations"][0])
+        clone["id"] = "FORGED-SECOND-PUBLICATION"
+        clone["published_on"] = "1963-11-16"
+        clone["variable_id"] = "forged_second_publication"
+        bad["observations"].append(clone)
+        with self.assertRaisesRegex(ValueError, "observation/source publication mismatch"):
+            validate(bad)
+
+    def test_same_source_family_cannot_split_into_fake_tracking_lineages(self):
+        bad = copy.deepcopy(self.graph)
+        bad["sources"][0]["upstream_tracking_family"] = "FORGED_NEW_SENSOR"
+        with self.assertRaisesRegex(ValueError, "conflicting upstream tracking lineage"):
+            validate(bad)
+
+    def test_pending_observation_cannot_fake_active_link_status(self):
+        bad = copy.deepcopy(self.graph)
+        bad["observations"][0]["link_status"] = "INDEPENDENT_PRIMARY_MEASURED"
+        with self.assertRaisesRegex(ValueError, "unvalidated evidence link status"):
+            validate(bad)
+
     def test_finite_reported_value_cannot_overflow_to_infinite_canonical_value(self):
         bad = copy.deepcopy(self.graph)
         row = bad["observations"][0]
