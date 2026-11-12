@@ -1,0 +1,32 @@
+---
+type: AgentMemory
+agent: polvo
+title: "RAAN conflitantes como cenários disjuntivos, sem falsa contradição física"
+description: "Issue #15 / PR #17: prova Lean 4.35.0 da união de hipóteses, não vacuidade, contraexemplo de interseção espúria e contrato Castor de custódia bloqueada"
+date: "2026-11-12"
+tags: [conde, lean, provenance, scenario-branches, RAAN, falsification, castor, ci]
+---
+
+## Fontes consultadas e continuidade
+
+- Lidos na **main** [AGENTS.md](https://github.com/franklinbaldo/conde-incident/blob/main/AGENTS.md) (Git blob `e9058f64c1eb68d25536b9ff306b9d676833b488`) e [team/polvo.md](https://github.com/franklinbaldo/conde-incident/blob/main/team/polvo.md) (blob `3e1534f215e2eb07c3672a0609789fe629cfe8ec`), issue própria [#15](https://github.com/franklinbaldo/conde-incident/issues/15), PR própria [#17](https://github.com/franklinbaldo/conde-incident/pull/17), PR base [#1](https://github.com/franklinbaldo/conde-incident/pull/1), proposta científica [#28](https://github.com/franklinbaldo/conde-incident/pull/28) ainda aberta e PRs/issues atuais. A main não contém a matriz; leitura do snapshot na própria PR empilhada, sem modificar base.
+- Matriz `research/evidence_matrix_C001-C238_2026-11-11.md` conferida no SHA Git blob `a7978c3a75a153b16ab70118a92c434bba674cb7`: 241 ocorrências, 238 rótulos únicos, C44/C45/C46 com duas ocorrências cada, preservadas integralmente. [C25#1 L118](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L118) e [C179#1 L839](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L839): espelho Space-Track/AFSPC retrospectivo, NÃO duas fontes instrumentais independentes; C179 relata RAAN 198,5261° e época em 27/10/1963. AGENTS.md contém conflito com RAAN 284,1520° do site antigo, ainda sem fonte original autenticada. Nenhuma fonte primária orbital nova foi inspecionada.
+
+## Mudança significativa
+
+1. Novo [`formal/Conde1963/ScenarioAlternatives.lean`](https://github.com/franklinbaldo/conde-incident/blob/88d794be3c23b64839737c2e3073c5e8a5acaa90/formal/Conde1963/ScenarioAlternatives.lean): define `AlternativeAllowed common left right` como `Allowed common ∧ (left ∨ right)`. São **11 teoremas auditados**, incluindo equivalência da união de domínios a dois ramos, condições exatas para emptiness, monotonicidade sob nova observação comum, critérios condicionais de decisão geográfica em ambos os ramos e conflito de testemunhos. Contraexemplo simbólico em `Bool`: ramos individualmente possíveis, interseção impossível; **não** é diagnóstico histórico de RAAN nem órbita.
+2. `formal/Conde1963.lean` e `formal/Conde1963/AxiomAudit.lean` importam e auditam o módulo. Auditoria `#print axioms` apresenta somente `propext` ou axiomas vazios nos 11 teoremas novos; **sem `sorryAx`**, `unsafe` ou axiomas externos. Bibliografia/identidade de fontes não são certificadas pelo kernel.
+3. `formal/scripts/evidence_registry.py` adiciona `unresolved_element_scenarios_interface.version=1` ao handoff JSON, com `DISJUNCTION_ONLY_UNTIL_SOURCE_ADJUDICATION`, links exatos C25#1/C179#1, valores de RAAN como alegações tipadas `UNVERIFIED`, `null/false/NOT_RUN` para filtros físicos, órbita, holdout e erro, impedindo promoção tácita. Dois novos testes `formal/tests/test_evidence_registry.py` exigem fail-closed e hyperlinks pinados. Documentação em `formal/scenario_alternatives.md`, sem modificar site/blog.
+4. Nenhuma restrição empírica nova admitida; as alternativas permanecem cenários documentais até autenticidade de época/quadro/fonte e confronto de propagação física. Este resultado atende estritamente à parte formal do fluxo da PR #28, **não** a um domínio físico efetivamente reduzido ou simulação calibrada.
+
+## Validação no HEAD e falha corrigida
+
+- HEAD **pré-memória**: [`88d794be3c23b64839737c2e3073c5e8a5acaa90`](https://github.com/franklinbaldo/conde-incident/commit/88d794be3c23b64839737c2e3073c5e8a5acaa90). [Actions #43151000179](https://github.com/franklinbaldo/conde-incident/actions/runs/43151000179): **2/2 jobs PASS** no SHA exato. Lean 4.35.0 `lake build`: **13 jobs**, `lake env lean Conde1963/AxiomAudit.lean` PASS, `#print axioms` sem `sorryAx`; Python **36/36 tests PASS** (dois testes novos, casos sintéticos de auditoria), fonte/matriz pinada `MATRIX_IDENTITY_PASS_ONLY`; Web `bun run lint` + `bun run build` PASS. O job também gera contratos JSON para Castor.
+- Falha real anterior: [Actions #43150925867](https://github.com/franklinbaldo/conde-incident/actions/runs/43150925867) no SHA `509a3658d39dacbd78438ed45d97d59106bb83e0`: `lake build` 13 jobs PASS mas `AxiomAudit.lean` sem `import Conde1963.ScenarioAlternatives` apontou 11 constantes desconhecidas. **Corrigido** no SHA `88d794b`; não contar esse run RED como PASS.
+- Após criar esta memória OKF, **reverificar o workflow no HEAD final da branch** antes de revisão/merge. A auditoria estrutural da matriz não autentica as fontes primárias.
+
+## Resultado negativo e bloqueios
+
+- ZIP histórico compilado 4.35.0 `Evidence.lean`, registro de 154 proposições/151 rótulos, gerador e hashes de custódia **não recuperados** neste repositório; importação histórica `NOT_RUN`. Não se reconstruíram proposições por adivinhação.
+- Fonte instrumental primária dos dois RAAN, epochs completos, referencial, calibração do arrasto, tolerâncias numéricas certificadas, janela de impacto e holdout 529 ainda **NÃO VERIFICADOS**. A eventual rejeição de um ramo deve provir de observações verificadas, não da interseção artificial de ambos. Registro NASA/Goddard 15/11/1963 p. 8 ([C131](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L502)/[C197](https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md#L905)) é UMA fonte documental do dia catalogado, não coordenada/horário de queda, não reinspecionada aqui.
+- Próximo experimento auditável: Castor fornece envelopes de integração r/v por ramo, com TLE autenticado, unidades/época, cobertura e teste cego 529; Polvo verifica obrigações Lean globalmente apenas se a fonte original for efetivamente comprovada. 🦅 Gavião revê formalização/linhagem; 🐘 Elefante integra **depois da #1**, sem merge pelo Polvo. PR #17 mantém draft. Sem contato com arquivos/pessoas, blog, rebase ou force-push.
