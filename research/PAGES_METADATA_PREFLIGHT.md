@@ -21,8 +21,12 @@ Para emitir `METADATA_ONLY_SITE_NOT_VERIFIED`, exige conjuntamente:
 2. SHA literal da `main` igual ao SHA auditado;
 3. **último** run de `Publish Conde site` por `push` na `main`, no SHA exato e `completed/success`;
 4. **último** deployment de `github-pages` no SHA exato, com último status `success`;
-5. releitura da `main` no final da inspeção, ainda no mesmo SHA.
+5. releitura do estado do repositório, fonte Pages, última tentativa de publicação, último deployment/status **e** `main` ao final da inspeção, sem mudanças de identidade/resultado ou SHA durante a janela de auditoria.
 
 Qualquer resultado ausente, erro de API, run mais recente falho, publicação antiga, configuração legada ou troca de SHA resulta em `NOT_VERIFIED` (exit code 1). O resultado favorável de metadados **não significa site publicado** e jamais deve aparecer como `PUBLISHED` ou `VERIFIED`: ainda falta provar via HTTPS o HTML final, os capítulos Markdown, as rotas Evidências/Caderno, CSS/JS e a integridade do conteúdo servido. Essa verificação E2E depende da integração editorial e de deployment real posterior.
 
 **Limite científico:** nem deployment real nem CI verde verificam, por si, a autenticidade de relatos de 1963, órbita ou impacto em Conde. O vínculo documental e os testes Lean, físicos e holdout continuam separados.
+
+## Proteção de corrida na auditoria (12/11/2026)
+
+O primeiro snapshot pode ser verdadeiro e ficar obsoleto antes da conclusão: um run falho posterior, um deployment substituto ou a fonte Pages mudando não devem produzir um parecer favorável. O segundo snapshot confirma os mesmos IDs, SHAs, estados do run/deployment e status de deployment; qualquer deriva gera `NOT_VERIFIED`. Se o estado mudar depois do último GET, permanece uma limitação inerente de auditorias pontuais. Nada nesta checagem comprova o conteúdo HTTPS.
