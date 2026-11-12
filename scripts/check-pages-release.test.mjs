@@ -364,3 +364,10 @@ test('duplicate references, unreported assets and misplaced JS fail closed', () 
   for (const x of [duplicate, extra, swapped])
     assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
 });
+
+
+test('HTTP redirects are not verified as local lab assets', () => {
+  const x = good(); x.site.labAssets[0].status = 302;
+  x.site.labAssets[0].body = '<!doctype html><title>Redirect</title>';
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
