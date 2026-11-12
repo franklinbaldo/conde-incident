@@ -115,3 +115,26 @@ Consultados indexadores web com expressões exatas inglesas do telegrama e varia
 Restrições **lógicas candidatas** a eventual avaliação formal, sem substituir as atividades do agente Lean: citar jornal em telegrama não implica inspeção do jornal; alegar objeto metálico no solo não implica que seja o objeto incerto no ar; relato consular não verificado não constitui observação física. **Sem mudança do domínio de parâmetros do NORAD 528**, sem hora/local de reentrada nem trajetória terminal medida. A documentação NASA de 15/11 registra somente a data 08/11.
 
 **Próximo alvo prioritário:** identificar a qual jornal Simonpietri se refere por «LOCAL NEWSPAPER REPORT», cotejando os originais de Jornal do Brasil 09/11, O Jornal 07–12/11, Diário de Notícias BA 09/11, Jornal da Bahia BA 11/11 e o telegrama Salvador 157 com os recortes do malote. Nenhum contato externo, alteração de blog, Lean ou simulador.
+
+
+## 12/11/2026 — horário legal de 1963 e a ambiguidade do cabeçalho FBIS
+
+**Pergunta concreta:** a marca «2330 8 NOV 63» da Rádio Tupi no FBIS significa necessariamente **23h30 no Rio de Janeiro (UTC−3)**, e a mesma hora em Conde? **Resposta: NÃO.** O Rio (Guanabara) estava em horário especial de verão em 08/11/1963; Bahia não estava. Além disso, o documento FBIS não declara expressamente a convenção (GMT ou horário local) aplicada a «2330». Qualquer hora absoluta antes de resolver essa ambiguidade será hipótese, não medição.
+
+### Evidência incremental com IDs locais, sem colisão com C001–C238
+
+| ID | Documento primário / observação | Proveniência e independência | Resultado e incerteza |
+| --- | --- | --- | --- |
+| GEN-DA-20261112-08 | **Decreto nº 52.700, de 18/10/1963**, art. 1º: desde 00h de 23/10/1963, relógios adiantados **60 minutos** apenas em São Paulo, Rio de Janeiro, Guanabara, Minas Gerais e Espírito Santo; **Bahia não consta**. Edição da Câmara registra DOU 21/10/1963, p. 8845. | Documento normativo federal **primário diretamente lido**, independente de Tupi/FBIS/DOS: https://www2.camara.leg.br/legin/fed/decret/1960-1969/decreto-52700-18-outubro-1963-393059-publicacaooriginal-1-pe.html . Ver também índice histórico do Observatório Nacional: https://www.gov.br/observatorio/pt-br/assuntos/areas-de-atuacao/tempo-e-frequencia/horario-de-verao | **Confirmado:** em 08/11, Rio/Guanabara (UTC−2 na base histórica IANA) estava uma hora adiantado sobre Bahia (UTC−3). É incorreto aplicar Rio UTC−3 à data. O texto digital do decreto contém inconsistência de mês no fecho («18 de maio»), mas o título, art. 1º e publicação oficial distinguem a norma de outubro. |
+| GEN-DA-20261112-09 | **Decreto nº 53.071, de 03/12/1963**, art. 1º: estendeu a hora de verão a todo o território nacional **somente a partir de 09/12/1963**. | Documento normativo **primário**, Câmara, DOU 04/12/1963 p. 10162: https://www2.camara.leg.br/legin/fed/decret/1960-1969/decreto-53071-3-dezembro-1963-393258-publicacaooriginal-1-pe.html | **Confirmado:** a extensão nacional em dezembro não pode ser aplicada retrospectivamente a Conde em 08/11. |
+| GEN-DA-20261112-10 | Fac-símile **EOP-UAP-D001**, p. 1, visualmente inspecionado: «RIO DE JANEIRO RADIO TUPI IN PORTUGUESE 2330 8 NOV 63 W»; outra marca «9 NOV 111A RWS/GY». Não há indicação literal «GMT», «UTC» ou «local». | **Fonte contemporânea primária para a marca FBIS**, porém secundária para a emissão e alegação do incidente; deriva da Rádio Tupi: https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf . Hospedagem espelhada, integridade contra arquivo oficial não testada. | **Confirmado** apenas o teor do cabeçalho; **não resolvido** o fuso de «2330» ou a semântica temporal de «111A». É incorreto afirmar 23h30 local ou UTC sem fonte sobre a convenção do FBIS. |
+
+### Reconstrução condicional e falsificação
+
+Se **2330 do FBIS é UTC/GMT**, a hora local correspondente seria **21h30 no Rio** e **20h30 em Conde**, ambas em 08/11/1963. Se **2330 é a hora local da estação carioca**, corresponde a **01h30 UTC de 09/11** e **22h30 em Conde no dia 08/11**. Essas são **alternativas hipotéticas**, não dois horários observados.
+
+Conversão reprodutível pela base IANA: Python datetime + zoneinfo, data 1963-11-08, zonas America/Sao_Paulo e America/Bahia: os respectivos deslocamentos são −02:00 e −03:00. O dispositivo legal de 1963 é a verificação histórica primária. A marca FBIS não fornece por si mesma um timestamp UTC.
+
+**Teste de refutação pendente:** localizar manual editorial FBIS de 1962–1964, ou exemplares que declarem explicitamente a zona das horas de transmissão. Buscas por instruções de horário dos boletins FBIS nesta sessão não recuperaram norma operacional aplicável. A seguir confrontar hora de fechamento dos jornais de 09/11; sem isso, precedência entre Tupi e impressos dentro de 08–09/11 é incerta.
+
+**Restrição lógica candidata ao Lean (não implementar nesta PR):** os dois deslocamentos legais são premissas documentadas condicionais, mas um número de hora em cabeçalho FBIS não implica instante universal sem convenção de fuso. **Não transformar** essas horas de transmissão em hora de reentrada/impacto. Não surgiu dado físico de órbita, de cratera ou de balão. **Domínio NORAD 528, simulador e holdouts inalterados.** Sem contatos ou alterações no blog.
