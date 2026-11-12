@@ -234,3 +234,20 @@ Controles sintéticos verificam perda pareada, caso adversarial em que **um úni
 **Fonte e linhagem:** [oxzoid/Space-Track Parquet 1963 commit 4b4fb3a](https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/4b4fb3a/data/tle_1963.parquet), SHA-256 \`c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09\`. Cada linha CSV é confrontada com os bytes Parquet originais e época/source_row. Não são três sensores; todos os modelos usam a mesma linhagem secundária. [NASA Situation Report 15/11/1963 p.8](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf) documenta só a **data civil** de decaimento 1963-003B, não trajetória terminal. Sem observações instrumentais originais (época/frame/covariância), resolução de RAAN 284,1520° vs 198,5261° ou evidência de impacto, nenhuma restrição física primária adicional pode ser promovida a Lean 4.35.0: simulação de reentrada e impacto em Conde continuam **INDETERMINADOS**, sem probabilidades.
 
 **Reprodução no HEAD:** \`python -m unittest discover -s tests -p 'test_*.py' -v\` e executar \`tools/audit_norad_1963.py --download\` seguido de \`tools/texugo_holdout_529.py --parquet <arquivo> --csv <csv> --audit <json> --output <saida>\`; ler \`rolling_tail_sensitivity\`. O workflow \`.github/workflows/texugo-holdout.yml\` executa o replay completo e arquiva o JSON. Revisão Gavião e integração Elefante após CI no SHA atual; nenhum merge pelo Texugo.
+
+
+### Replay C243-T11 efetivo (HEAD 65476d09859f5d0ab1744a5c887a74273ab224db)
+
+[Holdout Actions #43179955290](https://github.com/franklinbaldo/conde-incident/actions/runs/43179955290) **SUCCESS**, 159/159 testes Python PASS, origem Parquet SHA-pinado reaberta e confrontada ao CSV; [artefato #13925094889](https://github.com/franklinbaldo/conde-incident/actions/runs/43179955290/artifacts/13925094889). [Custódia #43179955359](https://github.com/franklinbaldo/conde-incident/actions/runs/43179955359) e [verificações científicas #43179955358](https://github.com/franklinbaldo/conde-incident/actions/runs/43179955358) também SUCCESS no mesmo SHA. Uma primeira execução falhou no teste **sintético** porque o valor manipulado \`0\` era indistinguível de erro numérico de \`~1e-14\` no limite de tolerância; trocado por \`10.0\` e reexecutado, preservando a falha como regressão de desenho de teste, não achado histórico ([run anterior](https://github.com/franklinbaldo/conde-incident/actions/runs/43179669542)).
+
+| Controle pareado, 51 próximas épocas 529 | Quadrático 529 | Média 527+528 | Persistência |
+| --- | ---: | ---: | ---: |
+| RMSE, rev/dia (C243-T10) | 0,074988 | 0,097122 | **0,026904** |
+| MAE, rev/dia (T11) | 0,038059 | 0,046511 | **0,016963** |
+| Mediana \|erro\|, rev/dia (T11) | 0,008748 | 0,008986 | **0,008154** |
+| Maior participação de uma época na SSE (T11) | **30,05%** | **30,69%** | **25,24%** |
+
+- A maior SSE do quadrático e da média foi a observação catalogada de **30/12/1963 11:25:41 UTC**; isto **não** é horário de reentrada, nem coordenada espacial. Para persistência, a maior foi 28/12 05:25 UTC.
+- O somatório de SSE conjunta menos quadrática é positivo em **0,194282 (rev/dia)²** nos 51 alvos. Os três maiores contrastes pareados em magnitude ocorreram 30, 29 e 28/12, somando aproximadamente **69,18% da soma de magnitudes** desses contrastes.
+- **Resultados negativos necessários:** remover isoladamente cada uma das 51 épocas **não mudou nenhuma vez** o vencedor quadrático sobre a média; remover cada um de 51 blocos móveis de **28 dias de alvos pontuados** também não mudou o vencedor (**0/51 e 0/51**, 0 NOT_RUN). Os modelos continuam ajustados sobre o passado: este procedimento *retira pontuação*, não testa influência sobre coeficientes de treinamento.
+- A maior participação individual na perda é relevante mesmo quando o vencedor pareado não muda. Não inferir robustez a origem sistematicamente enviesada, a séries de outro instrumento, a outros horizontes, a refits do treino nem a perturbações físicas. **Um único espelho secundário, inferência numérica pós-hoc, Conde indeterminado.** O conteúdo documental adicional requer CI do novo HEAD.
