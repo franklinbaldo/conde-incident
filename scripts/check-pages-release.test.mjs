@@ -9,10 +9,18 @@ function good() {
     pages: { build_type: 'workflow', html_url: EXPECTED_SITE },
     mainHead: { commit: { sha: SHA } },
     latestDeployments: [{ id: 12, sha: SHA, environment: 'github-pages' }],
-    runs: [{ name: 'Publish Conde site', head_sha: SHA, head_branch: 'main',
+    runs: [{ id: 42, name: 'Publish Conde site', head_sha: SHA, head_branch: 'main',
       event: 'push', status: 'completed', conclusion: 'success' }],
     deployments: [{ id: 12, sha: SHA, environment: 'github-pages' }],
     statuses: { 12: [{ state: 'success' }] },
+    finalControl: {
+      pages: { build_type: 'workflow', html_url: EXPECTED_SITE },
+      mainHead: { commit: { sha: SHA } },
+      latestDeployments: [{ id: 12, sha: SHA, environment: 'github-pages' }],
+      runs: [{ id: 42, name: 'Publish Conde site', head_sha: SHA, head_branch: 'main',
+        event: 'push', status: 'completed', conclusion: 'success' }],
+      latestStatuses: [{ state: 'success' }],
+    },
     sourceTree: { truncated: false, tree: [
       { path: 'stories/2026-11-11-primeira-historia.md', type: 'blob' },
     ] },
@@ -250,4 +258,43 @@ test('missing freshest-main and latest-deployment evidence fails closed', () => 
   const y = good(); delete y.latestDeployments;
   assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
   assert.equal(assessRelease(y).status, 'NOT_VERIFIED');
+});
+
+test('main advanced during multi-chapter fetch: initial clean snapshot is insufficient', () => {
+  const x = good();
+  x.finalControl.mainHead.commit.sha = 'b'.repeat(40);
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+test('Pages switched from Actions to branch source during public HTTP reads', () => {
+  const x = good();
+  x.finalControl.pages.build_type = 'legacy';
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+test('new push publication run appears after initial green snapshot', () => {
+  const x = good();
+  x.finalControl.runs.unshift({ id: 43, name: 'Publish Conde site',
+    head_sha: SHA, head_branch: 'main', event: 'push',
+    status: 'completed', conclusion: 'failure' });
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+test('post-read deployment supersedes initially successful deployment', () => {
+  const x = good();
+  x.finalControl.latestDeployments = [{ id: 13, sha: SHA, environment: 'github-pages' }];
+  x.finalControl.latestStatuses = [{ state: 'success' }];
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+test('deployment success revoked or pending while fetching last chapter', () => {
+  const x = good();
+  x.finalControl.latestStatuses[0].state = 'pending';
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+test('missing second control-plane snapshot cannot imply published', () => {
+  const x = good();
+  delete x.finalControl;
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+test('latest publish run identity is mandatory: no unidentified green run', () => {
+  const x = good();
+  delete x.runs[0].id;
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
 });
