@@ -291,3 +291,47 @@ versus 284.1520°. Não se inferem hora, local de reentrada, impacto
 nem probabilidade. **Holdout histórico original 527/529, certificação
 Lean de caixas históricas, modelo de arrasto de 1963 e SGP4 baseline
 comparável: NOT_RUN.**
+
+
+## Fail-closed finite phase-space ledger for conditional velocity boxes (🦫, 12 Nov 2026)
+
+An exact or finite **input interval** does **not** guarantee that all its possible
+velocity witnesses can be integrated by Float64 RK4. For example, the **synthetic**
+Cartesian range `vy = [sqrt(mu/(R+500 km)), 1e308] km/s` includes a numerically
+ordinary circular-orbit state as well as extreme finite values whose norm or
+RK4 stages overflow. These artificial inputs test software honesty. They are
+**not proposed 1963 orbital speeds**.
+
+`orbitPhysics.ts` now raises the typed `NumericalIntegrationBreakdown` when an
+RK4 stage/derivative/final state is no longer in the finite representable phase
+space. `runConditionalVelocityDomain` captures **only** that typed error *per
+sample*, preserving the seed, attempted velocity, and a `NOT_RUN_NUMERICAL_BREAKDOWN`
+record. Global errors such as missing atmosphere source, negative density, or
+invalid convergence controls **still throw**; they must not be turned into
+conditional success or per-branch physical contradictions. The domain runner
+reports `SAMPLED_WITH_NUMERICAL_BREAKDOWNS` when some witnesses survive, or
+`NOT_RUN_ALL_NUMERICAL_BREAKDOWNS` when none survives. Ordinary resolved
+witnesses remain `SAMPLED_CONDITIONALLY`. Every outcome returns an explicit
+`numericalBreakdownCount`.
+
+This failure is **numeric**, not a proof that a historically admissible
+physical trajectory does not exist. Surviving finitely many witnesses, including
+corners and seeded draws, cannot exclude *any* geographic possibility. The
+historical 527/529 blind holdout, authenticated Lean parameter extraction,
+atmospheric calibration of 1963, and impact inference remain **NOT_RUN**.
+SGP4 is still a distinct mean-element baseline.
+
+Run synthetic controls on the branch HEAD:
+```sh
+node --experimental-strip-types --test tests/orbitNumericalBreakdown.test.mjs
+```
+
+**Primary/source lineage:** NASA/Goddard, *Satellite Situation Report*, vol. 3,
+no. 22, **15 November 1963**, printed p. 8, NTRS [19640001198](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf),
+corresponding to cumulative matrix **C197/C198/C201** in [draft PR #1](https://github.com/franklinbaldo/conde-incident/pull/1).
+It documents the **8 November 1963 decay date** of 1963-003B,
+not time, coordinates, drag, state vectors or any 527/529 blind observations.
+NASA/NORAD-derived catalogs and TLE mirrors (C179–C185) do **not** create
+independent witnesses by repetition; their RAAN conflict is unresolved.
+The software's stress-box numbers are invented strictly for numerical testing,
+never historical evidence.
