@@ -68,7 +68,7 @@ export async function inspectPagesMetadata({ sha, token, fetchImpl = fetch }) {
     const workflow = await get("/actions/workflows/pages.yml/runs?branch=main&event=push&per_page=30");
     const deployments = await get("/deployments?environment=github-pages&per_page=30");
     const statuses = {};
-    for (const deployment of Array.isArray(deployments) ? deployments.slice(0, 1) : []) {
+    for (const deployment of Array.isArray(deployments) ? [...deployments].sort((a, b) => (Date.parse(b?.created_at || "") || 0) - (Date.parse(a?.created_at || "") || 0) || (Number(b?.id) || 0) - (Number(a?.id) || 0)).slice(0, 1) : []) {
       if (Number.isSafeInteger(deployment.id)) {
         statuses[deployment.id] = await get("/deployments/" + deployment.id + "/statuses?per_page=1") || [];
       }
