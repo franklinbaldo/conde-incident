@@ -74,7 +74,15 @@ export default function App() {
           </span>
         </div>
       )}
-      {/* Top Header & Navigation */}
+      {/* Hashes belong to routing; a skip link must not change the route. */}
+      <button
+        type="button"
+        onClick={() => document.getElementById('conteudo-lab')?.focus()}
+        className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[60] focus:rounded focus:bg-amber-100 focus:px-4 focus:py-2 focus:text-zinc-950 focus:font-semibold"
+      >
+        {lang === 'pt' ? 'Pular para o conteúdo do laboratório' : 'Skip to laboratory content'}
+      </button>
+      {/* Top Header & Navigation */
       <Navigation
         activeTab={activeTab}
         setActiveTab={navigateTab}
@@ -84,7 +92,7 @@ export default function App() {
       />
 
       {/* Main Content Body */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-6">
+      <main id="conteudo-lab" tabIndex={-1} className="flex-1 max-w-7xl w-full mx-auto px-4 py-6 focus:outline-none">
         {activeTab === null && (
           <section aria-labelledby="invalid-route" className="max-w-xl rounded-xl border border-amber-800/70 p-6">
             <h1 id="invalid-route" className="text-xl font-semibold">Página do laboratório não encontrada</h1>
