@@ -1,0 +1,6 @@
+name = "Conde1963"
+version = "0.1.0"
+defaultTargets = ["Conde1963"]
+
+[[lean_lib]]
+name = "Conde1963"
