@@ -6,8 +6,12 @@ export const EXPECTED_SITE = 'https://franklinbaldo.github.io/conde-incident/';
 // The public root is editorial; an HTTP-200 lab index is useless if its JS is a 404.
 export function labAssetReferences(html) {
   if (typeof html !== 'string') return [];
-  const attr = (tag, name) => tag.match(new RegExp('\\b' + name + '\\s*=\\s*(["\\\'])(.*?)\\1', 'i'))?.[2];
-  return Array.from(html.matchAll(/<(script|link)\\b[^>]*>/gi), match => {
+  const attr = (tag, name) => {
+    const pairs = tag.match(/\b[a-z-]+\s*=\s*(?:"[^"]*"|'[^']*')/gi) || [];
+    const pair = pairs.find(p => p.slice(0, p.indexOf('=')).trim().toLowerCase() === name);
+    return pair ? pair.slice(pair.indexOf('=') + 1).trim().slice(1, -1) : null;
+  };
+  return Array.from(html.matchAll(/<(script|link)\b[^>]*>/gi), match => {
     const tag = match[0];
     if (match[1].toLowerCase() === 'script') {
       const src = attr(tag, 'src');
@@ -15,7 +19,7 @@ export function labAssetReferences(html) {
     }
     const rel = attr(tag, 'rel') || '';
     const href = attr(tag, 'href');
-    return rel.toLowerCase().split(/\\s+/).includes('stylesheet') && href
+    return rel.toLowerCase().split(/\s+/).includes('stylesheet') && href
       ? { kind: 'css', path: href } : null;
   }).filter(Boolean);
 }
@@ -116,8 +120,8 @@ export function assessRelease({ sha, pages, runs = [], deployments = [], statuse
   // Do not follow off-origin, traversal or duplicate references; the same bounded
   // inventory is fetched by auditFromGitHub and checked here, including MIME.
   const safePath = a => a.kind === 'js'
-    ? /^\\/conde-incident\\/lab\\/assets\\/[A-Za-z0-9._-]+\\.js$/.test(a.path)
-    : /^\\/conde-incident\\/lab\\/assets\\/[A-Za-z0-9._-]+\\.css$/.test(a.path);
+    ? /^\/conde-incident\/lab\/assets\/[A-Za-z0-9._-]+\.js$/.test(a.path)
+    : /^\/conde-incident\/lab\/assets\/[A-Za-z0-9._-]+\.css$/.test(a.path);
   const assetsOk = assetRefs.length > 0 && assetRefs.length <= 20 &&
     assetRefs.some(a => a.kind === 'js') &&
     assetRefs.every(safePath) &&
@@ -127,8 +131,8 @@ export function assessRelease({ sha, pages, runs = [], deployments = [], statuse
       const actual = site.labAssets[i];
       const mime = actual?.contentType || '';
       const rightMime = ref.kind === 'js'
-        ? /^(text|application)\\/(x-)?javascript(?:\\s*;|$)/i.test(mime)
-        : /^text\\/css(?:\\s*;|$)/i.test(mime);
+        ? /^(text|application)\/(x-)?javascript(?:\s*;|$)/i.test(mime)
+        : /^text\/css(?:\s*;|$)/i.test(mime);
       return actual?.path === ref.path && actual?.kind === ref.kind &&
         actual?.status === 200 && rightMime &&
         typeof actual?.body === 'string' && actual.body.trim().length > 0;
@@ -228,7 +232,7 @@ export async function auditFromGitHub({ repo, sha, token, upstreamConclusion, si
   if (assetRefs.length > 20) throw new Error('More than 20 lab assets: review bounded audit');
   for (const asset of assetRefs) {
     // Even a compromised page must never turn this public auditor into an SSRF client.
-    if (!/^\\/conde-incident\\/lab\\/assets\\/[A-Za-z0-9._-]+\\.(?:js|css)$/.test(asset.path)) continue;
+    if (!/^\/conde-incident\/lab\/assets\/[A-Za-z0-9._-]+\.(?:js|css)$/.test(asset.path)) continue;
     site.labAssets.push({ ...asset,
       ...await readPage(asset.path.slice('/conde-incident/'.length)) });
   }
