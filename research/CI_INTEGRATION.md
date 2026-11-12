@@ -8,7 +8,7 @@ As inspected on 2026-11-12, `main` at `eee7851d29e7bafa38ebcb36cab9da9dfa2f2afb`
 
 ## What this PR provides
 
-`.github/workflows/integration-head.yml` runs on push and pull request, checks out **the actual PR head SHA** rather than GitHub's synthetic pull-request merge commit, and asserts the checked-out SHA. The web job installs the exact Bun lockfile, runs TypeScript and Vite build, and executes every `scripts/*.test.mjs` suite currently present. It explicitly reports that no such test suite exists when absent; it must never claim these tests passed if they did not exist.
+`.github/workflows/integration-head.yml` runs on push and pull request, checks out **the actual PR head SHA** rather than GitHub's synthetic pull-request merge commit, and asserts the checked-out SHA. The web job installs the exact Bun lockfile, runs TypeScript and Vite build, and executes every `scripts/**/*.test.mjs` and `tests/**/*.test.mjs` suite currently present (root and nested). It explicitly reports that no such test suite exists when absent; it must never claim these tests passed if they did not exist.
 
 The Lean job runs `lake build` when both the Lean toolchain file and Lake project manifest exist under `formal/`; it fails on a partial `formal/` directory and explicitly reports Lean absent otherwise. It uses the package's pinned Lean version, rather than accepting a floating version. This does **not** independently establish the historical truth of any assumption used in a theorem.
 
@@ -24,3 +24,7 @@ The workflow grants only `contents: read` and has **no Pages deployment permissi
 ## Next integration question
 
 Can this isolated CI bootstrap be reviewed and merged first so the independent workflow in `main` evaluates scientific PR #28's **current** head? After that, can #28 get Gavião's final conditional-science signoff and reduce the documentation→Lean→simulation gap without mistaking compiled implications for empirical orbit reconstruction?
+
+## Corrective CI slice: tests/ coverage (12 Nov 2026, 🐘)
+
+The initial workflow only expanded `scripts/*.test.mjs`, silently omitting the already-present `tests/orbitPhysics.test.mjs` on `main` as well as the newly proposed `tests/orbitKernel.test.mjs` in Castor PR #74. This is a real coverage omission, not a historical data finding. The workflow now enables Bash `globstar` and collects root/nested Node suites from both `scripts/` and `tests/`; synthetic temporary-directory regressions execute the actual workflow discovery shell (dry-run substitution) to verify inclusion and the zero-tests message. The ordinary CI run executes the actual discovered suites. Any regression failure must block the specific head until repaired; compilation/physics success cannot be asserted from a test file merely existing. This does not establish that a Pages deployment took place.
