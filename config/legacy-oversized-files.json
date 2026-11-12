@@ -1,0 +1,86 @@
+{
+  "policy": "Existing oversized blobs are frozen; any change must split/reduce them to <=20,000 bytes.",
+  "limit_bytes": 20000,
+  "exceptions": [
+    {
+      "path": ".gmp_cache/example_core.md",
+      "git_blob_sha": "bcaba553d4b02be3b422f5f01aa9d1578a6f4dbc",
+      "observed_bytes": 23602
+    },
+    {
+      "path": ".gmp_cache/gmp-framework-react.md",
+      "git_blob_sha": "1b26487c59ac7f12bb5c619832945706fae25b7c",
+      "observed_bytes": 32824
+    },
+    {
+      "path": ".gmp_cache/index.json",
+      "git_blob_sha": "6c65d2532e42301d99403206bb1a09be752dcb9d",
+      "observed_bytes": 24221
+    },
+    {
+      "path": "bun.lock",
+      "git_blob_sha": "1899b4801672f01cdbee6df05a637ce1de141cd1",
+      "observed_bytes": 70625
+    },
+    {
+      "path": "formal/Conde1963/Evidence.lean",
+      "git_blob_sha": "c6887c6790b9bdc5a80d681fb0d34b403fa7849c",
+      "observed_bytes": 102677
+    },
+    {
+      "path": "public/data/conde-source-citations.json",
+      "git_blob_sha": "04879b4dd9cd5240a1ce37d989b9ebcab3ffd136",
+      "observed_bytes": 33363
+    },
+    {
+      "path": "research/constraints/ssr_1963_observable_graph.json",
+      "git_blob_sha": "923855617fee403890367c076fd88b3b75ada388",
+      "observed_bytes": 38352
+    },
+    {
+      "path": "research/evidence_matrix_C001-C238_2026-11-11.md",
+      "git_blob_sha": "a7978c3a75a153b16ab70118a92c434bba674cb7",
+      "observed_bytes": 193476
+    },
+    {
+      "path": "research/geo/conde_ibge_2022_sirgas2000.json",
+      "git_blob_sha": "35881f68656faea2c77f277b0199225237dca7b7",
+      "observed_bytes": 110542
+    },
+    {
+      "path": "research/geo/conde_ibge_2025_sirgas2000.json",
+      "git_blob_sha": "a43a6b3253fee085320095ed1b7840e44e409d85",
+      "observed_bytes": 100878
+    },
+    {
+      "path": "research/provenance/lineages.json",
+      "git_blob_sha": "6b7f5dbffd6e8850586008cad11758f8e5f538f1",
+      "observed_bytes": 24045
+    },
+    {
+      "path": "src/components/ExecutiveSummary.tsx",
+      "git_blob_sha": "5eee17e3ff05da5fcbaf6e0bb0b2a3384991d834",
+      "observed_bytes": 26737
+    },
+    {
+      "path": "src/components/OrbitalMap.tsx",
+      "git_blob_sha": "ec95dffab4b30a5599903b0deb5925aec6cd5190",
+      "observed_bytes": 101576
+    },
+    {
+      "path": "src/components/TriangulationDashboard.tsx",
+      "git_blob_sha": "22108b5447638daabfc66167dc3f79d6bb79d339",
+      "observed_bytes": 31713
+    },
+    {
+      "path": "src/lib/constants.ts",
+      "git_blob_sha": "90e8ddec0a175056ddeb756fb3465ef110fbcc3b",
+      "observed_bytes": 20598
+    },
+    {
+      "path": "tools/provenance_graph.py",
+      "git_blob_sha": "398303934fa39e3bc167dc6de912a3e8d77252ec",
+      "observed_bytes": 25101
+    }
+  ]
+}
