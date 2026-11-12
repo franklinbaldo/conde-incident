@@ -69,16 +69,18 @@ theorem synthetic_terminal_geometry_cannot_certify_history
     (h : r.origin = .syntheticTerminalGeometry) :
     ¬ HistoricallyAdmissible r := by
   intro admitted
-  rw [h] at admitted
-  cases admitted.1
+  have same : r.origin = .coupledCartesianRV := admitted.1
+  rw [h] at same
+  cases same
 
 theorem retrospective_sgp4_cannot_certify_history
     (r : SimulationAudit)
     (h : r.origin = .retrospectiveSgp4) :
     ¬ HistoricallyAdmissible r := by
   intro admitted
-  rw [h] at admitted
-  cases admitted.1
+  have same : r.origin = .coupledCartesianRV := admitted.1
+  rw [h] at same
+  cases same
 
 theorem absent_independent_holdout_precludes_history
     (r : SimulationAudit)
@@ -103,8 +105,9 @@ theorem altitude_threshold_not_ground_impact
     (h : r.event = .chosenAltitudeThreshold) :
     ¬ GroundImpactAdmissible r := by
   intro supported
-  rw [h] at supported
-  cases supported.2.1
+  have same : r.event = .proposedGroundImpact := supported.2.1
+  rw [h] at same
+  cases same
 
 theorem missing_survival_model_not_ground_impact
     (r : SimulationAudit)
@@ -194,6 +197,7 @@ def scaledDragPower (nonnegativeFactor speedSquared : Nat) : Int :=
 theorem scaled_drag_power_nonpositive
     (nonnegativeFactor speedSquared : Nat) :
     scaledDragPower nonnegativeFactor speedSquared ≤ 0 := by
-  simp [scaledDragPower]
+  change -(Int.ofNat (nonnegativeFactor * speedSquared)) ≤ 0
+  omega
 
 end Conde1963
