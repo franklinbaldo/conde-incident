@@ -26,8 +26,8 @@ function integrate(initial, durationS, stepS, dynamics = {}) {
 test('central force has km/s² dimensional consistency at circular altitude', () => {
   const a = accelerationKmS2(circular);
   assert.ok(Math.abs(a[0] + EARTH.muKm3S2 / radius ** 2) < 1e-15);
-  assert.equal(a[1], 0);
-  assert.equal(a[2], 0);
+  assert.equal(Math.abs(a[1]), 0);
+  assert.equal(Math.abs(a[2]), 0);
   assert.ok(Math.abs(circular.vKmS[1] ** 2 / radius - EARTH.muKm3S2 / radius ** 2) < 1e-15);
 });
 
