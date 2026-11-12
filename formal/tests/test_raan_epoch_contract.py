@@ -50,7 +50,7 @@ class RaanEpochContractTests(unittest.TestCase):
             ("c241OneDayUs", 86400000000),
             ("c241CombinedRoundingE4", 1),
         ):
-            self.assertRegex(code, rf"def {name} : Nat := {n}\\b")
+            self.assertRegex(code, rf"def {name} : Nat := {n}\b")
         audit = AUDIT.read_text(encoding="utf-8")
         for name in (
             "c241_raan_gap_floor_is_856258",
