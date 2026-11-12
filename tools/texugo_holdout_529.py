@@ -207,16 +207,50 @@ def evaluate(rows: list[Observation], cutoff_day: str) -> dict:
     return summary
 
 
+def overlap_diagnostics(rows: list[Observation], results: list[dict]) -> dict:
+    """Count duplicate future 529 epochs across evaluated cutoffs, not independent replications."""
+    evaluated = [r["cutoff_utc_end_of_day"] for r in results if r["status"] != "NOT_RUN"]
+    future = {
+        day: {o.epoch for o in rows if o.sat == 529 and o.epoch > utc(day + "T23:59:59Z")}
+        for day in evaluated
+    }
+    if not evaluated:
+        return {"status": "NOT_RUN", "reason": "no evaluable target holdout",
+                "no_probability": True}
+    counts = {day: len(future[day]) for day in evaluated}
+    distinct = set().union(*future.values())
+    scored = sum(counts.values())
+    shared = {
+        f"{a}|{b}": len(future[a] & future[b])
+        for i, a in enumerate(evaluated) for b in evaluated[i + 1:]
+    }
+    return {
+        "status": "EVALUATED_POST_HOC",
+        "target_norad_id": 529,
+        "evaluated_cutoffs": evaluated,
+        "future_epochs_per_cutoff": counts,
+        "total_scored_epoch_occurrences": scored,
+        "distinct_future_epochs": len(distinct),
+        "reused_epoch_occurrences": scored - len(distinct),
+        "epochs_shared_by_all_evaluated_cutoffs": len(set.intersection(*future.values())),
+        "pairwise_overlap_counts": shared,
+        "independent_replications_established": False,
+        "no_probability": True,
+        "interpretation": "Repeated chronological scores reuse one secondary catalog; no independent sensors, p-values or orbital validation",
+    }
+
+
 def run(rows: list[Observation]) -> dict:
+    results = [evaluate(rows, date) for date in CUTOFFS]
     return {
         "status": "EXPLORATORY_NUMERIC_MIRROR_NOT_ORBITAL_VALIDATION",
         "source_url": EXPECTED_URL, "source_sha256": EXPECTED_SHA256,
         "training_rule": "527,528 and 529 epochs <= cutoff; target 529 > cutoff never used in fitting",
         "models": "quadratic on 529 vs equal-mean 527/528 curvature transferred; post-hoc ablations 527 alone, 528 alone, linear 529, inverted sign; not a physical coupled propagator",
         "no_probability": True,
-        "results": [evaluate(rows, date) for date in CUTOFFS],
+        "results": results,
+        "holdout_overlap": overlap_diagnostics(rows, results),
     }
-
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)

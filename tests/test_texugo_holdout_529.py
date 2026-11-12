@@ -140,6 +140,27 @@ class HoldoutControls(unittest.TestCase):
         self.assertEqual(before["coefficients"], after["coefficients"])
         self.assertNotEqual(before["holdout_rmse_rev_day"], after["holdout_rmse_rev_day"])
 
+    def test_overlapping_holdouts_are_not_independent_replications(self):
+        # SYNTHETIC counterexample: future target epochs are nested by cutoff.
+        from texugo_holdout_529 import overlap_diagnostics
+        start = datetime(1963, 8, 30, tzinfo=timezone.utc)
+        observations = [Observation(529, start + timedelta(days=d), 15.0)
+                        for d in (0, 2, 30, 50, 70)]
+        results = [{"cutoff_utc_end_of_day": day, "status": "TIE"} for day in CUTOFFS]
+        report = overlap_diagnostics(observations, results)
+        self.assertEqual(list(report["future_epochs_per_cutoff"].values()), [4, 3, 2, 1])
+        self.assertEqual(report["total_scored_epoch_occurrences"], 10)
+        self.assertEqual(report["distinct_future_epochs"], 4)
+        self.assertEqual(report["reused_epoch_occurrences"], 6)
+        self.assertEqual(report["epochs_shared_by_all_evaluated_cutoffs"], 1)
+        self.assertEqual(report["pairwise_overlap_counts"]["1963-08-31|1963-10-21"], 1)
+        self.assertFalse(report["independent_replications_established"])
+        results[1]["status"] = "NOT_RUN"
+        report = overlap_diagnostics(observations, results)
+        self.assertEqual(report["total_scored_epoch_occurrences"], 7)
+        self.assertEqual(report["distinct_future_epochs"], 4)
+        self.assertEqual(overlap_diagnostics(observations, [])["status"], "NOT_RUN")
+
     def test_no_likelihood_or_geography_in_report(self):
         report = run(samples())
         self.assertTrue(report["no_probability"])
