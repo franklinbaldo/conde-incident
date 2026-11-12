@@ -33,3 +33,41 @@ test('private workspace scaffold is present and bounded in the provisioner',()=>
   assert.doesNotMatch(source,/print\(token\)/);
   assert.match(source,/expected_visibility/);
 });
+
+
+test('every provisioned Markdown is normative OKF with a matching type spec', () => {
+  const py = [
+    'import json,sys',
+    'sys.path.insert(0, sys.argv[1])',
+    'import provision_agent_workspaces as p',
+    'owner, agents = p.read_roster()',
+    'print(json.dumps({a["slug"]: p.bootstrap_files(owner, a) for a in agents}, ensure_ascii=False))'
+  ].join('\n');
+  const result = spawnSync('python3', ['-c', py, new URL('../tools/', import.meta.url).pathname], {
+    encoding: 'utf8', timeout: 10000, maxBuffer: 4 * 1024 * 1024
+  });
+  assert.equal(result.status, 0, result.stderr);
+  const workspaces = JSON.parse(result.stdout);
+  assert.equal(Object.keys(workspaces).length, roster.agents.length);
+  for (const [slug, files] of Object.entries(workspaces)) {
+    assert.ok(files['tools/README.md'] && files['experiments/README.md'], slug);
+    assert.ok(files['.github/ISSUE_TEMPLATE/message.md'], slug);
+    for (const [path, content] of Object.entries(files)) {
+      assert.ok(Buffer.byteLength(content, 'utf8') <= 20_000, slug + '/' + path + ' too large');
+      if (!path.endsWith('.md')) continue;
+      assert.ok(content.startsWith('---\n'), slug + '/' + path + ' missing frontmatter');
+      const front = content.split('---\n')[1];
+      const type = front.match(/^type: "([^"]+)"$/m)?.[1];
+      assert.ok(type, slug + '/' + path + ' missing OKF type');
+      assert.match(front, /^title: ".+"$/m, slug + '/' + path + ' missing title');
+      assert.match(front, /^description: ".+"$/m, slug + '/' + path + ' missing description');
+      assert.ok(files['.okf/specs/' + type.toLowerCase() + '.md'],
+        slug + '/' + path + ' missing spec for ' + type);
+    }
+    const issue = files['.github/ISSUE_TEMPLATE/message.md'];
+    assert.match(issue, /^name: "Mensagem entre animais"$/m);
+    assert.match(issue, /^about: /m);
+    assert.match(issue, /^labels: /m);
+    assert.match(files['.agents/skills/conde-' + slug + '/SKILL.md'], /^name: "conde-/m);
+  }
+});

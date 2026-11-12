@@ -1,0 +1,289 @@
+{
+  "schema": "conde.igra-recife-nominal-date-contrast/v1",
+  "source": {
+    "archive_url": "https://www.ncei.noaa.gov/pub/data/igra/data/data-por/BRM00082900-data.txt.zip",
+    "archive_bytes": 7834492,
+    "archive_sha256": "0655b3ea80312abe888a5474f82233affc0a2496ee1fd8bc678162924f52ecdc",
+    "instrument_station": "BRM00082900",
+    "coordinates_catalogued": {
+      "lat_deg": -8.05,
+      "lon_deg_east": -34.9167,
+      "elevation_m": 7
+    },
+    "original_archive_upstream_code": "ncdc6301",
+    "same_instrumental_family": true,
+    "exact_1963_station_location_verified": false,
+    "instrument_error_m_s": null,
+    "temporal_transfer_error_m_s": null,
+    "recife_to_conde_transfer_error_m_s": null,
+    "station_period": "three separate nominal-date soundings, not independent stations"
+  },
+  "soundings": [
+    {
+      "nominal_utc_date": "1963-11-07",
+      "nominal_utc_hour": 12,
+      "release_time_utc": null,
+      "release_time_missing_code": 9999,
+      "record_sha256": "d77a3bc79935199cc5606a21a464f2836edc1191105ea44a03e58a3fce8375c6",
+      "source_levels": 29,
+      "complete_wind_levels": 15,
+      "standard_pressure_levels": [
+        {
+          "pressure_hpa": 850,
+          "geopotential_height_m_asl": 1560,
+          "gph_quality_flag": "B",
+          "wind_from_deg": 135,
+          "speed_m_s": 2.0,
+          "u_east_m_s": -1.414214,
+          "v_north_m_s": 1.414214
+        },
+        {
+          "pressure_hpa": 700,
+          "geopotential_height_m_asl": 3193,
+          "gph_quality_flag": "B",
+          "wind_from_deg": 191,
+          "speed_m_s": 4.0,
+          "u_east_m_s": 0.763236,
+          "v_north_m_s": 3.926509
+        },
+        {
+          "pressure_hpa": 500,
+          "geopotential_height_m_asl": 5909,
+          "gph_quality_flag": "B",
+          "wind_from_deg": 175,
+          "speed_m_s": 3.0,
+          "u_east_m_s": -0.261467,
+          "v_north_m_s": 2.988584
+        },
+        {
+          "pressure_hpa": 300,
+          "geopotential_height_m_asl": 9710,
+          "gph_quality_flag": "B",
+          "wind_from_deg": 150,
+          "speed_m_s": 14.0,
+          "u_east_m_s": -7.0,
+          "v_north_m_s": 12.124356
+        },
+        {
+          "pressure_hpa": 250,
+          "geopotential_height_m_asl": 10968,
+          "gph_quality_flag": "B",
+          "wind_from_deg": 130,
+          "speed_m_s": 11.0,
+          "u_east_m_s": -8.426489,
+          "v_north_m_s": 7.070664
+        }
+      ]
+    },
+    {
+      "nominal_utc_date": "1963-11-08",
+      "nominal_utc_hour": 12,
+      "release_time_utc": null,
+      "release_time_missing_code": 9999,
+      "record_sha256": "577224172e19552f5ce87081897479255596dc44debacc674dfd9d9ec418207e",
+      "source_levels": 26,
+      "complete_wind_levels": 15,
+      "standard_pressure_levels": [
+        {
+          "pressure_hpa": 850,
+          "geopotential_height_m_asl": 1560,
+          "gph_quality_flag": "B",
+          "wind_from_deg": 100,
+          "speed_m_s": 4.0,
+          "u_east_m_s": -3.939231,
+          "v_north_m_s": 0.694593
+        },
+        {
+          "pressure_hpa": 700,
+          "geopotential_height_m_asl": 3197,
+          "gph_quality_flag": "B",
+          "wind_from_deg": 236,
+          "speed_m_s": 4.0,
+          "u_east_m_s": 3.31615,
+          "v_north_m_s": 2.236772
+        },
+        {
+          "pressure_hpa": 500,
+          "geopotential_height_m_asl": 5917,
+          "gph_quality_flag": "B",
+          "wind_from_deg": 159,
+          "speed_m_s": 6.0,
+          "u_east_m_s": -2.150208,
+          "v_north_m_s": 5.601483
+        },
+        {
+          "pressure_hpa": 300,
+          "geopotential_height_m_asl": 9745,
+          "gph_quality_flag": "B",
+          "wind_from_deg": 129,
+          "speed_m_s": 15.0,
+          "u_east_m_s": -11.657189,
+          "v_north_m_s": 9.439806
+        },
+        {
+          "pressure_hpa": 250,
+          "geopotential_height_m_asl": 11007,
+          "gph_quality_flag": "B",
+          "wind_from_deg": 102,
+          "speed_m_s": 17.0,
+          "u_east_m_s": -16.628509,
+          "v_north_m_s": 3.534499
+        }
+      ]
+    },
+    {
+      "nominal_utc_date": "1963-11-09",
+      "nominal_utc_hour": 12,
+      "release_time_utc": null,
+      "release_time_missing_code": 9999,
+      "record_sha256": "73e963250891689bf39baf5c29963dd3e42ed13180cf72355237cf98a70d00b2",
+      "source_levels": 26,
+      "complete_wind_levels": 15,
+      "standard_pressure_levels": [
+        {
+          "pressure_hpa": 850,
+          "geopotential_height_m_asl": 1560,
+          "gph_quality_flag": "B",
+          "wind_from_deg": 304,
+          "speed_m_s": 2.0,
+          "u_east_m_s": 1.658075,
+          "v_north_m_s": -1.118386
+        },
+        {
+          "pressure_hpa": 700,
+          "geopotential_height_m_asl": 3171,
+          "gph_quality_flag": "B",
+          "wind_from_deg": 310,
+          "speed_m_s": 3.0,
+          "u_east_m_s": 2.298133,
+          "v_north_m_s": -1.928363
+        },
+        {
+          "pressure_hpa": 500,
+          "geopotential_height_m_asl": 5878,
+          "gph_quality_flag": "B",
+          "wind_from_deg": 110,
+          "speed_m_s": 9.0,
+          "u_east_m_s": -8.457234,
+          "v_north_m_s": 3.078181
+        },
+        {
+          "pressure_hpa": 300,
+          "geopotential_height_m_asl": 9685,
+          "gph_quality_flag": "B",
+          "wind_from_deg": 108,
+          "speed_m_s": 14.0,
+          "u_east_m_s": -13.314791,
+          "v_north_m_s": 4.326238
+        },
+        {
+          "pressure_hpa": 250,
+          "geopotential_height_m_asl": 10939,
+          "gph_quality_flag": "B",
+          "wind_from_deg": 90,
+          "speed_m_s": 10.0,
+          "u_east_m_s": -10.0,
+          "v_north_m_s": -0.0
+        }
+      ]
+    }
+  ],
+  "inter_day_at_recife_nominal_date_contrasts": [
+    {
+      "pressure_hpa": 850,
+      "day_07_minus_08": {
+        "delta_u_m_s": 2.525017,
+        "delta_v_m_s": 0.719621,
+        "vector_difference_m_s": 2.62556
+      },
+      "day_09_minus_08": {
+        "delta_u_m_s": 5.597306,
+        "delta_v_m_s": -1.812979,
+        "vector_difference_m_s": 5.883598
+      }
+    },
+    {
+      "pressure_hpa": 700,
+      "day_07_minus_08": {
+        "delta_u_m_s": -2.552914,
+        "delta_v_m_s": 1.689737,
+        "vector_difference_m_s": 3.061467
+      },
+      "day_09_minus_08": {
+        "delta_u_m_s": -1.018017,
+        "delta_v_m_s": -4.165135,
+        "vector_difference_m_s": 4.287739
+      }
+    },
+    {
+      "pressure_hpa": 500,
+      "day_07_minus_08": {
+        "delta_u_m_s": 1.888741,
+        "delta_v_m_s": -2.612899,
+        "vector_difference_m_s": 3.224063
+      },
+      "day_09_minus_08": {
+        "delta_u_m_s": -6.307026,
+        "delta_v_m_s": -2.523302,
+        "vector_difference_m_s": 6.793057
+      }
+    },
+    {
+      "pressure_hpa": 300,
+      "day_07_minus_08": {
+        "delta_u_m_s": 4.657189,
+        "delta_v_m_s": 2.68455,
+        "vector_difference_m_s": 5.37552
+      },
+      "day_09_minus_08": {
+        "delta_u_m_s": -1.657602,
+        "delta_v_m_s": -5.113568,
+        "vector_difference_m_s": 5.375521
+      }
+    },
+    {
+      "pressure_hpa": 250,
+      "day_07_minus_08": {
+        "delta_u_m_s": 8.20202,
+        "delta_v_m_s": 3.536165,
+        "vector_difference_m_s": 8.93183
+      },
+      "day_09_minus_08": {
+        "delta_u_m_s": 6.628509,
+        "delta_v_m_s": -3.534499,
+        "vector_difference_m_s": 7.511978
+      }
+    }
+  ],
+  "methodology": {
+    "days": [
+      "1963-11-07",
+      "1963-11-08",
+      "1963-11-09"
+    ],
+    "time_differences_are_nominal": true,
+    "real_release_times_all_unknown": true,
+    "comparisons_are_not_calibrated_uncertainty_bounds": true,
+    "sampling_is_not_spatially_transferable_to_conde": true,
+    "pressure_level_isobaric_comparison": true,
+    "gph_is_geopotential_altitude_not_exact_geometric_altitude": true,
+    "balloon_drift_or_impact_location_estimated": false,
+    "satellite_thermospheric_density_estimated": false,
+    "physical_constraint_status": "OBSERVATION_ONLY_PENDING_SPATIOTEMPORAL_TRANSFER",
+    "related_matrix_ids": [
+      "C149",
+      "C150",
+      "C151",
+      "C144",
+      "C145",
+      "C146",
+      "C17",
+      "C18",
+      "C19",
+      "C20",
+      "C21",
+      "C23",
+      "C193"
+    ]
+  }
+}

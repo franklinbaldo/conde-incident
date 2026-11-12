@@ -51,11 +51,12 @@ export function isCitationFeed(value: unknown): value is CitationFeed {
 export function citationContext(feed: CitationFeed, input: string) {
   const occurrence = normalizeOccurrence(input);
   if (!occurrence) return { state: 'invalid' as const };
-  const record = feed.records.find((item) => item.occurrence === occurrence);
+  const records = feed.records.filter((item) => item.occurrence === occurrence);
+  const record = records[0];
   if (!record) return { state: 'unmapped' as const, occurrence };
   // A work can yield multiple matrix citations, but is NOT several witnesses.
   const sameWork = feed.records.filter((item) => item.work_id === record.work_id);
-  return { state: 'mapped' as const, occurrence, record, sameWork };
+  return { state: 'mapped' as const, occurrence, record, records, sameWork };
 }
 
 // The curated citation feed pins original matrix Git blob a7978c3a75a153b16ab70118a92c434bba674cb7.
@@ -63,4 +64,78 @@ export function citationContext(feed: CitationFeed, input: string) {
 // silently turns a source citation into a different claim.
 export function matrixOccurrenceUrl(matrixLine: number): string {
   return 'https://github.com/franklinbaldo/conde-incident/blob/faf4dd0fd8dfbdd825e4e934b3b30ebd81bf61df/research/evidence_matrix_C001-C238_2026-11-11.md#L' + matrixLine;
+}
+
+
+// Documentary ancestry is an explicit *declaration* by the provenance graph.
+// No declared path is not evidence that two sources are independent.
+export interface DeclaredUpstreamPath {
+  upstream_source_id: string;
+  edges: Array<{ from: string; to: string; kind: string }>;
+}
+
+export interface DeclaredLineageRecord {
+  snapshot_ref: string;
+  source_id: string;
+  family_id: string;
+  declared_upstream_paths: DeclaredUpstreamPath[];
+  independent_physical_observation_count: null;
+}
+
+export interface DeclaredDependenceFeed {
+  schema: 'conde.declared-documentary-dependence/v1';
+  canonical_citations_path: string;
+  matrix_git_blob_sha1: string;
+  epistemic_limits: {
+    absence_of_edge_does_not_prove_independence: true;
+    independent_physical_observation_count: null;
+  };
+  citation_lineages: DeclaredLineageRecord[];
+}
+
+export function isDeclaredDependenceFeed(value: unknown): value is DeclaredDependenceFeed {
+  if (!value || typeof value !== 'object') return false;
+  const feed = value as Partial<DeclaredDependenceFeed>;
+  return feed.schema === 'conde.declared-documentary-dependence/v1'
+    && feed.canonical_citations_path === 'public/data/conde-source-citations.json'
+    && typeof feed.matrix_git_blob_sha1 === 'string'
+    && feed.epistemic_limits?.absence_of_edge_does_not_prove_independence === true
+    && feed.epistemic_limits?.independent_physical_observation_count === null
+    && Array.isArray(feed.citation_lineages)
+    && feed.citation_lineages.every((record) =>
+      typeof record.snapshot_ref === 'string'
+      && typeof record.source_id === 'string'
+      && typeof record.family_id === 'string'
+      && record.independent_physical_observation_count === null
+      && Array.isArray(record.declared_upstream_paths)
+      && record.declared_upstream_paths.every((path) =>
+        typeof path.upstream_source_id === 'string'
+        && Array.isArray(path.edges)
+        && path.edges.every((edge) =>
+          typeof edge.from === 'string'
+          && typeof edge.to === 'string'
+          && typeof edge.kind === 'string')));
+}
+
+export function declaredLineageContext(
+  dependence: DeclaredDependenceFeed,
+  citations: CitationFeed,
+  citation: CitationRecord,
+) {
+  // Companion and canonical feeds must refer to the same immutable matrix.
+  if (dependence.matrix_git_blob_sha1 !== citations.matrix_git_blob_sha1) {
+    return { state: 'snapshot-mismatch' as const };
+  }
+  const snapshotRef = `matrix:${citations.matrix_git_blob_sha1}:${citation.occurrence}`;
+  const candidates = dependence.citation_lineages.filter((item) => item.snapshot_ref === snapshotRef);
+  if (!candidates.length) return { state: 'unmapped' as const };
+  // One matrix occurrence may cite several independent *documents*, not
+  // independent physical witnesses (C232#1 has both an index and a NARA card).
+  // Never join a citation to the ancestry of whichever source occurs first.
+  const matches = candidates.filter((item) => item.source_id === citation.source_id);
+  if (matches.length !== 1 || matches[0].family_id !== citation.source_family) {
+    return { state: 'source-mismatch' as const };
+  }
+  const record = matches[0];
+  return { state: 'declared' as const, paths: record.declared_upstream_paths, sourceId: record.source_id };
 }

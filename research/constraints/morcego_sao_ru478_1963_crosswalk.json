@@ -1,0 +1,269 @@
+{
+  "schema": "conde.sao-archive-crosswalk/v1",
+  "question": "Where are 1963 full optical tracking logs, and what station did RU301 SC-8 films represent?",
+  "sources": [
+    {
+      "id": "RU478",
+      "url": "https://sirismm.si.edu/EADpdfs/SIA.FARU0478.pdf",
+      "grade": "primary_for_archive_holdings_only",
+      "source_sha256": null,
+      "reason": "Downloaded bytes unavailable; official catalog screenshots visually inspected"
+    },
+    {
+      "id": "SAO-SR353",
+      "url": "https://ntrs.nasa.gov/api/citations/19740019249/downloads/19740019249.pdf",
+      "grade": "SAO_first_party_retrospective_in_1973_for_station_history_not_1963_sensor",
+      "source_sha256": null,
+      "reason": "Original document parsed, screenshot attempt blocked by 12MB size limit"
+    }
+  ],
+  "occurrences": [
+    {
+      "id": "MOR-RU478-01",
+      "source_id": "RU478",
+      "locator": "box 59; printed p24",
+      "fact": "Baker-Nunn Observation Monthly Reports, 1961-1968",
+      "limitation": "MONTH_NOV_1963_NOT_VERIFIED",
+      "independence_family": "SMITHSONIAN_SAO_PROGRAM",
+      "original_instrument_measurement": false,
+      "hard_physical_constraint": false
+    },
+    {
+      "id": "MOR-RU478-02",
+      "source_id": "RU478",
+      "locator": "box 65; printed p25",
+      "fact": "Tape 12546 All Photo-Reduced Observations through 1974",
+      "limitation": "TAPE_CONTENT_NOT_READ",
+      "independence_family": "SMITHSONIAN_SAO_PROGRAM",
+      "original_instrument_measurement": false,
+      "hard_physical_constraint": false
+    },
+    {
+      "id": "MOR-RU478-03",
+      "source_id": "RU478",
+      "locator": "box 1; printed p3",
+      "fact": "1963 weather files Curacao #9009, Iran #9008; Brazil #9039 begins 1967",
+      "limitation": "DAILY_RECORDS_NOT_READ",
+      "independence_family": "SMITHSONIAN_SAO_PROGRAM",
+      "original_instrument_measurement": false,
+      "hard_physical_constraint": false
+    },
+    {
+      "id": "MOR-RU478-04",
+      "source_id": "RU478",
+      "locator": "boxes 51-52; printed p22",
+      "fact": "Timing references and station-coordinate cards",
+      "limitation": "CARD_DATES_CONTENT_NOT_READ",
+      "independence_family": "SMITHSONIAN_SAO_PROGRAM",
+      "original_instrument_measurement": false,
+      "hard_physical_constraint": false
+    },
+    {
+      "id": "MOR-SR353-05",
+      "source_id": "SAO-SR353",
+      "locator": "Table 3; printed p61; parsed lines 1126-1147",
+      "fact": "SC-8=9008 Shiraz Iran 1958-1966; SC-9=9009 Curacao 1958-1966; SC-9 moved Natal 1966",
+      "limitation": "SITE_MAPPING_NOT_PHYSICAL_OBSERVATION",
+      "independence_family": "SMITHSONIAN_SAO_PROGRAM",
+      "original_instrument_measurement": false,
+      "hard_physical_constraint": false
+    },
+    {
+      "id": "MOR-SR353-06",
+      "source_id": "SAO-SR353",
+      "locator": "section 2.3; printed p59; parsed lines 1008-1013",
+      "fact": "Before 20 September 1967 clocks referenced WWV and corrections were applied",
+      "limitation": "NO_1963_INDIVIDUAL_CLOCK_CALIBRATION",
+      "independence_family": "SMITHSONIAN_SAO_PROGRAM",
+      "original_instrument_measurement": false,
+      "hard_physical_constraint": false
+    }
+  ],
+  "variables": [
+    {
+      "id": "sc8_site_1963",
+      "value": "Shiraz, Iran",
+      "kind": "categorical",
+      "source_occurrence": "MOR-SR353-05",
+      "uncertainty": "SITE_METADATA_NOT_INSTRUMENT_OBSERVATION"
+    },
+    {
+      "id": "sc8_station_code_1963",
+      "value": "9008",
+      "kind": "code",
+      "source_occurrence": "MOR-SR353-05",
+      "uncertainty": "SITE_METADATA_NOT_INSTRUMENT_OBSERVATION"
+    },
+    {
+      "id": "sc9_site_1963",
+      "value": "Curaçao, Netherlands Antilles",
+      "kind": "categorical",
+      "source_occurrence": "MOR-SR353-05",
+      "uncertainty": "SITE_METADATA_NOT_INSTRUMENT_OBSERVATION"
+    },
+    {
+      "id": "sc9_station_code_1963",
+      "value": "9009",
+      "kind": "code",
+      "source_occurrence": "MOR-SR353-05",
+      "uncertainty": "SITE_METADATA_NOT_INSTRUMENT_OBSERVATION"
+    },
+    {
+      "id": "ru478_nov63_monthly_report",
+      "value": null,
+      "kind": "document_identity",
+      "source_occurrence": "MOR-RU478-01",
+      "uncertainty": "UNKNOWN_NOT_ZERO"
+    },
+    {
+      "id": "tape12546_object528_present",
+      "value": null,
+      "kind": "tri_state",
+      "source_occurrence": "MOR-RU478-02",
+      "uncertainty": "UNKNOWN_NOT_ZERO"
+    },
+    {
+      "id": "sc8_1963_station_coordinates",
+      "value": null,
+      "kind": "geodetic_coordinates",
+      "source_occurrence": "MOR-RU478-04",
+      "uncertainty": "UNKNOWN_NOT_ZERO"
+    },
+    {
+      "id": "sc8_1963_exposure_utc",
+      "value": null,
+      "kind": "instant",
+      "source_occurrence": "MOR-RU478-04",
+      "uncertainty": "UNKNOWN_NOT_ZERO"
+    },
+    {
+      "id": "sc8_1963_angle",
+      "value": null,
+      "kind": "radians",
+      "source_occurrence": "MOR-RU478-02",
+      "uncertainty": "UNKNOWN_NOT_ZERO"
+    },
+    {
+      "id": "sc8_1963_angle_error",
+      "value": null,
+      "kind": "radians",
+      "source_occurrence": "MOR-RU478-02",
+      "uncertainty": "UNKNOWN_NOT_ZERO"
+    },
+    {
+      "id": "sc8_1963_clock_correction",
+      "value": null,
+      "kind": "seconds",
+      "source_occurrence": "MOR-SR353-06",
+      "uncertainty": "UNKNOWN_NOT_ZERO"
+    },
+    {
+      "id": "sc8_1963_weather",
+      "value": null,
+      "kind": "weather_station_observation",
+      "source_occurrence": "MOR-RU478-03",
+      "uncertainty": "UNKNOWN_NOT_ZERO"
+    }
+  ],
+  "edges": [
+    {
+      "id": "RU301_SC8_FILMS_LINKED_TO_SHIRAZ",
+      "variables": [
+        "sc8_site_1963",
+        "sc8_station_code_1963"
+      ],
+      "upstream": "research/constraints/baker_nunn_ru301_1963_film_index.json",
+      "metadata_active": true,
+      "hard_physical_constraint": false,
+      "status": "ACTIVE_METADATA_ONLY"
+    },
+    {
+      "id": "RU478_MONTHLY_REPORT_MAY_SUPPLY_EPOCH",
+      "variables": [
+        "ru478_nov63_monthly_report",
+        "sc8_1963_exposure_utc"
+      ],
+      "upstream": null,
+      "metadata_active": false,
+      "hard_physical_constraint": false,
+      "status": "CONNECTED_PENDING_EVIDENCE"
+    },
+    {
+      "id": "RU478_TAPE_MAY_SUPPLY_OBJECT_AND_ANGLE",
+      "variables": [
+        "tape12546_object528_present",
+        "sc8_1963_angle"
+      ],
+      "upstream": null,
+      "metadata_active": false,
+      "hard_physical_constraint": false,
+      "status": "CONNECTED_PENDING_EVIDENCE"
+    },
+    {
+      "id": "RU478_WEATHER_INFORMS_SELECTION_NOT_DETECTION",
+      "variables": [
+        "sc8_1963_weather",
+        "sc8_1963_exposure_utc"
+      ],
+      "upstream": null,
+      "metadata_active": false,
+      "hard_physical_constraint": false,
+      "status": "CONNECTED_PENDING_EVIDENCE"
+    },
+    {
+      "id": "RU478_CLOCK_CORRECTION_FOR_1963",
+      "variables": [
+        "sc8_1963_clock_correction",
+        "sc8_1963_exposure_utc"
+      ],
+      "upstream": null,
+      "metadata_active": false,
+      "hard_physical_constraint": false,
+      "status": "CONNECTED_PENDING_EVIDENCE"
+    },
+    {
+      "id": "FUTURE_TOPCENTRIC_ANGULAR_RESIDUAL",
+      "variables": [
+        "sc8_1963_station_coordinates",
+        "sc8_1963_exposure_utc",
+        "sc8_1963_angle",
+        "sc8_1963_angle_error",
+        "tape12546_object528_present"
+      ],
+      "upstream": null,
+      "metadata_active": false,
+      "hard_physical_constraint": false,
+      "status": "CONNECTED_PENDING_EVIDENCE"
+    }
+  ],
+  "source_independence": "SAO RU301, RU478 and SAO SR353 are different documents from one tracking program, not three independent observations.",
+  "status": "ARCHIVAL_AND_SITE_METADATA_CONNECTED_NO_PHYSICAL_OBSERVATION",
+  "source_notes": "RU478 original screenshots: printed 3/22/24; printed 25 extracted but physical tape not inspected. SR353 Table3 original machine-extracted, screenshot blocked by size.",
+  "negative_tests": [
+    "No film data sheet for SC-8 14902 or 1963 NORAD 528 measurement found",
+    "Tape 12546 only catalog metadata; 1963/528 records unverified",
+    "November 1963 weather daily contents unverified",
+    "No 1963 station geodesy or clock corrections retrieved"
+  ],
+  "hypotheses": [
+    {
+      "id": "H_OPTICAL_528_OBSERVED",
+      "test": "Find time-stamped photo-reduced record explicitly marked NORAD 528",
+      "status": "OPEN"
+    },
+    {
+      "id": "H_RU301_8NOV_ABSENCE_EXCLUDES_528",
+      "test": "RU301 curated sample versus full box59/tape inventory",
+      "status": "NOT_SUPPORTABLE_FROM_SAMPLE"
+    },
+    {
+      "id": "H_SC8_IS_CARIBBEAN",
+      "test": "Compare first-party SAO SR353 station history",
+      "status": "REFUTED_SC8_IS_SHIRAZ_SC9_IS_CURACAO"
+    }
+  ],
+  "candidate_lean": "After recovering actual observed angle, instrument epoch in UTC corrected for 1963 WWV clock, geodetic station coordinates and angular error, define conditional angular residual bound; no active predicate now.",
+  "next_question": "Locate RU478 box59 November 1963 monthly report; assess box65 tape 12546 contents and catalog schema before claiming any 528 image.",
+  "domain_reduction": "NOT_EVALUABLE",
+  "conclusion": "NO_CONDE_IMPACT_INFERENCE"
+}

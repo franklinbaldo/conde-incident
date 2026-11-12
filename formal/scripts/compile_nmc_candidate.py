@@ -1,0 +1,144 @@
+#!/usr/bin/env python3
+"""Compile byte-verified NCAR Y20175 custody into 9 NOT-DECODED candidate queries.
+
+This is a crosswalk from Lontra's NEW archive to Polvo's existing C151#1
+NOAA Recife wind datum. It never asserts that any station-day was measured.
+No orbital predicate, hard cut, or numeric wind is generated.
+"""
+from __future__ import annotations
+import argparse
+import hashlib
+import json
+from pathlib import Path
+import sys
+
+ROOT=Path(__file__).resolve().parents[2]
+sys.path.insert(0,str(ROOT))
+from tools.provenance_graph import MATRIX, LINEAGES, build  # noqa:E402
+
+MANIFEST=ROOT/"research/meteorology/nmc_y20175_1963_custody.json"
+JSON_TARGET=ROOT/"research/constraints/nmc_y20175_pending_bridge.json"
+LEAN_TARGET=ROOT/"formal/Conde1963/NmcCandidate.lean"
+
+def compile_bridge(manifest:dict, lineages:dict, matrix_bytes:bytes)->tuple[str,str]:
+    feed, citation_feed = build(lineages,matrix_bytes,root=ROOT)
+    refs={r["occurrence"]:r for r in feed["matrix_occurrences"]}
+    curated={c["occurrence"]:c for c in citation_feed["records"]}
+    ref=refs["C151#1"]
+    citation=curated["C151#1"]
+    if (ref["snapshot_ref"] != "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C151#1"
+        or citation["source_id"] != "NOAA_IGRA_RECIFE_1963"
+        or citation["scope"] != "RECIFE_ONLY_NO_CONDE_INFERENCE"):
+        raise ValueError("C151#1 source and matrix snapshot not verified")
+    if manifest["schema"]!="conde.nmc-y20175-binary-custody/v1":
+        raise ValueError("unrecognized NCAR manifest schema")
+    binary=manifest["binary"]
+    audit=manifest["station_day_audit"]
+    if (manifest["prior_related_inventory_id"]!="MET-NMC-20261112-09"
+        or manifest["dataset"]["id"]!="d353000"
+        or manifest["api_snapshot"]["file_name"]!="Y20175"
+        or binary["byte_count"]!=117264384
+        or binary["sha256"]!="afec7c443e0c912f8a742738bb82384197baecc7c743cfb00a2a8bda207b5de4"
+        or not binary["download_complete"] or not binary["binary_checked_locally"]
+        or audit["status"]!="NOT_DECODED" or audit["physical_constraint_status"]!="NOT_ACTIVATED"
+        or audit["records_parsed"] is not None or audit["matches"] is not None
+        or audit["negative_station_claim"] is not False):
+        raise ValueError("Y20175 custody or decoded-status assertion changed")
+    dates=audit["dates_target"]
+    stations=audit["wmo_codes_target"]
+    if (dates!=["1963-11-07","1963-11-08","1963-11-09"]
+        or stations!=["83229","83096","82900"]
+        or len(set(dates))!=3 or len(set(stations))!=3):
+        raise ValueError("target station/day inventory changed")
+    if not all(y in manifest["dataset"]["description"] for y in ("1962","1972")):
+        raise ValueError("source date coverage no longer identified")
+    queries=[
+        {"station_wmo_candidate":station,"day_utc_candidate":date,
+         "query_status":"NOT_DECODED_NOT_OBSERVED"}
+        for station in stations for date in dates
+    ]
+    result={
+        "schema":"conde.pending-nmc-wind-bridge/v1",
+        "inventory_id":manifest["prior_related_inventory_id"],
+        "source_role":"REAL_BINARY_ARCHIVE_WITH_UNDECODED_STATION_DAY_CONTENTS",
+        "archive_url":binary["public_url"],
+        "archive_sha256":binary["sha256"],
+        "archive_bytes":binary["byte_count"],
+        "manifest_path":MANIFEST.relative_to(ROOT).as_posix(),
+        "manifest_sha256":hashlib.sha256(
+            json.dumps(manifest,ensure_ascii=False,sort_keys=True,separators=(",",":")).encode()).hexdigest(),
+        "matrix_context_ref":ref["snapshot_ref"],
+        "matrix_context_row_sha256":ref["row_sha256"],
+        "comparison_source":"NOAA_IGRA_RECIFE_1963",
+        "comparison_relation":"C151_RECIFE_PROFILE_NOT_Y20175_OBSERVATION_OR_INDEPENDENT_HOLDOUT",
+        "candidate_queries":queries,
+        "candidate_latent_parameter":"wind_field_nov_1963_with_altitude_time_and_position",
+        "candidate_forward_operator":"decode_station_day_profile_then_validate_station_epoch_height_and_spatial_transfer",
+        "required_evidence_to_activate":[
+            "validated_1963_CRAY_RPTOUT_ON20_decoder",
+            "actual_station_day_hits_with_source_offsets_and_qc",
+            "time_height_position_reference_and_units",
+            "independent_observation_errors_and_correlation",
+            "validated_transfer_to_Conde_and_reentry_state"
+        ],
+        "source_independence":"UNKNOWN_NO_DECODE",
+        "physical_domain":"UNCHANGED_NO_ACTIVE_CONSTRAINT",
+        "numeric_observations_generated":0
+    }
+    if len(queries)!=9:raise ValueError("target grid collision")
+    lean_rows=[]
+    for item in queries:
+        lean_rows.append(
+            "  { stationWmo := "+json.dumps(item["station_wmo_candidate"])+
+            ", dayUtc := "+json.dumps(item["day_utc_candidate"])+
+            ', state := "NOT_DECODED_NOT_OBSERVED" }')
+    lean='''import Conde1963.Documentary
+
+/-!
+Generated by formal/scripts/compile_nmc_candidate.py from byte-verified
+NCAR Y20175 manifest and snapshot-qualified C151#1 citation.
+Nine query targets are NOT nine observations or profiles.
+No physical orbit/landing constraint is activated.
+-/
+
+namespace Conde1963
+
+structure PendingStationDayQuery where
+  stationWmo : String
+  dayUtc : String
+  state : String
+  deriving Repr
+
+def pendingNmcSourceId : String := "MET-NMC-20261112-09"
+def pendingNmcArchiveSha256 : String := '''+json.dumps(binary["sha256"])+'''
+def pendingNmcMatrixContext : MatrixRef :=
+  { snapshot := "a7978c3a75a153b16ab70118a92c434bba674cb7"
+    label := 151, variant := 1 }
+
+-- These targets become candidate input data only AFTER an audited decoder.
+def pendingNmcStationDayQueries : Array PendingStationDayQuery := #[
+'''+",\n".join(lean_rows)+'''
+]
+
+end Conde1963
+'''
+    return json.dumps(result,ensure_ascii=False,sort_keys=True,indent=2)+"\n", lean
+
+def main():
+    p=argparse.ArgumentParser()
+    g=p.add_mutually_exclusive_group(required=True)
+    g.add_argument("--write",action="store_true")
+    g.add_argument("--check",action="store_true")
+    args=p.parse_args()
+    js,lean=compile_bridge(json.loads(MANIFEST.read_text()),json.loads(LINEAGES.read_text()),MATRIX.read_bytes())
+    if args.check:
+        if JSON_TARGET.read_text()!=js or LEAN_TARGET.read_text()!=lean:
+            raise SystemExit("stale NCAR Y20175 pending bridge; regenerate and inspect diff")
+    else:
+        JSON_TARGET.write_text(js,encoding="utf-8")
+        LEAN_TARGET.write_text(lean,encoding="utf-8")
+    print(json.dumps({"source_id":"MET-NMC-20261112-09","queries_not_observations":9,
+                      "new_active_physical_constraints":0,"matrix_reference":"C151#1",
+                      "mode":"check" if args.check else "write"},sort_keys=True))
+
+if __name__=="__main__":main()

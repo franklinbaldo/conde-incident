@@ -35,6 +35,12 @@ jobs:
           set -euo pipefail
           python3 formal/scripts/compile_documentary_links.py --check
           python3 -m unittest discover -s formal/tests -p 'test_documentary_links.py' -v
+      - name: Validate Y20175 candidate wind provenance and Lean export
+        run: |
+          set -euo pipefail
+          python3 formal/scripts/compile_nmc_candidate.py --check
+          python3 -m unittest discover -s formal/tests -p 'test_nmc_candidate.py' -v
+          python3 tools/verify_nmc_y20175.py
       - name: Audit restored 154-row legacy evidence and C144-C151 ID reuse
         run: |
           set -euo pipefail

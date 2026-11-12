@@ -81,5 +81,73 @@ class DocumentaryContractTests(unittest.TestCase):
         self.assertEqual({r["work_id"] for r in tracking if r["occurrence"] in ("C197#1", "C198#1")},
                          {"NASA_SSR_VOL3_22"})
 
+
+
+class DeclaredContractAncestryTests(unittest.TestCase):
+    """Contract -> snapshot occurrence -> source -> explicit upstream chain."""
+
+    @classmethod
+    def setUpClass(cls):
+        sys.path.insert(0, str(ROOT / "formal/scripts"))
+        from compile_contract_lineage import (
+            assemble as assemble_contracts, SOURCE, CANONICAL, TARGET as CONTRACT_TARGET,
+        )
+        from export_documentary_dependence import build as build_dependence
+        cls.assemble = staticmethod(assemble_contracts)
+        cls.canonical = json.loads(CANONICAL.read_text())
+        cls.companion = json.loads(SOURCE.read_text())
+        cls.expected = build_dependence()
+        cls.target = CONTRACT_TARGET
+
+    def test_contracts_are_typed_snapshot_qualified_and_byte_reproducible(self):
+        code, stats = self.assemble(self.companion, self.canonical, self.expected)
+        self.assertEqual(self.target.read_text(), code)
+        self.assertEqual((stats["contracts"], stats["contract_occurrences"],
+                          stats["contract_citation_links"], stats["declared_upstream_paths"]),
+                         (3, 8, 8, 1))
+        self.assertEqual(stats["active_constraints_added"], 0)
+        self.assertEqual(stats["new_numeric_observations"], 0)
+        self.assertIn("contractDocumentaryLineages", code)
+        self.assertIn('relation := "catalogue_of_same_work"', code)
+        self.assertNotIn('reportedDecimal := "284.1520"', code)
+
+    def test_c198_ntrs_is_catalogue_of_nasa_work_not_second_instrument(self):
+        c = next(c for c in self.companion["contract_citation_crosswalk"]
+                 if c["contract_id"] == "C197_DOCUMENTARY")
+        ntrs = next(o for o in c["occurrences"] if o["snapshot_ref"].endswith("C198#1"))
+        self.assertEqual(ntrs["cited_source_ids"], ["NTRS_19640001198"])
+        self.assertEqual(ntrs["declared_upstream_source_ids"], ["NASA_SSR_19631115"])
+        code, _ = self.assemble(self.companion, self.canonical, self.expected)
+        self.assertIn('sourceId := "NTRS_19640001198"', code)
+        self.assertIn('targetId := "NASA_SSR_19631115"', code)
+
+    def test_c151_snapshot_cannot_resolve_to_legacy_wind_false_alias(self):
+        c = next(c for c in self.companion["contract_citation_crosswalk"]
+                 if c["contract_id"] == "C179_C151_BRIDGE")
+        current = next(o for o in c["occurrences"] if o["snapshot_ref"].endswith("C151#1"))
+        self.assertIn("matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:", current["snapshot_ref"])
+        self.assertEqual(current["cited_source_ids"], ["NOAA_IGRA_RECIFE_1963"])
+        bad = copy.deepcopy(self.companion)
+        badref = next(o for c in bad["contract_citation_crosswalk"]
+                      if c["contract_id"] == "C179_C151_BRIDGE"
+                      for o in c["occurrences"] if o["snapshot_ref"].endswith("C151#1"))
+        badref["snapshot_ref"] = "matrix:0000000000000000000000000000000000000000:C151#1"
+        with self.assertRaisesRegex(ValueError, "companion differs"):
+            self.assemble(bad, self.canonical, self.expected)
+
+    def test_mutated_ancestry_kind_fails_closed(self):
+        bad = copy.deepcopy(self.companion)
+        ntrs = next(c for c in bad["citation_lineages"]
+                    if c["source_id"] == "NTRS_19640001198")
+        ntrs["declared_upstream_paths"][0]["edges"][0]["kind"] = "independent_tracking"
+        with self.assertRaisesRegex(ValueError, "companion differs"):
+            self.assemble(bad, self.canonical, self.expected)
+
+    def test_new_contract_status_cannot_be_silently_activated(self):
+        bad = copy.deepcopy(self.companion)
+        bad["contract_citation_crosswalk"][0]["contract_status"] = "ACTIVE_HARD"
+        with self.assertRaisesRegex(ValueError, "companion differs"):
+            self.assemble(bad, self.canonical, self.expected)
+
 if __name__ == "__main__":
     unittest.main()

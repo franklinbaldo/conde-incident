@@ -1,0 +1,28 @@
+name: Morcego RU478 archival links
+on:
+  pull_request:
+    paths:
+      - "research/constraints/morcego_sao_ru478_1963_crosswalk.json"
+      - "tests/test_morcego_ru478_crosswalk.py"
+      - ".github/workflows/morcego-ru478.yml"
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  crosswalk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Check SHA under test
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test archival links and forbid false physical certainty
+        run: python3 -m unittest discover -s tests -p "test_morcego_ru478_crosswalk.py" -v

@@ -190,10 +190,6 @@
       "git_blob_sha": "a7978c3a75a153b16ab70118a92c434bba674cb7"
     },
     {
-      "path": "research/geo/README.md",
-      "git_blob_sha": "53b56f90fd1f69aaf0c88cfd61ef1f3989c17cb1"
-    },
-    {
       "path": "research/meteorology/gdex_uadb_1963_coverage_2026-11-12.md",
       "git_blob_sha": "5d7cb7015491858c6523cd0d756c0ae1516b963d"
     },
