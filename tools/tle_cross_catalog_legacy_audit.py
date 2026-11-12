@@ -33,7 +33,11 @@ ONE_MICROSECOND = timedelta(microseconds=1)
 
 def circular_delta(a: Decimal, b: Decimal) -> Decimal:
     """Unsigned shortest arc, never a physical change of orbital plane."""
+    # Decimal % inherits the sign of a negative dividend in Python.
+    # Normalize to [0, 360) before taking the unsigned shortest arc.
     delta = (a - b) % DEGREE
+    if delta < 0:
+        delta += DEGREE
     return min(delta, DEGREE - delta)
 
 
