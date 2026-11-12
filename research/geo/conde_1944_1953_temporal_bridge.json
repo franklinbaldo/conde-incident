@@ -2,7 +2,11 @@
   "schema": "conde.gis.historical-statutes-bridge/v1",
   "id": "CGEO-09",
   "event_date": "1963-11-08",
-  "jurisdiction": {"name": "Conde", "state": "BA", "ibge_code": "2908606"},
+  "jurisdiction": {
+    "name": "Conde",
+    "state": "BA",
+    "ibge_code": "2908606"
+  },
   "sources": [
     {
       "id": "BA-DEC-12978-1944-ANNEX2-LXXIII",
@@ -21,7 +25,7 @@
       "act_date": "1953-12-30",
       "kind": "NONOFFICIAL_DIGITAL_REPUBLICATION_OF_LAW_WITHOUT_ANNEXES",
       "url": "https://leisestaduais.com.br/ba/lei-ordinaria-n-628-1953-bahia-fixa-a-divisao-territorial-administrativa-do-estado-da-bahia-a-vigorar-de-01-de-janeiro-de-1954-a-31-de-dezembro-de-1958",
-      "locator": "Ementa e art. 1 (1954-1958); art. 2 (anexos I-VI); nota editorial de anexos na Assembleia",
+      "locator": "Ementa, art. 1 (periodo 1954-1958), art. 2 (continuidade condicionada do Decreto 12.978/1944 e leis 1952/1953 com alteracoes em anexos II-VI), nota sobre anexos indisponiveis",
       "inspection": "SEARCH_INDEXED_TRANSCRIPTION_ONLY",
       "original_publication_pdf_sha256": null,
       "original_facsimile_inspected": false,
@@ -29,8 +33,8 @@
       "stated_division_period_start": "1954-01-01",
       "stated_division_period_end": "1958-12-31",
       "period_after_1958_legal_continuity_proven": false,
-      "claim": "Art.1 situa divisao administrativa de 1954 a 1958 e remete a quadro anexo; art.2 menciona anexos adicionais ausentes na transcricao consultada.",
-      "reliability_limit": "O periodo expresso nao prova cessacao material das divisas em 1959 nem permanencia inalterada em 1963."
+      "claim": "Art.1 fixa divisao para 1954-1958 no quadro I ausente; art.2 diz que continuam em vigor dispositivos do Decreto 12.978/1944 e leis de criacao de municipios 1952/1953, com alteracoes introduzidas pela propria Lei 628/1953 e anexos II-VI nao consultados.",
+      "reliability_limit": "A continuidade textual em 1953 de dispositivos de 1944 nao prova a identidade de uma divisa especifica, nem o regime juridico de 1959-1963, dadas alteracoes de 1953, anexos e atos posteriores ainda nao auditados."
     },
     {
       "id": "BA-SEPLAN-SEI-2013-06-26",
@@ -68,12 +72,39 @@
     "relationship_to_2017": "Toponimos hidrograficos parcialmente coincidentes com CGEO-06, sem identidade geodesica demonstrada."
   },
   "dependency_graph": {
-    "prior_ids": ["C24", "CGEO-05", "CGEO-06", "CGEO-08"],
+    "prior_ids": [
+      "C24",
+      "CGEO-05",
+      "CGEO-06",
+      "CGEO-08"
+    ],
     "links": [
-      {"source_id": "BA-DEC-12978-1944-ANNEX2-LXXIII", "target": "topology_of_jandaira_conde_border_1944", "type": "INDIRECT_TRANSCRIPTION"},
-      {"source_id": "BA-LEI-628-1953-TEXT", "target": "legal_division_1954_1958", "type": "INDIRECT_TRANSCRIPTION_MISSING_ANNEX"},
-      {"source_id": "BA-SEPLAN-SEI-2013-06-26", "target": "historical_account_last_general_revision_1953", "type": "OFFICIAL_LATE_SECONDARY"},
-      {"source_id": "BA-ALEBA-LEI-13720-2017-DO-22166", "target": "legal_2017_cgeo06", "type": "ALREADY_CUSTODIED_NOT_NEW_INDEPENDENT_OBSERVATION"}
+      {
+        "source_id": "BA-DEC-12978-1944-ANNEX2-LXXIII",
+        "target": "topology_of_jandaira_conde_border_1944",
+        "type": "INDIRECT_TRANSCRIPTION"
+      },
+      {
+        "source_id": "BA-LEI-628-1953-TEXT",
+        "target": "legal_division_1954_1958",
+        "type": "INDIRECT_TRANSCRIPTION_MISSING_ANNEX"
+      },
+      {
+        "source_id": "BA-LEI-628-1953-TEXT",
+        "target": "BA-DEC-12978-1944-ANNEX2-LXXIII",
+        "type": "EXPLICIT_ART2_NORMATIVE_CARRYOVER_WITH_1953_MODIFICATIONS",
+        "scope": "Continuam em vigor dispositivos do decreto 1944 com as alteracoes da lei e anexos de 1953; identidade da divisa Conde/Jandaira e vigencia em 1963 nao demonstradas"
+      },
+      {
+        "source_id": "BA-SEPLAN-SEI-2013-06-26",
+        "target": "historical_account_last_general_revision_1953",
+        "type": "OFFICIAL_LATE_SECONDARY"
+      },
+      {
+        "source_id": "BA-ALEBA-LEI-13720-2017-DO-22166",
+        "target": "legal_2017_cgeo06",
+        "type": "ALREADY_CUSTODIED_NOT_NEW_INDEPENDENT_OBSERVATION"
+      }
     ],
     "requires_for_event_date": [
       "authentic_1944_legal_annex_and_relevant_errata",
@@ -86,5 +117,19 @@
     "can_constrain_orbital_reentry_1963": false,
     "new_geometric_constraint_activated": false,
     "status": "CONNECTED_PENDING_PRIMARY_ANNEX_CONTINUITY_AND_GEOREFERENCE"
+  },
+  "legal_1944_1953_bridge": {
+    "law_source_id": "BA-LEI-628-1953-TEXT",
+    "linked_source_id": "BA-DEC-12978-1944-ANNEX2-LXXIII",
+    "provision": "art. 2",
+    "exact_short_excerpt": "Continuam em vigor os dispositivos do Decreto n. 12.978",
+    "explicit_preservation_in_1953": true,
+    "modified_by_1953_and_annexes": true,
+    "annexes_ii_vi_inspected": false,
+    "conde_jandaira_segment_identity_proven": false,
+    "continuing_unchanged_until_1963_proven": false,
+    "legal_scope_for_1963": null,
+    "boundary_geometry_for_1963": null,
+    "graph_status": "CONNECTED_PENDING_1953_ANNEX_ALTERATIONS_AND_LATER_ACTS"
   }
 }
