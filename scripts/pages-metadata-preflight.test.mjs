@@ -21,7 +21,7 @@ function valid() {
     runsAfter: [{
       id: 9, name: "Publish Conde site", path: ".github/workflows/pages.yml@main",
       event: "push", head_branch: "main", head_sha: SHA,
-      status: "completed", conclusion: "success", run_number: 9
+      status: "completed", conclusion: "success", run_number: 9, run_attempt: 1
     }],
     deployments: [{ id: 100, sha: SHA, environment: "github-pages", created_at: "2026-11-12T14:00:00Z" }],
     deploymentsAfter: [{ id: 100, sha: SHA, environment: "github-pages", created_at: "2026-11-12T14:00:00Z" }],
