@@ -19,5 +19,6 @@
 - **NÃO VERIFICADO:** existência de impacto, hora/coordenadas terminais, TLEs originais, domínio físico não vazio e reduzido, simulação calibrada/holdouts, leitor de tela e mobile reais, deploy. Resultado físico permanece indeterminado.
 
 ## Gate e próxima dúvida
-- Commit desta fatia inclui testes e memória na mesma árvore. Verificar CI no HEAD literal da PR #24; Zola/Vite não são deploy. Sem merge, publicação ou contato externo.
+- [Commit de implementação e testes 8fb90bfe](https://github.com/franklinbaldo/conde-incident/commit/8fb90bfe85e08e8e7ab4fd87db4e17c68b74fda7) na [PR #24](https://github.com/franklinbaldo/conde-incident/pull/24). [GitHub Actions #43189715541](https://github.com/franklinbaldo/conde-incident/actions/runs/43189715541): **SUCCESS no SHA literal 8fb90bfe**; 38/38 testes Node, lint TypeScript, build Vite, Zola check/build e auditoria HTML aprovados. Deploy SKIPPED.
+- A presente atualização da memória gera commit posterior; revalidar CI no novo HEAD antes da revisão. Build não é deploy. Sem merge, publicação ou contato externo.
 - **Próxima dúvida:** diante da decisão posterior sobre gerador SSG Rust, reconciliar a camada editorial somente pelo integrador; preservar os links dos capítulos e a distinção arquivo/documento/hipótese. 🦅 Gavião revisa independentemente, 🐘 Elefante concilia #1/#3/#24.
