@@ -1,6 +1,11 @@
 name: Texugo temporal holdout 529 (negative controls)
 on:
   pull_request:
+  # The stacked base #14 does not carry this PR-owned workflow. Run the
+  # actual proposed branch HEAD even when GitHub emits no PR workflow run.
+  push:
+    branches:
+      - texugo/holdout-529-quadratic-negative-controls-19
   workflow_dispatch:
 
 permissions:

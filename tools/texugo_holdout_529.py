@@ -152,6 +152,11 @@ def fixed_curvature_fit(samples: list[tuple[float, float]], curvature: float) ->
 
 
 def rmse(truth: list[float], predicted: list[float]) -> float:
+    """Score exactly paired finite observations; never truncate via zip."""
+    if not truth or len(truth) != len(predicted):
+        raise ValueError("RMSE exige pares não vazios de mesmo comprimento")
+    if not all(math.isfinite(v) for v in truth) or not all(math.isfinite(v) for v in predicted):
+        raise ValueError("RMSE exige valores finitos, sem NaN/Inf")
     return math.sqrt(math.fsum((a - b) ** 2 for a, b in zip(truth, predicted)) / len(truth))
 
 

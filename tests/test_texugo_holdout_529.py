@@ -8,7 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
-from texugo_holdout_529 import Observation, CUTOFFS, EXPECTED_SHA256, EXPECTED_URL, evaluate, load_audited, parse_csv, require_same_bindings, run
+from texugo_holdout_529 import Observation, CUTOFFS, EXPECTED_SHA256, EXPECTED_URL, evaluate, load_audited, parse_csv, require_same_bindings, rmse, run
 
 
 def samples(c527=0.4, c528=0.4, c529=0.4, noisy_target=False):
@@ -24,6 +24,22 @@ def samples(c527=0.4, c528=0.4, c529=0.4, noisy_target=False):
 
 
 class HoldoutControls(unittest.TestCase):
+    def test_rmse_rejects_unpaired_empty_or_nonfinite_scores(self):
+        # SYNTHETIC counterexample: old zip-based score returned a false zero
+        # when the high-error last observation had no prediction.
+        self.assertAlmostEqual(rmse([0.0, 2.0], [0.0, 4.0]), 2 ** 0.5)
+        cases = (
+            ([], []),
+            ([0.0, 10.0], [0.0]),
+            ([0.0], [0.0, 1.0]),
+            ([0.0, float("nan")], [0.0, 0.0]),
+            ([0.0, 1.0], [0.0, float("inf")]),
+        )
+        for truth, predictions in cases:
+            with self.subTest(truth=truth, predicted=predictions):
+                with self.assertRaisesRegex(ValueError, "RMSE"):
+                    rmse(truth, predictions)
+
     def test_joint_improves_when_shared_curvature_is_real_and_target_training_noisy(self):
         base = datetime(1963, 6, 1, tzinfo=timezone.utc)
         rows = []
