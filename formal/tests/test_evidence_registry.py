@@ -83,6 +83,34 @@ class MatrixEvidenceTests(unittest.TestCase):
         with self.assertRaisesRegex(InventoryError, "uncertainty promotion"):
             audit(self.raw, altered, strict_hash=False)
 
+
+    def test_outcome_handoff_cannot_claim_a_physical_prediction(self):
+        out = contracts(self.rows)
+        interface = out["outcome_interface"]
+        self.assertEqual(interface["version"], 1)
+        self.assertEqual(interface["kind"],
+                         "CONDITIONAL_OUTCOME_PROOF_OBLIGATIONS_NOT_OBSERVATIONS")
+        self.assertIsNone(interface["current_result"])
+        self.assertIsNone(interface["calibrated_model"])
+        self.assertIsNone(interface["numerical_impact_window"])
+        self.assertEqual(
+            {v["code"] for v in interface["conditional_outcomes"]},
+            {"CONTRADICTORY_PREMISES", "CONDE_FORCED", "CONDE_EXCLUDED",
+             "OTHER_WINDOW", "INDETERMINATE"}
+        )
+        for v in interface["conditional_outcomes"]:
+            self.assertTrue(v["lean"])
+            self.assertTrue(v["scope"])
+            self.assertTrue(v["warning"])
+        self.assertIn("global_coverage_proof_or_explicit_finite_grid_scope",
+                      interface["required_inputs"])
+        self.assertIn("ground_impact_model_distinct_from_orbital_decay",
+                      interface["required_inputs"])
+        self.assertEqual(sum(
+            e["physical_encoding"] ==
+            "NASA_CATALOGUED_DATE_HYPOTHESIS_NOT_HARD_FILTER"
+            for e in out["entries"]), 2)
+
     def test_export_preserves_all_rows_and_lineage_limits(self):
         out = contracts(self.rows)
         self.assertEqual(len(out["entries"]), 241)
