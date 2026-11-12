@@ -1,0 +1,393 @@
+{
+  "schema": "conde.gaviao.retrospective-main-window/v1",
+  "created_at_utc": "2026-11-12T11:40:40Z",
+  "reviewer": "🦅 Gavião",
+  "first_durable_checkpoint_on_main": true,
+  "checkpoint_in_main_before_window": null,
+  "initial_history_root_sha": "d6d6578c617a8630ad3a0a5c5657c9e5e60dfe22",
+  "reviewed_base_sha": "d6d6578c617a8630ad3a0a5c5657c9e5e60dfe22",
+  "reviewed_through_sha": "006c7d08b64956aeeabed7162b5604bba77de85b",
+  "main_commits_total": 16,
+  "post_base_changes": 15,
+  "merged_prs": [
+    2,
+    58,
+    69,
+    73,
+    75,
+    76,
+    79,
+    77,
+    80,
+    81,
+    83,
+    82,
+    84,
+    87
+  ],
+  "direct_commits_since_base": [
+    "807a118939fac50b48d649b1045461bfcc79b140"
+  ],
+  "root_entry_excluded_from_compare": "d6d6578c617a8630ad3a0a5c5657c9e5e60dfe22",
+  "closed_without_merge_not_main_changes": [
+    74,
+    10
+  ],
+  "window_entries": [
+    {
+      "order": 0,
+      "sha": "d6d6578c617a8630ad3a0a5c5657c9e5e60dfe22",
+      "parent_sha": null,
+      "committer_date_utc": "2026-11-11T19:25:54Z",
+      "kind": "initial-root",
+      "pr_number": null,
+      "category": "initial-empty-root",
+      "message": "Initial commit",
+      "changed_files": [
+        "README.md"
+      ],
+      "source_url": "https://github.com/franklinbaldo/conde-incident/commit/d6d6578c617a8630ad3a0a5c5657c9e5e60dfe22",
+      "review_status": "INSPECTED_BY_GAVIAO_CROSSCHECK_SOURCE_AND_CI_WHERE_APPLICABLE"
+    },
+    {
+      "order": 1,
+      "sha": "807a118939fac50b48d649b1045461bfcc79b140",
+      "parent_sha": "d6d6578c617a8630ad3a0a5c5657c9e5e60dfe22",
+      "committer_date_utc": "2026-11-11T19:26:19Z",
+      "kind": "direct-commit",
+      "pr_number": null,
+      "category": "direct-project-bootstrap",
+      "message": "feat: initialize NORAD 528 project structure",
+      "changed_files": [
+        ".env.example",
+        ".gitignore",
+        ".gmp_cache/compliance-review.md",
+        ".gmp_cache/example_core.md",
+        ".gmp_cache/example_geometry.md",
+        ".gmp_cache/example_map.md",
+        ".gmp_cache/gmp-framework-react.md",
+        ".gmp_cache/index.json",
+        "README.md",
+        "bun.lock",
+        "index.html",
+        "metadata.json",
+        "norad528_reconstruction.py",
+        "package.json",
+        "src/App.tsx",
+        "src/components/AtmosphereSensitivity.tsx",
+        "src/components/DocumentArchive.tsx",
+        "src/components/ExecutiveSummary.tsx",
+        "src/components/InversePassInspector.tsx",
+        "src/components/MonteCarloVisualizer.tsx",
+        "src/components/Navigation.tsx",
+        "src/components/OrbitalMap.tsx",
+        "src/components/PythonScriptModal.tsx",
+        "src/components/TleAuditViewer.tsx",
+        "src/components/TriangulationDashboard.tsx",
+        "src/index.css",
+        "src/lib/astrodynamics.ts",
+        "src/lib/constants.ts",
+        "src/lib/inverseSolver.ts",
+        "src/lib/monteCarlo.ts",
+        "src/lib/pythonScriptExport.ts",
+        "src/main.tsx",
+        "src/types/astrodynamics.ts",
+        "tsconfig.json",
+        "vite.config.ts"
+      ],
+      "source_url": "https://github.com/franklinbaldo/conde-incident/commit/807a118939fac50b48d649b1045461bfcc79b140",
+      "review_status": "INSPECTED_BY_GAVIAO_CROSSCHECK_SOURCE_AND_CI_WHERE_APPLICABLE"
+    },
+    {
+      "order": 2,
+      "sha": "eee7851d29e7bafa38ebcb36cab9da9dfa2f2afb",
+      "parent_sha": "807a118939fac50b48d649b1045461bfcc79b140",
+      "committer_date_utc": "2026-11-11T19:54:23Z",
+      "kind": "squash-merge-pr",
+      "pr_number": 2,
+      "category": "team bootstrap",
+      "message": "Configure eight animal agents for Conde research (#2)",
+      "changed_files": [
+        "AGENTS.md",
+        "team/castor.md",
+        "team/coruja.md",
+        "team/elefante.md",
+        "team/gaviao.md",
+        "team/polvo.md",
+        "team/raposa.md",
+        "team/tartaruga.md",
+        "team/texugo.md"
+      ],
+      "source_url": "https://github.com/franklinbaldo/conde-incident/commit/eee7851d29e7bafa38ebcb36cab9da9dfa2f2afb",
+      "review_status": "INSPECTED_BY_GAVIAO_CROSSCHECK_SOURCE_AND_CI_WHERE_APPLICABLE"
+    },
+    {
+      "order": 3,
+      "sha": "6860fdfd3b29f0017c4293473d9aad6762757ad0",
+      "parent_sha": "eee7851d29e7bafa38ebcb36cab9da9dfa2f2afb",
+      "committer_date_utc": "2026-11-12T10:45:53Z",
+      "kind": "squash-merge-pr",
+      "pr_number": 58,
+      "category": "CI exact PR SHA",
+      "message": "ci: exigir verificações no HEAD real da PR (#58)",
+      "changed_files": [
+        ".github/workflows/integration-head.yml",
+        "research/CI_INTEGRATION.md",
+        "scripts/integration-head.test.mjs",
+        "team/memory/elefante/20261112T0702Z-ci-head-bootstrap.md"
+      ],
+      "source_url": "https://github.com/franklinbaldo/conde-incident/commit/6860fdfd3b29f0017c4293473d9aad6762757ad0",
+      "review_status": "INSPECTED_BY_GAVIAO_CROSSCHECK_SOURCE_AND_CI_WHERE_APPLICABLE"
+    },
+    {
+      "order": 4,
+      "sha": "f3f5ab8c199e6be14fc4180972d1f0fd6b0644e4",
+      "parent_sha": "6860fdfd3b29f0017c4293473d9aad6762757ad0",
+      "committer_date_utc": "2026-11-12T10:55:56Z",
+      "kind": "squash-merge-pr",
+      "pr_number": 69,
+      "category": "agent governance",
+      "message": "team: PRs próprias, review retrospectivo, issues livres e cafezinho (#69)",
+      "changed_files": [
+        "AGENTS.md",
+        "scripts/agent-owned-merges.test.mjs",
+        "team/castor.md",
+        "team/coruja.md",
+        "team/elefante.md",
+        "team/gaviao.md",
+        "team/memory/polvo/20261112-autonomia-merges-gaviao-retro.md",
+        "team/polvo.md",
+        "team/raposa.md",
+        "team/tartaruga.md",
+        "team/texugo.md"
+      ],
+      "source_url": "https://github.com/franklinbaldo/conde-incident/commit/f3f5ab8c199e6be14fc4180972d1f0fd6b0644e4",
+      "review_status": "INSPECTED_BY_GAVIAO_CROSSCHECK_SOURCE_AND_CI_WHERE_APPLICABLE"
+    },
+    {
+      "order": 5,
+      "sha": "d1ea852f346beae3d9a225792725e3007ada74a8",
+      "parent_sha": "f3f5ab8c199e6be14fc4180972d1f0fd6b0644e4",
+      "committer_date_utc": "2026-11-12T11:00:13Z",
+      "kind": "squash-merge-pr",
+      "pr_number": 73,
+      "category": "agent skills",
+      "message": "team: bootstrap de oito skills individuais (#73)",
+      "changed_files": [
+        ".agents/skills/conde-castor/SKILL.md",
+        ".agents/skills/conde-coruja/SKILL.md",
+        ".agents/skills/conde-elefante/SKILL.md",
+        ".agents/skills/conde-gaviao/SKILL.md",
+        ".agents/skills/conde-polvo/SKILL.md",
+        ".agents/skills/conde-raposa/SKILL.md",
+        ".agents/skills/conde-tartaruga/SKILL.md",
+        ".agents/skills/conde-texugo/SKILL.md",
+        "scripts/agent-skills.test.mjs",
+        "team/memory/polvo/20261112T0700Z-skills-bootstrap.md"
+      ],
+      "source_url": "https://github.com/franklinbaldo/conde-incident/commit/d1ea852f346beae3d9a225792725e3007ada74a8",
+      "review_status": "INSPECTED_BY_GAVIAO_CROSSCHECK_SOURCE_AND_CI_WHERE_APPLICABLE"
+    },
+    {
+      "order": 6,
+      "sha": "435fa72c7a0e9197a34974a148989dc512654596",
+      "parent_sha": "d1ea852f346beae3d9a225792725e3007ada74a8",
+      "committer_date_utc": "2026-11-12T11:08:28Z",
+      "kind": "squash-merge-pr",
+      "pr_number": 75,
+      "category": "RK4/J2 numerical kernel",
+      "message": "feat: núcleo orbital cartesiano do Castor com testes (#75)",
+      "changed_files": [
+        ".github/workflows/orbit-kernel.yml",
+        "research/CASTOR_KERNEL_INTEGRATION.md",
+        "src/lib/orbitPhysics.ts",
+        "team/memory/castor/20261112-first-kernel-merge-slice.md",
+        "tests/orbitPhysics.test.mjs"
+      ],
+      "source_url": "https://github.com/franklinbaldo/conde-incident/commit/435fa72c7a0e9197a34974a148989dc512654596",
+      "review_status": "INSPECTED_BY_GAVIAO_CROSSCHECK_SOURCE_AND_CI_WHERE_APPLICABLE"
+    },
+    {
+      "order": 7,
+      "sha": "2b630667d22b70888b673dc57be952243095da17",
+      "parent_sha": "435fa72c7a0e9197a34974a148989dc512654596",
+      "committer_date_utc": "2026-11-12T11:10:54Z",
+      "kind": "squash-merge-pr",
+      "pr_number": 76,
+      "category": "Lean conditional core",
+      "message": "feat: núcleo Lean 4.35 e auditoria de axiomas (#76)",
+      "changed_files": [
+        ".github/workflows/lean-core.yml",
+        "formal/Conde1963.lean",
+        "formal/Conde1963/Core.lean",
+        "formal/Conde1963/CoreAxioms.lean",
+        "formal/README.md",
+        "formal/lakefile.toml",
+        "formal/lean-toolchain",
+        "team/memory/polvo/20261112-lean-core-independent-slice.md"
+      ],
+      "source_url": "https://github.com/franklinbaldo/conde-incident/commit/2b630667d22b70888b673dc57be952243095da17",
+      "review_status": "INSPECTED_BY_GAVIAO_CROSSCHECK_SOURCE_AND_CI_WHERE_APPLICABLE"
+    },
+    {
+      "order": 8,
+      "sha": "faf4dd0fd8dfbdd825e4e934b3b30ebd81bf61df",
+      "parent_sha": "2b630667d22b70888b673dc57be952243095da17",
+      "committer_date_utc": "2026-11-12T11:12:52Z",
+      "kind": "squash-merge-pr",
+      "pr_number": 79,
+      "category": "evidence matrix",
+      "message": "data: matriz histórica C01–C238 íntegra (#79)",
+      "changed_files": [
+        "research/MATRIX_INTEGRATION.md",
+        "research/evidence_matrix_C001-C238_2026-11-11.md",
+        "scripts/matrix-ledger.test.mjs",
+        "team/memory/polvo/20261112-matrix-independent-slice.md"
+      ],
+      "source_url": "https://github.com/franklinbaldo/conde-incident/commit/faf4dd0fd8dfbdd825e4e934b3b30ebd81bf61df",
+      "review_status": "INSPECTED_BY_GAVIAO_CROSSCHECK_SOURCE_AND_CI_WHERE_APPLICABLE"
+    },
+    {
+      "order": 9,
+      "sha": "ab8660b4a1bcd84eba0015db7219fa6b771b5014",
+      "parent_sha": "faf4dd0fd8dfbdd825e4e934b3b30ebd81bf61df",
+      "committer_date_utc": "2026-11-12T11:14:24Z",
+      "kind": "squash-merge-pr",
+      "pr_number": 77,
+      "category": "CI Node test discovery",
+      "message": "ci: run Node regressions under scripts/ and tests/ (#77)",
+      "changed_files": [
+        ".github/workflows/integration-head.yml",
+        "research/CI_INTEGRATION.md",
+        "scripts/integration-head.test.mjs",
+        "team/memory/elefante/20261112T0713-RO-ci-suite-coverage.md"
+      ],
+      "source_url": "https://github.com/franklinbaldo/conde-incident/commit/ab8660b4a1bcd84eba0015db7219fa6b771b5014",
+      "review_status": "INSPECTED_BY_GAVIAO_CROSSCHECK_SOURCE_AND_CI_WHERE_APPLICABLE"
+    },
+    {
+      "order": 10,
+      "sha": "8634a3088c8fa5d67a4a5d3760e2011cb6be5058",
+      "parent_sha": "ab8660b4a1bcd84eba0015db7219fa6b771b5014",
+      "committer_date_utc": "2026-11-12T11:15:09Z",
+      "kind": "squash-merge-pr",
+      "pr_number": 80,
+      "category": "step refinement",
+      "message": "feat: convergence checks for Castor RK4 kernel (#80)",
+      "changed_files": [
+        ".github/workflows/orbit-kernel.yml",
+        "research/CASTOR_CONVERGENCE_INTEGRATION.md",
+        "src/lib/orbitConvergence.ts",
+        "team/memory/castor/20261112-convergence-independent-slice.md",
+        "tests/orbitConvergence.test.mjs"
+      ],
+      "source_url": "https://github.com/franklinbaldo/conde-incident/commit/8634a3088c8fa5d67a4a5d3760e2011cb6be5058",
+      "review_status": "INSPECTED_BY_GAVIAO_CROSSCHECK_SOURCE_AND_CI_WHERE_APPLICABLE"
+    },
+    {
+      "order": 11,
+      "sha": "c4a3d3a1b6d5ecca12b98202b86015efe835a022",
+      "parent_sha": "8634a3088c8fa5d67a4a5d3760e2011cb6be5058",
+      "committer_date_utc": "2026-11-12T11:18:10Z",
+      "kind": "squash-merge-pr",
+      "pr_number": 81,
+      "category": "physical observables C179/C151",
+      "message": "feat: observáveis físicos C179/C151 do Polvo (#81)",
+      "changed_files": [
+        ".github/workflows/physical-observables.yml",
+        "formal/scripts/physical_observable_bridge.py",
+        "formal/tests/test_physical_observable_bridge.py",
+        "research/PHYSICAL_OBSERVABLE_HANDOFF.md",
+        "team/memory/polvo/20261112-observable-independent-integration.md"
+      ],
+      "source_url": "https://github.com/franklinbaldo/conde-incident/commit/c4a3d3a1b6d5ecca12b98202b86015efe835a022",
+      "review_status": "INSPECTED_BY_GAVIAO_CROSSCHECK_SOURCE_AND_CI_WHERE_APPLICABLE"
+    },
+    {
+      "order": 12,
+      "sha": "a874882aafc2bd1ab68c0bc51b9fa5d992b6b332",
+      "parent_sha": "c4a3d3a1b6d5ecca12b98202b86015efe835a022",
+      "committer_date_utc": "2026-11-12T11:20:45Z",
+      "kind": "squash-merge-pr",
+      "pr_number": 83,
+      "category": "528 secondary TLE",
+      "message": "data: TLE secundário rastreável do 528 (#83)",
+      "changed_files": [
+        "research/tle_custody/INTEGRATION.md",
+        "research/tle_custody/mirror_528_1963-10-27.tle",
+        "scripts/tle-528-provenance.test.mjs",
+        "team/memory/tartaruga/20261112-literal-528-incremental.md"
+      ],
+      "source_url": "https://github.com/franklinbaldo/conde-incident/commit/a874882aafc2bd1ab68c0bc51b9fa5d992b6b332",
+      "review_status": "INSPECTED_BY_GAVIAO_CROSSCHECK_SOURCE_AND_CI_WHERE_APPLICABLE"
+    },
+    {
+      "order": 13,
+      "sha": "6c2aab22fe4dc29d5fbee14ef548f4fe63ab4e84",
+      "parent_sha": "a874882aafc2bd1ab68c0bc51b9fa5d992b6b332",
+      "committer_date_utc": "2026-11-12T11:21:28Z",
+      "kind": "squash-merge-pr",
+      "pr_number": 82,
+      "category": "TLE UI/syntax",
+      "message": "fix(ui): distinguish TLE checksum from source custody (#82)",
+      "changed_files": [
+        "src/components/TleAuditViewer.tsx",
+        "src/lib/tleChecksum.ts",
+        "team/memory/raposa/20261112T1112Z-tle-custody-standalone-main.md",
+        "tests/tleSyntaxAndCustody.test.mjs"
+      ],
+      "source_url": "https://github.com/franklinbaldo/conde-incident/commit/6c2aab22fe4dc29d5fbee14ef548f4fe63ab4e84",
+      "review_status": "INSPECTED_BY_GAVIAO_CROSSCHECK_SOURCE_AND_CI_WHERE_APPLICABLE"
+    },
+    {
+      "order": 14,
+      "sha": "7b4e86f30e7d65146422c544f5926d6799d1a871",
+      "parent_sha": "6c2aab22fe4dc29d5fbee14ef548f4fe63ab4e84",
+      "committer_date_utc": "2026-11-12T11:22:53Z",
+      "kind": "squash-merge-pr",
+      "pr_number": 84,
+      "category": "operational orbit constants",
+      "message": "fix: referência orbital do 528 com fonte rastreável (#84)",
+      "changed_files": [
+        ".github/workflows/orbital-reference.yml",
+        "norad528_reconstruction.py",
+        "research/OPERATIONAL_528_REFERENCE.md",
+        "src/lib/constants.ts",
+        "src/lib/pythonScriptExport.ts",
+        "team/memory/tartaruga/20261112-operational-reference-528.md",
+        "tests/test_orbital_constants_provenance.py"
+      ],
+      "source_url": "https://github.com/franklinbaldo/conde-incident/commit/7b4e86f30e7d65146422c544f5926d6799d1a871",
+      "review_status": "INSPECTED_BY_GAVIAO_CROSSCHECK_SOURCE_AND_CI_WHERE_APPLICABLE"
+    },
+    {
+      "order": 15,
+      "sha": "006c7d08b64956aeeabed7162b5604bba77de85b",
+      "parent_sha": "7b4e86f30e7d65146422c544f5926d6799d1a871",
+      "committer_date_utc": "2026-11-12T11:40:40Z",
+      "kind": "squash-merge-pr",
+      "pr_number": 87,
+      "category": "cumulative SSR graph",
+      "message": "🧪 Ciência cumulativa: ligar evidências às variáveis antes de exigir redução do domínio (#87)",
+      "changed_files": [
+        ".github/workflows/cumulative-connections.yml",
+        "AGENTS.md",
+        "formal/scripts/check_cumulative_connections.py",
+        "research/constraints/README.md",
+        "research/constraints/ssr_1963_observable_graph.json",
+        "tests/test_cumulative_constraints.py"
+      ],
+      "source_url": "https://github.com/franklinbaldo/conde-incident/commit/006c7d08b64956aeeabed7162b5604bba77de85b",
+      "review_status": "INSPECTED_BY_GAVIAO_CROSSCHECK_SOURCE_AND_CI_WHERE_APPLICABLE"
+    }
+  ],
+  "scientific_findings": [
+    "G15-F1 NASA 1963-003B is PRESENT in decayed-objects table, contrary to EPIST-03 inherited from initial app; screenshot verified original PDF page index 9",
+    "G15-F2 A-628 quotes Midkiff telegram #157 on 14 Nov and newspaper reports; it does not establish physical inspection or prove absence of impact. EPIST-05 overstates",
+    "G15-F3 SSR 15/30 Nov comparison edges lack actual observation epochs and error intervals; CANDIDATE_NOT_ACTIVATED remains correct",
+    "G15-F4 TLE 528 secondary mirror SHA and checksum do not authenticate original NORAD provenance; 527/529 remain hypothetical",
+    "G15-F5 Lean checks are conditional; numerical RK4 unit tests are synthetic, no terminal calibration or impact claim"
+  ],
+  "physical_geography_status": "INDETERMINATE",
+  "confidence_scope": "Each integrated file enumerated. Selected scientific/UI statements cross-checked against primary NASA/A-628 facsimiles. CI success is not historical authentication."
+}
