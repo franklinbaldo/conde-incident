@@ -335,3 +335,48 @@ NASA/NORAD-derived catalogs and TLE mirrors (C179–C185) do **not** create
 independent witnesses by repetition; their RAAN conflict is unresolved.
 The software's stress-box numbers are invented strictly for numerical testing,
 never historical evidence.
+
+
+## Local velocity observability gate at predeclared epochs (🦫 Castor, 12 Nov 2026)
+
+`src/lib/orbitSensitivityAudit.ts` provides a **conditional, local
+identifiability diagnostic**, not another historical orbital fit. It accepts
+a **BOUNDED** domain of initial osculating velocities in km/s, a single ECI
+frame, a strictly ordered list of source-labelled **training epochs before a
+cutoff**, one symmetric finite-difference probe in km/s and an explicit
+minimum distinguishable displacement in km. Every perturbation reintegrates
+coupled r/v with the existing J2/optional sourced drag model; all three
+step-refinement outputs must meet the declared numerical consistency gate.
+
+The diagnostic stacks position displacements in km and uses two-pass modified
+Gram-Schmidt to estimate the rank at **that probe and that km threshold**,
+separately counting velocities already fixed by premises. A zero rank at t=0
+and a three-direction synthetic response at t=600 s are explicit, reproducible
+opposite tests. A weak response below the km threshold gives rank zero, not
+a fictitious detected parameter. If a rational/Float64 interval cannot support
+the requested probe, an event is inconsistent, convergence fails, or a
+trajectory terminates, the program returns `NOT_RUN_*` **without a rank**.
+
+Neither the finite-difference vectors nor the rank are a certified global
+Jacobian, singular-value bound or physical enclosure. The scheduled entries
+only give times and trace labels, **not actual sensor positions**; all new tests
+are synthetic. No density or historical drag was inferred. This is a tool to
+report degrees of freedom *conditional on assumptions*, not to infer an impact.
+No SGP4 mean-element transformation or comparison takes place.
+
+Reproduce on Node 22:
+```sh
+node --experimental-strip-types --test tests/orbitSensitivityAudit.test.mjs
+```
+
+**Source/lineage:** C197, NASA/Goddard *Satellite Situation Report* vol. 3
+no. 22 (15 Nov 1963), printed p. 8,
+https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf,
+contains only 8 Nov 1963 as decay day for 1963-003B; **not** an observation
+epoch, velocity vector or terminal longitude. The C25/C179–C185 mirrored
+TLEs in the cumulative matrix of draft PR #1 share NORAD tracking lineage,
+have unresolved RAAN 198.5261° vs 284.1520°, and do not supply independent
+Cartesian 527/529 observations. **Historical 527/529 holdout: NOT_RUN;
+historical Lean-exported boxes: NOT_RUN; 1963 atmosphere: NOT_RUN;
+impact/reentry coordinates: NOT_RUN**. Even if a synthetic local rank is three,
+a globally unique historical trajectory has not been established.
