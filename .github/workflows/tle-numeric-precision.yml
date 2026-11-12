@@ -1,0 +1,76 @@
+name: Tartaruga - C241-L7 numeric storage precision
+on:
+  pull_request:
+    paths:
+      - tools/tle_numeric_precision_audit.py
+      - tests/test_tle_numeric_precision_audit.py
+      - research/tle_custody/evidence_matrix_C241-L7_2026-11-12.md
+      - .github/workflows/tle-numeric-precision.yml
+  push:
+    branches: [main]
+    paths:
+      - tools/tle_numeric_precision_audit.py
+      - tests/test_tle_numeric_precision_audit.py
+      - research/tle_custody/evidence_matrix_C241-L7_2026-11-12.md
+      - .github/workflows/tle-numeric-precision.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  numeric-storage-custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Assert actual source HEAD equals triggering SHA
+        run: |
+          expected="${{ github.event.pull_request.head.sha || github.sha }}"
+          actual="$(git rev-parse HEAD)"
+          echo "audited_source_head=$actual"
+          test "$actual" = "$expected"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic adversarial tests and existing custody regression
+        run: |
+          python -m unittest discover -s tests -p 'test_tle_numeric_precision_audit.py' -v
+          python -m unittest discover -s tests -p 'test_tle_secondary_1963_ledger.py' -v
+          python -m unittest discover -s tests -p 'test_tle_literal_layout.py' -v
+      - name: Pin Parquet decoder version
+        run: python -m pip install --disable-pip-version-check pyarrow==21.0.0
+      - name: Verify SHA-pinned source and numerical precision
+        run: |
+          python tools/tle_secondary_1963_ledger.py --download --parquet "$RUNNER_TEMP/tle_1963.parquet" --literal research/tle_custody/mirror_528_1963-10-27.tle --output "$RUNNER_TEMP/c241-l7"
+          python tools/tle_numeric_precision_audit.py --parquet "$RUNNER_TEMP/tle_1963.parquet" --output "$RUNNER_TEMP/c241-l7/precision_c241_l7.json"
+      - name: Fail closed on schema, corpus, rounding or physical inference
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          p=Path(os.environ["RUNNER_TEMP"])/"c241-l7/precision_c241_l7.json"
+          a=json.loads(p.read_text(encoding="utf-8"))
+          assert a["source_sha256"]=="c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09"
+          assert a["rows"]==123 and a["counts"]=={"527":21,"528":45,"529":57}
+          assert a["schema"]["mean_motion"]=="double" and a["schema"]["raan"]=="float"
+          assert len(a["field_counts"])==6
+          assert all(f["roundtrip_on_grid"]==123 and f["unique_near_grid"]==123 for f in a["field_counts"].values())
+          assert len(a["inconsistent_or_ambiguous_fields"])==0
+          assert a["original_line1_line2_checksums"]=="NOT_AVAILABLE"
+          assert a["legacy_RAAN_284_1520_active_observation"] is False
+          assert a["constraint_link"]["state"]=="CONNECTED_PENDING_CALIBRATION"
+          assert a["constraint_link"]["measurement_sigma"] is None
+          assert a["constraint_link"]["candidate_Lean_4_35_0_predicate"]=="NOT_PROMOTED"
+          assert a["constraint_link"]["physical_parameter_domain_reduced"] is False
+          assert a["constraint_link"]["conde_impact"]=="INDETERMINATE"
+          print("C241-L7: 738/738 local decimal grid roundtrips, no primary TLE bytes")
+          PY
+      - name: Archive SHA-pinned ledger and precision report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: c241-l7-numeric-precision-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ${{ runner.temp }}/c241-l7/
+          if-no-files-found: warn
+          retention-days: 30
