@@ -61,6 +61,9 @@ for(const s of stories){
     'chapter: '+quote(s.chapter),'author: '+quote(s.author),
     'status: '+quote(s.status),
     'source_path: '+quote('stories/'+s.filename),'---',''];
-  writeFileSync(join('content/stories',s.filename),fm.join('\n')+s.body);
+  // Source custody is derived from the canonical filename, not optional SSG page metadata.
+  // Keep the real Markdown link in the rendered article even if the theme changes.
+  const provenance = '\n\n---\n\n[Consultar Markdown-fonte e histórico](https://github.com/franklinbaldo/conde-incident/blob/main/stories/' + s.filename + ')\n';
+  writeFileSync(join('content/stories',s.filename),fm.join('\n')+s.body+provenance);
 }
 console.log('Gerado conteúdo SSG de '+stories.length+' capítulos sem alterar stories/.');
