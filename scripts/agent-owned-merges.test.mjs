@@ -34,3 +34,29 @@ test('Gaviao reviews all merges since persisted checkpoint, Elefante coordinates
   assert.match(elefante, /autores são responsáveis pelo próprio CI/);
   assert.match(elefante, /NÃO é aprovador ou integrador exclusivo/);
 });
+
+test('every agent may create issues and Elefante organizes without monopoly', () => {
+  const rules = read('AGENTS.md');
+  const elefante = read('team/elefante.md');
+  assert.match(rules, /Issue creation is shared by everyone/);
+  assert.match(rules, /Any agent may open an issue/);
+  assert.match(elefante, /Todos os animais também podem abrir issues novas/);
+  assert.match(elefante, /atribui responsáveis e ordena a fila/);
+});
+
+test('daily Elefante coffee has date, expiry, no concurrent duplicate', () => {
+  const rules = read('AGENTS.md');
+  const elefante = read('team/elefante.md');
+  assert.match(rules, /America\/Porto_Velho/);
+  assert.match(rules, /new numbered session/);
+  assert.match(elefante, /☕ cafezinho/);
+  assert.match(elefante, /Não criar duas sessões simultaneamente/);
+});
+
+test('every animal keeps its own skill by stable path', () => {
+  const rules = read('AGENTS.md');
+  assert.match(rules, /Each animal maintains its own skill/);
+  for (const animal of agents) {
+    assert.match(rules, /\.agents\/skills\/conde-<animal>\/SKILL\.md/);
+  }
+});
