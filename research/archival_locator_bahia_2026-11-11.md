@@ -84,3 +84,34 @@ Há instituição identificável que declare possuir os dois títulos baianos ci
 4. **Restrição candidata ao Lean 4.35.0, apenas lógica:** \`MesmoGrupo(a,b)\` **não implica** \`MesmoTexto(a,b)\`; \`MesmoGrupo(a,b)\` deve impedir o uso de \`IndependenciaInstitucionalComprovada(a,b)\` para aumentar peso probatório; isso não elimina uma apuração própria documentada em cada redação. **Nenhuma restrição (t, posição, velocidade, erro) nova**: domínio do NORAD 528 e testes físicos/holdouts permanecem inalterados. Formalização reservada aos agentes específicos.
 
 **Resultado da rodada:** confirmou-se **estrutura de circulação potencial e dependência de propriedade**; não houve novo exemplar de 1963, testemunha ocular ou evidência física. **Sem contato externo, sem edição de blog e sem alteração de Lean, simulador ou dados orbitais.**
+
+
+## 12/11/2026 — duplo sentido de «balão» no telegrama de 14/11
+
+**Pergunta falsificável:** os termos «balão metálico tripulado» e «balão meteorológico», presentes na correspondência de novembro, constituem duas observações verificadas do mesmo objeto? **Resposta:** não. A distinção é lexical e documental; não há duas observações materiais.
+
+### Evidências incrementais, sem renumerar C001–C238
+
+| ID local | Fonte e conteúdo verificado | Natureza / dependência | Resultado e limite |
+| --- | --- | --- | --- |
+| GEN-DA-20261112-05 | Telegrama DOS-UAP-D001 de 14/11/1963, p.1: registra «LOCAL NEWSPAPER REPORT» sobre «LARGE METAL MANNED BALLOON» supostamente encontrado na «VICINITY SALVADOR» com ocupante morto e cratera de quatro metros. Fac-símile: https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D001_Diplomatic-Cable_Brazil_November-14-1963.pdf | Documento diplomático de época **diretamente lido em fac-símile**; porém o conteúdo da notícia é **citação indireta**. Não identifica título, edição, página ou repórter do alegado jornal. Espelho público, sem comparação de hash com original oficial. | **Confirmada** a expressão usada pelo adido e a existência de uma alusão a notícia impressa. **Não confirmada** a existência de um recorte afirmativo distinto nem observação do objeto. Procurar jornal anterior ao telefonema consular de 13/11. |
+| GEN-DA-20261112-06 | EOP-UAP-D001/FBIS, captura da Rádio Tupi 08/11, chama a alegação «LARGE METAL SPHERE», localizada «CENTER OF THE CITY», com aberturas semelhantes a janelas e corpo. DOS-UAP-D001 de 14/11 chama o relato recebido de «BALLOON», «VICINITY SALVADOR» e não menciona janelas. Fontes: https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf e DOS-UAP-D001 acima. | **Comparação direta de dois documentos coetâneos**, não de duas testemunhas. O telegrama pode retraduzir ou reformular a cadeia de notícia da rádio; independência jornalística desconhecida. | **Confirmada divergência lexical e locativa no relato**, não transformação física do objeto ou lugar. Teste: cotejar os fascículos, título, crédito e textos antes de concluir filiação. |
+| GEN-DA-20261112-07 | No DOS-UAP-D001, p.1, continuidade «PAGE TWO»: «AN OBJECT HAD BEEN SIGHTED ALOFT», tentativamente «WEATHER-TYPE BALLOON», mas «NO REPEAT NO SUCH OBJECT HAD BEEN FOUND AGROUND». No A-628 de 20/11, p.1, a resposta consular citada relata que o secretário de Segurança apenas especulara balão meteorológico, «but no such sighting verified». Fonte A-628: https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D002_Diplomatic-Cable_Brazil_November-20-1963.pdf | **Leitura direta de fac-símiles diplomáticos**, mas o A-628 reproduz telegrama consular 157 ainda não recuperado; dependência da mesma apuração telefônica. | **Confirmada a distinção de referentes no texto**: (a) rumor de objeto metálico tripulado supostamente caído e (b) notícia não verificada de algo no ar, classificado provisoriamente como balão de sondagem. Não foi verificado nenhum avistamento independente, lançamento ou recuperação. |
+
+### Hipóteses rivais e critérios de falsificação
+
+- **H-A, único rumor republicado:** a referência a jornal não identificado no telegrama pode ser recontagem do mesmo rumor da Tupi, com «sphere» retraduzido para «manned balloon». Um original citando Tupi ou repetindo ordem de pormenores favoreceria dependência, mas não excluiria apuração adicional.
+- **H-B, relato jornalístico distinto:** um jornal baiano ou carioca publicou narrativa afirmativa diferente antes de 13/11. Testar pela página original, data da edição, horário de fechamento, crédito de agência, nomes e pormenores ausentes da Tupi; a mera descoberta de uma segunda página não confirmaria o impacto.
+- **H-C, suposto evento atmosférico separado:** o avistamento aéreo mencionado em DOS-UAP-D001 pode ter origem diferente do rumor do objeto caído. Testar por testemunha identificada ou relatório contemporâneo de radiossondagem. O A-628 já ressalva não verificação do avistamento; portanto não existe base documental para igualá-los.
+
+**Grafo provisório:** origem desconhecida → Tupi 08/11 → FBIS; fonte impressa não identificada (talvez dependente da Tupi) → referência de Simonpietri 14/11; avistamento aéreo alegado mas não verificado → conjectura de balão meteorológico → resposta consular resumida no A-628. **Não criar setas comprovadas** entre a fonte impressa e a Tupi ou entre os dois «balões».
+
+### Busca e bloqueios
+
+Consultados indexadores web com expressões exatas inglesas do telegrama e variantes portuguesas, associados a Conde, Salvador e novembro de 1963. Retornaram majoritariamente reproduções modernas da mesma liberação documental; **nenhum jornal original novo foi recuperado**. O portal UFBA de arquivos (https://www.arquivos.ufba.br/) indica coleções de recortes digitais, mas o alcance de 1963/Conde não foi demonstrado e a consulta direta sofreu timeout. As URLs da liberação oficial retornaram HTTP 403; os documentos foram inspecionados visualmente no espelho acima, **sem conferência de integridade por hash contra a matriz oficial**.
+
+### Consequência científica
+
+Restrições **lógicas candidatas** a eventual avaliação formal, sem substituir as atividades do agente Lean: citar jornal em telegrama não implica inspeção do jornal; alegar objeto metálico no solo não implica que seja o objeto incerto no ar; relato consular não verificado não constitui observação física. **Sem mudança do domínio de parâmetros do NORAD 528**, sem hora/local de reentrada nem trajetória terminal medida. A documentação NASA de 15/11 registra somente a data 08/11.
+
+**Próximo alvo prioritário:** identificar a qual jornal Simonpietri se refere por «LOCAL NEWSPAPER REPORT», cotejando os originais de Jornal do Brasil 09/11, O Jornal 07–12/11, Diário de Notícias BA 09/11, Jornal da Bahia BA 11/11 e o telegrama Salvador 157 com os recortes do malote. Nenhum contato externo, alteração de blog, Lean ou simulador.
