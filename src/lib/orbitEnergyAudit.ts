@@ -7,7 +7,7 @@
  * NOT an observation of 1963, a rigorous global error bound or impact proof.
  */
 import {
-  accelerationKmS2, dragJacobiPowerKm2S3, propagate,
+  EARTH, accelerationKmS2, dragJacobiPowerKm2S3, propagate,
   rotatingFrameIntegralKm2S2,
 } from './orbitPhysics.ts';
 import type { Dynamics, Propagation, State } from './orbitPhysics.ts';
@@ -73,10 +73,10 @@ export function auditPhysicalBudget(
   let maxPositiveIncrease = 0;
   let event: Propagation['event'] = 'elapsed';
   const steps: BudgetStep[] = [];
-  if (Math.hypot(...initial.rKm) <= 6378.137 + terminationAltitudeKm) {
+  if (Math.hypot(...initial.rKm) <= EARTH.radiusKm + terminationAltitudeKm) {
     event = 'reentry-threshold';
   }
-  while (elapsedS < durationS && event !== 'reentry-threshold') {
+  while (elapsedS < durationS - 1e-10 && event !== 'reentry-threshold') {
     const h = Math.min(stepS, durationS - elapsedS);
     const result = propagate(current, h, h, terminationAltitudeKm, dynamics);
     const actualDt = result.state.tS - current.tS;
