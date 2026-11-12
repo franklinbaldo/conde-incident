@@ -198,3 +198,46 @@ A conversão racional exata → Float64 arredonda cada extremo **para o interior
 Os novos testes exclusivamente **sintéticos** cobrem domínios disjuntos, arredondamento de `3/10` a `4/5`, janela racional sub-ulp, singleton inexato, rejeição de Lean `PASS` fictício, unidade/parametrização inválidas e propagação acoplada J2 com seed repetível.
 
 Reproduzir com Node 22: `node --experimental-strip-types --test tests/orbitDeclaredDomainBridge.test.mjs`. O workflow `orbit-physics.yml` executa essa regressão junto à suíte física integral no HEAD exato. **Validação histórica cega 527/529: NOT_RUN**, assim como parâmetros de arrasto documentados e prova Lean histórica. A NASA/Goddard, *Satellite Situation Report*, vol. 3 nº 22 (15/11/1963), p. impressa 8, [NTRS 19640001198](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf), matriz **C197** da [draft PR #1](https://github.com/franklinbaldo/conde-incident/pull/1), só registra **08/11/1963** como data de decaimento de 1963-003B, sem hora e lugar. TLEs derivados C25/C179–C185 não são observações independentes nem resolvem o conflito RAAN. Sem inferência sobre Conde, reentrada terminal ou impacto.
+
+
+## Correção: interseção racional exata com IEEE-754 (Castor, 12/11/2026)
+
+**Contraprova de precisão anterior:** o adaptador de domínios da PR #43 fazia
+`Number(numerador) / Number(denominador)` antes de arredondar os extremos
+para o interior. A fração exata `10^400/10^400 = 1` virava
+`Infinity / Infinity = NaN` e produzia **`NOT_RUN_FLOAT64_PRECISION` falso**,
+apesar de 1 ser exatamente representável. Frações `1/2^1074` (menor
+subnormal positivo) igualmente não sobreviviam a essa conversão intermediária.
+O defeito é *numérico*, não uma nova observação de 1963.
+
+**Correção em `orbitDeclaredDomainBridge.ts`:** a interseção usa busca
+binária determinística sobre a ordenação monótona de todos os valores **finitos**
+IEEE-754 binary64, comparando cada candidato à fração original via
+`BigInt`, sem conversão intermediária dos inteiros para `Number`.
+Encontra o primeiro valor maior/igual ao mínimo exato e o último
+menor/igual ao máximo exato. Nenhum estado publicado pode estar fora dos
+intervalos racionais declarados. Se não houver ponto representável, retorna
+`NOT_RUN_FLOAT64_PRECISION`. Quando só um extremo racional ultrapassa o
+alcance de Float64, preserva a **interseção finita** até `Number.MAX_VALUE`,
+em vez de declarar incorretamente que ela é vazia. A saída é somente um
+**subconjunto representável**, não uma cobertura certificada de todos os
+valores reais do domínio nem a certificação de dinâmica orbital.
+
+**Controles adversariais SINTÉTICOS:** `10^400/10^400`, limites negativos,
+subnormal `1/2^1074`, singleton sub-ulp `1/2^1075` sem ponto Float64,
+intervalos exteriores ao máximo finito e região que admite apenas zero.
+São cinco regressões novas em `tests/orbitDeclaredDomainBridge.test.mjs`,
+executadas pelo mesmo workflow de cabeça exata `orbit-physics.yml`.
+Nenhum parâmetro físico foi inferido, nenhum valor de RAAN conflituoso foi
+combinado e nenhuma amostragem Monte Carlo passou a ser posterior histórica.
+
+**Ancora documental e cadeia:** NASA/Goddard,
+*Satellite Situation Report*, vol. 3 nº 22, 15/11/1963, p. impressa 8,
+[NTRS 19640001198](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf),
+matriz cumulativa **C197 na PR #1**, só registra 08/11/1963 como **dia**
+de decaimento de 1963-003B. Os TLEs espelhados C25/C179–C185 e C240/C241
+são derivados, com possível linhagem NORAD comum, sem observações
+cartesianas primárias independentes e com RAAN conflitante. As premissas
+racionais da PR #43 são declaradas, **não** domínios históricos
+certificados por Lean. Os testes não fornecem holdouts originais dos objetos
+527/529, densidade de 1963 nem ponto/hora da reentrada do 528: **NOT_RUN**.
