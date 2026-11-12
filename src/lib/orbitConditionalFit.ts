@@ -11,7 +11,7 @@ import {
   utcMilliseconds, validateTimedPositions, positionResidualRmsKm,
 } from './orbitPhysics.ts';
 import { auditVelocityDomain } from './orbitAdmissibility.ts';
-import { auditFutureOrbitScore } from './orbitHoldoutAudit.ts';
+import { auditFutureOrbitScore, auditTrainingOrbitScore } from './orbitHoldoutAudit.ts';
 import type {
   Dynamics, PreCutoffOrbitFit, State, TimedOrbitPosition, Vec3,
 } from './orbitPhysics.ts';
@@ -34,9 +34,12 @@ export interface ConditionalFitResult {
     | 'NOT_RUN_EMPTY'
     | 'NOT_RUN_UNBOUNDED'
     | 'NO_FINITE_TRAINING_SCORE'
+    | 'TRAINING_GAIN_UNCONFIRMED'
     | 'CALIBRATED_CONDITIONALLY';
   readonly domain: DomainAudit;
   readonly fit: PreCutoffOrbitFit | null;
+  /** Independently refined IN-SAMPLE score; never substitute for future holdout. */
+  readonly trainingAudit: AuditedHoldoutResult | null;
   readonly holdout: AuditedHoldoutResult | null;
   /** The original input velocity was outside declared bounds. */
   readonly baselineProjectedIntoDomain: boolean;
@@ -84,7 +87,7 @@ export function fitConditionalVelocity(
   };
   if (domain.status !== 'BOUNDED')
     return { ...header, status: domain.status === 'EMPTY' ? 'NOT_RUN_EMPTY' as const :
-      'NOT_RUN_UNBOUNDED' as const, fit: null, holdout: null,
+      'NOT_RUN_UNBOUNDED' as const, fit: null, trainingAudit: null, holdout: null,
       baselineProjectedIntoDomain: false, evaluations: 0 };
 
   if (scenario.initial.tS !== 0)
@@ -116,7 +119,7 @@ export function fitConditionalVelocity(
   let best = evaluate(projected);
   if (!Number.isFinite(best))
     return { ...header, status: 'NO_FINITE_TRAINING_SCORE', fit: null,
-      holdout: null, baselineProjectedIntoDomain, evaluations };
+      trainingAudit: null, holdout: null, baselineProjectedIntoDomain, evaluations };
 
   let velocity: Vec3 = projected;
   let delta = controls.gridStepKmS;
@@ -151,7 +154,14 @@ export function fitConditionalVelocity(
     stepS: controls.stepS, terminationAltitudeKm: controls.terminationAltitudeKm,
     dynamics,
   };
+  // Crucial numerical falsification: the optimizer ranks a coarse RK4
+  // training score. A separate step-halving audit must corroborate that gain.
+  // Any event conflict, nonconvergence, near tie, or reversed winner blocks
+  // CALIBRATED_CONDITIONALLY, without discarding the fitted candidate.
+  const trainingAudit = auditTrainingOrbitScore(fit, training, controls.convergence);
   const holdout = auditFutureOrbitScore(fit, future, controls.convergence);
-  return { ...header, status: 'CALIBRATED_CONDITIONALLY',
-    fit, holdout, baselineProjectedIntoDomain, evaluations };
+  return { ...header,
+    status: trainingAudit.status === 'APPARENT_FITTED_BETTER'
+      ? 'CALIBRATED_CONDITIONALLY' : 'TRAINING_GAIN_UNCONFIRMED',
+    fit, trainingAudit, holdout, baselineProjectedIntoDomain, evaluations };
 }

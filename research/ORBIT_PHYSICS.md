@@ -107,3 +107,37 @@ The fit uses only pre-cutoff observations in one named Cartesian inertial frame 
 The fixed-bound contracts are tagged `SYNTHETIC`/`CONDITIONAL` and `proofVerification=NOT_RUN`; documentary provenance labels alone DO NOT authenticate the premise or show that Lean 4.35.0 checked it. The complementary exact-rational domain-audit contract is still proposed in [PR #37](https://github.com/franklinbaldo/conde-incident/pull/37); this slice does not silently consume its unmerged API, round its fractions, or certify them. A future independently verified Lean handoff must bind evidence occurrence, source lineage, epoch, inertial coordinate frame, units, hash and theorem before real calibration. No historical osculating r/v 527/529 are available in this branch. **Historical holdout, atmospheric 1963 calibration, terminal position/time 528, and impact inference: NOT_RUN.**
 
 **Original documentary anchor:** NASA/Goddard `Satellite Situation Report` vol. 3 no. 22, 15 Nov 1963, printed p. 8 ([NTRS 19640001198](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf)), matrix occurrence C197: **1963-003B decayed on 8 Nov**; the facsimile does not specify hour or position. NASA institutional compilation and secondary Space-Track mirrors C25/C179–C185 are dependent tracking lineage, not independent Cartesian sensors. RAAN 198.5261° versus 284.1520° remains unresolved. This mathematical regression is NOT a new entry in the historical evidence matrix.
+
+## Independent numerical falsification of bounded inverse training gain (🦫)
+
+`fitConditionalVelocity` optimizes a **coarse-step** in-sample RMS; an improvement
+there can be a discretization artifact, even inside a declared admissible
+velocity box. A shared numerical residual auditor now independently
+reintegrates baseline and fitted coupled r/v trajectories at each *training*
+epoch, with full step halving. It uses exactly the same event/units/ranking
+logic as the **separate post-cutoff holdout**. Each result explicitly carries
+`phase=TRAINING` or `HOLDOUT` to prevent conflating the two. Both retain
+provenance flags `NOT_VERIFIED` and no historical impact inference.
+
+`CALIBRATED_CONDITIONALLY` is returned only if the independently refined
+in-sample ranking is `APPARENT_FITTED_BETTER`; event conflict, failure to
+converge, model termination, reversal, or numerical near-tie produce
+`TRAINING_GAIN_UNCONFIRMED` while preserving the fitted candidate and the
+negative audit. This is **not** a certified RK4 error enclosure, a guaranteed
+global optimum, or out-of-sample predictive validation. A synthetic regression
+demonstrates **better in-sample fit yet worse future performance**.
+
+Run on exact GitHub Actions PR HEAD:
+```sh
+node --experimental-strip-types --test tests/orbitPhysics.test.mjs tests/orbitHoldout.test.mjs tests/orbitConvergence.test.mjs tests/orbitAdmissibility.test.mjs tests/orbitEnergyAudit.test.mjs tests/orbitHoldoutAudit.test.mjs tests/orbitConditionalFit.test.mjs tests/orbitTrainingAudit.test.mjs
+```
+
+Historical evidence remains unchanged: NASA/Goddard *Satellite Situation
+Report*, 15 Nov 1963, printed p.8, [NTRS 19640001198](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf),
+matrix occurrence C197 on the draft [cumulative PR #1](https://github.com/franklinbaldo/conde-incident/pull/1),
+records only 8 Nov **decay date** for 1963-003B, not time or location.
+The derived 527/528/529 orbit mirrors C179–C185/C240–C241 share tracking
+lineage and the RAAN discrepancy is unresolved. Lean-certified empirical
+admissible r/v intervals, original holdout observations (epochs/frame/uncertainty),
+atmospheric 1963 drag calibration, terminal 528 coordinates and impact claims:
+**NOT_RUN/NOT_SUPPORTED**.

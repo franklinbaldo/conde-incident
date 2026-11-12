@@ -5,7 +5,7 @@
  * Deliberately does not infer independent observation, atmospheric calibration,
  * historic validity, a geographic impact, or a certified numerical error bound.
  */
-import { scoreFutureOrbit } from './orbitPhysics.ts';
+import { utcMilliseconds, validateTimedPositions } from './orbitPhysics.ts';
 import { assessNumericalConvergence } from './orbitConvergence.ts';
 import type { PreCutoffOrbitFit, TimedOrbitPosition, Vec3 } from './orbitPhysics.ts';
 import type { ConvergenceAssessment, ConvergenceControls } from './orbitConvergence.ts';
@@ -32,6 +32,8 @@ export type HoldoutAuditStatus =
   | 'APPARENT_FITTED_BETTER'
   | 'APPARENT_BASELINE_BETTER';
 export interface AuditedHoldoutResult {
+  /** TRAINING is in-sample; HOLDOUT is the post-cutoff evaluation. */
+  readonly phase: 'TRAINING' | 'HOLDOUT';
   readonly objectNorad: 527 | 529;
   readonly status: HoldoutAuditStatus;
   readonly points: readonly AuditedHoldoutPoint[];
@@ -63,14 +65,17 @@ const rank = (deltaKm: number): -1 | 0 | 1 =>
  * The labels APPARENT_* are conditional, never authenticated historical skill:
  * no result here establishes an SGP4 comparison, a proof of accuracy, or impact.
  */
-export function auditFutureOrbitScore(
+function auditOrbitResiduals(
   fit: PreCutoffOrbitFit,
   heldout: readonly TimedOrbitPosition[],
   controls: ConvergenceControls,
+  phase: 'TRAINING' | 'HOLDOUT',
 ): AuditedHoldoutResult {
-  // Reuse the single established UTC/frame/object/cutoff validation boundary.
-  // Its raw coarse scores are deliberately NOT trusted as the reported result.
-  scoreFutureOrbit(fit, heldout);
+  // One strict UTC/frame/object validation boundary for both phases.
+  // Unlike a coarse score, this does not propagate before convergence checks.
+  validateTimedPositions(heldout, fit.objectNorad, fit.inertialFrame,
+    utcMilliseconds(fit.initialEpochUtc), utcMilliseconds(fit.cutoffEpochUtc),
+    phase === 'TRAINING' ? 'training' : 'holdout');
 
   const points = heldout.map(o => ({
     epochUtc: o.epochUtc,
@@ -84,7 +89,7 @@ export function auditFutureOrbitScore(
   }));
   const result = (status: HoldoutAuditStatus, levels: readonly RefinementHoldoutLevel[] = [],
     recentDeltaSensitivityKm: number | null = null): AuditedHoldoutResult => ({
-    objectNorad: fit.objectNorad, status, points, levels, recentDeltaSensitivityKm,
+    phase, objectNorad: fit.objectNorad, status, points, levels, recentDeltaSensitivityKm,
     observationAuthenticity: 'NOT_VERIFIED', observationIndependence: 'NOT_VERIFIED',
     historicalCalibration: 'NOT_RUN', rigorousErrorEnclosure: false,
     impactInference: 'NOT_SUPPORTED',
@@ -127,4 +132,28 @@ export function auditFutureOrbitScore(
     return result('NUMERICALLY_INDISTINGUISHABLE', levels, sensitivity);
   return result(delta < 0 ? 'APPARENT_FITTED_BETTER' : 'APPARENT_BASELINE_BETTER',
     levels, sensitivity);
+}
+
+/** The chronology-only training audit cannot certify independent prediction.
+ * It is called AFTER the bounded grid fit, never during optimization.
+ * In-sample gain is acceptable only if independently refined r/v trajectories
+ * support the ranking; otherwise the caller must preserve a negative result.
+ */
+export function auditTrainingOrbitScore(
+  fit: PreCutoffOrbitFit,
+  training: readonly TimedOrbitPosition[],
+  controls: ConvergenceControls,
+): AuditedHoldoutResult {
+  if (!training.length) throw new RangeError('No training observations to audit');
+  return auditOrbitResiduals(fit, training, controls, 'TRAINING');
+}
+
+/** Withheld-position evaluation. No refit or reuse of training observations. */
+export function auditFutureOrbitScore(
+  fit: PreCutoffOrbitFit,
+  heldout: readonly TimedOrbitPosition[],
+  controls: ConvergenceControls,
+): AuditedHoldoutResult {
+  if (!heldout.length) throw new RangeError('No future observations to score');
+  return auditOrbitResiduals(fit, heldout, controls, 'HOLDOUT');
 }
