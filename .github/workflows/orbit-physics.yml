@@ -18,4 +18,4 @@ jobs:
         with:
           node-version: '22'
       - name: Physical conservation, inverse, conditional domain and seeded ensemble
-        run: node --experimental-strip-types --test tests/orbitPhysics.test.mjs tests/orbitHoldout.test.mjs tests/orbitConvergence.test.mjs tests/orbitAdmissibility.test.mjs tests/orbitEnergyAudit.test.mjs tests/orbitHoldoutAudit.test.mjs
+        run: node --experimental-strip-types --test tests/orbitPhysics.test.mjs tests/orbitHoldout.test.mjs tests/orbitConvergence.test.mjs tests/orbitAdmissibility.test.mjs tests/orbitEnergyAudit.test.mjs tests/orbitHoldoutAudit.test.mjs tests/orbitConditionalFit.test.mjs

@@ -279,7 +279,7 @@ export interface FutureOrbitScore {
   readonly observationCount: number;
 }
 
-function utcMilliseconds(iso: string): number {
+export function utcMilliseconds(iso: string): number {
   // Explicit UTC only: no local-time conversions and no guessed historical timezone.
   if (typeof iso !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?Z$/.test(iso))
     throw new RangeError('Observation epochs must be explicit ISO-8601 UTC timestamps');
@@ -289,7 +289,7 @@ function utcMilliseconds(iso: string): number {
   return ms;
 }
 
-function validateTimedPositions(
+export function validateTimedPositions(
   observations: readonly TimedOrbitPosition[],
   objectNorad: 527 | 529,
   inertialFrame: string,
