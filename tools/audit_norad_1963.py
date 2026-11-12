@@ -360,10 +360,10 @@ def main():
                       "mirror_reconciliation": report["mirror_comparison_528"]["status"],
                       "nearest_legacy_raan": report["mirror_comparison_528"]["legacy_raan_temporal_audit"]["nearest_raan_regardless_of_epoch"],
                       "raw_TLE_checksum": report["original_tle_line_checksums"]}, sort_keys=True))
-    if any(report["counts"][str(i)] == 0 for i in IDS):
-        raise SystemExit("FALHA: objeto sem registros no espelho")
-    if report["problems"]:
-        raise SystemExit("FALHA: anomalias detectadas; preservar CSV e relatório")
+    try:
+        assert_audit_valid(report)
+    except ValueError as exc:
+        raise SystemExit("FALHA de custodia: " + str(exc)) from exc
 
 
 if __name__ == "__main__":
