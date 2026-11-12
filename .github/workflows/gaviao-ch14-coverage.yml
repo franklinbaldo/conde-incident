@@ -29,11 +29,11 @@ jobs:
         run: |
           python tools/gaviao_ch14_coverage_audit.py --download \
             --parquet "$RUNNER_TEMP/tle_1963.parquet" \
-            --output "$RUNNER_TEMP/gaviao_ch14.json"
+            --output /tmp/gaviao_ch14.json
       - name: Preserve results and residuals
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: gaviao-ch14-audit
           path: /tmp/gaviao_ch14.json
-          if-no-files-found: warn
+          if-no-files-found: error
