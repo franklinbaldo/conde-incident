@@ -12,6 +12,7 @@ import json
 import math
 import sys
 from pathlib import Path
+from urllib.parse import urldefrag
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT = ROOT / "research/constraints/ssr_1963_observable_graph.json"
@@ -118,6 +119,24 @@ def validate(graph: dict) -> dict:
         len(params) != len(graph["parameters"]) or
         len(ops) != len(graph["operators"])):
         raise ValueError("graph missing elements or duplicate source/parameter/operator IDs")
+    # IDs and URL fragments must not turn one facsimile into new sources.
+    source_documents = set()
+    upstream_by_family = {}
+    for source in graph["sources"]:
+        url = source.get("url")
+        if not isinstance(url, str) or not url.strip():
+            raise ValueError("missing source document URL")
+        document_url = urldefrag(url.strip()).url
+        if document_url in source_documents:
+            raise ValueError("duplicate source document URL")
+        source_documents.add(document_url)
+        family = source.get("source_family")
+        origin = source.get("upstream_tracking_family")
+        if not family or not origin:
+            raise ValueError("missing source family or upstream lineage")
+        if family in upstream_by_family and upstream_by_family[family] != origin:
+            raise ValueError("conflicting upstream tracking lineage within source family")
+        upstream_by_family[family] = origin
     output = []
     ids = set()
     observation_signatures = set()
@@ -143,6 +162,10 @@ def validate(graph: dict) -> dict:
         src = sources[o["source_id"]]
         if o["source_independence_family"] != src["source_family"]:
             raise ValueError(f"source lineage mismatch: {oid}")
+        if o.get("published_on") != src.get("published_on"):
+            raise ValueError(f"observation/source publication mismatch: {oid}")
+        if o.get("link_status") != "CONNECTED_PENDING_CALIBRATION":
+            raise ValueError(f"unvalidated evidence link status: {oid}")
         families.add(src["source_family"])
         upstream.add(src.get("upstream_tracking_family", src["source_family"]))
         if o["forward_operator_id"] not in ops:
