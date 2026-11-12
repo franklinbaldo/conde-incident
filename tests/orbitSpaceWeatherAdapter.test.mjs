@@ -48,7 +48,7 @@ test('counterfactual loss of future 81-day records blocks centered-mean driver (
 });
 
 test('missing earlier ap history, wrong schema and false provenance are rejected', () => {
-  assert.throws(() => deriveMsiseDriversAtUtc(snapshot, '1963-11-04T00:00:00Z'), /ap history/);
+  assert.throws(() => deriveMsiseDriversAtUtc(snapshot, '1963-11-06T00:00:00Z'), /ap history/);
   assert.throws(() => deriveMsiseDriversAtUtc({...snapshot, schema: 'madeup'}, dates[1]), /Unsupported/);
   assert.throws(() => deriveMsiseDriversAtUtc({...snapshot, source_documents: {}}, dates[1]), /source URL/);
   assert.throws(() => deriveMsiseDriversAtUtc(snapshot, '1963-11-08'), /ISO-8601 UTC/);
