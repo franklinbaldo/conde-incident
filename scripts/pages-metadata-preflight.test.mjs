@@ -16,7 +16,7 @@ function valid() {
     runs: [{
       id: 9, name: "Publish Conde site", path: ".github/workflows/pages.yml@main",
       event: "push", head_branch: "main", head_sha: SHA,
-      status: "completed", conclusion: "success", run_number: 9
+      status: "completed", conclusion: "success", run_number: 9, run_attempt: 1
     }],
     runsAfter: [{
       id: 9, name: "Publish Conde site", path: ".github/workflows/pages.yml@main",
@@ -25,8 +25,8 @@ function valid() {
     }],
     deployments: [{ id: 100, sha: SHA, environment: "github-pages", created_at: "2026-11-12T14:00:00Z" }],
     deploymentsAfter: [{ id: 100, sha: SHA, environment: "github-pages", created_at: "2026-11-12T14:00:00Z" }],
-    statuses: { 100: [{ state: "success" }] },
-    statusesAfter: { 100: [{ state: "success" }] }
+    statuses: { 100: [{ id: 501, state: "success" }] },
+    statusesAfter: { 100: [{ id: 501, state: "success" }] }
   };
 }
 function refuse(edit, expected) {
@@ -61,6 +61,19 @@ test("most recent deployment overrides older successful deployment", () => refus
   i.statuses[101] = [{ state: "pending" }];
 }, "status is not success"));
 test("missing deployment status fails closed", () => refuse(i => { i.statuses = {}; }, "status is not success"));
+test("missing attempt identity fails closed", () => refuse(i => {
+  delete i.runs[0].run_attempt;
+}, "attempt is not identified"));
+test("rerun attempt with same run ID and green conclusion invalidates scan", () => refuse(i => {
+  i.runsAfter[0].run_attempt = 2;
+}, "publish run changed"));
+test("missing deployment status identity fails closed", () => refuse(i => {
+  delete i.statuses[100][0].id;
+}, "status ID is not identified"));
+test("replacement green status with new ID invalidates scan", () => refuse(i => {
+  i.statusesAfter[100][0].id = 502;
+}, "deployment status changed"));
+
 test("main moving during audit fails closed", () => refuse(i => { i.mainSHAAfter = OTHER; }, "changed during audit"));
 test("wrong deployment environment cannot be accepted", () => refuse(i => { i.deployments[0].environment = "production"; }, "not github-pages"));
 test("new failed publish attempt arriving during scan invalidates metadata", () => refuse(i => {
