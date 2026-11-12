@@ -1,0 +1,17 @@
+{
+  "evidence_id": "C197",
+  "original_document": "NASA/Goddard, Satellite Situation Report, vol. 3, no. 22",
+  "publication_date": "1963-11-15",
+  "ntrs_id": "19640001198",
+  "url": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf",
+  "printed_page": 8,
+  "pdf_index_zero_based": 9,
+  "viewer_page_one_based": 10,
+  "inspected_image": "PDF p. 10 (zero-based 9), table PLEASE ADD THE FOLLOWING TO THE DECAYED OBJECTS LIST",
+  "transcription": "1963 3B | US | 16 JAN | 8 NOV 63",
+  "observation_type": "Contemporary NASA catalogue listing, not a direct observation of ground impact",
+  "source_class": "contemporary_primary_document_visually_inspected",
+  "independence": "C198 is the NTRS catalogue entry for the same document, not an independent measurement; NASA and NORAD may share tracking inputs",
+  "uncertainty": "Day-only decay listing: neither terminal time nor reentry coordinates nor a ground impact is documented",
+  "source_verification": "Direct PDF page-image inspection, 2026-11-12; no new historical observation"
+}
