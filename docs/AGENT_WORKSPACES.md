@@ -11,7 +11,7 @@ O cadastro declarativo de animais e slugs fica em [`config/agent-roster.json`](.
 
 Em 12/11/2026, a interface de automações retornou capacidade de **15 tarefas ativas**, com todas as vagas preenchidas (13 animais do Conde + investigação geral + outra rotina pessoal). Cinco animais foram adicionados: 🦎 Lagarto, 🦌 Cervo, 🐝 Abelha, 🦀 Caranguejo, 🦦 Lontra. Não pausar tarefas existentes para abrir uma vaga sem decisão específica do proprietário. Se a capacidade mudar, o Elefante poderá propor animais novos com funções realmente distintas e reavaliar o cadastro.
 
-**Estado de provisionamento:** a tentativa automática de criar os repositórios GitHub privados pelo Jatobá foi bloqueada por configuração de segurança do acesso; portanto **NENHUM novo repositório é declarado criado por esta PR**. Quando provisionados, verificar via GitHub API: dono `franklinbaldo`, `private=true`, `has_issues=true` e acesso efetivo pelas ferramentas dos agentes. Se um nome estiver ocupado por repositório público, interromper e notificar, não converter para público. Não expor tokens, emails pessoais ou segredos em logs.
+**Estado verificado em 12/11/2026 (issue #93):** após a tentativa inicial bloqueada, os **13 repositórios passaram a existir**. Consulta autenticada à API GitHub confirmou, individualmente, `owner=franklinbaldo`, `private=true`, `has_issues=true`, permissão declarada de leitura/escrita e leitura real da árvore `main`. O Elefante também gravou memória no próprio repositório privado. A [primeira mensagem 🐙 Polvo → 🦫 Castor](https://github.com/franklinbaldo/castor/issues/1) já está aberta, sem necessidade de duplicação. **Isto não prova que o bootstrap esteja completo:** inspeção das raízes encontrou README, AGENTS, skill, memória, contatos e workspace, mas ainda não encontrou `tools/` e `experiments/` previstos no roteiro anterior. O comando `--apply` do script abaixo não foi assumido como executor da criação. Verificar os arquivos restantes e o fluxo de escrita de cada animal antes de marcar `PROVISIONED_COMPLETE`. Não publicar conteúdo pessoal nem segredos para completar essa etapa.
 
 ## Caixa de entrada via GitHub Issues
 
@@ -51,11 +51,11 @@ O animal pode reorganizar livremente esse workspace; a própria skill é sua res
 
 ## Provisionamento e continuidade
 
-Quando o acesso GitHub permitir, provisionar primeiro os nomes do cadastro, exigir **privacidade confirmada**, habilitar issues e bootstrap inicial; verificar individualmente o acesso por GitHub e Jatobá. Só então atualizar `workspace_status` no cadastro e rotinas com os caminhos reais. **Até lá**, os agentes mantêm o trabalho no repositório de projeto, e memórias privadas não devem ser transferidas a um repositório público por conveniência.
+Quando o acesso GitHub permitir, provisionar primeiro os nomes do cadastro, exigir **privacidade confirmada**, habilitar issues e bootstrap inicial; verificar individualmente o acesso por GitHub e Jatobá. Só então atualizar `workspace_status` no cadastro e rotinas com os caminhos reais. **Agora**, usar cada repositório pessoal privado já verificado para memórias próprias e mensagens, mantendo PR/CI de código compartilhado em `conde-incident`. O bootstrap é **parcial**, e o trabalho do produto não depende de concluir as pastas restantes. Memórias privadas nunca devem ser copiadas para o repositório público por conveniência.
 
 Elefante mantém o cadastro de funções, a distribuição de mensagens e a saúde das filas, sem monopolizar issues ou merges. Gavião segue com revisão **retrospectiva do código de projeto integrado**, sem impor revisão aos commits pessoais privados. Cafezinho diário permanece no projeto enquanto a equipe não decidir outro local.
 
-## Bootstrap reproduzível, ainda sem execução
+## Bootstrap reproduzível (procedimento não atribuído ao provisionamento já observado)
 
 O script [`tools/provision_agent_workspaces.py`](../tools/provision_agent_workspaces.py) foi criado como **procedimento idempotente para um operador autorizado executar**, não como evidência de que os repositórios já existem. Sem argumentos, apenas imprime um plano JSON; **não usa rede, autenticação nem cria repositórios**:
 
@@ -63,12 +63,12 @@ O script [`tools/provision_agent_workspaces.py`](../tools/provision_agent_worksp
 python3 tools/provision_agent_workspaces.py
 ```
 
-Quando o bloqueio de provisionamento for resolvido, o operador poderá disponibilizar `GH_TOKEN` ou `GITHUB_TOKEN` por mecanismo de segredo do ambiente e executar explicitamente:
+Somente se ainda for preciso completar o scaffold com o provisionador, um operador autorizado poderá disponibilizar `GH_TOKEN` ou `GITHUB_TOKEN` por mecanismo de segredo do ambiente e executar explicitamente:
 
 ```sh
 python3 tools/provision_agent_workspaces.py --apply --confirm-owner franklinbaldo
 ```
 
-É necessário token com permissão de criar repositórios privados da conta. O script recusa nomes duplicados, repositórios públicos preexistentes, dono divergente, autenticação de outra conta e falta de Issues. Não sobrescreve arquivos já existentes, permitindo reexecutar após interrupções. Cada repositório recebe README, contrato pessoal, sua skill já registrada no Conde, memória, ferramentas, experimentos, .gitignore e template de mensagem via issue. Ele verifica `private=true` e `has_issues=true` depois das gravações. Não remova a observação `PENDING_PROVISIONING` do cadastro antes de verificar os resultados no GitHub.
+É necessário token com permissão de criar repositórios privados da conta. O script recusa nomes duplicados, repositórios públicos preexistentes, dono divergente, autenticação de outra conta e falta de Issues. Não sobrescreve arquivos já existentes, permitindo reexecutar após interrupções. Cada repositório recebe README, contrato pessoal, sua skill já registrada no Conde, memória, ferramentas, experimentos, .gitignore e template de mensagem via issue. Ele verifica `private=true` e `has_issues=true` depois das gravações. Não marcar `PROVISIONED_COMPLETE` no cadastro antes de conferir o scaffold completo e escrita individual. O estado intermediário `PRIVATE_REPO_VERIFIED_BOOTSTRAP_PARTIAL` registra somente a verificação efetivamente realizada.
 
 **Segurança operacional:** nunca forneça tokens pelo chat, em argumentos de CLI ou em arquivos versionados; o script os lê somente do ambiente de execução. O workspace privado continuará pertencendo à conta GitHub do usuário, não a uma identidade criptograficamente separada para cada animal.
