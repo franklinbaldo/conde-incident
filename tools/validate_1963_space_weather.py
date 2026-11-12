@@ -74,3 +74,11 @@ if __name__=='__main__':
     doc=load_and_validate(p)
     print('OK: GFZ definitive 3h Kp/ap, daily Ap, Canada observed F10.7 + 81d centered; epochs=',','.join(x['epoch_utc'] for x in doc['model_inputs']))
     print('PHYSICAL CONSTRAINT: only CONNECTED_PENDING_CALIBRATION; no density or local Conde wind assigned.')
+    # Keep the existing offline CI command as the sole gate for both products.
+    from derive_1963_nov8_epoch_grid import validate_grid
+    base = Path(__file__).resolve().parents[1] / 'research/meteorology'
+    validate_grid(
+        json.loads((base / 'space_weather_msise_inputs_1963_11_07_09.json').read_text()),
+        json.loads((base / 'space_weather_nov08_3h_epoch_grid.json').read_text()),
+    )
+    print('PASS: eight 3h conditional index bins; no observed reentry')
