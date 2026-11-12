@@ -1,9 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { citationContext, isCitationFeed, normalizeOccurrence, matrixOccurrenceUrl } from '../src/lib/sourceCitationAudit.ts';
+import { citationContext, declaredLineageContext, isCitationFeed, isDeclaredDependenceFeed, normalizeOccurrence, matrixOccurrenceUrl } from '../src/lib/sourceCitationAudit.ts';
 
 const feed = JSON.parse(readFileSync(new URL('../public/data/conde-source-citations.json', import.meta.url), 'utf8'));
+const dependence = JSON.parse(readFileSync(new URL('../public/data/conde-declared-dependence.json', import.meta.url), 'utf8'));
 const component = readFileSync(new URL('../src/components/SourceCitationFeed.tsx', import.meta.url), 'utf8');
 const archive = readFileSync(new URL('../src/components/DocumentArchive.tsx', import.meta.url), 'utf8');
 
@@ -50,4 +51,62 @@ test('UI exposes provenance, real source links, accessibility and partial-covera
   assert.ok(!matrixOccurrenceUrl(901).includes('/blob/main/'));
   assert.equal(feed.matrix_git_blob_sha1, 'a7978c3a75a153b16ab70118a92c434bba674cb7');
   assert.equal(isCitationFeed({ schema: 'unknown', records: [] }), false);
+});
+
+
+test('companion displays declared Tupi and NASA ancestry without adding witnesses', () => {
+  assert.equal(isDeclaredDependenceFeed(dependence), true);
+  const tupi = citationContext(feed, 'C01#1');
+  const nasa = citationContext(feed, 'C198#1');
+  const cel = citationContext(feed, 'C23#1');
+  const day = citationContext(feed, 'C197#1');
+  assert.equal(tupi.state, 'mapped');
+  assert.equal(nasa.state, 'mapped');
+  assert.equal(cel.state, 'mapped');
+  assert.equal(day.state, 'mapped');
+  const tupiLineage = declaredLineageContext(dependence, feed, tupi.record);
+  const nasaLineage = declaredLineageContext(dependence, feed, nasa.record);
+  const celLineage = declaredLineageContext(dependence, feed, cel.record);
+  const dayLineage = declaredLineageContext(dependence, feed, day.record);
+  assert.equal(tupiLineage.state, 'declared');
+  assert.equal(nasaLineage.state, 'declared');
+  assert.equal(celLineage.state, 'declared');
+  assert.equal(dayLineage.state, 'declared');
+  assert.deepEqual(tupiLineage.paths[0].edges[0], {
+    from: 'FBIS_EOP_UAP_D001', to: 'RADIO_TUPI_19631108', kind: 'transcribes',
+  });
+  assert.deepEqual(nasaLineage.paths[0].edges[0], {
+    from: 'NTRS_19640001198', to: 'NASA_SSR_19631115', kind: 'catalogue_of_same_work',
+  });
+  assert.equal(celLineage.paths.length, 2);
+  assert.deepEqual(celLineage.paths.map((path) => path.upstream_source_id),
+    ['GFZ_KP_AP_SERIES', 'NRC_F107_SERIES']);
+  assert.equal(dayLineage.paths.length, 0); // No edge != independent source.
+  assert.equal(dependence.epistemic_limits.independent_physical_observation_count, null);
+  assert.equal(dependence.epistemic_limits.absence_of_edge_does_not_prove_independence, true);
+});
+
+test('unknown, stale and source-mismatched genealogy never silently attaches to citations', () => {
+  const tupi = citationContext(feed, 'C01#1');
+  assert.equal(tupi.state, 'mapped');
+  const stale = { ...dependence, matrix_git_blob_sha1: 'other-matrix' };
+  assert.equal(declaredLineageContext(stale, feed, tupi.record).state, 'snapshot-mismatch');
+  const alien = { ...tupi.record, source_id: 'DIFFERENT_SOURCE' };
+  assert.equal(declaredLineageContext(dependence, feed, alien).state, 'source-mismatch');
+  const uncurated = { ...tupi.record, occurrence: 'C44#1' };
+  assert.equal(declaredLineageContext(dependence, feed, uncurated).state, 'unmapped');
+  const malformed = { ...dependence, epistemic_limits: { absence_of_edge_does_not_prove_independence: false } };
+  assert.equal(isDeclaredDependenceFeed(malformed), false);
+});
+
+test('archive UI loads optional companion with accessible ancestry and unknown state', () => {
+  assert.match(component, /conde-declared-dependence\.json/);
+  assert.match(component, /isDeclaredDependenceFeed/);
+  assert.match(component, /declaredLineageContext/);
+  assert.match(component, /aria-labelledby="citation-lineage-heading"/);
+  assert.match(component, /lineage\.paths\.map/);
+  assert.match(component, /path\.edges\.map/);
+  assert.match(component, /Independência desconhecida|Independence is unknown/);
+  assert.match(component, /independência|independence/i);
+  assert.match(component, /dependenceError/);
 });
