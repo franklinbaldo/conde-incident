@@ -2,13 +2,46 @@ name: Texugo - C241-T15 quadratic RAAN ablation
 on:
   pull_request:
     paths:
-      - tools/texugo_quadratic_raan_ablation.py
-      - tests/test_texugo_quadratic_raan_ablation.py
-      - research/constraints/C241-T15_quadratic_raan_baseline.md
-      - research/tle_custody/evidence_matrix_C241-T15_2026-11-12.md
       - .github/workflows/texugo-quadratic-raan.yml
+      - formal/scripts/audit_secondary_j2_raan.py
+      - research/constraints/C241-T15_quadratic_raan_baseline.md
+      - research/statistics/raan_527_528_529_1963.json
+      - research/statistics/raan_chronological_holdout_1963.json
+      - research/tle_custody/evidence_matrix_C241-T15_2026-11-12.md
+      - research/tle_custody/mirror_528_1963-10-27.tle
+      - tests/test_raan_frozen_j2_holdout.py
+      - tests/test_raan_frozen_trend_holdout.py
+      - tests/test_texugo_ci_trigger_paths.py
+      - tests/test_texugo_quadratic_raan_ablation.py
+      - tools/cross_object_epoch_support.py
+      - tools/raan_chronological_holdout.py
+      - tools/raan_coepoch_audit.py
+      - tools/raan_frozen_j2_holdout.py
+      - tools/raan_frozen_trend_holdout.py
+      - tools/texugo_quadratic_raan_ablation.py
+      - tools/tle_secondary_1963_ledger.py
   push:
     branches: [main]
+    paths:
+      - .github/workflows/texugo-quadratic-raan.yml
+      - formal/scripts/audit_secondary_j2_raan.py
+      - research/constraints/C241-T15_quadratic_raan_baseline.md
+      - research/statistics/raan_527_528_529_1963.json
+      - research/statistics/raan_chronological_holdout_1963.json
+      - research/tle_custody/evidence_matrix_C241-T15_2026-11-12.md
+      - research/tle_custody/mirror_528_1963-10-27.tle
+      - tests/test_raan_frozen_j2_holdout.py
+      - tests/test_raan_frozen_trend_holdout.py
+      - tests/test_texugo_ci_trigger_paths.py
+      - tests/test_texugo_quadratic_raan_ablation.py
+      - tools/cross_object_epoch_support.py
+      - tools/raan_chronological_holdout.py
+      - tools/raan_coepoch_audit.py
+      - tools/raan_frozen_j2_holdout.py
+      - tools/raan_frozen_trend_holdout.py
+      - tools/texugo_quadratic_raan_ablation.py
+      - tools/tle_secondary_1963_ledger.py
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
@@ -31,6 +64,7 @@ jobs:
         run: |
           set -euo pipefail
           python3 -m unittest discover -s tests -p test_texugo_quadratic_raan_ablation.py -v
+          python3 -m unittest discover -s tests -p test_texugo_ci_trigger_paths.py -v
           python3 -m unittest discover -s tests -p test_raan_frozen_trend_holdout.py -v
           python3 -m unittest discover -s tests -p test_raan_frozen_j2_holdout.py -v
       - name: Verify source and compare all 35 epochs
