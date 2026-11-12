@@ -33,3 +33,9 @@ import Conde1963.DocumentaryDay
 #print axioms Conde1963.nasa_day_does_not_force_ground_impact
 #print axioms Conde1963.nasa_day_rule_accepts_both_examples
 #print axioms Conde1963.nasa_day_rule_rejects_off_day_example
+
+#print axioms Conde1963.evidence_matrix_row_count
+#print axioms Conde1963.two_primary_nasa_matrix_occurrences
+#print axioms Conde1963.context_rows_add_no_orbital_information
+#print axioms Conde1963.full_matrix_has_only_nasa_day_filter
+#print axioms Conde1963.full_matrix_does_not_identify_region
