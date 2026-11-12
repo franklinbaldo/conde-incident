@@ -77,6 +77,8 @@ def audit(rows, source_sha, *, counts=None, distinct=None):
                 a * (1.0 - eccentricity) - reference_radius,
             "apogee_a_times_1_plus_e_minus_radius":
                 a * (1.0 + eccentricity) - reference_radius,
+            "perigee_using_mean_earth_radius_6371":
+                a * (1.0 - eccentricity) - RADIUS_CANDIDATES_KM["mean_earth"],
         }
         residuals = {k: reported - v for k, v in proxies.items()}
         candidates = sorted(residuals, key=lambda k: (abs(residuals[k]), k))
@@ -90,6 +92,8 @@ def audit(rows, source_sha, *, counts=None, distinct=None):
             "semimajor_two_body_proxy_km": round(a, 9),
             "implied_radius_if_altitude_equals_a_minus_radius_km":
                 round(a - reported, 9),
+            "implied_radius_if_altitude_equals_perigee_minus_radius_km":
+                round(a * (1.0 - eccentricity) - reported, 9),
             "proxies_km": {k: round(v, 9) for k, v in proxies.items()},
             "reported_minus_proxy_km": {
                 k: round(v, 9) for k, v in residuals.items()},
@@ -121,6 +125,7 @@ def audit(rows, source_sha, *, counts=None, distinct=None):
             "a_proxy_formula": "(mu/(2*pi*n_rev_day/86400)^2)^(1/3)",
             "two_body_proxy_only": True,
             "independent_height_or_observation_claim": False,
+            "perigee_6371_is_only_a_candidate_formula": True,
             "report_thresholds_not_error_bars_km": RESIDUAL_REPORTING_KM,
             "radius_spread_diagnostic_not_identity_km":
                 RADIUS_SPREAD_REPORTING_KM,
@@ -154,15 +159,30 @@ def summarize(records, raw_count):
         for key in (
             "mean_a_minus_radius",
             "perigee_a_times_1_minus_e_minus_radius",
-            "apogee_a_times_1_plus_e_minus_radius")
+            "apogee_a_times_1_plus_e_minus_radius",
+            "perigee_using_mean_earth_radius_6371")
     }
     spread = max(radii) - min(radii) if radii else None
+    perigee_radii = [
+        r["implied_radius_if_altitude_equals_perigee_minus_radius_km"]
+        for r in records]
+    perigee_spread = (
+        max(perigee_radii) - min(perigee_radii) if perigee_radii else None)
     return {
         "original_rows": raw_count,
         "distinct_epochs": len(records),
         "implied_radius_range_km": (
             [round(min(radii), 9), round(max(radii), 9)] if radii else None),
         "implied_radius_spread_km": round(spread, 9) if radii else None,
+        "perigee_implied_radius_range_km": (
+            [round(min(perigee_radii), 9), round(max(perigee_radii), 9)]
+            if perigee_radii else None),
+        "perigee_implied_radius_spread_km": (
+            round(perigee_spread, 9) if perigee_radii else None),
+        "perigee_6371_numerical_match_at_0_1km_not_ETL_proof":
+            sum(abs(r["reported_minus_proxy_km"][
+                "perigee_using_mean_earth_radius_6371"]) <= 0.1
+                for r in records),
         "constant_radius_2km_spread_diagnostic": (
             "NUMERICALLY_COMPATIBLE_NOT_PROVEN_DERIVED"
             if spread is not None and spread <= RADIUS_SPREAD_REPORTING_KM
@@ -195,8 +215,10 @@ def main():
         "overall": report["overall"],
         "by_norad": {
             key: {"epochs": v["distinct_epochs"],
-                  "implied_radius_spread_km":
-                      v["implied_radius_spread_km"]}
+                  "perigee_implied_radius_spread_km":
+                      v["perigee_implied_radius_spread_km"],
+                  "perigee_6371_match_at_0_1km":
+                      v["perigee_6371_numerical_match_at_0_1km_not_ETL_proof"]}
             for key, v in report["by_norad"].items()},
         "primary": report["source"]["original_1963_NORAD_TLE_pairs"],
         "conde": report["conde_impact"],

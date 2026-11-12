@@ -524,3 +524,8 @@ Proveniência: Parquet oxzoid 1963 [revisão 4b4fb3a](https://huggingface.co/dat
 python -m unittest discover -s tests -p 'test_*.py' -v
 python tools/tle_altitude_lineage_audit.py --csv /tmp/tle-audit/norad_527_528_529_1963_numeric.csv --output /tmp/tle-audit/altitude_lineage_c241_t13.json
 ```
+
+
+### Observação preliminar e hipótese ETL refinada de C241-T13
+
+No [CI de custódia #43203137231](https://github.com/franklinbaldo/conde-incident/actions/runs/43203137231), com **153 testes sintéticos aprovados**, o resíduo absoluto médio de `altitude_km` contra `a(1-e)−6378,137` foi **7,137126929 km** nas 119 épocas distintas, próximo da diferença **7,137 km** entre os raios 6378,137 e 6371,0 km. É **hipótese verificável**, não prova de ETL: adicionado um quarto candidato `a(1-e)−6371,0`, mais o raio implícito `a(1-e)−altitude_km` por época. O próximo CI distinguirá se essa aproximação é numericamente consistente em 527/528/529. Essa coincidência não transformará `altitude_km` em observação primária, tampouco prova dinâmica orbital e nunca autoriza duplicar evidência de `mean_motion`.

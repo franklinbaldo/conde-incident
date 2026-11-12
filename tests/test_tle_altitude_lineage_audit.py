@@ -82,6 +82,22 @@ class AltitudeLineageControls(unittest.TestCase):
         self.assertNotEqual(RADIUS_CANDIDATES_KM["mean_earth"],
                             RADIUS_CANDIDATES_KM["WGS84_equatorial"])
 
+    def test_perigee_6371_formula_can_match_without_etl_custody(self):
+        r = audit([sample(1, 0, kind="perigee", radius=6371),
+                   sample(2, 1, kind="perigee", radius=6371)],
+                  "SYNTHETIC")
+        self.assertEqual(r["overall"][
+            "perigee_6371_numerical_match_at_0_1km_not_ETL_proof"], 2)
+        self.assertLess(r["overall"]["perigee_implied_radius_spread_km"],
+                        1e-6)
+        self.assertAlmostEqual(
+            r["overall"]["perigee_implied_radius_range_km"][0],
+            6371, places=6)
+        self.assertTrue(r["algorithm"][
+            "perigee_6371_is_only_a_candidate_formula"])
+        self.assertEqual(r["source"]["ETL_formula_for_altitude_km"],
+                         "NOT_VERIFIED")
+
     def test_nonconstant_radius_is_reported_not_hidden(self):
         r = audit([sample(1, 0), sample(2, 1, radius=6350)],
                   "SYNTHETIC")
