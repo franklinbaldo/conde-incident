@@ -19,7 +19,7 @@ const PRIMARY_TLE = 'https://github.com/franklinbaldo/conde-incident/blob/main/r
 const copy = {
   pt: {
     title: 'Mapa orbital exploratório',
-    subtitle: 'Cartografia esquemática local: sem Google Maps, API, tiles ou quota.',
+    subtitle: 'Litoral Natural Earth 1:110m embarcado: sem Google Maps, API, tiles ou quota.',
     warning: 'O dia 08/11/1963 está documentado como decaimento de 1963-003B (C197#1), mas não há hora, ponto terminal ou impacto em Conde comprovados. Os vetores SGP4 e a altitude modelada NÃO foram calibrados com observação terminal.',
     source: 'Fonte e limites', dynamics: 'Trilhas derivadas de elementos ilustrativos, não medições',
     model: 'NORAD 528: TLE de espelho secundário (C179#1). NORAD 527 e 529: vetores de cenário legado, NÃO observações históricas.',
@@ -34,14 +34,16 @@ const copy = {
     legend: 'Legenda de cálculo (mesma época UTC, não triangulação instrumental)',
     conde: 'Conde, BA (referência geográfica)', displayed: 'modelo disponível', missing: 'sem posição de cenário',
     uncertainty: 'Faixas opcionais: envelopes heurísticos do código legado, SEM incerteza empírica calibrada nem nível de confiança.',
-    geometry: 'Os contornos continentais são apenas esquemas aproximados; nenhum tile/cartografia externa é solicitado.',
+    geometry: 'Litoral Natural Earth 1:110m generalizado; não é levantamento local nem evidência de queda. Nenhum tile externo é solicitado.',
     instructions: 'No computador, arraste com mouse ou caneta. No celular, deslize para rolar a página e use os botões para mover, aproximar ou girar o mapa.',
     nodecay: 'O intervalo do controle não estima a hora de decaimento. Após 08/11, não é propagado o 528.',
     sources: 'Matriz C179#1 / C197#1', nasa: 'Boletim NASA 15/11/1963 (dia apenas)', custody: 'Auditoria TLE',
+    land: 'Litoral Natural Earth 1:110m (domínio público)',
+    coastlines: 'Mostrar litoral generalizado', graticule: 'Mostrar grade geográfica',
   },
   en: {
     title: 'Exploratory orbit map',
-    subtitle: 'Local schematic cartography: no Google Maps, API, tiles or quota.',
+    subtitle: 'Bundled Natural Earth 1:110m coastlines: no Google Maps, API, tiles or quota.',
     warning: '8 Nov 1963 is documented as the decay DAY for 1963-003B (C197#1), but no terminal hour, location or impact at Conde is established. The SGP4 vectors and modeled altitude are NOT calibrated against a terminal observation.',
     source: 'Sources and limits', dynamics: 'Tracks derived from illustrative elements, not measurements',
     model: 'NORAD 528: secondary mirrored TLE (C179#1). NORAD 527 and 529: legacy scenario vectors, NOT historical observations.',
@@ -56,10 +58,12 @@ const copy = {
     legend: 'Calculated legend (same UTC instant, not instrumental triangulation)',
     conde: 'Conde, Bahia (geographic reference)', displayed: 'scenario output available', missing: 'no scenario position',
     uncertainty: 'Optional rails: legacy code heuristic, with NO empirically calibrated uncertainty or confidence level.',
-    geometry: 'Land outlines are rough schematic guides; no external tiles/cartography are requested.',
+    geometry: 'Generalized Natural Earth 1:110m coastline, not a local survey or impact evidence. No external map tiles are requested.',
     instructions: 'On desktop, drag with a mouse or pen. On mobile, swipe to scroll the page; use the buttons to pan, zoom or rotate the map.',
     nodecay: 'This control does not estimate decay time. After 8 Nov, 528 is not propagated.',
     sources: 'Matrix C179#1 / C197#1', nasa: 'NASA bulletin 15 Nov 1963 (day only)', custody: 'TLE custody audit',
+    land: 'Natural Earth 1:110m coastlines (public domain)',
+    coastlines: 'Show generalized coastline', graticule: 'Show geographic grid',
   },
 };
 
@@ -74,6 +78,8 @@ export function OrbitalMap({ lang, selectedTimeMs, onTimeChange }: Props) {
   const [showSisters, setShowSisters] = useState(true);
   const [showUncertainty, setShowUncertainty] = useState(false);
   const [showConnections, setShowConnections] = useState(false);
+  const [showCoastlines, setShowCoastlines] = useState(true);
+  const [showGraticule, setShowGraticule] = useState(true);
 
   const clampTime = (value: number) => Math.min(END, Math.max(START, Number.isFinite(value) ? value : EPOCH));
   const changeTime = (value: number) => {
@@ -150,6 +156,8 @@ export function OrbitalMap({ lang, selectedTimeMs, onTimeChange }: Props) {
         {layer(t.sisters, showSisters, setShowSisters)}
         {layer(t.uncertain, showUncertainty, setShowUncertainty)}
         {layer(t.vectors, showConnections, setShowConnections)}
+        {layer(t.coastlines, showCoastlines, setShowCoastlines)}
+        {layer(t.graticule, showGraticule, setShowGraticule)}
       </div>
 
       <div className="rounded-xl border border-slate-700 bg-slate-900 p-2 sm:p-3">
@@ -158,6 +166,7 @@ export function OrbitalMap({ lang, selectedTimeMs, onTimeChange }: Props) {
           positions={positions} tracks={tracks} envelopes={data528.envelopes}
           showSisters={showSisters} showUncertainty={showUncertainty}
           showConnections={showConnections}
+          showCoastlines={showCoastlines} showGraticule={showGraticule}
           onPan={(dx, dy) => setPan(p => ({ x: Math.max(-600, Math.min(600, p.x + dx)), y: Math.max(-400, Math.min(400, p.y + dy)) }))}
         />
         <div className="flex flex-wrap items-center gap-2 pt-3" role="group"
@@ -198,7 +207,7 @@ export function OrbitalMap({ lang, selectedTimeMs, onTimeChange }: Props) {
 
       <section className="space-y-3 rounded-lg border border-slate-800 bg-slate-900 p-3" aria-label={t.legend}>
         <h2 className="font-semibold text-slate-100">{t.legend}</h2>
-        <ul className="grid gap-2 text-sm sm:grid-cols-2" aria-live="polite">
+        <ul className="grid gap-2 text-sm sm:grid-cols-2" aria-live={running ? "off" : "polite"}>
           {([527, 528, 529] as const).filter(id => id === 528 || showSisters).map(id => (
             <li key={id} className="rounded border border-slate-700 p-2">
               <strong className={id === 528 ? 'text-cyan-300' : id === 527 ? 'text-emerald-300' : 'text-violet-300'}>NORAD {id}</strong>
@@ -221,6 +230,7 @@ export function OrbitalMap({ lang, selectedTimeMs, onTimeChange }: Props) {
           <a href={MATRIX + '#L839-L845'} target="_blank" rel="noopener noreferrer">{t.sources}</a>
           <a href={NASA} target="_blank" rel="noopener noreferrer">{t.nasa}</a>
           <a href={PRIMARY_TLE} target="_blank" rel="noopener noreferrer">{t.custody}</a>
+          <a href="https://www.naturalearthdata.com/downloads/110m-physical-vectors/" target="_blank" rel="noopener noreferrer">{t.land}</a>
         </div>
       </aside>
     </section>

@@ -1,0 +1,102 @@
+{
+  "schema": "conde.cartesian-refinement-guard/v1",
+  "id": "CASTOR-G25-CARTESIAN-GROWTH-20261112",
+  "status": "CONNECTED_CONDITIONAL_NUMERICAL_DIAGNOSTIC_ONLY",
+  "classification": "NUMERICAL_FALSIFICATION_NOT_EMPIRICAL_ORBITAL_CONSTRAINT",
+  "source_occurrences": [
+    "C197#1",
+    "C179#1",
+    "C180#1"
+  ],
+  "original_source": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf",
+  "original_source_limitation": "NASA/Goddard 1963-11-15 p.8: only decay DAY 1963-11-08 for 1963-003B; no state, time, impact, covariance",
+  "input_lineage_note": "C179/C180 are retrospective element mirrors with tracking dependence; cannot be admitted as independent Cartesian 527/529 observations",
+  "numerical_variables": [
+    {
+      "id": "r_h",
+      "unit": "km",
+      "definition": "Cartesian RK4/J2 position at step h; same initial state, dynamics, epoch"
+    },
+    {
+      "id": "v_h",
+      "unit": "km/s",
+      "definition": "Cartesian RK4/J2 velocity at step h"
+    },
+    {
+      "id": "t_h",
+      "unit": "s",
+      "definition": "final propagation epoch or conditional threshold event"
+    },
+    {
+      "id": "d_r_previous",
+      "unit": "km",
+      "definition": "norm of r(h/2)-r(h)"
+    },
+    {
+      "id": "d_r_latest",
+      "unit": "km",
+      "definition": "norm of r(h/4)-r(h/2)"
+    },
+    {
+      "id": "d_v_previous",
+      "unit": "km/s",
+      "definition": "norm of v(h/2)-v(h)"
+    },
+    {
+      "id": "d_v_latest",
+      "unit": "km/s",
+      "definition": "norm of v(h/4)-v(h/2)"
+    },
+    {
+      "id": "d_t_previous",
+      "unit": "s",
+      "definition": "absolute epoch difference h/2-h"
+    },
+    {
+      "id": "d_t_latest",
+      "unit": "s",
+      "definition": "absolute epoch difference h/4-h/2"
+    }
+  ],
+  "conditional_edges": [
+    {
+      "from": "same_initial_r_v_and_dynamics",
+      "to": "rk4_h_h2_h4",
+      "relation": "independent_reintegration_without_resampling_or_coordinate_repair"
+    },
+    {
+      "from": "rk4_h_h2_h4",
+      "to": "d_r_d_v_d_t_adjacent",
+      "relation": "dimension_matched_pairwise_separation"
+    },
+    {
+      "from": "d_r_d_v_d_t_adjacent",
+      "to": "growth_veto",
+      "relation": "latest_greater_than_previous_plus_64_eps_scale"
+    },
+    {
+      "from": "growth_veto",
+      "to": "STABLE_label",
+      "relation": "reject_if_any_resolved_growth_or_nonfinite_difference"
+    },
+    {
+      "from": "declared_cartesian_sigma",
+      "to": "historical_holdout_eligibility",
+      "relation": "separate_source_and_resolution_gates_still_required"
+    }
+  ],
+  "epsilon_coefficient": 64,
+  "epsilon_status": "FLOATING_POINT_HEURISTIC_NOT_RIGOROUS_ERROR_BOUND",
+  "historical_initial_state": null,
+  "authenticated_527_529_holdout": null,
+  "historical_trajectory_domain_reduced": false,
+  "lean_4_35_empirical_constraint": null,
+  "sgp4_baseline_validated": false,
+  "confidence_or_impact_probability": null,
+  "tests": [
+    "tests/orbitConvergence.test.mjs"
+  ],
+  "implementation": "src/lib/orbitConvergence.ts",
+  "issue": "https://github.com/franklinbaldo/conde-incident/issues/4",
+  "result_interpretation": "Even STABLE is only internal numerical agreement; 1963 terminal location and Conde impact remain indeterminate"
+}

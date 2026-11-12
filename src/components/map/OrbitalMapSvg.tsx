@@ -2,6 +2,10 @@ import React, { useRef } from 'react';
 import type { GroundTrackPoint, UncertaintyEnvelope } from '../../types/astrodynamics';
 import { projectFlat, projectGlobe, projectedSegments } from '../../lib/mapGeometry';
 import { canPanWithPointer, shouldShowScenarioConnections } from '../../lib/mapInteraction';
+import { CONDE_COORDINATES } from '../../lib/constants';
+import { coastline110mPart1 } from '../../lib/coastline110mPart1';
+import { coastline110mPart2 } from '../../lib/coastline110mPart2';
+import { coastline110mPart3 } from '../../lib/coastline110mPart3';
 
 type Mode = 'flat' | 'globe';
 type Marker = GroundTrackPoint | null;
@@ -18,28 +22,25 @@ type Props = {
   showSisters: boolean;
   showUncertainty: boolean;
   showConnections: boolean;
+  showCoastlines: boolean;
+  showGraticule: boolean;
   onPan: (dx: number, dy: number) => void;
 };
 
 type Geo = { longitude: number; latitude: number };
 type Screen = { x: number; y: number; visible: boolean };
 
-// Deliberately schematic background shapes, NOT geodetic coastline data.
-const LAND: number[][][] = [
-  [[-168,65],[-140,70],[-120,72],[-80,72],[-60,50],[-70,42],[-80,25],[-95,20],[-105,22],[-120,34],[-125,48],[-140,58],[-168,65]],
-  [[-80,10],[-60,8],[-50,0],[-35,-5],[-37,-12],[-40,-22],[-50,-30],[-60,-40],[-68,-55],[-75,-48],[-72,-30],[-80,-5],[-80,10]],
-  [[-10,36],[0,44],[10,55],[25,70],[60,70],[100,75],[140,70],[170,65],[140,40],[120,30],[105,10],[80,10],[60,25],[45,40],[30,30],[10,36],[-10,36]],
-  [[-17,35],[10,37],[32,30],[42,12],[50,10],[40,-10],[30,-34],[18,-34],[10,-5],[-15,10],[-17,25],[-17,35]],
-  [[115,-20],[130,-12],[145,-15],[150,-24],[152,-38],[138,-35],[115,-35],[115,-20]],
-  [[-180,-70],[180,-70],[180,-85],[-180,-85]],
+// Natural Earth 1:110m public-domain coastlines, bundled locally with no tile provider.
+// They are generalized geographic context, NOT geolocated impact evidence.
+const COASTLINES: number[][][] = [
+  ...coastline110mPart1, ...coastline110mPart2, ...coastline110mPart3,
 ];
 
-const CONDE = { longitude: -37.6108, latitude: -11.8139 };
 const COLORS: Record<SatelliteId, string> = { 527: '#34d399', 528: '#22d3ee', 529: '#c4b5fd' };
 
 export function OrbitalMapSvg({
   lang, mode, zoom, pan, rotation, positions, tracks, envelopes,
-  showSisters, showUncertainty, showConnections, onPan,
+  showSisters, showUncertainty, showConnections, showCoastlines, showGraticule, onPan,
 }: Props) {
   const start = useRef<{ x: number; y: number } | null>(null);
   const isPt = lang === 'pt';
@@ -70,11 +71,11 @@ export function OrbitalMapSvg({
   }
 
   const displayed: SatelliteId[] = showSisters ? [527, 529, 528] : [528];
-  const conde = project(CONDE.longitude, CONDE.latitude);
+  const conde = project(CONDE_COORDINATES.longitude, CONDE_COORDINATES.latitude);
   const mapTitle = isPt ? 'Mapa orbital esquemático, sem mapa remoto' : 'Schematic orbital map without remote tiles';
   const mapDesc = isPt
-    ? 'Trilhas calculadas de cenários SGP4 ilustrativos, não observações de trajetória ou impacto. Sem coordenadas observadas de reentrada.'
-    : 'Calculated tracks from illustrative SGP4 scenarios, not observed paths or impact. No observed reentry coordinates.';
+    ? 'Trilhas SGP4 ilustrativas não observadas. O quadrado marca Conde apenas como referência geográfica, nunca como ponto de impacto. Litoral e grade podem ser ocultados.'
+    : 'Illustrative SGP4 tracks are not observed. The square marks Conde as a geographic reference only, never as an impact location. Coastline and grid may be hidden.';
   const transform = 'translate(' + pan.x + ' ' + pan.y + ') translate(480 240) scale(' +
     zoom + ') translate(-480 -240)';
 
@@ -117,12 +118,14 @@ export function OrbitalMapSvg({
       <g transform={transform}>
         {mode === 'globe' && <circle cx="480" cy="240" r="210" fill="#13243a" stroke="#52657d" strokeWidth="1.5" />}
         <g clipPath={mode === 'globe' ? 'url(#raposa-globe-clip)' : undefined}>
-          {grids.map((grid, i) => <g key={'grid-' + i}>{lines(grid, '#26374c', 0.8, '4 6')}</g>)}
-          {LAND.map((poly, i) => {
+          {showGraticule && <g data-layer="graticule">
+            {grids.map((grid, i) => <g key={'grid-' + i}>{lines(grid, '#26374c', 0.8, '4 6')}</g>)}
+          </g>}
+          {showCoastlines && <g data-layer="coastline">{COASTLINES.map((poly, i) => {
             const coords: Geo[] = poly.map(([longitude, latitude]) => ({ longitude, latitude }));
             // Polylines avoid falsely filling across the antimeridian/horizon.
             return <g key={'land-' + i}>{lines(coords, '#50708e', 1.2)}</g>;
-          })}
+          })}</g>}
           {showUncertainty && mode === 'flat' && envelopes.length > 1 && (
             <g aria-label={isPt ? 'Limites hipotéticos não calibrados' : 'Uncalibrated hypothetical bounds'}>
               {lines(envelopes.map(e => ({ longitude: e.leftLon, latitude: e.leftLat })), '#a5f3fc', 1.3, '5 5')}
@@ -150,9 +153,10 @@ export function OrbitalMapSvg({
           )}
           {conde.visible && (
             <g>
-              <circle cx={conde.x} cy={conde.y} r="5" fill="#fb7185" stroke="#fff" strokeWidth="1.2" />
+              <rect x={conde.x - 5} y={conde.y - 5} width="10" height="10"
+                fill="#fb7185" stroke="#fff" strokeWidth="1.2" />
               <text x={conde.x + 9} y={conde.y - 8} fill="#fecdd3" fontSize="13" stroke="#081527"
-                strokeWidth="2" paintOrder="stroke">Conde (BA)</text>
+                strokeWidth="2" paintOrder="stroke">{isPt ? "Conde (BA) · referência" : "Conde (BA) · reference"}</text>
             </g>
           )}
           {displayed.map(id => {

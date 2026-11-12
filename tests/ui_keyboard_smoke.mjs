@@ -44,6 +44,26 @@ try {
     const current = await page.getByRole('navigation', { name: 'Seções do laboratório' })
       .locator('[aria-current="page"]').textContent();
     assert.match(current || '', /Rastreamento & Mapa/);
+    // Real DOM check of independent, keyboard-operable context layers.
+    const mapSvg = page.getByRole('img', { name: /Mapa orbital esquemático/ });
+    await mapSvg.waitFor();
+    const coast = page.getByRole('checkbox', { name: 'Mostrar litoral generalizado' });
+    const grid = page.getByRole('checkbox', { name: 'Mostrar grade geográfica' });
+    assert.equal(await mapSvg.locator('[data-layer="coastline"]').count(), 1);
+    assert.equal(await mapSvg.locator('[data-layer="graticule"]').count(), 1);
+    await coast.uncheck();
+    assert.equal(await mapSvg.locator('[data-layer="coastline"]').count(), 0);
+    assert.equal(await mapSvg.locator('[data-layer="graticule"]').count(), 1,
+      'hiding coastlines must leave the graticule visible');
+    await grid.uncheck();
+    assert.equal(await mapSvg.locator('[data-layer="graticule"]').count(), 0);
+    await coast.check();
+    await grid.check();
+    assert.equal(await mapSvg.locator('[data-layer="coastline"]').count(), 1);
+    assert.equal(await mapSvg.locator('[data-layer="graticule"]').count(), 1);
+    assert.equal(await mapSvg.locator('rect[fill="#fb7185"]').count(), 1,
+      'Conde must remain a square reference marker, not an impact circle');
+
     await page.getByRole('button', { name: 'English' }).click();
     assert.equal(await page.locator('html').getAttribute('lang'), 'en');
     assert.equal(await page.getByRole('link', { name: 'Skip to main content' }).count(), 1);
@@ -56,6 +76,28 @@ try {
     assert(horizontal.document <= horizontal.viewport + 1,
       `body overflow on ${viewport.name}: ${JSON.stringify(horizontal)}`);
     await page.screenshot({ path: `${out}/${viewport.name}-summary.png`, fullPage: true });
+
+    // Verify modal name, focus entry/loop, Escape dismissal and trigger focus restoration.
+    const exportTrigger = page.getByRole('button', { name: 'Python Script' }).first();
+    await exportTrigger.click();
+    const dialog = page.getByRole('dialog', { name: 'norad528_reconstruction.py' });
+    await dialog.waitFor();
+    const close = dialog.getByRole('button', { name: 'Close export dialog' });
+    const copy = dialog.getByRole('button', { name: 'Copy code' });
+    assert(await close.evaluate(element => document.activeElement === element),
+      'opening the export dialog must focus its close control');
+    await page.keyboard.press('Tab');
+    assert(await copy.evaluate(element => document.activeElement === element),
+      'Tab from last control must wrap to first control');
+    await page.keyboard.press('Shift+Tab');
+    assert(await close.evaluate(element => document.activeElement === element),
+      'Shift+Tab from first control must wrap to last control');
+    await page.screenshot({ path: `${out}/${viewport.name}-python-dialog.png` });
+    await page.keyboard.press('Escape');
+    await dialog.waitFor({ state: 'hidden' });
+    assert(await exportTrigger.evaluate(element => document.activeElement === element),
+      'Escape must close export dialog and restore trigger focus');
+
     assert.equal(errors.length, 0, `uncaught page errors: ${errors.join('; ')}`);
     findings.push({ viewport: viewport.name, skip_target: focused.id, hash_preserved: true, nav_hash: '#/map', html_lang: 'en', overflow_px: horizontal.document - horizontal.viewport });
     await page.close();

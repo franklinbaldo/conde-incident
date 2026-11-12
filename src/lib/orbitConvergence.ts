@@ -29,6 +29,44 @@ export interface ConvergenceLevel {
   /** Comparison against the previous, coarser level. */
   readonly difference: AdjacentDifference | null;
 }
+/**
+ * Reject resolved growth of adjacent r/v/epoch differences independently of
+ * the user's (possibly very loose) absolute tolerances. This is the same
+ * falsification principle as the Jacobi budget trend, but uses Cartesian
+ * units directly and is applied to EVERY numerical holdout/ensemble consumer.
+ *
+ * A 64-ULP scale allowance is only an explicit floating-point heuristic.
+ * Neither monotonicity nor step agreement certifies an absolute error bound.
+ * C197#1 (NASA/Goddard SSR 15 Nov 1963 p.8) supplies a decay DAY only;
+ * historical 527/529 Cartesian measurements remain unverified.
+ */
+export type CartesianTrendMetric = keyof NumericalTolerance;
+export interface CartesianRefinementTrend {
+  readonly status: 'NO_RESOLVED_GROWTH' | 'GROWTH_BEYOND_ROUNDOFF' | 'NONFINITE_DIFFERENCE';
+  readonly growingMetrics: readonly CartesianTrendMetric[];
+  readonly roundoffAllowance: NumericalTolerance;
+  readonly interpretation: 'HEURISTIC_64_EPS_SCALE_NOT_ERROR_BOUND';
+}
+export function checkCartesianRefinementTrend(
+  previous: AdjacentDifference, finest: AdjacentDifference,
+  roundoffAllowance: NumericalTolerance,
+): CartesianRefinementTrend {
+  const metrics: readonly CartesianTrendMetric[] = ['positionKm', 'velocityKmS', 'epochS'];
+  if (metrics.some(key => !Number.isFinite(roundoffAllowance[key]) ||
+      roundoffAllowance[key] < 0))
+    throw new RangeError('Cartesian trend allowances require nonnegative finite units');
+  const finite = metrics.every(key => Number.isFinite(previous[key]) &&
+    previous[key] >= 0 && Number.isFinite(finest[key]) && finest[key] >= 0);
+  const growingMetrics = finite ? metrics.filter(key =>
+    finest[key] > previous[key] + roundoffAllowance[key]) : [];
+  return {
+    status: !finite ? 'NONFINITE_DIFFERENCE' :
+      growingMetrics.length ? 'GROWTH_BEYOND_ROUNDOFF' : 'NO_RESOLVED_GROWTH',
+    growingMetrics, roundoffAllowance,
+    interpretation: 'HEURISTIC_64_EPS_SCALE_NOT_ERROR_BOUND',
+  };
+}
+
 export interface ConvergenceAssessment {
   /**
    * EVENT_CONFLICT overrides apparently good fine-step agreement: a coarse
@@ -38,6 +76,7 @@ export interface ConvergenceAssessment {
   readonly status: 'STABLE' | 'NOT_RESOLVED' | 'EVENT_CONFLICT';
   readonly levels: readonly ConvergenceLevel[];
   readonly finest: Propagation;
+  readonly trend: CartesianRefinementTrend;
 }
 
 const separation = (a: Vec3, b: Vec3): number =>
@@ -91,9 +130,21 @@ export function assessNumericalConvergence(
   }
   const differences = levels.slice(1).map(level => level.difference!);
   const eventConflict = differences.some(difference => !difference.eventAgrees);
-  const stableAtFinest = differences.slice(-2).every(difference => difference.withinTolerance);
+  // Heuristic 64*EPSILON at each physical scale, never taken from the
+  // caller's acceptance limits (which could hide a growing numerical error).
+  const recentStates = levels.slice(-3).map(level => level.result.state);
+  const allowance = (values: readonly number[]): number =>
+    64 * Number.EPSILON * Math.max(1, ...values.map(Math.abs));
+  const trend = checkCartesianRefinementTrend(
+    differences.at(-2)!, differences.at(-1)!, {
+      positionKm: allowance(recentStates.map(s => Math.hypot(...s.rKm))),
+      velocityKmS: allowance(recentStates.map(s => Math.hypot(...s.vKmS))),
+      epochS: allowance(recentStates.map(s => s.tS)),
+    });
+  const stableAtFinest = differences.slice(-2).every(difference => difference.withinTolerance) &&
+    trend.status === 'NO_RESOLVED_GROWTH';
   return {
     status: eventConflict ? 'EVENT_CONFLICT' : stableAtFinest ? 'STABLE' : 'NOT_RESOLVED',
-    levels, finest: levels[levels.length - 1].result,
+    levels, finest: levels[levels.length - 1].result, trend,
   };
 }

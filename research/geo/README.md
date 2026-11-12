@@ -107,3 +107,9 @@ O contrato [CGEO-09](conde_1944_1953_temporal_bridge.json) registra a aresta nor
 ## CGEO-11: origem retrospectiva em 1991 e falta de precisão declarada
 
 O IBGE explicita na [Apresentação de sua série histórica, p. 1](ibge_1991_based_mesh_lineage_2026-11-12.md) que as malhas municipais históricas derivam de polígonos-base de **1991** e **não apresentam precisão cartográfica**. CGEO-10 é reconstrução nominal de 1960, não observação independente daquela época. O contrato [CGEO-11](ibge_1872_1991_methodology_2026-11-12.json), validador em tools/conde_ibge_lineage.py e onze testes impedem tratá-la como limite legal medido ou filtro de reentrada em 1963.
+
+## CGEO-12: auditoria topológica da malha nominal 1960
+
+A [auditoria reprodutível](ibge_1960_topology_audit.md) deriva somente dos
+vértices CGEO-10, sem reclassificá-los como levantamento independente ou
+limite de 1963. Verifique com python3 -m tools.conde_ibge_1960_topology --check.
