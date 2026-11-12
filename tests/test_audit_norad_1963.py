@@ -10,7 +10,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from audit_norad_1963 import (check_numeric, digest, epoch_utc, extract_rows, verified_bytes,
     tle_checksum, validate_raw_tle, tle_epoch_utc, angular_distance_deg,
     compare_secondary_528, legacy_raan_epoch_audit, TLE_EPOCH_QUANTUM_US,
-    TLE_EPOCH_HALF_QUANTUM_US, write_outputs)
+    TLE_EPOCH_HALF_QUANTUM_US, write_outputs, assert_audit_valid)
 
 
 class DummyTable:
