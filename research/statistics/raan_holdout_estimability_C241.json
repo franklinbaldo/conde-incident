@@ -1,0 +1,163 @@
+{
+  "classification": "EXACT_CONDITIONAL_LOCAL_LINEAR_ROW_SPACE_NOT_PHYSICAL_PREDICTION",
+  "comparisons": [
+    {
+      "by_object": {
+        "527": {
+          "estimable": 1,
+          "not_estimable": 0,
+          "total": 1
+        },
+        "528": {
+          "estimable": 13,
+          "not_estimable": 0,
+          "total": 13
+        },
+        "529": {
+          "estimable": 9,
+          "not_estimable": 0,
+          "total": 9
+        }
+      },
+      "holdout": "validation",
+      "row_space_only_no_physical_prediction": true,
+      "total_estimated": 23,
+      "total_holdout": 23,
+      "training": [
+        "fit"
+      ],
+      "training_rank": 6,
+      "training_rows": 61
+    },
+    {
+      "by_object": {
+        "527": {
+          "estimable": 4,
+          "not_estimable": 0,
+          "total": 4
+        },
+        "528": {
+          "estimable": 8,
+          "not_estimable": 0,
+          "total": 8
+        },
+        "529": {
+          "estimable": 23,
+          "not_estimable": 0,
+          "total": 23
+        }
+      },
+      "holdout": "evaluation",
+      "row_space_only_no_physical_prediction": true,
+      "total_estimated": 35,
+      "total_holdout": 35,
+      "training": [
+        "fit"
+      ],
+      "training_rank": 6,
+      "training_rows": 61
+    },
+    {
+      "by_object": {
+        "527": {
+          "estimable": 0,
+          "not_estimable": 4,
+          "total": 4
+        },
+        "528": {
+          "estimable": 8,
+          "not_estimable": 0,
+          "total": 8
+        },
+        "529": {
+          "estimable": 23,
+          "not_estimable": 0,
+          "total": 23
+        }
+      },
+      "holdout": "evaluation",
+      "row_space_only_no_physical_prediction": true,
+      "total_estimated": 31,
+      "total_holdout": 35,
+      "training": [
+        "validation"
+      ],
+      "training_rank": 5,
+      "training_rows": 23
+    },
+    {
+      "by_object": {
+        "527": {
+          "estimable": 4,
+          "not_estimable": 0,
+          "total": 4
+        },
+        "528": {
+          "estimable": 8,
+          "not_estimable": 0,
+          "total": 8
+        },
+        "529": {
+          "estimable": 23,
+          "not_estimable": 0,
+          "total": 23
+        }
+      },
+      "holdout": "evaluation",
+      "row_space_only_no_physical_prediction": true,
+      "total_estimated": 35,
+      "total_holdout": 35,
+      "training": [
+        "fit",
+        "validation"
+      ],
+      "training_rank": 6,
+      "training_rows": 84
+    }
+  ],
+  "frozen_manifest": {
+    "path": "research/statistics/raan_chronological_holdout_1963.json",
+    "retrospective_not_blind": true,
+    "sha256": "a51ff61054da94587aa9c45631b3887572f238fe5967d2a8493c49d360c5e59f",
+    "verified_total_unique_epochs": 119
+  },
+  "geographic_domain_change": "NOT_EVALUABLE",
+  "historical_likelihood": "NOT_CALIBRATED",
+  "historical_mcmc": "NOT_RUN",
+  "holdout_logscore": "NOT_RUN",
+  "interpretation": "Row-space estimability is an exact LOCAL algebraic condition in an assumed linear design. It is not predictive calibration, posterior identification, a physical orbit, independent evidence or a geographic exclusion. Wrapped RAAN can have global aliases.",
+  "model": "wrap(F_j(t)+phase_j+rate_j*t+catalog_offset+catalog_drift*t); F_j(t) entirely unknown/unvalidated, noise and source selection unknown",
+  "schema": "conde.raan-holdout-estimability/v1",
+  "source": {
+    "documentary_lineages": 1,
+    "instrument_calibration": null,
+    "occurrence_ids": [
+      "C25#1",
+      "C179#1",
+      "C180#1",
+      "C181#1",
+      "C241-L3"
+    ],
+    "path": "research/statistics/raan_527_528_529_1963.json",
+    "sha256": "b88564912c35167044d5fd4a0c1b50f6c624fcaf1066f82a7b70e503df8928f5"
+  },
+  "validation_527_counterexample": {
+    "classification": "COUNTERFACTUAL_NOT_A_HISTORICAL_OBSERVATION",
+    "counterfactual_extra_time": "validation_527_epoch + 1 exact day (DESIGN ONLY)",
+    "error_calibration_and_global_circle_aliases_still_unresolved": true,
+    "evaluation_527_prediction_changes_nonzero": true,
+    "independent_angular_calibration_still_required": true,
+    "minimal_additional_local_measurement": "one 527 angular measurement at a second distinct UTC epoch to make its local phase/rate combination estimable, conditional on a fixed physical F_527, identical calibrated convention and model",
+    "sole_527_validation_epoch": "1963-08-27T22:53:07.181376Z",
+    "validation_rank": 5,
+    "with_extra_and_both_528_anchors_rank": 8,
+    "with_one_527_extra_epoch_rank": 6,
+    "with_two_absolute_528_anchors_rank": 7,
+    "witness_delta": {
+      "all_other_parameters": "0",
+      "phase_527_deg": "-11947677767/50000000",
+      "rate_527_deg_per_day": "1"
+    },
+    "witness_validation_prediction_change_deg": "0"
+  }
+}
