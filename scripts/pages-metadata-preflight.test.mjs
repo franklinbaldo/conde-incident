@@ -69,7 +69,7 @@ test("read-only collection checks Pages, workflow, deployment and second HEAD", 
     sha: SHA,
     fetchImpl: async (url, options) => {
       assert.equal(options.method, "GET");
-      assert.ok(url.startsWith("https://api.github.com/repos/franklinbaldo/conde-incident/"));
+      assert.ok(url.startsWith("https://api.github.com/repos/franklinbaldo/conde-incident"));
       const path = url.slice("https://api.github.com/repos/franklinbaldo/conde-incident".length);
       paths.push(path);
       return { ok: responses.has(path), json: async () => responses.get(path) };
