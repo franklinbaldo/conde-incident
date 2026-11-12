@@ -29,24 +29,36 @@ export function assessRelease({ sha, pages, runs = [], deployments = [], statuse
     site.body.includes('/conde-incident/css/site.css');
   check('live HTTPS root renders Zola journal and correct base URLs', Boolean(homeOk),
     site ? 'HTTP ' + site.status : '(unreachable)');
-  // Require an actual link in the journal, not an arbitrary date-shaped string.
-  // Zola's permalink may be root-relative or absolute on this repository host.
-  const storyPath = (site?.stories?.body || '').match(
-    /href=["'](?:https:\/\/franklinbaldo\.github\.io)?(\/conde-incident\/stories\/\d{4}-\d{2}-\d{2}-[a-z0-9-]+\/)["']/i
-  )?.[1];
+  // Every indexed story must resolve to the expected source, not just the first card.
+  const indexedCards = Array.from((site?.stories?.body || '').matchAll(
+    /<article\s+class=["']story-card["'][^>]*>([\s\S]*?)<\/article>/gi
+  ), match => match[1]);
+  const storyLink = /href=["'](?:https:\/\/franklinbaldo\.github\.io)?(\/conde-incident\/stories\/(\d{4}-\d{2}-\d{2}-[a-z0-9-]+)\/)["']/i;
+  const storyMatches = indexedCards.map(card => card.match(storyLink));
+  const chapterPaths = storyMatches.map(match => match?.[1]);
   const storiesOk = site?.stories?.status === 200 &&
     /<section\s+class=["']journal["']/.test(site.stories.body || '') &&
-    /<article\s+class=["']story-card["']/.test(site.stories.body || '') &&
-    Boolean(storyPath);
-  check('live Zola story listing contains a dated chapter', Boolean(storiesOk),
-    site?.stories ? 'HTTP ' + site.stories.status : '(unreachable)');
-  const chapterOk = storiesOk && site?.chapter?.path === storyPath &&
-    site.chapter.status === 200 &&
-    /<article\s+class=["']full-story["']/.test(site.chapter.body || '') &&
-    /<div\s+class=["']story-body["']/.test(site.chapter.body || '') &&
-    (site.chapter.body || '').includes('Consultar Markdown-fonte e histórico editorial');
-  check('linked Zola chapter is live, complete, and exposes its Markdown source',
-    Boolean(chapterOk), site?.chapter ? 'HTTP ' + site.chapter.status : '(not fetched)');
+    indexedCards.length > 0 &&
+    storyMatches.every(Boolean) &&
+    new Set(chapterPaths).size === indexedCards.length;
+  check('live Zola story listing resolves every unique dated chapter', Boolean(storiesOk),
+    site?.stories ? 'HTTP ' + site.stories.status + ', cards: ' + indexedCards.length : '(unreachable)');
+  const chaptersOk = storiesOk && Array.isArray(site?.chapters) &&
+    site.chapters.length === chapterPaths.length &&
+    storyMatches.every((match, i) => {
+      const chapter = site.chapters[i];
+      const expectedSource = 'https://github.com/franklinbaldo/conde-incident/blob/main/stories/' +
+        match[2] + '.md';
+      const body = chapter?.body || '';
+      return chapter?.path === match[1] && chapter.status === 200 &&
+        /<article\s+class=["']full-story["']/.test(body) &&
+        /<div\s+class=["']story-body["']/.test(body) &&
+        (body.includes('href="' + expectedSource + '"') ||
+          body.includes("href='" + expectedSource + "'")) &&
+        body.includes('Consultar Markdown-fonte e histórico editorial');
+    });
+  check('every indexed Zola chapter is live, complete, and cites its own Markdown source',
+    Boolean(chaptersOk), site?.chapters ? 'Fetched: ' + site.chapters.length : '(not fetched)');
   const labOk = site?.lab?.status === 200 &&
     /<div\s+id=["']root["']/.test(site.lab.body || '') &&
     /\/conde-incident\/lab\/assets\/[^"'\s>]+\.js/.test(site.lab.body || '');
@@ -89,12 +101,21 @@ export async function auditFromGitHub({ repo, sha, token, upstreamConclusion, si
   };
   const site = await readPage('');
   site.stories = await readPage('stories/');
-  const chapterPath = site.stories.body.match(
+  const cards = Array.from(site.stories.body.matchAll(
+    /<article\s+class=["']story-card["'][^>]*>([\s\S]*?)<\/article>/gi
+  ), match => match[1]);
+  const chapters = cards.map(card => card.match(
     /href=["'](?:https:\/\/franklinbaldo\.github\.io)?(\/conde-incident\/stories\/\d{4}-\d{2}-\d{2}-[a-z0-9-]+\/)["']/i
-  )?.[1];
-  if (chapterPath) {
-    // Follow only a link under this repository's expected Pages base.
-    site.chapter = { ...await readPage(chapterPath.slice('/conde-incident/'.length)), path: chapterPath };
+  )?.[1]);
+  if (chapters.length > 100) throw new Error('More than 100 chapters: review bounded audit');
+  site.chapters = [];
+  for (const chapterPath of chapters) {
+    if (!chapterPath) continue; // assessRelease fails closed on a malformed card.
+    // Each article is fetched, so later broken chapters cannot hide behind the first.
+    site.chapters.push({
+      ...await readPage(chapterPath.slice('/conde-incident/'.length)),
+      path: chapterPath,
+    });
   }
   site.lab = await readPage('lab/');
   site.style = await readPage('css/site.css');
