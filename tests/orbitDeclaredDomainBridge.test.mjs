@@ -72,11 +72,11 @@ test('separate exact rational source branches convert to two bounded Cartesian s
 
 test('Float64 velocity endpoints are rounded INWARD, not overconfidently outward', () => {
   const audit = baseline();
-  audit.scenarios[0].parameters[0].admissible = {min:'1/10',max:'1/5'};
+  audit.scenarios[0].parameters[0].admissible = {min:'3/10',max:'4/5'};
   const out = run(audit);
   const x = out.alternatives[0].scenario.bounds[0];
-  assert.ok(x.lowerKmS > 0.1, '0.1 binary float is below the exact 1/10');
-  assert.ok(x.upperKmS < 0.2, '0.2 binary float is above the exact 1/5');
+  assert.ok(x.lowerKmS > 0.3, '0.3 binary float is below exact 3/10');
+  assert.ok(x.upperKmS < 0.8, '0.8 binary float is above exact 4/5');
   assert.ok(x.lowerKmS <= x.upperKmS);
 });
 
