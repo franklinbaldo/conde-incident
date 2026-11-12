@@ -62,6 +62,12 @@ jobs:
       - name: Export conditional C241 RAAN discriminator
         run: |
           python3 formal/scripts/raan_epoch_contract.py --output /tmp/conde-raan-epoch.json
+      - name: Export sourced orbital/weather observable crosswalk for Castor
+        run: |
+          python3 formal/scripts/physical_observable_bridge.py \
+            --matrix research/evidence_matrix_C001-C238_2026-11-11.md \
+            --descent-vertical-speed-mps 50 \
+            --output /tmp/conde-physical-observables.json
       - name: Export pinned evidence contracts for Castor
         if: success()
         uses: actions/upload-artifact@v4
@@ -71,4 +77,5 @@ jobs:
             /tmp/conde-evidence-contracts.json
             /tmp/conde-simulation-bridge.json
             /tmp/conde-raan-epoch.json
+            /tmp/conde-physical-observables.json
           retention-days: 30
