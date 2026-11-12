@@ -1,0 +1,34 @@
+# Investigação autônoma — controle arquivístico RG 59 e imprensa (11/11/2026)
+
+**Pergunta falsificável:** um inventário brasileiro dos arquivos diplomáticos americanos permite achar os recortes enviados com o aerograma A-628, e existe uma rota direta para ler jornais cariocas de novembro/1963 sem o DocReader da BN? **Resultado:** há uma nova rota técnica verificável para edições digitalizadas da BN, mas **não foi possível recuperar as edições críticas de 9–11/11**. O inventário da FUNAG contém caixas para a série política de 1963, mas NÃO localiza a unidade A-628, nem o expediente SCI correspondente. Nenhuma testemunha nova sobre Conde foi achada. Não interpretar ausência de ocorrência por OCR como silêncio de toda a imprensa.
+
+## Registros novos (IDs independentes das C001–C238 até conciliação)
+
+| ID local | Fonte, localizador | Verificação | Informação extraída | Dependência e limite |
+|---|---|---|---|---|
+| R05-01 | Fundação Alexandre de Gusmão / Itamaraty, **Guia dos Arquivos Americanos sobre o Brasil**, seção 4.1.2, **página impressa 210** (índice PDF 209), https://funag.gov.br/loja/download/753-guia_dos_arquivos_americanos.pdf | **Guia institucional de pesquisa (não documento do evento), tabela inspecionada visualmente** | A **caixa 2931** está na tabela *Subject Number File, 1967–1969*, com intervalos `SCI 6-1 BRAZ` a `SCI 30-4 BRAZ-US`. Logo, **não é localizador de 1963**. A seção seguinte *Subject Number File, 1963–1973* traz outras caixas, mas na amostra NÃO identifica caixa de SCI 1963. | Falsifica a pista errada de usar a caixa SCI 2931 para localizar A-628 em 1963; não demonstra que outro arquivo não exista. Essa obra é **guia retrospectivo**, não testemunha de Conde. |
+| R05-02 | Mesmo guia FUNAG, **página impressa 211** (índice PDF 210), https://funag.gov.br/loja/download/753-guia_dos_arquivos_americanos.pdf | **Tabela inspecionada visualmente** | Entre as caixas políticas listadas para o período 1963–1973, **RG 59, caixa 3833** cobre `POL-2 Brazil – POL 2-4 Brazil`. Página seguinte enumera telegramas/aerogramas políticos de 1963, em especial até outubro no trecho consultado. | Pista **apenas para contexto político de 1963**; A-628 trata de ciência/OVNI e sua presença nesta caixa **não é estabelecida**. Não a promover a localizador SCI. |
+| R05-03 | Fundação Biblioteca Nacional, edição original digitalizada do **Correio da Manhã**, 8/11/1963, nº 21.456, https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21656.pdf | **Texto OCR extraído da edição diretamente na infraestrutura BN**, cabeçalho data/número legível na extração. Screenshot remoto recusou com HTTP 403, portanto **não inspecionado visualmente**. | Buscas direcionadas no texto OCR da edição por `Conde`, `esfera` e `satélite` não identificaram a notícia. Ocorrências de `Conde` são sobretudo Rua Conde de Bonfim, e `esfera` aparece em contexto desportivo. | **Controle negativo de indexação**, particularmente fraco: jornal publicado na manhã de 8/11 e boletim FBIS diz 23h30 da mesma data (horário UTC/local ainda não resolvido). Não conta como contraditório ao relato posterior nem como prova de silêncio do jornal; OCR não totalmente auditado em fac-símile. |
+| R05-04 | BN, **Correio da Manhã**, edição de 20/11/1963, https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21666.pdf | **Texto original derivado de OCR da edição**, acesso por buscador da BN; não houve inspeção visual por HTTP 403. | Pesquisas no texto por `Conde`, `esfera`, `disco` e `satélite` não recuperaram uma matéria identificável sobre Conde; há notícias de satélites não relacionados (Relay e IMP-A). | **Amostra negativa, não prova de ausência** nas 7–12/11, em outros cadernos, nem de silêncio geral da imprensa. A presença de assuntos espaciais alheios não relaciona missões ao NORAD 528. |
+
+## Tentativas e obstáculos
+
+- Encontrado o caminho alternativo de **PDFs de números identificados** em `hemeroteca-pdf.bn.gov.br/<id>/per<id>_1963_<numero>.pdf`. Acesso e extração funcionaram para edições 8 e 20/11/1963 de *Correio da Manhã*, mas a recuperação direta dos supostos números intermediários a partir de URL não indexada falhou na interface de consulta. **Os números intermediários não foram autenticados**; não presumir que existam ou que a numeração seja diária.
+- Consultas específicas aos dois jornais baianos (*Diário de Notícias* Salvador 09/11 e *Jornal da Bahia* 11/11) retornaram reproduções da notícia de 2026 ou trabalhos acadêmicos que citam períodos distintos, não seus fasc-símiles. O servidor PDF contém também o **Diário de Notícias carioca** (ID 093718), que **não deve ser confundido** com o periódico baiano de mesmo título.
+- O guia FUNAG analisado descreve principalmente caixas de correspondência política; não identifica os recortes da mala diplomática do A-628, o original do telegrama Midkiff 157 nem uma caixa SCI de novembro de 1963.
+
+## Linhagens e matrizes de evidência
+
+- `Correio da Manhã` é redação distinta dos Diários Associados, mas **não foi identificado novo artigo sobre Conde**. Controles negativos sem texto pertinente não aumentam número de testemunhas.
+- `FUNAG → descrição seletiva de caixas RG 59` é camada de acesso arquivístico e **não é cadeia informativa do evento**. `NASA/NORAD 528` não foi acrescida nem restringida por estas buscas.
+- Classificação: R05-01/02 = **guia institucional diretamente examinado**, R05-03/04 = **edição primária com OCR consultado, imagem não verificada**. Nenhuma nova notícia positiva, depoimento ou observação física.
+- **Condição para formalização Lean:** nenhuma restrição física empírica nova; conjunto admissível orbital permanece inalterado. Pode-se registrar apenas uma restrição metodológica condicional: se `ano_série = 1967…1969`, caixa não certifica proveniência de expediente de 1963. Não converter isto em elemento orbital.
+- **Estado H0–H4:** hipóteses físicas inalteradas; não encontrada posição/hora terminal NORAD 528 ou evidência material da suposta esfera.
+
+## Próxima estratégia de maior rendimento
+
+1. Descobrir o **identificador verdadeiro da edição de 09–11/11/1963**, sem inferi-lo da sequencia; tentar catálogo/acesso BN por `hemeroteca-pdf` em vez de DocReader, e depois verificar visualmente as páginas relevantes e créditos da agência. Priorizar o par original de Salvador em IGHB/Barris com autorização para acesso físico, **sem fazer contato automático**.
+2. Pesquisar **inventário RG 59 SCI de 1963**, não caixas de 1967–1969 nem POL 2, e cotejar referências e listas de anexos do A-628. Separar referência a um recorte do próprio fac-símile.
+3. Manter separadas hipóteses jornalísticas sobre a esfera e tabelas astronáuticas da reentrada de 1963-003B; sem criar nova probabilidade ou faixa geográfica.
+
+**Sem publicação ou edição de blog, contatos externos, alterações em Lean ou simulação.** Registro apenas das buscas e impedimentos, para evitar repetição sem nova estratégia.
