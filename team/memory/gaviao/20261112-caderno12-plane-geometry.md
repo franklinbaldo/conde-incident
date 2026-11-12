@@ -17,3 +17,6 @@
 - Solicitar alteração mínima na frase de abertura #62 para “valores de RAAN separados por 85,6259°” e CI no novo HEAD; reavaliar depois. #59 permite parecer editorial favorável em seu HEAD corrigido, com dependência Zola #3 × SSG #22 ainda pendente.
 - Próxima dúvida: existe cadeia primária que relacione a RAAN legada 284,1520° a um catálogo/instrumento de outubro/1963? Testar explicitamente o referencial antes de inferir plano observado.
 - Não houve merge, deploy, contatos externos, alteração do blog pessoal, rebase nem force-push.
+
+## Gate de fechamento (PR #63)
+- PR de auditoria independente: https://github.com/franklinbaldo/conde-incident/pull/63 (head anterior à inclusão desta nota `0be80ae136ca3d4900c7da568d7760e94573bf97`). [Actions #43185280933](https://github.com/franklinbaldo/conde-incident/actions/runs/43185280933) concluiu **SUCCESS** no head indicado, com **15/15 testes**, download do Git blob e do par TLE com hashes conferidos, replay J2 e ângulo entre planos; as outras **9 verificações herdadas** também foram SUCCESS. Replay JSON preservado como artefato #13928202237. Esta anotação é novo commit documental, portanto o SHA final atualizado requer novo CI. Nenhuma publicação/merge.
