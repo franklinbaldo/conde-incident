@@ -351,5 +351,73 @@ class RollingTailSensitivityControls(unittest.TestCase):
             rolling_tail_sensitivity_diagnostics(malformed)
 
 
+class RecentTrendNegativeControls(unittest.TestCase):
+    """C243-T12: constructed series only; not historical observations."""
+
+    def test_fixed_local_controls_share_targets_and_fit_exact_linear_history(self):
+        from texugo_holdout_529 import rolling_origin_diagnostics
+        report = rolling_origin_diagnostics(samples(c527=0.0, c528=0.0, c529=0.0))
+        names = ("recency_529_two_point_secant", "recency_529_three_point_linear")
+        self.assertEqual(report["recency_controls"]["past_529_epoch_counts"], [2, 3])
+        self.assertTrue(report["recency_controls"]["scored_on_identical_targets"])
+        self.assertEqual(report["scored_distinct_targets"],
+                         sum(x["status"] != "NOT_RUN" for x in report["steps"]))
+        for name in names:
+            self.assertLess(report["pooled_rmse_rev_day"][name], 1e-7)
+        for step in report["steps"]:
+            if step["status"] != "NOT_RUN":
+                self.assertTrue(all(name in step["error_rev_day"] for name in names))
+                self.assertEqual(set(step["predicted_rev_day"]),
+                                 set(report["pooled_rmse_rev_day"]))
+
+    def test_target_future_cannot_enter_its_own_recent_trend_forecast(self):
+        from texugo_holdout_529 import rolling_origin_diagnostics
+        rows = samples(c527=0.2, c528=0.4, c529=0.3)
+        when = sorted(x.epoch for x in rows if x.sat == 529)[10]
+        modified = [Observation(x.sat, x.epoch, x.mean_motion + 6.0)
+                    if x.sat == 529 and x.epoch == when else x for x in rows]
+        old, new = rolling_origin_diagnostics(rows), rolling_origin_diagnostics(modified)
+        find = lambda r: next(s for s in r["steps"]
+                             if s["target_epoch_utc"] == when.isoformat())
+        for model in ("recency_529_two_point_secant", "recency_529_three_point_linear"):
+            self.assertEqual(find(old)["predicted_rev_day"][model],
+                             find(new)["predicted_rev_day"][model])
+            self.assertNotEqual(find(old)["error_rev_day"][model],
+                                find(new)["error_rev_day"][model])
+
+    def test_synthetic_change_in_slope_can_favor_recent_trend(self):
+        from texugo_holdout_529 import rolling_origin_diagnostics
+        base = datetime(1963, 6, 1, tzinfo=timezone.utc)
+        altered = [
+            Observation(o.sat, o.epoch, o.mean_motion +
+                        (0.2 * max(0, (o.epoch - base).days - 120) / 60
+                         if o.sat == 529 else 0))
+            for o in samples(c527=0.4, c528=0.4, c529=0.0)
+        ]
+        report = rolling_origin_diagnostics(altered)
+        self.assertLess(report["pooled_rmse_rev_day"]["recency_529_two_point_secant"],
+                        report["pooled_rmse_rev_day"]["quadratic_529_only"])
+
+    def test_synthetic_alternating_noise_can_make_secant_worse_than_persistence(self):
+        from texugo_holdout_529 import rolling_origin_diagnostics
+        ordered = sorted((o for o in samples() if o.sat == 529), key=lambda o: o.epoch)
+        order = {o.epoch: i for i, o in enumerate(ordered)}
+        altered = [Observation(o.sat, o.epoch, o.mean_motion +
+                   (0.1 if order[o.epoch] % 2 == 0 else -0.1))
+                   if o.sat == 529 else o for o in samples()]
+        report = rolling_origin_diagnostics(altered)
+        self.assertGreater(report["pooled_rmse_rev_day"]["recency_529_two_point_secant"],
+                           report["pooled_rmse_rev_day"]["persistence_529_last_epoch"])
+
+    def test_insufficient_training_stays_not_run_for_all_model_families(self):
+        from texugo_holdout_529 import rolling_origin_diagnostics
+        early = sorted((o for o in samples() if o.sat == 529), key=lambda o: o.epoch)[:3]
+        rows = [o for o in samples() if o.sat != 529] + early
+        report = rolling_origin_diagnostics(rows)
+        self.assertEqual(report["status"], "NOT_RUN")
+        self.assertEqual(report["scored_distinct_targets"], 0)
+        self.assertIsNone(report["pooled_rmse_rev_day"])
+
+
 if __name__ == "__main__":
     unittest.main()
