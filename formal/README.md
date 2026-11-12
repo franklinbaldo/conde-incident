@@ -43,6 +43,68 @@ report contradictory premises; if on-day and off-day candidates both survive,
 report indeterminate. Do not force a verdict with an unsupported date axiom.
 
 
+## 🐙 Conditional outcomes and empty-grid guard (issue #15)
+
+`Conde1963/Outcome.lean` now separates five possible scientific
+**reporting classes** as logical obligations, never observed outcomes:
+
+- **Contradictory premises** requires `¬ HasCandidate constraints`
+  over the justified model domain; exhausting a *finite grid* is NOT
+  proof of global inconsistency.
+- **Conde forced** requires `ForcesConde`: a nonempty admissible
+  domain and a predicted ground impact in Conde for **every** survivor.
+- **Conde excluded** requires `ExcludesConde`: a nonempty domain
+  and no modeled ground impact in Conde, but it does **not** imply
+  impact elsewhere. A simulator returning `none` is a concrete
+  logical countermodel to that inference.
+- **Other window** requires `IdentifiesOtherWindow`: all survivors
+  predict a ground impact in a stated time/place region **proved
+  disjoint** from Conde. Hence `other_window_conditionally_excludes_conde`.
+  Do not supply a made-up alternative window.
+- **Indeterminate** has a sufficient witness `MixedCondeOutcomes`:
+  one survivor with Conde impact and another survivor with either an
+  outside impact or **no impact**. The theorem
+  `mixed_outcomes_refute_both_decisive_conde_claims` rejects both
+  forced and excluded verdicts in that case. Other kinds of uncertainty
+  remain possible, so this is *not* an exhaustive decision procedure.
+
+The theorems establish consistency under additional constraints,
+pairwise incompatibility of contrary verdicts, and the difference
+between global model satisfiability and finite grid coverage. No
+historical trajectory is encoded or asserted here.
+
+The machine-readable `outcome_interface` in the existing CI
+`conde-evidence-contracts` JSON lists the five Lean obligations,
+required documentary and numerical inputs, and **null**
+`current_result`, `calibrated_model` and
+`numerical_impact_window`. This is a typed handoff to 🦫 Castor,
+not a claim that an orbital fit has been run. The matrix rows retain
+their commit-pinned citations, C44–C46 distinct occurrences and
+individual uncertainty/pending-review markers.
+
+**Source lineage reused, not reauthenticated this round:**
+NASA/Goddard *Satellite Situation Report*, 15 Nov 1963, p. 8,
+[NTRS 19640001198](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf),
+matrix C131/C197 (one report, two citations); the FBIS/Tupi
+transcription in C01 is a documentary report, not physical impact
+evidence. Source matrix commit `38ee0f01134f6a1ee07c9346945d058d2ad3ce0b`,
+Git blob `a7978c3a75a153b16ab70118a92c434bba674cb7`.
+The original `Evidence.lean` ZIP (154 propositions / 151 labels),
+original independently recorded digests and the RAAN conflict
+remain unresolved.
+
+Reproduce in the PR head:
+
+```bash
+python3 formal/scripts/evidence_registry.py \
+  --check formal/Conde1963/MatrixEvidence.lean \
+  --json /tmp/conde-evidence-contracts.json
+cd formal
+lake build
+lake env lean Conde1963/AxiomAudit.lean
+python3 -m unittest discover -s tests -v
+```
+
 This folder starts the transfer of the previously compiled 11 November 2026 Lean 4.35.0 research archive.
 
 `lake build` checks the **logical core**: provenance dependency, exact arithmetic from catalog statistics, holdout metric comparison and the failure of a date-only constraint to identify a geographic site.
