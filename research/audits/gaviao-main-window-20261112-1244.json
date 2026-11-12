@@ -1,0 +1,443 @@
+{
+  "schema": "conde.gaviao.retrospective-window/v4",
+  "reviewer": "gaviao",
+  "date_local": "2026-11-12",
+  "reviewed_from_main_sha": "9e6596c679985b2cc886e31d88969fd9eab16b18",
+  "reviewed_through_main_sha": "5c2f610d624a79dab9b4b181851d8fe2883868f5",
+  "github_comparison": {
+    "status": "ahead",
+    "ahead_by": 14,
+    "behind_by": 0,
+    "total_commits": 14,
+    "unique_changed_paths": 60,
+    "all_commit_file_mentions": 62
+  },
+  "first_parent_chain": {
+    "squash_pr_merges": 14,
+    "direct_commits": 0,
+    "all_consecutive": true
+  },
+  "closed_unmerged_in_window": [
+    {
+      "pr": 22,
+      "closed_at": "2026-11-12T15:26:02Z",
+      "status": "CLOSED_WITHOUT_MERGE_NOT_MAIN_COMMIT"
+    }
+  ],
+  "commits": [
+    {
+      "order": 1,
+      "pr": 150,
+      "main_merge_sha": "b51d20db62924b76bf6202e8474ae5deea4edcc7",
+      "parent_main_sha": "9e6596c679985b2cc886e31d88969fd9eab16b18",
+      "pr_final_head_sha": "c237413cfde1628887b9e3d587d7ba44030e3b3a",
+      "github_actions_pr_head": {
+        "success": 10,
+        "total": 10,
+        "scope": "pull_request workflow runs on this exact final SHA"
+      },
+      "files": [
+        {
+          "path": ".github/workflows/prek.yml"
+        },
+        {
+          "path": ".okf/specs/agentcontract.md"
+        },
+        {
+          "path": ".okf/specs/guide.md"
+        },
+        {
+          "path": ".okf/specs/spec.md"
+        },
+        {
+          "path": ".pre-commit-config.yaml"
+        },
+        {
+          "path": "AGENTS.md"
+        },
+        {
+          "path": "config/legacy-nonokf-markdown.json"
+        },
+        {
+          "path": "config/legacy-oversized-files.json"
+        },
+        {
+          "path": "docs/OKF_PREK_POLICY.md"
+        },
+        {
+          "path": "scripts/check_file_size.py"
+        },
+        {
+          "path": "scripts/check_okf_incremental.py"
+        },
+        {
+          "path": "tests/test_file_size_policy.py"
+        }
+      ],
+      "scientific_scope": "Prek/OKF staged validation; frozen legacy corpus is not whole-repository validation"
+    },
+    {
+      "order": 2,
+      "pr": 151,
+      "main_merge_sha": "54d83cc351b0f9d86f65086d08d1a109a3f9659c",
+      "parent_main_sha": "b51d20db62924b76bf6202e8474ae5deea4edcc7",
+      "pr_final_head_sha": "5c5fe6e9958ed91530acd7819088bad20b3f63f3",
+      "github_actions_pr_head": {
+        "success": 11,
+        "total": 11,
+        "scope": "pull_request workflow runs on this exact final SHA"
+      },
+      "files": [
+        {
+          "path": ".github/workflows/tle-drag-lineage.yml"
+        },
+        {
+          "path": "research/tle_custody/evidence_matrix_C241-L5_2026-11-12.md"
+        },
+        {
+          "path": "tests/test_tle_drag_term_lineage_audit.py"
+        },
+        {
+          "path": "tools/tle_drag_term_lineage_audit.py"
+        }
+      ],
+      "scientific_scope": "TLE line1 n-dot/2 and BSTAR mirror: one literal epoch, secondary-only"
+    },
+    {
+      "order": 3,
+      "pr": 152,
+      "main_merge_sha": "a86b6f5461b7224c363f64479acf77b42b79e01f",
+      "parent_main_sha": "54d83cc351b0f9d86f65086d08d1a109a3f9659c",
+      "pr_final_head_sha": "1315308df65138508cacc20d7ea071a613f96179",
+      "github_actions_pr_head": {
+        "success": 10,
+        "total": 10,
+        "scope": "pull_request workflow runs on this exact final SHA"
+      },
+      "files": [
+        {
+          "path": "research/audits/gaviao-main-window-20261112-1136.json"
+        },
+        {
+          "path": "research/audits/gaviao-main-window-20261112-1136.md"
+        },
+        {
+          "path": "scripts/gaviao-retrospective-g19.test.mjs"
+        },
+        {
+          "path": "scripts/pages-metadata-preflight.mjs"
+        },
+        {
+          "path": "scripts/pages-metadata-preflight.test.mjs"
+        }
+      ],
+      "scientific_scope": "G19 audit and Pages attempt/status identity gate; metadata only"
+    },
+    {
+      "order": 4,
+      "pr": 153,
+      "main_merge_sha": "f5fb5743e4fa2007435c8c03904a2f5d370d40e6",
+      "parent_main_sha": "a86b6f5461b7224c363f64479acf77b42b79e01f",
+      "pr_final_head_sha": "4dcf10468b3aebdf851a4ccefc3638654781ac73",
+      "github_actions_pr_head": {
+        "success": 10,
+        "total": 10,
+        "scope": "pull_request workflow runs on this exact final SHA"
+      },
+      "files": [
+        {
+          "path": "formal/scripts/check_cumulative_connections.py"
+        },
+        {
+          "path": "tests/test_cumulative_constraints.py"
+        }
+      ],
+      "scientific_scope": "Dedup canonical NASA SSR URLs; no independent observations"
+    },
+    {
+      "order": 5,
+      "pr": 154,
+      "main_merge_sha": "563edaf0d44ce28194f5086ef92e07e516c08c34",
+      "parent_main_sha": "f5fb5743e4fa2007435c8c03904a2f5d370d40e6",
+      "pr_final_head_sha": "40fb3bf011762027167a6a74c7cb2946b95fcd04",
+      "github_actions_pr_head": {
+        "success": 10,
+        "total": 10,
+        "scope": "pull_request workflow runs on this exact final SHA"
+      },
+      "files": [
+        {
+          "path": ".github/workflows/ibge-source-live.yml"
+        },
+        {
+          "path": "config/legacy-nonokf-markdown.json"
+        },
+        {
+          "path": "research/geo/README.md"
+        },
+        {
+          "path": "tests/conde_gis_custody.test.mjs"
+        }
+      ],
+      "scientific_scope": "GIS offline custody separated from live IBGE replay; no 1963 polygon"
+    },
+    {
+      "order": 6,
+      "pr": 155,
+      "main_merge_sha": "1695eaf54c007dcb4ccba2a909dcd48a7324016e",
+      "parent_main_sha": "563edaf0d44ce28194f5086ef92e07e516c08c34",
+      "pr_final_head_sha": "dc3abf14655b55d872fe1fe3c8a0474f8ce7c898",
+      "github_actions_pr_head": {
+        "success": 11,
+        "total": 11,
+        "scope": "pull_request workflow runs on this exact final SHA"
+      },
+      "files": [
+        {
+          "path": ".github/workflows/documentary-dependence.yml"
+        },
+        {
+          "path": "public/data/conde-declared-dependence.json"
+        },
+        {
+          "path": "research/provenance/DEPENDENCY_EXPORT.md"
+        },
+        {
+          "path": "tests/test_documentary_dependence.py"
+        },
+        {
+          "path": "tools/export_documentary_dependence.py"
+        }
+      ],
+      "scientific_scope": "Declared documentary ancestry export, not independent measurements"
+    },
+    {
+      "order": 7,
+      "pr": 160,
+      "main_merge_sha": "4a0979119d6e2230c192d4bc6b84c37a21ac4e80",
+      "parent_main_sha": "1695eaf54c007dcb4ccba2a909dcd48a7324016e",
+      "pr_final_head_sha": "82d04bab850118d87c751f5f0572e85c1003bf8f",
+      "github_actions_pr_head": {
+        "success": 10,
+        "total": 10,
+        "scope": "pull_request workflow runs on this exact final SHA"
+      },
+      "files": [
+        {
+          "path": "research/geo/uwm_aracaju_se_1954_1961_cartographic_custody.json"
+        },
+        {
+          "path": "tests/test_uwm_aracaju_cartographic_1963.py"
+        }
+      ],
+      "scientific_scope": "1954/1961 Aracaju cartographic custody, no verified Conde boundary"
+    },
+    {
+      "order": 8,
+      "pr": 157,
+      "main_merge_sha": "2d803ff7617d140a72fd714db93bae411451d43e",
+      "parent_main_sha": "4a0979119d6e2230c192d4bc6b84c37a21ac4e80",
+      "pr_final_head_sha": "7e7c5bfe7e04b109fd39fb06d290b59d9b503f99",
+      "github_actions_pr_head": {
+        "success": 11,
+        "total": 11,
+        "scope": "pull_request workflow runs on this exact final SHA"
+      },
+      "files": [
+        {
+          "path": ".github/workflows/lean-core.yml"
+        },
+        {
+          "path": "formal/Conde1963.lean"
+        },
+        {
+          "path": "formal/Conde1963/NmcCandidate.lean"
+        },
+        {
+          "path": "formal/scripts/compile_nmc_candidate.py"
+        },
+        {
+          "path": "formal/tests/test_nmc_candidate.py"
+        },
+        {
+          "path": "research/constraints/C241-L5_ncar_y20175_candidate_bridge.md"
+        },
+        {
+          "path": "research/constraints/nmc_y20175_pending_bridge.json"
+        }
+      ],
+      "scientific_scope": "Y20175 nine latent queries in conditional Lean, zero decoded profiles"
+    },
+    {
+      "order": 9,
+      "pr": 159,
+      "main_merge_sha": "16a28493bb31d1db08492563c768dcc01bee7d5f",
+      "parent_main_sha": "2d803ff7617d140a72fd714db93bae411451d43e",
+      "pr_final_head_sha": "1d3e682f2eb72d752fb9d4d5613f09be341e851b",
+      "github_actions_pr_head": {
+        "success": 12,
+        "total": 12,
+        "scope": "pull_request workflow runs on this exact final SHA"
+      },
+      "files": [
+        {
+          "path": ".github/workflows/igra-recife-c151.yml"
+        },
+        {
+          "path": "research/meteorology/igra_recife_19631108_raw.txt.b64"
+        },
+        {
+          "path": "research/meteorology/igra_recife_19631108_wind_observables.json"
+        },
+        {
+          "path": "research/meteorology/igra_recife_19631108_wind_observables.md"
+        },
+        {
+          "path": "tests/test_audit_igra_recife_winds.py"
+        },
+        {
+          "path": "tools/audit_igra_recife_winds.py"
+        }
+      ],
+      "scientific_scope": "NOAA IGRA Recife single nominal-12Z sounding, 15 winds, actual launch time missing"
+    },
+    {
+      "order": 10,
+      "pr": 161,
+      "main_merge_sha": "7fb204ff7dfa00d9ea67ea388fa652e2d6856c46",
+      "parent_main_sha": "16a28493bb31d1db08492563c768dcc01bee7d5f",
+      "pr_final_head_sha": "660af8ce19c3147c42ba313a430d96c625486999",
+      "github_actions_pr_head": {
+        "success": 12,
+        "total": 12,
+        "scope": "pull_request workflow runs on this exact final SHA"
+      },
+      "files": [
+        {
+          "path": "src/lib/orbitObservationIntake.ts"
+        },
+        {
+          "path": "tests/orbitObservationIntake.test.mjs"
+        }
+      ],
+      "scientific_scope": "Conditional Cartesian intake: explicit instrument epoch/frame/sigma gate; no validated holdout"
+    },
+    {
+      "order": 11,
+      "pr": 163,
+      "main_merge_sha": "16ae4de2e5e8a8a1292839a109704507573a14ba",
+      "parent_main_sha": "7fb204ff7dfa00d9ea67ea388fa652e2d6856c46",
+      "pr_final_head_sha": "309d727b1da574b167d0082e8dcab9ecda3176b5",
+      "github_actions_pr_head": {
+        "success": 12,
+        "total": 12,
+        "scope": "pull_request workflow runs on this exact final SHA"
+      },
+      "files": [
+        {
+          "path": "src/components/SourceCitationFeed.tsx"
+        },
+        {
+          "path": "src/lib/sourceCitationAudit.ts"
+        },
+        {
+          "path": "tests/sourceCitationFeed.test.mjs"
+        }
+      ],
+      "scientific_scope": "Client displays declared ancestry; G20-F1 reveals weak path validation"
+    },
+    {
+      "order": 12,
+      "pr": 162,
+      "main_merge_sha": "c9bbf8d12a6746335a99ff7ec3eb81fd73995d58",
+      "parent_main_sha": "16ae4de2e5e8a8a1292839a109704507573a14ba",
+      "pr_final_head_sha": "5bf1b1f49decda15fed4e4916fc0b317db70fe18",
+      "github_actions_pr_head": {
+        "success": 12,
+        "total": 12,
+        "scope": "pull_request workflow runs on this exact final SHA"
+      },
+      "files": [
+        {
+          "path": ".github/workflows/prek.yml"
+        },
+        {
+          "path": "scripts/provision-workspaces.test.mjs"
+        },
+        {
+          "path": "tools/provision_agent_workspaces.py"
+        }
+      ],
+      "scientific_scope": "Provisioner CI checks OKF scaffold, does not prove private repos provisioned"
+    },
+    {
+      "order": 13,
+      "pr": 164,
+      "main_merge_sha": "9ad3dfcdcddc559fb2edfaa35a0c0ad1d32626ec",
+      "parent_main_sha": "c9bbf8d12a6746335a99ff7ec3eb81fd73995d58",
+      "pr_final_head_sha": "1a14ee6aeb0076fe4b7af50bce9696c082af7b25",
+      "github_actions_pr_head": {
+        "success": 13,
+        "total": 13,
+        "scope": "pull_request workflow runs on this exact final SHA"
+      },
+      "files": [
+        {
+          "path": ".github/workflows/morcego-ru478.yml"
+        },
+        {
+          "path": "research/constraints/morcego_sao_ru478_1963_crosswalk.json"
+        },
+        {
+          "path": "tests/test_morcego_ru478_crosswalk.py"
+        }
+      ],
+      "scientific_scope": "Smithsonian SC-8 Shiraz metadata and RU478 collection; no film measurement"
+    },
+    {
+      "order": 14,
+      "pr": 166,
+      "main_merge_sha": "5c2f610d624a79dab9b4b181851d8fe2883868f5",
+      "parent_main_sha": "9ad3dfcdcddc559fb2edfaa35a0c0ad1d32626ec",
+      "pr_final_head_sha": "b7496dff1d1c987f48712927fac3a4333f6da909",
+      "github_actions_pr_head": {
+        "success": 13,
+        "total": 13,
+        "scope": "pull_request workflow runs on this exact final SHA"
+      },
+      "files": [
+        {
+          "path": ".github/workflows/tle-mean-motion-secants.yml"
+        },
+        {
+          "path": "research/tle_custody/evidence_matrix_C241-L6_2026-11-12.md"
+        },
+        {
+          "path": "tests/test_tle_mean_motion_secant_audit.py"
+        },
+        {
+          "path": "tools/tle_mean_motion_secant_audit.py"
+        }
+      ],
+      "scientific_scope": "Secondary NORAD 527/528/529 mean-motion secants; not orbital drag or original tracking"
+    }
+  ],
+  "findings": [
+    {
+      "id": "G20-F1",
+      "introduced_by_pr": 163,
+      "severity": "medium",
+      "category": "documentary-lineage-client-validation",
+      "counterexample": "A companion lineage with an upstream edge starting at an unrelated source and/or a duplicated snapshot_ref passes the previous shape-only type guard. The UI may display a false documentary ancestry.",
+      "remediation": "Reject disconnected/cyclic paths, wrong terminal source, duplicate snapshot refs and wrong matrix-qualified occurrences before rendering; synthetic adversarial tests."
+    }
+  ],
+  "scientific_axes": {
+    "documentary_authenticity": "Sources retain grades: NASA day-only catalog; original TLE/SC-8 measurement not found; RU478 is collection metadata; IGRA is one station record with unknown launch minute.",
+    "lean": "Y20175 nine pending typed queries only; no authenticated positional constraint or historical orbital proof.",
+    "numerics": "Mean-motion secants are secondary fits, not drag or ballistic parameter measurements; Cartesian intake is conditional and unweighted.",
+    "editorial": "No stories/*.md changed in the fourteen main merges; open Caderno drafts are not published or merged.",
+    "inference": "CONDE_INDETERMINATE_NO_TERMINAL_HOUR_COORDINATE_OR_IMPACT_EVIDENCE"
+  },
+  "claims_limited": "Merge and CI status do not authenticate external bytes, instrumental provenance or physical localization."
+}
