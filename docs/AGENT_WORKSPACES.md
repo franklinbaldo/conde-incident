@@ -1,3 +1,9 @@
+---
+type: AgentContract
+title: "Workspaces dos agentes e sede permanente da equipe"
+description: "Protocolo de casas pessoais, equipe e projetos"
+---
+
 # Protocolo de repositórios pessoais e comunicação entre agentes
 
 **Decisão do proprietário (12/11/2026).** Há três camadas independentes:
