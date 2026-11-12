@@ -117,6 +117,20 @@ jobs:
           print("all_three_catalogs:", r["by_norad"])
           print("physical_lean:", r["lean_physical_premise"])
           PY
+      - name: Test whether a 16-second epoch offset explains the 528 RAAN conflict under J2 (C241-T10)
+        run: |
+          python tools/tle_raan_epoch_offset_j2_audit.py \
+            --csv "$RUNNER_TEMP/tle-audit/norad_528_epochs_1963.csv" \
+            --pair research/tle_custody/mirror_528_1963-10-27.tle \
+            --output "$RUNNER_TEMP/tle-audit/raan_epoch_offset_j2_conditional.json"
+          python - <<'PY'
+          import json, os, pathlib
+          r = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) /
+                          "tle-audit/raan_epoch_offset_j2_conditional.json").read_text())
+          print("J2 conditional result:", r["diagnostic"]["epoch_offset_only_j2_model"])
+          print("RAAN original provenance:", r["diagnostic"]["physical_1963_raan_origin"])
+          print("Lean and impact:", r["lean_4_35_physical_restriction"], r["reentry_and_conde"])
+          PY
       - name: Preserve normalized source-derived rows and negative results
         if: always()
         uses: actions/upload-artifact@v4
