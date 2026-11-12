@@ -41,6 +41,16 @@ export function analyzeAlternatives(input) {
     });
     results.push({
       id,
+      reason: scenario.reason,
+      trace: [...input.common.restrictions, ...scenario.restrictions].map(r => ({
+        parameter: r.parameter,
+        evidence_id: r.trace.evidence_id,
+        occurrence: r.trace.occurrence,
+        source_uri: r.trace.source_uri,
+        independence_group_declared: r.trace.independence_group,
+        lean_ref_declared: r.formal.lean_ref,
+        lean_status_declared: r.formal.status,
+      })),
       domain_status: result.domain_status,
       parameters: result.parameters,
       declared_evidence: result.label,
