@@ -17,7 +17,7 @@ const trace = (axis, id) => ({
   lean_ref_declared: 'Synthetic.' + axis, lean_status_declared: 'NOT_RUN',
 });
 const parameter = (name, min, max) => ({
-  name, status: 'REDUCED', initial: { min, max },
+  name, status: 'REDUCED', initial: { min: '-1000', max: '1000' },
   admissible: { min, max },
 });
 const branch = (id, lo, hi) => ({
@@ -33,6 +33,8 @@ const branch = (id, lo, hi) => ({
 const baseline = () => ({
   status: 'MULTIPLE_DECLARED_FEASIBLE',
   scenarios: [branch('first','0','4/1000'),branch('second','8/100','9/100')],
+  scenarios_declared: 2,
+  scenarios_with_nonempty_intervals: 2,
   scenario_set_exhaustive: 'NOT_VERIFIED',
   matrix_occurrences: 'NOT_VERIFIED',
   source_authenticity: 'NOT_VERIFIED',
@@ -50,6 +52,14 @@ const context = (ids = ['first','second']) => ({
   })),
 });
 const run = (audit = baseline(), ctx = context()) => bridgeDeclaredAlternatives(audit,ctx);
+const setVx = (audit, interval) => {
+  const p = audit.scenarios[0].parameters[0];
+  // A real PR #37/#43 output includes the ORIGINAL interval. For extreme
+  // Float64 test boxes, declare it equal instead of forging an expansion.
+  p.initial = { ...interval };
+  p.admissible = { ...interval };
+  p.status = 'UNCHANGED';
+};
 
 test('separate exact rational source branches convert to two bounded Cartesian scenarios', () => {
   const out = run();
@@ -72,7 +82,7 @@ test('separate exact rational source branches convert to two bounded Cartesian s
 
 test('Float64 velocity endpoints are rounded INWARD, not overconfidently outward', () => {
   const audit = baseline();
-  audit.scenarios[0].parameters[0].admissible = {min:'3/10',max:'4/5'};
+  setVx(audit, {min:'3/10',max:'4/5'});
   const out = run(audit);
   const x = out.alternatives[0].scenario.bounds[0];
   assert.ok(x.lowerKmS > 0.3, '0.3 binary float is below exact 3/10');
@@ -82,10 +92,10 @@ test('Float64 velocity endpoints are rounded INWARD, not overconfidently outward
 
 test('a tiny exact rational interval with NO Float64 sample is rejected, not widened', () => {
   const audit = baseline();
-  audit.scenarios[0].parameters[0].admissible = {
+  setVx(audit, {
     min:'100000000000000000001/1000000000000000000000',
     max:'100000000000000000002/1000000000000000000000',
-  };
+  });
   const out = run(audit);
   assert.equal(out.alternatives.length,1);
   assert.equal(out.records[0].status,'NOT_RUN_FLOAT64_PRECISION');
@@ -94,9 +104,9 @@ test('a tiny exact rational interval with NO Float64 sample is rejected, not wid
 
 test('exact singleton with representable Float64 survives, but inexact singleton does not', () => {
   const audit = baseline();
-  audit.scenarios[0].parameters[0].admissible = {min:'1/2',max:'1/2'};
+  setVx(audit, {min:'1/2',max:'1/2'});
   assert.deepEqual(run(audit).alternatives[0].scenario.bounds[0].lowerKmS,0.5);
-  audit.scenarios[0].parameters[0].admissible = {min:'1/10',max:'1/10'};
+  setVx(audit, {min:'1/10',max:'1/10'});
   assert.equal(run(audit).records[0].status,'NOT_RUN_FLOAT64_PRECISION');
 });
 
@@ -104,6 +114,9 @@ test('declared contradiction remains local; never claim historical exclusion', (
   const audit = baseline();
   audit.scenarios[0].domain_status = 'CONTRADICTORY';
   audit.scenarios[0].parameters[0].admissible = null;
+  audit.scenarios[0].parameters[0].status = 'EMPTY';
+  audit.status = 'ONE_DECLARED_FEASIBLE';
+  audit.scenarios_with_nonempty_intervals = 1;
   const out = run(audit);
   assert.equal(out.records[0].status,'NOT_RUN_CONTRADICTORY');
   assert.equal(out.records[1].status,'READY_CONDITIONALLY');
@@ -134,7 +147,7 @@ test('no pretending that a claimed Lean label, units or frame conversion was ver
 test('no silent mapping from another parameter or another initial lineage', () => {
   const audit=baseline();
   audit.scenarios[0].parameters[0].name='RAAN';
-  assert.throws(() => run(audit),/Unsupported non-velocity/);
+  assert.throws(() => run(audit),/unsupported audit parameter/);
   audit.scenarios[0].parameters[0].name='vx';
   const ctx=context();ctx.initials.pop();
   assert.throws(() => run(audit,ctx),/Exactly one initial state/);
@@ -164,14 +177,14 @@ test('seeded, explicitly CONDiTIONAL physical propagation of rational branches i
 test('rational endpoints with huge numerator AND denominator retain exact representable singleton', () => {
   const audit=baseline();
   const huge='1'+'0'.repeat(400); // each BigInt exceeds finite Number
-  audit.scenarios[0].parameters[0].admissible={min:huge+'/'+huge,max:huge+'/'+huge};
+  setVx(audit, {min:huge+'/'+huge,max:huge+'/'+huge});
   let out=run(audit);
   assert.equal(out.records[0].status,'READY_CONDITIONALLY');
   assert.deepEqual([
     out.alternatives[0].scenario.bounds[0].lowerKmS,
     out.alternatives[0].scenario.bounds[0].upperKmS,
   ],[1,1]);
-  audit.scenarios[0].parameters[0].admissible={min:'-'+huge+'/'+huge,max:huge+'/'+huge};
+  setVx(audit, {min:'-'+huge+'/'+huge,max:huge+'/'+huge});
   out=run(audit);
   assert.equal(out.records[0].status,'READY_CONDITIONALLY');
   assert.deepEqual([
@@ -183,51 +196,51 @@ test('rational endpoints with huge numerator AND denominator retain exact repres
 test('exact subnormal singleton survives; unrepresentable half-ulp singleton does NOT', () => {
   const audit=baseline();
   const minDen=(1n<<1074n).toString();
-  audit.scenarios[0].parameters[0].admissible={min:'1/'+minDen,max:'1/'+minDen};
+  setVx(audit, {min:'1/'+minDen,max:'1/'+minDen});
   let out=run(audit);
   assert.equal(out.records[0].status,'READY_CONDITIONALLY');
   const x=out.alternatives[0].scenario.bounds[0];
   assert.equal(x.lowerKmS,Number.MIN_VALUE);
   assert.equal(x.upperKmS,Number.MIN_VALUE);
   const halfDen=(1n<<1075n).toString();
-  audit.scenarios[0].parameters[0].admissible={min:'1/'+halfDen,max:'1/'+halfDen};
+  setVx(audit, {min:'1/'+halfDen,max:'1/'+halfDen});
   out=run(audit);
   assert.equal(out.records[0].status,'NOT_RUN_FLOAT64_PRECISION');
 });
 
 test('exact rational intersection clips beyond both finite Float64 extremes without inventing witnesses', () => {
   const audit=baseline(), huge='1'+'0'.repeat(400);
-  audit.scenarios[0].parameters[0].admissible={min:'2',max:huge};
+  setVx(audit, {min:'2',max:huge});
   let out=run(audit);
   assert.equal(out.records[0].status,'READY_CONDITIONALLY');
   assert.deepEqual([
     out.alternatives[0].scenario.bounds[0].lowerKmS,
     out.alternatives[0].scenario.bounds[0].upperKmS,
   ],[2,Number.MAX_VALUE]);
-  audit.scenarios[0].parameters[0].admissible={min:'-'+huge,max:'-2'};
+  setVx(audit, {min:'-'+huge,max:'-2'});
   out=run(audit);
   assert.equal(out.records[0].status,'READY_CONDITIONALLY');
   assert.deepEqual([
     out.alternatives[0].scenario.bounds[0].lowerKmS,
     out.alternatives[0].scenario.bounds[0].upperKmS,
   ],[-Number.MAX_VALUE,-2]);
-  audit.scenarios[0].parameters[0].admissible={min:huge,max:huge};
+  setVx(audit, {min:huge,max:huge});
   out=run(audit);
   assert.equal(out.records[0].status,'NOT_RUN_FLOAT64_PRECISION');
-  audit.scenarios[0].parameters[0].admissible={min:'-'+huge,max:'-'+huge};
+  setVx(audit, {min:'-'+huge,max:'-'+huge});
   assert.equal(run(audit).records[0].status,'NOT_RUN_FLOAT64_PRECISION');
 });
 
 test('an ultra-narrow signed rational box containing zero has only the zero Float64 witness', () => {
   const audit=baseline(),den='1'+'0'.repeat(400);
-  audit.scenarios[0].parameters[0].admissible={min:'-1/'+den,max:'1/'+den};
+  setVx(audit, {min:'-1/'+den,max:'1/'+den});
   let out=run(audit);
   assert.equal(out.records[0].status,'READY_CONDITIONALLY');
   assert.deepEqual([
     out.alternatives[0].scenario.bounds[0].lowerKmS,
     out.alternatives[0].scenario.bounds[0].upperKmS,
   ],[0,0]);
-  audit.scenarios[0].parameters[0].admissible={min:'1/'+den,max:'2/'+den};
+  setVx(audit, {min:'1/'+den,max:'2/'+den});
   out=run(audit);
   assert.equal(out.records[0].status,'NOT_RUN_FLOAT64_PRECISION');
   assert.equal(out.records[1].status,'READY_CONDITIONALLY');
@@ -235,10 +248,64 @@ test('an ultra-narrow signed rational box containing zero has only the zero Floa
 
 test('Float64 endpoint search preserves exact negative fractional boundaries', () => {
   const audit=baseline();
-  audit.scenarios[0].parameters[0].admissible={min:'-4/5',max:'-3/10'};
+  setVx(audit, {min:'-4/5',max:'-3/10'});
   const out=run(audit);
   assert.equal(out.records[0].status,'READY_CONDITIONALLY');
   const b=out.alternatives[0].scenario.bounds[0];
   assert.ok(b.lowerKmS >= -0.8 && b.upperKmS <= -0.3);
   assert.ok(b.lowerKmS < b.upperKmS);
+});
+
+
+test('tampered admissible range may NOT grow beyond declared exact starting domain', () => {
+  const audit=baseline();
+  audit.scenarios[0].parameters[0].admissible={min:'-1001',max:'1/1000'};
+  assert.throws(()=>run(audit),/expands its original exact domain/);
+  // A tiny decimal growth invisible in typical Float64 endpoints remains forbidden.
+  audit.scenarios[0].parameters[0].admissible={min:'-1000000000000000000001/1000000000000000000',max:'1/1000'};
+  assert.throws(()=>run(audit),/expands its original exact domain/);
+});
+
+test('tampered REDUCED/UNCHANGED or contradictory scenario labels fail before propagation', () => {
+  const audit=baseline();
+  audit.scenarios[0].parameters[0].status='UNCHANGED';
+  assert.throws(()=>run(audit),/Inconsistent declared rational parameter status/);
+  audit.scenarios[0].parameters[0].status='REDUCED';
+  audit.scenarios[0].domain_status='UNCHANGED';
+  assert.throws(()=>run(audit),/Inconsistent declared scenario domain status/);
+  audit.scenarios[0].domain_status='CONTRADICTORY';
+  audit.status='ONE_DECLARED_FEASIBLE';
+  audit.scenarios_with_nonempty_intervals=1;
+  assert.throws(()=>run(audit),/Inconsistent declared scenario domain status/);
+});
+
+test('forged feasible-scenario count or global status is rejected', () => {
+  const audit=baseline();
+  audit.scenarios_with_nonempty_intervals=1;
+  assert.throws(()=>run(audit),/Unsupported or falsely certified/);
+  audit.scenarios_with_nonempty_intervals=2;
+  audit.status='NO_DECLARED_FEASIBLE';
+  assert.throws(()=>run(audit),/Unsupported or falsely certified/);
+  audit.status='MULTIPLE_DECLARED_FEASIBLE';
+  audit.scenarios_declared=3;
+  assert.throws(()=>run(audit),/Unsupported or falsely certified/);
+});
+
+test('missing, inverted or inconsistent original exact interval never becomes Float64 witness', () => {
+  const audit=baseline();
+  audit.scenarios[0].parameters[0].initial=null;
+  assert.throws(()=>run(audit),/Missing exact rational interval/);
+  audit.scenarios[0].parameters[0].initial={min:'1',max:'0'};
+  assert.throws(()=>run(audit),/Inverted exact rational interval/);
+  audit.scenarios[0].parameters[0].initial={min:'0',max:'1/10000'};
+  assert.throws(()=>run(audit),/expands its original exact domain/);
+});
+
+test('trace of unrelated axis or invented historical certification is rejected', () => {
+  const audit=baseline();
+  audit.scenarios[0].trace.push({...trace('RAAN','bogus'),parameter:'RAAN'});
+  assert.throws(()=>run(audit),/Trace cites unsupported velocity parameter/);
+  audit.scenarios[0].trace.pop();
+  audit.scenarios[0].declared_evidence='DECLARED_NOT_AUDITED';
+  assert.throws(()=>run(audit),/Invalid or falsely certified restriction trace/);
 });
