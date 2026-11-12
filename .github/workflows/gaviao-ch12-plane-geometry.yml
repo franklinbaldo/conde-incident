@@ -1,0 +1,47 @@
+name: Gaviao Caderno 12 - independent RAAN versus orbital plane
+on:
+  push:
+    branches: [gaviao/ch12-independent-plane-geometry-20261112]
+  pull_request:
+    paths:
+      - 'tools/gaviao_ch12_plane_geometry.py'
+      - 'tests/test_gaviao_ch12_plane_geometry.py'
+      - 'research/gaviao_ch12_review.md'
+      - 'team/memory/gaviao/**'
+      - '.github/workflows/gaviao-ch12-plane-geometry.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  geometry-and-provenance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Assert HEAD under review rather than a synthetic merge commit
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          echo "TESTED_SHA=$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Independent adversarial checks, standard library only
+        run: python -m unittest discover -s tests -p 'test_gaviao_ch12_plane_geometry.py' -v
+      - name: Check pinned Git blob SHA1, TLE SHA256 and recompute J2/plane geometry
+        run: python tools/gaviao_ch12_plane_geometry.py --pinned | tee "$RUNNER_TEMP/gaviao-ch12-geometry.json"
+      - name: Preserve independent numeric diagnostic
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gaviao-ch12-geometry-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ${{ runner.temp }}/gaviao-ch12-geometry.json
+          if-no-files-found: warn
+          retention-days: 30
