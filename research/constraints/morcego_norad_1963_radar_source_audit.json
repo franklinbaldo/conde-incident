@@ -1,0 +1,315 @@
+{
+  "schema": "conde.morcego-norad-1963-radar-document-audit/v1",
+  "investigation": "Source-control test: do archival NORAD records show timestamped measurements and can catalog dates be trusted?",
+  "sources": [
+    {
+      "id": "MOR-NORAD-1961-AGREEMENT",
+      "url": "https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/03.pdf",
+      "public_page": "https://nsarchive.gwu.edu/document/29907-document-3-agreement-between-department-defense-and-national-aeronautics-and-space",
+      "document_date": "1961-01-16",
+      "printed_pages": [
+        112,
+        113
+      ],
+      "pdf_pages_zero_based": [
+        3,
+        4
+      ],
+      "archive": "NARA RG330 Entry UD-06W #31, 471.96 file; in 1965 report appendix",
+      "original_document_verified": "SCREENSHOT_AND_TEXT",
+      "original_pdf_sha256": null,
+      "grade": "PRIMARY_INSTITUTIONAL_AGREEMENT",
+      "lineage": "NASA_DOD_1961_DATA_SHARING_POLICY",
+      "scope": "NASA and NORAD exchange catalog/observation information; not an individual 528 sensor observation"
+    },
+    {
+      "id": "MOR-NORAD-1963-NOV12",
+      "url": "https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/07.pdf",
+      "public_page": "https://nsarchive.gwu.edu/document/29911-document-7-department-air-force-staff-message-branch-incoming-messages-12-november",
+      "document_date": "1963-11-12",
+      "printed_pages": [
+        3,
+        4
+      ],
+      "pdf_pages_zero_based": [
+        2,
+        3
+      ],
+      "archive": "Air Force Declassification Office",
+      "original_document_verified": "SCREENSHOT_AND_TEXT",
+      "original_pdf_sha256": null,
+      "grade": "CONTEMPORARY_ORIGINAL_NORAD_INTELLIGENCE_REPORT",
+      "lineage": "NORAD_SPADATS_1963_SPUTNIK46",
+      "scope": "Sputnik 46 object 687 and 688; unrelated to 528"
+    },
+    {
+      "id": "MOR-NORAD-1963-NOV14",
+      "url": "https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/08.pdf",
+      "public_page": "https://nsarchive.gwu.edu/document/29912-document-8-department-air-force-staff-message-branch-incoming-messages-secret-14",
+      "document_date": "1963-11-14",
+      "printed_pages": [
+        2
+      ],
+      "pdf_pages_zero_based": [
+        1
+      ],
+      "archive": "Air Force Declassification Office",
+      "original_document_verified": "SCREENSHOT_AND_TEXT",
+      "original_pdf_sha256": null,
+      "grade": "CONTEMPORARY_ORIGINAL_NORAD_INTELLIGENCE_REPORT",
+      "lineage": "NORAD_SPADATS_1963_SPUTNIK46",
+      "scope": "Sputnik 46 object 688; repeat of NORAD tracking family"
+    },
+    {
+      "id": "MOR-NORAD-1964-NOV30-09",
+      "url": "https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/09.pdf",
+      "public_page": "https://nsarchive.gwu.edu/document/29913-document-9-department-army-staff-communications-division-secret-30-november-1963",
+      "document_date": "1964-11-30",
+      "catalog_date_claim": "1963-11-30",
+      "pdf_pages_zero_based": [
+        0
+      ],
+      "archive": "NARA RG319 Entry NM-3 47-R3 box16",
+      "original_document_verified": "SCREENSHOT_AND_TEXT",
+      "original_pdf_sha256": null,
+      "grade": "CONTEMPORARY_1964_ORIGINAL_MISDATED_BY_MODERN_CATALOG",
+      "lineage": "NORAD_SPADATS_1964_SPUTNIK83",
+      "scope": "Shemya radar 1964 event, NOT 1963 evidence"
+    },
+    {
+      "id": "MOR-NORAD-1964-NOV30-10",
+      "url": "https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/10.pdf",
+      "public_page": "https://nsarchive.gwu.edu/document/29914-document-10-department-army-staff-communications-division-30-november-1963-secret",
+      "document_date": "1964-11-30",
+      "catalog_date_claim": "1963-11-30",
+      "pdf_pages_zero_based": [
+        0,
+        1
+      ],
+      "archive": "NARA RG319 Entry NM-3 47-R3 box16",
+      "original_document_verified": "SCREENSHOT_AND_TEXT",
+      "original_pdf_sha256": null,
+      "grade": "CONTEMPORARY_1964_ORIGINAL_MISDATED_BY_MODERN_CATALOG",
+      "lineage": "NORAD_SPADATS_1964_SPUTNIK83",
+      "scope": "SPADATS object 943, international 1964-78; NOT 1963"
+    }
+  ],
+  "occurrences": [
+    {
+      "id": "MOR-NOR-20261112-01",
+      "source_id": "MOR-NORAD-1961-AGREEMENT",
+      "anchor": "PDF p4, printed 112",
+      "claim": "NASA Goddard receives unclassified NORAD catalog data and supplies NASA observation/catalog data back to NORAD; NASA dissemination should be source-labeled",
+      "scope": "Data provenance and independence policy",
+      "epistemic_grade": "DIRECT_PRIMARY_DOCUMENT",
+      "physical_constraint_active": false
+    },
+    {
+      "id": "MOR-NOR-20261112-02",
+      "source_id": "MOR-NORAD-1963-NOV12",
+      "anchor": "PDF p3, AF IN 20080 (12 Nov 63)",
+      "claim": "11 Nov 1963 Sputnik 46 (1963-44) launch about 06:25Z, Shemya detection 06:42Z; follow-up tracking by other SPADATS radars; orbit published for SPADATS 687, NOT 528",
+      "scope": "Independent historical example of timed radar detection",
+      "epistemic_grade": "DIRECT_PRIMARY_DOCUMENT_AS_TO_NORAD_REPORT",
+      "physical_constraint_active": false
+    },
+    {
+      "id": "MOR-NOR-20261112-03",
+      "source_id": "MOR-NORAD-1963-NOV14",
+      "anchor": "PDF p2, AF IN 23784 (14 Nov 63)",
+      "claim": "Sputnik 46 SPADATS 688 decay reportedly between 22:10Z and 24:00Z of 12 Nov 1963",
+      "scope": "Contemporary example of NORAD providing bounded reentry time rather than date-only",
+      "epistemic_grade": "DIRECT_PRIMARY_DOCUMENT_AS_TO_NORAD_REPORT",
+      "physical_constraint_active": false
+    },
+    {
+      "id": "MOR-NOR-20261112-04",
+      "source_id": "MOR-NORAD-1964-NOV30-09",
+      "anchor": "PDF p1, header and middle",
+      "claim": "Original declares 30 NOV 64 / fragmentary report 216-64, while online catalog declares 30 Nov 1963; chronology metadata error",
+      "scope": "Archivist catalogue mismatch; 1964 not 1963",
+      "epistemic_grade": "VERIFIED_CATALOG_VS_ORIGINAL_CONFLICT",
+      "physical_constraint_active": false
+    },
+    {
+      "id": "MOR-NOR-20261112-05",
+      "source_id": "MOR-NORAD-1964-NOV30-10",
+      "anchor": "PDF p1, header and SUBJECT",
+      "claim": "Original declares 30 NOV 64, fragmentary report 217-64, object 943, 1964-78; catalog declares 30 Nov 1963",
+      "scope": "Second original confirms 1964 identity from same reporting chain",
+      "epistemic_grade": "VERIFIED_CATALOG_VS_ORIGINAL_CONFLICT",
+      "physical_constraint_active": false
+    }
+  ],
+  "variables": [
+    {
+      "id": "policy_1961_norad_to_nasa_catalog",
+      "kind": "provenance_link",
+      "value": true,
+      "source_occurrence": "MOR-NOR-20261112-01",
+      "units": null,
+      "epoch": "1961-01-16",
+      "status": "ACTIVE_PROVENANCE"
+    },
+    {
+      "id": "policy_1961_nasa_to_norad_observations",
+      "kind": "provenance_link",
+      "value": true,
+      "source_occurrence": "MOR-NOR-20261112-01",
+      "units": null,
+      "epoch": "1961-01-16",
+      "status": "ACTIVE_PROVENANCE"
+    },
+    {
+      "id": "sputnik46_launch_report_utc",
+      "kind": "reported_time",
+      "value": "1963-11-11T06:25:00Z",
+      "source_occurrence": "MOR-NOR-20261112-02",
+      "units": "UTC",
+      "epoch": "1963-11-11",
+      "status": "ACTIVE_REPORT_METADATA_NOT_528"
+    },
+    {
+      "id": "sputnik46_shemya_radar_detection_utc",
+      "kind": "reported_time",
+      "value": "1963-11-11T06:42:00Z",
+      "source_occurrence": "MOR-NOR-20261112-02",
+      "units": "UTC",
+      "epoch": "1963-11-11",
+      "status": "ACTIVE_REPORT_METADATA_NOT_528"
+    },
+    {
+      "id": "spadats688_decay_lower_utc",
+      "kind": "reported_bound",
+      "value": "1963-11-12T22:10:00Z",
+      "source_occurrence": "MOR-NOR-20261112-03",
+      "units": "UTC",
+      "epoch": "1963-11-12",
+      "status": "ACTIVE_REPORT_METADATA_NOT_528"
+    },
+    {
+      "id": "spadats688_decay_upper_utc",
+      "kind": "reported_bound",
+      "value": "1963-11-13T00:00:00Z",
+      "source_occurrence": "MOR-NOR-20261112-03",
+      "units": "UTC",
+      "epoch": "1963-11-12",
+      "status": "ACTIVE_REPORT_METADATA_NOT_528",
+      "note": "Original 2400Z 12 Nov normalized to 00:00Z on 13 Nov."
+    },
+    {
+      "id": "spadats688_reported_decay_interval_error",
+      "kind": "reported_uncertainty",
+      "value": null,
+      "source_occurrence": "MOR-NOR-20261112-03",
+      "units": "s",
+      "epoch": "1963-11-12",
+      "status": "UNKNOWN_NOT_ZERO"
+    },
+    {
+      "id": "norad528_true_terminal_utc",
+      "kind": "latent_state",
+      "value": null,
+      "source_occurrence": "C197#1",
+      "units": "UTC",
+      "epoch": "1963-11-08",
+      "status": "UNOBSERVED_BY_THESE_SOURCES"
+    },
+    {
+      "id": "report09_original_year",
+      "kind": "catalog_audit",
+      "value": 1964,
+      "source_occurrence": "MOR-NOR-20261112-04",
+      "units": "year",
+      "status": "DOCUMENT_VERIFIED"
+    },
+    {
+      "id": "report10_original_year",
+      "kind": "catalog_audit",
+      "value": 1964,
+      "source_occurrence": "MOR-NOR-20261112-05",
+      "units": "year",
+      "status": "DOCUMENT_VERIFIED"
+    },
+    {
+      "id": "nov1963_528_detailed_radar_window_exists",
+      "kind": "tri_state",
+      "value": null,
+      "source_occurrence": "MOR-NOR-20261112-03",
+      "units": null,
+      "status": "UNKNOWN_NOT_ZERO"
+    }
+  ],
+  "edges": [
+    {
+      "id": "1961_BIDIRECTIONAL_NASA_NORAD_LINEAGE",
+      "depends_on": [
+        "policy_1961_norad_to_nasa_catalog",
+        "policy_1961_nasa_to_norad_observations"
+      ],
+      "effect": "NASA/NORAD published orbit data may share original tracking; require measurement-level provenance before independent likelihood counting",
+      "level": "PROVENANCE_ACTIVE",
+      "physical_528_constraint_active": false
+    },
+    {
+      "id": "1963_EXAMPLE_RADAR_TIME_BASE",
+      "depends_on": [
+        "sputnik46_launch_report_utc",
+        "sputnik46_shemya_radar_detection_utc"
+      ],
+      "effect": "Historical example of 1963 military radar observation timed in Z; NOT observation of 528",
+      "level": "COMPARISON_ONLY",
+      "physical_528_constraint_active": false
+    },
+    {
+      "id": "1963_EXAMPLE_DECAY_BOUNDS",
+      "depends_on": [
+        "spadats688_decay_lower_utc",
+        "spadats688_decay_upper_utc",
+        "spadats688_reported_decay_interval_error",
+        "nov1963_528_detailed_radar_window_exists"
+      ],
+      "effect": "Demonstrates existence of bounded-decay reporting for a DIFFERENT 1963 SPADATS object; search for comparable original 528 entry. Do not transfer time bound",
+      "level": "METHODOLOGICAL_COMPARISON_PENDING_528",
+      "physical_528_constraint_active": false
+    },
+    {
+      "id": "1964_CATALOG_YEAR_FALSIFICATION",
+      "depends_on": [
+        "report09_original_year",
+        "report10_original_year"
+      ],
+      "effect": "Remove two misleading modern listings under 1963 from candidate 1963 original corpus",
+      "level": "HISTORICAL_METADATA_FILTER_ACTIVE",
+      "physical_528_constraint_active": false
+    }
+  ],
+  "november_1963_528_observation_found": false,
+  "original_sha256_status": "UNAVAILABLE_EXTERNAL_PDF_BYTES_IN_RUNTIME",
+  "independence_rule": "Agreement 1961 establishes shared NASA/NORAD exchange. Nov12+Nov14 same Sputnik46 reporting chain, not independent witnesses. Nov1964 pair same Sputnik83 chain.",
+  "negative_search": [
+    "No 528, FTV 2313, or 1963-003B mention in the selected original documents.",
+    "Modern catalog erroneously dates the two Sputnik83 NORAD originals to Nov 1963; the originals say Nov 1964.",
+    "No archival 528 radar range, direction, sensor, epoch or terminal interval recovered."
+  ],
+  "candidate_lean": "If a primary 528 radar or decay report is later recovered, use only its explicit epoch, frame and bounded interval with validated uncertainty as a conditional predicate on true terminal_time_528; comparison object's window and catalog errors cannot constrain it.",
+  "hypotheses": [
+    {
+      "id": "H_CATALOG_NOV1963_SPUTNIK83",
+      "status": "REFUTED",
+      "reason": "Both first-hand originals are explicitly November 1964."
+    },
+    {
+      "id": "H_NORAD_NEVER_REPORTED_SUBDAY_DECAY_IN_1963",
+      "status": "REFUTED_AS_UNIVERSAL",
+      "reason": "14 Nov 1963 primary original gives a window for SPADATS 688."
+    },
+    {
+      "id": "H_NORAD_RETAINED_528_SUBDAY_WINDOW",
+      "status": "OPEN",
+      "requires": "Original 528 radar logs, operational decay bulletins, SPADATS fragmentary reports from 7–9 Nov 1963."
+    }
+  ],
+  "domain_528": "UNALTERED_NOT_EVALUABLE_FROM_COMPARISON_DOCUMENTS",
+  "recommended_next_archive_search": "Air Force 1963 SPADATS Space Intelligence Bulletin and decay reports 7-9 Nov; NARA historical NORAD files, not modern misdated Sputnik83 listings."
+}
