@@ -1,0 +1,754 @@
+{
+  "schema": "conde.cumulative-constraint-graph/v1",
+  "purpose": "Connect new evidence even without immediate narrowing of physically admissible parameters.",
+  "sources": [
+    {
+      "id": "NASA-SSR-1963-11-15",
+      "url": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf",
+      "published_on": "1963-11-15",
+      "source_family": "NASA_GODDARD_COMPILED_FROM_TRACKING",
+      "verification": "TABLE_FROM_PRIOR_INVESTIGATION_NOT_REVERIFIED_THIS_COMMIT",
+      "limitation": "Report date is not observation epoch; source family shared with NORAD."
+    },
+    {
+      "id": "NASA-SSR-1963-11-30",
+      "url": "https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf",
+      "published_on": "1963-11-30",
+      "source_family": "NASA_GODDARD_COMPILED_FROM_TRACKING",
+      "verification": "TABLE_FROM_PRIOR_INVESTIGATION_NOT_REVERIFIED_THIS_COMMIT",
+      "limitation": "Report date is not observation epoch; source family shared with NORAD."
+    }
+  ],
+  "parameters": [
+    {
+      "id": "state_527_at_t",
+      "type": "state_vector",
+      "units": "km,km/s",
+      "frame": "UNKNOWN_UNTIL_TLE_PROVENANCE_CHECK",
+      "scope": "NORAD 527"
+    },
+    {
+      "id": "t_observed_527_1963-11-15",
+      "type": "latent_epoch",
+      "units": "UTC",
+      "scope": "NORAD 527"
+    },
+    {
+      "id": "t_observed_527_1963-11-30",
+      "type": "latent_epoch",
+      "units": "UTC",
+      "scope": "NORAD 527"
+    },
+    {
+      "id": "ballistic_527",
+      "type": "object_specific",
+      "units": "m²/kg",
+      "scope": "NORAD 527"
+    },
+    {
+      "id": "state_529_at_t",
+      "type": "state_vector",
+      "units": "km,km/s",
+      "frame": "UNKNOWN_UNTIL_TLE_PROVENANCE_CHECK",
+      "scope": "NORAD 529"
+    },
+    {
+      "id": "t_observed_529_1963-11-15",
+      "type": "latent_epoch",
+      "units": "UTC",
+      "scope": "NORAD 529"
+    },
+    {
+      "id": "t_observed_529_1963-11-30",
+      "type": "latent_epoch",
+      "units": "UTC",
+      "scope": "NORAD 529"
+    },
+    {
+      "id": "ballistic_529",
+      "type": "object_specific",
+      "units": "m²/kg",
+      "scope": "NORAD 529"
+    },
+    {
+      "id": "shared_J2_gravity",
+      "type": "shared_force",
+      "units": "model",
+      "scope": "527+529"
+    },
+    {
+      "id": "shared_atmosphere_1963",
+      "type": "shared_force",
+      "units": "kg/m³",
+      "scope": "527+529"
+    }
+  ],
+  "operators": [
+    {
+      "id": "nodal_period_model",
+      "expression": "P_nodal=f(state(t),gravitational_and_oblateness_model)",
+      "requires": [
+        "nodal_period_definition",
+        "epoch",
+        "instrument_error",
+        "validated_propagator"
+      ]
+    },
+    {
+      "id": "inclination_model",
+      "expression": "i=f(state(t),frame_and_mean_element_convention)",
+      "requires": [
+        "inclination_definition",
+        "epoch",
+        "instrument_error",
+        "frame"
+      ]
+    },
+    {
+      "id": "apogee_model",
+      "expression": "h_apo=f(state(t),earth_reference_surface)",
+      "requires": [
+        "altitude_definition",
+        "epoch",
+        "instrument_error",
+        "earth_model"
+      ]
+    },
+    {
+      "id": "perigee_model",
+      "expression": "h_peri=f(state(t),earth_reference_surface)",
+      "requires": [
+        "altitude_definition",
+        "epoch",
+        "instrument_error",
+        "earth_model"
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "id": "SSR-1963-11-15-NORAD527-nodal_period",
+      "source_id": "NASA-SSR-1963-11-15",
+      "matrix_local_id": "ORB-DA-20261112 (prior-session local ID; reconcile with matrix)",
+      "object_id": 527,
+      "observable": "nodal_period",
+      "value": 94.6,
+      "unit": "min",
+      "observed_at_utc": null,
+      "published_on": "1963-11-15",
+      "measurement_error": null,
+      "reference_definition": "UNRESOLVED_FROM_SOURCE_TABLE",
+      "variable_id": "observed_nodal_period_527_1963-11-15",
+      "forward_operator_id": "nodal_period_model",
+      "input_parameters": [
+        "state_527_at_t",
+        "t_observed_527_1963-11-15"
+      ],
+      "constraint_status": "CANDIDATE_NOT_ACTIVATED",
+      "link_status": "CONNECTED_PENDING_CALIBRATION",
+      "pending": [
+        "observed_epoch",
+        "error_interval",
+        "forward_model_validation",
+        "source_row_facsímile_recheck"
+      ],
+      "source_independence_family": "NASA_GODDARD_COMPILED_FROM_TRACKING"
+    },
+    {
+      "id": "SSR-1963-11-15-NORAD527-inclination",
+      "source_id": "NASA-SSR-1963-11-15",
+      "matrix_local_id": "ORB-DA-20261112 (prior-session local ID; reconcile with matrix)",
+      "object_id": 527,
+      "observable": "inclination",
+      "value": 81.88,
+      "unit": "deg",
+      "observed_at_utc": null,
+      "published_on": "1963-11-15",
+      "measurement_error": null,
+      "reference_definition": "UNRESOLVED_FROM_SOURCE_TABLE",
+      "variable_id": "observed_inclination_527_1963-11-15",
+      "forward_operator_id": "inclination_model",
+      "input_parameters": [
+        "state_527_at_t",
+        "t_observed_527_1963-11-15"
+      ],
+      "constraint_status": "CANDIDATE_NOT_ACTIVATED",
+      "link_status": "CONNECTED_PENDING_CALIBRATION",
+      "pending": [
+        "observed_epoch",
+        "error_interval",
+        "forward_model_validation",
+        "source_row_facsímile_recheck"
+      ],
+      "source_independence_family": "NASA_GODDARD_COMPILED_FROM_TRACKING"
+    },
+    {
+      "id": "SSR-1963-11-15-NORAD527-apogee",
+      "source_id": "NASA-SSR-1963-11-15",
+      "matrix_local_id": "ORB-DA-20261112 (prior-session local ID; reconcile with matrix)",
+      "object_id": 527,
+      "observable": "apogee",
+      "value": 536,
+      "unit": "km",
+      "observed_at_utc": null,
+      "published_on": "1963-11-15",
+      "measurement_error": null,
+      "reference_definition": "UNRESOLVED_FROM_SOURCE_TABLE",
+      "variable_id": "observed_apogee_527_1963-11-15",
+      "forward_operator_id": "apogee_model",
+      "input_parameters": [
+        "state_527_at_t",
+        "t_observed_527_1963-11-15"
+      ],
+      "constraint_status": "CANDIDATE_NOT_ACTIVATED",
+      "link_status": "CONNECTED_PENDING_CALIBRATION",
+      "pending": [
+        "observed_epoch",
+        "error_interval",
+        "forward_model_validation",
+        "source_row_facsímile_recheck"
+      ],
+      "source_independence_family": "NASA_GODDARD_COMPILED_FROM_TRACKING"
+    },
+    {
+      "id": "SSR-1963-11-15-NORAD527-perigee",
+      "source_id": "NASA-SSR-1963-11-15",
+      "matrix_local_id": "ORB-DA-20261112 (prior-session local ID; reconcile with matrix)",
+      "object_id": 527,
+      "observable": "perigee",
+      "value": 455,
+      "unit": "km",
+      "observed_at_utc": null,
+      "published_on": "1963-11-15",
+      "measurement_error": null,
+      "reference_definition": "UNRESOLVED_FROM_SOURCE_TABLE",
+      "variable_id": "observed_perigee_527_1963-11-15",
+      "forward_operator_id": "perigee_model",
+      "input_parameters": [
+        "state_527_at_t",
+        "t_observed_527_1963-11-15"
+      ],
+      "constraint_status": "CANDIDATE_NOT_ACTIVATED",
+      "link_status": "CONNECTED_PENDING_CALIBRATION",
+      "pending": [
+        "observed_epoch",
+        "error_interval",
+        "forward_model_validation",
+        "source_row_facsímile_recheck"
+      ],
+      "source_independence_family": "NASA_GODDARD_COMPILED_FROM_TRACKING"
+    },
+    {
+      "id": "SSR-1963-11-15-NORAD529-nodal_period",
+      "source_id": "NASA-SSR-1963-11-15",
+      "matrix_local_id": "ORB-DA-20261112 (prior-session local ID; reconcile with matrix)",
+      "object_id": 529,
+      "observable": "nodal_period",
+      "value": 92.6,
+      "unit": "min",
+      "observed_at_utc": null,
+      "published_on": "1963-11-15",
+      "measurement_error": null,
+      "reference_definition": "UNRESOLVED_FROM_SOURCE_TABLE",
+      "variable_id": "observed_nodal_period_529_1963-11-15",
+      "forward_operator_id": "nodal_period_model",
+      "input_parameters": [
+        "state_529_at_t",
+        "t_observed_529_1963-11-15"
+      ],
+      "constraint_status": "CANDIDATE_NOT_ACTIVATED",
+      "link_status": "CONNECTED_PENDING_CALIBRATION",
+      "pending": [
+        "observed_epoch",
+        "error_interval",
+        "forward_model_validation",
+        "source_row_facsímile_recheck"
+      ],
+      "source_independence_family": "NASA_GODDARD_COMPILED_FROM_TRACKING"
+    },
+    {
+      "id": "SSR-1963-11-15-NORAD529-inclination",
+      "source_id": "NASA-SSR-1963-11-15",
+      "matrix_local_id": "ORB-DA-20261112 (prior-session local ID; reconcile with matrix)",
+      "object_id": 529,
+      "observable": "inclination",
+      "value": 81.87,
+      "unit": "deg",
+      "observed_at_utc": null,
+      "published_on": "1963-11-15",
+      "measurement_error": null,
+      "reference_definition": "UNRESOLVED_FROM_SOURCE_TABLE",
+      "variable_id": "observed_inclination_529_1963-11-15",
+      "forward_operator_id": "inclination_model",
+      "input_parameters": [
+        "state_529_at_t",
+        "t_observed_529_1963-11-15"
+      ],
+      "constraint_status": "CANDIDATE_NOT_ACTIVATED",
+      "link_status": "CONNECTED_PENDING_CALIBRATION",
+      "pending": [
+        "observed_epoch",
+        "error_interval",
+        "forward_model_validation",
+        "source_row_facsímile_recheck"
+      ],
+      "source_independence_family": "NASA_GODDARD_COMPILED_FROM_TRACKING"
+    },
+    {
+      "id": "SSR-1963-11-15-NORAD529-apogee",
+      "source_id": "NASA-SSR-1963-11-15",
+      "matrix_local_id": "ORB-DA-20261112 (prior-session local ID; reconcile with matrix)",
+      "object_id": 529,
+      "observable": "apogee",
+      "value": 420,
+      "unit": "km",
+      "observed_at_utc": null,
+      "published_on": "1963-11-15",
+      "measurement_error": null,
+      "reference_definition": "UNRESOLVED_FROM_SOURCE_TABLE",
+      "variable_id": "observed_apogee_529_1963-11-15",
+      "forward_operator_id": "apogee_model",
+      "input_parameters": [
+        "state_529_at_t",
+        "t_observed_529_1963-11-15"
+      ],
+      "constraint_status": "CANDIDATE_NOT_ACTIVATED",
+      "link_status": "CONNECTED_PENDING_CALIBRATION",
+      "pending": [
+        "observed_epoch",
+        "error_interval",
+        "forward_model_validation",
+        "source_row_facsímile_recheck"
+      ],
+      "source_independence_family": "NASA_GODDARD_COMPILED_FROM_TRACKING"
+    },
+    {
+      "id": "SSR-1963-11-15-NORAD529-perigee",
+      "source_id": "NASA-SSR-1963-11-15",
+      "matrix_local_id": "ORB-DA-20261112 (prior-session local ID; reconcile with matrix)",
+      "object_id": 529,
+      "observable": "perigee",
+      "value": 376,
+      "unit": "km",
+      "observed_at_utc": null,
+      "published_on": "1963-11-15",
+      "measurement_error": null,
+      "reference_definition": "UNRESOLVED_FROM_SOURCE_TABLE",
+      "variable_id": "observed_perigee_529_1963-11-15",
+      "forward_operator_id": "perigee_model",
+      "input_parameters": [
+        "state_529_at_t",
+        "t_observed_529_1963-11-15"
+      ],
+      "constraint_status": "CANDIDATE_NOT_ACTIVATED",
+      "link_status": "CONNECTED_PENDING_CALIBRATION",
+      "pending": [
+        "observed_epoch",
+        "error_interval",
+        "forward_model_validation",
+        "source_row_facsímile_recheck"
+      ],
+      "source_independence_family": "NASA_GODDARD_COMPILED_FROM_TRACKING"
+    },
+    {
+      "id": "SSR-1963-11-30-NORAD527-nodal_period",
+      "source_id": "NASA-SSR-1963-11-30",
+      "matrix_local_id": "ORB-DA-20261112 (prior-session local ID; reconcile with matrix)",
+      "object_id": 527,
+      "observable": "nodal_period",
+      "value": 94.8,
+      "unit": "min",
+      "observed_at_utc": null,
+      "published_on": "1963-11-30",
+      "measurement_error": null,
+      "reference_definition": "UNRESOLVED_FROM_SOURCE_TABLE",
+      "variable_id": "observed_nodal_period_527_1963-11-30",
+      "forward_operator_id": "nodal_period_model",
+      "input_parameters": [
+        "state_527_at_t",
+        "t_observed_527_1963-11-30"
+      ],
+      "constraint_status": "CANDIDATE_NOT_ACTIVATED",
+      "link_status": "CONNECTED_PENDING_CALIBRATION",
+      "pending": [
+        "observed_epoch",
+        "error_interval",
+        "forward_model_validation",
+        "source_row_facsímile_recheck"
+      ],
+      "source_independence_family": "NASA_GODDARD_COMPILED_FROM_TRACKING"
+    },
+    {
+      "id": "SSR-1963-11-30-NORAD527-inclination",
+      "source_id": "NASA-SSR-1963-11-30",
+      "matrix_local_id": "ORB-DA-20261112 (prior-session local ID; reconcile with matrix)",
+      "object_id": 527,
+      "observable": "inclination",
+      "value": 81.88,
+      "unit": "deg",
+      "observed_at_utc": null,
+      "published_on": "1963-11-30",
+      "measurement_error": null,
+      "reference_definition": "UNRESOLVED_FROM_SOURCE_TABLE",
+      "variable_id": "observed_inclination_527_1963-11-30",
+      "forward_operator_id": "inclination_model",
+      "input_parameters": [
+        "state_527_at_t",
+        "t_observed_527_1963-11-30"
+      ],
+      "constraint_status": "CANDIDATE_NOT_ACTIVATED",
+      "link_status": "CONNECTED_PENDING_CALIBRATION",
+      "pending": [
+        "observed_epoch",
+        "error_interval",
+        "forward_model_validation",
+        "source_row_facsímile_recheck"
+      ],
+      "source_independence_family": "NASA_GODDARD_COMPILED_FROM_TRACKING"
+    },
+    {
+      "id": "SSR-1963-11-30-NORAD527-apogee",
+      "source_id": "NASA-SSR-1963-11-30",
+      "matrix_local_id": "ORB-DA-20261112 (prior-session local ID; reconcile with matrix)",
+      "object_id": 527,
+      "observable": "apogee",
+      "value": 533,
+      "unit": "km",
+      "observed_at_utc": null,
+      "published_on": "1963-11-30",
+      "measurement_error": null,
+      "reference_definition": "UNRESOLVED_FROM_SOURCE_TABLE",
+      "variable_id": "observed_apogee_527_1963-11-30",
+      "forward_operator_id": "apogee_model",
+      "input_parameters": [
+        "state_527_at_t",
+        "t_observed_527_1963-11-30"
+      ],
+      "constraint_status": "CANDIDATE_NOT_ACTIVATED",
+      "link_status": "CONNECTED_PENDING_CALIBRATION",
+      "pending": [
+        "observed_epoch",
+        "error_interval",
+        "forward_model_validation",
+        "source_row_facsímile_recheck"
+      ],
+      "source_independence_family": "NASA_GODDARD_COMPILED_FROM_TRACKING"
+    },
+    {
+      "id": "SSR-1963-11-30-NORAD527-perigee",
+      "source_id": "NASA-SSR-1963-11-30",
+      "matrix_local_id": "ORB-DA-20261112 (prior-session local ID; reconcile with matrix)",
+      "object_id": 527,
+      "observable": "perigee",
+      "value": 459,
+      "unit": "km",
+      "observed_at_utc": null,
+      "published_on": "1963-11-30",
+      "measurement_error": null,
+      "reference_definition": "UNRESOLVED_FROM_SOURCE_TABLE",
+      "variable_id": "observed_perigee_527_1963-11-30",
+      "forward_operator_id": "perigee_model",
+      "input_parameters": [
+        "state_527_at_t",
+        "t_observed_527_1963-11-30"
+      ],
+      "constraint_status": "CANDIDATE_NOT_ACTIVATED",
+      "link_status": "CONNECTED_PENDING_CALIBRATION",
+      "pending": [
+        "observed_epoch",
+        "error_interval",
+        "forward_model_validation",
+        "source_row_facsímile_recheck"
+      ],
+      "source_independence_family": "NASA_GODDARD_COMPILED_FROM_TRACKING"
+    },
+    {
+      "id": "SSR-1963-11-30-NORAD529-nodal_period",
+      "source_id": "NASA-SSR-1963-11-30",
+      "matrix_local_id": "ORB-DA-20261112 (prior-session local ID; reconcile with matrix)",
+      "object_id": 529,
+      "observable": "nodal_period",
+      "value": 92.2,
+      "unit": "min",
+      "observed_at_utc": null,
+      "published_on": "1963-11-30",
+      "measurement_error": null,
+      "reference_definition": "UNRESOLVED_FROM_SOURCE_TABLE",
+      "variable_id": "observed_nodal_period_529_1963-11-30",
+      "forward_operator_id": "nodal_period_model",
+      "input_parameters": [
+        "state_529_at_t",
+        "t_observed_529_1963-11-30"
+      ],
+      "constraint_status": "CANDIDATE_NOT_ACTIVATED",
+      "link_status": "CONNECTED_PENDING_CALIBRATION",
+      "pending": [
+        "observed_epoch",
+        "error_interval",
+        "forward_model_validation",
+        "source_row_facsímile_recheck"
+      ],
+      "source_independence_family": "NASA_GODDARD_COMPILED_FROM_TRACKING"
+    },
+    {
+      "id": "SSR-1963-11-30-NORAD529-inclination",
+      "source_id": "NASA-SSR-1963-11-30",
+      "matrix_local_id": "ORB-DA-20261112 (prior-session local ID; reconcile with matrix)",
+      "object_id": 529,
+      "observable": "inclination",
+      "value": 81.86,
+      "unit": "deg",
+      "observed_at_utc": null,
+      "published_on": "1963-11-30",
+      "measurement_error": null,
+      "reference_definition": "UNRESOLVED_FROM_SOURCE_TABLE",
+      "variable_id": "observed_inclination_529_1963-11-30",
+      "forward_operator_id": "inclination_model",
+      "input_parameters": [
+        "state_529_at_t",
+        "t_observed_529_1963-11-30"
+      ],
+      "constraint_status": "CANDIDATE_NOT_ACTIVATED",
+      "link_status": "CONNECTED_PENDING_CALIBRATION",
+      "pending": [
+        "observed_epoch",
+        "error_interval",
+        "forward_model_validation",
+        "source_row_facsímile_recheck"
+      ],
+      "source_independence_family": "NASA_GODDARD_COMPILED_FROM_TRACKING"
+    },
+    {
+      "id": "SSR-1963-11-30-NORAD529-apogee",
+      "source_id": "NASA-SSR-1963-11-30",
+      "matrix_local_id": "ORB-DA-20261112 (prior-session local ID; reconcile with matrix)",
+      "object_id": 529,
+      "observable": "apogee",
+      "value": 390,
+      "unit": "km",
+      "observed_at_utc": null,
+      "published_on": "1963-11-30",
+      "measurement_error": null,
+      "reference_definition": "UNRESOLVED_FROM_SOURCE_TABLE",
+      "variable_id": "observed_apogee_529_1963-11-30",
+      "forward_operator_id": "apogee_model",
+      "input_parameters": [
+        "state_529_at_t",
+        "t_observed_529_1963-11-30"
+      ],
+      "constraint_status": "CANDIDATE_NOT_ACTIVATED",
+      "link_status": "CONNECTED_PENDING_CALIBRATION",
+      "pending": [
+        "observed_epoch",
+        "error_interval",
+        "forward_model_validation",
+        "source_row_facsímile_recheck"
+      ],
+      "source_independence_family": "NASA_GODDARD_COMPILED_FROM_TRACKING"
+    },
+    {
+      "id": "SSR-1963-11-30-NORAD529-perigee",
+      "source_id": "NASA-SSR-1963-11-30",
+      "matrix_local_id": "ORB-DA-20261112 (prior-session local ID; reconcile with matrix)",
+      "object_id": 529,
+      "observable": "perigee",
+      "value": 368,
+      "unit": "km",
+      "observed_at_utc": null,
+      "published_on": "1963-11-30",
+      "measurement_error": null,
+      "reference_definition": "UNRESOLVED_FROM_SOURCE_TABLE",
+      "variable_id": "observed_perigee_529_1963-11-30",
+      "forward_operator_id": "perigee_model",
+      "input_parameters": [
+        "state_529_at_t",
+        "t_observed_529_1963-11-30"
+      ],
+      "constraint_status": "CANDIDATE_NOT_ACTIVATED",
+      "link_status": "CONNECTED_PENDING_CALIBRATION",
+      "pending": [
+        "observed_epoch",
+        "error_interval",
+        "forward_model_validation",
+        "source_row_facsímile_recheck"
+      ],
+      "source_independence_family": "NASA_GODDARD_COMPILED_FROM_TRACKING"
+    }
+  ],
+  "couplings": [
+    {
+      "id": "527-529-shared-forces",
+      "type": "CONDITIONAL_DYNAMIC_RELATION",
+      "parameters": [
+        "shared_J2_gravity",
+        "shared_atmosphere_1963",
+        "state_527_at_t",
+        "state_529_at_t",
+        "ballistic_527",
+        "ballistic_529"
+      ],
+      "hard_constraint_active": false,
+      "description": "Bodies share some force models but not phase, ballistic coefficient, or orbit. Joint fit requires original epochs and independent holdout."
+    }
+  ],
+  "notes": [
+    "NASA reports share upstream tracking family; two publications are not independent radar networks.",
+    "Null observation epoch/error is UNKNOWN, not zero.",
+    "Publication day is not measurement time.",
+    "Connecting evidence is progress even if the admissible domain has not yet been computed."
+  ],
+  "derived_connections": [
+    {
+      "id": "SSR-PUBLICATIONS-DELTA-527-nodal_period",
+      "inputs": [
+        "SSR-1963-11-15-NORAD527-nodal_period",
+        "SSR-1963-11-30-NORAD527-nodal_period"
+      ],
+      "operator_id": "difference_between_published_values",
+      "expression": "reported_value(30-Nov publication) - reported_value(15-Nov publication)",
+      "derived_arithmetic": 0.2,
+      "unit": "min",
+      "status": "CONNECTED_PENDING_EPOCH_AND_COVARIANCE",
+      "physical_interpretation": "Difference between published tabulated values, NOT a measured time derivative or causal atmospheric trend.",
+      "missing": [
+        "source_specific_observation_epochs",
+        "correlated_source_errors",
+        "validated_forward_model"
+      ],
+      "next_model_relation": "predict_nodal_period_of_527(t_new)-predict_nodal_period_of_527(t_old)"
+    },
+    {
+      "id": "SSR-PUBLICATIONS-DELTA-527-inclination",
+      "inputs": [
+        "SSR-1963-11-15-NORAD527-inclination",
+        "SSR-1963-11-30-NORAD527-inclination"
+      ],
+      "operator_id": "difference_between_published_values",
+      "expression": "reported_value(30-Nov publication) - reported_value(15-Nov publication)",
+      "derived_arithmetic": 0,
+      "unit": "deg",
+      "status": "CONNECTED_PENDING_EPOCH_AND_COVARIANCE",
+      "physical_interpretation": "Difference between published tabulated values, NOT a measured time derivative or causal atmospheric trend.",
+      "missing": [
+        "source_specific_observation_epochs",
+        "correlated_source_errors",
+        "validated_forward_model"
+      ],
+      "next_model_relation": "predict_inclination_of_527(t_new)-predict_inclination_of_527(t_old)"
+    },
+    {
+      "id": "SSR-PUBLICATIONS-DELTA-527-apogee",
+      "inputs": [
+        "SSR-1963-11-15-NORAD527-apogee",
+        "SSR-1963-11-30-NORAD527-apogee"
+      ],
+      "operator_id": "difference_between_published_values",
+      "expression": "reported_value(30-Nov publication) - reported_value(15-Nov publication)",
+      "derived_arithmetic": -3,
+      "unit": "km",
+      "status": "CONNECTED_PENDING_EPOCH_AND_COVARIANCE",
+      "physical_interpretation": "Difference between published tabulated values, NOT a measured time derivative or causal atmospheric trend.",
+      "missing": [
+        "source_specific_observation_epochs",
+        "correlated_source_errors",
+        "validated_forward_model"
+      ],
+      "next_model_relation": "predict_apogee_of_527(t_new)-predict_apogee_of_527(t_old)"
+    },
+    {
+      "id": "SSR-PUBLICATIONS-DELTA-527-perigee",
+      "inputs": [
+        "SSR-1963-11-15-NORAD527-perigee",
+        "SSR-1963-11-30-NORAD527-perigee"
+      ],
+      "operator_id": "difference_between_published_values",
+      "expression": "reported_value(30-Nov publication) - reported_value(15-Nov publication)",
+      "derived_arithmetic": 4,
+      "unit": "km",
+      "status": "CONNECTED_PENDING_EPOCH_AND_COVARIANCE",
+      "physical_interpretation": "Difference between published tabulated values, NOT a measured time derivative or causal atmospheric trend.",
+      "missing": [
+        "source_specific_observation_epochs",
+        "correlated_source_errors",
+        "validated_forward_model"
+      ],
+      "next_model_relation": "predict_perigee_of_527(t_new)-predict_perigee_of_527(t_old)"
+    },
+    {
+      "id": "SSR-PUBLICATIONS-DELTA-529-nodal_period",
+      "inputs": [
+        "SSR-1963-11-15-NORAD529-nodal_period",
+        "SSR-1963-11-30-NORAD529-nodal_period"
+      ],
+      "operator_id": "difference_between_published_values",
+      "expression": "reported_value(30-Nov publication) - reported_value(15-Nov publication)",
+      "derived_arithmetic": -0.4,
+      "unit": "min",
+      "status": "CONNECTED_PENDING_EPOCH_AND_COVARIANCE",
+      "physical_interpretation": "Difference between published tabulated values, NOT a measured time derivative or causal atmospheric trend.",
+      "missing": [
+        "source_specific_observation_epochs",
+        "correlated_source_errors",
+        "validated_forward_model"
+      ],
+      "next_model_relation": "predict_nodal_period_of_529(t_new)-predict_nodal_period_of_529(t_old)"
+    },
+    {
+      "id": "SSR-PUBLICATIONS-DELTA-529-inclination",
+      "inputs": [
+        "SSR-1963-11-15-NORAD529-inclination",
+        "SSR-1963-11-30-NORAD529-inclination"
+      ],
+      "operator_id": "difference_between_published_values",
+      "expression": "reported_value(30-Nov publication) - reported_value(15-Nov publication)",
+      "derived_arithmetic": -0.01,
+      "unit": "deg",
+      "status": "CONNECTED_PENDING_EPOCH_AND_COVARIANCE",
+      "physical_interpretation": "Difference between published tabulated values, NOT a measured time derivative or causal atmospheric trend.",
+      "missing": [
+        "source_specific_observation_epochs",
+        "correlated_source_errors",
+        "validated_forward_model"
+      ],
+      "next_model_relation": "predict_inclination_of_529(t_new)-predict_inclination_of_529(t_old)"
+    },
+    {
+      "id": "SSR-PUBLICATIONS-DELTA-529-apogee",
+      "inputs": [
+        "SSR-1963-11-15-NORAD529-apogee",
+        "SSR-1963-11-30-NORAD529-apogee"
+      ],
+      "operator_id": "difference_between_published_values",
+      "expression": "reported_value(30-Nov publication) - reported_value(15-Nov publication)",
+      "derived_arithmetic": -30,
+      "unit": "km",
+      "status": "CONNECTED_PENDING_EPOCH_AND_COVARIANCE",
+      "physical_interpretation": "Difference between published tabulated values, NOT a measured time derivative or causal atmospheric trend.",
+      "missing": [
+        "source_specific_observation_epochs",
+        "correlated_source_errors",
+        "validated_forward_model"
+      ],
+      "next_model_relation": "predict_apogee_of_529(t_new)-predict_apogee_of_529(t_old)"
+    },
+    {
+      "id": "SSR-PUBLICATIONS-DELTA-529-perigee",
+      "inputs": [
+        "SSR-1963-11-15-NORAD529-perigee",
+        "SSR-1963-11-30-NORAD529-perigee"
+      ],
+      "operator_id": "difference_between_published_values",
+      "expression": "reported_value(30-Nov publication) - reported_value(15-Nov publication)",
+      "derived_arithmetic": -8,
+      "unit": "km",
+      "status": "CONNECTED_PENDING_EPOCH_AND_COVARIANCE",
+      "physical_interpretation": "Difference between published tabulated values, NOT a measured time derivative or causal atmospheric trend.",
+      "missing": [
+        "source_specific_observation_epochs",
+        "correlated_source_errors",
+        "validated_forward_model"
+      ],
+      "next_model_relation": "predict_perigee_of_529(t_new)-predict_perigee_of_529(t_old)"
+    }
+  ]
+}
