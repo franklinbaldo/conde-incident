@@ -39,6 +39,8 @@ try {
     await page.getByRole('navigation', { name: 'Seções do laboratório' })
       .getByRole('link', { name: /Rastreamento & Mapa/ }).click();
     assert.equal(new URL(page.url()).hash, '#/map');
+    // Hash changes synchronously; React state and aria-current update on a later tick.
+    await page.waitForFunction(() => document.querySelector('nav a[aria-current="page"]')?.textContent?.includes('Rastreamento & Mapa'));
     const current = await page.getByRole('navigation', { name: 'Seções do laboratório' })
       .locator('[aria-current="page"]').textContent();
     assert.match(current || '', /Rastreamento & Mapa/);
