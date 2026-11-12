@@ -4,6 +4,8 @@ NORAD 528 (1963-003B) & O CASO CONDE (1963)
 Reconstrucao Orbital Historica, Triangulacao Dinamica e Teste Inverso de Falsificacao
 """
 
+# Modelo exploratorio: retropropagacao de 12 dias nao e previsao de reentrada.
+# O dia de decaimento NASA 08/11 nao fornece hora nem local.
 import math
 import random
 from datetime import datetime, timezone, timedelta
@@ -14,11 +16,11 @@ EARTH_J2 = 0.00108262668
 CONDE_LAT = -11.8139
 CONDE_LON = -37.6108
 
-EPOCH_528 = datetime(1963, 10, 27, 14, 40, 0, tzinfo=timezone.utc)
+EPOCH_528 = datetime(1963, 10, 27, 14, 40, 16, 132512, tzinfo=timezone.utc)
 INCLINATION_528_DEG = 81.8615
-MEAN_MOTION_528_REV_DAY = 15.7490
-RAAN_528_DEG = 284.1520
-ECCENTRICITY_528 = 0.00842
+MEAN_MOTION_528_REV_DAY = 15.74901460
+RAAN_528_DEG = 198.5261
+ECCENTRICITY_528 = 0.0017147
 
 def haversine_km(lat1, lon1, lat2, lon2):
     phi1, phi2 = math.radians(lat1), math.radians(lat2)
