@@ -1,0 +1,107 @@
+{
+  "schema": "conde.gis.spu-mme-1985-catalogue/v1",
+  "id": "CGEO-13",
+  "event_date": "1963-11-08",
+  "source_family": "IBGE_MME_MAPS_SPU_ARCHIVE",
+  "records": [
+    {
+      "id": "BR-SPU-SPUNET-2020200296040",
+      "municipality": "Conde",
+      "catalog_url": "https://memoria-spu.gestao.gov.br/acervo-historicodesativado/ibge-conde-ba-1985/",
+      "catalogue_secondary_url": "https://memoria-spu.gestao.gov.br/acervo-historico/ibge-conde-ba-1985/",
+      "scan_marker": "1590163557715-10861-Reg6345_0006",
+      "pdf_url": "https://memoria-spu.gestao.gov.br/wp-content/uploads/tainacan-items/305841/329573/1590163557715-10861-Reg6345_0006.pdf",
+      "scale_denominator": 100000,
+      "revision_month": "1985-09",
+      "catalogued_utm_text": "UTM-FUSO- 24º-39º - WGr.",
+      "extra_base": "MMC 70 used south of latitude 12° S",
+      "catalogue_mentions": [
+        "Rio Real",
+        "Jandaira",
+        "Rio Itapicuru",
+        "Esplanada"
+      ],
+      "state": "BA",
+      "catalogued_year": 1985,
+      "original_date": null,
+      "document_type": "IBGE MME map / SPU archival copy",
+      "custodian": "SPU-RJ",
+      "originating_office": "SPU-BA",
+      "paper_material": "Papel manteiga",
+      "access_status": "CATALOGUE_READ_PDF_NOT_ACQUIRED",
+      "facsimile_inspected": false,
+      "pdf_sha256": null,
+      "geodetic_datum": null,
+      "verified_crs": null,
+      "geometry": null,
+      "positional_accuracy_m": null
+    },
+    {
+      "id": "BR-SPU-REG6341-0002",
+      "municipality": "Jandaira",
+      "catalog_url": "https://memoria-spu.gestao.gov.br/acervo-historico/ibge-jandaira-ba-1985/",
+      "catalogue_secondary_url": null,
+      "scan_marker": "1590001722218-null-Reg6341_0002",
+      "pdf_url": "https://memoria-spu.gestao.gov.br/wp-content/uploads/tainacan-items/305841/329444/1590001722218-null-Reg6341_0002.pdf",
+      "scale_denominator": 50000,
+      "revision_month": "1985-09",
+      "catalogued_utm_text": "UTM-FUSO - 24º - 39 - WGr.",
+      "extra_base": null,
+      "catalogue_mentions": [
+        "Conde",
+        "Rio Real",
+        "Sergipe",
+        "Esplanada",
+        "Rancho Tabatinga",
+        "Mangue Seco"
+      ],
+      "state": "BA",
+      "catalogued_year": 1985,
+      "original_date": null,
+      "document_type": "IBGE MME map / SPU archival copy",
+      "custodian": "SPU-RJ",
+      "originating_office": "SPU-BA",
+      "paper_material": "Papel manteiga",
+      "access_status": "CATALOGUE_READ_PDF_NOT_ACQUIRED",
+      "facsimile_inspected": false,
+      "pdf_sha256": null,
+      "geodetic_datum": null,
+      "verified_crs": null,
+      "geometry": null,
+      "positional_accuracy_m": null
+    }
+  ],
+  "dependency_graph": {
+    "prior_ids": [
+      "CGEO-09",
+      "CGEO-10",
+      "CGEO-11",
+      "CGEO-12"
+    ],
+    "links": [
+      {
+        "from": "BR-SPU-SPUNET-2020200296040",
+        "to": "MME_1985_MAP_FAMILY",
+        "type": "CATALOGUED_ARCHIVAL_COPY"
+      },
+      {
+        "from": "BR-SPU-REG6341-0002",
+        "to": "MME_1985_MAP_FAMILY",
+        "type": "CATALOGUED_ARCHIVAL_COPY"
+      },
+      {
+        "from": "MME_1985_MAP_FAMILY",
+        "to": "1963_LEGAL_BOUNDARY_LATENT",
+        "type": "POST_EVENT_WITH_FACSIMILE_AND_LEGAL_BRIDGE_MISSING"
+      }
+    ],
+    "same_ibge_family_not_independent_surveys": true,
+    "postdates_event": true,
+    "legal_boundary_1963": null,
+    "datum": null,
+    "georeferencing_error_m": null,
+    "point_of_reentry": null,
+    "can_constrain_reentry": false
+  },
+  "falsification_gate": "Obtain both official PDFs with SHA256 and inspect imprints before any attempted georeferencing. Verify 1944/1953 original legal annexes and intervening acts before attributing legal validity to 1963."
+}
