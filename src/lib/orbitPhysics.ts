@@ -60,25 +60,44 @@ export function accelerationKmS2(s: State, dynamics: Dynamics = {}): Vec3 {
       factor * s.rKm[2] * (5 * z2OverR2 - 3),
     ]);
   }
-  if (dynamics.atmosphere) {
-    const { densityKgM3, cdAreaOverMassM2Kg, source } = dynamics.atmosphere;
-    if (!source.trim() || !Number.isFinite(cdAreaOverMassM2Kg) || cdAreaOverMassM2Kg < 0) {
-      throw new RangeError('Atmospheric model requires source and nonnegative Cd*A/m');
-    }
-    const rho = densityKgM3(r - EARTH.radiusKm, s.tS);
-    if (!Number.isFinite(rho) || rho < 0) throw new RangeError('Density must be finite and nonnegative');
-    // Atmosphere co-rotates with Earth; relative velocity is inertial v minus omega x r.
-    const vRelKmS: Vec3 = [
-      s.vKmS[0] + EARTH.spinRadS * s.rKm[1],
-      s.vKmS[1] - EARTH.spinRadS * s.rKm[0],
-      s.vKmS[2],
-    ];
-    // SI drag m/s^2 divided by 1000 -> km/s^2. Multiplication by
-    // (1000 m/km)^2 / (1000 m/km) = 1000.
-    const dragFactor = -500 * rho * cdAreaOverMassM2Kg * norm(vRelKmS);
-    acceleration = add(acceleration, scale(vRelKmS, dragFactor));
-  }
+  if (dynamics.atmosphere) acceleration = add(acceleration, dragAccelerationKmS2(s, dynamics.atmosphere));
   return acceleration;
+}
+
+/**
+ * Co-rotating atmospheric drag isolated for a physical-work audit. The same
+ * term is used by the RK4 force, so an audit cannot silently use another drag
+ * law. Density and ballistic parameter are ALWAYS explicit source inputs.
+ */
+export function dragAccelerationKmS2(s: State, atmosphere: Atmosphere): Vec3 {
+  const r = norm(s.rKm);
+  if (!finiteVec(s.rKm) || !finiteVec(s.vKmS) || !Number.isFinite(s.tS) || !(r > EARTH.radiusKm * 0.5))
+    throw new RangeError('Nonfinite or invalid osculating state');
+  const { densityKgM3, cdAreaOverMassM2Kg, source } = atmosphere;
+  if (typeof source !== 'string' || !source.trim() ||
+      !Number.isFinite(cdAreaOverMassM2Kg) || cdAreaOverMassM2Kg < 0)
+    throw new RangeError('Atmospheric model requires source and nonnegative Cd*A/m');
+  const rho = densityKgM3(r - EARTH.radiusKm, s.tS);
+  if (!Number.isFinite(rho) || rho < 0) throw new RangeError('Density must be finite and nonnegative');
+  const relative: Vec3 = [
+    s.vKmS[0] + EARTH.spinRadS * s.rKm[1],
+    s.vKmS[1] - EARTH.spinRadS * s.rKm[0],
+    s.vKmS[2],
+  ];
+  // SI drag -> km/s²: (1/2)*rho*(Cd*A/m)*(1000*vKmS)^2/1000.
+  return scale(relative, -500 * rho * cdAreaOverMassM2Kg * norm(relative));
+}
+
+/** Drag power on the Jacobi-like E - omega*Lz integral (km²/s³).
+ * For any admissible nonnegative density/Cd*A/m it must be <= 0.
+ */
+export function dragJacobiPowerKm2S3(s: State, atmosphere: Atmosphere): number {
+  const relative: Vec3 = [
+    s.vKmS[0] + EARTH.spinRadS * s.rKm[1],
+    s.vKmS[1] - EARTH.spinRadS * s.rKm[0],
+    s.vKmS[2],
+  ];
+  return dot(dragAccelerationKmS2(s, atmosphere), relative);
 }
 
 export function rk4(s: State, dtS: number, dynamics: Dynamics = {}): State {
