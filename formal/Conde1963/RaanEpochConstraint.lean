@@ -47,11 +47,17 @@ def c241RateCanExplain (rateE4PerDay : Nat) : Prop :=
 
 /-- At most 458,578 degrees/day is mathematically insufficient. -/
 theorem c241_rate_458578_deg_day_cannot_explain :
-    ¬ c241RateCanExplain (458578 * 10000) := by decide
+    ¬ c241RateCanExplain (458578 * 10000) := by
+  change ¬ ((2841520 - 1985261 - 1) * 86400000000 ≤
+    (458578 * 10000) * 16132608)
+  decide
 
 /-- 458,579 degrees/day crosses the numeric threshold. Neither
     bound is an estimated or observed physical precession rate. -/
 theorem c241_rate_458579_deg_day_passes_numeric_gate :
-    c241RateCanExplain (458579 * 10000) := by decide
+    c241RateCanExplain (458579 * 10000) := by
+  change (2841520 - 1985261 - 1) * 86400000000 ≤
+    (458579 * 10000) * 16132608
+  decide
 
 end Conde1963
