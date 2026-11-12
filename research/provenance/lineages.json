@@ -42,6 +42,16 @@
       "kind": "radiosonde_archive",
       "independence": "MEASURED_IN_RECIFE_ONLY",
       "comment": "Radiosonde historical wind levels in Recife; not measured at Conde."
+    },
+    {
+      "id": "USAF_AIRA_BLUEBOOK",
+      "kind": "DOCUMENTARY_ADMINISTRATIVE_CHAIN",
+      "independence_limit": "Separate USAF document; may reproduce consular reporting; never count as physical or separate eyewitness observation."
+    },
+    {
+      "id": "RIO_PRESS_UNINSPECTED",
+      "kind": "NEWSPAPER_QUOTED_NOT_READ",
+      "independence_limit": "Original issue and informant not inspected; no independent witness or publication time established."
     }
   ],
   "sources": [
@@ -156,6 +166,22 @@
       "url": "https://www.ncei.noaa.gov/pub/data/igra/data/data-por/BRM00082900-data.txt.zip",
       "locator": "NOAA IGRA BRM00082900, 08/11/1963, 5 níveis 850–250 hPa; hora real RELTIME ausente",
       "status": "HISTORICAL_WIND_MEASUREMENT_RECIFE_NOT_CONDE"
+    },
+    {
+      "id": "NARA_AIRA_TELEGRAM_19631114",
+      "family": "USAF_AIRA_BLUEBOOK",
+      "work_id": "NARA_BLUEBOOK_CONDE_FILEUNIT_302531012",
+      "status": "ORIGINAL_DIGITAL_OBJECT_VISUALLY_INSPECTED_QUOTES_PRESS",
+      "locator": "NARA NAID 302531012 / digital object 302531014 / T1206 reel 49 / 0810.jp2; telegram USAIRA Rio 14 NOV 1963",
+      "url": "https://catalog.archives.gov/medialz/partners/dc-metro/rg-341/597821/T1206-ProjectBlueBook_0049/images/0810.jp2"
+    },
+    {
+      "id": "O_GLOBO_19631108_UNINSPECTED",
+      "family": "RIO_PRESS_UNINSPECTED",
+      "work_id": "O_GLOBO_19631108_ISSUE_UNLOCATED",
+      "status": "UNINSPECTED_NEWSPAPER_QUOTED_BY_USAIRA_NOT_AUTHENTICATED",
+      "locator": "O Globo, 08/11/1963; cited by USAIRA 14/11; original issue, page, edition and hour not inspected",
+      "url": null
     }
   ],
   "dependencies": [
@@ -193,6 +219,11 @@
       "from": "CELESTRAK_SPACE_WEATHER",
       "to": "NRC_F107_SERIES",
       "kind": "aggregates_from"
+    },
+    {
+      "from": "NARA_AIRA_TELEGRAM_19631114",
+      "to": "O_GLOBO_19631108_UNINSPECTED",
+      "kind": "quotes_uninspected_source"
     }
   ],
   "citations": [
@@ -373,6 +404,43 @@
       ],
       "status": "DOCUMENTARY_DAY_ONLY",
       "scope": "NASA 8 NOV 63 is a catalogue date, not terminal observation."
+    }
+  ],
+  "post_matrix_occurrences": [
+    {
+      "id": "NARA-BB-CONDE-20261112-01",
+      "source_id": "NARA_AIRA_TELEGRAM_19631114",
+      "quoted_source_id": "O_GLOBO_19631108_UNINSPECTED",
+      "status": "CONNECTED_PENDING_DOCUMENTARY_VERIFICATION",
+      "observation_type": "DOCUMENTARY_CITATION_NOT_PHYSICAL_OBSERVATION",
+      "proposition": "Telegram USAIRA dated 14 Nov 1963 cites an O Globo issue dated 8 Nov with a story attributed to Salvador about an alleged metallic sphere in Conde.",
+      "nara_fileunit_naid": 302531012,
+      "nara_object_id": 302531014,
+      "image_filename": "0810.jp2",
+      "image_sha256": "136be026e23acdd5e7ff0a5307e04bef799249b48346072a43cae1506be37ce9",
+      "telegram_date": "1963-11-14",
+      "reported_newspaper_date": "1963-11-08",
+      "newspaper_page": null,
+      "newspaper_edition": null,
+      "newspaper_publication_time": null,
+      "journalistic_source_independence": "UNRESOLVED",
+      "physical_constraint": null,
+      "related_matrix_occurrences": [
+        "C232#1",
+        "C233#1",
+        "C234#1",
+        "C235#1",
+        "C236#1",
+        "C237#1",
+        "C238#1",
+        "C01#1",
+        "C02#1",
+        "C03#1"
+      ],
+      "relationship_to_matrix": "PROVENANCE_UPDATE_NO_CHANGE_TO_FROZEN_HISTORICAL_ROWS",
+      "verification": "NARA JP2 inspected and SHA256 recorded in the project archive report; O Globo original not read.",
+      "next_dependency": "Locate O Globo 08/11/1963 original issue/page and confirm printed credit, sourcing, edition and publication time; compare to Rádio Tupi 08/11 23:30 only after time provenance.",
+      "report_path": "research/archives/nara_bluebook_conde_naid_302531012_2026-11-12.md"
     }
   ]
 }
