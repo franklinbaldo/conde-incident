@@ -1,5 +1,48 @@
 # Lean 4: Conde 1963
 
+## 🐙 Epistemic correction: catalogue date is NOT the physical event date
+
+**Current normative interpretation, superseding any older text below that
+treated the NASA catalogue day as an admitted physical constraint.**
+
+- **Proven documentary statement:** NASA/Goddard's 15 Nov 1963 report
+  records 1963-003B as decayed on **8 Nov 1963**. Matrix C131/C197 are
+  two references to that **same document**, not independent observations.
+- **Unproven scientific hypothesis:** the true physical orbital decay
+  occurred on that same day. We do not know the operational method by which
+  NORAD/NASA assigned the date, its error distribution, last positive track,
+  first failed acquisition, actual reentry time or location.
+- **Separate questions:** whether orbital decay occurred; its UTC interval;
+  whether material survived; whether anything impacted Conde. A recorded
+  catalogue date is not proof of any subsequent ground impact.
+- **Lean:** `nasa_record_states_november_eighth` certifies the transcribed
+  *documentary* value as a defined fact. `PhysicalDayMatchesCatalogue`
+  is only a scientific proposition on a latent candidate. The C131/C197
+  constraints have `use := .scenarioOnly`, so `AllowedFromSources` does
+  **not** narrow physical parameters on that basis. Theorems provide
+  explicit nonempty conditional verdicts: `ConditionallyForcesNasaDay`,
+  `ConditionallyExcludesNasaDay`, `DayRemainsUnderdetermined`.
+- **ALL 241 matrix occurrences:** every Lean row now has a mandatory
+  `EpistemicUncertainty` marker, and the JSON contract provides
+  `epistemic_uncertainty`, `uncertainty_basis`, `numeric_error_bounds`
+  (`null`, never fabricated) and the source text plus permalink.
+  C01 marks an **existing news report with physical occurrence unverified**;
+  C131/C197 mark a **catalogue day with actual day unknown**; the other
+  **238 occurrences are explicitly pending itemized uncertainty assessment
+  in this formal transfer**, retaining the matrix's original caveats.
+  Pending review does NOT declare those 238 false or lacking historical value.
+- **Scope of CI proof:** information accounting and implications of assumed
+  constraints, not authenticity, NORAD operational inference, an orbital
+  prediction, or a calibrated statistical confidence interval.
+
+A valid future day test must use independent observations, dated epochs,
+verified custody, a physically validated propagation model and holdouts.
+Only then may an error-bounded date hypothesis be admitted or rejected
+**conditional on those justified premises**. If no parameters survive,
+report contradictory premises; if on-day and off-day candidates both survive,
+report indeterminate. Do not force a verdict with an unsupported date axiom.
+
+
 This folder starts the transfer of the previously compiled 11 November 2026 Lean 4.35.0 research archive.
 
 `lake build` checks the **logical core**: provenance dependency, exact arithmetic from catalog statistics, holdout metric comparison and the failure of a date-only constraint to identify a geographic site.
@@ -126,7 +169,7 @@ verification of every historical source, recovery of the 154/151 Lean
 archive, or an observed position/time of a 1963 impact.
 
 
-## 🐙 Documentary day restriction: C131/C197 (11 November 2026)
+## Historical note (superseded): documentary-day filter C131/C197 (11 November 2026)
 
 `Conde1963/DocumentaryDay.lean` instantiates the abstract parameter
 interface with one *historically sourced, limited* condition: the NASA/Goddard
@@ -170,7 +213,7 @@ its independent custody hashes remain unavailable: historical import
 **NOT_RUN**.
 
 
-## 🐙 All 241 documentary occurrences tracked (C01–C238)
+## Historical note (superseded physical-role semantics): 241 documentary occurrences
 
 The **pinned** 2026-11-11 matrix has 238 distinct numeric IDs but **241
 actual Markdown evidence rows**. C44, C45 and C46 each occur twice with
