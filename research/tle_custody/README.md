@@ -512,3 +512,27 @@ O HEAD de código \`e0f4a37b7f03181cb0a9816c4fe174055a600e96\` passou [140 teste
 | 529 | 54 | **0** | 1,9628071° (12/08, linha 3041) |
 
 A série tem **123 registros físicos e 119 épocas catalogadas distintas**; nenhuma das épocas origina por cópia *integral* o vetor legado de seis campos no limite de arredondamento numérico do dataset. **Nenhuma** dessas distâncias de RAAN corresponde a prova de origem do 284,1520°, e não é possível juntar elementos de objetos ou épocas diferentes. Falha de teste no SHA inicial \`2c03d0b5\`: o resto \`Decimal %\` com dividendo negativo não produzia distância circular positiva, gerando falso positivo. Corrigido antes da execução citada e preservado em histórico. Qualquer novo commit, inclusive esta memória, exige novo CI no HEAD final.
+
+
+## C241-T13: não contar `altitude_km` como altura instrumental independente
+
+A extração Parquet fixa contém também `altitude_km`, além do movimento médio e da excentricidade. Antes de empregar essa coluna como observação independente, [o auditor específico](../../tools/tle_altitude_lineage_audit.py) confronta cada época de 527/528/529 com três **proxies keplerianos meramente algébricos**: `a-R`, `a(1-e)-R` e `a(1+e)-R`. Também informa o raio numérico implícito `a-altitude_km`, dispersão entre épocas, e a concordância com raios de referência explicitados. `μ=398600,4418 km³/s²` e `R=6378,137 km` são convenções do diagnóstico; não parâmetros estimados de 1963. Um alinhamento até 0,1/1/10 km não certifica o ETL do espelho nem o erro do satélite, tampouco prova ausência de arrasto. Uma discordância tampouco demonstra alteração de órbita: o movimento médio TLE pode não corresponder a `n` kepleriano simples. Preservar duplicatas e `source_row`, inclusive discrepâncias.
+
+Proveniência: Parquet oxzoid 1963 [revisão 4b4fb3a](https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/4b4fb3a/data/tle_1963.parquet), SHA-256 `c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09`; CSV dos três NORAD, SHA-256 `3940715d7c15cf15c24e678a8c5b5fbb34a031b3ffd7e33c0580277377383231`. NASA 19640001198 é evidência primária **do dia 08/11**, não de alturas; nenhum TLE instrumental, ETL original, frame/sensor/erro ou fragmento físico foi recuperado aqui. `altitude_km` continua **SEM INDEPENDÊNCIA ESTABELECIDA** e RAAN conflitante **NÃO RESOLVIDA**. [Matriz C241-T13](../evidence_matrix_C001-C238_2026-11-11.md) explicita critérios e limitações.
+
+```sh
+python -m unittest discover -s tests -p 'test_*.py' -v
+python tools/tle_altitude_lineage_audit.py --csv /tmp/tle-audit/norad_527_528_529_1963_numeric.csv --output /tmp/tle-audit/altitude_lineage_c241_t13.json
+```
+
+
+### Observação preliminar e hipótese ETL refinada de C241-T13
+
+No [CI de custódia #43203137231](https://github.com/franklinbaldo/conde-incident/actions/runs/43203137231), com **153 testes sintéticos aprovados**, o resíduo absoluto médio de `altitude_km` contra `a(1-e)−6378,137` foi **7,137126929 km** nas 119 épocas distintas, próximo da diferença **7,137 km** entre os raios 6378,137 e 6371,0 km. É **hipótese verificável**, não prova de ETL: adicionado um quarto candidato `a(1-e)−6371,0`, mais o raio implícito `a(1-e)−altitude_km` por época. O próximo CI distinguirá se essa aproximação é numericamente consistente em 527/528/529. Essa coincidência não transformará `altitude_km` em observação primária, tampouco prova dinâmica orbital e nunca autoriza duplicar evidência de `mean_motion`.
+
+
+### Resultado executado de C241-T13
+
+[Custódia #43203634026](https://github.com/franklinbaldo/conde-incident/actions/runs/43203634026) passou no HEAD `1f2d7b800e6a019dae1867fb3295384cf9783438` com **154/154 testes**, [científico #43203633990](https://github.com/franklinbaldo/conde-incident/actions/runs/43203633990) também passou, [artefato de custódia #13935179318](https://github.com/franklinbaldo/conde-incident/actions/runs/43203634026/artifacts/13935179318), SHA-256 ZIP `c560216dbf02cc43e5370d22d5a23be0f531d71b17d61db1f3b22dbca34c1ea0`. O corpus fixado tem 119 épocas distintas. O proxy `a(1−e)−6371 km` concordou com `altitude_km` a menos de **0,1 km em 119/119** registros únicos: **20/20** de 527, **45/45** de 528 e **54/54** de 529. Média do módulo do residual **0,002422669 km** (2,422669 m). Raio implícito sob esse modelo **6370,995084995 a 6371,004952507 km**, amplitude **0,009867512 km**. O raio implícito em `a−altura` variou 48,770218456 km; a hipótese circular média de raio fixo não explica a coluna com os mesmos limiares. **Isso torna a dependência algébrica uma hipótese ETL especialmente forte, mas ainda NÃO comprova a fórmula do exportador, a origem NORAD nem independência instrumental**. Não usar a altura como um novo sensor/holdout; não há domínio físico autenticado.
+
+Um CI intermediário [#43203540815](https://github.com/franklinbaldo/conde-incident/actions/runs/43203540815) falhou um teste de controle (raios de referência diferentes, apesar de e=0), corrigido antes da aprovação. Nova alteração documental exige outro CI no HEAD final.

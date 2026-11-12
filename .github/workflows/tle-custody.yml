@@ -164,6 +164,20 @@ jobs:
               for k, v in r["comparison"]["by_catalog"].items()})
           print("no_physical_claim:", r["lean_physical_restriction"], r["conde_impact"])
           PY
+      - name: Audit whether altitude_km could be derived from mean_motion (C241-T13)
+        run: |
+          python tools/tle_altitude_lineage_audit.py \
+            --csv "$RUNNER_TEMP/tle-audit/norad_527_528_529_1963_numeric.csv" \
+            --output "$RUNNER_TEMP/tle-audit/altitude_lineage_c241_t13.json"
+          python - <<'PY'
+          import json, os, pathlib
+          r = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) /
+                          "tle-audit/altitude_lineage_c241_t13.json").read_text())
+          print("C241-T13:", r["overall"])
+          print("independent altitude observation:", r["source"]["independent_altitude_measurement"])
+          print("frame and primary:", r["source"]["historical_frame_sensor_and_error"], r["source"]["original_1963_NORAD_TLE_pairs"])
+          print("RAAN/Conde:", r["raan_198_5261_vs_284_1520"], r["conde_impact"])
+          PY
       - name: Preserve normalized source-derived rows and negative results
         if: always()
         uses: actions/upload-artifact@v4
