@@ -20,10 +20,10 @@ class CumulativeConstraintGraphTests(unittest.TestCase):
 
     def test_all_table_cells_are_connected_without_premature_narrowing(self):
         out = validate(self.graph)
-        self.assertEqual(out["input_observations"], 16)
-        self.assertEqual(out["connected_observations"], 16)
+        self.assertEqual(out["input_observations"], 22)
+        self.assertEqual(out["connected_observations"], 22)
         self.assertEqual(out["derived_connections_recorded"], 8)
-        self.assertEqual(out["unique_source_families"], 1)
+        self.assertEqual(out["unique_source_families"], 2)
         self.assertEqual(out["constraints_activated"], 0)
         self.assertEqual(out["physical_domain_status"], "PENDING_CALIBRATION_NOT_DISCARDED")
         self.assertTrue(all(o["status"] == "CANDIDATE_NOT_ACTIVATED" for o in out["observations"]))
@@ -74,13 +74,50 @@ class CumulativeConstraintGraphTests(unittest.TestCase):
 
     def test_no_count_double_from_shared_upstream_tracking(self):
         out = validate(self.graph)
-        self.assertEqual(len(self.graph["sources"]), 2)
-        self.assertEqual(out["unique_source_families"], 1)
+        self.assertEqual(len(self.graph["sources"]), 3)
+        self.assertEqual(out["unique_source_families"], 2)
+        self.assertEqual(out["upstream_tracking_families"], 1)
 
     def test_unknown_unit_fails(self):
         bad = copy.deepcopy(self.graph)
         bad["observations"][0]["unit"] = "furlongs"
         with self.assertRaisesRegex(ValueError, "unknown physical unit"):
+            validate(bad)
+
+    def test_c179_added_six_custodied_fields_and_numeric_bridge(self):
+        out = validate(self.graph)
+        self.assertEqual(out["physical_bridges_recorded"], 1)
+        self.assertEqual(out["constraints_activated"], 0)
+        bridge = out["physical_bridges"][0]
+        self.assertEqual(bridge["source_occurrence"], "C179#1")
+        self.assertEqual(bridge["element_epoch_utc"], "1963-10-27T14:40:16.132512Z")
+        self.assertAlmostEqual(bridge["raan_rate_deg_per_day_first_order_j2_proxy"], -1.173124071, places=8)
+        self.assertAlmostEqual(bridge["legacy_raan_delta_deg"], 85.6259, places=7)
+        self.assertEqual(bridge["physical_domain"], "NOT_NARROWED_UNCALIBRATED_SOURCE")
+        rows = [o for o in out["observations"] if o["source"] == "AFSPC-SECONDARY-528-1963-10-27"]
+        self.assertEqual(len(rows), 6)
+        self.assertTrue(all(row["element_epoch_utc"] == bridge["element_epoch_utc"] for row in rows))
+        self.assertTrue(all(row["observed_at_utc"] is None for row in rows))
+        self.assertEqual(len({row["independence_family"] for row in rows}), 1)
+
+    def test_secondary_tle_changed_raan_without_changing_hash_is_rejected(self):
+        bad = copy.deepcopy(self.graph)
+        row = next(o for o in bad["observations"] if o["id"].endswith("NORAD528-raan"))
+        row["value"] = 284.1520
+        with self.assertRaisesRegex(ValueError, "C179 TLE value"):
+            validate(bad)
+
+    def test_legacy_unsourced_raan_must_not_become_historical_measurement(self):
+        bad = copy.deepcopy(self.graph)
+        bad["legacy_candidates"][0]["status"] = "PRIMARY_CONFIRMED"
+        with self.assertRaisesRegex(ValueError, "legacy unsourced"):
+            validate(bad)
+
+    def test_element_epoch_is_not_instrumental_observation_epoch(self):
+        bad = copy.deepcopy(self.graph)
+        row = next(o for o in bad["observations"] if o["id"].endswith("NORAD528-mean_motion"))
+        row["observed_at_utc"] = row["element_epoch_utc"]
+        with self.assertRaisesRegex(ValueError, "C179 TLE value"):
             validate(bad)
 
 
