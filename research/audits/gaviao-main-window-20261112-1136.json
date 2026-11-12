@@ -1,0 +1,445 @@
+{
+  "schema": "conde.gaviao.retrospective-window/v3",
+  "reviewer": "gaviao",
+  "observed_local_date": "2026-11-12",
+  "reviewed_from_main_sha": "dfefa93be7a3e6361c7a0ce35fa196d0ef036a65",
+  "reviewed_through_main_sha": "9e6596c679985b2cc886e31d88969fd9eab16b18",
+  "github_comparison": {
+    "status": "ahead",
+    "ahead_by": 13,
+    "behind_by": 0,
+    "total_commits": 13
+  },
+  "first_parent_chain": {
+    "all_thirteen_consecutive_parent_links": true,
+    "squash_pr_merges": 13,
+    "direct_commits": 0,
+    "merged_pr_numbers": [
+      134,
+      135,
+      138,
+      137,
+      139,
+      140,
+      141,
+      143,
+      142,
+      144,
+      145,
+      146,
+      147
+    ]
+  },
+  "closed_unmerged": {
+    "all_historical_found": [
+      10,
+      74,
+      22
+    ],
+    "within_cutoff_window": [],
+    "notes": "#22 closed without merge after frozen G19 HEAD (15:26Z vs 15:22Z); #10/#74 closed earlier; never count closed-unmerged as main commits"
+  },
+  "commits": [
+    {
+      "index": 1,
+      "pr": 134,
+      "main_merge_sha": "ea14bf06d463625657c5d6bf10bb13f60599c2ab",
+      "parent_main_sha": "dfefa93be7a3e6361c7a0ce35fa196d0ef036a65",
+      "pr_final_head_sha": "87324b664c4585aacbc128d6b09501c6bd23b659",
+      "github_actions_pr_head": {
+        "success": 9,
+        "total": 9,
+        "source": "GitHub pull_request workflow runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": "research/meteorology/space_weather_nov08_3h_epoch_grid.json"
+        },
+        {
+          "path": "research/meteorology/space_weather_nov08_3h_epoch_grid.md"
+        },
+        {
+          "path": "tools/derive_1963_nov8_epoch_grid.py"
+        },
+        {
+          "path": "tools/validate_1963_space_weather.py"
+        }
+      ],
+      "scope_and_limit": "8 planetary-index time bins, not an observed reentry window"
+    },
+    {
+      "index": 2,
+      "pr": 135,
+      "main_merge_sha": "f77ca94433d527b6c0e2d68ea47c9aa884b5d0a3",
+      "parent_main_sha": "ea14bf06d463625657c5d6bf10bb13f60599c2ab",
+      "pr_final_head_sha": "469a3bb0fa8c47873a98c0137ca42ae2e5b8055b",
+      "github_actions_pr_head": {
+        "success": 9,
+        "total": 9,
+        "source": "GitHub pull_request workflow runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": "research/audits/gaviao-main-window-20261112-1041.json"
+        },
+        {
+          "path": "research/audits/gaviao-main-window-20261112-1041.md"
+        },
+        {
+          "path": "research/provenance/lineages.json"
+        },
+        {
+          "path": "scripts/gaviao-retrospective-g18.test.mjs"
+        },
+        {
+          "path": "tests/test_provenance_graph.py"
+        },
+        {
+          "path": "tools/provenance_graph.py"
+        }
+      ],
+      "scope_and_limit": "Restores NARA addendum lost before G18; documentary only"
+    },
+    {
+      "index": 3,
+      "pr": 138,
+      "main_merge_sha": "56eab0413ae0ad0197b65ce282dc5a43dc9fbdba",
+      "parent_main_sha": "f77ca94433d527b6c0e2d68ea47c9aa884b5d0a3",
+      "pr_final_head_sha": "6648fb318cb72fb814f229f157a87012e0212ee1",
+      "github_actions_pr_head": {
+        "success": 9,
+        "total": 9,
+        "source": "GitHub pull_request workflow runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": "formal/scripts/check_cumulative_connections.py"
+        },
+        {
+          "path": "research/constraints/texugo_negative_controls_04_2026-11-12.md"
+        },
+        {
+          "path": "tests/test_cumulative_constraints.py"
+        }
+      ],
+      "scope_and_limit": "Synthetic SSR observable/operator/unit/object cross-link veto"
+    },
+    {
+      "index": 4,
+      "pr": 137,
+      "main_merge_sha": "3768e7ba8f8485dc6f9cab56280a6e9893274f9e",
+      "parent_main_sha": "56eab0413ae0ad0197b65ce282dc5a43dc9fbdba",
+      "pr_final_head_sha": "9b7e2f4f015ccb996fbadf4927b06eefc412c915",
+      "github_actions_pr_head": {
+        "success": 9,
+        "total": 9,
+        "source": "GitHub pull_request workflow runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": "research/statistics/LINEAGE_IDENTIFIABILITY.md"
+        },
+        {
+          "path": "research/statistics/README.md"
+        },
+        {
+          "path": "research/statistics/raan_lineage_identifiability_1963.json"
+        },
+        {
+          "path": "tests/test_raan_lineage_identifiability.py"
+        },
+        {
+          "path": "tools/raan_lineage_identifiability.py"
+        }
+      ],
+      "scope_and_limit": "Conditional rank-3 circular shared-bias gauge, no orbital posterior"
+    },
+    {
+      "index": 5,
+      "pr": 139,
+      "main_merge_sha": "29a3b64b10654fd9a235ce5acb5ac0ef77249209",
+      "parent_main_sha": "3768e7ba8f8485dc6f9cab56280a6e9893274f9e",
+      "pr_final_head_sha": "68ede81c544fb56b451e16c4b13c2b96c91bc928",
+      "github_actions_pr_head": {
+        "success": 9,
+        "total": 9,
+        "source": "GitHub pull_request workflow runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": ".github/workflows/documentary-provenance.yml"
+        },
+        {
+          "path": "research/meteorology/nmc_y20175_1963_custody.json"
+        },
+        {
+          "path": "research/meteorology/nmc_y20175_1963_custody.md"
+        },
+        {
+          "path": "tests/test_nmc_y20175_custody.py"
+        },
+        {
+          "path": "tools/verify_nmc_y20175.py"
+        }
+      ],
+      "scope_and_limit": "117264384-byte NMC file cataloged; NOT_DECODED, no verified soundings"
+    },
+    {
+      "index": 6,
+      "pr": 140,
+      "main_merge_sha": "ddbea9fd337b47ed2e7731b0737c29cfe2f7ff4c",
+      "parent_main_sha": "29a3b64b10654fd9a235ce5acb5ac0ef77249209",
+      "pr_final_head_sha": "2bee34fe668450e053cadb49aa22718c1bd0ad5f",
+      "github_actions_pr_head": {
+        "success": 9,
+        "total": 9,
+        "source": "GitHub pull_request workflow runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": "research/geo/README.md"
+        },
+        {
+          "path": "research/geo/conde_legal_1953_2017.json"
+        },
+        {
+          "path": "tests/test_conde_legal_boundary.py"
+        },
+        {
+          "path": "tools/conde_legal_boundary.py"
+        }
+      ],
+      "scope_and_limit": "1953 law via 2013 compilation and 2017 memorial do not establish 1963 georeferenced boundary"
+    },
+    {
+      "index": 7,
+      "pr": 141,
+      "main_merge_sha": "8f2382b7b69330c6a8c95d7d1fac5d863e1c4682",
+      "parent_main_sha": "ddbea9fd337b47ed2e7731b0737c29cfe2f7ff4c",
+      "pr_final_head_sha": "c34718f344d204ccb8cb723f62f06ce6d4e5d989",
+      "github_actions_pr_head": {
+        "success": 10,
+        "total": 10,
+        "source": "GitHub pull_request workflow runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": ".github/workflows/polvo-j2-secondary-raan.yml"
+        },
+        {
+          "path": "formal/scripts/audit_secondary_j2_raan.py"
+        },
+        {
+          "path": "formal/tests/test_secondary_j2_raan.py"
+        },
+        {
+          "path": "research/constraints/C241-L4_j2_short_gap_diagnostic.md"
+        }
+      ],
+      "scope_and_limit": "Three secondary short-gap pairs per 528 and 529; J2 proxy not calibrated"
+    },
+    {
+      "index": 8,
+      "pr": 143,
+      "main_merge_sha": "7c0816a564ee50f8eb19bfb8313ff158425c239d",
+      "parent_main_sha": "8f2382b7b69330c6a8c95d7d1fac5d863e1c4682",
+      "pr_final_head_sha": "4912e0c961d0bbc8228e42a7bed06eab482b9f71",
+      "github_actions_pr_head": {
+        "success": 9,
+        "total": 9,
+        "source": "GitHub pull_request workflow runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": "research/PAGES_METADATA_PREFLIGHT.md"
+        },
+        {
+          "path": "scripts/pages-metadata-preflight.mjs"
+        },
+        {
+          "path": "scripts/pages-metadata-preflight.test.mjs"
+        }
+      ],
+      "scope_and_limit": "Second Pages snapshot covers most races, omits run_attempt and status identity"
+    },
+    {
+      "index": 9,
+      "pr": 142,
+      "main_merge_sha": "bfcaf80af6dd32bb82a6e68b60cb8e8a274eebe5",
+      "parent_main_sha": "7c0816a564ee50f8eb19bfb8313ff158425c239d",
+      "pr_final_head_sha": "44bc22ead9697143c969d1910e182a698a75db2f",
+      "github_actions_pr_head": {
+        "success": 9,
+        "total": 9,
+        "source": "GitHub pull_request workflow runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": "formal/Conde1963/Documentary.lean"
+        },
+        {
+          "path": "formal/tests/test_documentary_links.py"
+        },
+        {
+          "path": "public/data/conde-source-citations.json"
+        },
+        {
+          "path": "research/provenance/README.md"
+        },
+        {
+          "path": "research/provenance/lineages.json"
+        },
+        {
+          "path": "scripts/gaviao-retrospective-g17.test.mjs"
+        },
+        {
+          "path": "tests/test_provenance_graph.py"
+        },
+        {
+          "path": "tools/provenance_graph.py"
+        }
+      ],
+      "scope_and_limit": "Curated C232-C235 NARA crosswalk and Lean documentary import, not physics"
+    },
+    {
+      "index": 10,
+      "pr": 144,
+      "main_merge_sha": "062ba90feae3ccdd2c7349749894d14fd7221dc9",
+      "parent_main_sha": "bfcaf80af6dd32bb82a6e68b60cb8e8a274eebe5",
+      "pr_final_head_sha": "7ad308b74e7dc3f80ad4298a8615818be7eb72db",
+      "github_actions_pr_head": {
+        "success": 9,
+        "total": 9,
+        "source": "GitHub pull_request workflow runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": ".github/workflows/orbit-kernel.yml"
+        },
+        {
+          "path": "research/ORBIT_SPACE_WEATHER_BRIDGE.md"
+        },
+        {
+          "path": "src/lib/orbitPhysics.ts"
+        },
+        {
+          "path": "src/lib/orbitSpaceWeatherAdapter.ts"
+        },
+        {
+          "path": "tests/orbitSpaceWeatherAdapter.test.mjs"
+        }
+      ],
+      "scope_and_limit": "Conditional GFZ/NRCan inputs for RK4 stages without density or historical orbit fit"
+    },
+    {
+      "index": 11,
+      "pr": 145,
+      "main_merge_sha": "4fadaae6ea287f9e8d5bf9e00506c52342d52245",
+      "parent_main_sha": "062ba90feae3ccdd2c7349749894d14fd7221dc9",
+      "pr_final_head_sha": "29162caaf851d8640d9117436f21b3bd7131cdb4",
+      "github_actions_pr_head": {
+        "success": 9,
+        "total": 9,
+        "source": "GitHub pull_request workflow runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": "research/constraints/baker_nunn_ru301_1963_film_index.json"
+        },
+        {
+          "path": "research/constraints/baker_nunn_ru301_1963_notes.md"
+        },
+        {
+          "path": "tests/test_baker_nunn_ru301_film_index.py"
+        }
+      ],
+      "scope_and_limit": "15 Smithsonian RU301 film index locators, not instrument data or NORAD 528"
+    },
+    {
+      "index": 12,
+      "pr": 146,
+      "main_merge_sha": "3ec792392abd210a6a08cba2be851761a812414d",
+      "parent_main_sha": "4fadaae6ea287f9e8d5bf9e00506c52342d52245",
+      "pr_final_head_sha": "83c1e59e8c507f5b7ca4db708e4b53af5137887b",
+      "github_actions_pr_head": {
+        "success": 9,
+        "total": 9,
+        "source": "GitHub pull_request workflow runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": "src/App.tsx"
+        },
+        {
+          "path": "src/components/Navigation.tsx"
+        },
+        {
+          "path": "src/lib/tabRoutes.ts"
+        },
+        {
+          "path": "tests/labDeepLinks.test.mjs"
+        }
+      ],
+      "scope_and_limit": "React lab hash navigation, not editorial SSG or deployed site"
+    },
+    {
+      "index": 13,
+      "pr": 147,
+      "main_merge_sha": "9e6596c679985b2cc886e31d88969fd9eab16b18",
+      "parent_main_sha": "3ec792392abd210a6a08cba2be851761a812414d",
+      "pr_final_head_sha": "e97114b274f4d85095a71a3f518fd66aab103bff",
+      "github_actions_pr_head": {
+        "success": 9,
+        "total": 9,
+        "source": "GitHub pull_request workflow runs on exact head SHA"
+      },
+      "files": [
+        {
+          "path": "formal/tests/test_documentary_links.py"
+        },
+        {
+          "path": "research/provenance/README.md"
+        },
+        {
+          "path": "tests/test_provenance_graph.py"
+        },
+        {
+          "path": "tools/provenance_graph.py"
+        }
+      ],
+      "scope_and_limit": "Restricts documentary scopes and pins NARA image/source identity; external JP2 not reinspected"
+    }
+  ],
+  "findings": [
+    {
+      "id": "G19-F1",
+      "introduced_by_pr": 143,
+      "severity": "medium",
+      "category": "CI/editorial",
+      "counterexample": "GitHub workflow rerun attempt changes 1→2 with same id, SHA, success conclusion, or latest Pages status id changes 501→502 with success→success. Old checker called the snapshots stable.",
+      "correction": "Lock run_attempt and newest deployment status ID across both GET snapshots; fail closed on unidentified IDs."
+    }
+  ],
+  "source_integrity": {
+    "NARA_addendum": "NARA-BB-CONDE-20261112-01",
+    "persisted_at_frozen_head": true,
+    "families": 10,
+    "sources": 22,
+    "curated_citations": 29,
+    "primary_bytes_reinspected_in_this_run": false
+  },
+  "editorial": {
+    "merged_stories": 0,
+    "open_story_draft_149": "reviewed separate from merged window",
+    "site_published_verified": false,
+    "repo_has_pages": false
+  },
+  "scientific_result": "INDETERMINATE_NO_TERMINAL_POSITION_OR_TIME",
+  "limits": [
+    "Lean 4.35 assertions conditional on imported source hypotheses",
+    "J2 uses secondary catalog pairs; no independent sensor error or covariance",
+    "NCAR Y20175 station records NOT_DECODED",
+    "NASA SSR day-only decay, no location",
+    "No primary Smithsonian film sheets or NARA JP2 bytes independently opened in this run"
+  ]
+}

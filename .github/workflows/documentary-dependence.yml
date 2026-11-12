@@ -1,0 +1,28 @@
+name: Declared documentary dependence
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  documentary-lineage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact HEAD
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify canonical citations and all declared ancestry
+        run: |
+          python3 -m unittest discover -s tests -p 'test_provenance_graph.py' -v
+          python3 -m unittest discover -s tests -p 'test_documentary_dependence.py' -v
+          python3 tools/provenance_graph.py --check-site
+          python3 tools/export_documentary_dependence.py --check-site

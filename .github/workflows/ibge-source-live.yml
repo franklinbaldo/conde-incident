@@ -1,0 +1,33 @@
+name: IBGE source replay (non-gating; remote status explicit)
+
+on:
+  schedule:
+    - cron: "19 5 * * 6"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Declare custody semantics
+        run: |
+          echo 'Offline snapshot custody is mandatory in Integration checks (exact head).' >> "$GITHUB_STEP_SUMMARY"
+          echo 'This separate upstream replay is NOT a required PR gate.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'VERIFIED_REMOTE requires matching the exact pinned ZIP/SHP SHA256 and full geometry.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'NOT_RUN_REMOTE_SOURCE is recorded explicitly on network failure and means upstream authenticity was NOT revalidated.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Replay official IBGE source (no synthetic replacement)
+        env:
+          CONDE_IBGE_LIVE_REPLAY: "1"
+        run: node --test tests/conde_gis_custody.test.mjs

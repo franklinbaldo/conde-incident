@@ -216,7 +216,7 @@ class CumulativeConstraintGraphTests(unittest.TestCase):
     def test_same_source_family_cannot_split_into_fake_tracking_lineages(self):
         bad = copy.deepcopy(self.graph)
         bad["sources"][0]["upstream_tracking_family"] = "FORGED_NEW_SENSOR"
-        with self.assertRaisesRegex(ValueError, "conflicting upstream tracking lineage"):
+        with self.assertRaisesRegex(ValueError, "pinned NASA SSR source identity"):
             validate(bad)
 
     def test_pending_observation_cannot_fake_active_link_status(self):
@@ -259,6 +259,47 @@ class CumulativeConstraintGraphTests(unittest.TestCase):
         row = next(o for o in bad["observations"] if o["id"] == "SSR-1963-11-15-NORAD529-nodal_period")
         row["input_parameters"][1] = "t_observed_529_1963-11-30"
         with self.assertRaisesRegex(ValueError, "cross-object or cross-publication SSR parameter link"):
+            validate(bad)
+
+    def test_nasa_url_query_alias_cannot_manufacture_another_source(self):
+        # A download flag is not a second instrument or document edition.
+        for suffix in ("?download=1", "?download=1#page=8"):
+            with self.subTest(suffix=suffix):
+                bad = copy.deepcopy(self.graph)
+                alias = copy.deepcopy(bad["sources"][0])
+                alias["id"] = "FORGED-NASA-QUERY-ALIAS"
+                alias["url"] += suffix
+                bad["sources"].append(alias)
+                forged = copy.deepcopy(bad["observations"][0])
+                forged["id"] = "FORGED-NASA-QUERY-ROW"
+                forged["source_id"] = alias["id"]
+                forged["variable_id"] = "forged_alias_nodal_period"
+                bad["observations"].append(forged)
+                with self.assertRaisesRegex(ValueError, "duplicate source document URL"):
+                    validate(bad)
+
+    def test_compiled_nasa_report_cannot_be_relabelled_as_independent_radar(self):
+        bad = copy.deepcopy(self.graph)
+        source = bad["sources"][0]
+        sid = source["id"]
+        source["source_family"] = "FORGED_INDEPENDENT_RADAR"
+        source["upstream_tracking_family"] = "FORGED_INDEPENDENT_RADAR"
+        for row in bad["observations"]:
+            if row["source_id"] == sid:
+                row["source_independence_family"] = source["source_family"]
+        with self.assertRaisesRegex(ValueError, "pinned NASA SSR source identity"):
+            validate(bad)
+
+    def test_nasa_facsimile_url_cannot_be_replaced_without_new_custody(self):
+        bad = copy.deepcopy(self.graph)
+        bad["sources"][0]["url"] = "https://example.org/invented-independent-radar.pdf"
+        with self.assertRaisesRegex(ValueError, "pinned NASA SSR source identity"):
+            validate(bad)
+
+    def test_uninspected_nasa_table_cannot_be_upgraded_to_verified(self):
+        bad = copy.deepcopy(self.graph)
+        bad["sources"][0]["verification"] = "PRIMARY_FACSIMILE_RECHECKED"
+        with self.assertRaisesRegex(ValueError, "pinned NASA SSR source identity"):
             validate(bad)
 
     def test_finite_reported_value_cannot_overflow_to_infinite_canonical_value(self):

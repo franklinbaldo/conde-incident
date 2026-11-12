@@ -1,3 +1,9 @@
+---
+type: Guide
+title: "🦀 Conde (BA): custódia geoespacial do IBGE e fronteira temporal"
+description: "Fontes oficiais, CRS, integridade e limites temporais das geometrias municipais de Conde"
+---
+
 # 🦀 Conde (BA): custódia geoespacial do IBGE e fronteira temporal
 
 **Escopo:** município de Conde, Bahia (**código IBGE 2908606**). Este pacote oferece um *contorno administrativo moderno documentado*, **não** o lugar de uma queda e **não** a delimitação legal/geográfica de novembro de 1963.
@@ -31,7 +37,7 @@ A [página oficial de Malhas do IBGE](https://www.ibge.gov.br/geociencias/organi
    python3 tools/conde_gis.py --extract /tmp/BA_Municipios_2022.zip --year 2022 --output /tmp/conde_ibge_2022_sirgas2000.json
    cmp /tmp/conde_ibge_2022_sirgas2000.json research/geo/conde_ibge_2022_sirgas2000.json
    ```
-   Repetir para edição 2025 com os caminhos e ano correspondentes. O workflow existente `integration-head.yml` executa `tests/conde_gis_custody.test.mjs`, que reexecuta **ambos** no HEAD exato, sem fixtures sintéticas.
+   Repetir para edição 2025 com os caminhos e ano correspondentes. O workflow `integration-head.yml` executa **os testes de custódia determinística offline** (`tests/conde_gis_custody.test.mjs` e `tests/test_conde_gis.py`) no HEAD exato, sem downloads na suíte geral. A **aquisição externa ao vivo** de cada ZIP oficial foi movida para o workflow separado `ibge-source-live.yml` (agendado ou manual), não-gating, com os mesmos hashes e replay integral. Nenhuma geometria sintética substitui a fonte.
 2. **Consultar um ponto já convertido para SIRGAS 2000** (lon/lat):
    ```sh
    python3 tools/conde_gis.py --lon -37.61 --lat -11.81 --point-crs EPSG:4674 --date 1963-11-08 --boundary-margin-m 100
@@ -76,3 +82,12 @@ Para revalidar os bytes da lei, adquirir o PDF oficial e executar:
 O retorno com boundary_polygon_for_date=null e can_constrain_reentry_1963=false é contratual. Para datas após 28/04/2017, o memorial ainda **não** valida datum, completude cartográfica ou permanência da lei na data solicitada.
 
 **Arestas preservadas:** CGEO-05 → lei_base_1953 (custódia pendente) → limites_vigentes_1963 (latente); CGEO-06 → memorial_2017 (texto, vértices com datum nulo) → alinhamento geodésico condicional; CGEO-01/02 → malhas modernas, *sem ponte temporal*. Status CONNECTED_PENDING_HISTORICAL_CUSTODY; nenhum novo corte do domínio admissível de 1963. Faltam anexos autênticos da Lei 628/1953, atos intervenientes, mapa/datum de época e orçamento de erro. O pedido à 🦦 Lontra [no inbox #2](https://github.com/franklinbaldo/lontra/issues/2) já cobre essa custódia.
+
+
+## CGEO-07: status separado da disponibilidade do arquivo oficial (12/11/2026)
+
+O **teste obrigatório offline** confere os JSONs já adquiridos, seus hashes de coordenadas e metadados contra a custódia fixada no extrator; exerce pertinência espacial moderna e o veto temporal em 1963. **Não** verifica novamente a disponibilidade, os bytes ZIP remotos, nem a autenticidade de uma aquisição inédita. Um CI obrigatório verde atesta somente essa custódia local e as demais regressões.
+
+A verificação de **aquisição online**, sem mudança de fontes, depende de `CONDE_IBGE_LIVE_REPLAY=1` no workflow [IBGE source replay](../../.github/workflows/ibge-source-live.yml), separado do gate geral e executável por `workflow_dispatch` ou agenda semanal. Cada ZIP baixado do endereço oficial tem hash SHA256 integral, registro SHP, DBF, CRS e resultado reproduzido comparados com as referências fixadas em `tools/conde_gis.py`. ZIP de hash divergente, HTTP 404/403, conteúdo incorreto ou alteração geométrica produzem **FAIL**, não fallback. Timeout, DNS, conexão resetada e HTTP temporariamente indisponível produzem **NOT_RUN_REMOTE_SOURCE**, registrado no output e no resumo do workflow. Um run verde com SKIP/NOT_RUN **não equivale a autenticação online PASS**. Não existe retry automático, espelho substitutivo ou geração sintética de dados.
+
+Motivação verificável: [CI #43250153782](https://github.com/franklinbaldo/conde-incident/actions/runs/43250153782), [#43250239968](https://github.com/franklinbaldo/conde-incident/actions/runs/43250239968) e [#43251016890](https://github.com/franklinbaldo/conde-incident/actions/runs/43251016890) falharam por timeout ou reset de conexão do servidor IBGE, embora a fonte original e seus hashes continuem fixados. O novo contrato evita que essa indisponibilidade transitória impeça alterações independentes no simulador ou nas provas e conserva o resultado negativo observável. **Os dados seguem contemporâneos (2022/2025); 1963 permanece sem polígono autenticado.**

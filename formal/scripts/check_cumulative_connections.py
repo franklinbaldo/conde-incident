@@ -12,7 +12,7 @@ import json
 import math
 import sys
 from pathlib import Path
-from urllib.parse import urldefrag
+from urllib.parse import urlsplit, urlunsplit
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT = ROOT / "research/constraints/ssr_1963_observable_graph.json"
@@ -32,6 +32,22 @@ NASA_SSR_FIELDS = {
     "perigee": ("perigee_model", "km"),
 }
 
+# These two historical report editions are specific documentary objects.
+# Reclassifying a compiled table as an independent sensor (or as a newly
+# verified facsimile) must require a separately evidenced source update.
+PINNED_NASA_SSR_SOURCES = {
+    "NASA-SSR-1963-11-15": (
+        "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf",
+        "1963-11-15",
+    ),
+    "NASA-SSR-1963-11-30": (
+        "https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf",
+        "1963-11-30",
+    ),
+}
+NASA_SSR_FAMILY = "NASA_GODDARD_COMPILED_FROM_TRACKING"
+SHARED_TRACKING = "NORAD_AFS_SHARED_TRACKING_NOT_INDEPENDENT"
+SSR_TABLE_VERIFICATION = "TABLE_FROM_PRIOR_INVESTIGATION_NOT_REVERIFIED_THIS_COMMIT"
 
 
 def validate_528_tle_bridge(graph: dict, sources: dict, observations: list[dict]) -> list[dict]:
@@ -136,10 +152,24 @@ def validate(graph: dict) -> dict:
         url = source.get("url")
         if not isinstance(url, str) or not url.strip():
             raise ValueError("missing source document URL")
-        document_url = urldefrag(url.strip()).url
+        # Query parameters and fragments do not establish an independent
+        # documentary object. A genuinely different version needs an explicit
+        # independent identifier, custody record and review.
+        parsed = urlsplit(url.strip())
+        document_url = urlunsplit((parsed.scheme.lower(), parsed.netloc.lower(),
+                                   parsed.path, "", ""))
         if document_url in source_documents:
             raise ValueError("duplicate source document URL")
         source_documents.add(document_url)
+        pinned = PINNED_NASA_SSR_SOURCES.get(source["id"])
+        if pinned and (
+            source.get("url") != pinned[0]
+            or source.get("published_on") != pinned[1]
+            or source.get("source_family") != NASA_SSR_FAMILY
+            or source.get("upstream_tracking_family") != SHARED_TRACKING
+            or source.get("verification") != SSR_TABLE_VERIFICATION
+        ):
+            raise ValueError("pinned NASA SSR source identity/lineage/verification mismatch")
         family = source.get("source_family")
         origin = source.get("upstream_tracking_family")
         if not family or not origin:
