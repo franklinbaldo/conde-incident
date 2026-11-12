@@ -51,9 +51,11 @@ O próprio artigo precisa apontar para
 e não `blob/main`: a fonte do artigo publicado fica identificável
 **mesmo depois que main avançar**. Requer atualização do template da
 Coruja na PR #3, ainda **não implementada**; um teste sintético verde
-não representa deploy. Se houver Markdown intencionalmente não
-publicável, ele deve estar fora de `stories/` ou o contrato deve ser
-explicitamente revisto com avaliação independente, nunca ignorado.
+não representa deploy. A exceção explícita é `stories/README.md`, documentação editorial já
+presente na PR #3, que não representa capítulo publicável. Se houver outro
+Markdown intencionalmente não publicável, ele deve estar fora de `stories/`
+ou o contrato deve ser explicitamente revisto com avaliação independente,
+nunca ignorado silenciosamente.
 
 **Mudança editorial superveniente:** a PR #22 registra decisão do
 proprietário por SSG Rust em lugar de Zola. Este auditor é independente
