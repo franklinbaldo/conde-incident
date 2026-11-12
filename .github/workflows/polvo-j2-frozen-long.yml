@@ -3,16 +3,24 @@ on:
   pull_request:
     paths:
       - tools/raan_frozen_j2_holdout.py
+      - tools/raan_fitfield_j2_holdout.py
       - tests/test_raan_frozen_j2_holdout.py
+      - tests/test_raan_fitfield_j2_holdout.py
       - research/constraints/C241-P2_j2_frozen_long_holdout.md
+      - research/constraints/C241-P3_fitfield_j2_forward_holdout.md
+      - research/tle_custody/evidence_matrix_C241-P3_2026-11-12.md
       - research/tle_custody/evidence_matrix_C241-P2_2026-11-12.md
       - .github/workflows/polvo-j2-frozen-long.yml
   push:
     branches: [main]
     paths:
       - tools/raan_frozen_j2_holdout.py
+      - tools/raan_fitfield_j2_holdout.py
       - tests/test_raan_frozen_j2_holdout.py
+      - tests/test_raan_fitfield_j2_holdout.py
       - research/constraints/C241-P2_j2_frozen_long_holdout.md
+      - research/constraints/C241-P3_fitfield_j2_forward_holdout.md
+      - research/tle_custody/evidence_matrix_C241-P3_2026-11-12.md
       - research/tle_custody/evidence_matrix_C241-P2_2026-11-12.md
       - .github/workflows/polvo-j2-frozen-long.yml
 permissions:
@@ -38,6 +46,7 @@ jobs:
           set -euo pipefail
           python3 -m unittest discover -s tests -p 'test_raan_frozen_j2_holdout.py' -v
           python3 -m unittest discover -s tests -p 'test_raan_frozen_trend_holdout.py' -v
+          python3 -m unittest discover -s tests -p 'test_raan_fitfield_j2_holdout.py' -v
       - name: Recover pinned secondary snapshot and compare future holdouts
         run: |
           set -euo pipefail
@@ -49,6 +58,21 @@ jobs:
           python3 tools/raan_frozen_j2_holdout.py \
             --csv "$RUNNER_TEMP/c241-p2/norad_527_528_529_numeric_1963.csv" \
             --output "$RUNNER_TEMP/c241-p2/polvo_j2_frozen_holdout.json"
+          python3 tools/raan_fitfield_j2_holdout.py \
+            --csv "$RUNNER_TEMP/c241-p2/norad_527_528_529_numeric_1963.csv" \
+            --output "$RUNNER_TEMP/c241-p2/polvo_fitfield_j2_holdout.json"
+          python3 - <<'PY_P3'
+          import json,os,pathlib
+          p=pathlib.Path(os.environ["RUNNER_TEMP"])/"c241-p2/polvo_fitfield_j2_holdout.json"
+          x=json.loads(p.read_text())
+          assert x["method"]["domain_reduction"]=="NONE_NO_PRIMARY_TRACKING_FRAME_OR_SENSOR_ERRORS"
+          assert {k:x["objects"][k]["evaluation"]["n"] for k in ("527","528","529")}=={"527":4,"528":8,"529":23}
+          for k in ("527","528","529"):
+              c=x["objects"][k]["evaluation"]["metrics"]
+              assert c["max_quadrature_refinement_delta_deg"] < x["method"]["quadrature_tolerance_deg"]
+              print("P3_VERIFIED",k,"MAE_DEG",round(c["mae_deg"],6))
+          PY_P3
+
           python3 - <<'PY'
           import json,os,pathlib,sys
           sys.path.insert(0,"tools")
