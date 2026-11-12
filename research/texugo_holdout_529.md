@@ -130,3 +130,11 @@ Os blocos de 14/28 dias, seu alinhamento e as comparações são escolhas analí
     python -m unittest discover -s tests -p 'test_texugo_block_529.py' -v
 
 O workflow texugo-holdout.yml executa o mesmo script no HEAD da PR e arquiva block_529.json com cada exclusão e sinal. Até revalidação do HEAD, não reivindicar resultados históricos novos.
+
+### Contraprova C243-T5: translação artificial das épocas dos doadores (12/11/2026 UTC)
+
+**Pergunta anti-overclaim:** a curvatura emprestada do 527/528 mede de fato a sincronização, a posição relativa ou as forças comuns dos três objetos? O modelo C243 utiliza dos doadores somente o coeficiente quadrático de uma regressão de movimento médio. Essa grandeza é **invariante a translação constante do eixo temporal** quando a amostra pré-corte permanece a mesma. Portanto, mesmo um ajuste numérico bem-sucedido não contém informação suficiente para medir fase relativa, triangulação ou posição de reentrada.
+
+O controle translation_placebo em tools/texugo_block_529.py desloca **artificialmente 28 dias para trás** apenas as épocas 527/528 já anteriores a cada corte, sem mudar seus valores de movimento médio, sem tocar no 529, sem acrescentar dados e sem permitir que uma época posterior entre no treino. Compara quatro RMSE (quadrático, média, 527 e 528 isolados) e duas curvaturas; arquiva diferenças e eventual falha da invariância numérica. É uma **ablação sintética sobre a linhagem histórica secundária**, não uma correção de relógio nem hipótese orbital. A seleção interna C243-T2 não é objeto desse placebo, pois sua fronteira cronológica interna poderia alterar amostras se os tempos fossem deslocados.
+
+O teste sintético está em tests/test_texugo_block_529.py. O JSON block_529.json incluirá translation_placebos nos quatro cortes. **Resultado no espelho e GitHub Actions do novo HEAD: NOT_RUN até execução confirmada.** A invariância matemática do coeficiente não é alegação empírica de órbita: prova apenas que este estimador de curvatura **não testa sincronismo**. A ausência de observações instrumentais primárias/épocas em mesmo frame e o conflito RAAN persistem; Conde permanece INDETERMINADO.

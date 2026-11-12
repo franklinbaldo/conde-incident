@@ -79,12 +79,53 @@ def evaluate_blocks(rows: list[Observation], day: str, width: int) -> dict:
     return out
 
 
+
+def translation_placebo(rows: list[Observation], day: str, lag_days: int = 28) -> dict:
+    """Synthetic donor-clock perturbation: tests a missing synchrony feature.
+
+    Only the already-eligible pre-cutoff 527/528 epochs are translated backwards.
+    Target 529 and every mean-motion value remain unchanged. Donor quadratic
+    curvature must be invariant; this is NOT a clock correction or orbit model.
+    """
+    cutoff = utc(day + "T23:59:59Z")
+    reference = evaluate(rows, day)
+    result = {"cutoff_utc_end_of_day": day, "lag_days": lag_days,
+              "kind": "SYNTHETIC_DONOR_EPOCH_TRANSLATION_NEGATIVE_CONTROL",
+              "status": "NOT_RUN", "is_historical_observation": False}
+    if reference["status"] == "NOT_RUN":
+        result["reason"] = reference.get("reason", "baseline NOT_RUN")
+        return result
+    altered = [Observation(o.sat, o.epoch - timedelta(days=lag_days), o.mean_motion)
+               if o.sat in (527, 528) and o.epoch <= cutoff else o
+               for o in rows]
+    shifted = evaluate(altered, day)
+    if shifted["status"] == "NOT_RUN":
+        result["reason"] = shifted.get("reason", "synthetic translation NOT_RUN")
+        return result
+    names = ("quadratic_529_only", "shared_curvature_527_528_to_529",
+             "transfer_527_only", "transfer_528_only")
+    changes = {name: shifted["holdout_rmse_rev_day"][name] -
+                reference["holdout_rmse_rev_day"][name] for name in names}
+    curvature_changes = {sat: shifted["source_curvatures"][sat] -
+                         reference["source_curvatures"][sat] for sat in ("527", "528")}
+    maximum = max(abs(v) for v in (*changes.values(), *curvature_changes.values()))
+    result.update({"status": "EVALUATED_SYNTHETIC_CONTROL",
+                   "donor_epochs_shifted": sum(o.sat in (527, 528) and o.epoch <= cutoff for o in rows),
+                   "model_rmse_change_rev_day": changes,
+                   "curvature_changes": curvature_changes,
+                   "max_abs_numeric_change": maximum,
+                   "invariant_within_1e_8": maximum <= 1e-8,
+                   "interpretation": "Epoch-invariant donor curvature cannot establish synchronized observation, dynamic coupling or triangulation; numerical deviations are not physical evidence"})
+    return result
+
+
 def run(rows: list[Observation]) -> dict:
     return {"status": "SECONDARY_MIRROR_POST_HOC_BLOCK_CONTROL_NOT_ORBITAL_VALIDATION",
             "source_url": EXPECTED_URL, "source_sha256": EXPECTED_SHA256,
             "no_probability": True, "no_geolocation": True,
             "block_anchor": ANCHOR.isoformat(), "block_widths_days": list(WIDTHS),
-            "results": [evaluate_blocks(rows, day, width) for day in CUTOFFS for width in WIDTHS]}
+            "results": [evaluate_blocks(rows, day, width) for day in CUTOFFS for width in WIDTHS],
+            "translation_placebos": [translation_placebo(rows, day) for day in CUTOFFS]}
 
 
 def main():
@@ -97,7 +138,8 @@ def main():
     args.output.write_text(json.dumps(report, sort_keys=True, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(json.dumps({"sha256": EXPECTED_SHA256,
                       "summaries": [{k: v for k, v in res.items() if k != "trials"}
-                                    for res in report["results"]]}, ensure_ascii=False))
+                                    for res in report["results"]],
+                      "translation_placebos": report["translation_placebos"]}, ensure_ascii=False))
     if all(res["status"] == "NOT_RUN" for res in report["results"]):
         raise SystemExit("All block controls NOT_RUN; see artifact")
 

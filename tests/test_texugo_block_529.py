@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from texugo_holdout_529 import Observation
-from texugo_block_529 import ANCHOR, prior_blocks, evaluate_blocks, run
+from texugo_block_529 import ANCHOR, prior_blocks, evaluate_blocks, translation_placebo, run
 
 
 def artificial():
@@ -63,11 +63,30 @@ class CalendarBlockFalsifiers(unittest.TestCase):
         with self.assertRaises(ValueError):
             prior_blocks(artificial(), datetime(1963, 10, 21, tzinfo=timezone.utc), 3)
 
+
+    def test_synthetic_donor_clock_shift_does_not_measure_synchrony(self):
+        rows = artificial()
+        original = translation_placebo(rows, "1963-10-21", 28)
+        self.assertEqual(original["status"], "EVALUATED_SYNTHETIC_CONTROL")
+        self.assertFalse(original["is_historical_observation"])
+        self.assertGreater(original["donor_epochs_shifted"], 0)
+        self.assertTrue(original["invariant_within_1e_8"])
+        self.assertLess(original["max_abs_numeric_change"], 1e-8)
+        self.assertIn("transfer_528_only", original["model_rmse_change_rev_day"])
+        cutoff = datetime(1963, 10, 21, 23, 59, 59, tzinfo=timezone.utc)
+        changed_future = [Observation(o.sat, o.epoch, o.mean_motion + 7)
+                          if o.sat == 529 and o.epoch > cutoff else o for o in rows]
+        altered = translation_placebo(changed_future, "1963-10-21", 28)
+        self.assertTrue(altered["invariant_within_1e_8"])
+        self.assertEqual(original["donor_epochs_shifted"], altered["donor_epochs_shifted"])
+
     def test_no_probability_or_orbit_claims(self):
         report = run(artificial())
         self.assertTrue(report["no_probability"])
         self.assertTrue(report["no_geolocation"])
         self.assertEqual(len(report["results"]), 8)
+        self.assertEqual(len(report["translation_placebos"]), 4)
+        self.assertTrue(all(not x["is_historical_observation"] for x in report["translation_placebos"]))
         self.assertIn("POST_HOC", report["status"])
 
 
