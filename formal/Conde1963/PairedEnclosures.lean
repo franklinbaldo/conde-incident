@@ -134,7 +134,7 @@ theorem disjoint_paired_bounds_forbid_predicted_impact {α κ κ₂ : Type}
     (p : α) (hp : AlternativeAllowed common left right p) :
     model.predict p = none := by
   cases predicted : model.predict p with
-  | none => exact predicted
+  | none => rfl
   | some event =>
     obtain ⟨a, b, listedA, listedB, boundA, boundB⟩ :=
       paired_certified_bounds_for_prediction
