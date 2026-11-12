@@ -1,13 +1,15 @@
 # Protocolo de repositórios pessoais e comunicação entre agentes
 
-**Decisão do proprietário (12/11/2026).** Há duas camadas independentes:
+**Decisão do proprietário (12/11/2026).** Há três camadas independentes:
 
-1. **Workspace pessoal privado**: um repositório GitHub por animal, no usuário `franklinbaldo`, com nome em português, minúsculo e sem diacríticos no endereço. Exemplo: `franklinbaldo/polvo`; para 🦅 Gavião, o slug é `gaviao`. O animal mantém nele memórias duráveis OKF, skills, ferramentas, scripts, experiências e organização própria. Pode fazer commits/push diretamente no seu workspace sem PR, aprovação ou auditoria prévia de outros animais. Não precisa vincular cada experiência a uma issue de projeto. A privacidade desejada é **GitHub private**, não um diretório local sem hospedagem.
-2. **Repositório de produto/projeto**: `franklinbaldo/conde-incident` (ou outros projetos futuros). Código destinado ao produto vai por PRs pequenas, CI no HEAD e merge do próprio autor quando seguro. O autor anota o número da PR de produto no seu diário privado; não despejar rascunhos pessoais no repositório do produto.
+1. **Equipe permanente privada**: `franklinbaldo/cafezinho/team/` guarda cadastro, perfis e arquivo da equipe, independentemente de projetos. O antigo `team/` deste repositório é cópia de compatibilidade para testes/skills legados; não é mais fonte canônica.
+
+2. **Workspace pessoal privado**: um repositório GitHub por animal, no usuário `franklinbaldo`, com nome em português, minúsculo e sem diacríticos no endereço. Exemplo: `franklinbaldo/polvo`; para 🦅 Gavião, o slug é `gaviao`. O animal mantém nele memórias duráveis OKF, skills, ferramentas, scripts, experiências e organização própria. Pode fazer commits/push diretamente no seu workspace sem PR, aprovação ou auditoria prévia de outros animais. Não precisa vincular cada experiência a uma issue de projeto. A privacidade desejada é **GitHub private**, não um diretório local sem hospedagem.
+3. **Repositório de produto/projeto**: `franklinbaldo/conde-incident` (ou outros projetos futuros). Código destinado ao produto vai por PRs pequenas, CI no HEAD e merge do próprio autor quando seguro. O autor anota o número da PR de produto no seu diário privado; não despejar rascunhos pessoais no repositório do produto.
 
 ## Agentes e vagas
 
-O cadastro declarativo de animais e slugs fica em [`config/agent-roster.json`](../config/agent-roster.json). Este arquivo registra a **configuração desejada**, não confirma criação de repositórios GitHub. Não usar nomes alternativos, sufixos ou repositórios públicos sem autorização.
+O cadastro canônico de animais e slugs fica em [`franklinbaldo/cafezinho/team/roster.json`](https://github.com/franklinbaldo/cafezinho/blob/main/team/roster.json). A cópia [`config/agent-roster.json`](../config/agent-roster.json) é legado de compatibilidade dos testes deste projeto. Este arquivo registra a **configuração desejada**, não confirma criação de repositórios GitHub. Não usar nomes alternativos, sufixos ou repositórios públicos sem autorização.
 
 Em 12/11/2026, a interface de automações retornou capacidade de **15 tarefas ativas**, com todas as vagas preenchidas (13 animais do Conde + investigação geral + outra rotina pessoal). Cinco animais foram adicionados: 🦎 Lagarto, 🦌 Cervo, 🐝 Abelha, 🦀 Caranguejo, 🦦 Lontra. Não pausar tarefas existentes para abrir uma vaga sem decisão específica do proprietário. Se a capacidade mudar, o Elefante poderá propor animais novos com funções realmente distintas e reavaliar o cadastro.
 

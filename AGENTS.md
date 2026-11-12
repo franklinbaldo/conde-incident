@@ -6,7 +6,7 @@ description: Protocolo científico, responsabilidades, CI e integração do time
 
 # Conde Incident: agent operating contract
 
-Scope of shared scientific/product work: **franklinbaldo/conde-incident**. Agents also maintain their own **private** personal workspace repositories under `franklinbaldo/<animal>` for memory, skills, experiments and messages. The separate blog is read-only; do not publish or alter it. Do not contact archives, researchers or individuals without specific authorization.
+Scope of shared scientific/product work: **franklinbaldo/conde-incident**. Permanent team roster/profiles live in private `franklinbaldo/cafezinho/team/`; agents keep private personal homes at `franklinbaldo/<animal>` for memory, skills, experiments and messages. Legacy `team/` files here remain for project CI compatibility. The separate blog is read-only; do not publish or alter it. Do not contact archives, researchers or individuals without specific authorization.
 
 ## Source and epistemic rules
 - Prioritize original 1963 source facsimiles and raw historical Space-Track data; preserve exact URL, issue/date/page or TLE epoch, checksum and provenance.
@@ -18,7 +18,7 @@ Scope of shared scientific/product work: **franklinbaldo/conde-incident**. Agent
 - The day-only NASA decay record of 8 Nov 1963 gives no terminal time or place. Do not treat 23:59 as an observed timestamp.
 - The Lean proof kernel certifies logical implications of premises, not empirical authenticity or orbital integration. Preserve any known holdout failures.
 
-## Private animal workspaces and interagent messaging (owner protocol, 12 Nov 2026)
+## Permanent team and private animal workspaces (owner protocol, 12 Nov 2026)
 
 **Two repositories serve two different functions.** The public/shared `conde-incident` remains the source of truth for scientific data, product code, evidence matrix, work issues, CI and release history. Every animal has a **private personal repository named after its Portuguese animal name in lowercase**, e.g. `franklinbaldo/polvo`, `franklinbaldo/castor`, `franklinbaldo/gaviao` (ASCII slug), `franklinbaldo/elefante`. This home is the animal's persistent workspace for tools, notes, skills, temporary experiments, learning and session memory. The older `team/memory/` material stays in Git history, but **new personal memories go into the private home**.
 
