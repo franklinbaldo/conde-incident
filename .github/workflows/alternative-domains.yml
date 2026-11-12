@@ -1,0 +1,31 @@
+name: Alternative evidence scenarios
+on:
+  pull_request:
+    paths:
+      - 'scripts/audit-admissible-domain.mjs'
+      - 'scripts/audit-alternative-domains.mjs'
+      - 'tests/admissible-domain.test.mjs'
+      - 'tests/alternative-domains.test.mjs'
+      - 'research/ALTERNATIVE_DOMAINS.md'
+      - '.github/workflows/alternative-domains.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/audit-admissible-domain.mjs'
+      - 'scripts/audit-alternative-domains.mjs'
+      - 'tests/admissible-domain.test.mjs'
+      - 'tests/alternative-domains.test.mjs'
+      - 'research/ALTERNATIVE_DOMAINS.md'
+      - '.github/workflows/alternative-domains.yml'
+permissions:
+  contents: read
+jobs:
+  scenarios:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Audit exact domains and competing source scenarios
+        run: node --test tests/admissible-domain.test.mjs tests/alternative-domains.test.mjs
