@@ -78,6 +78,40 @@ For each scientific PR, report: (1) source matrix ID plus occurrence, document l
 
 Immediate discriminating targets: recover full epoch, source and reference conventions for the conflicting 528 RAAN reports (284.1520° and 198.5261°), then quantitatively compare viable element histories against available 527/528/529 time series, established baselines and holdouts. Cross-object mean-motion fits are retrospective model comparisons, not proof of physical coupling. If no empirical reduction is possible, pause tautological theorem expansion and produce a concise blocker specifying the missing data and its intended test. 🦡 Texugo should treat repeated restatement of known caveats as churn.
 
+## Physical observable graph and cross-domain evidence
+
+For each free physical parameter, systematically derive **observable quantities** by
+unit-preserving equations and search the existing evidence matrix for measurements
+of those observables. This is an operational method, not permission to convert
+a source-free number into a measured fact. Each edge MUST carry:
+`parameter -> equation -> derived quantity (SI units, frame, epoch, position/altitude)
+-> measurement IDs and source chain -> residual and error interval -> feasible-domain update`.
+Keep non-observed quantities free; a dimensional unit conversion alone does NOT
+constitute a new independent constraint or extra witness.
+
+Examples already linked to the case: C179 mean motion (rev/day) -> angular
+frequency (rad/s) -> Kepler proxy semimajor axis/perigee -> J2 nodal rate;
+C151 NOAA IGRA 8 Nov 1963 Recife pressure/wind -> Pa and horizontal wind
+vector (east/north m/s); atmospheric density requires pressure AND
+temperature from a collocated profile plus an equation of state; descent
+displacement depends on wind as a function of position, time and altitude,
+vertical speed, object mass/area and aerodynamic drag. C144-C146 are Navy
+synoptic charts, not a directly measured Conde wind profile.
+
+**Geographic and dynamic scope is a hard gate:** Recife wind cannot be used
+as measured wind at Conde without separately justified spatiotemporal
+transfer and uncertainty; surface storm winds cannot automatically invalidate
+an orbital entry or prove/no-prove ground impact. Local winds may matter for
+balloon drift or the terminal drift of a surviving fragment. Pressure map,
+balloon wind, geomagnetic Ap and orbital precession belong to DIFFERENT
+observation operators until the intermediate physical relations and errors
+are calibrated. For model-only assumptions report sensitivity, not historical
+posterior; for MCMC specify likelihood, priors, observation covariance,
+dependence chains, seed and held-out predictions. Do not fabricate missing
+wind/temperature/density, mass or fragment survival. Explicitly show the
+before/after physically admissible ranges and refuse to claim reduction
+when no calibrated observational inequality exists.
+
 ## Work protocol
 1. Read main, this file, your `team/<animal>.md` card, open issues/PRs, and the cumulative matrix in `research/` (present in PR #1 until merged).
 2. Resume an existing issue/PR in your domain before claiming new work. A single agent claims a single active issue; issues use `<priority 0–100> <emoji> <short title>`. Avoid duplicate claims and conflicting edits.
