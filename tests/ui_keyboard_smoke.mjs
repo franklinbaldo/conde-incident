@@ -44,6 +44,26 @@ try {
     const current = await page.getByRole('navigation', { name: 'Seções do laboratório' })
       .locator('[aria-current="page"]').textContent();
     assert.match(current || '', /Rastreamento & Mapa/);
+    // Real DOM check of independent, keyboard-operable context layers.
+    const mapSvg = page.getByRole('img', { name: /Mapa orbital esquemático/ });
+    await mapSvg.waitFor();
+    const coast = page.getByRole('checkbox', { name: 'Mostrar litoral generalizado' });
+    const grid = page.getByRole('checkbox', { name: 'Mostrar grade geográfica' });
+    assert.equal(await mapSvg.locator('[data-layer="coastline"]').count(), 1);
+    assert.equal(await mapSvg.locator('[data-layer="graticule"]').count(), 1);
+    await coast.uncheck();
+    assert.equal(await mapSvg.locator('[data-layer="coastline"]').count(), 0);
+    assert.equal(await mapSvg.locator('[data-layer="graticule"]').count(), 1,
+      'hiding coastlines must leave the graticule visible');
+    await grid.uncheck();
+    assert.equal(await mapSvg.locator('[data-layer="graticule"]').count(), 0);
+    await coast.check();
+    await grid.check();
+    assert.equal(await mapSvg.locator('[data-layer="coastline"]').count(), 1);
+    assert.equal(await mapSvg.locator('[data-layer="graticule"]').count(), 1);
+    assert.equal(await mapSvg.locator('rect[fill="#fb7185"]').count(), 1,
+      'Conde must remain a square reference marker, not an impact circle');
+
     await page.getByRole('button', { name: 'English' }).click();
     assert.equal(await page.locator('html').getAttribute('lang'), 'en');
     assert.equal(await page.getByRole('link', { name: 'Skip to main content' }).count(), 1);
