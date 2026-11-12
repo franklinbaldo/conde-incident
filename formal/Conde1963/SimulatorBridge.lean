@@ -198,14 +198,10 @@ theorem scaled_drag_power_nonpositive
     (nonnegativeFactor speedSquared : Nat) :
     scaledDragPower nonnegativeFactor speedSquared ≤ 0 := by
   change -(Int.ofNat (nonnegativeFactor * speedSquared)) ≤ 0
-  have factorNonnegative : (0 : Int) ≤ (↑nonnegativeFactor : Int) := by omega
-  have speedNonnegative : (0 : Int) ≤ (↑speedSquared : Int) := by omega
-  have productNonnegative : (0 : Int) ≤
-      (↑nonnegativeFactor : Int) * (↑speedSquared : Int) :=
-    mul_nonneg factorNonnegative speedNonnegative
   have castNonnegative : (0 : Int) ≤
       Int.ofNat (nonnegativeFactor * speedSquared) := by
-    simpa using productNonnegative
+    generalize hprod : nonnegativeFactor * speedSquared = n
+    omega
   omega
 
 end Conde1963
