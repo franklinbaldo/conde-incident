@@ -14,6 +14,11 @@ export function assessPagesMetadata(input) {
   requireCheck(input?.repo?.has_pages === true, "repository has_pages is not true");
   requireCheck(input?.pages?.build_type === "workflow", "Pages source is not GitHub Actions");
   requireCheck(input?.pages?.html_url === SITE, "Pages URL is not the expected project URL");
+  requireCheck(input?.repoAfter?.has_pages === input?.repo?.has_pages && input?.repoAfter?.has_pages === true,
+    "repository Pages flag changed during audit");
+  requireCheck(input?.pagesAfter?.build_type === input?.pages?.build_type &&
+    input?.pagesAfter?.html_url === input?.pages?.html_url,
+    "Pages source or URL changed during audit");
   requireCheck(input?.mainSHA === sha, "main HEAD differs from expected SHA");
 
   // Consider the most recent publish attempt, not any older green run.
@@ -28,6 +33,19 @@ export function assessPagesMetadata(input) {
   requireCheck(latestRun?.head_sha === sha, "latest publish run does not target expected SHA");
   requireCheck(latestRun?.status === "completed" && latestRun?.conclusion === "success",
     "latest publish run is not completed/success");
+  const runsAfter = Array.isArray(input?.runsAfter) ? input.runsAfter.filter(r =>
+    r?.name === "Publish Conde site" && r?.event === "push" &&
+    r?.head_branch === "main" && typeof r?.path === "string" &&
+    /^\.github\/workflows\/pages\.yml(@main)?$/.test(r.path)
+  ) : [];
+  runsAfter.sort((a, b) => (b.run_number || 0) - (a.run_number || 0));
+  const latestRunAfter = runsAfter[0];
+  requireCheck(Boolean(latestRunAfter && latestRun) &&
+    latestRunAfter.id === latestRun.id &&
+    latestRunAfter.head_sha === latestRun.head_sha &&
+    latestRunAfter.status === latestRun.status &&
+    latestRunAfter.conclusion === latestRun.conclusion,
+    "publish run changed during audit");
 
   // A green workflow is not a Pages deployment. Inspect the newest deployment AND its newest status.
   const deployments = Array.isArray(input?.deployments) ? [...input.deployments] : [];
@@ -39,6 +57,18 @@ export function assessPagesMetadata(input) {
   const deploymentStatuses = input?.statuses?.[latestDeployment?.id] || [];
   requireCheck(Array.isArray(deploymentStatuses) && deploymentStatuses[0]?.state === "success",
     "latest Pages deployment status is not success");
+  const deploymentsAfter = Array.isArray(input?.deploymentsAfter) ? [...input.deploymentsAfter] : [];
+  deploymentsAfter.sort((a, b) => (Date.parse(b?.created_at || "") || 0) -
+    (Date.parse(a?.created_at || "") || 0) || (Number(b?.id) || 0) - (Number(a?.id) || 0));
+  const latestDeploymentAfter = deploymentsAfter[0];
+  requireCheck(Boolean(latestDeploymentAfter && latestDeployment) &&
+    latestDeploymentAfter.id === latestDeployment.id &&
+    latestDeploymentAfter.sha === latestDeployment.sha &&
+    latestDeploymentAfter.environment === latestDeployment.environment,
+    "Pages deployment changed during audit");
+  const statusesAfter = input?.statusesAfter?.[latestDeploymentAfter?.id] || [];
+  requireCheck(Array.isArray(statusesAfter) && statusesAfter[0]?.state === "success",
+    "Pages deployment status changed during audit");
   requireCheck(input?.mainSHAAfter === sha, "main HEAD changed during audit");
 
   return {
@@ -73,10 +103,23 @@ export async function inspectPagesMetadata({ sha, token, fetchImpl = fetch }) {
         statuses[deployment.id] = await get("/deployments/" + deployment.id + "/statuses?per_page=1") || [];
       }
     }
+    // A new failed run/deployment or changed Pages setting can appear while scanning statuses.
+    // Re-read the same control-plane sources before accepting even a metadata-only verdict.
+    const repoAfter = await get("");
+    const pagesAfter = await get("/pages");
+    const workflowAfter = await get("/actions/workflows/pages.yml/runs?branch=main&event=push&per_page=30");
+    const deploymentsAfter = await get("/deployments?environment=github-pages&per_page=30");
+    const statusesAfter = {};
+    for (const deployment of Array.isArray(deploymentsAfter) ? [...deploymentsAfter].sort((a, b) => (Date.parse(b?.created_at || "") || 0) - (Date.parse(a?.created_at || "") || 0) || (Number(b?.id) || 0) - (Number(a?.id) || 0)).slice(0, 1) : []) {
+      if (Number.isSafeInteger(deployment.id)) {
+        statusesAfter[deployment.id] = await get("/deployments/" + deployment.id + "/statuses?per_page=1") || [];
+      }
+    }
     const mainAfter = await get("/branches/main");
     return assessPagesMetadata({
       sha, repo, pages, mainSHA: main?.commit?.sha,
       runs: workflow?.workflow_runs, deployments, statuses,
+      repoAfter, pagesAfter, runsAfter: workflowAfter?.workflow_runs, deploymentsAfter, statusesAfter,
       mainSHAAfter: mainAfter?.commit?.sha
     });
   } catch (error) {

@@ -8,7 +8,9 @@ function valid() {
   return {
     sha: SHA,
     repo: { has_pages: true },
+    repoAfter: { has_pages: true },
     pages: { build_type: "workflow", html_url: SITE },
+    pagesAfter: { build_type: "workflow", html_url: SITE },
     mainSHA: SHA,
     mainSHAAfter: SHA,
     runs: [{
@@ -16,8 +18,15 @@ function valid() {
       event: "push", head_branch: "main", head_sha: SHA,
       status: "completed", conclusion: "success", run_number: 9
     }],
+    runsAfter: [{
+      id: 9, name: "Publish Conde site", path: ".github/workflows/pages.yml@main",
+      event: "push", head_branch: "main", head_sha: SHA,
+      status: "completed", conclusion: "success", run_number: 9
+    }],
     deployments: [{ id: 100, sha: SHA, environment: "github-pages", created_at: "2026-11-12T14:00:00Z" }],
-    statuses: { 100: [{ state: "success" }] }
+    deploymentsAfter: [{ id: 100, sha: SHA, environment: "github-pages", created_at: "2026-11-12T14:00:00Z" }],
+    statuses: { 100: [{ state: "success" }] },
+    statusesAfter: { 100: [{ state: "success" }] }
   };
 }
 function refuse(edit, expected) {
@@ -54,6 +63,25 @@ test("most recent deployment overrides older successful deployment", () => refus
 test("missing deployment status fails closed", () => refuse(i => { i.statuses = {}; }, "status is not success"));
 test("main moving during audit fails closed", () => refuse(i => { i.mainSHAAfter = OTHER; }, "changed during audit"));
 test("wrong deployment environment cannot be accepted", () => refuse(i => { i.deployments[0].environment = "production"; }, "not github-pages"));
+test("new failed publish attempt arriving during scan invalidates metadata", () => refuse(i => {
+  i.runsAfter.unshift({ ...i.runs[0], id: 10, run_number: 10, conclusion: "failure" });
+}, "publish run changed"));
+test("running publish attempt changing status invalidates metadata", () => refuse(i => {
+  i.runsAfter[0].status = "in_progress";
+}, "publish run changed"));
+test("newer deployment arriving during scan invalidates metadata", () => refuse(i => {
+  i.deploymentsAfter.unshift({ ...i.deployments[0], id: 101, created_at: "2026-11-12T15:00:00Z" });
+  i.statusesAfter[101] = [{ state: "success" }];
+}, "Pages deployment changed"));
+test("deployment status revoked during scan invalidates metadata", () => refuse(i => {
+  i.statusesAfter[100] = [{ state: "failure" }];
+}, "Pages deployment status changed"));
+test("Pages source switching during scan invalidates metadata", () => refuse(i => {
+  i.pagesAfter.build_type = "legacy";
+}, "Pages source or URL changed"));
+test("Pages feature disabled during scan invalidates metadata", () => refuse(i => {
+  i.repoAfter.has_pages = false;
+}, "repository Pages flag changed"));
 
 test("read-only collection checks Pages, workflow, deployment and second HEAD", async () => {
   const responses = new Map([
@@ -77,7 +105,9 @@ test("read-only collection checks Pages, workflow, deployment and second HEAD", 
   });
   assert.equal(result.status, "METADATA_ONLY_SITE_NOT_VERIFIED");
   assert.equal(paths.filter(path => path === "/branches/main").length, 2);
-  assert.ok(paths.includes("/deployments/100/statuses?per_page=1"));
+  assert.equal(paths.filter(path => path === "/pages").length, 2);
+  assert.equal(paths.filter(path => path.includes("/actions/workflows/pages.yml/runs")).length, 2);
+  assert.equal(paths.filter(path => path === "/deployments/100/statuses?per_page=1").length, 2);
 });
 test("API failures are NOT_VERIFIED, not published", async () => {
   const result = await inspectPagesMetadata({
