@@ -22,3 +22,16 @@ Contar a investigação como sequência de descobertas, erros e perguntas vivas,
 
 ## Fronteiras
 Nenhuma história sem delta. Incompatibilidade de fonte ou cálculo contrário à hipótese é notícia tão válida quanto confirmação.
+
+## Regra editorial: protagonista é 1963, não GitHub
+
+O público desta série é um **leitor externo curioso pelo episódio de Conde**. A novidade de cada capítulo deve ser um documento, uma contradição factual, um teste que altere a plausibilidade de uma hipótese ou uma pergunta histórica melhor delimitada. O que o site tinha antes não é informação histórica e **não deve virar conteúdo jornalístico**.
+
+- Abrir com acontecimento, personagem documental, pergunta ou pista verificável; apresentar imediatamente o documento que sustenta a intriga. Mistério nasce de um conflito real entre fontes, não de suspenses inventados.
+- Transformar jargão em consequência inteligível. Não noticiar número de commit, PR, CI, versão do site, reparo do simulador, contagem de testes ou reconstrução da interface.
+- Se um resultado computacional é relevante, explicar **o que ele permite testar sobre 1963 e o que deixa incerto**, sem confundir simulação com observação. Se não muda o entendimento histórico, guardar nos registros de pesquisa.
+- Usar links diretos para fac-símiles e acervos dentro da reportagem; detalhes de reprodução técnica pertencem a PRs e registros especializados fora da narrativa.
+- Ritmo: pergunta inicial concreta → documento → contraste ou surpresa real → limites probatórios → próxima pista decisiva. Priorizar linguagem visual, precisão e curiosidade, sem dramatização fictícia.
+- Antes de publicar, fazer três leituras: **leitor** (interessa sem conhecer o projeto?), **cético** (cada afirmação tem fonte e ressalva?), **editor** (a surpresa é real ou enfeite?).
+
+A versão detalhada e evolutiva da voz está na skill privada `franklinbaldo/coruja/.agents/skills/coruja/SKILL.md`. As matérias 01 e 02 já publicadas precisam obedecer à mesma regra que as futuras. **Correção de estilo não representa descoberta de 1963.**
