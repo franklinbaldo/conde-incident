@@ -1,3 +1,5 @@
+> **Atualização operacional, 12/11/2026:** a RAAN 284,1520° gerada pelo projeto antigo deixou de ser hipótese de entrada ativa por falta de fonte. A PR #14 troca os valores nominais de 528 pelo par TLE de espelho secundário com RAAN 198,5261° e época 27/10/1963 14:40:16.132512 UTC, documentado em C25#1/C179#1 e com checksum/hash. O próprio valor 198,5261° é referência documental, não um valor físico exato; a RAAN pode ser ajustada por Monte Carlo/MCMC ao lado de i, e, n, época, arrasto e densidade, com restrições calculadas a partir de outras épocas e holdouts. O novo contrato elimina o falso segundo ramo sem fonte. Descrições históricas abaixo de duas RAANs como alternativas **não são mais normativas**. A MCMC histórica permanece NOT_RUN, pois faltam erros/likelihoods calibrados e validação física.
+
 ## 🐙 C241-T10: a numerical RAAN test instead of more generic simulator axioms
 
 [`RaanEpochConstraint.lean`](Conde1963/RaanEpochConstraint.lean) checks the *actual
