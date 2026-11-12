@@ -38,6 +38,15 @@ def reconcile_handoff(graph: dict, handoff: dict) -> dict:
         found[key] = o["value"]
     if set(found) != set(expected):
         raise ValueError("NASA facsimile incomplete table")
+    # A renamed source row must not evade the erratum while still appearing
+    # as a new, uncorrected historical observation in the exported handoff.
+    for o in graph["observations"]:
+        if o["source_id"] not in {key[0] for key in TABLE}:
+            continue
+        edition = o["source_id"].removeprefix("NASA-SSR-")
+        pinned_id = f"SSR-{edition}-NORAD{o['object_id']}-{o['observable']}"
+        if o["id"] != pinned_id:
+            raise ValueError("NASA facsimile row identity mismatch: " + str(o["id"]))
     for key, value in found.items():
         frozen_value = 94.8 if key == ERRATUM else expected[key]
         if type(value) not in (int, float) or not math.isfinite(value) or value != frozen_value:
@@ -45,6 +54,18 @@ def reconcile_handoff(graph: dict, handoff: dict) -> dict:
     delta = [d for d in graph["derived_connections"] if d["id"] == DELTA_ID]
     if len(delta) != 1 or delta[0]["derived_arithmetic"] != 0.2:
         raise ValueError("NASA facsimile legacy difference mismatch")
+    # The corrected export must contain all sixteen inspected cells exactly
+    # once, plus the edited delta; otherwise its audit status is misleading.
+    pinned_rows = {
+        f"SSR-{src.removeprefix('NASA-SSR-')}-NORAD{obj}-{col}"
+        for src, obj, col in expected
+    }
+    actual_rows = [r["observation"] for r in handoff["observations"]
+                   if r.get("source") in {key[0] for key in TABLE}]
+    if set(actual_rows) != pinned_rows or len(actual_rows) != len(pinned_rows):
+        raise ValueError("NASA facsimile handoff row set mismatch")
+    if sum(edge.get("id") == DELTA_ID for edge in handoff["derived_connections"]) != 1:
+        raise ValueError("NASA facsimile handoff delta missing or duplicated")
     result = dict(handoff)
     result["observations"] = []
     for row in handoff["observations"]:

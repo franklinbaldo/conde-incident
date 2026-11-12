@@ -1,0 +1,30 @@
+{
+  "id": "QA-TX-20261112-08",
+  "kind": "adversarial_falsification_of_nasa_ssr_corrected_handoff",
+  "owner": "Texugo",
+  "issue": "https://github.com/franklinbaldo/conde-incident/issues/19",
+  "predecessor": "QA-TX-20261112-07",
+  "primary_sources": [
+    {
+      "id": "NASA-SSR-1963-11-15",
+      "url": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf#page=7",
+      "printed_page": 5
+    },
+    {
+      "id": "NASA-SSR-1963-11-30",
+      "url": "https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf#page=7",
+      "printed_page": 5
+    }
+  ],
+  "reproduction": "python3 -m unittest discover -s tests -p test_texugo_ssr_facsimile_qa.py -v",
+  "attack": "Renaming an otherwise valid NASA row while updating only its derived input IDs could bypass the specific row patch and preserve false 94.8 in the outward-facing handoff, even while the facsimile_audit claimed correction.",
+  "controls": [
+    "Reject alias row ID even if source/object/column/value are unchanged",
+    "Reject handoff with missing corrected source row",
+    "Reject handoff with missing or duplicate corrected difference edge"
+  ],
+  "lineage": "Both NASA 1963 editions compile the NORAD/AFS upstream family and cannot be counted as independent tracking sensors.",
+  "uncertainty": "Original instrument epochs, covariance, and terminal state unknown; documentary QA is not a physical restriction.",
+  "physical_constraints_activated": 0,
+  "conde_status": "INDETERMINATE"
+}

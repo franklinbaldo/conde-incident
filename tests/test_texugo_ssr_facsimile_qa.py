@@ -39,5 +39,39 @@ class FacsimileQATests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "NASA facsimile source-value mismatch"):
             validate(bad)
 
+    def test_renamed_raw_cell_cannot_bypass_facsimile_erratum(self):
+        bad = copy.deepcopy(self.raw)
+        old = "SSR-1963-11-30-NORAD527-nodal_period"
+        forged = old + "-alternate"
+        next(o for o in bad["observations"] if o["id"] == old)["id"] = forged
+        next(d for d in bad["derived_connections"] if d["id"] ==
+             "SSR-PUBLICATIONS-DELTA-527-nodal_period")["inputs"][1] = forged
+        with self.assertRaisesRegex(ValueError, "NASA facsimile row identity mismatch"):
+            validate(bad)
+
+    def test_handoff_missing_erratum_row_is_rejected(self):
+        from texugo_ssr_facsimile_erratum import reconcile_handoff, ROW_ID
+        valid = validate(self.raw)
+        forged = copy.deepcopy(valid)
+        forged["observations"] = [r for r in forged["observations"]
+                                  if r["observation"] != ROW_ID]
+        with self.assertRaisesRegex(ValueError, "NASA facsimile handoff row set mismatch"):
+            reconcile_handoff(self.raw, forged)
+
+    def test_handoff_duplicate_or_missing_delta_is_rejected(self):
+        from texugo_ssr_facsimile_erratum import reconcile_handoff, DELTA_ID
+        valid = validate(self.raw)
+        for variant in ("missing", "duplicate"):
+            with self.subTest(variant=variant):
+                forged = copy.deepcopy(valid)
+                if variant == "missing":
+                    forged["derived_connections"] = [e for e in forged["derived_connections"]
+                                                      if e["id"] != DELTA_ID]
+                else:
+                    forged["derived_connections"].append(
+                        next(e for e in forged["derived_connections"] if e["id"] == DELTA_ID))
+                with self.assertRaisesRegex(ValueError, "NASA facsimile handoff delta"):
+                    reconcile_handoff(self.raw, forged)
+
 if __name__ == "__main__":
     unittest.main()
