@@ -63,11 +63,6 @@
       "observed_bytes": 26737
     },
     {
-      "path": "src/components/OrbitalMap.tsx",
-      "git_blob_sha": "ec95dffab4b30a5599903b0deb5925aec6cd5190",
-      "observed_bytes": 101576
-    },
-    {
       "path": "src/components/TriangulationDashboard.tsx",
       "git_blob_sha": "22108b5447638daabfc66167dc3f79d6bb79d339",
       "observed_bytes": 31713
