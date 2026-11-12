@@ -1,0 +1,51 @@
+name: Gaviao Caderno 13 - independent recency replay
+on:
+  push:
+    branches: [gaviao/ch13-independent-recency-20261112]
+  pull_request:
+    paths:
+      - 'tools/gaviao_ch13_recency_audit.py'
+      - 'tests/test_gaviao_ch13_recency_audit.py'
+      - 'research/gaviao_ch13_review.md'
+      - 'research/gaviao_claim_matrix_C243_T12.md'
+      - 'team/memory/gaviao/**'
+      - '.github/workflows/gaviao-ch13-recency.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independent-529:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 1
+          persist-credentials: false
+      - name: Assert actual proposal HEAD
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          echo "TESTED_SHA=$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Independent synthetic falsifiers
+        run: python -m unittest discover -s tests -p 'test_gaviao_ch13_recency_audit.py' -v
+      - name: Install fixed parquet reader
+        run: python -m pip install --disable-pip-version-check pyarrow==21.0.0
+      - name: Pin source bytes and replay secant OLS persistence independently
+        run: |
+          python tools/gaviao_ch13_recency_audit.py --download \
+            --parquet "$RUNNER_TEMP/tle_1963.parquet" \
+            --output "$RUNNER_TEMP/gaviao_c243_t12.json"
+      - name: Preserve per-target errors and negative results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gaviao-ch13-recency-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ${{ runner.temp }}/gaviao_c243_t12.json
+          if-no-files-found: warn
+          retention-days: 30
