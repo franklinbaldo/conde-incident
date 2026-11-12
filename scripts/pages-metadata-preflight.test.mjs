@@ -40,6 +40,7 @@ test("even complete metadata never asserts site publication", () => {
   const result = assessPagesMetadata(valid());
   assert.equal(result.status, "METADATA_ONLY_SITE_NOT_VERIFIED");
   assert.equal(result.failures.length, 0);
+  assert.deepEqual(result.evidence, { runId: 9, attempt: 1, deploymentId: 100, statusId: 501 });
   assert.match(result.note, /never proves live HTTPS/i);
 });
 test("invalid SHA fails closed", () => refuse(i => { i.sha = "main"; }, "invalid expected SHA"));
@@ -130,3 +131,10 @@ test("API failures are NOT_VERIFIED, not published", async () => {
   assert.equal(result.status, "NOT_VERIFIED");
   assert.match(result.failures.join(), /simulated rate limit/);
 });
+
+test("missing run ID prevents trustworthy post-HTTPS recheck", () => refuse(i => {
+  delete i.runs[0].id;
+}, "run ID is not identified"));
+test("missing deployment ID is not valid metadata evidence", () => refuse(i => {
+  delete i.deployments[0].id;
+}, "deployment ID is not identified"));

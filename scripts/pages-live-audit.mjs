@@ -6,6 +6,13 @@ import { inspectPagesMetadata, SITE } from "./pages-metadata-preflight.mjs";
 const BASE = new URL(SITE);
 const PREFIX = BASE.pathname;
 
+function evidenceKey(value) {
+  const keys = ["runId", "attempt", "deploymentId", "statusId"];
+  if (!value || !keys.every(key => Number.isSafeInteger(value[key]) && value[key] > 0))
+    return null;
+  return keys.map(key => value[key]).join(":");
+}
+
 function internal(raw, base = SITE) {
   try {
     const url = new URL(raw, base);
@@ -75,8 +82,9 @@ export async function auditPublishedSite({
 }) {
   const failures = [];
   const metadata = await metadataInspector({ sha, token, fetchImpl });
+  const beforeKey = evidenceKey(metadata?.evidence);
   if (metadata?.status !== "METADATA_ONLY_SITE_NOT_VERIFIED" ||
-      !Array.isArray(metadata.failures) || metadata.failures.length) {
+      !Array.isArray(metadata.failures) || metadata.failures.length || !beforeKey) {
     return {
       status: "NOT_VERIFIED", phase: "metadata",
       failures: ["Pages metadata/deploy gate has not passed", ...(metadata?.failures || [])],
@@ -138,10 +146,28 @@ export async function auditPublishedSite({
   for (const css of [...new Set(styles)]) await get(css, "css");
   for (const js of [...new Set(scripts)]) await get(js, "js");
 
+  // A new publish/deploy during the HTTPS scan invalidates the live-content check.
+  // Rechecking metadata limits this race but does NOT bind bytes to an artifact digest.
+  try {
+    const after = await metadataInspector({ sha, token, fetchImpl });
+    const afterKey = evidenceKey(after?.evidence);
+    if (after?.status !== "METADATA_ONLY_SITE_NOT_VERIFIED" ||
+        !Array.isArray(after.failures) || after.failures.length) {
+      failures.push("Pages metadata/deploy gate failed after HTTPS scan");
+      if (Array.isArray(after?.failures)) failures.push(...after.failures);
+    }
+    if (!afterKey || afterKey !== beforeKey)
+      failures.push("publish run or deployment identity changed during HTTPS scan");
+  } catch (error) {
+    failures.push("post-HTTPS metadata read failed: " + String(error?.message || error));
+  }
+
   return {
-    status: failures.length ? "NOT_VERIFIED" : "VERIFIED_PUBLICATION",
+    // Until the site bytes are compared with an authenticated deploy artifact,
+    // current HTTPS availability must NOT be called VERIFIED_PUBLICATION.
+    status: failures.length ? "NOT_VERIFIED" : "LIVE_CONTENT_PRESENT_UNATTESTED",
     phase: "content", failures, site: SITE, sha, chapter,
-    note: "Verifies current HTTPS content, not historical claims or permanence of deployment."
+    note: "HTTPS content is present at audit time, but bytes are not attested against the deploy artifact."
   };
 }
 
@@ -152,5 +178,6 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
     sha, chapterPath, token: process.env.GITHUB_TOKEN
   });
   console.log(JSON.stringify(result, null, 2));
+  // Fail closed as a release attestation until artifact-to-HTTPS binding exists.
   if (result.status !== "VERIFIED_PUBLICATION") process.exitCode = 1;
 }

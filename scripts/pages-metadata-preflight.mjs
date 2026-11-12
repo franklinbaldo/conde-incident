@@ -33,6 +33,8 @@ export function assessPagesMetadata(input) {
   requireCheck(latestRun?.head_sha === sha, "latest publish run does not target expected SHA");
   requireCheck(latestRun?.status === "completed" && latestRun?.conclusion === "success",
     "latest publish run is not completed/success");
+  requireCheck(Number.isSafeInteger(latestRun?.id) && latestRun.id > 0,
+    "latest publish run ID is not identified");
   requireCheck(Number.isSafeInteger(latestRun?.run_attempt) && latestRun.run_attempt > 0,
     "latest publish run attempt is not identified");
   const runsAfter = Array.isArray(input?.runsAfter) ? input.runsAfter.filter(r =>
@@ -57,6 +59,8 @@ export function assessPagesMetadata(input) {
   const latestDeployment = deployments[0];
   requireCheck(latestDeployment?.environment === "github-pages", "latest deployment is not github-pages");
   requireCheck(latestDeployment?.sha === sha, "latest Pages deployment does not target expected SHA");
+  requireCheck(Number.isSafeInteger(latestDeployment?.id) && latestDeployment.id > 0,
+    "latest Pages deployment ID is not identified");
   const deploymentStatuses = input?.statuses?.[latestDeployment?.id] || [];
   requireCheck(Array.isArray(deploymentStatuses) && deploymentStatuses[0]?.state === "success",
     "latest Pages deployment status is not success");
@@ -82,7 +86,13 @@ export function assessPagesMetadata(input) {
     failures,
     sha,
     site: SITE,
-    note: "This preflight never proves live HTTPS content, CSS, JavaScript or Markdown chapters."
+    // Compare this control-plane identity again AFTER reading HTTPS bytes.
+    // IDs are not a hash of the published content and provide no byte attestation.
+    evidence: failures.length ? null : {
+      runId: latestRun.id, attempt: latestRun.run_attempt,
+      deploymentId: latestDeployment.id, statusId: deploymentStatuses[0].id
+    },
+    note: "This preflight never proves live HTTPS content or artifact/commit byte identity."
   };
 }
 
