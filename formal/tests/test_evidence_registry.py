@@ -6,7 +6,8 @@ import unittest
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "formal" / "scripts"))
 from evidence_registry import (  # noqa: E402
-    InventoryError, audit, contracts, parse_rows, render_lean
+    InventoryError, audit, contracts, parse_rows, render_lean,
+    j2_nodal_rate_deg_per_day
 )
 
 MATRIX = ROOT / "research" / "evidence_matrix_C001-C238_2026-11-11.md"
@@ -177,6 +178,11 @@ class MatrixEvidenceTests(unittest.TestCase):
         self.assertEqual(source["source_authentication"], "NOT_VERIFIED_PRIMARY")
         self.assertFalse(source["admitted_as_hard_constraint"])
         self.assertTrue(source["reference_only_not_true_raan"])
+        self.assertAlmostEqual(
+            source["nominal_first_order_j2_node_rate_deg_per_day"],
+            -1.173124071, places=8)
+        self.assertEqual(source["j2_rate_model_status"],
+                         "CONDITIONAL_MEAN_MOTION_KEPLER_PROXY_NOT_CALIBRATED")
         self.assertEqual(source["matrix_occurrences"], ["C25#1", "C179#1"])
         self.assertEqual(interface["original_tle_custody"], "NOT_VERIFIED")
         self.assertEqual(interface["historical_orbit_validation"], "NOT_RUN")
@@ -200,6 +206,24 @@ class MatrixEvidenceTests(unittest.TestCase):
         self.assertIn("FIRST_ORDER_J2_NODAL_PRECESSION",
                       [x["relation"] for x in
                        interface["physical_dependencies_to_explore"]])
+
+    def test_j2_rate_depends_on_other_orbital_parameters_not_legacy_raan(self):
+        source_rate = j2_nodal_rate_deg_per_day(81.8615, 0.0017147, 15.74901460)
+        self.assertAlmostEqual(source_rate, -1.173124071, places=8)
+        self.assertNotAlmostEqual(
+            j2_nodal_rate_deg_per_day(80.0, 0.0017147, 15.74901460),
+            source_rate, places=4)
+        self.assertNotAlmostEqual(
+            j2_nodal_rate_deg_per_day(81.8615, 0.0017147, 16.0),
+            source_rate, places=4)
+        self.assertAlmostEqual(
+            j2_nodal_rate_deg_per_day(90.0, 0.0017147, 15.74901460),
+            0.0, places=8)
+        for bad in [(-1.0, 0.1, 15.0), (90.0, 1.0, 15.0),
+                    (90.0, 0.0, 0.0), (float("nan"), 0.0, 15.0)]:
+            with self.subTest(bad=bad):
+                with self.assertRaises(ValueError):
+                    j2_nodal_rate_deg_per_day(*bad)
 
     def test_sourced_raan_reference_cites_exact_original_matrix_rows(self):
         out = contracts(self.rows)
