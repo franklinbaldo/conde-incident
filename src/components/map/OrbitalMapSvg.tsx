@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import type { GroundTrackPoint, UncertaintyEnvelope } from '../../types/astrodynamics';
-import { projectFlat, projectGlobe, projectedSegments } from '../../lib/mapGeometry';
+import { projectFlat, projectGlobe, projectedSegments, canDrawFlatConnection } from '../../lib/mapGeometry';
 import { canPanWithPointer, shouldShowScenarioConnections } from '../../lib/mapInteraction';
 import { CONDE_COORDINATES } from '../../lib/constants';
 import { coastline110mPart1 } from '../../lib/coastline110mPart1';
@@ -145,7 +145,7 @@ export function OrbitalMapSvg({
                 if (!other) return null;
                 const to = project(other.longitude, other.latitude);
                 if (!from.visible || !to.visible ||
-                    (mode === 'flat' && Math.abs(other.longitude - positions[528]!.longitude) > 180)) return null;
+                    (mode === 'flat' && !canDrawFlatConnection(positions[528]!, other))) return null;
                 return <line key={'connection-' + id} x1={from.x} y1={from.y} x2={to.x} y2={to.y}
                   stroke={COLORS[id]} strokeWidth="1" strokeDasharray="3 5" vectorEffect="non-scaling-stroke" />;
               })}
