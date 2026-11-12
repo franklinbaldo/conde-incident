@@ -131,6 +131,22 @@ jobs:
           print("RAAN original provenance:", r["diagnostic"]["physical_1963_raan_origin"])
           print("Lean and impact:", r["lean_4_35_physical_restriction"], r["reentry_and_conde"])
           PY
+      - name: Audit mean-motion secants without accepting n-dot as a measured derivative (C241-T11)
+        run: |
+          python tools/tle_mean_motion_secant_audit.py \
+            --csv "$RUNNER_TEMP/tle-audit/norad_527_528_529_1963_numeric.csv" \
+            --output "$RUNNER_TEMP/tle-audit/mean_motion_secants_c241_t11.json"
+          python - <<'PY'
+          import json, os, pathlib
+          r = json.loads((pathlib.Path(os.environ["RUNNER_TEMP"]) /
+                          "tle-audit/mean_motion_secants_c241_t11.json").read_text())
+          print("C241-T11:", r["global"])
+          print("527/528/529 72h windows:", {
+              key: val["up_to_72h"]
+              for key, val in r["by_norad"].items()})
+          print("unresolved:", r["raan_198_5261_vs_284_1520"],
+                r["provenance"]["primary_1963_TLE_pairs"], r["conde"])
+          PY
       - name: Preserve normalized source-derived rows and negative results
         if: always()
         uses: actions/upload-artifact@v4
