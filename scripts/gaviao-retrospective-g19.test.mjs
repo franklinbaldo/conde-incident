@@ -37,7 +37,7 @@ test('G19 preserves the NARA occurrence and does not convert reporting to observ
 test('G19 identifies a control-plane race but never claims a physical or Pages deployment proof', () => {
   const bug = audit.findings.find(x => x.id === 'G19-F1');
   assert.equal(bug.introduced_by_pr, 143);
-  assert.match(bug.counterexample, /run_attempt/);
+  assert.match(bug.counterexample, /rerun attempt/);
   assert.match(bug.counterexample, /status id/);
   assert.equal(audit.editorial.site_published_verified, false);
   assert.equal(audit.editorial.repo_has_pages, false);
