@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 
 export type TabId =
+  | 'research'
   | 'summary'
   | 'map'
   | 'inverse'
@@ -42,6 +43,12 @@ export const Navigation: React.FC<NavigationProps> = ({
 }) => {
   const storiesHref = `${import.meta.env.BASE_URL.replace(/lab\/$/, '')}stories/`;
   const tabs = [
+    {
+      id: 'research' as TabId,
+      labelPt: 'Evidências & restrições',
+      labelEn: 'Evidence & constraints',
+      icon: FileText,
+    },
     {
       id: 'summary' as TabId,
       labelPt: 'Veredito & Resumo',
