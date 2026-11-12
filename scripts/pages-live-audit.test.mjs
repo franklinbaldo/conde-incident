@@ -20,6 +20,7 @@ const pages = {
 function fixture(overrides = {}) {
   const content = { ...pages, ...(overrides.content || {}) };
   const reads = [];
+  const metadataReads = [];
   const fetchImpl = async (url, opts) => {
     assert.equal(opts.method, "GET");
     assert.equal(opts.redirect, "error");
@@ -30,21 +31,27 @@ function fixture(overrides = {}) {
     return { ok: true, status: 200, url: overrides.redirect === url ? "https://untrusted.test/" : url,
       headers: { get: () => record[0] }, text: async () => record[1] };
   };
-  return { reads, args: {
+  return { reads, metadataReads, args: {
     sha: SHA, chapterPath: CHAPTER, fetchImpl,
-    metadataInspector: async () => ({
-      status: overrides.metadataStatus || "METADATA_ONLY_SITE_NOT_VERIFIED",
-      failures: overrides.metadataFailures || []
-    })
+    metadataInspector: async () => {
+      const index = metadataReads.length;
+      metadataReads.push(index);
+      return overrides.metadataResponses?.[index] ?? {
+        status: overrides.metadataStatus || "METADATA_ONLY_SITE_NOT_VERIFIED",
+        failures: overrides.metadataFailures || [],
+        evidence: { runId: 9, attempt: 1, deploymentId: 100, statusId: 501 }
+      };
+    }
   } };
 }
 
-test("live HTML, chapter, lab, CSS and JS after green metadata yield verified", async () => {
+test("green metadata plus live content still does not attest artifact bytes", async () => {
   const f = fixture();
   const result = await auditPublishedSite(f.args);
-  assert.equal(result.status, "VERIFIED_PUBLICATION");
+  assert.equal(result.status, "LIVE_CONTENT_PRESENT_UNATTESTED");
   assert.equal(result.failures.length, 0);
   assert.deepEqual(new Set(f.reads), new Set([SITE, CHAPTER, LAB, CSS, JS]));
+  assert.equal(f.metadataReads.length, 2, "must recheck metadata after HTTPS");
 });
 
 test("never fetch public site if publish metadata/deployment gate failed", async () => {
@@ -215,6 +222,46 @@ test("G22: real tags following a quoted fake tag remain inspectable", async () =
     [SITE]: ["text/html", pages[SITE][1].replace("<body>", "<body>" + fake)]
   } });
   const result = await auditPublishedSite(f.args);
-  assert.equal(result.status, "VERIFIED_PUBLICATION");
+  assert.equal(result.status, "LIVE_CONTENT_PRESENT_UNATTESTED");
   assert.equal(result.failures.length, 0);
+});
+
+const GREEN = {
+  status: "METADATA_ONLY_SITE_NOT_VERIFIED",
+  failures: [], evidence: { runId: 9, attempt: 1, deploymentId: 100, statusId: 501 }
+};
+test("G21-F2: newer deployment during HTTPS scan invalidates live verdict", async () => {
+  const f = fixture({ metadataResponses: [
+    GREEN, { ...GREEN, evidence: { ...GREEN.evidence, deploymentId: 101, statusId: 502 } }
+  ] });
+  const result = await auditPublishedSite(f.args);
+  assert.equal(result.status, "NOT_VERIFIED");
+  assert.match(result.failures.join(), /identity changed/);
+  assert.equal(f.metadataReads.length, 2);
+});
+test("G21-F2: failed replacement run discovered after HTTPS invalidates verdict", async () => {
+  const f = fixture({ metadataResponses: [
+    GREEN, { status: "NOT_VERIFIED", failures: ["latest publish run is not completed/success"],
+      evidence: null }
+  ] });
+  const result = await auditPublishedSite(f.args);
+  assert.equal(result.status, "NOT_VERIFIED");
+  assert.match(result.failures.join(), /gate failed after HTTPS scan/);
+  assert.match(result.failures.join(), /not completed\/success/);
+});
+test("G21-F2: post-HTTPS metadata read error fails closed", async () => {
+  const f = fixture();
+  let calls = 0;
+  const result = await auditPublishedSite({ ...f.args, metadataInspector: async () => {
+    if (calls++ === 0) return GREEN;
+    throw Error("postscan unavailable");
+  } });
+  assert.equal(result.status, "NOT_VERIFIED");
+  assert.match(result.failures.join(), /postscan unavailable/);
+});
+test("G21-F2: missing deploy identity cannot verify content", async () => {
+  const f = fixture({ metadataResponses: [{ ...GREEN, evidence: null }] });
+  const result = await auditPublishedSite(f.args);
+  assert.equal(result.status, "NOT_VERIFIED");
+  assert.equal(f.reads.length, 0);
 });
