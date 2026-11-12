@@ -209,3 +209,11 @@ test('two chapters with immutable matching source references pass the source led
   const x = withTwoChapters();
   assert.equal(assessRelease(x).status, 'PASS');
 });
+
+test('canonical stories README is editorial documentation, not a missing chapter', () => {
+  const x = good();
+  x.sourceTree.tree.push({ path: 'stories/README.md', type: 'blob' });
+  assert.equal(assessRelease(x).status, 'PASS');
+  x.sourceTree.tree.push({ path: 'stories/unexpected.md', type: 'blob' });
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
