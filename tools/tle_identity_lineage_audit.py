@@ -67,7 +67,7 @@ def check_catalog_ledger(ledger):
             nasa.get("catalog_designator_printed") != "1963 3B" or
             nasa.get("decay_day") != "1963-11-08" or
             nasa.get("extraction_status") !=
-            "PREVIOUSLY_INSPECTED_IN_C197_NOT_REINSPECTED_IN_T8"):
+            "VISUALLY_REINSPECTED_PDF_PAGE_9_PRINTED_8_2026-11-12"):
         raise ValueError("NASA document must remain a date-only attributed claim")
     p = ledger.get("provenance", {})
     if any(p.get(name) is not False for name in (
