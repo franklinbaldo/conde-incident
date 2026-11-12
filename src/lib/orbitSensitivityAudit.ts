@@ -149,7 +149,8 @@ export function auditLocalVelocitySensitivity(
     const right = Math.min(hi, midpoint[axis] + probeKmS);
     // A rational/Float64 box may be non-singleton while a requested probe
     // cannot resolve two distinct speeds near its chosen midpoint.
-    if (!(left < right)) return noScore('NOT_RUN_PROBE_PRECISION');
+    if (!(left < right) || right - left <= Number.EPSILON * Math.max(1, Math.abs(midpoint[axis])))
+      return noScore('NOT_RUN_PROBE_PRECISION');
     axisPairs.push([left, right]);
     const observations: number[][] = [[], []];
     for (const [side, speed] of [left, right].entries()) {

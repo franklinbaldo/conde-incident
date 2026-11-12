@@ -128,7 +128,7 @@ test('a missed coarse reentry suppresses sensitivity ranking, never proves a no-
       vKmS: [-0.15, 8.15, 0], tS: 0 },
   }, [scheduled(3000)], {
     ...controls, cutoffEpochUtc: '1963-10-27T02:00:00.000Z',
-    stepS: 3000, convergence: {
+    stepS: 3000, minimumSignalKm: 0.03, convergence: {
       ...controls.convergence,
       tolerance: { positionKm: 0.01, velocityKmS: 0.0001, epochS: 0.01 },
     },
