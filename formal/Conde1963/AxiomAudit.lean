@@ -1,4 +1,4 @@
-import Conde1963.ScenarioAlternatives
+import Conde1963.ScenarioEnclosures
 
 /-! Explicit kernel-dependency report in CI, not an empirical validation. -/
 
@@ -99,3 +99,15 @@ import Conde1963.ScenarioAlternatives
 #print axioms Conde1963.branches_exclude_alternative
 #print axioms Conde1963.conflicting_branch_witnesses_leave_alternative_indeterminate
 #print axioms Conde1963.intersecting_alternatives_can_falsely_erase_all_candidates
+
+-- Error envelopes across disjoint unresolved source scenarios: no physical location inferred.
+#print axioms Conde1963.covered_alternative_envelope_excludes_conde
+#print axioms Conde1963.covered_alternative_envelope_forces_conde
+#print axioms Conde1963.covered_alternative_envelope_identifies_other_window
+#print axioms Conde1963.alternative_enclosure_exclusion_persists_with_witness
+#print axioms Conde1963.alternative_enclosure_forcing_persists_with_witness
+#print axioms Conde1963.alternative_enclosure_other_window_persists_with_witness
+#print axioms Conde1963.proven_empty_right_branch_allows_left_exclusion
+#print axioms Conde1963.opposing_branch_witnesses_block_gated_verdicts
+#print axioms Conde1963.missing_ground_audit_blocks_all_alternative_verdicts
+#print axioms Conde1963.castor_declared_audit_blocks_all_alternative_verdicts
