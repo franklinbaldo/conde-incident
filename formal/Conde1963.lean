@@ -13,3 +13,4 @@ import Conde1963.ScenarioEnclosures
 import Conde1963.FiniteCoverage
 import Conde1963.CertifiedCells
 import Conde1963.PairedEnclosures
+import Conde1963.TruthBridge
