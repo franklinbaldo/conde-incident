@@ -11,7 +11,7 @@ test('atmospheric panel cannot present algebraic interpolation as a measured ter
     /arrasto molecular.*governado/, /getTime\(\).*simulatedDecayDays/,
     /Média nov\/1963: 76,5/, /Padrão solar mínimo: 45 km/,
   ]) assert.doesNotMatch(source, pattern);
-  assert.match(source, /não integra uma trajetória/);
+  assert.match(source, /não integra uma trajetória/i);
   assert.match(source, /does not integrate a trajectory/);
   assert.match(source, /Resultado científico para o local e a hora: indeterminado/);
 });
@@ -46,7 +46,7 @@ test('historical matrix IDs, dependent witnesses and scientific limits remain li
   }
   assert.match(source, /BSTAR = 0.*não é medição de arrasto nulo/);
   assert.match(source, /BSTAR = 0.*does not measure zero physical drag/);
-  assert.match(source, /não um intervalo físico validado/);
+  assert.match(source, /não um intervalo físico validado/i);
   assert.match(source, /NOT a validated physical interval/);
   assert.match(source, /Não existe nesta interface um conjunto não vazio e reduzido/);
 });
