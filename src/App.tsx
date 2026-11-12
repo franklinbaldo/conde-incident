@@ -34,6 +34,8 @@ export default function App() {
     return () => window.removeEventListener('gmp-quota-exceeded', handleQuotaExceeded);
   }, []);
 
+  React.useEffect(() => { document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en'; }, [lang]);
+
   React.useEffect(() => {
     const syncRoute = () => setActiveTab(resolveLabHash(window.location.hash));
     window.addEventListener('hashchange', syncRoute);
@@ -93,7 +95,7 @@ export default function App() {
         {activeTab === 'research' && (
           <>
             <ResearchLedger lang={lang} />
-            <EvidenceTrace />
+            <EvidenceTrace lang={lang} />
           </>
         )}
         {activeTab === 'summary' && (

@@ -20,6 +20,8 @@ for(const name of readdirSync('stories').filter(s => /^\d{4}-\d{2}-\d{2}-.+\.md$
   assert.ok(article.includes('evidence_matrix_C001-C238_2026-11-11.md'),'chapter missing matrix snapshot: '+name);
   assert.ok(article.includes('/lab/#/map'),'chapter missing deep link to map: '+name);
   assert.ok(article.includes('/lab/#/research'),'chapter missing functional Evidence link: '+name);
+  assert.ok(article.includes('/lab/#/research/c01'),'chapter missing evidence occurrence permalink C01: '+name);
+  assert.ok(article.includes('/lab/#/research/c197'),'chapter missing evidence occurrence permalink C197: '+name);
   assert.ok(article.includes('sem hora ou coordenadas') || article.includes('não há hora ou coordenadas'),'chapter must not present an unsupported terminal point: '+name);
   assert.ok(article.includes('og:type" content="article"'),'chapter missing article social metadata: '+name);
   assert.ok(article.includes('rel="canonical" href="'+ 'https://franklinbaldo.github.io/conde-incident/stories/'+slug+'/'),'chapter canonical missing or points elsewhere: '+name);
