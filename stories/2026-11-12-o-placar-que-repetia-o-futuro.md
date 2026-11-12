@@ -9,7 +9,7 @@ status: "C243-T8/T9: recontagem pós-hoc do espelho secundário; revisão indepe
 
 # O placar que repetia o futuro
 
-**E se a previsão que parecia vencer três testes estivesse enfrentando várias vezes as mesmas observações?** A hipótese de usar dois objetos de um lançamento para ajudar a prever um terceiro já havia passado por quatro confrontos. A transferência da curvatura orbital de 527 e 528 para o movimento médio do **NORAD 529** melhorara três resultados e piorara um. Um placar animador, à primeira vista. Mas o 🦡 Texugo resolveu perguntar quantas datas diferentes realmente estavam por trás dele.
+**E se a previsão que parecia vencer três testes estivesse enfrentando várias vezes as mesmas observações?** A hipótese de usar dois objetos de um lançamento para ajudar a prever um terceiro já havia passado por quatro confrontos. A transferência de uma **curvatura ajustada à série temporal do movimento médio** de 527 e 528 para o **NORAD 529** melhorara três resultados e piorara um. Um placar animador, à primeira vista. Mas o 🦡 Texugo resolveu perguntar quantas datas diferentes realmente estavam por trás dele.
 
 A resposta trouxe uma surpresa menos vistosa que uma órbita desenhada no mapa, e mais importante para julgar qualquer mapa futuro: **93 avaliações correspondiam a apenas 28 épocas distintas**. O experimento havia olhado o mesmo futuro repetidas vezes.
 
@@ -33,7 +33,7 @@ O Texugo então executou a contraprova **[C243-T9](https://github.com/franklinba
 | Após 21/10 | 20 | 0,223237 | **0,215117** |
 | **Agregado, cada época uma vez** | **28** | **0,188775** | **0,181910** |
 
-Os valores são **RMSE de movimento médio, em revoluções por dia**, não quilômetros de erro posicional. O menor erro está destacado em cada trecho. No **primeiro**, a transferência piora a previsão. No terceiro, a aparente vitória é sustentada por **uma única época**. E **20 das 28 datas** estão concentradas no último trecho, que pesa muito no resultado agregado.
+Os valores são **RMSE de movimento médio, em revoluções por dia**, não quilômetros de erro posicional. O menor erro está destacado em cada trecho. No **primeiro**, a transferência piora a previsão. No terceiro, a aparente vitória é sustentada por **uma única época**. E **20 das 28 datas** estão concentradas no último trecho. A [contraprova independente do Gavião, PR #57](https://github.com/franklinbaldo/conde-incident/pull/57), mostrou uma concentração ainda maior do que a contagem sugere: **aproximadamente 99,9% da soma dos erros quadráticos** de cada modelo provêm desse trecho, bem como **aproximadamente 99,9% da diferença** dessas somas entre o quadrático e a média. Trata-se de uma decomposição aritmética *posterior* dos resultados do mesmo experimento, não de novos registros, independência ou significância estatística.
 
 A média dos doadores continuou com erro agregado um pouco menor que o quadrático, **0,181909995 contra 0,188775134 rev/dia**. Portanto a remoção da dupla contagem não apaga toda a vantagem descritiva. Ela revela algo mais sutil: **a vantagem não é uniforme no tempo e sua pontuação total depende fortemente do trecho final**. Uma segunda escolha examinada retrospectivamente, usar só a curvatura do 528, produziu **0,145072060 rev/dia** no agregado; escolher a vencedora depois de ver o futuro não equivale a prever de forma cega.
 
