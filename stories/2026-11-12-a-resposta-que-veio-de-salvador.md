@@ -15,6 +15,12 @@ status: "Apuração documental; inexistência de objeto não demonstrada diretam
 
 A pergunta atravessou o Atlântico em novembro de 1963. O relato atribuído à Rádio Tupi chegou a um serviço americano de monitoramento de transmissões. Dias depois, funcionários dos Estados Unidos queriam uma resposta de quem estava mais perto da história. O resultado não foi uma fotografia nem a descrição de destroços. Foi um telegrama que colocava em dúvida a própria existência da esfera.
 
+
+<figure class="story-visual story-map">
+  <iframe loading="lazy" title="Mapa interativo de localização da sede de Conde, no litoral norte da Bahia" src="https://www.openstreetmap.org/export/embed.html?bbox=-38.15%2C-12.1%2C-37.10%2C-11.30&amp;layer=mapnik&amp;marker=-11.81%2C-37.61" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  <figcaption><strong>Onde fica Conde?</strong> O marcador indica aproximadamente a <em>sede municipal</em> na Bahia, não o local de qualquer objeto alegadamente encontrado em 1963. Coordenadas de referência: <a href="https://www.conde.ba.gov.br/site/dadosmunicipais">Prefeitura de Conde</a>; mapa: <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors</a>. <a href="https://www.openstreetmap.org/?mlat=-11.81&amp;mlon=-37.61#map=10/-11.81/-37.61">Abrir o mapa</a>.</figcaption>
+</figure>
+
 ## De uma transmissão de rádio a um pedido de confirmação
 
 O ponto de partida está numa [folha do serviço de monitoramento FBIS](https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf), com cabeçalho atribuindo a notícia à **Rádio Tupi do Rio de Janeiro**, em 8 de novembro de 1963. O texto fala de uma esfera, aberturas envidraçadas, um corpo e uma cratera de quatro metros. Não identifica o autor do relato em Conde, nem alguém que tenha examinado o objeto. É uma notícia transmitida, não um registro de inspeção.
@@ -27,6 +33,12 @@ O telegrama descreve a alegação de um grande objeto metálico, um ocupante mor
 
 A história já chegava à diplomacia acompanhada de uma pergunta incômoda: o que havia sido efetivamente visto na Bahia?
 
+
+<figure class="story-visual story-diagram">
+  <img src="/conde-incident/img/cadeia-documental-conde.svg" alt="Linha documental: notícia atribuída à Rádio Tupi, monitorada pelo FBIS em 8 de novembro; pedido de confirmação da embaixada em 14 de novembro; resposta consular de 14 de novembro reproduzida em aerograma de 20 de novembro. Esses registros não equivalem a três testemunhas independentes." width="900" height="260" loading="lazy">
+  <figcaption><strong>Três registros, uma cadeia de circulação.</strong> As setas indicam uma sequência de documentos e pedidos de verificação, não três observações independentes nem uma trajetória de satélite. Fontes: <a href="https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf">FBIS</a>, <a href="https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D001_Diplomatic-Cable_Brazil_November-14-1963.pdf">telegrama</a> e <a href="https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D002_Diplomatic-Cable_Brazil_November-20-1963.pdf">aerograma</a>.</figcaption>
+</figure>
+
 ## O cônsul respondeu no mesmo dia
 
 A resposta aparece reproduzida no [aerograma A-628, datado de 20 de novembro de 1963](https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D002_Diplomatic-Cable_Brazil_November-20-1963.pdf). Nele, a embaixada transcreve o telegrama **n.º 157, de 14 de novembro**, enviado pelo cônsul americano em Salvador, **Harold Midkiff**.
@@ -36,6 +48,12 @@ Midkiff informou que a história de um objeto descendo sobre Conde **aparentemen
 É a virada mais forte dos documentos: a versão extraordinária, que viajou rapidamente por rádio e repartições, encontrou em Salvador uma contestação explícita. Só que a natureza dessa contestação também importa. O cônsul **relatou o resultado de consultas e notícias locais**; seu telegrama não é uma ata de perícia na cratera, uma lista nominativa de entrevistas nem prova lógica de que nenhum evento físico poderia ter ocorrido.
 
 A palavra *aparentemente* não deve desaparecer quando se conta essa conclusão.
+
+
+<figure class="story-visual story-document">
+  <iframe loading="lazy" title="Fac-símile do aerograma A-628, de 20 de novembro de 1963, com a resposta consular sobre Conde" src="https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D002_Diplomatic-Cable_Brazil_November-20-1963.pdf#page=1" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  <figcaption><strong>Leia o documento original.</strong> Aerograma A-628, Departamento de Estado dos EUA, 20/11/1963, com reprodução da resposta consular n.º 157. É um fac-símile hospedado em espelho documental, não um exame físico da alegada esfera. Caso seu navegador não exiba PDF incorporado, <a href="https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D002_Diplomatic-Cable_Brazil_November-20-1963.pdf">abra o PDF completo</a>.</figcaption>
+</figure>
 
 ## Dois jornais e uma máquina de código Morse
 
