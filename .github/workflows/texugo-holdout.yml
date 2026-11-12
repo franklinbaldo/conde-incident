@@ -20,6 +20,13 @@ jobs:
         with:
           # Exact proposed HEAD, never GitHub's synthetic merge commit.
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Confirm literal proposed HEAD (no synthetic merge checkout)
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          echo "Expected: $EXPECTED_SHA"
+          echo "Actual: $(git rev-parse HEAD)"
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'

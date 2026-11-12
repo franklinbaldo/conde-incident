@@ -402,7 +402,7 @@ def rolling_origin_diagnostics(rows: list[Observation]) -> dict:
     pooled = {name: math.sqrt(math.fsum(e) / scored) for name, e in square_errors.items()} if scored else None
     return {"status": "EVALUATED_RETROSPECTIVE_PREQUENTIAL" if scored else "NOT_RUN",
             "target_norad_id": 529,
-            "origin_rule": "previous 529 epoch; donor epochs <= origin; predict next 529 epoch",
+            "origin_rule": "previous 529 epoch; donor epochs <= origin; conditional prediction at the next catalog timestamp known ex post",
             "recency_controls": {
                 "models": ["recency_529_two_point_secant", "recency_529_three_point_linear"],
                 "past_529_epoch_counts": [2, 3],
