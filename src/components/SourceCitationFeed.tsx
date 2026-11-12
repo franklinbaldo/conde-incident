@@ -5,7 +5,7 @@ import {
 } from '../lib/sourceCitationAudit';
 
 type Props = { lang: 'pt' | 'en' };
-const examples = ['C197#1', 'C198#1', 'C01#1', 'C02#1', 'C03#1', 'C44#1'];
+const examples = ['C197#1', 'C198#1', 'C232#1', 'C01#1', 'C02#1', 'C03#1', 'C44#1'];
 
 export function SourceCitationFeed({ lang }: Props) {
   const pt = lang === 'pt';
@@ -53,8 +53,6 @@ export function SourceCitationFeed({ lang }: Props) {
   }, []);
 
   const context = feed && citationContext(feed, selected);
-  const lineage = feed && dependenceFeed && context?.state === 'mapped'
-    ? declaredLineageContext(dependenceFeed, feed, context.record) : null;
   return (
     <section aria-labelledby="source-citations-heading" className="rounded-xl border border-cyan-900/70 bg-zinc-900 p-4 sm:p-6 space-y-4">
       <div className="space-y-2">
@@ -100,28 +98,42 @@ export function SourceCitationFeed({ lang }: Props) {
         {context?.state === 'mapped' && (
           <div className="space-y-3">
             <p><strong className="font-mono text-cyan-200">{context.occurrence}</strong> · {context.record.claim_text}</p>
+            <p className="text-xs text-amber-200">{pt
+              ? `${context.records.length} referências documentais curadas para esta ocorrência. Não equivalem a testemunhos independentes nem a novas observações físicas.`
+              : `${context.records.length} curated documentary references for this occurrence. These are not independent witnesses or additional physical observations.`}</p>
+            <ol className="space-y-4" aria-label={pt ? 'Fontes desta ocorrência' : 'Sources for this occurrence'}>
+              {context.records.map((record, index) => {
+                const lineage = feed && dependenceFeed
+                  ? declaredLineageContext(dependenceFeed, feed, record) : null;
+                const related = feed?.records.filter((item) =>
+                  item.work_id === record.work_id && item.occurrence !== record.occurrence) ?? [];
+                return (
+                  <li key={`${record.occurrence}-${record.source_id}`} className="rounded-lg border border-zinc-700 bg-zinc-950/60 p-3 space-y-3">
+                    <h4 className="font-semibold text-zinc-100 break-all">
+                      {index + 1}. <code>{record.source_id}</code>
+                    </h4>
             <dl className="grid gap-2 sm:grid-cols-2 text-xs">
-              <div><dt className="text-zinc-400">{pt ? 'Família da fonte' : 'Source family'}</dt><dd className="font-mono break-words">{context.record.source_family}</dd></div>
-              <div><dt className="text-zinc-400">{pt ? 'Obra documental' : 'Documentary work'}</dt><dd className="font-mono break-words">{context.record.work_id}</dd></div>
-              <div><dt className="text-zinc-400">{pt ? 'Tipo / relação' : 'Type / relation'}</dt><dd className="font-mono break-words">{context.record.relation}</dd></div>
-              <div><dt className="text-zinc-400">{pt ? 'Limite / estado' : 'Limit / status'}</dt><dd className="font-mono break-words">{context.record.scope}</dd></div>
+              <div><dt className="text-zinc-400">{pt ? 'Família da fonte' : 'Source family'}</dt><dd className="font-mono break-words">{record.source_family}</dd></div>
+              <div><dt className="text-zinc-400">{pt ? 'Obra documental' : 'Documentary work'}</dt><dd className="font-mono break-words">{record.work_id}</dd></div>
+              <div><dt className="text-zinc-400">{pt ? 'Tipo / relação' : 'Type / relation'}</dt><dd className="font-mono break-words">{record.relation}</dd></div>
+              <div><dt className="text-zinc-400">{pt ? 'Limite / estado' : 'Limit / status'}</dt><dd className="font-mono break-words">{record.scope}</dd></div>
             </dl>
             <p className="text-xs text-amber-200">{pt
               ? 'Sem confirmação de impacto em Conde, hora ou longitude de reentrada. Este vínculo não fornece uma observação física adicional.'
               : 'No confirmed impact in Conde, reentry time or longitude. This link does not add an independent physical observation.'}</p>
-            <p className="text-xs text-zinc-300">{context.record.locator}</p>
+            <p className="text-xs text-zinc-300">{record.locator}</p>
             <div className="flex flex-wrap gap-4 text-sm">
-              {context.record.citation_url.startsWith('https://') && (
-                <a href={context.record.citation_url} rel="noopener noreferrer" target="_blank" className="text-cyan-300 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300">
+              {record.citation_url.startsWith('https://') && (
+                <a href={record.citation_url} rel="noopener noreferrer" target="_blank" className="text-cyan-300 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300">
                   {pt ? 'Abrir fonte externa' : 'Open external source'}
                 </a>
               )}
-              <a href={matrixOccurrenceUrl(context.record.matrix_line)} rel="noopener noreferrer" target="_blank" className="text-cyan-300 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300">
-                {pt ? 'Abrir linha da matriz' : 'Open matrix row'} {context.record.matrix_line}
+              <a href={matrixOccurrenceUrl(record.matrix_line)} rel="noopener noreferrer" target="_blank" className="text-cyan-300 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300">
+                {pt ? 'Abrir linha da matriz' : 'Open matrix row'} {record.matrix_line}
               </a>
             </div>
-            <section aria-labelledby="citation-lineage-heading" className="rounded border border-zinc-700 p-3 space-y-2 text-xs">
-              <h4 id="citation-lineage-heading" className="font-semibold text-zinc-100">
+            <section aria-labelledby={`citation-lineage-${index}`} className="rounded border border-zinc-700 p-3 space-y-2 text-xs">
+              <h4 id={`citation-lineage-${index}`} className="font-semibold text-zinc-100">
                 {pt ? 'Ancestralidade documental declarada' : 'Declared documentary ancestry'}
               </h4>
               <p className="text-zinc-300">
@@ -150,16 +162,24 @@ export function SourceCitationFeed({ lang }: Props) {
                     ? (pt ? 'Feed de genealogia indisponível ou inválido; nenhuma relação de independência pode ser inferida.' : 'Lineage feed unavailable or invalid; no independence relationship can be inferred.')
                     : !dependenceFeed
                       ? (pt ? 'Carregando genealogia…' : 'Loading ancestry…')
-                      : (pt ? 'Nenhuma cadeia ancestral verificável foi declarada para esta ocorrência neste snapshot. Independência desconhecida.' : 'No verifiable upstream chain is declared for this occurrence in this snapshot. Independence is unknown.')}
+                      : lineage?.state === 'snapshot-mismatch'
+                        ? (pt ? 'Snapshot da matriz divergente; nenhuma cadeia pode ser associada.' : 'Matrix snapshot mismatch; no lineage can be attached.')
+                        : lineage?.state === 'source-mismatch'
+                          ? (pt ? 'Fonte ou família divergente; nenhuma cadeia pode ser associada.' : 'Source or family mismatch; no lineage can be attached.')
+                          : (pt ? 'Nenhuma cadeia ancestral verificável foi declarada para esta fonte neste snapshot. Independência desconhecida.' : 'No verifiable upstream chain is declared for this source in this snapshot. Independence is unknown.')}
                 </p>
               )}
             </section>
             <details className="rounded border border-zinc-700 p-3 text-xs">
-              <summary className="cursor-pointer font-medium text-zinc-200">{pt ? 'Ocorrências relacionadas à mesma obra, não novos testemunhos' : 'Related occurrences of the same work, not additional witnesses'} ({context.sameWork.length})</summary>
+              <summary className="cursor-pointer font-medium text-zinc-200">{pt ? 'Ocorrências relacionadas à mesma obra, não novos testemunhos' : 'Related occurrences of the same work, not additional witnesses'} ({related.length})</summary>
               <ul className="mt-2 space-y-1">
-                {context.sameWork.map((record) => <li key={record.occurrence} className="font-mono text-zinc-300">{record.occurrence}: {record.relation}</li>)}
+                {related.map((record) => <li key={`${record.occurrence}-${record.source_id}`} className="font-mono text-zinc-300">{record.occurrence}: {record.relation}</li>)}
               </ul>
             </details>
+                  </li>
+                );
+              })}
+            </ol>
           </div>
         )}
       </div>

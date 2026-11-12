@@ -42,7 +42,7 @@ test('UI exposes provenance, real source links, accessibility and partial-covera
   assert.match(component, /htmlFor="citation-occurrence"/);
   assert.match(component, /BASE_URL/);
   assert.match(component, /UNMAPPED/);
-  assert.match(component, /sameWork\.length/);
+  assert.match(component, /related\.length/);
   assert.match(component, /rel="noopener noreferrer"/);
   assert.match(component, /not independent witnesses|não são testemunhos independentes/);
   assert.match(archive, /<SourceCitationFeed lang=\{lang\} \/>/);
@@ -138,10 +138,25 @@ test('archive UI loads optional companion with accessible ancestry and unknown s
   assert.match(component, /conde-declared-dependence\.json/);
   assert.match(component, /isDeclaredDependenceFeed/);
   assert.match(component, /declaredLineageContext/);
-  assert.match(component, /aria-labelledby="citation-lineage-heading"/);
+  assert.match(component, /citation-lineage-\$\{index\}/);
   assert.match(component, /lineage\.paths\.map/);
   assert.match(component, /path\.edges\.map/);
   assert.match(component, /Independência desconhecida|Independence is unknown/);
   assert.match(component, /independência|independence/i);
   assert.match(component, /dependenceError/);
+});
+
+test('C232 UI renders BOTH documentary sources with separate lineage and no independence claim', () => {
+  const two = citationContext(feed, 'C232#1');
+  assert.equal(two.state, 'mapped');
+  assert.equal(two.records.length, 2);
+  assert.match(component, /context\.records\.map/);
+  assert.match(component, /declaredLineageContext\(dependenceFeed, feed, record\)/);
+  assert.match(component, /record\.source_id/);
+  assert.match(component, /matrixOccurrenceUrl\(record\.matrix_line\)/);
+  assert.match(component, /source-mismatch/);
+  assert.match(component, /snapshot-mismatch/);
+  assert.ok(two.records.every((item) => declaredLineageContext(dependence, feed, item).state === 'declared'));
+  assert.deepEqual(two.records.map((record) =>
+    declaredLineageContext(dependence, feed, record).paths.length), [0, 1]);
 });
