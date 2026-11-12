@@ -1,3 +1,9 @@
+---
+type: Guide
+title: "C241-L5: custódia n-dot e BSTAR dos NORAD 527–529"
+description: "Suplemento científico rastreável da linhagem secundária TLE e testes de codificação n-dot/BSTAR."
+---
+
 # C241-L5: custódia de n-dot/2 e BSTAR do 528 e série 527–529 (12/11/2026)
 
 Suplemento **aditivo** à [matriz histórica C001–C238](../evidence_matrix_C001-C238_2026-11-11.md), [C241-L1](evidence_matrix_C241-L1_2026-11-12.md), [C241-L2](evidence_matrix_C241-L2_2026-11-12.md), [C241-L3](evidence_matrix_C241-L3_2026-11-12.md) e [C241-L4](evidence_matrix_C241-L4_2026-11-12.md). Isolado da auditoria C241-T9 na [PR #14](https://github.com/franklinbaldo/conde-incident/pull/14); **uma linhagem catalográfica secundária, não sensores independentes**.
