@@ -2,6 +2,9 @@ import React, { useRef } from 'react';
 import type { GroundTrackPoint, UncertaintyEnvelope } from '../../types/astrodynamics';
 import { projectFlat, projectGlobe, projectedSegments } from '../../lib/mapGeometry';
 import { canPanWithPointer, shouldShowScenarioConnections } from '../../lib/mapInteraction';
+import { coastline110mPart1 } from '../../lib/coastline110mPart1';
+import { coastline110mPart2 } from '../../lib/coastline110mPart2';
+import { coastline110mPart3 } from '../../lib/coastline110mPart3';
 
 type Mode = 'flat' | 'globe';
 type Marker = GroundTrackPoint | null;
@@ -24,14 +27,10 @@ type Props = {
 type Geo = { longitude: number; latitude: number };
 type Screen = { x: number; y: number; visible: boolean };
 
-// Deliberately schematic background shapes, NOT geodetic coastline data.
-const LAND: number[][][] = [
-  [[-168,65],[-140,70],[-120,72],[-80,72],[-60,50],[-70,42],[-80,25],[-95,20],[-105,22],[-120,34],[-125,48],[-140,58],[-168,65]],
-  [[-80,10],[-60,8],[-50,0],[-35,-5],[-37,-12],[-40,-22],[-50,-30],[-60,-40],[-68,-55],[-75,-48],[-72,-30],[-80,-5],[-80,10]],
-  [[-10,36],[0,44],[10,55],[25,70],[60,70],[100,75],[140,70],[170,65],[140,40],[120,30],[105,10],[80,10],[60,25],[45,40],[30,30],[10,36],[-10,36]],
-  [[-17,35],[10,37],[32,30],[42,12],[50,10],[40,-10],[30,-34],[18,-34],[10,-5],[-15,10],[-17,25],[-17,35]],
-  [[115,-20],[130,-12],[145,-15],[150,-24],[152,-38],[138,-35],[115,-35],[115,-20]],
-  [[-180,-70],[180,-70],[180,-85],[-180,-85]],
+// Natural Earth 1:110m public-domain coastlines, bundled locally with no tile provider.
+// They are generalized geographic context, NOT geolocated impact evidence.
+const COASTLINES: number[][][] = [
+  ...coastline110mPart1, ...coastline110mPart2, ...coastline110mPart3,
 ];
 
 const CONDE = { longitude: -37.6108, latitude: -11.8139 };
@@ -71,7 +70,7 @@ export function OrbitalMapSvg({
 
   const displayed: SatelliteId[] = showSisters ? [527, 529, 528] : [528];
   const conde = project(CONDE.longitude, CONDE.latitude);
-  const mapTitle = isPt ? 'Mapa orbital esquemático, sem mapa remoto' : 'Schematic orbital map without remote tiles';
+  const mapTitle = isPt ? 'Mapa orbital com litoral Natural Earth 1:110m, sem mapa remoto' : 'Orbital map with Natural Earth 1:110m coastlines, without remote tiles';
   const mapDesc = isPt
     ? 'Trilhas calculadas de cenários SGP4 ilustrativos, não observações de trajetória ou impacto. Sem coordenadas observadas de reentrada.'
     : 'Calculated tracks from illustrative SGP4 scenarios, not observed paths or impact. No observed reentry coordinates.';
@@ -118,7 +117,7 @@ export function OrbitalMapSvg({
         {mode === 'globe' && <circle cx="480" cy="240" r="210" fill="#13243a" stroke="#52657d" strokeWidth="1.5" />}
         <g clipPath={mode === 'globe' ? 'url(#raposa-globe-clip)' : undefined}>
           {grids.map((grid, i) => <g key={'grid-' + i}>{lines(grid, '#26374c', 0.8, '4 6')}</g>)}
-          {LAND.map((poly, i) => {
+          {COASTLINES.map((poly, i) => {
             const coords: Geo[] = poly.map(([longitude, latitude]) => ({ longitude, latitude }));
             // Polylines avoid falsely filling across the antimeridian/horizon.
             return <g key={'land-' + i}>{lines(coords, '#50708e', 1.2)}</g>;
