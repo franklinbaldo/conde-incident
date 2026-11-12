@@ -8,6 +8,7 @@
  */
 import { sampleVelocityBox } from './orbitBoxSampling.ts';
 import { assessNumericalConvergence } from './orbitConvergence.ts';
+import { NumericalIntegrationBreakdown } from './orbitPhysics.ts';
 import type { State, Dynamics } from './orbitPhysics.ts';
 import type { ConvergenceControls, ConvergenceAssessment } from './orbitConvergence.ts';
 
@@ -57,7 +58,7 @@ const validUtc = (value: string): boolean => {
 export function auditVelocityDomain(scenario: ConditionalOrbitScenario): DomainAudit {
   if (![527, 528, 529].includes(scenario.objectNorad) ||
       !validUtc(scenario.epochUtc) || !scenario.inertialFrame?.trim() ||
-      !Number.isFinite(scenario.initial.tS) ||
+      scenario.initial.tS !== 0 ||
       scenario.initial.rKm.length !== 3 || scenario.initial.vKmS.length !== 3 ||
       ![...scenario.initial.rKm, ...scenario.initial.vKmS].every(Number.isFinite)) {
     throw new RangeError('Invalid target, explicit UTC epoch, inertial frame or Cartesian state');
@@ -102,11 +103,16 @@ export interface DomainRunControls {
 }
 export interface ConditionalSample {
   readonly vKmS: readonly [number, number, number];
-  readonly numerical: ConvergenceAssessment;
+  /** A failed RK4 witness is retained instead of erasing the whole box. */
+  readonly numerical: ConvergenceAssessment | null;
+  readonly numericalStatus: 'ASSESSED' | 'NOT_RUN_NUMERICAL_BREAKDOWN';
+  readonly failureReason: string | null;
 }
 export interface DomainRun {
   readonly domain: DomainAudit;
-  readonly status: 'NOT_RUN_EMPTY' | 'NOT_RUN_UNBOUNDED' | 'SAMPLED_CONDITIONALLY';
+  readonly status: 'NOT_RUN_EMPTY' | 'NOT_RUN_UNBOUNDED' | 'SAMPLED_CONDITIONALLY' |
+    'SAMPLED_WITH_NUMERICAL_BREAKDOWNS' | 'NOT_RUN_ALL_NUMERICAL_BREAKDOWNS';
+  readonly numericalBreakdownCount: number;
   readonly samples: readonly ConditionalSample[];
   readonly seed: number;
   readonly method: 'MIDPOINT_CORNERS_SEEDED_INTERIOR';
@@ -139,20 +145,33 @@ export function runConditionalVelocityDomain(
   if (domain.status !== 'BOUNDED') {
     return {
       ...header, status: domain.status === 'EMPTY' ? 'NOT_RUN_EMPTY' : 'NOT_RUN_UNBOUNDED',
-      samples: [],
+      samples: [], numericalBreakdownCount: 0,
     };
   }
   const intervals = AXES.map(axis => domain.intervals[axis]!);
   // Samples are exact finite witnesses inside the declared Float64 box.
   // Convex interpolation handles opposite-sign extremes without overflow.
   const samples: ConditionalSample[] = [];
+  let numericalBreakdownCount = 0;
   for (const vKmS of sampleVelocityBox(intervals, controls.seed, controls.interiorDraws)) {
     const initial = { ...scenario.initial, vKmS };
-    samples.push({
-      vKmS,
-      numerical: assessNumericalConvergence(initial, controls.durationS, controls.stepS,
-        controls.terminationAltitudeKm, controls.convergence, dynamics),
-    });
+    try {
+      const numerical = assessNumericalConvergence(initial, controls.durationS, controls.stepS,
+        controls.terminationAltitudeKm, controls.convergence, dynamics);
+      samples.push({ vKmS, numerical, numericalStatus: 'ASSESSED', failureReason: null });
+    } catch (error) {
+      // ONLY a typed numerical breakdown is a per-witness outcome. Invalid
+      // dynamics, densities, thresholds and global controls still throw.
+      if (!(error instanceof NumericalIntegrationBreakdown)) throw error;
+      numericalBreakdownCount++;
+      samples.push({
+        vKmS, numerical: null, numericalStatus: 'NOT_RUN_NUMERICAL_BREAKDOWN',
+        failureReason: error.message,
+      });
+    }
   }
-  return { ...header, status: 'SAMPLED_CONDITIONALLY', samples };
+  const status = numericalBreakdownCount === 0 ? 'SAMPLED_CONDITIONALLY' :
+    numericalBreakdownCount === samples.length ? 'NOT_RUN_ALL_NUMERICAL_BREAKDOWNS' :
+      'SAMPLED_WITH_NUMERICAL_BREAKDOWNS';
+  return { ...header, status, samples, numericalBreakdownCount };
 }
