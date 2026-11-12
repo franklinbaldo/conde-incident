@@ -1,5 +1,5 @@
 ---
-type: ResearchNote
+type: Guide
 title: "CGEO-14: imagens da Vila do Conde e a incerteza de centro urbano em 1963"
 description: "Inventário verificável de três JPEGs de uma galeria local, sem datar a tomada ou situar a reentrada."
 ---
