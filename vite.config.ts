@@ -6,6 +6,8 @@ import {defineConfig} from 'vite';
 export default defineConfig(() => {
   return {
     plugins: [react(), tailwindcss()],
+    // The published research lab lives below the external Rust-SSG site.
+    base: process.env.SCIENCE_BASE ?? (process.env.GITHUB_PAGES === 'true' ? '/conde-incident/lab/' : '/'),
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),
