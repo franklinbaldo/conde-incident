@@ -138,3 +138,16 @@ significa concordância das observações nos dois instantes, **não**
 garantia perpétua de publicação. Um `NOT_VERIFIED` pode ser transitório
 durante deploy legítimo. A publicação real ainda depende do merge e de
 confirmar Pages, Actions, deployment e URL de produção.
+
+
+## Integridade operacional dos assets do laboratório (fatia 🐘, 12/11/2026)
+
+**Lacuna:** um `/lab/` com HTML HTTP 200, `<div id="root">` e `<script src="/conde-incident/lab/assets/main-xyz.js">` podia ser aceito mesmo quando o módulo JavaScript retornava HTTP 404 ou a CDN devolvia HTML de fallback com status 200. Isso não prova um laboratório funcional. O mesmo problema vale para CSS referenciado pelo índice.
+
+**Contrato adicional:** extrair todos os scripts externos e stylesheets do HTML de `/conde-incident/lab/` com atributos em qualquer ordem; limitar a 20 recursos, rejeitar duplicatas; admitir somente caminhos exatos sob `/conde-incident/lab/assets/`, sem query, traversal ou host externo; consultar cada URL HTTPS e exigir HTTP 200, resposta não vazia e MIME JavaScript (`text/javascript`, `application/javascript`, `application/x-javascript`) ou CSS (`text/css`) compatível. Recursos que não passem deixam o gate em **NOT_VERIFIED**, sem realizar fetch off-origin.
+
+**Contraprovas:** scripts 404, fallback HTML, CSS ausente, MIME divergente, URL externa, traversal, duplicatas, bundle sem corpo e índice saudável com bundle quebrado; testes isolados não demonstram deploy real.
+
+**Limites:** apenas recursos diretamente referenciados pelo `index.html`. Não executa JS no navegador, não cobre importação dinâmica, não atesta checksum dos bytes do build nem autentica evento histórico. Continuam obrigatórios Pages por Actions, deploy `push/main`, verificação HTTPS e inventário de capítulos, revisão independente e a reconciliação #1/#3/#22.
+
+**Fontes e grau:** [PR #52](https://github.com/franklinbaldo/conde-incident/pull/52), [Vite public base](https://vite.dev/guide/build#public-base-path), [GitHub Pages](https://docs.github.com/en/pages) e [GitHub REST deployments](https://docs.github.com/en/rest/deployments/deployments). Verificação técnica por fixtures; situação pública ainda **NOT_VERIFIED**.

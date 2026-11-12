@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { assessRelease, EXPECTED_SITE } from './check-pages-release.mjs';
+import { assessRelease, EXPECTED_SITE, labAssetReferences } from './check-pages-release.mjs';
 
 const SHA = 'a'.repeat(40);
 function good() {
@@ -37,6 +37,9 @@ function good() {
           'Consultar Markdown-fonte e histórico editorial</a></article>' }],
       lab: { status: 200, body: '<div id="root"></div>' +
         '<script src="/conde-incident/lab/assets/main-xyz.js"></script>' },
+      labAssets: [{ kind: 'js', path: '/conde-incident/lab/assets/main-xyz.js',
+        status: 200, contentType: 'application/javascript; charset=utf-8',
+        body: 'console.log("working-lab");' }],
       style: { status: 200, body: '.masthead{color:#fff}.story-card{padding:1rem}' },
     },
   };
@@ -296,5 +299,75 @@ test('missing second control-plane snapshot cannot imply published', () => {
 test('latest publish run identity is mandatory: no unidentified green run', () => {
   const x = good();
   delete x.runs[0].id;
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+
+
+test('read real Vite module scripts and stylesheet with different attribute order', () => {
+  const refs = labAssetReferences('<script crossorigin type="module" src="/conde-incident/lab/assets/m.js"></script>' +
+    '<link href="/conde-incident/lab/assets/m.css" crossorigin rel="stylesheet">');
+  assert.deepEqual(refs, [
+    { kind: 'js', path: '/conde-incident/lab/assets/m.js' },
+    { kind: 'css', path: '/conde-incident/lab/assets/m.css' },
+  ]);
+});
+
+test('a lab index HTTP 200 with missing JS asset is not a working publication', () => {
+  const x = good(); x.site.labAssets[0].status = 404;
+  const y = good(); delete y.site.labAssets;
+  const z = good(); z.site.labAssets[0].body = '';
+  for (const item of [x, y, z]) assert.equal(assessRelease(item).status, 'NOT_VERIFIED');
+});
+
+test('a Pages HTML fallback served as JavaScript does not count as bundle', () => {
+  const x = good();
+  x.site.labAssets[0].contentType = 'text/html; charset=utf-8';
+  x.site.labAssets[0].body = '<!doctype html><title>Not found</title>';
+  assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+
+test('only exact lab asset paths on our origin are safe to fetch', () => {
+  const paths = [
+    'https://external.example/conde-incident/lab/assets/main-xyz.js',
+    '/conde-incident/lab/../../something.js',
+    '/conde-incident/lab/assets/main-xyz.js?stale=true',
+    '//external.example/conde-incident/lab/assets/main-xyz.js',
+  ];
+  for (const path of paths) {
+    const x = good();
+    x.site.lab.body = x.site.lab.body.replace('/conde-incident/lab/assets/main-xyz.js', path);
+    assert.equal(assessRelease(x).status, 'NOT_VERIFIED', path);
+  }
+});
+
+test('every Vite stylesheet must exist, have CSS MIME and nonempty content', () => {
+  const make = () => {
+    const x = good();
+    x.site.lab.body += '<link href="/conde-incident/lab/assets/main-xyz.css" rel="stylesheet">';
+    x.site.labAssets.push({ kind: 'css', path: '/conde-incident/lab/assets/main-xyz.css',
+      status: 200, contentType: 'text/css; charset=utf-8', body: 'body { margin: 0 }' });
+    return x;
+  };
+  assert.equal(assessRelease(make()).status, 'PASS');
+  const missing = make(); missing.site.labAssets[1].status = 404;
+  const fallback = make(); fallback.site.labAssets[1].contentType = 'text/html';
+  const omitted = make(); omitted.site.labAssets.pop();
+  for (const x of [missing, fallback, omitted])
+    assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+
+test('duplicate references, unreported assets and misplaced JS fail closed', () => {
+  const duplicate = good(); duplicate.site.lab.body +=
+    '<script src="/conde-incident/lab/assets/main-xyz.js"></script>';
+  const extra = good(); extra.site.labAssets.push({ ...extra.site.labAssets[0] });
+  const swapped = good(); swapped.site.labAssets[0].path = '/conde-incident/lab/assets/other.js';
+  for (const x of [duplicate, extra, swapped])
+    assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
+});
+
+
+test('HTTP redirects are not verified as local lab assets', () => {
+  const x = good(); x.site.labAssets[0].status = 302;
+  x.site.labAssets[0].body = '<!doctype html><title>Redirect</title>';
   assert.equal(assessRelease(x).status, 'NOT_VERIFIED');
 });

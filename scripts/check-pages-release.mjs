@@ -2,6 +2,28 @@
 /** Read-only proof of one Pages release. A green web build is not a deployment. */
 import { pathToFileURL } from 'node:url';
 export const EXPECTED_SITE = 'https://franklinbaldo.github.io/conde-incident/';
+// Parse only direct Vite script and stylesheet references from lab index HTML.
+// The public root is editorial; an HTTP-200 lab index is useless if its JS is a 404.
+export function labAssetReferences(html) {
+  if (typeof html !== 'string') return [];
+  const attr = (tag, name) => {
+    const pairs = tag.match(/\b[a-z-]+\s*=\s*(?:"[^"]*"|'[^']*')/gi) || [];
+    const pair = pairs.find(p => p.slice(0, p.indexOf('=')).trim().toLowerCase() === name);
+    return pair ? pair.slice(pair.indexOf('=') + 1).trim().slice(1, -1) : null;
+  };
+  return Array.from(html.matchAll(/<(script|link)\b[^>]*>/gi), match => {
+    const tag = match[0];
+    if (match[1].toLowerCase() === 'script') {
+      const src = attr(tag, 'src');
+      return src ? { kind: 'js', path: src } : null;
+    }
+    const rel = attr(tag, 'rel') || '';
+    const href = attr(tag, 'href');
+    return rel.toLowerCase().split(/\s+/).includes('stylesheet') && href
+      ? { kind: 'css', path: href } : null;
+  }).filter(Boolean);
+}
+
 export function assessRelease({ sha, pages, runs = [], deployments = [], statuses = {}, sourceTree, site, upstreamConclusion,
   mainHead, latestDeployments, finalControl }) {
   const checks = [];
@@ -94,6 +116,30 @@ export function assessRelease({ sha, pages, runs = [], deployments = [], statuse
     /\/conde-incident\/lab\/assets\/[^"'\s>]+\.js/.test(site.lab.body || '');
   check('live React lab has separate /lab/ bundle', Boolean(labOk),
     site?.lab ? 'HTTP ' + site.lab.status : '(unreachable)');
+  const assetRefs = labAssetReferences(site?.lab?.body);
+  // Do not follow off-origin, traversal or duplicate references; the same bounded
+  // inventory is fetched by auditFromGitHub and checked here, including MIME.
+  const safePath = a => a.kind === 'js'
+    ? /^\/conde-incident\/lab\/assets\/[A-Za-z0-9._-]+\.js$/.test(a.path)
+    : /^\/conde-incident\/lab\/assets\/[A-Za-z0-9._-]+\.css$/.test(a.path);
+  const assetsOk = assetRefs.length > 0 && assetRefs.length <= 20 &&
+    assetRefs.some(a => a.kind === 'js') &&
+    assetRefs.every(safePath) &&
+    new Set(assetRefs.map(a => a.path)).size === assetRefs.length &&
+    Array.isArray(site?.labAssets) && site.labAssets.length === assetRefs.length &&
+    assetRefs.every((ref, i) => {
+      const actual = site.labAssets[i];
+      const mime = actual?.contentType || '';
+      const rightMime = ref.kind === 'js'
+        ? /^(text|application)\/(x-)?javascript(?:\s*;|$)/i.test(mime)
+        : /^text\/css(?:\s*;|$)/i.test(mime);
+      return actual?.path === ref.path && actual?.kind === ref.kind &&
+        actual?.status === 200 && rightMime &&
+        typeof actual?.body === 'string' && actual.body.trim().length > 0;
+    });
+  check('all referenced lab JS/CSS assets serve nonempty matching MIME over HTTPS',
+    Boolean(assetsOk), 'referenced: ' + assetRefs.length +
+    ', inspected: ' + (site?.labAssets?.length ?? 0));
   const cssOk = site?.style?.status === 200 &&
     /\.masthead|\.story-card/.test(site.style.body || '');
   check('live editorial stylesheet available at repository base', Boolean(cssOk),
@@ -157,9 +203,10 @@ export async function auditFromGitHub({ repo, sha, token, upstreamConclusion, si
   }
   const readPage = async suffix => {
     const r = await fetch(siteUrl + suffix, {
-      signal: AbortSignal.timeout(15000), redirect: 'follow',
+      signal: AbortSignal.timeout(15000), redirect: 'manual', // do not follow cross-origin CDN redirects
     });
-    return { status: r.status, body: r.ok ? await r.text() : '' };
+    return { status: r.status, contentType: r.headers.get('content-type') || '',
+      body: r.ok ? await r.text() : '' };
   };
   const site = await readPage('');
   site.stories = await readPage('stories/');
@@ -180,6 +227,15 @@ export async function auditFromGitHub({ repo, sha, token, upstreamConclusion, si
     });
   }
   site.lab = await readPage('lab/');
+  site.labAssets = [];
+  const assetRefs = labAssetReferences(site.lab.body);
+  if (assetRefs.length > 20) throw new Error('More than 20 lab assets: review bounded audit');
+  for (const asset of assetRefs) {
+    // Even a compromised page must never turn this public auditor into an SSRF client.
+    if (!/^\/conde-incident\/lab\/assets\/[A-Za-z0-9._-]+\.(?:js|css)$/.test(asset.path)) continue;
+    site.labAssets.push({ ...asset,
+      ...await readPage(asset.path.slice('/conde-incident/'.length)) });
+  }
   site.style = await readPage('css/site.css');
   // Re-read at the end, rather than extrapolating the initial snapshot.
   // A PASS means only that these independent reads remained consistent;
