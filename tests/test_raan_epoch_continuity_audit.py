@@ -44,7 +44,7 @@ class RaanEpochContinuityControls(unittest.TestCase):
         a = [synthetic(8, -3, 359.99), synthetic(4, -1, 0.01),
              synthetic(10, 0, 1.00)]
         self.assertEqual(json.dumps(check(a), sort_keys=True),
-                         json.dumps(check(list(reversed(a)), sort_keys=True)))
+                         json.dumps(check(list(reversed(a))), sort_keys=True))
         report = check(a)
         self.assertEqual(report["adjacent_intervals"], 2)
         self.assertAlmostEqual(report["per_adjacent_epoch_interval"][0][
