@@ -33,6 +33,8 @@ export function assessPagesMetadata(input) {
   requireCheck(latestRun?.head_sha === sha, "latest publish run does not target expected SHA");
   requireCheck(latestRun?.status === "completed" && latestRun?.conclusion === "success",
     "latest publish run is not completed/success");
+  requireCheck(Number.isSafeInteger(latestRun?.run_attempt) && latestRun.run_attempt > 0,
+    "latest publish run attempt is not identified");
   const runsAfter = Array.isArray(input?.runsAfter) ? input.runsAfter.filter(r =>
     r?.name === "Publish Conde site" && r?.event === "push" &&
     r?.head_branch === "main" && typeof r?.path === "string" &&
@@ -42,6 +44,7 @@ export function assessPagesMetadata(input) {
   const latestRunAfter = runsAfter[0];
   requireCheck(Boolean(latestRunAfter && latestRun) &&
     latestRunAfter.id === latestRun.id &&
+    latestRunAfter.run_attempt === latestRun.run_attempt &&
     latestRunAfter.head_sha === latestRun.head_sha &&
     latestRunAfter.status === latestRun.status &&
     latestRunAfter.conclusion === latestRun.conclusion,
@@ -57,6 +60,8 @@ export function assessPagesMetadata(input) {
   const deploymentStatuses = input?.statuses?.[latestDeployment?.id] || [];
   requireCheck(Array.isArray(deploymentStatuses) && deploymentStatuses[0]?.state === "success",
     "latest Pages deployment status is not success");
+  requireCheck(Number.isSafeInteger(deploymentStatuses[0]?.id) && deploymentStatuses[0].id > 0,
+    "latest Pages deployment status ID is not identified");
   const deploymentsAfter = Array.isArray(input?.deploymentsAfter) ? [...input.deploymentsAfter] : [];
   deploymentsAfter.sort((a, b) => (Date.parse(b?.created_at || "") || 0) -
     (Date.parse(a?.created_at || "") || 0) || (Number(b?.id) || 0) - (Number(a?.id) || 0));
@@ -67,7 +72,8 @@ export function assessPagesMetadata(input) {
     latestDeploymentAfter.environment === latestDeployment.environment,
     "Pages deployment changed during audit");
   const statusesAfter = input?.statusesAfter?.[latestDeploymentAfter?.id] || [];
-  requireCheck(Array.isArray(statusesAfter) && statusesAfter[0]?.state === "success",
+  requireCheck(Array.isArray(statusesAfter) && statusesAfter[0]?.state === "success" &&
+    statusesAfter[0]?.id === deploymentStatuses[0]?.id,
     "Pages deployment status changed during audit");
   requireCheck(input?.mainSHAAfter === sha, "main HEAD changed during audit");
 
