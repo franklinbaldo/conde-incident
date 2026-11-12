@@ -6,7 +6,7 @@
  * Numeric intersection is exact for the supplied finite intervals; finite
  * sampling and RK4 convergence NEVER certify exhaustive orbital/geographic claims.
  */
-import { seededUniform } from './orbitPhysics.ts';
+import { sampleVelocityBox } from './orbitBoxSampling.ts';
 import { assessNumericalConvergence } from './orbitConvergence.ts';
 import type { State, Dynamics } from './orbitPhysics.ts';
 import type { ConvergenceControls, ConvergenceAssessment } from './orbitConvergence.ts';
@@ -143,23 +143,10 @@ export function runConditionalVelocityDomain(
     };
   }
   const intervals = AXES.map(axis => domain.intervals[axis]!);
-  const middle = intervals.map(([lo, hi]) => lo + (hi - lo) / 2);
-  const candidates: number[][] = [middle];
-  for (let mask = 0; mask < 8; mask++) {
-    candidates.push(intervals.map(([lo, hi], i) => (mask & (1 << i)) ? hi : lo));
-  }
-  const rng = seededUniform(controls.seed);
-  for (let i = 0; i < controls.interiorDraws; i++) {
-    candidates.push(intervals.map(([lo, hi]) => lo + (hi - lo) * rng()));
-  }
-  const unique = new Set<string>();
+  // Samples are exact finite witnesses inside the declared Float64 box.
+  // Convex interpolation handles opposite-sign extremes without overflow.
   const samples: ConditionalSample[] = [];
-  for (const values of candidates) {
-    if (!values.every(Number.isFinite)) throw new RangeError('Velocity interpolation overflow');
-    const key = values.map(v => Object.is(v, -0) ? 0 : v).join(',');
-    if (unique.has(key)) continue;
-    unique.add(key);
-    const vKmS = values as [number, number, number];
+  for (const vKmS of sampleVelocityBox(intervals, controls.seed, controls.interiorDraws)) {
     const initial = { ...scenario.initial, vKmS };
     samples.push({
       vKmS,
