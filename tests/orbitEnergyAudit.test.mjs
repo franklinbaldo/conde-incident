@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { EARTH, dragJacobiPowerKm2S3, rotatingFrameIntegralKm2S2 } from '../src/lib/orbitPhysics.ts';
-import { auditPhysicalBudget } from '../src/lib/orbitEnergyAudit.ts';
+import { auditPhysicalBudget, auditRefinedPhysicalBudget } from '../src/lib/orbitEnergyAudit.ts';
 
 // All states and density functions below are SYNTHETIC, not 1963 tracking.
 const radiusKm = EARTH.radiusKm + 500;
@@ -82,4 +82,65 @@ test('invalid or unsourced atmosphere and model controls fail closed', () => {
   const idle = auditPhysicalBudget(initial, 0, 20, 80, 1e-5);
   assert.equal(idle.status, 'NOT_EVALUATED');
   assert.equal(idle.steps.length, 0);
+});
+
+
+// The following controls are deliberately SYNTHETIC. They are neither
+// 1963 orbital ephemerides nor validated uncertainty intervals.
+const looseRefinement = Object.freeze({
+  positionKm: 500, velocityKmS: 5, epochS: 500,
+  jacobiKm2S2: 5, modeledWorkKm2S2: 5,
+});
+
+test('independent r/v reintegrations agree when generous dimensional limits are declared', () => {
+  const audit = auditRefinedPhysicalBudget(
+    initial, 1200, 200, 80, 5, looseRefinement, 2, { j2: true, atmosphere: drag });
+  assert.equal(audit.status, 'REFINEMENT_CONSISTENT');
+  assert.deepEqual(audit.levels.map(x => x.steps.length), [6, 12, 24]);
+  assert.equal(audit.differences.length, 2);
+  assert.ok(audit.differences.every(d => Object.values(d).every(Number.isFinite)));
+  assert.ok(audit.levels.every(x => x.dragSource === drag.source));
+  assert.equal(audit.interpretation, 'NUMERICAL_ONLY_NOT_HISTORICAL');
+});
+
+test('a green energy-work budget is NOT enough when independent r/v states disagree', () => {
+  const limits = { ...looseRefinement, positionKm: 1e-14 };
+  const audit = auditRefinedPhysicalBudget(
+    initial, 1200, 200, 80, 5, limits, 2, { j2: true });
+  assert.ok(audit.levels.every(x => x.status === 'NUMERICALLY_CONSISTENT'));
+  assert.ok(audit.differences.at(-1).positionKm > limits.positionKm);
+  assert.equal(audit.status, 'REFINEMENT_UNRESOLVED');
+  assert.equal(audit.levels.at(-1).geographicInference, 'NOT_SUPPORTED');
+});
+
+test('physical budget error in finest two runs cannot be hidden by large state tolerances', () => {
+  const audit = auditRefinedPhysicalBudget(
+    initial, 1200, 200, 80, 1e-16, looseRefinement, 2,
+    { j2: true, atmosphere: drag });
+  assert.notEqual(audit.status, 'REFINEMENT_CONSISTENT');
+  assert.ok(audit.levels.some(x => x.status === 'NUMERICALLY_UNRESOLVED'));
+});
+
+test('the threshold event is compared across step sizes without claiming impact', () => {
+  const descending = {
+    rKm: [EARTH.radiusKm + 90, 0, 0],
+    vKmS: [-0.15, 8.15, 0], tS: 0,
+  };
+  const audit = auditRefinedPhysicalBudget(
+    descending, 400, 400, 80, 5, looseRefinement, 2);
+  assert.ok(audit.levels.every(x => x.terminationEvent === 'reentry-threshold'));
+  assert.ok(audit.levels.every(x => x.final.tS > 0 && x.final.tS < 400));
+  assert.equal(audit.interpretation, 'NUMERICAL_ONLY_NOT_HISTORICAL');
+});
+
+test('refinement controls are dimensioned, finite and bounded for reproducibility', () => {
+  const run = (limits, n) => auditRefinedPhysicalBudget(
+    initial, 100, 20, 80, 1e-5, limits, n);
+  assert.throws(() => run(looseRefinement, 1), /2..5 halvings/);
+  assert.throws(() => run(looseRefinement, 6), /2..5 halvings/);
+  assert.throws(() => run({ ...looseRefinement, epochS: 0 }, 2), /positive finite/);
+  assert.throws(() => run({ ...looseRefinement, velocityKmS: NaN }, 2), /positive finite/);
+  const x = run(looseRefinement, 2);
+  const y = run(looseRefinement, 2);
+  assert.deepEqual(x, y, 'identical seed-free state/model/controls must be repeatable');
 });
