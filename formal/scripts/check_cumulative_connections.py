@@ -22,6 +22,16 @@ CANONICAL = {
 }
 PENDING = "CANDIDATE_NOT_ACTIVATED"
 
+# A NASA SSR table field is not a new observable merely because its label,
+# operator or input-state links were renamed. This schema describes the four
+# already-registered tabular columns, not an orbital forward model.
+NASA_SSR_FIELDS = {
+    "nodal_period": ("nodal_period_model", "min"),
+    "inclination": ("inclination_model", "deg"),
+    "apogee": ("apogee_model", "km"),
+    "perigee": ("perigee_model", "km"),
+}
+
 
 
 def validate_528_tle_bridge(graph: dict, sources: dict, observations: list[dict]) -> list[dict]:
@@ -170,6 +180,21 @@ def validate(graph: dict) -> dict:
         upstream.add(src.get("upstream_tracking_family", src["source_family"]))
         if o["forward_operator_id"] not in ops:
             raise ValueError(f"unmapped forward operator: {oid}")
+        if src["source_family"] == "NASA_GODDARD_COMPILED_FROM_TRACKING":
+            # The four SSR columns have distinct units/operators. A relabeled
+            # column or a state/epoch borrowed from another object/date must
+            # not count as a new model-connected measurement.
+            expected = NASA_SSR_FIELDS.get(o["observable"])
+            if expected is None or (o["forward_operator_id"], o["unit"]) != expected:
+                raise ValueError(f"mismatched SSR observable/operator/unit: {oid}")
+            if o["object_id"] not in (527, 529):
+                raise ValueError(f"invalid SSR object link: {oid}")
+            expected_inputs = [
+                f"state_{o['object_id']}_at_t",
+                f"t_observed_{o['object_id']}_{src['published_on']}",
+            ]
+            if o.get("input_parameters") != expected_inputs:
+                raise ValueError(f"cross-object or cross-publication SSR parameter link: {oid}")
         if not o.get("input_parameters") or any(p not in params for p in o["input_parameters"]):
             raise ValueError(f"orphan parameter link: {oid}")
         if o["unit"] not in CANONICAL:
