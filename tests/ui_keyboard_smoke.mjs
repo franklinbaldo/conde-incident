@@ -10,7 +10,7 @@ await fs.mkdir(out, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 const findings = [];
 try {
-  for (const viewport of [{ name: 'desktop', width: 1440, height: 900 }, { name: 'mobile', width: 375, height: 812 }, { name: 'reflow-640-css-px', width: 640, height: 720 }]) {
+  for (const viewport of [{ name: 'desktop', width: 1440, height: 900 }, { name: 'mobile', width: 375, height: 812 }, { name: 'mobile-320', width: 320, height: 700 }, { name: 'reflow-640-css-px', width: 640, height: 720 }]) {
     const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height }, reducedMotion: 'reduce' });
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
@@ -28,6 +28,15 @@ try {
       'Lab header must not cover reading content at narrow/reflow widths: ' + JSON.stringify(headerLayout));
     assert(headerLayout.height < headerLayout.viewportHeight * 0.75,
       'Lab header takes over too much of the available height: ' + JSON.stringify(headerLayout));
+    // The laboratory is a separate SPA: users need a visible way back to the
+    // published editorial Caderno, including on the narrowest mobile layout.
+    const backToCaderno = page.getByRole('link', { name: 'Voltar ao Caderno' });
+    assert.equal(await backToCaderno.count(), 1, 'missing accessible return to Caderno');
+    assert.equal(await backToCaderno.getAttribute('href'),
+      'https://franklinbaldo.github.io/conde-incident/');
+    const backRect = await backToCaderno.boundingBox();
+    assert(backRect && backRect.x >= 0 && backRect.x + backRect.width <= viewport.width + 1,
+      'Caderno return link is clipped off screen at ' + viewport.name + ': ' + JSON.stringify(backRect));
     const before = new URL(page.url()).hash;
     await page.keyboard.press('Tab');
     const first = await page.evaluate(() => ({
@@ -95,6 +104,8 @@ try {
 
     await page.getByRole('button', { name: 'English' }).click();
     assert.equal(await page.locator('html').getAttribute('lang'), 'en');
+    assert.equal(await page.getByRole('link', { name: 'Back to the Notebook' }).count(), 1,
+      'editorial return link must follow the selected language');
     assert.equal(await page.getByRole('link', { name: 'Skip to main content' }).count(), 1);
     // Switching locale must also translate badges, export controls and footer,
     // not only the tab headings or the root html[lang] attribute.
