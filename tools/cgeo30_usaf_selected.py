@@ -27,15 +27,15 @@ def sha(raw: bytes) -> str:
 def summary(raw: bytes) -> dict:
     text = raw.decode("utf-8", errors="replace")
     selected = re.findall(
-        r'<div class="[^"]*\\brtSelected\\b[^"]*">\\s*<span[^>]*></span>'
-        r'<img[^>]*><span class="rtIn">(.*?)</span>\\s*</div>',
+        r'<div class="[^"]*\brtSelected\b[^"]*">\s*<span[^>]*></span>'
+        r'<img[^>]*><span class="rtIn">(.*?)</span>\s*</div>',
         text, flags=re.DOTALL,
     )
     if not selected:
         # The official tree uses nested inline elements; allow whitespace but
         # never accept the label merely appearing elsewhere in the tree.
         selected = re.findall(
-            r'<div class="rtMid rtSelected">.*?<span class="rtIn">(.*?)</span>\\s*</div>',
+            r'<div class="rtMid rtSelected">.*?<span class="rtIn">(.*?)</span>\s*</div>',
             text, flags=re.DOTALL,
         )
     values = re.findall(r'"_selectedValue":"([^"]+)"', text)
@@ -47,7 +47,7 @@ def summary(raw: bytes) -> dict:
         "label": unescape(selected[0].strip()),
         "value": values[0],
         "page_counter": unescape(page[0].strip()),
-        "img_has_src": re.search(r"\\bsrc\\s*=", image[0], re.I) is not None,
+        "img_has_src": re.search(r"\bsrc\s*=", image[0], re.I) is not None,
     }
 
 
