@@ -1,0 +1,214 @@
+{
+  "activation": false,
+  "archive_files": [
+    {
+      "archive_id": "refIDd1e2142",
+      "box": 22,
+      "document_contents_inspected": false,
+      "id": "SIA.FARU0171:refIDd1e2142",
+      "physical_observables_recovered": 0,
+      "title": "SAO - Optical Tracking Reports, 1960-1963",
+      "url": "https://sova.si.edu/record/sia.faru0171/refIDd1e2142"
+    },
+    {
+      "archive_id": "refIDd1e2187",
+      "box": 22,
+      "document_contents_inspected": false,
+      "id": "SIA.FARU0171:refIDd1e2187",
+      "physical_observables_recovered": 0,
+      "title": "STP Monthly Report, 1961-1965",
+      "url": "https://sova.si.edu/record/sia.faru0171/refIDd1e2187"
+    },
+    {
+      "archive_id": "refIDd1e2240",
+      "box": 23,
+      "document_contents_inspected": false,
+      "id": "SIA.FARU0171:refIDd1e2240",
+      "physical_observables_recovered": 0,
+      "title": "SAO - STP Correspondence, Bk II, 1962-1963",
+      "url": "https://sova.si.edu/record/sia.faru0171/refIDd1e2240"
+    },
+    {
+      "archive_id": "refIDd1e2360",
+      "box": 24,
+      "document_contents_inspected": false,
+      "id": "SIA.FARU0171:refIDd1e2360",
+      "physical_observables_recovered": 0,
+      "title": "SAO - STP Clocks, Precision Timing System, 1961-1965",
+      "url": "https://sova.si.edu/record/sia.faru0171/refIDd1e2360"
+    }
+  ],
+  "candidate_constraint": "IF_REPORT_WITH_OBJECT_EPOCH_FRAME_ERROR_THEN_OPTICAL_OBSERVABLE_CONSTRAINT",
+  "candidate_constraint_status": "CONNECTED_PENDING_SOURCE_RETRIEVAL_AND_CALIBRATION",
+  "dependency_graph": [
+    {
+      "from": "C241-L43",
+      "independent_observation": false,
+      "relation": "CUSTODIED_INSTITUTIONAL_FINDING_AID",
+      "to": "SIA.FARU0171:EAD:15b9c1a3e513690b0d66eec177a2b6897c373fbfe96cd8925e722765e6229f02"
+    },
+    {
+      "from": "SIA.FARU0171:EAD:15b9c1a3e513690b0d66eec177a2b6897c373fbfe96cd8925e722765e6229f02",
+      "independent_observation": false,
+      "relation": "ARCHIVAL_FILE_LEVEL_DESCRIPTION_ONLY",
+      "to": "SIA.FARU0171:refIDd1e2142"
+    },
+    {
+      "from": "SIA.FARU0171:EAD:15b9c1a3e513690b0d66eec177a2b6897c373fbfe96cd8925e722765e6229f02",
+      "independent_observation": false,
+      "relation": "ARCHIVAL_FILE_LEVEL_DESCRIPTION_ONLY",
+      "to": "SIA.FARU0171:refIDd1e2187"
+    },
+    {
+      "from": "SIA.FARU0171:EAD:15b9c1a3e513690b0d66eec177a2b6897c373fbfe96cd8925e722765e6229f02",
+      "independent_observation": false,
+      "relation": "ARCHIVAL_FILE_LEVEL_DESCRIPTION_ONLY",
+      "to": "SIA.FARU0171:refIDd1e2240"
+    },
+    {
+      "from": "SIA.FARU0171:EAD:15b9c1a3e513690b0d66eec177a2b6897c373fbfe96cd8925e722765e6229f02",
+      "independent_observation": false,
+      "relation": "ARCHIVAL_FILE_LEVEL_DESCRIPTION_ONLY",
+      "to": "SIA.FARU0171:refIDd1e2360"
+    },
+    {
+      "from": "SIA.FARU0171:refIDd1e2142",
+      "independent_observation": false,
+      "relation": "LOCATOR_FOR_REQUIRED_ORIGINAL",
+      "to": "pending_sao_1963:ORIGINAL_OPTICAL_RECORD_AND_OBJECT_ID"
+    },
+    {
+      "from": "SIA.FARU0171:refIDd1e2187",
+      "independent_observation": false,
+      "relation": "LOCATOR_FOR_REQUIRED_ORIGINAL",
+      "to": "pending_sao_1963:OBSERVATION_PIPELINE_PROVENANCE"
+    },
+    {
+      "from": "SIA.FARU0171:refIDd1e2240",
+      "independent_observation": false,
+      "relation": "LOCATOR_FOR_REQUIRED_ORIGINAL",
+      "to": "pending_sao_1963:TARGET_DESIGNATION_CROSSWALK"
+    },
+    {
+      "from": "SIA.FARU0171:refIDd1e2360",
+      "independent_observation": false,
+      "relation": "LOCATOR_FOR_REQUIRED_ORIGINAL",
+      "to": "pending_sao_1963:TIME_STANDARD_AND_CLOCK_CALIBRATION"
+    },
+    {
+      "from": "SIA.FARU0171:refIDd1e2142",
+      "independent_observation": false,
+      "relation": "SEARCH_CANDIDATE_NOT_TARGET_IDENTIFIED",
+      "to": "sao_optical_target_match_527"
+    },
+    {
+      "from": "SIA.FARU0171:refIDd1e2142",
+      "independent_observation": false,
+      "relation": "SEARCH_CANDIDATE_NOT_TARGET_IDENTIFIED",
+      "to": "sao_optical_target_match_528"
+    },
+    {
+      "from": "SIA.FARU0171:refIDd1e2142",
+      "independent_observation": false,
+      "relation": "SEARCH_CANDIDATE_NOT_TARGET_IDENTIFIED",
+      "to": "sao_optical_target_match_529"
+    }
+  ],
+  "hypotheses": [
+    "H_ARCHIVE_BOX_22_MAY_CONTAIN_1963_OPTICAL_REPORTS",
+    "H_ORIGINAL_REPORT_MAY_IDENTIFY_527_528_OR_529",
+    "H_CLOCK_FILES_MAY_DOCUMENT_NETWORK_TIMING_NOT_TARGET_TIME"
+  ],
+  "id": "ABELHA-C241-L43-SAO-01",
+  "independent_instrumental_observations_added": 0,
+  "input_ledger_path": "research/tle_custody/sao_archival_tracking_leads_C241-L43.json",
+  "input_ledger_sha256": "0b00fea9d5a2ed28e4e7bebbf212bd6c94dd6fe1e9e15b0a8a80683adf7d8154",
+  "lean_candidate": "Conde1963.saoOpticalArchiveRoutes",
+  "lean_status": "DOCUMENTARY_TYPED_CANDIDATE_NOT_COMPILED_PHYSICAL_THEOREM",
+  "next_falsifier": "Inspect file-level 1963 SAO optical reports and demand target identification, station, UTC epoch, frame and calibrated error; absence in one folder is not global absence",
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "related_context_not_independent_evidence": true,
+  "related_context_occurrences": [
+    "C195#1",
+    "C196#1"
+  ],
+  "schema": "conde.sao-1963-archive-scientific-bridge/v1",
+  "simulator_latent_parameters": [
+    {
+      "activation": false,
+      "candidate_node": "sao_optical_target_match_527",
+      "fields": {
+        "angular_covariance_rad2": null,
+        "observation_epoch_utc": null,
+        "optical_ra_dec_rad": null,
+        "reference_frame": null,
+        "station_id": null,
+        "time_calibration_error_seconds": null
+      },
+      "international_designator": "1963-003A",
+      "match_verified": false,
+      "object_id": 527,
+      "requires": [
+        "original_1963_optical_report",
+        "explicit_object_designation_crosswalk",
+        "observation_timestamp_and_clock_standard",
+        "station_identity_and_reference_frame",
+        "instrument_calibration_and_covariance"
+      ]
+    },
+    {
+      "activation": false,
+      "candidate_node": "sao_optical_target_match_528",
+      "fields": {
+        "angular_covariance_rad2": null,
+        "observation_epoch_utc": null,
+        "optical_ra_dec_rad": null,
+        "reference_frame": null,
+        "station_id": null,
+        "time_calibration_error_seconds": null
+      },
+      "international_designator": "1963-003B",
+      "match_verified": false,
+      "object_id": 528,
+      "requires": [
+        "original_1963_optical_report",
+        "explicit_object_designation_crosswalk",
+        "observation_timestamp_and_clock_standard",
+        "station_identity_and_reference_frame",
+        "instrument_calibration_and_covariance"
+      ]
+    },
+    {
+      "activation": false,
+      "candidate_node": "sao_optical_target_match_529",
+      "fields": {
+        "angular_covariance_rad2": null,
+        "observation_epoch_utc": null,
+        "optical_ra_dec_rad": null,
+        "reference_frame": null,
+        "station_id": null,
+        "time_calibration_error_seconds": null
+      },
+      "international_designator": "1963-003C",
+      "match_verified": false,
+      "object_id": 529,
+      "requires": [
+        "original_1963_optical_report",
+        "explicit_object_designation_crosswalk",
+        "observation_timestamp_and_clock_standard",
+        "station_identity_and_reference_frame",
+        "instrument_calibration_and_covariance"
+      ]
+    }
+  ],
+  "source": {
+    "archive_collection": "SIA.FARU0171",
+    "ead_bytes": 90490,
+    "ead_sha256": "15b9c1a3e513690b0d66eec177a2b6897c373fbfe96cd8925e722765e6229f02",
+    "ead_url": "https://sirismm.si.edu/EADs/SIA.FARU0171-ead.xml",
+    "hash_scope": "COMPLETE_EAD_XML_NOT_ARCHIVED_REPORT_CONTENT",
+    "retrieved_at_utc_date": "2026-11-13"
+  },
+  "source_occurrence": "C241-L43",
+  "source_scope": "INSTITUTIONAL_FINDING_AID_NOT_PRIMARY_TRACK"
+}
