@@ -1,0 +1,50 @@
+{
+  "schema": "conde.isd-caravelas-station-lineage/v1",
+  "station_key": {
+    "usaf": "834970",
+    "wban": "99999"
+  },
+  "original_records": {
+    "source_url": "https://www.ncei.noaa.gov/pub/data/noaa/1963/834970-99999-1963.gz",
+    "full_source_sha256": "c4a0b2f625e8febcd03c4b6ca6ac37b91c9d38423a2ccddd6f0cd7a7712e7e05",
+    "coordinate_encoding": "ISD row positions 28:34, 34:41 at 0.001 degree; elevation 46:51 in metres",
+    "reported_position": {
+      "lat_deg": -17.633,
+      "lon_deg": -39.25,
+      "elevation_m": 4,
+      "rows": 72,
+      "distinct_dates": 3
+    },
+    "historical_site_survey_verified": null
+  },
+  "retrospective_catalog": {
+    "source_url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-history.csv",
+    "full_source_sha256": "1994747ab4af1b97e63adb434b4d0d022f2daee76f0c144ea9ab46be2d906604",
+    "station_row_sha256": "b24514a2be25cf2fe2e59dce58f78f577e27878b69435b6db8098df74a4a7a7e",
+    "reported_position": {
+      "lat_deg": -17.652,
+      "lon_deg": -39.253,
+      "elevation_m": 11.0,
+      "icao": "SBCV",
+      "archive_period": [
+        "19610101",
+        "19971231"
+      ]
+    },
+    "position_epoch_verified": null
+  },
+  "comparison": {
+    "horizontal_geodesic_separation_km": 2.136489,
+    "elevation_catalog_minus_record_m": 7.0,
+    "difference_is_geolocation_error_bound": false,
+    "station_relocation_proven": false
+  },
+  "scientific_status": {
+    "classification": "CONFLICTING_RETROSPECTIVE_POSITION_FIELDS",
+    "relation_to_conde": "CONNECTED_PENDING_SPATIOTEMPORAL_CALIBRATION",
+    "instrument_position_in_1963": null,
+    "measurement_covariance": null,
+    "active_location_or_drag_constraint": null,
+    "need": "original 1963 station survey / original field log and position lineage"
+  }
+}
