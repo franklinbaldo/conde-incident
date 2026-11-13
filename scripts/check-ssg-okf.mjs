@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {readdirSync,readFileSync,statSync,existsSync} from 'node:fs';
 import {join} from 'node:path';
+import {AUTHORED_ROUTES,checkPage} from './ssg-authored-pages.mjs';
 const root='content', files=[];
 function walk(dir){
  for(const entry of readdirSync(dir)){
@@ -42,4 +43,10 @@ for(const path of files){
 }
 for(const path of ['content/index.md','content/stories/index.md','content/evidencias/arquivo/index.md'])
  assert.match(readFileSync(path,'utf8'),/^---\ntype: Page\n/);
-console.log('OKF SSG: '+files.length+' páginas tipadas.');
+for(const slug of AUTHORED_ROUTES){
+ const path='pages/'+slug+'/index.md';
+ const source=checkPage(slug,readFileSync(path,'utf8'));
+ assert.equal(readFileSync('content/'+slug+'/index.md','utf8'),source,
+   'Saída SSG diverge da página OKF canônica: '+slug);
+}
+console.log('OKF SSG: '+files.length+' páginas tipadas, '+AUTHORED_ROUTES.length+' páginas canônicas.');
