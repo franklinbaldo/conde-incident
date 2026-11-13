@@ -12,6 +12,7 @@ not NORAD 1963 tracking precision; result is SENSITIVITY, not impact probability
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 from dataclasses import dataclass
@@ -20,6 +21,9 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 INPUT=ROOT/"research/statistics/c241_528_unweighted_2000km_scenarios.json"
 SCHEMA="conde.c241-confidence-weighted-geography/v1"
+# SHA-256 of canonical JSON for the full audited frozen input snapshot.
+# This is local artifact integrity, NOT independent authentication of 1963 sources.
+FROZEN_INPUT_CANONICAL_SHA256="45ab7d423aa9a17664e18d6c4a422f3b71c8765fbff45d61ff445294b3edb5c0"
 
 def require(ok: bool, message: str) -> None:
     if not ok:
@@ -139,6 +143,10 @@ def validate_frozen_report(report: dict) -> None:
             report["confidence_status"]["error_correlation"] is None and
             report["confidence_status"]["historical_impact_posterior"] is None,
             "unverified errors silently calibrated")
+    canonical=json.dumps(report,sort_keys=True,separators=(",",":"),
+                         ensure_ascii=True,allow_nan=False).encode("utf-8")
+    require(hashlib.sha256(canonical).hexdigest()==FROZEN_INPUT_CANONICAL_SHA256,
+            "frozen input payload diverged from audited snapshot")
 
 def weight_frozen_scenarios(
     report: dict, *, phase_sigma_deg: float | None,

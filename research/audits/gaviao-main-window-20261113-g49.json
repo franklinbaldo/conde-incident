@@ -1,0 +1,155 @@
+{
+  "schema": "conde.gaviao-retrospective-main/v1",
+  "audit_id": "G49",
+  "reviewed_on_utc_date": "2026-11-13",
+  "base_exclusive": "7a579c17c389760f69c24f81da51fb002d2848dd",
+  "head_inclusive": "17eec4a4ad8864bfee2b4eb02d43647360c21f11",
+  "first_parent_integrations": 16,
+  "dag_commits": 19,
+  "conventional_merge_commits": 2,
+  "historical_check_policy": "NOT_CHECKED unless individually inspected",
+  "deep_reviewed_change": "PR #650 confidence-weighted heatmap source snapshot validation",
+  "finding": {
+    "id": "G49-F1",
+    "severity": "FROZEN_REPORT_SCENARIOS_NOT_INTEGRITY_PROTECTED",
+    "status": "PATCH_TESTED_CI_PENDING",
+    "red": "Two equal-and-opposite scenario-count changes accepted while frozen declared SHA and global totals unchanged; 25-deg assumption weighted percentage 1.86734821 -> 1.92147907",
+    "green": "Canonical SHA-256 of entire approved JSON input; 3 adversarial cases (hits, draws, epistemic flags) rejected",
+    "limitation": "Snapshot lock is not independent primary-source authentication."
+  },
+  "integrations": [
+    {
+      "sha": "c5b8b552b788a96fc15617c9b79800fe1d4dd428",
+      "subject": "90 🦦 C241-LONTRA-R34: localizar canal institucional da estação 1078 (#631)",
+      "pr_number": 631,
+      "files_changed_first_parent": 4,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "3242651e24bb76db3c72088518fe0ee80a443e51",
+      "subject": "🦅 G48: reject unverified GCAT mass claims in semantic replay (#642)",
+      "pr_number": 642,
+      "files_changed_first_parent": 4,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "56f5fe082592d82eed16e063a88db62f99bf3f22",
+      "subject": "geo: validate Conde/Vila Velha imagery in original UWM JP2 (CGEO-35)",
+      "pr_number": null,
+      "files_changed_first_parent": 5,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "c2b5a5173fb7379efbba32893f70c5702c728037",
+      "subject": "🐝 CGEO-34: JP2 íntegro → grafo geográfico e Θ inalterado (#643)",
+      "pr_number": 643,
+      "files_changed_first_parent": 3,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "0d65bed2310355276e14bff85589e584cf28420a",
+      "subject": "88 🦎 Validar estruturalmente dependências no gate SSG/JSON (#625)",
+      "pr_number": 625,
+      "files_changed_first_parent": 3,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "4b0ed91c6d8e15222dc129f5ced4a8e5cb015bf4",
+      "subject": "Merge pull request #628 from franklinbaldo/research/cervo-c241-p32-causal-flux",
+      "pr_number": 628,
+      "files_changed_first_parent": 6,
+      "parents": 2,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "0eb19463ddb33614319649ebb37d84ff4e975e78",
+      "subject": "Merge pull request #644 from franklinbaldo/research/cervo-c241-p33-real-f107-backfill",
+      "pr_number": 644,
+      "files_changed_first_parent": 7,
+      "parents": 2,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "3809c5fc8fa040e6f86951eb81227a8389ca075f",
+      "subject": "91 🦦 C241-LONTRA-R35: custódia retrospectiva de negativos AFU em Zvenigorod (#645)",
+      "pr_number": 645,
+      "files_changed_first_parent": 4,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "300e5246e26b654ee864a9173fd6476242cf8d96",
+      "subject": "92 🦫 G47: corrigir deriva do UTC pré-1972 e preparar orientação terrestre de 1963 (#636)",
+      "pr_number": 636,
+      "files_changed_first_parent": 5,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "1042852c02a72cd28cf45c1f0ea12f906a29dcb4",
+      "subject": "85 🦊 Corrigir reflow e links reais nas citações do Arquivo Lab (#635) (#639)",
+      "pr_number": 635,
+      "files_changed_first_parent": 3,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "122e1b68e6bc5091c6d1732455e4460526d98657",
+      "subject": "80 🦇 Corrigir reflow da capa e dos IDs nas páginas documentais (#630) (#632)",
+      "pr_number": 630,
+      "files_changed_first_parent": 2,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "3469f7432b6ec7c7259fdbdc92c93a130252af14",
+      "subject": "80 🦇 Agrupar cronologia editorial por data com cabeçalhos acessíveis (#7) (#638)",
+      "pr_number": 7,
+      "files_changed_first_parent": 3,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "b80d87cb1f0bdda51a84a5365670f393a3f5c43e",
+      "subject": "85 🦉 Caderno 25: centro e Vila do Conde sem geocodificação retroativa (#640)",
+      "pr_number": 640,
+      "files_changed_first_parent": 1,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "70f324ef9cc8e249a94959262cea15ccfbd47700",
+      "subject": "docs(stories): Coruja Caderno 26 lê massas GCAT sem inferir detritos (#648)",
+      "pr_number": 648,
+      "files_changed_first_parent": 1,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "ce1fab4a37cdbaca87f66d3c13913ab28b0309db",
+      "subject": "fix: C241-L39 invalid mass claims reject under python -O (#649)",
+      "pr_number": 649,
+      "files_changed_first_parent": 2,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "17eec4a4ad8864bfee2b4eb02d43647360c21f11",
+      "subject": "96 🦌 Python: penalização de erros por confiança e correlação nas trajetórias do Conde (#650)",
+      "pr_number": 650,
+      "files_changed_first_parent": 5,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    }
+  ],
+  "limitations": [
+    "Prior integration SHAs and changed-path counts enumerated; historical individual CI checks not individually verified.",
+    "Source report is secondary synthetic J2 groundtrack; no observed terminal 528 location, survival or historical posterior.",
+    "Full scenario snapshot digest requires deliberate reapproval upon legitimate input version changes."
+  ]
+}
