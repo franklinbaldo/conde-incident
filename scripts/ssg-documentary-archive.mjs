@@ -75,9 +75,12 @@ export function archivePages(citations, lineage) {
         for (const path of ancestry.declared_upstream_paths) {
           assert.ok(path.edges.length > 0 && path.upstream_source_id);
           let cursor = r.source_id;
+          const visited = new Set([cursor]);
           for (const edge of path.edges) {
             assert.equal(edge.from, cursor, 'Cadeia de proveniência descontínua');
             assert.ok(edge.to && edge.kind && edge.to !== cursor);
+            assert.ok(!visited.has(edge.to), 'Ciclo de proveniência documental');
+            visited.add(edge.to);
             parts.push(`- ${safe(edge.from)} → ${safe(edge.to)} (${safe(edge.kind)})`);
             cursor=edge.to;
           }
