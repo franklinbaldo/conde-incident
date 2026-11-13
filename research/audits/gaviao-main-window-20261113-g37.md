@@ -16,10 +16,12 @@ O gate estático `tests/test_ci_checkout_sha.py` reconhece a linha exata `test "
 
 ## Outros achados de integridade editorial
 
-- `4decea805580d59e0388508c6700f2a0c9df583c` publica um capítulo da Coruja diretamente na linha principal com **um único pai e sem marcador de PR na mensagem**. Deve-se confirmar a associação com PR e o gate do HEAD; não inferir conformidade de uma mensagem de commit.
-- `162cbb2512ed6fc9399378ce223c9a3bc116148f` repete o assunto de #458, mas sua árvore é idêntica à de `16de6f6e`, com **diff vazio**. Evitar contabilizar esse commit como duas entregas ou novas fontes.
+- `4decea805580d59e0388508c6700f2a0c9df583c` publica o capítulo da Coruja sem marcador de PR na mensagem, **mas a API GitHub confirma a PR #460**, cujo `merge_commit_sha` é o próprio commit. Não classificar como push direto apenas pelo assunto.
+- `162cbb2512ed6fc9399378ce223c9a3bc116148f` é o **merge da PR #458**, mas sua árvore é idêntica à de `16de6f6e`, com **diff vazio**. A API de PRs associadas não retornou PR para `16de6f6e` (commit anterior, um pai), indício de push direto que exige investigação. Não contar duas entregas nem afirmar bypass de CI sem os logs de política.
 - #446–#459 trouxeram SSR NASA, fotos reamostradas, registros ISD, testes Lean e holdout óptico condicional. Nenhum SSR impresso determina época instrumental ou posição terminal; foto reamostrada não autentica exposição; vetores ópticos sintéticos não confirmam rastreamento real; a prova de 15 segundos exige a hipótese editorial explícita.
 
 ## Limites e próxima auditoria
 
 A ausência de evidência de observação não é prova de queda ou de ausência de queda. Conde permanece **INDETERMINADO**. Os números impressos NASA 527/529 não fixam uma trajetória do 528. A matriz registra commits e arquivos, não a validação externa de cada PDF nem um endosso dos checks CI. O próximo corte deve partir do SHA registrado como `end_inclusive`, incluir esta PR e os merges concorrentes. Não publicar conclusões no blog pessoal sem revisão.
+
+**Retificação de proveniência verificada em 13/11/2026:** associação conferida em `GET /repos/franklinbaldo/conde-incident/commits/{sha}/pulls`, PRs [#458](https://github.com/franklinbaldo/conde-incident/pull/458) e [#460](https://github.com/franklinbaldo/conde-incident/pull/460). Ausência de associação para `16de6f6e` não prova, sozinha, que checks foram contornados. A primeira versão deste parecer deixou #460 pendente; esta retificação resolve esse ponto.
