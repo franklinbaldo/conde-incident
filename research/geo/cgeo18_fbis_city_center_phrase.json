@@ -1,0 +1,93 @@
+{
+  "schema": "conde.gis.fbis-city-center-claim/v1",
+  "id": "CGEO-18",
+  "municipality": {
+    "ibge_code": "2908606",
+    "name": "Conde",
+    "state": "Bahia",
+    "country": "Brazil",
+    "excluded_homonyms": [
+      "Conde/PB",
+      "São Francisco do Conde/BA",
+      "Vila do Conde/Portugal"
+    ]
+  },
+  "document": {
+    "source_family": "FBIS English-language relay of Portuguese Radio Tupi broadcast",
+    "source_role": "contemporary_secondary_report_of_claim",
+    "publisher_of_download": "ondisclosure.org (digital copy; not verified original custodian)",
+    "url": "https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf",
+    "sha256": "63654bcd90c0515f30e31ed511a12a05f170ff4470e3d8a6f40fca12012a1adb",
+    "byte_size": 126624,
+    "pdf_page_one_based": 1,
+    "printed_marker": "FBIS 03",
+    "declassification_authority_visible": "NND 968063",
+    "visual_inspection_date": "2026-11-13",
+    "original_portuguese_audio_acquired": false,
+    "original_portuguese_words_verified": false
+  },
+  "transcript": {
+    "broadcast_header_printed": "RIO DE JANEIRO RADIO TUPI IN PORTUGUESE 2330 8 NOV 63 W",
+    "reported_municipality_english": "REPORTS FROM THE MUNICIPALITY OF CONDE",
+    "location_phrase_english": "FELL IN THE CENTER OF THE CITY",
+    "processing_line_printed": "9 NOV 111A RWS/GY",
+    "language_of_visible_transcript": "en",
+    "underlying_broadcast_language_claimed": "pt",
+    "reported_utterance_not_primary_physical_observation": true,
+    "reported_event_date": null,
+    "reported_event_time": null,
+    "verified_event_date": null,
+    "verified_event_time": null,
+    "broadcast_clock_timezone": null,
+    "processing_line_semantics": null
+  },
+  "spatial_interpretation": {
+    "expression_kind": "INFORMAL_REPORTED_URBAN_CENTRALITY",
+    "urban_seat_candidate": true,
+    "urban_seat_candidate_is_verified": false,
+    "municipal_polygon_centroid_is_city_center": false,
+    "praça_severiano_lima_1958_identity_confirmed": false,
+    "other_square_identity_confirmed": false,
+    "matched_street": null,
+    "matched_square": null,
+    "matched_landmark": null,
+    "source_coordinates": null,
+    "geo_reference_control_points": null,
+    "historical_center_point": null,
+    "historical_center_polygon": null,
+    "reported_impact_location": null,
+    "legal_boundary_1963": null,
+    "horizontal_accuracy_m": null,
+    "crs": null,
+    "can_constrain_orbital_reentry": false,
+    "epistemic_status": "DOCUMENTED_TEXTUAL_CLAIM_NOT_VERIFIED_GROUND_EVENT"
+  },
+  "dependency_graph": [
+    {
+      "from": "CGEO-18",
+      "to": "C01",
+      "relation": "SAME_TUPI_FBIS_REPORT_LINEAGE_NOT_NEW_WITNESS"
+    },
+    {
+      "from": "CGEO-18",
+      "to": "CGEO-17",
+      "relation": "GEOGRAPHIC_INTERPRETATION_DEPENDS_ON_HISTORICAL_TOPONYM_CROSSWALK"
+    },
+    {
+      "from": "CGEO-18",
+      "to": "LON-IBGE1958-CONDE-01",
+      "relation": "URBAN_CONTEXT_IMAGES_NOT_EVENT_PHOTOGRAPHS"
+    }
+  ],
+  "next_discriminating_tests": [
+    "Find and check Brazilian Portuguese broadcast or contemporaneous newspaper edition for exact original location wording",
+    "Locate documented urban plan or aerial photo dated 1950-1963 with named streets/squares",
+    "Identify mapping and lawful renaming of Praça Severiano Lima via primary municipal records before attempting a geocode"
+  ],
+  "limits": [
+    "The exact English phrase is verified on the visible FBIS facsimile; the reported Portuguese words are not",
+    "The printed 2330 is a broadcast header field, not a verified fall timestamp; timezone not established",
+    "Documented circulation of a claim does not establish any metal sphere, crater, person or reentry",
+    "No place named or coordinate given by the phrase; do not use centroid of a municipality as an urban center"
+  ]
+}
