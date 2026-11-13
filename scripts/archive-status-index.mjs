@@ -2,8 +2,10 @@
 import assert from 'node:assert/strict';
 import {interpretArchiveStatus} from './archive-source-status.mjs';
 
-const ROOT='/conde-incident/evidencias/arquivo/';
-const MATRIX='https://github.com/franklinbaldo/conde-incident/blob/faf4dd0fd8dfbdd825e4e934b3b30ebd81bf61df/research/evidence_matrix_C001-C238_2026-11-11.md#L';
+export const ARCHIVE_ROOT='/conde-incident/evidencias/arquivo/';
+const ROOT=ARCHIVE_ROOT;
+export const MATRIX_ROW_ROOT='https://github.com/franklinbaldo/conde-incident/blob/faf4dd0fd8dfbdd825e4e934b3b30ebd81bf61df/research/evidence_matrix_C001-C238_2026-11-11.md#L';
+const MATRIX=MATRIX_ROW_ROOT;
 
 export function renderArchiveStatusIndex(records) {
   assert.ok(Array.isArray(records), 'Citações documentais ausentes');
