@@ -122,9 +122,16 @@ def validate_institutional_chain(source: dict) -> dict:
     rows = source.get("transcribed_links")
     if not isinstance(rows, list) or len(rows) != len(HOUSE_LINKS):
         raise ValueError("incomplete or duplicate institutional provenance links")
+    expected_link_fields = {"from", "to", "relation", "printed_page"}
+    if any(set(r) != expected_link_fields for r in rows):
+        raise ValueError("unknown institutional link field or missing required field")
     keys = [(r["from"], r["to"], r["relation"], r["printed_page"]) for r in rows]
     if len(set(keys)) != len(keys) or set(keys) != HOUSE_LINKS:
         raise ValueError("altered institutional provenance relationship")
+    occurrences = source.get("relevant_occurrences", [])
+    if (not isinstance(occurrences, list)
+            or len(occurrences) != 4 or len(set(occurrences)) != 4):
+        raise ValueError("duplicate institutional occurrence or incomplete references")
     if (
         source.get("per_object_527_528_529_input_lineage_verified") is not False
         or source.get("observation_epoch_utc") is not None
