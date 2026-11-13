@@ -52,7 +52,7 @@ const norm3 = (v: readonly number[]): number => Math.hypot(v[0], v[1], v[2]);
 export function ascendingNodeDeg(state: State): number {
   const [x, y, z] = state.rKm;
   const [vx, vy, vz] = state.vKmS;
-  const nx = z * vx - x * vz; // -h_y
+  const nx = x * vz - z * vx; // -h_y
   const ny = y * vz - z * vy; // +h_x
   if (!Number.isFinite(nx) || !Number.isFinite(ny) ||
       norm3([nx, ny, 0]) <= 1e-12) {
