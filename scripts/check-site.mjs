@@ -38,6 +38,8 @@ assert.ok(archiveIndex.includes('/conde-incident/lab/#/documents'),'Arquivo sem 
  for(const route of ['evidencias/arquivo/index.html',
    'evidencias/arquivo/familias/index.html',
    'evidencias/arquivo/familias/bluebook-derivative-catalogues/index.html',
+   'evidencias/arquivo/obras/index.html',
+   'evidencias/arquivo/obras/nasa-ssr-vol3-22/index.html',
    'evidencias/arquivo/c232-1/index.html']){
    const html=read(route);
    assert.doesNotMatch(html,/Capítulo\s*\?/,'Índice com capítulo fictício: '+route);
@@ -54,6 +56,11 @@ for(const [slug,id] of [['c01-1','C01#1'],['c197-1','C197#1'],['c232-1','C232#1'
   assert.ok(html.includes('não verificação de ocorrência física'),'Limite documental omitido: '+id);
 }
 assert.match(read('evidencias/arquivo/c232-1/index.html'),/Referência 2/,'Duas fontes na mesma ocorrência foram fundidas');
+assert.ok(archiveIndex.includes('/conde-incident/evidencias/arquivo/obras/'), 'Falta navegação por obra');
+const reusedWork=read('evidencias/arquivo/obras/nasa-ssr-vol3-22/index.html');
+assert.match(reusedWork,/8 ocorrência\(s\), 8 vínculo\(s\)/,'Índice por obra perdeu relações');
+assert.ok(reusedWork.includes('/conde-incident/evidencias/arquivo/c197-1/'),'Obra sem ligação às ocorrências');
+assert.match(reusedWork,/não contagem de observações independentes/i,'Reutilização documental descrita como medição');
 for(const slug of ['summary','map','inverse','triangulation','sensitivity','montecarlo','tles','documents']){
  assert.ok(read('simulacoes/index.html').includes('/conde-incident/lab/#/'+slug),'Link legado ausente: '+slug);
 }
