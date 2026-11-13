@@ -99,6 +99,30 @@ class ConfidencePenalties(unittest.TestCase):
         result=gaussian_penalty([item(0.)])
         self.assertEqual(result["relative_weight"],1.)
 
+    def test_balanced_hit_reallocation_is_not_authenticated_by_aggregate(self):
+        tampered=copy.deepcopy(INPUT)
+        # 25,489 total hits and the original declared upstream SHA remain intact.
+        tampered["scenarios"][0]["within_2000km"]+=1000
+        tampered["scenarios"][6]["within_2000km"]-=1000
+        self.assertEqual(sum(x["within_2000km"] for x in tampered["scenarios"]),25489)
+        self.assertEqual(tampered["source"],INPUT["source"])
+        with self.assertRaisesRegex(ValueError,"audited snapshot"):
+            validate_frozen_report(tampered)
+
+    def test_balanced_draw_reallocation_is_not_authenticated_by_aggregate(self):
+        tampered=copy.deepcopy(INPUT)
+        tampered["scenarios"][0]["draws"]+=300
+        tampered["scenarios"][6]["draws"]-=300
+        self.assertEqual(sum(x["draws"] for x in tampered["scenarios"]),1500000)
+        with self.assertRaisesRegex(ValueError,"audited snapshot"):
+            validate_frozen_report(tampered)
+
+    def test_provenance_claims_not_exempt_from_full_payload_digest(self):
+        tampered=copy.deepcopy(INPUT)
+        tampered["integrity_constraints"]["NASA_terminal_time_sigma_known"]=True
+        with self.assertRaisesRegex(ValueError,"audited snapshot"):
+            validate_frozen_report(tampered)
+
     def test_original_count_mutation_rejected(self):
         damaged=copy.deepcopy(INPUT)
         damaged["scenarios"][0]["draws"]+=1
