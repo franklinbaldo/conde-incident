@@ -62,3 +62,8 @@ jobs:
           python3 formal/scripts/audit_legacy_154.py > legacy-audit.json
           python3 -m unittest discover -s formal/tests -p 'test_legacy_evidence.py' -v
           cat legacy-audit.json
+      - name: Check NASA April/October printed period bounds (not tracking epochs)
+        run: |
+          set -euo pipefail
+          python3 formal/scripts/compile_ssr_print_intervals.py --check
+          python3 -m unittest discover -s formal/tests -p 'test_ssr_print_intervals.py' -v
