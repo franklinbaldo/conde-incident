@@ -76,6 +76,8 @@ def event_blocks(source: str) -> dict[str, list[str]]:
 
 def assert_workflow_policy(source: str, filename: str) -> bool:
     events = event_blocks(source)
+    if 'pull_request' in events and 'pull_request_target' in events:
+        raise AssertionError(f'{filename}: pull_request_target duplicates pull_request triggers')
     if 'push' not in events or 'pull_request' not in events:
         return False
     push = events['push']
@@ -178,6 +180,17 @@ class EntireWorkflowEventPolicy(unittest.TestCase):
             valid = original.replace('branches: [main]', replacement, 1)
             with self.subTest(valid=replacement):
                 self.assertTrue(assert_workflow_policy(valid, name))
+
+    def test_pr_target_cannot_duplicate_normal_pr_event(self):
+        for name in ('integration-head.yml', 'prek.yml', 'historical-space-weather.yml'):
+            original = (WORKFLOWS / name).read_text(encoding='utf-8')
+            self.assertTrue(assert_workflow_policy(original, name))
+            for extra in ('  pull_request_target:\n', '  pull_request_target: {}\n'):
+                mutant = original.replace('  pull_request:\n', '  pull_request:\n' + extra, 1)
+                with self.subTest(workflow=name, extra=extra):
+                    self.assertNotEqual(mutant, original)
+                    with self.assertRaisesRegex(AssertionError, 'pull_request_target'):
+                        assert_workflow_policy(mutant, name)
 
     def test_one_event_only_is_not_falsely_classified_as_double(self):
         single = 'name: replay\non:\n  workflow_dispatch:\njobs:\n  run:\n    runs-on: ubuntu-latest\n'
