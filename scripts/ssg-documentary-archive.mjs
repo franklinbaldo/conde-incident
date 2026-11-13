@@ -274,8 +274,7 @@ export function archivePages(citations, lineage, wayback=null) {
       ...familyLinks, '',
       '[Voltar ao arquivo curado]('+ROOT+')',
     ].join('\n')));
-  // Browse by the reviewed documentary classification without booting React.
-  // Keep every source link and immutable matrix row; categories are not witnesses.
+  // Indexed reference categories, never independent witnesses.
   files.set('estados/index.md', page('Estados documentais: índice de vínculos',
     'Referências curadas agrupadas por estado, sem inferir observação física.',
     renderArchiveStatusIndex(citations.records)));
