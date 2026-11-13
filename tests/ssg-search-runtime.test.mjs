@@ -33,6 +33,21 @@ test('Full dynamic locale: visible empty state, announcements for zero and N res
   assert.throws(() => localizeRuntimeSource(source.replace('No results found', 'No matches')),
     /runtime drift/);
 });
+test('Published SSG escaped quotes cannot leak literal +esc(q)+ to search users', () => {
+  const escaped = source.replace("&ldquo;'+esc(q)+'&rdquo;",
+    String.raw`&ldquo;\'+esc(q)+\'&rdquo;`);
+  assert.notEqual(escaped, source, 'Test must exercise broken upstream variant');
+  const fixed = localizeRuntimeSource(escaped);
+  assert.equal(fixed.changed, true);
+  const expression = fixed.code.match(/results\.innerHTML=(.*?);(?:\n|if\(sr\))/)?.[1];
+  assert.ok(expression, 'No dynamic search empty-state expression found');
+  const rendered = new Function('q', 'esc', 'return ' + expression)(
+    'NORAD 528', value => value);
+  assert.match(rendered, /NORAD 528/);
+  assert.doesNotMatch(rendered, /esc\(q\)/);
+  assert.deepEqual(localizeRuntimeSource(fixed.code), { ...fixed, changed: false });
+});
+
 test('Real HTML links and SHA384 remain valid after versioned asset rewrite', () => {
   const root = mkdtempSync(join(tmpdir(), 'conde-search-'));
   try {
