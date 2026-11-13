@@ -5,12 +5,13 @@ from pathlib import Path
 import unittest
 
 from formal.scripts.compile_ssr_november import (
-    LEDGER, OCTOBER, SURVIVORS, REPORT, LEAN, compile_report, render_lean,
+    LEDGER, OCTOBER, SURVIVORS, BRIDGE, REPORT, LEAN, compile_report, render_lean,
 )
 
 LED = json.loads(LEDGER.read_text())
 OCT = json.loads(OCTOBER.read_text())
 SURV = json.loads(SURVIVORS.read_text())
+LINK = json.loads(BRIDGE.read_text())
 
 
 class TestNovemberPrintedMeasures(unittest.TestCase):
@@ -87,6 +88,41 @@ class TestNovemberPrintedMeasures(unittest.TestCase):
             altered["limits"][key] = True
             with self.subTest(key=key), self.assertRaises(ValueError):
                 compile_report(altered, OCT, SURV)
+
+    def test_bridge_binds_real_527_period_without_sensor_epoch(self):
+        binding = compile_report(LED, OCT, SURV, LINK)["source_locked_bridge"]
+        self.assertEqual(binding["canonical_527_nov30_period_min"], "94.6")
+        self.assertEqual(binding["nov15_to_nov30_527_publication_delta_min"], "0.0")
+        self.assertEqual(binding["linked_occurrences"],
+                         ["C241-L19#1", "C241-L18:19640002493"])
+        self.assertFalse(binding["constraint_activation"])
+        self.assertIsNone(binding["observed_epoch"])
+        self.assertIsNone(binding["sensor_sigma"])
+
+    def test_bridge_tampering_and_promotion_are_rejected(self):
+        mutants = [
+            ("canonical_value_min", "94.8"),
+            ("canonical_value_seconds", "5688"),
+            ("documentary_delta_min", "0.2"),
+            ("simulator_observation_epoch_utc", "1963-11-30T12:00:00Z"),
+            ("simulator_instrument_error", 0),
+            ("simulator_calibrated_value", "94.6"),
+            ("active_physical_constraint", True),
+            ("checked_control_cells", 14),
+        ]
+        for field, replacement in mutants:
+            mutant = copy.deepcopy(LINK)
+            mutant[field] = replacement
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                compile_report(LED, OCT, SURV, mutant)
+        for field, replacement in (("pdf_sha256", "0"*64),
+                                   ("published_on", "1963-11-29"),
+                                   ("matrix_context", ["C197#1"]),
+                                   ("occurrence_id", "C197#1")):
+            mutant = copy.deepcopy(LINK)
+            mutant["linked_sources"][1][field] = replacement
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                compile_report(LED, OCT, SURV, mutant)
 
     def test_report_and_lean_are_deterministic(self):
         r = compile_report(LED, OCT, SURV)
