@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFileSync,readdirSync,mkdirSync,rmSync,writeFileSync} from 'node:fs';
 import {join} from 'node:path';
+import {writeArchivePages} from './ssg-documentary-archive.mjs';
 
 // stories/*.md is the sole human-authored content; content/ is regenerated.
 const names=readdirSync('stories').filter(n=>/^\d{4}-\d{2}-\d{2}-[a-z0-9-]+\.md$/.test(n)).sort();
@@ -85,7 +86,11 @@ landing('cronologia','Cronologia da investigação','Datas editoriais da investi
 landing('evidencias','Evidências e fontes','Índice de textos, fontes e proveniência.',
  '# Evidências e fontes\n\nEste índice cobre os capítulos editoriais, **não toda a matriz científica**. Verifique as fontes originais e a dependência entre relatos.\n\n'+stories.map(s=>
  '- [Capítulo '+s.chapter+': '+s.title+'](/conde-incident/stories/'+s.slug+'/) · [Markdown canônico](https://github.com/franklinbaldo/conde-incident/blob/main/stories/'+s.filename+')'
- ).join('\n')+'\n\n[Pesquisa e evidências completas](https://github.com/franklinbaldo/conde-incident/tree/main/research)');
+ ).join('\n')+'\n\n[Arquivo documental estático: proveniência e genealogia](/conde-incident/evidencias/arquivo/)\n\n[Pesquisa e evidências completas](https://github.com/franklinbaldo/conde-incident/tree/main/research)');
+const archiveCount = writeArchivePages('content/evidencias/arquivo',
+  JSON.parse(readFileSync('public/data/conde-source-citations.json', 'utf8')),
+  JSON.parse(readFileSync('public/data/conde-declared-dependence.json', 'utf8')));
+console.log('Arquivo SSG: '+archiveCount+' páginas Markdown para SSG sem JS.');
 landing('hipoteses','Hipóteses concorrentes','Hipóteses submetidas a contraprovas.',
  '# Hipóteses concorrentes\n\n## Queda em Conde\n\nExige vínculo físico e documental do objeto, tempo e localização. Um relato não prova o impacto.\n\n## Sobrevoo\n\nUma órbita simulada não equivale a observação histórica; identificar instrumentos e incertezas.\n\n## Descarte ou fragmentação\n\nExige evidência independente do processo e da identidade dos fragmentos.\n\n## Ausência de vínculo causal\n\nNotícia e registro de decaimento podem se referir a eventos diferentes.\n\n**Nenhuma dessas hipóteses é considerada demonstrada nesta página.**');
 const labTabs=[['summary','Síntese'],['map','Mapa orbital'],['inverse','Inspetor inverso'],['triangulation','Triangulação'],['sensitivity','Atmosfera'],['montecarlo','Monte Carlo'],['tles','TLEs'],['documents','Documentos']];
