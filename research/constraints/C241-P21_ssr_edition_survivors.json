@@ -1,0 +1,194 @@
+{
+  "exact_feasible_pairs": [
+    [
+      "1963-06-30",
+      "1963-07-31"
+    ]
+  ],
+  "exact_feasible_triples": [],
+  "gap_527_minus_528_or_null_if_absent": [
+    50,
+    90,
+    100,
+    130,
+    220,
+    null,
+    null,
+    null,
+    null
+  ],
+  "gap_527_minus_529": [
+    30,
+    60,
+    70,
+    80,
+    130,
+    200,
+    240,
+    300,
+    540
+  ],
+  "id": "C241-P21",
+  "instrument_epochs": null,
+  "instrument_sigma": null,
+  "interpretation": "Only Jun30/Jul31 can both be retained under shared additive edition bias and assumed <=0.05min per-cell residual. NOT seven actual errata, independent instrument measurements, or an orbital constraint.",
+  "maximum_retained_editions": 2,
+  "min_removed_editions": 7,
+  "model": "printed=obj_baseline+publication_offset+cell_residual",
+  "new_instrument_observations": 0,
+  "pairs_passing_527_529_screen": [
+    [
+      "1963-06-30",
+      "1963-07-31"
+    ],
+    [
+      "1963-06-30",
+      "1963-08-15"
+    ],
+    [
+      "1963-07-31",
+      "1963-08-15"
+    ]
+  ],
+  "pairs_passing_all_shared_object_screens": [
+    [
+      "1963-06-30",
+      "1963-07-31"
+    ]
+  ],
+  "parent_evidence": [
+    "C241-L27",
+    "C241-P20"
+  ],
+  "physical_domain": "THETA_UNCHANGED",
+  "print_half_step_ASSUMED_not_sensor_sigma": 5,
+  "removed_editions_NOT_errata": [
+    "1963-04-30",
+    "1963-08-15",
+    "1963-10-15",
+    "1963-11-15",
+    "1963-11-30",
+    "1963-12-15",
+    "1963-12-31"
+  ],
+  "schema": "conde.ssr-edition-survivors/v1",
+  "sources": [
+    {
+      "ntrs": "19630012128",
+      "page": 5,
+      "pdf_sha256_from_ledger": "87b8c1be1d074dff4b605b422f6a8836c2ebdf80ca4ac0568373b168cc457a38",
+      "publication": "1963-04-30",
+      "source_ledger": "research/tle_custody/nasa_ssr_apr_oct_1963_C241-L16.json"
+    },
+    {
+      "ntrs": "19630012130",
+      "page": 5,
+      "pdf_sha256_from_ledger": "8add4b46734e992a213088ef58ba9d58b6385df7b89bb504f79fe8715ec418f3",
+      "publication": "1963-06-30",
+      "source_ledger": "research/tle_custody/nasa_ssr_jun30_1963_C241-L22.json"
+    },
+    {
+      "ntrs": "19630012290",
+      "page": 5,
+      "pdf_sha256_from_ledger": "9b00bf8323b1de80a34920f73c658f70f766a51632a13473a408679f0e5a03d9",
+      "publication": "1963-07-31",
+      "source_ledger": "research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json"
+    },
+    {
+      "ntrs": "19630012289",
+      "page": 5,
+      "pdf_sha256_from_ledger": "4e5cb0205577bc1b0959088db9ca3ae7a05f8de480b5ece9b86c385437636968",
+      "publication": "1963-08-15",
+      "source_ledger": "research/tle_custody/nasa_ssr_aug15_1963_C241-L17.json"
+    },
+    {
+      "ntrs": "19640000428",
+      "page": 5,
+      "pdf_sha256_from_ledger": "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+      "publication": "1963-10-15",
+      "source_ledger": "research/tle_custody/nasa_ssr_1963_oct15_C241-L12.json"
+    },
+    {
+      "ntrs": "19640001198",
+      "page": 5,
+      "pdf_sha256_from_ledger": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+      "publication": "1963-11-15",
+      "source_ledger": "research/tle_custody/nasa_ssr_nov15_1963_C241-L19.json"
+    },
+    {
+      "ntrs": "19640002493",
+      "page": 5,
+      "pdf_sha256_from_ledger": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+      "publication": "1963-11-30",
+      "source_ledger": "research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json"
+    },
+    {
+      "ntrs": "19640003479",
+      "page": 5,
+      "pdf_sha256_from_ledger": "d31a064f8e03fd39be6fe75b88cd5852c0b74c9101fa635cb40ac25c77ef474f",
+      "publication": "1963-12-15",
+      "source_ledger": "research/tle_custody/nasa_ssr_dec15_1963_C241-L21.json"
+    },
+    {
+      "ntrs": "19640005618",
+      "page": 5,
+      "pdf_sha256_from_ledger": "d9504a8641baa65c208e41034e77b0e9b1cc01b4acb2a4f95541bd9e75d3783d",
+      "publication": "1963-12-31",
+      "source_ledger": "research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json"
+    }
+  ],
+  "unique_maximal_survivors": [
+    "1963-06-30",
+    "1963-07-31"
+  ],
+  "unit": "centiminute (0.01 minute)",
+  "witness": {
+    "baselines": {
+      "527": 9460,
+      "528": 9370,
+      "529": 9400
+    },
+    "offsets": {
+      "1963-06-30": -5,
+      "1963-07-31": -5
+    },
+    "residuals": [
+      {
+        "object": 527,
+        "printed": 9460,
+        "publication": "1963-06-30",
+        "residual": 5
+      },
+      {
+        "object": 527,
+        "printed": 9460,
+        "publication": "1963-07-31",
+        "residual": 5
+      },
+      {
+        "object": 528,
+        "printed": 9370,
+        "publication": "1963-06-30",
+        "residual": 5
+      },
+      {
+        "object": 528,
+        "printed": 9360,
+        "publication": "1963-07-31",
+        "residual": -5
+      },
+      {
+        "object": 529,
+        "printed": 9400,
+        "publication": "1963-06-30",
+        "residual": 5
+      },
+      {
+        "object": 529,
+        "printed": 9390,
+        "publication": "1963-07-31",
+        "residual": -5
+      }
+    ]
+  }
+}
