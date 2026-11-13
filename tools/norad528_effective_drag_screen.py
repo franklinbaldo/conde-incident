@@ -5,9 +5,16 @@ import json
 import math
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from tools.cross_object_epoch_support import (
-    read_pinned_csv, normalize, SOURCE_URL, SOURCE_SHA256, EXPECTED_CSV_SHA256,
-)
+try:
+    from tools.cross_object_epoch_support import (
+        read_pinned_csv, normalize, SOURCE_URL, SOURCE_SHA256, EXPECTED_CSV_SHA256,
+    )
+except ModuleNotFoundError as exc:
+    if exc.name != "tools":
+        raise
+    from cross_object_epoch_support import (
+        read_pinned_csv, normalize, SOURCE_URL, SOURCE_SHA256, EXPECTED_CSV_SHA256,
+    )
 
 ROOT=Path(__file__).resolve().parents[1]
 SPLIT=ROOT/"research/statistics/raan_chronological_holdout_1963.json"
