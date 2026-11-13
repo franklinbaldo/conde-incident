@@ -27,3 +27,11 @@ h1,h2,h3{line-height:1.16;letter-spacing:-.025em}h1{font-size:clamp(2.4rem,5vw,4
 .story-visual figcaption strong{color:var(--ink)}
 .story-visual figcaption a{overflow-wrap:anywhere}
 @media(max-width:620px){.story-visual iframe{height:320px}.story-document iframe{height:480px}.story-visual figcaption{padding:.85rem 1rem;font-size:.81rem}}
+
+/* Caderno: acesso por teclado e reflow em 320 CSS px (WCAG 1.4.10).
+   A navegação não deve comprimir os títulos em palavras isoladas. */
+.masthead nav{flex-wrap:wrap;align-items:center;gap:.5rem 1.25rem;padding:.9rem max(1.25rem,calc((100% - 960px)/2))}
+.masthead nav a{white-space:nowrap;padding:.35rem .1rem}
+.skip-link{position:fixed;top:-6rem;left:1rem;z-index:1000;padding:.65rem 1rem;border-radius:.35rem;background:var(--accent);color:var(--paper);font:700 1rem/1.4 system-ui,sans-serif}
+.skip-link:focus-visible{top:1rem}
+a:focus-visible,button:focus-visible,iframe:focus-visible{outline:3px solid #ffd278;outline-offset:3px}
