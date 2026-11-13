@@ -15,7 +15,7 @@
     ],
     "visual_page_verified": true,
     "pdf_sha256": null,
-    "provenance": "Official WMO PDF viewed as rendered page and parsed text on 2026-11-13 UTC; binary PDF not downloaded or hashed",
+    "provenance": "Official WMO PDF viewed as rendered page and parsed text on 2026-11-13 UTC; row columns reconstructed from image because parsed text omits spacing; binary not downloaded or hashed",
     "epistemic_class": "institutional catalogue from 2014, not a 1963 operating log"
   },
   "rows": [
@@ -89,7 +89,7 @@
         "."
       ],
       "remarks": "CLIMAT(C);RBCN;RBSN(T)",
-      "transcribed_pdf_row": "900 RECIFE ............. 08 03 00S 34 55 00W 7.00 7.00 X . . . X . X . . . RW . CLIMAT(C);RBCN;RBSN(T)"
+      "transcribed_pdf_row": "900 RECIFE ............. 08 03 00S 34 55 00W 7.00 7.00 X . . . X . X . . . . RW . CLIMAT(C);RBCN;RBSN(T)"
     }
   ],
   "legend": {
