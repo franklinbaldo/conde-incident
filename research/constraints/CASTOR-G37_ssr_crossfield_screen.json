@@ -1,0 +1,221 @@
+{
+  "schema": "conde.ssr-crossfield-conditional-screen/v1",
+  "id": "CASTOR-G37-DEC31-SSR-CROSSFIELD",
+  "epistemic_status": "COMPUTATIONAL_CONDITIONAL_SCREEN_NOT_HISTORICAL_OBSERVATION",
+  "sources": [
+    {
+      "ntrs": "19630012290",
+      "pdf_sha256": "9b00bf8323b1de80a34920f73c658f70f766a51632a13473a408679f0e5a03d9",
+      "pdf_url": "https://ntrs.nasa.gov/api/citations/19630012290/downloads/19630012290.pdf",
+      "pdf_page_index": 6,
+      "published_NOT_observed": "1963-07-31"
+    },
+    {
+      "ntrs": "19640002493",
+      "pdf_sha256": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+      "pdf_url": "https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf",
+      "pdf_page_index": 6,
+      "published_NOT_observed": "1963-11-30"
+    },
+    {
+      "ntrs": "19640005618",
+      "pdf_sha256": "d9504a8641baa65c208e41034e77b0e9b1cc01b4acb2a4f95541bd9e75d3783d",
+      "pdf_url": "https://ntrs.nasa.gov/api/citations/19640005618/downloads/19640005618.pdf",
+      "pdf_page_index": 6,
+      "published_NOT_observed": "1963-12-31"
+    }
+  ],
+  "source_ledger": "research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json",
+  "physical_model": "T=2*pi*sqrt((R+(apogee+perigee)/2)^3/mu); two-body, coincident osculating elements ASSUMED for this screening check only",
+  "constants": {
+    "earth_mu_km3_s2": 398600.4418,
+    "earth_radius_km": 6378.137
+  },
+  "printing_precision_only": {
+    "period_min_plusminus": 0.05,
+    "altitude_km_plusminus": 0.5
+  },
+  "cells": [
+    {
+      "id": "C241-L18:19630012290:1963-003A",
+      "object": "1963-003A",
+      "source_ntrs": "19630012290",
+      "pdf_sha256": "9b00bf8323b1de80a34920f73c658f70f766a51632a13473a408679f0e5a03d9",
+      "pdf_page_index": 6,
+      "publication_date_NOT_sensor_epoch": "1963-07-31",
+      "printed_period_min": 94.6,
+      "printed_apogee_km": 537,
+      "printed_perigee_km": 458,
+      "two_body_same_epoch_HYPOTHESIS_period_min": 94.56471981,
+      "printed_minus_two_body_seconds": 2.116811,
+      "printing_only_bounds_seconds_NOT_sigma": [
+        -1.502112,
+        5.735712
+      ],
+      "large_offset_over_30s_SCREEN_ONLY": false,
+      "sensor_epoch_utc": null,
+      "instrumental_sigma": null,
+      "calibrated_orbit_constraint": false
+    },
+    {
+      "id": "C241-L18:19630012290:1963-003B",
+      "object": "1963-003B",
+      "source_ntrs": "19630012290",
+      "pdf_sha256": "9b00bf8323b1de80a34920f73c658f70f766a51632a13473a408679f0e5a03d9",
+      "pdf_page_index": 6,
+      "publication_date_NOT_sensor_epoch": "1963-07-31",
+      "printed_period_min": 93.6,
+      "printed_apogee_km": 463,
+      "printed_perigee_km": 415,
+      "two_body_same_epoch_HYPOTHESIS_period_min": 93.360412709,
+      "printed_minus_two_body_seconds": 14.375237,
+      "printing_only_bounds_seconds_NOT_sigma": [
+        10.758953,
+        17.991499
+      ],
+      "large_offset_over_30s_SCREEN_ONLY": false,
+      "sensor_epoch_utc": null,
+      "instrumental_sigma": null,
+      "calibrated_orbit_constraint": false
+    },
+    {
+      "id": "C241-L18:19630012290:1963-003C",
+      "object": "1963-003C",
+      "source_ntrs": "19630012290",
+      "pdf_sha256": "9b00bf8323b1de80a34920f73c658f70f766a51632a13473a408679f0e5a03d9",
+      "pdf_page_index": 6,
+      "publication_date_NOT_sensor_epoch": "1963-07-31",
+      "printed_period_min": 93.9,
+      "printed_apogee_km": 498,
+      "printed_perigee_km": 452,
+      "two_body_same_epoch_HYPOTHESIS_period_min": 94.100915971,
+      "printed_minus_two_body_seconds": -12.054958,
+      "printing_only_bounds_seconds_NOT_sigma": [
+        -15.672868,
+        -8.437071
+      ],
+      "large_offset_over_30s_SCREEN_ONLY": false,
+      "sensor_epoch_utc": null,
+      "instrumental_sigma": null,
+      "calibrated_orbit_constraint": false
+    },
+    {
+      "id": "C241-L18:19640002493:1963-003A",
+      "object": "1963-003A",
+      "source_ntrs": "19640002493",
+      "pdf_sha256": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+      "pdf_page_index": 6,
+      "publication_date_NOT_sensor_epoch": "1963-11-30",
+      "printed_period_min": 94.6,
+      "printed_apogee_km": 533,
+      "printed_perigee_km": 459,
+      "two_body_same_epoch_HYPOTHESIS_period_min": 94.533775911,
+      "printed_minus_two_body_seconds": 3.973445,
+      "printing_only_bounds_seconds_NOT_sigma": [
+        0.35459,
+        7.592278
+      ],
+      "large_offset_over_30s_SCREEN_ONLY": false,
+      "sensor_epoch_utc": null,
+      "instrumental_sigma": null,
+      "calibrated_orbit_constraint": false
+    },
+    {
+      "id": "C241-L18:19640002493:1963-003C",
+      "object": "1963-003C",
+      "source_ntrs": "19640002493",
+      "pdf_sha256": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+      "pdf_page_index": 6,
+      "publication_date_NOT_sensor_epoch": "1963-11-30",
+      "printed_period_min": 92.2,
+      "printed_apogee_km": 390,
+      "printed_perigee_km": 368,
+      "two_body_same_epoch_HYPOTHESIS_period_min": 92.130582394,
+      "printed_minus_two_body_seconds": 4.165056,
+      "printing_only_bounds_seconds_NOT_sigma": [
+        0.55149,
+        7.7786
+      ],
+      "large_offset_over_30s_SCREEN_ONLY": false,
+      "sensor_epoch_utc": null,
+      "instrumental_sigma": null,
+      "calibrated_orbit_constraint": false
+    },
+    {
+      "id": "C241-L18:19640005618:1963-003A",
+      "object": "1963-003A",
+      "source_ntrs": "19640005618",
+      "pdf_sha256": "d9504a8641baa65c208e41034e77b0e9b1cc01b4acb2a4f95541bd9e75d3783d",
+      "pdf_page_index": 6,
+      "publication_date_NOT_sensor_epoch": "1963-12-31",
+      "printed_period_min": 94.6,
+      "printed_apogee_km": 530,
+      "printed_perigee_km": 461,
+      "two_body_same_epoch_HYPOTHESIS_period_min": 94.523462029,
+      "printed_minus_two_body_seconds": 4.592278,
+      "printing_only_bounds_seconds_NOT_sigma": [
+        0.973445,
+        8.211089
+      ],
+      "large_offset_over_30s_SCREEN_ONLY": false,
+      "sensor_epoch_utc": null,
+      "instrumental_sigma": null,
+      "calibrated_orbit_constraint": false
+    },
+    {
+      "id": "C241-L18:19640005618:1963-003C",
+      "object": "1963-003C",
+      "source_ntrs": "19640005618",
+      "pdf_sha256": "d9504a8641baa65c208e41034e77b0e9b1cc01b4acb2a4f95541bd9e75d3783d",
+      "pdf_page_index": 6,
+      "publication_date_NOT_sensor_epoch": "1963-12-31",
+      "printed_period_min": 89.2,
+      "printed_apogee_km": 335,
+      "printed_perigee_km": 333,
+      "two_body_same_epoch_HYPOTHESIS_period_min": 91.211783642,
+      "printed_minus_two_body_seconds": -120.707019,
+      "printing_only_bounds_seconds_NOT_sigma": [
+        -124.318539,
+        -117.095521
+      ],
+      "large_offset_over_30s_SCREEN_ONLY": true,
+      "sensor_epoch_utc": null,
+      "instrumental_sigma": null,
+      "calibrated_orbit_constraint": false
+    }
+  ],
+  "dec31_529_vs_527_printed_diagnostic": {
+    "object_529": "C241-L18:19640005618:1963-003C",
+    "object_527": "C241-L18:19640005618:1963-003A",
+    "529_printed_minus_model_seconds": -120.707019,
+    "527_printed_minus_model_seconds": 4.592278,
+    "529_printing_only_interval_seconds": [
+      -124.318539,
+      -117.095521
+    ],
+    "529_large_offset_flag": true,
+    "facsimile_529_period_min": 89.2,
+    "prior_C227_transcription_min": 89.6,
+    "erratum_origin": "C241-L18 visual facsimile recheck; 89.6 was a transcription error"
+  },
+  "scientific_interpretation": {
+    "large_crossfield_residual_proves_nasa_wrong": false,
+    "same_sensor_epoch_and_element_convention_established": false,
+    "candidate_explanations_not_discriminated": [
+      "mixed instrument epochs or update latencies within compiled columns",
+      "nodal versus osculating period convention or elements",
+      "other compiled-field inconsistency"
+    ],
+    "fit_directly_to_1963_trajectory": false,
+    "recorded_original_instrument_observations": 0,
+    "historical_holdout": "NOT_RUN",
+    "active_domain_reduction": false,
+    "impact_on_conde": "NOT_DETERMINED",
+    "required_next_evidence": [
+      "original observed UTC epochs per field",
+      "orbit-element and period conventions",
+      "instrument calibration and source genealogy",
+      "uncertainty/covariance and independent station data"
+    ]
+  }
+}
