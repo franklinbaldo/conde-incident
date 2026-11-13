@@ -24,6 +24,23 @@ test('every published JSON record links to a generated, navigable SSG occurrence
   assert.ok(summary.shards>0);
 });
 
+test('modified historical matrix is rejected even with unchanged feeds',()=>{
+  const bundle=clean();
+  bundle.matrixBytes=Buffer.concat([bundle.matrixBytes,Buffer.from('\n<!-- changed -->\n')]);
+  assert.throws(()=>audit(bundle),/Frozen matrix Git blob mismatch/);
+});
+
+test('consistent forged hash across citation, lineage and shard is rejected',()=>{
+  const bundle=clean();
+  const record=bundle.citations.records[0];
+  record.row_sha256='0'.repeat(64);
+  const lineage=bundle.lineage.citation_lineages.find(item=>
+    item.snapshot_ref===record.snapshot_ref && item.source_id===record.source_id);
+  lineage.row_sha256=record.row_sha256;
+  mutateRow(bundle,row=>{row.row_sha256=record.row_sha256;});
+  assert.throws(()=>audit(bundle),/Matrix row SHA-256 mismatch/);
+});
+
 test('tampered shard bytes fail digest validation',()=>{
   const bundle=clean();
   bundle.shards[0].raw=Buffer.from('{}');

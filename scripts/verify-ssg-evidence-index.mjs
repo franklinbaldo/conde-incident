@@ -8,7 +8,10 @@ import {archivePages,matrixRowUrl} from './ssg-documentary-archive.mjs';
 
 const PREFIX='/conde-incident/evidencias/arquivo/';
 const DATA='public/data/';
+const MATRIX='research/evidence_matrix_C001-C238_2026-11-11.md';
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
+const gitBlob=bytes=>createHash('sha1')
+  .update(Buffer.from('blob '+bytes.length+'\0')).update(bytes).digest('hex');
 const slug=value=>value.toLowerCase().replaceAll('_','-');
 const link=(kind,id)=>PREFIX+kind+'/'+slug(id)+'/';
 const idPath=id=>PREFIX+id.toLowerCase().replace('#','-')+'/';
@@ -72,22 +75,26 @@ export function visibleDocument(html) {
 
 export function readBundle(root='.') {
   const read=path=>readFileSync(join(root,path));
+  const matrixBytes=read(MATRIX);
   const citationsRaw=read(DATA+'conde-source-citations.json');
   const lineageRaw=read(DATA+'conde-declared-dependence.json');
   const citations=JSON.parse(citationsRaw);
   const lineage=JSON.parse(lineageRaw);
   const manifest=JSON.parse(read(DATA+'conde-evidence-index-manifest.json'));
   const shards=manifest.shards.map(meta=>({path:meta.path, raw:read(meta.path)}));
-  return {citations,lineage,manifest,shards,sourceBytes:new Map([
+  return {citations,lineage,manifest,shards,matrixBytes,sourceBytes:new Map([
     [DATA+'conde-source-citations.json',citationsRaw],
     [DATA+'conde-declared-dependence.json',lineageRaw],
   ]),pages:archivePages(citations,lineage)};
 }
 
 export function audit(bundle) {
-  const {citations,lineage,manifest,shards,sourceBytes,pages}=bundle;
+  const {citations,lineage,manifest,shards,matrixBytes,sourceBytes,pages}=bundle;
   assert.equal(manifest.schema,'conde.evidence-index/v1');
   assert.equal(manifest.matrix_git_blob_sha1,citations.matrix_git_blob_sha1);
+  assert.equal(gitBlob(matrixBytes),manifest.matrix_git_blob_sha1,
+    'Frozen matrix Git blob mismatch');
+  const matrixLines=matrixBytes.toString('utf8').split('\n');
   assert.equal(lineage.matrix_git_blob_sha1,citations.matrix_git_blob_sha1);
   assert.equal(manifest.no_js_index,PREFIX);
   assert.equal(manifest.independent_physical_observation_count,null);
@@ -128,6 +135,12 @@ export function audit(bundle) {
   const archiveIndex=pages.get('index.md');
   assert.ok(archiveIndex?.includes(PREFIX+'familias/'),'No-JS root absent');
   for (const record of citations.records) {
+    const originalLine=matrixLines[record.matrix_line-1];
+    assert.ok(originalLine,'Matrix line missing: '+record.occurrence);
+    assert.equal(hash(Buffer.from(originalLine)),record.row_sha256,
+      'Matrix row SHA-256 mismatch: '+record.occurrence);
+    assert.equal(/^\|\s*\*{0,2}(C[0-9]+)\*{0,2}\s*\|/.exec(originalLine)?.[1],
+      record.occurrence.split('#')[0],'Matrix row ID mismatch: '+record.occurrence);
     const row=actual.get(key(record));
     assert.ok(row,'Citation missing from JSON: '+key(record));
     assert.deepEqual(take(row,tracked),take(record,tracked),'Citation data changed: '+key(record));
