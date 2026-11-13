@@ -1,0 +1,109 @@
+{
+  "id": "C241-L24#1",
+  "kind": "institutional_channel_not_object_measurement",
+  "document": {
+    "title": "Satellite Information from the National Aeronautics and Space Administration",
+    "report": "H. Rept. 89-197",
+    "published_on": "1965-03-22",
+    "url": "https://www.govinfo.gov/content/pkg/SERIALSET-12667_05_00-002-0197-0000/pdf/SERIALSET-12667_05_00-002-0197-0000.pdf",
+    "pdf_bytes": 9297493,
+    "pdf_sha256": "a08b4c505a37c09d1eb9c33ed14cc56228fd5e67f7ec1645f38554310bd60ca0",
+    "pdf_pages_human": [
+      21,
+      22
+    ],
+    "pdf_pages_index_zero": [
+      20,
+      21
+    ],
+    "printed_pages": [
+      15,
+      16
+    ],
+    "visual_review": "2026-11-13",
+    "exhibit": "5",
+    "agreement_date": "1962-05",
+    "parent_id": "C241-L20#1",
+    "effective_for_object_1963_003": "NOT_ESTABLISHED"
+  },
+  "channels": [
+    {
+      "id": "C241-L24:channel-1",
+      "from": "NAVSPASUR",
+      "to": "GSFC",
+      "relation": "SCIENTIFIC_LAUNCH_STATION_TIME_ANGLE_REQUEST",
+      "qualifier": "NOMINAL_SIX_HOURS_CONDITIONAL",
+      "printed_page": 15
+    },
+    {
+      "id": "C241-L24:channel-2",
+      "from": "NORAD_SPADATS",
+      "to": "GSFC",
+      "relation": "PERIODIC_UNCLASSIFIED_CATALOG",
+      "qualifier": "CATALOG_NOT_RAW_OBSERVATION",
+      "printed_page": 16
+    },
+    {
+      "id": "C241-L24:channel-3",
+      "from": "GSFC_SIN",
+      "to": "NORAD",
+      "relation": "ROUTINE_REDUCED_OBSERVATIONS",
+      "qualifier": "DIRECTION_GSFC_TO_NORAD",
+      "printed_page": 16
+    },
+    {
+      "id": "C241-L24:channel-4",
+      "from": "NORAD_SENSORS",
+      "to": "GSFC",
+      "relation": "ON_REQUEST_SENSOR_DATA",
+      "qualifier": "NASA_TRACKED_OBJECTS_USUALLY_FIRST_EIGHT_ORBITS",
+      "printed_page": 16
+    },
+    {
+      "id": "C241-L24:channel-5",
+      "from": "NORAD_HEADQUARTERS",
+      "to": "GSFC",
+      "relation": "CLASSIFICATION_RELEASE_GATE",
+      "qualifier": "NEED_TO_KNOW_NOT_PROOF_OF_528_CLASSIFICATION",
+      "printed_page": 16
+    }
+  ],
+  "navspasur_nominal_hours": 6,
+  "objects": [
+    {
+      "norad": 527,
+      "observation_id": null,
+      "station": null,
+      "sensor": null,
+      "epoch_utc": null,
+      "frame": null,
+      "sigma": null
+    },
+    {
+      "norad": 528,
+      "observation_id": null,
+      "station": null,
+      "sensor": null,
+      "epoch_utc": null,
+      "frame": null,
+      "sigma": null
+    },
+    {
+      "norad": 529,
+      "observation_id": null,
+      "station": null,
+      "sensor": null,
+      "epoch_utc": null,
+      "frame": null,
+      "sigma": null
+    }
+  ],
+  "independence": "SAME_DOCUMENT_FAMILY_AS_C241-L20",
+  "activation": "CONNECTED_PENDING_CALIBRATION",
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "archive_targets": [
+    "NORAD/SPADATS 1963-003 catalog transmission to GSFC",
+    "GSFC requests and NAVSPASUR station-time-angle observations keyed to 527/528/529",
+    "GSFC SIN reduced observations and NORAD sensor-data requests for 1963-003"
+  ]
+}
