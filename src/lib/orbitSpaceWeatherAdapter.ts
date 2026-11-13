@@ -36,7 +36,26 @@ const THREE_HOURS_MS = 10_800_000;
 // WGS84-like Earth model used by the Cartesian force. This envelope is a
 // necessary geometry check, NOT a substitute for a sourced frame transform.
 const POLAR_RADIUS_KM = 6356.752314245;
+const WGS84_ECCENTRICITY_SQUARED = 1 - (POLAR_RADIUS_KM / EARTH.radiusKm) ** 2;
 const GEODETIC_RADIUS_TOLERANCE_KM = 1e-6;
+
+/** Geocentric radius implied by a WGS84 geodetic (latitude, height) pair.
+ * This is invariant under any legitimate inertial↔Earth-fixed rotation.
+ * Longitude, frame orientation, EOP and the truth of the reported latitude
+ * CANNOT be certified from radius alone.
+ */
+export function wgs84RadiusForGeodeticKm(latitudeDeg: number, altitudeKm: number): number {
+  if (!Number.isFinite(latitudeDeg) || Math.abs(latitudeDeg) > 90 ||
+      !Number.isFinite(altitudeKm) || altitudeKm < 0)
+    throw new RangeError('Invalid WGS84 latitude or height');
+  const phi = latitudeDeg * Math.PI / 180;
+  const sinPhi = Math.sin(phi);
+  const cosPhi = Math.cos(phi);
+  const primeVerticalKm = EARTH.radiusKm /
+    Math.sqrt(1 - WGS84_ECCENTRICITY_SQUARED * sinPhi ** 2);
+  return Math.hypot((primeVerticalKm + altitudeKm) * cosPhi,
+    (primeVerticalKm * (1 - WGS84_ECCENTRICITY_SQUARED) + altitudeKm) * sinPhi);
+}
 const utcDay = (ms: number) => new Date(Math.floor(ms / DAY_MS) * DAY_MS).toISOString().slice(0, 10);
 const dateKey = (ms: number) => new Date(ms).toISOString().replace('.000Z', 'Z');
 const validPositive = (x: unknown): x is number => typeof x === 'number' && Number.isFinite(x) && x >= 0;
@@ -163,6 +182,15 @@ export function makeConditionalMsiseAtmosphere(options: ConditionalMsiseOptions)
           geo.altitudeKm < radialAltitudeKm - GEODETIC_RADIUS_TOLERANCE_KM ||
           geo.altitudeKm > maxAltitudeKm + GEODETIC_RADIUS_TOLERANCE_KM)
         throw new RangeError('Geodetic altitude inconsistent with inertial radius (km)');
+      // The broad a/b envelope above cannot catch an inconsistent geodetic
+      // latitude: a polar height can masquerade as an equatorial height.
+      // The exact WGS84 latitude-height pair must reproduce |r|, which is
+      // invariant under rotation. This remains NECESSARY, not sufficient:
+      // a jointly fabricated latitude/height or incorrect longitude may pass.
+      const modelRadiusKm = wgs84RadiusForGeodeticKm(geo.latitudeDeg, geo.altitudeKm);
+      if (Math.abs(modelRadiusKm - (radialAltitudeKm + EARTH.radiusKm)) >
+          GEODETIC_RADIUS_TOLERANCE_KM)
+        throw new RangeError('WGS84 latitude-height pair inconsistent with inertial radius (km)');
       const rho = evaluateDensityKgM3({epochUtc, drivers, geodetic: geo});
       if (!validPositive(rho)) throw new RangeError('Conditional density model returned invalid kg/m^3');
       return rho;
