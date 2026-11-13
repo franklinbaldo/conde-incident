@@ -10,7 +10,8 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1] / '.github' / 'workflows'
 PR_SHA = '${{ github.event.pull_request.head.sha || github.sha }}'
 RUN_SHA = '${{ github.sha }}'
-CHECKOUT = re.compile(r'(?m)^      - uses: actions/checkout@[^\n]+\n')
+STEP_START = re.compile(r'(?m)^      - ')
+CHECKOUT_USE = re.compile(r"(?m)^(?:uses| {8}uses): [\"']?actions/checkout@[^\n]+")
 REF = re.compile(r'(?m)^          ref: (.+)$')
 
 
@@ -43,19 +44,23 @@ def _is_exact_assertion(step: str, expected: str) -> bool:
 
 def check_checkout_sha(source: str, name: str) -> int:
     expected = PR_SHA if re.search(r'(?m)^  pull_request:', source) else RUN_SHA
-    matches = list(CHECKOUT.finditer(source))
-    for match in matches:
-        # The first step *after each* checkout must assert that checkout's SHA.
-        checkout, sep, tail = source[match.end():].partition('      - ')
+    # Split on YAML step boundaries, not merely `- uses:`. GitHub Actions
+    # permits `name:` or `id:` before `uses:` inside a checkout step.
+    steps = STEP_START.split(source)[1:]
+    count = 0
+    for pos, checkout in enumerate(steps):
+        if not CHECKOUT_USE.search(checkout):
+            continue
+        count += 1
         refs = REF.findall(checkout)
         if refs != [expected]:
             raise AssertionError(f'{name}: checkout must pin {expected}, got {refs!r}')
-        if not sep:
+        if pos + 1 >= len(steps):
             raise AssertionError(f'{name}: checkout has no following SHA assertion step')
-        next_step = tail.split('      - ', 1)[0]
+        next_step = steps[pos + 1]
         if not _is_exact_assertion(next_step, expected):
             raise AssertionError(f'{name}: missing executable exact SHA assertion immediately after checkout')
-    return len(matches)
+    return count
 
 
 class ExactCheckoutPolicy(unittest.TestCase):
@@ -102,6 +107,25 @@ class ExactCheckoutPolicy(unittest.TestCase):
                     self.assertNotEqual(mutant, source)
                     with self.assertRaisesRegex(AssertionError, 'exact SHA assertion'):
                         check_checkout_sha(mutant, name)
+
+    def test_named_checkout_cannot_escape_sha_guard(self):
+        name = 'integration-head.yml'
+        source = (ROOT / name).read_text(encoding='utf-8')
+        self.assertEqual(check_checkout_sha(source, name), 2)
+        original = '      - uses: actions/checkout@v4\n'
+        self.assertIn(original, source)
+        for initial in ('name: Checkout source', 'id: checkout_source'):
+            named = source.replace(
+                original,
+                f'      - {initial}\n        uses: actions/checkout@v4\n', 1,
+            )
+            with self.subTest(initial=initial):
+                # Naming a checkout must not make it invisible to the audit.
+                self.assertEqual(check_checkout_sha(named, name), 2)
+                broken = named.replace(f'ref: {PR_SHA}', 'ref: main', 1)
+                self.assertNotEqual(broken, named)
+                with self.assertRaisesRegex(AssertionError, 'checkout must pin'):
+                    check_checkout_sha(broken, name)
 
     def test_sha_assertion_cannot_be_skipped_or_ignored(self):
         for name, marker in (
