@@ -1,0 +1,52 @@
+{
+  "id": "C241-L19",
+  "source_family": "NASA_GODDARD_COMPILED_NOV15_SAME_TRACKING_FAMILY_NOT_INDEPENDENT_SENSORS",
+  "inspection": "2026-11-13, direct visual facsimile p.5 (PDF page index 6), independently re-downloaded full bytes SHA-256",
+  "documents": [
+    {
+      "date": "1963-11-15",
+      "ntrs": "19640001198",
+      "volume": 3,
+      "number": 22,
+      "pdf": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf",
+      "sha256": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+      "bytes": 327613,
+      "page_index": 6,
+      "printed_page": 5,
+      "rows": [
+        {
+          "designator": "1963-003A",
+          "period_min": "94.6",
+          "inclination_deg": "81.88",
+          "apogee_km": 536,
+          "perigee_km": 455
+        },
+        {
+          "designator": "1963-003C",
+          "period_min": "92.6",
+          "inclination_deg": "81.87",
+          "apogee_km": 420,
+          "perigee_km": 376
+        }
+      ]
+    }
+  ],
+  "related_ids": [
+    "C241-L12",
+    "C241-L16",
+    "C241-L17",
+    "C241-L18:19640002493",
+    "C197#1",
+    "C198#1"
+  ],
+  "limits": {
+    "publication_date_is_observation_epoch": false,
+    "instrumental_epoch_known": false,
+    "individual_sensor_known": false,
+    "covariance_known": false,
+    "nasa_original_tle_pair": false,
+    "physical_constraint_activated": false,
+    "source_of_1963_3B_decay": "C197#1 (same issue, printed p.8)",
+    "norad_crosswalk": "modern secondary 1963-003A=527, 003C=529, 003B=528"
+  }
+}

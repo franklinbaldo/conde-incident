@@ -1,0 +1,190 @@
+{
+  "conditional_november_3c_gt_3a_drop": {
+    "apogee_km": true,
+    "period_min": true
+  },
+  "difference_intervals_are_publication_table_only": true,
+  "evaluation_holdout": "November 30 unobserved by predictors; October 15 and November 15 define fit",
+  "holdout_dates_are_publication_dates_not_tracking_epochs": true,
+  "id": "C241-P11",
+  "instrumental_validation": "NOT_RUN_NO_ORIGINAL_SENSOR_EPOCH_FRAME_COVARIANCE",
+  "norad_528_period_in_november": "NOT_IN_ORBIT_TABLE_DECAY_LISTED_08_NOV_C197",
+  "objects": [
+    {
+      "designator": "1963-003A",
+      "nov30_publication_holdout": {
+        "apogee_km": {
+          "linear_from_oct15_nov15_error": 5.419354838709637,
+          "persist_last_error": 3.0
+        },
+        "period_min": {
+          "linear_from_oct15_nov15_error": 0.0,
+          "persist_last_error": 0.0
+        }
+      },
+      "oct15_minus_nov15_and_nov15_minus_nov30_bounds": {
+        "apogee_km": [
+          [
+            -12,
+            -8
+          ],
+          [
+            4,
+            8
+          ]
+        ],
+        "inclination_deg": [
+          [
+            0,
+            2
+          ],
+          [
+            -1,
+            1
+          ]
+        ],
+        "perigee_km": [
+          [
+            12,
+            16
+          ],
+          [
+            -10,
+            -6
+          ]
+        ],
+        "period_min": [
+          [
+            -10,
+            10
+          ],
+          [
+            -10,
+            10
+          ]
+        ]
+      },
+      "printed_values_scaled": [
+        {
+          "apogee_km": 1062,
+          "inclination_deg": 8189,
+          "perigee_km": 924,
+          "period_min": 9460
+        },
+        {
+          "apogee_km": 1072,
+          "inclination_deg": 8188,
+          "perigee_km": 910,
+          "period_min": 9460
+        },
+        {
+          "apogee_km": 1066,
+          "inclination_deg": 8188,
+          "perigee_km": 918,
+          "period_min": 9460
+        }
+      ]
+    },
+    {
+      "designator": "1963-003C",
+      "nov30_publication_holdout": {
+        "apogee_km": {
+          "linear_from_oct15_nov15_error": 11.612903225806463,
+          "persist_last_error": 30.0
+        },
+        "period_min": {
+          "linear_from_oct15_nov15_error": 0.061290322580643986,
+          "persist_last_error": 0.4
+        }
+      },
+      "oct15_minus_nov15_and_nov15_minus_nov30_bounds": {
+        "apogee_km": [
+          [
+            74,
+            78
+          ],
+          [
+            58,
+            62
+          ]
+        ],
+        "inclination_deg": [
+          [
+            -1,
+            1
+          ],
+          [
+            0,
+            2
+          ]
+        ],
+        "perigee_km": [
+          [
+            62,
+            66
+          ],
+          [
+            14,
+            18
+          ]
+        ],
+        "period_min": [
+          [
+            60,
+            80
+          ],
+          [
+            30,
+            50
+          ]
+        ]
+      },
+      "printed_values_scaled": [
+        {
+          "apogee_km": 916,
+          "inclination_deg": 8187,
+          "perigee_km": 816,
+          "period_min": 9330
+        },
+        {
+          "apogee_km": 840,
+          "inclination_deg": 8187,
+          "perigee_km": 752,
+          "period_min": 9260
+        },
+        {
+          "apogee_km": 780,
+          "inclination_deg": 8186,
+          "perigee_km": 736,
+          "period_min": 9220
+        }
+      ]
+    }
+  ],
+  "physical_admissible_domain_change": "NONE",
+  "publication_dates": [
+    "1963-10-15",
+    "1963-11-15",
+    "1963-11-30"
+  ],
+  "quantization_assumption": "nearest printed 0.1 min; 0.01 degree; 1 km, not sensor sigma",
+  "quantization_units": {
+    "apogee_km": "half-kilometer",
+    "inclination_deg": "centidegree",
+    "perigee_km": "half-kilometer",
+    "period_min": "centiminute"
+  },
+  "same_compilation_not_independent_sensors": true,
+  "source_graph_legacy_conflict": "Nov30 3A=94.6, not 94.8 in old ssr_1963_observable_graph.json",
+  "source_ids": [
+    "C241-L12",
+    "C241-L19#1",
+    "C241-L18:19640002493",
+    "C197#1"
+  ],
+  "source_sha256": [
+    "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+    "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+    "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d"
+  ]
+}

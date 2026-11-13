@@ -8,5 +8,6 @@ import Conde1963.NoradContext
 import Conde1963.WaybackCitations
 import Conde1963.SsrPrintIntervals
 import Conde1963.SsrThreeEditions
+import Conde1963.SsrNovember
 import Conde1963.RelativeTrajectories
 import Conde1963.SsrSurvivorIntervals
