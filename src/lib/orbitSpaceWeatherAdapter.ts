@@ -9,7 +9,8 @@
  */
 import { EARTH, utcMilliseconds } from './orbitPhysics.ts';
 import type { Atmosphere, State } from './orbitPhysics.ts';
-import { validateSourcedGeodeticFrameKm } from './orbitGeodeticFrame.ts';
+import { validateSourcedGeodeticFrameKm,
+  validateSourcedLocalSolarTimeHours } from './orbitGeodeticFrame.ts';
 
 export interface SpaceWeatherSnapshot {
   readonly schema: string;
@@ -144,6 +145,11 @@ export interface ConditionalMsiseOptions {
    * basis validates longitude as well as latitude and height. */
   readonly inertialPrimeMeridianAtUtc?: (epochUtc: string) => readonly [number, number, number];
   readonly primeMeridianSource?: string;
+  /** Optional independently sourced inertial unit vector from Earth to Sun
+   * at the same UTC as every RK4 substage. Requires pole and meridian axes.
+   * Used only to check apparent local solar time, NOT to infer an ephemeris. */
+  readonly inertialSunDirectionAtUtc?: (epochUtc: string) => readonly [number, number, number];
+  readonly sunDirectionSource?: string;
   readonly densityModelSource: string;
   readonly evaluateDensityKgM3: (request: ConditionalDensityRequest) => number;
   readonly cdAreaOverMassM2Kg: number;
@@ -157,6 +163,7 @@ export function makeConditionalMsiseAtmosphere(options: ConditionalMsiseOptions)
   const {snapshot, originEpochUtc, originStateTS, inertialFrame, frameTransformSource,
     toGeodetic, inertialEarthPoleAtUtc, earthPoleSource,
     inertialPrimeMeridianAtUtc, primeMeridianSource,
+    inertialSunDirectionAtUtc, sunDirectionSource,
     densityModelSource, evaluateDensityKgM3, cdAreaOverMassM2Kg} = options;
   const originMs = utcMilliseconds(originEpochUtc);
   if (!Number.isFinite(originStateTS) || !inertialFrame?.trim() ||
@@ -168,7 +175,11 @@ export function makeConditionalMsiseAtmosphere(options: ConditionalMsiseOptions)
       (inertialPrimeMeridianAtUtc !== undefined &&
         typeof inertialPrimeMeridianAtUtc !== 'function') ||
       Boolean(inertialPrimeMeridianAtUtc) !== Boolean(primeMeridianSource?.trim()) ||
-      (Boolean(inertialPrimeMeridianAtUtc) && !inertialEarthPoleAtUtc))
+      (Boolean(inertialPrimeMeridianAtUtc) && !inertialEarthPoleAtUtc) ||
+      (inertialSunDirectionAtUtc !== undefined &&
+        typeof inertialSunDirectionAtUtc !== 'function') ||
+      Boolean(inertialSunDirectionAtUtc) !== Boolean(sunDirectionSource?.trim()) ||
+      (Boolean(inertialSunDirectionAtUtc) && !inertialPrimeMeridianAtUtc))
     throw new RangeError('Requires explicit inertial frame, sourced transform, density model and Cd*A/m');
   // Preflight source and required series without inventing any density.
   deriveMsiseDriversAtUtc(snapshot, originEpochUtc);
@@ -179,6 +190,8 @@ export function makeConditionalMsiseAtmosphere(options: ConditionalMsiseOptions)
       (earthPoleSource ? '; axial-pole='+earthPoleSource+' (CHECK_ONLY)' : '; axial-pole=NOT_CHECKED')+
       (primeMeridianSource ? '; full-geodesy='+primeMeridianSource+' (CHECK_ONLY)' :
         '; full-geodesy=NOT_CHECKED')+
+      (sunDirectionSource ? '; local-solar-time='+sunDirectionSource+' (CHECK_ONLY)' :
+        '; local-solar-time=NOT_CHECKED')+
       '; GFZ/NRC declared provenance; NOT_CALIBRATED',
     densityKgM3: (radialAltitudeKm: number, tS: number, state: State): number => {
       if (!state || !Number.isFinite(tS) || state.tS !== tS ||
@@ -242,6 +255,11 @@ export function makeConditionalMsiseAtmosphere(options: ConditionalMsiseOptions)
         if (inertialPrimeMeridianAtUtc) {
           const primeMeridian = inertialPrimeMeridianAtUtc(epochUtc);
           validateSourcedGeodeticFrameKm(state.rKm, geo, pole, primeMeridian);
+          if (inertialSunDirectionAtUtc) {
+            const sun = inertialSunDirectionAtUtc(epochUtc);
+            validateSourcedLocalSolarTimeHours(geo.longitudeDeg,
+              geo.localSolarTimeHours, pole, primeMeridian, sun);
+          }
         }
       }
       const rho = evaluateDensityKgM3({epochUtc, drivers, geodetic: geo});

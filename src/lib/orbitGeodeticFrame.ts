@@ -64,3 +64,40 @@ export function validateSourcedGeodeticFrameKm(
     rKm[1] - reconstructed[1], rKm[2] - reconstructed[2]) > 1e-6)
     throw new RangeError('WGS84 longitude/latitude/height inconsistent with sourced frame (km)');
 }
+
+/**
+ * Optional independent check of the apparent local solar hour. A sourced
+ * inertial Sun direction and a sourced Earth-fixed basis must share the
+ * state's UTC and inertial frame. The Sun vector is projected onto the
+ * equatorial plane; it is not derived from UTC or an invented UT1 offset.
+ *
+ * Longitude is EAST-positive. Local apparent solar time is noon when the
+ * Sun crosses the local meridian; 24h and 0h represent the same instant.
+ * This validates only internal consistency, not historical authenticity.
+ */
+export function validateSourcedLocalSolarTimeHours(
+  longitudeDeg: number, localSolarTimeHours: number,
+  pole: Vec3, primeMeridian: Vec3, sunDirection: Vec3,
+): void {
+  const validUnit = (v: Vec3) => Array.isArray(v) && v.length === 3 &&
+    v.every(Number.isFinite) && Math.abs(norm(v) - 1) <= 1e-10;
+  if (!Number.isFinite(longitudeDeg) || Math.abs(longitudeDeg) > 180 ||
+      !Number.isFinite(localSolarTimeHours) ||
+      localSolarTimeHours < 0 || localSolarTimeHours >= 24 ||
+      !validUnit(pole) || !validUnit(primeMeridian) ||
+      !validUnit(sunDirection) || Math.abs(dot(pole, primeMeridian)) > 1e-10)
+    throw new RangeError('Invalid sourced Sun/Earth axes or local solar time');
+  const east = cross(pole, primeMeridian);
+  const sunX = dot(sunDirection, primeMeridian);
+  const sunY = dot(sunDirection, east);
+  if (Math.hypot(sunX, sunY) < 1e-8)
+    throw new RangeError('Sourced Sun direction has undefined equatorial hour angle');
+  const subsolarLongitudeRad = Math.atan2(sunY, sunX);
+  const wrap24 = (h: number) => ((h % 24) + 24) % 24;
+  const expected = wrap24(12 + longitudeDeg / 15 - subsolarLongitudeRad * 12 / Math.PI);
+  const wrappedError = Math.abs(wrap24(localSolarTimeHours - expected + 12) - 12);
+  // 1 second of local solar time. This is a numerical consistency tolerance,
+  // NOT an uncertainty bound for 1963 Sun ephemerides or the Earth orientation.
+  if (wrappedError > 1 / 3600)
+    throw new RangeError('Local solar time inconsistent with sourced Sun and Earth frame');
+}
