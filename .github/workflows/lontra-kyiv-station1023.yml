@@ -1,0 +1,36 @@
+name: Lontra Kyiv station1023 archival custody
+on:
+  pull_request:
+    paths:
+      - 'research/tle_custody/*LONTRA-R37*'
+      - 'research/tle_custody/kyiv_station1023_archive_C241-LONTRA-R37.json'
+      - 'tools/verify_kyiv_station1023_archive.py'
+      - 'tests/test_kyiv_station1023_archive.py'
+      - '.github/workflows/lontra-kyiv-station1023.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/tle_custody/*LONTRA-R37*'
+      - 'research/tle_custody/kyiv_station1023_archive_C241-LONTRA-R37.json'
+      - 'tools/verify_kyiv_station1023_archive.py'
+      - 'tests/test_kyiv_station1023_archive.py'
+      - '.github/workflows/lontra-kyiv-station1023.yml'
+  workflow_dispatch:
+jobs:
+  provenance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact HEAD
+        run: |
+          actual="$(git rev-parse HEAD)"
+          expected="${{ github.event.pull_request.head.sha || github.sha }}"
+          echo "audited_head=$actual"
+          test "$actual" = "$expected"
+      - name: Adversarial documentary checks
+        run: |
+          python3 -m unittest discover -s tests -p 'test_kyiv_station1023_archive.py' -v
+          python3 tools/verify_kyiv_station1023_archive.py

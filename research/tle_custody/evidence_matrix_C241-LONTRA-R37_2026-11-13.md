@@ -1,0 +1,19 @@
+---
+type: Guide
+title: 'C241-LONTRA-R37: coleção de relatórios da estação soviética 1023 em Kyiv'
+description: 'Rota institucional para localizar cadernos originais de observações de satélites, sem confundir relatos retrospectivos de arquivo com medições dos objetos 527/528/529.'
+---
+
+# C241-LONTRA-R37 · O acervo da estação 1023
+
+**Novo encaminhamento arquivístico, ainda não uma observação astronômica de 1963.** Em [artigo assinado pela responsável do Museu Astronômico de Kyiv e coautor, 2022, pp. 104–127](https://viv.nuou.org.ua/article/download/281444/275680/648790), as páginas **116 e 118** foram inspecionadas visualmente. A legenda da figura 3 na p. 116 atribui a série histórica anual de observações à **coleção de relatórios da estação 1023 no arquivo do Museu Astronômico**. A nota 1, p. 118, identifica um exemplo de cota **fundo ССШСЗ, processo 06-03-02, relatório de 1976, 32 folhas**. Esta cota é *de 1976*, não registro de 1963. Nenhuma cota de 1963 foi recuperada.
+
+O estudo situa a estação **1023**, em Kyiv, em operação regular **1957–1983**, e descreve a investigação de satélites conhecidos e **objetos orbitais não identificados** pelo programa *Kosmos*. Reporta, para **todo o período**, **93.165 indicações/efemérides** e **77.134 posições determinadas**; não são números de novembro de 1963 nem atribuíveis aos NORAD 527, 528 ou 529. A figura anual mostra atividade por volta de 1963, mas **não identifica objetos, datas, noites ou precisão de registros individuais**. Os critérios do programa indicados no artigo não certificam a precisão de nenhum registro específico ainda não examinado. O fototeodolito KFT e programas posteriores não podem ser retroprojetados para 1963.
+
+A [página oficial de publicações do museu](https://observ.knu.ua/museum/publikatsiyi/) lista o trabalho de **L. Kazantseva, *Fenomen stantsii no 1023* (2007, pp. 28–31)**, cujo [PDF está publicado na biblioteca do Observatório Astronômico Principal](https://www.mao.kiev.ua/biblio/jscans/svitogliad/svit-2007-07-5/svit-2007-07-5-28-kazanceva.pdf). A [página de fundos do museu](https://observ.knu.ua/museum/fondi-muzeyu/) confirma uma seção institucional de acervos, mas **não enumera inventário de cadernos de 1963**. A página oficial de publicações foi baixada integralmente por TLS validado: **72.900 bytes, SHA-256 `de14cfaedd29663591e050f8544499a50f0a621ad0d1bc1cadc5d0e85d847286`**. Página de fundos: **41.555 bytes, SHA-256 `e4f569c4e9c7bc3992fbafedb3b3b3693fee3680f49fddc6c5bcc58a60eb5071`**. Os dois hashes identificam snapshots HTML contemporâneos, **não relatórios originais**.
+
+**Limitação de download:** ambos os PDFs (2022 e 2007) foram consultados no visualizador web, mas o download HTTPS direto no executor retornou HTTP **403**. `bytes=null` e `sha256=null` para os PDFs no manifesto, sem fingir posse de original. A figura foi inspecionada visualmente no visualizador; não foi inferido número exato de observações em 1963 a partir de pixels. Fontes distintas continuam distintas: site institucional, artigo retrospectivo, coleção arquivística citada, medição instrumental ainda ausente.
+
+**Próximo teste verificável:** localizar inventário ou digitalização de **diários/relatórios da estação 1023 em 7–9/11/1963**, programa *Kosmos*, com cota, folha, identificador explícito do objeto (1963-003 A/B/C ou NORAD 527/528/529), instante/fuso UTC, método e medidas originais. O artigo indica que o acervo foi consultado em 2022, **não demonstra sua situação atual em 2026**. Nenhum contato externo foi feito. Não ativar restrição de simulação ou teorema Lean.
+
+Reproduzir `python3 tools/verify_kyiv_station1023_archive.py` e `python3 -m unittest discover -s tests -p 'test_kyiv_station1023_archive.py' -v`; replay opcional dos dois HTMLs originais com `--html-publications` e `--html-holdings`.
