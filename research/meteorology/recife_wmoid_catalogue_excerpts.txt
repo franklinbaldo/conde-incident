@@ -1,0 +1,2 @@
+CEDA	82900	Recife/Curado       			 8.03S  34.55W    7m 		
+SGB	Atlas pluviométrico do Brasil: equações intensidade-duração-frequência (desagregação de precipitações diárias): município Recife, estação pluviográfica Aeroporto de Recife, código 82899
