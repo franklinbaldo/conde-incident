@@ -39,6 +39,17 @@ try {
     const backRect = await backToCaderno.boundingBox();
     assert(backRect && backRect.x >= 0 && backRect.x + backRect.width <= viewport.width + 1,
       'Caderno return link is clipped off screen at ' + viewport.name + ': ' + JSON.stringify(backRect));
+    // Locale toggles must remain reachable by touch even with 11px labels.
+    // Measure real rendered boxes, not a source class or an invented fixture.
+    for (const localeName of ['Português (Brasil)', 'English']) {
+      const locale = page.getByRole('button', { name: localeName });
+      const size = await locale.boundingBox();
+      assert(size && size.width >= 32 && size.height >= 32,
+        'language toggle touch target is smaller than 32 CSS px on ' +
+        viewport.name + ': ' + localeName + ' ' + JSON.stringify(size));
+      assert(size.x >= 0 && size.x + size.width <= viewport.width + 1,
+        'language toggle clipped on ' + viewport.name + ': ' + JSON.stringify(size));
+    }
     const before = new URL(page.url()).hash;
     await page.keyboard.press('Tab');
     const first = await page.evaluate(() => ({
