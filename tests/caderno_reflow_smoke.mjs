@@ -5,7 +5,7 @@ import fs from 'node:fs/promises';
 import { chromium } from 'playwright';
 
 const css = await fs.readFile('static/css/site.css', 'utf8');
-const sources = ['templates/template.html', 'templates/tera/base.html'];
+const sources = ['templates/template.html', 'templates/page.html', 'templates/index.html', 'templates/post.html', 'templates/tera/base.html'];
 const out = process.env.UI_AUDIT_OUT || 'test-results/ui';
 await fs.mkdir(out, { recursive: true });
 
@@ -15,12 +15,13 @@ try {
     const source = await fs.readFile(path, 'utf8');
     const header = source.match(/<header class="masthead">[\s\S]*?<\/header>/)?.[0];
     const skip = source.match(/<a\b[^>]*class="skip-link"[^>]*>[^<]+<\/a>/)?.[0];
-    assert(header && skip, `missing real header/skip-link markup: ${path}`);
+    const main = source.match(/<main\b[^>]*>/)?.[0];
+    assert(header && skip && main, `missing real header/skip-link/main markup: ${path}`);
 
     for (const width of [320, 375, 1440]) {
       const page = await browser.newPage({ viewport: { width, height: 800 }, reducedMotion: 'reduce' });
       try {
-        await page.setContent(`<!doctype html><html lang="pt-BR"><head><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>${skip}${header}<main id="main" tabindex="-1"><h1>Caderno de histórias</h1></main></body></html>`);
+        await page.setContent(`<!doctype html><html lang="pt-BR"><head><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>${skip}${header}${main}<h1>Caderno de histórias</h1><a href="#primeiro-link">Primeira fonte</a></main></body></html>`);
         await page.addStyleTag({ content: css });
         const before = await page.locator('.skip-link').boundingBox();
         assert(before && before.y < 0, `skip link must be visually tucked away before focus: ${path} ${width}`);
@@ -55,8 +56,19 @@ try {
         assert(focused && focused.y >= 0 && focused.y < 100, `focused skip link offscreen: ${path} ${width}`);
         assert(focusStyle.outline !== 'none' && focusStyle.width >= 2,
           `skip link missing visible focus ring: ${path} ${width}`);
-        await page.screenshot({ path: `${out}/caderno-${path.includes('tera') ? 'tera' : 'ssg'}-${width}.png` });
-        console.log(`PASS: ${path}, ${width}px: nav reflow, keyboard skip and focus ring`);
+        await page.keyboard.press('Enter');
+        const destination = await page.evaluate(() => ({
+          tag: document.activeElement?.tagName,
+          id: document.activeElement?.id,
+          hash: location.hash,
+        }));
+        assert.deepEqual(destination, { tag: 'MAIN', id: 'main', hash: '#main' },
+          `skip link must move actual keyboard focus to main: ${path} ${width}`);
+        await page.keyboard.press('Tab');
+        assert.equal(await page.evaluate(() => document.activeElement?.getAttribute('href')),
+          '#primeiro-link', `next Tab must continue within main: ${path} ${width}`);
+        await page.screenshot({ path: `${out}/caderno-${path.replace(/\W/g, '-')}-${width}.png` });
+        console.log(`PASS: ${path}, ${width}px: nav reflow, skip-link focus target, next Tab and focus ring`);
       } finally { await page.close(); }
     }
   }
