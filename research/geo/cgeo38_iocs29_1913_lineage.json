@@ -1,0 +1,75 @@
+{
+  "schema": "conde.geo.iocs29-lineage/v1",
+  "id": "CGEO-38",
+  "checked_on": "2026-11-13",
+  "map_1913": {
+    "title": "Mapa parcial do estado da Bahia",
+    "printed": "1913-10",
+    "archive_id": "BR AN,RIO DS.0.MAP.5",
+    "publication": 29,
+    "series": "I-G",
+    "cartographers": [
+      "Guilherme Lane",
+      "Roberto Miller"
+    ],
+    "scale": 500000,
+    "catalogue": "https://www.gov.br/arquivonacional/pt-br/servicos/copy_of_instrumentos-de-pesquisa/academia-brasileira-de-letras.pdf",
+    "printed_page": 9,
+    "pdf_page_zero_index": 8,
+    "replica": "https://upload.wikimedia.org/wikipedia/commons/5/56/Mapa_parcial_do_estado_da_Bahia.pdf",
+    "replica_bytes": 2440283,
+    "replica_sha256": "feaae0eb8534e4f71242c01faa9dbbe71c0f7440b85e5791d8548a46306bb3dd",
+    "full_visual_inspection": false
+  },
+  "itapicuru_1912": {
+    "title": "Mapa da bacia do rio Itapicuru",
+    "archive_id": "BR AN,RIO F4.0.MAP.448",
+    "publication": 15,
+    "series": "I-G",
+    "printed": "1912-03",
+    "scale": 500000,
+    "catalogue": "https://www.gov.br/arquivonacional/pt-br/servicos/copy_of_instrumentos-de-pesquisa/bhering-final-14-fev-13.pdf",
+    "printed_page": 116,
+    "pdf_page_zero_index": 115,
+    "archive_note_date": "1917-02-03",
+    "archive_note": "deixou de ser registrado no Vº por já estar incluído na publicação nº 29 - série 1G. Rio 3 fev. 917. Duarte",
+    "original_map_acquired": false,
+    "pixel_comparison_proven": false
+  },
+  "archives": {
+    "ds_pdf_size": 1274536,
+    "ds_pdf_sha256": "f7f15d448f4ae48dd22a091e55c4a1d2e8324c114d42cb5a1dde600393d792a3",
+    "f4_pdf_size": 2382507,
+    "f4_pdf_sha256": "17ef624688aecb8f20a08b447792cb09dddb9de763c45289b28c0a3ddabd9587",
+    "physical_original_inspected": false
+  },
+  "edges": [
+    {
+      "from": "IOCS-15-1912",
+      "to": "IOCS-29-1913",
+      "relation": "ARCHIVAL_ANNOTATION_SAYS_INCLUDED",
+      "pixel_transfer_verified": false
+    },
+    {
+      "from": "IOCS-29-1913",
+      "to": "CGEO-37",
+      "relation": "DECLARED_CARTOGRAPHIC_SOURCE_IN_SOPER_1914",
+      "pixel_transfer_verified": false
+    },
+    {
+      "from": "CGEO-37",
+      "to": "CGEO-36",
+      "relation": "SAME_1914_WORK_DIFFERENT_CUSTODIANS",
+      "pixel_transfer_verified": false
+    }
+  ],
+  "limits": {
+    "center_1963": null,
+    "reported_fall": null,
+    "uncertainty_m": null,
+    "flight_date": null,
+    "spatial_coverage_confirmed": false,
+    "independent_survey": false,
+    "can_constrain_orbital_reentry": false
+  }
+}
