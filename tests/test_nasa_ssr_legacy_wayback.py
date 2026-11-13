@@ -52,7 +52,7 @@ class NASAOldNTRSTest(unittest.TestCase):
 
 
     def test_current_nasa_api_bytes_are_checked_independently(self):
-        sample = b'%PDF-1.4\\nindependent synthetic payload\\n%%EOF\\n'
+        sample = b'%PDF-1.4\nindependent synthetic payload\n%%EOF\n'
         manifest = {'bytes': len(sample), 'sha256': hashlib.sha256(sample).hexdigest()}
         self.assertEqual(current_api_errors(manifest, sample, http_status=200,
                                             content_type='application/pdf; charset=binary'), [])
@@ -70,16 +70,16 @@ class NASAOldNTRSTest(unittest.TestCase):
 
             def __enter__(self): return self
             def __exit__(self, *args): return False
-            def read(self, count): return b'%PDF-1.4\\nchanged NASA API response\\n%%EOF'
+            def read(self, count): return b'%PDF-1.4\nchanged NASA API response\n%%EOF'
 
         def fake_urlopen(request, timeout):
             visited.append(request.full_url)
             return FakeResponse()
 
-        with patch('tools.verify_nasa_ssr_legacy_wayback.urlopen', side_effect=fake_urlopen), \\
-             patch('tools.verify_nasa_ssr_legacy_wayback.replay_errors', return_value=[]), \\
-             patch.object(sys, 'argv', ['verifier', '--fetch']), \\
-             contextlib.redirect_stdout(io.StringIO()):
+        with (patch('tools.verify_nasa_ssr_legacy_wayback.urlopen', side_effect=fake_urlopen),
+              patch('tools.verify_nasa_ssr_legacy_wayback.replay_errors', return_value=[]),
+              patch.object(sys, 'argv', ['verifier', '--fetch']),
+              contextlib.redirect_stdout(io.StringIO())):
             result = main()
         # Wayback HTTP is faked solely to isolate the independent NASA API fetch.
         # Before G30 the script returned 0 after visiting only three archive URLs.
