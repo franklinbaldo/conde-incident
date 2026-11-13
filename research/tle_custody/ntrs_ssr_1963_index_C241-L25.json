@@ -1,0 +1,163 @@
+{
+  "id": "C241-L25",
+  "source": "NASA NTRS REST API metadata search (not a 1963 report)",
+  "capture_date_utc": "2026-11-13",
+  "source_url": "https://ntrs.nasa.gov/api/citations/search",
+  "query": {
+    "q": "Satellite Situation Report",
+    "page": {
+      "size": 200,
+      "from": 0
+    }
+  },
+  "captured_query_total": 136,
+  "response_sha256": "80b1c0fb9dc88e5a562bc7c8a1d7d53bc3a069947a4f1c28e05292e1b71e8d2f",
+  "response_bytes": 528408,
+  "known_records": [
+    {
+      "ntrs_id": 19630012113,
+      "published_on": "1963-01-16",
+      "title_as_indexed": "SATELLITE SITUATION REPORT, VOLUME 3, NO. 2",
+      "report_numbers_as_indexed": [
+        "NASA-TM-X-50339",
+        "X-533-63-1",
+        "Report Number: NASA-TM-X-50339",
+        "Report Number: X-533-63-1"
+      ],
+      "issue_number_from_project": 2,
+      "issue_number_provenance": "NTRS_TITLE"
+    },
+    {
+      "ntrs_id": 19630012127,
+      "published_on": "1963-04-10",
+      "title_as_indexed": "SATELLITE SITUATION REPORT, VOLUME 3, NO. 8",
+      "report_numbers_as_indexed": [
+        "NASA-TM-X-50197",
+        "X-533-63-1, VOL. 3, NO. 8",
+        "Report Number: NASA-TM-X-50197",
+        "Report Number: X-533-63-1, VOL. 3, NO. 8"
+      ],
+      "issue_number_from_project": 8,
+      "issue_number_provenance": "C241-L23"
+    },
+    {
+      "ntrs_id": 19630012128,
+      "published_on": "1963-04-30",
+      "title_as_indexed": "SATELLITE SITUATION REPORT, VOLUME 3, NO. 9",
+      "report_numbers_as_indexed": [
+        "X-533-63-1, VOL. 3, NO. 9",
+        "NASA-TM-X-50198",
+        "Report Number: X-533-63-1, VOL. 3, NO. 9",
+        "Report Number: NASA-TM-X-50198"
+      ],
+      "issue_number_from_project": 9,
+      "issue_number_provenance": "C241-L16"
+    },
+    {
+      "ntrs_id": 19630012130,
+      "published_on": "1963-06-30",
+      "title_as_indexed": "SATELLITE SITUATION REPORT, VOLUME 3, NO. 13",
+      "report_numbers_as_indexed": [
+        "X-533-63-1, VOL. 3, NO. 13",
+        "NASA-TM-X-50196",
+        "Report Number: X-533-63-1, VOL. 3, NO. 13",
+        "Report Number: NASA-TM-X-50196"
+      ],
+      "issue_number_from_project": 13,
+      "issue_number_provenance": "C241-L22"
+    },
+    {
+      "ntrs_id": 19630012290,
+      "published_on": "1963-07-31",
+      "title_as_indexed": "SATELLITE SITUATION REPORT, VOL. 3, NO. 15",
+      "report_numbers_as_indexed": [
+        "NASA-TM-X-50335",
+        "X-533-63-1, VOL. 3, NO. 15",
+        "Report Number: NASA-TM-X-50335",
+        "Report Number: X-533-63-1, VOL. 3, NO. 15"
+      ],
+      "issue_number_from_project": 15,
+      "issue_number_provenance": "C241-L18"
+    },
+    {
+      "ntrs_id": 19630012289,
+      "published_on": "1963-08-15",
+      "title_as_indexed": "Saatellite Situation Report",
+      "report_numbers_as_indexed": [
+        "NASA-TM-X-50364",
+        "X-533-63-1, VOL. 3, NO. 16",
+        "Report Number: NASA-TM-X-50364",
+        "Report Number: X-533-63-1, VOL. 3, NO. 16"
+      ],
+      "issue_number_from_project": 16,
+      "issue_number_provenance": "C241-L17"
+    },
+    {
+      "ntrs_id": 19640000428,
+      "published_on": "1963-10-15",
+      "title_as_indexed": "Satellite Situation Report",
+      "report_numbers_as_indexed": [
+        "X-583-63-1",
+        "NASA-TM-X-51120",
+        "Report Number: X-583-63-1",
+        "Report Number: NASA-TM-X-51120"
+      ],
+      "issue_number_from_project": 20,
+      "issue_number_provenance": "C241-L12_FACSIMILE"
+    },
+    {
+      "ntrs_id": 19640001198,
+      "published_on": "1963-11-15",
+      "title_as_indexed": "Satellite Situation Report",
+      "report_numbers_as_indexed": [
+        "NASA-TM-X-51205",
+        "X-533-63-1, VOL. 3, NO. 22",
+        "Report Number: NASA-TM-X-51205",
+        "Report Number: X-533-63-1, VOL. 3, NO. 22"
+      ],
+      "issue_number_from_project": 22,
+      "issue_number_provenance": "C241-L11"
+    },
+    {
+      "ntrs_id": 19640002493,
+      "published_on": "1963-11-30",
+      "title_as_indexed": "Satellite Situation Report",
+      "report_numbers_as_indexed": [
+        "NASA-TM-X-50510",
+        "X-533-63-1, VOL. 3, NO. 23",
+        "Report Number: NASA-TM-X-50510",
+        "Report Number: X-533-63-1, VOL. 3, NO. 23"
+      ],
+      "issue_number_from_project": 23,
+      "issue_number_provenance": "C241-L18"
+    },
+    {
+      "ntrs_id": 19640003479,
+      "published_on": "1963-12-15",
+      "title_as_indexed": "Satellite Situation Report",
+      "report_numbers_as_indexed": [
+        "NASA-TM-X-51375",
+        "X-533-63-1, VOL. 3, NO. 24",
+        "Report Number: NASA-TM-X-51375",
+        "Report Number: X-533-63-1, VOL. 3, NO. 24"
+      ],
+      "issue_number_from_project": 24,
+      "issue_number_provenance": "C241-L21"
+    },
+    {
+      "ntrs_id": 19640005618,
+      "published_on": "1963-12-31",
+      "title_as_indexed": "Satellite Situation Report",
+      "report_numbers_as_indexed": [
+        "X-533-63-1",
+        "NASA-TM-X-54539",
+        "Report Number: X-533-63-1",
+        "Report Number: NASA-TM-X-54539"
+      ],
+      "issue_number_from_project": 25,
+      "issue_number_provenance": "C241-L18_FACSIMILE"
+    }
+  ],
+  "not_proof_of_exhaustive_coverage": true,
+  "instrumental_observations": 0
+}
