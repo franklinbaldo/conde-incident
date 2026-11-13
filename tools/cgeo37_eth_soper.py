@@ -90,7 +90,7 @@ def verify_file(path: Path, expected_bytes: int, expected_sha: str, kind: str) -
         raise ValueError(f"{kind} custody failed")
     if kind == "pdf" and (not prefix.startswith(b"%PDF-") or b"%%EOF" not in suffix):
         raise ValueError("not PDF")
-    if kind == "jpeg" and (not prefix.startswith(b"\\xff\\xd8") or not suffix.endswith(b"\\xff\\xd9")):
+    if kind == "jpeg" and (not prefix.startswith(bytes.fromhex("ffd8")) or not suffix.endswith(bytes.fromhex("ffd9"))):
         raise ValueError("not JPEG")
     if kind == "manifest":
         obj = json.loads(path.read_text(encoding="utf-8"))
