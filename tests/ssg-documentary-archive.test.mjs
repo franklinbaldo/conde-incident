@@ -223,7 +223,7 @@ test('UX-04: every curated canonical state has legible, non-probabilistic readin
   const pages=archivePages(feed, ancestry);
   const index=pages.get('index.md');
   assert.match(index,/Como interpretar os estados documentais/);
-  assert.match(index,/não de observações físicas independentes/);
+  assert.match(index,/nunca de observações físicas independentes/);
   for (const record of feed.records) {
     const {label,support,limit}=interpretArchiveStatus(record.source_status);
     const route=record.occurrence.toLowerCase().replace('#','-')+'/index.md';
