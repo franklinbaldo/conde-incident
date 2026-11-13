@@ -1,0 +1,47 @@
+name: Tartaruga C241-L36 UN-NASA editorial crosscutoff
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/un_nasa_crosscutoff_print_deltas_C241-L36.json
+      - research/tle_custody/evidence_matrix_C241-L36_2026-11-13.md
+      - tools/tle_un_nasa_crosscutoff_audit.py
+      - tests/test_tle_un_nasa_crosscutoff_audit.py
+      - .github/workflows/tle-un-nasa-crosscutoff.yml
+  push:
+    branches: [main]
+    paths:
+      - research/tle_custody/un_nasa_crosscutoff_print_deltas_C241-L36.json
+      - research/tle_custody/evidence_matrix_C241-L36_2026-11-13.md
+      - tools/tle_un_nasa_crosscutoff_audit.py
+      - tests/test_tle_un_nasa_crosscutoff_audit.py
+      - .github/workflows/tle-un-nasa-crosscutoff.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  crosscutoff:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Tests and audit on exact HEAD
+        run: |
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+          python3 -m unittest discover -s tests -p test_tle_un_nasa_crosscutoff_audit.py -v
+          python3 tools/tle_un_nasa_crosscutoff_audit.py --output "$RUNNER_TEMP/c241-l36.json"
+      - name: Replay two original public archival PDFs by hash
+        run: |
+          mkdir -p "$RUNNER_TEMP/c241-l36-source"
+          curl --fail --location --silent --show-error --retry 2 --max-time 80 "https://www.unoosa.org/documents/pdf/inf030E.pdf" -o "$RUNNER_TEMP/c241-l36-source/inf030E.pdf"
+          curl --fail --location --silent --show-error --retry 2 --max-time 80 "https://ntrs.nasa.gov/api/citations/19630012128/downloads/19630012128.pdf" -o "$RUNNER_TEMP/c241-l36-source/19630012128.pdf"
+          python3 tools/tle_un_nasa_crosscutoff_audit.py --pdf-dir "$RUNNER_TEMP/c241-l36-source" --output "$RUNNER_TEMP/c241-l36.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: c241-l36-source-cutoff-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ${{ runner.temp }}/c241-l36.json
+          if-no-files-found: warn
+          retention-days: 30
