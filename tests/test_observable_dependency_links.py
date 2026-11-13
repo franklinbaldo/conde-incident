@@ -114,5 +114,70 @@ class ObservableDependencyLinkTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'TLE custody'):
                 links.build()
 
+
+    def test_un_and_soviet_edges_join_existing_graph_without_promotion(self):
+        edges = self.data['pending_documentary_edges']
+        un = [e for e in edges if e['source_occurrence'] == 'C241-L33']
+        sov = [e for e in edges if e['source_occurrence'] == 'C241-L37']
+        self.assertEqual((len(un), len(sov)), (2, 11))
+        self.assertEqual({e['to'] for e in un},
+                         {'latent_1963_528_state_epoch', 'latent_528_true_terminal_time'})
+        self.assertEqual({e['to'] for e in sov if e['to'].startswith('NORAD_')},
+                         {f'NORAD_{n}_latent_track' for n in (527, 528, 529)})
+        self.assertEqual({e['to'] for e in sov if e['from'] == 'C241-L37'},
+                         {'SOVIET_METHODS_SERIAL', 'SOVIET_RAW_RESULTS_SERIAL',
+                          'C241-L29', 'C241-L31', 'C241-L34', 'C241-L35'})
+        self.assertEqual(len({(e['from'], e['to'], e['relation']) for e in edges}), 13)
+        self.assertTrue(all(e['activation'] is False
+                            and e['observed_value'] is None
+                            and e['status'] == 'CONNECTED_PENDING_CALIBRATION'
+                            for e in edges))
+        for path, digest in self.data['pending_source_sha256'].items():
+            self.assertEqual(links.hashlib.sha256((ROOT / path).read_bytes()).hexdigest(), digest)
+        self.assertEqual(len(self.data['edges']), 2)
+        self.assertEqual(len(self.data['external_source_edges']), 1)
+        self.assertEqual(self.data['epistemic_limits']['activated_constraints'], 0)
+
+    def test_un_administrative_cutoff_cannot_become_instrument_epoch(self):
+        un = json.loads((ROOT / 'public/data/conde-un-1963-status-bridge.json').read_text())
+        sov = json.loads((ROOT / 'public/data/conde-soviet-raw-route-bridge.json').read_text())
+        for key, value in [('actual_terminal_time_utc', '1963-11-08T13:00:00Z'),
+                           ('sensor_epoch_utc', '1963-11-15T00:00:00Z'),
+                           ('sensor_covariance', [[1]])]:
+            bad = copy.deepcopy(un)
+            bad['documentary_status_528'][key] = value
+            with self.subTest(key=key), self.assertRaisesRegex(ValueError, 'UN cutoff'):
+                links.pending_documentary_routes(bad, sov, {})
+        bad = copy.deepcopy(un)
+        bad['source_documents'][1]['publication_day'] = '1963-11-15'
+        with self.assertRaisesRegex(ValueError, 'publication/cutoff'):
+            links.pending_documentary_routes(bad, sov, {})
+
+    def test_soviet_catalogue_not_measured_528_or_november_record(self):
+        un = json.loads((ROOT / 'public/data/conde-un-1963-status-bridge.json').read_text())
+        sov = json.loads((ROOT / 'public/data/conde-soviet-raw-route-bridge.json').read_text())
+        for key, value in [('sigma', 0.1), ('time_utc', '1963-11-08T04:00:00Z'),
+                           ('source_identity_confirmed', True), ('value', 0.2)]:
+            bad = copy.deepcopy(sov)
+            bad['simulator_latent_parameters'][1][key] = value
+            with self.subTest(key=key), self.assertRaisesRegex(ValueError, 'target parameters'):
+                links.pending_documentary_routes(un, bad, {})
+        bad = copy.deepcopy(sov)
+        bad['catalogue_leads'][0]['described_observation_month'] = 'November 1963'
+        with self.assertRaisesRegex(ValueError, 'Soviet catalogue'):
+            links.pending_documentary_routes(un, bad, {})
+        bad = copy.deepcopy(sov)
+        bad['source_dependency_graph'][1] = copy.deepcopy(bad['source_dependency_graph'][0])
+        with self.assertRaisesRegex(ValueError, 'routes lost'):
+            links.pending_documentary_routes(un, bad, {})
+
+    def test_parent_replay_is_required_before_publishing_aggregate(self):
+        with mock.patch.object(links.soviet, 'render', return_value=b'not canonical'):
+            with self.assertRaisesRegex(ValueError, 'stale pending source bridge'):
+                links.build()
+        with mock.patch.object(links.un1963, 'render', return_value=b'not canonical'):
+            with self.assertRaisesRegex(ValueError, 'stale pending source bridge'):
+                links.build()
+
 if __name__ == '__main__':
     unittest.main()
