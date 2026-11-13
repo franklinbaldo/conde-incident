@@ -32,3 +32,7 @@ jobs:
         run: |
           python3 tools/audit_causal_flux_backfill.py --check
           python3 -m unittest discover -s tests -p test_causal_flux_backfill.py -v
+      - name: Replay observed NRC F10.7 missing records and adversarial tests
+        run: |
+          python3 tools/audit_causal_flux_recovery.py --check
+          python3 -m unittest discover -s tests -p test_causal_flux_recovery.py -v
