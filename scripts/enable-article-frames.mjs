@@ -36,3 +36,19 @@ paperHtml=paperHtml.replace(paperMatch[0],paperMatch[0].replace(paperMatch[1],pa
 assert.ok(paperHtml.includes(paperAllow));
 writeFileSync(newspaper,paperHtml);
 console.log('PASS: CSP restrita do capitulo 05 autoriza apenas a Hemeroteca em iframe.');
+
+
+// Chapter 07 embeds only the official NORAD 1963 fac-simile. No wildcard host.
+const camerasFile='public/stories/2026-11-12-as-cameras-que-o-norad-nao-ganhou/index.html';
+let camerasHtml=readFileSync(camerasFile,'utf8');
+const camerasUrl='https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/11.pdf#page=3';
+assert.ok(camerasHtml.includes(camerasUrl),'Fac-simile NORAD 1963 ausente do capitulo 07');
+const camerasCsp=csp.exec(camerasHtml);
+assert.ok(camerasCsp,'CSP da pagina 07 ausente');
+assert.ok(!camerasCsp[1].includes('frame-src'),'Nova frame-src de pagina 07 requer reavaliacao');
+const camerasAllow='frame-src https://nsarchive.gwu.edu';
+camerasHtml=camerasHtml.replace(camerasCsp[0],
+  camerasCsp[0].replace(camerasCsp[1],camerasCsp[1].replace(/;?\s*$/, '; ')+camerasAllow+';'));
+assert.ok(camerasHtml.includes(camerasAllow));
+writeFileSync(camerasFile,camerasHtml);
+console.log('PASS: CSP restrita do capitulo 07 permite so o fac-simile NORAD.');
