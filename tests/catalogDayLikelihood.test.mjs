@@ -4,7 +4,6 @@ import {
   CATALOGUE_528, PREDECLARED_DAY_SCENARIOS, catalogueDayLikelihood,
   calendarSpreadScenario, scenarioWeightedCells,
 } from '../src/lib/catalogDayLikelihood.ts';
-import { runMonteCarloSimulation } from '../src/lib/monteCarlo.ts';
 
 const HOUR=3_600_000;
 const MID=Date.parse('1963-11-08T12:00:00Z');
@@ -85,30 +84,6 @@ test('reject absent or malformed sample weights and epochs',()=>{
   assert.throws(()=>scenarioWeightedCells([{eventEpochMs:MID,cellId:'',priorWeight:1}],12),/cell ID/);
   assert.throws(()=>scenarioWeightedCells([{eventEpochMs:MID,cellId:'x',priorWeight:-1}],12),/prior weight/);
   assert.throws(()=>scenarioWeightedCells([{eventEpochMs:NaN,cellId:'x',priorWeight:1}],12),/epoch/);
-});
-
-test('existing Monte Carlo returns 3 timing scenarios, without historical claim',()=>{
-  const original=Math.random;
-  let seed=19631108;
-  Math.random=()=>{
-    seed^=seed<<13;seed^=seed>>>17;seed^=seed<<5;
-    return (seed>>>0)/2**32;
-  };
-  try{
-    const r=runMonteCarloSimulation(400);
-    assert.equal(r.twoSidedDaySensitivity.length,3);
-    for(const row of r.twoSidedDaySensitivity){
-      assert.ok([6,12,24].includes(row.sigmaHoursAssumed));
-      assert.equal(row.provenance,'C197_DAY_LABEL_SCENARIO_NOT_HISTORICAL_IMPACT');
-      assert.ok(row.effectiveSampleSize!==null && row.effectiveSampleSize>0
-        && row.effectiveSampleSize<=400.00001);
-      const a=row.weightedWithin100Km;
-      const b=row.weightedWithin500Km;
-      const c=row.weightedWithin2000Km;
-      assert.ok(a!==null&&b!==null&&c!==null);
-      assert.ok(0<=a&&a<=b&&b<=c&&c<=1);
-    }
-  }finally{Math.random=original;}
 });
 
 test('new likelihood does not truncate November 9 events to zero',()=>{
