@@ -1,0 +1,101 @@
+{
+  "record_id": "C241-L15",
+  "source_family": "NASA_GODDARD_NORAD_SMITHSONIAN_COMPILED_SERIES",
+  "independence": "ONE_COMPILATION_FAMILY_NOT_THREE_SENSOR_OBSERVATIONS",
+  "sources": [
+    {
+      "ntrs_id": "19640000428",
+      "volume": 3,
+      "number": 20,
+      "publication_date": "1963-10-15",
+      "compilation_as_of_utc": "1963-10-15T12:00:00Z",
+      "pdf_page_index_zero_based": 1,
+      "pdf_page_one_based": 2,
+      "facsimile_reading": "HUMAN_VISUAL_NOT_OCR",
+      "url": "https://ntrs.nasa.gov/api/citations/19640000428/downloads/19640000428.pdf",
+      "accepted_download_sha256_and_bytes": [
+        [
+          "826f260524f6a7b83695e5c01d383025ff0da884656ebcc7fb98a1408c698ce3",
+          282624
+        ],
+        [
+          "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+          286417
+        ]
+      ],
+      "catalogue_occurrence": "C241-L12",
+      "claim_class": "DOCUMENTARY_CATALOGUE_IN_ORBIT_1963_3B"
+    },
+    {
+      "ntrs_id": "19640001198",
+      "volume": 3,
+      "number": 22,
+      "publication_date": "1963-11-15",
+      "compilation_as_of_utc": "1963-11-15T12:00:00Z",
+      "pdf_page_index_zero_based": 1,
+      "pdf_page_one_based": 2,
+      "facsimile_reading": "HUMAN_VISUAL_NOT_OCR",
+      "url": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf",
+      "accepted_download_sha256_and_bytes": [
+        [
+          "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+          327613
+        ]
+      ],
+      "catalogue_occurrence": "C241-L11",
+      "claim_class": "DOCUMENTARY_ADDITION_TO_DECAY_LIST_1963_3B_DAY_1963_11_08"
+    },
+    {
+      "ntrs_id": "19640002493",
+      "volume": 3,
+      "number": 23,
+      "publication_date": "1963-11-30",
+      "compilation_as_of_utc": "1963-11-30T12:00:00Z",
+      "pdf_page_index_zero_based": 1,
+      "pdf_page_one_based": 2,
+      "facsimile_reading": "HUMAN_VISUAL_NOT_OCR",
+      "url": "https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf",
+      "accepted_download_sha256_and_bytes": [
+        [
+          "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+          1266393
+        ]
+      ],
+      "catalogue_occurrence": "C241-L11",
+      "claim_class": "DOCUMENTARY_NO_REPEAT_IN_INCREMENTAL_DECAY_ADDITIONS"
+    }
+  ],
+  "graph_edge": {
+    "id": "C241-L15:SSR_SNAPSHOT_CLOCK_VS_PHYSICAL_OBSERVATION_EPOCH",
+    "from": "NASA_SSR_COMPILED_AT_1200Z",
+    "to": "TRACKING_MEASUREMENT_EPOCH_UNKNOWN",
+    "relation": "EDITORIAL_SNAPSHOT_DOES_NOT_IDENTIFY_UPSTREAM_SENSOR_TIME",
+    "state": "CONNECTED_PENDING_CALIBRATION",
+    "pending": [
+      "ORIGINAL_SENSOR_RECORD",
+      "EPOCH_OF_MEASUREMENT",
+      "INSTRUMENT_AND_STATION",
+      "ERROR_MODEL",
+      "TLE_LINEAGE"
+    ]
+  },
+  "missing": {
+    "edition_21": "NOT_RECOVERED",
+    "physical_observation_epoch": null,
+    "sensor_station": null,
+    "frame": null,
+    "historical_tle_checksums": null,
+    "sigma": null,
+    "physical_identity_528": null,
+    "terminal_time": null,
+    "terminal_position": null,
+    "original_raan_284_1520": null,
+    "primary_raan_198_5261": null,
+    "earth_impact_claim": false,
+    "tle_from_ssr": false,
+    "one_independent_measurement_per_issue": false,
+    "legacy_raan_activated": false,
+    "lean_physical_constraint": "NOT_PROMOTED",
+    "conde_outcome": "INDETERMINATE"
+  }
+}
