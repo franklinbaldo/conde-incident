@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {mkdtempSync,mkdirSync,rmSync,writeFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
-import {join} from 'node:path';
+import {dirname,join} from 'node:path';
 import {audit,auditBuiltSite,readBundle} from '../scripts/verify-ssg-evidence-index.mjs';
 
 const clean=()=>readBundle(); // Fresh, independent on-disk fixture each time.
@@ -61,5 +61,45 @@ test('actual generated HTML must exist: feed and Markdown alone are insufficient
     mkdirSync(join(directory,'evidencias/arquivo'),{recursive:true});
     writeFileSync(join(directory,'evidencias/arquivo/index.html'),'');
     assert.throws(()=>auditBuiltSite(readBundle(),directory),/SSG HTML missing/);
+  } finally {rmSync(directory,{recursive:true,force:true});}
+});
+
+// G44 adversarial fixture: fake HTML contains the expected route text and
+// digests, but not a single navigable anchor. A rendered-site audit must
+// reject it even when the source Markdown, JSON and all paths are valid.
+test('built HTML index must expose navigable href anchors, not inert path text',()=>{
+  const bundle=clean();
+  const directory=mkdtempSync(join(tmpdir(),'conde-ssg-inert-'));
+  try {
+    const shards=bundle.shards.flatMap(part=>JSON.parse(part.raw).records);
+    const digests=shards.map(row=>row.row_sha256).join(' ');
+    for (const [name] of bundle.pages) {
+      const dest=join(directory,'evidencias/arquivo',name.replace(/index\.md$/,'index.html'));
+      mkdirSync(dirname(dest),{recursive:true});
+      writeFileSync(dest,`<!doctype html><html><body><p>${digests}</p></body></html>`);
+    }
+    // The index prints every route string, but gives readers zero links.
+    writeFileSync(join(directory,'evidencias/arquivo/index.html'),
+      `<!doctype html><p>${shards.map(row=>row.archive_path).join(' ')}</p>`);
+    assert.throws(()=>auditBuiltSite(bundle,directory),/Built index missing navigable anchor/);
+  } finally {rmSync(directory,{recursive:true,force:true});}
+});
+
+test('built occurrence pages must expose live family, source and work reverse links',()=>{
+  const bundle=clean();
+  const directory=mkdtempSync(join(tmpdir(),'conde-ssg-reverse-'));
+  try {
+    const rows=bundle.shards.flatMap(part=>JSON.parse(part.raw).records);
+    const digests=rows.map(row=>row.row_sha256).join(' ');
+    for (const [name] of bundle.pages) {
+      const dest=join(directory,'evidencias/arquivo',name.replace(/index\.md$/,'index.html'));
+      mkdirSync(dirname(dest),{recursive:true});
+      writeFileSync(dest,`<!doctype html><html><body><p>${digests}</p></body></html>`);
+    }
+    // Index is truly clickable; occurrence pages are not.
+    writeFileSync(join(directory,'evidencias/arquivo/index.html'),
+      `<!doctype html><main>${[...new Set(rows.map(row=>row.archive_path))]
+        .map(path=>`<a href="${path}">go</a>`).join('')}</main>`);
+    assert.throws(()=>auditBuiltSite(bundle,directory),/Built occurrence missing reverse anchor/);
   } finally {rmSync(directory,{recursive:true,force:true});}
 });

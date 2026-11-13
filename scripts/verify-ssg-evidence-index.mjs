@@ -17,6 +17,11 @@ const tracked=['occurrence','snapshot_ref','source_id','source_family','work_id'
   'source_status','relation','scope','locator','claim_text','citation_url',
   'row_sha256','matrix_line'];
 const take=(row,fields)=>Object.fromEntries(fields.map(name=>[name,row[name]]));
+// Inspect actual anchor attributes in the generated HTML, not inert text in
+// paragraphs, metadata, comments or pre-rendered Markdown source.
+const anchors=html=>new Set([...html.replace(/<!--[\s\S]*?-->/g,'')
+  .matchAll(/<a\b[^>]*\bhref\s*=\s*(['"])([^'"]+)\1/gi)]
+  .map(match=>match[2].replaceAll('&amp;','&')));
 
 export function readBundle(root='.') {
   const read=path=>readFileSync(join(root,path));
@@ -116,13 +121,20 @@ export function auditBuiltSite(bundle,siteRoot='public') {
   }
   const allRows=bundle.shards.flatMap(part=>JSON.parse(part.raw).records);
   const index=readFileSync(join(siteRoot,'evidencias/arquivo/index.html'),'utf8');
+  const indexAnchors=anchors(index);
   for (const row of allRows) {
-    assert.ok(index.includes(row.archive_path),'Built index missing link: '+row.archive_path);
+    assert.ok(indexAnchors.has(row.archive_path),
+      'Built index missing navigable anchor: '+row.archive_path);
     const page=join(siteRoot,row.archive_path.slice(PREFIX.length)
       ? 'evidencias/arquivo/'+row.archive_path.slice(PREFIX.length)+'index.html'
       : 'evidencias/arquivo/index.html');
     const html=readFileSync(page,'utf8');
     assert.ok(html.includes(row.row_sha256),'Built HTML missing row digest: '+row.archive_path);
+    const reverseAnchors=anchors(html);
+    for (const target of [link('familias',row.source_family),
+      link('obras',row.work_id),link('fontes',row.source_id)])
+      assert.ok(reverseAnchors.has(target),
+        'Built occurrence missing reverse anchor: '+row.archive_path+' -> '+target);
   }
   return counts;
 }

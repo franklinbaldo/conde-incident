@@ -16,6 +16,7 @@ HOLDINGS = "research/tle_custody/soviet_1963_bibliographic_holdings_C241-L29.jso
 CROSS = "research/tle_custody/soviet_1963_cross_id_C241-L30.json"
 NASA = "research/tle_custody/nasa_527_1964_1967_crosswalk_C241-L28.json"
 NASA1977 = "research/tle_custody/nasa_ssr_dec1977_528_identity_C241-L32.json"
+MASEVICH = "research/tle_custody/masevich_periodicals_1963_C241-L34.json"
 OUT = ROOT / "public/data/conde-soviet-catalogue-bridge.json"
 IDS = ("C241-L29#1", "C241-L29#2")
 OBJECTS = (527, 528, 529)
@@ -32,7 +33,7 @@ def require(ok: bool, message: str) -> None:
         raise ValueError("Soviet catalogue bridge: " + message)
 
 
-def build(hold: dict, cross: dict, nasa: dict, nasa1977: dict, parent_hashes: dict) -> dict:
+def build(hold: dict, cross: dict, nasa: dict, nasa1977: dict, masevich: dict, parent_hashes: dict) -> dict:
     require(hold["schema"] == "conde.soviet_1963_holdings/v1"
             and hold["id"] == "C241-L29"
             and hold["verified_observations"] == 0
@@ -156,6 +157,49 @@ def build(hold: dict, cross: dict, nasa: dict, nasa1977: dict, parent_hashes: di
             and counts["orbital_constraints_activated"] == 0
             and counts["lean_activated"] is False,
             "published counts conflict with missing instrumental evidence")
+    # C241-L34 is a contemporary *bibliographic mention* in third-party
+    # digitized pages, not a station's 1963 observations. Two named periodicals
+    # may resemble L29 holdings, but their edition identity is not established.
+    require(masevich["schema"] == "conde.contemporary_bibliographic_locator/v1"
+            and masevich["id"] == "C241-L34"
+            and masevich["target_objects"] == list(OBJECTS)
+            and masevich["dependencies"] == ["C241-L29", "C241-L31"]
+            and masevich["epistemic_level"] ==
+            "1963_CONTEMPORARY_BIBLIOGRAPHIC_REFERENCE_ONLY",
+            "contemporary bibliography identifier or dependencies changed")
+    src = masevich["source"]
+    require(src["russian_preface_date"] == "1963-02"
+            and src["russian_edition_year"] == 1963
+            and src["source_authentication"] ==
+            "THIRD_PARTY_PAGE_IMAGES_VISUALLY_INSPECTED_NOT_MASTER_AUTHENTICATED"
+            and src["landing_url"] == "https://djvu.online/file/raBEGf36i2gfZ"
+            and src["landing_html_sha256"] ==
+            "9e142d1ac2d17be5ffd44e4425baa21389f8075951c4704e2035f0fb8beb0a92"
+            and src["landing_html_bytes"] == 806435
+            and len(src["images"]) == 2
+            and [(a["viewer_page"], a["printed_page"], a["sha256"], a["bytes"])
+                 for a in src["images"]] == [
+                (6, None, "0d68650aa352f7404f4251abf53c3d117efd3dde377b6c5667df85516089f901", 121794),
+                (7, 6, "fea39a91dae6ce25b977e4562c758818dc44667dc7559b7d99f9ecc6231f4bb2", 44202)],
+            "1963 preface custody or page provenance changed")
+    bibliography = masevich["bibliography"]
+    require([b["title"] for b in bibliography] == [
+                "Искусственные спутники Земли",
+                "Бюллетень станций оптических наблюдений искусственных спутников"]
+            and [b["mention_location"] for b in bibliography] == [
+                "preface spans images 006 and 007", "printed page 6 / image 007"]
+            and all(b["catalog_or_original_volume_retrieved"] is False
+                    for b in bibliography), "unverified bibliography promoted")
+    limits = masevich["interpretive_limits"]
+    require(limits["target_specific_primary_measurements"] == 0
+            and limits["observed_objects_identified_in_pages"] == []
+            and limits["station_ephemeris_or_tle_record_found"] is False
+            and limits["independent_physical_observation"] is False
+            and limits["orbital_constraint_activated"] is False
+            and limits["publication_independence_not_established"] is True
+            and limits["no_facsimile_of_bulletin_issue_retrieved"] is True
+            and limits["february_1963_preface_does_not_cover_november_1963"] is True,
+            "bibliography cannot become a contemporaneous orbital sensor")
     graph = []
     for record in rows:
         graph.append({
@@ -184,6 +228,27 @@ def build(hold: dict, cross: dict, nasa: dict, nasa1977: dict, parent_hashes: di
             "original_page": None,
             "observing_epoch_utc": None,
             "instrument_sigma": None,
+            "activation": False,
+        })
+    for i, periodical in enumerate(bibliography, 1):
+        graph.append({
+            "from": "C241-L34",
+            "to": f"SOVIET_PERIODICAL_SEARCH_TITLE_{i}",
+            "type": "CONTEMPORARY_BIBLIOGRAPHIC_MENTION_NOT_MEASUREMENT",
+            "title": periodical["title"],
+            "source_url": src["images"][0 if i == 1 else 1]["url"],
+            "source_webp_sha256": src["images"][0 if i == 1 else 1]["sha256"],
+            "printed_page": None if i == 1 else 6,
+            "observing_epoch_utc": None,
+            "sensor": None,
+            "activation": False,
+        })
+    for related in masevich["dependencies"]:
+        graph.append({
+            "from": "C241-L34", "to": related,
+            "type": "RESEARCH_CONTEXT_NOT_VERIFIED_SAME_ISSUE_OR_TRACK",
+            "publication_identity_confirmed": False,
+            "target_norad_identified": False,
             "activation": False,
         })
     identities = [
@@ -224,6 +289,21 @@ def build(hold: dict, cross: dict, nasa: dict, nasa1977: dict, parent_hashes: di
             "decay_day_528": row["reported_decay_day_from_1977_table"],
             "physical_reentry_time": None, "physical_reentry_place": None,
         },
+        "contemporary_1963_bibliographic_lead": {
+            "source_id": "C241-L34",
+            "preface_date": src["russian_preface_date"],
+            "source_kind": src["source_authentication"],
+            "landing_url": src["landing_url"],
+            "source_page_webp_sha256": [a["sha256"] for a in src["images"]],
+            "periodical_titles": [b["title"] for b in bibliography],
+            "relationship_to_holdings": "SEARCH_CONTEXT_NOT_PROVEN_SAME_ISSUE",
+            "original_issue_facsimile": None,
+            "target_specific_observation_epoch": None,
+            "instrument_covariance": None,
+            "lean_candidate": "Conde1963.sovietContemporaryBibliographicLeads",
+            "sensor_count_added": 0,
+            "activation": False,
+        },
         "source_relation": "TWO_TITLES_HOLDINGS_NOT_INDEPENDENT_TRACKING",
         "evidence_level": "BIBLIOGRAPHIC_METADATA_NOT_INSTRUMENTAL",
         "candidate_join_count": 6,
@@ -247,7 +327,7 @@ def build(hold: dict, cross: dict, nasa: dict, nasa1977: dict, parent_hashes: di
 
 
 def render() -> bytes:
-    paths = (HOLDINGS, CROSS, NASA, NASA1977)
+    paths = (HOLDINGS, CROSS, NASA, NASA1977, MASEVICH)
     raw = [(ROOT / p).read_bytes() for p in paths]
     payload = build(*(json.loads(b) for b in raw),
                     {p: hashlib.sha256(b).hexdigest()

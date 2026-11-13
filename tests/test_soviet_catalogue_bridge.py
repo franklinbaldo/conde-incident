@@ -7,14 +7,14 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
-from export_soviet_catalogue_bridge import HOLDINGS, CROSS, NASA, NASA1977, OUT, build, render
+from export_soviet_catalogue_bridge import HOLDINGS, CROSS, NASA, NASA1977, MASEVICH, OUT, build, render
 
 
 class SovietCatalogueBridgeTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.parents = [json.loads((ROOT / p).read_text())
-                       for p in (HOLDINGS, CROSS, NASA, NASA1977)]
+                       for p in (HOLDINGS, CROSS, NASA, NASA1977, MASEVICH)]
 
     def mutate(self, index=None, edit=None):
         docs = copy.deepcopy(self.parents)
@@ -27,7 +27,7 @@ class SovietCatalogueBridgeTests(unittest.TestCase):
         self.assertEqual(b["candidate_join_count"], 6)
         self.assertEqual(b["independent_observations"], 0)
         self.assertEqual(b["physical_domain_effect"], "THETA_UNCHANGED")
-        self.assertEqual(len(b["source_dependency_graph"]), 12)
+        self.assertEqual(len(b["source_dependency_graph"]), 16)
         self.assertFalse(b["activation"])
         self.assertEqual([r["value"] for r in b["simulator_latent_parameters"]],
                          [None, None, None])
@@ -105,6 +105,43 @@ class SovietCatalogueBridgeTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.mutate(3, lambda d: d["source"].update(pdf_sha256="a" * 64))
 
+    def test_1963_preface_fills_two_search_routes_not_measurements(self):
+        b = self.mutate()
+        m = b["contemporary_1963_bibliographic_lead"]
+        self.assertEqual(m["source_id"], "C241-L34")
+        self.assertEqual(m["preface_date"], "1963-02")
+        self.assertEqual(m["sensor_count_added"], 0)
+        self.assertIsNone(m["target_specific_observation_epoch"])
+        self.assertFalse(m["activation"])
+        self.assertEqual(b["candidate_join_count"], 6)
+        self.assertEqual(len([e for e in b["source_dependency_graph"]
+                              if e["from"] == "C241-L34"]), 4)
+
+    def test_preface_does_not_identify_november_object(self):
+        with self.assertRaises(ValueError):
+            self.mutate(4, lambda d: d["interpretive_limits"].update(
+                observed_objects_identified_in_pages=[528]))
+
+    def test_preface_cannot_manufacture_issue_identity(self):
+        with self.assertRaises(ValueError):
+            self.mutate(4, lambda d: d["bibliography"][1].update(
+                catalog_or_original_volume_retrieved=True))
+
+    def test_preface_pagination_is_not_inferred(self):
+        with self.assertRaises(ValueError):
+            self.mutate(4, lambda d: d["source"]["images"][0].update(
+                printed_page=5))
+
+    def test_preface_image_hash_is_pinned(self):
+        with self.assertRaises(ValueError):
+            self.mutate(4, lambda d: d["source"]["images"][1].update(
+                sha256="a" * 64))
+
+    def test_preface_has_no_independent_sensor(self):
+        with self.assertRaises(ValueError):
+            self.mutate(4, lambda d: d["interpretive_limits"].update(
+                independent_physical_observation=True))
+
     def test_stale_publication_and_typed_consumer(self):
         self.assertEqual(OUT.read_bytes(), render())
         lean = (ROOT / "formal/Conde1963/SovietCatalogueCandidate.lean").read_text()
@@ -112,6 +149,8 @@ class SovietCatalogueBridgeTests(unittest.TestCase):
         self.assertIn("C241-L29#2", lean)
         self.assertIn("C241-L28", lean)
         self.assertIn("C241-L32", lean)
+        self.assertIn("C241-L34", lean)
+        self.assertIn("sovietContemporaryBibliographicLeads", lean)
         self.assertIn("nasaRetrospective1977Labels", lean)
         self.assertIn("none", lean)
         self.assertIn("import Conde1963.SovietCatalogueCandidate",

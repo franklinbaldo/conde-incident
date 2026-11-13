@@ -5,7 +5,8 @@
     "research/tle_custody/soviet_1963_bibliographic_holdings_C241-L29.json": "5bd0d5fe22630b5ff5322cc713b7277a67f043e0a1913ddddd07817e9177d483",
     "research/tle_custody/soviet_1963_cross_id_C241-L30.json": "e11c2a3b952651685500da93d3be662aa4fbe7ac2974d3dd4e3267de6706f851",
     "research/tle_custody/nasa_527_1964_1967_crosswalk_C241-L28.json": "4dcd4df46288883c6da93f711721b2101fa2a1b39668187c1d3b0c272d992372",
-    "research/tle_custody/nasa_ssr_dec1977_528_identity_C241-L32.json": "4de614ade9f8850bbacb09bf9d7b597dff905657b3815e8f7d1be27c6fcfdaa7"
+    "research/tle_custody/nasa_ssr_dec1977_528_identity_C241-L32.json": "4de614ade9f8850bbacb09bf9d7b597dff905657b3815e8f7d1be27c6fcfdaa7",
+    "research/tle_custody/masevich_periodicals_1963_C241-L34.json": "77d5085346c21c1bee97c5094c93450fb137b4e18f2643787fdb83ef4a8d2768"
   },
   "source_occurrences": [
     "C241-L29#1",
@@ -46,6 +47,27 @@
     "decay_day_528": "1963-11-08",
     "physical_reentry_time": null,
     "physical_reentry_place": null
+  },
+  "contemporary_1963_bibliographic_lead": {
+    "source_id": "C241-L34",
+    "preface_date": "1963-02",
+    "source_kind": "THIRD_PARTY_PAGE_IMAGES_VISUALLY_INSPECTED_NOT_MASTER_AUTHENTICATED",
+    "landing_url": "https://djvu.online/file/raBEGf36i2gfZ",
+    "source_page_webp_sha256": [
+      "0d68650aa352f7404f4251abf53c3d117efd3dde377b6c5667df85516089f901",
+      "fea39a91dae6ce25b977e4562c758818dc44667dc7559b7d99f9ecc6231f4bb2"
+    ],
+    "periodical_titles": [
+      "Искусственные спутники Земли",
+      "Бюллетень станций оптических наблюдений искусственных спутников"
+    ],
+    "relationship_to_holdings": "SEARCH_CONTEXT_NOT_PROVEN_SAME_ISSUE",
+    "original_issue_facsimile": null,
+    "target_specific_observation_epoch": null,
+    "instrument_covariance": null,
+    "lean_candidate": "Conde1963.sovietContemporaryBibliographicLeads",
+    "sensor_count_added": 0,
+    "activation": false
   },
   "source_relation": "TWO_TITLES_HOLDINGS_NOT_INDEPENDENT_TRACKING",
   "evidence_level": "BIBLIOGRAPHIC_METADATA_NOT_INSTRUMENTAL",
@@ -146,6 +168,46 @@
       "original_page": null,
       "observing_epoch_utc": null,
       "instrument_sigma": null,
+      "activation": false
+    },
+    {
+      "from": "C241-L34",
+      "to": "SOVIET_PERIODICAL_SEARCH_TITLE_1",
+      "type": "CONTEMPORARY_BIBLIOGRAPHIC_MENTION_NOT_MEASUREMENT",
+      "title": "Искусственные спутники Земли",
+      "source_url": "https://djvu.online/jpg2/r/a/B/raBEGf36i2gfZ/006.webp",
+      "source_webp_sha256": "0d68650aa352f7404f4251abf53c3d117efd3dde377b6c5667df85516089f901",
+      "printed_page": null,
+      "observing_epoch_utc": null,
+      "sensor": null,
+      "activation": false
+    },
+    {
+      "from": "C241-L34",
+      "to": "SOVIET_PERIODICAL_SEARCH_TITLE_2",
+      "type": "CONTEMPORARY_BIBLIOGRAPHIC_MENTION_NOT_MEASUREMENT",
+      "title": "Бюллетень станций оптических наблюдений искусственных спутников",
+      "source_url": "https://djvu.online/jpg2/r/a/B/raBEGf36i2gfZ/007.webp",
+      "source_webp_sha256": "fea39a91dae6ce25b977e4562c758818dc44667dc7559b7d99f9ecc6231f4bb2",
+      "printed_page": 6,
+      "observing_epoch_utc": null,
+      "sensor": null,
+      "activation": false
+    },
+    {
+      "from": "C241-L34",
+      "to": "C241-L29",
+      "type": "RESEARCH_CONTEXT_NOT_VERIFIED_SAME_ISSUE_OR_TRACK",
+      "publication_identity_confirmed": false,
+      "target_norad_identified": false,
+      "activation": false
+    },
+    {
+      "from": "C241-L34",
+      "to": "C241-L31",
+      "type": "RESEARCH_CONTEXT_NOT_VERIFIED_SAME_ISSUE_OR_TRACK",
+      "publication_identity_confirmed": false,
+      "target_norad_identified": false,
       "activation": false
     },
     {
