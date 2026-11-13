@@ -1,0 +1,72 @@
+{
+  "schema": "conde.c241-p31-space-weather-asof-audit/v1",
+  "source_snapshot": "research/meteorology/space_weather_msise_inputs_1963_11_07_09.json",
+  "source_snapshot_sha256": "a8601410663ef3f24b6b9f17cc0ff3103e1a97f24614617815357fa81cc5c955",
+  "source_F107_sha256": "60c51e8878dc70561e615b5cefb26315c201116fe4560799ec19237bed691c61",
+  "source_geomagnetic_family": "GFZ Kp/ap/Ap (dependent, not three independent sensors)",
+  "claim": "Centered F107A, daily Ap and current 3-hour bins use information after the selected evaluation instant. Valid as retrospective inputs, not as-of forecasts.",
+  "retrospective_driver_status": "RETROSPECTIVE_INPUT_ONLY",
+  "prospective_driver_status": "PROSPECTIVE_SCORE_NOT_AUTHORIZED",
+  "prospective_score": "NOT_AUTHORIZED",
+  "historical_density_and_reentry_posterior": "NOT_RUN",
+  "historical_constraint": "CONNECTED_PENDING_CALIBRATION",
+  "rows": [
+    {
+      "model_evaluation_utc_not_event_time": "1963-11-07T12:00:00Z",
+      "f107a_centered_window_utc_days": {
+        "first": "1963-09-28",
+        "last": "1963-12-17",
+        "total": 81
+      },
+      "f107a_days_after_asof": 40,
+      "ap_daily_bins_at_or_after_asof": 4,
+      "ap_current_bin_utc": {
+        "start": "1963-11-07T12:00:00Z",
+        "end_exclusive": "1963-11-07T15:00:00Z"
+      },
+      "f107_previous_day_release_time": null,
+      "definitive_ap_kp_release_time": null,
+      "eligible_for_prospective_asof_evaluation": false,
+      "eligible_for_retrospective_driver_reconstruction": true,
+      "physical_constraint_active": false
+    },
+    {
+      "model_evaluation_utc_not_event_time": "1963-11-08T12:00:00Z",
+      "f107a_centered_window_utc_days": {
+        "first": "1963-09-29",
+        "last": "1963-12-18",
+        "total": 81
+      },
+      "f107a_days_after_asof": 40,
+      "ap_daily_bins_at_or_after_asof": 4,
+      "ap_current_bin_utc": {
+        "start": "1963-11-08T12:00:00Z",
+        "end_exclusive": "1963-11-08T15:00:00Z"
+      },
+      "f107_previous_day_release_time": null,
+      "definitive_ap_kp_release_time": null,
+      "eligible_for_prospective_asof_evaluation": false,
+      "eligible_for_retrospective_driver_reconstruction": true,
+      "physical_constraint_active": false
+    },
+    {
+      "model_evaluation_utc_not_event_time": "1963-11-09T12:00:00Z",
+      "f107a_centered_window_utc_days": {
+        "first": "1963-09-30",
+        "last": "1963-12-19",
+        "total": 81
+      },
+      "f107a_days_after_asof": 40,
+      "ap_daily_bins_at_or_after_asof": 4,
+      "ap_current_bin_utc": {
+        "start": "1963-11-09T12:00:00Z",
+        "end_exclusive": "1963-11-09T15:00:00Z"
+      },
+      "f107_previous_day_release_time": null,
+      "definitive_ap_kp_release_time": null,
+      "eligible_for_prospective_asof_evaluation": false,
+      "eligible_for_retrospective_driver_reconstruction": true,
+      "physical_constraint_active": false
+    }
+  ]
+}
