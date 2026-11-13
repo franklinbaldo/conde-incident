@@ -106,13 +106,24 @@
           "perigee_km": 333
         }
       ],
-      "source_status": "EXISTING_MATRIX_C227_HAS_89_6_MIN_UNRECONCILED_VISUAL_READ_L18_89_2_P6",
+      "source_status": "FACSIMILE_RECHECKED_89_2_C227_ERRATUM_2026_11_13",
       "transcription_conflict": {
         "matrix_occurrence": "C227",
         "prior_reported_period_min": "89.6",
         "facsimile_current_read_period_min": "89.2",
-        "status": "OPEN_REQUIRES_INDEPENDENT_REVIEW",
-        "eligible_for_calibrated_physical_fit": false
+        "status": "RESOLVED_AS_TRANSCRIPTION_ERRATUM_NOT_INSTRUMENT_VALIDATION",
+        "eligible_for_calibrated_physical_fit": false,
+        "independent_review": {
+          "reviewed_utc_date": "2026-11-13",
+          "method": "Independent visual inspection of NASA NTRS PDF page image, not extracted text/OCR",
+          "ntrs_id": "19640005618",
+          "pdf_page_index": 6,
+          "printed_page": 5,
+          "verified_1963_3c_period_min": "89.2",
+          "superseded_c227_period_min": "89.6",
+          "source_sha256": "d9504a8641baa65c208e41034e77b0e9b1cc01b4acb2a4f95541bd9e75d3783d",
+          "limits": "Printed compiled-period transcription only; original sensor epoch/frame/sigma unavailable"
+        }
       }
     }
   ],
@@ -157,6 +168,6 @@
     "activation": "CANDIDATE_NOT_ACTIVATED",
     "independent_density_constraint_proven": false,
     "quantified_uncertainty_reduction": "NOT_EVALUABLE",
-    "lean_numeric_use": "DOCUMENTARY_INTERVAL_ONLY_CONDITIONAL_ON_UNRESOLVED_DEC31_TRANSCRIPTION"
+    "lean_numeric_use": "DOCUMENTARY_INTERVAL_89_2_TRANSCRIPTION_RECONCILED_NOT_INSTRUMENT_CALIBRATED"
   }
 }
