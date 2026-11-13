@@ -100,6 +100,20 @@ class ScientificBridgeTests(unittest.TestCase):
         self.assertEqual(x["simulator_parameter"],
                          "sim_param_legal_boundary_Conde_BA_1963")
 
+    def test_historical_nmc_manual_is_separate_conditional_bridge(self):
+        links = self.data["supplementary_links"]
+        self.assertEqual(len(links), 1)
+        self.assertEqual(links[0]["id"], "C241-L14-NMC-ON20-LAYOUT")
+        path = ROOT / links[0]["path"]
+        import hashlib
+        self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), links[0]["sha256"])
+        link = json.loads(path.read_text())
+        self.assertEqual(link["manual_publication_year"], 1964)
+        self.assertIsNone(link["validated_1963_layout_reference"])
+        self.assertIsNone(link["decoded_station_day_matches"])
+        self.assertEqual(link["tape_source_id"], "MET-NMC-20261112-09")
+        self.assertFalse(link["active_physical_constraint"])
+
     def test_export_matches_byte_for_byte(self):
         raw = (ROOT / bridge.OUTPUT).read_bytes()
         self.assertEqual(raw, bridge.serialize(self.data).encode())
@@ -112,6 +126,7 @@ class ScientificBridgeTests(unittest.TestCase):
             target.mkdir(parents=True)
             for path, _ in bridge.INPUTS:
                 (root / path).write_bytes((ROOT / path).read_bytes())
+            (root / bridge.on20.OUTPUT).write_bytes((ROOT / bridge.on20.OUTPUT).read_bytes())
             (root / "public/data/conde-source-citations.json").write_bytes(
                 (ROOT / "public/data/conde-source-citations.json").read_bytes())
             (root / "research").symlink_to(ROOT / "research", target_is_directory=True)
@@ -131,6 +146,7 @@ class ScientificBridgeTests(unittest.TestCase):
             root.joinpath("public/data").mkdir(parents=True)
             root.joinpath("research").symlink_to(ROOT / "research", target_is_directory=True)
             root.joinpath("formal").symlink_to(ROOT / "formal", target_is_directory=True)
+            (root / bridge.on20.OUTPUT).write_bytes((ROOT / bridge.on20.OUTPUT).read_bytes())
             inputs = []
             for path, builder in bridge.INPUTS:
                 data = copy.deepcopy(builder(ROOT))
