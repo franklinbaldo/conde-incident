@@ -54,6 +54,14 @@ export function archivePages(citations, lineage) {
   }
   assert.equal(grouped.size, citations.curated_occurrences, 'Cobertura curada divergente');
   assert.equal(citations.curated_occurrences + citations.unmapped_occurrences, citations.total_matrix_occurrences);
+  // Every declared ancestry must have a corresponding curated citation. Otherwise
+  // unrendered, potentially misleading dependencies silently survive validation.
+  const citationKeys = new Set(citations.records.map(r =>
+    JSON.stringify([r.snapshot_ref, r.source_id])));
+  for (const entry of lineage.citation_lineages) {
+    assert.ok(citationKeys.has(JSON.stringify([entry.snapshot_ref, entry.source_id])),
+      'Genealogia órfã: não corresponde a uma citação curada');
+  }
   const files = new Map();
   const sorted = [...grouped].sort(([a],[b])=> {
     const [ia,na] = a.slice(1).split('#').map(Number), [ib,nb] = b.slice(1).split('#').map(Number);

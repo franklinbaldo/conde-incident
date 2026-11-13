@@ -48,6 +48,16 @@ test('SSG fails closed on lineage and snapshot errors', () => {
   const missing=clone(ancestry);
   missing.citation_lineages.pop();
   assert.throws(()=>archivePages(feed,missing), /Genealogia ausente/);
+  // Adversary: a new dependency for a non-curated source must not be ignored.
+  const orphan=clone(ancestry);
+  orphan.citation_lineages.push({
+    ...clone(ancestry.citation_lineages[0]),
+    source_id:'SYNTHETIC_SOURCE_NOT_IN_CURATED_CITATIONS',
+    declared_upstream_paths:[],
+  });
+  assert.throws(()=>archivePages(feed,orphan), /Genealogia órfã/);
+  // Positive control: the unmodified one-to-one corpus is accepted.
+  assert.doesNotThrow(()=>archivePages(feed,ancestry));
   const confused=clone(ancestry);
   confused.citation_lineages[0].family_id='OTHER';
   assert.throws(()=>archivePages(feed,confused), /Família divergente/);

@@ -1,0 +1,323 @@
+{
+  "schema": "conde.gaviao-retrospective-window/v1",
+  "review": "G33",
+  "date": "2026-11-13",
+  "reviewed_from_exclusive_main_sha": "c98ccd9a2ef66d202108c8e6bf7f430b6eb25368",
+  "reviewed_through_inclusive_main_sha": "c9b4482f7850434a9124dfe6a12c540006aa468f",
+  "first_parent_integrations": 18,
+  "squash_merges": 15,
+  "conventional_merges": 3,
+  "dag_commits": 38,
+  "direct_commits": 0,
+  "additional_dag_commits": 20,
+  "entries": [
+    {
+      "main_sha": "221a60bf3d596bafd6d1addd4ec0d06740b8f4dd",
+      "first_parent_sha": "c98ccd9a2ef66d202108c8e6bf7f430b6eb25368",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 377,
+      "subject": "93 🐢 C241-L17: NASA 15/08/1963 liga abril a outubro sem inventar épocas (#377)",
+      "changed_files": [
+        ".github/workflows/tle-nasa-ssr-aug15.yml",
+        "research/tle_custody/evidence_matrix_C241-L17_2026-11-13.md",
+        "research/tle_custody/nasa_ssr_aug15_1963_C241-L17.json",
+        "tests/test_tle_nasa_ssr_aug15_audit.py",
+        "tools/tle_nasa_ssr_aug15_audit.py"
+      ],
+      "claim_status": "REVIEWED_SCOPE_SOURCE_LIMITS_NOT_NEW_PHYSICAL_OBSERVATION"
+    },
+    {
+      "main_sha": "4b4b64b52c5795ee5ead1d562184cd234cc94408",
+      "first_parent_sha": "221a60bf3d596bafd6d1addd4ec0d06740b8f4dd",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 379,
+      "subject": "88 🦌 Corrigir leakage UTC no consumidor de missingness (#379)",
+      "changed_files": [
+        "research/statistics/CATALOG_DAY_MISSINGNESS.md",
+        "tests/test_raan_catalog_day_missingness.py",
+        "tools/raan_catalog_day_missingness.py"
+      ],
+      "claim_status": "REVIEWED_SCOPE_SOURCE_LIMITS_NOT_NEW_PHYSICAL_OBSERVATION"
+    },
+    {
+      "main_sha": "0d6c7faddcae83b38d6227be98e31409c831d481",
+      "first_parent_sha": "4b4b64b52c5795ee5ead1d562184cd234cc94408",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 380,
+      "subject": "🐝 Integrar a captura ON20 íntegra mais antiga ao contrato Lean/site (#380)",
+      "changed_files": [
+        "formal/Conde1963/NmcLayout.lean",
+        "formal/tests/test_nmc_candidate.py",
+        "public/data/conde-observable-dependency-links.json",
+        "public/data/conde-on20-layout-link.json",
+        "public/data/conde-scientific-bridges.json",
+        "public/data/conde-wayback-citation-links.json",
+        "tools/export_nmc_on20_layout_link.py"
+      ],
+      "claim_status": "REVIEWED_SCOPE_SOURCE_LIMITS_NOT_NEW_PHYSICAL_OBSERVATION"
+    },
+    {
+      "main_sha": "f6c9c6afadeaeefe8da02ce075ebbc54df7274d1",
+      "first_parent_sha": "0d6c7faddcae83b38d6227be98e31409c831d481",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 381,
+      "subject": "audit(gaviao): reject circular documentary lineage and record G32 (#381)",
+      "changed_files": [
+        "research/audits/gaviao-main-window-20261113-g32.json",
+        "research/audits/gaviao-main-window-20261113-g32.md",
+        "scripts/ssg-documentary-archive.mjs",
+        "tests/ssg-documentary-archive.test.mjs"
+      ],
+      "claim_status": "REVIEWED_SCOPE_SOURCE_LIMITS_NOT_NEW_PHYSICAL_OBSERVATION"
+    },
+    {
+      "main_sha": "fc55da3baa1c554d0d8e39a13f0026bb7e6ef959",
+      "first_parent_sha": "f6c9c6afadeaeefe8da02ce075ebbc54df7274d1",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 382,
+      "subject": "82 🦦 Custódia do mapa SEI de Conde (2017): hash, 16 pontos e barreira temporal (#382)",
+      "changed_files": [
+        "research/archive/conde_sei_2017_map_custody_20261113.json",
+        "tests/test_conde_sei_2017_map.py",
+        "tools/verify_conde_sei_2017_map.py"
+      ],
+      "claim_status": "REVIEWED_SCOPE_SOURCE_LIMITS_NOT_NEW_PHYSICAL_OBSERVATION"
+    },
+    {
+      "main_sha": "3e7e06a2be8a9e9b8d682067e8bf85f5be69e8dc",
+      "first_parent_sha": "fc55da3baa1c554d0d8e39a13f0026bb7e6ef959",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 384,
+      "subject": "test(ci): reject duplicate pull_request_target alongside PR (#384)",
+      "changed_files": [
+        "tests/test_ci_event_policy_all_workflows.py"
+      ],
+      "claim_status": "REVIEWED_SCOPE_SOURCE_LIMITS_NOT_NEW_PHYSICAL_OBSERVATION"
+    },
+    {
+      "main_sha": "58a17484f4e74576bf12da69e7a121e84656f59d",
+      "first_parent_sha": "3e7e06a2be8a9e9b8d682067e8bf85f5be69e8dc",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 386,
+      "subject": "90 🐙 C241-P9: three NASA editions rounded bounds and Lean rankings (#386)",
+      "changed_files": [
+        ".github/workflows/lean-core.yml",
+        "formal/Conde1963.lean",
+        "formal/Conde1963/SsrThreeEditions.lean",
+        "formal/scripts/compile_ssr_three_editions.py",
+        "formal/tests/test_ssr_three_editions.py",
+        "research/constraints/C241-P9_ssr_three_edition_intervals.json"
+      ],
+      "claim_status": "REVIEWED_SCOPE_SOURCE_LIMITS_NOT_NEW_PHYSICAL_OBSERVATION"
+    },
+    {
+      "main_sha": "635bb9302d5d6dcad5feb5b36f041ce2d34f3707",
+      "first_parent_sha": "58a17484f4e74576bf12da69e7a121e84656f59d",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 385,
+      "subject": "70 🦎 OMM Vol. A 2014 distingue Recife 82899/82900 sem retroprojetar 1963 (#383) (#385)",
+      "changed_files": [
+        "research/meteorology/wmo_vola_2014_recife.json",
+        "research/meteorology/wmo_vola_2014_recife.md",
+        "tests/test_wmo_vola_2014_recife.py",
+        "tools/validate_wmo_vola_2014_recife.py"
+      ],
+      "claim_status": "REVIEWED_SCOPE_SOURCE_LIMITS_NOT_NEW_PHYSICAL_OBSERVATION"
+    },
+    {
+      "main_sha": "21d9b74c79c001beccf3ec28c3c14816bf71fdde",
+      "first_parent_sha": "635bb9302d5d6dcad5feb5b36f041ce2d34f3707",
+      "other_parents": [
+        "efacc85337d2dd1b173adeb89dd4318f9cc305a1"
+      ],
+      "merge_method": "merge",
+      "pr": 387,
+      "subject": "Merge PR #387: formalize 527/528/529 relative trajectories in Lean",
+      "changed_files": [
+        "formal/Conde1963.lean",
+        "formal/Conde1963/CoreAxioms.lean",
+        "formal/Conde1963/RelativeTrajectories.lean",
+        "research/constraints/C241-P10_three_object_relative_trajectories.json"
+      ],
+      "claim_status": "REVIEWED_SCOPE_SOURCE_LIMITS_NOT_NEW_PHYSICAL_OBSERVATION"
+    },
+    {
+      "main_sha": "0427dcc6b49051901768247f87009faf8e5ad869",
+      "first_parent_sha": "21d9b74c79c001beccf3ec28c3c14816bf71fdde",
+      "other_parents": [
+        "caf0deea2294785b4adfac1e354f286a496c26fd"
+      ],
+      "merge_method": "merge",
+      "pr": 389,
+      "subject": "Merge pull request #389 from franklinbaldo/research/caranguejo-cgeo19-1959-photo-attributions",
+      "changed_files": [
+        "research/geo/README.md",
+        "research/geo/cgeo19_1959_editorial_photographs.json",
+        "research/geo/cgeo19_1959_editorial_photographs.md",
+        "tests/test_cgeo19_1959_photos.py",
+        "tools/cgeo19_1959_photos.py"
+      ],
+      "claim_status": "REVIEWED_SCOPE_SOURCE_LIMITS_NOT_NEW_PHYSICAL_OBSERVATION"
+    },
+    {
+      "main_sha": "b8dca3183ed27d7aceef124a174ac8b33d02d828",
+      "first_parent_sha": "0427dcc6b49051901768247f87009faf8e5ad869",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 390,
+      "subject": "feat(ssg): páginas OKF tipadas e specs para site Conde (#390)",
+      "changed_files": [
+        ".github/workflows/pages.yml",
+        ".okf/specs/constraint.md",
+        ".okf/specs/evidence.md",
+        ".okf/specs/experiment.md",
+        ".okf/specs/hypothesis.md",
+        ".okf/specs/page.md",
+        ".okf/specs/source.md",
+        "docs/OKF_SITE_TYPES.md",
+        "scripts/check-ssg-okf.mjs",
+        "scripts/prepare-ssg.mjs",
+        "scripts/ssg-documentary-archive.mjs",
+        "tests/ssg-okf-types.test.mjs"
+      ],
+      "claim_status": "REVIEWED_SCOPE_SOURCE_LIMITS_NOT_NEW_PHYSICAL_OBSERVATION"
+    },
+    {
+      "main_sha": "211be9e4c8ee66b06b8d25daa98fef4322a4c1ac",
+      "first_parent_sha": "b8dca3183ed27d7aceef124a174ac8b33d02d828",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 391,
+      "subject": "🦫 G32: finite-amplitude nonlinear audit for Cartesian STM (#391)",
+      "changed_files": [
+        ".github/workflows/orbit-kernel.yml",
+        "research/constraints/stm_nonlinear_envelope_g32.json",
+        "src/lib/orbitStmEnvelope.ts",
+        "tests/orbitStmEnvelope.test.mjs"
+      ],
+      "claim_status": "REVIEWED_SCOPE_SOURCE_LIMITS_NOT_NEW_PHYSICAL_OBSERVATION"
+    },
+    {
+      "main_sha": "771a43949c2c46b5b434a6742003f2e6aac973be",
+      "first_parent_sha": "211be9e4c8ee66b06b8d25daa98fef4322a4c1ac",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 392,
+      "subject": "90 🦊 SSG: navegar ocorrências por famílias documentais (#392)",
+      "changed_files": [
+        "scripts/ssg-documentary-archive.mjs",
+        "tests/ssg-documentary-archive.test.mjs",
+        "tests/ssg-okf-types.test.mjs"
+      ],
+      "claim_status": "REVIEWED_SCOPE_SOURCE_LIMITS_NOT_NEW_PHYSICAL_OBSERVATION"
+    },
+    {
+      "main_sha": "32a006d58ffc881074d0a345327952a0210895f2",
+      "first_parent_sha": "771a43949c2c46b5b434a6742003f2e6aac973be",
+      "other_parents": [
+        "d20855885d6119b23f1c5ce88e7ebde6079c2adb"
+      ],
+      "merge_method": "merge",
+      "pr": 394,
+      "subject": "Merge PR #394: NASA July and post-B 527/529 survivor orbit evidence to Lean",
+      "changed_files": [
+        ".github/workflows/tle-nasa-ssr-jul-dec.yml",
+        "formal/Conde1963.lean",
+        "formal/Conde1963/CoreAxioms.lean",
+        "formal/Conde1963/SsrSurvivorIntervals.lean",
+        "research/tle_custody/evidence_matrix_C241-L18_2026-11-13.md",
+        "research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json",
+        "tests/test_tle_nasa_ssr_jul_dec_audit.py",
+        "tools/tle_nasa_ssr_jul_dec_audit.py"
+      ],
+      "claim_status": "REVIEWED_SCOPE_SOURCE_LIMITS_NOT_NEW_PHYSICAL_OBSERVATION"
+    },
+    {
+      "main_sha": "0b582569df6f7345d3c7ffe437aafe61e2cfa9a9",
+      "first_parent_sha": "32a006d58ffc881074d0a345327952a0210895f2",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 393,
+      "subject": "feat(ssg): páginas OKF próprias para mapa e experimentos (#393)",
+      "changed_files": [
+        ".github/workflows/pages.yml",
+        "docs/OKF_SITE_TYPES.md",
+        "pages/hipoteses/page.md",
+        "pages/mapa/page.md",
+        "pages/metodo/page.md",
+        "pages/simulacoes/inverso/page.md",
+        "pages/simulacoes/montecarlo/page.md",
+        "pages/simulacoes/page.md",
+        "pages/simulacoes/sensibilidade/page.md",
+        "pages/simulacoes/tles/page.md",
+        "pages/simulacoes/triangulacao/page.md",
+        "scripts/check-ssg-authored-site.mjs",
+        "scripts/check-ssg-okf.mjs",
+        "scripts/prepare-ssg.mjs",
+        "scripts/ssg-authored-pages.mjs",
+        "templates/page.html",
+        "tests/ssg-authored-pages.test.mjs"
+      ],
+      "claim_status": "REVIEWED_SCOPE_SOURCE_LIMITS_NOT_NEW_PHYSICAL_OBSERVATION"
+    },
+    {
+      "main_sha": "b2ef7d2de8f2f34d49208383dd3c74c33fd0348c",
+      "first_parent_sha": "0b582569df6f7345d3c7ffe437aafe61e2cfa9a9",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 395,
+      "subject": "90 🦇 Corrigir contraste de rótulos do cenário inverso e rodapé (#395)",
+      "changed_files": [
+        "src/App.tsx",
+        "src/components/InversePassInspector.tsx",
+        "tests/caderno_reflow_smoke.mjs",
+        "tests/ui_keyboard_smoke.mjs"
+      ],
+      "claim_status": "REVIEWED_SCOPE_SOURCE_LIMITS_NOT_NEW_PHYSICAL_OBSERVATION"
+    },
+    {
+      "main_sha": "06705c34fc540edde7f7435cf67d12cd0424c4c7",
+      "first_parent_sha": "b2ef7d2de8f2f34d49208383dd3c74c33fd0348c",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 398,
+      "subject": "90 🐙 C241-P11: NASA 15/11 contra 30/11, controles e holdout Lean (#398)",
+      "changed_files": [
+        ".github/workflows/lean-core.yml",
+        "formal/Conde1963.lean",
+        "formal/Conde1963/CoreAxioms.lean",
+        "formal/Conde1963/SsrNovember.lean",
+        "formal/scripts/compile_ssr_november.py",
+        "formal/tests/test_ssr_november.py",
+        "research/constraints/C241-P11_november_historical_printings.json",
+        "research/constraints/C241-P11_november_historical_printings.md",
+        "research/tle_custody/evidence_matrix_C241-L19_2026-11-13.md",
+        "research/tle_custody/nasa_ssr_nov15_1963_C241-L19.json"
+      ],
+      "claim_status": "REVIEWED_SCOPE_SOURCE_LIMITS_NOT_NEW_PHYSICAL_OBSERVATION"
+    },
+    {
+      "main_sha": "c9b4482f7850434a9124dfe6a12c540006aa468f",
+      "first_parent_sha": "06705c34fc540edde7f7435cf67d12cd0424c4c7",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 399,
+      "subject": "fix(tle): C241-L18 NASA July 3C perigee 452 km (#399)",
+      "changed_files": [
+        "research/tle_custody/evidence_matrix_C241-L18_2026-11-13.md",
+        "research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json",
+        "tests/test_tle_nasa_ssr_jul_dec_audit.py",
+        "tools/tle_nasa_ssr_jul_dec_audit.py"
+      ],
+      "claim_status": "REVIEWED_SCOPE_SOURCE_LIMITS_NOT_NEW_PHYSICAL_OBSERVATION"
+    }
+  ]
+}
