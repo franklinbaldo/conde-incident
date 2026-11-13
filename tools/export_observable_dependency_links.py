@@ -33,6 +33,88 @@ def require(condition: bool, detail: str) -> None:
         raise ValueError('observable dependency contract: ' + detail)
 
 
+
+def build_caravelas_external(report: dict, graph: dict, recife: dict,
+                            parent_hashes: dict) -> dict:
+    """Join one external source to the cumulative latent-wind graph, without inventing a Cnn."""
+    from audit_isd_caravelas_1963 import SOURCE_SHA256, WINDOW_SHA256
+
+    source_id = 'MET-ISD-19631107-09-CARAVELAS-01'
+    latent = 'wind_field_nov_1963_with_altitude_time_and_position'
+    source = report['source']
+    require(report['schema'] == 'conde.isd-caravelas-hourly-1963/v1'
+            and source['full_gzip_sha256'] == SOURCE_SHA256
+            and source['excerpt_sha256'] == WINDOW_SHA256
+            and source['excerpt_rows'] == 72
+            and report['station']['usaf'] == '834970'
+            and report['station']['wban'] == '99999'
+            and report['station']['position_epoch_in_1963_verified'] is None
+            and report['quality']['measurement_uncertainty'] is None
+            and report['quality']['instrument_identity_1963'] is None
+            and report['quality']['station_specific_transfer_uncertainty_to_conde'] is None
+            and report['interpretation']['numeric_constraint_on_conde'] is None,
+            'Caravelas archive/custody or instrumental status changed')
+    require(graph['schema'] == 'conde.historical-surface-pending-bridge/v1'
+            and graph['id'] == source_id
+            and graph['source']['url'] == source['url']
+            and graph['source']['full_gzip_sha256'] == SOURCE_SHA256
+            and graph['source']['excerpt_sha256'] == WINDOW_SHA256
+            and graph['source']['independence_family'] ==
+                'NOAA_NCEI_ISD_DIGITIZED_SURFACE_OBSERVATIONS'
+            and graph['observation']['rows'] == 72
+            and graph['observation']['station_position_in_1963'] is None
+            and graph['observation']['measurement_method_in_1963'] is None
+            and graph['status'] == 'CONNECTED_PENDING_SPATIOTEMPORAL_CALIBRATION'
+            and graph['active_conde_constraint'] is None
+            and graph['uncertainty_m_s'] is None
+            and graph['instrument_covariance'] is None,
+            'Caravelas graph cannot be an activated Conde constraint')
+    expected = [
+        (source_id, 'Caravelas_surface_wind_at_hour_t', 'OBSERVES_DIGITIZED'),
+        ('Caravelas_surface_wind_at_hour_t', 'Conde_surface_wind_at_hour_t',
+         'PENDING_SPATIAL_TRANSFER'),
+        ('Conde_surface_wind_at_hour_t', 'Conde_entry_drag_or_fall_location',
+         'PENDING_TRAJECTORY_AND_ALTITUDE_MODEL'),
+        (source_id, 'C149-C151 Recife IGRA sounding family',
+         'CONTEXT_NOT_INDEPENDENCE_CERTIFIED'),
+    ]
+    require([(e['from'], e['to'], e['type']) for e in graph['edges']] == expected,
+            'missing/reversed Caravelas edges or false spatial observation')
+    require(recife['source_id'] == 'NOAA_IGRA_RECIFE_1963'
+            and recife['matrix_occurrence'].endswith(':C151#1')
+            and recife['activation'] is False
+            and recife['simulator_value'] is None
+            and recife['latent_parameter_id'] == latent,
+            'Caravelas is external to matrix; Recife context must stay C151#1')
+    return {
+        'source_id': source_id,
+        'matrix_occurrence': None,  # NOAA/ISD Caravelas is not an invented Cnn.
+        'source_url': source['url'],
+        'source_family': graph['source']['independence_family'],
+        'full_gzip_sha256': SOURCE_SHA256,
+        'excerpt_sha256': WINDOW_SHA256,
+        'station_usaf': '834970',
+        'station_wban': '99999',
+        'digitized_station_hour_rows': 72,
+        'latent_parameter_id': latent,
+        'graph_edges': graph['edges'],
+        'activation_requirements': graph['necessary_for_promotion'],
+        'recife_context': {'matrix_occurrence': recife['matrix_occurrence'],
+                           'row_sha256': recife['row_sha256'],
+                           'source_id': recife['source_id'],
+                           'independence_certified': False},
+        'source_parent_sha256': parent_hashes,
+        'station_position_1963': None,
+        'instrument_covariance': None,
+        'spatial_transfer_operator': None,
+        'terminal_epoch_528': None,
+        'simulator_value': None,
+        'activation': False,
+        'status': 'CONNECTED_PENDING_SPATIOTEMPORAL_CALIBRATION',
+        'physical_domain_effect': 'THETA_UNCHANGED',
+    }
+
+
 def build(root: Path = ROOT) -> dict:
     def pinned(path: str, builder) -> dict:
         raw = (root / path).read_bytes()
@@ -134,8 +216,17 @@ def build(root: Path = ROOT) -> dict:
         'research/constraints/ssr_1963_observable_graph.json').read_text())['parameters']}
     require(source_values['C179#1']['latent_parameter_id'] in param_ids,
             'orbital latent parameter reference lost')
+    external_paths = ('research/meteorology/isd_caravelas_19631107_09.json',
+                      'research/constraints/isd_caravelas_surface_1963.json')
+    parents = {p: (root / p).read_bytes() for p in external_paths}
+    report, graph = (json.loads(parents[p]) for p in external_paths)
+    recife = next(x for x in rows if x['source_id'] == 'NOAA_IGRA_RECIFE_1963')
+    caravelas = build_caravelas_external(
+        report, graph, recife,
+        {p: hashlib.sha256(raw).hexdigest() for p, raw in parents.items()})
     return {
         'schema': 'conde.observable-dependency-links/v1',
+        'external_source_edges': [caravelas],
         'matrix_git_blob_sha1': pg.MATRIX_BLOB_SHA,
         'contract_id': contract['contract_id'],
         'contract_status': contract['contract_status'],

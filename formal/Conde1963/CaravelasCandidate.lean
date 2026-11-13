@@ -16,6 +16,12 @@ structure ArchivedSurfaceCandidate where
   observations : Nat
   status : String
   latentParameter : String
+  observedVariable : String
+  spatialTarget : String
+  spatialTransfer : Option String
+  stationPosition1963 : Option String
+  instrumentCovariance : Option String
+  terminalEpoch528 : Option String
   deriving Repr
 
 def caravelas1963Candidate : ArchivedSurfaceCandidate :=
@@ -24,7 +30,13 @@ def caravelas1963Candidate : ArchivedSurfaceCandidate :=
     windowSha256 := "c6926a86150df982d13286285c17a70e4752cb1ce0ffe1d44ae5330be215a000"
     observations := 72
     status := "CONNECTED_PENDING_SPATIOTEMPORAL_CALIBRATION"
-    latentParameter := "wind_field_nov_1963_with_altitude_time_and_position" }
+    latentParameter := "wind_field_nov_1963_with_altitude_time_and_position"
+    observedVariable := "Caravelas_surface_wind_at_hour_t"
+    spatialTarget := "Conde_surface_wind_at_hour_t"
+    spatialTransfer := none
+    stationPosition1963 := none
+    instrumentCovariance := none
+    terminalEpoch528 := none }
 
 -- The matched C151#1 is IGRA Recife context, not a Caravelas measurement.
 def caravelasComparisonContext : MatrixRef :=
