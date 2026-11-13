@@ -1,0 +1,89 @@
+{
+  "schema": "conde.isd-caravelas-derived-vector-scientific-bridge/v1",
+  "id": "ABELHA-G39-CARAVELAS-DERIVED-VECTORS",
+  "parents_sha256": {
+    "research/meteorology/isd_caravelas_vectors_1963.json": "58950e685577e7302c85c3640ae8660e8a42cacb6aeaae0504354996f67f7f63",
+    "research/constraints/isd_caravelas_vector_edges_1963.json": "9908c716e0df00b627ec95a874d52051997dfcbd1de30dd5845b03439075554c",
+    "public/data/conde-isd-caravelas-bridge.json": "07f7c7e897a4a75c3beb9e22261deff1acbbdfadbe597b945a7d192c6f639bc7"
+  },
+  "derived_occurrence_id": "MET-ISD-CARAVELAS-WIND-VECTORS-19631107-09",
+  "original_occurrence_id": "MET-ISD-19631107-09-CARAVELAS-01",
+  "source_url": "https://www.ncei.noaa.gov/pub/data/noaa/1963/834970-99999-1963.gz",
+  "source_family": "NOAA_NCEI_ISD_DIGITIZED_SURFACE_OBSERVATIONS",
+  "full_gzip_sha256": "c4a0b2f625e8febcd03c4b6ca6ac37b91c9d38423a2ccddd6f0cd7a7712e7e05",
+  "window_sha256": "c6926a86150df982d13286285c17a70e4752cb1ce0ffe1d44ae5330be215a000",
+  "archive_rows": 72,
+  "independent_instrument_families": 1,
+  "independent_daily_measurements": false,
+  "vector_convention": "meteorological FROM; eastward u=-s*sin(theta); northward v=-s*cos(theta)",
+  "derived_days": [
+    {
+      "date_utc": "1963-11-07",
+      "station_hours": 24,
+      "calm_hours": 0,
+      "u_millimetres_per_second": -2709,
+      "v_millimetres_per_second": -1702,
+      "scalar_speed_millimetres_per_second": 3367
+    },
+    {
+      "date_utc": "1963-11-08",
+      "station_hours": 24,
+      "calm_hours": 3,
+      "u_millimetres_per_second": -2334,
+      "v_millimetres_per_second": -2382,
+      "scalar_speed_millimetres_per_second": 3367
+    },
+    {
+      "date_utc": "1963-11-09",
+      "station_hours": 24,
+      "calm_hours": 1,
+      "u_millimetres_per_second": -2372,
+      "v_millimetres_per_second": -2812,
+      "scalar_speed_millimetres_per_second": 3775
+    }
+  ],
+  "graph_edges": [
+    {
+      "from": "MET-ISD-19631107-09-CARAVELAS-01",
+      "to": "Caravelas_hourly_speed_and_direction",
+      "type": "RECORDED_BY"
+    },
+    {
+      "from": "Caravelas_hourly_speed_and_direction",
+      "to": "Caravelas_surface_hourly_u_v",
+      "type": "SOURCE_DERIVED"
+    },
+    {
+      "from": "Caravelas_surface_hourly_u_v",
+      "to": "Caravelas_daily_vector_means",
+      "type": "AGGREGATION_NOT_INDEPENDENT_OBSERVATIONS"
+    },
+    {
+      "from": "Caravelas_daily_vector_means",
+      "to": "Conde_surface_wind",
+      "type": "TRANSFER_PENDING_CALIBRATION"
+    },
+    {
+      "from": "Caravelas_daily_vector_means",
+      "to": "Conde1963.caravelasDailyVectors",
+      "type": "LEAN_TYPED_DERIVATION"
+    },
+    {
+      "from": "Conde1963.caravelasDailyVectors",
+      "to": "wind_field_nov_1963_with_altitude_time_and_position",
+      "type": "PENDING_3D_TEMPORAL_SPATIAL_TRANSFER"
+    }
+  ],
+  "lean_module": "Conde1963.CaravelasCandidate",
+  "lean_declaration": "Conde1963.caravelasDailyVectors",
+  "lean_status": "TYPED_DOCUMENTARY_DERIVATION_NOT_PHYSICAL_PROOF",
+  "simulator_latent_parameter": "wind_field_nov_1963_with_altitude_time_and_position",
+  "simulator_value": null,
+  "instrument_uncertainty": null,
+  "station_position_epoch_1963": null,
+  "spatial_transfer_to_conde": null,
+  "vertical_transfer_to_528": null,
+  "terminal_epoch_528": null,
+  "activation": false,
+  "physical_domain_effect": "THETA_UNCHANGED"
+}
