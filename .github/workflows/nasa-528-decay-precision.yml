@@ -1,0 +1,40 @@
+name: Tartaruga - NASA 528 decay-day precision and source lineage
+on:
+  pull_request:
+    paths:
+      - research/constraints/nasa_528_decay_precision_C197_20261113.json
+      - research/tle_custody/evidence_matrix_C197-precision_2026-11-13.md
+      - tools/nasa_528_decay_precision_audit.py
+      - tests/test_nasa_528_decay_precision_audit.py
+      - .github/workflows/nasa-528-decay-precision.yml
+  push:
+    branches: [main]
+    paths:
+      - research/constraints/nasa_528_decay_precision_C197_20261113.json
+      - research/tle_custody/evidence_matrix_C197-precision_2026-11-13.md
+      - tools/nasa_528_decay_precision_audit.py
+      - tests/test_nasa_528_decay_precision_audit.py
+      - .github/workflows/nasa-528-decay-precision.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Exact HEAD and adversarial scientific gates
+        run: |
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+          python3 -m unittest discover -s tests -p test_nasa_528_decay_precision_audit.py -v
+          python3 tools/nasa_528_decay_precision_audit.py --output "$RUNNER_TEMP/nasa-528-precision.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nasa-528-decay-precision-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ${{ runner.temp }}/nasa-528-precision.json
+          if-no-files-found: warn
