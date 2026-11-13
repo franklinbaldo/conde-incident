@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Enforce 20 KB with exact editable exemptions and frozen legacy blobs.
+"""Enforce 20 KB with narrowly reviewed lockfiles and frozen legacy blobs.
 
 A listed legacy blob may remain untouched. It cannot grow or change in place.
-Generated lockfiles may be explicitly exempted without disabling other gates.
+No exemption can be granted merely by editing a JSON manifest.
 """
 from pathlib import Path
 import json
@@ -13,6 +13,9 @@ ROOT = Path(__file__).resolve().parents[1]
 LIMIT = 20_000
 MANIFEST = ROOT / "config/legacy-oversized-files.json"
 EXEMPTIONS = ROOT / "config/file-size-exemptions.json"
+# Adding a new mutable exception requires changing reviewed code and tests, not
+# just a JSON reason. Only the actually required generated lockfile is allowed.
+APPROVED_EDITABLE_LOCKFILES = frozenset({"bun.lock"})
 
 
 def git(*args):
@@ -35,6 +38,8 @@ def editable_exemptions():
             or name in paths
         ):
             raise ValueError(f"invalid or duplicate size exemption: {name!r}")
+        if name not in APPROVED_EDITABLE_LOCKFILES:
+            raise ValueError(f"unapproved mutable lockfile exemption: {name!r}")
         paths.add(name)
     return paths
 
