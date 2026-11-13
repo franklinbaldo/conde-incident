@@ -4,8 +4,8 @@
   "parent_sha256": {
     "research/meteorology/ghcnd_conde_precip_19631107_09.json": "960f165d90d44b1c7c26a05b01db65afb22d8073d47501524ae4e1f8eecde3a3",
     "research/constraints/ghcnd_conde_precip_19631107_09_edges.json": "89d1b07302ecb13422a950a72505f4fc4c851c8331d44329d5289142772d7f6e",
-    "public/data/conde-observable-dependency-links.json": "4ba50d68c989495d1c794571809016acbd2c5a10d9dee0b7e0edbd92f76951ca",
-    "public/data/conde-isd-caravelas-bridge.json": "47751c2fcdbd7bba860ec7bdbb266ee1415b3ab4a1f587dbe096b3853b832f42"
+    "public/data/conde-observable-dependency-links.json": "1ae35013ddb6c6e269dcc2e053b1faee3b1d9acd1170c885eef73438f3ebf4be",
+    "public/data/conde-isd-caravelas-bridge.json": "8de6eb2a6eed6033701e0836e5819f3d11e1131095991a2e7569e7535feb1a35"
   },
   "source_occurrence_id": "MET-GHCND-CONDE-19631107-09-01",
   "source_family": "NOAA_NCEI_GHCN_DAILY",

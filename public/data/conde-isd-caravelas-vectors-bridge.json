@@ -4,7 +4,7 @@
   "parents_sha256": {
     "research/meteorology/isd_caravelas_vectors_1963.json": "58950e685577e7302c85c3640ae8660e8a42cacb6aeaae0504354996f67f7f63",
     "research/constraints/isd_caravelas_vector_edges_1963.json": "9908c716e0df00b627ec95a874d52051997dfcbd1de30dd5845b03439075554c",
-    "public/data/conde-isd-caravelas-bridge.json": "47751c2fcdbd7bba860ec7bdbb266ee1415b3ab4a1f587dbe096b3853b832f42"
+    "public/data/conde-isd-caravelas-bridge.json": "8de6eb2a6eed6033701e0836e5819f3d11e1131095991a2e7569e7535feb1a35"
   },
   "derived_occurrence_id": "MET-ISD-CARAVELAS-WIND-VECTORS-19631107-09",
   "original_occurrence_id": "MET-ISD-19631107-09-CARAVELAS-01",

@@ -22,6 +22,11 @@ jobs:
           python-version: '3.12'
       - name: Test numeric transformations and fail-closed provenance
         run: python3 -m unittest discover -s formal/tests -p 'test_physical_observable_bridge.py' -v
+      - name: Replay cumulative documentary controls and falsifications
+        run: |
+          python3 -m unittest discover -s tests -p 'test_december_compilation_links.py' -v
+          python3 -m unittest discover -s tests -p 'test_observable_dependency_links.py' -v
+          python3 tools/export_observable_dependency_links.py --check-site
       - name: Export conservative Castor handoff
         run: |
           python3 formal/scripts/physical_observable_bridge.py --matrix research/evidence_matrix_C001-C238_2026-11-11.md --descent-vertical-speed-mps 50 --output /tmp/conde-physical-observables.json

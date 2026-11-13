@@ -18,6 +18,8 @@ import provenance_graph as pg
 import export_un_1963_status_bridge as un1963
 import export_soviet_raw_route_bridge as soviet
 from export_pending_documentary_routes import pending_documentary_routes
+import december_compilation_links as december
+from export_ssr_december_bridge import render as render_december
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = Path('public/data/conde-observable-dependency-links.json')
@@ -234,6 +236,13 @@ def build(root: Path = ROOT) -> dict:
     pending_edges = pending_documentary_routes(
         json.loads(pending_raw['public/data/conde-un-1963-status-bridge.json']),
         json.loads(pending_raw['public/data/conde-soviet-raw-route-bridge.json']))
+    # The frozen C227 transcription is erroneous (89.6 vs verified 89.2).
+    # Replay C241-L18, then attach printed cells, NOT orbital observations.
+    december_raw = (root / december.BRIDGE).read_bytes()
+    require(december_raw == render_december().encode('utf-8'),
+            'stale source-locked December report')
+    december_edges = december.build(json.loads(december_raw),
+                                    pg.matrix_occurrences(matrix))
     recife = next(x for x in rows if x['source_id'] == 'NOAA_IGRA_RECIFE_1963')
     caravelas = build_caravelas_external(
         report, graph, recife,
@@ -241,6 +250,8 @@ def build(root: Path = ROOT) -> dict:
     return {
         'schema': 'conde.observable-dependency-links/v1',
         'pending_documentary_edges': pending_edges,
+        'pending_december_compilation_edges': december_edges,
+        'december_bridge_sha256': hashlib.sha256(december_raw).hexdigest(),
         'pending_source_sha256': {path: hashlib.sha256(data).hexdigest()
                                   for path, data in pending_raw.items()},
         'external_source_edges': [caravelas],

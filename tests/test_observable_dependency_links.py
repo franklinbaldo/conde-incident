@@ -141,6 +141,19 @@ class ObservableDependencyLinkTests(unittest.TestCase):
         self.assertEqual(len(self.data['external_source_edges']), 1)
         self.assertEqual(self.data['epistemic_limits']['activated_constraints'], 0)
 
+    def test_december_529_erratum_c227_and_same_work_c228_are_connected(self):
+        edges = self.data["pending_december_compilation_edges"]
+        self.assertEqual(len(edges), 3)
+        self.assertEqual([e["matrix_occurrence"].rsplit(":", 1)[-1]
+                          for e in edges], ["C227#1", "C227#1", "C228#1"])
+        self.assertEqual([e["printed_period_min_not_instrument_observation"]
+                          for e in edges], ["89.2", "94.6", None])
+        self.assertTrue(all(not e["activation"] and not e["independent_sensor"]
+                            and e["instrument_epoch_utc"] is None
+                            and e["instrument_covariance"] is None
+                            for e in edges))
+        self.assertEqual(self.data["epistemic_limits"]["activated_constraints"], 0)
+
     def test_un_administrative_cutoff_cannot_become_instrument_epoch(self):
         un = json.loads((ROOT / 'public/data/conde-un-1963-status-bridge.json').read_text())
         sov = json.loads((ROOT / 'public/data/conde-soviet-raw-route-bridge.json').read_text())
