@@ -39,6 +39,11 @@ try {
     const backRect = await backToCaderno.boundingBox();
     assert(backRect && backRect.x >= 0 && backRect.x + backRect.width <= viewport.width + 1,
       'Caderno return link is clipped off screen at ' + viewport.name + ': ' + JSON.stringify(backRect));
+    for (const name of ['Português (Brasil)', 'English']) {
+      const box = await page.getByRole('button', { name }).boundingBox();
+      assert(box && Math.min(box.width, box.height) >= 32,
+        `Small locale touch target (${viewport.name}, ${name}): ${JSON.stringify(box)}`);
+    }
     const before = new URL(page.url()).hash;
     await page.keyboard.press('Tab');
     const first = await page.evaluate(() => ({

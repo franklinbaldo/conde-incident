@@ -171,7 +171,7 @@ export const Navigation: React.FC<NavigationProps> = ({
               type="button"
               aria-pressed={lang === 'pt'}
               aria-label="Português (Brasil)"
-              className={`px-2 py-0.5 rounded text-[11px] font-semibold transition-colors ${
+              className={`min-h-8 min-w-12 px-2 py-1 rounded text-[11px] font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 ${
                 lang === 'pt' ? 'bg-cyan-600 text-white' : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
@@ -182,7 +182,7 @@ export const Navigation: React.FC<NavigationProps> = ({
               type="button"
               aria-pressed={lang === 'en'}
               aria-label="English"
-              className={`px-2 py-0.5 rounded text-[11px] font-semibold transition-colors ${
+              className={`min-h-8 min-w-12 px-2 py-1 rounded text-[11px] font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 ${
                 lang === 'en' ? 'bg-cyan-600 text-white' : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
