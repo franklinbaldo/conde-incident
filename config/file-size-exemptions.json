@@ -1,0 +1,9 @@
+{
+  "policy": "Exempt exact named files from size gate only; no wildcards, other checks unchanged.",
+  "exceptions": [
+    {
+      "path": "bun.lock",
+      "reason": "Bun-generated dependency lockfile; updating it preserves frozen installs."
+    }
+  ]
+}

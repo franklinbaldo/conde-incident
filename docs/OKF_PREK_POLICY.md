@@ -10,7 +10,7 @@ description: Política auditável de tamanho e validação dos documentos Markdo
 
 ## Acervo anterior
 
-A base existente continha **16 arquivos acima do limite** e **94 Markdown** sem migração OKF integral. Os dois inventários em `config/` guardam os caminhos e hashes Git originais. As exceções são **temporárias, exatas e imutáveis por hash**. Qualquer arquivo alterado ou novo deve obedecer imediatamente às regras.
+A base anterior continha **15 arquivos acima do limite** e **94 Markdown** sem migração OKF integral. `bun.lock` passa a ser exceção editável explícita, mantendo os outros **15 blobs** congelados. Os dois inventários em `config/` guardam os caminhos e hashes Git originais. As exceções legadas são **temporárias, exatas e imutáveis por hash**. Exceções editáveis de arquivos gerados são listadas em `config/file-size-exemptions.json`, com caminho exato, sem curingas e com justificativa; isso não dispensa OKF ou outros gates. Qualquer arquivo alterado ou novo deve obedecer imediatamente às regras.
 
 Não aumentar, reformatar ou alterar qualquer blob legado mantendo o tamanho acima do limite. Para modificar um Markdown legado, primeiro convertê-lo para OKF (frontmatter `type/title/description` e spec correspondente) e, caso ultrapasse 20.000 bytes, dividir em partes que preservem todas as referências e IDs originais. Remover do inventário o item migrado em PR específica. Nenhuma fonte primária, matriz ou prova Lean pode ser apagada só para conseguir CI verde.
 
@@ -18,7 +18,7 @@ O checker incremental `scripts/check_okf_incremental.py` **executa o parser ofic
 
 ## Repositórios pessoais
 
-Os workspaces privados dos 14 animais já usam prek + OKF normativo no workflow `OKF all Markdown`; nesses repositórios não há tolerância a Markdown pessoal inválido nem a arquivo acima do limite. O projeto público requer migração controlada de seu corpus anterior, sem perda de proveniência.
+Os workspaces privados dos 14 animais já usam prek + OKF normativo no workflow `OKF all Markdown`; nesses repositórios não há tolerância a Markdown pessoal inválido; exceções exatas de tamanho para arquivos gerados não dispensam OKF nem Prek. O projeto público requer migração controlada de seu corpus anterior, sem perda de proveniência.
 
 ## Execução local
 

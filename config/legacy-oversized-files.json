@@ -1,5 +1,5 @@
 {
-  "policy": "Existing oversized blobs are frozen; any change must split/reduce them to <=20,000 bytes.",
+  "policy": "Frozen historical blobs remain SHA-pinned; editable exemptions are in config/file-size-exemptions.json.",
   "limit_bytes": 20000,
   "exceptions": [
     {
@@ -16,11 +16,6 @@
       "path": ".gmp_cache/index.json",
       "git_blob_sha": "6c65d2532e42301d99403206bb1a09be752dcb9d",
       "observed_bytes": 24221
-    },
-    {
-      "path": "bun.lock",
-      "git_blob_sha": "1899b4801672f01cdbee6df05a637ce1de141cd1",
-      "observed_bytes": 70625
     },
     {
       "path": "formal/Conde1963/Evidence.lean",
