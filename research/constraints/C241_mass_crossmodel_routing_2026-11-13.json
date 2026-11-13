@@ -1,0 +1,156 @@
+{
+  "schema": "conde.c241-shared-mass-model-routing/v1",
+  "id": "C241-MASS-CROSSMODEL-20261113",
+  "status": "CONDITIONAL_MODEL_COUPLING_NO_HISTORICAL_POSTERIOR",
+  "source": {
+    "primary_matrix_occurrence": "C61",
+    "committed_budget": "research/constraints/C241_mass_budget_residual_2026-11-13.json",
+    "relationship": "research/tle_custody/gcat_full_catalog_lineage_C241-L14.json",
+    "reviewed_catalogue_source": "https://github.com/franklinbaldo/conde-incident/pull/629",
+    "reviewed_catalogue_status": "REQUIRES_INTEGRATED_SOURCE_RECONCILIATION",
+    "named_reference_total_kg_approx": 1176,
+    "source_mass_basis": "GCAT_TOTMASS_SECONDARY_NOT_VERIFIED_INDEPENDENT_FRAGMENT_INVENTORY",
+    "payload_527_component_mass_kg": 306,
+    "payload_527_dry_mass_kg": 306,
+    "agena_stage_mass_kg": 900,
+    "agena_stage_dry_mass_kg": 870,
+    "separate_insertion_mass_sum_kg": 1206,
+    "individual_528_mass_kg": null,
+    "individual_529_mass_kg": null,
+    "catalogue_uncertainty_kg": null,
+    "initial_mass_accounting_epoch": null,
+    "mass_related_sources_independent_sensors": false
+  },
+  "scenario_contract": {
+    "type": "conde.conditional-three-object-mass/v1",
+    "adapter": "src/lib/orbitMassConstraints.ts",
+    "must_explicitly_choose_mass_basis": true,
+    "mass_bases_kg": {
+      "GCAT_TOTMASS_1176": 1176,
+      "PAYLOAD_PLUS_STAGE_DRY_1176": 1176,
+      "PAYLOAD_PLUS_STAGE_AT_INSERTION_1206": 1206
+    },
+    "equations": [
+      "m527 + m528 + m529 + X + L = mass_basis + signed_epsilon",
+      "m527 = retained_OPS + retained_Agena + other_attached_parts, if independently verified",
+      "B_j = Cd_j * projected_area_j / m_j",
+      "a_drag_j = -0.5*rho*B_j*|v_rel|*v_rel",
+      "A_projected = B_j*m_j/Cd_j if all factors are independently calibrated"
+    ],
+    "unknowns": [
+      "reference_epoch_and_mass_basis",
+      "signed_epsilon_kg",
+      "X_outside_tracked_objects_kg",
+      "L_prior_losses_kg",
+      "m527_kg",
+      "m528_kg",
+      "m529_kg",
+      "retained_payload_kg",
+      "Cd_527_528_529",
+      "projected_area_527_528_529",
+      "rho_1963_calibrated",
+      "historical_tle_covariance"
+    ],
+    "possible_double_count": "losses prior to comparison are L, pieces still outside three bodies at reference are X; never count same matter twice",
+    "posterior_prior_from_306kg": null,
+    "unconditional_individual_mass_bound_kg": null,
+    "historical_activation": false
+  },
+  "consumers": [
+    {
+      "id": "mass-budget-and-X",
+      "path": "tools/mass_budget_527_529.py",
+      "effect": "CONSERVATION_PRECONDITION_AND_NUMERIC_SCENARIO",
+      "historical_constraint_active": false
+    },
+    {
+      "id": "mass-budget-lean",
+      "path": "formal/Conde1963/MassBudget527529.lean",
+      "effect": "CONDITIONAL_LOGIC_PROVED",
+      "historical_constraint_active": false
+    },
+    {
+      "id": "cartesian-j2-drag",
+      "path": "src/lib/orbitPhysics.ts",
+      "adapter": "src/lib/orbitMassConstraints.ts",
+      "effect": "MASS_TO_B_VIA_EXPLICIT_AREA_AND_CD",
+      "historical_constraint_active": false
+    },
+    {
+      "id": "source-declared-msise-density",
+      "path": "src/lib/orbitSpaceWeatherAdapter.ts",
+      "entrypoint": "makeConditionalMassBudgetMsiseAtmosphere",
+      "effect": "SAME_MASS_TO_B_INPUT_WITH_REAL_DENSITY_CALLBACK",
+      "historical_constraint_active": false
+    },
+    {
+      "id": "inverse-ballistic",
+      "path": "src/lib/inverseSolver.ts",
+      "entrypoint": "conditionalBallisticCompatibility",
+      "effect": "SCENARIO_COMPATIBILITY_NOT_HISTORICAL_EXCLUSION",
+      "historical_constraint_active": false
+    },
+    {
+      "id": "exploratory-monte-carlo",
+      "path": "src/lib/monteCarlo.ts",
+      "entrypoint": "conditionalMassScenario",
+      "effect": "EXPLICIT_SCENARIO_B_REPLACES_RANDOM_B_BUT_NO_HISTORICAL_PROBABILITY",
+      "historical_constraint_active": false
+    },
+    {
+      "id": "scalar-j2-drag-proxy",
+      "path": "tools/norad528_effective_drag_screen.py",
+      "effect": "EFFECTIVE_K_NOT_DIRECT_B_NO_AUTOMATIC_MASS_INFERENCE",
+      "historical_constraint_active": false
+    },
+    {
+      "id": "bayesian-mass-partition",
+      "path": "https://github.com/franklinbaldo/conde-incident/pull/634",
+      "effect": "MCMC_SOURCE_AND_LIKELIHOOD_GATE_PENDING_PR",
+      "historical_constraint_active": false
+    },
+    {
+      "id": "equivalent-fragment-dimensions",
+      "path": "src/lib/orbitMassConstraints.ts",
+      "entrypoint": "conditionalProjectedAreaEnvelope",
+      "effect": "REQUIRES_M_B_CD_INTERVALS_AND_EXPLICIT_SHAPE",
+      "historical_constraint_active": false
+    },
+    {
+      "id": "angular-sibling-orbit-geometry",
+      "path": "research/tle_custody/evidence_matrix_C241-orbital-screen_2026-11-13.md",
+      "effect": "MASS_AFFECTS_PRECESSION_ONLY_THROUGH_CALIBRATED_DRAG_NOT_UNIVERSAL_ANGULAR_SIGMA",
+      "historical_constraint_active": false
+    },
+    {
+      "id": "atmosphere-sensitivity-legacy-ui",
+      "path": "src/components/AtmosphereSensitivity.tsx",
+      "effect": "LEGACY_FIXED_B_UNCALIBRATED_NO_MASS_BOUND_ACTIVATION",
+      "historical_constraint_active": false
+    },
+    {
+      "id": "fragment-survival-and-deposition",
+      "path": "research/ORBIT_ENERGY_BUDGET.md",
+      "effect": "FUTURE_REQUIRES_MASS_MATERIAL_ABLATION_AND_GEOMETRY",
+      "historical_constraint_active": false
+    }
+  ],
+  "invariants": {
+    "all_consumer_historical_mass_constraints_active": 0,
+    "legacy_RAAN_2841520_not_rescued_by_mass": true,
+    "GCAT_306_is_not_entire_527_physical_mass": true,
+    "X_not_assumed_small": true,
+    "no_posterior_from_nominal_mass_alone": true,
+    "no_1963_object_size_inferred": true,
+    "terminal_date_does_not_calibrate_B_without_time_error": true,
+    "source_reconciliation_required_before_hard_mass_filter": true,
+    "numerical_matching_not_instrumental_accuracy": true
+  },
+  "next_provenance": [
+    "merge/reconcile GCAT C241-L40 physical component mass semantics",
+    "reconcile source membership and common accounting epoch of 527/528/529",
+    "retain or recover mass/area/attitude history of 527 composite and two separated bodies",
+    "calibrate atmospheric density amplitude and independent Cd/area before posterior",
+    "run genuine Cartesian+SGP4 holdouts from authenticated epochs with covariance"
+  ]
+}

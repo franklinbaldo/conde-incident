@@ -9,6 +9,8 @@
  */
 import { EARTH, utcMilliseconds } from './orbitPhysics.ts';
 import type { Atmosphere, State } from './orbitPhysics.ts';
+import { ballisticFromMassScenario, atmosphereForMassScenario } from './orbitMassConstraints.ts';
+import type { MassBudgetScenario, DragGeometryScenario } from './orbitMassConstraints.ts';
 import { validateSourcedGeodeticFrameKm,
   validateSourcedLocalSolarTimeHours } from './orbitGeodeticFrame.ts';
 
@@ -267,4 +269,22 @@ export function makeConditionalMsiseAtmosphere(options: ConditionalMsiseOptions)
       return rho;
     },
   };
+}
+
+
+/** Conditional MASS→B→density bridge. Keeps the same source-declared
+ * geodesy and density engine; changes only Cd*A/m based on an explicitly
+ * supplied allocation and projected area. This is not a historical fit.
+ */
+export function makeConditionalMassBudgetMsiseAtmosphere(
+  options: Omit<ConditionalMsiseOptions, 'cdAreaOverMassM2Kg'>,
+  scenario: MassBudgetScenario, geometry: DragGeometryScenario,
+): Atmosphere {
+  const b = ballisticFromMassScenario(scenario, geometry);
+  if (!b.budgetConsistent)
+    throw new RangeError('Conditional mass budget invalid before density evaluation');
+  const base = makeConditionalMsiseAtmosphere({
+    ...options, cdAreaOverMassM2Kg: b.cdAreaOverMassM2Kg,
+  });
+  return atmosphereForMassScenario(base, scenario, geometry);
 }
