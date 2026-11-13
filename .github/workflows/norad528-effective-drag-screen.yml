@@ -1,0 +1,83 @@
+name: NORAD 528 - frozen secondary J2 drag screen and conditional date
+on:
+  pull_request:
+    paths:
+      - tools/norad528_effective_drag_screen.py
+      - tests/test_norad528_effective_drag_screen.py
+      - formal/Conde1963/Norad528DecayWindow.lean
+      - formal/Conde1963.lean
+      - research/tle_custody/evidence_matrix_C241-orbital-screen_2026-11-13.md
+      - .github/workflows/norad528-effective-drag-screen.yml
+  push:
+    branches: [main]
+    paths:
+      - tools/norad528_effective_drag_screen.py
+      - tests/test_norad528_effective_drag_screen.py
+      - formal/Conde1963/Norad528DecayWindow.lean
+      - formal/Conde1963.lean
+      - research/tle_custody/evidence_matrix_C241-orbital-screen_2026-11-13.md
+      - .github/workflows/norad528-effective-drag-screen.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  screening:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Exact head and adversarial screen tests
+        run: |
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+          python3 -m unittest discover -s tests -p test_norad528_effective_drag_screen.py -v
+      - name: Fixed Parquet decoder
+        run: python3 -m pip install --disable-pip-version-check pyarrow==21.0.0
+      - name: Replay 1963 numeric mirror from SHA-pinned bytes
+        run: |
+          python3 tools/tle_secondary_1963_ledger.py \
+            --download --parquet "$RUNNER_TEMP/tle_1963.parquet" \
+            --literal research/tle_custody/mirror_528_1963-10-27.tle \
+            --output "$RUNNER_TEMP/secondary"
+      - name: Evaluate real 45 secondary epochs and reserved holdouts
+        run: |
+          python3 tools/norad528_effective_drag_screen.py \
+            --csv "$RUNNER_TEMP/secondary/norad_527_528_529_numeric_1963.csv" \
+            --output "$RUNNER_TEMP/norad528_effective_drag_screen.json"
+          python3 - "$RUNNER_TEMP/norad528_effective_drag_screen.json" <<'PY'
+          import json,sys
+          x=json.load(open(sys.argv[1]))
+          assert x['source']['parquet_sha256']=='c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09'
+          assert x['source']['csv_sha256']=='3940715d7c15cf15c24e678a8c5b5fbb34a031b3ffd7e33c0580277377383231'
+          assert x['terminal_scenario']['end_exclusive_utc'].startswith('1963-11-09')
+          assert not x['terminal_scenario']['physical_constraint_active']
+          assert not x['historical_fit_authenticated'] and not x['physical_domain_reduced']
+          assert x['conde']=='INDETERMINATE'
+          assert x['nasa_norad_constant_angular_sigma'] is None
+          assert set(x['angular_evaluation_asynchronous']).issubset({'527','529'})
+          print('source-pinned secondary orbital test passed; no physical claim')
+          PY
+      - name: Install and compile pinned Lean toolchain
+        run: |
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Lean 4.35 conditional window proof and no-sorry check
+        working-directory: formal
+        run: |
+          lake build
+          lake env lean Conde1963/CoreAxioms.lean > /tmp/axioms.log
+          cat /tmp/axioms.log
+          if grep -E 'sorryAx|unsafe|error:' /tmp/axioms.log; then exit 1; fi
+      - name: Preserve results even if diagnostic fails
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: norad528-effective-drag-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ${{ runner.temp }}/norad528_effective_drag_screen.json
+          if-no-files-found: warn
+          retention-days: 30
