@@ -202,7 +202,9 @@
         "tests/ssg-documentary-archive.test.mjs",
         "tests/ssg-okf-types.test.mjs"
       ],
-      "first_parent_diff_empty": false
+      "first_parent_diff_empty": false,
+      "verified_associated_pr": null,
+      "verification": "GET /commits/16de6f6e/pulls returned [] on 2026-11-13; possible direct push to main, provenance to investigate"
     },
     {
       "sha": "162cbb2512ed6fc9399378ce223c9a3bc116148f",
@@ -214,7 +216,9 @@
         "458"
       ],
       "first_parent_changed_files": [],
-      "first_parent_diff_empty": true
+      "first_parent_diff_empty": true,
+      "verified_associated_pr": 458,
+      "verification": "GitHub commit-associated PRs endpoint and #458 merge_commit_sha; identical first-parent tree"
     },
     {
       "sha": "78d9210442ad51bf811680cccb890fe90e78d864",
@@ -244,7 +248,9 @@
       "first_parent_changed_files": [
         "stories/2026-11-13-quinze-segundos-para-salvar-uma-explicacao.md"
       ],
-      "first_parent_diff_empty": false
+      "first_parent_diff_empty": false,
+      "verified_associated_pr": 460,
+      "verification": "GitHub commit-associated PRs endpoint and #460 merge_commit_sha; squash"
     }
   ],
   "ci_status": "not_yet_verified_per_commit",
@@ -252,6 +258,16 @@
   "limits": [
     "Commit subject PR markers do not alone prove platform merge provenance",
     "Prior checks are not interpreted as all green without independent checks",
-    "Direct story commit has no PR marker; association needs GitHub verification"
-  ]
+    "Chapter #460 verified as associated squash PR despite absent subject marker; direct-push candidate instead is 16de6f6e (no associated PR as of 2026-11-13)"
+  ],
+  "pr_association_verification": {
+    "method": "GitHub REST GET /repos/franklinbaldo/conde-incident/commits/{sha}/pulls and PR merge_commit_sha",
+    "verified_utc_date": "2026-11-13",
+    "findings": {
+      "4decea805580d59e0388508c6700f2a0c9df583c": 460,
+      "162cbb2512ed6fc9399378ce223c9a3bc116148f": 458,
+      "16de6f6ed": null
+    },
+    "caution": "No association returned is an investigation trigger, not conclusive proof of bypassed CI."
+  }
 }
