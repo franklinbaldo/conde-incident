@@ -13,7 +13,7 @@ OUT = ROOT / "research/statistics/ssr_post528_print_contrasts_C241.json"
 DATA = ROOT / "research/tle_custody"
 DESIGNATORS = ("1963-003A", "1963-003B", "1963-003C")
 DATES = ("1963-04-30", "1963-07-31", "1963-08-15", "1963-10-15",
-         "1963-11-15", "1963-11-30", "1963-12-31")
+         "1963-11-15", "1963-11-30", "1963-12-15", "1963-12-31")
 HASHES = {
     "1963-04-30": "87b8c1be1d074dff4b605b422f6a8836c2ebdf80ca4ac0568373b168cc457a38",
     "1963-07-31": "9b00bf8323b1de80a34920f73c658f70f766a51632a13473a408679f0e5a03d9",
@@ -21,6 +21,7 @@ HASHES = {
     "1963-10-15": "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
     "1963-11-15": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
     "1963-11-30": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+    "1963-12-15": "d31a064f8e03fd39be6fe75b88cd5852c0b74c9101fa635cb40ac25c77ef474f",
     "1963-12-31": "d9504a8641baa65c208e41034e77b0e9b1cc01b4acb2a4f95541bd9e75d3783d",
 }
 FILENAMES = {
@@ -29,6 +30,7 @@ FILENAMES = {
     "aug": "nasa_ssr_aug15_1963_C241-L17.json",
     "oct": "nasa_ssr_1963_oct15_C241-L12.json",
     "nov": "nasa_ssr_nov15_1963_C241-L19.json",
+    "dec15": "nasa_ssr_dec15_1963_C241-L21.json",
 }
 HALF_PRINT_CENTIMIN = 5  # conditional nearest 0.1 min rounding
 
@@ -55,6 +57,17 @@ def reports(documents: dict | None = None) -> list[dict]:
     if set(jul_dec) != {"1963-07-31", "1963-11-30", "1963-12-31"}:
         raise ValueError("incomplete July/November/December source family")
     nov = d["nov"]["documents"]
+    dec15 = d["dec15"]
+    if (dec15["id"] != "C241-L21" or dec15["source"]["ntrs_id"] != "19640003479"
+        or dec15["source"]["compilation_as_of_utc"] != "1963-12-15T12:00:00Z"
+        or dec15["not_listed_in_objects_in_orbit"] != ["1963-003B"]
+        or dec15["limits"]["independent_sensor_observation"] is not False
+        or dec15["limits"]["instrumental_epoch_utc"] is not None):
+        raise ValueError("Dec 15 source provenance or interpretation drift")
+    if {row["designator"]: row["norad_crosswalk"] for row in dec15["rows"]} != {
+        "1963-003A": 527, "1963-003C": 529
+    } or len(dec15["rows"]) != 2:
+        raise ValueError("Dec 15 object crosswalk drift")
     if len(nov) != 1:
         raise ValueError("November 15 ledger must have exactly one document")
     specs = [
@@ -70,6 +83,8 @@ def reports(documents: dict | None = None) -> list[dict]:
          nov[0]["rows"], "designator", "period_min"),
         ("1963-11-30", "C241-L18", jul_dec["1963-11-30"]["sha256"],
          jul_dec["1963-11-30"]["rows"], "designator", "period_min"),
+        ("1963-12-15", "C241-L21", dec15["source"]["sha256"],
+         dec15["rows"], "designator", "period_min"),
         ("1963-12-31", "C241-L18", jul_dec["1963-12-31"]["sha256"],
          jul_dec["1963-12-31"]["rows"], "designator", "period_min"),
     ]
@@ -80,6 +95,7 @@ def reports(documents: dict | None = None) -> list[dict]:
         d["oct"]["source"]["publication_date"],
         nov[0]["date"],
         jul_dec["1963-11-30"]["published"],
+        dec15["source"]["publication_date"],
         jul_dec["1963-12-31"]["published"],
     )
     if metadata_dates != DATES:
@@ -102,6 +118,8 @@ def reports(documents: dict | None = None) -> list[dict]:
                        "source_family": "NASA_GODDARD_COMPILED_SHARED_TRACKING"})
     if tuple(x["report_date_not_observation_epoch"] for x in result) != DATES:
         raise ValueError("report date/order drift")
+    if result[-2]["printed_centiminutes"]["1963-003C"] != 9160:
+        raise ValueError("December 15 3C value drift")
     if result[-1]["printed_centiminutes"]["1963-003C"] != 8920:
         raise ValueError("December 3C transcription reverted from 89.2 to 89.6")
     return result
