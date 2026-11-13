@@ -7,6 +7,8 @@ from pathlib import Path
 import re
 import unittest
 
+from ci_critical_step_scripts import MULTILINE
+
 WORKFLOWS = Path(__file__).resolve().parents[1] / '.github' / 'workflows'
 MUST_DUAL = {
     'cumulative-connections.yml',
@@ -90,6 +92,9 @@ def assert_unskippable_universal_jobs(source: str, filename: str) -> None:
     required = UNIVERSAL_REQUIRED_JOBS.get(filename)
     if not required:
         return
+    # An inherited shell can replace each critical run with a no-op.
+    if re.search(r'(?m)^(?:defaults:|    defaults:)\s*$', source):
+        raise AssertionError(f'{filename}: universal step shell defaults prohibited')
     jobs = re.search(r'(?m)^jobs:\s*$', source)
     if jobs is None:
         raise AssertionError(f'{filename}: missing universal jobs block')
@@ -137,14 +142,21 @@ def assert_unskippable_critical_steps(source: str, filename: str,
                    if job == 'lean' and title == 'Compile conditional proofs' else [])
         if conditions != allowed:
             raise AssertionError(f'{filename}: conditional universal step: {job}/{title}')
+        shells = re.findall(r'(?m)^        shell:\s*(.*?)\s*$', step)
+        if shells and shells not in (['bash'], ['sh']):
+            raise AssertionError(f'{filename}: universal step shell override: {job}/{title}')
         run = re.search(r'(?m)^        run:\s*(.*)$', step)
         if run is None:
             raise AssertionError(f'{filename}: missing command in universal step: {job}/{title}')
         if run.group(1) == '|':
             # A multiline step may have setup and shell guards, but must
             # still contain the actual test invocation as a command line.
-            commands = [line.strip() for line in step[run.end():].splitlines()]
-            if command not in commands:
+            # Exact, reviewed command sequence. A textual occurrence after
+            # `exit 0`, `set +e`, or a shadowed conditional is not executable
+            # evidence of the required CI gate.
+            commands = tuple(line.strip() for line in step[run.end():].splitlines()
+                             if line.strip() and not line.lstrip().startswith('#'))
+            if commands != MULTILINE.get((filename, job, title)):
                 raise AssertionError(f'{filename}: universal step command changed: {job}/{title}')
         elif run.group(1) != command:
             raise AssertionError(f'{filename}: universal step command changed: {job}/{title}')

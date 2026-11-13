@@ -1,0 +1,252 @@
+{
+  "schema": "conde.gaviao-retrospective-window/v1",
+  "audit": "G41",
+  "reviewed_from_main_sha": "9a2f98151d3e9db98384f532cee6d5cea90958dd",
+  "reviewed_through_main_sha": "d1f6d53851e9a4d3564ed436c527ad0c2157f12e",
+  "first_parent_integrations": 13,
+  "dag_commits": 19,
+  "merge_commits": 3,
+  "lateral_commits": 6,
+  "ci_source": "Not queried for historical commits; no CI success inferred",
+  "validation": {
+    "python_ci_tests": "20/20 PASS locally",
+    "focused_scientific_tests": "62 PASS, 1 SKIPPED of 63 locally",
+    "adversarial_mutants": "4 of 4 bypassed previous policy, 7 of 7 rejected after repair"
+  },
+  "integrations_newest_first": [
+    {
+      "sha": "d1f6d53851e9a4d3564ed436c527ad0c2157f12e",
+      "parents": [
+        "9f72fdc4c7dadb076a28275d4546b97daa50ffb7"
+      ],
+      "pr_number": 531,
+      "subject": "🦉 Caderno 18: apurar acervos Moonwatch sem inventar observações (#531)",
+      "first_parent_changed_files": [
+        "stories/2026-11-13-as-gavetas-que-ainda-nao-viram-o-satelite.md"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "No per-commit GitHub check-run inventory captured in this round"
+      }
+    },
+    {
+      "sha": "9f72fdc4c7dadb076a28275d4546b97daa50ffb7",
+      "parents": [
+        "259100982b1bcf3729959afe24a5608b044041c8"
+      ],
+      "pr_number": 530,
+      "subject": "82 🦇 Busca do Caderno: anunciar Ctrl/⌘+K corretamente (#530)",
+      "first_parent_changed_files": [
+        "scripts/localize-ssg-search.mjs",
+        "tests/ssg-search-locale.test.mjs"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "No per-commit GitHub check-run inventory captured in this round"
+      }
+    },
+    {
+      "sha": "259100982b1bcf3729959afe24a5608b044041c8",
+      "parents": [
+        "b15a4b6a679778bd475fe67aeb834eb192f34d2c"
+      ],
+      "pr_number": 529,
+      "subject": "82 🦊 Publicar sitemap canônico derivado do Pages final (SSG + laboratório) (#529)",
+      "first_parent_changed_files": [
+        ".github/workflows/pages.yml",
+        "scripts/build-sitemap.mjs",
+        "tests/ssg-sitemap.test.mjs",
+        "tools/check_sitemap.py"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "No per-commit GitHub check-run inventory captured in this round"
+      }
+    },
+    {
+      "sha": "b15a4b6a679778bd475fe67aeb834eb192f34d2c",
+      "parents": [
+        "3547cb9b656579643cdcaff4b03f76a97bd5cbf5"
+      ],
+      "pr_number": 528,
+      "subject": "87 🦦 Custódia cruzada: Diário de Notícias Salvador 1963 no ICAA ≠ FBN 1876–1909 (#528)",
+      "first_parent_changed_files": [
+        "research/archive/diario_noticias_salvador_1963_icaa_1110862_locator.json",
+        "tests/test_diario_noticias_icaa_locator.py",
+        "tools/verify_diario_noticias_icaa_locator.py"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "No per-commit GitHub check-run inventory captured in this round"
+      }
+    },
+    {
+      "sha": "3547cb9b656579643cdcaff4b03f76a97bd5cbf5",
+      "parents": [
+        "f0dac7157319192652a010b0c9f25f141a681db1"
+      ],
+      "pr_number": 526,
+      "subject": "88 🦫 G40: audit SSR epoch window sensitivity (#526)",
+      "first_parent_changed_files": [
+        ".github/workflows/tle-mean-motion-secants.yml",
+        "research/constraints/CASTOR-G40_ssr_epoch_window_sensitivity.json",
+        "tests/test_ssr_epoch_window_g40.py",
+        "tools/ssr_epoch_window_g40.py"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "No per-commit GitHub check-run inventory captured in this round"
+      }
+    },
+    {
+      "sha": "f0dac7157319192652a010b0c9f25f141a681db1",
+      "parents": [
+        "7b5b7eb59902a241d51447c12fb9e2e7d09bb857",
+        "a42c76356fd3103f42d5b3a0bb7815c62a94693f"
+      ],
+      "pr_number": 525,
+      "subject": "Merge pull request #525 from franklinbaldo/research/caranguejo-cgeo27-sgb-access",
+      "first_parent_changed_files": [
+        "research/geo/cgeo27_sgb_official_aerial_access.json",
+        "research/geo/cgeo27_sgb_official_aerial_access.md",
+        "research/geo/evidence/cgeo27_sgb_collection_options.txt",
+        "tests/test_cgeo27_sgb_archive_access.py",
+        "tools/cgeo27_sgb_archive_access.py"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "No per-commit GitHub check-run inventory captured in this round"
+      }
+    },
+    {
+      "sha": "7b5b7eb59902a241d51447c12fb9e2e7d09bb857",
+      "parents": [
+        "4dcca1123d123130b2dfa3f4af1dad95cc2e5376"
+      ],
+      "pr_number": 523,
+      "subject": "76 🦡 Reject masked failure suffixes in universal CI checks (#523)",
+      "first_parent_changed_files": [
+        "tests/test_ci_event_policy_all_workflows.py",
+        "tests/test_ci_universal_steps.py"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "No per-commit GitHub check-run inventory captured in this round"
+      }
+    },
+    {
+      "sha": "4dcca1123d123130b2dfa3f4af1dad95cc2e5376",
+      "parents": [
+        "8a2d100f8151946e5d5f2a343a22fa6bad2b1462"
+      ],
+      "pr_number": null,
+      "subject": "86 🐙 C241-P18: certificar influência das fontes NASA no modelo editorial",
+      "first_parent_changed_files": [
+        ".github/workflows/lean-core.yml",
+        "formal/Conde1963.lean",
+        "formal/Conde1963/SsrInfluence.lean",
+        "formal/scripts/compile_ssr_influence.py",
+        "formal/tests/test_ssr_influence.py",
+        "research/constraints/C241-P18_ssr_source_influence.json"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "No per-commit GitHub check-run inventory captured in this round"
+      }
+    },
+    {
+      "sha": "8a2d100f8151946e5d5f2a343a22fa6bad2b1462",
+      "parents": [
+        "dabe2e87d90e1c0de8f2c1879a9daa1b83f74e51",
+        "457050bf23bef24759c08fe03d9407b0bf80c5c4"
+      ],
+      "pr_number": 519,
+      "subject": "Merge pull request #519 from franklinbaldo/research/lagarto-ghcnd-conde-1963-r26",
+      "first_parent_changed_files": [
+        ".agents/skills/conde-lagarto/SKILL.md",
+        ".github/workflows/ghcnd-conde-precip-1963.yml",
+        "research/constraints/ghcnd_conde_precip_19631107_09_edges.json",
+        "research/meteorology/ghcnd_conde_precip_19631107_09.json",
+        "research/meteorology/ghcnd_conde_precip_19631107_09.md",
+        "tests/test_ghcnd_conde_rain_1963.py",
+        "tools/audit_ghcnd_conde_rain_1963.py"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "No per-commit GitHub check-run inventory captured in this round"
+      }
+    },
+    {
+      "sha": "dabe2e87d90e1c0de8f2c1879a9daa1b83f74e51",
+      "parents": [
+        "51bee5d74d7314d36263568a85631da7e18b0464",
+        "cb8aa6a7d435162e39646fc7b32c7da8c295400a"
+      ],
+      "pr_number": 520,
+      "subject": "Merge pull request #520 from franklinbaldo/cervo/station-epoch-gauge-c241-p17",
+      "first_parent_changed_files": [
+        "research/statistics/OPTICAL_STATION_EPOCH_C241.md",
+        "tests/test_optical_station_epoch_alignment.py",
+        "tools/optical_station_epoch_alignment.py"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "No per-commit GitHub check-run inventory captured in this round"
+      }
+    },
+    {
+      "sha": "51bee5d74d7314d36263568a85631da7e18b0464",
+      "parents": [
+        "7711490919a6569470227e94c41747ece1edec3e"
+      ],
+      "pr_number": 521,
+      "subject": "🐝 Corrigir ponte UH 00471 com locator DocReader custodiado (#521)",
+      "first_parent_changed_files": [
+        "public/data/conde-tupi-legacy-fragment-bridge.json",
+        "tests/test_tupi_legacy_fragment_bridge.py",
+        "tools/export_tupi_legacy_fragment_bridge.py"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "No per-commit GitHub check-run inventory captured in this round"
+      }
+    },
+    {
+      "sha": "7711490919a6569470227e94c41747ece1edec3e",
+      "parents": [
+        "ff05e27e5ee6a03742c14d098079917362c43e24"
+      ],
+      "pr_number": 517,
+      "subject": "88 🦅 G40: gate universal steps against skipped checks; audit 16 merges (#517)",
+      "first_parent_changed_files": [
+        "research/audits/gaviao-main-window-20261113-g40.json",
+        "research/audits/gaviao-main-window-20261113-g40.md",
+        "tests/test_ci_event_policy_all_workflows.py",
+        "tests/test_ci_universal_steps.py"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "No per-commit GitHub check-run inventory captured in this round"
+      }
+    },
+    {
+      "sha": "ff05e27e5ee6a03742c14d098079917362c43e24",
+      "parents": [
+        "9a2f98151d3e9db98384f532cee6d5cea90958dd"
+      ],
+      "pr_number": 516,
+      "subject": "95 🐢 C241-L27: nove edições NASA, custódia cruzada e precisão impressa (#516)",
+      "first_parent_changed_files": [
+        ".github/workflows/tle-ssr-edition-precision.yml",
+        "research/tle_custody/evidence_matrix_C241-L27_2026-11-13.md",
+        "research/tle_custody/nasa_ssr_editions_precision_C241-L27.json",
+        "tests/test_tle_ssr_editions_precision_audit.py",
+        "tools/tle_ssr_editions_precision_audit.py"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "No per-commit GitHub check-run inventory captured in this round"
+      }
+    }
+  ]
+}
