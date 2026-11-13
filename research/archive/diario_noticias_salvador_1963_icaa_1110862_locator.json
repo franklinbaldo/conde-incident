@@ -1,0 +1,54 @@
+{
+  "schema": "conde.archival-holdings-disambiguation/v1",
+  "record_id": "LONTRA-DN-ICAA-1110862-20261113",
+  "catalog_family": "ICAA_MFAH_secondary_catalog_of_FBN_digitized_item",
+  "catalog": {
+    "institution": "International Center for the Arts of the Americas, Museum of Fine Arts Houston",
+    "record_id": "1110862",
+    "url": "https://icaa.mfah.org/s/en/item/1110862",
+    "title": "Arte popular",
+    "document_type": "Newspaper Article",
+    "journal": "Diário de Notícias",
+    "journal_city": "Salvador",
+    "journal_state": "BA",
+    "date": "1963-11-05",
+    "printed_page": 2,
+    "digitized_item_located_at": "Fundação Biblioteca Nacional",
+    "catalog_metadata_verified_by": "indexed_page_read_2026-11-13",
+    "direct_jatoba_http_status": 403,
+    "direct_jatoba_response_kind": "access_interstitial_not_facsimile",
+    "newspaper_image_retrieved": false,
+    "newspaper_image_sha256": null
+  },
+  "similarly_named_fbn_docreader": {
+    "collection_id": "098167",
+    "url": "https://memoria.bn.gov.br/docreader/DocReader.aspx?bib=098167&pagfis=95",
+    "browser_title": "Diario de Noticias (BA) - 1876 a 1909",
+    "declared_year_range": [1876, 1909],
+    "http_status": 200,
+    "html_image_element_counts_as_facsimile": false,
+    "covers_target_1963": false,
+    "not_equivalent_to_icaa_digitized_item": true
+  },
+  "research_target": {
+    "newspaper": "Diário de Notícias",
+    "city": "Salvador",
+    "target_dates": ["1963-11-08", "1963-11-09"],
+    "target_editions_located": false,
+    "target_article_read": false,
+    "text_corroboration_of_conde_event": false,
+    "newspaper_pdf_sha256": null,
+    "next_step": "Locate contemporaneous 1963 edition via FBN/IGHB holding identifier, confirm 9 Nov clipping and page, retrieve and hash actual facsimile"
+  },
+  "independence": {
+    "catalog_article_is_about_conde": false,
+    "independent_conde_observation_added": false,
+    "claim": "ICAA item is proof of a cited 5 Nov 1963 Diário de Notícias bibliographic item, not proof that the requested 8-9 Nov Conde clippings have been retrieved",
+    "orbital_constraint_activated": false
+  },
+  "limitations": [
+    "ICAA catalog metadata is accessible in indexed public representation; direct Jatobá HTTP yielded 403 interstitial. No item PDF was downloaded.",
+    "FBN DocReader collection 098167 has a declared 1876-1909 range, not coverage of the requested 1963 issues. An unrelated early run must not be used as a failed search of all FBN holdings.",
+    "A separately catalogued article from 5 November about art does not authenticate or independently corroborate any Conde report."
+  ]
+}
