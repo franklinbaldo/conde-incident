@@ -112,10 +112,9 @@ def assert_unskippable_universal_jobs(source: str, filename: str) -> None:
             raise AssertionError(f'{filename}: universal job lacks steps: {marker.group(1)}')
         if re.search(r'(?m)^    (?:if|continue-on-error)\s*:', block):
             raise AssertionError(f'{filename}: conditional/tolerated universal job: {marker.group(1)}')
-        # `needs` propagates an upstream skip to this required job; GitHub
-        # can then report a successful workflow with the gate never run.
+        # Skipped prerequisites also skip required jobs.
         if re.search(r'(?m)^    needs\s*:', block):
-            raise AssertionError(f'{filename}: universal job depends on potentially skipped prerequisites: {marker.group(1)}')
+            raise AssertionError(f'{filename}: universal job has needs: {marker.group(1)}')
         assert_unskippable_critical_steps(source, filename, marker.group(1), block)
 
 
@@ -363,8 +362,7 @@ class EntireWorkflowEventPolicy(unittest.TestCase):
                         assert_workflow_policy(removed, name)
 
     def test_universal_jobs_cannot_depend_on_skippable_jobs(self):
-        # `needs` inherits the upstream job's skipped state. A required job
-        # can therefore be silently skipped even without its own `if` key.
+        # Skipped dependencies silently bypass this required gate.
         gate = (
             '  optional_gate:\n'
             '    if: ${{ false }}\n'
