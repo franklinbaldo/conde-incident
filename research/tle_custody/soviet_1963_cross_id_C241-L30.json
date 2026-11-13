@@ -26,7 +26,11 @@
       "issue_1963_content_seen": false,
       "independent_observation": false,
       "possible_relation_to": "C241-L29#1",
-      "same_publication_proven": false
+      "same_publication_proven": false,
+      "capture_sha256": "da7b7e445ccaf5569bccbb42809f9da471318cebebe6d713ec0deb0a08c31034",
+      "capture_bytes": 54342,
+      "capture_http_status": 200,
+      "capture_day_utc": "2026-11-13"
     },
     {
       "id": "CNII-AA00826990",
@@ -39,7 +43,11 @@
       "issue_1963_content_seen": false,
       "independent_observation": false,
       "possible_relation_to": null,
-      "same_publication_proven": false
+      "same_publication_proven": false,
+      "capture_sha256": "0f349be2b3655f29ba1f8a518143ee807d58ba970b507629a5ed1fcf39c8740b",
+      "capture_bytes": 53364,
+      "capture_http_status": 200,
+      "capture_day_utc": "2026-11-13"
     }
   ],
   "holdings": [
