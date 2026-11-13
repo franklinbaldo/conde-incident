@@ -2,6 +2,7 @@
 """Check exact NASA NTRS legacy URL captures; network optional and bounded."""
 from __future__ import annotations
 import argparse
+import hashlib
 from datetime import datetime
 import json
 from pathlib import Path
@@ -84,6 +85,29 @@ def validate(doc: dict) -> list[str]:
     return errors
 
 
+
+def current_api_errors(expected: dict, data: bytes, *, http_status: int, content_type: str) -> list[str]:
+    """Verify today's NASA API bytes, independently from the archived CDX rows.
+
+    The manifest is a frozen expectation. Its self-consistency does not prove
+    that the live API currently serves the same bytes.
+    """
+    errors = []
+    if http_status != 200:
+        errors.append('current NASA API response not HTTP 200')
+    if content_type.split(';', 1)[0].strip().lower() != 'application/pdf':
+        errors.append('current NASA API response not PDF')
+    if len(data) != expected.get('bytes'):
+        errors.append('current NASA API byte count mismatch')
+    if hashlib.sha256(data).hexdigest() != expected.get('sha256'):
+        errors.append('current NASA API SHA-256 mismatch')
+    if not data.startswith(b'%PDF-'):
+        errors.append('current NASA API missing PDF magic')
+    if b'%%EOF' not in data[-1024:]:
+        errors.append('current NASA API missing PDF EOF')
+    return errors
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('--manifest', type=Path, default=MANIFEST)
@@ -109,6 +133,22 @@ def main() -> int:
             for err in errs: print('FAIL replay', err)
             return 1
         print('PASS', row['cdx_record']['timestamp'], 'bytes and CDX SHA-1 + SHA-256')
+    # Archived replay equality alone must not certify the current API URL.
+    try:
+        with urlopen(Request(doc['current_api_url'], headers={'User-Agent': 'CondeCustody/1.0'}), timeout=35) as response:
+            data = response.read(1_000_001)
+            errs = current_api_errors(
+                doc['current_api_replay'], data,
+                http_status=response.status,
+                content_type=response.headers.get('Content-Type', ''),
+            )
+    except Exception as exc:
+        print('FAIL current NASA API unavailable', type(exc).__name__)
+        return 2
+    if errs:
+        for err in errs: print('FAIL current NASA API', err)
+        return 1
+    print('PASS current NASA API bytes and SHA-256 match archived payload')
     return 0
 
 
