@@ -51,10 +51,10 @@ function admissibleCovariance(c: CartesianCovariance6): boolean {
   if (!Array.isArray(c) || c.length !== 6 ||
       c.some(row => !Array.isArray(row) || row.length !== 6 ||
         !row.every(Number.isFinite))) return false;
-  const sigma = c.map((row, i) => Math.sqrt(row[i]));
+  const sigma = c.map((row: readonly number[], i: number) => Math.sqrt(row[i]));
   if (!sigma.every(s => Number.isFinite(s) && s > 0)) return false;
-  const corr = c.map((row, i) => row.map((value, j) => value / sigma[i] / sigma[j]));
-  if (corr.some((row, i) => row.some((x, j) => !Number.isFinite(x) ||
+  const corr = c.map((row: readonly number[], i: number) => row.map((value: number, j: number) => value / sigma[i] / sigma[j]));
+  if (corr.some((row: number[], i: number) => row.some((x: number, j: number) => !Number.isFinite(x) ||
       (i === j && !near(x, 1)) || (i > j && !near(x, corr[j][i]))))) return false;
   const l = Array.from({length: 6}, () => Array(6).fill(0) as number[]);
   for (let i = 0; i < 6; i++) for (let j = 0; j <= i; j++) {
