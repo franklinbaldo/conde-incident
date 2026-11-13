@@ -93,6 +93,21 @@ for(const slug of ['summary','map','inverse','triangulation','sensitivity','mont
 }
 assert.match(lab,/\/conde-incident\/lab\/assets\//,'Assets Vite fora de /lab/');
 assert.doesNotMatch(lab,/(?:src|href)=["']\/assets\//,'Assets relativos à raiz, 404 no Pages');
+// The SSG output directory is regenerated. Versioned research feeds must
+// survive into the actual Pages artifact; a green HTML build is not proof.
+for (const feed of [
+  'conde-source-citations.json',
+  'conde-declared-dependence.json',
+  'conde-wayback-citation-links.json',
+  'conde-ssr-kepler-provenance.json',
+  'conde-ssr-december-bridge.json',
+]) {
+  const path=join('public','data',feed);
+  assert.ok(existsSync(path),'Feed versionado ausente do Pages: '+feed);
+  const value=JSON.parse(readFileSync(path,'utf8'));
+  assert.ok(value && typeof value==='object' && !Array.isArray(value),
+    'Feed versionado JSON inválido: '+feed);
+}
 assert.ok(existsSync('public/lab/assets'),'Assets de laboratório ausentes');
 assert.ok(existsSync('public/css/site.css'),'CSS do Caderno ausente');
 assert.ok(existsSync('public/img/caderno.svg'),'Arte editorial ausente');
