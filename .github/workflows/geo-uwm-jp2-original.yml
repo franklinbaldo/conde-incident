@@ -21,7 +21,7 @@ permissions:
 jobs:
   archival-byte-replay:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
@@ -37,7 +37,9 @@ jobs:
           python3 -m unittest discover -s tests -p 'test_cgeo34_uwm_jp2.py' -v
       - name: Acquire 110 MB original from UWM and replay exact bytes
         run: |
-          curl --fail --show-error --silent --location --retry 2 --max-time 200 \
+          # UWM ignores byte-range probes (HTTP 200); short retries restart 110 MB downloads.
+          # Allow one bounded uninterrupted transfer; Python below still checks size and SHA256.
+          curl --fail --show-error --silent --location --connect-timeout 25 --max-time 780 \
             'https://collections.lib.uwm.edu/digital/api/collection/agdm/id/10814/download' \
             --output "$RUNNER_TEMP/uwm-agdm-10814.jp2"
           python3 -m tools.cgeo34_uwm_jp2 --original "$RUNNER_TEMP/uwm-agdm-10814.jp2"
