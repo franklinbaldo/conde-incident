@@ -1,0 +1,59 @@
+// Chromium regression against the actual SSG template navigation and site CSS.
+// This is a LOCAL TEMPLATE test, not a claim about the deployed Pages experience.
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import { chromium } from 'playwright';
+
+const css = await fs.readFile('static/css/site.css', 'utf8');
+const sources = ['templates/template.html', 'templates/tera/base.html'];
+const out = process.env.UI_AUDIT_OUT || 'test-results/ui';
+await fs.mkdir(out, { recursive: true });
+
+const browser = await chromium.launch({ headless: true });
+try {
+  for (const path of sources) {
+    const source = await fs.readFile(path, 'utf8');
+    const header = source.match(/<header class="masthead">[\s\S]*?<\/header>/)?.[0];
+    const skip = source.match(/<a\b[^>]*class="skip-link"[^>]*>[^<]+<\/a>/)?.[0];
+    assert(header && skip, `missing real header/skip-link markup: ${path}`);
+
+    for (const width of [320, 375, 1440]) {
+      const page = await browser.newPage({ viewport: { width, height: 800 }, reducedMotion: 'reduce' });
+      try {
+        await page.setContent(`<!doctype html><html lang="pt-BR"><head><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>${skip}${header}<main id="main" tabindex="-1"><h1>Caderno de histórias</h1></main></body></html>`);
+        await page.addStyleTag({ content: css });
+        const before = await page.locator('.skip-link').boundingBox();
+        assert(before && before.y < 0, `skip link must be visually tucked away before focus: ${path} ${width}`);
+
+        const layout = await page.evaluate(() => ({
+          viewport: document.documentElement.clientWidth,
+          scroll: document.documentElement.scrollWidth,
+          anchors: [...document.querySelectorAll('.masthead nav a')].map(a => ({
+            width: a.clientWidth, scroll: a.scrollWidth, whiteSpace: getComputedStyle(a).whiteSpace,
+            top: Math.round(a.getBoundingClientRect().top)
+          }))
+        }));
+        assert(layout.scroll <= layout.viewport + 1, `horizontal overflow ${path} ${width}: ${JSON.stringify(layout)}`);
+        assert.equal(layout.anchors.length, 3);
+        assert(layout.anchors.every(a => a.whiteSpace === 'nowrap' && a.scroll <= a.width + 1),
+          `broken navigation labels ${path} ${width}: ${JSON.stringify(layout)}`);
+        if (width === 320) assert(new Set(layout.anchors.map(a => a.top)).size > 1,
+          `nav should wrap into rows rather than squeeze labels: ${path}`);
+
+        await page.keyboard.press('Tab');
+        assert.equal(await page.evaluate(() => document.activeElement?.className), 'skip-link',
+          `skip link should be the first tab stop: ${path} ${width}`);
+        const focused = await page.locator('.skip-link').boundingBox();
+        const focusStyle = await page.locator('.skip-link').evaluate(el => {
+          const s = getComputedStyle(el);
+          return { outline: s.outlineStyle, width: parseFloat(s.outlineWidth) };
+        });
+        assert(focused && focused.y >= 0 && focused.y < 100, `focused skip link offscreen: ${path} ${width}`);
+        assert(focusStyle.outline !== 'none' && focusStyle.width >= 2,
+          `skip link missing visible focus ring: ${path} ${width}`);
+        await page.screenshot({ path: `${out}/caderno-${path.includes('tera') ? 'tera' : 'ssg'}-${width}.png` });
+        console.log(`PASS: ${path}, ${width}px: nav reflow, keyboard skip and focus ring`);
+      } finally { await page.close(); }
+    }
+  }
+} finally { await browser.close(); }
