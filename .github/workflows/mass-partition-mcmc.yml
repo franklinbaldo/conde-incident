@@ -6,6 +6,8 @@ on:
       - research/statistics/C241_mass_partition_306kg_mcmc_20261113.md
       - tools/gcat_mass_lineage_audit.py
       - tests/test_gcat_mass_lineage_audit.py
+      - formal/Conde1963/MassComponent306.lean
+      - formal/Conde1963.lean
       - tools/mass_partition_mcmc.py
       - tests/test_mass_partition_mcmc.py
       - tests/fixtures/mass_partition_synthetic_c241.json
@@ -17,6 +19,8 @@ on:
       - research/statistics/C241_mass_partition_306kg_mcmc_20261113.md
       - tools/gcat_mass_lineage_audit.py
       - tests/test_gcat_mass_lineage_audit.py
+      - formal/Conde1963/MassComponent306.lean
+      - formal/Conde1963.lean
       - tools/mass_partition_mcmc.py
       - tests/test_mass_partition_mcmc.py
       - tests/fixtures/mass_partition_synthetic_c241.json
