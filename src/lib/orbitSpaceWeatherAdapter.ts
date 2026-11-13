@@ -9,6 +9,7 @@
  */
 import { EARTH, utcMilliseconds } from './orbitPhysics.ts';
 import type { Atmosphere, State } from './orbitPhysics.ts';
+import { validateSourcedGeodeticFrameKm } from './orbitGeodeticFrame.ts';
 
 export interface SpaceWeatherSnapshot {
   readonly schema: string;
@@ -138,6 +139,11 @@ export interface ConditionalMsiseOptions {
    * expressed in inertialFrame at the *same* UTC. Not an EOP approximation. */
   readonly inertialEarthPoleAtUtc?: (epochUtc: string) => readonly [number, number, number];
   readonly earthPoleSource?: string;
+  /** Optional inertial unit ECEF x-axis at each substage UTC (prime meridian).
+   * Requires the independently sourced pole above. The resulting right-handed
+   * basis validates longitude as well as latitude and height. */
+  readonly inertialPrimeMeridianAtUtc?: (epochUtc: string) => readonly [number, number, number];
+  readonly primeMeridianSource?: string;
   readonly densityModelSource: string;
   readonly evaluateDensityKgM3: (request: ConditionalDensityRequest) => number;
   readonly cdAreaOverMassM2Kg: number;
@@ -150,6 +156,7 @@ export interface ConditionalMsiseOptions {
 export function makeConditionalMsiseAtmosphere(options: ConditionalMsiseOptions): Atmosphere {
   const {snapshot, originEpochUtc, originStateTS, inertialFrame, frameTransformSource,
     toGeodetic, inertialEarthPoleAtUtc, earthPoleSource,
+    inertialPrimeMeridianAtUtc, primeMeridianSource,
     densityModelSource, evaluateDensityKgM3, cdAreaOverMassM2Kg} = options;
   const originMs = utcMilliseconds(originEpochUtc);
   if (!Number.isFinite(originStateTS) || !inertialFrame?.trim() ||
@@ -157,7 +164,11 @@ export function makeConditionalMsiseAtmosphere(options: ConditionalMsiseOptions)
       typeof toGeodetic !== 'function' || typeof evaluateDensityKgM3 !== 'function' ||
       !validPositive(cdAreaOverMassM2Kg) ||
       (inertialEarthPoleAtUtc !== undefined && typeof inertialEarthPoleAtUtc !== 'function') ||
-      Boolean(inertialEarthPoleAtUtc) !== Boolean(earthPoleSource?.trim()))
+      Boolean(inertialEarthPoleAtUtc) !== Boolean(earthPoleSource?.trim()) ||
+      (inertialPrimeMeridianAtUtc !== undefined &&
+        typeof inertialPrimeMeridianAtUtc !== 'function') ||
+      Boolean(inertialPrimeMeridianAtUtc) !== Boolean(primeMeridianSource?.trim()) ||
+      (Boolean(inertialPrimeMeridianAtUtc) && !inertialEarthPoleAtUtc))
     throw new RangeError('Requires explicit inertial frame, sourced transform, density model and Cd*A/m');
   // Preflight source and required series without inventing any density.
   deriveMsiseDriversAtUtc(snapshot, originEpochUtc);
@@ -166,6 +177,8 @@ export function makeConditionalMsiseAtmosphere(options: ConditionalMsiseOptions)
     source: 'CONDITIONAL_NRLMSISE: '+densityModelSource+'; frame='+inertialFrame+
       '; transform='+frameTransformSource+
       (earthPoleSource ? '; axial-pole='+earthPoleSource+' (CHECK_ONLY)' : '; axial-pole=NOT_CHECKED')+
+      (primeMeridianSource ? '; full-geodesy='+primeMeridianSource+' (CHECK_ONLY)' :
+        '; full-geodesy=NOT_CHECKED')+
       '; GFZ/NRC declared provenance; NOT_CALIBRATED',
     densityKgM3: (radialAltitudeKm: number, tS: number, state: State): number => {
       if (!state || !Number.isFinite(tS) || state.tS !== tS ||
@@ -226,6 +239,10 @@ export function makeConditionalMsiseAtmosphere(options: ConditionalMsiseOptions)
           state.rKm[1] * pole[1] + state.rKm[2] * pole[2];
         if (Math.abs(expectedAxialKm - inertialAxialKm) > GEODETIC_RADIUS_TOLERANCE_KM)
           throw new RangeError('Geodetic latitude inconsistent with sourced Earth pole (km)');
+        if (inertialPrimeMeridianAtUtc) {
+          const primeMeridian = inertialPrimeMeridianAtUtc(epochUtc);
+          validateSourcedGeodeticFrameKm(state.rKm, geo, pole, primeMeridian);
+        }
       }
       const rho = evaluateDensityKgM3({epochUtc, drivers, geodetic: geo});
       if (!validPositive(rho)) throw new RangeError('Conditional density model returned invalid kg/m^3');
