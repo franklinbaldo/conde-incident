@@ -179,3 +179,41 @@ test('SSG rejects unsafe source identifiers before generating source URLs',()=>{
   mutated.records[0].source_id='NASA/../../escape';
   assert.throws(()=>archivePages(mutated,ancestry),/Genealogia ausente|Identificador de fonte inválido/);
 });
+
+test('UX-04: every citation has a round-trip path to its matrix row and original', () => {
+  const pages=archivePages(feed, ancestry);
+  const used=new Set();
+  for(const r of feed.records){
+    const occurrence=r.occurrence.toLowerCase().replace('#','-');
+    const slug=value=>value.toLowerCase().replaceAll('_','-');
+    const routes={
+      occurrence:occurrence+'/index.md',
+      source:'fontes/'+slug(r.source_id)+'/index.md',
+      work:'obras/'+slug(r.work_id)+'/index.md',
+      family:'familias/'+slug(r.source_family)+'/index.md',
+    };
+    const detail=pages.get(routes.occurrence);
+    assert.ok(detail.includes('/fontes/'+slug(r.source_id)+'/'), 'Fonte sem ida: '+r.occurrence);
+    assert.ok(detail.includes('/obras/'+slug(r.work_id)+'/'), 'Obra sem ida: '+r.occurrence);
+    assert.ok(detail.includes('/familias/'+slug(r.source_family)+'/'), 'Família sem ida: '+r.occurrence);
+    assert.ok(detail.includes(r.row_sha256), 'SHA da linha não visível: '+r.occurrence);
+    assert.ok(detail.includes('#L'+r.matrix_line+')'), 'Referência não aponta para sua linha: '+r.occurrence);
+    assert.ok(detail.includes(r.citation_url), 'Original não alcançável: '+r.occurrence);
+    for(const [type,path] of Object.entries(routes)){
+      assert.ok(pages.has(path), 'Destino inexistente: '+path);
+      if(type!=='occurrence'){
+        const reverse=pages.get(path);
+        assert.ok(reverse.includes('/'+occurrence+'/'), 'Sem retorno da '+type+': '+r.occurrence);
+      }
+    }
+    used.add(r.occurrence);
+  }
+  const multiple=[...used].filter(id=>feed.records.filter(r=>r.occurrence===id).length>1);
+  assert.ok(multiple.length>0, 'Corpus sem controle positivo de múltiplas referências');
+  for(const id of multiple){
+    const page=pages.get(id.toLowerCase().replace('#','-')+'/index.md');
+    for(const r of feed.records.filter(r=>r.occurrence===id))
+      assert.ok(page.includes('/fontes/'+r.source_id.toLowerCase().replaceAll('_','-')+'/'),
+        'Fonte de referência múltipla perdida: '+id);
+  }
+});
