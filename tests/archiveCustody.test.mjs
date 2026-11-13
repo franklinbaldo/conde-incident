@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { negativeArchiveLabel } from '../src/lib/archiveCustodyLabel.ts';
 
 const custody = JSON.parse(readFileSync('research/archive/wayback_pilot_2026-11-12.json', 'utf8'));
 const ui = readFileSync('src/components/DocumentArchive.tsx', 'utf8');
@@ -29,4 +30,17 @@ test('two distinct archival replays and a delimited negative; no historical infe
   assert.equal(nasa.archived_url, null);
   assert.equal(nasa.replay, null);
   assert.match(ui, /isso não prova ausência do documento/);
+});
+
+
+test('negative archive rows retain their own identity, not the NASA label', () => {
+  const nasa = custody.records.find(r => r.id === 'WB-NASA-SSR-19631115');
+  assert.equal(negativeArchiveLabel(nasa), nasa.source_type);
+  const other = { id: 'WB-OTHER-NEGATIVE', source_type: 'Another institutional collection',
+    status: 'NO_EXACT_CAPTURE_IN_QUERIED_INDEX' };
+  assert.equal(negativeArchiveLabel(other), 'Another institutional collection');
+  assert.notEqual(negativeArchiveLabel(other), negativeArchiveLabel(nasa));
+  assert.equal(negativeArchiveLabel({ id: 'WB-NO-TITLE', source_type: '  ' }), 'WB-NO-TITLE');
+  assert.match(ui, /negativeArchiveLabel\(r\)/);
+  assert.doesNotMatch(ui, /<strong>NASA SSR 15\/11\/1963:<\/strong>/);
 });
