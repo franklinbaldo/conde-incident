@@ -7,6 +7,10 @@ on:
       - 'src/components/OrbitalMap.tsx'
       - 'src/components/map/**'
       - 'tests/ui_keyboard_smoke.mjs'
+      - 'tests/caderno_reflow_smoke.mjs'
+      - 'static/css/site.css'
+      - 'templates/template.html'
+      - 'templates/tera/base.html'
       - '.github/workflows/ui-keyboard-smoke.yml'
   workflow_dispatch:
 permissions:
@@ -52,6 +56,8 @@ jobs:
           exit 1
       - name: Browser keyboard and desktop/mobile screenshots
         run: node tests/ui_keyboard_smoke.mjs
+      - name: Caderno 320px reflow and focus in Chromium (source templates)
+        run: node tests/caderno_reflow_smoke.mjs
       - name: Upload screenshots and findings even on failure
         if: always()
         uses: actions/upload-artifact@v4
