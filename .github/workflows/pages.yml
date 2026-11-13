@@ -77,6 +77,11 @@ jobs:
           cp -R dist/. public/lab/
           cp -R static/css/. public/css/
           cp -R static/img/. public/img/
+      - name: Test and build canonical sitemap from final Pages artifact
+        run: |
+          node --test tests/ssg-sitemap.test.mjs
+          node scripts/build-sitemap.mjs public
+          python3 tools/check_sitemap.py public
       - name: Audit actual GitHub Pages prefix without weakening gates
         run: |
           mkdir -p "$RUNNER_TEMP/conde-audit-root/conde-incident"
