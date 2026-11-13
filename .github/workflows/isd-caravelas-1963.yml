@@ -24,6 +24,10 @@ jobs:
         run: python3 tools/audit_isd_caravelas_1963.py --check
       - name: Adversarial ISD/QC tests
         run: python3 -m unittest discover -s tests -p 'test_isd_caravelas_1963.py' -v
+      - name: Verify directional wind components and uncalibrated transfer
+        run: |
+          python3 tools/audit_isd_caravelas_vectors_1963.py --check
+          python3 -m unittest discover -s tests -p 'test_isd_caravelas_vectors_1963.py' -v
       - name: Recover and compare full 1963 NOAA gzip
         run: |
           curl -fL --retry 3 --retry-all-errors --connect-timeout 15 --max-time 90 \

@@ -1,0 +1,19 @@
+{
+  "schema": "conde.meteorological-derived-vector/v1",
+  "id": "MET-ISD-CARAVELAS-WIND-VECTORS-19631107-09",
+  "source": "MET-ISD-19631107-09-CARAVELAS-01",
+  "dependencies": [
+    "MET-ISD-CARAVELAS-POSITION-DISCREPANCY-1963-01",
+    "NOAA_ISD_834970_99999_1963"
+  ],
+  "edges": [
+    {"from": "Caravelas_hourly_speed_and_direction", "to": "Caravelas_surface_hourly_u_v", "type": "SOURCE_DERIVED"},
+    {"from": "Caravelas_surface_hourly_u_v", "to": "Caravelas_daily_vector_means", "type": "AGGREGATION_NOT_INDEPENDENT_OBSERVATIONS"},
+    {"from": "Caravelas_daily_vector_means", "to": "Conde_surface_wind", "type": "TRANSFER_PENDING_CALIBRATION"}
+  ],
+  "station_site_1963_authenticated": false,
+  "instrument_sigma_m_s": null,
+  "geographic_transfer_function": null,
+  "active_conde_constraint": null,
+  "status": "CONNECTED_PENDING_SPATIOTEMPORAL_CALIBRATION"
+}
