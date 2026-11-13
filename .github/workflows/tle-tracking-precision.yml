@@ -1,0 +1,53 @@
+name: Tartaruga - 1963 tracking precision documentary custody
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/tracking_precision_1963_C241-L26.json
+      - research/tle_custody/evidence_matrix_C241-L26_2026-11-13.md
+      - tools/tle_1963_tracking_precision_audit.py
+      - tests/test_tle_1963_tracking_precision_audit.py
+      - .github/workflows/tle-tracking-precision.yml
+  push:
+    branches: [main]
+    paths:
+      - research/tle_custody/tracking_precision_1963_C241-L26.json
+      - research/tle_custody/evidence_matrix_C241-L26_2026-11-13.md
+      - tools/tle_1963_tracking_precision_audit.py
+      - tests/test_tle_1963_tracking_precision_audit.py
+      - .github/workflows/tle-tracking-precision.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  tracking-custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify code and source contract at exact SHA
+        run: |
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+          python3 -m unittest discover -s tests -p test_tle_1963_tracking_precision_audit.py -v
+          python3 tools/tle_1963_tracking_precision_audit.py --output "$RUNNER_TEMP/c241-l26-contract.json"
+      - name: Download original facsimiles and audit byte custody
+        run: |
+          mkdir -p "$RUNNER_TEMP/c241-l26-sources"
+          cd "$RUNNER_TEMP/c241-l26-sources"
+          curl -fsSL --retry 2 --max-time 90 -o nasa-ssr-1963-11-15.pdf https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf
+          curl -fsSL --retry 2 --max-time 90 -o nasa-pres-1961.pdf https://www.nasa.gov/wp-content/uploads/2024/01/presrep1961.pdf
+          curl -fsSL --retry 2 --max-time 90 -o norad-conad-jul-dec-1963.pdf https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/11.pdf
+          curl -fsSL --retry 2 --max-time 90 -o norad-1965-cosmos94.pdf https://www.archives.gov/files/declassification/iscap/pdf/2009-068-doc102.pdf
+          cd "$GITHUB_WORKSPACE"
+          python3 tools/tle_1963_tracking_precision_audit.py --source-dir "$RUNNER_TEMP/c241-l26-sources" --output "$RUNNER_TEMP/c241-l26-verified.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: c241-l26-precision-${{ github.event.pull_request.head.sha || github.sha }}
+          path: |
+            ${{ runner.temp }}/c241-l26-contract.json
+            ${{ runner.temp }}/c241-l26-verified.json
+          if-no-files-found: warn
+          retention-days: 30
