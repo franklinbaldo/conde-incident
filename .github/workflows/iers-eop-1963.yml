@@ -1,0 +1,39 @@
+name: Castor IERS 1963 EOP original replay
+on:
+  pull_request:
+    paths:
+      - .github/workflows/iers-eop-1963.yml
+      - tools/iers_1963_eop.py
+      - tests/test_iers_1963_eop.py
+      - research/constraints/iers_eop_1963_11_07_09.json
+      - research/constraints/iers_eop_1963_G46.md
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/iers-eop-1963.yml
+      - tools/iers_1963_eop.py
+      - tests/test_iers_1963_eop.py
+      - research/constraints/iers_eop_1963_11_07_09.json
+      - research/constraints/iers_eop_1963_G46.md
+permissions:
+  contents: read
+jobs:
+  pinned-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact checkout head
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Replay source and adversarial tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p 'test_iers_1963_eop.py' -v
+          python3 tools/iers_1963_eop.py --download --check
