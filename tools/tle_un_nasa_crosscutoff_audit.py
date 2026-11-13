@@ -5,12 +5,20 @@ from decimal import Decimal, InvalidOperation
 import hashlib
 import json
 from pathlib import Path
+try:
+    from tools.tle_un_1963_registration_audit import validate as validate_un_1963
+    from tools.tle_nasa_ssr_apr_oct_audit import validate as validate_nasa_apr
+except ModuleNotFoundError:  # Direct execution: python3 tools/tle_un_nasa_crosscutoff_audit.py
+    from tle_un_1963_registration_audit import validate as validate_un_1963
+    from tle_nasa_ssr_apr_oct_audit import validate as validate_nasa_apr
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL = "research/tle_custody/un_nasa_crosscutoff_print_deltas_C241-L36.json"
 UN = "research/tle_custody/un_1963_registration_C241-L33.json"
 NASA = "research/tle_custody/nasa_ssr_apr_oct_1963_C241-L16.json"
 IDENTITY = "research/tle_custody/nasa_ssr_dec1977_528_identity_C241-L32.json"
+NASA_1963_LINEAGE = "research/tle_custody/nasa_ssr_1963_incremental_lineage_C241-L11.json"
+NASA_OCTOBER = "research/tle_custody/nasa_ssr_1963_oct15_C241-L12.json"
 FIELDS = (
     ("nodal_period_min", "nodal_period_min_printed", "nodal_period_min"),
     ("inclination_deg", "inclination_deg_printed", "inclination_deg"),
@@ -31,6 +39,12 @@ def load(path):
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
 
 def validate(m, un, nasa, identity):
+    # Arithmetic agreement alone is not document custody: changing both a
+    # ledger cell and its published delta would otherwise pass unchanged PDF
+    # hashes. Reuse the independently source-pinned L33 and L16 validators,
+    # rather than maintaining another table of 12+12 printed cells here.
+    validate_un_1963(un, identity, load(NASA_1963_LINEAGE))
+    validate_nasa_apr(nasa, load(NASA_OCTOBER))
     require(m["schema"] == "conde.c241-l36-un-nasa-editorial-crosscutoff/v1"
             and m["id"] == "C241-L36"
             and m["epistemic_status"] == "DOCUMENTARY_PRINTED_DIFFERENCES_NO_PHYSICAL_RATE",

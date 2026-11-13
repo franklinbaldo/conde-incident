@@ -1,0 +1,210 @@
+{
+  "schema": "conde.gaviao-retrospective/v1",
+  "id": "G46",
+  "reviewed_from_main_sha_exclusive": "23b69249fddb897945f611d47247a8d6428fe2a7",
+  "reviewed_through_main_sha_inclusive": "00e2226de5c7889c992e3164d9616f8c6354ab2b",
+  "first_parent_integrations": 12,
+  "dag_commit_count": 23,
+  "first_parent_merge_commits": 3,
+  "historical_ci_status": "NOT_CHECKED",
+  "findings": [
+    {
+      "id": "G46-F1",
+      "kind": "DOCUMENTARY_CUSTODY_CROSS_LEDGER_MUTATION",
+      "reproduced": true,
+      "synthetic_mutations": 2,
+      "baseline_joint_mutations_accepted": 2,
+      "fixed_by": "reuse C241-L33 and C241-L16 source-pinned validators at C241-L36 consumer boundary",
+      "historical_adulteration_proven": false,
+      "new_physical_observation_count": 0
+    }
+  ],
+  "integrations": [
+    {
+      "sha": "164cf88aea592d79cbf90949c3e6bbacd83d0f66",
+      "parents": [
+        "23b69249fddb897945f611d47247a8d6428fe2a7"
+      ],
+      "title": "🐢 C241-L36: connect UN and NASA 1963 printed orbital values (#592)",
+      "pr_number": 592,
+      "files": [
+        ".github/workflows/tle-un-nasa-crosscutoff.yml",
+        "research/tle_custody/evidence_matrix_C241-L36_2026-11-13.md",
+        "research/tle_custody/un_nasa_crosscutoff_print_deltas_C241-L36.json",
+        "tests/test_tle_un_nasa_crosscutoff_audit.py",
+        "tools/tle_un_nasa_crosscutoff_audit.py"
+      ],
+      "historical_ci": "NOT_CHECKED"
+    },
+    {
+      "sha": "5773160f66a69c058d2b104f4e4226b2626afc01",
+      "parents": [
+        "164cf88aea592d79cbf90949c3e6bbacd83d0f66"
+      ],
+      "title": "🦅 G45: fail closed on empty Node CI suite discovery (#591)",
+      "pr_number": 591,
+      "files": [
+        ".github/workflows/integration-head.yml",
+        "research/audits/gaviao-main-window-20261113-g45.json",
+        "research/audits/gaviao-main-window-20261113-g45.md",
+        "scripts/integration-head.test.mjs",
+        "tests/ci_critical_step_scripts.py",
+        "tests/test_ci_node_discovery_gate.py"
+      ],
+      "historical_ci": "NOT_CHECKED"
+    },
+    {
+      "sha": "8f5e3e59f2cb5626f852d58fd974f1c38fce6745",
+      "parents": [
+        "5773160f66a69c058d2b104f4e4226b2626afc01",
+        "d008dfa3f21c277c00f7be28ab3930b83c285117"
+      ],
+      "title": "Merge pull request #593 from franklinbaldo/lagarto/ssg-visible-navigation-r31",
+      "pr_number": 593,
+      "files": [
+        "docs/SSG_EVIDENCE_INDEX.md",
+        "scripts/verify-ssg-evidence-index.mjs",
+        "tests/ssg-evidence-index-bridge.test.mjs"
+      ],
+      "historical_ci": "NOT_CHECKED"
+    },
+    {
+      "sha": "f25b3993a742a36d3f9880e03086a38a205be749",
+      "parents": [
+        "8f5e3e59f2cb5626f852d58fd974f1c38fce6745",
+        "ade34f059cf341a767ad0d046695e2c2b6d83c68"
+      ],
+      "title": "Merge pull request #594 from franklinbaldo/research/polvo-c241-p23-un-ssr-20261113",
+      "pr_number": 594,
+      "files": [
+        "formal/Conde1963.lean",
+        "formal/Conde1963/CoreAxioms.lean",
+        "formal/Conde1963/UnSsrCrossCompilation.lean",
+        "formal/scripts/compile_un_ssr_cross_compilation.py",
+        "formal/tests/test_ssr_edition_survivors.py",
+        "research/constraints/C241-P23_un_ssr_cross_compilation.json"
+      ],
+      "historical_ci": "NOT_CHECKED"
+    },
+    {
+      "sha": "6f7d59f943ad2372813a26ecec14385a47c5cae4",
+      "parents": [
+        "f25b3993a742a36d3f9880e03086a38a205be749",
+        "1dfbe8920b1f42f258fc74b61cc74eedd8509a53"
+      ],
+      "title": "Merge pull request #595 from franklinbaldo/research/abelha-un-registration-bridge-c241-l33",
+      "pr_number": 595,
+      "files": [
+        "formal/Conde1963.lean",
+        "formal/Conde1963/UnRegistrationCandidate.lean",
+        "public/data/conde-un-1963-status-bridge.json",
+        "tests/test_un_1963_status_bridge.py",
+        "tools/export_un_1963_status_bridge.py"
+      ],
+      "historical_ci": "NOT_CHECKED"
+    },
+    {
+      "sha": "05e7f83f9e2b7bb211614fe962779df5c698b79a",
+      "parents": [
+        "6f7d59f943ad2372813a26ecec14385a47c5cae4"
+      ],
+      "title": "🦦 C241-L37: separar série soviética de dados brutos dos boletins metodológicos (#597)",
+      "pr_number": 597,
+      "files": [
+        "research/tle_custody/evidence_matrix_C241-L37_2026-11-13.md",
+        "research/tle_custody/soviet_raw_observations_route_C241-L37.json",
+        "tests/test_soviet_raw_observations_route.py",
+        "tools/verify_soviet_raw_observations_route.py"
+      ],
+      "historical_ci": "NOT_CHECKED"
+    },
+    {
+      "sha": "9b975bd4d8520872f673a55da1f536c6271256d4",
+      "parents": [
+        "05e7f83f9e2b7bb211614fe962779df5c698b79a"
+      ],
+      "title": "84 🦀 CGEO-33: cartografia SEI 2025, cortes e proveniência (#596)",
+      "pr_number": 596,
+      "files": [
+        ".github/workflows/geo-sei-history.yml",
+        "research/geo/cgeo33_sei_history.json",
+        "research/geo/cgeo33_sei_history.md",
+        "tests/test_cgeo33_sei_history.py",
+        "tools/cgeo33_sei_history.py"
+      ],
+      "historical_ci": "NOT_CHECKED"
+    },
+    {
+      "sha": "3b05d2537697be716274bfd14374a54bf1b09425",
+      "parents": [
+        "9b975bd4d8520872f673a55da1f536c6271256d4"
+      ],
+      "title": "🦌 C241-P30: intervalos robustos de H sob heterogeneidade da densidade (#599)",
+      "pr_number": 599,
+      "files": [
+        "research/constraints/C241-P30_density_epoch_partial_id.json",
+        "research/statistics/DENSITY_EPOCH_PARTIAL_ID_C241.md",
+        "tests/test_density_epoch_partial_id.py",
+        "tools/density_epoch_partial_id.py"
+      ],
+      "historical_ci": "NOT_CHECKED"
+    },
+    {
+      "sha": "864b9501f102435b007958029ab1ed7ad28a4408",
+      "parents": [
+        "3b05d2537697be716274bfd14374a54bf1b09425"
+      ],
+      "title": "fix(castor): validate apparent solar time against sourced inertial Sun vector (#600)",
+      "pr_number": 600,
+      "files": [
+        ".github/workflows/orbit-kernel.yml",
+        "src/lib/orbitGeodeticFrame.ts",
+        "src/lib/orbitSpaceWeatherAdapter.ts",
+        "tests/orbitSolarTimeFrame.test.mjs"
+      ],
+      "historical_ci": "NOT_CHECKED"
+    },
+    {
+      "sha": "49e60736ef01f48144b25b47f0ab4d49faac78d5",
+      "parents": [
+        "864b9501f102435b007958029ab1ed7ad28a4408"
+      ],
+      "title": "🦇 UX: recuperação acessível quando instrumento lazy falha ao carregar (#601)",
+      "pr_number": 601,
+      "files": [
+        ".github/workflows/ui-keyboard-smoke.yml",
+        "src/App.tsx",
+        "src/components/LabLoadErrorBoundary.tsx",
+        "tests/ui_lab_chunk_failure_smoke.mjs"
+      ],
+      "historical_ci": "NOT_CHECKED"
+    },
+    {
+      "sha": "3d538ccb2caf2d12f859beca0509da2e7009be7c",
+      "parents": [
+        "49e60736ef01f48144b25b47f0ab4d49faac78d5"
+      ],
+      "title": "🦊 UX: exportação Python continua fechável quando o módulo sob demanda falha (#602)",
+      "pr_number": 602,
+      "files": [
+        ".github/workflows/ui-keyboard-smoke.yml",
+        "src/App.tsx",
+        "src/components/PythonExportFallback.tsx",
+        "tests/lab_python_export_failure_smoke.mjs"
+      ],
+      "historical_ci": "NOT_CHECKED"
+    },
+    {
+      "sha": "00e2226de5c7889c992e3164d9616f8c6354ab2b",
+      "parents": [
+        "3d538ccb2caf2d12f859beca0509da2e7009be7c"
+      ],
+      "title": "85 🦉 Caderno 23: a lanterna e os dois arquivos soviéticos (#603)",
+      "pr_number": 603,
+      "files": [
+        "stories/2026-11-13-a-lanterna-que-levou-a-dois-arquivos.md"
+      ],
+      "historical_ci": "NOT_CHECKED"
+    }
+  ]
+}
