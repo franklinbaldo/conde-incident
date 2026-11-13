@@ -1,0 +1,546 @@
+{
+  "baseline_all_nine_centiminute": 128,
+  "delete_one": [
+    {
+      "attaining_witness": {
+        "max_abs_residual": 120,
+        "object_baselines": {
+          "527": 9460,
+          "528": 9310,
+          "529": 9160
+        },
+        "publication_offsets": {
+          "1963-06-30": 120,
+          "1963-07-31": 110,
+          "1963-08-15": 100,
+          "1963-10-15": 50,
+          "1963-11-15": -20,
+          "1963-11-30": -60,
+          "1963-12-15": -120,
+          "1963-12-31": -120
+        }
+      },
+      "lower_bound_contrast": {
+        "gap_centiminute": [
+          60,
+          540
+        ],
+        "gap_change_centiminute": 480,
+        "integral_bound": 120,
+        "necessary_inequality": "4*E >= absolute gap change",
+        "objects": [
+          527,
+          529
+        ],
+        "publications": [
+          "1963-06-30",
+          "1963-12-31"
+        ]
+      },
+      "minimum_residual_centiminute": 120,
+      "minimum_residual_seconds": "72.0",
+      "removed_publication": "1963-04-30",
+      "retained_printed_cells": 20,
+      "retained_publications": [
+        "1963-06-30",
+        "1963-07-31",
+        "1963-08-15",
+        "1963-10-15",
+        "1963-11-15",
+        "1963-11-30",
+        "1963-12-15",
+        "1963-12-31"
+      ]
+    },
+    {
+      "attaining_witness": {
+        "max_abs_residual": 128,
+        "object_baselines": {
+          "527": 9460,
+          "528": 9342,
+          "529": 9176
+        },
+        "publication_offsets": {
+          "1963-04-30": 126,
+          "1963-07-31": 86,
+          "1963-08-15": 76,
+          "1963-10-15": 26,
+          "1963-11-15": -44,
+          "1963-11-30": -84,
+          "1963-12-15": -128,
+          "1963-12-31": -128
+        }
+      },
+      "lower_bound_contrast": {
+        "gap_centiminute": [
+          30,
+          540
+        ],
+        "gap_change_centiminute": 510,
+        "integral_bound": 128,
+        "necessary_inequality": "4*E >= absolute gap change",
+        "objects": [
+          527,
+          529
+        ],
+        "publications": [
+          "1963-04-30",
+          "1963-12-31"
+        ]
+      },
+      "minimum_residual_centiminute": 128,
+      "minimum_residual_seconds": "76.8",
+      "removed_publication": "1963-06-30",
+      "retained_printed_cells": 20,
+      "retained_publications": [
+        "1963-04-30",
+        "1963-07-31",
+        "1963-08-15",
+        "1963-10-15",
+        "1963-11-15",
+        "1963-11-30",
+        "1963-12-15",
+        "1963-12-31"
+      ]
+    },
+    {
+      "attaining_witness": {
+        "max_abs_residual": 128,
+        "object_baselines": {
+          "527": 9460,
+          "528": 9342,
+          "529": 9176
+        },
+        "publication_offsets": {
+          "1963-04-30": 126,
+          "1963-06-30": 96,
+          "1963-08-15": 76,
+          "1963-10-15": 26,
+          "1963-11-15": -44,
+          "1963-11-30": -84,
+          "1963-12-15": -128,
+          "1963-12-31": -128
+        }
+      },
+      "lower_bound_contrast": {
+        "gap_centiminute": [
+          30,
+          540
+        ],
+        "gap_change_centiminute": 510,
+        "integral_bound": 128,
+        "necessary_inequality": "4*E >= absolute gap change",
+        "objects": [
+          527,
+          529
+        ],
+        "publications": [
+          "1963-04-30",
+          "1963-12-31"
+        ]
+      },
+      "minimum_residual_centiminute": 128,
+      "minimum_residual_seconds": "76.8",
+      "removed_publication": "1963-07-31",
+      "retained_printed_cells": 20,
+      "retained_publications": [
+        "1963-04-30",
+        "1963-06-30",
+        "1963-08-15",
+        "1963-10-15",
+        "1963-11-15",
+        "1963-11-30",
+        "1963-12-15",
+        "1963-12-31"
+      ]
+    },
+    {
+      "attaining_witness": {
+        "max_abs_residual": 128,
+        "object_baselines": {
+          "527": 9460,
+          "528": 9342,
+          "529": 9176
+        },
+        "publication_offsets": {
+          "1963-04-30": 126,
+          "1963-06-30": 96,
+          "1963-07-31": 86,
+          "1963-10-15": 26,
+          "1963-11-15": -44,
+          "1963-11-30": -84,
+          "1963-12-15": -128,
+          "1963-12-31": -128
+        }
+      },
+      "lower_bound_contrast": {
+        "gap_centiminute": [
+          30,
+          540
+        ],
+        "gap_change_centiminute": 510,
+        "integral_bound": 128,
+        "necessary_inequality": "4*E >= absolute gap change",
+        "objects": [
+          527,
+          529
+        ],
+        "publications": [
+          "1963-04-30",
+          "1963-12-31"
+        ]
+      },
+      "minimum_residual_centiminute": 128,
+      "minimum_residual_seconds": "76.8",
+      "removed_publication": "1963-08-15",
+      "retained_printed_cells": 20,
+      "retained_publications": [
+        "1963-04-30",
+        "1963-06-30",
+        "1963-07-31",
+        "1963-10-15",
+        "1963-11-15",
+        "1963-11-30",
+        "1963-12-15",
+        "1963-12-31"
+      ]
+    },
+    {
+      "attaining_witness": {
+        "max_abs_residual": 128,
+        "object_baselines": {
+          "527": 9460,
+          "528": 9382,
+          "529": 9176
+        },
+        "publication_offsets": {
+          "1963-04-30": 126,
+          "1963-06-30": 96,
+          "1963-07-31": 86,
+          "1963-08-15": 76,
+          "1963-11-15": -44,
+          "1963-11-30": -84,
+          "1963-12-15": -128,
+          "1963-12-31": -128
+        }
+      },
+      "lower_bound_contrast": {
+        "gap_centiminute": [
+          30,
+          540
+        ],
+        "gap_change_centiminute": 510,
+        "integral_bound": 128,
+        "necessary_inequality": "4*E >= absolute gap change",
+        "objects": [
+          527,
+          529
+        ],
+        "publications": [
+          "1963-04-30",
+          "1963-12-31"
+        ]
+      },
+      "minimum_residual_centiminute": 128,
+      "minimum_residual_seconds": "76.8",
+      "removed_publication": "1963-10-15",
+      "retained_printed_cells": 20,
+      "retained_publications": [
+        "1963-04-30",
+        "1963-06-30",
+        "1963-07-31",
+        "1963-08-15",
+        "1963-11-15",
+        "1963-11-30",
+        "1963-12-15",
+        "1963-12-31"
+      ]
+    },
+    {
+      "attaining_witness": {
+        "max_abs_residual": 128,
+        "object_baselines": {
+          "527": 9460,
+          "528": 9342,
+          "529": 9176
+        },
+        "publication_offsets": {
+          "1963-04-30": 126,
+          "1963-06-30": 96,
+          "1963-07-31": 86,
+          "1963-08-15": 76,
+          "1963-10-15": 26,
+          "1963-11-30": -84,
+          "1963-12-15": -128,
+          "1963-12-31": -128
+        }
+      },
+      "lower_bound_contrast": {
+        "gap_centiminute": [
+          30,
+          540
+        ],
+        "gap_change_centiminute": 510,
+        "integral_bound": 128,
+        "necessary_inequality": "4*E >= absolute gap change",
+        "objects": [
+          527,
+          529
+        ],
+        "publications": [
+          "1963-04-30",
+          "1963-12-31"
+        ]
+      },
+      "minimum_residual_centiminute": 128,
+      "minimum_residual_seconds": "76.8",
+      "removed_publication": "1963-11-15",
+      "retained_printed_cells": 21,
+      "retained_publications": [
+        "1963-04-30",
+        "1963-06-30",
+        "1963-07-31",
+        "1963-08-15",
+        "1963-10-15",
+        "1963-11-30",
+        "1963-12-15",
+        "1963-12-31"
+      ]
+    },
+    {
+      "attaining_witness": {
+        "max_abs_residual": 128,
+        "object_baselines": {
+          "527": 9460,
+          "528": 9342,
+          "529": 9176
+        },
+        "publication_offsets": {
+          "1963-04-30": 126,
+          "1963-06-30": 96,
+          "1963-07-31": 86,
+          "1963-08-15": 76,
+          "1963-10-15": 26,
+          "1963-11-15": -44,
+          "1963-12-15": -128,
+          "1963-12-31": -128
+        }
+      },
+      "lower_bound_contrast": {
+        "gap_centiminute": [
+          30,
+          540
+        ],
+        "gap_change_centiminute": 510,
+        "integral_bound": 128,
+        "necessary_inequality": "4*E >= absolute gap change",
+        "objects": [
+          527,
+          529
+        ],
+        "publications": [
+          "1963-04-30",
+          "1963-12-31"
+        ]
+      },
+      "minimum_residual_centiminute": 128,
+      "minimum_residual_seconds": "76.8",
+      "removed_publication": "1963-11-30",
+      "retained_printed_cells": 21,
+      "retained_publications": [
+        "1963-04-30",
+        "1963-06-30",
+        "1963-07-31",
+        "1963-08-15",
+        "1963-10-15",
+        "1963-11-15",
+        "1963-12-15",
+        "1963-12-31"
+      ]
+    },
+    {
+      "attaining_witness": {
+        "max_abs_residual": 128,
+        "object_baselines": {
+          "527": 9460,
+          "528": 9342,
+          "529": 9176
+        },
+        "publication_offsets": {
+          "1963-04-30": 126,
+          "1963-06-30": 96,
+          "1963-07-31": 86,
+          "1963-08-15": 76,
+          "1963-10-15": 26,
+          "1963-11-15": -44,
+          "1963-11-30": -84,
+          "1963-12-31": -128
+        }
+      },
+      "lower_bound_contrast": {
+        "gap_centiminute": [
+          30,
+          540
+        ],
+        "gap_change_centiminute": 510,
+        "integral_bound": 128,
+        "necessary_inequality": "4*E >= absolute gap change",
+        "objects": [
+          527,
+          529
+        ],
+        "publications": [
+          "1963-04-30",
+          "1963-12-31"
+        ]
+      },
+      "minimum_residual_centiminute": 128,
+      "minimum_residual_seconds": "76.8",
+      "removed_publication": "1963-12-15",
+      "retained_printed_cells": 21,
+      "retained_publications": [
+        "1963-04-30",
+        "1963-06-30",
+        "1963-07-31",
+        "1963-08-15",
+        "1963-10-15",
+        "1963-11-15",
+        "1963-11-30",
+        "1963-12-31"
+      ]
+    },
+    {
+      "attaining_witness": {
+        "max_abs_residual": 68,
+        "object_baselines": {
+          "527": 9460,
+          "528": 9342,
+          "529": 9296
+        },
+        "publication_offsets": {
+          "1963-04-30": 66,
+          "1963-06-30": 36,
+          "1963-07-31": 26,
+          "1963-08-15": 16,
+          "1963-10-15": -34,
+          "1963-11-15": -68,
+          "1963-11-30": -68,
+          "1963-12-15": -68
+        }
+      },
+      "lower_bound_contrast": {
+        "gap_centiminute": [
+          30,
+          300
+        ],
+        "gap_change_centiminute": 270,
+        "integral_bound": 68,
+        "necessary_inequality": "4*E >= absolute gap change",
+        "objects": [
+          527,
+          529
+        ],
+        "publications": [
+          "1963-04-30",
+          "1963-12-15"
+        ]
+      },
+      "minimum_residual_centiminute": 68,
+      "minimum_residual_seconds": "40.8",
+      "removed_publication": "1963-12-31",
+      "retained_printed_cells": 21,
+      "retained_publications": [
+        "1963-04-30",
+        "1963-06-30",
+        "1963-07-31",
+        "1963-08-15",
+        "1963-10-15",
+        "1963-11-15",
+        "1963-11-30",
+        "1963-12-15"
+      ]
+    }
+  ],
+  "highest_leverage_decrease_centiminute": 60,
+  "highest_leverage_deleted_publication": "1963-12-31",
+  "id": "C241-P22",
+  "instrument_error_sigma": null,
+  "interpretation": "Dec31 omission reduces minimum E from 128 to 68 centimin; Apr30 omission only to 120; every other single omission leaves 128. This prioritizes auditing the Dec31 facsimile, NOT labeling it an erratum or inferring physics.",
+  "model": "printed(obj,publication) = baseline_obj + offset_publication + residual",
+  "new_independent_instrument_observations": 0,
+  "parent_evidence": [
+    "C241-L27",
+    "C241-P20",
+    "C241-P21"
+  ],
+  "physical_domain": "THETA_UNCHANGED",
+  "publication_is_instrument_epoch": false,
+  "schema": "conde.ssr-jackknife-print-model/v1",
+  "source_editions": [
+    {
+      "ntrs": "19630012128",
+      "page": 5,
+      "pdf_sha256_from_ledger": "87b8c1be1d074dff4b605b422f6a8836c2ebdf80ca4ac0568373b168cc457a38",
+      "publication": "1963-04-30",
+      "source_ledger": "research/tle_custody/nasa_ssr_apr_oct_1963_C241-L16.json"
+    },
+    {
+      "ntrs": "19630012130",
+      "page": 5,
+      "pdf_sha256_from_ledger": "8add4b46734e992a213088ef58ba9d58b6385df7b89bb504f79fe8715ec418f3",
+      "publication": "1963-06-30",
+      "source_ledger": "research/tle_custody/nasa_ssr_jun30_1963_C241-L22.json"
+    },
+    {
+      "ntrs": "19630012290",
+      "page": 5,
+      "pdf_sha256_from_ledger": "9b00bf8323b1de80a34920f73c658f70f766a51632a13473a408679f0e5a03d9",
+      "publication": "1963-07-31",
+      "source_ledger": "research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json"
+    },
+    {
+      "ntrs": "19630012289",
+      "page": 5,
+      "pdf_sha256_from_ledger": "4e5cb0205577bc1b0959088db9ca3ae7a05f8de480b5ece9b86c385437636968",
+      "publication": "1963-08-15",
+      "source_ledger": "research/tle_custody/nasa_ssr_aug15_1963_C241-L17.json"
+    },
+    {
+      "ntrs": "19640000428",
+      "page": 5,
+      "pdf_sha256_from_ledger": "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+      "publication": "1963-10-15",
+      "source_ledger": "research/tle_custody/nasa_ssr_1963_oct15_C241-L12.json"
+    },
+    {
+      "ntrs": "19640001198",
+      "page": 5,
+      "pdf_sha256_from_ledger": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+      "publication": "1963-11-15",
+      "source_ledger": "research/tle_custody/nasa_ssr_nov15_1963_C241-L19.json"
+    },
+    {
+      "ntrs": "19640002493",
+      "page": 5,
+      "pdf_sha256_from_ledger": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+      "publication": "1963-11-30",
+      "source_ledger": "research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json"
+    },
+    {
+      "ntrs": "19640003479",
+      "page": 5,
+      "pdf_sha256_from_ledger": "d31a064f8e03fd39be6fe75b88cd5852c0b74c9101fa635cb40ac25c77ef474f",
+      "publication": "1963-12-15",
+      "source_ledger": "research/tle_custody/nasa_ssr_dec15_1963_C241-L21.json"
+    },
+    {
+      "ntrs": "19640005618",
+      "page": 5,
+      "pdf_sha256_from_ledger": "d9504a8641baa65c208e41034e77b0e9b1cc01b4acb2a4f95541bd9e75d3783d",
+      "publication": "1963-12-31",
+      "source_ledger": "research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json"
+    }
+  ],
+  "source_family": "NASA_GODDARD_NORAD_SAO_COMPILED_SAME_UPSTREAM",
+  "unit": "centiminute (0.01 minute)"
+}
