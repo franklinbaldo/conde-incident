@@ -1,0 +1,121 @@
+{
+  "schema": "conde.nasa-retrospective-satellite-catalog-crosswalk/v1",
+  "record_id": "C241-L32",
+  "scientific_question": "Can a NASA institutional publication directly pair the 1963-003B international designator with catalog 528, without relying solely on modern secondary aggregators?",
+  "source": {
+    "title": "Satellite Situation Report, Volume 17, Number 6",
+    "issuing_body": "NASA Goddard Space Flight Center, Office of Public Affairs",
+    "report_number": "NASA-TM-79345",
+    "ntrs_id": "19780009188",
+    "date_published": "1977-12-31",
+    "ntrs_url": "https://ntrs.nasa.gov/citations/19780009188",
+    "pdf_url": "https://ntrs.nasa.gov/api/citations/19780009188/downloads/19780009188.pdf",
+    "pdf_bytes": 11563410,
+    "pdf_sha256": "c5c66eb7eab242ab5b3dd56567de8bab2d404d0a6776baeb3b79383c86bc5ba8",
+    "document_kind": "ORIGINAL_NASA_1977_PUBLICATION_RETROSPECTIVE_CATALOG_NOT_1963_SENSOR",
+    "table_section": "DECAYED OBJECTS",
+    "year_group": "1963 LAUNCHES",
+    "page_index_zero_based": 46,
+    "printed_page": 43,
+    "full_page_visual_review": "VISUALLY_VERIFIED_1977_SOURCE",
+    "visual_basis": "GitHub Actions CI run 43454971351, pinned NASA PDF rendered page 47/114, printed -43-, reviewed visually 2026-11-13"
+  },
+  "row": {
+    "international_designator_printed": "1963 003B",
+    "catalog_number_printed": 528,
+    "identity_match": "DIRECT_VISUAL_VERIFIED",
+    "source_528_sensor_id": null,
+    "original_1963_tle_pair": null,
+    "original_1963_observation_epoch_utc": null,
+    "reentry_physical_time_utc": null,
+    "reentry_location": null,
+    "decay_date_cell_crosscheck": "1963-11-08",
+    "reported_decay_day_from_1977_table": "1963-11-08",
+    "decay_day_timezone": null,
+    "decay_day_error_seconds": null
+  },
+  "context": [
+    {
+      "occurrence": "C197#1",
+      "source_id": "19640001198",
+      "scope": "NASA 15 Nov 1963 editorial catalog day 8 Nov 1963; no catalog number in that printed row"
+    },
+    {
+      "occurrence": "C241-L28",
+      "scope": "NASA 1964-1967 facsimiles already show 1963 03A and catalog 527; comparison not independent radar observation"
+    },
+    {
+      "occurrence": "C241-L10",
+      "scope": "Modern secondary 03A/03B/03C to NORAD 527/528/529 crosswalk; target of provenance upgrade"
+    }
+  ],
+  "dependencies": [
+    "research/tle_custody/nasa_ssr_1963_incremental_lineage_C241-L11.json",
+    "research/constraints/nasa_528_decay_precision_C197_20261113.json"
+  ],
+  "independence": {
+    "upstream_catalog_family": "NASA_NORAD_OR_SAO_SHARED_TRACKING_POSSIBLE",
+    "does_not_constitute_additional_radar_tracking": true,
+    "independent_528_instrumental_observations_added": 0,
+    "chronology_not_contemporary_to_1963": true,
+    "second_document_does_not_independently_validate_reentry": true
+  },
+  "graph": {
+    "proposed_edges": [
+      {
+        "from": "NASA1977_1963-003B_528_ROW",
+        "to": "INTERNATIONAL_DESIGNATOR_1963-003B",
+        "role": "CATALOG_LABEL_FROM_RETROSPECTIVE_PRIMARY"
+      },
+      {
+        "from": "NASA1977_1963-003B_528_ROW",
+        "to": "CATALOG_NUMBER_528",
+        "role": "CATALOG_LABEL_FROM_RETROSPECTIVE_PRIMARY"
+      },
+      {
+        "from": "NASA1963_1963-3B_DECAY_DAY",
+        "to": "NASA1977_1963-003B_528_ROW",
+        "role": "LINK_BY_DESIGNATOR_PENDING_ROW_VISUAL"
+      },
+      {
+        "from": "NASA_GODDARD_NORAD_SHARED_CATALOG",
+        "to": "NASA1977_1963-003B_528_ROW",
+        "role": "LIKELY_EDITORIAL_FAMILY_NOT_INDEPENDENT_SENSOR"
+      },
+      {
+        "from": "NASA1977_1963-003C_529_ROW",
+        "to": "INTERNATIONAL_DESIGNATOR_1963-003C",
+        "role": "RETROSPECTIVE_PRIMARY_CATALOG_LABEL"
+      },
+      {
+        "from": "NASA1977_1963-003C_529_ROW",
+        "to": "CATALOG_NUMBER_529",
+        "role": "RETROSPECTIVE_PRIMARY_CATALOG_LABEL"
+      }
+    ],
+    "constraint_status": "DOCUMENTARY_CROSSWALK_VERIFIED_NO_PHYSICAL_CONSTRAINT",
+    "physical_constraints_activated": 0,
+    "lean_predicates_activated": 0,
+    "change_to_simulation_parameters": false,
+    "localized_impact_inferred": false
+  },
+  "next_steps": [
+    "Find a contemporary 1963-1964 direct crosswalk (1977 original retrospective already verified)",
+    "Seek original NORAD 528/529 instrument tracking, UTC epochs, sensors and covariance",
+    "Determine whether catalog day labels were event-day estimates or administrative updates, without assuming accuracy"
+  ],
+  "control_rows": [
+    {
+      "international_designator_printed": "1963 003A",
+      "catalog_number_printed": 527,
+      "decay_day_printed": "1969-01-09",
+      "role": "POSITIVE_PREVIOUSLY_KNOWN_C241-L28"
+    },
+    {
+      "international_designator_printed": "1963 003C",
+      "catalog_number_printed": 529,
+      "decay_day_printed": "1963-12-31",
+      "role": "ADDITIONAL_NASA_1977_RETROSPECTIVE_PRIMARY_CROSSWALK"
+    }
+  ]
+}

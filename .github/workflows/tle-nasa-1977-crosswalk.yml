@@ -1,0 +1,73 @@
+name: Tartaruga C241-L32 NASA 1977 catalog original
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/nasa_ssr_dec1977_528_identity_C241-L32.json
+      - research/tle_custody/evidence_matrix_C241-L32_2026-11-13.md
+      - tools/tle_nasa_1977_crosswalk_audit.py
+      - tests/test_tle_nasa_1977_crosswalk_audit.py
+      - .github/workflows/tle-nasa-1977-crosswalk.yml
+  push:
+    branches: [main]
+    paths:
+      - research/tle_custody/nasa_ssr_dec1977_528_identity_C241-L32.json
+      - research/tle_custody/evidence_matrix_C241-L32_2026-11-13.md
+      - tools/tle_nasa_1977_crosswalk_audit.py
+      - tests/test_tle_nasa_1977_crosswalk_audit.py
+      - .github/workflows/tle-nasa-1977-crosswalk.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact HEAD and adversarial tests
+        run: |
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+          python3 -m unittest discover -s tests -p 'test_tle_nasa_1977_crosswalk_audit.py' -v
+      - name: Audit NASA original PDF bytes and identify catalog row
+        run: |
+          if ! command -v pdftotext >/dev/null || ! command -v pdftoppm >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y poppler-utils
+          fi
+          curl --fail --location --silent --show-error --retry 2 --max-time 90 \
+            https://ntrs.nasa.gov/api/citations/19780009188/downloads/19780009188.pdf \
+            -o "$RUNNER_TEMP/nasa-1977.pdf"
+          python3 tools/tle_nasa_1977_crosswalk_audit.py \
+            --pdf "$RUNNER_TEMP/nasa-1977.pdf" \
+            --output "$RUNNER_TEMP/nasa-1977-crosswalk.json"
+          python3 - "$RUNNER_TEMP/nasa-1977-crosswalk.json" <<'PY'
+          import json,sys
+          r=json.load(open(sys.argv[1]))
+          assert r["catalog_pair"]==["1963 003B",528]
+          assert r["pdf_audit"]["pdf_bytes_verified"]==11563410
+          assert r["physical_constraints_activated"]==0
+          assert r["pdf_audit"]["visual_confirmation"]=="NOT_AUTOMATICALLY_INFERRED_FROM_OCR"
+          print("catalog pair located on PDF zero-based page", r["pdf_audit"]["pair_page_index_zero_based"])
+          PY
+      - name: Render located original page for independent visual check
+        run: |
+          PAGE=$(python3 -c 'import json,os;print(json.load(open(os.environ["RUNNER_TEMP"]+"/nasa-1977-crosswalk.json"))["pdf_audit"]["pair_page_number_1based"])')
+          pdftoppm -f "$PAGE" -l "$PAGE" -scale-to 1100 -gray -png -singlefile \
+            "$RUNNER_TEMP/nasa-1977.pdf" "$RUNNER_TEMP/nasa-1977-crosswalk-page"
+          test -s "$RUNNER_TEMP/nasa-1977-crosswalk-page.png"
+          echo "NASA_CATALOG_PAGE_BASE64_START"
+          base64 -w0 "$RUNNER_TEMP/nasa-1977-crosswalk-page.png"
+          echo
+          echo "NASA_CATALOG_PAGE_BASE64_END"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nasa-1977-528-c241-l32-${{ github.event.pull_request.head.sha || github.sha }}
+          path: |
+            ${{ runner.temp }}/nasa-1977-crosswalk.json
+            ${{ runner.temp }}/nasa-1977-crosswalk-page.png
+          if-no-files-found: warn
+          retention-days: 30
