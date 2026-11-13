@@ -42,7 +42,8 @@ O [Monte Carlo exploratório](../../src/lib/monteCarlo.ts) agora calcula automat
 
 ## Verificação
 
-    node --import tsx --test tests/catalogDayLikelihood.test.mjs
+    node --experimental-strip-types --test tests/catalogDayLikelihood.test.mjs
+    node --import tsx --test tests/catalogDayMonteCarloIntegration.check.mjs
     npm run lint
 
 O workflow próprio executa testes e auditoria de fonte no HEAD exato. O [certificado JSON](../constraints/C241_nov8_two_sided_day_likelihood_2026-11-13.json) preserva as distinções epistemológicas e alternativas. Não derivar número de probabilidade histórica de Conde a partir da simples etiqueta NASA.
