@@ -172,6 +172,23 @@ for(const text of ['Francisco Cabral','23h30','1º Caderno','transcrição inter
 assert.ok(!/<iframe\b|<img\b/i.test(balaoSource),
  'Não incorporar recortes de jornal sem revisão de direitos e custódia');
 
+
+const nasa10Slug='2026-11-13-102-segundos-na-tabela-da-nasa';
+const nasa10Source=readFileSync('stories/'+nasa10Slug+'.md','utf8');
+const nasa10Html=read('stories/'+nasa10Slug+'/index.html');
+for(const cited of [
+ 'https://ntrs.nasa.gov/api/citations/19630012128/downloads/19630012128.pdf#page=7',
+ 'https://ntrs.nasa.gov/api/citations/19640000428/downloads/19640000428.pdf#page=7',
+ 'https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf#page=10'
+]) assert.ok(nasa10Source.includes(cited)&&nasa10Html.includes(cited),'Fonte NASA 1963 ausente: '+cited);
+for(const value of ['94,6','94,1','92,4','94,3','93,3','102 segundos','1963 3B','época','não']) 
+ assert.ok(nasa10Source.includes(value),'Dado ou limite faltante no capitulo 10: '+value);
+for(const img of ['nasa-1963-periodos.svg','nasa-1963-periodos-mobile.svg']){
+ assert.ok(existsSync('public/img/'+img),'Diagrama NASA nao publicado: '+img);
+ assert.ok(nasa10Html.includes(img),'Diagrama NASA nao referenciado no HTML: '+img);
+}
+assert.ok(nasa10Html.includes('Em uma tabela orbital')||nasa10Html.includes('períodos nodais publicados'),'Limite de interpretacao das tabelas nao foi renderizado');
+
 assert.ok(accessiblePdfEmbeds>=3,'Regressão: menos de três PDFs incorporados com link anterior');
 assert.ok(chapters>0,'Nenhuma reportagem renderizada');
 console.log('PASS: '+chapters+' capítulos, índice, CSS, laboratório e rotas GitHub Pages.');
