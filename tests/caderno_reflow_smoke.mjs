@@ -3,8 +3,15 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import { chromium } from 'playwright';
+import { archivePages } from '../scripts/ssg-documentary-archive.mjs';
 
 const css = await fs.readFile('static/css/site.css', 'utf8');
+const citations = JSON.parse(await fs.readFile('public/data/conde-source-citations.json', 'utf8'));
+const ancestry = JSON.parse(await fs.readFile('public/data/conde-declared-dependence.json', 'utf8'));
+const familySource = archivePages(citations, ancestry).get('familias/bluebook-derivative-catalogues/index.md');
+assert(familySource, 'curated family page missing');
+const familyTitle = JSON.parse(familySource.match(/^title: (.+)$/m)?.[1] || 'null');
+assert.match(familyTitle, /BLUEBOOK_DERIVATIVE_CATALOGUES/);
 const sources = ['templates/template.html', 'templates/page.html', 'templates/index.html', 'templates/post.html', 'templates/tera/base.html'];
 const out = process.env.UI_AUDIT_OUT || 'test-results/ui';
 await fs.mkdir(out, { recursive: true });
@@ -21,12 +28,13 @@ try {
     for (const width of [320, 375, 1440]) {
       const page = await browser.newPage({ viewport: { width, height: 800 }, reducedMotion: 'reduce' });
       try {
-        await page.setContent(`<!doctype html><html lang="pt-BR"><head><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>${skip}${header}${main}<h1>Caderno de histórias</h1><a href="#primeiro-link">Primeira fonte</a></main></body></html>`);
+        await page.setContent(`<!doctype html><html lang="pt-BR"><head><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>${skip}${header}${main}<h1>${familyTitle}</h1><a href="#primeiro-link">Primeira fonte</a></main></body></html>`);
         await page.addStyleTag({ content: css });
         const before = await page.locator('.skip-link').boundingBox();
         assert(before && before.y < 0, `skip link must be visually tucked away before focus: ${path} ${width}`);
 
         const layout = await page.evaluate(() => ({
+          heading: {left: document.querySelector('h1').getBoundingClientRect().left, right: document.querySelector('h1').getBoundingClientRect().right, scroll: document.querySelector('h1').scrollWidth, width: document.querySelector('h1').clientWidth},
           viewport: document.documentElement.clientWidth,
           scroll: document.documentElement.scrollWidth,
           anchors: [...document.querySelectorAll('.masthead nav a')].map(a => ({
@@ -35,6 +43,8 @@ try {
           }))
         }));
         assert(layout.scroll <= layout.viewport + 1, `horizontal overflow ${path} ${width}: ${JSON.stringify(layout)}`);
+        assert(layout.heading.scroll <= layout.heading.width + 1,
+          `long real documentary family title overflows at ${width}px: ${JSON.stringify(layout.heading)}`);
         // Some authored Page variants expose an additional static Map route.
         // Verify the eight shared destinations in order, without rejecting a
         // legitimate ninth destination or silently dropping its label.
@@ -77,7 +87,7 @@ try {
         assert.equal(await page.evaluate(() => document.activeElement?.getAttribute('href')),
           '#primeiro-link', `next Tab must continue within main: ${path} ${width}`);
         await page.screenshot({ path: `${out}/caderno-${path.replace(/\W/g, '-')}-${width}.png` });
-        console.log(`PASS: ${path}, ${width}px: nav reflow, skip-link focus target, next Tab and focus ring`);
+        console.log(`PASS: ${path}, ${width}px: real family heading reflow, nav, skip-link focus and keyboard order`);
       } finally { await page.close(); }
     }
   }
