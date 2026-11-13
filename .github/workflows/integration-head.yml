@@ -37,6 +37,13 @@ jobs:
           python-version: "3.12"
       - name: Install pinned scientific Python dependency (G48 ERFA)
         run: python3 -m pip install pyerfa==2.0.1.5
+      - name: Authenticate original IERS archive for G49
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL --retry 3 --max-time 45 https://datacenter.iers.org/products/179/14334/orig/eopc04_05_IAU2000.63 -o "$RUNNER_TEMP/iers-1963-g49.bin"
+          python3 tools/iers_1963_eop.py --source "$RUNNER_TEMP/iers-1963-g49.bin" --check
+          printf 'IERS_1963_SOURCE=%s\n' "$RUNNER_TEMP/iers-1963-g49.bin" >> "$GITHUB_ENV"
       - name: Execute all Python unittest suites (fail closed)
         shell: bash
         run: |
