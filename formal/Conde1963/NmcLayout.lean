@@ -22,7 +22,7 @@ structure HistoricalNmcLayoutCandidate where
 def pendingHistoricalNmcLayout : HistoricalNmcLayoutCandidate := {
   manuscriptSource := "MET-NMC-NCEPON-20261112-02"
   originalYear := 1964
-  archiveDateUtc := "2022-01-19T07:53:33Z"
+  archiveDateUtc := "2008-09-20T17:55:18Z"
   facsimileSha256 := "656984ac58ff1632e39b0f62ac80003785ddea0a0de32dfb19c8c612067aabbe"
   tapeSource := pendingNmcSourceId
   tapeSha256 := pendingNmcArchiveSha256

@@ -76,10 +76,36 @@ class NmcOn20HistoricalLayoutTests(unittest.TestCase):
         self.assertEqual(data["wayback_pdf_bytes"], 932414)
         self.assertEqual(data["revision_date_seen"], "1964-11-27")
         self.assertTrue(data["not_an_independent_documentary_source"])
-        self.assertEqual(data["wayback_capture_utc"], "2022-01-19T07:53:33Z")
-        self.assertEqual(len(data["lineage"]), 3)
+        self.assertEqual(data["wayback_capture_utc"], "2008-09-20T17:55:18Z")
+        self.assertIn("20080920175518id_", data["wayback_url"])
+        self.assertEqual(data["other_verified_archive_capture_utc"], "2022-01-19T07:53:33Z")
+        self.assertEqual(data["preferred_archive_copy_id"], "MET-NMC-NCEPON-20080920-FULL")
+        self.assertEqual(data["rejected_incomplete_capture_id"], "MET-NMC-NCEPON-20080724-PREFIX")
+        self.assertEqual(len(data["lineage"]), 4)
         self.assertIsNone(data["validated_1963_layout_reference"])
         self.assertFalse(data["active_physical_constraint"])
+
+    def test_preferred_capture_cannot_be_replaced_by_truncated_prefix(self):
+        changed = copy.deepcopy(self.archive)
+        full = next(x for x in changed["nodes"] if x["id"] == "MET-NMC-NCEPON-20080920-FULL")
+        prefix = next(x for x in changed["nodes"] if x["id"] == "MET-NMC-NCEPON-20080724-PREFIX")
+        full["archive_url"] = prefix["archive_url"]
+        with self.assertRaisesRegex(ValueError, "canonical Abelha|selected complete"):
+            self.on20.build_from_data(self.manual, self.pages, self.tape, changed)
+
+    def test_preferred_complete_capture_must_match_full_pdf_digest(self):
+        changed = copy.deepcopy(self.archive)
+        full = next(x for x in changed["nodes"] if x["id"] == "MET-NMC-NCEPON-20080920-FULL")
+        full["cdx_digest_base32_sha1"] = "FAKEDIGEST"
+        with self.assertRaisesRegex(ValueError, "selected complete"):
+            self.on20.build_from_data(self.manual, self.pages, self.tape, changed)
+
+    def test_preferred_capture_date_must_be_exact_not_document_date(self):
+        changed = copy.deepcopy(self.archive)
+        full = next(x for x in changed["nodes"] if x["id"] == "MET-NMC-NCEPON-20080920-FULL")
+        full["capture_utc"] = "1963-11-08T00:00:00Z"
+        with self.assertRaisesRegex(ValueError, "selected complete"):
+            self.on20.build_from_data(self.manual, self.pages, self.tape, changed)
 
     def test_relabel_1964_manual_as_1963_is_rejected(self):
         changed = copy.deepcopy(self.manual)

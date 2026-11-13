@@ -97,6 +97,19 @@ def build_from_data(manual: dict, page: dict, tape: dict, archived: dict) -> dic
           and ("NMC_Y20175_PENDING_BRIDGE", manual["id"],
                "CONDITIONAL_DOCUMENTARY_REFERENCE_NOT_1963_CALIBRATION") in edges,
           "canonical Abelha custody/dependency graph changed")
+    complete = nodes["MET-NMC-NCEPON-20080920-FULL"]
+    prefix = nodes["MET-NMC-NCEPON-20080724-PREFIX"]
+    check(complete["capture_utc"] == "2008-09-20T17:55:18Z"
+          and complete["archive_url"] == nodes[manual["id"]]["preferred_archived_url"]
+          and complete["cdx_digest_base32_sha1"]
+              == nodes[manual["id"]]["cdx_digest_base32_sha1"]
+          and complete["retrieved_bytes_length"] == capture["byte_length"]
+          and complete["retrieved_bytes_sha256"] == capture["sha256"]
+          and prefix["capture_utc"] == "2008-07-24T20:21:55Z"
+          and prefix["retrieved_bytes_length"] < complete["retrieved_bytes_length"]
+          and prefix["retrieved_bytes_sha256"] != complete["retrieved_bytes_sha256"]
+          and prefix["recommended_as_source_link"] is False,
+          "selected complete Wayback capture lacks verified custody")
     return {
         "schema": "conde.on20-historical-layout-candidate/v1",
         "id": "C241-L14-NMC-ON20-LAYOUT",
@@ -107,6 +120,8 @@ def build_from_data(manual: dict, page: dict, tape: dict, archived: dict) -> dic
              "kind": "manual_from_1964_not_verified_for_1963"},
             {"from": "1963_ON20_LAYOUT_UNVERIFIED", "to": tape["inventory_id"],
              "kind": "conditional_decoder_prerequisite_not_observation"},
+            {"from": complete["id"], "to": manual["id"],
+             "kind": "same_pdf_bytes_not_independent_measurements"},
         ],
         "derived_from_canonical_archive_feed": str(archive.OUTPUT),
         "canonical_archive_feed_sha256": hashlib.sha256(archive.encode(archived)).hexdigest(),
@@ -114,8 +129,12 @@ def build_from_data(manual: dict, page: dict, tape: dict, archived: dict) -> dic
         "manual_source_path": MANUAL,
         "page_audit_path": PAGES,
         "manual_publication_year": manual["published_year"],
-        "wayback_capture_utc": capture["capture_utc"],
-        "wayback_url": capture["replay_url"],
+        "wayback_capture_utc": complete["capture_utc"],
+        "wayback_url": complete["archive_url"],
+        "preferred_archive_copy_id": complete["id"],
+        "other_verified_archive_capture_utc": capture["capture_utc"],
+        "other_verified_archive_url": capture["replay_url"],
+        "rejected_incomplete_capture_id": prefix["id"],
         "wayback_pdf_sha256": capture["sha256"],
         "wayback_pdf_bytes": capture["byte_length"],
         "page_visual_inspection": "INSPECTED_IN_LATER_PAGE_AUDIT",
