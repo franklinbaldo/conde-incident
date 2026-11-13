@@ -1,0 +1,97 @@
+{
+  "schema": "conde.conditional-j2-nodal-benchmark/v1",
+  "id": "CASTOR-G27-NASA-OCT15-J2-NODAL-SENSITIVITY-20261112",
+  "source_occurrences": [
+    "C241-L12#1",
+    "C197#1"
+  ],
+  "source_primary": {
+    "agency": "NASA/Goddard",
+    "date": "1963-10-15",
+    "ntrs": "19640000428",
+    "url": "https://ntrs.nasa.gov/api/citations/19640000428/downloads/19640000428.pdf",
+    "table": "OBJECTS IN ORBIT",
+    "record": "1963-003B",
+    "published_values": {
+      "perigee_km": 376,
+      "apogee_km": 401,
+      "inclination_deg": 81.87
+    },
+    "source_lineage": "COMPILED_PUBLICATION_NOT_RAW_SENSOR_OR_TRACKING_EPOCH",
+    "uncertainty": null
+  },
+  "decay_document": {
+    "ntrs": "19640001198",
+    "date": "1963-11-15",
+    "occurrence": "C197#1",
+    "catalogued_decay_day": "1963-11-08",
+    "terminal_epoch_utc": null,
+    "terminal_coordinates": null
+  },
+  "variables": [
+    {
+      "id": "published_perigee_apogee_inclination",
+      "status": "COMPILED_PRIMARY_SOURCE_VALUES",
+      "occurrence": "C241-L12#1"
+    },
+    {
+      "id": "unknown_epoch_raan_argument_perigee_phase",
+      "value": null,
+      "source": "C241-L12#1"
+    },
+    {
+      "id": "scenario_true_anomaly",
+      "unit": "deg",
+      "role": "UNOBSERVED_CONTROL"
+    },
+    {
+      "id": "scenario_osculating_rv",
+      "units": "km,km/s",
+      "role": "CONSTRUCTED_NOT_MEASURED"
+    },
+    {
+      "id": "j2_secular_raan_rate",
+      "unit": "deg/day",
+      "role": "FIRST_ORDER_ANALYTIC"
+    },
+    {
+      "id": "rk4_j2_nodal_change",
+      "unit": "deg/day",
+      "role": "PHASE_CONDITIONAL_MODEL"
+    },
+    {
+      "id": "rk4_two_body_nodal_change",
+      "unit": "deg/day",
+      "role": "NULL_CONTROL"
+    }
+  ],
+  "edges": [
+    {
+      "from": "published_perigee_apogee_inclination",
+      "to": "scenario_osculating_rv",
+      "requires": "arbitrary_epoch_raan_perigee_argument_phase"
+    },
+    {
+      "from": "scenario_osculating_rv",
+      "to": "rk4_j2_nodal_change",
+      "relation": "full_cartesian_RK4_J2"
+    },
+    {
+      "from": "published_perigee_apogee_inclination",
+      "to": "j2_secular_raan_rate",
+      "relation": "first_order_averaged_J2"
+    },
+    {
+      "from": "unknown_epoch_raan_argument_perigee_phase",
+      "to": "historical_absolute_raan",
+      "status": "NOT_IDENTIFIED"
+    }
+  ],
+  "reproduction": "node --experimental-strip-types --test tests/orbitJ2NodalBenchmark.test.mjs",
+  "classification": "CONDITIONAL_MODEL_SANITY_BENCHMARK",
+  "historical_holdout_527_529": "NOT_RUN",
+  "historical_domain_reduction": "NONE",
+  "historical_impact_inference": "NOT_SUPPORTED",
+  "active_constraint": false,
+  "project_issue": 4
+}
