@@ -140,6 +140,25 @@ assert.ok(oitoSource.includes(oitoCustodia.source.pdf_sha256),'SHA256 oficial do
 assert.ok(!oitoSource.includes('<img')&&!oitoSource.includes('<iframe'),'Capitulo 08 nao deve redistribuir ou embutir imagens IBGE sem licenca');
 assert.ok(oitoHtml.includes('research/geo/ibge_1958_conde_photo_custody.json'),'Proveniencia nao publicada');
 
+
+const balaoSlug='2026-11-12-o-balao-que-chegou-ao-jornal';
+const balaoSource=readFileSync('stories/'+balaoSlug+'.md','utf8');
+const balaoHtml=read('stories/'+balaoSlug+'/index.html');
+for(const link of [
+  'https://news.google.com/newspapers?id=ZvYZAAAAIBAJ',
+  'https://weightofevidence.org/documents/18377',
+  'https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00477.pdf#page=7',
+  'https://catalog.archives.gov/id/302531012'
+]){
+ assert.ok(balaoSource.includes(link)&&balaoHtml.includes(link),
+   'A fonte documental do capítulo 09 deve permanecer navegável: '+link);
+}
+for(const text of ['Francisco Cabral','23h30','1º Caderno','transcrição intermediária','não','não foi recuperado','não de uma nova inspeção']){
+ assert.ok(balaoSource.includes(text),'Limite/identificação essencial ausente no capítulo 09: '+text);
+}
+assert.ok(!/<iframe\b|<img\b/i.test(balaoSource),
+ 'Não incorporar recortes de jornal sem revisão de direitos e custódia');
+
 assert.ok(accessiblePdfEmbeds>=3,'Regressão: menos de três PDFs incorporados com link anterior');
 assert.ok(chapters>0,'Nenhuma reportagem renderizada');
 console.log('PASS: '+chapters+' capítulos, índice, CSS, laboratório e rotas GitHub Pages.');
