@@ -26,6 +26,11 @@ jobs:
         run: |
           python3 -m unittest discover -s tests -p 'test_nmc_y20175_custody.py' -v
           python3 tools/verify_nmc_y20175.py
+      - name: SAO 1963 archival locator to inactive scientific links (C241-L43)
+        run: |
+          python3 -m unittest discover -s tests -p 'test_sao_l43_scientific_bridge.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_sao_l43_scientific_bridge.py' -q
+          python3 tools/export_sao_l43_scientific_bridge.py --check-site
       - name: Export crosswalk for Polvo and site (no asserted physical landing)
         run: |
           python3 tools/provenance_graph.py --check-site --output /tmp/conde-documentary-provenance.json --citations /tmp/conde-documentary-citations.json
