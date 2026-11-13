@@ -8,9 +8,9 @@
   "requested_printed_page": 8,
   "requested_date": "1963-11-08",
   "checked_utc_date": "2026-11-13",
-  "catalog_url": "https://memoria.bn.gov.br/DocReader/765147/5756",
+  "catalog_url": "https://memoria.bn.gov.br/DocReader/765147/5339",
   "catalog_identifier": "765147",
-  "catalog_finding": "1963 > Edicao 00471 is listed; no page facsimile was retrieved in this check",
+  "catalog_finding": "HTML DocReader GET 200: selected edition 00471 on physical page IDs 5339..5346; earlier /5756 selects edition 00507. No newspaper raster/image recovered.",
   "pdf_exact_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00471.pdf",
   "pdf_head_status": 403,
   "pdf_sha256": null,
@@ -29,8 +29,18 @@
   "claim_limitation": "The secondary blog's four-metre story is unverified in source facsimile; identical numbers in separate reports do not establish copying or a shared physical event.",
   "orbital_constraint_activated": false,
   "next_steps": [
-    "Recover the actual PDF or page 8 image via original Hemeroteca reader or verifiable alternate URL.",
-    "Hash bytes, match issue date and printed page and transcribe context visually.",
-    "Test relationship to Tupi/FBIS story only after source-level verification."
-  ]
+    "Recover actual raster for candidate page 8 (DocReader physical 5346) or original PDF, not just HTML selector.",
+    "Match print date, issue number and printed page visually; hash the real image/PDF bytes.",
+    "Only then transcribe context and compare four-metre narrative with Tupi/FBIS source."
+  ],
+  "earlier_catalog_url": "https://memoria.bn.gov.br/DocReader/765147/5756",
+  "earlier_catalog_selected_edition": "00507",
+  "docreader_selected_edition": "00471",
+  "docreader_first_physical_id": 5339,
+  "docreader_last_physical_id": 5346,
+  "docreader_requested_page8_candidate_id": 5346,
+  "docreader_requested_page8_candidate_url": "https://memoria.bn.gov.br/DocReader/765147/5346",
+  "docreader_html_http_status": 200,
+  "docreader_page8_raster_retrieved": false,
+  "docreader_physical_ids_are_not_printed_pages": true
 }
