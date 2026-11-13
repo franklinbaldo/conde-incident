@@ -209,3 +209,62 @@ test('independent 45-degree WGS84 construction and polar/geodetic corners pass r
   assert.ok(Math.abs(wgs84RadiusForGeodeticKm(90, 500) - (b + 500)) < 1e-9);
   assert.throws(() => wgs84RadiusForGeodeticKm(91, 500), /Invalid WGS84/);
 });
+
+
+test('G43 caller cannot substitute a matching altitude and geodesy for another Cartesian state', () => {
+  let calls = 0;
+  const atmosphere = makeConditionalMsiseAtmosphere(options({
+    toGeodetic: () => ({latitudeDeg: 0, longitudeDeg: 0,
+      altitudeKm: 600, localSolarTimeHours: 6}),
+    evaluateDensityKgM3: () => { calls++; return 1e-12; },
+  }));
+  assert.throws(() => atmosphere.densityKgM3(600, initialState.tS, initialState),
+    /radius argument disagrees/);
+  assert.throws(() => atmosphere.densityKgM3(NaN, initialState.tS, initialState),
+    /radius argument disagrees/);
+  assert.equal(calls, 0);
+});
+
+test('G43 sourced inertial Earth pole catches wrong latitude despite exactly matching WGS84 radius', () => {
+  const h = 500, a = 6378.137, b = 6356.752314245;
+  const actual = {...initialState, rKm: [a + h, 0, 0]};
+  // Construct a polar geodetic pair at the same radius: the G42 scalar
+  // radius check is satisfied, but its axial coordinate is impossible.
+  const counterfeit = () => ({latitudeDeg: 90, longitudeDeg: 0,
+    altitudeKm: a + h - b, localSolarTimeHours: 6});
+  assert.ok(Math.abs(wgs84RadiusForGeodeticKm(90, a + h - b) - Math.hypot(...actual.rKm)) < 1e-9);
+  let calls = 0;
+  const guarded = makeConditionalMsiseAtmosphere(options({
+    inertialEarthPoleAtUtc: () => [0, 0, 1], earthPoleSource: 'SYNTHETIC_POLE',
+    toGeodetic: counterfeit, evaluateDensityKgM3: () => { calls++; return 1e-12; },
+  }));
+  assert.throws(() => dragAccelerationKmS2(actual, guarded), /latitude inconsistent with sourced Earth pole/);
+  assert.equal(calls, 0);
+  const radiusOnly = makeConditionalMsiseAtmosphere(options({toGeodetic: counterfeit}));
+  assert.ok(dragAccelerationKmS2(actual, radiusOnly).every(Number.isFinite));
+  assert.match(radiusOnly.source, /axial-pole=NOT_CHECKED/);
+});
+
+test('G43 valid oblique and rotated unit poles pass; missing or invalid provenance fails', () => {
+  const a = 6378.137, b = 6356.752314245, e2 = 1 - (b / a) ** 2;
+  const phi = Math.PI / 4, N = a / Math.sqrt(1 - e2 * Math.sin(phi) ** 2);
+  const equatorial = (N + 500) * Math.cos(phi);
+  const axial = (N * (1 - e2) + 500) * Math.sin(phi);
+  const state = {...initialState, rKm: [axial, equatorial, 0]};
+  const opt = {
+    inertialEarthPoleAtUtc: () => [1, 0, 0], earthPoleSource: 'SYNTHETIC_ROTATED_POLE',
+    toGeodetic: () => ({latitudeDeg: 45, longitudeDeg: 0,
+      altitudeKm: 500, localSolarTimeHours: 6}),
+  };
+  assert.ok(dragAccelerationKmS2(state, makeConditionalMsiseAtmosphere(options(opt))).every(Number.isFinite));
+  assert.throws(() => makeConditionalMsiseAtmosphere(options({...opt, earthPoleSource: ''})),
+    /Requires explicit/);
+  const invalidPole = makeConditionalMsiseAtmosphere(options({
+    ...opt, inertialEarthPoleAtUtc: () => [0, 0, 2],
+  }));
+  assert.throws(() => dragAccelerationKmS2(state, invalidPole), /Invalid sourced unit Earth pole/);
+  const wrongDirection = makeConditionalMsiseAtmosphere(options({
+    ...opt, inertialEarthPoleAtUtc: () => [0, 0, 1],
+  }));
+  assert.throws(() => dragAccelerationKmS2(state, wrongDirection), /latitude inconsistent/);
+});
