@@ -1,0 +1,125 @@
+{
+  "record_id": "C241-L13",
+  "question": "Does a catalogued Agena B classification for 527 physically identify 528?",
+  "checked_on_utc": "2026-11-13",
+  "sources": [
+    {
+      "id": "NASA_OCT15",
+      "type": "1963_CONTEMPORARY_PUBLICATION",
+      "url": "https://ntrs.nasa.gov/citations/19640000428",
+      "publication_date": "1963-10-15",
+      "ntrs_id": "19640000428",
+      "table": "OBJECTS IN ORBIT",
+      "pdf_page_one_based": 7,
+      "printed_page": 5,
+      "printed_designators": [
+        "1963 3A",
+        "1963 3B",
+        "1963 3C"
+      ],
+      "physical_piece_description": null,
+      "raw_sensor_records": null,
+      "source_sha256": null,
+      "reference": "C241-L12 (PDF hashes and variants recorded there)"
+    },
+    {
+      "id": "GCAT_AUX",
+      "type": "MODERN_SCHOLARLY_CATALOG",
+      "url": "https://planet4589.org/space/gcat/data/cat/auxcat.html",
+      "snapshot_updated_utc": "2026-11-09T00:53:07Z",
+      "record_key": "A00324",
+      "catalog_number": "00527",
+      "designation": "1963-003A",
+      "classification_code": "R2",
+      "name": "Agena B 2313",
+      "source_sha256": null,
+      "live_bytes_sha256_status": "COMPUTED_WHEN_RETRIEVED_NOT_PINNED",
+      "measurement_source": null
+    },
+    {
+      "id": "KEEPTRACK_527",
+      "type": "MODERN_SECONDARY_CATALOG",
+      "url": "https://keeptrack.space/satellite/00527",
+      "catalog_number": "00527",
+      "designation": "1963-003A",
+      "classification_label": "Payload",
+      "bus_label": "SAMOS F-2",
+      "source_sha256": null
+    },
+    {
+      "id": "SECONDARY_DEB_528",
+      "type": "MODERN_SECONDARY_CATALOG",
+      "url": "https://keeptrack.space/satellite/528",
+      "catalog_number": "00528",
+      "designation": "1963-003B",
+      "classification_label": "Debris",
+      "engineering_piece": null,
+      "source_sha256": null
+    },
+    {
+      "id": "SECONDARY_DEB_529",
+      "type": "MODERN_SECONDARY_CATALOG",
+      "url": "https://keeptrack.space/satellite/529",
+      "catalog_number": "00529",
+      "designation": "1963-003C",
+      "classification_label": "Debris",
+      "engineering_piece": null,
+      "source_sha256": null
+    }
+  ],
+  "comparison": {
+    "modern_labels_for_527": [
+      "R2: Agena B 2313",
+      "Payload: SAMOS F-2"
+    ],
+    "labels_not_demonstrated_mutually_exclusive": true,
+    "identity_transfer_from_527_to_528": false,
+    "identity_transfer_from_527_to_529": false,
+    "gcat_auxcat_absence_is_not_global_catalog_absence": true,
+    "classification_is_not_observation": true,
+    "tracking_lineage_independence": "NOT_ESTABLISHED",
+    "physical_piece_528": null,
+    "physical_piece_529": null,
+    "frame_528": null,
+    "instrumental_sigma_528": null,
+    "original_tle_528": null,
+    "raw_measurement_528": null,
+    "legacy_raan_2841520_observed": false,
+    "secondary_raan_1985261_authenticated_primary": false,
+    "lean_physical_constraint": "NOT_PROMOTED",
+    "graph_state": "CONNECTED_PENDING_CALIBRATION",
+    "conde_outcome": "INDETERMINATE"
+  },
+  "edges": [
+    {
+      "from": "C241-L12",
+      "to": "C241-L13",
+      "kind": "contemporary-designator-context",
+      "independent_sensor": false
+    },
+    {
+      "from": "C241-L10",
+      "to": "C241-L13",
+      "kind": "secondary-norad-cospar-join",
+      "independent_sensor": false
+    },
+    {
+      "from": "GCAT_AUX:A00324",
+      "to": "NORAD:00527",
+      "kind": "modern-catalog-classification",
+      "independent_sensor": false
+    },
+    {
+      "from": "NORAD:00527",
+      "to": "NORAD:00528",
+      "kind": "same-launch-only-no-material-inference",
+      "independent_sensor": false
+    },
+    {
+      "from": "NORAD:00527",
+      "to": "NORAD:00529",
+      "kind": "same-launch-only-no-material-inference",
+      "independent_sensor": false
+    }
+  ]
+}
