@@ -27,6 +27,8 @@ export interface FrameCovarianceAudit {
     'COVARIANCE_INADMISSIBLE' | 'EPOCH_MISMATCH' |
     'SYNTHETIC_DIAGNOSTIC_ONLY' | 'CONDITIONAL_DIAGNOSTIC_ONLY';
   readonly transformedCovariance: CartesianCovariance6 | null;
+  /** The exact UTC epoch of the admitted covariance and its frame conversion. */
+  readonly epochUtc: string | null;
   /** Rdot couples TEME position errors to ECI velocity errors. */
   readonly rateCouplingIncluded: boolean;
   readonly sourceOccurrence: string | null;
@@ -81,7 +83,8 @@ export function auditTemeInertialCovariance(
 ): FrameCovarianceAudit {
   const report = (status: FrameCovarianceAudit['status'],
     transformedCovariance: CartesianCovariance6 | null = null): FrameCovarianceAudit => ({
-    status, transformedCovariance, rateCouplingIncluded: transformedCovariance !== null,
+    status, transformedCovariance, epochUtc: transformedCovariance ? source.epochUtc : null,
+    rateCouplingIncluded: transformedCovariance !== null,
     sourceOccurrence: transformedCovariance ? source.sourceOccurrence : null,
     frameSystematicsIncluded: false, measurementCovarianceAuthenticated: false,
     historicalHoldoutValidated: false, impactInference: 'NOT_SUPPORTED',
