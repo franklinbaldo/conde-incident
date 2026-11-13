@@ -133,15 +133,26 @@ try {
         fontSize: getComputedStyle(el).fontSize,
       })),
     ];
-    const luminance = color => {
-      const rgb = color.match(/[\d.]+/g)?.slice(0, 3).map(Number);
-      assert(rgb?.length === 3, 'not an RGB color: ' + color);
-      return rgb.map(n => n / 255).map(n =>
-        n <= 0.04045 ? n / 12.92 : ((n + 0.055) / 1.055) ** 2.4
-      ).reduce((total, n, i) => total + n * [0.2126, 0.7152, 0.0722][i], 0);
-    };
+    // Tailwind v4 resolves these classes to oklch() in Chromium. Convert actual
+    // rendered colors through a 1px sRGB canvas rather than parsing CSS strings
+    // as if every getComputedStyle(color) returned rgb().
+    const sampleRgb = await page.evaluate(samples => {
+      const canvas = document.createElement('canvas');
+      canvas.width = canvas.height = 1;
+      const ctx = canvas.getContext('2d', { willReadFrequently: true });
+      if (!ctx) throw new Error('Canvas unavailable for color conversion');
+      return samples.map(sample => [sample.fg, sample.bg].map(color => {
+        ctx.clearRect(0, 0, 1, 1);
+        ctx.fillStyle = color;
+        ctx.fillRect(0, 0, 1, 1);
+        return Array.from(ctx.getImageData(0, 0, 1, 1).data).slice(0, 3);
+      }));
+    }, samples);
+    const luminance = rgb => rgb.map(n => n / 255).map(n =>
+      n <= 0.04045 ? n / 12.92 : ((n + 0.055) / 1.055) ** 2.4
+    ).reduce((total, n, i) => total + n * [0.2126, 0.7152, 0.0722][i], 0);
     for (const [i, sample] of samples.entries()) {
-      const a = luminance(sample.fg), b = luminance(sample.bg);
+      const a = luminance(sampleRgb[i][0]), b = luminance(sampleRgb[i][1]);
       const ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
       assert(ratio >= 4.5, 'WCAG AA small-text contrast failure in ' +
         (i ? 'footer' : 'inverse scenario label') + ': ' + ratio.toFixed(2) +
