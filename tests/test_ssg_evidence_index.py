@@ -42,17 +42,46 @@ class EvidenceIndexTest(unittest.TestCase):
         self.assertEqual(artifacts, export.build(), 'Mesma fonte deve gerar bytes idênticos')
         export.sync(artifacts, check=True)
 
-    def mutate(self, filename, alter):
+    def mutate_inputs(self, alter, edit_matrix=lambda raw: raw):
         with tempfile.TemporaryDirectory() as directory:
             scratch = Path(directory)
             (scratch / 'public/data').mkdir(parents=True)
-            for path in (export.CITATIONS, export.LINEAGE):
-                data = json.loads((ROOT / path).read_text())
-                if path == filename:
-                    alter(data)
-                (scratch / path).write_text(json.dumps(data))
+            (scratch / 'research').mkdir()
+            data = {path: json.loads((ROOT / path).read_text())
+                    for path in (export.CITATIONS, export.LINEAGE)}
+            alter(data)
+            for path, document in data.items():
+                (scratch / path).write_text(json.dumps(document))
+            (scratch / export.MATRIX).write_bytes(
+                edit_matrix((ROOT / export.MATRIX).read_bytes()))
             with self.assertRaises(ValueError):
                 export.build(scratch)
+
+    def mutate(self, filename, alter):
+        self.mutate_inputs(lambda data: alter(data[filename]))
+
+    def test_both_feeds_cannot_forge_a_row_hash(self):
+        def forge(data):
+            row = data[export.CITATIONS]['records'][0]
+            row['row_sha256'] = '0' * 64
+            key = (row['snapshot_ref'], row['source_id'])
+            entry = next(e for e in data[export.LINEAGE]['citation_lineages']
+                         if (e['snapshot_ref'], e['source_id']) == key)
+            entry['row_sha256'] = row['row_sha256']
+        self.mutate_inputs(forge)
+
+    def test_both_feeds_cannot_move_a_matrix_line(self):
+        def forge(data):
+            row = data[export.CITATIONS]['records'][0]
+            row['matrix_line'] += 1
+            key = (row['snapshot_ref'], row['source_id'])
+            entry = next(e for e in data[export.LINEAGE]['citation_lineages']
+                         if (e['snapshot_ref'], e['source_id']) == key)
+            entry['matrix_line'] = row['matrix_line']
+        self.mutate_inputs(forge)
+
+    def test_mutated_frozen_matrix_rejected_even_with_same_feeds(self):
+        self.mutate_inputs(lambda _: None, lambda raw: raw + b'\n<!-- altered -->\n')
 
     def test_duplicate_document_link_rejected(self):
         self.mutate(export.CITATIONS, lambda d: d['records'].append(copy.deepcopy(d['records'][0])))
