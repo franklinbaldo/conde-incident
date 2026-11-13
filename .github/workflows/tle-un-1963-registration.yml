@@ -32,6 +32,10 @@ jobs:
           test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
           python3 -m unittest discover -s tests -p test_tle_un_1963_registration_audit.py -v
           python3 tools/tle_un_1963_registration_audit.py
+      - name: Install PDF page renderer (external runner, not Jatoba)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq poppler-utils
       - name: Download four original UNOOSA PDFs and test their bytes
         run: |
           mkdir -p "$RUNNER_TEMP/unoosa-1963"
