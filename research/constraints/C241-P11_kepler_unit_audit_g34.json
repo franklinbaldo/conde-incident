@@ -1,0 +1,160 @@
+{
+  "id": "CASTOR-G34-C241-P11-SSR-PERIOD-DIMENSIONAL-AUDIT",
+  "classification": "SOURCE_LOCKED_CONDITIONAL_KEPLER_PLAUSIBILITY_NOT_OBSERVATIONAL_VALIDATION",
+  "depends_on": [
+    "C241-P11",
+    "C241-L12",
+    "C241-L19#1",
+    "C241-L18:19640002493",
+    "C197#1"
+  ],
+  "provenance": {
+    "ledger": "research/constraints/C241-P11_november_historical_printings.json",
+    "source_family": "NASA/Goddard compiled SSR; shared tracking genealogy",
+    "source_pdf_identifiers": [
+      "19640000428",
+      "19640001198",
+      "19640002493"
+    ],
+    "source_date_type": "publication date only, not instrument epoch",
+    "cross_check": "research/statistics/ssr_post528_print_contrasts_C241.json"
+  },
+  "physical_operator": "T_2body=2*pi*sqrt(a^3/mu_Earth)/60 minutes; a=R_Earth+(perigeeHalfKm+apogeeHalfKm)/4 km",
+  "constants": {
+    "earth_radius_km": 6378.137,
+    "earth_mu_km3_per_s2": 398600.4418
+  },
+  "input_units": {
+    "perigee_km_and_apogee_km_field": "ledger integer counts of HALF-km, not literal km",
+    "period_min_field": "ledger integer counts of 1/100 minute",
+    "period_printed_precision": "nearest 0.1 minute, not sigma",
+    "altitude_printed_precision": "nearest 1 km, not sigma"
+  },
+  "cross_field_diagnostics": [
+    {
+      "object": "1963-003A",
+      "report_date": "1963-10-15",
+      "source_occurrence": "C241-L12",
+      "source_pdf_sha256": "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+      "altitude_mean_km": 496.5,
+      "printed_period_min": 94.6,
+      "two_body_period_min": 94.54409017,
+      "printed_minus_two_body_seconds": 3.35459,
+      "print_rounding_residual_seconds": [
+        -0.26429,
+        6.97345
+      ],
+      "incorrect_unscaled_height_residual_seconds": -622.1457,
+      "observational_epoch": null,
+      "sensor_sigma": null
+    },
+    {
+      "object": "1963-003A",
+      "report_date": "1963-11-15",
+      "source_occurrence": "C241-L19#1",
+      "source_pdf_sha256": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+      "altitude_mean_km": 495.5,
+      "printed_period_min": 94.6,
+      "two_body_period_min": 94.52346203,
+      "printed_minus_two_body_seconds": 4.59228,
+      "print_rounding_residual_seconds": [
+        0.97345,
+        8.21109
+      ],
+      "incorrect_unscaled_height_residual_seconds": -619.5826,
+      "observational_epoch": null,
+      "sensor_sigma": null
+    },
+    {
+      "object": "1963-003A",
+      "report_date": "1963-11-30",
+      "source_occurrence": "C241-L18:19640002493",
+      "source_pdf_sha256": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+      "altitude_mean_km": 496.0,
+      "printed_period_min": 94.6,
+      "two_body_period_min": 94.53377591,
+      "printed_minus_two_body_seconds": 3.97345,
+      "print_rounding_residual_seconds": [
+        0.35459,
+        7.59228
+      ],
+      "incorrect_unscaled_height_residual_seconds": -620.8641,
+      "observational_epoch": null,
+      "sensor_sigma": null
+    },
+    {
+      "object": "1963-003C",
+      "report_date": "1963-10-15",
+      "source_occurrence": "C241-L12",
+      "source_pdf_sha256": "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+      "altitude_mean_km": 433.0,
+      "printed_period_min": 93.3,
+      "two_body_period_min": 93.2371852,
+      "printed_minus_two_body_seconds": 3.76889,
+      "print_rounding_residual_seconds": [
+        0.15287,
+        7.38488
+      ],
+      "incorrect_unscaled_height_residual_seconds": -538.0793,
+      "observational_epoch": null,
+      "sensor_sigma": null
+    },
+    {
+      "object": "1963-003C",
+      "report_date": "1963-11-15",
+      "source_occurrence": "C241-L19#1",
+      "source_pdf_sha256": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+      "altitude_mean_km": 398.0,
+      "printed_period_min": 92.6,
+      "two_body_period_min": 92.51944035,
+      "printed_minus_two_body_seconds": 4.83358,
+      "print_rounding_residual_seconds": [
+        1.21915,
+        8.44798
+      ],
+      "incorrect_unscaled_height_residual_seconds": -491.3552,
+      "observational_epoch": null,
+      "sensor_sigma": null
+    },
+    {
+      "object": "1963-003C",
+      "report_date": "1963-11-30",
+      "source_occurrence": "C241-L18:19640002493",
+      "source_pdf_sha256": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+      "altitude_mean_km": 379.0,
+      "printed_period_min": 92.2,
+      "two_body_period_min": 92.13058239,
+      "printed_minus_two_body_seconds": 4.16506,
+      "print_rounding_residual_seconds": [
+        0.55149,
+        7.7786
+      ],
+      "incorrect_unscaled_height_residual_seconds": -467.3714,
+      "observational_epoch": null,
+      "sensor_sigma": null
+    }
+  ],
+  "conclusions": {
+    "six_printed_minus_two_body_seconds_range": [
+      3.35459,
+      4.83358
+    ],
+    "wrong_unit_interpretation_seconds_magnitude_min": 467.3714,
+    "unit_encoding_discriminated": true,
+    "historical_holdout": "NOT_RUN",
+    "instrumental_covariance": null,
+    "frame_and_observation_epoch": null,
+    "independent_sensor_validation": false,
+    "active_domain_reduction": false,
+    "impact_location_inference": "NOT_SUPPORTED"
+  },
+  "limitations": [
+    "Near-second residuals are not fit statistics: instantaneous osculating Kepler period can differ from catalog mean/draconitic/anomalistic period, even absent transcriptions errors",
+    "Printed decimal quantization is not measurement error or model discrepancy; no sigma or likelihood is inferred",
+    "Same NASA compiled lineage for all six rows; period and altitudes not independent instrument observations",
+    "These are report publication dates, not dated tracking epochs; no orbital dynamic rate, RAAN, position or reentry geography follows"
+  ],
+  "implementation": "src/lib/orbitSsrPeriodAudit.ts",
+  "tests": "tests/orbitSsrPeriodAudit.test.mjs",
+  "historical_holdout": "NOT_RUN"
+}
