@@ -15,7 +15,16 @@ import math
 import random
 from pathlib import Path
 
-from tools.mass_budget_527_529 import MODEL, MATRIX, IDENTITY, validate
+try:
+    from tools.mass_budget_527_529 import MODEL, MATRIX, IDENTITY, validate
+    from tools.gcat_mass_lineage_audit import (MODEL as SEMANTICS_PATH,
+        MATRIX as ORIGINAL_MATRIX, AUX, CAT, validate as validate_semantics)
+except ModuleNotFoundError as exc:
+    if exc.name != "tools":
+        raise
+    from mass_budget_527_529 import MODEL, MATRIX, IDENTITY, validate
+    from gcat_mass_lineage_audit import (MODEL as SEMANTICS_PATH,
+        MATRIX as ORIGINAL_MATRIX, AUX, CAT, validate as validate_semantics)
 
 OBJECTS=("527","528","529","X")
 PREDECLARED_PRIORS={
@@ -24,6 +33,8 @@ PREDECLARED_PRIORS={
     "main_body_large_assumption":(4.,1.,1.,0.25),
 }
 DEFAULT_SEED=19631108
+SOURCE_TOTALS={"SUM_MASS_INSERTION":1206., "TOTMASS_REPORTED":1176.,
+               "PAYLOAD_PLUS_STAGE_DRY":1176.}
 
 def require(ok,reason):
     if not ok: raise ValueError(reason)
@@ -37,14 +48,20 @@ def read_sources():
             and model["variables"][4]["value"] is None
             and not model["conditional_budget"]["physically_calibrated_historical_constraint"],
             "historical evidence must be independently audited")
-    return model
+    semantics=json.loads(SEMANTICS_PATH.read_text(encoding="utf-8"))
+    validate_semantics(semantics,ORIGINAL_MATRIX.read_text(encoding="utf-8"),
+                       json.loads(AUX.read_text(encoding="utf-8")),
+                       json.loads(CAT.read_text(encoding="utf-8")))
+    require({z["id"]:float(z["nominal_total_kg"]) for z in semantics["accounting_scenarios"]} ==
+            SOURCE_TOTALS, "GCAT mass-basis sources changed")
+    return model,semantics
 
-def prior_profile(alpha):
+def prior_profile(alpha, total_kg=1176.):
     require(len(alpha)==4 and all(math.isfinite(x) and x>0 for x in alpha),"invalid Dirichlet prior")
     total=sum(alpha)
-    return {key:round(1176*x/total,6) for key,x in zip(OBJECTS,alpha)}
+    return {key:round(total_kg*x/total,6) for key,x in zip(OBJECTS,alpha)}
 
-def historical_gate(model):
+def historical_gate(model,semantics):
     return {
         "id":"C241-MASS-MCMC-20261113",
         "inference_status":"HISTORICAL_POSTERIOR_NOT_IDENTIFIED_NOT_RUN",
@@ -53,6 +70,13 @@ def historical_gate(model):
         "historical_likelihood":None,"posterior_most_probable_allocation":None,
         "historical_mcmc_executed":False,
         "source_C61_total_mass_kg_approx":1176,
+        "catalogue_payload_527_component_mass_kg":semantics["sources"]["payload"]["Mass_kg"],
+        "catalogue_agena_stage_mass_at_insertion_kg":semantics["sources"]["stage"]["Mass_kg"],
+        "catalogue_agena_stage_dry_mass_kg":semantics["sources"]["stage"]["DryMass_kg"],
+        "catalogue_mass_basis_conflict_kg":semantics["nominal_kg"]["difference_mass_at_insertion_sum_minus_totmass"],
+        "catalogue_mass_scenarios_unresolved":semantics["accounting_scenarios"],
+        "mass_of_orbiting_527_composite_is_not_306kg_verified":True,
+        "component_306kg_is_not_direct_mass_observation_of_528":True,
         "untracked_X_bound":None,"catalog_error_epsilon_bound":None,
         "prior_sensitivity_only_not_posterior":{
             name:prior_profile(alpha) for name,alpha in PREDECLARED_PRIORS.items()},
@@ -74,9 +98,9 @@ def fractions(y):
     s=sum(weights)
     return tuple(x/s for x in weights)
 
-def log_target(y,eps,alpha,sigma_total,obs):
+def log_target(y,eps,alpha,sigma_total,obs,total_reference_mass_kg=1176.):
     f=fractions(y)
-    total=1176.+eps
+    total=total_reference_mass_kg+eps
     if total<=0 or not math.isfinite(total):
         return -math.inf
     # Correct Jacobian of additive log ratio: sum(alpha_i * log(f_i)).
@@ -100,6 +124,7 @@ def log_target(y,eps,alpha,sigma_total,obs):
 
 def validate_synthetic_fixture(config):
     require(config.get("mode")=="SYNTHETIC_TEST_ONLY","only synthetic likelihood supported")
+    require(config.get("mass_basis") in SOURCE_TOTALS, "mass basis must be explicit and hypothetical")
     alpha=config["dirichlet_alpha"]
     prior_profile(alpha)
     sigma=float(config["reference_error_sigma_kg"])
@@ -120,14 +145,14 @@ def validate_synthetic_fixture(config):
     require(len({x["object"] for x in obs})==len(obs),"duplicate/possibly dependent observations")
     return tuple(float(x) for x in alpha),sigma,obs
 
-def one_chain(alpha,sigma,obs,seed,warmup,draws):
+def one_chain(alpha,sigma,obs,seed,warmup,draws,total_reference_mass_kg=1176.):
     rng=random.Random(seed)
     g=[rng.gammavariate(x,1.) for x in alpha]
     s=sum(g)
     f=[x/s for x in g]
     y=[math.log(f[j]/f[3]) for j in range(3)]
     eps=rng.gauss(0.,sigma)
-    lp=log_target(y,eps,alpha,sigma,obs)
+    lp=log_target(y,eps,alpha,sigma,obs,total_reference_mass_kg)
     kept=[]
     accepted=0
     for it in range(warmup+draws):
@@ -136,20 +161,25 @@ def one_chain(alpha,sigma,obs,seed,warmup,draws):
         axis=rng.randrange(4)
         if axis==3:e+=rng.gauss(0.,sigma*.12)
         else:proposal[axis]+=rng.gauss(0.,.25)
-        nxt=log_target(proposal,e,alpha,sigma,obs)
+        nxt=log_target(proposal,e,alpha,sigma,obs,total_reference_mass_kg)
         if math.log(max(1e-300,rng.random()))<nxt-lp:
             y,eps,lp=proposal,e,nxt
             if it>=warmup:accepted+=1
         if it>=warmup:
             fs=fractions(y)
-            masses=[(1176.+eps)*x for x in fs]
+            masses=[(total_reference_mass_kg+eps)*x for x in fs]
             kept.append({"masses_kg":masses,"epsilon_kg":eps,"log_ratios":list(y)})
     return {"draws":kept,"accepted_fraction":accepted/draws}
 
 def scalar_diagnostics(chains,coordinate):
     # Existing repository reference rank-normalized/folded split-Rhat and ESS,
     # rather than "converged" based solely on low rejection.
-    from tools.raan_chain_diagnostics import _split,_axis
+    try:
+        from tools.raan_chain_diagnostics import _split,_axis
+    except ModuleNotFoundError as exc:
+        if exc.name != "tools":
+            raise
+        from raan_chain_diagnostics import _split,_axis
     values=[[draw["masses_kg"][coordinate] for draw in chain["draws"]]
             for chain in chains]
     report=_axis(_split(values))
@@ -170,7 +200,9 @@ def run_synthetic(config,*,seed=DEFAULT_SEED,warmup=400,draws=600):
     require(isinstance(seed,int) and 1<=seed<2**31
             and 100<=warmup<=5000 and 200<=draws<=2048,
             "unsupported MCMC controls")
-    chains=[one_chain(alpha,sigma,obs,seed+10007*j,warmup,draws)
+    basis=config["mass_basis"]
+    total_reference_mass_kg=SOURCE_TOTALS[basis]
+    chains=[one_chain(alpha,sigma,obs,seed+10007*j,warmup,draws,total_reference_mass_kg)
             for j in range(4)]
     summary={}
     for j,name in enumerate(OBJECTS):
@@ -188,7 +220,10 @@ def run_synthetic(config,*,seed=DEFAULT_SEED,warmup=400,draws=600):
         "seed":seed,"chains":len(chains),"warmup":warmup,
         "draws_per_chain":draws,
         "acceptance_fractions":[round(c["accepted_fraction"],4) for c in chains],
-        "mass_total_source":"1176 kg nominal + synthetic Gaussian epsilon; NOT actual 1963 mass",
+        "mass_total_source":f"{basis} = {total_reference_mass_kg} kg nominal + synthetic Gaussian epsilon; not actual 1963 mass",
+        "assumed_total_reference_kg":total_reference_mass_kg,
+        "basis_is_historically_selected":False,
+        "payload_306kg_does_not_equal_m527_composite_observation":True,
         "prior_dirichlet_alpha":alpha,
         "observations_are_invented_for_test":True,
         "mass_summary":summary,
@@ -201,9 +236,9 @@ def main():
     p.add_argument("--synthetic-fixture",type=Path)
     p.add_argument("--output",type=Path)
     args=p.parse_args()
-    model=read_sources()
+    model,semantics=read_sources()
     report=(run_synthetic(json.loads(args.synthetic_fixture.read_text(encoding="utf-8")))
-            if args.synthetic_fixture else historical_gate(model))
+            if args.synthetic_fixture else historical_gate(model,semantics))
     payload=json.dumps(report,ensure_ascii=False,indent=2,sort_keys=True)+"\n"
     if args.output:
         args.output.parent.mkdir(parents=True,exist_ok=True)
