@@ -1,0 +1,60 @@
+{
+  "schema": "conde.bahia-lei628-index-locator/v1",
+  "record_id": "BA-LEI628-1953-INDEX-20261113",
+  "observed_utc_date": "2026-11-13",
+  "project_issue": "https://github.com/franklinbaldo/conde-incident/issues/308",
+  "interagent_request": "https://github.com/franklinbaldo/lontra/issues/2",
+  "legal_identity": {
+    "jurisdiction": "Bahia, Brazil",
+    "act": "Lei estadual 628",
+    "act_date": "1953-12-30",
+    "administrative_table_period_in_indexed_art_1": ["1954-01-01", "1958-12-31"],
+    "article_1_mentions_annex": "quadro I",
+    "article_2_mentions_annexes": ["II", "III", "IV", "V", "VI"],
+    "target_municipality": "Conde, Bahia",
+    "target_date": "1963-11-08"
+  },
+  "locator": {
+    "type": "THIRD_PARTY_SEARCH_INDEX_SNIPPET",
+    "url": "https://leisestaduais.com.br/ba/lei-ordinaria-n-628-1953-bahia-fixa-a-divisao-territorial-administrativa-do-estado-da-bahia-a-vigorar-de-01-de-janeiro-de-1954-a-31-de-dezembro-de-1958",
+    "search_indexed": true,
+    "direct_open": "HTTP_403",
+    "direct_original_text_inspected": false,
+    "indexed_elements": [
+      "law number and enactment date",
+      "caption specifies a 1954-1958 administrative division period",
+      "Article 1 points to attached quadro I",
+      "Article 2 names annexes II-VI"
+    ],
+    "annexes_retrieved": false,
+    "official_1953_1954_facsimile_retrieved": false,
+    "full_original_text_verified": false,
+    "pdf_bytes": null,
+    "pdf_sha256": null,
+    "printed_page": null
+  },
+  "official_repository_locator": {
+    "url": "https://www.ba.gov.br/casacivil/43/legislacao",
+    "page_type": "BAHIA_CASA_CIVIL_LEGISLATION_PORTAL",
+    "law_specific_original_found_there": false,
+    "limits": "Portal states ordinary legislation is indexed from 1947; not evidence that the original 628/1953 and annexes were fetched."
+  },
+  "prior_source_chain": [
+    "CGEO-05: official SEI Bahia 2013 publication attributes Conde limits to 628/1953",
+    "CGEO-06: state law 13.720/2017 describes an update to limits previously set by 628/1953"
+  ],
+  "interpretation": {
+    "indexed_law_caption_not_original_fascimile": true,
+    "caption_period_end_proves_1963_limits_expired": false,
+    "law_1953_alone_proves_boundary_on_target_date": false,
+    "2017_boundary_retrojected_to_1963": false,
+    "legal_status_on_target_date": "UNDETERMINED_PENDING_ORIGINAL_ANNEXES_AND_INTERVENING_ACTS",
+    "new_geographic_coordinates": false,
+    "new_orbital_constraint": false
+  },
+  "outstanding": [
+    "Obtain official facsimile of Bahia Lei 628/1953 and its annexes, including Conde memorial and original printed page; checksum full bytes",
+    "Examine subsequent changes and territorial division framework during 1959-1963; an administrative period stated in 1953 law caption does not alone resolve 1963 legal continuity",
+    "Do not treat 403 as absence from all archives or the indexed transcription as original signed text"
+  ]
+}
