@@ -53,8 +53,9 @@ theorem large_residual_consistent_with_total :
     ∃ a b c x : Nat,
       0 < a ∧ 0 < b ∧ 0 < c ∧
       ClosedBudget a b c x ∧ 2 * x > referenceGrams := by
-  refine ⟨200000, 100000, 100000, 776000, ?_, ?_, ?_, ?_, ?_⟩
-  all_goals simp only [ClosedBudget, referenceGrams] <;> omega
+  refine ⟨200000, 100000, 100000, 776000, by omega, by omega, by omega, ?_, by omega⟩
+  change 200000 + 100000 + 100000 + 776000 = 1176000
+  omega
 
 /-- Include a signed reference-total error epsilon (in grams).
 When an external source someday supplies |epsilon| ≤ tolerance and
