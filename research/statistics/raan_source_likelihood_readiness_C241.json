@@ -87,6 +87,46 @@
         "BN-RU301-20261112-03"
       ],
       "source_url": "https://sirismm.si.edu/EADpdfs/SIA.FARU0301.pdf"
+    },
+    {
+      "blockers": [
+        "PRIMARY_INSTRUMENT_RECORD",
+        "PHYSICAL_PIECE_IDENTITY",
+        "OBSERVABLE_EPOCH_FRAME_ERROR"
+      ],
+      "cospar": "1963-003B",
+      "factor_eligibility": "MODERN_COMPILED_LABEL_NO_INDEPENDENT_SENSOR",
+      "name": "GCAT_MODERN_COMPILED_PIECE_LABELS",
+      "object_catalogue_id": "00528",
+      "occurrences": [
+        "C241-L13",
+        "C241-L14"
+      ],
+      "physical_piece": null,
+      "source_path": "research/tle_custody/gcat_full_catalog_lineage_C241-L14.json"
+    },
+    {
+      "blockers": [
+        "CHILD_OBJECT_ID",
+        "MEASUREMENT_EPOCH",
+        "UPSTREAM_INDEPENDENCE",
+        "VISUAL_TRANSCRIPTION",
+        "SENSOR_FRAME_ERROR"
+      ],
+      "child_528_perigee_from_this_row": null,
+      "child_528_status_from_this_row": null,
+      "factor_eligibility": "LAUNCH_GROUP_COMPILATION_NOT_528_OBSERVATION",
+      "name": "NASA_SP4004_1963_LAUNCH_GROUP",
+      "occurrences": [
+        "C241-L15"
+      ],
+      "printed_group_designation": "1963-3",
+      "printed_group_status": "Still in orbit.",
+      "printed_page": 501,
+      "printed_perigee_statute_miles": 286,
+      "published_year": 1964,
+      "source_path": "research/tle_custody/nasa_sp4004_1963_group_custody_C241-L15.json",
+      "source_url": "https://www.nasa.gov/wp-content/uploads/2023/04/sp-4004-1963.pdf"
     }
   ],
   "classification": "DOCUMENTARY_FACTOR_ELIGIBILITY_AUDIT_NO_HISTORICAL_POSTERIOR",
@@ -101,7 +141,9 @@
     "status": "RETROSPECTIVE_TIME_SPLIT_NOT_BLINDED"
   },
   "independence": {
+    "annual_group_record_cannot_override_528_child_status": true,
     "factorization_into_independent_observations": "NOT_JUSTIFIED",
+    "gcat_compilation_cannot_add_independent_528_observation": true,
     "lineage_count_is_not_effective_sample_size": true,
     "nasa_norad_data_exchange_possible_not_proof_of_exact_record_ancestry": true,
     "norad_documents_1963_sputnik46_share_reporting_family": true,
@@ -129,6 +171,14 @@
     {
       "path": "research/tle_custody/catalog_identity_527_529_2026-11-12.json",
       "sha256": "9c129a3bb7f1fa56663f6cdd51c5ecfbcb271620730ebc353a8ac58b75d8daab"
+    },
+    {
+      "path": "research/tle_custody/gcat_full_catalog_lineage_C241-L14.json",
+      "sha256": "b6c033820b747dda8dab9b5cacd87c65899238093e89cca2a4dd5a8706f004a2"
+    },
+    {
+      "path": "research/tle_custody/nasa_sp4004_1963_group_custody_C241-L15.json",
+      "sha256": "4cdbf9ab4f3fcb19b646417823b30e0648ff69aded2c3826783992dc21c9b368"
     }
   ],
   "model_contract": {
