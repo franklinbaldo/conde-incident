@@ -19,7 +19,8 @@ MULTILINE = {
         'if (( ${#tests[@]} )); then',
         'node --test "${tests[@]}"',
         'else',
-        'echo "NO_NODE_TEST_FILES: scripts/ and tests/ have no *.test.mjs at checked-out head"',
+        'echo "::error::NO_NODE_TEST_FILES: expected Node regression suites in scripts/ or tests/"',
+        'exit 1',
         'fi',
     ),
     ('integration-head.yml', 'lean', 'Detect Lean package'): (
