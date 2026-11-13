@@ -1,0 +1,51 @@
+{
+  "schema": "conde.archival_station_locator/v1",
+  "id": "C241-L38",
+  "audit_date": "2026-11-13",
+  "question": "Can contemporaneous station observation journals be located separately from retrospective Soviet bulletin catalogues?",
+  "institutional_history": {
+    "title": "История института — Справка о станции наблюдений ИСЗ",
+    "institution": "Лесосибирский педагогический институт, филиал Сибирского федерального университета",
+    "url": "https://www.lpi.sfu-kras.ru/node/286",
+    "date_of_web_publication": null,
+    "kind": "UNDATED_INSTITUTIONAL_RETROSPECTIVE",
+    "observed_station_name": "Енисейск, Красноярский край",
+    "station_identifier": "1078",
+    "station_founded_year_stated": 1961,
+    "listed_station_leaders": ["В.А. Воротников", "П.М. Першин"],
+    "states_original_journals_kept_at_station_at_time_of_writing": true,
+    "journal_years_individually_itemized": false,
+    "journal_november_1963_confirmed": false,
+    "present_day_holding_confirmed": false,
+    "catalogue_call_number": null,
+    "source_original_observation_facsimile": false,
+    "period_of_operation_described_as_years": 25
+  },
+  "retrieved_transport_copy": {
+    "retrieved": true,
+    "bytes": 321424,
+    "sha256": "4df12d13cef3bcec550c0d53c34d0a8080f2b292080ebb51b7b0d9d66eab1721",
+    "byte_scope": "full undated institutional HTML page; NOT a 1963 observation log",
+    "http_status": 200,
+    "tls_certificate_validated": false,
+    "tls_failure_when_strict": "curl error 60: unable to get local issuer certificate",
+    "retrieval_caveat": "Bytes downloaded with curl --insecure solely for inspection and reproducible hashing; transport does not authenticate publisher.",
+    "content_type_detected": "text/html; charset=utf-8"
+  },
+  "route": {
+    "proposed_original_source": "station 1078 observation journals and outgoing reports to КВЦ Космос",
+    "candidate_observation_dates": ["1963-11-07", "1963-11-08", "1963-11-09"],
+    "catalogue_or_inventory_available": false,
+    "target_norad_ids": [527, 528, 529],
+    "target_objects_explicitly_identified": false,
+    "station_logs_retrieved": false,
+    "station_coordinates_confirmed_for_1963": false,
+    "archive_contacted": false,
+    "search_next": "Find surviving archival inventory or digitized journal pages for 7–9 Nov 1963; establish current custodian, accession, page and satellite designation before astrometry."
+  },
+  "independent_target_measurements": 0,
+  "new_numeric_observables": 0,
+  "orbital_constraints_activated": 0,
+  "epistemic_status": "INSTITUTIONAL_HISTORY_ARCHIVAL_LEAD_NOT_TARGET_OBSERVATION",
+  "dependencies": ["C241-L29", "C241-L31", "C241-L34", "C241-L35", "C241-L37"]
+}
