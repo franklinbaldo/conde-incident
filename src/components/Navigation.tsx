@@ -110,6 +110,8 @@ export const Navigation: React.FC<NavigationProps> = ({
     },
   ];
 
+  const currentTab = tabs.find(tab => tab.id === activeTab);
+
   return (
     <header className="border-b border-zinc-800 bg-zinc-950/90 backdrop-blur md:sticky md:top-0 z-50">
       {/* Top Banner */}
@@ -223,6 +225,11 @@ export const Navigation: React.FC<NavigationProps> = ({
           );
         })}
       </nav>
+      {/* Announce SPA route changes without moving keyboard focus or reading the entire main region. */}
+      <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+        {lang === 'pt' ? 'Seção ativa: ' : 'Active section: '}
+        {lang === 'pt' ? currentTab?.labelPt : currentTab?.labelEn}
+      </p>
     </header>
   );
 };
