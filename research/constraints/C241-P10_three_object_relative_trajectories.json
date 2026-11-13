@@ -1,6 +1,6 @@
 {
   "schema": "conde.cumulative-constraint-graph-supplement/v1",
-  "id": "C241-P9-three-object-relative-trajectories",
+  "id": "C241-P10-three-object-relative-trajectories",
   "purpose": "Constrain candidate NORAD 528 positions jointly by the past and future propagated positions of NORAD 527 and 529, at matching epochs; never assume fixed or observed separation.",
   "parents": [
     "research/constraints/ssr_1963_observable_graph.json",

@@ -1,7 +1,7 @@
 import Lean
 
 /-!
-C241-P9: simultaneous, three-object orbital-separation constraints.
+C241-P10: simultaneous, three-object orbital-separation constraints.
 
 At a common, calibrated ECI epoch t, candidate 528 positions must satisfy
 the 527/528, 528/529 and 527/529 *distance intervals*, plus conservative
