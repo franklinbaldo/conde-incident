@@ -1,0 +1,81 @@
+{
+  "schema": "conde.coruja.archive-live-replay-comparison/v1",
+  "observed_at_utc": "2026-11-13T01:26:25Z",
+  "method": "GET original and timestamped Wayback id_ replay using urllib.request with independent SHA-256 hashing; files inspected only for size, content-type, PDF header/end marker and hash (no page-content re-reading here).",
+  "source_custody": "research/archive/wayback_pilot_2026-11-12.json",
+  "records": [
+    {
+      "id": "WB-NORAD-1963-H2",
+      "source_family": "NORAD_CONAD_HISTORICAL_SUMMARY_1963",
+      "original_url": "https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/11.pdf",
+      "replay_url": "https://web.archive.org/web/20230315024525id_/https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/11.pdf",
+      "capture_utc": "2023-03-15T02:45:25Z",
+      "original": {
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 1459815,
+        "sha256": "cb3a9c4dc8bbdae6d2f72711d4dbb50887e576975e7f0e84f2e434c90fcee52b",
+        "pdf_header": true,
+        "pdf_eof": true
+      },
+      "replay": {
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 1459815,
+        "sha256": "cb3a9c4dc8bbdae6d2f72711d4dbb50887e576975e7f0e84f2e434c90fcee52b",
+        "pdf_header": true,
+        "pdf_eof": true
+      },
+      "byte_identity_observed": true
+    },
+    {
+      "id": "WB-SAO-RU301",
+      "source_family": "SMITHSONIAN_SAO_INSTITUTIONAL_ARCHIVE",
+      "original_url": "https://sirismm.si.edu/EADpdfs/SIA.FARU0301.pdf",
+      "replay_url": "https://web.archive.org/web/20210228105202id_/https://sirismm.si.edu/EADpdfs/SIA.FARU0301.pdf",
+      "capture_utc": "2021-02-28T10:52:02Z",
+      "original": {
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 124806,
+        "sha256": "e3acb2332415332dd14167db8d3d8c3d83ad2ef8897991f50f8b86c166b365cc",
+        "pdf_header": true,
+        "pdf_eof": true
+      },
+      "replay": {
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 124806,
+        "sha256": "e3acb2332415332dd14167db8d3d8c3d83ad2ef8897991f50f8b86c166b365cc",
+        "pdf_header": true,
+        "pdf_eof": true
+      },
+      "byte_identity_observed": true
+    },
+    {
+      "id": "WB-NASA-SSR-19631115",
+      "source_family": "NASA_NORAD_SSR_SINGLE_DOCUMENT",
+      "original_url": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf",
+      "replay_url": null,
+      "exact_wayback_lookup": "NO_EXACT_CAPTURE_IN_QUERIED_INDEX",
+      "original": {
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 327613,
+        "sha256": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+        "pdf_header": true,
+        "pdf_eof": true
+      },
+      "replay": null,
+      "byte_identity_observed": null
+    }
+  ],
+  "limitations": [
+    "Original HTTP bytes were accessible at the audit time; future contents or availability can change.",
+    "Two Wayback captures existed in 2021 and 2023; they were not created by this comparison.",
+    "Original/replay hash equality proves equality of downloaded payload bytes at the audit time, not independent historical measurements or provenance back to 1963.",
+    "PDF validity was not exhaustively tested beyond header/EOF; historical pages were not reinspected during this check.",
+    "NASA negative means no exact capture for this URL was returned by Lontra's CDX/Availability pilot, not absence from the Internet Archive or historical record.",
+    "No tracking epoch, terminal orbit, meteorological observations, impact coordinate or posterior probability inferred."
+  ]
+}
