@@ -20,6 +20,17 @@ class EvidenceIndexTest(unittest.TestCase):
         self.assertIsNone(manifest['independent_physical_observation_count'])
         self.assertFalse(manifest['absence_of_declared_dependency_proves_independence'])
         self.assertEqual(len(manifest['post_matrix_ids_not_in_curated_index']), 1)
+        gaps = manifest['unmapped_matrix_refs']
+        self.assertEqual(len(gaps), manifest['unmapped_matrix_occurrences'])
+        self.assertEqual(len(gaps) + manifest['curated_occurrences'],
+                         manifest['total_matrix_occurrences'])
+        indexed = {r['occurrence'] for r in
+                   json.loads((ROOT / export.CITATIONS).read_text())['records']}
+        self.assertFalse(indexed.intersection(r['occurrence'] for r in gaps))
+        inventory = export.matrix_inventory((ROOT / export.MATRIX).read_bytes().splitlines())
+        self.assertEqual({g['occurrence']: g['matrix_line'] for g in gaps},
+                         {k: v for k, v in inventory.items() if k not in indexed})
+        self.assertEqual(inventory['C44#2'] > inventory['C44#1'], True)
         seen = set()
         for shard in manifest['shards']:
             raw = artifacts[Path(shard['path'])]
@@ -59,6 +70,22 @@ class EvidenceIndexTest(unittest.TestCase):
 
     def mutate(self, filename, alter):
         self.mutate_inputs(lambda data: alter(data[filename]))
+
+    def test_declaration_cannot_hide_an_unindexed_matrix_row(self):
+        def forge(data):
+            citation = data[export.CITATIONS]
+            citation['total_matrix_occurrences'] -= 1
+            citation['unmapped_occurrences'] -= 1
+            # Old arithmetic check still held, but the frozen rows did not.
+        self.mutate_inputs(forge)
+
+    def test_inventory_keeps_duplicate_matrix_labels_distinct(self):
+        lines = (ROOT / export.MATRIX).read_bytes().splitlines()
+        inventory = export.matrix_inventory(lines)
+        for name in ('C44', 'C45', 'C46'):
+            self.assertIn(f'{name}#1', inventory)
+            self.assertIn(f'{name}#2', inventory)
+            self.assertNotEqual(inventory[f'{name}#1'],inventory[f'{name}#2'])
 
     def test_both_feeds_cannot_forge_a_row_hash(self):
         def forge(data):

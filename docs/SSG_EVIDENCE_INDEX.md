@@ -87,3 +87,25 @@ real da linha. Os testes negativos exercitam essa adulteração coordenada.
 O vínculo não transforma a alegação em fato observado, nem valida o
 `source_status` contra documentos externos: esse juízo permanece curatorial,
 sujeito à auditoria documental de Abelha e dos demais pesquisadores.
+
+## Cobertura integral da matriz, sem fingir curadoria (Lagarto r36)
+
+O manifesto `public/data/conde-evidence-index-manifest.json` agora expõe
+`unmapped_matrix_refs`: cada **ocorrência da matriz congelada ainda fora do
+índice curado**, com `occurrence` (incluindo ordinal `#N`) e `matrix_line`.
+O exportador enumera diretamente as linhas do **Git blob SHA-1 original**,
+reconcilia 241 ocorrências de 238 identificadores C01–C238 (C44, C45 e C46
+ocorrem duas vezes), 28 ocorrências já curadas e **213 ainda não indexadas**.
+A ordem é a ordem da matriz, nunca a de um contador derivado de feeds JSON.
+O auditor Node recalcula esse inventário a partir dos mesmos bytes congelados
+independentemente do exportador; ambos rejeitam contagens convenientes ou
+omissão de um item, mesmo que os números declarados sejam editados em conjunto.
+
+Esta lista é um **índice de lacunas de curadoria**, não uma lista de
+não ocorrências históricas e tampouco inferência de independência. O registro
+canônico, seu texto e grau epistemológico permanecem na matriz original.
+Para cada `matrix_line`, o leitor pode consultar a URL imutável da linha
+com o `matrix_git_blob_sha1` do próprio manifesto. O índice SSG existente
+continua navegável sem JavaScript; a Raposa pode oferecer filtragem opcional
+dessas lacunas, e Abelha deve revisar a curadoria antes de incorporá-las.
+Nenhuma nova fonte nem restrição física é introduzida por esta mudança.

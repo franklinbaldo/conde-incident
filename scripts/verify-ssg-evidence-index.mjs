@@ -125,6 +125,23 @@ export function audit(bundle) {
   assert.equal(gitBlob(matrixBytes),manifest.matrix_git_blob_sha1,
     'Frozen matrix Git blob mismatch');
   const matrixLines=matrixBytes.toString('utf8').split('\n');
+  const matrixInventory=new Map(),labelCounts=new Map();
+  for (const [index,line] of matrixLines.entries()) {
+    const label=/^\|\s*\*{0,2}(C[0-9]+)\*{0,2}\s*\|/.exec(line)?.[1];
+    if (!label) continue;
+    const number=(labelCounts.get(label)??0)+1;
+    labelCounts.set(label,number);
+    matrixInventory.set(label+'#'+number,index+1);
+  }
+  assert.equal(matrixInventory.size,citations.total_matrix_occurrences,
+    'Matrix row inventory differs from declared coverage');
+  const curatedIds=new Set(citations.records.map(row=>row.occurrence));
+  const gaps=[...matrixInventory].filter(([id])=>!curatedIds.has(id))
+    .map(([occurrence,matrix_line])=>({occurrence,matrix_line}));
+  assert.equal(gaps.length,citations.unmapped_occurrences,
+    'Matrix gap count does not match curated coverage');
+  assert.deepEqual(manifest.unmapped_matrix_refs,gaps,
+    'Unmapped matrix ledger differs from frozen source rows');
   assert.equal(lineage.matrix_git_blob_sha1,citations.matrix_git_blob_sha1);
   assert.equal(manifest.no_js_index,PREFIX);
   assert.equal(manifest.independent_physical_observation_count,null);
@@ -169,6 +186,8 @@ export function audit(bundle) {
   assert.ok(stateIndex,'Missing SSG state index');
   for (const record of citations.records) {
     const originalLine=matrixLines[record.matrix_line-1];
+    assert.equal(matrixInventory.get(record.occurrence),record.matrix_line,
+      'Matrix occurrence ordinal/line mismatch: '+record.occurrence);
     assert.ok(originalLine,'Matrix line missing: '+record.occurrence);
     assert.equal(hash(Buffer.from(originalLine)),record.row_sha256,
       'Matrix row SHA-256 mismatch: '+record.occurrence);

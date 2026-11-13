@@ -24,6 +24,30 @@ test('every published JSON record links to a generated, navigable SSG occurrence
   assert.ok(summary.shards>0);
 });
 
+test('coverage ledger exposes every unindexed frozen matrix row',()=>{
+  const bundle=clean();
+  assert.equal(bundle.manifest.unmapped_matrix_refs.length,
+    bundle.citations.unmapped_occurrences);
+  const copy=bundle.manifest.unmapped_matrix_refs;
+  const second=copy.find(row=>row.occurrence==='C44#2');
+  assert.ok(second);
+  assert.notEqual(second.matrix_line,
+    copy.find(row=>row.occurrence==='C44#1')?.matrix_line);
+  // Even though both counts remain unchanged, omission cannot be silent.
+  bundle.manifest.unmapped_matrix_refs=copy.slice();
+  bundle.manifest.unmapped_matrix_refs[0]={...copy[0],matrix_line:99999};
+  assert.throws(()=>audit(bundle),/Unmapped matrix ledger differs/);
+});
+
+test('coordinated coverage count shrink fails against original matrix rows',()=>{
+  const bundle=clean();
+  bundle.citations.total_matrix_occurrences--;
+  bundle.citations.unmapped_occurrences--;
+  bundle.manifest.total_matrix_occurrences--;
+  bundle.manifest.unmapped_matrix_occurrences--;
+  assert.throws(()=>audit(bundle),/Matrix row inventory differs/);
+});
+
 test('modified historical matrix is rejected even with unchanged feeds',()=>{
   const bundle=clean();
   bundle.matrixBytes=Buffer.concat([bundle.matrixBytes,Buffer.from('\n<!-- changed -->\n')]);
