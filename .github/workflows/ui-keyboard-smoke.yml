@@ -4,6 +4,8 @@ on:
     paths:
       - 'index.html'
       - 'src/App.tsx'
+      - 'src/components/LabLoadErrorBoundary.tsx'
+      - 'tests/ui_lab_chunk_failure_smoke.mjs'
       - 'index.html'
       - 'vite.config.ts'
       - 'tests/lab-code-split.test.mjs'
@@ -68,6 +70,8 @@ jobs:
           exit 1
       - name: Browser keyboard and desktop/mobile screenshots
         run: node tests/ui_keyboard_smoke.mjs
+      - name: Chromium lazy-download failure and recovery (PT/EN)
+        run: node tests/ui_lab_chunk_failure_smoke.mjs
       - name: Caderno 320px reflow and focus in Chromium (source templates)
         run: node tests/caderno_reflow_smoke.mjs
       - name: Install pinned SSG binary for the real editorial UI
