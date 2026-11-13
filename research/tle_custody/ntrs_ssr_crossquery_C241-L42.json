@@ -1,0 +1,34 @@
+{
+  "id": "C241-L42",
+  "source_url": "https://ntrs.nasa.gov/api/citations/search",
+  "query": {
+    "q": "X-533-63-1",
+    "page": {
+      "size": 200,
+      "from": 0
+    }
+  },
+  "capture_date_utc": "2026-11-13",
+  "captured_query_total": 26,
+  "captured_response_bytes": 66740,
+  "captured_response_sha256": "a057a3a1e300782e3f9e0471076f36f3ca136fcdf866b653f0b37d6ea4ef05ba",
+  "captured_1963_source_ids": [
+    19630012113,
+    19630012127,
+    19630012128,
+    19630012130,
+    19630012289,
+    19630012290,
+    19640001198,
+    19640002493,
+    19640003479,
+    19640005618
+  ],
+  "absent_anchor_due_to_cross_index_mismatch": 19640000428,
+  "source_discrepancy_record": "C241-L12",
+  "prior_query_record": "C241-L25",
+  "scope": "NASA_NTRS_SEARCH_METADATA_NOT_TRACKING_SENSOR",
+  "observations_528": 0,
+  "issue_21_not_proven_absent": true,
+  "geographic_inference": "NOT_ACTIVATED"
+}
