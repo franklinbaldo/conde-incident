@@ -60,4 +60,34 @@ def nasaRetrospective1977Labels : List NasaRetrospectiveCatalogLabel :=
      norad := 529, printedPage := 43, originalObservationEpochUtc := none,
      originalSensor := none, status := "DOCUMENTARY_IDENTITY_ONLY" }]
 
+/-! C241-L34: Alla Masevich's February 1963 preface mentions two
+Soviet periodical series. These bibliographic search targets are neither
+issue-level facsimiles nor observations of any target object. The printed
+page of viewer image 006 and the instrumental epoch are unknown. -/
+structure SovietContemporaryBibliographicLead where
+  sourceRecord : String
+  periodicalTitle : String
+  viewerPage : Nat
+  printedPage : Option Nat
+  sourceWebpSha256 : String
+  observedNorad : Option Nat
+  observationEpochUtc : Option String
+  originalIssueAuthenticated : Bool
+  status : String
+  deriving Repr
+
+def sovietContemporaryBibliographicLeads :
+    List SovietContemporaryBibliographicLead :=
+  [{ sourceRecord := "C241-L34", periodicalTitle := "Искусственные спутники Земли",
+     viewerPage := 6, printedPage := none,
+     sourceWebpSha256 := "0d68650aa352f7404f4251abf53c3d117efd3dde377b6c5667df85516089f901",
+     observedNorad := none, observationEpochUtc := none,
+     originalIssueAuthenticated := false, status := "BIBLIOGRAPHIC_LEAD_ONLY" },
+   { sourceRecord := "C241-L34",
+     periodicalTitle := "Бюллетень станций оптических наблюдений искусственных спутников",
+     viewerPage := 7, printedPage := some 6,
+     sourceWebpSha256 := "fea39a91dae6ce25b977e4562c758818dc44667dc7559b7d99f9ecc6231f4bb2",
+     observedNorad := none, observationEpochUtc := none,
+     originalIssueAuthenticated := false, status := "BIBLIOGRAPHIC_LEAD_ONLY" }]
+
 end Conde1963
