@@ -1,0 +1,118 @@
+{
+  "schema": "conde.gaviao-retrospective-main/v1",
+  "audit_id": "G51",
+  "reviewed_on_utc_date": "2026-11-13",
+  "base_exclusive": "e26d0db841e6c120c2cd5b27ddc7bdbce8079bfc",
+  "head_inclusive": "cf163c5841c33343346f6c966657e27724e0197d",
+  "first_parent_integrations": 12,
+  "dag_commits": 12,
+  "conventional_merge_commits": 0,
+  "historical_check_policy": "NOT_CHECKED unless individually inspected",
+  "deep_reviewed_change": "C241-LONTRA-R37 station 1023 custody validator in merge #668",
+  "finding": {
+    "id": "G51-F1",
+    "severity": "SCIENTIFIC_CUSTODY_VALIDATOR_OPTIMIZATION_BYPASS",
+    "status": "RED_REPRODUCED_GREEN_LOCAL_CI_PENDING",
+    "red": "Unmodified Python -O suppresses all production assert statements: synthetic source SHA mismatch, target identification and activated orbital constraint were accepted as True",
+    "green": "Use unconditional ValueError guards and execute regression subprocesses under optimized Python -O, rejecting three independent mutations",
+    "limitation": "Synthetic test of validator control flow only; no evidence of historical tampering, discovery of target-specific Soviet readings or new orbital constraint"
+  },
+  "integrations": [
+    {
+      "sha": "d99043679bd9bf1245a89eaaafda15d56711e405",
+      "subject": "94 🐝 GCAT C241-L40: massas latentes sem inventário fechado (#664)",
+      "pr_number": 664,
+      "parents": 1,
+      "files_changed_first_parent": 3,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "ffe7e01abcf5548b4705577912bc9c375077abb9",
+      "subject": "🦅 G50: trigger C241 replay for all direct scientific inputs (#661)",
+      "pr_number": 661,
+      "parents": 1,
+      "files_changed_first_parent": 4,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "58c599b3b4b5a1d1ca6f835f554b574e2bc79c53",
+      "subject": "🐢 C241-L42: detectar falso negativo em busca NASA NTRS (#662)",
+      "pr_number": 662,
+      "parents": 1,
+      "files_changed_first_parent": 4,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "d12bebd8f1f81e7ca820660d0e082cc43f29d4b3",
+      "subject": "🦎 SSG: inventariar 213 lacunas da matriz em manifesto verificável (#663)",
+      "pr_number": 663,
+      "parents": 1,
+      "files_changed_first_parent": 6,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "6e858398f3217f0e61252c1ed25e6381776fc302",
+      "subject": "stat(cervo): quantify pass-block deletion sensitivity in Telstar benchmark (#665)",
+      "pr_number": 665,
+      "parents": 1,
+      "files_changed_first_parent": 4,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "e96d70ce0977c6bcbf6876ea5971c31cce5e22e2",
+      "subject": "feat(geo): CGEO-37 cross-custody ETH Soper 1914 (#666)",
+      "pr_number": 666,
+      "parents": 1,
+      "files_changed_first_parent": 5,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "d6da28cb22c387d796400e23392407b0c10ca4b1",
+      "subject": "95 🐙 C241-P25: conectar C227/C228 à compilação NASA dezembro sem ativar física (#88) (#667)",
+      "pr_number": 667,
+      "parents": 1,
+      "files_changed_first_parent": 9,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "8d5e7023627c1eb2c73fb87d9ccef64ceea55511",
+      "subject": "95 🦦 C241-LONTRA-R37: custodiar coleção da estação 1023 (#668)",
+      "pr_number": 668,
+      "parents": 1,
+      "files_changed_first_parent": 5,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "a9c32565643c772beebde2bc0737397b7c986751",
+      "subject": "95 🦫 G49: interpolação IERS subdiária autenticada (#669)",
+      "pr_number": 669,
+      "parents": 1,
+      "files_changed_first_parent": 6,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "bafb4d19a9fa55be4c5dad29a54e0c635707c892",
+      "subject": "91 🦊 SSG: navegação direta entre estados e fontes (#670)",
+      "pr_number": 670,
+      "parents": 1,
+      "files_changed_first_parent": 5,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "e29bc42adb97b97d0a8762b72315a551b54cac65",
+      "subject": "87 🦇 Busca SSG: mostrar a consulta real quando não há resultados (#671)",
+      "pr_number": 671,
+      "parents": 1,
+      "files_changed_first_parent": 3,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "cf163c5841c33343346f6c966657e27724e0197d",
+      "subject": "93 🦉 Caderno 28: estação 1023 observava também alvos não anunciados (#672)",
+      "pr_number": 672,
+      "parents": 1,
+      "files_changed_first_parent": 1,
+      "historical_checks": "NOT_CHECKED"
+    }
+  ]
+}

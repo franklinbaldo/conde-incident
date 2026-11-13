@@ -2,6 +2,8 @@
 import copy
 import importlib.util
 import json
+import subprocess
+import sys
 from pathlib import Path
 import unittest
 
@@ -21,7 +23,7 @@ class ArchiveContract(unittest.TestCase):
         for field in path[:-1]:
             parent = parent[field]
         parent[path[-1]] = value
-        with self.assertRaises(AssertionError):
+        with self.assertRaises(ValueError):
             M.validate(changed)
 
     def test_manifest(self):
@@ -59,6 +61,28 @@ class ArchiveContract(unittest.TestCase):
         self.reject(['limits', 'observation_for_norad_527_528_529_confirmed'], True)
         self.reject(['limits', 'orbital_constraints_activated'], 1)
         self.reject(['limits', 'outreach_sent'], True)
+
+    def test_optimized_python_cannot_bypass_scientific_guards(self):
+        baseline = (
+            'import json\n'
+            'from tools.verify_kyiv_station1023_archive import MANIFEST, validate\n'
+            'd=json.loads(MANIFEST.read_text())\n'
+        )
+        for tamper in (
+            '',
+            "d['limits']['orbital_constraints_activated']=1\n",
+            "d['station']['unknown_objects_are_not_identified_as_norad_targets']=False\n",
+            "d['sources'][0]['sha256']='0'*64\n",
+        ):
+            result = subprocess.run(
+                [sys.executable, '-O', '-c', baseline + tamper + 'validate(d)\n'],
+                cwd=ROOT, capture_output=True, text=True, check=False,
+            )
+            if not tamper:
+                self.assertEqual(result.returncode, 0, result.stderr)
+            else:
+                self.assertNotEqual(result.returncode, 0, tamper)
+                self.assertIn('ValueError', result.stderr)
 
     def test_no_claim_current_custody(self):
         self.reject(['limits', 'current_custody_in_2026_confirmed'], True)
