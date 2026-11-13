@@ -1,0 +1,33 @@
+{
+  "id": "CASTOR-G29-TEME-6D-COVARIANCE-DEPENDENCY",
+  "project_issue": 4,
+  "scientific_status": "SYNTHETIC_OR_DECLARED_CONDITIONAL_NOT_HISTORICAL_VALIDATION",
+  "upstream_occurrences": ["C179#1", "C197#1", "C241-L12#1"],
+  "primary_source": {
+    "occurrence": "C197#1",
+    "citation": "NASA/Goddard Satellite Situation Report, 1963-11-15, p.8",
+    "url": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf",
+    "supports": "1963-003B catalog decay day only; not covariance, time or location"
+  },
+  "secondary_lineage": {
+    "occurrence": "C179#1",
+    "kind": "RETROSPECTIVE_TLE_MIRROR_NOT_INSTRUMENT_COVARIANCE"
+  },
+  "variables": {
+    "C_TEME": "declared 6x6 state covariance in [km,km/s] ordering",
+    "R": "documented time-dependent TEME-to-ECI rotation",
+    "Rdot": "documented rotation derivative per second",
+    "J": "[[R,0],[Rdot,R]]",
+    "C_ECI": "J C_TEME J^T, excluding frame-systematic covariance"
+  },
+  "required_unavailable_inputs": [
+    "original NORAD 527/529 6x6 instrumental covariance with epoch and frame",
+    "source-identified EOP/UT1/precession-nutation and associated uncertainty/correlation",
+    "independent original Cartesian observations for chronological holdout",
+    "Lean-constrained historical admissible domain"
+  ],
+  "validation": "tests/orbitFrameCovariance.test.mjs",
+  "historical_holdout": "NOT_RUN",
+  "lean_parameter_domain_reduction": false,
+  "impact_in_conde": "NOT_EVALUABLE"
+}

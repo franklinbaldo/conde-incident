@@ -77,7 +77,7 @@ const digest = (s: string | undefined): boolean => /^[0-9a-f]{64}$/i.test(s ?? '
 const exactEpoch = (s: string): number | null => {
   try { return utcMilliseconds(s); } catch { return null; }
 };
-const declared = (k: DeclaredFrameKinematics): boolean =>
+export const isDeclaredFrameKinematics = (k: DeclaredFrameKinematics): boolean =>
   k.from === 'TEME' && k.to === 'ECI_DECLARED' &&
   !!k.sourceOccurrence?.trim() && k.sourceUrl?.startsWith('https://') && digest(k.sourceSha256) &&
   Number.isFinite(k.positionFrameSigmaKm) && k.positionFrameSigmaKm >= 0 &&
@@ -103,7 +103,7 @@ export function auditTemeInertialComparison(
     impactInference: 'NOT_SUPPORTED',
   });
   if (!kinematics) return output('FRAME_NOT_DOCUMENTED');
-  if (!declared(kinematics) || inertial.frame !== 'ECI_DECLARED') return output('TRANSFORM_INADMISSIBLE');
+  if (!isDeclaredFrameKinematics(kinematics) || inertial.frame !== 'ECI_DECLARED') return output('TRANSFORM_INADMISSIBLE');
   const sourceEpoch = exactEpoch(sgp4.epochUtc);
   const targetEpoch = exactEpoch(inertial.epochUtc);
   const transformEpoch = exactEpoch(kinematics.epochUtc);
