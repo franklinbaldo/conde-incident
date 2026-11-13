@@ -25,7 +25,7 @@ Há uma mudança de nome que importa. A fonte está hoje associada a **Lesosibir
 
 ## O que um caderno poderia contar
 
-No [capítulo anterior](./2026-11-13-a-lanterna-que-levou-a-dois-arquivos.md), a astrônoma Alla Masevich ajudou a distinguir duas famílias de publicação soviéticas: os boletins sobre métodos de observação e os volumes que divulgavam resultados originais. A estação 1078 apresenta uma terceira possibilidade: **os registros do posto antes de sua circulação em boletins ou compilações**.
+No [capítulo anterior](https://franklinbaldo.github.io/conde-incident/stories/2026-11-13-a-lanterna-que-levou-a-dois-arquivos/), a astrônoma Alla Masevich ajudou a distinguir duas famílias de publicação soviéticas: os boletins sobre métodos de observação e os volumes que divulgavam resultados originais. A estação 1078 apresenta uma terceira possibilidade: **os registros do posto antes de sua circulação em boletins ou compilações**.
 
 Essa diferença é crucial para a genealogia de uma medida. Um resultado impresso anos depois pode ter sido reduzido, corrigido ou copiado de outra tabela. Uma folha contemporânea, acompanhada de identificação do observador e dos procedimentos utilizados, permitiria investigar a cadeia entre a primeira anotação e o número publicado.
 
