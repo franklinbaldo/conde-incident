@@ -1,0 +1,128 @@
+{
+  "schema": "conde.gis.vila-conde-camera-custody/v1",
+  "id": "CGEO-15",
+  "generated_from": "new primary image files with cross-checked Commons descriptive metadata",
+  "event_date": "1963-11-08",
+  "place_context": {
+    "municipality": "Conde, Bahia, Brazil",
+    "ibge_municipality_code": "2908606",
+    "building": "Igreja Matriz de Nossa Senhora do Monte",
+    "building_wikidata": "Q62063348",
+    "modern_address_label": "Praça 10 de Agosto (Wikimedia Commons category; unverified against official street inventory)",
+    "source_ibge_historical": "https://www.ibge.gov.br/biblioteca/visualizacao/dtb/bahia/conde.pdf",
+    "source_municipality": "https://www.conde.ba.gov.br/site/ConvenioTransferenciaDetalhe/432",
+    "building_centroid": null,
+    "building_footprint": null,
+    "municipal_center_1963_point": null,
+    "municipal_center_1963_polygon": null,
+    "reported_object_location_1963": null
+  },
+  "captured_images": [
+    {
+      "id": "CGEO15-CAMERA-01",
+      "file_page": "https://commons.wikimedia.org/wiki/File:Igreja_Matriz_de_Nossa_Senhora_do_Monte_-_Conde_-_20220915170828.jpg",
+      "original_file": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Igreja_Matriz_de_Nossa_Senhora_do_Monte_-_Conde_-_20220915170828.jpg",
+      "bytes": 5365818,
+      "sha256": "fa483bae3ae85d4eeb33bc76748f123515c5f87eca7b9a69f35fd2523d97df6d",
+      "capture_local": "2022-09-15T17:08:00",
+      "capture_timezone": null,
+      "uploaded_utc_date": "2022-09-18",
+      "photographer": "Túllio F",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "camera_point_from_commons": {
+        "latitude": -11.7988,
+        "longitude": -37.621475,
+        "coordinate_role": "point_of_view",
+        "datum": null,
+        "epsg": null,
+        "gps_horizontal_error_m": null,
+        "gps_coordinate_epoch": "2022-09-15",
+        "srs_usable_for_1963": false
+      },
+      "source_metadata_note": "Camera location and date from Wikimedia Commons file page/EXIF transcription; raw JPEG bytes independently hashed"
+    },
+    {
+      "id": "CGEO15-CAMERA-02",
+      "file_page": "https://commons.wikimedia.org/wiki/File:Igreja_Matriz_de_Nossa_Senhora_do_Monte_-_Conde_-_20220915170956.JPG",
+      "original_file": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Igreja_Matriz_de_Nossa_Senhora_do_Monte_-_Conde_-_20220915170956.JPG",
+      "bytes": 3632175,
+      "sha256": "04e5752d902055071e6ba9e414610bf1ccc1c11d64a93f165df2cd65e6bb3cfa",
+      "capture_local": "2022-09-15T17:09:00",
+      "capture_timezone": null,
+      "uploaded_utc_date": "2022-09-18",
+      "photographer": "Túllio F",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "camera_point_from_commons": {
+        "latitude": -11.798532,
+        "longitude": -37.621659,
+        "coordinate_role": "point_of_view",
+        "datum": null,
+        "epsg": null,
+        "gps_horizontal_error_m": null,
+        "gps_coordinate_epoch": "2022-09-15",
+        "srs_usable_for_1963": false
+      },
+      "source_metadata_note": "Commons reports -11.798532,-37.621659 (more detailed structured source has -11.7985323,-37.6216591); display rounding is not geolocation accuracy"
+    }
+  ],
+  "archived_candidate": {
+    "id": "CGEO15-IBGE-1958-VOL-XX",
+    "url": "https://biblioteca.ibge.gov.br/visualizacao/livros/liv27295_20.pdf",
+    "title": "Enciclopédia dos Municípios Brasileiros, volume XX",
+    "publisher": "IBGE",
+    "publication_year": 1958,
+    "acquired_sha256": "440bd7eaa42c712c89e65111fbebb7b8f77430f76ecff2be0a96d4eacb11a741",
+    "acquired_bytes": 72579243,
+    "contemporary_to_1963": true,
+    "pages_visually_inspected": 0,
+    "conde_page_identified": false,
+    "conde_photographs_verified": false,
+    "status": "BYTES_ACQUIRED_CONTENT_NOT_INSPECTED_RESOURCE_LIMIT",
+    "file_committed": false
+  },
+  "dependency_graph": {
+    "links": [
+      {
+        "from": "CGEO15-CAMERA-01",
+        "to": "CGEO15-PHOTOGRAPHIC-SESSION-2022",
+        "relation": "SAME_PHOTOGRAPHER_SESSION"
+      },
+      {
+        "from": "CGEO15-CAMERA-02",
+        "to": "CGEO15-PHOTOGRAPHIC-SESSION-2022",
+        "relation": "SAME_PHOTOGRAPHER_SESSION"
+      },
+      {
+        "from": "CGEO15-PHOTOGRAPHIC-SESSION-2022",
+        "to": "CGEO-14",
+        "relation": "MODERN_GEOREFERENCE_CONTEXT_NOT_HISTORICAL_PHOTO_DATUM"
+      },
+      {
+        "from": "CGEO15-IBGE-1958-VOL-XX",
+        "to": "CGEO-03",
+        "relation": "CONTEMPORANEOUS_SOURCE_CANDIDATE_NOT_YET_PAGE_INSPECTED"
+      }
+    ],
+    "historical_independent_observations_confirmed": 0,
+    "modern_photographic_sessions_confirmed": 1,
+    "can_constrain_1963_reentry": false
+  },
+  "castor_contract": {
+    "modern_camera_points_only": true,
+    "temporal_bridge_2022_to_1963": null,
+    "event_location": null,
+    "event_buffer_m": null,
+    "historical_center_geometries": null,
+    "orbital_constraint_activated": false,
+    "position_accuracy_m": null
+  },
+  "limitations": [
+    "Camera GPS points locate photographer viewpoint in 2022, not church centroid or a 1963 impact site",
+    "GPS CRS and horizontal uncertainty are not independently calibrated; no EPSG or metre tolerance asserted",
+    "Two files belong to one author/session and cannot count as two independent 1963 witnesses",
+    "IBGE 1958 scanned volume is acquired and hashed but Conde pages/images have not been verified",
+    "Names Conde, Vila do Conde and Sitio do Conde must not be silently conflated"
+  ]
+}
