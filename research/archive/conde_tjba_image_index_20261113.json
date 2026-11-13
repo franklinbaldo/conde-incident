@@ -1,0 +1,33 @@
+{
+  "schema": "conde.archidoc-image-viewer-negative/v1",
+  "checked_utc_date": "2026-11-13",
+  "source_site": "https://acervo.tjba.jus.br/ConsultaWeb/",
+  "documents": [
+    {
+      "document_id": "CGEO-TJBA-DOE-1953-12-01",
+      "catalog_node_id": "15747f27e5bd40000000000000000023",
+      "pdf_resource_id": "dfdig000000000000000000000009008",
+      "pdf_pages_preserved_separately": 823,
+      "viewer_total_value": 0,
+      "images_json_response": [],
+      "status": "NO_SEPARATE_PAGE_IMAGES_IN_THIS_VIEWER_NODE"
+    },
+    {
+      "document_id": "CGEO-TJBA-DOE-1954-01-01",
+      "catalog_node_id": "15747f27fffc00000000000000000023",
+      "pdf_resource_id": "dfdig000000000000000000000009009",
+      "pdf_pages_preserved_separately": 856,
+      "viewer_total_value": 0,
+      "images_json_response": [],
+      "status": "NO_SEPARATE_PAGE_IMAGES_IN_THIS_VIEWER_NODE"
+    }
+  ],
+  "exact_endpoint_template": "https://acervo.tjba.jus.br/ConsultaWeb/assets/json/imagenes.json?id={node}&idNodoImagen={node}&ini=1",
+  "viewer_endpoint_template": "https://acervo.tjba.jus.br/ConsultaWeb/showImagenes?id={node}&ini=1",
+  "epistemic_scope": "The ArchiDoc image viewer returns zero separately indexed images for THESE MONTHLY PDF NODES; it does not mean the PDFs lack pages or that the Lei 628/1953 was absent from the editions.",
+  "law_628_1953_page_found": false,
+  "law_628_1953_publication_date_proven": false,
+  "legal_boundary_1963_demonstrated": false,
+  "orbital_constraint_activated": false,
+  "next_step": "Inspect original PDF page images using a renderer on an appropriately provisioned external executor; do not infer the publication issue or page from this zero-result endpoint."
+}
