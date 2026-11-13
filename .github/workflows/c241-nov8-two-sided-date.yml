@@ -4,27 +4,37 @@ on:
     paths:
       - src/lib/catalogDayLikelihood.ts
       - src/lib/monteCarlo.ts
+      - src/lib/constants.ts
+      - src/lib/astrodynamics.ts
+      - src/types/astrodynamics.ts
       - src/components/MonteCarloVisualizer.tsx
       - tests/catalogDayLikelihood.test.mjs
       - tests/catalogDayMonteCarloIntegration.check.mjs
       - tools/audit_nov8_two_sided_day.py
       - tests/test_nov8_two_sided_day.py
       - research/constraints/C241_nov8_two_sided_day_likelihood_2026-11-13.json
+      - research/constraints/nasa_528_decay_precision_C197_20261113.json
       - research/statistics/C241_nov8_two_sided_day_likelihood_2026-11-13.md
       - .github/workflows/c241-nov8-two-sided-date.yml
+      - package.json
   push:
     branches: [main]
     paths:
       - src/lib/catalogDayLikelihood.ts
       - src/lib/monteCarlo.ts
+      - src/lib/constants.ts
+      - src/lib/astrodynamics.ts
+      - src/types/astrodynamics.ts
       - src/components/MonteCarloVisualizer.tsx
       - tests/catalogDayLikelihood.test.mjs
       - tests/catalogDayMonteCarloIntegration.check.mjs
       - tools/audit_nov8_two_sided_day.py
       - tests/test_nov8_two_sided_day.py
       - research/constraints/C241_nov8_two_sided_day_likelihood_2026-11-13.json
+      - research/constraints/nasa_528_decay_precision_C197_20261113.json
       - research/statistics/C241_nov8_two_sided_day_likelihood_2026-11-13.md
       - .github/workflows/c241-nov8-two-sided-date.yml
+      - package.json
   workflow_dispatch:
 permissions:
   contents: read

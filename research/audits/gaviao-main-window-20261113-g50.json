@@ -1,0 +1,118 @@
+{
+  "schema": "conde.gaviao-retrospective-main/v1",
+  "audit_id": "G50",
+  "reviewed_on_utc_date": "2026-11-13",
+  "base_exclusive": "17eec4a4ad8864bfee2b4eb02d43647360c21f11",
+  "head_inclusive": "e26d0db841e6c120c2cd5b27ddc7bdbce8079bfc",
+  "first_parent_integrations": 12,
+  "dag_commits": 12,
+  "conventional_merge_commits": 0,
+  "historical_check_policy": "NOT_CHECKED unless individually inspected",
+  "deep_reviewed_change": "C241 two-sided NASA day dedicated replay workflow and first-party imports",
+  "finding": {
+    "id": "G50-F1",
+    "severity": "SCIENTIFIC_REPLAY_PATH_FILTER_GAP",
+    "status": "RED_REPRODUCED_GREEN_LOCAL_CI_PENDING",
+    "red": "Source-only changes to NASA C197 primary ledger, orbital model imports, type contracts or package.json did not match specialized workflow path filters",
+    "green": "Explicit five missing paths in pull_request and push; regression test requires the complete footprint in both events",
+    "limitation": "This shows a possible nonexecution of the specialized gate, not a historical CI bypass; other generic checks may still run"
+  },
+  "integrations": [
+    {
+      "sha": "c3d828526919b285e40797e0736628404c375433",
+      "subject": "95 🦅 G49: fixar os 12 cenários completos do replay Monte Carlo (#651)",
+      "pr_number": 651,
+      "parents": 1,
+      "files_changed_first_parent": 4,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "509dbb8a65d432731d20832ebceea867822adda9",
+      "subject": "94 🦎 SSG: vincular título da alegação à matriz histórica imutável (#652)",
+      "pr_number": 652,
+      "parents": 1,
+      "files_changed_first_parent": 5,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "0693037213d2835e9576cd52156ea0f4010f9d36",
+      "subject": "95 🐙 C241-P24: rotas ONU e soviéticas no grafo cumulativo sem ativação (#627)",
+      "pr_number": 627,
+      "parents": 1,
+      "files_changed_first_parent": 7,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "3eb00fa8063b594511b91d57810715910e431103",
+      "subject": "geo(CGEO-36): cartografia Soper 1914 distingue Conde e Sítio",
+      "pr_number": null,
+      "parents": 1,
+      "files_changed_first_parent": 5,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "86e4210eb27d77be01d28859c3ad974e76608a53",
+      "subject": "92 🐝 CGEO-35: ligar âncora de pixels ao grafo e latentes sem geocodificação (#655)",
+      "pr_number": 655,
+      "parents": 1,
+      "files_changed_first_parent": 3,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "08bd0486ded8165242cd976b8d23bc058ba09a07",
+      "subject": "🦦 C241-LONTRA-R36: delimitar cronologia AFU/VAU e corrigir custódia",
+      "pr_number": null,
+      "parents": 1,
+      "files_changed_first_parent": 5,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "ed6d785f9267941f7b627d688a018cbfc0aa3393",
+      "subject": "stat(cervo): audit real Telstar prediction residuals without 528 sigma transfer (#656)",
+      "pr_number": 656,
+      "parents": 1,
+      "files_changed_first_parent": 6,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "634d0e25f611b95eeb8146e073a7953d131247da",
+      "subject": "95 🦫 G48: IERS 1963 SOFA IAU2000A GCRS/ITRS frame (#657)",
+      "pr_number": 657,
+      "parents": 1,
+      "files_changed_first_parent": 5,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "d37b5697de5200c74d425ea145749b4d46a696bc",
+      "subject": "C241: cenários temporais bilaterais para o dia NASA 8/11",
+      "pr_number": null,
+      "parents": 1,
+      "files_changed_first_parent": 10,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "8ad82dad959c46b0c100effbccb95ec152eede79",
+      "subject": "88 🦇 UX: alinhar rodapé global do Caderno ao grid SSG (#658)",
+      "pr_number": 658,
+      "parents": 1,
+      "files_changed_first_parent": 3,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "38fa2ae9f665ae045299261b009e57ce1330b0ad",
+      "subject": "90 🦊 SSG: explorar estados documentais com proveniência (#659)",
+      "pr_number": 659,
+      "parents": 1,
+      "files_changed_first_parent": 6,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "e26d0db841e6c120c2cd5b27ddc7bdbce8079bfc",
+      "subject": "85 🦉 Caderno 27: fim da missão 7153 não é reentrada do 528 (#660)",
+      "pr_number": 660,
+      "parents": 1,
+      "files_changed_first_parent": 1,
+      "historical_checks": "NOT_CHECKED"
+    }
+  ]
+}
