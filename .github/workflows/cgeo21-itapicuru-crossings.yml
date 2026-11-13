@@ -1,0 +1,32 @@
+name: CGEO-21 Itapicuru crossings chronology
+on:
+  pull_request:
+    paths:
+      - "research/geo/cgeo21_itapicuru_crossings_2014_2025.*"
+      - "research/geo/cgeo20_centro_vila_2020.json"
+      - "tools/cgeo21_itapicuru_crossings.py"
+      - "tests/test_cgeo21_itapicuru_crossings.py"
+      - ".github/workflows/cgeo21-itapicuru-crossings.yml"
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  chronology:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Check SHA under test
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check source graph and temporal veto
+        run: |
+          python3 -m tools.cgeo21_itapicuru_crossings
+          python3 -m unittest discover -s tests -p "test_cgeo21_itapicuru_crossings.py" -v
