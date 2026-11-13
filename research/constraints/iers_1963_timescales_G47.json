@@ -1,0 +1,97 @@
+{
+  "id": "CASTOR-G47-1963-PRELEAP-UTC-RATE",
+  "classification": "RETROSPECTIVE_TIMESCALE_RECONSTRUCTION_NOT_TRACKING",
+  "sources": {
+    "iers_eop": {
+      "url": "https://datacenter.iers.org/products/179/14334/orig/eopc04_05_IAU2000.63",
+      "sha256": "66711a146bd3a2752f8824a193431955a687ac7be013ebb0dfe0d86f64d5b264",
+      "original_rows": 365
+    },
+    "tai_utc_definition": {
+      "bipm_url": "https://www.bipm.org/documents/20126/59466374/9_Table2_TAR20.pdf/713645fb-e266-6304-1375-d906d14785d7",
+      "iers_url": "https://hpiers.obspm.fr/eop-pc/index.php?index=TAI-UTC_tab",
+      "clause": "1963-11-01 through 1963-12-31",
+      "basis_mjd": 37665,
+      "offset_s": 1.945858,
+      "rate_s_per_day": 0.0011232
+    },
+    "era_model": {
+      "reference": "https://juliaastro.org/SOFA/stable/api/rotations/",
+      "model": "IAU 2000 ERA00"
+    }
+  },
+  "rows_at_00_utc": [
+    {
+      "utc": "1963-11-07T00:00:00Z",
+      "mjd": 38340,
+      "tai_minus_utc_s": 2.704018,
+      "tt_minus_utc_s": 34.888018,
+      "ut1_minus_utc_s": -0.0364491,
+      "ut1_minus_tai_s": -2.7404671,
+      "lod_s": 0.002042,
+      "jd_part1": 2400000.5,
+      "jd_part2_ut1": 38339.99999957813,
+      "jd_part2_tt": 38340.000403796505,
+      "era_iau2000_rad": 0.8018567584829128
+    },
+    {
+      "utc": "1963-11-08T00:00:00Z",
+      "mjd": 38341,
+      "tai_minus_utc_s": 2.7051412,
+      "tt_minus_utc_s": 34.8891412,
+      "ut1_minus_utc_s": -0.0373852,
+      "ut1_minus_tai_s": -2.7425264,
+      "lod_s": 0.002076,
+      "jd_part1": 2400000.5,
+      "jd_part2_ut1": 38340.9999995673,
+      "jd_part2_tt": 38341.00040380951,
+      "era_iau2000_rad": 0.8190588697966668
+    },
+    {
+      "utc": "1963-11-09T00:00:00Z",
+      "mjd": 38342,
+      "tai_minus_utc_s": 2.7062644,
+      "tt_minus_utc_s": 34.8902644,
+      "ut1_minus_utc_s": -0.0383712,
+      "ut1_minus_tai_s": -2.7446356,
+      "lod_s": 0.002138,
+      "jd_part1": 2400000.5,
+      "jd_part2_ut1": 38341.99999955589,
+      "jd_part2_tt": 38342.0004038225,
+      "era_iau2000_rad": 0.836260977471655
+    }
+  ],
+  "daily_lod_diagnostics": [
+    {
+      "utc_start": "1963-11-07T00:00:00Z",
+      "utc_end": "1963-11-08T00:00:00Z",
+      "delta_ut1_minus_utc_s": -0.0009361,
+      "delta_tai_minus_utc_s": 0.0011232,
+      "delta_ut1_minus_tai_s": -0.0020593,
+      "mean_lod_s": 0.002059,
+      "lod_residual_without_utc_rate_us": 1122.9,
+      "lod_residual_with_utc_rate_us": -0.3
+    },
+    {
+      "utc_start": "1963-11-08T00:00:00Z",
+      "utc_end": "1963-11-09T00:00:00Z",
+      "delta_ut1_minus_utc_s": -0.000986,
+      "delta_tai_minus_utc_s": 0.0011232,
+      "delta_ut1_minus_tai_s": -0.0021092,
+      "mean_lod_s": 0.002107,
+      "lod_residual_without_utc_rate_us": 1121.0,
+      "lod_residual_with_utc_rate_us": -2.2
+    }
+  ],
+  "limits": {
+    "utc_rate": "valid ONLY Nov-Dec 1963; historical step on 1963-11-01",
+    "daily_dut1_interpolation": "NOT_IMPLEMENTED",
+    "lod_residual": "descriptive central differences; NOT calibrated uncertainty",
+    "tt_definition": "conventional TT=TAI+32.184 s back-extrapolation",
+    "earth_rotation_angle": "IAU2000 analytic component computed, not frame",
+    "full_iau2000a_celestial_to_terrestrial_rotation": "NOT_IMPLEMENTED",
+    "dut1_x_y_source": "retrospective IERS C04, not independent NORAD sensors",
+    "historical_527_529_holdout": "NOT_RUN",
+    "impact_location_or_probability": null
+  }
+}
