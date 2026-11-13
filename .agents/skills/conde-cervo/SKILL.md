@@ -33,3 +33,9 @@ A interface de inferência angular mantém previsões H congeladas: o motor do C
 - Para um cutoff intradiário, uma média trailing sobre **dias completos anteriores** exclui o dia corrente. Verifique o intervalo requerido por conjuntos exatos de datas, não por uma contagem vaga de itens presentes no arquivo. Ver `tools/audit_causal_flux_backfill.py --check`.
 - A fonte F10.7 definitiva do projeto foi preservada como **extrato de 85 dias**; o histórico completo pode conter datas anteriores. Marque ausências *do extrato*, sem afirmar inexistência histórica. Não impute ausências como zero, nem calcule médias de 81 dias com denominador menor.
 - Mesmo após backfill, confirmar *vintage* e timestamps de publicação antes de score `as-of`. Causal trailing F10.7 é hipótese de novo preditor, não F107A centrada equivalente para o NRLMSISE; exige calibração independente. MCMC 528: `NOT_RUN`. [C241-P32](../../../research/statistics/CAUSAL_SOLAR_FLUX_BACKFILL_C241.md).
+
+## C241-P33: recuperar antes de imputar
+- Reutilizar a fonte completa SHA-fixada quando um extrato contiver lacunas; contar datas versus cópias documentais.
+- Testar conteúdo bruto e colunas, preservar linha original e validar hash do arquivo integral opcionalmente.
+- Cobertura retrospectiva completa não é disponibilidade de vintage as-of; trailing de 81 dias não substitui entrada centrada de NRLMSISE sem calibração.
+- Conectar os resultados ao grafo, mantendo parâmetros atmosféricos e MCMC do 528 em NOT_RUN sem observáveis próprios.
