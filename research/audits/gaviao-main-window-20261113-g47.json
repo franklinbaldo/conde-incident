@@ -1,0 +1,247 @@
+{
+  "schema": "conde.gaviao-retrospective-main/v1",
+  "audit_id": "G47",
+  "reviewed_on_utc_date": "2026-11-13",
+  "base_exclusive": "00e2226de5c7889c992e3164d9616f8c6354ab2b",
+  "head_inclusive": "9c884f7a995cb7de221694c41132cd4c11b8d2d4",
+  "first_parent_integrations": 15,
+  "dag_commits": 15,
+  "conventional_merge_commits": 0,
+  "historical_check_policy": "NOT_CHECKED unless individually inspected",
+  "finding": {
+    "id": "G47-F1",
+    "severity": "CI_REPLAY_COVERAGE",
+    "proof": "synthetic source-only change to frozen split/precision or decoder does not match path filters",
+    "status": "CORRECTION_PROPOSED",
+    "affected_workflow": ".github/workflows/norad528-effective-drag-screen.yml"
+  },
+  "integrations": [
+    {
+      "sha": "c867a99f1f3f8bd087d11364f6f183049523c7a3",
+      "parents": [
+        "00e2226de5c7889c992e3164d9616f8c6354ab2b"
+      ],
+      "subject": "94 🐢 C241-L15: corrigir linha NASA SP-4004 por inspeção visual (#604)",
+      "pr_number": 604,
+      "files": [
+        "research/statistics/SOURCE_FAMILY_STATUS_GUARDS_L14_L15.md",
+        "research/statistics/raan_source_likelihood_readiness_C241.json",
+        "research/tle_custody/evidence_matrix_C241-L15_2026-11-12.md",
+        "research/tle_custody/nasa_sp4004_1963_group_custody_C241-L15.json",
+        "tests/test_raan_source_likelihood_readiness.py",
+        "tests/test_tle_nasa_annual_group_audit.py",
+        "tools/raan_source_likelihood_readiness.py",
+        "tools/tle_nasa_annual_group_audit.py"
+      ],
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "51eb93a25248e306bf43c59f201ac326b34213a5",
+      "parents": [
+        "c867a99f1f3f8bd087d11364f6f183049523c7a3"
+      ],
+      "subject": "🦅 G46: anchor UN/NASA printed deltas to source-pinned transcriptions (#605)",
+      "pr_number": 605,
+      "files": [
+        "research/audits/gaviao-main-window-20261113-g46.json",
+        "research/audits/gaviao-main-window-20261113-g46.md",
+        "tests/test_tle_un_nasa_crosscutoff_audit.py",
+        "tools/tle_un_nasa_crosscutoff_audit.py"
+      ],
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "0f7a7a8331bec9c048bfc4e0a52ffbda9735919f",
+      "parents": [
+        "51eb93a25248e306bf43c59f201ac326b34213a5"
+      ],
+      "subject": "🐝 C241-L37: ligar séries soviéticas à busca instrumental sem promover órbitas (#606)",
+      "pr_number": 606,
+      "files": [
+        "formal/Conde1963/SovietCatalogueCandidate.lean",
+        "public/data/conde-soviet-raw-route-bridge.json",
+        "tests/test_soviet_raw_route_bridge.py",
+        "tools/export_soviet_raw_route_bridge.py"
+      ],
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "bb6a8797ba69c8d3137808701128b87a3b8ac5bd",
+      "parents": [
+        "0f7a7a8331bec9c048bfc4e0a52ffbda9735919f"
+      ],
+      "subject": "🦦 L38: station 1078 observation-journal archival lead (#608)",
+      "pr_number": 608,
+      "files": [
+        "research/tle_custody/evidence_matrix_C241-L38_2026-11-13.md",
+        "research/tle_custody/yeniseisk_station1078_journals_C241-L38.json",
+        "tests/test_yeniseisk_station1078.py",
+        "tools/verify_yeniseisk_station1078.py"
+      ],
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "2e3a59b450a5a0851166a10b4f7f79615e92d2a5",
+      "parents": [
+        "bb6a8797ba69c8d3137808701128b87a3b8ac5bd"
+      ],
+      "subject": "stat(cervo): audit as-of leakage in 1963 MSISE drivers (C241-P31) (#609)",
+      "pr_number": 609,
+      "files": [
+        ".agents/skills/conde-cervo/SKILL.md",
+        ".github/workflows/historical-space-weather.yml",
+        "research/constraints/C241-P31_space_weather_asof.json",
+        "research/statistics/SPACE_WEATHER_ASOF_ELIGIBILITY_C241.md",
+        "tests/test_space_weather_asof.py",
+        "tools/audit_space_weather_asof.py"
+      ],
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "1b66dc7a13a7ec4c0737d7c10196ad4dbc612da2",
+      "parents": [
+        "2e3a59b450a5a0851166a10b4f7f79615e92d2a5"
+      ],
+      "subject": "94 🦎 SSG: verificar matriz imutável por Git blob e SHA-256 de cada linha (#610)",
+      "pr_number": 610,
+      "files": [
+        "docs/SSG_EVIDENCE_INDEX.md",
+        "scripts/verify-ssg-evidence-index.mjs",
+        "tests/ssg-evidence-index-bridge.test.mjs",
+        "tests/test_ssg_evidence_index.py",
+        "tools/export_ssg_evidence_index.py"
+      ],
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "abcda41a52cbfb9e0d4a042cbd557d6b40b2c881",
+      "parents": [
+        "1b66dc7a13a7ec4c0737d7c10196ad4dbc612da2"
+      ],
+      "subject": "95 🐙 Gate real para artefatos Lean P20/P22/P23 (#611)",
+      "pr_number": 611,
+      "files": [
+        ".github/workflows/lean-core.yml",
+        "formal/tests/test_un_ssr_cross_compilation.py"
+      ],
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "c273461e74cc86119c42ab579ff6a932147e0dd4",
+      "parents": [
+        "abcda41a52cbfb9e0d4a042cbd557d6b40b2c881"
+      ],
+      "subject": "🦀 CGEO-34: autenticar JP2 integral da carta Aracaju-SE (UWM 10814) (#612)",
+      "pr_number": 612,
+      "files": [
+        ".github/workflows/geo-uwm-jp2-original.yml",
+        "research/geo/cgeo34_uwm_original_jp2_custody.json",
+        "research/geo/cgeo34_uwm_original_jp2_custody.md",
+        "research/geo/evidence/cgeo34_uwm_jp2_header.hex",
+        "tests/test_cgeo34_uwm_jp2.py",
+        "tools/cgeo34_uwm_jp2.py"
+      ],
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "a434fe28e028608123fce3f058cfc741567ac015",
+      "parents": [
+        "c273461e74cc86119c42ab579ff6a932147e0dd4"
+      ],
+      "subject": "🦀 CGEO-34: separar metadados XML de processamento e parâmetros JP2 (#613)",
+      "pr_number": 613,
+      "files": [
+        "research/geo/cgeo34_uwm_original_jp2_custody.json",
+        "research/geo/cgeo34_uwm_original_jp2_custody.md",
+        "tests/test_cgeo34_uwm_jp2.py",
+        "tools/cgeo34_uwm_jp2.py"
+      ],
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "96af7bdffd6e5fce0036b925b3c28ce7705fed86",
+      "parents": [
+        "a434fe28e028608123fce3f058cfc741567ac015"
+      ],
+      "subject": "🦫 G46: IERS 1963 EOP custody, verification and exact-head replay (#614)",
+      "pr_number": 614,
+      "files": [
+        ".github/workflows/iers-eop-1963.yml",
+        "research/constraints/iers_eop_1963_11_07_09.json",
+        "research/constraints/iers_eop_1963_G46.md",
+        "tests/test_iers_1963_eop.py",
+        "tools/iers_1963_eop.py"
+      ],
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "35ce17871299967acd547023532feeef805799ee",
+      "parents": [
+        "96af7bdffd6e5fce0036b925b3c28ce7705fed86"
+      ],
+      "subject": "🦇 UX: alvos de 44px e foco visível na exportação Python (#616)",
+      "pr_number": 616,
+      "files": [
+        ".github/workflows/ui-keyboard-smoke.yml",
+        "src/components/PythonScriptModal.tsx",
+        "tests/ui_python_modal_touch_smoke.mjs"
+      ],
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "e3f9a444ee18da3b222ab7bd9559b68df751f980",
+      "parents": [
+        "35ce17871299967acd547023532feeef805799ee"
+      ],
+      "subject": "85 🦊 UX-04: tornar legíveis os estados documentais no arquivo SSG (#618)",
+      "pr_number": 618,
+      "files": [
+        "scripts/archive-source-status.mjs",
+        "scripts/ssg-documentary-archive.mjs",
+        "tests/ssg-documentary-archive.test.mjs"
+      ],
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "09d6f104be0a6de621529cedb3bd1e9d79fe773d",
+      "parents": [
+        "e3f9a444ee18da3b222ab7bd9559b68df751f980"
+      ],
+      "subject": "90 🐢 Triagem orbital 528: arrasto efetivo, J2, controles angulares e janela condicional Lean (#619)",
+      "pr_number": 619,
+      "files": [
+        ".github/workflows/norad528-effective-drag-screen.yml",
+        "formal/Conde1963.lean",
+        "formal/Conde1963/Norad528DecayWindow.lean",
+        "research/tle_custody/evidence_matrix_C241-orbital-screen_2026-11-13.md",
+        "tests/test_norad528_effective_drag_screen.py",
+        "tools/norad528_effective_drag_screen.py"
+      ],
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "b889005ca80498217dfb0ae480a36b6babd04593",
+      "parents": [
+        "09d6f104be0a6de621529cedb3bd1e9d79fe773d"
+      ],
+      "subject": "ci: aceitar transferência JP2 lenta sem resetar downloads parciais (#617)",
+      "pr_number": 617,
+      "files": [
+        ".github/workflows/geo-uwm-jp2-original.yml"
+      ],
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "9c884f7a995cb7de221694c41132cd4c11b8d2d4",
+      "parents": [
+        "b889005ca80498217dfb0ae480a36b6babd04593"
+      ],
+      "subject": "85 🦉 Caderno 24: os cadernos da estação soviética 1078 (#620)",
+      "pr_number": 620,
+      "files": [
+        "stories/2026-11-13-os-cadernos-que-talvez-guardem-uma-noite.md"
+      ],
+      "historical_checks": "NOT_CHECKED"
+    }
+  ]
+}
