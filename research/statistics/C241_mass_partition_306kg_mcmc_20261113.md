@@ -53,6 +53,12 @@ As massas remanescentes dependem de separações, combustível e origem exata do
 
 No cadastro do lançamento, o campo **OrbPay=1,176 t** é gerado pelo GCAT, enquanto **OrbMass=0** é campo não preenchido, não uma medida de massa orbital zero. Não contar OrbPay como evidência independente de TotMass. Os três inventários possíveis não têm pesos históricos conhecidos. O MCMC permite selecionar uma base explicitamente para experimentos **sintéticos**, sem convertê-la em “modelo mais provável”. Quatro cadeias Metropolis-Hastings com sementes independentes, propostas sobre log-razões e epsilon, priors explícitos, observações artificiais de massa e Cd·A/m e diagnósticos rank-Rhat/ESS exercitam o método. Passar diagnóstico de convergência numérico **não autentica dados ou prior**. A primeira inferência histórica só será permitida após obter medições de área/massa ou arrasto calibrado, dados independentes de densidade, genealogia de componentes, erros e referências temporais.
 
+## Diagnóstico numérico real da fixture sintética
+
+A execução de desenvolvimento no Jatobá com a fixture declaradamente artificial passou os testes, mas **as cadeias não convergiram segundo o gate**. Com a semente congelada, o componente residual X apresentou R-hat aproximado **2,56** e ESS bulk próximo de **4,8**, muito aquém das exigências predeclaradas. Assim, mesmo as tabelas de quantis sintéticos produzidas pelo sampler servem **apenas como diagnóstico de desenvolvimento**, não como resultados de uma posterior confiável. O JSON agora expõe `numerical_convergence_gate_passed`, `posterior_marginal_summaries_approved` e `historical_posterior_certified=false`, sem mascarar a falha.
+
+Isso é independente da falta de fonte histórica. Mesmo que corrigíssemos a mistura da cadeia, os 306 kg do componente OPS e os 1.176 kg catalogados ainda não forneceriam, por si, uma verossimilhança que identificasse as três massas. O próximo experimento estatístico deve melhorar o sampler e só depois introduzir, com proveniência, restrições reais sobre área projetada, coeficiente de arrasto ou inventário de componentes.
+
 ## Prova Lean da ambiguidade e dos limites de componente
 
 O módulo [MassComponent306.lean](../../formal/Conde1963/MassComponent306.lean) está importado no projeto Lean e prova aritmeticamente:
