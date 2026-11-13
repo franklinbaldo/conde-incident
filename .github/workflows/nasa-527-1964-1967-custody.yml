@@ -1,0 +1,52 @@
+name: Tartaruga - C241-L28 primary NASA 527 crosswalk 1964-1967
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/nasa_527_1964_1967_crosswalk_C241-L28.json
+      - research/tle_custody/evidence_matrix_C241-L28_2026-11-13.md
+      - tools/nasa_527_1964_1967_custody.py
+      - tests/test_nasa_527_1964_1967_custody.py
+      - .github/workflows/nasa-527-1964-1967-custody.yml
+  push:
+    branches: [main]
+    paths:
+      - research/tle_custody/nasa_527_1964_1967_crosswalk_C241-L28.json
+      - research/tle_custody/evidence_matrix_C241-L28_2026-11-13.md
+      - tools/nasa_527_1964_1967_custody.py
+      - tests/test_nasa_527_1964_1967_custody.py
+      - .github/workflows/nasa-527-1964-1967-custody.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  nasa-custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Validate exact head and mutation tests
+        run: |
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+          python3 -m unittest discover -s tests -p test_nasa_527_1964_1967_custody.py -v
+          python3 tools/nasa_527_1964_1967_custody.py
+      - name: Fetch four original NASA documents
+        run: |
+          mkdir -p "$RUNNER_TEMP/c241-l28-pdfs"
+          for n in 19640017911 19650016819 19660012484 19680005210; do
+            curl --fail --location --silent --show-error --retry 2 --max-time 70 \
+              "https://ntrs.nasa.gov/api/citations/$n/downloads/$n.pdf" \
+              -o "$RUNNER_TEMP/c241-l28-pdfs/$n.pdf"
+          done
+          python3 tools/nasa_527_1964_1967_custody.py \
+            --pdf-dir "$RUNNER_TEMP/c241-l28-pdfs" \
+            --output "$RUNNER_TEMP/c241-l28-audit.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: c241-l28-nasa-527-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ${{ runner.temp }}/c241-l28-audit.json
+          if-no-files-found: warn
+          retention-days: 30
