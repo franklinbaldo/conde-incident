@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {mkdirSync, writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 import {archiveKey,verifiedArchiveLinks} from './ssg-wayback-links.mjs';
+import {interpretArchiveStatus,archiveStatusGuide} from './archive-source-status.mjs';
 
 const ROOT = '/conde-incident/evidencias/arquivo/';
 const MATRIX = 'https://github.com/franklinbaldo/conde-incident/blob/faf4dd0fd8dfbdd825e4e934b3b30ebd81bf61df/research/evidence_matrix_C001-C238_2026-11-11.md#L';
@@ -91,10 +92,13 @@ export function archivePages(citations, lineage, wayback=null) {
       `Esta ocorrência possui **${entries.length} referência(s) curada(s)**. Referências documentais não devem ser contadas como testemunhos físicos independentes.`, '',
       `[Abrir ocorrência na matriz imutável](${MATRIX}${record.matrix_line})`, ''];
     for (const [i, {record:r, ancestry}] of entries.entries()) {
+      const reading=interpretArchiveStatus(r.source_status);
       parts.push(`## Referência ${i+1}: ${safe(r.source_id)}`, '',
         `- **Obra:** [${safe(r.work_id)}](${ROOT}obras/${workSlug(r.work_id)}/)`,
         `- **Fonte:** [${safe(r.source_id)}](${ROOT}fontes/${sourceSlug(r.source_id)}/)`,
         `- **Família:** [${safe(r.source_family)}](${ROOT}familias/${familySlug(r.source_family)}/)`,
+        `- **Leitura do estado da fonte:** ${safe(reading.label)}. ${safe(reading.support)}`,
+        `- **Não permite concluir:** ${safe(reading.limit)}`,
         `- **Estado documental (código canônico, não veredito):** \`${r.source_status}\``,
         `- **Relação:** ${safe(r.relation)}`, `- **Limite:** ${safe(r.scope)}`,
         `- **Localizador:** ${safe(r.locator)}`,
@@ -274,6 +278,7 @@ export function archivePages(citations, lineage, wayback=null) {
     '**Leitura estática gerada pelo SSG Rust a partir dos feeds curados do laboratório.** Sem React ou JavaScript. O laboratório anterior permanece disponível durante a migração. A data editorial deste índice não é a data de uma observação em 1963.', '',
     `**Cobertura:** ${citations.curated_occurrences} ocorrências curadas de ${citations.total_matrix_occurrences}. ${citations.unmapped_occurrences} ocorrências não mapeadas no feed parcial **não significam fonte inexistente**.`, '',
     'Uma mesma obra pode originar múltiplos vínculos documentais, sem criar novas testemunhas físicas. Ausência de genealogia declarada não significa independência. Datas NASA são entradas de catálogo, não posições ou horários observados de queda.', '',
+    ...archiveStatusGuide(citations.records), '',
     '[Consultar famílias documentais e ocorrências relacionadas]('+ROOT+'familias/) · [Consultar obras e suas reutilizações]('+ROOT+'obras/) · [Consultar identificadores de fontes]('+ROOT+'fontes/)', '',
     ...links, '',
     `**Matriz imutável (Git blob):** ${citations.matrix_git_blob_sha1}.`, '',
