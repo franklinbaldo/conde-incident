@@ -1,0 +1,138 @@
+{
+  "schema": "conde.ssr-kepler-documentary-provenance/v1",
+  "id": "ABELHA-G34-SSR-PRINTED-UNITS",
+  "ledger": "research/constraints/C241-P11_november_historical_printings.json",
+  "calculation_audit": "research/constraints/C241-P11_kepler_unit_audit_g34.json",
+  "upstream_custody_bridge": "public/data/conde-ssr-source-locked-links.json",
+  "source_family": "SHARED_NASA_NORAD_COMPILED_NOT_SIX_SENSORS",
+  "cells": [
+    {
+      "id": "C241-L12:1963-003A:period_apogee_perigee",
+      "source_occurrence": "C241-L12",
+      "report_publication_date_not_epoch": "1963-10-15",
+      "source_pdf_sha256": "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+      "object": "1963-003A",
+      "period_centimin": 9460,
+      "perigee_half_km": 924,
+      "apogee_half_km": 1062,
+      "two_body_residual_seconds": 3.35459,
+      "print_rounding_residual_seconds_not_sigma": [
+        -0.26429,
+        6.97345
+      ],
+      "instrument_epoch": null,
+      "covariance": null,
+      "active_physical_constraint": false
+    },
+    {
+      "id": "C241-L19#1:1963-003A:period_apogee_perigee",
+      "source_occurrence": "C241-L19#1",
+      "report_publication_date_not_epoch": "1963-11-15",
+      "source_pdf_sha256": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+      "object": "1963-003A",
+      "period_centimin": 9460,
+      "perigee_half_km": 910,
+      "apogee_half_km": 1072,
+      "two_body_residual_seconds": 4.59228,
+      "print_rounding_residual_seconds_not_sigma": [
+        0.97345,
+        8.21109
+      ],
+      "instrument_epoch": null,
+      "covariance": null,
+      "active_physical_constraint": false
+    },
+    {
+      "id": "C241-L18:19640002493:1963-003A:period_apogee_perigee",
+      "source_occurrence": "C241-L18:19640002493",
+      "report_publication_date_not_epoch": "1963-11-30",
+      "source_pdf_sha256": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+      "object": "1963-003A",
+      "period_centimin": 9460,
+      "perigee_half_km": 918,
+      "apogee_half_km": 1066,
+      "two_body_residual_seconds": 3.97345,
+      "print_rounding_residual_seconds_not_sigma": [
+        0.35459,
+        7.59228
+      ],
+      "instrument_epoch": null,
+      "covariance": null,
+      "active_physical_constraint": false
+    },
+    {
+      "id": "C241-L12:1963-003C:period_apogee_perigee",
+      "source_occurrence": "C241-L12",
+      "report_publication_date_not_epoch": "1963-10-15",
+      "source_pdf_sha256": "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+      "object": "1963-003C",
+      "period_centimin": 9330,
+      "perigee_half_km": 816,
+      "apogee_half_km": 916,
+      "two_body_residual_seconds": 3.76889,
+      "print_rounding_residual_seconds_not_sigma": [
+        0.15287,
+        7.38488
+      ],
+      "instrument_epoch": null,
+      "covariance": null,
+      "active_physical_constraint": false
+    },
+    {
+      "id": "C241-L19#1:1963-003C:period_apogee_perigee",
+      "source_occurrence": "C241-L19#1",
+      "report_publication_date_not_epoch": "1963-11-15",
+      "source_pdf_sha256": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+      "object": "1963-003C",
+      "period_centimin": 9260,
+      "perigee_half_km": 752,
+      "apogee_half_km": 840,
+      "two_body_residual_seconds": 4.83358,
+      "print_rounding_residual_seconds_not_sigma": [
+        1.21915,
+        8.44798
+      ],
+      "instrument_epoch": null,
+      "covariance": null,
+      "active_physical_constraint": false
+    },
+    {
+      "id": "C241-L18:19640002493:1963-003C:period_apogee_perigee",
+      "source_occurrence": "C241-L18:19640002493",
+      "report_publication_date_not_epoch": "1963-11-30",
+      "source_pdf_sha256": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+      "object": "1963-003C",
+      "period_centimin": 9220,
+      "perigee_half_km": 736,
+      "apogee_half_km": 780,
+      "two_body_residual_seconds": 4.16506,
+      "print_rounding_residual_seconds_not_sigma": [
+        0.55149,
+        7.7786
+      ],
+      "instrument_epoch": null,
+      "covariance": null,
+      "active_physical_constraint": false
+    }
+  ],
+  "publication_dates_are_sensor_epochs": false,
+  "related_lean_contract": "formal/Conde1963/SsrNovember.lean",
+  "related_lean_theorem": "printed_november_period_3c_gt_3a",
+  "lean_claim_scope": "related_printed_period_arithmetic_not_kepler_theorem",
+  "lean_kepler_proof": null,
+  "simulation_contract": "research/constraints/C241-P10_three_object_relative_trajectories.json",
+  "latent_requirements": [
+    "instrumental_observation_epochs",
+    "reference_frame",
+    "period_convention",
+    "independent_calibration_and_covariance",
+    "model_discrepancy",
+    "aerodynamic_drag_and_atmosphere",
+    "source_specific_tracking_genealogy"
+  ],
+  "simulator_parameter_values": null,
+  "active_physical_constraint": false,
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "status": "CONNECTED_PENDING_CALIBRATION",
+  "not_an_observation_of_528": true
+}
