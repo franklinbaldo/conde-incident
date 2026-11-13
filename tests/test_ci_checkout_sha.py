@@ -13,6 +13,7 @@ RUN_SHA = '${{ github.sha }}'
 STEP_START = re.compile(r'(?m)^      - ')
 CHECKOUT_USE = re.compile(r"(?m)^(?:uses| {8}uses): [\"']?actions/checkout@[^\n]+")
 REF = re.compile(r'(?m)^          ref: (.+)$')
+CREDENTIALS = re.compile(r'(?m)^          persist-credentials: (.+)$')
 
 
 
@@ -80,6 +81,9 @@ def check_checkout_sha(source: str, name: str) -> int:
         if not CHECKOUT_USE.search(checkout):
             continue
         count += 1
+        credentials = CREDENTIALS.findall(checkout)
+        if credentials != ['false']:
+            raise AssertionError(f'{name}: checkout must set persist-credentials: false, got {credentials!r}')
         refs = REF.findall(checkout)
         if refs != [expected]:
             raise AssertionError(f'{name}: checkout must pin {expected}, got {refs!r}')
@@ -203,6 +207,19 @@ class ExactCheckoutPolicy(unittest.TestCase):
             with self.subTest(change=mutant != source):
                 self.assertNotEqual(mutant, source)
                 with self.assertRaisesRegex(AssertionError, 'exact SHA assertion'):
+                    check_checkout_sha(mutant, name)
+
+
+    def test_checkout_credentials_must_not_persist(self):
+        name = 'integration-head.yml'
+        source = (ROOT / name).read_text(encoding='utf-8')
+        marker = '          persist-credentials: false\n'
+        self.assertIn(marker, source)
+        for replacement in ('', '          persist-credentials: true\n'):
+            mutant = source.replace(marker, replacement, 1)
+            with self.subTest(replacement=replacement):
+                self.assertNotEqual(mutant, source)
+                with self.assertRaisesRegex(AssertionError, 'persist-credentials'):
                     check_checkout_sha(mutant, name)
 
 
