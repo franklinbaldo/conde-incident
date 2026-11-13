@@ -43,4 +43,22 @@ for(const marker of ['63300.61129783','198.5261','18cf11665e061b5ec8679242e10b00
  assert.ok(custody.includes(marker),'Custódia TLE ausente no HTML publicado: '+marker);
 assert.ok(read('simulacoes/tles').includes('/conde-incident/simulacoes/tles/custodia/'),
  'Auditoria TLE sem acesso à custódia SSG');
+// Static pages expose the quota-free map without opening legacy Google SDK hosts.
+// The React /lab/ is separate and is not mutated by this check.
+for (const file of ['index.html','stories/index.html',
+  'stories/2026-11-12-a-resposta-que-veio-de-salvador/index.html',
+  'evidencias/arquivo/index.html',
+  'evidencias/arquivo/c197-1/index.html',
+  ...AUTHORED_ROUTES.map(route => route + '/index.html')]) {
+  const html = readFileSync(join('public', file), 'utf8');
+  const nav = /<nav aria-label="Navegação principal">([\s\S]*?)<\/nav>/.exec(html)?.[1];
+  assert.ok(nav, 'Navegação SSG ausente: '+file);
+  assert.equal((nav.match(/href="\/conde-incident\/mapa\/"/g) || []).length, 1,
+    'Link Mapa não encontrado exatamente uma vez: '+file);
+  const policy = /<meta http-equiv="Content-Security-Policy" content="([^"]+)">/.exec(html)?.[1];
+  assert.ok(policy, 'CSP SSG ausente: '+file);
+  assert.match(policy, /script-src 'self'/, 'Script local não permitido: '+file);
+  assert.doesNotMatch(policy, /maps\.googleapis\.com|\*\.googleapis\.com|\*\.gstatic\.com/,
+    'CSP ainda autoriza SDK Google Maps sem necessidade: '+file);
+}
 console.log('PASS: '+AUTHORED_ROUTES.length+' URLs SSG canônicas com navegação e retorno ao laboratório.');
