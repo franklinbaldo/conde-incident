@@ -1,0 +1,155 @@
+{
+  "schema": "conde.stage-payload-mass-lineage-1963/v1",
+  "id": "C241-L39-MASS-SEMANICS",
+  "source_status": "MODERN_SECONDARY_CATALOGUE_WITH_UNRESOLVED_MASS_BASIS",
+  "sources": {
+    "definitions": {
+      "url": "https://planet4589.org/space/gcat/web/cat/cols.html",
+      "role": "GCAT_FIELD_SEMANTICS",
+      "definitions": {
+        "Mass": "object mass at insertion, excludes attached bodies",
+        "DryMass": "object mass without propellant/consumables; excludes attached bodies",
+        "TotMass": "total attached complex mass at initial insertion; one GCAT object may hold total"
+      }
+    },
+    "payload": {
+      "url": "https://planet4589.org/space/gcat/data/cat/satcat.html",
+      "jcat": "S00527",
+      "name": "OPS 0180",
+      "norad": 527,
+      "associated_parent": "A00324",
+      "Mass_kg": 306,
+      "DryMass_kg": null,
+      "TotMass_associated_kg": 1176,
+      "statement": "306 is S00527 individual catalog mass, NOT a measured complete detached 527 composite mass",
+      "verification": "SECONDARY_GCAT_ROW_C61_REENTRY_CROSSCHECK"
+    },
+    "stage": {
+      "url": "https://planet4589.org/space/gcat/data/cat/auxcat.html",
+      "jcat": "A00324",
+      "name": "Agena B 2313",
+      "Mass_kg": 900,
+      "DryMass_kg": 870,
+      "TotMass_kg": 0,
+      "linked_satcat": "00527",
+      "verification": "SECONDARY_GCAT_AUXCAT_ROW"
+    },
+    "secondary_attachment": {
+      "url": "https://planet4589.org/space/gcat/data/derived/currentcat.html",
+      "jcat": "S00527",
+      "statement": "OPS 0180 reentered attached to A00324",
+      "scientific_status": "CATALOG_RELATIONSHIP_NOT_INSTRUMENTAL_MEASUREMENT"
+    },
+    "earlier_matrix": {
+      "path": "research/evidence_matrix_C001-C238_2026-11-11.md",
+      "occurrence": "C61",
+      "legacy_description": "~306 kg useful dry mass",
+      "correction": "Do not treat C61 wording as proving dry mass of entire 527/528/529 combined body"
+    },
+    "catalog_identity": {
+      "path": "research/tle_custody/gcat_full_catalog_lineage_C241-L14.json",
+      "crosswalk_status": "528/529 cataloged as debris, physical pieces and mass unknown"
+    }
+  },
+  "nominal_kg": {
+    "payload_object_Mass": 306,
+    "stage_Mass": 900,
+    "stage_DryMass": 870,
+    "TotMass_associated": 1176,
+    "sum_individual_Mass_payload_plus_stage": 1206,
+    "sum_payload_Mass_plus_stage_DryMass": 1176,
+    "difference_mass_at_insertion_sum_minus_totmass": 30,
+    "difference_stage_Mass_minus_DryMass": 30
+  },
+  "findings": {
+    "mass_basis_clash": "306+900=1206 differs from TotMass 1176 by 30; 306+870=1176 exactly. This is not by itself proof of propellant expended at a particular time, or of a 30-kg loss.",
+    "component_numbering": "S00527 identifies OPS 0180; Agena stage A00324 is attached and may share S00527 tracked orbit. Therefore effective orbital object 527 may contain BOTH stage and payload, not 306 kg alone.",
+    "unknown_mass_528_kg": null,
+    "unknown_mass_529_kg": null,
+    "physical_mass_inventory_epoch": null,
+    "source_revision_digest": null,
+    "original_vehicle_mass_document": null,
+    "wet_vs_dry_catalog_definition_confirmed_at_instance": false,
+    "TotMass_equals_sum_wet_confirmed": false,
+    "TotMass_equals_sum_dry_confirmed": false,
+    "stage_consumed_30_kg_is_observed": false,
+    "historical_masses_identified": false
+  },
+  "accounting_scenarios": [
+    {
+      "id": "SUM_MASS_INSERTION",
+      "nominal_total_kg": 1206,
+      "assumption": "initial inventory includes full 306+900 Mass fields at common orbital insertion instant",
+      "validity": "CONDITIONAL_UNVERIFIED"
+    },
+    {
+      "id": "TOTMASS_REPORTED",
+      "nominal_total_kg": 1176,
+      "assumption": "1176 TotMass is applicable to the reference epoch of 527+528+529+X",
+      "validity": "CONDITIONAL_UNVERIFIED"
+    },
+    {
+      "id": "PAYLOAD_PLUS_STAGE_DRY",
+      "nominal_total_kg": 1176,
+      "assumption": "reference inventory uses 306 payload + 870 dry stage at a later physically reconciled epoch",
+      "validity": "CONDITIONAL_UNVERIFIED"
+    }
+  ],
+  "physical_model": {
+    "M_initial_basis": "scenario_selected_total + epsilon_for_that_source_basis",
+    "M_at_separation": "M_initial_basis - L_material_exited_system_prior_to_separation",
+    "partition": "M_527_composite(t_sep) + M_528(t_sep) + M_529(t_sep) + X_other(t_sep) = M_at_separation",
+    "other_losses": "L may include expended propellant or previously ejected matter, never count same loss twice in X and L",
+    "m527_decomposition": "M_527_composite(t) = M_payload_remaining(t) + M_Agena_remaining(t) + M_other_attached_to_527(t)",
+    "m527_equals_306_directly": false,
+    "catalog_30_kg_difference_is_not_additional_mass": true,
+    "mass_528_mass_529_are_positive_if_real_objects": true,
+    "X_small_prior_empirical": false,
+    "eps_bound_kg": null,
+    "L_bound_kg": null,
+    "X_bound_kg": null,
+    "active_physical_constraint": false
+  },
+  "mcmc_bridge": {
+    "add_discrete_model_label": "SUM_MASS_INSERTION | TOTMASS_REPORTED | PAYLOAD_PLUS_STAGE_DRY",
+    "no_evidence_for_model_weights": true,
+    "no_historical_likelihood_for_306_as_m527": true,
+    "require_latent_payload_stage_retention_at_separation": true,
+    "evidence_306_is_not_direct_528_observation": true,
+    "stage_fuel_delta_nominal_30_kg_not_measured_loss": true
+  },
+  "graph_edges": [
+    [
+      "C61",
+      "S00527:Mass_306",
+      "CATALOG_NUMBER_WITH_FIELD_DEFINITION"
+    ],
+    [
+      "A00324",
+      "A00324:Mass_900_DryMass_870",
+      "CATALOG_STAGE_COMPONENT"
+    ],
+    [
+      "S00527",
+      "A00324",
+      "CATALOG_ATTACHED_RELATIONSHIP"
+    ],
+    [
+      "S00527 + A00324",
+      "TotMass_1176",
+      "PENDING_BASIS_RECONCILIATION"
+    ],
+    [
+      "S00528/S00529",
+      "mass_528/mass_529",
+      "UNIDENTIFIED_DEBRIS_MASSES"
+    ],
+    [
+      "mass_scenarios",
+      "C241-MASS-X-20261113",
+      "MODEL_SELECTION_NOT_CALIBRATED"
+    ]
+  ],
+  "historical_posterior_available": false,
+  "conde": "INDETERMINATE"
+}
