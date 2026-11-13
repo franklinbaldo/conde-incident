@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {readFileSync,readdirSync,mkdirSync,rmSync,writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 import {writeArchivePages} from './ssg-documentary-archive.mjs';
+import {writeTleCustodyPage} from './ssg-tle-custody.mjs';
 import {writeAuthoredPages} from './ssg-authored-pages.mjs';
 
 // stories/*.md is the sole human-authored content; content/ is regenerated.
@@ -94,6 +95,8 @@ const archiveCount = writeArchivePages('content/evidencias/arquivo',
   JSON.parse(readFileSync('public/data/conde-declared-dependence.json', 'utf8')));
 console.log('Arquivo SSG: '+archiveCount+' páginas Markdown para SSG sem JS.');
 const authoredCount=writeAuthoredPages();
+writeTleCustodyPage();
+console.log('SSG: custódia do TLE secundário 528 publicada sem React.');
 console.log('Páginas Page canônicas validadas e copiadas: '+authoredCount);
 const homePath='content/index.md';
 const home=readFileSync(homePath,'utf8');

@@ -12,7 +12,9 @@ canonical_route: "/conde-incident/simulacoes/tles/"
 
 Um checksum TLE válido verifica somente a estrutura da linha examinada. Não autentica a origem histórica, o instrumento, a época nem a consistência de sua associação ao objeto.
 
-[Abrir auditoria TLE interativa](/conde-incident/lab/#/tles)
+[Inspecionar o par TLE secundário do 528, seus checksums e sua proveniência, sem JavaScript](/conde-incident/simulacoes/tles/custodia/)
+
+[Abrir auditoria TLE interativa no laboratório anterior](/conde-incident/lab/#/tles)
 
 Os elementos disponíveis no laboratório podem incluir linhas secundárias ou ilustrativas. É preciso separar integridade sintática, custódia, referencial e validação orbital para os objetos 527, 528 e 529.
 
