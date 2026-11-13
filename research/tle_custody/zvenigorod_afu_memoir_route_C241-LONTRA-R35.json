@@ -1,0 +1,58 @@
+{
+  "schema": "conde.archival_retro_memoir_route/v1",
+  "id": "C241-LONTRA-R35",
+  "audit_date": "2026-11-13",
+  "source": {
+    "url": "https://www.sai.msu.ru/EAAS/rus/doc/MEM-12.htm",
+    "title_original": "Мемуары несостоявшегося астронома",
+    "content_type": "text/html",
+    "server_charset": "koi8-r",
+    "html_meta_charset": "windows-1251",
+    "effective_decoding": "koi8-r",
+    "http_status": 200,
+    "tls_certificate_validated": true,
+    "byte_length": 613158,
+    "sha256": "3eef0389a2c752cf52803965a4e4a13e2ea12699b7f2129fbe98f6aa841a057d",
+    "source_form": "retrospective_first_person_memoir_on_university_site",
+    "historical_claims": [
+      {
+        "date": "1963",
+        "fact": "author recounts postgraduate admission into Astrosovet",
+        "documentary_level": "retrospective_report",
+        "independent_target_measurement": false
+      },
+      {
+        "date": "2007-05",
+        "fact": "author reports making electronic catalogue of locally kept AFU negatives at Zvenigorod observatory for International Virtual Observatory",
+        "documentary_level": "retrospective_report",
+        "independent_target_measurement": false
+      },
+      {
+        "date": null,
+        "fact": "author also reports AFU-75 images from different stations being catalogued",
+        "documentary_level": "retrospective_report",
+        "independent_target_measurement": false
+      }
+    ]
+  },
+  "open_questions": {
+    "survival_as_of_2026": null,
+    "negative_inventory_identifier": null,
+    "dates_of_original_photographs": null,
+    "covers_november_1963": null,
+    "covers_norad_527_528_529": null,
+    "modern_custodian": null
+  },
+  "status": "VERIFIED_MEMOIR_BYTES_ARCHIVE_REFERENCE_NOT_ORIGINAL_1963_OBSERVATION",
+  "observables": {
+    "target_ids": [
+      527,
+      528,
+      529
+    ],
+    "independent_measurements": 0,
+    "orbital_constraints_activated": 0
+  },
+  "outreach_sent": false
+}
+
