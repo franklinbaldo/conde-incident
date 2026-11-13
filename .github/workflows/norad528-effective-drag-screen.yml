@@ -3,6 +3,15 @@ on:
   pull_request:
     paths:
       - tools/norad528_effective_drag_screen.py
+      - tools/cross_object_epoch_support.py
+      - tools/tle_secondary_1963_ledger.py
+      - research/statistics/raan_chronological_holdout_1963.json
+      - research/statistics/raan_527_528_529_1963.json
+      - research/constraints/nasa_528_decay_precision_C197_20261113.json
+      - research/tle_custody/mirror_528_1963-10-27.tle
+      - formal/Conde1963/CoreAxioms.lean
+      - formal/lean-toolchain
+      - formal/lakefile.toml
       - tests/test_norad528_effective_drag_screen.py
       - formal/Conde1963/Norad528DecayWindow.lean
       - formal/Conde1963.lean
@@ -12,6 +21,15 @@ on:
     branches: [main]
     paths:
       - tools/norad528_effective_drag_screen.py
+      - tools/cross_object_epoch_support.py
+      - tools/tle_secondary_1963_ledger.py
+      - research/statistics/raan_chronological_holdout_1963.json
+      - research/statistics/raan_527_528_529_1963.json
+      - research/constraints/nasa_528_decay_precision_C197_20261113.json
+      - research/tle_custody/mirror_528_1963-10-27.tle
+      - formal/Conde1963/CoreAxioms.lean
+      - formal/lean-toolchain
+      - formal/lakefile.toml
       - tests/test_norad528_effective_drag_screen.py
       - formal/Conde1963/Norad528DecayWindow.lean
       - formal/Conde1963.lean
