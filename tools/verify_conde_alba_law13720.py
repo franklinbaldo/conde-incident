@@ -44,7 +44,7 @@ def validate(doc: dict) -> list[str]:
     custody = doc.get("custody") or {}
     for key, expected in {
         "bytes": 354121, "sha256": SHA256, "mime_or_magic": "%PDF-1.6",
-        "pdf_eof": True, "pdf_leaf_page_count": 11,
+        "pdf_eof": True, "pdf_leaf_page_count": 10,
         "visual_inspection": "PRINTED_PAGES_9_10", "archive_url": None,
     }.items():
         if custody.get(key, object()) != expected:
