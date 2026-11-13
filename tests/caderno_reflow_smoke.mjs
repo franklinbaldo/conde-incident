@@ -30,11 +30,15 @@ try {
           scroll: document.documentElement.scrollWidth,
           anchors: [...document.querySelectorAll('.masthead nav a')].map(a => ({
             width: a.clientWidth, scroll: a.scrollWidth, whiteSpace: getComputedStyle(a).whiteSpace,
-            top: Math.round(a.getBoundingClientRect().top)
+            top: Math.round(a.getBoundingClientRect().top), href: a.getAttribute('href')
           }))
         }));
         assert(layout.scroll <= layout.viewport + 1, `horizontal overflow ${path} ${width}: ${JSON.stringify(layout)}`);
-        assert.equal(layout.anchors.length, 3);
+        assert.deepEqual(layout.anchors.map(a => a.href), [
+          '/conde-incident/', '/conde-incident/stories/', '/conde-incident/cronologia/',
+          '/conde-incident/evidencias/', '/conde-incident/hipoteses/',
+          '/conde-incident/simulacoes/', '/conde-incident/metodo/'
+        ], `all seven SSG navigation destinations must remain keyboard-accessible: ${path} ${width}`);
         assert(layout.anchors.every(a => a.whiteSpace === 'nowrap' && a.scroll <= a.width + 1),
           `broken navigation labels ${path} ${width}: ${JSON.stringify(layout)}`);
         if (width === 320) assert(new Set(layout.anchors.map(a => a.top)).size > 1,

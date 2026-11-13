@@ -1,0 +1,49 @@
+name: Tartaruga - C241-L15 NASA SP4004 group custody
+on:
+  pull_request:
+    paths:
+      - tools/tle_nasa_annual_group_audit.py
+      - tests/test_tle_nasa_annual_group_audit.py
+      - research/tle_custody/nasa_sp4004_1963_group_custody_C241-L15.json
+      - research/tle_custody/evidence_matrix_C241-L15_2026-11-12.md
+      - .github/workflows/tle-nasa-annual-group.yml
+  push:
+    branches: [main]
+    paths:
+      - tools/tle_nasa_annual_group_audit.py
+      - tests/test_tle_nasa_annual_group_audit.py
+      - research/tle_custody/nasa_sp4004_1963_group_custody_C241-L15.json
+      - research/tle_custody/evidence_matrix_C241-L15_2026-11-12.md
+      - .github/workflows/tle-nasa-annual-group.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  annual-compiled-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Validate exact head and adversarial controls
+        run: |
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+          python3 -m unittest discover -s tests -p 'test_tle_nasa_annual_group_audit.py' -v
+      - name: Reacquire and verify official NASA publication bytes
+        run: |
+          curl --fail --location --silent --show-error --retry 2 --max-time 120 \
+            https://www.nasa.gov/wp-content/uploads/2023/04/sp-4004-1963.pdf -o "$RUNNER_TEMP/sp4004.pdf"
+          sha256sum "$RUNNER_TEMP/sp4004.pdf"
+          python3 tools/tle_nasa_annual_group_audit.py \
+            --ledger research/tle_custody/nasa_sp4004_1963_group_custody_C241-L15.json \
+            --october research/tle_custody/nasa_ssr_1963_oct15_C241-L12.json \
+            --november research/tle_custody/nasa_ssr_1963_incremental_lineage_C241-L11.json \
+            --pdf "$RUNNER_TEMP/sp4004.pdf" --output "$RUNNER_TEMP/c241-l15.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: c241-l15-source-custody-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ${{ runner.temp }}/c241-l15.json
+          if-no-files-found: warn
+          retention-days: 30

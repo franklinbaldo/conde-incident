@@ -82,17 +82,24 @@ def assert_workflow_policy(source: str, filename: str) -> bool:
     # Only branches: [main] / branches: - main; other keys (e.g. paths)
     # are allowed, but tags and branches-ignore are not equivalent.
     values = []
+    active_list = None
     for line in push:
         if re.fullmatch(r'    branches:\s*\[\s*[\x27\x22]?main[\x27\x22]?\s*\]', line):
             values.append('main')
+            active_list = None
         elif line == '    branches:':
             values.append('multiline')
-        elif values and values[-1] == 'multiline' and re.fullmatch(r'      -\s*[\x27\x22]?main[\x27\x22]?\s*', line):
+            active_list = 'branches'
+        elif re.match(r'    paths(?:-ignore)?:', line):
+            # Paths may be multiline, but their entries are never branch names.
+            active_list = 'paths' if line.endswith(':') else None
+        elif re.fullmatch(r'      -\s*[\x27\x22]?main[\x27\x22]?\s*', line) and active_list == 'branches':
+            if values[-1] != 'multiline':
+                raise AssertionError(f'{filename}: duplicate push branch entry')
             values[-1] = 'main'
-        elif re.match(r'    paths(?:-ignore)?:', line) or re.match(r'      - ', line):
-            # paths are permitted; branch list additions are not.
-            if values and values[-1] == 'multiline':
-                raise AssertionError(f'{filename}: push branches has non-main entry')
+        elif re.match(r'      - ', line):
+            if active_list != 'paths':
+                raise AssertionError(f'{filename}: extra push branch or stray list entry: {line.strip()}')
         else:
             raise AssertionError(f'{filename}: unrecognized push trigger: {line.strip()}')
     if values != ['main']:
@@ -149,6 +156,28 @@ class EntireWorkflowEventPolicy(unittest.TestCase):
                     self.assertNotEqual(mutant, original, 'negative control must mutate')
                     with self.assertRaisesRegex(AssertionError, 'universal PR gate'):
                         assert_workflow_policy(mutant, name)
+
+    def test_multiline_branches_do_not_hide_extra_push_targets(self):
+        name = 'integration-head.yml'
+        original = (WORKFLOWS / name).read_text(encoding='utf-8')
+        self.assertIn('branches: [main]', original)
+        for replacement in (
+            'branches:\n      - main\n      - animal/**',
+            'branches:\n      - animal/**\n      - main',
+            'branches:\n      - main\n      - main',
+            'branches: [main]\n      - animal/**',
+        ):
+            mutant = original.replace('branches: [main]', replacement, 1)
+            with self.subTest(replacement=replacement):
+                with self.assertRaises(AssertionError):
+                    assert_workflow_policy(mutant, name)
+        for replacement in (
+            'branches:\n      - main',
+            'branches:\n      - main\n    paths:\n      - \"tests/**\"',
+        ):
+            valid = original.replace('branches: [main]', replacement, 1)
+            with self.subTest(valid=replacement):
+                self.assertTrue(assert_workflow_policy(valid, name))
 
     def test_one_event_only_is_not_falsely_classified_as_double(self):
         single = 'name: replay\non:\n  workflow_dispatch:\njobs:\n  run:\n    runs-on: ubuntu-latest\n'

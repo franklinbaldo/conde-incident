@@ -1,0 +1,81 @@
+{
+  "schema": "conde.recife-wmoid-catalogue-crosscheck/v1",
+  "id": "LAG-RECIFE-WMOID-CROSSCHECK-1963-01",
+  "retrieved_at_utc": "2026-11-13",
+  "sources": {
+    "ceda": {
+      "url": "https://artefacts.ceda.ac.uk/badc_datadocs/radiosglobe/southamerica.html",
+      "sha256": "dc8354d3f2d012838e26c6f80b68849fa784ad917732e816ab86fc54ffa03a29",
+      "bytes": 6302
+    },
+    "sgb": {
+      "url": "https://rigeo.sgb.gov.br/items/1f0cc1e9-5f8b-4c8b-b816-a88a2665b854",
+      "sha256": "8a310e76a75b74267c74e934742585e9363f930b2278d3a2df45db86d419ae6a",
+      "bytes": 464477
+    }
+  },
+  "excerpt_sha256": "41b400332a60b8cea8ea2cd5b78b7c3de865aa3eb78af381e22acd00239ab058",
+  "catalogue_records": [
+    {
+      "source_key": "ceda",
+      "wmo_id": 82900,
+      "catalogue_label": "Recife/Curado",
+      "published_year": null,
+      "latitude_historical": null,
+      "longitude_historical": null,
+      "elevation_historical_m": null,
+      "catalogue_coordinates": "8.03S 34.55W",
+      "catalogue_elevation_m": 7,
+      "variable_family": "UKMO radiosonde station inventory, web catalogue",
+      "physical_measurement_1963": false,
+      "independent_igra_sounding": false
+    },
+    {
+      "source_key": "sgb",
+      "wmo_id": 82899,
+      "catalogue_label": "Aeroporto de Recife",
+      "published_year": 2014,
+      "latitude_historical": null,
+      "longitude_historical": null,
+      "elevation_historical_m": null,
+      "catalogue_coordinates": null,
+      "catalogue_elevation_m": null,
+      "variable_family": "CPRM precipitation intensity-duration-frequency report metadata",
+      "physical_measurement_1963": false,
+      "independent_igra_sounding": false
+    }
+  ],
+  "physical_1963": {
+    "historical_1963_instrument": null,
+    "historical_1963_launch_coordinates": null,
+    "historical_1963_gph_method": null,
+    "historical_1963_sensor_covariance": null,
+    "recife_to_conde_transfer_error": null,
+    "new_drag_constraint": null
+  },
+  "status": "CONNECTED_PENDING_CALIBRATION",
+  "independence_assessment": "Two catalogue publishers independently label different WMOIDs; not two independent 1963 meteorological observations. Both could reuse earlier station lists and neither documents the 1963 sonde.",
+  "edges": [
+    {
+      "from": "SGB-CPRM-2014-82899",
+      "to": "C149-C151",
+      "relation": "catalogue_alias_branch_NOT_1963_instrument"
+    },
+    {
+      "from": "CEDA-UKMO-82900",
+      "to": "C149-C151",
+      "relation": "catalogue_alias_branch_NOT_1963_instrument"
+    },
+    {
+      "from": "C149-C151",
+      "to": "1963_IGRA_station_identity",
+      "relation": "PENDING_contemporaneous_station_register"
+    },
+    {
+      "from": "1963_IGRA_station_identity",
+      "to": "Castor_drag_and_fragment_drift",
+      "relation": "PENDING_original_sonde_and_transfer_calibration"
+    }
+  ],
+  "admissible_domain_reduction": false
+}

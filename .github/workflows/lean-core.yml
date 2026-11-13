@@ -35,6 +35,12 @@ jobs:
           set -euo pipefail
           python3 formal/scripts/compile_documentary_links.py --check
           python3 -m unittest discover -s formal/tests -p 'test_documentary_links.py' -v
+      - name: Check NORAD documentary identity and Lean crosswalk (not tracking)
+        run: |
+          set -euo pipefail
+          python3 tools/export_norad_context.py --check
+          python3 formal/scripts/compile_norad_context.py --check
+          python3 -m unittest discover -s formal/tests -p 'test_norad_context.py' -v
       - name: Validate Y20175 candidate wind provenance and Lean export
         run: |
           set -euo pipefail

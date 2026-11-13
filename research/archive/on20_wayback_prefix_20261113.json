@@ -1,0 +1,94 @@
+{
+  "schema": "conde.on20-wayback-prefix/v1",
+  "audited_utc": "2026-11-13",
+  "issue": "https://github.com/franklinbaldo/conde-incident/issues/308",
+  "document_id": "MET-NMC-NCEPON-20261112-02",
+  "source_title": "NMC Office Note 20, Upper Air ADP Records Format",
+  "source_author": "J. Neilon",
+  "document_publication_year": 1964,
+  "original_url": "http://www.ncep.noaa.gov/officenotes/NOAA-NPM-NCEPON-0001/013FD4DB.pdf",
+  "cdx_query": "https://web.archive.org/cdx/search/cdx?url=http%3A%2F%2Fwww.ncep.noaa.gov%2Fofficenotes%2FNOAA-NPM-NCEPON-0001%2F013FD4DB.pdf&output=json&fl=timestamp%2Coriginal%2Cstatuscode%2Cmimetype%2Cdigest%2Clength",
+  "snapshots": [
+    {
+      "cdx": {
+        "timestamp": "20080724202155",
+        "original": "http://www.ncep.noaa.gov/officenotes/NOAA-NPM-NCEPON-0001/013FD4DB.pdf",
+        "statuscode": "200",
+        "mimetype": "application/pdf",
+        "digest": "4AG5M4XFUITKIQUVPKEGBEQPCKAZYFC4",
+        "length": 126836
+      },
+      "archived_url": "https://web.archive.org/web/20080724202155id_/http://www.ncep.noaa.gov/officenotes/NOAA-NPM-NCEPON-0001/013FD4DB.pdf",
+      "replay": {
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 130826,
+        "sha256": "adb575f5e55518e8e306c9032bb1f277cec6ebe8774426a414a70928e079c4f6",
+        "sha1_base32": "4AG5M4XFUITKIQUVPKEGBEQPCKAZYFC4",
+        "pdf_header": true,
+        "pdf_eof": false
+      },
+      "assessment": "TRUNCATED_PREFIX_NOT_RECOMMENDED"
+    },
+    {
+      "cdx": {
+        "timestamp": "20080920175518",
+        "original": "http://www.ncep.noaa.gov/officenotes/NOAA-NPM-NCEPON-0001/013FD4DB.pdf",
+        "statuscode": "200",
+        "mimetype": "application/pdf",
+        "digest": "WJ2GSUYH54TA2IUAFHSKWG2KCRX2WMIM",
+        "length": 892544
+      },
+      "archived_url": "https://web.archive.org/web/20080920175518id_/http://www.ncep.noaa.gov/officenotes/NOAA-NPM-NCEPON-0001/013FD4DB.pdf",
+      "replay": {
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 932414,
+        "sha256": "656984ac58ff1632e39b0f62ac80003785ddea0a0de32dfb19c8c612067aabbe",
+        "sha1_base32": "WJ2GSUYH54TA2IUAFHSKWG2KCRX2WMIM",
+        "pdf_header": true,
+        "pdf_eof": true
+      },
+      "assessment": "COMPLETE_PDF_REPLAY"
+    },
+    {
+      "cdx": {
+        "timestamp": "20220119075333",
+        "original": "http://www.ncep.noaa.gov/officenotes/NOAA-NPM-NCEPON-0001/013FD4DB.pdf",
+        "statuscode": "200",
+        "mimetype": "application/pdf",
+        "digest": "WJ2GSUYH54TA2IUAFHSKWG2KCRX2WMIM",
+        "length": 889435
+      },
+      "archived_url": "https://web.archive.org/web/20220119075333id_/http://www.ncep.noaa.gov/officenotes/NOAA-NPM-NCEPON-0001/013FD4DB.pdf",
+      "replay": {
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 932414,
+        "sha256": "656984ac58ff1632e39b0f62ac80003785ddea0a0de32dfb19c8c612067aabbe",
+        "sha1_base32": "WJ2GSUYH54TA2IUAFHSKWG2KCRX2WMIM",
+        "pdf_header": true,
+        "pdf_eof": true
+      },
+      "assessment": "COMPLETE_PDF_REPLAY"
+    }
+  ],
+  "comparison": {
+    "earliest_is_exact_byte_prefix_of_complete_replay": true,
+    "prefix_bytes": 130826,
+    "two_complete_replays_identical": true,
+    "distinct_cdx_sha1_digests_imply_distinct_historical_editions": false,
+    "earliest_pdf_is_complete": false,
+    "cdx_length_is_downloaded_pdf_bytes": false,
+    "new_meteorological_observation": false,
+    "applicability_to_Y20175_1963": "NOT_ESTABLISHED",
+    "new_orbital_constraint": false
+  },
+  "limits": [
+    "Exact URL CDX records only; no institutional master checksum obtained",
+    "A CDX HTTP 200 and application/pdf can describe a truncated capture; the earliest replay ends midstream and is an exact prefix of the later complete PDF",
+    "Two complete PDF replays match each other; duplicate payloads are not independent editions or witnesses",
+    "The 1964 document and its November 1964 amendment do not prove applicability to meteorological records dated November 1963",
+    "This archive audit rechecked bytes only; printed pagination, OCR and scientific fields were not reread"
+  ]
+}

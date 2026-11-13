@@ -1,0 +1,94 @@
+{
+  "schema": "conde.nasa-ssr-legacy-wayback/v1",
+  "audit_utc": "2026-11-13T02:21:38Z",
+  "case_issue": "https://github.com/franklinbaldo/conde-incident/issues/308",
+  "source_occurrences": ["C197#1", "C198#1"],
+  "ntrs_id": "19640001198",
+  "source_title": "Satellite Situation Report, vol. 3, no. 22",
+  "publication_date": "1963-11-15",
+  "source_family": "NASA_NORAD_SSR_SINGLE_DOCUMENT",
+  "source_page": "printed p. 8 (separate prior inspection; not re-read in this audit)",
+  "legacy_path": "/archive/nasa/casi.ntrs.nasa.gov/19640001198.pdf",
+  "legacy_cdx_query": "https://web.archive.org/cdx/search/cdx?url=https%3A%2F%2Fntrs.nasa.gov%2Farchive%2Fnasa%2Fcasi.ntrs.nasa.gov%2F19640001198.pdf&output=json&fl=timestamp%2Coriginal%2Cstatuscode%2Cmimetype%2Cdigest%2Clength&filter=statuscode%3A200",
+  "current_api_url": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf",
+  "current_api_exact_wayback_lookup": "NO_EXACT_CAPTURE_IN_QUERIED_INDEX (prior pilot; different URL)",
+  "current_api_replay": {
+    "http_status": 200,
+    "content_type": "application/pdf",
+    "bytes": 327613,
+    "sha256": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+    "pdf_magic": true,
+    "pdf_eof": true
+  },
+  "captures": [
+    {
+      "cdx_record": {
+        "timestamp": "20150217133001",
+        "original": "http://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/19640001198.pdf",
+        "statuscode": "200",
+        "mimetype": "application/pdf",
+        "digest": "I2EGWPNOUYBQW3TJASLYO5JASEALQJSK",
+        "length": 299054
+      },
+      "archived_url": "https://web.archive.org/web/20150217133001id_/http://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/19640001198.pdf",
+      "replay": {
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 327613,
+        "sha256": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+        "sha1_base32": "I2EGWPNOUYBQW3TJASLYO5JASEALQJSK",
+        "pdf_magic": true,
+        "pdf_eof": true
+      }
+    },
+    {
+      "cdx_record": {
+        "timestamp": "20170228144859",
+        "original": "https://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/19640001198.pdf",
+        "statuscode": "200",
+        "mimetype": "application/pdf",
+        "digest": "I2EGWPNOUYBQW3TJASLYO5JASEALQJSK",
+        "length": 298957
+      },
+      "archived_url": "https://web.archive.org/web/20170228144859id_/https://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/19640001198.pdf",
+      "replay": {
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 327613,
+        "sha256": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+        "sha1_base32": "I2EGWPNOUYBQW3TJASLYO5JASEALQJSK",
+        "pdf_magic": true,
+        "pdf_eof": true
+      }
+    },
+    {
+      "cdx_record": {
+        "timestamp": "20170302093149",
+        "original": "https://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/19640001198.pdf",
+        "statuscode": "200",
+        "mimetype": "application/pdf",
+        "digest": "I2EGWPNOUYBQW3TJASLYO5JASEALQJSK",
+        "length": 298959
+      },
+      "archived_url": "https://web.archive.org/web/20170302093149id_/https://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/19640001198.pdf",
+      "replay": {
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 327613,
+        "sha256": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+        "sha1_base32": "I2EGWPNOUYBQW3TJASLYO5JASEALQJSK",
+        "pdf_magic": true,
+        "pdf_eof": true
+      }
+    }
+  ],
+  "interpretation": {
+    "captured_document_is_independent_sensor": false,
+    "captures_are_independent_historical_witnesses": false,
+    "separate_cdx_lengths_mean_separate_pdf_versions": false,
+    "cdx_length_is_pdf_bytes": false,
+    "same_bytes_as_current_api_observed": true,
+    "new_orbital_constraint": false,
+    "conclusion": "Three capture timestamps for a legacy URL yield one payload identical to the current NASA API PDF in this audit. The 2026 pilot's negative remains true only for the new API URL, not for all older URLs or for the document. No independent observation or authentication of the 1963 source results from the captures."
+  }
+}

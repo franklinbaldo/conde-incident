@@ -49,8 +49,8 @@ const claims: readonly {
     title: { pt: 'Os elementos orbitais exigem conciliação', en: 'Orbital elements need reconciliation' },
     status: { pt: 'Conflito de proveniência e épocas', en: 'Unresolved provenance and epochs' },
     explanation: {
-      pt: 'O RAAN 284,1520° do conjunto legado diverge da série alternativa próxima de 198,5261°. Custódia, época e referenciais precisam ser conciliados; não é lícito combinar os valores ou inferir trajetória terminal.',
-      en: 'The legacy RAAN of 284.1520° conflicts with an alternative series near 198.5261°. Custody, epochs and reference frames must be reconciled; neither averaging them nor inferring a terminal path is justified.',
+      pt: 'C179#1 registra um TLE do 528 obtido de espelho secundário, com época em 27/10/1963. A origem instrumental ainda não foi autenticada; os vetores 527/529 do laboratório são cenários, não observações. Nenhum desses dados fixa uma trajetória terminal.',
+      en: 'C179#1 records a 528 TLE from a secondary mirror, with an epoch on 27 October 1963. Its original tracking provenance remains unverified; the laboratory’s 527/529 vectors are scenarios, not observations. None establishes a terminal trajectory.',
     },
     matrixLine: 839,
     source: 'https://github.com/franklinbaldo/conde-incident/blob/d368bc2340f49cd637fa2b88a00bc47dfd91018d/research/constraints/norad_1963_epoch_availability_C241-L3.json',

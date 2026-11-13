@@ -10,6 +10,15 @@ for(const [name,html] of [['home',index],['stories',listing]]) {
   assert.match(html,/<html[^>]+lang=["']?pt-BR/i,name+' sem idioma pt-BR');
   assert.doesNotMatch(html,/(?:src|href)=["']\/(?:assets|css)\//i,name+' referencia assets da raiz');
 }
+for(const slug of ['cronologia','evidencias','hipoteses','simulacoes','metodo']){
+ const html=read(slug+'/index.html');
+ assert.ok(index.includes('/conde-incident/'+slug+'/'),'Rota SSG ausente: '+slug);
+ assert.match(html,/<html[^>]+lang=["']?pt-BR/i,'Idioma ausente: '+slug);
+ assert.match(html,/Content-Security-Policy/,'CSP ausente: '+slug);
+}
+for(const slug of ['summary','map','inverse','triangulation','sensitivity','montecarlo','tles','documents']){
+ assert.ok(read('simulacoes/index.html').includes('/conde-incident/lab/#/'+slug),'Link legado ausente: '+slug);
+}
 assert.match(lab,/\/conde-incident\/lab\/assets\//,'Assets Vite fora de /lab/');
 assert.doesNotMatch(lab,/(?:src|href)=["']\/assets\//,'Assets relativos à raiz, 404 no Pages');
 assert.ok(existsSync('public/lab/assets'),'Assets de laboratório ausentes');
@@ -17,6 +26,7 @@ assert.ok(existsSync('public/css/site.css'),'CSS do Caderno ausente');
 assert.ok(existsSync('public/img/caderno.svg'),'Arte editorial ausente');
 for(const page of ['index.html','stories/index.html','lab/index.html']) assert.match(read(page),/Content-Security-Policy/,'CSP ausente em '+page);
 let chapters=0;
+let accessiblePdfEmbeds=0;
 for(const name of readdirSync('stories').filter(s=>/^\d{4}-\d{2}-\d{2}-.+\.md$/.test(s))){
   const slug=name.slice(0,-3);
   const source=readFileSync(join('stories',name),'utf8');
@@ -27,6 +37,21 @@ for(const name of readdirSync('stories').filter(s=>/^\d{4}-\d{2}-\d{2}-.+\.md$/.
   assert.ok(article.includes('/conde-incident/lab/'),'Artigo sem retorno ao laboratório: '+slug);
   assert.ok(article.includes('https://github.com/franklinbaldo/conde-incident/blob/main/stories/'+name),'Fonte canônica ausente: '+slug);
   assert.ok(article.includes('https://') && source.includes('https://'),'Sem referência externa: '+slug);
+  // A keyboard user must meet a direct PDF link before entering the embedded reader.
+  for (const [, figure] of article.matchAll(/<figure class="story-visual story-document">([\s\S]*?)<\/figure>/g)) {
+    const iframe = figure.match(/<iframe\b[^>]*\bsrc="([^"]+\.pdf(?:#[^"]*)?)"/i);
+    if (!iframe) continue;
+    accessiblePdfEmbeds++;
+    const action = figure.match(/<p class="story-document-action">\s*<a\b([^>]*)>([^<]+)<\/a>/i);
+    assert.ok(action, 'Alternativa de acesso direto ao PDF ausente: '+slug);
+    const href = action[1].match(/\bhref="([^"]+)"/)?.[1];
+    assert.equal(href, iframe[1], 'Link alternativo não abre a mesma página do PDF: '+slug);
+    assert.ok(figure.indexOf('class="story-document-action"') < figure.indexOf('<iframe'),
+      'Link alternativo aparece depois do iframe: '+slug);
+    assert.match(action[1], /\btarget="_blank"/, 'Link direto sem nova aba: '+slug);
+    assert.match(action[1], /\brel="noopener noreferrer"/, 'Link direto sem isolamento: '+slug);
+    assert.ok(action[2].trim().length >= 15, 'Rótulo do link PDF insuficiente: '+slug);
+  }
   chapters++;
 }
 
@@ -84,5 +109,27 @@ const archiveComparison=JSON.parse(readFileSync('research/archive/coruja_wayback
 assert.equal(archiveComparison.records.length,3,'Conjunto original e controle negativo incompleto');
 assert.equal(archiveComparison.records.filter(r=>r.byte_identity_observed===true).length,2,'Cotejo sem as duas igualdades documentais');
 
+
+const oitoSlug='2026-11-12-oito-fotografias-antes-da-esfera';
+const oitoSource=readFileSync('stories/'+oitoSlug+'.md','utf8');
+const oitoHtml=read('stories/'+oitoSlug+'/index.html');
+const oitoCustodia=JSON.parse(readFileSync('research/geo/ibge_1958_conde_photo_custody.json','utf8'));
+assert.equal(oitoCustodia.photo_count,8,'A fonte deve continuar com oito retratos');
+assert.equal(oitoCustodia.photos.length,8,'Numero de legendas da custodia mudou');
+const oitoPaginas=[[181,186,3],[182,187,3],[183,188,2]];
+for(const [pdf,impresso,quantidade] of oitoPaginas){
+ const fotos=oitoCustodia.photos.filter(p=>p.pdf_page===pdf&&p.printed_page===impresso);
+ assert.equal(fotos.length,quantidade,'Pagina/quantidade de fotos divergiu do fac-simile: '+impresso);
+ const url='https://biblioteca.ibge.gov.br/visualizacao/livros/liv27295_20.pdf#page='+pdf;
+ assert.ok(oitoSource.includes(url)&&oitoHtml.includes(url),'Link oficial da folha '+pdf+' ausente');
+}
+for(const palavra of ['Prefeitura','Itapicuru','Severiano Lima','Senhor do Bonfim','Rua do Carro','margem esquerda','Rua Marechal Floriano','Condeúba'])
+ assert.ok(oitoSource.toLocaleLowerCase('pt-BR').includes(palavra.toLocaleLowerCase('pt-BR')),'Toponimo/verificacao ausente: '+palavra);
+assert.ok(oitoSource.includes('1958')&&oitoSource.includes('1963')&&oitoSource.includes('não foram copiadas'),'Limites e politica de imagens faltando');
+assert.ok(oitoSource.includes(oitoCustodia.source.pdf_sha256),'SHA256 oficial do PDF nao documentado');
+assert.ok(!oitoSource.includes('<img')&&!oitoSource.includes('<iframe'),'Capitulo 08 nao deve redistribuir ou embutir imagens IBGE sem licenca');
+assert.ok(oitoHtml.includes('research/geo/ibge_1958_conde_photo_custody.json'),'Proveniencia nao publicada');
+
+assert.ok(accessiblePdfEmbeds>=3,'Regressão: menos de três PDFs incorporados com link anterior');
 assert.ok(chapters>0,'Nenhuma reportagem renderizada');
 console.log('PASS: '+chapters+' capítulos, índice, CSS, laboratório e rotas GitHub Pages.');

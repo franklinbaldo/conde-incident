@@ -1,0 +1,345 @@
+{
+  "schema": "conde.gaviao-retrospective-window/v1",
+  "audit": "G30",
+  "checkpoint_sha": "b3a632d6da60c9b054473b89211579cbb488d525",
+  "reviewed_through_main_sha": "d73e66678dbaf0583064f88da7e4702baeb7d5b0",
+  "main_cut_utc": "2026-11-13T02:26:14Z",
+  "first_parent_integrations": 11,
+  "squash_merges": 11,
+  "conventional_merges": 0,
+  "lateral_commits": 0,
+  "direct_main_commits": 0,
+  "dag_commits": 11,
+  "closed_unmerged_recent_query": "GitHub PR search is:closed is:unmerged returned only older PRs; no recent PR closure in this 2026-11-13T01:41–02:26Z window identified. Query scoped, not exhaustive proof.",
+  "source_policy": "All source and physics assertions remain conditional on primary authenticity; NASA catalog day is not terminal instant. Local current NASA API re-fetch not performed in retrospective itself.",
+  "material_findings": [
+    {
+      "id": "G30-F1",
+      "severity": "MEDIUM",
+      "source_pr": 340,
+      "path": "tools/verify_nasa_ssr_legacy_wayback.py",
+      "reproduction": "Before fix, --fetch calls urlopen for the 3 Wayback archived_url values only and returns PASS, without requesting doc.current_api_url despite claiming equality with current NASA API PDF",
+      "remediation": "Independently fetch current NASA API and verify status/MIME/byte count/SHA-256/PDF markers; synthetic HTTP drift regression in test_nasa_ssr_legacy_wayback.py"
+    }
+  ],
+  "no_new_terminal_time_or_position": true,
+  "no_new_historical_domain_reduction": true,
+  "reviewed": [
+    {
+      "pr": 326,
+      "sha": "308975ade83c2d98424808d5b7b238f8893277c8",
+      "first_parent_sha": "b3a632d6da60c9b054473b89211579cbb488d525",
+      "other_parents": [],
+      "type": "SQUASH",
+      "author_head_sha": "634cdecf4881e0672b63adcd3595a50897c1e66a",
+      "changed_files": [
+        "research/geo/cgeo16_ppa2021_visual_context.json",
+        "research/geo/cgeo16_ppa2021_visual_context.md",
+        "tests/test_cgeo16_ppa_visual_context.py"
+      ],
+      "review_note": "CGEO-16 PPA Conde/BA 2021; visual municipal modern only; no dates/coordinates for 1963",
+      "author_ci": {
+        "sha": "634cdecf4881e0672b63adcd3595a50897c1e66a",
+        "event": "pull_request",
+        "success": 18,
+        "skipped": 1,
+        "total": 19
+      },
+      "push_ci": {
+        "sha": "308975ade83c2d98424808d5b7b238f8893277c8",
+        "event": "push",
+        "success": 19,
+        "skipped": 0,
+        "total": 19
+      }
+    },
+    {
+      "pr": 328,
+      "sha": "0d40393b424a6dd15bfa28dbd93156b6eba4b1a8",
+      "first_parent_sha": "308975ade83c2d98424808d5b7b238f8893277c8",
+      "other_parents": [],
+      "type": "SQUASH",
+      "author_head_sha": "c979922f4db9fd07f628d03973470fa4b731e920",
+      "changed_files": [
+        "research/statistics/CATALOG_DAY_MISSINGNESS.md",
+        "research/statistics/raan_catalog_day_missingness_C241.json",
+        "tests/test_raan_catalog_day_missingness.py",
+        "tools/raan_catalog_day_missingness.py"
+      ],
+      "review_note": "Catalog-day missingness is not sensor non-detection; 119 retained mirror epochs not survival likelihood",
+      "author_ci": {
+        "sha": "c979922f4db9fd07f628d03973470fa4b731e920",
+        "event": "pull_request",
+        "success": 18,
+        "skipped": 1,
+        "total": 19
+      },
+      "push_ci": {
+        "sha": "0d40393b424a6dd15bfa28dbd93156b6eba4b1a8",
+        "event": "push",
+        "success": 19,
+        "skipped": 0,
+        "total": 19
+      }
+    },
+    {
+      "pr": 329,
+      "sha": "1922c1272d14bce3d79b5e8af6b690cbe26471a6",
+      "first_parent_sha": "0d40393b424a6dd15bfa28dbd93156b6eba4b1a8",
+      "other_parents": [],
+      "type": "SQUASH",
+      "author_head_sha": "4f8524439da2fa69c64d75c69adbb9d0fc3ff243",
+      "changed_files": [
+        "research/meteorology/wwr_brazil_1961_1970_recife_coverage.json",
+        "research/meteorology/wwr_brazil_1961_1970_recife_coverage.md",
+        "research/meteorology/wwr_brazil_1961_1970_station_headers.txt",
+        "tests/test_wwr_recife_1963_coverage.py",
+        "tools/audit_wwr_recife_1963_coverage.py"
+      ],
+      "review_note": "NOAA WWR series 6 surface station coverage; cannot infer Recife upper-air 1963 wind field",
+      "author_ci": {
+        "sha": "4f8524439da2fa69c64d75c69adbb9d0fc3ff243",
+        "event": "pull_request",
+        "success": 18,
+        "skipped": 1,
+        "total": 19
+      },
+      "push_ci": {
+        "sha": "1922c1272d14bce3d79b5e8af6b690cbe26471a6",
+        "event": "push",
+        "success": 19,
+        "skipped": 0,
+        "total": 19
+      }
+    },
+    {
+      "pr": 330,
+      "sha": "6e776067556f35a680a34bbd9879a0f185616572",
+      "first_parent_sha": "1922c1272d14bce3d79b5e8af6b690cbe26471a6",
+      "other_parents": [],
+      "type": "SQUASH",
+      "author_head_sha": "8d40da9a1a9dd7e091af665ddc815c14ccf104ec",
+      "changed_files": [
+        "public/data/conde-wayback-citation-links.json",
+        "tests/test_wayback_citation_links.py",
+        "tools/export_wayback_citation_links.py"
+      ],
+      "review_note": "WB-01 citation crosswalk preserves source family; archives not independent contemporaneous measurements",
+      "author_ci": {
+        "sha": "8d40da9a1a9dd7e091af665ddc815c14ccf104ec",
+        "event": "pull_request",
+        "success": 18,
+        "skipped": 1,
+        "total": 19
+      },
+      "push_ci": {
+        "sha": "6e776067556f35a680a34bbd9879a0f185616572",
+        "event": "push",
+        "success": 19,
+        "skipped": 0,
+        "total": 19
+      }
+    },
+    {
+      "pr": 331,
+      "sha": "cfcc79b7b9089261d746d168eb87f6d9acdec4ee",
+      "first_parent_sha": "6e776067556f35a680a34bbd9879a0f185616572",
+      "other_parents": [],
+      "type": "SQUASH",
+      "author_head_sha": "5a3a0d065ad32db392e9f4f322aedc903a04f2fb",
+      "changed_files": [
+        "tests/test_ci_event_policy_all_workflows.py"
+      ],
+      "review_note": "Universal workflow event policy regression added without altering scientific data",
+      "author_ci": {
+        "sha": "5a3a0d065ad32db392e9f4f322aedc903a04f2fb",
+        "event": "pull_request",
+        "success": 18,
+        "skipped": 1,
+        "total": 19
+      },
+      "push_ci": {
+        "sha": "cfcc79b7b9089261d746d168eb87f6d9acdec4ee",
+        "event": "push",
+        "success": 19,
+        "skipped": 0,
+        "total": 19
+      }
+    },
+    {
+      "pr": 332,
+      "sha": "91ec1b353b8af846b2055b1472a343935048cd69",
+      "first_parent_sha": "cfcc79b7b9089261d746d168eb87f6d9acdec4ee",
+      "other_parents": [],
+      "type": "SQUASH",
+      "author_head_sha": "c3fd5eee28deb2362ac215b5cc3e59523143b457",
+      "changed_files": [
+        "research/audits/gaviao-main-window-20261112-g29.json",
+        "research/audits/gaviao-main-window-20261112-g29.md",
+        "src/components/DocumentArchive.tsx",
+        "src/lib/archiveCustodyLabel.ts",
+        "tests/archiveCustody.test.mjs"
+      ],
+      "review_note": "G29 Wayback label now derived from each negative record rather than hardcoded NASA identity",
+      "author_ci": {
+        "sha": "c3fd5eee28deb2362ac215b5cc3e59523143b457",
+        "event": "pull_request",
+        "success": 18,
+        "skipped": 1,
+        "total": 19
+      },
+      "push_ci": {
+        "sha": "91ec1b353b8af846b2055b1472a343935048cd69",
+        "event": "push",
+        "success": 19,
+        "skipped": 0,
+        "total": 19
+      }
+    },
+    {
+      "pr": 333,
+      "sha": "4a84d858bcce51d74f3135a44d7e63d2464679e4",
+      "first_parent_sha": "91ec1b353b8af846b2055b1472a343935048cd69",
+      "other_parents": [],
+      "type": "SQUASH",
+      "author_head_sha": "0b263d876d769a6cb067e156fc6b6c3424867d25",
+      "changed_files": [
+        ".github/workflows/lean-core.yml",
+        "formal/Conde1963.lean",
+        "formal/Conde1963/NoradContext.lean",
+        "formal/scripts/compile_norad_context.py",
+        "formal/tests/test_norad_context.py",
+        "research/constraints/C241-L15_norad_documentary_scope.md"
+      ],
+      "review_note": "NORAD 687/688/943 documents modeled as contextual identities in Lean, not 528 tracking; conditional compilation only",
+      "author_ci": {
+        "sha": "0b263d876d769a6cb067e156fc6b6c3424867d25",
+        "event": "pull_request",
+        "success": 18,
+        "skipped": 1,
+        "total": 19
+      },
+      "push_ci": {
+        "sha": "4a84d858bcce51d74f3135a44d7e63d2464679e4",
+        "event": "push",
+        "success": 19,
+        "skipped": 0,
+        "total": 19
+      }
+    },
+    {
+      "pr": 334,
+      "sha": "697b5c42c57642e15ba32c430ee45190abbd1c6d",
+      "first_parent_sha": "4a84d858bcce51d74f3135a44d7e63d2464679e4",
+      "other_parents": [],
+      "type": "SQUASH",
+      "author_head_sha": "b73462692131b4c48e1223600c469b0b0d93fe84",
+      "changed_files": [
+        "research/geo/ibge_1958_conde_photo_custody.json",
+        "tests/test_ibge_1958_conde.py",
+        "tools/audit_ibge_1958_conde.py"
+      ],
+      "review_note": "IBGE 1958 vol XX PDF pp 180-183 / printed 185-188; eight photos from one volume, no per-photo date/geo",
+      "author_ci": {
+        "sha": "b73462692131b4c48e1223600c469b0b0d93fe84",
+        "event": "pull_request",
+        "success": 18,
+        "skipped": 1,
+        "total": 19
+      },
+      "push_ci": {
+        "sha": "697b5c42c57642e15ba32c430ee45190abbd1c6d",
+        "event": "push",
+        "success": 19,
+        "skipped": 0,
+        "total": 19
+      }
+    },
+    {
+      "pr": 337,
+      "sha": "0e13bbe6fab70dfd46351bcf3834223e43c4eba1",
+      "first_parent_sha": "697b5c42c57642e15ba32c430ee45190abbd1c6d",
+      "other_parents": [],
+      "type": "SQUASH",
+      "author_head_sha": "bff05a783e325ecfb2bc2e83f085aa6b047717e5",
+      "changed_files": [
+        "scripts/check-site.mjs",
+        "static/css/site.css",
+        "stories/2026-11-12-a-resposta-que-veio-de-salvador.md",
+        "stories/2026-11-12-as-cameras-que-o-norad-nao-ganhou.md",
+        "stories/2026-11-12-o-humorista-que-encontrou-um-satelite-na-redacao.md"
+      ],
+      "review_note": "Story PDF iframe gains direct source links; no added event or documentary interpretation",
+      "author_ci": {
+        "sha": "bff05a783e325ecfb2bc2e83f085aa6b047717e5",
+        "event": "pull_request",
+        "success": 19,
+        "skipped": 1,
+        "total": 20
+      },
+      "push_ci": {
+        "sha": "0e13bbe6fab70dfd46351bcf3834223e43c4eba1",
+        "event": "push",
+        "success": 19,
+        "skipped": 0,
+        "total": 19
+      }
+    },
+    {
+      "pr": 338,
+      "sha": "fffc1bb6fd5e762611ff05376a798380edc624d6",
+      "first_parent_sha": "0e13bbe6fab70dfd46351bcf3834223e43c4eba1",
+      "other_parents": [],
+      "type": "SQUASH",
+      "author_head_sha": "cd21a42e777815941d6132035c5ea1bf0219c4c9",
+      "changed_files": [
+        "src/components/ExecutiveSummary.tsx",
+        "src/components/TleAuditViewer.tsx",
+        "tests/frontend-source-claim-guards.test.mjs"
+      ],
+      "review_note": "PT/EN UI distinguishes secondary 528 TLE C179#1 from illustrative 527/529; NASA 1964 is contextual not TLE provenance",
+      "author_ci": {
+        "sha": "cd21a42e777815941d6132035c5ea1bf0219c4c9",
+        "event": "pull_request",
+        "success": 18,
+        "skipped": 1,
+        "total": 19
+      },
+      "push_ci": {
+        "sha": "fffc1bb6fd5e762611ff05376a798380edc624d6",
+        "event": "push",
+        "success": 19,
+        "skipped": 0,
+        "total": 19
+      }
+    },
+    {
+      "pr": 340,
+      "sha": "d73e66678dbaf0583064f88da7e4702baeb7d5b0",
+      "first_parent_sha": "fffc1bb6fd5e762611ff05376a798380edc624d6",
+      "other_parents": [],
+      "type": "SQUASH",
+      "author_head_sha": "c36dbf5ffcb1a1fe30890671cd3f3160d9ebf087",
+      "changed_files": [
+        "research/archive/nasa_ssr_19631115_legacy_wayback_20261113.json",
+        "tests/test_nasa_ssr_legacy_wayback.py",
+        "tools/verify_nasa_ssr_legacy_wayback.py"
+      ],
+      "review_note": "Three Wayback timestamps one NASA PDF payload; verification flaw: --fetch never checks current API URL",
+      "author_ci": {
+        "sha": "c36dbf5ffcb1a1fe30890671cd3f3160d9ebf087",
+        "event": "pull_request",
+        "success": 18,
+        "skipped": 1,
+        "total": 19
+      },
+      "push_ci": {
+        "sha": "d73e66678dbaf0583064f88da7e4702baeb7d5b0",
+        "event": "push",
+        "success": 19,
+        "skipped": 0,
+        "total": 19
+      }
+    }
+  ]
+}

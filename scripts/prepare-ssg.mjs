@@ -67,3 +67,34 @@ for(const s of stories){
   writeFileSync(join('content/stories',s.filename),fm.join('\n')+s.body+provenance);
 }
 console.log('Gerado conteúdo SSG de '+stories.length+' capítulos sem alterar stories/.');
+
+
+const links=[
+ ['cronologia','Cronologia'],['evidencias','Evidências'],
+ ['hipoteses','Hipóteses'],['simulacoes','Simulações'],['metodo','Método']
+];
+const newNav=links.map(([slug,title])=>'- ['+title+'](/conde-incident/'+slug+'/)').join('\n');
+function landing(slug,title,description,content){
+ mkdirSync('content/'+slug,{recursive:true});
+ writeFileSync('content/'+slug+'/index.md',page(title,description,'index',content+'\n\n[Início](/conde-incident/) · [Caderno](/conde-incident/stories/)'));
+}
+landing('cronologia','Cronologia da investigação','Datas editoriais da investigação do Conde.',
+ '# Cronologia da investigação\n\n**Estas datas são de publicação dos capítulos, não datas de observação, passagem ou queda.**\n\n'+stories.map(s=>
+ '- **'+s.date+'**: [Capítulo '+s.chapter+': '+s.title+'](/conde-incident/stories/'+s.slug+'/). '+s.summary
+ ).join('\n'));
+landing('evidencias','Evidências e fontes','Índice de textos, fontes e proveniência.',
+ '# Evidências e fontes\n\nEste índice cobre os capítulos editoriais, **não toda a matriz científica**. Verifique as fontes originais e a dependência entre relatos.\n\n'+stories.map(s=>
+ '- [Capítulo '+s.chapter+': '+s.title+'](/conde-incident/stories/'+s.slug+'/) · [Markdown canônico](https://github.com/franklinbaldo/conde-incident/blob/main/stories/'+s.filename+')'
+ ).join('\n')+'\n\n[Pesquisa e evidências completas](https://github.com/franklinbaldo/conde-incident/tree/main/research)');
+landing('hipoteses','Hipóteses concorrentes','Hipóteses submetidas a contraprovas.',
+ '# Hipóteses concorrentes\n\n## Queda em Conde\n\nExige vínculo físico e documental do objeto, tempo e localização. Um relato não prova o impacto.\n\n## Sobrevoo\n\nUma órbita simulada não equivale a observação histórica; identificar instrumentos e incertezas.\n\n## Descarte ou fragmentação\n\nExige evidência independente do processo e da identidade dos fragmentos.\n\n## Ausência de vínculo causal\n\nNotícia e registro de decaimento podem se referir a eventos diferentes.\n\n**Nenhuma dessas hipóteses é considerada demonstrada nesta página.**');
+const labTabs=[['summary','Síntese'],['map','Mapa orbital'],['inverse','Inspetor inverso'],['triangulation','Triangulação'],['sensitivity','Atmosfera'],['montecarlo','Monte Carlo'],['tles','TLEs'],['documents','Documentos']];
+landing('simulacoes','Simulações e laboratório','Acesso à instrumentação científica em transição.',
+ '# Simulações e laboratório\n\n**Migração em etapas:** o conteúdo editorial e os novos índices já usam SSG Rust. Os instrumentos abaixo ainda usam React até comprovarmos paridade funcional.\n\n'+labTabs.map(([id,t])=>'- ['+t+'](/conde-incident/lab/#/'+id+')').join('\n')+'\n\nAlinhamento simulado não é sobrevoo observado. Um dia de decaimento não determina a hora nem o local de reentrada.');
+landing('metodo','Método e limites','Distinção entre fontes, resultados e provas.',
+ '# Método e limites\n\n- **Fonte examinada** é um registro com proveniência, não necessariamente um evento físico confirmado.\n- **Relato** documenta o que se afirmou, não prova independente da afirmação.\n- **Simulação** depende de condições e incertezas declaradas.\n- **Prova Lean** garante consequências das premissas, não sua autenticidade empírica.\n- **Conclusão** requer cadeia documental e inferência controlada.\n\n[Repositório, scripts, fontes e CI](https://github.com/franklinbaldo/conde-incident).');
+const homePath='content/index.md';
+const home=readFileSync(homePath,'utf8');
+const heading='## Caderno de histórias';
+assert.ok(home.includes(heading),'Secção Caderno ausente do índice SSG');
+writeFileSync(homePath,home.replace(heading,'## Explore a investigação\n\n'+newNav+'\n\n'+heading));
