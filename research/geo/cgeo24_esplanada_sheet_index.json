@@ -1,0 +1,118 @@
+{
+  "schema": "conde.gis.sheet-catalog-locator/v1",
+  "id": "CGEO-24",
+  "audit_date": "2026-11-13",
+  "sources": {
+    "ibge": {
+      "title": "IBGE Carta Imagem Porto Sauipe MI-1906 (sheet index for MI-1850)",
+      "url": "https://geoftp.ibge.gov.br/imagens_do_territorio/imagens_corrigidas/cartas_imagem/ba100/porto_sauipe_mi-1906_ci.pdf",
+      "byte_size": 3943016,
+      "sha256": "36e4cda6a248db96a5a0f33189ab0fe23b883cc196582083023ed1ed20a830d2",
+      "data_epoch": "SPOT imagery 2000-2002, geometric correction 2003"
+    },
+    "sudene": {
+      "title": "SUDENE inventory 11/02/2022 (PDF page 13, index 12)",
+      "url": "https://www.gov.br/sudene/pt-br/centrais-de-conteudo/CartasTopograficasparadoacao2022.pdf/@@display-file/file",
+      "byte_size": 274357,
+      "sha256": "4df003e72a7187da97438ab3c36114b28cf2e44cc94a44156794a473e519bbe9",
+      "pdf_page_index": 12,
+      "entry": {
+        "mi": 1850,
+        "name": "Esplanada - BA / SE",
+        "scale": "1:100.000",
+        "format": "Impresso e digital",
+        "inventory_quantity": 4
+      },
+      "edition_year_of_underlying_map": null
+    }
+  },
+  "nominal_graticule": {
+    "unit": "degrees from printed index, not authenticated geodetic datum",
+    "horizontal_datum": null,
+    "positional_accuracy_m": null,
+    "sheets": [
+      {
+        "mi": 1850,
+        "name": "Esplanada - BA / SE",
+        "bbox": [
+          -38,
+          -12,
+          -37.5,
+          -11.5
+        ]
+      },
+      {
+        "mi": 1851,
+        "name": "Riacho Tabatinga - BA / SE",
+        "bbox": [
+          -37.5,
+          -12,
+          -37,
+          -11.5
+        ]
+      },
+      {
+        "mi": 1906,
+        "name": "Porto Sauipe",
+        "bbox": [
+          -38,
+          -12.5,
+          -37.5,
+          -12
+        ]
+      }
+    ]
+  },
+  "camera_observations": [
+    {
+      "id": "CGEO-15-1708",
+      "epoch": "2022-09-15",
+      "lon": -37.621475,
+      "lat": -11.7988,
+      "mi_expected": 1850
+    },
+    {
+      "id": "CGEO-15-1709",
+      "epoch": "2022-09-15",
+      "lon": -37.621659,
+      "lat": -11.798532,
+      "mi_expected": 1850
+    }
+  ],
+  "false_friends": [
+    {
+      "mi": 38,
+      "name": "Conde - PB",
+      "scale": "1:25.000",
+      "is_conde_bahia": false
+    },
+    {
+      "url": "https://geoftp.ibge.gov.br/imagens_do_territorio/imagens_corrigidas/cartas_imagem/ba100/esplanada_mi-1850_ci.pdf",
+      "http_status_on_2026_11_13": 404,
+      "full_sheet_acquired": false
+    }
+  ],
+  "historical": {
+    "center_point_1963": null,
+    "center_polygon_1963": null,
+    "fall_location_1963": null,
+    "horizontal_error_m": null,
+    "authenticated_pre_1963_sheet": false,
+    "can_constrain_orbital_reentry": false,
+    "missing_bridge": "Acquire dated historical Esplanada MI-1850 sheet or aerial photo and locate independently identified urban control points"
+  },
+  "dependencies": [
+    {
+      "to": "CGEO-15",
+      "type": "CAMERA_2022_INDEX_ONLY"
+    },
+    {
+      "to": "CGEO-17",
+      "type": "1958_TOPONYMS_GEOCODE_PENDING"
+    },
+    {
+      "to": "CGEO-18",
+      "type": "NOT_EVENT_GEOREFERENCE"
+    }
+  ]
+}
