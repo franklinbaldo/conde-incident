@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {archivePages} from '../scripts/ssg-documentary-archive.mjs';
+import {interpretArchiveStatus} from '../scripts/archive-source-status.mjs';
 
 const feed = JSON.parse(readFileSync('public/data/conde-source-citations.json','utf8'));
 const ancestry = JSON.parse(readFileSync('public/data/conde-declared-dependence.json','utf8'));
@@ -216,4 +217,27 @@ test('UX-04: every citation has a round-trip path to its matrix row and original
       assert.ok(page.includes('/fontes/'+r.source_id.toLowerCase().replaceAll('_','-')+'/'),
         'Fonte de referência múltipla perdida: '+id);
   }
+});
+
+test('UX-04: every curated canonical state has legible, non-probabilistic reading', () => {
+  const pages=archivePages(feed, ancestry);
+  const index=pages.get('index.md');
+  assert.match(index,/Como interpretar os estados documentais/);
+  assert.match(index,/nunca de observações físicas independentes/);
+  for (const record of feed.records) {
+    const {label,support,limit}=interpretArchiveStatus(record.source_status);
+    const route=record.occurrence.toLowerCase().replace('#','-')+'/index.md';
+    const detail=pages.get(route);
+    for (const piece of [label,support,limit]) {
+      assert.ok(detail.includes(piece), 'Leitura ausente na ocorrência: '+route+' '+piece);
+      assert.ok(index.includes(piece), 'Leitura ausente no índice: '+piece);
+    }
+    assert.ok(detail.includes(record.source_status), 'Código canônico removido');
+  }
+  assert.match(pages.get('c197-1/index.md'),/Data catalogada, sem local de queda/);
+  assert.match(pages.get('c179-1/index.md'),/Espelho de elementos orbitais não autenticado/);
+  const unknown=clone(feed);
+  unknown.records[0].source_status='UNREVIEWED_INSTRUMENTAL_OBSERVATION';
+  assert.throws(()=>archivePages(unknown,ancestry),/sem leitura editorial revisada/);
+  assert.throws(()=>interpretArchiveStatus('__proto__'),/sem leitura editorial revisada/);
 });
