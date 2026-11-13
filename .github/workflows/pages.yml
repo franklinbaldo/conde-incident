@@ -86,7 +86,7 @@ jobs:
           cp -R static/css/. public/css/
           cp -R static/img/. public/img/
       - name: Verify published SSG documentary status deep links
-        run: node --test tests/ssg-state-fragments-built.test.mjs
+        run: node --test tests/ssg-state-fragments-built.check.mjs
       - name: Test and build canonical sitemap from final Pages artifact
         run: |
           node --test tests/ssg-sitemap.test.mjs
