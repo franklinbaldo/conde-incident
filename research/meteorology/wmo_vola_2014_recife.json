@@ -1,0 +1,131 @@
+{
+  "schema": "conde.wmo-volume-a-2014-recife/v1",
+  "source": {
+    "institution": "World Meteorological Organization",
+    "title": "WMO No. 9 Volume A: Observing Stations",
+    "edition": "2014-12",
+    "url": "https://old.wmo.int/extranet/pages/prog/www/ois/Operational_Information/VolumeA/VolumeA2014ed.pdf",
+    "pdf_page_index_zero_based": 248,
+    "pdf_page_number_one_based": 249,
+    "section": "Region III - Brazil, index range 82764-82927",
+    "legend_page_indices_zero_based": [
+      11,
+      12,
+      13
+    ],
+    "visual_page_verified": true,
+    "pdf_sha256": null,
+    "provenance": "Official WMO PDF viewed as rendered page and parsed text on 2026-11-13 UTC; binary PDF not downloaded or hashed",
+    "epistemic_class": "institutional catalogue from 2014, not a 1963 operating log"
+  },
+  "rows": [
+    {
+      "wmo_id": 82899,
+      "short_index": 899,
+      "name": "RECIFE (AERO)",
+      "latitude_south_dms": [
+        8,
+        4,
+        0
+      ],
+      "longitude_west_dms": [
+        34,
+        51,
+        0
+      ],
+      "pressure_datum_hp_m": 19,
+      "terrain_or_aerodrome_elevation_m": 19,
+      "surface_at_utc_2014": [
+        "X",
+        "X",
+        "X",
+        "X",
+        "X",
+        "X",
+        "X",
+        "X"
+      ],
+      "hourly_obs": "H00-24",
+      "upper_air_at_utc_2014": [
+        ".",
+        ".",
+        ".",
+        "."
+      ],
+      "remarks": "A;RBSN(S)",
+      "transcribed_pdf_row": "899 RECIFE (AERO) ...... 08 04 00S 34 51 00W 19.00 19.00 X X X X X X X X H00-24 . . . . A;RBSN(S)"
+    },
+    {
+      "wmo_id": 82900,
+      "short_index": 900,
+      "name": "RECIFE",
+      "latitude_south_dms": [
+        8,
+        3,
+        0
+      ],
+      "longitude_west_dms": [
+        34,
+        55,
+        0
+      ],
+      "pressure_datum_hp_m": 7,
+      "terrain_or_aerodrome_elevation_m": 7,
+      "surface_at_utc_2014": [
+        "X",
+        ".",
+        ".",
+        ".",
+        "X",
+        ".",
+        "X",
+        "."
+      ],
+      "hourly_obs": ".",
+      "upper_air_at_utc_2014": [
+        ".",
+        ".",
+        "RW",
+        "."
+      ],
+      "remarks": "CLIMAT(C);RBCN;RBSN(T)",
+      "transcribed_pdf_row": "900 RECIFE ............. 08 03 00S 34 55 00W 7.00 7.00 X . . . X . X . . . RW . CLIMAT(C);RBCN;RBSN(T)"
+    }
+  ],
+  "legend": {
+    "R": "radiosonde: upper-air pressure, temperature and humidity by electronic means",
+    "W": "radiowind: upper wind by electronically tracked free balloon",
+    "RW": "co-occurrence of R and W for a listed official 2014 observation slot",
+    "RBSN_S": "regional basic synoptic network SYNOP station",
+    "RBSN_T": "regional basic synoptic network TEMP station"
+  },
+  "historical_1963": {
+    "launch_site_wmo_id": null,
+    "upper_air_schedule": null,
+    "radiosonde_model": null,
+    "pressure_temperature_height_covariance": null,
+    "physical_transfer_to_conde": null,
+    "coeval_wmo_catalogue_found": false
+  },
+  "dependencies": [
+    "C149",
+    "C150",
+    "C151",
+    "C193"
+  ],
+  "edges": [
+    {
+      "from": "WMO-VolA-2014-p249-82899-82900",
+      "to": "C149-C151",
+      "relation": "retrospective_station_id_and_programme_only"
+    },
+    {
+      "from": "C149-C151",
+      "to": "Castor_drag_and_drift",
+      "relation": "PENDING_coeval_source_and_transfer_calibration"
+    }
+  ],
+  "status": "CONNECTED_PENDING_CALIBRATION",
+  "independent_1963_measurements_added": 0,
+  "admissible_domain_reduction": false
+}
