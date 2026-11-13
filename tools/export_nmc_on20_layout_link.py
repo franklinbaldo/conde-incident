@@ -74,13 +74,26 @@ def build_from_data(manual: dict, page: dict, tape: dict, archived: dict) -> dic
     edges = {(e["from"], e["to"], e["kind"]) for e in archived["edges"]}
     check(archived["schema"] == "conde.archive-documentary-links/v1"
           and {manual["linked_catalog_id"], manual["id"], page["id"],
-               "NMC_Y20175_PENDING_BRIDGE"} == set(nodes)
+               "NMC_Y20175_PENDING_BRIDGE"}.issubset(nodes)
           and nodes[manual["id"]]["retrieved_bytes_sha256"] == capture["sha256"]
           and nodes[manual["id"]]["document_year"] == 1964
           and nodes["NMC_Y20175_PENDING_BRIDGE"]["activation"] is False
           and nodes["NMC_Y20175_PENDING_BRIDGE"]["simulator_value"] is None
-          and nodes[manual["id"]]["cdx_digest_base32_sha1"] is None
+          and nodes[manual["id"]]["cdx_digest_base32_sha1"]
+              == "WJ2GSUYH54TA2IUAFHSKWG2KCRX2WMIM"
+          and nodes[manual["id"]]["preferred_archived_url"]
+              == nodes["MET-NMC-NCEPON-20080920-FULL"]["archive_url"]
+          and nodes["MET-NMC-NCEPON-20080920-FULL"]["retrieved_bytes_sha256"]
+              == capture["sha256"]
+          and nodes["MET-NMC-NCEPON-20080920-FULL"]["pdf_eof"] is True
+          and nodes["MET-NMC-NCEPON-20080920-FULL"]["recommended_as_source_link"] is True
+          and nodes["MET-NMC-NCEPON-20080724-PREFIX"]["pdf_eof"] is False
+          and nodes["MET-NMC-NCEPON-20080724-PREFIX"]["recommended_as_source_link"] is False
           and (page["id"], manual["id"], "SAME_BYTES_PAGE_AUDIT") in edges
+          and ("MET-NMC-NCEPON-20080920-FULL", manual["id"],
+               "SAME_PDF_BYTES_NOT_INDEPENDENT_SOURCES") in edges
+          and ("MET-NMC-NCEPON-20080724-PREFIX", "MET-NMC-NCEPON-20080920-FULL",
+               "EXACT_TRUNCATED_PREFIX_NOT_INDEPENDENT_EDITION") in edges
           and ("NMC_Y20175_PENDING_BRIDGE", manual["id"],
                "CONDITIONAL_DOCUMENTARY_REFERENCE_NOT_1963_CALIBRATION") in edges,
           "canonical Abelha custody/dependency graph changed")
