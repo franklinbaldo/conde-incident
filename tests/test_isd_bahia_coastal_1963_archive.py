@@ -13,6 +13,10 @@ spec.loader.exec_module(audit)
 class NOAAIndexTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        if not all(os.environ.get(key) for key in ("NOAA_ISD_HISTORY", "NOAA_ISD_INDEX_1963")):
+            # The dedicated source-pinned NOAA workflow downloads original bytes.
+            # Global offline unittest discovery does not fetch arbitrary network data.
+            raise unittest.SkipTest("NOAA source inputs are staged by the dedicated source-pinned workflow")
         cls.history = Path(os.environ["NOAA_ISD_HISTORY"]).read_bytes()
         cls.index = Path(os.environ["NOAA_ISD_INDEX_1963"]).read_bytes()
 
