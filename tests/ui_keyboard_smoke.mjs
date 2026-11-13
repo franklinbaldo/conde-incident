@@ -17,6 +17,8 @@ try {
     const response = await page.goto(origin, { waitUntil: 'domcontentloaded', timeout: 30000 });
     assert(response?.ok(), `initial page HTTP ${response?.status()}`);
     await page.getByRole('heading', { level: 1 }).first().waitFor({ timeout: 20000 });
+    assert.equal(await page.getByRole('heading', { level: 1 }).count(), 1,
+      'SPA must expose exactly one route-specific H1, not a duplicate static heading');
     // In a 1280 px desktop browser at 200% zoom, layout can approach 640 CSS px.
     // This emulates the reflow width, NOT native browser zoom or screen-reader QA.
     const headerLayout = await page.locator('header').first().evaluate(el => ({
@@ -198,6 +200,46 @@ try {
     assert.equal(errors.length, 0, `uncaught page errors: ${errors.join('; ')}`);
     findings.push({ viewport: viewport.name, skip_target: focused.id, hash_preserved: true, nav_hash: '#/map', html_lang: 'en', overflow_px: horizontal.document - horizontal.viewport });
     await page.close();
+  }
+  // Verify the real HTML entrypoint with scripts disabled. This is a browser
+  // fallback test, not a screen-reader evaluation or native 200% zoom test.
+  for (const viewport of [
+    { name: 'desktop', width: 1440, height: 900 },
+    { name: 'mobile', width: 375, height: 812 },
+  ]) {
+    const context = await browser.newContext({
+      javaScriptEnabled: false,
+      viewport: { width: viewport.width, height: viewport.height },
+    });
+    try {
+      const page = await context.newPage();
+      const response = await page.goto(origin, { waitUntil: 'domcontentloaded' });
+      assert(response?.ok(), 'no-script entrypoint failed to load');
+      await page.getByRole('heading', {
+        level: 1,
+        name: 'Laboratório indisponível sem JavaScript',
+      }).waitFor();
+      assert.equal(await page.getByRole('main').count(), 1,
+        'no-script visitor needs a main landmark');
+      assert.equal(await page.getByRole('heading', { level: 1 }).count(), 1,
+        'no-script entrypoint should have exactly one H1');
+      const notebook = page.getByRole('link', { name: 'Ir ao Caderno' });
+      const evidence = page.getByRole('link', { name: 'Consultar evidências' });
+      assert.equal(await notebook.getAttribute('href'), '/conde-incident/');
+      assert.equal(await evidence.getAttribute('href'), '/conde-incident/evidencias/');
+      assert.equal(await page.locator('#root').innerHTML(), '',
+        'React must not be required to render the no-script fallback');
+      const horizontal = await page.evaluate(() => ({
+        viewport: document.documentElement.clientWidth,
+        document: document.documentElement.scrollWidth,
+      }));
+      assert(horizontal.document <= horizontal.viewport + 1,
+        'no-script fallback overflows at ' + viewport.name);
+      await page.screenshot({ path: out + '/' + viewport.name + '-noscript.png', fullPage: true });
+      findings.push({ viewport: viewport.name, javascript: false, fallback: 'PASS' });
+    } finally {
+      await context.close();
+    }
   }
   await fs.writeFile(`${out}/findings.json`, JSON.stringify({ origin, findings }, null, 2) + '\n');
   console.log(JSON.stringify({ result: 'PASS', findings }, null, 2));
