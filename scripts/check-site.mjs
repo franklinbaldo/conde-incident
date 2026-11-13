@@ -10,6 +10,15 @@ for(const [name,html] of [['home',index],['stories',listing]]) {
   assert.match(html,/<html[^>]+lang=["']?pt-BR/i,name+' sem idioma pt-BR');
   assert.doesNotMatch(html,/(?:src|href)=["']\/(?:assets|css)\//i,name+' referencia assets da raiz');
 }
+// SSG 0.0.75 emits English search copy even on pt-BR sites. The existing
+// post-build integration localizes the generated widget without touching SRI.
+for (const route of ['index.html','stories/index.html','evidencias/arquivo/index.html']) {
+  const html = read(route);
+  assert.match(html, /id="ssg-search-btn"[^>]*aria-label="Pesquisar"/, 'Busca sem nome PT-BR: '+route);
+  assert.match(html, /id="ssg-search-input"[^>]*placeholder="Pesquisar no acervo\.\.\."/, 'Campo de busca em inglês: '+route);
+  assert.match(html, /<kbd>Esc<\/kbd> fechar/, 'Ajuda de teclado em inglês: '+route);
+  assert.doesNotMatch(html, /<span>Search<\/span>/, 'Busca não localizada: '+route);
+}
 const labNav = html => {
   const header = html.indexOf('<header class="masthead">');
   const nav = header < 0 ? -1 : html.indexOf('<nav', header);
