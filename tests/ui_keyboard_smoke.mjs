@@ -10,13 +10,24 @@ await fs.mkdir(out, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 const findings = [];
 try {
-  for (const viewport of [{ name: 'desktop', width: 1440, height: 900 }, { name: 'mobile', width: 375, height: 812 }]) {
+  for (const viewport of [{ name: 'desktop', width: 1440, height: 900 }, { name: 'mobile', width: 375, height: 812 }, { name: 'reflow-640-css-px', width: 640, height: 720 }]) {
     const page = await browser.newPage({ viewport: { width: viewport.width, height: viewport.height }, reducedMotion: 'reduce' });
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
     const response = await page.goto(origin, { waitUntil: 'domcontentloaded', timeout: 30000 });
     assert(response?.ok(), `initial page HTTP ${response?.status()}`);
     await page.getByRole('heading', { level: 1 }).first().waitFor({ timeout: 20000 });
+    // In a 1280 px desktop browser at 200% zoom, layout can approach 640 CSS px.
+    // This emulates the reflow width, NOT native browser zoom or screen-reader QA.
+    const headerLayout = await page.locator('header').first().evaluate(el => ({
+      position: getComputedStyle(el).position,
+      height: el.getBoundingClientRect().height,
+      viewportHeight: window.innerHeight,
+    }));
+    assert.equal(headerLayout.position, viewport.width < 768 ? 'static' : 'sticky',
+      'Lab header must not cover reading content at narrow/reflow widths: ' + JSON.stringify(headerLayout));
+    assert(headerLayout.height < headerLayout.viewportHeight * 0.75,
+      'Lab header takes over too much of the available height: ' + JSON.stringify(headerLayout));
     const before = new URL(page.url()).hash;
     await page.keyboard.press('Tab');
     const first = await page.evaluate(() => ({
