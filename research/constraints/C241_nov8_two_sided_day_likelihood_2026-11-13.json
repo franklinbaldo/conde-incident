@@ -54,7 +54,8 @@
     "src/lib/catalogDayLikelihood.ts",
     "src/lib/monteCarlo.ts",
     "src/components/MonteCarloVisualizer.tsx",
-    "tests/catalogDayLikelihood.test.mjs"
+    "tests/catalogDayLikelihood.test.mjs",
+    "tests/catalogDayMonteCarloIntegration.check.mjs"
   ],
   "source_to_simulation_contract": {
     "event_weighing": "P(reported label 1963-11-08 | model terminal orbital-decay event t,sigma)",
