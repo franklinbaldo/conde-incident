@@ -30,6 +30,7 @@ A notícia de Conde lhe ofereceu um material quase pronto para sátira: um objet
 ## O papel que agora podemos abrir
 
 <figure class="story-visual story-document">
+  <p class="story-document-action"><a href="https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00477.pdf#page=7" target="_blank" rel="noopener noreferrer">Abrir Última Hora (PDF, folha 7) em nova aba</a></p>
   <iframe loading="lazy" title="Jornal Última Hora, edição Nordeste, 14 de novembro de 1963, página digital 7: coluna Stanislaw Ponte Preta, A Guerra dos Mundos na Versão Baiana" src="https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00477.pdf#page=7" referrerpolicy="strict-origin-when-cross-origin"></iframe>
   <figcaption><strong>O documento, não uma reconstituição.</strong> Fac-símile de <em>Última Hora</em>, Nordeste/Recife, 14/11/1963, folha 7 do PDF, coluna de Stanislaw Ponte Preta, à esquerda da página. Fonte: <a href="https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00477.pdf#page=7">Hemeroteca Digital da Biblioteca Nacional (abrir em outra visualização)</a>. O arquivo pode não carregar dentro de alguns navegadores; o link direto preserva o acesso.</figcaption>
 </figure>
