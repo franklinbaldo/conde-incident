@@ -1,0 +1,47 @@
+{
+  "active_historical_constraint": false,
+  "classification": "EXACT_CONDITIONAL_STRUCTURAL_ONLY",
+  "conde_geographic_reduction": "NOT_EVALUABLE",
+  "dependencies": [
+    "C241-P16",
+    "C241-P17",
+    "Tartaruga #396",
+    "Castor #4"
+  ],
+  "exact_gauge": "(x0,delta,epsilon)->(phi_-h(x0),delta+h,epsilon-h)",
+  "externally_dated_forcing_counterexample": {
+    "interpretation": "THIS gauge can fail under an externally anchored nonautonomous force; neither full observability nor physical validity follows",
+    "jerk": "3",
+    "model": "q''(t)=g*t; g calibrated in absolute time",
+    "second_difference_of_shift_residual": "6/5",
+    "shift": "2/5",
+    "symbolic_difference": "g*h for observations t=0,1,2; nonzero forbids identical 3-point positions"
+  },
+  "general_proof": "phi_(t+delta+h)(phi_-h(x0))=phi_(t+delta)(x0); station time t+delta+epsilon unchanged",
+  "historical_instrument_data": "NOT_AVAILABLE",
+  "historical_mcmc": "NOT_RUN",
+  "historical_physical_model_validation": "NOT_RUN",
+  "id": "C241-P18-AUTONOMOUS-FLOW-TIME-GAUGE",
+  "required_assumptions": [
+    "autonomous time-translation-equivariant target flow",
+    "freely estimated target initial state",
+    "unanchored target clock and station-ephemeris epoch"
+  ],
+  "witness": {
+    "different_initial_states": true,
+    "dynamics": "three-dimensional constant acceleration, not inertial straight-line motion",
+    "four_distinct_epochs": [
+      "0",
+      "1/2",
+      "2",
+      "5"
+    ],
+    "sightlines_identical_exactly": [
+      true,
+      true,
+      true,
+      true
+    ],
+    "station": "arbitrary quadratic ephemeris"
+  }
+}

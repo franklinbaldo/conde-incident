@@ -1,0 +1,32 @@
+{
+  "schema": "conde.c241-conditional-observability-bridge/v1",
+  "id": "C241-P18-AUTONOMOUS-FLOW-TIME-GAUGE",
+  "classification": "EXACT_CONDITIONAL_STRUCTURAL_ONLY",
+  "project_issue": 536,
+  "derivation": "research/statistics/AUTONOMOUS_FLOW_TIME_GAUGE_C241.md",
+  "rational_replay": "research/statistics/autonomous_time_gauge_C241.json",
+  "source_occurrences": [],
+  "new_historical_measurements": false,
+  "variables": [
+    {"id": "target_initial_state_x0", "role": "free_parameter", "historical_value": null},
+    {"id": "target_clock_offset_delta", "role": "free_parameter", "historical_value": null},
+    {"id": "station_ephemeris_offset_epsilon", "role": "free_parameter", "historical_value": null},
+    {"id": "autonomous_flow_phi", "role": "conditional_dynamical_operator", "validated_historical_model": null},
+    {"id": "externally_dated_force", "role": "possible_symmetry_breaking_input", "validated_historical_model": null},
+    {"id": "station_external_time_anchor", "role": "needed_calibration", "observed_value": null},
+    {"id": "instrumental_angles_epoch_covariance", "role": "needed_calibration", "observed_value": null}
+  ],
+  "dependency_edges": [
+    {"from": "target_initial_state_x0", "to": "predicted_sightline", "relation": "state_evolves_under_phi"},
+    {"from": "target_clock_offset_delta", "to": "predicted_sightline", "relation": "target_time_argument"},
+    {"from": "station_ephemeris_offset_epsilon", "to": "predicted_sightline", "relation": "station_time_argument"},
+    {"from": "autonomous_flow_phi", "to": "time_gauge", "relation": "flow_group_identity_yields_exact_nonidentifiability"},
+    {"from": "externally_dated_force", "to": "time_gauge", "relation": "may_break_this_gauge_if_calibrated"},
+    {"from": "station_external_time_anchor", "to": "station_ephemeris_offset_epsilon", "relation": "potential_external_constraint_not_acquired"},
+    {"from": "instrumental_angles_epoch_covariance", "to": "historical_likelihood", "relation": "missing_primary_instrumental_calibration"}
+  ],
+  "historic_constraint_active": false,
+  "historical_mcmc": "NOT_RUN",
+  "historical_geographic_reduction": "NOT_EVALUABLE",
+  "depends_on_issues": [396, 4]
+}
