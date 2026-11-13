@@ -1,7 +1,9 @@
 import Conde1963.Core
+import Conde1963.RelativeTrajectories
 
-/-! Audit core theorem axioms. Compiling a conditional implication does not
-authenticate observations, original 1963 TLEs, or a landing near Conde. -/
+/-! Audit axiom dependencies of existing documentary results and new
+conditional, three-object orbital exclusion theorem. Lean compilation
+does not authenticate observed positions or establish a 1963 reentry. -/
 
 #print axioms Conde1963.no_double_count_tupi
 #print axioms Conde1963.no_double_count_tracking
@@ -11,3 +13,5 @@ authenticate observations, original 1963 TLEs, or a landing near Conde. -/
 #print axioms Conde1963.joint_model_did_not_beat_quadratic_on_holdout
 #print axioms Conde1963.date_alone_does_not_identify_place
 #print axioms Conde1963.more_constraints_never_expand
+#print axioms Conde1963.RelativeTrajectories.controls_exclude_candidate_if_x_envelopes_disjoint
+#print axioms Conde1963.RelativeTrajectories.one_disjoint_epoch_rejects_trajectory
