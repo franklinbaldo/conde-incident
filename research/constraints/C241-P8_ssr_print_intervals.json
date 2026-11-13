@@ -1,0 +1,72 @@
+{
+  "id": "C241-P8",
+  "interpretation": "BOUNDED_CROSS_EDITION_PRINTED_VALUES_NOT_ORBITAL_EPOCHS",
+  "objects": [
+    {
+      "april_printed_centiminutes": 9460,
+      "conditional_april_minus_october_centiminutes": [
+        -10,
+        10
+      ],
+      "designator": "1963-003A",
+      "instrumental_uncertainty": null,
+      "measured_decay_rate": null,
+      "observed_epoch": null,
+      "october_printed_centiminutes": 9460,
+      "printed_apogee_delta_oct_minus_apr_km": -6,
+      "printed_perigee_delta_oct_minus_apr_km": 2,
+      "printed_period_change_robust_to_nearest_tenth_rounding": false
+    },
+    {
+      "april_printed_centiminutes": 9410,
+      "conditional_april_minus_october_centiminutes": [
+        160,
+        180
+      ],
+      "designator": "1963-003B",
+      "instrumental_uncertainty": null,
+      "measured_decay_rate": null,
+      "observed_epoch": null,
+      "october_printed_centiminutes": 9240,
+      "printed_apogee_delta_oct_minus_apr_km": -104,
+      "printed_perigee_delta_oct_minus_apr_km": -59,
+      "printed_period_change_robust_to_nearest_tenth_rounding": true
+    },
+    {
+      "april_printed_centiminutes": 9430,
+      "conditional_april_minus_october_centiminutes": [
+        90,
+        110
+      ],
+      "designator": "1963-003C",
+      "instrumental_uncertainty": null,
+      "measured_decay_rate": null,
+      "observed_epoch": null,
+      "october_printed_centiminutes": 9330,
+      "printed_apogee_delta_oct_minus_apr_km": -73,
+      "printed_perigee_delta_oct_minus_apr_km": -29,
+      "printed_period_change_robust_to_nearest_tenth_rounding": true
+    }
+  ],
+  "physical_domain_change": "NONE_NO_HISTORICAL_EPOCH_OR_INSTRUMENT_SIGMA",
+  "precision": "ONE_DECIMAL_MINUTE_PRINTED; NEAREST_ROUNDING_HYPOTHESIS",
+  "schema": "conde.ssr-printed-period-intervals/v1",
+  "sources": [
+    {
+      "id": "C241-L16",
+      "printed_page": 5,
+      "publication": "1963-04-30",
+      "sha256": "87b8c1be1d074dff4b605b422f6a8836c2ebdf80ca4ac0568373b168cc457a38",
+      "url": "https://ntrs.nasa.gov/api/citations/19630012128/downloads/19630012128.pdf"
+    },
+    {
+      "id": "C241-L12",
+      "printed_page": 5,
+      "publication": "1963-10-15",
+      "sha256": "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+      "url": "https://ntrs.nasa.gov/api/citations/19640000428/downloads/19640000428.pdf"
+    }
+  ],
+  "unit": "0.01 minute",
+  "upstream_family": "NASA_GODDARD_COMPILED_REPORT_NOT_INDEPENDENT_SENSORS"
+}
