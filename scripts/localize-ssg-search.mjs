@@ -8,8 +8,9 @@ import { fileURLToPath } from 'node:url';
 // Do not touch the fingerprinted JS or its SRI/CSP integrity metadata.
 const translations = [
   ['<button id="ssg-search-btn" type="button" aria-label="Search">',
-   '<button id="ssg-search-btn" type="button" aria-label="Pesquisar">'],
+   '<button id="ssg-search-btn" type="button" aria-label="Pesquisar" aria-keyshortcuts="Control+K Meta+K">'],
   ['<span>Search</span>', '<span>Pesquisar</span>'],
+  ['<kbd>K</kbd>', '<kbd>Ctrl/⌘+K</kbd>'],
   ['<div id="ssg-search-overlay" role="dialog" aria-label="Search">',
    '<div id="ssg-search-overlay" role="dialog" aria-label="Pesquisar">'],
   ['<input id="ssg-search-input" type="search" placeholder="Search documentation..." autocomplete="off" aria-label="Search"/>',
