@@ -22,8 +22,12 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
-      - name: Show exact audited commit
-        run: git rev-parse HEAD
+      - name: Verify exact source SHA
+        run: |
+          actual="$(git rev-parse HEAD)"
+          expected="${{ github.event.pull_request.head.sha || github.sha }}"
+          echo "audited_source_head=$actual"
+          test "$actual" = "$expected"
       - name: Adversarial tests and provenance manifest
         run: |
           python3 -m unittest discover -s tests -p 'test_zvenigorod_collection_dates.py' -v
