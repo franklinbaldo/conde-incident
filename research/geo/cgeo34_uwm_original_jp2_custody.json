@@ -35,7 +35,22 @@
     "acquired_original_bitstream": true,
     "full_image_visual_inspection_performed": false,
     "full_jp2_kept_outside_git": true,
-    "copyright_checked_for_redistribution": false
+    "copyright_checked_for_redistribution": false,
+    "embedded_xml": {
+      "payload_bytes": 1660,
+      "payload_sha256": "34324b6e4d426531c0796aa8a28d52dde53b01b7a2840bd3e9af334f50c6200d",
+      "change_history_date": "2017-06-23",
+      "change_history_meaning": "PROCESSING_HISTORY_NOT_SURVEY_OR_PHOTOGRAPH_CAPTURE_DATE",
+      "bitsperpixel_literal": "1953391977",
+      "bitsperpixel_consistent_with_ihdr": false,
+      "header_bits_per_component": 8,
+      "original_internal_source_path_republished": false,
+      "transform": "5x3 reversible wavlet transform",
+      "levels": 8,
+      "layers": 20,
+      "tile_width": 1024,
+      "tile_height": 1024
+    }
   },
   "map_historical_readings": {
     "catalog_year": 1954,
