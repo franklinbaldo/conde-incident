@@ -50,6 +50,13 @@ def _is_exact_assertion(step: str, expected: str) -> bool:
     # command contains a byte-for-byte exact SHA comparison.
     if re.search(r'(?m)^        (?:if|continue-on-error)\s*:', step):
         return False
+    # GitHub accepts arbitrary shell templates. A custom template such as
+    # `bash -c "true" {0}` reports success without executing the SHA check.
+    # Built-in bash/sh preserve the script's exit status; fail closed on
+    # other shells until their behavior is audited explicitly.
+    shells = re.findall(r'(?m)^        shell:\s*(.*?)\s*$', step)
+    if shells and shells not in (['bash'], ['sh']):
+        return False
     commands = {line.strip() for line in step.splitlines()
                 if line.strip() and not line.lstrip().startswith('#')}
     commands |= {line.removeprefix('run: ').strip() for line in commands if line.startswith('run: ')}
@@ -158,6 +165,26 @@ class ExactCheckoutPolicy(unittest.TestCase):
                 self.assertNotEqual(broken, named)
                 with self.assertRaisesRegex(AssertionError, 'checkout must pin'):
                     check_checkout_sha(broken, name)
+
+    def test_sha_guard_shell_cannot_ignore_the_script(self):
+        name = 'integration-head.yml'
+        source = (ROOT / name).read_text(encoding='utf-8')
+        marker = '      - name: Assert exact head SHA\n'
+        self.assertIn(marker, source)
+        self.assertEqual(check_checkout_sha(source, name), 2)
+        # GitHub custom shell templates can ignore {0}, the script file.
+        # Such a step succeeds even when the checkout SHA differs.
+        for shell in ('bash -c "true" {0}', 'sh -c "true" {0}'):
+            mutant = source.replace(marker, marker + f'        shell: {shell}\n', 1)
+            with self.subTest(shell=shell):
+                self.assertNotEqual(mutant, source)
+                with self.assertRaisesRegex(AssertionError, 'exact SHA assertion'):
+                    check_checkout_sha(mutant, name)
+        # Explicit built-in shells retain the fail-closed SHA check.
+        for shell in ('bash', 'sh'):
+            valid = source.replace(marker, marker + f'        shell: {shell}\n', 1)
+            with self.subTest(shell=shell):
+                self.assertEqual(check_checkout_sha(valid, name), 2)
 
     def test_sha_assertion_cannot_be_skipped_or_ignored(self):
         for name, marker in (
