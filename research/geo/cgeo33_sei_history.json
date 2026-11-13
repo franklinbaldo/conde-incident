@@ -1,0 +1,102 @@
+{
+  "schema": "conde.gis.cartographic-historiography/v1",
+  "id": "CGEO-33",
+  "date_reviewed": "2026-11-13",
+  "municipality": {
+    "name": "Conde",
+    "state": "BA",
+    "ibge_code": 2908606
+  },
+  "source": {
+    "publisher": "SEI Bahia / CECAR",
+    "title": "Plano Cartográfico do Estado da Bahia",
+    "year": 2025,
+    "isbn": "978-65-989250-5-5",
+    "series": "Série Cecar 1",
+    "section": "5.1 Histórico",
+    "printed_pages": [
+      69,
+      70
+    ],
+    "url": "https://www.ba.gov.br/sei/sites/site-sei/files/2026-03/serie_cecar_1_plano_cartografico_da_bahia_2025.pdf",
+    "pdf_bytes": 12278693,
+    "pdf_sha256": "267f1f30775f8a44b1c5ab17ce1bf25d303713530d006c0302e4854760fa0865",
+    "downloaded_utc_date": "2026-11-13",
+    "pdf_integral_bytes_acquired": true,
+    "source_text_read": true,
+    "visual_pages_rendered": false,
+    "source_type": "INSTITUTIONAL_RETROSPECTIVE_2025_NOT_CONTEMPORANEOUS_1963"
+  },
+  "archival_claims": [
+    {
+      "id": "IBGE_250K",
+      "printed_page": 69,
+      "scale_denominator": 250000,
+      "production_years": [
+        "1949-1952",
+        "1956"
+      ],
+      "sheets_reported": 31,
+      "coverage_complete": false,
+      "conde_sheet_identified": null,
+      "urban_center_1963_located": false
+    },
+    {
+      "id": "BA_100K",
+      "printed_page": 69,
+      "scale_denominator": 100000,
+      "production_decades": "1960s-1980s",
+      "multiple_agencies_and_editions": true,
+      "esplanada_edition_before_november_1963_confirmed": false
+    },
+    {
+      "id": "PETROBRAS_25K",
+      "printed_page": 70,
+      "scale_denominator": 25000,
+      "nominal_decade": "1960s",
+      "region_approximate": "Recôncavo/Tucano/Jatobá",
+      "first_mapping_sheet_cut": "FREE",
+      "second_mapping_year": 1998,
+      "second_mapping_partial_sheets": true,
+      "actual_1961_photo_footprint": null,
+      "project_53d_same_program_confirmed": null
+    }
+  ],
+  "dependencies": [
+    {
+      "to": "CGEO-24",
+      "relation": "MI1850_SHEET_INDEX_NOT_FRAME_COVERAGE"
+    },
+    {
+      "to": "CGEO-25",
+      "relation": "SUDENE_1973_EDITION_POSTDATES_EVENT"
+    },
+    {
+      "to": "CGEO-26",
+      "relation": "PET53D_LINK_UNVERIFIED"
+    },
+    {
+      "to": "CGEO-32",
+      "relation": "DNOCS_213_INDEPENDENCE_UNVERIFIED"
+    },
+    {
+      "to": "CGEO-18",
+      "relation": "NO_BRIDGE_TO_FBIS_CENTER"
+    }
+  ],
+  "interpretive_limits": {
+    "ica_pre1963_250k_sheet_covers_conde": null,
+    "old_250k_sheet_is_urban_precision": false,
+    "first_1960s_sheet_cuts_prove_conde_coverage": false,
+    "post1998_partial_sheet_proves_1961_footprint": false,
+    "project_53d_identified_with_regional_petrobras_program": null,
+    "historical_center_1963": null,
+    "municipal_boundary_1963": null,
+    "reported_fall_location": null,
+    "uncertainty_m": null,
+    "new_orbital_constraint": false,
+    "can_constrain_orbital_reentry": false,
+    "source_is_independent_1963_observation": false
+  },
+  "next_test": "Obter índice por folha das cartas IBGE 1:250.000 1949-1956 e fotoíndices PETROBRAS 53D, DNOCS 213, USAF 63-32; conferir cobertura Conde, data por fotograma e edição original antes de georreferenciar."
+}
