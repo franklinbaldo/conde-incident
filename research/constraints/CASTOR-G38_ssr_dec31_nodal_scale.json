@@ -1,0 +1,183 @@
+{
+  "schema": "conde.ssr-nodal-convention-falsification/v1",
+  "id": "CASTOR-G38-DEC31-PRINTED-NODAL-J2",
+  "epistemic_status": "COMPUTED_CONDITIONAL_NO_OBSERVED_ORBIT",
+  "depends_on": [
+    "C241-L18",
+    "CASTOR-G37-DEC31-SSR-CROSSFIELD",
+    "C241-P7"
+  ],
+  "source_ledger": "research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json",
+  "document_family": "NASA_GODDARD_COMPILED_SSR_NOT_INDEPENDENT_SENSORS",
+  "source_pdf_sha256": {
+    "19630012290": "9b00bf8323b1de80a34920f73c658f70f766a51632a13473a408679f0e5a03d9",
+    "19640002493": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+    "19640005618": "d9504a8641baa65c208e41034e77b0e9b1cc01b4acb2a4f95541bd9e75d3783d"
+  },
+  "model": "first-order J2 secular draconitic proxy using omega_dot + M_dot; printed heights conditionally taken as coepoch mean-orbit apsidal altitudes",
+  "assumption_details": {
+    "earth_radius_km": 6378.137,
+    "earth_mu_km3_s2": 398600.4418,
+    "J2": 0.00108262668,
+    "period_print_half_width_min": 0.05,
+    "height_print_half_width_km": 0.5,
+    "inclination_print_half_width_deg": 0.005,
+    "eight_box_corners": true,
+    "box_is_not_instrumental_sigma": true,
+    "nodal_model_convention_proven_historical": false,
+    "same_epoch_hypothesis_proven": false,
+    "calibrated_model_error_bound": null
+  },
+  "records": [
+    {
+      "source_occurrence": "C241-L18:19630012290:1963-003A",
+      "publication_NOT_instrument_epoch": "1963-07-31",
+      "designator": "1963-003A",
+      "printed_nodal_period_min": 94.6,
+      "kepler_two_body_min": 94.56471981,
+      "first_order_J2_nodal_proxy_min": 94.686485737,
+      "J2_minus_kepler_sec": 7.305956,
+      "printed_minus_J2_proxy_sec": -5.189144,
+      "print_box_only_residual_sec_NOT_sigma": [
+        -8.808576,
+        -1.569734
+      ],
+      "model_is_conditional": true,
+      "instrument_epoch_utc": null,
+      "instrumental_uncertainty": null,
+      "historical_orbit_fit": false
+    },
+    {
+      "source_occurrence": "C241-L18:19630012290:1963-003B",
+      "publication_NOT_instrument_epoch": "1963-07-31",
+      "designator": "1963-003B",
+      "printed_nodal_period_min": 93.6,
+      "kepler_two_body_min": 93.360412709,
+      "first_order_J2_nodal_proxy_min": 93.482698286,
+      "J2_minus_kepler_sec": 7.337135,
+      "printed_minus_J2_proxy_sec": 7.038103,
+      "print_box_only_residual_sec_NOT_sigma": [
+        3.42131,
+        10.654874
+      ],
+      "model_is_conditional": true,
+      "instrument_epoch_utc": null,
+      "instrumental_uncertainty": null,
+      "historical_orbit_fit": false
+    },
+    {
+      "source_occurrence": "C241-L18:19630012290:1963-003C",
+      "publication_NOT_instrument_epoch": "1963-07-31",
+      "designator": "1963-003C",
+      "printed_nodal_period_min": 93.9,
+      "kepler_two_body_min": 94.100915971,
+      "first_order_J2_nodal_proxy_min": 94.222878024,
+      "J2_minus_kepler_sec": 7.317723,
+      "printed_minus_J2_proxy_sec": -19.372681,
+      "print_box_only_residual_sec_NOT_sigma": [
+        -22.9911,
+        -15.754285
+      ],
+      "model_is_conditional": true,
+      "instrument_epoch_utc": null,
+      "instrumental_uncertainty": null,
+      "historical_orbit_fit": false
+    },
+    {
+      "source_occurrence": "C241-L18:19640002493:1963-003A",
+      "publication_NOT_instrument_epoch": "1963-11-30",
+      "designator": "1963-003A",
+      "printed_nodal_period_min": 94.6,
+      "kepler_two_body_min": 94.533775911,
+      "first_order_J2_nodal_proxy_min": 94.655554333,
+      "J2_minus_kepler_sec": 7.306705,
+      "printed_minus_J2_proxy_sec": -3.33326,
+      "print_box_only_residual_sec_NOT_sigma": [
+        -6.952624,
+        0.286082
+      ],
+      "model_is_conditional": true,
+      "instrument_epoch_utc": null,
+      "instrumental_uncertainty": null,
+      "historical_orbit_fit": false
+    },
+    {
+      "source_occurrence": "C241-L18:19640002493:1963-003C",
+      "publication_NOT_instrument_epoch": "1963-11-30",
+      "designator": "1963-003C",
+      "printed_nodal_period_min": 92.2,
+      "kepler_two_body_min": 92.130582394,
+      "first_order_J2_nodal_proxy_min": 92.253358215,
+      "J2_minus_kepler_sec": 7.366549,
+      "printed_minus_J2_proxy_sec": -3.201493,
+      "print_box_only_residual_sec_NOT_sigma": [
+        -6.81557,
+        0.412562
+      ],
+      "model_is_conditional": true,
+      "instrument_epoch_utc": null,
+      "instrumental_uncertainty": null,
+      "historical_orbit_fit": false
+    },
+    {
+      "source_occurrence": "C241-L18:19640005618:1963-003A",
+      "publication_NOT_instrument_epoch": "1963-12-31",
+      "designator": "1963-003A",
+      "printed_nodal_period_min": 94.6,
+      "kepler_two_body_min": 94.523462029,
+      "first_order_J2_nodal_proxy_min": 94.645269955,
+      "J2_minus_kepler_sec": 7.308476,
+      "printed_minus_J2_proxy_sec": -2.716197,
+      "print_box_only_residual_sec_NOT_sigma": [
+        -6.335538,
+        0.903121
+      ],
+      "model_is_conditional": true,
+      "instrument_epoch_utc": null,
+      "instrumental_uncertainty": null,
+      "historical_orbit_fit": false
+    },
+    {
+      "source_occurrence": "C241-L18:19640005618:1963-003C",
+      "publication_NOT_instrument_epoch": "1963-12-31",
+      "designator": "1963-003C",
+      "printed_nodal_period_min": 89.2,
+      "kepler_two_body_min": 91.211783642,
+      "first_order_J2_nodal_proxy_min": 91.334866743,
+      "J2_minus_kepler_sec": 7.384986,
+      "printed_minus_J2_proxy_sec": -128.092005,
+      "print_box_only_residual_sec_NOT_sigma": [
+        -131.704039,
+        -124.479992
+      ],
+      "model_is_conditional": true,
+      "instrument_epoch_utc": null,
+      "instrumental_uncertainty": null,
+      "historical_orbit_fit": false
+    }
+  ],
+  "december_31_contrast": {
+    "529_J2_minus_kepler_seconds": 7.384986,
+    "529_printed_minus_J2_seconds": -128.092005,
+    "529_printing_box_excludes_zero": true,
+    "527_printed_minus_J2_seconds": -2.716197,
+    "first_order_J2_alone_reconciles_529": false,
+    "this_does_not_prove_NASA_error": true
+  },
+  "uncertainty": {
+    "source_instrument_epoch": null,
+    "instrument_station": null,
+    "source_covariance": null,
+    "historical_element_convention": null,
+    "residual_causes_unresolved": [
+      "heterogeneous update epoch",
+      "mean vs osculating elements",
+      "compiled field provenance",
+      "model convention"
+    ]
+  },
+  "source_raw_instrument_observations": 0,
+  "independent_527_529_holdout": "NOT_RUN",
+  "activated_historical_restriction": false,
+  "conde_impact_hour_place_probability": "NOT_DETERMINED"
+}
