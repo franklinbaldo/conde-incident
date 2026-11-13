@@ -274,7 +274,6 @@ export function archivePages(citations, lineage, wayback=null) {
       ...familyLinks, '',
       '[Voltar ao arquivo curado]('+ROOT+')',
     ].join('\n')));
-  // Indexed reference categories, never independent witnesses.
   files.set('estados/index.md', page('Estados documentais: índice de vínculos',
     'Referências curadas agrupadas por estado, sem inferir observação física.',
     renderArchiveStatusIndex(citations.records)));
