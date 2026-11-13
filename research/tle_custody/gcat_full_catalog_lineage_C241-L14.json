@@ -1,0 +1,85 @@
+{
+  "record_id": "C241-L14",
+  "observed_at_utc": "2026-11-13",
+  "question": "Does the full GCAT object catalog resolve physical identity of 528/529?",
+  "sources": [
+    {
+      "id": "C241-L13",
+      "kind": "previous_secondary_catalog_compilation",
+      "note": "auxcat A00324 Agena B 2313 and secondary catalog labels; not an independent sensor"
+    },
+    {
+      "id": "GCAT_CURRENT",
+      "kind": "modern_derived_catalog",
+      "url": "https://planet4589.org/space/gcat/data/derived/currentcat.html",
+      "capture_sha256": null,
+      "note": "mutable; hash and exact rows computed by CI"
+    },
+    {
+      "id": "GCAT_SATCAT",
+      "kind": "modern_compiled_catalog",
+      "url": "https://planet4589.org/space/gcat/data/cat/satcat.html",
+      "capture_sha256": null,
+      "note": "mutable; hash and exact rows computed by CI"
+    },
+    {
+      "id": "NASA_OCT15",
+      "kind": "contemporary_publication",
+      "url": "https://ntrs.nasa.gov/citations/19640000428",
+      "note": "lists 1963 3A/B/C, no engineering fragment identity; already C241-L12"
+    }
+  ],
+  "catalogue_labels": {
+    "00527": {
+      "cospar": "1963-003A",
+      "reported_parent": "A00324 Agena B 2313"
+    },
+    "00528": {
+      "cospar": "1963-003B",
+      "reported_parent": "S00527",
+      "generic_name": "deb USAF satellite/Agena D",
+      "physical_piece": null
+    },
+    "00529": {
+      "cospar": "1963-003C",
+      "reported_parent": "S00527",
+      "generic_name": "deb USAF satellite/Agena D",
+      "physical_piece": null
+    }
+  },
+  "comparisons": {
+    "name_mismatch_is_not_hardware_proof": true,
+    "independent_tracking_sources": 0,
+    "historical_tle_checksums": null,
+    "frame": null,
+    "sensor": null,
+    "sigma": null,
+    "primary_tle": null,
+    "legacy_raan_active": false,
+    "confirmed_raan_primary": null,
+    "decay_date_time_position": null,
+    "graph": "CONNECTED_PENDING_CALIBRATION",
+    "lean": "NOT_PROMOTED",
+    "conde": "INDETERMINATE"
+  },
+  "edges": [
+    {
+      "from": "C241-L13",
+      "to": "C241-L14",
+      "kind": "catalogue-hierarchy-cross-check",
+      "independent_observation": false
+    },
+    {
+      "from": "GCAT_CURRENT",
+      "to": "GCAT_SATCAT",
+      "kind": "shared-gcat-compiler-family",
+      "independent_observation": false
+    },
+    {
+      "from": "NASA_OCT15",
+      "to": "C241-L14",
+      "kind": "contemporary-cospar-list-not-piece-proof",
+      "independent_observation": false
+    }
+  ]
+}
