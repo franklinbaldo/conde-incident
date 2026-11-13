@@ -1,0 +1,25 @@
+{
+  "schema": "conde.ghcnd-conde-precipitation-edges/v1",
+  "id": "MET-GHCND-CONDE-19631107-09-EDGES-01",
+  "source": "MET-GHCND-CONDE-19631107-09-01",
+  "dependencies": [
+    "MET-ISD-BAHIA-1963-ARCHIVE-COVERAGE-01",
+    "MET-ISD-19631107-09-CARAVELAS-01",
+    "C149",
+    "C150",
+    "C151"
+  ],
+  "edges": [
+    {"from": "GHCNd_11_original_station_files", "to": "daily_PRCP_7_to_9_nov_1963", "type": "ARCHIVED_DAILY_PRECIPITATION_NOT_HOURLY"},
+    {"from": "GHCNd_Conde_08Nov_3point5mm", "to": "rain_around_Conde_1963", "type": "OBSERVED_IN_ARCHIVE_STATION_DATE_ONLY"},
+    {"from": "GHCNd_SFLAG_I", "to": "historic_brazilian_station_origin", "type": "PENDING_INSTRUMENT_AND_COLLECTION_LINEAGE"},
+    {"from": "GHCNd_Conde_daily_PRCP", "to": "meteorology_at_incident_epoch", "type": "PENDING_DAILY_CLOCK_AND_LOCATION_ALIGNMENT"},
+    {"from": "GHCNd_Conde_daily_PRCP", "to": "wind_drag_or_fall_of_NORAD_527_528_529", "type": "NO_TRANSFER_CALIBRATED"},
+    {"from": "GHCNd_archival_family", "to": "NOAA_ISD_Caravelas_archival_family", "type": "DISTINCT_PRODUCTS_SOURCE_INDEPENDENCE_UNPROVED"}
+  ],
+  "observation_time_within_day": null,
+  "instrument_error_model": null,
+  "station_coordinates_verified_1963": null,
+  "calibrated_physical_constraint": null,
+  "status": "CONNECTED_PENDING_SPATIOTEMPORAL_CALIBRATION"
+}
