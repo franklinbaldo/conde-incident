@@ -55,6 +55,8 @@ jobs:
         run: |
           python3 -m unittest discover -s tests -p test_ssg_evidence_index.py
           python3 tools/export_ssg_evidence_index.py --check
+          node --test tests/ssg-evidence-index-bridge.test.mjs
+          node scripts/verify-ssg-evidence-index.mjs
       - name: Snapshot versioned scientific JSON before SSG rebuild
         shell: bash
         run: |
@@ -91,6 +93,8 @@ jobs:
           mkdir -p "$RUNNER_TEMP/conde-audit-root/conde-incident"
           cp -R public/. "$RUNNER_TEMP/conde-audit-root/conde-incident/"
           ssg audit --output "$RUNNER_TEMP/conde-audit-root" --config ssg.toml --fail-on error
+      - name: Verify every JSON deep link against real built SSG HTML
+        run: node scripts/verify-ssg-evidence-index.mjs --built-site
       - name: Verify every article and /conde-incident/ paths
         run: node scripts/check-site.mjs
       - name: Verify independent authored Page URLs
