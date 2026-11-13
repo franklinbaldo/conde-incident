@@ -1,0 +1,80 @@
+{
+  "schema": "conde.gis.official-photoindex-selection/v1",
+  "id": "CGEO-30",
+  "verified_on": "2026-11-13",
+  "source": "https://acervo.sgb.gov.br/DocReader/DocReader.aspx?bib=FotoUSAF",
+  "parent": "CGEO-29",
+  "municipality": {
+    "ibge_code": 2908606,
+    "name": "Conde",
+    "state": "BA"
+  },
+  "question": "Was the exact MI-1850 USAF 63-32 tree node selected server-side, and did its original photoindex image become available?",
+  "selection": {
+    "method": "ASP.NET_T1_POSTBACK",
+    "event_target": "T1",
+    "event_argument": "s679",
+    "node_ordinal_0_based": 679,
+    "selected_value": "680",
+    "literal_label": "1850 Projeto USAF 63-32 - área A: SC.24-Z-C-VI",
+    "http_status": 200,
+    "selected_response_bytes": 578782,
+    "selected_response_sha256": "85453908986f12259462c70e7bcb919c332af6ac8e4aa75ed75749ee6b327788",
+    "selected_excerpt": "research/geo/evidence/cgeo30_usaf_selected_excerpt.html",
+    "selected_excerpt_sha256": "c59038962fc60766b9951353d149704437ac970dfaaccde1898c8bc251f0fafa",
+    "server_rendered_page_counter": "/1",
+    "document_image_src_in_server_html": null,
+    "dynamic_session_id_not_reusable": true
+  },
+  "image_load_attempt": {
+    "event_target": "CarregaImagemHiddenButton",
+    "hPagFis": "1",
+    "http_status": 200,
+    "response_bytes": 578799,
+    "response_sha256": "72b7becf8928ab098d3889defdea6273a86169c8188b743fc4b01f4e6310340f",
+    "server_selected_value": "680",
+    "document_image_src_in_server_html": null,
+    "note": "A second POST kept the node selected but did not render an img src in the returned HTML. It does NOT prove that no image exists or that the browser cannot retrieve it."
+  },
+  "export_probe": {
+    "endpoint": "PDFExport.aspx",
+    "parameters": "id=session-volatile;bib=FotoUSAF;pagfis=1",
+    "http_status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "response_bytes": 28140,
+    "actual_pdf_acquired": false,
+    "note": "Export page HTML was returned, not PDF bytes. A second route without pagfis also returned HTML."
+  },
+  "evidence_state": "USAF_PHOTOINDEX_NODE_SELECTION_CONFIRMED_IMAGE_NOT_ACQUIRED",
+  "scientific_limits": {
+    "date_of_capture_verified": false,
+    "flight_footprint_verified": false,
+    "original_photoindex_image_acquired": false,
+    "individual_frame_acquired": false,
+    "historical_center_geometry": null,
+    "event_position_1963": null,
+    "horizontal_uncertainty_m": null,
+    "can_constrain_orbital_reentry": false
+  },
+  "interpretive_limits": [
+    "The page counter /1 is not a count of exposures or evidence of successful image rendering.",
+    "The node selection is an archive navigation event, not independent historical observation.",
+    "The photoindex may be browser-rendered after script/async requests. Absence of src in these server HTML replies is not an archive-wide negative finding.",
+    "63-32 is an archival project code, not an independently authenticated image date."
+  ],
+  "graph_edges": [
+    {
+      "to": "CGEO-29",
+      "relation": "NAVIGATION_CONFIRMED_FOR_INDEX_NODE"
+    },
+    {
+      "to": "CGEO-28",
+      "relation": "SERVER_NODE_POSTBACK_DISTINCT_FROM_TEXT_SEARCH"
+    },
+    {
+      "to": "CGEO-18",
+      "relation": "NO_VALIDATED_BRIDGE_TO_REPORTED_CENTER_1963"
+    }
+  ],
+  "next_test": "Acquire actual photoindex image via a verified public browser request, capture SHA256 and view legible markings, date and flight strips. Investigate image handler or export UI without inferring coverage from folder label."
+}
