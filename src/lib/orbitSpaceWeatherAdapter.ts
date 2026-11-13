@@ -134,6 +134,10 @@ export interface ConditionalMsiseOptions {
   readonly inertialFrame: string;
   readonly frameTransformSource: string;
   readonly toGeodetic: (state: State, epochUtc: string) => ConditionalGeodeticPosition;
+  /** Optional independent axial check: a sourced unit terrestrial-pole vector
+   * expressed in inertialFrame at the *same* UTC. Not an EOP approximation. */
+  readonly inertialEarthPoleAtUtc?: (epochUtc: string) => readonly [number, number, number];
+  readonly earthPoleSource?: string;
   readonly densityModelSource: string;
   readonly evaluateDensityKgM3: (request: ConditionalDensityRequest) => number;
   readonly cdAreaOverMassM2Kg: number;
@@ -145,22 +149,36 @@ export interface ConditionalMsiseOptions {
  */
 export function makeConditionalMsiseAtmosphere(options: ConditionalMsiseOptions): Atmosphere {
   const {snapshot, originEpochUtc, originStateTS, inertialFrame, frameTransformSource,
-    toGeodetic, densityModelSource, evaluateDensityKgM3, cdAreaOverMassM2Kg} = options;
+    toGeodetic, inertialEarthPoleAtUtc, earthPoleSource,
+    densityModelSource, evaluateDensityKgM3, cdAreaOverMassM2Kg} = options;
   const originMs = utcMilliseconds(originEpochUtc);
   if (!Number.isFinite(originStateTS) || !inertialFrame?.trim() ||
       !frameTransformSource?.trim() || !densityModelSource?.trim() ||
       typeof toGeodetic !== 'function' || typeof evaluateDensityKgM3 !== 'function' ||
-      !validPositive(cdAreaOverMassM2Kg))
+      !validPositive(cdAreaOverMassM2Kg) ||
+      (inertialEarthPoleAtUtc !== undefined && typeof inertialEarthPoleAtUtc !== 'function') ||
+      Boolean(inertialEarthPoleAtUtc) !== Boolean(earthPoleSource?.trim()))
     throw new RangeError('Requires explicit inertial frame, sourced transform, density model and Cd*A/m');
   // Preflight source and required series without inventing any density.
   deriveMsiseDriversAtUtc(snapshot, originEpochUtc);
   return {
     cdAreaOverMassM2Kg,
     source: 'CONDITIONAL_NRLMSISE: '+densityModelSource+'; frame='+inertialFrame+
-      '; transform='+frameTransformSource+'; GFZ/NRC declared provenance; NOT_CALIBRATED',
+      '; transform='+frameTransformSource+
+      (earthPoleSource ? '; axial-pole='+earthPoleSource+' (CHECK_ONLY)' : '; axial-pole=NOT_CHECKED')+
+      '; GFZ/NRC declared provenance; NOT_CALIBRATED',
     densityKgM3: (radialAltitudeKm: number, tS: number, state: State): number => {
-      if (!state || !Number.isFinite(tS) || state.tS !== tS)
+      if (!state || !Number.isFinite(tS) || state.tS !== tS ||
+          !Array.isArray(state.rKm) || state.rKm.length !== 3 ||
+          !state.rKm.every(Number.isFinite))
         throw new RangeError('Missing or inconsistent coupled r/v state for atmosphere');
+      // Do not trust the independently supplied altitude argument: a caller
+      // might supply a self-consistent geodetic pair for a *different* state.
+      const stateRadiusKm = Math.hypot(...state.rKm);
+      if (!Number.isFinite(radialAltitudeKm) ||
+          Math.abs(stateRadiusKm - EARTH.radiusKm - radialAltitudeKm) >
+            GEODETIC_RADIUS_TOLERANCE_KM)
+        throw new RangeError('Atmosphere radius argument disagrees with Cartesian state (km)');
       const epochMs = originMs + (tS - originStateTS) * 1000;
       if (!Number.isFinite(epochMs) || !Number.isSafeInteger(Math.round(epochMs)))
         throw new RangeError('Atmosphere UTC overflow');
@@ -188,9 +206,27 @@ export function makeConditionalMsiseAtmosphere(options: ConditionalMsiseOptions)
       // invariant under rotation. This remains NECESSARY, not sufficient:
       // a jointly fabricated latitude/height or incorrect longitude may pass.
       const modelRadiusKm = wgs84RadiusForGeodeticKm(geo.latitudeDeg, geo.altitudeKm);
-      if (Math.abs(modelRadiusKm - (radialAltitudeKm + EARTH.radiusKm)) >
-          GEODETIC_RADIUS_TOLERANCE_KM)
+      if (Math.abs(modelRadiusKm - stateRadiusKm) > GEODETIC_RADIUS_TOLERANCE_KM)
         throw new RangeError('WGS84 latitude-height pair inconsistent with inertial radius (km)');
+      if (inertialEarthPoleAtUtc) {
+        const pole = inertialEarthPoleAtUtc(epochUtc);
+        if (!Array.isArray(pole) || pole.length !== 3 ||
+            !pole.every(Number.isFinite) ||
+            Math.abs(Math.hypot(...pole) - 1) > 1e-10)
+          throw new RangeError('Invalid sourced unit Earth pole at atmosphere UTC');
+        // Earth rotation about this axis preserves the axial coordinate. A
+        // wrong geodetic latitude can have exactly the right geocentric radius
+        // (G42), but it cannot have the wrong axial projection as well.
+        const phi = geo.latitudeDeg * Math.PI / 180;
+        const sinPhi = Math.sin(phi);
+        const N = EARTH.radiusKm / Math.sqrt(1 - WGS84_ECCENTRICITY_SQUARED * sinPhi ** 2);
+        const expectedAxialKm = (N * (1 - WGS84_ECCENTRICITY_SQUARED) +
+          geo.altitudeKm) * sinPhi;
+        const inertialAxialKm = state.rKm[0] * pole[0] +
+          state.rKm[1] * pole[1] + state.rKm[2] * pole[2];
+        if (Math.abs(expectedAxialKm - inertialAxialKm) > GEODETIC_RADIUS_TOLERANCE_KM)
+          throw new RangeError('Geodetic latitude inconsistent with sourced Earth pole (km)');
+      }
       const rho = evaluateDensityKgM3({epochUtc, drivers, geodetic: geo});
       if (!validPositive(rho)) throw new RangeError('Conditional density model returned invalid kg/m^3');
       return rho;
