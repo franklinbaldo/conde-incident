@@ -58,6 +58,23 @@ class Cgeo25Tests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate(c)
 
+    def test_source_documents_cannot_be_swapped_or_annotated(self):
+        # A recorded digest does not authenticate a changed URL or a new claim.
+        cases = (
+            ('sudene_1997_catalogue', 'url', 'https://example.org/unrelated-catalogue.pdf'),
+            ('sgb_1998_planimetry', 'url', 'https://rigeo.sgb.gov.br/server/api/core/bitstreams/00000000-0000-0000-0000-000000000000/content'),
+            ('sgb_1998_topography', 'local_filename', 'other-document.pdf'),
+            ('sgb_1998_topography', 'map_subject', 'Observed NORAD 528 impact in 1963'),
+            ('sgb_1998_planimetry', 'pdf_page_index', 17),
+            ('sgb_1998_topography', 'observed_528_position_1963', [-11.8, -37.6]),
+        )
+        for source, field, injected in cases:
+            with self.subTest(source=source, field=field):
+                changed = copy.deepcopy(self.c)
+                changed['sources'][source][field] = injected
+                with self.assertRaises(ValueError):
+                    validate(changed)
+
     def test_wrong_sheet_numbers_rejected(self):
         c = copy.deepcopy(self.c)
         c['prior_cartographic_inputs_reported_by_sgb']['sheet_identifiers'][0] = '721-4-1'
