@@ -258,6 +258,53 @@ export const MonteCarloVisualizer: React.FC<MonteCarloVisualizerProps> = ({
         </div>
       )}
 
+      {/* C197: two-sided timing uncertainty is a SCENARIO, not historic posterior. */}
+      {summary && (
+        <section className="p-5 rounded-xl bg-zinc-900 border border-zinc-800 space-y-3">
+          <h3 className="text-sm font-bold text-zinc-100">
+            {isPt ? 'Janela de 8 de novembro com erro nas duas pontas' :
+              'November 8 window with uncertainty on both sides'}
+          </h3>
+          <p className="text-xs text-zinc-400 leading-relaxed">
+            {isPt
+              ? 'Em vez de cortar abruptamente em 7/11 ou 9/11, usamos uma verossimilhança suavizada do dia catalogado. Cada linha supõe um erro gaussiano diferente, ainda não medido para o NORAD 528. Os resultados abaixo são frequências condicionais do simulador exploratório, não probabilidades históricas de impacto ou sobrevivência atmosférica.'
+              : 'Rather than truncating at November 7 or 9, the reported calendar day receives two-sided uncertainty. Each row assumes a hypothetical Gaussian timing error, not an observed NORAD 528 precision. These are exploratory scenario frequencies, not historical impact or fragment-survival probabilities.'}
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs font-mono text-zinc-300">
+              <thead>
+                <tr className="border-b border-zinc-700 text-zinc-400">
+                  <th className="text-left p-2">σ</th>
+                  <th className="text-right p-2">{isPt ? 'Antes do dia 8' : 'Before 8th'}</th>
+                  <th className="text-right p-2">{isPt ? 'Dia 8' : 'Day 8'}</th>
+                  <th className="text-right p-2">{isPt ? 'Depois do dia 8' : 'After 8th'}</th>
+                  <th className="text-right p-2">{isPt ? '≤ 500 km de Conde' : '≤ 500 km of Conde'}</th>
+                  <th className="text-right p-2">{isPt ? 'N efetivo' : 'Effective N'}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {summary.twoSidedDaySensitivity.map(row => (
+                  <tr key={row.sigmaHoursAssumed} className="border-b border-zinc-800">
+                    <td className="p-2">{row.sigmaHoursAssumed}h</td>
+                    <td className="text-right p-2">{(row.probabilityBeforeDay8*100).toFixed(1)}%</td>
+                    <td className="text-right p-2">{(row.probabilityDuringDay8*100).toFixed(1)}%</td>
+                    <td className="text-right p-2">{(row.probabilityAfterDay8*100).toFixed(1)}%</td>
+                    <td className="text-right p-2">{row.weightedWithin500Km === null
+                      ? 'não estimável' : (row.weightedWithin500Km*100).toFixed(3)+'%'}</td>
+                    <td className="text-right p-2">{row.effectiveSampleSize?.toFixed(0) ?? '0'}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-[11px] text-zinc-500">
+            {isPt
+              ? 'A NASA informou o dia catalogado de decaimento orbital, não a hora nem o local do impacto. Um atraso entre reentrada e deposição de fragmentos exige modelo físico independente. As amostras anteriores usam órbitas e parâmetros exploratórios, portanto suas frequências ponderadas não são uma posterior histórica.'
+              : 'NASA reported a catalogued orbital decay day, not a physical impact time or location. Fragment travel and deposition require independent physics. The weighted frequencies inherit the exploratory prior and are not a historical posterior.'}
+          </p>
+        </section>
+      )}
+
       {/* Epistemological Discussion */}
       <div className="p-5 rounded-xl bg-zinc-900 border border-zinc-800 space-y-3">
         <h4 className="text-xs font-bold text-zinc-200 flex items-center gap-2">
