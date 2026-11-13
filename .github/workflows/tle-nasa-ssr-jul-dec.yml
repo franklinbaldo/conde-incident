@@ -1,0 +1,68 @@
+name: C241-L18 NASA July and post-528 survivor snapshots
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json
+      - research/tle_custody/evidence_matrix_C241-L18_2026-11-13.md
+      - tools/tle_nasa_ssr_jul_dec_audit.py
+      - tests/test_tle_nasa_ssr_jul_dec_audit.py
+      - formal/Conde1963/SsrSurvivorIntervals.lean
+      - formal/Conde1963.lean
+      - formal/Conde1963/CoreAxioms.lean
+      - .github/workflows/tle-nasa-ssr-jul-dec.yml
+  push:
+    branches: [main]
+    paths:
+      - research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json
+      - research/tle_custody/evidence_matrix_C241-L18_2026-11-13.md
+      - tools/tle_nasa_ssr_jul_dec_audit.py
+      - tests/test_tle_nasa_ssr_jul_dec_audit.py
+      - formal/Conde1963/SsrSurvivorIntervals.lean
+      - formal/Conde1963.lean
+      - formal/Conde1963/CoreAxioms.lean
+      - .github/workflows/tle-nasa-ssr-jul-dec.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  facsimile-custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact SHA and run adversarial tests
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+          python3 -m unittest discover -s tests -p test_tle_nasa_ssr_jul_dec_audit.py -v
+      - name: Verify three original PDF payloads and written report
+        run: |
+          set -euo pipefail
+          for id in 19630012290 19640002493 19640005618; do
+            curl -fLsS --retry 2 --max-time 60 \
+              "https://ntrs.nasa.gov/api/citations/$id/downloads/$id.pdf" \
+              -o "$RUNNER_TEMP/$id.pdf"
+          done
+          python3 tools/tle_nasa_ssr_jul_dec_audit.py \
+            --ledger research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json \
+            --pdf-dir "$RUNNER_TEMP" \
+            --output "$RUNNER_TEMP/c241-l18-report.json"
+          python3 - "$RUNNER_TEMP/c241-l18-report.json" <<'PY'
+          import json,sys
+          x=json.load(open(sys.argv[1]))
+          assert x["source_integrity_checked"] is True
+          assert x["independent_instrument_measurements_found"] == 0
+          assert x["physical_domain_reduced"] is False
+          assert x["survivor_527_nov_dec_periods"] == ["94.6", "94.6"]
+          assert x["survivor_529_nov_dec_conservative_delta_min_with_unresolved_89_2_or_89_6_and_tenth_rounding"] == ["2.50", "3.10"]
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: nasa-c241-l18-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ${{ runner.temp }}/c241-l18-report.json
+          if-no-files-found: warn
+          retention-days: 30
