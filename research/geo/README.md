@@ -117,3 +117,7 @@ limite de 1963. Verifique com python3 -m tools.conde_ibge_1960_topology --check.
 ## CGEO-19: fotos da Vila atribuídas a 1959
 
 [Contrato e contexto](cgeo19_1959_editorial_photographs.md): três fotos atribuídas a 1959 num blog de 2012, com JPEGs auditados, autoria/data de captura não comprovadas e nenhuma posição de reentrada inferida.
+
+## CGEO-22
+
+[Mesmo JPEG em 2012/2014](cgeo22_jpeg_scan_lineage.md); não prova foto tirada em 1959 nem centro de 1963.

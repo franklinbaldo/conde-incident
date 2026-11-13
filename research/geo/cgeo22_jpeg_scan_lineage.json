@@ -1,0 +1,87 @@
+{
+  "schema": "conde.gis.jpeg-entropy-lineage/v1",
+  "id": "CGEO-22",
+  "audited_utc_date": "2026-11-13",
+  "municipality": {
+    "ibge_code": "2908606",
+    "uf": "BA",
+    "place_label": "Vila do Conde"
+  },
+  "source_family_ids": [
+    "CGEO-19",
+    "CGEO-14"
+  ],
+  "sources": {
+    "blogger_2012": {
+      "editorial_publication": "2012-12-10",
+      "parent_id": "CGEO-19/vila_1959_claim",
+      "url": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg0d9sxJJ714dVbe7juTyDzOXG5ngKfyU3W8O_UzjM3iUGsPJxlHjVOAjWoZYfhXlJb-eI4PwkYQSCsKKrNx8Id3EEb4Va23QgT5cKVUmzQfcNFh7HVdzMF-fdjLS_1nLREXkCnR0pk3zHl/s1600/vila+velha+001.jpg",
+      "byte_size": 316900,
+      "sha256": "b0c17c9bae3a4397d1572b300b26967e703fe1c0bdb05c624819dd34c16abde3"
+    },
+    "wordpress_2014": {
+      "editorial_publication": "2014-03-13",
+      "parent_id": "CGEO14-IMAGE-01",
+      "url": "https://condebahia.wordpress.com/wp-content/uploads/2014/03/vila-velha-001.jpg",
+      "byte_size": 321338,
+      "sha256": "233264fed3b4475e6ea3aae5efea521f56fe9a1fc8ee6d9c0c602787653ef154"
+    }
+  },
+  "result": {
+    "status": "REAL_JPEG_BITSTREAM_REPLAY_MATCH",
+    "method": "strict_single_scan_JPEG_marker_parser_standard_library",
+    "same_encoded_image": true,
+    "whole_files_identical": false,
+    "dimensions_px": [
+      1600,
+      1163
+    ],
+    "scan_bytes": 316379,
+    "scan_sha256": "c8f9c79af818e9dbcc0114b01594f7d28695ba8a5029665b4d9c804c5ae76cf4",
+    "identical_non_APP1_JPEG_segments": true,
+    "non_app1_header_sha256": "3a44659c42cdd41305172f3ddb31968a2643ffec4dcd845e3cde3d76695ad6b8",
+    "exif_payload_bytes": [
+      106,
+      4544
+    ],
+    "exif_orientation_both": null,
+    "exif_original_capture_timestamp_both": null,
+    "exif_gps_pointer_both": null,
+    "two_independent_photo_captures": false,
+    "direction_of_copying_proven": false,
+    "original_capture_date_proven": false,
+    "verified_original_negative": false,
+    "rights_to_redistribute_verified": false,
+    "other_two_2012_2014_photo_pairs_compared": false
+  },
+  "geospatial": {
+    "historic_center_1963": null,
+    "camera_point_1959": null,
+    "point_of_impact": null,
+    "crs": null,
+    "horizontal_uncertainty_m": null,
+    "can_constrain_orbital_reentry": false
+  },
+  "dependencies": [
+    {
+      "from": "CGEO-22",
+      "to": "CGEO-19",
+      "relation": "EXACT_2012_BLOGGER_CODED_IMAGE"
+    },
+    {
+      "from": "CGEO-22",
+      "to": "CGEO-14",
+      "relation": "EXACT_2014_WORDPRESS_CODED_IMAGE"
+    },
+    {
+      "from": "CGEO-22",
+      "to": "CGEO-18",
+      "relation": "NOT_1963_EVENT_OBSERVATION"
+    }
+  ],
+  "next": [
+    "Check whether the other two WordPress 320x233 previews derive from the 2012 1600x1163 photos using a resampling-aware comparison",
+    "Find authenticated negatives or dated print provenance for the 1959 editorial claim",
+    "Find an independently dated pre-1963 urban map/aerial photo differentiating Center from Vila"
+  ]
+}
