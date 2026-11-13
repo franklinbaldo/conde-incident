@@ -1,3 +1,9 @@
+---
+type: Guide
+title: '🦌 Cervo: limites da transferência de controles 527/529 para o 528'
+description: 'Contraprova racional de identificabilidade entre corpos, sem dados históricos nem inferência geográfica.'
+---
+
 # 🦌 Cervo: controles 527/529 não identificam automaticamente a trajetória do 528
 
 **Contexto documental:** [issue #396](https://github.com/franklinbaldo/conde-incident/issues/396), que solicita mais observações instrumentais de 527/529 posteriores a 08/11/1963 e medidas primárias dos três objetos; C241-L18 e C241-P10. **Nenhuma medida foi lida ou adicionada por esta demonstração.** O resultado é uma contraprova algébrica condicional, não uma estimativa orbital.
