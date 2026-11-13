@@ -12,6 +12,7 @@ import re
 ROOT = Path(__file__).resolve().parents[1]
 CITATIONS = Path('public/data/conde-source-citations.json')
 LINEAGE = Path('public/data/conde-declared-dependence.json')
+MATRIX = Path('research/evidence_matrix_C001-C238_2026-11-11.md')
 DEST = Path('public/data/conde-evidence-index')
 MANIFEST = Path('public/data/conde-evidence-index-manifest.json')
 MAX_SHARD_BYTES = 12_000  # Below repository-wide 20,000-byte rule.
@@ -45,6 +46,13 @@ def build(root=ROOT):
     require(citations['schema'] == 'conde.source-citations/v1', 'Schema de citações incompatível')
     require(lineage['schema'] == 'conde.declared-documentary-dependence/v1', 'Schema genealógico incompatível')
     matrix = citations['matrix_git_blob_sha1']
+    # Verify the original Git blob, not only matching declarations in two feeds.
+    matrix_raw = (root / MATRIX).read_bytes()
+    actual_blob = hashlib.sha1(
+        f'blob {len(matrix_raw)}\0'.encode('ascii') + matrix_raw
+    ).hexdigest()
+    require(actual_blob == matrix, 'Snapshot da matriz não corresponde ao Git blob real')
+    matrix_lines = matrix_raw.splitlines()
     require(bool(SHA1.fullmatch(matrix)), 'SHA-1 de snapshot inválido')
     require(matrix == lineage['matrix_git_blob_sha1'], 'Snapshots de matriz diferentes')
     require(lineage['epistemic_limits']['independent_physical_observation_count'] is None,
@@ -70,6 +78,15 @@ def build(root=ROOT):
         require(bool(OCCURRENCE.fullmatch(occurrence)), 'ID de ocorrência inválido')
         require(record['snapshot_ref'] == f'matrix:{matrix}:{occurrence}', 'Referência de snapshot falsa')
         require(bool(SHA256.fullmatch(record['row_sha256'])), 'Hash da linha inválido')
+        number = record['matrix_line']
+        require(isinstance(number, int) and 0 < number <= len(matrix_lines),
+                'Linha da matriz fora do snapshot')
+        original_line = matrix_lines[number - 1]
+        require(digest(original_line) == record['row_sha256'],
+                'SHA-256 da linha não corresponde à matriz original')
+        match = re.match(rb'^\|\s*\*{0,2}(C[0-9]+)\*{0,2}\s*\|', original_line)
+        require(match is not None and match.group(1).decode('ascii') == occurrence.split('#')[0],
+                'ID da linha não corresponde à ocorrência')
         require(record['not_a_verified_conde_physical_event'] is True,
                 'A referência não pode ser promovida a testemunho físico')
         require(isinstance(record['matrix_line'], int) and record['matrix_line'] > 0,
