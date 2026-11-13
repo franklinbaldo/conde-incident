@@ -153,7 +153,7 @@ for(const link of [
  assert.ok(balaoSource.includes(link)&&balaoHtml.includes(link),
    'A fonte documental do capítulo 09 deve permanecer navegável: '+link);
 }
-for(const text of ['Francisco Cabral','23h30','1º Caderno','transcrição intermediária','não','não foi recuperado','não de uma nova inspeção']){
+for(const text of ['Francisco Cabral','23h30','1º Caderno','transcrição intermediária','não','não foram recuperados','não de uma nova inspeção']){
  assert.ok(balaoSource.includes(text),'Limite/identificação essencial ausente no capítulo 09: '+text);
 }
 assert.ok(!/<iframe\b|<img\b/i.test(balaoSource),
