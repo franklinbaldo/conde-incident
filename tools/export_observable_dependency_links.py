@@ -15,6 +15,9 @@ import sys
 import export_documentary_dependence as documentary
 import export_contextual_scientific_bridges as scientific
 import provenance_graph as pg
+import export_un_1963_status_bridge as un1963
+import export_soviet_raw_route_bridge as soviet
+from export_pending_documentary_routes import pending_documentary_routes
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = Path('public/data/conde-observable-dependency-links.json')
@@ -113,6 +116,7 @@ def build_caravelas_external(report: dict, graph: dict, recife: dict,
         'status': 'CONNECTED_PENDING_SPATIOTEMPORAL_CALIBRATION',
         'physical_domain_effect': 'THETA_UNCHANGED',
     }
+
 
 
 def build(root: Path = ROOT) -> dict:
@@ -220,12 +224,25 @@ def build(root: Path = ROOT) -> dict:
                       'research/constraints/isd_caravelas_surface_1963.json')
     parents = {p: (root / p).read_bytes() for p in external_paths}
     report, graph = (json.loads(parents[p]) for p in external_paths)
+    pending_paths = {
+        'public/data/conde-un-1963-status-bridge.json': un1963.render,
+        'public/data/conde-soviet-raw-route-bridge.json': soviet.render,
+    }
+    pending_raw = {path: (root / path).read_bytes() for path in pending_paths}
+    for path, render in pending_paths.items():
+        require(pending_raw[path] == render(), 'stale pending source bridge: ' + path)
+    pending_edges = pending_documentary_routes(
+        json.loads(pending_raw['public/data/conde-un-1963-status-bridge.json']),
+        json.loads(pending_raw['public/data/conde-soviet-raw-route-bridge.json']))
     recife = next(x for x in rows if x['source_id'] == 'NOAA_IGRA_RECIFE_1963')
     caravelas = build_caravelas_external(
         report, graph, recife,
         {p: hashlib.sha256(raw).hexdigest() for p, raw in parents.items()})
     return {
         'schema': 'conde.observable-dependency-links/v1',
+        'pending_documentary_edges': pending_edges,
+        'pending_source_sha256': {path: hashlib.sha256(data).hexdigest()
+                                  for path, data in pending_raw.items()},
         'external_source_edges': [caravelas],
         'matrix_git_blob_sha1': pg.MATRIX_BLOB_SHA,
         'contract_id': contract['contract_id'],
