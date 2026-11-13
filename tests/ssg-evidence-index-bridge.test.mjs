@@ -41,6 +41,14 @@ test('consistent forged hash across citation, lineage and shard is rejected',()=
   assert.throws(()=>audit(bundle),/Matrix row SHA-256 mismatch/);
 });
 
+test('synchronized headline rewrite rejected despite genuine matrix row hash',()=>{
+  const bundle=clean();
+  const record=bundle.citations.records[0];
+  record.claim_text='Impacto físico confirmado em Conde';
+  mutateRow(bundle,row=>{row.claim_text=record.claim_text;});
+  assert.throws(()=>audit(bundle),/Matrix claim text mismatch/);
+});
+
 test('tampered shard bytes fail digest validation',()=>{
   const bundle=clean();
   bundle.shards[0].raw=Buffer.from('{}');

@@ -1,0 +1,149 @@
+{
+  "activation": false,
+  "dependency_graph": [
+    {
+      "from": "CGEO-35",
+      "independent_observation": false,
+      "relation": "DERIVED_RASTER_FROM_SAME_SHA256_VERIFIED_JP2",
+      "to": "CGEO-34"
+    },
+    {
+      "active_geographic_constraint": false,
+      "from": "CGEO-35",
+      "relation": "CONDE_AND_VILA_VELHA_ARE_DISTINCT_MAP_LABELS",
+      "to": "CGEO-20"
+    },
+    {
+      "active_geographic_constraint": false,
+      "from": "CGEO-35",
+      "relation": "MAP_LABEL_NOT_TRANSLATED_1963_CITY_CENTER",
+      "to": "CGEO-18"
+    },
+    {
+      "active_geographic_constraint": false,
+      "from": "CGEO-35",
+      "relation": "CARTOGRAPHIC_CONTEXT_VIA_CGEO34_NO_NEW_WITNESS",
+      "to": "C24#1"
+    },
+    {
+      "active_geographic_constraint": false,
+      "from": "CGEO-35",
+      "relation": "IMAGE_PIXEL_ANCHOR_REQUIRES_DATUM_CONTROL_POINTS_AND_ERROR",
+      "to": "historical_map_pixel_to_geodetic_transform"
+    },
+    {
+      "active_geographic_constraint": false,
+      "from": "historical_map_pixel_to_geodetic_transform",
+      "relation": "MAP_LABEL_IS_NOT_HISTORICAL_URBAN_CENTER_IDENTIFICATION",
+      "to": "reported_city_center_1963_geometry"
+    }
+  ],
+  "hypotheses": [
+    "H_CONDE_MAP_LABEL_DISTINCT_FROM_CITY_CENTER",
+    "H_REENTRY_POSITION_NOT_OBSERVED"
+  ],
+  "id": "ABELHA-CGEO35-PIXEL-ANCHOR-01",
+  "image_coordinate_datum": {
+    "coordinate_system": "ORIGINAL_JP2_PIXEL_XY_TOP_LEFT",
+    "distinct_label": "Vila Velha",
+    "distinct_label_roi_xyxy": [
+      4380,
+      5310,
+      4510,
+      5380
+    ],
+    "geographic_coordinates": null,
+    "ground_tolerance_m": null,
+    "interpretation": "A manually inspected map glyph, not a measured 1963 town centre.",
+    "label": "CONDE",
+    "label_and_symbol_roi_xyxy": [
+      4390,
+      5380,
+      4590,
+      5470
+    ],
+    "manual_visual_tolerance_pixels": 20,
+    "settlement_symbol_xy_pixels": [
+      4465,
+      5413
+    ]
+  },
+  "independent_physical_witnesses_added": 0,
+  "lean_candidate": "Conde1963.historicalMapPixelAnchorCandidate",
+  "lean_status": "TYPED_CANDIDATE_NOT_COMPILED_OBSERVATIONAL_PROOF",
+  "limitations": [
+    "The raster crop is a derivative of CGEO-34, not an independent witness.",
+    "Pixel tolerance is not a geodetic or horizontal uncertainty.",
+    "The map is dated 1954 with a 1961 update, not a new 1963 survey.",
+    "Conde and Vila Velha labels do not identify the reported city centre.",
+    "The 1963 report, geodetic transform and an observed reentry location remain absent."
+  ],
+  "matrix_context": "C24#1",
+  "new_numeric_orbital_constraints": 0,
+  "parent_occurrence": "CGEO-34",
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "schema": "conde.cgeo35-raster-anchor-scientific-bridge/v1",
+  "simulator_latent_parameters": [
+    {
+      "activation": false,
+      "name": "historical_map_pixel_to_geodetic_transform",
+      "required_observables": [
+        "map_datum",
+        "control_points_with_error",
+        "projection_definition"
+      ],
+      "uncertainty": null,
+      "unit": null,
+      "value": null
+    },
+    {
+      "activation": false,
+      "name": "reported_city_center_1963_geometry",
+      "required_observables": [
+        "original_1963_report_wording",
+        "dated_urban_landmark_identification",
+        "validated_geodetic_transform"
+      ],
+      "uncertainty": null,
+      "unit": null,
+      "value": null
+    },
+    {
+      "activation": false,
+      "name": "reported_event_position_1963",
+      "required_observables": [
+        "independent_ground_localization",
+        "event_epoch",
+        "position_error"
+      ],
+      "uncertainty": null,
+      "unit": null,
+      "value": null
+    }
+  ],
+  "source": {
+    "catalogue_url": "https://collections.lib.uwm.edu/digital/collection/agdm/id/10814/",
+    "communications_update_year": 1961,
+    "custodian": "University of Wisconsin-Milwaukee Libraries / AGSL",
+    "independent_original_map_acquired": false,
+    "map_scale_denominator": 500000,
+    "original_jp2_sha256": "6637246d2a68a2e7024e07829caa35a8af0a707905e6c606109f1da52ae808b3",
+    "original_map_year": 1954,
+    "original_pixel_roi_xyxy": [
+      4250,
+      5200,
+      5000,
+      5670
+    ],
+    "pixel_crop_rgb_sha256": "a42b07caee45dd378a319de770d5d4dcf5a386b279874d64812710daf8329243",
+    "pixel_crop_sha_scope": "RGB_DECODED_ROI_NOT_WHOLE_JP2",
+    "raster_inspection_mode": "JP2_DECODE_FROM_SHA_VERIFIED_ORIGINAL",
+    "reduction_levels": 1
+  },
+  "source_occurrence": "CGEO-35",
+  "source_sha256": {
+    "public/data/conde-cgeo34-original-map-bridge.json": "485b40a06f872b4d9e8e96236b1beaf3e548aa42039de0e6d9ab8ee35e355c17",
+    "research/geo/cgeo34_uwm_original_jp2_custody.json": "dde2305e334787298b35e70351d9fc879a380a19f5ec0ed990a05dae56292dfa",
+    "research/geo/cgeo35_uwm_jp2_raster_anchors.json": "c8183f1103e507deda297c5b0e051c6d93157a3cb808e2174fa447946390ab33"
+  }
+}

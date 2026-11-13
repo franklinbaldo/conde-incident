@@ -74,3 +74,16 @@ mesmo com hashes SHA-256 recalculados. Quatro contraprovas (campo terminal
 inventado, ciclo, salto e campo extra em aresta) exercitam esse requisito.
 A checagem protege a representação versionada, não afirma que a origem
 documental foi autenticada ou que há observação física independente.
+
+## Alegação textual vinculada à matriz congelada
+
+Além de conferir SHA-1 do blob, SHA-256 da linha, posição e ID, os validadores
+Python e Node exigem que `claim_text` coincida literalmente com a segunda
+coluna de conteúdo (título da alegação) da linha congelada da matriz. Um
+editor não pode reescrever simultaneamente o feed de citações e o shard
+para anunciar, por exemplo, um impacto confirmado enquanto mantém o hash
+real da linha. Os testes negativos exercitam essa adulteração coordenada.
+
+O vínculo não transforma a alegação em fato observado, nem valida o
+`source_status` contra documentos externos: esse juízo permanece curatorial,
+sujeito à auditoria documental de Abelha e dos demais pesquisadores.

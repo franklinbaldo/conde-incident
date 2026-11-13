@@ -1,0 +1,117 @@
+{
+  "schema": "conde.c241-confidence-weighted-geography/v1",
+  "id": "C241-MC-CONFIDENCE-INPUT-20261113",
+  "source": {
+    "sha256_of_original_1500000_draw_report": "c6c32f55fbc2afd3c60c6f109ce8f5d4c979eb195600b0fc51ead400a0f8824d",
+    "sha256_of_original_analysis_script": "d1049526868525a131e132fe9b0f0603da310d2331ed08a8700df019ebb22cd9",
+    "tle_sha256": "18cf11665e061b5ec8679242e10b00b82accf29bc6f0b9b7b6330b9c44e341cd",
+    "tle_epoch_utc": "1963-10-27T14:40:16.132512Z",
+    "catalogue_source": "C179#1 / secondary TLE mirror (single lineage)",
+    "n": 1500000,
+    "seed": 19631108,
+    "classification": "SYNTHETIC_SECULAR_J2_GROUNDTRACK_NOT_IMPACT",
+    "independent_primary_observation": false,
+    "window_utc": [
+      "1963-11-07T00:00:00Z",
+      "1963-11-09T00:00:00Z"
+    ],
+    "window_source": "ASSUMED UNIFORM, NOT NASA physical classification",
+    "target": "Conde BA (-11.8139,-37.6108), radius=2000km",
+    "shape": "EARTH_SUBSATELLITE_POINT_NOT_SURVIVING_MATERIAL"
+  },
+  "scenarios": [
+    {
+      "ndot_rev_day2": 0,
+      "phase_offset_deg": 0,
+      "draws": 124998,
+      "within_2000km": 2378
+    },
+    {
+      "ndot_rev_day2": 0,
+      "phase_offset_deg": 90,
+      "draws": 124728,
+      "within_2000km": 1839
+    },
+    {
+      "ndot_rev_day2": 0,
+      "phase_offset_deg": 180,
+      "draws": 125303,
+      "within_2000km": 2084
+    },
+    {
+      "ndot_rev_day2": 0,
+      "phase_offset_deg": 270,
+      "draws": 124987,
+      "within_2000km": 2271
+    },
+    {
+      "ndot_rev_day2": 0.01373126,
+      "phase_offset_deg": 0,
+      "draws": 125135,
+      "within_2000km": 2334
+    },
+    {
+      "ndot_rev_day2": 0.01373126,
+      "phase_offset_deg": 90,
+      "draws": 125308,
+      "within_2000km": 2078
+    },
+    {
+      "ndot_rev_day2": 0.01373126,
+      "phase_offset_deg": 180,
+      "draws": 124997,
+      "within_2000km": 1634
+    },
+    {
+      "ndot_rev_day2": 0.01373126,
+      "phase_offset_deg": 270,
+      "draws": 124804,
+      "within_2000km": 2320
+    },
+    {
+      "ndot_rev_day2": 0.04,
+      "phase_offset_deg": 0,
+      "draws": 125134,
+      "within_2000km": 2181
+    },
+    {
+      "ndot_rev_day2": 0.04,
+      "phase_offset_deg": 90,
+      "draws": 125085,
+      "within_2000km": 2139
+    },
+    {
+      "ndot_rev_day2": 0.04,
+      "phase_offset_deg": 180,
+      "draws": 124688,
+      "within_2000km": 1911
+    },
+    {
+      "ndot_rev_day2": 0.04,
+      "phase_offset_deg": 270,
+      "draws": 124833,
+      "within_2000km": 2320
+    }
+  ],
+  "confidence_status": {
+    "TLE_528_nominal_phase_deg": 255.4423,
+    "TLE_528_individual_sensor_sigma": null,
+    "phase_sigma_deg": null,
+    "ndot_sigma_rev_day2": null,
+    "error_correlation": null,
+    "historical_impact_posterior": null,
+    "documented_confidence_is_not_numeric_sigma": true,
+    "uncertainty_scaling_is_exploratory": true,
+    "better_documented_does_not_imply_sensor_calibrated": true
+  },
+  "integrity_constraints": {
+    "baseline_2000km_hits": 25489,
+    "sample_is_censored_by_2000km_region": false,
+    "527_529_independent_sensor_observations": 0,
+    "NASA_decay_label_date": "1963-11-08",
+    "NASA_decay_label_verified": true,
+    "NASA_terminal_time_sigma_known": false,
+    "source_family_correlation_known": false,
+    "posterior_available": false
+  }
+}

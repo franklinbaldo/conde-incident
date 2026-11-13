@@ -1,0 +1,84 @@
+{
+  "schema": "conde.geo.early-cartographic-toponyms/v1",
+  "id": "CGEO-36",
+  "date_checked": "2026-11-13",
+  "source": {
+    "title": "Mappa do Estado de Sergipe e da parte nordeste do Estado da Bahia",
+    "maker": "Ralph H. Soper / Inspectoria de Obras contra as Seccas",
+    "publication": "1914-07",
+    "printed_scale_denominator": 1000000,
+    "original_custodian": "Arquivo Nacional (Brasil)",
+    "archival_accession": "BR RJANRIO DS.0.MAP.28",
+    "public_file_page": "https://commons.wikimedia.org/wiki/File:Mapa_do_estado_de_Sergipe_e_da_parte_nordeste_do_estado_da_Bahia_1914.pdf",
+    "pdf_url": "https://upload.wikimedia.org/wikipedia/commons/d/d4/Mapa_do_estado_de_Sergipe_e_da_parte_nordeste_do_estado_da_Bahia_1914.pdf",
+    "pdf_bytes": 1383563,
+    "pdf_sha256": "66c9646a3a3e15bb6a8525e90c7697d3177d0be979e42c3b599f90241ef0cf33",
+    "pdf_pages": 1,
+    "listed_scan_dimensions_px": [
+      3977,
+      4475
+    ],
+    "rights": "Public Domain / Acervo Arquivo Nacional (as recorded on Wikimedia Commons)"
+  },
+  "inspected_derivative": {
+    "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Mapa_do_estado_de_Sergipe_e_da_parte_nordeste_do_estado_da_Bahia_1914.pdf/page1-1920px-Mapa_do_estado_de_Sergipe_e_da_parte_nordeste_do_estado_da_Bahia_1914.pdf.jpg",
+    "bytes": 967413,
+    "sha256": "172b519c2f89cc0f17341ce0e41887701987b25fa3c2d08d3814ead3ca4a7fbb",
+    "size_px": [
+      1920,
+      2161
+    ],
+    "image_region_xyxy_px": [
+      750,
+      1110,
+      1250,
+      1510
+    ],
+    "visible_labels": [
+      "Conde",
+      "Sítio"
+    ],
+    "reading": "Two distinct printed locality labels; 'Conde' is situated inland relative to the coastal 'Sítio' label on this historical map",
+    "position_is_image_space_only": true,
+    "manual_reading_without_ocr": true,
+    "separate_named_localities_not_centers": true
+  },
+  "bibliographic_crosscheck": {
+    "url": "https://www.e-rara.ch/zut/content/titleinfo/32574892",
+    "persistent_id": "https://doi.org/10.3931/e-rara-153583",
+    "holder": "ETH-Bibliothek Zürich",
+    "call_number": "K 368018",
+    "interpretation": "Another custodian's record for a Soper 1914 map; not a new flight, survey, or observation of 1963",
+    "independently_verified_pixel_identity": false
+  },
+  "historical_inference": {
+    "pre_1963_printed_map": true,
+    "independent_of_1954_cartographic_survey": null,
+    "modern_sitio_do_conde_identity_demonstrated": false,
+    "city_centre_1963_identified": false,
+    "reported_fall_location_1963_identified": false,
+    "new_observation_of_1963": false
+  },
+  "graph_links": [
+    {
+      "to": "CGEO-18",
+      "kind": "EARLIER_LOCALITY_LABEL_NOT_FALL_POSITION"
+    },
+    {
+      "to": "CGEO-20",
+      "kind": "CONDE_AND_SITIO_SEPARATE_LABELS_NO_1963_IDENTITY"
+    },
+    {
+      "to": "CGEO-35",
+      "kind": "EARLIER_PRINTED_MAP_DIFFERENT_SHEET_NO_SHARED_SURVEY_PROVEN"
+    }
+  ],
+  "limits": {
+    "historical_city_center_polygon_1963": null,
+    "reported_impact_coordinates": null,
+    "map_to_world_transform": null,
+    "horizontal_uncertainty_m": null,
+    "historical_bridge_to_1963": null,
+    "can_constrain_orbital_reentry": false
+  }
+}

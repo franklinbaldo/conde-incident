@@ -1,0 +1,97 @@
+{
+  "schema": "conde.archival_collection_date_range/v1",
+  "id": "C241-LONTRA-R36",
+  "audit_date": "2026-11-13",
+  "previous_reference": "C241-LONTRA-R35",
+  "sources": [
+    {
+      "url": "https://www.astro.bas.bg/conf_proc/book_VIIBSAC.pdf",
+      "title": "The INASAN Zvenigorod Observatory Plate Collection",
+      "authors": [
+        "O. B. Dluzhnevskaya",
+        "S. V. Vereshchagin",
+        "N. V. Chupina",
+        "V. P. Osipenko"
+      ],
+      "publication_year": 2012,
+      "printed_pages": "359-362",
+      "page_checked_visually": false,
+      "page_text_indexed": true,
+      "http_status": 200,
+      "tls_validated": true,
+      "bytes": 17605841,
+      "sha256": "e6b538c34a8c26056cd8d0296ae6570033eb9ff5359f932f9b6250f670e64e42"
+    },
+    {
+      "url": "https://www.astroplate.cz/wp-content/uploads/2014/12/astroplate_2014_proceedings.pdf",
+      "title": "Photo plates digital archives of the INASAN Zvenigorod Astronomical Observatory",
+      "authors": [
+        "Sergei V. Vereshchagin",
+        "Natalia V. Chupina"
+      ],
+      "publication_year": 2014,
+      "printed_pages": "119-122",
+      "page_checked_visually": true,
+      "checked_pdf_pages_1based": [
+        126,
+        127
+      ],
+      "page_text_indexed": true,
+      "http_status": 200,
+      "tls_validated": true,
+      "bytes": 8854648,
+      "sha256": "59b53f4ea48c3c9486b80aead7469b01e15307747fa085e99df04de7f08f1d70"
+    }
+  ],
+  "inventory_as_reported_in_2012": [
+    {
+      "instrument": "Zeiss-400 astrograph",
+      "from_year": 1972,
+      "to_year": 2005,
+      "reported_units": 4500,
+      "medium": "photographic plates"
+    },
+    {
+      "instrument": "AFU camera",
+      "from_year": 1973,
+      "to_year": 1985,
+      "reported_units": 2800,
+      "medium": "satellite-monitoring films"
+    },
+    {
+      "instrument": "VAU camera",
+      "from_year": 1971,
+      "to_year": 2005,
+      "reported_units": 10000,
+      "medium": "wide-field films"
+    }
+  ],
+  "inventory_as_reported_in_2014": {
+    "Zeiss_negative_count": 3703,
+    "AFU_film_count": 2683,
+    "VAU_film_count_approx": 10000,
+    "AFU_catalogued_in_WFPDB": true,
+    "WFPDB_observatory_code": "ZVN",
+    "WFPDB_AFU_instrument_code": "021",
+    "AFU_scanning_planned": false
+  },
+  "difference_interpretation": "Counts are statements from different publications; no claim of loss, destruction, rescan or contemporaneous observation follows.",
+  "scope": "named_zvenigorod_plate_film_collections_only",
+  "conclusion": "NO_1963_IN_DOCUMENTED_COLLECTION_YEAR_RANGES",
+  "does_not_establish": {
+    "any_other_1963_AFU_archive_absent": true,
+    "no_1963_satellite_observation_anywhere": true,
+    "archive_custody_still_current_2026": true
+  },
+  "next_priority": "Seek 1963 observations in actual contemporaneous optical-station logbooks and Results of Satellite Observations 1963 volumes; avoid Zvenigorod film negative path as 1963 lead without new counterevidence.",
+  "orbits": {
+    "target_ids": [
+      527,
+      528,
+      529
+    ],
+    "new_independent_measurements": 0,
+    "orbital_constraints_activated": 0
+  },
+  "outreach_sent": false
+}
