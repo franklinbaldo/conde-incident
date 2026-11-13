@@ -42,9 +42,17 @@ export function localizeRuntimeSource(input) {
       translated++;
     }
   }
+  // SSG 0.0.75 can emit escaped quote characters around the empty-state
+  // query interpolation. Those turn +esc(q)+ into *visible literal text*.
+  // Repair only the exact upstream pattern, then check the result in CI.
+  const brokenQuery = String.raw`\'+esc(q)+\'`;
+  const liveQuery = "'+esc(q)+'";
+  const brokenCount = output.split(brokenQuery).length - 1;
+  assert.ok(brokenCount <= 1, 'Duplicate SSG empty-state interpolation');
+  if (brokenCount) output = output.replace(brokenQuery, liveQuery);
   assert.ok(translated === 0 || translated === changes.length,
     'Partially localized runtime is not safe to publish');
-  return { code: output, changed: translated > 0 };
+  return { code: output, changed: translated > 0 || brokenCount === 1 };
 }
 
 function* htmlFiles(folder) {
