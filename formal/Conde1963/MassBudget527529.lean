@@ -30,7 +30,7 @@ theorem each_below_assumed_reference
     (a b c x : Nat) (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (h : ClosedBudget a b c x) :
     a < referenceGrams ∧ b < referenceGrams ∧ c < referenceGrams := by
-  unfold ClosedBudget referenceGrams at h ⊢
+  simp only [ClosedBudget, referenceGrams] at h ⊢
   omega
 
 /-- The tracked sum cannot exceed the reference inventory, but need not
@@ -38,13 +38,13 @@ be equal to it if X is positive. -/
 theorem tracked_sum_le_reference
     (a b c x : Nat) (h : ClosedBudget a b c x) :
     a + b + c ≤ referenceGrams := by
-  unfold ClosedBudget referenceGrams at h ⊢
+  simp only [ClosedBudget, referenceGrams] at h ⊢
   omega
 
 theorem tracked_sum_eq_reference_iff_no_residual
     (a b c x : Nat) (h : ClosedBudget a b c x) :
     a + b + c = referenceGrams ↔ x = 0 := by
-  unfold ClosedBudget referenceGrams at h ⊢
+  simp only [ClosedBudget, referenceGrams] at h ⊢
   omega
 
 /-- Even an exact total does not establish that residual X is small.
@@ -54,7 +54,7 @@ theorem large_residual_consistent_with_total :
       0 < a ∧ 0 < b ∧ 0 < c ∧
       ClosedBudget a b c x ∧ 2 * x > referenceGrams := by
   refine ⟨200000, 100000, 100000, 776000, ?_, ?_, ?_, ?_, ?_⟩
-  all_goals decide
+  all_goals simp only [ClosedBudget, referenceGrams] <;> omega
 
 /-- Include a signed reference-total error epsilon (in grams).
 When an external source someday supplies |epsilon| ≤ tolerance and
