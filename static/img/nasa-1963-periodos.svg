@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="310" viewBox="0 0 900 310" role="img" aria-labelledby="title desc">
+<title id="title">Períodos nodais impressos pela NASA em abril e outubro de 1963</title>
+<desc id="desc">1963 3A 94,6 para 94,6 minutos, diferença zero. 1963 3B 94,1 para 92,4 minutos, diferença menos 1,7 minuto. 1963 3C 94,3 para 93,3 minutos, diferença menos 1,0 minuto. Comparação de duas tabelas, não épocas instrumentais.</desc>
+<rect width="900" height="310" rx="14" fill="#151b25"/>
+<g font-family="system-ui,Arial,sans-serif">
+<text x="25" y="34" font-size="18" fill="#e4eff4" font-weight="700">TRÊS OBJETOS · DOIS BOLETINS DA NASA (1963)</text>
+<text x="25" y="60" font-size="13" fill="#b5c9d2">Período nodal publicado · minutos</text>
+<text x="303" y="85" font-size="15" fill="#b8dce0" text-anchor="middle" font-weight="700">ABRIL</text>
+<text x="542" y="85" font-size="15" fill="#b8dce0" text-anchor="middle" font-weight="700">OUTUBRO</text>
+<text x="782" y="85" font-size="15" fill="#b8dce0" text-anchor="middle" font-weight="700">DIFERENÇA</text>
+<g stroke="#445361" stroke-width="1"><path d="M20 105 H880 M20 167 H880 M20 229 H880"/></g>
+<g font-size="19" fill="#f3f5f6" font-weight="600"><text x="30" y="143">1963 3A</text><text x="30" y="205">1963 3B</text><text x="30" y="267">1963 3C</text></g>
+<g font-size="23" text-anchor="middle"><text x="303" y="144" fill="#e4eff4">94,6</text><text x="303" y="206" fill="#e4eff4">94,1</text><text x="303" y="268" fill="#e4eff4">94,3</text><text x="542" y="144" fill="#e4eff4">94,6</text><text x="542" y="206" fill="#e4eff4">92,4</text><text x="542" y="268" fill="#e4eff4">93,3</text></g>
+<g stroke="#81b9c6" stroke-width="2"><path d="M358 135 H486 M358 197 H486 M358 259 H486"/></g>
+<g font-size="19" text-anchor="middle" font-weight="700"><text x="782" y="144" fill="#c6d0d7">0,0 min</text><text x="782" y="206" fill="#f1d4a6">−1,7 min</text><text x="782" y="268" fill="#f1d4a6">−1,0 min</text></g>
+<text x="25" y="298" fill="#aebdc4" font-size="12">Datas dos relatórios. Não representam duas medições instrumentais com épocas conhecidas.</text>
+</g></svg>
