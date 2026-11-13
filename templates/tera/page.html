@@ -1,15 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
 <article class="full-story">
-<header><p class="eyebrow">Capítulo {{ page.chapter | default('?') }} · {{ page.date | default('') }}</p>
+<header>
+{% if page.chapter is defined and page.chapter %}
+<p class="eyebrow">Capítulo {{ page.chapter }}{% if page.date is defined and page.date %} · {{ page.date }}{% endif %}</p>
+{% elif page.date is defined and page.date %}
+<p class="eyebrow">Edição documental · {{ page.date }}</p>
+{% endif %}
 <h1>{{ page.title | default('Sem título') }}</h1>
 <p class="deck">{{ page.description | default('') }}</p>
-<p class="byline">{{ page.author | default('Coruja') }} · {{ page.status | default('Status não definido') }}</p>
+{% if page.author is defined and page.author %}
+<p class="byline">{{ page.author }}{% if page.status is defined and page.status %} · {{ page.status }}{% endif %}</p>
+{% endif %}
 </header>
 <img class="editorial-cover" width="1200" height="630" loading="lazy" src="https://franklinbaldo.github.io/conde-incident/img/caderno.svg" alt="Arte editorial abstrata; não é imagem do incidente">
 <div class="story-body">{{ page.content | safe }}</div>
 <footer class="story-end"><p>O texto distingue documento, relato e hipótese.</p>
+{% if page.chapter is defined and page.chapter %}
 <p>O vínculo ao Markdown-fonte original aparece ao fim do texto, gerado a partir do arquivo canônico.</p>
-<a href="/conde-incident/stories/">Todos os capítulos</a> · <a href="/conde-incident/lab/">Laboratório científico</a>
+<a href="/conde-incident/stories/">Todos os capítulos</a>
+{% else %}
+<p>Fontes e vínculos documentais constam nas referências desta página.</p>
+<a href="/conde-incident/evidencias/arquivo/">Arquivo curado</a>
+{% endif %} · <a href="/conde-incident/lab/">Laboratório científico</a>
 </footer></article>
 {% endblock %}
