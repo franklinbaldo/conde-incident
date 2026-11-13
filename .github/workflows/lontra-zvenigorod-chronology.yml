@@ -1,0 +1,30 @@
+name: Lontra Zvenigorod chronology
+on:
+  pull_request:
+    paths:
+      - 'research/tle_custody/*LONTRA-R36*'
+      - 'tools/verify_zvenigorod_collection_dates.py'
+      - 'tests/test_zvenigorod_collection_dates.py'
+      - '.github/workflows/lontra-zvenigorod-chronology.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/tle_custody/*LONTRA-R36*'
+      - 'tools/verify_zvenigorod_collection_dates.py'
+      - 'tests/test_zvenigorod_collection_dates.py'
+      - '.github/workflows/lontra-zvenigorod-chronology.yml'
+  workflow_dispatch:
+jobs:
+  chronology:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Show exact audited commit
+        run: git rev-parse HEAD
+      - name: Adversarial tests and provenance manifest
+        run: |
+          python3 -m unittest discover -s tests -p 'test_zvenigorod_collection_dates.py' -v
+          python3 tools/verify_zvenigorod_collection_dates.py
