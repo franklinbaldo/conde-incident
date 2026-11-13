@@ -111,3 +111,31 @@ test('SSG rejects unsafe or ambiguous family identifiers', () => {
     && x.source_id===changed.records[0].source_id).family_id=changed.records[0].source_family;
   assert.throws(()=>archivePages(changed,linked), /Identificador de família inválido/);
 });
+
+test('SSG exposes a verified Wayback PDF only via an exact frozen citation join', () => {
+  const graph=JSON.parse(readFileSync('public/data/conde-wayback-citation-links.json','utf8'));
+  const pages=archivePages(feed,ancestry,graph);
+  for (const id of ['c197-1/index.md','c198-1/index.md']) {
+    const page=pages.get(id);
+    assert.match(page,/PDF preservado no Wayback \(2015-02-17 13:30:01 UTC\)/);
+    assert.match(page,/0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674/);
+    assert.match(page,/3 captura\(s\) do mesmo PDF/);
+    assert.match(page,/não equivale a nova observação de 1963/);
+  }
+  assert.doesNotMatch(pages.get('c01-1/index.md'),/PDF preservado no Wayback/);
+  assert.match(pages.get('c197-1/index.md'),/Abrir documento original/);
+  const corrupt=clone(graph);
+  corrupt.nodes.find(n=>n.kind==='VERIFIED_ARCHIVAL_COPY'
+    && n.id.includes('LEGACY-CAPTURE')).retrieved_bytes_sha256='0'.repeat(64);
+  assert.throws(()=>archivePages(feed,ancestry,corrupt),/Bytes Wayback divergentes/);
+  const wrong=clone(graph);
+  wrong.matrix_git_blob_sha1='f'.repeat(40);
+  assert.throws(()=>archivePages(feed,ancestry,wrong),/snapshot exato/);
+  const rogue=clone(graph);
+  rogue.edges=rogue.edges.filter(e=>!e.kind.includes('SAME_SSR_WORK'));
+  assert.throws(()=>archivePages(feed,ancestry,rogue),/único payload/);
+  const tampered=clone(graph);
+  tampered.nodes.find(n=>n.kind==='VERIFIED_ARCHIVAL_COPY'
+    && n.id.includes('LEGACY-CAPTURE')).archived_url='javascript:alert(1)';
+  assert.throws(()=>archivePages(feed,ancestry,tampered),/Somente URL Wayback/);
+});
