@@ -216,9 +216,15 @@ def run_synthetic(config,*,seed=DEFAULT_SEED,warmup=400,draws=600):
             "q95_kg":round(quantile(values,.95),3),
             "diagnostic":scalar_diagnostics(chains,j),
         }
+    numerical_pass=all(item["diagnostic"]["meets_reference_numerical_gate"]
+                       for item in summary.values())
     return {
         "id":"C241-MASS-MCMC-SYNTHETIC-ONLY",
         "inference_status":"SYNTHETIC_FIXTURE_NOT_HISTORICAL_POSTERIOR",
+        "numerical_convergence_gate_passed":numerical_pass,
+        "posterior_marginal_summaries_approved":numerical_pass,
+        "failed_diagnostics_forbid_marginal_interpretation":not numerical_pass,
+        "historical_posterior_certified":False,
         "seed":seed,"chains":len(chains),"warmup":warmup,
         "draws_per_chain":draws,
         "acceptance_fractions":[round(c["accepted_fraction"],4) for c in chains],
