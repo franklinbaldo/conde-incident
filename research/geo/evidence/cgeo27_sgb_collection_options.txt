@@ -1,0 +1,4 @@
+<option value="CPRM">Fotos Aéreas CPRM</option>
+<option value="DNPM bk">Fotos Aéreas DNPM</option>
+<option value="FotoDNPM">Fotoíndices DNPM</option>
+<option value="FotoUSAF">Fotoíndices USAF</option>

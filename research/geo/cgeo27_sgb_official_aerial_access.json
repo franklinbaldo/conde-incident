@@ -1,0 +1,127 @@
+{
+  "schema": "conde.gis.institutional-aerial-collection-access/v1",
+  "id": "CGEO-27",
+  "verified_on": "2026-11-13",
+  "municipality": {
+    "name": "Conde",
+    "state": "BA",
+    "ibge_code": 2908606
+  },
+  "question": "Where can the original PETROBRAS 53 D / 1961, MI-1850 aerial photo index and frames be looked up, without assuming their availability?",
+  "official_source_snapshots": [
+    {
+      "role": "online_collection_search_form",
+      "url": "https://acervo.sgb.gov.br/docreader/Pesquisa/acervo_digital.html",
+      "http_status": 200,
+      "acquired_bytes": 5816,
+      "sha256": "e09f4503966cb335920fb6c92d6fed2aea00bf2d304cb675e55c6f870f1d6c3e",
+      "body_archived_in_project": false,
+      "actual_option_lines_excerpt": "evidence/cgeo27_sgb_collection_options.txt",
+      "excerpt_sha256": "86c508307f66e6c1a23b3ce40b9710b908f51640081fb7e354b88431b6816f34"
+    },
+    {
+      "role": "institutional_collection_overview",
+      "url": "https://www.sgb.gov.br/pt/acervo",
+      "http_status": 200,
+      "acquired_bytes": 273440,
+      "sha256": "0eb68426a445d857de173d1c33d10ef655d32eb4824e72141f367ba0d89e4e73",
+      "body_archived_in_project": false
+    },
+    {
+      "role": "institutional_archival_contact",
+      "url": "https://www.sgb.gov.br/rede-de-bibliotecas",
+      "http_status": 200,
+      "acquired_bytes": 262596,
+      "sha256": "49c8d62d3200d7238095279ea2fa54f9fb68ec7607f116042bfa3fbe3b0d54f8",
+      "body_archived_in_project": false
+    },
+    {
+      "role": "institutional_access_policy",
+      "url": "https://www.sgb.gov.br/pt/faq",
+      "http_status": 200,
+      "acquired_bytes": 281516,
+      "sha256": "1076cd638816b85c143d9d94061b31d455b502cf2097401b02f2e624e889190c",
+      "body_archived_in_project": false
+    }
+  ],
+  "institutional_inventory": {
+    "custodian": "Servico Geologico do Brasil (SGB), Rede Ametista / Biblioteca Octavio Barbosa, divisao de documentacao fotocartografica",
+    "official_page_asserts_holdings_include_aerial_photos_and_photo_indexes": true,
+    "official_web_form_verified": true,
+    "online_collection_options": [
+      {
+        "label": "Fotos Aereas CPRM",
+        "alias": "CPRM"
+      },
+      {
+        "label": "Fotos Aereas DNPM",
+        "alias": "DNPM bk"
+      },
+      {
+        "label": "Fotoindices DNPM",
+        "alias": "FotoDNPM"
+      },
+      {
+        "label": "Fotoindices USAF",
+        "alias": "FotoUSAF"
+      }
+    ],
+    "physical_collection_access": "public consultation by institutional rules and scheduling; no external contact initiated",
+    "official_archive_contact_page": "https://www.sgb.gov.br/rede-de-bibliotecas",
+    "archivists_contacted": false,
+    "project_53d_entry_found_in_official_online_search_results": null,
+    "online_photo_index_exists_for_mi1850_proven": null,
+    "institutional_possession_of_exact_1961_items_verified": null,
+    "reason": "An institutional collection and search interface are not a catalogue hit for PETROBRAS 53 D."
+  },
+  "target_archival_request": {
+    "producer": "PETROBRAS",
+    "project": "53 D",
+    "nominal_year": 1961,
+    "sheet_mi": 1850,
+    "sheet_cim": "SC-24-Z-C-VI",
+    "sheet_label": "Esplanada BA/SE",
+    "requested_media": [
+      "2003 DIDOTE catalogue original and page",
+      "1961 53 D photo-index for MI-1850",
+      "flight strips and frame IDs",
+      "dated aerial-frame originals/negatives",
+      "coverage diagram and custody/license terms"
+    ],
+    "existing_origin_grade": "SECONDARY_WEB_TRANSCRIPTION_OF_UNACQUIRED_CATALOGUE",
+    "search_result_status": "NOT_VERIFIED_IN_OFFICIAL_CATALOGUE",
+    "next_test": "Search official portal collections and/or obtain documented archival confirmation for 53 D MI-1850, then acquire exact frame/index bytes, capture dates and footprints before any GIS inference."
+  },
+  "scientific_limits": {
+    "project_nominal_year_is_individual_frame_date": false,
+    "catalogue_sheet_implies_full_photo_coverage": false,
+    "official_search_form_proves_target_file_exists": false,
+    "official_search_form_proves_target_file_is_accessible_online": false,
+    "catalogue_original_pdf_acquired": false,
+    "photo_index_original_acquired": false,
+    "aerial_frames_original_acquired": false,
+    "pre_1963_individual_frame_confirmed": false,
+    "center_polygon_1963": null,
+    "fall_point_1963": null,
+    "horizontal_error_m": null,
+    "can_constrain_orbital_reentry": false
+  },
+  "graph_edges": [
+    {
+      "to": "CGEO-26",
+      "relation": "OFFICIAL_ACCESS_PATH_FOR_PREVIOUS_SECONDARY_CATALOGUE_LEAD"
+    },
+    {
+      "to": "CGEO-24",
+      "relation": "SHEET_REFERENCE_NOT_FRAME_FOOTPRINT"
+    },
+    {
+      "to": "CGEO-17",
+      "relation": "POTENTIAL_HISTORICAL_LANDMARK_MATCH_PENDING_PHOTOS"
+    },
+    {
+      "to": "CGEO-18",
+      "relation": "DOES_NOT_GEOLOCATE_FBIS_REPORT"
+    }
+  ]
+}
