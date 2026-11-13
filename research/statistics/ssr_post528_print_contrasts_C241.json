@@ -1,0 +1,229 @@
+{
+  "C_minus_A_difference_in_differences": [
+    {
+      "C_minus_A_printed_change_contrast": {
+        "center_centiminutes": 70,
+        "interval_centiminutes": [
+          50,
+          90
+        ],
+        "strictly_positive_under_rounding": true
+      },
+      "earlier_report": "1963-10-15",
+      "later_report": "1963-11-15"
+    },
+    {
+      "C_minus_A_printed_change_contrast": {
+        "center_centiminutes": 40,
+        "interval_centiminutes": [
+          20,
+          60
+        ],
+        "strictly_positive_under_rounding": true
+      },
+      "earlier_report": "1963-11-15",
+      "later_report": "1963-11-30"
+    },
+    {
+      "C_minus_A_printed_change_contrast": {
+        "center_centiminutes": 300,
+        "interval_centiminutes": [
+          280,
+          320
+        ],
+        "strictly_positive_under_rounding": true
+      },
+      "earlier_report": "1963-11-30",
+      "later_report": "1963-12-31"
+    }
+  ],
+  "C_minus_A_october_december": {
+    "center_centiminutes": 410,
+    "interval_centiminutes": [
+      390,
+      430
+    ],
+    "strictly_positive_under_rounding": true
+  },
+  "classification": "SOURCE_LOCKED_DOCUMENTARY_CONTRAST_NOT_ORBITAL_LIKELIHOOD",
+  "limits": {
+    "active_physical_constraint": false,
+    "geographic_exclusion": "NOT_AUTHORIZED",
+    "holdout": "RETROSPECTIVE_NOT_BLIND_NO_PHYSICAL_FORWARD_OPERATOR",
+    "instrumental_epoch": null,
+    "mcmc_historical": "NOT_RUN",
+    "next_discriminant": "dated 527/529/528 raw tracks with frames, calibrations, covariance and independent source genealogy",
+    "rate_by_publication_interval": "NOT_IDENTIFIED",
+    "sensor_and_covariance": null,
+    "source_independence": "NOT_ESTABLISHED_SHARED_NASA_NORAD_LINEAGE"
+  },
+  "not_listed_528": [
+    "1963-11-15",
+    "1963-11-30",
+    "1963-12-31"
+  ],
+  "not_listed_is_nondetection": false,
+  "period_unit": "centiminutes integer (1/100 minute)",
+  "post_528_report_dates": [
+    "1963-11-15",
+    "1963-11-30",
+    "1963-12-31"
+  ],
+  "post_cataloged_528_day": "1963-11-08 (NASA compiled catalog day, no terminal epoch)",
+  "post_october_adjacent_contrasts": {
+    "1963-003A": [
+      {
+        "earlier_report": "1963-10-15",
+        "later_report": "1963-11-15",
+        "printed_earlier_minus_later": {
+          "center_centiminutes": 0,
+          "interval_centiminutes": [
+            -10,
+            10
+          ],
+          "strictly_positive_under_rounding": false
+        }
+      },
+      {
+        "earlier_report": "1963-11-15",
+        "later_report": "1963-11-30",
+        "printed_earlier_minus_later": {
+          "center_centiminutes": 0,
+          "interval_centiminutes": [
+            -10,
+            10
+          ],
+          "strictly_positive_under_rounding": false
+        }
+      },
+      {
+        "earlier_report": "1963-11-30",
+        "later_report": "1963-12-31",
+        "printed_earlier_minus_later": {
+          "center_centiminutes": 0,
+          "interval_centiminutes": [
+            -10,
+            10
+          ],
+          "strictly_positive_under_rounding": false
+        }
+      }
+    ],
+    "1963-003C": [
+      {
+        "earlier_report": "1963-10-15",
+        "later_report": "1963-11-15",
+        "printed_earlier_minus_later": {
+          "center_centiminutes": 70,
+          "interval_centiminutes": [
+            60,
+            80
+          ],
+          "strictly_positive_under_rounding": true
+        }
+      },
+      {
+        "earlier_report": "1963-11-15",
+        "later_report": "1963-11-30",
+        "printed_earlier_minus_later": {
+          "center_centiminutes": 40,
+          "interval_centiminutes": [
+            30,
+            50
+          ],
+          "strictly_positive_under_rounding": true
+        }
+      },
+      {
+        "earlier_report": "1963-11-30",
+        "later_report": "1963-12-31",
+        "printed_earlier_minus_later": {
+          "center_centiminutes": 300,
+          "interval_centiminutes": [
+            290,
+            310
+          ],
+          "strictly_positive_under_rounding": true
+        }
+      }
+    ]
+  },
+  "rounding_assumption": "nearest tenth minute, each printed center +/- 5 centiminutes; not sensor uncertainty",
+  "schema": "conde.ssr-post528-printed-contrast/v1",
+  "sources": [
+    {
+      "occurrence": "C241-L16",
+      "pdf_sha256": "87b8c1be1d074dff4b605b422f6a8836c2ebdf80ca4ac0568373b168cc457a38",
+      "printed_centiminutes": {
+        "1963-003A": 9460,
+        "1963-003B": 9410,
+        "1963-003C": 9430
+      },
+      "report_date_not_observation_epoch": "1963-04-30",
+      "source_family": "NASA_GODDARD_COMPILED_SHARED_TRACKING"
+    },
+    {
+      "occurrence": "C241-L18",
+      "pdf_sha256": "9b00bf8323b1de80a34920f73c658f70f766a51632a13473a408679f0e5a03d9",
+      "printed_centiminutes": {
+        "1963-003A": 9460,
+        "1963-003B": 9360,
+        "1963-003C": 9390
+      },
+      "report_date_not_observation_epoch": "1963-07-31",
+      "source_family": "NASA_GODDARD_COMPILED_SHARED_TRACKING"
+    },
+    {
+      "occurrence": "C241-L17",
+      "pdf_sha256": "4e5cb0205577bc1b0959088db9ca3ae7a05f8de480b5ece9b86c385437636968",
+      "printed_centiminutes": {
+        "1963-003A": 9460,
+        "1963-003B": 9330,
+        "1963-003C": 9380
+      },
+      "report_date_not_observation_epoch": "1963-08-15",
+      "source_family": "NASA_GODDARD_COMPILED_SHARED_TRACKING"
+    },
+    {
+      "occurrence": "C241-L12",
+      "pdf_sha256": "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+      "printed_centiminutes": {
+        "1963-003A": 9460,
+        "1963-003B": 9240,
+        "1963-003C": 9330
+      },
+      "report_date_not_observation_epoch": "1963-10-15",
+      "source_family": "NASA_GODDARD_COMPILED_SHARED_TRACKING"
+    },
+    {
+      "occurrence": "C241-L19",
+      "pdf_sha256": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+      "printed_centiminutes": {
+        "1963-003A": 9460,
+        "1963-003C": 9260
+      },
+      "report_date_not_observation_epoch": "1963-11-15",
+      "source_family": "NASA_GODDARD_COMPILED_SHARED_TRACKING"
+    },
+    {
+      "occurrence": "C241-L18",
+      "pdf_sha256": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+      "printed_centiminutes": {
+        "1963-003A": 9460,
+        "1963-003C": 9220
+      },
+      "report_date_not_observation_epoch": "1963-11-30",
+      "source_family": "NASA_GODDARD_COMPILED_SHARED_TRACKING"
+    },
+    {
+      "occurrence": "C241-L18",
+      "pdf_sha256": "d9504a8641baa65c208e41034e77b0e9b1cc01b4acb2a4f95541bd9e75d3783d",
+      "printed_centiminutes": {
+        "1963-003A": 9460,
+        "1963-003C": 8920
+      },
+      "report_date_not_observation_epoch": "1963-12-31",
+      "source_family": "NASA_GODDARD_COMPILED_SHARED_TRACKING"
+    }
+  ]
+}
