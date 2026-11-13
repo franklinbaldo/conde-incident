@@ -1,0 +1,376 @@
+{
+  "id": "CASTOR-G40-SSR-EPOCH-WINDOW-SENSITIVITY",
+  "status": "SECONDARY_DOCUMENTARY_EPOCH_CHOICE_SENSITIVITY_NOT_HISTORICAL_FIT",
+  "dependencies": [
+    "C241-L18",
+    "C241-L2",
+    "CASTOR-G39-SSR-SECONDARY-PERIOD-CROSSCHECK"
+  ],
+  "source_parquet_sha256": "c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09",
+  "source_csv_sha256": "3940715d7c15cf15c24e678a8c5b5fbb34a031b3ffd7e33c0580277377383231",
+  "metric": "For EVERY eligible prior secondary epoch within each lookback window, descriptive min/max of NASA printed minus 1440/n and of NASA printed mean altitude minus Kepler proxy from n",
+  "source_independence": "UNKNOWN_SHARED_NORAD_LINEAGE",
+  "reported_epochs_are_instrument_epochs": false,
+  "secondary_epochs_are_authenticated_raw_instrument_observations": false,
+  "window_width_is_uncertainty_calibration": false,
+  "source_epoch_lag_is_publication_latency": "NOT_ESTABLISHED",
+  "instrument_sigma_and_covariance": null,
+  "physical_constraint_activated": false,
+  "norad_527_529_historical_holdouts": "NOT_RUN",
+  "conde_impact_time_position_probability": "NOT_DETERMINED",
+  "results": [
+    {
+      "ntrs_id": "19630012290",
+      "object": "1963-003A",
+      "norad_id": "527",
+      "publication_date_NOT_observation_epoch": "1963-07-31",
+      "editorial_cutoff_NOT_observation_epoch": "1963-07-31T12:00:00Z",
+      "g39_latest_prior_source_row": 2966,
+      "g39_latest_prior_age_days": 27.217081,
+      "windows": [
+        {
+          "max_lookback_days_NOT_instrument_age": 2,
+          "distinct_secondary_epochs": 0,
+          "printed_minus_mirror_period_seconds_range": null,
+          "printed_height_minus_mirror_kepler_proxy_km_range": null
+        },
+        {
+          "max_lookback_days_NOT_instrument_age": 7,
+          "distinct_secondary_epochs": 0,
+          "printed_minus_mirror_period_seconds_range": null,
+          "printed_height_minus_mirror_kepler_proxy_km_range": null
+        },
+        {
+          "max_lookback_days_NOT_instrument_age": 14,
+          "distinct_secondary_epochs": 0,
+          "printed_minus_mirror_period_seconds_range": null,
+          "printed_height_minus_mirror_kepler_proxy_km_range": null
+        },
+        {
+          "max_lookback_days_NOT_instrument_age": 30,
+          "distinct_secondary_epochs": 1,
+          "printed_minus_mirror_period_seconds_range": [
+            5.6492,
+            5.6492
+          ],
+          "printed_height_minus_mirror_kepler_proxy_km_range": [
+            2.854,
+            2.854
+          ]
+        }
+      ]
+    },
+    {
+      "ntrs_id": "19630012290",
+      "object": "1963-003B",
+      "norad_id": "528",
+      "publication_date_NOT_observation_epoch": "1963-07-31",
+      "editorial_cutoff_NOT_observation_epoch": "1963-07-31T12:00:00Z",
+      "g39_latest_prior_source_row": 2996,
+      "g39_latest_prior_age_days": 5.382219,
+      "windows": [
+        {
+          "max_lookback_days_NOT_instrument_age": 2,
+          "distinct_secondary_epochs": 0,
+          "printed_minus_mirror_period_seconds_range": null,
+          "printed_height_minus_mirror_kepler_proxy_km_range": null
+        },
+        {
+          "max_lookback_days_NOT_instrument_age": 7,
+          "distinct_secondary_epochs": 1,
+          "printed_minus_mirror_period_seconds_range": [
+            14.9514,
+            14.9514
+          ],
+          "printed_height_minus_mirror_kepler_proxy_km_range": [
+            0.4674,
+            0.4674
+          ]
+        },
+        {
+          "max_lookback_days_NOT_instrument_age": 14,
+          "distinct_secondary_epochs": 3,
+          "printed_minus_mirror_period_seconds_range": [
+            10.7543,
+            14.9514
+          ],
+          "printed_height_minus_mirror_kepler_proxy_km_range": [
+            -2.9374,
+            0.4674
+          ]
+        },
+        {
+          "max_lookback_days_NOT_instrument_age": 30,
+          "distinct_secondary_epochs": 4,
+          "printed_minus_mirror_period_seconds_range": [
+            5.1224,
+            14.9514
+          ],
+          "printed_height_minus_mirror_kepler_proxy_km_range": [
+            -7.505,
+            0.4674
+          ]
+        }
+      ]
+    },
+    {
+      "ntrs_id": "19630012290",
+      "object": "1963-003C",
+      "norad_id": "529",
+      "publication_date_NOT_observation_epoch": "1963-07-31",
+      "editorial_cutoff_NOT_observation_epoch": "1963-07-31T12:00:00Z",
+      "g39_latest_prior_source_row": 3039,
+      "g39_latest_prior_age_days": 2.78302,
+      "windows": [
+        {
+          "max_lookback_days_NOT_instrument_age": 2,
+          "distinct_secondary_epochs": 0,
+          "printed_minus_mirror_period_seconds_range": null,
+          "printed_height_minus_mirror_kepler_proxy_km_range": null
+        },
+        {
+          "max_lookback_days_NOT_instrument_age": 7,
+          "distinct_secondary_epochs": 1,
+          "printed_minus_mirror_period_seconds_range": [
+            7.8284,
+            7.8284
+          ],
+          "printed_height_minus_mirror_kepler_proxy_km_range": [
+            16.099,
+            16.099
+          ]
+        },
+        {
+          "max_lookback_days_NOT_instrument_age": 14,
+          "distinct_secondary_epochs": 2,
+          "printed_minus_mirror_period_seconds_range": [
+            5.3472,
+            7.8284
+          ],
+          "printed_height_minus_mirror_kepler_proxy_km_range": [
+            14.089,
+            16.099
+          ]
+        },
+        {
+          "max_lookback_days_NOT_instrument_age": 30,
+          "distinct_secondary_epochs": 3,
+          "printed_minus_mirror_period_seconds_range": [
+            0.7737,
+            7.8284
+          ],
+          "printed_height_minus_mirror_kepler_proxy_km_range": [
+            10.3848,
+            16.099
+          ]
+        }
+      ]
+    },
+    {
+      "ntrs_id": "19640002493",
+      "object": "1963-003A",
+      "norad_id": "527",
+      "publication_date_NOT_observation_epoch": "1963-11-30",
+      "editorial_cutoff_NOT_observation_epoch": "1963-11-30T12:00:00Z",
+      "g39_latest_prior_source_row": 2971,
+      "g39_latest_prior_age_days": 10.651509,
+      "windows": [
+        {
+          "max_lookback_days_NOT_instrument_age": 2,
+          "distinct_secondary_epochs": 0,
+          "printed_minus_mirror_period_seconds_range": null,
+          "printed_height_minus_mirror_kepler_proxy_km_range": null
+        },
+        {
+          "max_lookback_days_NOT_instrument_age": 7,
+          "distinct_secondary_epochs": 0,
+          "printed_minus_mirror_period_seconds_range": null,
+          "printed_height_minus_mirror_kepler_proxy_km_range": null
+        },
+        {
+          "max_lookback_days_NOT_instrument_age": 14,
+          "distinct_secondary_epochs": 1,
+          "printed_minus_mirror_period_seconds_range": [
+            8.0524,
+            8.0524
+          ],
+          "printed_height_minus_mirror_kepler_proxy_km_range": [
+            3.296,
+            3.296
+          ]
+        },
+        {
+          "max_lookback_days_NOT_instrument_age": 30,
+          "distinct_secondary_epochs": 1,
+          "printed_minus_mirror_period_seconds_range": [
+            8.0524,
+            8.0524
+          ],
+          "printed_height_minus_mirror_kepler_proxy_km_range": [
+            3.296,
+            3.296
+          ]
+        }
+      ]
+    },
+    {
+      "ntrs_id": "19640002493",
+      "object": "1963-003C",
+      "norad_id": "529",
+      "publication_date_NOT_observation_epoch": "1963-11-30",
+      "editorial_cutoff_NOT_observation_epoch": "1963-11-30T12:00:00Z",
+      "g39_latest_prior_source_row": 3063,
+      "g39_latest_prior_age_days": 1.132007,
+      "windows": [
+        {
+          "max_lookback_days_NOT_instrument_age": 2,
+          "distinct_secondary_epochs": 1,
+          "printed_minus_mirror_period_seconds_range": [
+            7.5803,
+            7.5803
+          ],
+          "printed_height_minus_mirror_kepler_proxy_km_range": [
+            2.7834,
+            2.7834
+          ]
+        },
+        {
+          "max_lookback_days_NOT_instrument_age": 7,
+          "distinct_secondary_epochs": 3,
+          "printed_minus_mirror_period_seconds_range": [
+            -1.9446,
+            7.5803
+          ],
+          "printed_height_minus_mirror_kepler_proxy_km_range": [
+            -4.978,
+            2.7834
+          ]
+        },
+        {
+          "max_lookback_days_NOT_instrument_age": 14,
+          "distinct_secondary_epochs": 5,
+          "printed_minus_mirror_period_seconds_range": [
+            -14.0715,
+            7.5803
+          ],
+          "printed_height_minus_mirror_kepler_proxy_km_range": [
+            -14.8532,
+            2.7834
+          ]
+        },
+        {
+          "max_lookback_days_NOT_instrument_age": 30,
+          "distinct_secondary_epochs": 8,
+          "printed_minus_mirror_period_seconds_range": [
+            -34.0325,
+            7.5803
+          ],
+          "printed_height_minus_mirror_kepler_proxy_km_range": [
+            -31.0923,
+            2.7834
+          ]
+        }
+      ]
+    },
+    {
+      "ntrs_id": "19640005618",
+      "object": "1963-003A",
+      "norad_id": "527",
+      "publication_date_NOT_observation_epoch": "1963-12-31",
+      "editorial_cutoff_NOT_observation_epoch": "1963-12-31T12:00:00Z",
+      "g39_latest_prior_source_row": 2972,
+      "g39_latest_prior_age_days": 14.261526,
+      "windows": [
+        {
+          "max_lookback_days_NOT_instrument_age": 2,
+          "distinct_secondary_epochs": 0,
+          "printed_minus_mirror_period_seconds_range": null,
+          "printed_height_minus_mirror_kepler_proxy_km_range": null
+        },
+        {
+          "max_lookback_days_NOT_instrument_age": 7,
+          "distinct_secondary_epochs": 0,
+          "printed_minus_mirror_period_seconds_range": null,
+          "printed_height_minus_mirror_kepler_proxy_km_range": null
+        },
+        {
+          "max_lookback_days_NOT_instrument_age": 14,
+          "distinct_secondary_epochs": 0,
+          "printed_minus_mirror_period_seconds_range": null,
+          "printed_height_minus_mirror_kepler_proxy_km_range": null
+        },
+        {
+          "max_lookback_days_NOT_instrument_age": 30,
+          "distinct_secondary_epochs": 1,
+          "printed_minus_mirror_period_seconds_range": [
+            2.9229,
+            2.9229
+          ],
+          "printed_height_minus_mirror_kepler_proxy_km_range": [
+            -1.3488,
+            -1.3488
+          ]
+        }
+      ]
+    },
+    {
+      "ntrs_id": "19640005618",
+      "object": "1963-003C",
+      "norad_id": "529",
+      "publication_date_NOT_observation_epoch": "1963-12-31",
+      "editorial_cutoff_NOT_observation_epoch": "1963-12-31T12:00:00Z",
+      "g39_latest_prior_source_row": 3071,
+      "g39_latest_prior_age_days": 1.023826,
+      "windows": [
+        {
+          "max_lookback_days_NOT_instrument_age": 2,
+          "distinct_secondary_epochs": 2,
+          "printed_minus_mirror_period_seconds_range": [
+            -33.6993,
+            -15.0405
+          ],
+          "printed_height_minus_mirror_kepler_proxy_km_range": [
+            71.3317,
+            86.6787
+          ]
+        },
+        {
+          "max_lookback_days_NOT_instrument_age": 7,
+          "distinct_secondary_epochs": 3,
+          "printed_minus_mirror_period_seconds_range": [
+            -65.072,
+            -15.0405
+          ],
+          "printed_height_minus_mirror_kepler_proxy_km_range": [
+            45.5674,
+            86.6787
+          ]
+        },
+        {
+          "max_lookback_days_NOT_instrument_age": 14,
+          "distinct_secondary_epochs": 5,
+          "printed_minus_mirror_period_seconds_range": [
+            -112.6128,
+            -15.0405
+          ],
+          "printed_height_minus_mirror_kepler_proxy_km_range": [
+            6.6199,
+            86.6787
+          ]
+        },
+        {
+          "max_lookback_days_NOT_instrument_age": 30,
+          "distinct_secondary_epochs": 8,
+          "printed_minus_mirror_period_seconds_range": [
+            -159.0886,
+            -15.0405
+          ],
+          "printed_height_minus_mirror_kepler_proxy_km_range": [
+            -31.3461,
+            86.6787
+          ]
+        }
+      ]
+    }
+  ]
+}
