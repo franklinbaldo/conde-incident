@@ -78,6 +78,18 @@ class EvidenceIndexTest(unittest.TestCase):
             path['upstream_source_id'] = chain['source_id']
         self.mutate(export.LINEAGE, change)
 
+    def test_unvalidated_terminal_claim_in_path_rejected(self):
+        def inject(data):
+            entry = next(x for x in data['citation_lineages'] if x['declared_upstream_paths'])
+            entry['declared_upstream_paths'][0]['norad_528_terminal_epoch_utc'] = '1963-11-08T08:15:00Z'
+        self.mutate(export.LINEAGE, inject)
+
+    def test_unvalidated_terminal_claim_in_edge_rejected(self):
+        def inject(data):
+            entry = next(x for x in data['citation_lineages'] if x['declared_upstream_paths'])
+            entry['declared_upstream_paths'][0]['edges'][0]['norad_528_terminal_latitude_deg'] = -11.85
+        self.mutate(export.LINEAGE, inject)
+
     def test_manual_edit_does_not_survive_check(self):
         artifacts = export.build()
         with tempfile.TemporaryDirectory() as directory:

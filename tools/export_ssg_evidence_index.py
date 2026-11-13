@@ -92,12 +92,19 @@ def build(root=ROOT):
         paths = entry['declared_upstream_paths']
         require(isinstance(paths, list), 'Cadeias de dependência ausentes')
         for path in paths:
+            # Entire paths are exported verbatim; unknown keys could publish
+            # fabricated observations without altering declared row hashes.
+            require(isinstance(path, dict) and set(path) == {'edges', 'upstream_source_id'},
+                    'Cadeia contém campo documental não validado')
             cursor = record['source_id']
             visited = {cursor}
             require(isinstance(path['edges'], list) and bool(path['edges']), 'Cadeia vazia')
             for edge in path['edges']:
-                require(edge['from'] == cursor and edge['to'] not in visited
-                        and isinstance(edge['kind'], str) and bool(edge['kind']),
+                require(isinstance(edge, dict) and set(edge) == {'from', 'to', 'kind'},
+                        'Aresta contém campo documental não validado')
+                require(isinstance(edge['to'], str) and bool(edge['to'].strip())
+                        and edge['from'] == cursor and edge['to'] not in visited
+                        and isinstance(edge['kind'], str) and bool(edge['kind'].strip()),
                         'Cadeia descontínua, cíclica ou sem relação')
                 cursor = edge['to']
                 visited.add(cursor)
