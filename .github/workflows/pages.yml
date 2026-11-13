@@ -100,7 +100,7 @@ jobs:
       - name: Verify every article and /conde-incident/ paths
         run: node scripts/check-site.mjs
       - name: Verify centered SSG footer in built Pages HTML
-        run: node --test tests/ssg-footer.test.mjs
+        run: node --test scripts/check-ssg-footer.mjs
       - name: Verify independent authored Page URLs
         run: node scripts/check-ssg-authored-site.mjs
       - name: Upload Pages artifact
