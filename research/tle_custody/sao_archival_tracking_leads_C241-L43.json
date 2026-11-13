@@ -1,0 +1,54 @@
+{
+  "id": "C241-L43",
+  "retrieved_at_utc_date": "2026-11-13",
+  "source_type": "ARCHIVAL_FINDING_AID_METADATA_NOT_OBSERVATION",
+  "archive": "Smithsonian Institution Archives",
+  "collection": "Records, 1957-1966",
+  "collection_id": "SIA.FARU0171",
+  "source_url": "https://sirismm.si.edu/EADs/SIA.FARU0171-ead.xml",
+  "source_bytes": 90490,
+  "source_sha256": "15b9c1a3e513690b0d66eec177a2b6897c373fbfe96cd8925e722765e6229f02",
+  "description_url": "https://sova.si.edu/components/sia.faru0171",
+  "archive_entries": [
+    {
+      "id": "refIDd1e2142",
+      "title": "SAO - Optical Tracking Reports, 1960-1963",
+      "box": 22,
+      "url": "https://sova.si.edu/record/sia.faru0171/refIDd1e2142",
+      "research_purpose": "Check whether 1963 optical reports identify 1963-003A/B/C and contain actual station/UTC/astrometry"
+    },
+    {
+      "id": "refIDd1e2187",
+      "title": "STP Monthly Report, 1961-1965",
+      "box": 22,
+      "url": "https://sova.si.edu/record/sia.faru0171/refIDd1e2187",
+      "research_purpose": "Locate reporting pipeline, observation provenance and possible instrument logs for 1963"
+    },
+    {
+      "id": "refIDd1e2240",
+      "title": "SAO - STP Correspondence, Bk II, 1962-1963",
+      "box": 23,
+      "url": "https://sova.si.edu/record/sia.faru0171/refIDd1e2240",
+      "research_purpose": "Trace dissemination, identities, 1963 observation documentation and requests"
+    },
+    {
+      "id": "refIDd1e2360",
+      "title": "SAO - STP Clocks, Precision Timing System, 1961-1965",
+      "box": 24,
+      "url": "https://sova.si.edu/record/sia.faru0171/refIDd1e2360",
+      "research_purpose": "Identify time standards/calibration methods without inventing 528 timing precision"
+    }
+  ],
+  "possible_objects": [527, 528, 529],
+  "object_match_verified": false,
+  "original_records_inspected": false,
+  "instrumental_observations_recovered": 0,
+  "instrument_epoch_utc": null,
+  "sensor_or_station": null,
+  "instrument_uncertainty": null,
+  "evidence_status": "ARCHIVE_LOCATOR_ONLY_PENDING_RETRIEVAL_AND_IDENTITY",
+  "scientific_graph_link": "ARCHIVE_CATALOG -> DOCUMENT_REQUEST -> PRIMARY_REPORT -> OBJECT_ID_CHECK -> EPOCH_FRAME_ERROR_CHECK -> CANDIDATE_ORBIT_CONSTRAINT",
+  "domain_restrictions_activated": 0,
+  "conde_reentry_location": "INDETERMINATE",
+  "contact_status": "NO_ARCHIVE_CONTACT_AUTHORIZED_OR_SENT"
+}
