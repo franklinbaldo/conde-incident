@@ -68,6 +68,8 @@ jobs:
           ssg audit --output "$RUNNER_TEMP/conde-audit-root" --config ssg.toml --fail-on error
       - name: Verify every article and /conde-incident/ paths
         run: node scripts/check-site.mjs
+      - name: Verify independent authored Page URLs
+        run: node scripts/check-ssg-authored-site.mjs
       - name: Upload Pages artifact
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3

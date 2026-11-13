@@ -15,3 +15,11 @@ Os tipos `Source`, `Hypothesis`, `Constraint` e `Experiment` estão prontos para
 Os IDs documentais têm forma `Cxxx#n` e snapshots com hash Git. As 28 ocorrências curadas não representam todas as 241 da matriz. Múltiplas fontes sobre o mesmo registro não são necessariamente testemunhos independentes.
 
 Validação: `node scripts/prepare-ssg.mjs`, `node scripts/check-ssg-okf.mjs`, `ssg check/build/audit`, testes Node e prek/OKF dos arquivos versionados. Build aprovado não equivale a site publicado.
+
+## Páginas autorais canônicas
+
+O diretório `pages/` contém documentos Markdown OKF do tipo `Page`, cada um com `canonical_route` e conteúdo próprio. `scripts/ssg-authored-pages.mjs` valida e copia os documentos sem alterar seus textos para o diretório gerado `content/`. A lista de caminhos é explícita, para evitar páginas órfãs ou URLs acidentais.
+
+As páginas `hipoteses`, `metodo`, `simulacoes`, `mapa` e `simulacoes/{inverso,triangulacao,sensibilidade,montecarlo,tles}` são agora fontes autorais independentes. Os índices de histórias, cronologia e fontes continuam derivados do Caderno; as fichas `Evidence` continuam geradas de feeds documentais auditáveis.
+
+Cada ferramenta tem uma URL pública SSG e um link direto à interação correspondente no React legado em `/lab/#/...`. Isso preserva a funcionalidade e os deep links sem alegar que o cálculo foi migrado. A página SSG funciona sem JS, mas a ferramenta ainda depende do laboratório. O verificador de frontmatter e a auditoria de HTML devem falhar se algum caminho ou vínculo se perder.

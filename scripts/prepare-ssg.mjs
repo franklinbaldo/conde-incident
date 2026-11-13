@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {readFileSync,readdirSync,mkdirSync,rmSync,writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 import {writeArchivePages} from './ssg-documentary-archive.mjs';
+import {writeAuthoredPages} from './ssg-authored-pages.mjs';
 
 // stories/*.md is the sole human-authored content; content/ is regenerated.
 const names=readdirSync('stories').filter(n=>/^\d{4}-\d{2}-\d{2}-[a-z0-9-]+\.md$/.test(n)).sort();
@@ -73,7 +74,7 @@ console.log('Gerado conteúdo SSG de '+stories.length+' capítulos sem alterar s
 
 const links=[
  ['cronologia','Cronologia'],['evidencias','Evidências'],
- ['hipoteses','Hipóteses'],['simulacoes','Simulações'],['metodo','Método']
+ ['hipoteses','Hipóteses'],['mapa','Mapa'],['simulacoes','Simulações'],['metodo','Método']
 ];
 const newNav=links.map(([slug,title])=>'- ['+title+'](/conde-incident/'+slug+'/)').join('\n');
 function landing(slug,title,description,content){
@@ -92,13 +93,8 @@ const archiveCount = writeArchivePages('content/evidencias/arquivo',
   JSON.parse(readFileSync('public/data/conde-source-citations.json', 'utf8')),
   JSON.parse(readFileSync('public/data/conde-declared-dependence.json', 'utf8')));
 console.log('Arquivo SSG: '+archiveCount+' páginas Markdown para SSG sem JS.');
-landing('hipoteses','Hipóteses concorrentes','Hipóteses submetidas a contraprovas.',
- '# Hipóteses concorrentes\n\n## Queda em Conde\n\nExige vínculo físico e documental do objeto, tempo e localização. Um relato não prova o impacto.\n\n## Sobrevoo\n\nUma órbita simulada não equivale a observação histórica; identificar instrumentos e incertezas.\n\n## Descarte ou fragmentação\n\nExige evidência independente do processo e da identidade dos fragmentos.\n\n## Ausência de vínculo causal\n\nNotícia e registro de decaimento podem se referir a eventos diferentes.\n\n**Nenhuma dessas hipóteses é considerada demonstrada nesta página.**');
-const labTabs=[['summary','Síntese'],['map','Mapa orbital'],['inverse','Inspetor inverso'],['triangulation','Triangulação'],['sensitivity','Atmosfera'],['montecarlo','Monte Carlo'],['tles','TLEs'],['documents','Documentos']];
-landing('simulacoes','Simulações e laboratório','Acesso à instrumentação científica em transição.',
- '# Simulações e laboratório\n\n**Migração em etapas:** o conteúdo editorial e os novos índices já usam SSG Rust. Os instrumentos abaixo ainda usam React até comprovarmos paridade funcional.\n\n'+labTabs.map(([id,t])=>'- ['+t+'](/conde-incident/lab/#/'+id+')').join('\n')+'\n\nAlinhamento simulado não é sobrevoo observado. Um dia de decaimento não determina a hora nem o local de reentrada.');
-landing('metodo','Método e limites','Distinção entre fontes, resultados e provas.',
- '# Método e limites\n\n- **Fonte examinada** é um registro com proveniência, não necessariamente um evento físico confirmado.\n- **Relato** documenta o que se afirmou, não prova independente da afirmação.\n- **Simulação** depende de condições e incertezas declaradas.\n- **Prova Lean** garante consequências das premissas, não sua autenticidade empírica.\n- **Conclusão** requer cadeia documental e inferência controlada.\n\n[Repositório, scripts, fontes e CI](https://github.com/franklinbaldo/conde-incident).');
+const authoredCount=writeAuthoredPages();
+console.log('Páginas Page canônicas validadas e copiadas: '+authoredCount);
 const homePath='content/index.md';
 const home=readFileSync(homePath,'utf8');
 const heading='## Caderno de histórias';
