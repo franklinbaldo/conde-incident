@@ -50,6 +50,37 @@ MUST_DUAL = {
 MUST_UNFILTERED_PR = {'integration-head.yml', 'prek.yml'}
 
 
+# A green workflow with skipped or tolerated essential jobs is a false gate.
+UNIVERSAL_REQUIRED_JOBS = {
+    'integration-head.yml': {'web', 'lean'},
+    'prek.yml': {'prek'},
+}
+
+
+def assert_unskippable_universal_jobs(source: str, filename: str) -> None:
+    required = UNIVERSAL_REQUIRED_JOBS.get(filename)
+    if not required:
+        return
+    jobs = re.search(r'(?m)^jobs:\s*$', source)
+    if jobs is None:
+        raise AssertionError(f'{filename}: missing universal jobs block')
+    remaining = source[jobs.end():]
+    headers = list(re.finditer(r'(?m)^  ([A-Za-z][\w-]*):\s*$', remaining))
+    found = {m.group(1) for m in headers}
+    if not required <= found or len(found) != len(headers):
+        raise AssertionError(f'{filename}: missing/duplicate universal job: {required - found}')
+    for index, marker in enumerate(headers):
+        if marker.group(1) not in required:
+            continue
+        end = headers[index + 1].start() if index + 1 < len(headers) else len(remaining)
+        block = remaining[marker.end():end]
+        if not re.search(r'(?m)^    steps:\s*$', block):
+            raise AssertionError(f'{filename}: universal job lacks steps: {marker.group(1)}')
+        if re.search(r'(?m)^    (?:if|continue-on-error)\s*:', block):
+            raise AssertionError(f'{filename}: conditional/tolerated universal job: {marker.group(1)}')
+
+
+
 def event_blocks(source: str) -> dict[str, list[str]]:
     lines = source.splitlines()
     try:
@@ -75,6 +106,7 @@ def event_blocks(source: str) -> dict[str, list[str]]:
 
 
 def assert_workflow_policy(source: str, filename: str) -> bool:
+    assert_unskippable_universal_jobs(source, filename)
     events = event_blocks(source)
     if 'pull_request' in events and 'pull_request_target' in events:
         raise AssertionError(f'{filename}: pull_request_target duplicates pull_request triggers')
@@ -217,6 +249,33 @@ class EntireWorkflowEventPolicy(unittest.TestCase):
                     self.assertNotEqual(mutant, original)
                     with self.assertRaisesRegex(AssertionError, 'pull_request_target'):
                         assert_workflow_policy(mutant, name)
+
+    def test_universal_jobs_cannot_be_skipped_or_tolerate_failure(self):
+        # The PR/main event policy is not sufficient if a required job is
+        # skipped or its failure is tolerated (GitHub can report a green run).
+        required = {'integration-head.yml': ('web', 'lean'), 'prek.yml': ('prek',)}
+        for name, jobs in required.items():
+            source = (WORKFLOWS / name).read_text(encoding='utf-8')
+            self.assertTrue(assert_workflow_policy(source, name))
+            for job in jobs:
+                marker = f'  {job}:\n'
+                self.assertIn(marker, source)
+                for bypass in (
+                    '    if: false\n',
+                    '    if: ${{ github.event_name == "workflow_dispatch" }}\n',
+                    '    continue-on-error: true\n',
+                ):
+                    mutant = source.replace(marker, marker + bypass, 1)
+                    with self.subTest(workflow=name, job=job, bypass=bypass.strip()):
+                        with self.assertRaisesRegex(AssertionError, 'universal job'):
+                            assert_workflow_policy(mutant, name)
+                # Removing a required job must not leave a successful partial CI.
+                head, remaining = source.split(marker, 1)
+                nxt = re.search(r'(?m)^  [A-Za-z][A-Za-z0-9_-]*:\s*$', remaining)
+                removed = head + (remaining[nxt.start():] if nxt else '')
+                with self.subTest(workflow=name, job=job, bypass='missing job'):
+                    with self.assertRaisesRegex(AssertionError, 'universal job'):
+                        assert_workflow_policy(removed, name)
 
     def test_one_event_only_is_not_falsely_classified_as_double(self):
         single = 'name: replay\non:\n  workflow_dispatch:\njobs:\n  run:\n    runs-on: ubuntu-latest\n'
