@@ -120,6 +120,9 @@ class ObservableDependencyLinkTests(unittest.TestCase):
         un = [e for e in edges if e['source_occurrence'] == 'C241-L33']
         sov = [e for e in edges if e['source_occurrence'] == 'C241-L37']
         self.assertEqual((len(un), len(sov)), (2, 11))
+        self.assertEqual({e['matrix_context'] for e in un}, {'C197#1'})
+        self.assertTrue(all(e['matrix_context'] is None for e in sov))
+        self.assertTrue(all(not e['independence_certified'] for e in edges))
         self.assertEqual({e['to'] for e in un},
                          {'latent_1963_528_state_epoch', 'latent_528_true_terminal_time'})
         self.assertEqual({e['to'] for e in sov if e['to'].startswith('NORAD_')},
@@ -147,11 +150,11 @@ class ObservableDependencyLinkTests(unittest.TestCase):
             bad = copy.deepcopy(un)
             bad['documentary_status_528'][key] = value
             with self.subTest(key=key), self.assertRaisesRegex(ValueError, 'UN cutoff'):
-                links.pending_documentary_routes(bad, sov, {})
+                links.pending_documentary_routes(bad, sov)
         bad = copy.deepcopy(un)
         bad['source_documents'][1]['publication_day'] = '1963-11-15'
         with self.assertRaisesRegex(ValueError, 'publication/cutoff'):
-            links.pending_documentary_routes(bad, sov, {})
+            links.pending_documentary_routes(bad, sov)
 
     def test_soviet_catalogue_not_measured_528_or_november_record(self):
         un = json.loads((ROOT / 'public/data/conde-un-1963-status-bridge.json').read_text())
@@ -161,15 +164,15 @@ class ObservableDependencyLinkTests(unittest.TestCase):
             bad = copy.deepcopy(sov)
             bad['simulator_latent_parameters'][1][key] = value
             with self.subTest(key=key), self.assertRaisesRegex(ValueError, 'target parameters'):
-                links.pending_documentary_routes(un, bad, {})
+                links.pending_documentary_routes(un, bad)
         bad = copy.deepcopy(sov)
         bad['catalogue_leads'][0]['described_observation_month'] = 'November 1963'
         with self.assertRaisesRegex(ValueError, 'Soviet catalogue'):
-            links.pending_documentary_routes(un, bad, {})
+            links.pending_documentary_routes(un, bad)
         bad = copy.deepcopy(sov)
         bad['source_dependency_graph'][1] = copy.deepcopy(bad['source_dependency_graph'][0])
         with self.assertRaisesRegex(ValueError, 'routes lost'):
-            links.pending_documentary_routes(un, bad, {})
+            links.pending_documentary_routes(un, bad)
 
     def test_parent_replay_is_required_before_publishing_aggregate(self):
         with mock.patch.object(links.soviet, 'render', return_value=b'not canonical'):
