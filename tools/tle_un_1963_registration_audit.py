@@ -33,7 +33,7 @@ def validate(m, nasa77, nasa63):
     need([d["number"] for d in docs]==["30","53","54","55"],"source completeness/order")
     for d in docs:
         b,h,day,letter,cutoff = SOURCES[d["number"]]
-        need(d["url"]==f"https://www.unoosa.org/documents/pdf/inf{d['number']}E.pdf"
+        need(d["url"]==f"https://www.unoosa.org/documents/pdf/inf{int(d['number']):03d}E.pdf"
              and d["bytes"]==b and d["sha256"]==h
              and d["document_day"]==day and d["letter_day"]==letter
              and d["report_cutoff_printed"]==cutoff
