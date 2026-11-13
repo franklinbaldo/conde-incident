@@ -1,0 +1,161 @@
+{
+  "candidate_groups": [
+    {
+      "blockers": [
+        "RAW_1963_TRACKING_RECORD",
+        "EPOCH_SEMANTICS",
+        "SENSOR_FRAME_AND_ERROR",
+        "WITHIN_LINEAGE_DEPENDENCE"
+      ],
+      "factor_eligibility": "PENDING_PRIMARY_RAW_OBSERVABLE_SENSOR_FRAME_COVARIANCE",
+      "n_528_entries": 45,
+      "name": "1963_TLE_NUMERIC_MIRROR",
+      "occurrences": [
+        "C25#1",
+        "C179#1",
+        "C180#1",
+        "C181#1",
+        "C241-L3"
+      ],
+      "source_path": "research/statistics/raan_527_528_529_1963.json",
+      "unique_epochs_by_object": {
+        "527": 20,
+        "528": 45,
+        "529": 54
+      },
+      "upstream_family": "SINGLE_SECONDARY_CATALOGUE_UNVERIFIED_SENSOR_LINEAGE"
+    },
+    {
+      "blockers": [
+        "OBSERVATION_EPOCH",
+        "TERMINAL_EVENT_SEMANTICS",
+        "STATUS_REPORT_SELECTION_PROCESS"
+      ],
+      "catalog_status_day": "1963-11-08",
+      "factor_eligibility": "NOT_AN_OBSERVED_SENSOR_EVENT_OR_TERMINAL_TIME",
+      "name": "NASA_1963_003B_DAY_ONLY_STATUS",
+      "occurrences": [
+        "C197#1",
+        "C198#1"
+      ],
+      "printed_page": 8,
+      "source_document_id": "NASA NTRS 19640001198",
+      "source_url": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf"
+    },
+    {
+      "blockers": [
+        "OBJECT_ID_528",
+        "SENSOR_RECORD_528"
+      ],
+      "document_lineages": [
+        "NASA_DOD_1961_DATA_SHARING_POLICY",
+        "NORAD_SPADATS_1963_SPUTNIK46",
+        "NORAD_SPADATS_1964_SPUTNIK83"
+      ],
+      "factor_eligibility": "NO_528_MEASUREMENT_IN_INSPECTED_DOCUMENTS",
+      "n_documents": 5,
+      "n_documents_about_528": 0,
+      "name": "NORAD_SPADATS_MOR_CONTEXT",
+      "objects_named_in_documents": [
+        687,
+        688,
+        943
+      ],
+      "occurrences": [
+        "MOR-NOR-20261112-01",
+        "MOR-NOR-20261112-02",
+        "MOR-NOR-20261112-03",
+        "MOR-NOR-20261112-04",
+        "MOR-NOR-20261112-05"
+      ]
+    },
+    {
+      "blockers": [
+        "FILM_CONTENT",
+        "TARGET_ID",
+        "OBSERVATION_TIME",
+        "MEASURED_ANGLE",
+        "CALIBRATED_ERROR"
+      ],
+      "factor_eligibility": "INVENTORY_ONLY_TARGET_NOT_VERIFIED",
+      "n_curated_film_indices": 15,
+      "n_with_authenticated_target_528": 0,
+      "name": "SMITHSONIAN_RU301_SC8_FILM_INDEX",
+      "occurrences": [
+        "BN-RU301-20261112-01",
+        "BN-RU301-20261112-02",
+        "BN-RU301-20261112-03"
+      ],
+      "source_url": "https://sirismm.si.edu/EADpdfs/SIA.FARU0301.pdf"
+    }
+  ],
+  "classification": "DOCUMENTARY_FACTOR_ELIGIBILITY_AUDIT_NO_HISTORICAL_POSTERIOR",
+  "frozen_holdout": {
+    "memberships_by_partition": {
+      "evaluation": 35,
+      "fit": 61,
+      "validation": 23
+    },
+    "prediction_score": "NOT_RUN",
+    "same_secondary_source_family_across_all_partitions": true,
+    "status": "RETROSPECTIVE_TIME_SPLIT_NOT_BLINDED"
+  },
+  "independence": {
+    "factorization_into_independent_observations": "NOT_JUSTIFIED",
+    "lineage_count_is_not_effective_sample_size": true,
+    "nasa_norad_data_exchange_possible_not_proof_of_exact_record_ancestry": true,
+    "norad_documents_1963_sputnik46_share_reporting_family": true,
+    "number_of_independent_528_sensor_sources_identified_in_inputs": 0,
+    "number_of_independent_528_sensor_sources_in_history": null,
+    "secondary_mirror_is_not_independent_from_its_catalog_reprints": true
+  },
+  "input_sha256": [
+    {
+      "path": "public/data/conde-norad-context.json",
+      "sha256": "78e8d88a5bcdb570d0afec854497720987f29fdfdebbe785c27418a988fb5e3b"
+    },
+    {
+      "path": "research/constraints/baker_nunn_ru301_1963_film_index.json",
+      "sha256": "bd7bd05a6530af496b840da2edb7aa056ff0cdb9f25588d8831e92bff7b2562c"
+    },
+    {
+      "path": "research/statistics/raan_527_528_529_1963.json",
+      "sha256": "b88564912c35167044d5fd4a0c1b50f6c624fcaf1066f82a7b70e503df8928f5"
+    },
+    {
+      "path": "research/statistics/raan_chronological_holdout_1963.json",
+      "sha256": "a51ff61054da94587aa9c45631b3887572f238fe5967d2a8493c49d360c5e59f"
+    },
+    {
+      "path": "research/tle_custody/catalog_identity_527_529_2026-11-12.json",
+      "sha256": "9c129a3bb7f1fa56663f6cdd51c5ecfbcb271620730ebc353a8ac58b75d8daab"
+    }
+  ],
+  "model_contract": {
+    "MCMC_historical": "NOT_RUN",
+    "active_constraint": false,
+    "admissible_geographic_domain_change": "NOT_EVALUABLE",
+    "forward_observable": "H_528(theta, observation_utc, frame, sensor)",
+    "likelihood_scale_or_covariance": null,
+    "posterior_historical": "NOT_IDENTIFIED",
+    "priors_documented_for_historical_run": null,
+    "required_fields": [
+      "observation_epoch_utc",
+      "instrument_id",
+      "reference_frame",
+      "measured_quantity",
+      "measured_value",
+      "units",
+      "measurement_error_model_ref",
+      "observation_selection_model_ref",
+      "source_document_id",
+      "source_page_or_record",
+      "upstream_independence_assessment",
+      "physical_forward_operator_ref"
+    ],
+    "selection_and_non_detection_model": null
+  },
+  "question": "Which inspected records could act as calibrated physical likelihood factors for NORAD 528?",
+  "schema": "conde.raan-source-likelihood-readiness/v1",
+  "scope_limit": "Zero eligible 528 instrument records IN THESE INSPECTED INPUTS, not evidence that the object was never observed."
+}
