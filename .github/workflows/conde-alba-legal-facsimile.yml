@@ -1,0 +1,26 @@
+name: ALBA 2017 legal facsimile and temporal custody
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  conde-legal-source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact HEAD
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Offline custody and adversarial temporal checks
+        run: |
+          python -m unittest discover -s tests -p 'test_conde_alba_law13720.py' -v
+          python tools/verify_conde_alba_law13720.py

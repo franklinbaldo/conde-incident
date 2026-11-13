@@ -1,0 +1,132 @@
+{
+  "schema": "conde.alba-legal-facsimile/v1",
+  "document_id": "CGEO-ALBA-L13720-2017-01",
+  "title": "Lei BA 13.720/2017 no Diario Oficial da Assembleia Legislativa da Bahia",
+  "issuer": "Assembleia Legislativa do Estado da Bahia",
+  "law_number": "13.720",
+  "signed_date": "2017-04-27",
+  "publication_date": "2017-04-28",
+  "publication_issue": "22.166",
+  "original_url": "https://ftp.sei.ba.gov.br/Geoinformacao/leis/lim_mun/aprov/lei-no-13720-de-27-de-abril-de-2017.pdf",
+  "custody": {
+    "retrieved_utc_date": "2026-11-13",
+    "http_get": "200",
+    "mime_or_magic": "%PDF-1.6",
+    "bytes": 354121,
+    "sha256": "76134441592ebc234dbd3856560ed6375f956f8e126c8ecced5244b9a38d89d9",
+    "pdf_eof": true,
+    "pdf_leaf_page_count": 10,
+    "visual_inspection": "PRINTED_PAGES_9_10",
+    "archive_url": null
+  },
+  "cite": {
+    "law": "art. 1, par. 8, incisos I-IV",
+    "pdf_page_indices_zero_based": [
+      3,
+      4
+    ],
+    "printed_pages": [
+      9,
+      10
+    ],
+    "other_recitals": [
+      "art. 1 par. 11 inciso III (Esplanada)",
+      "art. 1 par. 15 inciso IV (Jandaira)",
+      "art. 1 par. 20 inciso IV (Rio Real)"
+    ]
+  },
+  "boundary_anchors_2017": [
+    {
+      "id": "salobrinho",
+      "description": "foz do riacho Salobrinho no rio Branco",
+      "lat_dms": "-11°39'45,89\"",
+      "lon_dms": "-37°44'50,27\""
+    },
+    {
+      "id": "itapicuru_atlantic",
+      "description": "foz do rio Itapicuru no oceano Atlântico",
+      "lat_dms": "-11°44'27,80\"",
+      "lon_dms": "-37°30'40,44\""
+    },
+    {
+      "id": "inhambupe_atlantic",
+      "description": "foz do rio Inhambupe no oceano Atlântico",
+      "lat_dms": "-12°05'54,08\"",
+      "lon_dms": "-37°41'09,25\""
+    },
+    {
+      "id": "mangues_itapicuru",
+      "description": "foz do riacho dos Mangues no rio Itapicuru",
+      "lat_dms": "-11°44'16,86\"",
+      "lon_dms": "-37°48'44,48\""
+    }
+  ],
+  "boundary_cycle_2017": [
+    {
+      "neighbor": "Jandaira",
+      "inciso": "I",
+      "from": "salobrinho",
+      "to": "itapicuru_atlantic"
+    },
+    {
+      "neighbor": "Oceano Atlantico",
+      "inciso": "II",
+      "from": "itapicuru_atlantic",
+      "to": "inhambupe_atlantic"
+    },
+    {
+      "neighbor": "Esplanada",
+      "inciso": "III",
+      "from": "inhambupe_atlantic",
+      "to": "mangues_itapicuru"
+    },
+    {
+      "neighbor": "Rio Real",
+      "inciso": "IV",
+      "from": "mangues_itapicuru",
+      "to": "salobrinho"
+    }
+  ],
+  "reciprocal_references_2017": [
+    {
+      "neighbor": "Jandaira",
+      "section": "15-IV",
+      "from": "itapicuru_atlantic",
+      "to": "salobrinho"
+    },
+    {
+      "neighbor": "Esplanada",
+      "section": "11-III",
+      "from": "mangues_itapicuru",
+      "to": "inhambupe_atlantic"
+    },
+    {
+      "neighbor": "Rio Real",
+      "section": "20-IV",
+      "from": "salobrinho",
+      "to": "mangues_itapicuru"
+    }
+  ],
+  "legal_genealogy": {
+    "reference_law": "BA 628/1953",
+    "reference_status": "RETROSPECTIVE_LEGAL_REFERENCE_IN_2017",
+    "recovered_1953_facsimile": false,
+    "recovered_1953_annexes": false,
+    "checked_intervening_acts_1954_1963": false,
+    "temporal_conclusion": "2017_VIGENCY_ONLY"
+  },
+  "dependencies": [
+    "CGEO-SEI-MAP-2017-01",
+    "lontra#2",
+    "caranguejo#3"
+  ],
+  "epistemology": {
+    "official_2017_legislative_facsimile": true,
+    "independent_1963_boundary_survey": false,
+    "1963_legal_boundary_demonstrated": false,
+    "law_2017_coordinates_are_1963_observations": false,
+    "orbital_constraint_activated": false,
+    "precise_1963_coordinates_established": false
+  },
+  "limitations": "Reciprocidade testada somente nos pontos extremos de trechos legais de 2017, sem validar geometria intermediaria. Lei 628/1953 com quadro I/anexos e alteracoes especificas ate 1963 ainda nao foi recuperada."
+}
