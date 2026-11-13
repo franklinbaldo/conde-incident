@@ -1,10 +1,15 @@
 """Offline regression/negative controls for historical NTRS URL variants."""
 from __future__ import annotations
 from copy import deepcopy
+import contextlib
+import hashlib
+import io
+import sys
+from unittest.mock import patch
 import json
 from pathlib import Path
 import unittest
-from tools.verify_nasa_ssr_legacy_wayback import validate
+from tools.verify_nasa_ssr_legacy_wayback import validate, current_api_errors, main
 
 DOC = json.loads((Path(__file__).resolve().parents[1] / 'research/archive/nasa_ssr_19631115_legacy_wayback_20261113.json').read_text())
 
@@ -44,6 +49,43 @@ class NASAOldNTRSTest(unittest.TestCase):
         bad = deepcopy(DOC)
         bad['current_api_replay']['sha256'] = '0' * 64
         self.assertTrue(any('NASA original/archive bytes differ' in x for x in validate(bad)))
+
+
+    def test_current_nasa_api_bytes_are_checked_independently(self):
+        sample = b'%PDF-1.4\nindependent synthetic payload\n%%EOF\n'
+        manifest = {'bytes': len(sample), 'sha256': hashlib.sha256(sample).hexdigest()}
+        self.assertEqual(current_api_errors(manifest, sample, http_status=200,
+                                            content_type='application/pdf; charset=binary'), [])
+        altered = sample.replace(b'independent', b'altered____')
+        self.assertTrue(any('SHA-256 mismatch' in x for x in
+                            current_api_errors(manifest, altered, http_status=200,
+                                               content_type='application/pdf')))
+
+    def test_fetch_reaches_nasa_api_not_just_three_wayback_urls(self):
+        visited = []
+
+        class FakeResponse:
+            status = 200
+            headers = {'Content-Type': 'application/pdf'}
+
+            def __enter__(self): return self
+            def __exit__(self, *args): return False
+            def read(self, count): return b'%PDF-1.4\nchanged NASA API response\n%%EOF'
+
+        def fake_urlopen(request, timeout):
+            visited.append(request.full_url)
+            return FakeResponse()
+
+        with (patch('tools.verify_nasa_ssr_legacy_wayback.urlopen', side_effect=fake_urlopen),
+              patch('tools.verify_nasa_ssr_legacy_wayback.replay_errors', return_value=[]),
+              patch.object(sys, 'argv', ['verifier', '--fetch']),
+              contextlib.redirect_stdout(io.StringIO())):
+            result = main()
+        # Wayback HTTP is faked solely to isolate the independent NASA API fetch.
+        # Before G30 the script returned 0 after visiting only three archive URLs.
+        self.assertEqual(result, 1)
+        self.assertEqual(len(visited), 4)
+        self.assertEqual(visited[-1], DOC['current_api_url'])
 
 
 if __name__ == '__main__':
