@@ -43,6 +43,8 @@ jobs:
           ssg --version
           ssg --help
           ssg build --help
+      - name: Exercise documentary archive and Wayback custody adversarial tests
+        run: node --test tests/ssg-documentary-archive.test.mjs tests/ssg-wayback-custody.test.mjs
       - name: Validate chapter schema and chronology
         run: node scripts/prepare-ssg.mjs --check
       - name: Generate SSG inputs from canonical stories

@@ -1,0 +1,416 @@
+{
+  "schema": "conde.igra-bahia-regional-1963/v1",
+  "capture_date_utc": "2026-11-13",
+  "sources": {
+    "station_list_url": "https://www.ncei.noaa.gov/pub/data/igra/igra2-station-list.txt",
+    "station_list_sha256": "9515d29b0c61fcfc912028830c37f47e723ba32c14d88fb48cf6d8bf727060ab",
+    "zip_url_template": "https://www.ncei.noaa.gov/pub/data/igra/data/data-por/{station_id}-data.txt.zip",
+    "conde_ibge_2022_archive_sha256": "6559f564071dec2d49e3c55061049190054ea71121cb02e2e6d9cbf8e9bc7c48"
+  },
+  "reference": {
+    "type": "midpoint_of_IBGE_2022_municipality_bbox_not_centroid",
+    "lat_lon": [
+      -11.8641854035,
+      -37.68935144749995
+    ],
+    "radius_km": 1500,
+    "distance_method": "haversine_spherical_earth_R6371km",
+    "coordinates_valid_for_1963": null,
+    "historical_site_distance_error_km": null
+  },
+  "catalogue": {
+    "within_1500_km": 31,
+    "year_1963_in_catalogue_bounds": 4,
+    "rows": [
+      {
+        "station_id": "BRM00083096",
+        "catalogue_name": "ARACAJU",
+        "catalogue_lat": -10.917,
+        "catalogue_lon": -37.05,
+        "approx_bbox_center_km": 126.3,
+        "inventory_first_year": 1974,
+        "inventory_last_year": 1979,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00083229",
+        "catalogue_name": "SALVADOR (83229-0)",
+        "catalogue_lat": -13.0167,
+        "catalogue_lon": -38.5167,
+        "approx_bbox_center_km": 156.5,
+        "inventory_first_year": 1970,
+        "inventory_last_year": 2018,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00082993",
+        "catalogue_name": "MACEIO (AEROPORTO)",
+        "catalogue_lat": -9.517,
+        "catalogue_lon": -35.783,
+        "approx_bbox_center_km": 333.9,
+        "inventory_first_year": 1973,
+        "inventory_last_year": 1979,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00082983",
+        "catalogue_name": "PETROLINA (82983-0)",
+        "catalogue_lat": -9.3833,
+        "catalogue_lon": -40.4833,
+        "approx_bbox_center_km": 411.5,
+        "inventory_first_year": 1970,
+        "inventory_last_year": 2020,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00083182",
+        "catalogue_name": "IRECE",
+        "catalogue_lat": -11.3,
+        "catalogue_lon": -41.867,
+        "approx_bbox_center_km": 459.4,
+        "inventory_first_year": 1975,
+        "inventory_last_year": 1979,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00083344",
+        "catalogue_name": "VITORIA DA CONQUIST",
+        "catalogue_lat": -14.95,
+        "catalogue_lon": -40.883,
+        "approx_bbox_center_km": 486.9,
+        "inventory_first_year": 1976,
+        "inventory_last_year": 1977,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00082900",
+        "catalogue_name": "RECIFE (82900-0)",
+        "catalogue_lat": -8.05,
+        "catalogue_lon": -34.9167,
+        "approx_bbox_center_km": 521.6,
+        "inventory_first_year": 1952,
+        "inventory_last_year": 2019,
+        "year_1963_inside_inventory_bounds": true
+      },
+      {
+        "station_id": "BRM00082784",
+        "catalogue_name": "BARBALHA",
+        "catalogue_lat": -7.317,
+        "catalogue_lon": -39.3,
+        "approx_bbox_center_km": 535.6,
+        "inventory_first_year": 1974,
+        "inventory_last_year": 1979,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00082791",
+        "catalogue_name": "PATOS",
+        "catalogue_lat": -7.017,
+        "catalogue_lon": -37.267,
+        "approx_bbox_center_km": 541.0,
+        "inventory_first_year": 1976,
+        "inventory_last_year": 1979,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00083288",
+        "catalogue_name": "BOM JESUS DA LAPA (83288-0)",
+        "catalogue_lat": -13.2511,
+        "catalogue_lon": -43.4053,
+        "approx_bbox_center_km": 639.2,
+        "inventory_first_year": 1970,
+        "inventory_last_year": 2015,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00083498",
+        "catalogue_name": "CARAVELAS (83498-0)",
+        "catalogue_lat": -17.7333,
+        "catalogue_lon": -39.25,
+        "approx_bbox_center_km": 673.8,
+        "inventory_first_year": 1975,
+        "inventory_last_year": 2016,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00082599",
+        "catalogue_name": "NATAL (AERO)",
+        "catalogue_lat": -5.9167,
+        "catalogue_lon": -35.25,
+        "approx_bbox_center_km": 713.5,
+        "inventory_first_year": 1943,
+        "inventory_last_year": 2026,
+        "year_1963_inside_inventory_bounds": true
+      },
+      {
+        "station_id": "BRM00082586",
+        "catalogue_name": "QUIXERAMOBIM",
+        "catalogue_lat": -5.2,
+        "catalogue_lon": -39.3,
+        "approx_bbox_center_km": 761.9,
+        "inventory_first_year": 1974,
+        "inventory_last_year": 1979,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00082975",
+        "catalogue_name": "BOM JESUS",
+        "catalogue_lat": -9.1,
+        "catalogue_lon": -44.117,
+        "approx_bbox_center_km": 767.0,
+        "inventory_first_year": 1977,
+        "inventory_last_year": 1979,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00083236",
+        "catalogue_name": "BARREIRAS",
+        "catalogue_lat": -12.15,
+        "catalogue_lon": -45.0,
+        "approx_bbox_center_km": 795.7,
+        "inventory_first_year": 1973,
+        "inventory_last_year": 1979,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00082678",
+        "catalogue_name": "FLORIANO (82678-0)",
+        "catalogue_lat": -6.7667,
+        "catalogue_lon": -43.0167,
+        "approx_bbox_center_km": 814.1,
+        "inventory_first_year": 1971,
+        "inventory_last_year": 2019,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00082397",
+        "catalogue_name": "FORTALEZA (82397-0)",
+        "catalogue_lat": -3.7667,
+        "catalogue_lon": -38.6,
+        "approx_bbox_center_km": 906.0,
+        "inventory_first_year": 1973,
+        "inventory_last_year": 2019,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00082579",
+        "catalogue_name": "TERESINA",
+        "catalogue_lat": -5.05,
+        "catalogue_lon": -42.817,
+        "approx_bbox_center_km": 944.3,
+        "inventory_first_year": 1973,
+        "inventory_last_year": 1978,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00083649",
+        "catalogue_name": "VITORIA (AERO)",
+        "catalogue_lat": -20.2667,
+        "catalogue_lon": -40.2833,
+        "approx_bbox_center_km": 974.5,
+        "inventory_first_year": 1973,
+        "inventory_last_year": 2026,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00082400",
+        "catalogue_name": "FERNANDO DE NORONHA (AERO)",
+        "catalogue_lat": -3.85,
+        "catalogue_lon": -32.4167,
+        "approx_bbox_center_km": 1063.4,
+        "inventory_first_year": 1958,
+        "inventory_last_year": 2026,
+        "year_1963_inside_inventory_bounds": true
+      },
+      {
+        "station_id": "BRM00082287",
+        "catalogue_name": "PARNAIBA",
+        "catalogue_lat": -3.083,
+        "catalogue_lon": -41.783,
+        "approx_bbox_center_km": 1075.5,
+        "inventory_first_year": 1973,
+        "inventory_last_year": 1979,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00083566",
+        "catalogue_name": "CONFINS (AERO)",
+        "catalogue_lat": -19.6167,
+        "catalogue_lon": -43.9667,
+        "approx_bbox_center_km": 1092.5,
+        "inventory_first_year": 1973,
+        "inventory_last_year": 2026,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00082571",
+        "catalogue_name": "BARRA DO CORDA",
+        "catalogue_lat": -5.5,
+        "catalogue_lon": -45.267,
+        "approx_bbox_center_km": 1092.6,
+        "inventory_first_year": 1977,
+        "inventory_last_year": 1979,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00083063",
+        "catalogue_name": "PORTO NACIONAL",
+        "catalogue_lat": -10.7,
+        "catalogue_lon": -48.4,
+        "approx_bbox_center_km": 1175.0,
+        "inventory_first_year": 1973,
+        "inventory_last_year": 1979,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00082765",
+        "catalogue_name": "CAROLINA (82765-0)",
+        "catalogue_lat": -7.3333,
+        "catalogue_lon": -47.4667,
+        "approx_bbox_center_km": 1184.2,
+        "inventory_first_year": 1970,
+        "inventory_last_year": 2019,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00083378",
+        "catalogue_name": "BRASILIA (AERO)",
+        "catalogue_lat": -15.8729,
+        "catalogue_lon": -47.9241,
+        "approx_bbox_center_km": 1191.1,
+        "inventory_first_year": 1966,
+        "inventory_last_year": 2026,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00082281",
+        "catalogue_name": "SAO LUIS (AERO)",
+        "catalogue_lat": -2.6,
+        "catalogue_lon": -44.2333,
+        "approx_bbox_center_km": 1257.4,
+        "inventory_first_year": 1971,
+        "inventory_last_year": 2021,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00083650",
+        "catalogue_name": "ILHA DE TRINDADE (CHM)",
+        "catalogue_lat": -20.5,
+        "catalogue_lon": -29.3167,
+        "approx_bbox_center_km": 1311.3,
+        "inventory_first_year": 1967,
+        "inventory_last_year": 2019,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00083746",
+        "catalogue_name": "GALEAO (AERO)",
+        "catalogue_lat": -22.8167,
+        "catalogue_lon": -43.25,
+        "approx_bbox_center_km": 1352.8,
+        "inventory_first_year": 1961,
+        "inventory_last_year": 2026,
+        "year_1963_inside_inventory_bounds": true
+      },
+      {
+        "station_id": "BRM00083525",
+        "catalogue_name": "UBERLANDIA (AERO)",
+        "catalogue_lat": -18.8833,
+        "catalogue_lon": -48.2167,
+        "approx_bbox_center_km": 1371.5,
+        "inventory_first_year": 2006,
+        "inventory_last_year": 2026,
+        "year_1963_inside_inventory_bounds": false
+      },
+      {
+        "station_id": "BRM00083576",
+        "catalogue_name": "UBERABA",
+        "catalogue_lat": -19.783,
+        "catalogue_lon": -47.967,
+        "approx_bbox_center_km": 1407.7,
+        "inventory_first_year": 1973,
+        "inventory_last_year": 1973,
+        "year_1963_inside_inventory_bounds": false
+      }
+    ]
+  },
+  "audited_archives": [
+    {
+      "station_id": "BRM00082400",
+      "snapshot_zip_bytes": 14035890,
+      "snapshot_zip_sha256": "3005549a9eb830202b0f5bb117ccaa23431d3a24f259824c6feb7b7d9d839445",
+      "sounding_headers_total": 15129,
+      "sounding_headers_1963": 0,
+      "months_1963": {},
+      "dates_nov_07_09_1963": {}
+    },
+    {
+      "station_id": "BRM00082599",
+      "snapshot_zip_bytes": 19067487,
+      "snapshot_zip_sha256": "e8ffc9be391d97674b95624eda8d57cd94ddac599404cdea775aa6e95202f7be",
+      "sounding_headers_total": 20448,
+      "sounding_headers_1963": 0,
+      "months_1963": {},
+      "dates_nov_07_09_1963": {}
+    },
+    {
+      "station_id": "BRM00082900",
+      "snapshot_zip_bytes": 7834492,
+      "snapshot_zip_sha256": "df4fcd10e1920723b3cf337b745301b505810ee1dc8a6c5006b84e52b2c871df",
+      "sounding_headers_total": 14977,
+      "sounding_headers_1963": 346,
+      "months_1963": {
+        "01": 31,
+        "02": 25,
+        "03": 28,
+        "04": 25,
+        "05": 29,
+        "06": 27,
+        "07": 29,
+        "08": 31,
+        "09": 30,
+        "10": 31,
+        "11": 29,
+        "12": 31
+      },
+      "dates_nov_07_09_1963": {
+        "1963-11-07": 1,
+        "1963-11-08": 1,
+        "1963-11-09": 1
+      }
+    },
+    {
+      "station_id": "BRM00083746",
+      "snapshot_zip_bytes": 25370969,
+      "snapshot_zip_sha256": "4caf057ca487167ac68241d7e150a994e79fda7601c784df07db60dceeac6ac8",
+      "sounding_headers_total": 34926,
+      "sounding_headers_1963": 72,
+      "months_1963": {
+        "01": 17,
+        "02": 11,
+        "03": 7,
+        "04": 9,
+        "06": 14,
+        "07": 14
+      },
+      "dates_nov_07_09_1963": {}
+    }
+  ],
+  "result": {
+    "actual_1963_headers_in_four_nominally_eligible_archives": 418,
+    "archive_ids_with_nov_07_09_headers": [
+      "BRM00082900"
+    ],
+    "independent_conde_wind_observation_1963_11_08": null,
+    "spatiotemporal_transfer_uncertainty": null,
+    "instrumental_covariance": null,
+    "geographic_constraint_activated": false,
+    "status": "CONNECTED_PENDING_SPATIOTEMPORAL_CALIBRATION",
+    "links": [
+      "C149",
+      "C150",
+      "C151",
+      "PR420"
+    ]
+  }
+}

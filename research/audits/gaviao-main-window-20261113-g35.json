@@ -1,0 +1,220 @@
+{
+  "schema": "conde.gaviao-retrospective-window/v1",
+  "review": "G35",
+  "date": "2026-11-13",
+  "reviewed_from_exclusive_main_sha": "06f1f11ca567ec37d260435fba233080b5365170",
+  "reviewed_through_inclusive_main_sha": "0d0f51f0eec06421b895372b6390d7f309ad61fa",
+  "first_parent_integrations": 13,
+  "squash_merges": 11,
+  "conventional_merges": 2,
+  "dag_commits": 19,
+  "direct_commits": 0,
+  "additional_dag_commits": 6,
+  "entries": [
+    {
+      "main_sha": "2dd44b83c82c25bf5b4d9e4106bdc06751010b52",
+      "first_parent_sha": "06f1f11ca567ec37d260435fba233080b5365170",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 414,
+      "subject": "🐢 C241-L18: reconcile NASA 31 Dec 3C 89.2 min with C227 erratum",
+      "changed_files": [
+        ".github/workflows/tle-nasa-ssr-jul-dec.yml",
+        "research/tle_custody/evidence_matrix_C241-L18_2026-11-13.md",
+        "research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json",
+        "tests/test_tle_nasa_ssr_jul_dec_audit.py",
+        "tools/tle_nasa_ssr_jul_dec_audit.py"
+      ],
+      "audit_note": "December NASA 3C period erratum: 89.2 min vs 89.6; documentary, not terminal track",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "646a3f1eea8aff6a73848c8807315f48313fece7",
+      "first_parent_sha": "2dd44b83c82c25bf5b4d9e4106bdc06751010b52",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 415,
+      "subject": "88 🦅 G34: vedar época instrumental inventada em genealogia SSR e auditar 12 integrações (#415)",
+      "changed_files": [
+        "research/audits/gaviao-main-window-20261113-g34.json",
+        "research/audits/gaviao-main-window-20261113-g34.md",
+        "tests/test_ssr_source_locked_links.py",
+        "tools/export_ssr_source_locked_links.py"
+      ],
+      "audit_note": "Previous G34 schema-closed SSR lineage; post-merge revision in scope",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "8754b802e095082055ddbab6f4b62873c32ef4f9",
+      "first_parent_sha": "646a3f1eea8aff6a73848c8807315f48313fece7",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 416,
+      "subject": "90 🐙 C241-P11: ligar Lean de novembro à ponte NASA auditada C241-L18/L19 (#416)",
+      "changed_files": [
+        ".github/workflows/lean-core.yml",
+        "formal/scripts/compile_ssr_november.py",
+        "formal/tests/test_ssr_november.py",
+        "research/constraints/C241-P11_november_historical_printings.json"
+      ],
+      "audit_note": "Lean November bridge: premise-conditional, no instrumental authentication",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "522164eb4f836960fb6b2a64aa45126a025d5f4a",
+      "first_parent_sha": "8754b802e095082055ddbab6f4b62873c32ef4f9",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 417,
+      "subject": "92 🦦 Fonte oficial Lei 628/1953: Conde, Quadro I e Anexo VI (#417)",
+      "changed_files": [
+        "research/archive/conde_lei628_official_1953_20261113.json",
+        "tests/test_conde_lei628_official.py",
+        "tools/verify_conde_lei628_official.py"
+      ],
+      "audit_note": "1953 law facsimile is legal geography, not a 1963 orbital track",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "e114564e7dc6fd3cb8e7d5c4f432355d3ee144ec",
+      "first_parent_sha": "522164eb4f836960fb6b2a64aa45126a025d5f4a",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 419,
+      "subject": "🐝 C241-L18: bind corrected December 529 SSR to Lean and latent physics (#419)",
+      "changed_files": [
+        "formal/Conde1963/SsrSurvivorIntervals.lean",
+        "public/data/conde-ssr-december-bridge.json",
+        "tests/test_ssr_december_bridge.py",
+        "tools/export_ssr_december_bridge.py"
+      ],
+      "audit_note": "Nov/Dec NASA 529 table bridge with uncalibrated sensor epochs",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "c220fb08b19b8e18e0d92231bdbb6fdcd62757d4",
+      "first_parent_sha": "e114564e7dc6fd3cb8e7d5c4f432355d3ee144ec",
+      "other_parents": [
+        "e34a648dc592a2027033d6d13645afee731425e3"
+      ],
+      "merge_method": "merge",
+      "pr": 420,
+      "subject": "Merge pull request #420 from franklinbaldo/research/lagarto-igra-neighbor-coverage-r19",
+      "changed_files": [
+        "research/meteorology/igra_nearby_1963_source_refresh.json",
+        "research/meteorology/igra_nearby_1963_source_refresh.md",
+        "tests/test_igra_neighbors_1963.py",
+        "tools/audit_igra_neighbors_1963.py"
+      ],
+      "audit_note": "IGRA station availability and uncertainty; no imputed profiles",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "9e14693880666a883e18329f6c89c23f98d1686c",
+      "first_parent_sha": "c220fb08b19b8e18e0d92231bdbb6fdcd62757d4",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 421,
+      "subject": "90 🦌 C241: contrastes documentais NASA SSR pós-528 (#421)",
+      "changed_files": [
+        "research/statistics/SSR_POST528_PRINT_CONTRASTS.md",
+        "research/statistics/ssr_post528_print_contrasts_C241.json",
+        "tests/test_ssr_post528_print_contrasts.py",
+        "tools/ssr_post528_print_contrasts.py"
+      ],
+      "audit_note": "Printed period contrasts with rounding bands, not sensor covariance",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "e5fc3b03de967e592b42eb5b3fdfccf8d6597952",
+      "first_parent_sha": "9e14693880666a883e18329f6c89c23f98d1686c",
+      "other_parents": [
+        "a8a8588cd050fa0b98529ddc4f5d8d95ab72d2e2"
+      ],
+      "merge_method": "merge",
+      "pr": 422,
+      "subject": "Merge pull request #422 from franklinbaldo/research/caranguejo-cgeo21-itapicuru-crossings",
+      "changed_files": [
+        "research/geo/cgeo21_itapicuru_crossings_2014_2025.json",
+        "research/geo/cgeo21_itapicuru_crossings_2014_2025.md",
+        "tests/test_cgeo21_itapicuru_crossings.py",
+        "tools/cgeo21_itapicuru_crossings.py"
+      ],
+      "audit_note": "2014–2025 Itapicuru crossings cannot be retrojected to 1963",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "1785120199560867bfed6403aa698d584f06e853",
+      "first_parent_sha": "e5fc3b03de967e592b42eb5b3fdfccf8d6597952",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 424,
+      "subject": "test(ci): exigir comparação executável do HEAD em cada checkout (#424)",
+      "changed_files": [
+        "tests/test_ci_checkout_sha.py"
+      ],
+      "audit_note": "Checkout SHA audit asserts comparison on each CI checkout",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "72f1e4f8201c78b94053afe037951b426e6b3599",
+      "first_parent_sha": "1785120199560867bfed6403aa698d584f06e853",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 425,
+      "subject": "feat(castor): dimensionally audit NASA SSR 527/529 compiled periods (#425)",
+      "changed_files": [
+        "research/constraints/C241-P11_kepler_unit_audit_g34.json",
+        "src/lib/orbitSsrPeriodAudit.ts",
+        "tests/orbitSsrPeriodAudit.test.mjs"
+      ],
+      "audit_note": "Kepler 2-body dimensional baseline, explicitly not J2/SGP4 calibration",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "f03f2114f8ba1bff224b8ca58553b738130161dd",
+      "first_parent_sha": "72f1e4f8201c78b94053afe037951b426e6b3599",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 426,
+      "subject": "fix(ui): distinguir arquivo documental de capítulo (#426)",
+      "changed_files": [
+        "scripts/check-site.mjs",
+        "templates/tera/page.html"
+      ],
+      "audit_note": "Static archive labels/navigation; no changed instrumental facts",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "a6b4449cfcca68031370b76e320b73ede8e5916f",
+      "first_parent_sha": "f03f2114f8ba1bff224b8ca58553b738130161dd",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 427,
+      "subject": "feat(raposa): Wayback verificado em C197/C198 SSG (#427)",
+      "changed_files": [
+        "scripts/prepare-ssg.mjs",
+        "scripts/ssg-documentary-archive.mjs",
+        "scripts/ssg-wayback-links.mjs",
+        "tests/ssg-documentary-archive.test.mjs"
+      ],
+      "audit_note": "F1 Wayback: metadata/URL captured source mismatch accepted by validator",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "0d0f51f0eec06421b895372b6390d7f309ad61fa",
+      "first_parent_sha": "a6b4449cfcca68031370b76e320b73ede8e5916f",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 428,
+      "subject": "story(coruja): caderno 12 testa J2 com controle negativo (#428)",
+      "changed_files": [
+        "stories/2026-11-13-dois-acertos-uma-derrota-j2.md"
+      ],
+      "audit_note": "J2 notebook with negative control; does not identify 528 terminal reentry",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    }
+  ],
+  "finding": "G35-F1: Wayback source URL, CDX origin, capture UTC, byte length and duplicate capture edges not cross-checked before publication",
+  "scientific_conclusion": "NORAD_528_REENTRY_TIME_AND_LOCATION_UNDETERMINED"
+}
