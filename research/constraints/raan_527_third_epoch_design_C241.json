@@ -1,0 +1,115 @@
+{
+  "active_constraint": false,
+  "calibrated_holdout_likelihood": "NOT_RUN",
+  "classification": "EXACT_COUNTERFACTUAL_DESIGN_NOT_HISTORICAL_INFERENCE",
+  "conde_geographic_domain_change": "NOT_EVALUABLE",
+  "designs": {
+    "adjacent_one_tle_tick": {
+      "bounded_error_residual_factor": "100000001/50000000",
+      "condition": "ASSUMED |angular error at each of 3 times|<=epsilon (no independence assumed); exact timestamps, common frame, fixed physical F_527; two candidate extrapolation bands are separated if epsilon<min_distance/(2*(abs(1-r)+abs(r)+1)).",
+      "first_aliases_circular_discrimination_deg": [
+        "9/2500000",
+        "9/1250000",
+        "27/2500000",
+        "9/625000"
+      ],
+      "first_k_all_distinguishable_exact": true,
+      "first_k_max": 4,
+      "gcd_days_exact": "1/100000000",
+      "global_alias_spacing_deg_per_day_exact_noise_free": "36000000000/1",
+      "min_discrimination_first_k_deg": "9/2500000",
+      "no_historical_error_or_prior_calibrated": true,
+      "sufficient_per_angle_error_for_disjoint_candidate_bands_deg_strictly_below": "90/100000001",
+      "t1_minus_t0_days": "1/1",
+      "t2_minus_t0_days": "100000001/100000000",
+      "t2_over_t1_relative_to_t0": "100000001/100000000"
+    },
+    "half_day_offset": {
+      "bounded_error_residual_factor": "3/1",
+      "condition": "ASSUMED |angular error at each of 3 times|<=epsilon (no independence assumed); exact timestamps, common frame, fixed physical F_527; two candidate extrapolation bands are separated if epsilon<min_distance/(2*(abs(1-r)+abs(r)+1)).",
+      "first_aliases_circular_discrimination_deg": [
+        "180/1",
+        "0/1",
+        "180/1",
+        "0/1"
+      ],
+      "first_k_all_distinguishable_exact": false,
+      "first_k_max": 4,
+      "gcd_days_exact": "1/2",
+      "global_alias_spacing_deg_per_day_exact_noise_free": "720/1",
+      "min_discrimination_first_k_deg": "0/1",
+      "no_historical_error_or_prior_calibrated": true,
+      "sufficient_per_angle_error_for_disjoint_candidate_bands_deg_strictly_below": null,
+      "t1_minus_t0_days": "1/1",
+      "t2_minus_t0_days": "3/2",
+      "t2_over_t1_relative_to_t0": "3/2"
+    },
+    "one_fifth_day_offset": {
+      "bounded_error_residual_factor": "12/5",
+      "condition": "ASSUMED |angular error at each of 3 times|<=epsilon (no independence assumed); exact timestamps, common frame, fixed physical F_527; two candidate extrapolation bands are separated if epsilon<min_distance/(2*(abs(1-r)+abs(r)+1)).",
+      "first_aliases_circular_discrimination_deg": [
+        "72/1",
+        "144/1",
+        "144/1",
+        "72/1"
+      ],
+      "first_k_all_distinguishable_exact": true,
+      "first_k_max": 4,
+      "gcd_days_exact": "1/5",
+      "global_alias_spacing_deg_per_day_exact_noise_free": "1800/1",
+      "min_discrimination_first_k_deg": "72/1",
+      "no_historical_error_or_prior_calibrated": true,
+      "sufficient_per_angle_error_for_disjoint_candidate_bands_deg_strictly_below": "15/1",
+      "t1_minus_t0_days": "1/1",
+      "t2_minus_t0_days": "6/5",
+      "t2_over_t1_relative_to_t0": "6/5"
+    }
+  },
+  "forward_physical_operator": null,
+  "frozen_holdout": {
+    "evaluation_527_epochs_utc": [
+      "1963-10-01T10:44:17.819808Z",
+      "1963-10-16T10:14:13.188192Z",
+      "1963-11-19T20:21:49.593024Z",
+      "1963-12-17T05:43:24.184704Z"
+    ],
+    "evaluation_observations_used_for_fit": false,
+    "path": "research/statistics/raan_chronological_holdout_1963.json",
+    "retrospective_nonblind": true,
+    "sha256": "a51ff61054da94587aa9c45631b3887572f238fe5967d2a8493c49d360c5e59f",
+    "split_counts": [
+      61,
+      23,
+      35
+    ],
+    "unique_epochs": 119,
+    "validation_527_epoch_utc": "1963-08-27T22:53:07.181376Z"
+  },
+  "historical_angular_error": null,
+  "historical_mcmc": "NOT_RUN",
+  "historical_physical_rate_interval": null,
+  "historical_timestamp_error": null,
+  "hypothesis": "wrap(F_527(t)+alpha_527+beta_527*t+catalog_offset+catalog_drift*t); fixed F_527 is not yet validated. For exact 3 times, rate aliases have lattice spacing 360/gcd(t1-t0,t2-t0). Finite-time-error, angle-error and physical calibration unknown.",
+  "k_max_is_exploratory_not_a_physical_prior": true,
+  "rank_does_not_prove_robust_identification": true,
+  "reference_times": {
+    "t0": "actual 527 validation UTC epoch (timing only)",
+    "t1": "t0 + 1 exact day; NO measurement exists at that time",
+    "t2": "three alternative counterfactual timings; NO measurement exists"
+  },
+  "schema": "conde.raan-527-third-epoch-discrimination/v1",
+  "source": {
+    "documentary_lineages": 1,
+    "occurrence_ids": [
+      "C25#1",
+      "C179#1",
+      "C180#1",
+      "C181#1",
+      "C241-L3"
+    ],
+    "path": "research/statistics/raan_527_528_529_1963.json",
+    "sensor_calibration": null,
+    "sha256": "b88564912c35167044d5fd4a0c1b50f6c624fcaf1066f82a7b70e503df8928f5"
+  },
+  "tick_864_microseconds_is_format_grid_not_instrument_accuracy": true
+}
