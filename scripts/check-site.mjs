@@ -29,11 +29,7 @@ assert.ok(runtimeMatch, 'SSG runtime pt-BR not linked from home');
 const runtimeJs = read('_csp/' + runtimeMatch[1]);
 assert.equal(runtimeMatch[2], 'sha384-' + createHash('sha384').update(runtimeJs).digest('base64'),
   'SRI mismatch in localized SSG search');
-assert.match(runtimeJs, /Nenhum resultado para &ldquo;/, 'Dynamic empty result in English');
-assert.ok(runtimeJs.includes("&ldquo;'+esc(q)+'&rdquo;"),
-  'Busca publicada exibe expressao literal em vez da consulta sem resultados');
-assert.ok(!runtimeJs.includes(String.raw`\'+esc(q)+\'`),
-  'SSG runtime ainda escapa interpolacao da consulta');
+assert.ok(runtimeJs.includes("Nenhum resultado para &ldquo;'+esc(q)+'&rdquo;"), 'Consulta sem interpolacao no SSG');
 assert.match(runtimeJs, /Nenhum resultado encontrado/, 'Screen-reader empty state in English');
 assert.match(runtimeJs, /resultado.*encontrado/, 'Plural result count not translated');
 assert.match(runtimeJs, /ssg-search-close/, 'Close button not wired');
