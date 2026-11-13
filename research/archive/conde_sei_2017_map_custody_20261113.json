@@ -1,0 +1,142 @@
+{
+  "schema": "conde.sei-map-custody/v1",
+  "document_id": "CGEO-SEI-MAP-2017-01",
+  "municipality": "Conde, Bahia",
+  "ibge_code": "2908606",
+  "original_url": "https://ftp.sei.ba.gov.br/Geoinformacao/mapas/munic/vigente/mapa_com_descritivo_atual_2908606.pdf",
+  "institution": "Superintendencia de Estudos Economicos e Sociais da Bahia (SEI)",
+  "document_type": "mapa oficial retrospectivo com descritivo de limites, edicao de 2017",
+  "document_preparation": "2017-08",
+  "administrative_division_version": "2017-06-14",
+  "legal_basis": {
+    "law": "BA 13.720",
+    "date": "2017-04-27",
+    "effect": "atualizacao dos limites de Conde, nao evidencia de limites vigentes em 1963"
+  },
+  "source_layers": [
+    {
+      "name": "folhas topograficas SUDENE",
+      "year": 1973,
+      "scale": "1:100000"
+    },
+    {
+      "name": "folhas planimetricas IBGE/SEI",
+      "year": 2007
+    },
+    {
+      "name": "sistema de transportes DERBA",
+      "year": 2007
+    },
+    {
+      "name": "localidades IBGE",
+      "year": 2010
+    }
+  ],
+  "cartography": {
+    "scale": "1:100000",
+    "projection": "UTM",
+    "datum": "SIRGAS2000",
+    "utm_zone": "24S",
+    "pdf_pages": 1
+  },
+  "retrieval": {
+    "date_utc": "2026-11-13",
+    "http_result": "HTTP_GET_COMPLETE",
+    "bytes": 1105817,
+    "sha256": "8a04fcd2ee0f57dc753de621e7c076f18f4756a8a3398ef8f7877bd4bcfcb61b",
+    "pdf_magic": true,
+    "pdf_eof": true,
+    "visual_inspection": "PAGE_1_INSPECTED",
+    "wayback_url": null
+  },
+  "boundary_points_2017": [
+    {
+      "id": "P01",
+      "description": "Foz do riacho Salobrinho no rio Branco"
+    },
+    {
+      "id": "P02",
+      "description": "Nascente do riacho Baixa da Vitorina"
+    },
+    {
+      "id": "P03",
+      "description": "Foz do riacho Baixa da Vitorina no rio Piranji"
+    },
+    {
+      "id": "P04",
+      "description": "Foz do rio Piranji no rio Itapicuru"
+    },
+    {
+      "id": "P05",
+      "description": "Foz do rio Itapicuru no oceano Atlantico"
+    },
+    {
+      "id": "P06",
+      "description": "Foz do rio Inhambupe no oceano Atlantico"
+    },
+    {
+      "id": "P07",
+      "description": "Foz do rio Bu no rio Inhambupe"
+    },
+    {
+      "id": "P08",
+      "description": "Foz do riacho Sucuriu no rio Bu"
+    },
+    {
+      "id": "P09",
+      "description": "Foz do riacho do Assentamento Mucambo no rio Mucambo"
+    },
+    {
+      "id": "P10",
+      "description": "Cruzamento da estrada para Rio Branco com o rio Branco"
+    },
+    {
+      "id": "P11",
+      "description": "Nascente do rio Branco"
+    },
+    {
+      "id": "P12",
+      "description": "Foz do rio Muquim no rio Itariri"
+    },
+    {
+      "id": "P13",
+      "description": "Ponte na BA-233 sobre o rio Itariri"
+    },
+    {
+      "id": "P14",
+      "description": "Nascente do riacho dos Mangues"
+    },
+    {
+      "id": "P15",
+      "description": "Foz do riacho dos Mangues no rio Itapicuru"
+    },
+    {
+      "id": "P16",
+      "description": "Foz do rio Branco no rio Itapicuru"
+    }
+  ],
+  "connections": [
+    "CGEO-06",
+    "CGEO-05",
+    "CGEO-10",
+    "lontra#2",
+    "Conde#308"
+  ],
+  "epistemology": {
+    "publisher_original_pdf_inspected": true,
+    "2017_point_descriptions_from_publisher_pdf": true,
+    "2017_map_is_an_independent_1963_survey": false,
+    "2007_2010_2017_source_layers_are_1963_observations": false,
+    "1963_legal_boundary_demonstrated": false,
+    "orbital_constraint_activated": false,
+    "precise_1963_coordinates_established": false,
+    "unresolved": "Consultar quadro e anexos da Lei 628/1953, atos pontuais 1954-1963 e cartografia anterior a 1963; nao retroprojetar a Lei 13.720/2017."
+  },
+  "government_context_2013": {
+    "url": "https://www.ba.gov.br/seplan/noticias/sei-lanca-canal-de-informacoes-sobre-limites-intermunicipais",
+    "publication_date": "2013-06-26",
+    "claim": "A SEPLAN informa que a ultima redefinicao geral das divisas municipais foi em 1953, seguida de processo de atualizacao iniciado em 2011.",
+    "status": "OFFICIAL_RETROSPECTIVE_EXPLANATION_NOT_LAW_FACSIMILE",
+    "proves_no_intervening_specific_acts": false
+  }
+}
