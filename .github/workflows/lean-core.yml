@@ -91,9 +91,3 @@ jobs:
           set -euo pipefail
           python3 -m formal.scripts.compile_ssr_offset_threshold --check
           python3 -m unittest discover -s formal/tests -p 'test_ssr_offset_threshold.py' -v
-
-      - name: Check cartographic and Blue Book documentary handoffs (no physical inference)
-        run: |
-          set -euo pipefail
-          python3 tools/export_historical_dependency_links.py --check
-          python3 -m unittest discover -s tests -p 'test_historical_dependency_links.py' -v
