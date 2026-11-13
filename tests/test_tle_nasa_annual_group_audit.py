@@ -56,7 +56,22 @@ class AnnualGroupTests(unittest.TestCase):
         self.mutate("methodological_note", "measurement_independence", "INDEPENDENT")
 
     def test_fake_visual_verification(self):
-        self.mutate("publication", "page_image_verified", True)
+        self.mutate("publication", "page_image_verified", False)
+
+    def test_ocr_row_name_confused_with_neighbor(self):
+        self.mutate("annual_row_extracted_text", "name_printed", "DOD Probe")
+
+    def test_period_cannot_be_dropped_after_visual_review(self):
+        self.mutate("annual_row_extracted_text", "period_minutes_printed", None)
+
+    def test_wrong_printed_page(self):
+        self.mutate("publication", "row_page_printed", 501)
+
+    def test_false_1963_launch_date(self):
+        self.mutate("annual_row_extracted_text", "launch_date_printed", "Jan. 18")
+
+    def test_wrong_inclination(self):
+        self.mutate("annual_row_extracted_text", "inclination_deg_printed", "82.0")
 
     def test_wrong_linked_day(self):
         self.mutate("linked_sources", "november_decay_day", "1963-11-09")
