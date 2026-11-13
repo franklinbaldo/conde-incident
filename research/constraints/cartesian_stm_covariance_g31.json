@@ -1,0 +1,75 @@
+{
+  "id": "CASTOR-G31-CARTESIAN-STATE-TRANSITION",
+  "issue": 4,
+  "status": "CONNECTED_PENDING_HISTORICAL_CALIBRATION",
+  "provenance": [
+    {
+      "occurrence": "C197#1",
+      "source": "NASA/Goddard Satellite Situation Report, 1963-11-15, p.8",
+      "url": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf",
+      "verified_claim": "Catalogued 8 November 1963 decay day for 1963-003B only",
+      "not_supported": [
+        "Cartesian observation epoch",
+        "instrumental covariance",
+        "location or time of reentry"
+      ]
+    },
+    {
+      "occurrence": "C179#1",
+      "source": "Retrospectively mirrored NORAD 528 TLE",
+      "lineage": "SECONDARY_TLE_NOT_INDEPENDENT_RAW_TRACKING",
+      "not_supported": [
+        "527/529 independent Cartesian state",
+        "historical covariance",
+        "TEME/ECI frame calibration"
+      ]
+    },
+    {
+      "occurrence": "C241-L12#1",
+      "source": "NASA/Goddard 1963-10-15 orbital bulletin",
+      "lineage": "NASA_COMPILED_TRACKING_NOT_INDEPENDENT_FROM_NORAD",
+      "not_supported": [
+        "initial Cartesian state",
+        "phase and exact observation epoch"
+      ]
+    }
+  ],
+  "model": {
+    "variables": [
+      "theta0_r_km",
+      "theta0_v_km_s",
+      "C0_6x6",
+      "epoch_UTC",
+      "J2",
+      "optional_documented_drag",
+      "RK4_step_seconds",
+      "ECI_frame"
+    ],
+    "equations": [
+      "x(t)=RK4_J2(x0; t, h, dynamics)",
+      "Phi(t,t0)=partial_x0 x(t) with 6x6 position/velocity blocks",
+      "C(t)=Phi C0 Phi^T"
+    ],
+    "audit": "Central differences at two initial perturbation scales, RK4 time-step halving, dimensionless scaled component drift and explicit position/velocity tolerances; reject event crossing and unresolved refinement.",
+    "restrictions": [
+      "Input covariance must be admitted in an explicitly declared frame at the same UTC epoch",
+      "For historical inference original tracking, EOP lineage and error covariances are still required",
+      "No automatic frame systematic covariance, no inferred drag"
+    ]
+  },
+  "files": [
+    "src/lib/orbitStateTransition.ts",
+    "tests/orbitStateTransition.test.mjs",
+    ".github/workflows/orbit-kernel.yml"
+  ],
+  "missing_dependencies": [
+    "original NORAD 527/529 Cartesian observations with same-frame epoch and covariance",
+    "historical EOP/UT1 with uncertainty and common lineage",
+    "documented drag parameters if invoked",
+    "Lean historical admissible state domain"
+  ],
+  "model_status": "CONDITIONAL_NUMERICAL_TOOL_NOT_EMPIRICAL_VALIDATION",
+  "historical_holdout": "NOT_RUN",
+  "domain_reduced": false,
+  "impact_in_conde": "NOT_EVALUABLE"
+}
