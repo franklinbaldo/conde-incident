@@ -9,6 +9,8 @@ export default defineConfig(() => {
     // Keep the normal local development base unchanged.
     base: process.env.VITE_BASE_PATH || '/',
     plugins: [react(), tailwindcss()],
+    // Inspect the actual emitted dependency graph and compressed entry size in CI.
+    build: { manifest: true },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),

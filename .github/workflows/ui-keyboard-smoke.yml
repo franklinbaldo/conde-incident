@@ -4,6 +4,9 @@ on:
     paths:
       - 'index.html'
       - 'src/App.tsx'
+      - 'index.html'
+      - 'vite.config.ts'
+      - 'tests/lab-code-split.test.mjs'
       - 'src/components/Navigation.tsx'
       - 'src/lib/editorialRoutes.ts'
       - 'tests/editorialRoutes.test.mjs'
@@ -80,6 +83,8 @@ jobs:
           echo "$RUNNER_TEMP" >> "$GITHUB_PATH"
       - name: Build the actual Vite laboratory for the same Pages artifact
         run: VITE_BASE_PATH=/conde-incident/lab/ bun run build
+      - name: Verify lazy instrument chunks and lab entry payload (UX-08)
+        run: node --test tests/lab-code-split.test.mjs
       - name: Build and serve SSG Pages artifact at production prefix
         shell: bash
         run: |
