@@ -1,0 +1,150 @@
+{
+  "actual_tracking_epoch_utc": null,
+  "attaining_witness": {
+    "object_baselines_centiminute": {
+      "527": 9460,
+      "528": 9370,
+      "529": 9405
+    },
+    "per_object_edition_residual_centiminute": {
+      "527": [
+        -20,
+        0,
+        0,
+        20
+      ],
+      "528": [
+        20,
+        0,
+        -10,
+        -20
+      ],
+      "529": [
+        5,
+        -5,
+        -15,
+        -5
+      ]
+    },
+    "shared_edition_bias_centiminute": [
+      20,
+      0,
+      0,
+      -20
+    ]
+  },
+  "conditional_print_rounding_halfunit_centiminute": 5,
+  "crosswalk": {
+    "527": "1963-003A",
+    "528": "1963-003B",
+    "529": "1963-003C"
+  },
+  "difference_527_minus_528": [
+    50,
+    90,
+    100,
+    130
+  ],
+  "exact_minimax_centiminute": 20,
+  "exact_minimax_seconds": 12,
+  "historical_conclusion": "INDETERMINATE",
+  "id": "C241-P16",
+  "independent_instrument_samples_added": 0,
+  "instrument_sigma": null,
+  "lean_file": "formal/Conde1963/SsrFourEditions.lean",
+  "lower_bound_basis": "April/August difference-of-differences for 527 and 528",
+  "model": "P[obj,edition] = B[obj] + H[edition] + e[obj,edition], abs(e)<=E",
+  "parent_evidence": [
+    "C241-L10",
+    "C241-L16",
+    "C241-L17",
+    "C241-L18",
+    "C241-L22"
+  ],
+  "parent_graph": "research/constraints/ssr_1963_observable_graph.json",
+  "physical_admissible_domain": "THETA_UNCHANGED",
+  "printed_period_by_object": {
+    "527": [
+      9460,
+      9460,
+      9460,
+      9460
+    ],
+    "528": [
+      9410,
+      9370,
+      9360,
+      9330
+    ],
+    "529": [
+      9430,
+      9400,
+      9390,
+      9380
+    ]
+  },
+  "ratio_to_print_rounding_halfunit": 4,
+  "rejected_edges": [
+    "publication_date -> orbital_instrument_epoch",
+    "printed_period_gap -> physical_decay_rate",
+    "printed_cell_residual -> sensor_sigma",
+    "twelve_compiled_cells -> twelve_independent_instrument_observations",
+    "documentary_minimax -> physical_theta_reduction"
+  ],
+  "schema": "conde.ssr-three-objects-four-editions-additive-bias/v1",
+  "scientific_claim": "0.05-minute per-cell rounding alone falsifies the restricted shared-additive-edition-bias model; 0.20-minute per-cell free residual is necessary and sufficient for these twelve printed cells",
+  "source_documents": [
+    {
+      "actual_tracking_epoch_utc": null,
+      "document_sha256_claim_from_ledger": "87b8c1be1d074dff4b605b422f6a8836c2ebdf80ca4ac0568373b168cc457a38",
+      "ledger_bytes_sha256": "8986791647ffa775b9d87a1d91e8e2221fb61d5284159d1c109a4bfe0a9a00f0",
+      "ledger_path": "research/tle_custody/nasa_ssr_apr_oct_1963_C241-L16.json",
+      "ntrs_id": "19630012128",
+      "printed_page": 5,
+      "publication": "1963-04-30",
+      "source_status": "CONTEMPORARY_COMPILED_NASA_TABLE_NOT_RAW_TRACKING"
+    },
+    {
+      "actual_tracking_epoch_utc": null,
+      "document_sha256_claim_from_ledger": "8add4b46734e992a213088ef58ba9d58b6385df7b89bb504f79fe8715ec418f3",
+      "ledger_bytes_sha256": "8d0c181a05275f5eaec4e2a37d27940f1aefe546d10125272c62b3270557aa4b",
+      "ledger_path": "research/tle_custody/nasa_ssr_jun30_1963_C241-L22.json",
+      "ntrs_id": "19630012130",
+      "printed_page": 5,
+      "publication": "1963-06-30",
+      "source_status": "CONTEMPORARY_COMPILED_NASA_TABLE_NOT_RAW_TRACKING"
+    },
+    {
+      "actual_tracking_epoch_utc": null,
+      "document_sha256_claim_from_ledger": "9b00bf8323b1de80a34920f73c658f70f766a51632a13473a408679f0e5a03d9",
+      "ledger_bytes_sha256": "6cc3b54429deca2e43ccb7ddc7f2ae6ebaa80955b4f142c258cbb6e7ac82a435",
+      "ledger_path": "research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json",
+      "ntrs_id": "19630012290",
+      "printed_page": 5,
+      "publication": "1963-07-31",
+      "source_status": "CONTEMPORARY_COMPILED_NASA_TABLE_NOT_RAW_TRACKING"
+    },
+    {
+      "actual_tracking_epoch_utc": null,
+      "document_sha256_claim_from_ledger": "4e5cb0205577bc1b0959088db9ca3ae7a05f8de480b5ece9b86c385437636968",
+      "ledger_bytes_sha256": "bde3deed4459a01329b3c534a178b50183d030c240f863007e4455c602d3d0bb",
+      "ledger_path": "research/tle_custody/nasa_ssr_aug15_1963_C241-L17.json",
+      "ntrs_id": "19630012289",
+      "printed_page": 5,
+      "publication": "1963-08-15",
+      "source_status": "CONTEMPORARY_COMPILED_NASA_TABLE_NOT_RAW_TRACKING"
+    }
+  ],
+  "status": "CONNECTED_PENDING_CALIBRATION",
+  "tracking_frame": null,
+  "unit": "centiminute (0.01 minute)",
+  "uses": [
+    "compiled_period_527",
+    "compiled_period_528",
+    "compiled_period_529",
+    "latent_report_bias",
+    "latent_instrument_epoch_each_cell",
+    "latent_kinematic_state_each_object",
+    "candidate_common_forces"
+  ]
+}
