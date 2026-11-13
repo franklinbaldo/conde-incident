@@ -1,0 +1,56 @@
+name: C241 Python confidence weights on NORAD 528 scenarios
+on:
+  pull_request:
+    paths:
+      - tools/c241_confidence_weighted_heatmap.py
+      - tests/test_c241_confidence_weighted_heatmap.py
+      - research/statistics/c241_528_unweighted_2000km_scenarios.json
+      - research/statistics/C241_confidence_weighted_heatmap_2026-11-13.md
+      - .github/workflows/c241-confidence-weights.yml
+  push:
+    branches: [main]
+    paths:
+      - tools/c241_confidence_weighted_heatmap.py
+      - tests/test_c241_confidence_weighted_heatmap.py
+      - research/statistics/c241_528_unweighted_2000km_scenarios.json
+      - research/statistics/C241_confidence_weighted_heatmap_2026-11-13.md
+      - .github/workflows/c241-confidence-weights.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  confidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact source HEAD
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Source-locked correlated uncertainty test
+        run: |
+          python3 -m unittest discover -s tests -p test_c241_confidence_weighted_heatmap.py -v
+          python3 tools/c241_confidence_weighted_heatmap.py --output "$RUNNER_TEMP/c241-confidence-sensitivity.json"
+          python3 - "$RUNNER_TEMP/c241-confidence-sensitivity.json" <<'PY'
+          import json,sys
+          x=json.load(open(sys.argv[1]))
+          assert x['source']=='SECONDARY_TLE_J2_SYNTHETIC_1_5M_SAMPLES'
+          assert x['historical_posterior'] is None and x['impact_probability'] is None
+          assert abs(x['baseline_equal_draw_percent']-1.6992666666667)<1e-10
+          for row in x['sensitivity'].values():
+              assert row['probability_of_ground_impact'] is None
+              assert row['ablation_survival_probability'] is None
+              assert not row['historical_sigma_calibrated']
+          PY
+      - name: Archive sensitivity report
+        uses: actions/upload-artifact@v4
+        with:
+          name: c241-confidence-sensitivity-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ${{ runner.temp }}/c241-confidence-sensitivity.json
+          retention-days: 30
+          if-no-files-found: error
