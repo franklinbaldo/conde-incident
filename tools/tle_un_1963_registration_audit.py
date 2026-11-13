@@ -118,7 +118,7 @@ def read(path):
 
 def check_pdf_bytes(model, pdf_directory):
     for d in model["docs"]:
-        path=Path(pdf_directory)/f"inf{d['number']}E.pdf"
+        path=Path(pdf_directory)/f"inf{int(d['number']):03d}E.pdf"
         raw=path.read_bytes()
         need(raw.startswith(b"%PDF-"),"not a PDF")
         need(len(raw)==d["bytes"] and hashlib.sha256(raw).hexdigest()==d["sha256"],
