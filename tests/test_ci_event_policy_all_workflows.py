@@ -106,6 +106,10 @@ def assert_workflow_policy(source: str, filename: str) -> bool:
             raise AssertionError(f'{filename}: unrecognized push trigger: {line.strip()}')
     if values != ['main']:
         raise AssertionError(f'{filename}: push+PR requires exactly main, got {values!r}')
+    if filename in MUST_UNFILTERED_PR and any(
+        re.match(r'    paths(?:-ignore)?:', line) for line in push
+    ):
+        raise AssertionError(f'{filename}: universal main push gate may not filter paths')
     if filename in MUST_UNFILTERED_PR and events['pull_request']:
         raise AssertionError(f'{filename}: universal PR gate may not filter paths, branches or event types')
     return True
@@ -159,6 +163,26 @@ class EntireWorkflowEventPolicy(unittest.TestCase):
                     with self.assertRaisesRegex(AssertionError, 'universal PR gate'):
                         assert_workflow_policy(mutant, name)
 
+    def test_universal_main_push_gates_are_unfiltered(self):
+        for name in sorted(MUST_UNFILTERED_PR):
+            original = (WORKFLOWS / name).read_text(encoding='utf-8')
+            self.assertTrue(assert_workflow_policy(original, name))
+            for restriction in (
+                'paths: ["docs/**"]',
+                'paths-ignore: ["tests/**"]',
+                'paths:\n      - "docs/**"',
+                'paths-ignore:\n      - "tests/**"',
+            ):
+                mutant = original.replace(
+                    '    branches: [main]\n',
+                    '    branches: [main]\n    ' + restriction + '\n',
+                    1,
+                )
+                with self.subTest(workflow=name, restriction=restriction):
+                    self.assertNotEqual(mutant, original)
+                    with self.assertRaisesRegex(AssertionError, 'universal main push gate'):
+                        assert_workflow_policy(mutant, name)
+
     def test_multiline_branches_do_not_hide_extra_push_targets(self):
         name = 'integration-head.yml'
         original = (WORKFLOWS / name).read_text(encoding='utf-8')
@@ -179,7 +203,9 @@ class EntireWorkflowEventPolicy(unittest.TestCase):
         ):
             valid = original.replace('branches: [main]', replacement, 1)
             with self.subTest(valid=replacement):
-                self.assertTrue(assert_workflow_policy(valid, name))
+                # Selective scientific workflows may filter push paths; universal gates cannot.
+                policy_name = ('historical-space-weather.yml' if '    paths:' in replacement else name)
+                self.assertTrue(assert_workflow_policy(valid, policy_name))
 
     def test_pr_target_cannot_duplicate_normal_pr_event(self):
         for name in ('integration-head.yml', 'prek.yml', 'historical-space-weather.yml'):

@@ -1,0 +1,67 @@
+{
+  "schema": "conde.igra-gts-1963-provenance/v1",
+  "id": "LAG-IGRA-GTS-1963-PROVENANCE-01",
+  "sources": {
+    "igra_methods_2006": {
+      "authors": "Imke Durre, Russell S. Vose, David B. Wuertz",
+      "title": "Overview of the Integrated Global Radiosonde Archive",
+      "publication": "Journal of Climate 19(1), 53-68",
+      "published": "2006-01-01",
+      "doi": "10.1175/JCLI3594.1",
+      "url": "https://journals.ametsoc.org/abstract/journals/clim/19/1/jcli3594.1.xml",
+      "sections": ["2a", "2c", "4"],
+      "binary_sha256": null,
+      "provenance": "Publisher's indexed full-text sections consulted in 2026-11; direct complete binary retrieval not authenticated"
+    },
+    "wmo_historical_catalogue_scope": {
+      "institution": "World Meteorological Organization",
+      "url": "https://old.wmo.int/extranet/pages/prog/www/ois/volume-a/vola-hist-home.htm",
+      "captured_utc_date": "2026-11-13",
+      "raw_html_bytes": 29556,
+      "raw_html_sha256": "6c8b5b69b9f38c6c569a10b5a8ecd3572e6c5221e3e0ac2654d5540b38e8c56a",
+      "catalogue_vintage_found": "2014-07",
+      "historical_1963_catalogue_obtained": false
+    }
+  },
+  "general_igra_processing_documented_in_2006": {
+    "ncdc_gts_core_interval": "1963-1970",
+    "other_gts_core_intervals": ["1970-12 to 1972: NCAR", "1973 to 1999-10: NCEP", "2000 onward: NCDC"],
+    "other_igra_early_source": "US Air Force archive, 1946-1973",
+    "station_name_country_auxiliary_metadata_sources_include": ["NCDC and NCEP GTS metadata", "GHCN inventory", "WMO No. 9 Volume A 2004"],
+    "station_number_compositing_documented": true,
+    "same_station_raw_and_modern_id_guaranteed": false
+  },
+  "recife_case": {
+    "archive_station_id": "BRM00082900",
+    "upstream_code_in_existing_pin": "ncdc6301",
+    "upstream_yearly_code_proven_to_be_original_recife_gts_message": false,
+    "original_gts_message_obtained": false,
+    "original_1963_station_catalogue_obtained": false,
+    "original_sensor_and_processing_log_obtained": false,
+    "original_1963_launch_site_wmo_id": null,
+    "original_1963_launch_site_coordinates": null,
+    "original_1963_release_time_utc": null,
+    "original_1963_radiosonde_model": null,
+    "pressure_temperature_gph_covariance": null,
+    "transfer_uncertainty_recife_conde": null,
+    "original_archive_sha256": "0655b3ea80312abe888a5474f82233affc0a2496ee1fd8bc678162924f52ecdc"
+  },
+  "interpretation": {
+    "verified": "2006 archive-method description documents a GTS core starting in 1963 and retrospective station metadata and some composite station numbers",
+    "not_verified": "Which primary GTS message, instrument, station position or exact data decoding/provenance produced the specific Recife November 1963 levels",
+    "catalogue_date_not_observation_date": true,
+    "meteorology_1963_at_conde_measured": false,
+    "independent_measurements_added": 0,
+    "hard_physical_constraints_added": 0,
+    "admissible_domain_reduction": false
+  },
+  "dependencies": ["C149", "C150", "C151", "C193"],
+  "edges": [
+    {"from": "Durre-2006-IGRA-methods", "to": "BRM00082900-ncdc6301", "relation": "general_archive_family_context_not_individual_message_proof"},
+    {"from": "WMO-VolumeA-legacy-info", "to": "WMO-2014-Recife-identifiers", "relation": "retrospective_catalogue_scope_not_1963_instrument"},
+    {"from": "BRM00082900-ncdc6301", "to": "C149-C151", "relation": "shared_archival_lineage_not_independent_observation"},
+    {"from": "C149-C151", "to": "Castor-drag-drift", "relation": "PENDING_1963_original_messages_instrument_covariance_and_transfer"}
+  ],
+  "status": "CONNECTED_PENDING_CALIBRATION",
+  "next_test": "Find a contemporary 1963 WMO No. 9 Volume A or TEMP/PILOT message catalogue and source tape/decoder documentation; then validate station-specific source code against original GTS message before inferring 1963 site or accuracy"
+}
