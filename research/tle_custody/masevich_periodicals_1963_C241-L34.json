@@ -1,0 +1,88 @@
+{
+  "schema": "conde.contemporary_bibliographic_locator/v1",
+  "id": "C241-L34",
+  "as_of": "2026-11-13",
+  "research_issue": 545,
+  "target_objects": [
+    527,
+    528,
+    529
+  ],
+  "source": {
+    "kind": "CONTEMPORARY_1963_PRINT_PREFACE_THIRD_PARTY_SCAN",
+    "work_title": "Искусственные спутники и научные исследования",
+    "original_author": "Д. Кинг-Хили (Desmond King-Hele)",
+    "russian_editor_preface": "А. Масевич (Alla Masevich)",
+    "russian_preface_date": "1963-02",
+    "russian_edition_year": 1963,
+    "imprint_status": "Russian edition visible on third-party digitization; master institutional copy not authenticated",
+    "landing_url": "https://djvu.online/file/raBEGf36i2gfZ",
+    "landing_http_status": 200,
+    "landing_html_bytes": 806435,
+    "landing_html_sha256": "9e142d1ac2d17be5ffd44e4425baa21389f8075951c4704e2035f0fb8beb0a92",
+    "images": [
+      {
+        "viewer_page": 6,
+        "printed_page": null,
+        "printed_page_note": "Page preceding printed 6; numeral not legible/printed",
+        "url": "https://djvu.online/jpg2/r/a/B/raBEGf36i2gfZ/006.webp",
+        "http_status": 200,
+        "bytes": 121794,
+        "sha256": "0d68650aa352f7404f4251abf53c3d117efd3dde377b6c5667df85516089f901",
+        "format": "WebP",
+        "width": 957,
+        "height": 1500
+      },
+      {
+        "viewer_page": 7,
+        "printed_page": 6,
+        "printed_page_note": "Visible printed page number 6",
+        "url": "https://djvu.online/jpg2/r/a/B/raBEGf36i2gfZ/007.webp",
+        "http_status": 200,
+        "bytes": 44202,
+        "sha256": "fea39a91dae6ce25b977e4562c758818dc44667dc7559b7d99f9ecc6231f4bb2",
+        "format": "WebP",
+        "width": 957,
+        "height": 1500
+      }
+    ],
+    "source_authentication": "THIRD_PARTY_PAGE_IMAGES_VISUALLY_INSPECTED_NOT_MASTER_AUTHENTICATED",
+    "source_checksum_scope": "HTML and two WebP derivatives, not the original physical 1963 edition"
+  },
+  "bibliography": [
+    {
+      "title": "Искусственные спутники Земли",
+      "issuer": "Академия наук СССР",
+      "mention_location": "preface spans images 006 and 007",
+      "catalog_or_original_volume_retrieved": false
+    },
+    {
+      "title": "Бюллетень станций оптических наблюдений искусственных спутников",
+      "issuer": "Астрономический совет АН СССР",
+      "mention_location": "printed page 6 / image 007",
+      "catalog_or_original_volume_retrieved": false
+    }
+  ],
+  "interpretive_limits": {
+    "february_1963_preface_does_not_cover_november_1963": true,
+    "no_facsimile_of_bulletin_issue_retrieved": true,
+    "observed_objects_identified_in_pages": [],
+    "target_specific_primary_measurements": 0,
+    "station_ephemeris_or_tle_record_found": false,
+    "contemporaneous_editorial_reference_only": true,
+    "independent_physical_observation": false,
+    "orbital_constraint_activated": false,
+    "archive_contacted": false,
+    "publication_independence_not_established": true
+  },
+  "next_tests": [
+    "Locate the periodical issue containing original 1963 optical observations rather than only methodological articles",
+    "Inspect issue-level indexes and identify pages/epochs for US satellite 1963-003A/B/C and NORAD 527/528/529",
+    "Ask Tartaruga to test independent provenance and frame/units only after an observation is recovered"
+  ],
+  "dependencies": [
+    "C241-L29",
+    "C241-L31"
+  ],
+  "epistemic_level": "1963_CONTEMPORARY_BIBLIOGRAPHIC_REFERENCE_ONLY"
+}
