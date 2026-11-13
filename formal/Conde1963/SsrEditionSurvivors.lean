@@ -46,7 +46,11 @@ theorem unique_pair_under_necessary_screens :
       within20 (gapAC i) (gapAC j) →
       ((i.val < 5 ∧ j.val < 5) → within20 (gapAB i) (gapAB j)) →
       i.val = 1 ∧ j.val = 2 := by
-  decide
+  intro i j hij hac hab
+  have hi : i.val < 9 := i.isLt
+  have hj : j.val < 9 := j.isLt
+  simp only [gapAC, gapAB, within20] at hac hab
+  split_ifs at hac hab <;> omega
 
 /-- Any three survivors would contain two different ordered pairs, each
 forced to be indices 1 and 2, contradiction. -/
