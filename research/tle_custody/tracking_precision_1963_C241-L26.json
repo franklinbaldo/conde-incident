@@ -1,0 +1,183 @@
+{
+  "id": "C241-L26",
+  "schema": "conde.tracking-capability-custody/v1",
+  "compiled_on": "2026-11-13",
+  "question": "Como calibrar a confiança na data de decaimento publicada para NORAD 528?",
+  "sources": [
+    {
+      "id": "NASA_SSR_1963_NOV15",
+      "date": "1963-11-15",
+      "type": "CONTEMPORANEOUS_COMPILED_ORBIT_CATALOG",
+      "url": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf",
+      "identification": "NASA-TM-X-51205; X-533-63-1 vol.3 no.22",
+      "page_in_pdf_one_based": 10,
+      "page_printed": "8",
+      "sha256": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+      "bytes": 327613,
+      "observation_epoch_known": false
+    },
+    {
+      "id": "PRESIDENT_US_1961_SAO",
+      "date": "1962-01-31",
+      "type": "CONTEMPORANEOUS_GOVERNMENT_TECHNICAL_SUMMARY",
+      "url": "https://www.nasa.gov/wp-content/uploads/2024/01/presrep1961.pdf",
+      "identification": "Aeronautics and Space Activities, 1961; Smithsonian Astrophysical Observatory",
+      "page_in_pdf_one_based": 75,
+      "page_printed": "73",
+      "sha256": "b8c0ff027d0a20f04a07997a40cb1544c0df4d4ff2926f6542f07c68c0c127b5",
+      "bytes": 1522003,
+      "observation_epoch_known": false
+    },
+    {
+      "id": "NORAD_CONAD_1963_HISTORICAL",
+      "date": null,
+      "type": "CONTEMPORANEOUS_INSTITUTIONAL_HISTORY_ARCHIVE_COPY",
+      "url": "https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/11.pdf",
+      "identification": "NORAD/CONAD Historical Summary July-Dec 1963; excerpt p.54-59",
+      "page_in_pdf_one_based": 4,
+      "page_printed": "55",
+      "sha256": "cb3a9c4dc8bbdae6d2f72711d4dbb50887e576975e7f0e84f2e434c90fcee52b",
+      "bytes": 1459815,
+      "observation_epoch_known": false,
+      "coverage_period": "1963-07_to_1963-12",
+      "publication_date_status": "NOT_RECOVERED"
+    },
+    {
+      "id": "NORAD_WIR_1965_COSMOS94",
+      "date": "1965-11-12",
+      "type": "CONTEMPORANEOUS_INSTITUTIONAL_CASE_OTHER_OBJECT",
+      "url": "https://www.archives.gov/files/declassification/iscap/pdf/2009-068-doc102.pdf",
+      "identification": "NORAD Weekly Intelligence Review 46/65; Cosmos 94, object 1636",
+      "page_in_pdf_one_based": 3,
+      "page_printed": "6",
+      "sha256": "c9e8e38fb9fdf0de97a209c4120d2d0a391b3624af054edeb30b01f467328e90",
+      "bytes": 7669507,
+      "observation_epoch_known": true
+    }
+  ],
+  "documentary_observables": [
+    {
+      "id": "C241-L26:DAY_528",
+      "source": "NASA_SSR_1963_NOV15",
+      "object_norad": 528,
+      "designation_printed": "1963 3B",
+      "source_field": "DECAY",
+      "published_calendar_day": "1963-11-08",
+      "date_precision": "CALENDAR_DAY_ONLY",
+      "time_utc": null,
+      "method": null,
+      "sensor": null,
+      "measurement_sigma": null,
+      "epistemic_status": "CONTEMPORANEOUS_CATALOG_DECAY_DAY_NOT_INSTRUMENTAL_FIX"
+    },
+    {
+      "id": "C241-L26:SAO_CAMERA_CAPABILITY",
+      "source": "PRESIDENT_US_1961_SAO",
+      "object_norad": null,
+      "instrument": "Baker-Nunn optical camera (SAO network)",
+      "nominal_angular_accuracy_arcseconds": 4,
+      "nominal_time_accuracy_milliseconds": 2,
+      "performance_scope": "NOMINAL_CAMERA_CAPABILITY_NOT_528_MEASUREMENT",
+      "measurement_sigma": null,
+      "epistemic_status": "CONTEMPORANEOUS_INSTRUMENT_CAPABILITY_OTHER_UNLINKED_OBSERVATIONS"
+    },
+    {
+      "id": "C241-L26:SPADATS_1963_NETWORK",
+      "source": "NORAD_CONAD_1963_HISTORICAL",
+      "object_norad": null,
+      "history": "SPADATS included USAF Spacetrack and Navy SPASUR; in 1963 integration of Baker-Nunn cameras, SAO data and national radars was incomplete/negotiated; five-camera military plan was not automatically a deployed unified observing network",
+      "page_range_printed": "54-59",
+      "linked_to_528": false,
+      "measurement_sigma": null,
+      "epistemic_status": "CONTEMPORANEOUS_NETWORK_CONTEXT_NO_OBJECT_CUSTODY"
+    },
+    {
+      "id": "C241-L26:COMPARISON_COSMOS94",
+      "source": "NORAD_WIR_1965_COSMOS94",
+      "object_norad": 1636,
+      "date_of_event": "1965-11-05",
+      "history": "Shemya radar observed revolution 127 but not 128; preliminary Diyarbakir radar analysis supported loss on revolution 128; report predicted probable impact 15-20 minutes after 0628Z equator crossing",
+      "linked_to_528": false,
+      "measurement_sigma": null,
+      "epistemic_status": "CONTEMPORANEOUS_COMPARATIVE_CASE_NOT_528_INFORMATION"
+    }
+  ],
+  "object_measurement_custody": [
+    {
+      "norad": 527,
+      "raw_instrument_measurement_id": null,
+      "timestamp_utc": null,
+      "station_id": null,
+      "station_location_datum": null,
+      "sensor_class": null,
+      "angular_sigma_rad": null,
+      "range_sigma_m": null,
+      "time_sigma_s": null,
+      "orbit_fit_residuals": null,
+      "reference_frame": null,
+      "status": "NOT_RECOVERED"
+    },
+    {
+      "norad": 528,
+      "raw_instrument_measurement_id": null,
+      "timestamp_utc": null,
+      "station_id": null,
+      "station_location_datum": null,
+      "sensor_class": null,
+      "angular_sigma_rad": null,
+      "range_sigma_m": null,
+      "time_sigma_s": null,
+      "orbit_fit_residuals": null,
+      "reference_frame": null,
+      "status": "NOT_RECOVERED"
+    },
+    {
+      "norad": 529,
+      "raw_instrument_measurement_id": null,
+      "timestamp_utc": null,
+      "station_id": null,
+      "station_location_datum": null,
+      "sensor_class": null,
+      "angular_sigma_rad": null,
+      "range_sigma_m": null,
+      "time_sigma_s": null,
+      "orbit_fit_residuals": null,
+      "reference_frame": null,
+      "status": "NOT_RECOVERED"
+    }
+  ],
+  "links": [
+    {
+      "from": "C241-L26:DAY_528",
+      "to": "latent_reentry_calendar_day_528",
+      "operator": "catalog_reporting_day",
+      "status": "CONNECTED_PENDING_METHOD_AND_ERROR"
+    },
+    {
+      "from": "C241-L26:SAO_CAMERA_CAPABILITY",
+      "to": "possible_sensor_accuracy_prior",
+      "operator": "sensor_selection_AND_raw_observation_required",
+      "status": "CONTEXT_ONLY_NOT_ACTIVATED"
+    },
+    {
+      "from": "C241-L26:SPADATS_1963_NETWORK",
+      "to": "provenance_sensor_candidate_graph",
+      "operator": "trace_station_and_observation_id",
+      "status": "CONTEXT_ONLY_NOT_ACTIVATED"
+    },
+    {
+      "from": "C241-L26:COMPARISON_COSMOS94",
+      "to": "historical_detection_method_comparison",
+      "operator": "comparative_case_not_528_likelihood",
+      "status": "CONTEXT_ONLY_NOT_ACTIVATED"
+    }
+  ],
+  "independence": {
+    "NASA_SSR_1963_NOV15": "NASA_NORAD_SAO_COMPILED_CATALOG_FAMILY",
+    "PRESIDENT_US_1961_SAO": "GOVERNMENT_REPORT_ON_SAO_HARDWARE_NOT_SENSOR_RECORD",
+    "NORAD_CONAD_1963_HISTORICAL": "NORAD_INSTITUTIONAL_HISTORY_NOT_SENSOR_RECORD",
+    "NORAD_WIR_1965_COSMOS94": "NORAD_COMPARATIVE_CASE_DIFFERENT_OBJECT"
+  },
+  "next_discriminating_record": "Raw observation (site/time/object 528), tracking station log, NORAD/SPADATS decay work sheet or dated pre-decay prediction with explicit error envelope",
+  "domain_delta": "NOT_EVALUABLE_WITHOUT_TERMINAL_METHOD_AND_ERROR"
+}
