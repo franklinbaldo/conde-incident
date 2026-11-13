@@ -5,7 +5,7 @@ import {createHash} from 'node:crypto';
 import {mkdtempSync,mkdirSync,readFileSync,rmSync,writeFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {dirname,join} from 'node:path';
-import {audit,auditBuiltSite,readBundle} from '../scripts/verify-ssg-evidence-index.mjs';
+import {audit,auditBuiltSite,readBundle,visibleDocument} from '../scripts/verify-ssg-evidence-index.mjs';
 
 const clean=()=>readBundle(); // Fresh, independent on-disk fixture each time.
 const mutateRow=(bundle,change)=>{
@@ -180,6 +180,63 @@ test('immutable matrix row must be a link, not printed text',()=>{
     const matrix='https://github.com/franklinbaldo/conde-incident/blob/';
     assert.ok(html.includes('href="'+matrix));
     writeFileSync(page,html.replaceAll('href="'+matrix,'data-inert-matrix="'+matrix));
+    assert.throws(()=>auditBuiltSite(bundle,directory),
+      /Built occurrence missing source\/matrix\/index anchor/);
+  } finally {rmSync(directory,{recursive:true,force:true});}
+});
+
+// A green CI must mean a reader can reach the actual source, not that a
+// string containing href survived in an inert or hidden fragment.
+test('static HTML navigation excludes inert, hidden and non-content anchors',()=>{
+  const target='/conde-incident/evidencias/arquivo/c01-1/';
+  const deceptive=[
+    `<script>"<a href="${target}">source</a>"</script>`,
+    `<style>/* <a href="${target}">source</a> */</style>`,
+    `<template><a href="${target}">source</a></template>`,
+    `<noscript><a href="${target}">source</a></noscript>`,
+    `<div hidden><a href="${target}">source</a></div>`,
+    `<div inert><a href="${target}">source</a></div>`,
+    `<div aria-hidden="true"><a href="${target}">source</a></div>`,
+    `<div style="display:none"><a href="${target}">source</a></div>`,
+    `<div style="visibility:hidden"><a href="${target}">source</a></div>`,
+    `<a tabindex="-1" href="${target}">source</a>`,
+    `<a aria-disabled="true" href="${target}">source</a>`,
+  ];
+  for (const fragment of deceptive) {
+    const {links}=visibleDocument(`<main>${fragment}</main>`);
+    assert.ok(!links.has(target),'Inert anchor was counted: '+fragment);
+  }
+  assert.ok(!visibleDocument(`<nav><a href="${target}">source</a></nav>`).links.has(target),
+    'Link outside main must not satisfy documentary evidence navigation');
+  assert.ok(visibleDocument(`<main><a title="a > b" href="${target}">source</a></main>`)
+    .links.has(target),'Quoted > must not terminate a real anchor');
+});
+
+test('hidden and metadata-only epistemic states do not count as rendered text',()=>{
+  const code='DOC_STATUS_TEST';
+  for (const fragment of [
+    `<script>"${code}"</script>`, `<template>${code}</template>`,
+    `<p hidden>${code}</p>`, `<p aria-hidden="true">${code}</p>`,
+    `<p style="display:none">${code}</p>`,
+    `<meta name="status" content="${code}">`,
+  ]) {
+    assert.ok(!visibleDocument(`<main>${fragment}</main>`).visibleText.includes(code),
+      'Inert status counted: '+fragment);
+  }
+  assert.ok(visibleDocument(`<main><code>${code}</code></main>`).visibleText.includes(code));
+});
+
+test('built archive rejects a source URL hidden in script after its live link disappears',()=>{
+  const bundle=clean();
+  const directory=mkdtempSync(join(tmpdir(),'conde-ssg-script-decoy-'));
+  try {
+    mockBuiltSite(bundle,directory);
+    const row=bundle.citations.records[0];
+    const page=join(directory,'evidencias/arquivo/c01-1/index.html');
+    const html=readFileSync(page,'utf8').replace('href="'+row.citation_url+'"',
+      'data-inert-source="'+row.citation_url+'"');
+    writeFileSync(page,html.replace('</main>',
+      `<script>"<a href="${row.citation_url}">not a link</a>"</script></main>`));
     assert.throws(()=>auditBuiltSite(bundle,directory),
       /Built occurrence missing source\/matrix\/index anchor/);
   } finally {rmSync(directory,{recursive:true,force:true});}

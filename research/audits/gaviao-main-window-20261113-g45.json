@@ -1,0 +1,207 @@
+{
+  "schema": "conde.gaviao-retrospective/v1",
+  "id": "G45",
+  "reviewed_from_main_sha_exclusive": "5b72218b98621637d28000a3c82d86496585a9be",
+  "reviewed_through_main_sha_inclusive": "23b69249fddb897945f611d47247a8d6428fe2a7",
+  "first_parent_integrations": 13,
+  "dag_commit_count": 17,
+  "first_parent_merge_commits": 2,
+  "historical_ci_status": "NOT_CHECKED",
+  "findings": [
+    {
+      "id": "G45-F1",
+      "kind": "CI_GATE_FALSE_POSITIVE",
+      "reproduced": true,
+      "scope": ".github/workflows/integration-head.yml",
+      "baseline_empty_suite_exit_code": 0,
+      "corrected_expected_exit_code": 1,
+      "negative_and_positive_tests": "tests/test_ci_node_discovery_gate.py",
+      "historical_incident_proven": false
+    }
+  ],
+  "integrations": [
+    {
+      "sha": "9be8433e3cecd7803396732972f1a7b48557d511",
+      "parents": [
+        "5b72218b98621637d28000a3c82d86496585a9be"
+      ],
+      "title": "🦅 G44: verify rendered SSG navigation anchors, not inert text (#579)",
+      "pr_number": 579,
+      "files": [
+        "research/audits/gaviao-main-window-20261113-g44.json",
+        "research/audits/gaviao-main-window-20261113-g44.md",
+        "scripts/verify-ssg-evidence-index.mjs",
+        "tests/ssg-evidence-index-bridge.test.mjs"
+      ],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "a31e43c4ab57dc6938cda6cd13b81923f4da1e77",
+      "parents": [
+        "9be8433e3cecd7803396732972f1a7b48557d511"
+      ],
+      "title": "96 🐢 C241-L33: registros originais ONU de 1963 identificam 528 e status em novembro (#578)",
+      "pr_number": 578,
+      "files": [
+        ".github/workflows/tle-un-1963-registration.yml",
+        "research/tle_custody/evidence_matrix_C241-L33_2026-11-13.md",
+        "research/tle_custody/un_1963_registration_C241-L33.json",
+        "tests/test_tle_un_1963_registration_audit.py",
+        "tools/tle_un_1963_registration_audit.py"
+      ],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "bfc0fddf107c8497a3e05a2f38159a7a879069b8",
+      "parents": [
+        "a31e43c4ab57dc6938cda6cd13b81923f4da1e77"
+      ],
+      "title": "🦦 L35: boletins ISZ nº 25/38/42 e custódia CP1251 (#580)",
+      "pr_number": 580,
+      "files": [
+        "research/tle_custody/evidence_matrix_C241-L35_2026-11-13.md",
+        "research/tle_custody/nikolaev_soviet_photo_1962_1964_C241-L35.json",
+        "tests/test_nikolaev_soviet_photo_1962_1964.py",
+        "tools/verify_nikolaev_soviet_photo_1962_1964.py"
+      ],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "4858f1f5f0b57b8dadfc63e483997e97920ba9ef",
+      "parents": [
+        "bfc0fddf107c8497a3e05a2f38159a7a879069b8"
+      ],
+      "title": "🐝 C241-L34: contemporary Soviet bibliographic lead (#581)",
+      "pr_number": 581,
+      "files": [
+        "formal/Conde1963/SovietCatalogueCandidate.lean",
+        "public/data/conde-soviet-catalogue-bridge.json",
+        "tests/test_soviet_catalogue_bridge.py",
+        "tools/export_soviet_catalogue_bridge.py"
+      ],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "4fa655a5adfa8bfc14ddcca8c5e60287601ddfa1",
+      "parents": [
+        "4858f1f5f0b57b8dadfc63e483997e97920ba9ef",
+        "01dfbf5f24571d31e6aeda55b71347b28b9f8f62"
+      ],
+      "title": "Merge pull request #582 from franklinbaldo/research/polvo-c241-p22-ssr-jackknife-20261113",
+      "pr_number": 582,
+      "files": [],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "fdfb130dc47603eab402265cc75c72e9eeca9ec4",
+      "parents": [
+        "4fa655a5adfa8bfc14ddcca8c5e60287601ddfa1",
+        "32b2ea8d2122f0ab81678cf31e89ee9d4db9cd96"
+      ],
+      "title": "Merge pull request #583 from franklinbaldo/lagarto/ssg-documentary-journey-r30",
+      "pr_number": 583,
+      "files": [],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "2e75092c100a7b51506d89bcaae05d17584a5f37",
+      "parents": [
+        "fdfb130dc47603eab402265cc75c72e9eeca9ec4"
+      ],
+      "title": "84 🦀 CGEO-32: DNOCS 213 (1961) é outra pista aerofotográfica para MI-1850 (#584)",
+      "pr_number": 584,
+      "files": [
+        ".github/workflows/geo-dnocs213-1961.yml",
+        "research/geo/cgeo32_dnocs213_1961_mi1850.json",
+        "research/geo/cgeo32_dnocs213_1961_mi1850.md",
+        "tests/test_cgeo32_dnocs213_crosswalk.py",
+        "tools/cgeo32_dnocs213_crosswalk.py"
+      ],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "9dc8d8ef57e60217ca4b4d3de382f71718bd5d4a",
+      "parents": [
+        "2e75092c100a7b51506d89bcaae05d17584a5f37"
+      ],
+      "title": "🦌 C241-P29: desenho temporal cruzado da densidade",
+      "pr_number": null,
+      "files": [
+        "research/constraints/C241-P29_density_epoch_contrast.json",
+        "research/statistics/DENSITY_EPOCH_CONTRAST_C241.md",
+        "tests/test_density_epoch_contrast.py",
+        "tools/density_epoch_contrast.py"
+      ],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "47888af462f11834741625b930687841ad793bfc",
+      "parents": [
+        "9dc8d8ef57e60217ca4b4d3de382f71718bd5d4a"
+      ],
+      "title": "80 🦫 G44: assert sourced full geodetic frame before density",
+      "pr_number": null,
+      "files": [
+        "src/lib/orbitGeodeticFrame.ts",
+        "src/lib/orbitSpaceWeatherAdapter.ts",
+        "tests/orbitGeodeticFrame.test.mjs"
+      ],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "604a9c459c8351d1873b4d79ae77ba062204c15f",
+      "parents": [
+        "47888af462f11834741625b930687841ad793bfc"
+      ],
+      "title": "ci(orbit): execute G44 sourced geodetic-frame tests on PRs (#588)",
+      "pr_number": 588,
+      "files": [
+        ".github/workflows/orbit-kernel.yml"
+      ],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "3ea7e0eb97915c263f38c4094a87f86c84056898",
+      "parents": [
+        "604a9c459c8351d1873b4d79ae77ba062204c15f"
+      ],
+      "title": "🦇 UI: ampliar alvos de toque do seletor PT/EN e foco visível (#587)",
+      "pr_number": 587,
+      "files": [
+        "src/components/Navigation.tsx",
+        "tests/ui_keyboard_smoke.mjs"
+      ],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "5a4e1ee75d95a64ed4d00c783aa6e3f0fcaa96b7",
+      "parents": [
+        "3ea7e0eb97915c263f38c4094a87f86c84056898"
+      ],
+      "title": "92 🦊 UX-08: carregar instrumentos do Laboratório sob demanda (#589)",
+      "pr_number": 589,
+      "files": [
+        ".github/workflows/pages.yml",
+        ".github/workflows/ui-keyboard-smoke.yml",
+        "index.html",
+        "src/App.tsx",
+        "tests/frontend-triangulation-source-bounds.test.mjs",
+        "tests/lab-code-split.test.mjs",
+        "vite.config.ts"
+      ],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "23b69249fddb897945f611d47247a8d6428fe2a7",
+      "parents": [
+        "5a4e1ee75d95a64ed4d00c783aa6e3f0fcaa96b7"
+      ],
+      "title": "🦉 Caderno 22: registro ONU 1963-3B e datas administrativas (#590)",
+      "pr_number": 590,
+      "files": [
+        "stories/2026-11-13-o-satelite-que-saiu-do-registro.md"
+      ],
+      "ci_status": "NOT_CHECKED"
+    }
+  ]
+}

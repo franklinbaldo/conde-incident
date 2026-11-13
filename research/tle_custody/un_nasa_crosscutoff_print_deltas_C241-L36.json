@@ -1,0 +1,66 @@
+{
+  "schema": "conde.c241-l36-un-nasa-editorial-crosscutoff/v1",
+  "id": "C241-L36",
+  "subject": "528 and controls 527/529: independent document series, not independent sensors",
+  "epistemic_status": "DOCUMENTARY_PRINTED_DIFFERENCES_NO_PHYSICAL_RATE",
+  "source_earlier": {
+    "ledger": "research/tle_custody/un_1963_registration_C241-L33.json",
+    "document_id": "UN A/AC.105/INF.30",
+    "url": "https://www.unoosa.org/documents/pdf/inf030E.pdf",
+    "sha256": "fbee0e928a2d81e62c97c102eef70d4f4931dd500372a4bf735bd8891c6188b8",
+    "pdf_page_index_zero_based": 1,
+    "cutoff_printed": "2400Z 31 JANUARY 1963",
+    "published_day": "1963-03-13",
+    "source_role": "US_TO_UN_REGISTER_AS_OF_CUTOFF_NOT_SENSOR"
+  },
+  "source_later": {
+    "ledger": "research/tle_custody/nasa_ssr_apr_oct_1963_C241-L16.json",
+    "document_id": "NASA NTRS 19630012128",
+    "url": "https://ntrs.nasa.gov/api/citations/19630012128/downloads/19630012128.pdf",
+    "sha256": "87b8c1be1d074dff4b605b422f6a8836c2ebdf80ca4ac0568373b168cc457a38",
+    "pdf_page_index_zero_based": 6,
+    "cutoff_printed": "1430Z APR 30 1963",
+    "published_day": "1963-04-30",
+    "source_role": "NASA_SSR_COMPILED_CATALOG_NOT_SENSOR"
+  },
+  "identity_bridge": "research/tle_custody/nasa_ssr_dec1977_528_identity_C241-L32.json",
+  "comparison_rule": "Decimal(later NASA printed value) - Decimal(earlier UN printed value); nominal arithmetic only",
+  "quantities": ["nodal_period_min", "inclination_deg", "apogee_km", "perigee_km"],
+  "objects": [
+    {"designator": "1963-003A", "norad": 527, "nominal_deltas": {"nodal_period_min": "-0.1", "inclination_deg": "-0.08", "apogee_km": "18.4", "perigee_km": "-19.5"}},
+    {"designator": "1963-003B", "norad": 528, "nominal_deltas": {"nodal_period_min": "-0.4", "inclination_deg": "-0.10", "apogee_km": "-0.5", "perigee_km": "-41.4"}},
+    {"designator": "1963-003C", "norad": 529, "nominal_deltas": {"nodal_period_min": "-0.4", "inclination_deg": "-0.09", "apogee_km": "5.5", "perigee_km": "-39.4"}}
+  ],
+  "unknowns": {
+    "observation_epochs_for_each_printed_cell_utc": null,
+    "sensor_station_for_each_cell": null,
+    "tracking_arc_and_state_fit_method": null,
+    "measurement_covariance": null,
+    "cross_publication_error_covariance": null,
+    "reporting_latency_model": null,
+    "common_upstream_lineage_fully_resolved": null
+  },
+  "independence": {
+    "same_us_source_family_possible": true,
+    "new_independent_tracking_sensor_evidences": 0,
+    "un_to_nasa_publications_count_as_two_independent_observations": false,
+    "nominal_change_is_derivative": false,
+    "nominal_change_is_physical_bound": false,
+    "nominal_change_is_calibrated_uncertainty": false
+  },
+  "graph": {
+    "parent": "research/constraints/ssr_1963_observable_graph.json",
+    "dependencies": [
+      "research/tle_custody/un_1963_registration_C241-L33.json",
+      "research/tle_custody/nasa_ssr_apr_oct_1963_C241-L16.json",
+      "research/tle_custody/nasa_ssr_dec1977_528_identity_C241-L32.json"
+    ],
+    "printed_pair_connections": 12,
+    "documentation_only": true,
+    "physical_constraints_activated": 0,
+    "lean_promoted": false,
+    "simulation_parameters_changed": false,
+    "inferred_terminal_time_or_place": false
+  },
+  "next_critical_document": "Original dated instrumental SPADATS 528 observation or custody record including sensor, UTC epoch, frame, uncertainty and determination method"
+}
