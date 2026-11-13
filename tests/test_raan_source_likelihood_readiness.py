@@ -136,6 +136,9 @@ class SourceReadinessTests(unittest.TestCase):
         annual = groups['NASA_SP4004_1963_LAUNCH_GROUP']
         self.assertEqual(annual['printed_group_status'], 'Still in orbit.')
         self.assertEqual(annual['printed_perigee_statute_miles'], 286)
+        self.assertEqual(annual['printed_page'], 502)
+        self.assertEqual(annual['group_period_minutes_printed'], '94.6')
+        self.assertNotIn('VISUAL_TRANSCRIPTION', annual['blockers'])
         self.assertIsNone(annual['child_528_status_from_this_row'])
         self.assertIsNone(annual['child_528_perigee_from_this_row'])
         self.assertFalse(report['model_contract']['active_constraint'])
@@ -150,8 +153,15 @@ class SourceReadinessTests(unittest.TestCase):
     def test_annual_report_does_not_claim_visual_confirmation(self):
         raw = list(raw_inputs())
         raw[6] = mutate(raw[6], lambda p: p['publication'].__setitem__(
-            'page_image_verified', True))
+            'page_image_verified', False))
         with self.assertRaisesRegex(ValueError, 'documentary source'):
+            build(*raw)
+
+    def test_annual_ocr_false_neighbor_name_fails_closed(self):
+        raw = list(raw_inputs())
+        raw[6] = mutate(raw[6], lambda p: p["annual_row_extracted_text"].__setitem__(
+            "name_printed", "DOD Probe"))
+        with self.assertRaisesRegex(ValueError, "group/child"):
             build(*raw)
 
     def test_annual_status_changed_requires_reassessment(self):
