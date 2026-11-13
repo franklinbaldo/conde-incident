@@ -18,6 +18,7 @@ OCTOBER = ROOT / "research/tle_custody/nasa_ssr_1963_oct15_C241-L12.json"
 SURVIVORS = ROOT / "research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json"
 REPORT = ROOT / "research/constraints/C241-P11_november_historical_printings.json"
 LEAN = ROOT / "formal/Conde1963/SsrNovember.lean"
+BRIDGE = ROOT / "public/data/conde-ssr-source-locked-links.json"
 EXPECTED = {
     "1963-11-15": {
         "ntrs": "19640001198",
@@ -134,8 +135,80 @@ def validate(ledger: dict, october: dict, survivors: dict) -> dict:
     return {"1963-10-15": october_rows, **docs}
 
 
-def compile_report(ledger: dict, october: dict, survivors: dict) -> dict:
+def validate_bridge(bridge: dict, series: dict) -> dict:
+    """Bind the published-number Lean model to the audited public graph.
+
+    The bridge and this compiler independently read the two NASA ledgers.
+    Their agreement must be checked, not assumed; no observation epoch or
+    covariance is inferred from a report's publication date.
+    """
+    if (bridge.get("schema") != "conde.ssr-source-locked-links/v1"
+            or bridge.get("id") != "C241-L18-L19-LEGACY527-NOV30"
+            or bridge.get("legacy_blob_preserved") is not True
+            or bridge.get("legacy_transcription_value_rejected_min") != "94.8"
+            or bridge.get("legacy_row_id") != "SSR-1963-11-30-NORAD527-nodal_period"
+            or bridge.get("linked_lean_contract") != "formal/Conde1963/SsrNovember.lean"
+            or bridge.get("checked_control_cells") != 16
+            or bridge.get("checked_distinct_control_objects") != [527, 529]
+            or bridge.get("source_family") != "NASA_GODDARD_COMPILED_FROM_TRACKING"):
+        raise ValueError("public source bridge identity, coverage or Lean lineage mismatch")
+    nov15 = Decimal(series["1963-11-15"]["1963-003A"]["period_min"]) / 100
+    nov30 = Decimal(series["1963-11-30"]["1963-003A"]["period_min"]) / 100
+    if (Decimal(str(bridge.get("canonical_value_min"))) != nov30
+            or Decimal(str(bridge.get("canonical_value_seconds"))) != nov30 * 60
+            or Decimal(str(bridge.get("documentary_delta_min"))) != nov30 - nov15
+            or bridge.get("documentary_delta_id") !=
+               "SSR-PUBLICATIONS-DELTA-527-nodal_period"):
+        raise ValueError("source bridge 527 period or published-date delta mismatch")
+    sources = bridge.get("linked_sources", [])
+    if not isinstance(sources, list) or len(sources) != 2:
+        raise ValueError("source bridge missing NASA edition")
+    for row, (day, occurrence, contexts) in zip(sources, (
+            ("1963-11-15", "C241-L19#1", ["C197#1", "C198#1"]),
+            ("1963-11-30", "C241-L18:19640002493", ["C183#1", "C199#1"]))):
+        spec = EXPECTED[day]
+        if (row.get("occurrence_id") != occurrence
+                or row.get("published_on") != day
+                or row.get("document_ntrs") != spec["ntrs"]
+                or row.get("pdf_sha256") != spec["sha"]
+                or row.get("pdf_bytes") != spec["bytes"]
+                or row.get("pdf_page_index") != 6
+                or row.get("printed_page") != 5
+                or row.get("matrix_context") != contexts
+                or row.get("relationship") !=
+                   "different_editions_same_tracking_family_not_independent_sensors"):
+            raise ValueError("source bridge NASA edition provenance mismatch")
+    if (bridge.get("simulator_observation_epoch_utc") is not None
+            or bridge.get("simulator_instrument_error") is not None
+            or bridge.get("simulator_calibrated_value") is not None
+            or bridge.get("active_physical_constraint") is not False
+            or bridge.get("physical_domain_effect") != "THETA_UNCHANGED"
+            or bridge.get("status") != "CONNECTED_PENDING_CALIBRATION"
+            or bridge.get("lean_claim_scope") != "conditional_printed_number_arithmetic_only"
+            or bridge.get("simulator_observation_epoch_parameter") !=
+               "t_observed_527_1963-11-30"
+            or bridge.get("simulator_parameter") !=
+               "observed_nodal_period_527_1963-11-30"
+            or set(bridge.get("pending", [])) != {
+                "original_sensor_records", "observation_epoch_utc", "reference_frame",
+                "instrument_covariance", "calibrated_forward_model"}):
+        raise ValueError("source bridge promoted a publication into physical calibration")
+    return {
+        "bridge_path": "public/data/conde-ssr-source-locked-links.json",
+        "bridge_id": bridge["id"],
+        "linked_occurrences": [s["occurrence_id"] for s in sources],
+        "canonical_527_nov30_period_min": str(nov30),
+        "nov15_to_nov30_527_publication_delta_min": str(nov30 - nov15),
+        "observed_epoch": None,
+        "sensor_sigma": None,
+        "constraint_activation": False,
+    }
+
+
+def compile_report(ledger: dict, october: dict, survivors: dict,
+                   bridge: dict | None = None) -> dict:
     series = validate(ledger, october, survivors)
+    binding = validate_bridge(json.loads(BRIDGE.read_text()) if bridge is None else bridge, series)
     keys = ("1963-10-15", "1963-11-15", "1963-11-30")
     days = [(date.fromisoformat(keys[i+1]) -
              date.fromisoformat(keys[i])).days for i in (0, 1)]
@@ -177,6 +250,7 @@ def compile_report(ledger: dict, october: dict, survivors: dict) -> dict:
         raise ValueError("falsified November documentary ranking")
     return {
         "id": "C241-P11",
+        "source_locked_bridge": binding,
         "source_ids": ["C241-L12", "C241-L19#1", "C241-L18:19640002493", "C197#1"],
         "publication_dates": list(keys),
         "source_sha256": [OCT_SHA]+[EXPECTED[k]["sha"] for k in keys[1:]],
