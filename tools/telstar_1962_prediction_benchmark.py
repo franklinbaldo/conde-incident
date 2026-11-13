@@ -84,6 +84,44 @@ def sky_separation_deg(az_o: float, az_p: float, el_o: float, el_p: float) -> fl
     return math.degrees(2 * math.asin(math.sqrt(max(0.0, min(1.0, hav)))))
 
 
+def pass_deletion_sensitivity(rows: list[dict]) -> dict:
+    """Five fixed-sample deletion diagnostics; NOT out-of-sample predictive CV.
+
+    Excluding a pass recomputes a descriptive aggregate; there is no refit,
+    held-out forecast, independence claim, or uncertainty coverage estimate.
+    """
+    per = {}
+    for row in rows:
+        separation = sky_separation_deg(*(float(row[k]) for k in
+            ("az_obs", "az_pred", "el_obs", "el_pred")))
+        per.setdefault(row["pass_id"], []).append(separation**2)
+    if set(per) != set(COUNTS) or any(len(per[k]) != COUNTS[k] for k in COUNTS):
+        raise ValueError("pass-membership contract changed")
+    all_count = sum(len(x) for x in per.values())
+    total_sq = sum(sum(x) for x in per.values())
+    deleted = []
+    for pass_id in COUNTS:
+        remaining_n = all_count - len(per[pass_id])
+        remaining_sq = total_sq - sum(per[pass_id])
+        deleted.append({"excluded_pass_id": pass_id,
+                        "remaining_rows": remaining_n,
+                        "remaining_passes": len(COUNTS) - 1,
+                        "descriptive_los_rms_deg": round(math.sqrt(remaining_sq / remaining_n), 7)})
+    vals = [r["descriptive_los_rms_deg"] for r in deleted]
+    return {
+        "classification": "PASS_BLOCK_DELETION_SENSITIVITY_NOT_CROSS_VALIDATION",
+        "unit_of_deletion": "complete_tracking_pass",
+        "refits_prediction_model": False,
+        "prospective_or_blind_holdout": False,
+        "estimates_population_uncertainty": False,
+        "assumes_independent_passes": False,
+        "passes": deleted,
+        "min_deletion_rms_deg": min(vals),
+        "max_deletion_rms_deg": max(vals),
+        "rms_range_deg": round(max(vals)-min(vals), 7),
+    }
+
+
 def summarize(rows: list[dict]) -> dict:
     per_pass = []
     all_separations = []
@@ -126,6 +164,7 @@ def summarize(rows: list[dict]) -> dict:
             "rows_are_independent_realizations": False,
         },
         "passes": per_pass,
+        "pass_deletion_sensitivity": pass_deletion_sensitivity(rows),
         "all_rows_descriptive_los_rms_deg": round(
             math.sqrt(sum(s*s for s in all_separations)/len(all_separations)), 7),
         "all_rows_descriptive_los_max_deg": round(max(all_separations), 7),

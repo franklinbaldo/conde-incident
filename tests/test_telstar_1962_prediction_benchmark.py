@@ -82,6 +82,35 @@ class TelstarHistoricalBenchmark(unittest.TestCase):
         self.assertFalse(self.report["method"]["rows_are_independent_realizations"])
         self.assertFalse(self.report["method"]["rounding_rule_verified"])
 
+    def test_pass_deletion_counts_and_nonpredictive_contract(self):
+        diag = self.report["pass_deletion_sensitivity"]
+        self.assertEqual(diag["classification"],
+                         "PASS_BLOCK_DELETION_SENSITIVITY_NOT_CROSS_VALIDATION")
+        self.assertFalse(diag["refits_prediction_model"])
+        self.assertFalse(diag["prospective_or_blind_holdout"])
+        self.assertFalse(diag["assumes_independent_passes"])
+        self.assertFalse(diag["estimates_population_uncertainty"])
+        self.assertEqual([(v["excluded_pass_id"], v["remaining_rows"],
+                           v["remaining_passes"]) for v in diag["passes"]],
+                         [(124,30,4),(133,31,4),(143,31,4),(151,30,4),(160,30,4)])
+        self.assertAlmostEqual(diag["min_deletion_rms_deg"], 0.0267494, places=7)
+        self.assertAlmostEqual(diag["max_deletion_rms_deg"], 0.0357907, places=7)
+        self.assertAlmostEqual(diag["rms_range_deg"], 0.0090413, places=7)
+
+    def test_deletion_diagnostics_are_recomputed_from_source_locked_rows(self):
+        for excluded in mod.COUNTS:
+            remaining = [r for r in self.rows if r["pass_id"] != excluded]
+            squares = [mod.sky_separation_deg(*(float(r[k]) for k in
+                        ("az_obs", "az_pred", "el_obs", "el_pred")))**2
+                       for r in remaining]
+            expected = (sum(squares) / len(squares))**0.5
+            got = next(v["descriptive_los_rms_deg"] for v in
+                       self.report["pass_deletion_sensitivity"]["passes"]
+                       if v["excluded_pass_id"] == excluded)
+            self.assertAlmostEqual(got, expected, places=7)
+        with self.assertRaisesRegex(ValueError, "pass-membership"):
+            mod.pass_deletion_sensitivity(self.rows[:-1])
+
     def test_generated_report_is_reproducible(self):
         import json
         self.assertEqual(json.loads(mod.OUT.read_text()), self.report)
