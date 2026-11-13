@@ -1,0 +1,108 @@
+{
+  "id": "CGEO-16",
+  "scope": {
+    "municipality": "Conde",
+    "state": "BA",
+    "country": "Brasil",
+    "ibge_code": "2908606",
+    "exclude_homonyms": [
+      "Conde/PB",
+      "São Francisco do Conde/BA",
+      "Vila do Conde/Portugal"
+    ]
+  },
+  "source": {
+    "document_title": "Plano Plurianual 2022-2025 do Município de Conde (BA)",
+    "official_publication": "Diário Oficial do Município de Conde (BA), Ano I, nº 409",
+    "publication_date": "2021-12-21",
+    "producing_institution": "Prefeitura Municipal de Conde (BA)",
+    "hosting_institution": "Câmara Municipal de Conde (BA)",
+    "url": "https://www.camaraconde.ba.gov.br/Handler.ashx?f=f&query=5694316d-2f66-4d60-9900-cb9a5136f9dc.pdf",
+    "pdf_page_index_zero_based": 13,
+    "official_diario_page_number": 14,
+    "ppa_internal_page_number": 13,
+    "source_family": "single official publication",
+    "document_render_inspected": true,
+    "document_bytes_acquired": false,
+    "document_sha256": null,
+    "capture_of_photograph_authenticated": false
+  },
+  "observations": [
+    {
+      "id": "CGEO16-VIS-STREET-01",
+      "content_class": "commercial_street_photo",
+      "page_placement": "lower part of Diario page 14 / PPA internal page 13",
+      "directly_visible": [
+        "cobblestone-like pavement",
+        "storefront facades",
+        "street-market stalls and goods",
+        "people"
+      ],
+      "caption_verbatim_on_page": null,
+      "official_context": "Photograph reproduced in section about municipal commerce and services",
+      "capture_date": null,
+      "photographer": null,
+      "camera_coordinates": null,
+      "photographed_street_name": null,
+      "neighborhood": null,
+      "belongs_to_historic_vila": null,
+      "equals_center_of_city_1963": null,
+      "image_file_sha256": null,
+      "reuse_license": null,
+      "admissible_role": "unlocated modern visual context; no historical position constraint"
+    },
+    {
+      "id": "CGEO16-VIS-COAST-01",
+      "content_class": "beach_waterfront_photo",
+      "page_placement": "upper part of Diario page 14 / PPA internal page 13",
+      "directly_visible": [
+        "sand beach",
+        "seaside pedestrian walkway",
+        "vegetation",
+        "market or leisure structures"
+      ],
+      "caption_verbatim_on_page": null,
+      "official_context": "Photograph reproduced in the same official municipal PPA page",
+      "capture_date": null,
+      "photographer": null,
+      "camera_coordinates": null,
+      "photographed_street_name": null,
+      "neighborhood": null,
+      "belongs_to_historic_vila": null,
+      "equals_center_of_city_1963": null,
+      "image_file_sha256": null,
+      "reuse_license": null,
+      "admissible_role": "coastal visual context; not interchangeable with urban commercial street"
+    }
+  ],
+  "lineage": {
+    "publication_groups_images": true,
+    "independent_1963_observations": 0,
+    "related_records": [
+      {
+        "id": "CGEO-14",
+        "relation": "other later photographs; no matched viewpoint proven"
+      },
+      {
+        "id": "CGEO-15",
+        "relation": "2022 church camera positions; not co-located with these unidentified images"
+      }
+    ]
+  },
+  "castor_export": {
+    "location_of_1963_report": null,
+    "historical_center_polygon": null,
+    "impact_point": null,
+    "datum": null,
+    "crs": null,
+    "horizontal_uncertainty_m": null,
+    "can_constrain_orbital_reentry": false,
+    "graph_state": "CONNECTED_PENDING_SPATIAL_IDENTIFICATION",
+    "pending_dependencies": [
+      "authenticated original photo capture dates and photographers",
+      "independent street/landmark matching",
+      "1963 urban plan or period aerial imagery",
+      "literal primary wording and provenance of 'centro da cidade'"
+    ]
+  }
+}
