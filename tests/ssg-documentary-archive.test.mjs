@@ -9,7 +9,9 @@ const clone = obj=>JSON.parse(JSON.stringify(obj));
 
 test('SSG publishes one stable, no-JS page per curated occurrence', () => {
   const pages=archivePages(feed, ancestry);
-  assert.equal(pages.size, feed.curated_occurrences+11);
+  const families=new Set(feed.records.map(r=>r.source_family));
+  const works=new Set(feed.records.map(r=>r.work_id));
+  assert.equal(pages.size, feed.curated_occurrences+3+families.size+works.size);
   const index=pages.get('index.md');
   assert.match(index,/28 ocorrências curadas de 241/);
   assert.match(index,/213 ocorrências não mapeadas/);
@@ -36,6 +38,17 @@ test('SSG publishes one stable, no-JS page per curated occurrence', () => {
   assert.match(pages.get('familias/norad-nasa-tracking/index.md'),/12 ocorrência\(s\)/);
   assert.match(pages.get('familias/usaf-aira-bluebook/index.md'),/C232#1/);
   assert.match(pages.get('familias/bluebook-derivative-catalogues/index.md'),/C232#1/);
+  assert.match(index,/Consultar obras e suas reutilizações/);
+  assert.match(pages.get('obras/index.md'),/Obras documentais/);
+  assert.ok(pages.get('obras/index.md').includes('/obras/nasa-ssr-vol3-22/'));
+  assert.match(pages.get('obras/nasa-ssr-vol3-22/index.md'),/8 ocorrência\(s\), 8 vínculo\(s\)/);
+  assert.match(pages.get('obras/nasa-ssr-vol3-22/index.md'),/C197#1/);
+  assert.match(pages.get('obras/nasa-ssr-vol3-22/index.md'),/SHA-256 da linha na matriz/);
+  assert.match(pages.get('c232-1/index.md'),/obras\/nara-bb-card-302531013\//);
+  for(const work of works){
+    const slug=work.toLowerCase().replaceAll('_','-');
+    assert.ok(pages.has('obras/'+slug+'/index.md'), 'Obra ausente: '+work);
+  }
   for (const [path, html] of pages) {
     assert.doesNotMatch(html, /<script|onclick=|onload=/i, `Página não estática: ${path}`);
   }
@@ -138,4 +151,13 @@ test('SSG exposes a verified Wayback PDF only via an exact frozen citation join'
   tampered.nodes.find(n=>n.kind==='VERIFIED_ARCHIVAL_COPY'
     && n.id.includes('LEGACY-CAPTURE')).archived_url='javascript:alert(1)';
   assert.throws(()=>archivePages(feed,ancestry,tampered),/Somente URL Wayback/);
+});
+
+test('SSG rejects forged or path-like work IDs before creating links',()=>{
+  const changed=clone(feed);
+  changed.records[0].work_id='NASA/../../outside';
+  assert.throws(()=>archivePages(changed,ancestry),/Identificador de obra inválido/);
+  const alternate=clone(feed);
+  alternate.records[0].work_id='NASA <script>';
+  assert.throws(()=>archivePages(alternate,ancestry),/Identificador de obra inválido/);
 });
