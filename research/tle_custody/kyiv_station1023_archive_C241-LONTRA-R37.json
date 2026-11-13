@@ -1,0 +1,78 @@
+{
+  "schema": "conde.historical_station_archive_route/v1",
+  "id": "C241-LONTRA-R37",
+  "audit_date": "2026-11-13",
+  "status": "ARCHIVE_COLLECTION_LOCATED_IN_RETROSPECTIVE_PUBLICATION_ONLY",
+  "sources": [
+    {
+      "kind": "institutional_museum_publications_html",
+      "url": "https://observ.knu.ua/museum/publikatsiyi/",
+      "http_status": 200,
+      "tls_validated": true,
+      "bytes": 72900,
+      "sha256": "de14cfaedd29663591e050f8544499a50f0a621ad0d1bc1cadc5d0e85d847286",
+      "proves": "museum_lists_2007_station1023_article"
+    },
+    {
+      "kind": "institutional_museum_holdings_html",
+      "url": "https://observ.knu.ua/museum/fondi-muzeyu/",
+      "http_status": 200,
+      "tls_validated": true,
+      "bytes": 41555,
+      "sha256": "e4f569c4e9c7bc3992fbafedb3b3b3693fee3680f49fddc6c5bcc58a60eb5071",
+      "proves": "museum_exposes_holdings_section_not_specific_1963_journal"
+    },
+    {
+      "kind": "peer_reviewed_retrospective_pdf_visual_inspection",
+      "url": "https://viv.nuou.org.ua/article/download/281444/275680/648790",
+      "title": "Istorychnyi dosvid rozvytku prohram z vykorystannia shtuchnykh suputnykiv Zemli viiskovo-rozviduvalnoho ta podviinoho pryznachennia",
+      "authors": ["L. Kazantseva", "S. Salata"],
+      "year": 2022,
+      "doi": "10.33099/2707-1383-2022-45-3-104-127",
+      "printed_pages_checked_visually": [116, 118],
+      "web_pdf_rendered": true,
+      "direct_download_http_status_in_executor": 403,
+      "bytes": null,
+      "sha256": null,
+      "proves": "authors_report_museum_station1023_reports_collection_not_instrumental_target_measurement"
+    },
+    {
+      "kind": "retrospective_article_pdf_web_inspected",
+      "url": "https://www.mao.kiev.ua/biblio/jscans/svitogliad/svit-2007-07-5/svit-2007-07-5-28-kazanceva.pdf",
+      "title": "Fenomen stantsii no 1023",
+      "author": "L. Kazantseva",
+      "year": 2007,
+      "printed_pages": "28-31",
+      "web_pdf_rendered": true,
+      "direct_download_http_status_in_executor": 403,
+      "bytes": null,
+      "sha256": null,
+      "proves": "historical_station_activity_testimony_only"
+    }
+  ],
+  "station": {
+    "identifier": "1023",
+    "place": "Kyiv, Ukrainian SSR",
+    "program": "Kosmos",
+    "regular_operational_years_reported": [1957, 1983],
+    "reported_ephemerides_received_all_years": 93165,
+    "reported_positions_measured_all_years": 77134,
+    "counts_are_not_1963_counts": true,
+    "museum_report_collection_fig3_page": 116,
+    "museum_archive_cited_for_1976_report": "fond SSHSZ, file 06-03-02, Station 1023 report 1976, 32 sheets",
+    "archive_1976_is_not_archive_1963": true,
+    "unknown_object_observations_reported": true,
+    "unknown_objects_are_not_identified_as_norad_targets": true,
+    "kft_phototheodolite_not_1963_evidence": true
+  },
+  "follow_up": "Locate holdings inventory or scans of original Station 1023 Kosmos program reports/journals for 1963-11-07 through 1963-11-09; ask for accession, dates, station, UTC, angular records and explicit object identifiers. No outreach without permission.",
+  "limits": {
+    "original_1963_reports_retrieved": false,
+    "current_custody_in_2026_confirmed": false,
+    "observation_for_norad_527_528_529_confirmed": false,
+    "all_year_counts_usable_as_1963_measurements": false,
+    "new_independent_orbital_measurements": 0,
+    "orbital_constraints_activated": 0,
+    "outreach_sent": false
+  }
+}
