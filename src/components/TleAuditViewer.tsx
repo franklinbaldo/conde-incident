@@ -12,6 +12,7 @@ const MATRIX_C179 = MATRIX + '#L839';
 const MATRIX_C197 = MATRIX + '#L905-L910';
 const MATRIX_COLLISIONS = MATRIX + '#L164-L177';
 const NASA_BULLETIN = 'https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf#page=10';
+const NASA_527_1964 = 'https://ntrs.nasa.gov/api/citations/19640019314/downloads/19640019314.pdf#page=7';
 
 const labels = {
   pt: {
@@ -39,9 +40,11 @@ const labels = {
     data: 'Parâmetros exibidos pelo modelo, não medições validadas',
     epoch: 'Época declarada no conjunto',
     raan: 'RAAN no conjunto',
+    unverified: 'Não autenticado (cenário)',
+    catalog527: 'NASA 30/06/1964: 527 em órbita (não valida TLE deste cenário)',
     bstar: 'BSTAR no conjunto',
     assumptions: 'Premissas e limitações',
-    status: 'O conflito de RAAN para 528 permanece aberto: 284,1520° no aplicativo versus aproximadamente 198,5261° em outra série. Épocas, fonte primária, identidade e independência precisam ser conciliadas antes de qualquer ajuste.',
+    status: 'C179#1 registra um par TLE secundário do 528, mas não comprova sua origem instrumental. Os vetores 527/529 são cenários sem TLE primário autenticado. O boletim NASA de 30/06/1964 documenta 527 em órbita, não confirma os elementos ou épocas usados neste simulador.',
     drag: 'BSTAR = 0 não demonstra arrasto físico nulo. Um valor não zero tampouco certifica calibração histórica.',
     nasa: 'O boletim NASA de 15/11/1963 documenta o dia 08/11 para o decaimento de 1963-003B. Não autentica estas linhas nem informa hora ou local terminal. Reentrada não comprova impacto.',
     conclusion: 'Resultado científico: indeterminado. Não há domínio admissível não vazio e reduzido ou intervalo físico certificado para hora, posição e impacto.',
@@ -79,9 +82,11 @@ const labels = {
     data: 'Model inputs, not validated measurements',
     epoch: 'Epoch declared in dataset',
     raan: 'RAAN in dataset',
+    unverified: 'Unauthenticated (scenario)',
+    catalog527: 'NASA 30 Jun 1964: 527 in orbit (not this scenario TLE)',
     bstar: 'BSTAR in dataset',
     assumptions: 'Assumptions and limits',
-    status: 'The RAAN conflict for 528 remains unresolved: 284.1520° in this app versus approximately 198.5261° in another series. Epochs, original sources, identification and independence must be reconciled before fitting.',
+    status: 'C179#1 records a secondary TLE pair for 528, without authentication of its original tracking source. The 527/529 vectors are scenarios lacking authenticated primary TLEs. NASA’s 30 June 1964 bulletin documents 527 in orbit, not the epochs or elements used by this simulator.',
     drag: 'BSTAR = 0 does not measure zero physical drag. A nonzero value also does not certify historical calibration.',
     nasa: 'The NASA bulletin of November 15, 1963 records November 8 as the decay day for 1963-003B. It does not authenticate these lines or establish terminal time or location. Reentry is not proof of ground impact.',
     conclusion: 'Scientific outcome: undetermined. No established nonempty reduced admissible domain or certified physical interval for time, position or impact.',
@@ -165,7 +170,7 @@ export const TleAuditViewer: React.FC<TleAuditViewerProps> = ({ lang }) => {
           <h4 className="mb-3 font-semibold">{t.data}</h4>
           <dl className="grid gap-3 text-sm sm:grid-cols-3">
             <div><dt className="text-zinc-400">{t.epoch}</dt><dd className="mt-1 break-words font-mono text-zinc-100">{sat.epochStr}</dd></div>
-            <div><dt className="text-zinc-400">{t.raan}</dt><dd className="mt-1 font-mono text-zinc-100">{sat.raanDeg.toFixed(4)}°</dd></div>
+            <div><dt className="text-zinc-400">{t.raan}</dt><dd className="mt-1 font-mono text-zinc-100">{selectedId === 528 ? `${sat.raanDeg.toFixed(4)}°` : t.unverified}</dd></div>
             <div><dt className="text-zinc-400">{t.bstar}</dt><dd className="mt-1 font-mono text-zinc-100">{sat.bstar.toExponential(3)}</dd></div>
           </dl>
         </div>
@@ -181,6 +186,7 @@ export const TleAuditViewer: React.FC<TleAuditViewerProps> = ({ lang }) => {
           {[
             [t.matrix, MATRIX],
             [t.primary, NASA_BULLETIN],
+            [t.catalog527, NASA_527_1964],
             [t.custody, 'https://github.com/franklinbaldo/conde-incident/pull/14'],
             [t.evidence, MATRIX_C179],
             [t.decay, MATRIX_C197],
