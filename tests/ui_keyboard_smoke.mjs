@@ -229,6 +229,44 @@ try {
     findings.push({ viewport: viewport.name, skip_target: focused.id, hash_preserved: true, nav_hash: '#/map', html_lang: 'en', overflow_px: horizontal.document - horizontal.viewport });
     await page.close();
   }
+  // A direct link to a later tab must show the selected item even when the
+  // horizontal nav strip starts at scrollLeft=0 (320px, 375px, reflow width).
+  for (const width of [320, 375, 640]) {
+    const page = await browser.newPage({ viewport: { width, height: 800 } });
+    try {
+      await page.goto(origin + '#/documents', { waitUntil: 'domcontentloaded' });
+      const nav = page.getByRole('navigation', { name: 'Seções do laboratório' });
+      const active = nav.locator('[aria-current="page"]');
+      await active.waitFor();
+      const assertRevealed = async () => {
+        await page.waitForFunction(() => {
+          const el = document.querySelector('nav [aria-current="page"]');
+          if (!el) return false;
+          const tab = el.getBoundingClientRect();
+          const strip = el.closest('nav').getBoundingClientRect();
+          return tab.left >= strip.left + 12 && tab.right <= strip.right - 12;
+        }, null, { timeout: 3000 });
+        const bounds = await active.evaluate(el => {
+          const tab = el.getBoundingClientRect();
+          const strip = el.closest('nav').getBoundingClientRect();
+          return { left: tab.left, right: tab.right, stripLeft: strip.left, stripRight: strip.right };
+        });
+        assert(bounds.left >= bounds.stripLeft + 12 && bounds.right <= bounds.stripRight - 12,
+          'deep-linked selected tab hidden at ' + width + ': ' + JSON.stringify(bounds));
+        assert.equal(await page.evaluate(() => window.scrollY), 0,
+          'revealing the current tab must not scroll the article vertically');
+      };
+      assert.match(await active.innerText(), /Arquivo e proveniência/);
+      await assertRevealed();
+      if (width === 640) {
+        await page.setViewportSize({ width: 320, height: 800 });
+        await assertRevealed();
+      }
+      await page.screenshot({ path: `${out}/deep-link-documents-${width}.png` });
+    } finally {
+      await page.close();
+    }
+  }
   // Verify the real HTML entrypoint with scripts disabled. This is a browser
   // fallback test, not a screen-reader evaluation or native 200% zoom test.
   for (const viewport of [
