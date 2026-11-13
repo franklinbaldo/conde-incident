@@ -1,6 +1,7 @@
 import React from 'react';
 import { ExternalLink, FileText, ShieldAlert } from 'lucide-react';
 import { SourceCitationFeed } from './SourceCitationFeed';
+import custody from '../../research/archive/wayback_pilot_2026-11-12.json';
 import { matrixOccurrenceUrl } from '../lib/sourceCitationAudit';
 
 type Language = 'pt' | 'en';
@@ -88,6 +89,54 @@ export const DocumentArchive: React.FC<{ lang: Language }> = ({ lang }) => {
       </section>
 
       <SourceCitationFeed lang={lang} />
+
+      <section aria-labelledby="custody-heading" className="rounded-xl border border-zinc-700 bg-zinc-900 p-4 sm:p-6 space-y-4">
+        <h2 id="custody-heading" className="text-lg font-semibold text-zinc-100">
+          {pt ? 'Custódia digital não é nova testemunha' : 'Digital custody is not new testimony'}
+        </h2>
+        <p className="text-sm text-zinc-300">
+          {pt ? 'Capturas Wayback preservam PDFs, mas não verificam sensores de 1963 ou eventos em Conde.'
+              : 'Wayback captures preserve PDFs but do not verify 1963 sensors or events in Conde.'}
+        </p>
+        <ul className="grid gap-3 md:grid-cols-2">
+          {custody.records.filter(r => r.status === 'VERIFIED_REPLAY' && r.archived_url).map(r => (
+            <li key={r.id} className="rounded-lg border border-zinc-700 bg-zinc-950 p-4 space-y-2">
+              <h3 className="text-sm font-semibold text-zinc-100">
+                {r.id === 'WB-NORAD-1963-H2' ? (pt ? 'Resumo institucional NORAD' : 'NORAD institutional summary')
+                  : (pt ? 'Inventário Smithsonian RU301' : 'Smithsonian RU301 inventory')}
+              </h3>
+              <p className="text-xs text-zinc-300">{pt ? 'Capturado em ' : 'Captured at '}
+                <time dateTime={r.capture_utc ?? undefined}>{r.capture_utc?.replace('T', ' ').replace('Z', ' UTC')}</time>
+              </p>
+              <a href={r.archived_url ?? undefined} target="_blank" rel="noopener noreferrer"
+                className="text-sm text-cyan-300 underline focus-visible:outline-2 focus-visible:outline-cyan-300">
+                {pt ? 'Abrir cópia preservada' : 'Open preserved copy'}
+              </a>
+              <details className="text-xs text-zinc-300">
+                <summary className="cursor-pointer">{pt ? 'Proveniência e SHA-256' : 'Provenance and SHA-256'}</summary>
+                <p className="mt-2 font-mono break-all">{r.replay?.sha256}</p>
+                <a href={r.original_url} target="_blank" rel="noopener noreferrer" className="break-all underline">{r.original_url}</a>
+              </details>
+            </li>
+          ))}
+        </ul>
+        {custody.records.filter(r => r.status === 'NO_EXACT_CAPTURE_IN_QUERIED_INDEX').map(r => (
+          <p key={r.id} role="note" className="rounded border border-amber-900 p-3 text-sm text-amber-100">
+            <strong>NASA SSR 15/11/1963:</strong> {pt
+              ? 'sem captura da URL exata nos índices consultados; isso não prova ausência do documento.'
+              : 'no exact-URL capture in queried indexes; this does not prove the document is absent.'}
+          </p>
+        ))}
+        <p className="text-xs text-zinc-400">
+          {pt ? 'Auditoria em ' : 'Audit at '}<time dateTime={custody.audit_utc}>{custody.audit_utc.replace('T', ' ').replace('Z', ' UTC')}</time>.
+          {' '}<a href="https://github.com/franklinbaldo/conde-incident/blob/main/research/archive/wayback_pilot_2026-11-12.json"
+            target="_blank" rel="noopener noreferrer" className="text-cyan-300 underline">
+            {pt ? 'Manifesto e limitações' : 'Manifest and limitations'}
+          </a>
+        </p>
+      </section>
+
+
 
       <section className="rounded-xl border border-zinc-700 bg-zinc-900 p-4 sm:p-6" aria-labelledby="archive-gaps-heading">
         <h2 id="archive-gaps-heading" className="text-lg font-semibold text-zinc-100">
