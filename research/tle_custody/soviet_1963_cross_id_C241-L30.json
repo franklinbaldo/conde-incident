@@ -1,0 +1,273 @@
+{
+  "schema": "conde.soviet-1963-cross-id-readiness/v1",
+  "id": "C241-L30",
+  "scope": "CATALOG_CROSS_IDENTIFICATION_READINESS_NO_ORBITAL_INFERENCE",
+  "research_issues": [
+    "franklinbaldo/conde-incident#13",
+    "franklinbaldo/tartaruga#4",
+    "franklinbaldo/conde-incident#545"
+  ],
+  "verified_on": "2026-11-13",
+  "upstream": {
+    "holdings": "research/tle_custody/soviet_1963_bibliographic_holdings_C241-L29.json",
+    "nasa_527": "research/tle_custody/nasa_527_1964_1967_crosswalk_C241-L28.json",
+    "secondary_western": "research/tle_custody/catalog_identity_527_529_2026-11-12.json"
+  },
+  "bibliographic_cross_checks": [
+    {
+      "id": "CNII-AA00566856",
+      "url": "https://ci.nii.ac.jp/ncid/AA00566856",
+      "title": "Бюллетень Станции оптического наблюдения искусственных спутников Земли",
+      "institution": "Астрономический совет Академии наук СССР",
+      "extent": "No. 1 (1958)-no. 59 (1971)",
+      "holding_example": "Kyoto University 1963-1971, numbers 32-59",
+      "status": "LIBRARY_METADATA_ONLY",
+      "pdf_sha256": null,
+      "issue_1963_content_seen": false,
+      "independent_observation": false,
+      "possible_relation_to": "C241-L29#1",
+      "same_publication_proven": false,
+      "capture_sha256": "da7b7e445ccaf5569bccbb42809f9da471318cebebe6d713ec0deb0a08c31034",
+      "capture_bytes": 54342,
+      "capture_http_status": 200,
+      "capture_day_utc": "2026-11-13"
+    },
+    {
+      "id": "CNII-AA00826990",
+      "url": "https://ci.nii.ac.jp/ncid/AA00826990",
+      "title": "Результаты наблюдений американских искусственных спутников Земли",
+      "institution": "Институт теоретической астрономии АН СССР; Астрономический совет АН СССР",
+      "holding_example": "CiNii displayed library holdings: 1961-1962 only, numbers 1-15 at NAOJ",
+      "status": "NO_1963_HOLDING_SHOWN_IN_THIS_CATALOG_VIEW",
+      "pdf_sha256": null,
+      "issue_1963_content_seen": false,
+      "independent_observation": false,
+      "possible_relation_to": null,
+      "same_publication_proven": false,
+      "capture_sha256": "0f349be2b3655f29ba1f8a518143ee807d58ba970b507629a5ed1fcf39c8740b",
+      "capture_bytes": 53364,
+      "capture_http_status": 200,
+      "capture_day_utc": "2026-11-13"
+    }
+  ],
+  "holdings": [
+    {
+      "id": "C241-L29#1",
+      "source_kind": "LIBRARY_HTML_HOLDING_NOT_ISSUE_PDF",
+      "publication": "Бюллетень станции оптического наблюдения ИСЗ",
+      "source_url": "https://mao.kiev.ua/index.php/ua/gao-biblio-periodyka/specissues",
+      "year": 1963,
+      "issue_numbers": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "issue_pages_seen": false,
+      "issue_pdf_sha256": null,
+      "sensor_measurement_present": null
+    },
+    {
+      "id": "C241-L29#2",
+      "source_kind": "LIBRARY_HTML_HOLDING_NOT_ISSUE_PDF",
+      "publication": "Наблюдения ИСЗ",
+      "source_url": "https://mao.kiev.ua/index.php/ua/gao-biblio-periodyka/sciencefilds-n",
+      "year": 1963,
+      "issue_numbers": [
+        2
+      ],
+      "issue_pages_seen": false,
+      "issue_pdf_sha256": null,
+      "sensor_measurement_present": null
+    }
+  ],
+  "western_object_aliases": [
+    {
+      "norad": 527,
+      "modern_designator": "1963-003A",
+      "contemporary_nasa_designator": "1963 03A",
+      "western_crosswalk": "CONFIRMED_PRIMARY_NASA_CATALOG_ONLY",
+      "western_crosswalk_source": "C241-L28",
+      "soviet_record_id": null
+    },
+    {
+      "norad": 528,
+      "modern_designator": "1963-003B",
+      "contemporary_nasa_designator": "1963 3B",
+      "western_crosswalk": "PENDING_PRIMARY_NUMBER_MATCH",
+      "western_crosswalk_source": "MODERN_SECONDARY_CATALOG_PLUS_C197_DAY_ONLY",
+      "soviet_record_id": null
+    },
+    {
+      "norad": 529,
+      "modern_designator": "1963-003C",
+      "contemporary_nasa_designator": "1963 03C",
+      "western_crosswalk": "PENDING_PRIMARY_NUMBER_MATCH",
+      "western_crosswalk_source": "MODERN_SECONDARY_CATALOG",
+      "soviet_record_id": null
+    }
+  ],
+  "candidate_joins": [
+    {
+      "source_holding_id": "C241-L29#1",
+      "target_norad": 527,
+      "target_designator": "1963-003A",
+      "join_status": "PENDING_NO_ISSUE_FACSIMILE",
+      "original_soviet_designation": null,
+      "original_soviet_page": null,
+      "original_soviet_issue_scan_sha256": null,
+      "original_epoch_utc": null,
+      "original_station": null,
+      "original_measurement": null,
+      "original_orbit_elements": null,
+      "frame": null,
+      "time_standard": null,
+      "measurement_units": null,
+      "instrument_sigma": null,
+      "origin_of_orbit_fit": null,
+      "same_tracking_as_western": null,
+      "independent_sensor_confirmed": false,
+      "physical_constraint_active": false
+    },
+    {
+      "source_holding_id": "C241-L29#1",
+      "target_norad": 528,
+      "target_designator": "1963-003B",
+      "join_status": "PENDING_NO_ISSUE_FACSIMILE",
+      "original_soviet_designation": null,
+      "original_soviet_page": null,
+      "original_soviet_issue_scan_sha256": null,
+      "original_epoch_utc": null,
+      "original_station": null,
+      "original_measurement": null,
+      "original_orbit_elements": null,
+      "frame": null,
+      "time_standard": null,
+      "measurement_units": null,
+      "instrument_sigma": null,
+      "origin_of_orbit_fit": null,
+      "same_tracking_as_western": null,
+      "independent_sensor_confirmed": false,
+      "physical_constraint_active": false
+    },
+    {
+      "source_holding_id": "C241-L29#1",
+      "target_norad": 529,
+      "target_designator": "1963-003C",
+      "join_status": "PENDING_NO_ISSUE_FACSIMILE",
+      "original_soviet_designation": null,
+      "original_soviet_page": null,
+      "original_soviet_issue_scan_sha256": null,
+      "original_epoch_utc": null,
+      "original_station": null,
+      "original_measurement": null,
+      "original_orbit_elements": null,
+      "frame": null,
+      "time_standard": null,
+      "measurement_units": null,
+      "instrument_sigma": null,
+      "origin_of_orbit_fit": null,
+      "same_tracking_as_western": null,
+      "independent_sensor_confirmed": false,
+      "physical_constraint_active": false
+    },
+    {
+      "source_holding_id": "C241-L29#2",
+      "target_norad": 527,
+      "target_designator": "1963-003A",
+      "join_status": "PENDING_NO_ISSUE_FACSIMILE",
+      "original_soviet_designation": null,
+      "original_soviet_page": null,
+      "original_soviet_issue_scan_sha256": null,
+      "original_epoch_utc": null,
+      "original_station": null,
+      "original_measurement": null,
+      "original_orbit_elements": null,
+      "frame": null,
+      "time_standard": null,
+      "measurement_units": null,
+      "instrument_sigma": null,
+      "origin_of_orbit_fit": null,
+      "same_tracking_as_western": null,
+      "independent_sensor_confirmed": false,
+      "physical_constraint_active": false
+    },
+    {
+      "source_holding_id": "C241-L29#2",
+      "target_norad": 528,
+      "target_designator": "1963-003B",
+      "join_status": "PENDING_NO_ISSUE_FACSIMILE",
+      "original_soviet_designation": null,
+      "original_soviet_page": null,
+      "original_soviet_issue_scan_sha256": null,
+      "original_epoch_utc": null,
+      "original_station": null,
+      "original_measurement": null,
+      "original_orbit_elements": null,
+      "frame": null,
+      "time_standard": null,
+      "measurement_units": null,
+      "instrument_sigma": null,
+      "origin_of_orbit_fit": null,
+      "same_tracking_as_western": null,
+      "independent_sensor_confirmed": false,
+      "physical_constraint_active": false
+    },
+    {
+      "source_holding_id": "C241-L29#2",
+      "target_norad": 529,
+      "target_designator": "1963-003C",
+      "join_status": "PENDING_NO_ISSUE_FACSIMILE",
+      "original_soviet_designation": null,
+      "original_soviet_page": null,
+      "original_soviet_issue_scan_sha256": null,
+      "original_epoch_utc": null,
+      "original_station": null,
+      "original_measurement": null,
+      "original_orbit_elements": null,
+      "frame": null,
+      "time_standard": null,
+      "measurement_units": null,
+      "instrument_sigma": null,
+      "origin_of_orbit_fit": null,
+      "same_tracking_as_western": null,
+      "independent_sensor_confirmed": false,
+      "physical_constraint_active": false
+    }
+  ],
+  "required_to_confirm_designation": [
+    "issue_original_pages_and_pinned_bytes",
+    "contemporary_printed_target_designation",
+    "explicit_crosswalk_or_auditable_identity_explanation"
+  ],
+  "required_to_use_orbit": [
+    "original_instrument_timestamp_and_time_standard",
+    "station_sensor_frame_and_units",
+    "source_of_elements_observed_vs_computed",
+    "error_covariance_and_duplicate_lineage",
+    "validated_forward_operator_and_holdout"
+  ],
+  "rejected_automatic_upgrades": [
+    "LIBRARY_HOLDING_IS_NOT_1963_003B_OBSERVATION",
+    "TWO_LIBRARY_CATALOGS_ARE_NOT_TWO_SENSORS",
+    "CONTEMPORARY_527_CROSSWALK_DOES_NOT_PROVE_528_OR_529",
+    "ALIAS_LOOKUP_IS_NOT_IDENTIFICATION_OF_SOVIET_PAGE",
+    "ORBIT_CATALOG_PRINT_PRECISION_IS_NOT_INSTRUMENT_SIGMA",
+    "NO_1963_HOLDING_SHOWN_DOES_NOT_PROVE_GLOBAL_ABSENCE",
+    "1963_NOV8_CATALOG_DAY_IS_NOT_MEASURED_TERMINAL_UTC"
+  ],
+  "result": {
+    "contemporary_1963_soviet_527_528_529_instrument_observations_verified": 0,
+    "soviet_fascimiles_inspected": 0,
+    "source_holding_families": 2,
+    "candidate_joins_pending": 6,
+    "candidate_joins_confirmed": 0,
+    "independent_measurements_added": 0,
+    "orbital_constraints_activated": 0,
+    "lean_activated": false,
+    "impact_location_claimed": false
+  },
+  "next_test": "Acquire any 1963 issue 32-37 of Soviet optical-station Bulletin or Observations ISZ issue 2, inspect actual pages and record exact designator and sensor epoch, without contacting libraries absent authorization."
+}

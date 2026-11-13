@@ -1,0 +1,56 @@
+name: Tartaruga - Soviet 1963 cross-identification and CiNii custody
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/soviet_1963_cross_id_C241-L30.json
+      - research/tle_custody/evidence_matrix_C241-L30_2026-11-13.md
+      - research/tle_custody/soviet_1963_bibliographic_holdings_C241-L29.json
+      - research/tle_custody/nasa_527_1964_1967_crosswalk_C241-L28.json
+      - research/tle_custody/catalog_identity_527_529_2026-11-12.json
+      - tools/audit_soviet_1963_cross_id.py
+      - tests/test_soviet_1963_cross_id.py
+      - .github/workflows/soviet-1963-cross-id.yml
+  push:
+    branches: [main]
+    paths:
+      - research/tle_custody/soviet_1963_cross_id_C241-L30.json
+      - research/tle_custody/evidence_matrix_C241-L30_2026-11-13.md
+      - research/tle_custody/soviet_1963_bibliographic_holdings_C241-L29.json
+      - research/tle_custody/nasa_527_1964_1967_crosswalk_C241-L28.json
+      - research/tle_custody/catalog_identity_527_529_2026-11-12.json
+      - tools/audit_soviet_1963_cross_id.py
+      - tests/test_soviet_1963_cross_id.py
+      - .github/workflows/soviet-1963-cross-id.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  cross-id:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Exact HEAD and adversarial source constraints
+        run: |
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+          python3 -m unittest discover -s tests -p test_soviet_1963_cross_id.py -v
+          python3 tools/audit_soviet_1963_cross_id.py --output "$RUNNER_TEMP/soviet-cross-id.json"
+      - name: Re-fetch two genuine CiNii pages and pin exact bytes
+        run: |
+          mkdir -p "$RUNNER_TEMP/cinii"
+          for id in AA00566856 AA00826990; do
+            curl --fail --location --silent --show-error --retry 2 --max-time 60 \
+              "https://ci.nii.ac.jp/ncid/$id" -o "$RUNNER_TEMP/cinii/$id.html"
+          done
+          python3 tools/audit_soviet_1963_cross_id.py \
+            --cinii-dir "$RUNNER_TEMP/cinii" \
+            --output "$RUNNER_TEMP/soviet-cross-id.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: soviet-cross-id-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ${{ runner.temp }}/soviet-cross-id.json
+          if-no-files-found: warn
