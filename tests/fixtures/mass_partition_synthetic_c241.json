@@ -1,0 +1,31 @@
+{
+  "mode": "SYNTHETIC_TEST_ONLY",
+  "dirichlet_alpha": [
+    2,
+    1,
+    1,
+    0.3
+  ],
+  "reference_error_sigma_kg": 40,
+  "synthetic_mass_observations": [
+    {
+      "object": "527",
+      "mass_kg": 620,
+      "sigma_kg": 50,
+      "source_class": "SYNTHETIC_NOT_HISTORICAL"
+    },
+    {
+      "object": "528",
+      "mass_kg": 240,
+      "sigma_kg": 45,
+      "source_class": "SYNTHETIC_NOT_HISTORICAL"
+    },
+    {
+      "object": "529",
+      "mass_kg": 230,
+      "sigma_kg": 50,
+      "source_class": "SYNTHETIC_NOT_HISTORICAL"
+    }
+  ],
+  "note": "Entirely invented calibration to test the algorithm. Not 1963 data. None of the three objects has an authenticated historical mass measurement."
+}
