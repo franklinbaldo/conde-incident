@@ -91,3 +91,8 @@ jobs:
           set -euo pipefail
           python3 -m formal.scripts.compile_ssr_offset_threshold --check
           python3 -m unittest discover -s formal/tests -p 'test_ssr_offset_threshold.py' -v
+      - name: Certify three-object April-August SSR documentary minimax (C241-P16)
+        run: |
+          set -euo pipefail
+          python3 -m formal.scripts.compile_ssr_four_editions --check
+          python3 -m unittest discover -s formal/tests -p 'test_ssr_four_editions.py' -v
