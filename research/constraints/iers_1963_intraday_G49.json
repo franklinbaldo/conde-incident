@@ -1,0 +1,445 @@
+{
+  "id": "CASTOR-G49-IERS-1963-INTRADAY",
+  "classification": "CONDITIONAL_RETROSPECTIVE_GCRS_ITRS_NOT_SATELLITE_TRACKING",
+  "sources": {
+    "iers_1963_full_archive_sha256": "66711a146bd3a2752f8824a193431955a687ac7be013ebb0dfe0d86f64d5b264",
+    "original_1963_days": 365,
+    "g46_g47_source_cells_verified": true,
+    "model": "ERFA c2t00a IAU2000A (nominal; dX/dY unavailable)",
+    "utc": "BIPM pre-1972 rate valid Nov-Dec 1963"
+  },
+  "epochs": [
+    {
+      "utc": "1963-11-07T00:00:00Z",
+      "mjd_utc": 38340.0,
+      "bracket_utc": [
+        "1963-11-07T00:00:00Z",
+        "1963-11-08T00:00:00Z"
+      ],
+      "linear_fraction": 0.0,
+      "interpolation": "LINEAR_UT1_MINUS_TAI_AND_POLAR_MOTION_CONDITIONAL",
+      "x_arcsec": -0.095115,
+      "y_arcsec": -0.012515,
+      "lod_s_diagnostic_only": 0.002042,
+      "ut1_minus_utc_s": -0.0364491,
+      "ut1_minus_tai_s": -2.7404671,
+      "tai_minus_utc_s": 2.704018,
+      "tt_minus_utc_s": 34.888018,
+      "gcrs_to_itrs": [
+        [
+          0.6953691121923049,
+          0.7186484704822701,
+          0.002484689594208908
+        ],
+        [
+          -0.718644011006249,
+          0.6953735508675821,
+          -0.0025318370130086153
+        ],
+        [
+          -0.0035472882228378202,
+          -2.5046040136360537e-05,
+          0.9999937080396855
+        ]
+      ],
+      "itrs_x_axis_in_gcrs": [
+        0.6953691121923049,
+        0.7186484704822701,
+        0.002484689594208908
+      ],
+      "itrs_pole_axis_in_gcrs": [
+        -0.0035472882228378202,
+        -2.5046040136360537e-05,
+        0.9999937080396855
+      ],
+      "orthogonality_residual": 3.3306690738754696e-16,
+      "interpolation_sigma": null,
+      "sensor_epoch": null
+    },
+    {
+      "utc": "1963-11-07T06:00:00Z",
+      "mjd_utc": 38340.25,
+      "bracket_utc": [
+        "1963-11-07T00:00:00Z",
+        "1963-11-08T00:00:00Z"
+      ],
+      "linear_fraction": 0.25,
+      "interpolation": "LINEAR_UT1_MINUS_TAI_AND_POLAR_MOTION_CONDITIONAL",
+      "x_arcsec": -0.095965,
+      "y_arcsec": -0.012215,
+      "lod_s_diagnostic_only": 0.0020505,
+      "ut1_minus_utc_s": -0.036683125,
+      "ut1_minus_tai_s": -2.740981925,
+      "tai_minus_utc_s": 2.7042988,
+      "tt_minus_utc_s": 34.8882988,
+      "gcrs_to_itrs": [
+        [
+          -0.7216278088438491,
+          0.6922765623538557,
+          -0.002542974390995222
+        ],
+        [
+          -0.6922721417864371,
+          -0.7216322890458096,
+          -0.0024740883015798997
+        ],
+        [
+          -0.0035478457751363783,
+          -2.4940591792979555e-05,
+          0.9999937060643544
+        ]
+      ],
+      "itrs_x_axis_in_gcrs": [
+        -0.7216278088438491,
+        0.6922765623538557,
+        -0.002542974390995222
+      ],
+      "itrs_pole_axis_in_gcrs": [
+        -0.0035478457751363783,
+        -2.4940591792979555e-05,
+        0.9999937060643544
+      ],
+      "orthogonality_residual": 2.220446049250313e-16,
+      "interpolation_sigma": null,
+      "sensor_epoch": null
+    },
+    {
+      "utc": "1963-11-07T12:00:00Z",
+      "mjd_utc": 38340.5,
+      "bracket_utc": [
+        "1963-11-07T00:00:00Z",
+        "1963-11-08T00:00:00Z"
+      ],
+      "linear_fraction": 0.5,
+      "interpolation": "LINEAR_UT1_MINUS_TAI_AND_POLAR_MOTION_CONDITIONAL",
+      "x_arcsec": -0.096815,
+      "y_arcsec": -0.011915,
+      "lod_s_diagnostic_only": 0.002059,
+      "ut1_minus_utc_s": -0.03691715,
+      "ut1_minus_tai_s": -2.74149675,
+      "tai_minus_utc_s": 2.7045796,
+      "tt_minus_utc_s": 34.8885796,
+      "gcrs_to_itrs": [
+        [
+          -0.6891623676890669,
+          -0.7246027613695778,
+          -0.002463569926328167
+        ],
+        [
+          0.7245982638187315,
+          -0.6891667705001686,
+          0.002553137138459055
+        ],
+        [
+          -0.0035478207507115746,
+          -2.5572456038098877e-05,
+          0.9999937061371789
+        ]
+      ],
+      "itrs_x_axis_in_gcrs": [
+        -0.6891623676890669,
+        -0.7246027613695778,
+        -0.002463569926328167
+      ],
+      "itrs_pole_axis_in_gcrs": [
+        -0.0035478207507115746,
+        -2.5572456038098877e-05,
+        0.9999937061371789
+      ],
+      "orthogonality_residual": 2.220446049250313e-16,
+      "interpolation_sigma": null,
+      "sensor_epoch": null
+    },
+    {
+      "utc": "1963-11-07T18:00:00Z",
+      "mjd_utc": 38340.75,
+      "bracket_utc": [
+        "1963-11-07T00:00:00Z",
+        "1963-11-08T00:00:00Z"
+      ],
+      "linear_fraction": 0.75,
+      "interpolation": "LINEAR_UT1_MINUS_TAI_AND_POLAR_MOTION_CONDITIONAL",
+      "x_arcsec": -0.097665,
+      "y_arcsec": -0.011615,
+      "lod_s_diagnostic_only": 0.0020675,
+      "ut1_minus_utc_s": -0.037151175,
+      "ut1_minus_tai_s": -2.742011575,
+      "tai_minus_utc_s": 2.7048604,
+      "tt_minus_utc_s": 34.8888604,
+      "gcrs_to_itrs": [
+        [
+          0.7275553181223865,
+          -0.6860442328408137,
+          0.0025631343491822533
+        ],
+        [
+          0.6860398512020137,
+          0.7275598325432725,
+          0.0024520669493759157
+        ],
+        [
+          -0.003547059987035865,
+          -2.560204188682054e-05,
+          0.9999937088352026
+        ]
+      ],
+      "itrs_x_axis_in_gcrs": [
+        0.7275553181223865,
+        -0.6860442328408137,
+        0.0025631343491822533
+      ],
+      "itrs_pole_axis_in_gcrs": [
+        -0.003547059987035865,
+        -2.560204188682054e-05,
+        0.9999937088352026
+      ],
+      "orthogonality_residual": 2.220446049250313e-16,
+      "interpolation_sigma": null,
+      "sensor_epoch": null
+    },
+    {
+      "utc": "1963-11-08T00:00:00Z",
+      "mjd_utc": 38341.0,
+      "bracket_utc": [
+        "1963-11-08T00:00:00Z",
+        "1963-11-09T00:00:00Z"
+      ],
+      "linear_fraction": 0.0,
+      "interpolation": "LINEAR_UT1_MINUS_TAI_AND_POLAR_MOTION_CONDITIONAL",
+      "x_arcsec": -0.098515,
+      "y_arcsec": -0.011315,
+      "lod_s_diagnostic_only": 0.002076,
+      "ut1_minus_utc_s": -0.0373852,
+      "ut1_minus_tai_s": -2.7425264,
+      "tai_minus_utc_s": 2.7051412,
+      "tt_minus_utc_s": 34.8891412,
+      "gcrs_to_itrs": [
+        [
+          0.6829046471939855,
+          0.7305034478250328,
+          0.0024404009092445908
+        ],
+        [
+          -0.7304989132273795,
+          0.6829090071864472,
+          -0.0025740390902386496
+        ],
+        [
+          -0.003546916192324871,
+          -2.4886955259330288e-05,
+          0.999993709363296
+        ]
+      ],
+      "itrs_x_axis_in_gcrs": [
+        0.6829046471939855,
+        0.7305034478250328,
+        0.0024404009092445908
+      ],
+      "itrs_pole_axis_in_gcrs": [
+        -0.003546916192324871,
+        -2.4886955259330288e-05,
+        0.999993709363296
+      ],
+      "orthogonality_residual": 3.3306690738754696e-16,
+      "interpolation_sigma": null,
+      "sensor_epoch": null
+    },
+    {
+      "utc": "1963-11-08T06:00:00Z",
+      "mjd_utc": 38341.25,
+      "bracket_utc": [
+        "1963-11-08T00:00:00Z",
+        "1963-11-09T00:00:00Z"
+      ],
+      "linear_fraction": 0.25,
+      "interpolation": "LINEAR_UT1_MINUS_TAI_AND_POLAR_MOTION_CONDITIONAL",
+      "x_arcsec": -0.099365,
+      "y_arcsec": -0.01099,
+      "lod_s_diagnostic_only": 0.0020915,
+      "ut1_minus_utc_s": -0.0376317,
+      "ut1_minus_tai_s": -2.7430537,
+      "tai_minus_utc_s": 2.705422,
+      "tt_minus_utc_s": 34.889422,
+      "gcrs_to_itrs": [
+        [
+          -0.733428997085423,
+          0.6797611521057589,
+          -0.0025850187856339274
+        ],
+        [
+          -0.6797568104254939,
+          -0.7334335521866768,
+          -0.0024296516194882603
+        ],
+        [
+          -0.003547522294495744,
+          -2.4792825935746536e-05,
+          0.9999937072156434
+        ]
+      ],
+      "itrs_x_axis_in_gcrs": [
+        -0.733428997085423,
+        0.6797611521057589,
+        -0.0025850187856339274
+      ],
+      "itrs_pole_axis_in_gcrs": [
+        -0.003547522294495744,
+        -2.4792825935746536e-05,
+        0.9999937072156434
+      ],
+      "orthogonality_residual": 3.3306690738754696e-16,
+      "interpolation_sigma": null,
+      "sensor_epoch": null
+    },
+    {
+      "utc": "1963-11-08T12:00:00Z",
+      "mjd_utc": 38341.5,
+      "bracket_utc": [
+        "1963-11-08T00:00:00Z",
+        "1963-11-09T00:00:00Z"
+      ],
+      "linear_fraction": 0.5,
+      "interpolation": "LINEAR_UT1_MINUS_TAI_AND_POLAR_MOTION_CONDITIONAL",
+      "x_arcsec": -0.100215,
+      "y_arcsec": -0.010665,
+      "lod_s_diagnostic_only": 0.002107,
+      "ut1_minus_utc_s": -0.0378782,
+      "ut1_minus_tai_s": -2.743581,
+      "tai_minus_utc_s": 2.7057028,
+      "tt_minus_utc_s": 34.8897028,
+      "gcrs_to_itrs": [
+        [
+          -0.6765964014705823,
+          -0.7363500920560075,
+          -0.0024189762644371998
+        ],
+        [
+          0.7363455199527561,
+          -0.6766007251561147,
+          0.002594988193602394
+        ],
+        [
+          -0.003547500889897014,
+          -2.5442661540358814e-05,
+          0.9999937072752544
+        ]
+      ],
+      "itrs_x_axis_in_gcrs": [
+        -0.6765964014705823,
+        -0.7363500920560075,
+        -0.0024189762644371998
+      ],
+      "itrs_pole_axis_in_gcrs": [
+        -0.003547500889897014,
+        -2.5442661540358814e-05,
+        0.9999937072752544
+      ],
+      "orthogonality_residual": 1.0664111718707139e-16,
+      "interpolation_sigma": null,
+      "sensor_epoch": null
+    },
+    {
+      "utc": "1963-11-08T18:00:00Z",
+      "mjd_utc": 38341.75,
+      "bracket_utc": [
+        "1963-11-08T00:00:00Z",
+        "1963-11-09T00:00:00Z"
+      ],
+      "linear_fraction": 0.75,
+      "interpolation": "LINEAR_UT1_MINUS_TAI_AND_POLAR_MOTION_CONDITIONAL",
+      "x_arcsec": -0.101065,
+      "y_arcsec": -0.01034,
+      "lod_s_diagnostic_only": 0.0021225,
+      "ut1_minus_utc_s": -0.0381247,
+      "ut1_minus_tai_s": -2.7441083,
+      "tai_minus_utc_s": 2.7059836,
+      "tt_minus_utc_s": 34.8899836,
+      "gcrs_to_itrs": [
+        [
+          0.739248424858363,
+          -0.6734277848093084,
+          0.0026048015773278274
+        ],
+        [
+          0.6734234826437435,
+          0.7392530135205705,
+          0.002407285759326424
+        ],
+        [
+          -0.003546740531968919,
+          -2.544765596600529e-05,
+          0.9999937099722257
+        ]
+      ],
+      "itrs_x_axis_in_gcrs": [
+        0.739248424858363,
+        -0.6734277848093084,
+        0.0026048015773278274
+      ],
+      "itrs_pole_axis_in_gcrs": [
+        -0.003546740531968919,
+        -2.544765596600529e-05,
+        0.9999937099722257
+      ],
+      "orthogonality_residual": 2.220446049250313e-16,
+      "interpolation_sigma": null,
+      "sensor_epoch": null
+    },
+    {
+      "utc": "1963-11-09T00:00:00Z",
+      "mjd_utc": 38342.0,
+      "bracket_utc": [
+        "1963-11-08T00:00:00Z",
+        "1963-11-09T00:00:00Z"
+      ],
+      "linear_fraction": 1.0,
+      "interpolation": "LINEAR_UT1_MINUS_TAI_AND_POLAR_MOTION_CONDITIONAL",
+      "x_arcsec": -0.101915,
+      "y_arcsec": -0.010015,
+      "lod_s_diagnostic_only": 0.002138,
+      "ut1_minus_utc_s": -0.0383712,
+      "ut1_minus_tai_s": -2.7446356,
+      "tai_minus_utc_s": 2.7062644,
+      "tt_minus_utc_s": 34.8902644,
+      "gcrs_to_itrs": [
+        [
+          0.6702381095518228,
+          0.7421422628702541,
+          0.0023954469765429683
+        ],
+        [
+          -0.7421376542335921,
+          0.670242389775018,
+          -0.002615552969073835
+        ],
+        [
+          -0.0035466425052629678,
+          -2.47081225878448e-05,
+          0.9999937103384444
+        ]
+      ],
+      "itrs_x_axis_in_gcrs": [
+        0.6702381095518228,
+        0.7421422628702541,
+        0.0023954469765429683
+      ],
+      "itrs_pole_axis_in_gcrs": [
+        -0.0035466425052629678,
+        -2.47081225878448e-05,
+        0.9999937103384444
+      ],
+      "orthogonality_residual": 2.220446049250313e-16,
+      "interpolation_sigma": null,
+      "sensor_epoch": null
+    }
+  ],
+  "limitations": {
+    "interpolation": "PIECEWISE_LINEAR_CONVENTION_NOT_INSTRUMENT_CALIBRATION",
+    "interpolation_uncertainty": null,
+    "dX_dY": "UNAVAILABLE_NOT_MEASURED_ZERO",
+    "TEME_to_GCRS": "NOT_IMPLEMENTED",
+    "sensor_observations_527_529": "MISSING",
+    "historical_holdout_527_529": "NOT_RUN",
+    "impact_coordinates_time_probability": null
+  }
+}
