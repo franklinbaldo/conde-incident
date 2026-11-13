@@ -19,6 +19,23 @@ for (const route of ['index.html','stories/index.html','evidencias/arquivo/index
   assert.match(html, /<kbd>Esc<\/kbd> fechar/, 'Ajuda de teclado em inglês: '+route);
   assert.doesNotMatch(html, /<span>Search<\/span>/, 'Busca não localizada: '+route);
 }
+// Mark the current primary section in the rendered SSG DOM, including deep links.
+for (const [file, section] of [
+  ['index.html',''], ['stories/index.html','stories'],
+  ['stories/2026-11-12-a-resposta-que-veio-de-salvador/index.html','stories'],
+  ['evidencias/arquivo/c197-1/index.html','evidencias'],
+  ['mapa/index.html','mapa'],
+  ['simulacoes/tles/custodia/index.html','simulacoes']
+]) {
+  const rendered = read(file);
+  const nav = /<nav aria-label="Navegação principal">([\s\S]*?)<\/nav>/.exec(rendered)?.[1];
+  assert.ok(nav, 'Navegação SSG ausente: ' + file);
+  assert.ok(nav.includes('<a href="/conde-incident/mapa/">Mapa</a>'), 'Mapa ausente da navegação: ' + file);
+  assert.equal((nav.match(/aria-current="page"/g) || []).length, 1, 'Seção atual ambígua: ' + file);
+  assert.ok(nav.includes('<a href="/conde-incident/' + (section ? section+'/' : '') + '" aria-current="page">'),
+    'Seção atual incorreta: ' + file);
+}
+
 const labNav = html => {
   const header = html.indexOf('<header class="masthead">');
   const nav = header < 0 ? -1 : html.indexOf('<nav', header);

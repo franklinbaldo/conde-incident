@@ -1,3 +1,4 @@
+import {annotateGeneratedNavigation} from './ssg-navigation.mjs';
 import { localizeGeneratedPages } from './localize-ssg-search.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync,writeFileSync} from 'node:fs';
@@ -57,3 +58,6 @@ console.log('PASS: CSP restrita do capitulo 07 permite so o fac-simile NORAD.');
 // The same post-SSG integration step localizes its built-in search UI.
 // Only generated HTML text changes; the CSP/SRI-protected JS is untouched.
 localizeGeneratedPages();
+
+// Make the static map discoverable and mark the current primary section.
+annotateGeneratedNavigation();
