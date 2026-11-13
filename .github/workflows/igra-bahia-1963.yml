@@ -1,0 +1,26 @@
+name: IGRA Bahia historical regional coverage (pinned)
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Exact tested SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check pinned inventory and epistemic boundary
+        run: python3 tools/audit_igra_bahia_1963.py --check
+      - name: Adversarial coverage tests
+        run: python3 -m unittest discover -s tests -p 'test_igra_bahia_1963.py' -v
