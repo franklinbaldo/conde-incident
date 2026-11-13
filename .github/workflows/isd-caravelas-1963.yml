@@ -28,8 +28,13 @@ jobs:
         run: |
           python3 tools/audit_isd_caravelas_vectors_1963.py --check
           python3 -m unittest discover -s tests -p 'test_isd_caravelas_vectors_1963.py' -v
+      - name: Validate raw source-code lineage N/BRAZ
+        run: |
+          python3 tools/audit_isd_caravelas_source_flags_1963.py --check
+          python3 -m unittest discover -s tests -p 'test_isd_caravelas_source_flags_1963.py' -v
       - name: Recover and compare full 1963 NOAA gzip
         run: |
           curl -fL --retry 3 --retry-all-errors --connect-timeout 15 --max-time 90 \
             https://www.ncei.noaa.gov/pub/data/noaa/1963/834970-99999-1963.gz -o /tmp/caravelas-1963.gz
           python3 tools/audit_isd_caravelas_1963.py --check --verify-full-gz /tmp/caravelas-1963.gz
+          python3 tools/audit_isd_caravelas_source_flags_1963.py --check --verify-full-gz /tmp/caravelas-1963.gz
