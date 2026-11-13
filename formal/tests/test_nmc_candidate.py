@@ -55,4 +55,56 @@ class NmcBridgeTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"station/day"):
             compile_bridge(fake,self.lineages,self.matrix)
 
+class NmcOn20HistoricalLayoutTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from tools import export_nmc_on20_layout_link as on20
+        from compile_nmc_layout_link import assemble, TARGET
+        cls.on20 = on20
+        cls.assemble = staticmethod(assemble)
+        cls.target = TARGET
+        cls.manual = json.loads((ROOT / on20.MANUAL).read_text())
+        cls.pages = json.loads((ROOT / on20.PAGES).read_text())
+        cls.tape = json.loads((ROOT / on20.TAPE).read_text())
+
+    def test_real_1964_facsimile_connected_to_undecoded_1963_tape(self):
+        data = self.on20.build_from_data(self.manual, self.pages, self.tape)
+        self.assertEqual(self.on20.encode(data), (ROOT / self.on20.OUTPUT).read_bytes())
+        self.assertEqual(self.assemble(data), self.target.read_text())
+        self.assertEqual(data["manual_publication_year"], 1964)
+        self.assertEqual(data["wayback_pdf_bytes"], 932414)
+        self.assertEqual(data["wayback_capture_utc"], "2022-01-19T07:53:33Z")
+        self.assertEqual(len(data["lineage"]), 3)
+        self.assertIsNone(data["validated_1963_layout_reference"])
+        self.assertFalse(data["active_physical_constraint"])
+
+    def test_relabel_1964_manual_as_1963_is_rejected(self):
+        changed = copy.deepcopy(self.manual)
+        changed["published_year"] = 1963
+        with self.assertRaisesRegex(ValueError, "historical manual"):
+            self.on20.build_from_data(changed, self.pages, self.tape)
+
+    def test_wrong_pdf_hash_or_page_identity_is_rejected(self):
+        changed = copy.deepcopy(self.pages)
+        changed["pdf_sha256"] = "0" * 64
+        with self.assertRaisesRegex(ValueError, "page inventory"):
+            self.on20.build_from_data(self.manual, changed, self.tape)
+
+    def test_false_station_decode_and_wind_activation_are_rejected(self):
+        changed = copy.deepcopy(self.tape)
+        changed["candidate_queries"][0]["query_status"] = "OBSERVED"
+        with self.assertRaisesRegex(ValueError, "Y20175 observations"):
+            self.on20.build_from_data(self.manual, self.pages, changed)
+        changed = copy.deepcopy(self.tape)
+        changed["physical_domain"] = "NARROWED"
+        with self.assertRaisesRegex(ValueError, "Y20175 observations"):
+            self.on20.build_from_data(self.manual, self.pages, changed)
+
+    def test_fabricated_1963_layout_provenance_does_not_compile(self):
+        data = self.on20.build_from_data(self.manual, self.pages, self.tape)
+        data["validated_1963_layout_reference"] = "UNSOURCED"
+        with self.assertRaisesRegex(ValueError, "conditionality"):
+            self.assemble(data)
+
+
 if __name__=="__main__":unittest.main()
