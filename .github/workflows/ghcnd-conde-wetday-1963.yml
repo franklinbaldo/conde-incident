@@ -1,0 +1,36 @@
+name: NOAA GHCNd Conde 1963 wet-day alignment (pinned)
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  original-source-alignment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact head
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$HEAD_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Retrieve full NOAA/GHCNd station sources
+        run: |
+          mkdir -p /tmp/ghcnd-1963
+          base=https://www.ncei.noaa.gov/pub/data/ghcn/daily/all
+          for id in BR048346820 BR048345380 BR048441550 BR048345130 BR048345070 BR001137041 BR048338870 BR048340980 BR001237001 BR048249490 BR048158910; do
+            curl -fLsS --retry 3 --retry-all-errors --connect-timeout 15 --max-time 90 \
+              "$base/$id.dly" -o "/tmp/ghcnd-1963/$id.dly"
+          done
+      - name: Reconstruct 1963 report from pinned original sources
+        run: python3 tools/audit_ghcnd_conde_wetday_alignment_1963.py --source-dir /tmp/ghcnd-1963 --check
+      - name: Test missingness, quality flags, lag support, time and negative controls
+        env:
+          GHCND_SOURCE_DIR: /tmp/ghcnd-1963
+        run: python3 -m unittest discover -s tests -p 'test_ghcnd_conde_wetday_alignment_1963.py' -v
