@@ -52,7 +52,7 @@ class OriginalNASA527(unittest.TestCase):
         self.reject("data", lambda d: d["source_documents"][1].update(bytes=123))
 
     def test_wrong_1966_perigee(self):
-        self.reject("data", lambda d: d["source_documents"][2]["row"].update(perigee_km=475))
+        self.reject("data", lambda d: d["source_documents"][2]["row"].update(perigee_km_printed=475))
 
     def test_wrong_1967_period(self):
         self.reject("data", lambda d: d["source_documents"][3]["row"].update(
