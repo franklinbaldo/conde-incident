@@ -1,0 +1,65 @@
+{
+  "schema": "conde.ssr-source-locked-links/v1",
+  "id": "C241-L18-L19-LEGACY527-NOV30",
+  "legacy_graph_path": "research/constraints/ssr_1963_observable_graph.json",
+  "legacy_row_id": "SSR-1963-11-30-NORAD527-nodal_period",
+  "legacy_blob_preserved": true,
+  "legacy_transcription_value_rejected_min": "94.8",
+  "canonical_value_min": "94.6",
+  "canonical_value_seconds": "5676",
+  "documentary_delta_id": "SSR-PUBLICATIONS-DELTA-527-nodal_period",
+  "documentary_delta_min": "0.0",
+  "linked_sources": [
+    {
+      "occurrence_id": "C241-L19#1",
+      "published_on": "1963-11-15",
+      "document_ntrs": "19640001198",
+      "pdf_page_index": 6,
+      "printed_page": 5,
+      "pdf_sha256": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+      "pdf_bytes": 327613,
+      "matrix_context": [
+        "C197#1",
+        "C198#1"
+      ],
+      "relationship": "different_editions_same_tracking_family_not_independent_sensors"
+    },
+    {
+      "occurrence_id": "C241-L18:19640002493",
+      "published_on": "1963-11-30",
+      "document_ntrs": "19640002493",
+      "pdf_page_index": 6,
+      "printed_page": 5,
+      "pdf_sha256": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+      "pdf_bytes": 1266393,
+      "matrix_context": [
+        "C183#1",
+        "C199#1"
+      ],
+      "relationship": "different_editions_same_tracking_family_not_independent_sensors"
+    }
+  ],
+  "checked_control_cells": 16,
+  "checked_distinct_control_objects": [
+    527,
+    529
+  ],
+  "source_family": "NASA_GODDARD_COMPILED_FROM_TRACKING",
+  "linked_lean_contract": "formal/Conde1963/SsrNovember.lean",
+  "lean_claim_scope": "conditional_printed_number_arithmetic_only",
+  "simulator_parameter": "observed_nodal_period_527_1963-11-30",
+  "simulator_observation_epoch_parameter": "t_observed_527_1963-11-30",
+  "simulator_observation_epoch_utc": null,
+  "simulator_instrument_error": null,
+  "simulator_calibrated_value": null,
+  "active_physical_constraint": false,
+  "status": "CONNECTED_PENDING_CALIBRATION",
+  "pending": [
+    "original_sensor_records",
+    "observation_epoch_utc",
+    "reference_frame",
+    "instrument_covariance",
+    "calibrated_forward_model"
+  ],
+  "physical_domain_effect": "THETA_UNCHANGED"
+}
