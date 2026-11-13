@@ -84,8 +84,18 @@ def log_target(y,eps,alpha,sigma_total,obs):
     value-=0.5*(eps/sigma_total)**2
     for item in obs:
         j=OBJECTS.index(item["object"])
-        predicted=total*f[j]
-        value-=0.5*((predicted-item["mass_kg"])/item["sigma_kg"])**2
+        mass=total*f[j]
+        if item["kind"]=="mass":
+            predicted=mass
+            observed=item["mass_kg"]
+            sigma=item["sigma_kg"]
+        else:
+            # Explicit projected Cd*A is a SYNTHETIC assumption; source-backed
+            # ballistic B and area calibration do not yet exist for the 528.
+            predicted=item["assumed_Cd_area_m2"]/mass
+            observed=item["observed_B_m2_kg"]
+            sigma=item["sigma_B_m2_kg"]
+        value-=0.5*((predicted-observed)/sigma)**2
     return value
 
 def validate_synthetic_fixture(config):
@@ -99,9 +109,14 @@ def validate_synthetic_fixture(config):
     for item in obs:
         require(item["object"] in OBJECTS and
                 item.get("source_class")=="SYNTHETIC_NOT_HISTORICAL" and
-                item["sigma_kg"]>0 and math.isfinite(item["sigma_kg"]) and
-                item["mass_kg"]>0 and math.isfinite(item["mass_kg"]),
-                "missing synthetic-only source labels or sigma")
+                item.get("kind") in ("mass","ballistic"),
+                "missing synthetic-only source labels/type")
+        fields=(("mass_kg","sigma_kg") if item["kind"]=="mass" else
+                ("observed_B_m2_kg","sigma_B_m2_kg","assumed_Cd_area_m2"))
+        require(all(isinstance(item.get(k),(int,float)) and
+                    not isinstance(item[k],bool) and
+                    math.isfinite(item[k]) and item[k]>0 for k in fields),
+                "missing synthetic value, area, source or uncertainty")
     require(len({x["object"] for x in obs})==len(obs),"duplicate/possibly dependent observations")
     return tuple(float(x) for x in alpha),sigma,obs
 
