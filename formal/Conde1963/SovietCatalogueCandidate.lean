@@ -122,4 +122,39 @@ def sovietRawSeriesRoutes : List SovietRawSeriesRoute :=
       uncertainty := none
       active := false }
 
+/-! C241-L38: institutional (undated) Yeniseisk/1078 station history
+reports journals present when the article was written. Neither a Nov 1963
+journal, an instrument observation, 1963 station coordinates, nor current
+archival holdings have been recovered. These candidate search routes do
+not assert a new physical constraint or an independent observation. -/
+structure SovietStationJournalSearch where
+  sourceOccurrence : String
+  stationCode : String
+  institutionHtmlSha256 : String
+  candidateNorad : Nat
+  originalJournalPage : Option String
+  targetDesignation : Option String
+  observationEpochUtc : Option String
+  stationPosition1963 : Option String
+  observedDirection : Option String
+  referenceFrame : Option String
+  instrumentSigma : Option String
+  status : String
+  deriving Repr
+
+def sovietStation1078JournalRoutes : List SovietStationJournalSearch :=
+  [527, 528, 529].map fun norad =>
+    { sourceOccurrence := "C241-L38"
+      stationCode := "1078"
+      institutionHtmlSha256 := "4df12d13cef3bcec550c0d53c34d0a8080f2b292080ebb51b7b0d9d66eab1721"
+      candidateNorad := norad
+      originalJournalPage := none
+      targetDesignation := none
+      observationEpochUtc := none
+      stationPosition1963 := none
+      observedDirection := none
+      referenceFrame := none
+      instrumentSigma := none
+      status := "CONNECTED_PENDING_ORIGINAL_STATION_JOURNAL" }
+
 end Conde1963
