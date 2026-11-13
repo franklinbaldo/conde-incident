@@ -8,6 +8,7 @@ import { Navigation, type TabId } from './components/Navigation';
 import { mapTimeHref, parseLabRoute, tabHref } from './lib/tabRoutes';
 import { skipToMain } from './lib/skipToMain';
 import { ExecutiveSummary } from './components/ExecutiveSummary';
+import { LabLoadErrorBoundary } from './components/LabLoadErrorBoundary';
 import { Satellite, Shield, Globe, Terminal, ExternalLink } from 'lucide-react';
 
 // Technical instruments and the Python export are loaded only when requested.
@@ -91,6 +92,7 @@ export default function App() {
               : 'This section is not available in the laboratory. Showing the summary; choose an existing tab.'}
           </p>
         )}
+        <LabLoadErrorBoundary key={activeTab} lang={lang}>
         <React.Suspense fallback={<p role="status" className="rounded-lg border border-zinc-700 bg-zinc-900 p-5 text-sm text-zinc-200">{lang === 'pt' ? 'Carregando a seção do laboratório…' : 'Loading laboratory section…'}</p>}>
         {activeTab === 'summary' && (
           <ExecutiveSummary
@@ -134,6 +136,7 @@ export default function App() {
           <DocumentArchive lang={lang} />
         )}
         </React.Suspense>
+        </LabLoadErrorBoundary>
       </main>
 
       {/* Python Script Modal */}
