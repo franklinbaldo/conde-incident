@@ -19,7 +19,9 @@ FILMS = 'research/constraints/baker_nunn_ru301_1963_film_index.json'
 SERIES = 'research/statistics/raan_527_528_529_1963.json'
 SPLIT = 'research/statistics/raan_chronological_holdout_1963.json'
 IDENTITY = 'research/tle_custody/catalog_identity_527_529_2026-11-12.json'
-INPUTS = (NORAD_CONTEXT, FILMS, SERIES, SPLIT, IDENTITY)
+GCAT = 'research/tle_custody/gcat_full_catalog_lineage_C241-L14.json'
+ANNUAL = 'research/tle_custody/nasa_sp4004_1963_group_custody_C241-L15.json'
+INPUTS = (NORAD_CONTEXT, FILMS, SERIES, SPLIT, IDENTITY, GCAT, ANNUAL)
 OUTPUT = 'research/statistics/raan_source_likelihood_readiness_C241.json'
 REQUIRED_OBSERVABLE_FIELDS = (
     'observation_epoch_utc', 'instrument_id', 'reference_frame',
@@ -63,10 +65,12 @@ def digest(data: bytes, name: str) -> dict:
 
 
 def build(norad_bytes: bytes, films_bytes: bytes, series_bytes: bytes,
-          split_bytes: bytes, identity_bytes: bytes) -> dict:
-    context, films, series, split, identity = [
+          split_bytes: bytes, identity_bytes: bytes,
+          gcat_bytes: bytes, annual_bytes: bytes) -> dict:
+    context, films, series, split, identity, gcat, annual = [
         json.loads(b) for b in (
-            norad_bytes, films_bytes, series_bytes, split_bytes, identity_bytes)]
+            norad_bytes, films_bytes, series_bytes, split_bytes, identity_bytes,
+            gcat_bytes, annual_bytes)]
     if context['schema'] != 'conde.norad-documentary-context/v1':
         raise ValueError('NORAD source contract drift')
     if context['epistemic_limits']['no_source_is_an_observation_of_norad_528'] is not True:
@@ -139,6 +143,40 @@ def build(norad_bytes: bytes, films_bytes: bytes, series_bytes: bytes,
             or primary['decay_day'] != '1963-11-08'
             or primary['printed_page'] != 8):
         raise ValueError('NASA primary documentary day-only binding drift')
+    # A group-level annual table must not overwrite a child's distinct status.
+    # This guard intentionally fails closed on future corrected source readings.
+    if (annual['record_id'] != 'C241-L15'
+            or annual['publication']['series'] != 'NASA SP-4004'
+            or annual['publication']['page_printed'] != 501
+            or annual['publication']['page_image_verified'] is not False
+            or annual['methodological_note']['declares_compilation'] is not True
+            or annual['methodological_note']['measurement_independence'] != 'NOT_ESTABLISHED'):
+        raise ValueError('annual NASA documentary source changed: reassess')
+    group = annual['annual_row_extracted_text']
+    if (group['international_designation_printed'] != '1963-3'
+            or group['scope'] != 'LAUNCH_GROUP_UNRESOLVED_CHILD'
+            or group['child_piece_identifier'] is not None
+            or group['observation_epoch'] is not None
+            or group['status_printed'] != 'Still in orbit.'
+            or group['perigee_statute_miles_printed'] != 286
+            or group['visual_transcription_confirmed'] is not False
+            or annual['linked_sources']['november_piece_printed'] != '1963 3B'
+            or annual['linked_sources']['november_decay_day'] != primary['decay_day']
+            or annual['inference_guard']['aggregate_status_is_528_status'] is not False
+            or annual['inference_guard']['annual_is_independent_orbital_measurement'] is not False):
+        raise ValueError('NASA annual group/child status changed: reassess')
+    if (gcat['record_id'] != 'C241-L14'
+            or set(gcat['catalogue_labels']) != {'00527', '00528', '00529'}
+            or gcat['catalogue_labels']['00528']['cospar'] != '1963-003B'
+            or gcat['catalogue_labels']['00528']['physical_piece'] is not None
+            or gcat['catalogue_labels']['00529']['physical_piece'] is not None
+            or gcat['comparisons']['independent_tracking_sources'] != 0
+            or gcat['comparisons']['primary_tle'] is not None
+            or gcat['comparisons']['sensor'] is not None
+            or gcat['comparisons']['sigma'] is not None
+            or any(edge['independent_observation'] is not False
+                   for edge in gcat['edges'])):
+        raise ValueError('GCAT secondary catalogue independence changed: reassess')
     # This is a count of eligible evidence IN THESE INPUTS, not a claim
     # about the number of observations actually made in 1963.
     return {
@@ -146,7 +184,8 @@ def build(norad_bytes: bytes, films_bytes: bytes, series_bytes: bytes,
         'classification': 'DOCUMENTARY_FACTOR_ELIGIBILITY_AUDIT_NO_HISTORICAL_POSTERIOR',
         'question': 'Which inspected records could act as calibrated physical likelihood factors for NORAD 528?',
         'input_sha256': [digest(raw, path) for raw, path in zip(
-            (norad_bytes, films_bytes, series_bytes, split_bytes, identity_bytes), INPUTS)],
+            (norad_bytes, films_bytes, series_bytes, split_bytes, identity_bytes,
+             gcat_bytes, annual_bytes), INPUTS)],
         'candidate_groups': [
             {
                 'name': '1963_TLE_NUMERIC_MIRROR',
@@ -191,10 +230,40 @@ def build(norad_bytes: bytes, films_bytes: bytes, series_bytes: bytes,
                 'blockers': ['FILM_CONTENT', 'TARGET_ID', 'OBSERVATION_TIME',
                              'MEASURED_ANGLE', 'CALIBRATED_ERROR'],
             },
+            {
+                'name': 'GCAT_MODERN_COMPILED_PIECE_LABELS',
+                'occurrences': ['C241-L13', 'C241-L14'],
+                'source_path': GCAT,
+                'object_catalogue_id': '00528',
+                'cospar': gcat['catalogue_labels']['00528']['cospar'],
+                'physical_piece': None,
+                'factor_eligibility': 'MODERN_COMPILED_LABEL_NO_INDEPENDENT_SENSOR',
+                'blockers': ['PRIMARY_INSTRUMENT_RECORD', 'PHYSICAL_PIECE_IDENTITY',
+                             'OBSERVABLE_EPOCH_FRAME_ERROR'],
+            },
+            {
+                'name': 'NASA_SP4004_1963_LAUNCH_GROUP',
+                'occurrences': ['C241-L15'],
+                'source_path': ANNUAL,
+                'source_url': annual['publication']['url'],
+                'printed_page': annual['publication']['page_printed'],
+                'published_year': annual['publication']['publication_year'],
+                'printed_group_designation': group['international_designation_printed'],
+                'printed_group_status': group['status_printed'],
+                'printed_perigee_statute_miles': group['perigee_statute_miles_printed'],
+                'child_528_status_from_this_row': None,
+                'child_528_perigee_from_this_row': None,
+                'factor_eligibility': 'LAUNCH_GROUP_COMPILATION_NOT_528_OBSERVATION',
+                'blockers': ['CHILD_OBJECT_ID', 'MEASUREMENT_EPOCH',
+                             'UPSTREAM_INDEPENDENCE', 'VISUAL_TRANSCRIPTION',
+                             'SENSOR_FRAME_ERROR'],
+            },
         ],
         'independence': {
             'lineage_count_is_not_effective_sample_size': True,
             'secondary_mirror_is_not_independent_from_its_catalog_reprints': True,
+            'gcat_compilation_cannot_add_independent_528_observation': True,
+            'annual_group_record_cannot_override_528_child_status': True,
             'norad_documents_1963_sputnik46_share_reporting_family': True,
             'nasa_norad_data_exchange_possible_not_proof_of_exact_record_ancestry': True,
             'number_of_independent_528_sensor_sources_identified_in_inputs': 0,
