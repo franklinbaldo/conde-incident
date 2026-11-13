@@ -1,0 +1,40 @@
+{
+  "schema": "conde.archival-volume-custody/v1",
+  "document_id": "CGEO-TJBA-DOE-1953-12-01",
+  "archive_institution": "Tribunal de Justica do Estado da Bahia, Biblioteca Forum Ruy Barbosa (ArchiDoc)",
+  "publication_title": "DIÁRIO OFICIAL DO ESTADO DA BAHIA. DEZEMBRO DE 1953",
+  "catalog_node_id": "15747f27e5bd40000000000000000023",
+  "catalog_url": "https://acervo.tjba.jus.br/ConsultaWeb/#/showDocumentos/15747f27e5bd40000000000000000023",
+  "catalog_date_range": [
+    "1953-12-01",
+    "1953-12-31"
+  ],
+  "download_resource_id": "dfdig000000000000000000000009008",
+  "download_url": "https://acervo.tjba.jus.br/ConsultaWeb/downResource?id=dfdig000000000000000000000009008",
+  "retrieved_utc_date": "2026-11-13",
+  "http_status": 200,
+  "mime_type": "application/pdf",
+  "content_disposition_filename": "DOS_523.pdf.pdf",
+  "pdf_bytes": 78342918,
+  "pdf_sha256": "0c68c64c2d70281375c94918ea6b16107399cfdfa0c6ccb36b5dd933b378f4e9",
+  "pdf_magic": "%PDF-1.5",
+  "pdf_eof_present": true,
+  "pdf_linearized_n": 823,
+  "pdf_pages_tree_count": 823,
+  "pdf_page_objects_count": 823,
+  "archivist_status": "MONTHLY_VOLUME_RETRIEVED_SPECIFIC_LEGAL_PAGES_NOT_INSPECTED",
+  "lei_628_1953_text_located_in_this_volume": false,
+  "lei_628_1953_publication_date_proven": false,
+  "annex_vi_text_corrected_against_1953_print": false,
+  "acts_1959_1963_exhaustively_checked": false,
+  "legal_boundary_1963_demonstrated": false,
+  "orbital_constraint_activated": false,
+  "note": "A downloadable full December 1953 DOE PDF was recovered from TJBA ArchiDoc and its bytes integrity-checked. No publication page, annex, or law passage has yet been visually inspected or text-matched; the law could appear in a following edition. December month membership is catalog metadata, not proof of the text of Law 628.",
+  "related_legal_document_id": "CGEO-LEGISBA-L628-1953-01",
+  "next_verification": [
+    "Locate law 628 dated 30 December 1953 within page images, also inspect January 1954 editions",
+    "Compare printed text and Jandaira passage against modern official annex transcription",
+    "Audit subsequent municipal legislation through 8 November 1963 before any GIS polygon or orbital constraint"
+  ],
+  "source_custody_limit": "Downloaded bytes were not checked against the physical master edition held by EGBA."
+}
