@@ -1,0 +1,167 @@
+{
+  "admissible_domain": "THETA_UNCHANGED",
+  "conditional_printing_error_centimin": [
+    -5,
+    5
+  ],
+  "contrast_labels": [
+    "nov15_to_nov30",
+    "nov30_to_dec15",
+    "nov15_to_dec15"
+  ],
+  "dates_are_publication_not_tracking_epochs": true,
+  "g34_documentary_diagnostics": {
+    "cell_keys": [
+      [
+        "C241-L12",
+        "1963-10-15",
+        "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+        "1963-003A"
+      ],
+      [
+        "C241-L19#1",
+        "1963-11-15",
+        "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+        "1963-003A"
+      ],
+      [
+        "C241-L18:19640002493",
+        "1963-11-30",
+        "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+        "1963-003A"
+      ],
+      [
+        "C241-L12",
+        "1963-10-15",
+        "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+        "1963-003C"
+      ],
+      [
+        "C241-L19#1",
+        "1963-11-15",
+        "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+        "1963-003C"
+      ],
+      [
+        "C241-L18:19640002493",
+        "1963-11-30",
+        "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+        "1963-003C"
+      ]
+    ],
+    "id": "ABELHA-G34-SSR-PRINTED-UNITS",
+    "independent_sensor_provenance_established": false,
+    "not_a_528_measurement": true,
+    "pending_calibration": [
+      "instrumental_observation_epochs",
+      "reference_frame",
+      "period_convention",
+      "independent_calibration_and_covariance",
+      "model_discrepancy",
+      "aerodynamic_drag_and_atmosphere",
+      "source_specific_tracking_genealogy"
+    ],
+    "residual_seconds_are_instrument_sigma": false,
+    "six_documentary_cells_three_compiled_editions": true,
+    "source": "public/data/conde-ssr-kepler-provenance.json"
+  },
+  "id": "C241-P12",
+  "instrument_covariance": null,
+  "intermediate_edition_cancels_in_endpoint_contrast": true,
+  "lean_contract": "formal/Conde1963/SsrEditionOffset.lean",
+  "model_tested": "P_{object,edition}=base_object+offset_edition+rounding_error",
+  "not_tested": [
+    "object_specific_edits",
+    "dynamical_forces",
+    "sensor_epochs",
+    "tracking_error",
+    "terminal_geography"
+  ],
+  "object_ids": {
+    "1963-003A": 527,
+    "1963-003C": 529
+  },
+  "observation_epoch_utc": null,
+  "physical_constraint_active": false,
+  "printed_527_minus_529_centimin": [
+    200,
+    240,
+    300
+  ],
+  "printed_contrasts": [
+    {
+      "center_centimin": 40,
+      "common_additive_edition_offset_rejected": true,
+      "nearest_tenth_conditional_interval_centimin": [
+        20,
+        60
+      ]
+    },
+    {
+      "center_centimin": 60,
+      "common_additive_edition_offset_rejected": true,
+      "nearest_tenth_conditional_interval_centimin": [
+        40,
+        80
+      ]
+    },
+    {
+      "center_centimin": 100,
+      "common_additive_edition_offset_rejected": true,
+      "nearest_tenth_conditional_interval_centimin": [
+        80,
+        120
+      ]
+    }
+  ],
+  "printed_period_centimin": {
+    "527": [
+      9460,
+      9460,
+      9460
+    ],
+    "529": [
+      9260,
+      9220,
+      9160
+    ]
+  },
+  "provenance_dependency": "C241-L20#1",
+  "result": "REJECT_SHARED_ADDITIVE_EDITION_OFFSET_UNDER_PRINTING_ASSUMPTION",
+  "schema": "conde.ssr-edition-offset-test/v1",
+  "simulation_latent_variables": [
+    "state_527(t)",
+    "state_529(t)",
+    "sensor_epoch_per_row",
+    "report_latency_per_row",
+    "force_model",
+    "ballistic_coefficients",
+    "sensor_covariance"
+  ],
+  "source_editions": [
+    {
+      "ntrs": "19640001198",
+      "occurrence": "C241-L19#1",
+      "page_index": 6,
+      "publication_date_not_epoch": "1963-11-15",
+      "sha256": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674"
+    },
+    {
+      "ntrs": "19640002493",
+      "occurrence": "C241-L18:19640002493",
+      "page_index": 6,
+      "publication_date_not_epoch": "1963-11-30",
+      "sha256": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d"
+    },
+    {
+      "ntrs": "19640003479",
+      "occurrence": "C241-L21",
+      "page_index": 6,
+      "publication_date_not_epoch": "1963-12-15",
+      "sha256": "d31a064f8e03fd39be6fe75b88cd5852c0b74c9101fa635cb40ac25c77ef474f"
+    }
+  ],
+  "source_family": "NASA_NORAD_SAO_COMPILED_NOT_INDEPENDENT_SENSORS",
+  "source_independence_verified": false,
+  "status": "CONNECTED_PENDING_CALIBRATION"
+}
