@@ -4,17 +4,25 @@ on:
     paths:
       - .github/workflows/iers-eop-1963.yml
       - tools/iers_1963_eop.py
+      - tools/iers_1963_timescales.py
       - tests/test_iers_1963_eop.py
+      - tests/test_iers_1963_timescales.py
       - research/constraints/iers_eop_1963_11_07_09.json
       - research/constraints/iers_eop_1963_G46.md
+      - research/constraints/iers_1963_timescales_G47.json
+      - research/constraints/iers_1963_timescales_G47.md
   push:
     branches: [main]
     paths:
       - .github/workflows/iers-eop-1963.yml
       - tools/iers_1963_eop.py
+      - tools/iers_1963_timescales.py
       - tests/test_iers_1963_eop.py
+      - tests/test_iers_1963_timescales.py
       - research/constraints/iers_eop_1963_11_07_09.json
       - research/constraints/iers_eop_1963_G46.md
+      - research/constraints/iers_1963_timescales_G47.json
+      - research/constraints/iers_1963_timescales_G47.md
 permissions:
   contents: read
 jobs:
@@ -36,4 +44,7 @@ jobs:
         run: |
           set -euo pipefail
           python3 -m unittest discover -s tests -p 'test_iers_1963_eop.py' -v
-          python3 tools/iers_1963_eop.py --download --check
+          python3 -m unittest discover -s tests -p 'test_iers_1963_timescales.py' -v
+          curl -fsSL --retry 3 --max-time 45 https://datacenter.iers.org/products/179/14334/orig/eopc04_05_IAU2000.63 -o /tmp/iers-1963-eop.bin
+          python3 tools/iers_1963_eop.py --source /tmp/iers-1963-eop.bin --check
+          python3 tools/iers_1963_timescales.py --source /tmp/iers-1963-eop.bin --check
