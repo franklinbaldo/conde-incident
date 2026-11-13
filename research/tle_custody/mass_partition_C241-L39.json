@@ -1,0 +1,48 @@
+{
+  "schema": "conde.mass-partition-proposal/v1",
+  "id": "C241-L39",
+  "subject": "1963-003A/B/C | NORAD 527/528/529",
+  "epistemic_grade": "USER_HYPOTHESIS_UNVERIFIED",
+  "source": {
+    "statement": "1176 kg is the combined mass of all three objects, with possible untracked or earlier-lost material",
+    "origin": "proprietor discussion, 2026-11-13",
+    "primary_publication": null,
+    "source_page": null,
+    "source_sha256": null,
+    "reference_epoch_utc": null,
+    "mass_definition": null,
+    "object_coverage_confirmed": false
+  },
+  "object_ids": [527, 528, 529],
+  "nominal_total_kg": 1176,
+  "unknowns_kg": {
+    "m_527": null,
+    "m_528": null,
+    "m_529": null,
+    "x_unaccounted": null,
+    "delta_total_measurement": null
+  },
+  "assumptions": {
+    "masses_nonnegative": true,
+    "x_nonnegative": true,
+    "same_reference_epoch_required": true,
+    "epsilon_total_kg": null,
+    "x_independently_bounded_kg": null,
+    "x_is_small": "NOT_ESTABLISHED",
+    "full_partition_of_total": "NOT_ESTABLISHED"
+  },
+  "equation": "m_527 + m_528 + m_529 + x_unaccounted = 1176 + delta_total_measurement (kg)",
+  "scope": "CONDITIONAL_MASS_BUDGET_NOT_AN_ORBITAL_OBSERVATION",
+  "activation": {
+    "physical_constraint_active": false,
+    "used_to_fit_drag": false,
+    "used_for_lean_historical_facts": false,
+    "reason": "No primary mass source, definition, common epoch, or tolerance has been verified"
+  },
+  "links": {
+    "catalog_identity": "C241-L32",
+    "orbital_fits": "C241-P1",
+    "effective_drag_exploration": "Conde PR #619",
+    "independent_mass_provenance": "PENDING"
+  }
+}
