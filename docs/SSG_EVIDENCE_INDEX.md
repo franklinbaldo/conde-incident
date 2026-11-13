@@ -14,6 +14,23 @@ A jornada sem JavaScript continua no arquivo documental gerado por `scripts/ssg-
 
 Reproduzir com `python3 tools/export_ssg_evidence_index.py --check` e `python3 -m unittest discover -s tests -p test_ssg_evidence_index.py`. Para atualizar após mudança canônica: executar o script sem `--check`, revisar os diffs e submeter PR com CI no SHA final. O workflow Pages executa a checagem antes de preservar `public/data/` para publicação; `ssg check/build/audit` e Prek/OKF continuam como gates separados.
 
+## Imutabilidade verificada contra o arquivo matriz (Lagarto)
+
+O mesmo SHA-1 declarado em ambos os feeds não basta para autenticar uma matriz:
+uma adulteração coordenada dos feeds pode preservar a igualdade entre eles.
+O exportador Python e o auditor Node reabrem a matriz histórica em bytes,
+calculam o Git blob SHA-1 a partir do cabeçalho de tamanho e conteúdo original,
+e verificam o número de linha, SHA-256 da linha sem terminador e ID Cnnn.
+Um digest sintaticamente válido, mas falso, falha mesmo se o feed genealógico
+e o shard forem atualizados em conjunto.
+
+Isso verifica a integridade entre três representações versionadas, não a
+autenticidade dos fac-símiles externos nem a verdade física do relato. A matriz
+histórica é fixa e os acréscimos posteriores continuam explicitamente fora
+deste recorte curado. Testes adversariais reproduzem adulteração da matriz,
+remapeamento de linha e digest forjado consistente. Rodar Python e Node no SHA
+exato do workflow que compila o SSG.
+
 ## Ponte verificável JSON → SSG (Lagarto)
 
 `node scripts/verify-ssg-evidence-index.mjs` confere os hashes e tamanhos dos shards, a correspondência literal dos atributos documentais, genealogias, IDs e as rotas individuais `archive_path` com páginas geradas pelo SSG sem JavaScript. Também exige links reversos para fontes, obras e famílias. `node --test tests/ssg-evidence-index-bridge.test.mjs` inclui contraprovas com digest recalculado, rota inexistente e falsa promoção de status. Após `ssg build`, `node scripts/verify-ssg-evidence-index.mjs --built-site` verifica cada HTML da edição real, em vez de supor que o Markdown gerado virou rota publicada. O verificador não identifica sensores independentes, não autentica documentos externos nem valida uma queda.
