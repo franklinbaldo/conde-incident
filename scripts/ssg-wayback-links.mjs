@@ -57,14 +57,31 @@ export function verifiedArchiveLinks(graph, citations) {
       e.kind === 'SAME_BYTES_NOT_INDEPENDENT_ARCHIVAL_WITNESS')
       .map(e => nodes.get(e.from));
     assert.ok(captures.length > 0, 'Sem replay verificado da obra');
+    const seenCaptures = new Set();
     for (const c of captures) {
+      assert.ok(!seenCaptures.has(c.id), 'Captura Wayback duplicada');
+      seenCaptures.add(c.id);
       assert.equal(c.kind, 'VERIFIED_ARCHIVAL_COPY');
       assert.equal(c.new_physical_observations, 0);
       assert.ok(utc(c.capture_utc), 'Data UTC de captura inválida');
       assert.ok(https(c.archived_url) && c.archived_url.startsWith('https://web.archive.org/web/'),
         'Somente URL Wayback verificada no grafo');
+      // The archived permalink, CDX origin, UTC time, and frozen source must
+      // describe the *same* capture. A plausible Wayback URL alone is not proof.
+      const match = /^https:\/\/web\.archive\.org\/web\/(\d{14})id_\/(https?:\/\/[^\s<>"'()]+)$/u.exec(c.archived_url);
+      assert.ok(match, 'Formato da captura Wayback divergente');
+      assert.equal(match[1], c.capture_utc.replace(/[-:TZ]/gu, ''),
+        'Data Wayback divergente da captura CDX');
+      assert.equal(match[2], c.cdx_original_url, 'URL arquivada divergente da origem CDX');
+      const sourceUrl = new URL(source.original_url);
+      const archivedOrigin = new URL(match[2]);
+      assert.equal(archivedOrigin.hostname, sourceUrl.hostname,
+        'Host arquivado não corresponde à fonte curada');
+      assert.equal(archivedOrigin.pathname.split('/').at(-1), sourceUrl.pathname.split('/').at(-1),
+        'Documento arquivado não corresponde à fonte curada');
       assert.equal(c.retrieved_bytes_sha256, payload.sha256, 'Bytes Wayback divergentes');
-      assert.ok(Number.isSafeInteger(c.retrieved_bytes_length) && c.retrieved_bytes_length > 0);
+      assert.ok(Number.isSafeInteger(payload.bytes) && payload.bytes > 0);
+      assert.equal(c.retrieved_bytes_length, payload.bytes, 'Tamanho Wayback divergente');
     }
     captures.sort((a,b)=>a.capture_utc.localeCompare(b.capture_utc));
     assert.ok(!archived.has(key(record.snapshot_ref,record.source_id)), 'Ligação Wayback duplicada');
