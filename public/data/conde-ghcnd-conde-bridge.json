@@ -1,0 +1,125 @@
+{
+  "schema": "conde.ghcnd-conde-scientific-bridge/v1",
+  "id": "ABELHA-GHCND-CONDE-DAILY-PRCP-BRIDGE-01",
+  "parent_sha256": {
+    "research/meteorology/ghcnd_conde_precip_19631107_09.json": "960f165d90d44b1c7c26a05b01db65afb22d8073d47501524ae4e1f8eecde3a3",
+    "research/constraints/ghcnd_conde_precip_19631107_09_edges.json": "89d1b07302ecb13422a950a72505f4fc4c851c8331d44329d5289142772d7f6e",
+    "public/data/conde-observable-dependency-links.json": "e80ddf458337aad18e263c85fbb76b19d6035899a349fd3b5ee930c14ab76108",
+    "public/data/conde-isd-caravelas-bridge.json": "07f7c7e897a4a75c3beb9e22261deff1acbbdfadbe597b945a7d192c6f639bc7"
+  },
+  "source_occurrence_id": "MET-GHCND-CONDE-19631107-09-01",
+  "source_family": "NOAA_NCEI_GHCN_DAILY",
+  "station_source_ids": [
+    "BR048346820",
+    "BR048345380",
+    "BR048441550",
+    "BR048345130",
+    "BR048345070",
+    "BR001137041",
+    "BR048338870",
+    "BR048340980",
+    "BR001237001",
+    "BR048249490",
+    "BR048158910"
+  ],
+  "source_files_sha256": {
+    "BR048346820": "f99557d7cb4187ea412b85b205ad2b04bf7449c0b89d27d4f546f75cbc717d53",
+    "BR048345380": "db6b41b580b10728366eda6b95f02a178fa700d8fb3b180b72b44eaeec7bc62e",
+    "BR048441550": "199e2d779d89bd7609a22ad25d7676117d95a71dcdb39cbb3492f9ac30f9e368",
+    "BR048345130": "1107f12859308f555b1fea9a22dac13c401e9b79e8720e22dca861842d2964b2",
+    "BR048345070": "071bcec32e1d365ef33b7d5c26caf4c10f5dfd0b3e41dad456f3da4dd2332f59",
+    "BR001137041": "eb531edda42ca95a385efea419a526d59c34121d7cbf93f95543cf38dcdfbc12",
+    "BR048338870": "a2951b0dc895d4a034b355aae4ca98cf19f38c175974557740acbf097247b183",
+    "BR048340980": "841a054af83f0b9c005744b96dfc4d0d66e8ceb55f836f9a1499bfbec0e4fa31",
+    "BR001237001": "aa788f7bc9697cbd9b488a904fd9f96e82a444f0f21a75fcd165373baaab9e6d",
+    "BR048249490": "07ff6fbcc7b6b3b967d95b58b17cd0759578747dec8664d904e54bac2752c0e8",
+    "BR048158910": "327a5c3f0f326a36214d7c2d37e9ecee82f676f8a6bf6e14056d82fe88673d03"
+  },
+  "observations_count": 33,
+  "archival_day_labels_not_instant_utc": [
+    "1963-11-07",
+    "1963-11-08",
+    "1963-11-09"
+  ],
+  "station": {
+    "id": "BR048346820",
+    "catalogue_name": "CONDE",
+    "coordinate_lat_lon_catalogue_not_1963_verified": [
+      -11.81,
+      -37.61
+    ],
+    "daily_precipitation_tenths_mm": [
+      0,
+      35,
+      0
+    ],
+    "raw_cells": [
+      "    0  I",
+      "   35  I",
+      "    0  I"
+    ]
+  },
+  "comparison_station": {
+    "id": "BR048340980",
+    "catalogue_name": "INDIAROBA",
+    "daily_precipitation_tenths_mm": [
+      0,
+      24,
+      0
+    ]
+  },
+  "source_flag": "I",
+  "source_flag_is_instrument_identity": false,
+  "source_dependency_graph": [
+    {
+      "from": "GHCNd_11_original_station_files",
+      "to": "daily_PRCP_7_to_9_nov_1963",
+      "type": "ARCHIVED_DAILY_PRECIPITATION_NOT_HOURLY"
+    },
+    {
+      "from": "GHCNd_Conde_08Nov_3point5mm",
+      "to": "rain_around_Conde_1963",
+      "type": "OBSERVED_IN_ARCHIVE_STATION_DATE_ONLY"
+    },
+    {
+      "from": "GHCNd_SFLAG_I",
+      "to": "historic_brazilian_station_origin",
+      "type": "PENDING_INSTRUMENT_AND_COLLECTION_LINEAGE"
+    },
+    {
+      "from": "GHCNd_Conde_daily_PRCP",
+      "to": "meteorology_at_incident_epoch",
+      "type": "PENDING_DAILY_CLOCK_AND_LOCATION_ALIGNMENT"
+    },
+    {
+      "from": "GHCNd_Conde_daily_PRCP",
+      "to": "wind_drag_or_fall_of_NORAD_527_528_529",
+      "type": "NO_TRANSFER_CALIBRATED"
+    },
+    {
+      "from": "GHCNd_archival_family",
+      "to": "NOAA_ISD_Caravelas_archival_family",
+      "type": "DISTINCT_PRODUCTS_SOURCE_INDEPENDENCE_UNPROVED"
+    }
+  ],
+  "matrix_context": {
+    "occurrence": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C151#1",
+    "row_sha256": "d2efe77c596b9fc28b6cf968467e8e696533d1d473fa5d93e0532c767326330b",
+    "relation": "CONTEXT_ONLY_NO_INDEPENDENCE_CERTIFIED"
+  },
+  "comparison_isd": "MET-ISD-19631107-09-CARAVELAS-01",
+  "comparison_independence": "UNKNOWN_DISTINCT_ARCHIVAL_PRODUCTS",
+  "lean_module": "Conde1963.GhcndCondeCandidate",
+  "lean_status": "DOCUMENTARY_CANDIDATE_NOT_PHYSICAL_PROOF",
+  "observed_variable": "station_daily_precipitation_tenths_mm",
+  "simulator_latent_parameter": "precipitation_at_incident_site_and_epoch_unknown",
+  "simulator_value": null,
+  "station_coordinates_verified_1963": null,
+  "rainfall_at_incident_site": null,
+  "observation_time_within_day": null,
+  "instrument_error_covariance": null,
+  "terminal_epoch_528": null,
+  "activation": false,
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "independent_instruments_count": null
+}

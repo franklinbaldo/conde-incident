@@ -1,0 +1,3 @@
+<input name="PesquisarTxt" type="text" value="MI 1850" id="PesquisarTxt" class="RadInputMgr RadInputMgr_Default RadInput_Enabled_Default" onmouseover="javascript:$radIE.mouseOver(event);" onmouseout="javascript:$radIE.mouseOut(event);" onkeypress="return OnKeyPress(event, 1);$radIE.keyPress(event);" onblur="javascript:$radIE.blur(event);" onfocus="javascript:$radIE.focus(event);" />
+<span id="PastaTxt" title="Projeto 1 - Rondônia\MI 1392 / CIM SC.20-V-B-V / Porto Velho\001 a 146" OnClick="PastaListaAbre();return false;">Projeto 1 - Rondônia\MI 1392 / CIM SC.20-V-B-V / Porto Velho\001 a 146</span>
+<span id="PagTotalLbl" title="All folder´s page">/146</span>
