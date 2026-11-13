@@ -133,7 +133,10 @@ export function auditStmNonlinearEnvelope(
     return report('BASELINE_NOT_ADMITTED');
   const cols = sigmaDirections(admitted.transformedCovariance);
   if (!cols) return report('BASELINE_NOT_ADMITTED');
-  const base = integrate(initial.state, durationS, stepS, thresholdKm, dynamics);
+  // G31 returns the step-halved Jacobian; use that same integration
+  // resolution for all finite-amplitude controls to avoid a mixed-step bias.
+  const controlStepS = stepS / 2;
+  const base = integrate(initial.state, durationS, controlStepS, thresholdKm, dynamics);
   if (!base) return report('PROPAGATION_UNRESOLVED');
   const start = vector(initial.state);
   let maxDr = 0, maxDv = 0, count = 0;
@@ -147,7 +150,7 @@ export function auditStmNonlinearEnvelope(
       const state: State = {tS:initial.state.tS,
         rKm: shifted.slice(0,3) as unknown as Vec3,
         vKmS: shifted.slice(3,6) as unknown as Vec3};
-      const actual = integrate(state,durationS,stepS,thresholdKm,dynamics);
+      const actual = integrate(state,durationS,controlStepS,thresholdKm,dynamics);
       if (!actual) return report('PROPAGATION_UNRESOLVED',maxDr,maxDv,count);
       const remainder = actual.map((x,i) => x-base[i]-
         f[i].reduce((sum,a,j) => sum+a*delta[j],0));
