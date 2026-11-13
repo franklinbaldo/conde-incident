@@ -22,7 +22,7 @@ Dados, hash SHA-256, tamanho, índice de página e transcrição estão no
 
 - [NASA SSR v3 nº 15 de 31/07/1963, NTRS 19630012290, PDF p.7, impressa p.5](https://ntrs.nasa.gov/api/citations/19630012290/downloads/19630012290.pdf):
   3A 94,6 min, 537/458 km; 3B 93,6 min, 463/415 km; 3C
-  93,9 min, 498/425 km. Inclinações 81,88° nas três linhas.
+  93,9 min, 498/452 km. Inclinações 81,88° nas três linhas.
   SHA256 `9b00bf8323b1de80a34920f73c658f70f766a51632a13473a408679f0e5a03d9`.
 - [NASA SSR v3 nº 23 de 30/11/1963, NTRS 19640002493, PDF p.7, impressa p.5](https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf):
   3A 94,6 min, inclinação 81,88°, alturas 533/459 km;
@@ -40,6 +40,14 @@ A referência "as of 1200Z" refere-se à situação **computada/compilada**
 para o boletim. Não é, sem o log de rastreamento original, o instante de cada
 sensor. A listagem em 31/12 do 3C não fixa seu horário terminal, ainda que o
 catálogo posterior indique decaimento nesse mesmo dia.
+
+**Errata C241-L18 (segunda leitura, 13/11/2026):** a célula `PERIGEE Km.`
+na linha `1963 3C` do fac-símile NASA nº 15 (página PDF 7,
+índice 6; página impressa 5) lê-se **452 km**, não 425 km.
+O ledger anterior e o PIN do auditor reproduziam 425 km por transcrição
+incorreta. O número antigo permanece documentado no ledger como valor
+substituído; URL, bytes e SHA do PDF permanecem inalterados. Esta correção
+**não** ativa parâmetro físico: não há época instrumental, frame ou σ.
 
 ## Assimilação temporal e restrições científicas
 
