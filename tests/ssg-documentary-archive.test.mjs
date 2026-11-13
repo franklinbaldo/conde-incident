@@ -11,7 +11,8 @@ test('SSG publishes one stable, no-JS page per curated occurrence', () => {
   const pages=archivePages(feed, ancestry);
   const families=new Set(feed.records.map(r=>r.source_family));
   const works=new Set(feed.records.map(r=>r.work_id));
-  assert.equal(pages.size, feed.curated_occurrences+3+families.size+works.size);
+  const sources=new Set(feed.records.map(r=>r.source_id));
+  assert.equal(pages.size, feed.curated_occurrences+4+families.size+works.size+sources.size);
   const index=pages.get('index.md');
   assert.match(index,/28 ocorrências curadas de 241/);
   assert.match(index,/213 ocorrências não mapeadas/);
@@ -45,6 +46,17 @@ test('SSG publishes one stable, no-JS page per curated occurrence', () => {
   assert.match(pages.get('obras/nasa-ssr-vol3-22/index.md'),/C197#1/);
   assert.match(pages.get('obras/nasa-ssr-vol3-22/index.md'),/SHA-256 da linha na matriz/);
   assert.match(pages.get('c232-1/index.md'),/obras\/nara-bb-card-302531013\//);
+  assert.match(index,/Consultar identificadores de fontes/);
+  assert.match(pages.get('fontes/index.md'),/Identificadores de fontes/);
+  const repeated=pages.get('fontes/nasa-ssr-19631115/index.md');
+  assert.match(repeated,/7 ocorrência\(s\), 7 vínculo\(s\)/);
+  assert.match(repeated,/matriz imutável/);
+  assert.match(repeated,/C197#1/);
+  assert.match(repeated,/Documento original/);
+  for(const source of sources){
+    assert.ok(pages.has('fontes/'+source.toLowerCase().replaceAll('_','-')+'/index.md'),
+      'Fonte sem índice: '+source);
+  }
   for(const work of works){
     const slug=work.toLowerCase().replaceAll('_','-');
     assert.ok(pages.has('obras/'+slug+'/index.md'), 'Obra ausente: '+work);
@@ -160,4 +172,10 @@ test('SSG rejects forged or path-like work IDs before creating links',()=>{
   const alternate=clone(feed);
   alternate.records[0].work_id='NASA <script>';
   assert.throws(()=>archivePages(alternate,ancestry),/Identificador de obra inválido/);
+});
+
+test('SSG rejects unsafe source identifiers before generating source URLs',()=>{
+  const mutated=clone(feed);
+  mutated.records[0].source_id='NASA/../../escape';
+  assert.throws(()=>archivePages(mutated,ancestry),/Genealogia ausente|Identificador de fonte inválido/);
 });
