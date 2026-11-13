@@ -78,6 +78,20 @@ class FileSizeGateTests(unittest.TestCase):
         self.prepare(editable=["bun.lock"])
         self.assertTrue(self.check())
 
+    def test_arbitrary_non_lockfile_exemption_is_rejected(self):
+        """An edited manifest must not exempt scientific evidence or executable code."""
+        (self.root / "scientific-proof.json").write_bytes(b"x" * 20001)
+        self.prepare(editable=["scientific-proof.json"])
+        with self.assertRaises(ValueError):
+            self.check()
+
+    def test_unapproved_lockfile_exemption_is_rejected(self):
+        """New oversized lockfiles need code review, not just a JSON exception."""
+        (self.root / "third-party.lock").write_bytes(b"x" * 20001)
+        self.prepare(editable=["third-party.lock"])
+        with self.assertRaises(ValueError):
+            self.check()
+
     def test_wildcards_are_rejected(self):
         self.prepare()
         self.exemptions.write_text(json.dumps({"exceptions": [
