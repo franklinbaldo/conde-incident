@@ -55,6 +55,32 @@ class TestG37(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "NASA Dec 31"):
             MOD.build(changed)
 
+    def test_upstream_source_lock_vetoes_unchecked_compiled_cells(self):
+        # The older local check guarded just two December cells.  Other five
+        # source readings must retain their independently reviewed lineage.
+        for label, source_index, row_index, key, value in [
+            ("July 529 printed period", 0, 2, "period_min", "92.0"),
+            ("November 529 printed apogee", 1, 1, "apogee_km", 999),
+            ("July 528 inclination", 0, 1, "inclination_deg", "0.00"),
+        ]:
+            with self.subTest(label=label):
+                changed = copy.deepcopy(LEDGER)
+                changed["sources"][source_index]["rows"][row_index][key] = value
+                with self.assertRaises((ValueError, AssertionError)):
+                    MOD.build(changed)
+
+    def test_upstream_source_lock_vetoes_document_provenance_drift(self):
+        for label, source_index, key, value in [
+            ("PDF redirect", 0, "pdf_url", "https://example.invalid/fake.pdf"),
+            ("publication relabel", 0, "published", "1963-06-30"),
+            ("report timestamp relabel", 0, "as_of_utc", "1963-01-01T00:00:00Z"),
+        ]:
+            with self.subTest(label=label):
+                changed = copy.deepcopy(LEDGER)
+                changed["sources"][source_index][key] = value
+                with self.assertRaises((ValueError, AssertionError)):
+                    MOD.build(changed)
+
     def test_duplicate_object_and_invalid_units_veto(self):
         changed = copy.deepcopy(LEDGER)
         changed["sources"][0]["rows"].append(changed["sources"][0]["rows"][0])
