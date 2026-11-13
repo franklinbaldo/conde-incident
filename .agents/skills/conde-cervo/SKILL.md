@@ -27,3 +27,9 @@ A interface de inferência angular mantém previsões H congeladas: o motor do C
 
 - Ao validar um holdout *as-of* histórico, auditar **o intervalo de suporte e a hora efetiva de liberação de cada driver**, não apenas a data do registro. NRLMSISE F107A é média **centrada** de 81 dias e contém 40 dias após a data-alvo; Ap diário usa o dia UTC completo, e o bin ap/Kp corrente exige seu fim. Não classificar índices definitivos como disponíveis em tempo real sem versões publicadas com timestamp.
 - Usar `tools/audit_space_weather_asof.py --check` e o certificado `research/constraints/C241-P31_space_weather_asof.json` para rejeitar avaliação prospectiva silenciosamente contaminada; séries definitivas seguem utilizáveis para reconstrução retrospectiva, com limitações físicas. Isso não é densidade nem posterior de 528. [Issue #607](https://github.com/franklinbaldo/conde-incident/issues/607).
+
+## C241-P32: disponibilidade causal exige cobertura E proveniência temporal
+
+- Para um cutoff intradiário, uma média trailing sobre **dias completos anteriores** exclui o dia corrente. Verifique o intervalo requerido por conjuntos exatos de datas, não por uma contagem vaga de itens presentes no arquivo. Ver `tools/audit_causal_flux_backfill.py --check`.
+- A fonte F10.7 definitiva do projeto foi preservada como **extrato de 85 dias**; o histórico completo pode conter datas anteriores. Marque ausências *do extrato*, sem afirmar inexistência histórica. Não impute ausências como zero, nem calcule médias de 81 dias com denominador menor.
+- Mesmo após backfill, confirmar *vintage* e timestamps de publicação antes de score `as-of`. Causal trailing F10.7 é hipótese de novo preditor, não F107A centrada equivalente para o NRLMSISE; exige calibração independente. MCMC 528: `NOT_RUN`. [C241-P32](../../../research/statistics/CAUSAL_SOLAR_FLUX_BACKFILL_C241.md).
