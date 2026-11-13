@@ -21,6 +21,13 @@ SPLIT = 'research/statistics/raan_chronological_holdout_1963.json'
 IDENTITY = 'research/tle_custody/catalog_identity_527_529_2026-11-12.json'
 INPUTS = (NORAD_CONTEXT, FILMS, SERIES, SPLIT, IDENTITY)
 OUTPUT = 'research/statistics/raan_source_likelihood_readiness_C241.json'
+# Frozen UTC experiment partitions (source manifest C241-P4/G25).
+# Do not trust a mutated manifest to redefine the chronological gate.
+FROZEN_BOUNDARIES = {
+    'fit_before_utc': '1963-08-01T00:00:00Z',
+    'validation_before_utc': '1963-10-01T00:00:00Z',
+    'evaluation_from_utc': '1963-10-01T00:00:00Z',
+}
 REQUIRED_OBSERVABLE_FIELDS = (
     'observation_epoch_utc', 'instrument_id', 'reference_frame',
     'measured_quantity', 'measured_value', 'units',
@@ -113,6 +120,12 @@ def build(norad_bytes: bytes, films_bytes: bytes, series_bytes: bytes,
     if (series['provenance']['status'] != 'SECONDARY_CATALOGUE_DERIVED_NOT_ORIGINAL_TRACK'
             or split['design_status'] != 'RETROSPECTIVE_TIME_SPLIT_NOT_BLINDED'):
         raise ValueError('mirror lineage or retrospective holdout changed')
+    if split.get('schema') != 'conde.raan-chronological-split/v1' or (
+            split.get('boundaries') != FROZEN_BOUNDARIES):
+        raise ValueError('holdout temporal boundary contract changed')
+    fit_cut = datetime.fromisoformat(FROZEN_BOUNDARIES['fit_before_utc'].replace('Z', '+00:00'))
+    evaluation_cut = datetime.fromisoformat(
+        FROZEN_BOUNDARIES['evaluation_from_utc'].replace('Z', '+00:00'))
     observed = {527: set(), 528: set(), 529: set()}
     for row in series['records']:
         if type(row['norad']) is not int or row['norad'] not in observed:
@@ -123,6 +136,16 @@ def build(norad_bytes: bytes, films_bytes: bytes, series_bytes: bytes,
     for k in observed:
         frozen = split['memberships'][str(k)]
         members = sum((frozen[part] for part in ('fit', 'validation', 'evaluation')), [])
+        for part in ('fit', 'validation', 'evaluation'):
+            for value in frozen[part]:
+                if not is_utc(value):
+                    raise ValueError('holdout temporal boundary contains invalid UTC epoch')
+                instant = datetime.fromisoformat(value.replace('Z', '+00:00'))
+                valid = (instant < fit_cut if part == 'fit' else
+                         fit_cut <= instant < evaluation_cut if part == 'validation' else
+                         instant >= evaluation_cut)
+                if not valid:
+                    raise ValueError(f'holdout leakage: temporal boundary {k} {part} {value}')
         if len(members) != len(set(members)) or set(members) != observed[k]:
             raise ValueError('frozen temporal membership changed; holdout leakage risk')
     if [len(observed[k]) for k in observed] != [20, 45, 54]:

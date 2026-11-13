@@ -104,6 +104,25 @@ class SourceReadinessTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'holdout leakage'):
             build(*raw)
 
+    def test_holdout_cross_partition_swap_is_rejected(self):
+        # Synthetic adversary: membership, deduplication, and counts stay intact.
+        # The swapped Oct epoch must not be allowed into August validation.
+        raw = list(raw_inputs())
+        split = json.loads(raw[3])
+        member = split['memberships']['528']
+        member['validation'][0], member['evaluation'][0] = (
+            member['evaluation'][0], member['validation'][0])
+        raw[3] = json.dumps(split).encode()
+        with self.assertRaisesRegex(ValueError, 'holdout leakage: temporal boundary'):
+            build(*raw)
+
+    def test_declared_holdout_boundary_drift_is_rejected(self):
+        raw = list(raw_inputs())
+        raw[3] = mutate(raw[3], lambda split: split['boundaries'].__setitem__(
+            'evaluation_from_utc', '1963-11-01T00:00:00Z'))
+        with self.assertRaisesRegex(ValueError, 'holdout temporal boundary'):
+            build(*raw)
+
     def test_secondary_epoch_drift_is_rejected(self):
         raw = list(raw_inputs())
         raw[2] = mutate(raw[2], lambda p: p['records'][0].__setitem__(
