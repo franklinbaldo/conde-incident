@@ -25,6 +25,7 @@ for (const [route, href, state] of [
   ['stories/index.html', '/stories/', 'page'],
   ['cronologia/index.html', '/cronologia/', 'page'],
   ['evidencias/index.html', '/evidencias/', 'page'],
+  ['mapa/index.html', '/mapa/', 'page'],
   ['evidencias/arquivo/index.html', '/evidencias/', 'location'],
   ['evidencias/arquivo/familias/bluebook-derivative-catalogues/index.html', '/evidencias/', 'location'],
 ]) {

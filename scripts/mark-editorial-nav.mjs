@@ -20,8 +20,6 @@ export function markEditorialNav(html, file) {
   const nav = html.slice(start, end);
   const href = prefix + (section ? section + '/' : '');
   const anchor = '<a href="' + href + '">';
-  assert.equal(nav.split(anchor).length - 1, 1,
-    'Expected exactly one section link: ' + JSON.stringify({ file, route, section, href, anchor, nav }));
   const state = route === '' || route === section ? 'page' : 'location';
   const marked = '<a href="' + href + '" aria-current="' + state + '">';
   if (nav.includes(marked)) {
@@ -29,6 +27,9 @@ export function markEditorialNav(html, file) {
       'Conflicting current links: ' + file);
     return { html, changed: false, found: true };
   }
+  assert.equal(nav.split(anchor).length - 1, 1,
+    'Expected exactly one section link: ' + JSON.stringify({ file, route, section, href, anchor, nav }));
+
   assert.doesNotMatch(nav, /aria-current=/, 'Unexpected active marker: ' + file);
   return { html: html.slice(0, start) + nav.replace(anchor, marked) + html.slice(end),
     changed: true, found: true };
