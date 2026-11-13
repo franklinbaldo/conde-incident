@@ -1,0 +1,36 @@
+name: Lontra INTEROBS 1963 provenance
+on:
+  pull_request:
+    paths:
+      - 'research/tle_custody/*LONTRA-R38*'
+      - 'research/tle_custody/konkoly_interobs_1963_C241-LONTRA-R38.json'
+      - 'tools/verify_konkoly_interobs_1963.py'
+      - 'tests/test_konkoly_interobs_1963.py'
+      - '.github/workflows/lontra-konkoly-interobs.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/tle_custody/*LONTRA-R38*'
+      - 'research/tle_custody/konkoly_interobs_1963_C241-LONTRA-R38.json'
+      - 'tools/verify_konkoly_interobs_1963.py'
+      - 'tests/test_konkoly_interobs_1963.py'
+      - '.github/workflows/lontra-konkoly-interobs.yml'
+  workflow_dispatch:
+jobs:
+  custody:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert audited head
+        run: |
+          actual="$(git rev-parse HEAD)"
+          expected="${{ github.event.pull_request.head.sha || github.sha }}"
+          echo "audited_head=$actual"
+          test "$actual" = "$expected"
+      - name: Audit source claim boundaries
+        run: |
+          python3 -m unittest discover -s tests -p 'test_konkoly_interobs_1963.py' -v
+          python3 tools/verify_konkoly_interobs_1963.py
