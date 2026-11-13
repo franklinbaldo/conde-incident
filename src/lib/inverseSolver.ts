@@ -5,6 +5,8 @@ import {
   SPACE_ENVIRONMENT_NOV_1963,
 } from './constants';
 import { CandidatePass } from '../types/astrodynamics';
+import { conditionalBallisticCompatibility } from './orbitMassConstraints.ts';
+import type { MassBudgetScenario, DragGeometryScenario } from './orbitMassConstraints.ts';
 import {
   deg2rad,
   rad2deg,
@@ -18,7 +20,12 @@ import {
 export function computeInversePasses(
   startDateStr = '1963-11-07T00:00:00Z',
   endDateStr = '1963-11-09T23:59:59Z',
-  customScaleHeightKm = 45
+  customScaleHeightKm = 45,
+  massOptions?: {
+    readonly scenario: MassBudgetScenario;
+    readonly geometry: DragGeometryScenario;
+    readonly relativeTolerance: number; // scenario tolerance, NOT NASA sigma
+  }
 ): CandidatePass[] {
   const passes: CandidatePass[] = [];
   const epochDate528 = HISTORICAL_ORBITAL_DATA[528].epochDate;
@@ -128,6 +135,19 @@ export function computeInversePasses(
         }
 
         // Check if altitude corresponds to atmospheric breakup
+        if (massOptions) {
+          if (massOptions.geometry.object !== 528)
+            throw new RangeError('Inverse scenario mass geometry must be NORAD 528');
+          const compatible = conditionalBallisticCompatibility(
+            Math.abs(requiredB), massOptions.scenario,
+            massOptions.geometry, massOptions.relativeTolerance,
+          );
+          // This existing inverse B is heuristic. Do not turn scenario
+          // disagreement into a historical physical exclusion.
+          notes += compatible.compatibleWithChosenScenario ?
+            ' B inverso compatível com a hipótese de massa/área declarada; NÃO é validação física.' :
+            ' B inverso diverge da hipótese de massa/área declarada; NÃO exclui a órbita histórica.';
+        }
         if (bestPt.altitudeKm > 200) {
           notes += ' Altura orbital ainda em vácuo (>200 km); não é ponto de queda.';
         } else if (bestPt.altitudeKm <= 120 && bestPt.altitudeKm >= 70) {
