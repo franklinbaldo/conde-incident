@@ -1,0 +1,210 @@
+{
+  "schema": "conde.gaviao-retrospective/v1",
+  "id": "G44",
+  "reviewed_from_main_sha_exclusive": "7aed7403d39f2d097f0a9eedc44a83a342f2f215",
+  "reviewed_through_main_sha_inclusive": "5b72218b98621637d28000a3c82d86496585a9be",
+  "first_parent_integrations": 12,
+  "dag_commit_count": 12,
+  "integrations": [
+    {
+      "sha": "5a30f50fcc48625aced85e296781b6fdb14226d8",
+      "title": "96 🐢 C241-L32: NASA original confirma 03B=528 e 03C=529 (#565)",
+      "parents": [
+        "7aed7403d39f2d097f0a9eedc44a83a342f2f215"
+      ],
+      "date": "2026-11-13T11:47:01-04:00",
+      "pr_number": 565,
+      "files": [
+        ".github/workflows/tle-nasa-1977-crosswalk.yml",
+        "research/tle_custody/evidence_matrix_C241-L32_2026-11-13.md",
+        "research/tle_custody/nasa_ssr_dec1977_528_identity_C241-L32.json",
+        "tests/test_tle_nasa_1977_crosswalk_audit.py",
+        "tools/tle_nasa_1977_crosswalk_audit.py"
+      ],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "79a0a84ba666b14effd3f891f13772ef9813e176",
+      "title": "88 🦅 G43: close SSG lineage schemas before export (#566)",
+      "parents": [
+        "5a30f50fcc48625aced85e296781b6fdb14226d8"
+      ],
+      "date": "2026-11-13T11:48:18-04:00",
+      "pr_number": 566,
+      "files": [
+        "research/audits/gaviao-main-window-20261113-g43.json",
+        "research/audits/gaviao-main-window-20261113-g43.md",
+        "tests/test_ssg_evidence_index.py",
+        "tools/export_ssg_evidence_index.py"
+      ],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "dafab84c9beca37309945f6e2e0e5942adf69897",
+      "title": "82 🦌 C241-P28: altitude contrasts isolate density shape (#568)",
+      "parents": [
+        "79a0a84ba666b14effd3f891f13772ef9813e176"
+      ],
+      "date": "2026-11-13T11:55:21-04:00",
+      "pr_number": 568,
+      "files": [
+        "research/statistics/DRAG_DENSITY_SHAPE_DESIGN_C241.md",
+        "tests/orbitDensityShapeDesign.test.mjs"
+      ],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "7fdf541645d2f03a18ddd0f3e535e17b68003d61",
+      "title": "87 🦎 Auditar paridade entre índice JSON e rotas SSG publicadas (#570)",
+      "parents": [
+        "dafab84c9beca37309945f6e2e0e5942adf69897"
+      ],
+      "date": "2026-11-13T11:59:15-04:00",
+      "pr_number": 570,
+      "files": [
+        ".github/workflows/pages.yml",
+        ".github/workflows/ssg-evidence-index.yml",
+        "docs/SSG_EVIDENCE_INDEX.md",
+        "scripts/verify-ssg-evidence-index.mjs",
+        "tests/ssg-evidence-index-bridge.test.mjs"
+      ],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "92c8ce4b8eac593ec861aaaf6155ee0724920e43",
+      "title": "85 🐝 Bridge NASA 1977 primary catalogue identity 528/529 to Soviet candidates (#569)",
+      "parents": [
+        "7fdf541645d2f03a18ddd0f3e535e17b68003d61"
+      ],
+      "date": "2026-11-13T12:00:29-04:00",
+      "pr_number": 569,
+      "files": [
+        "formal/Conde1963/SovietCatalogueCandidate.lean",
+        "public/data/conde-soviet-catalogue-bridge.json",
+        "tests/test_soviet_catalogue_bridge.py",
+        "tools/export_soviet_catalogue_bridge.py"
+      ],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "9c872a7953ea881c0789a496e084cc828a3ff4b4",
+      "title": "80 🦫 G43: validar raio cartesiano e projeção do polo antes da densidade (#574)",
+      "parents": [
+        "92c8ce4b8eac593ec861aaaf6155ee0724920e43"
+      ],
+      "date": "2026-11-13T12:02:20-04:00",
+      "pr_number": 574,
+      "files": [
+        "src/lib/orbitSpaceWeatherAdapter.ts",
+        "tests/orbitSpaceWeatherAdapter.test.mjs"
+      ],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "55f3ac35d4cce1191ab97de90eb66ffeb70d4d6a",
+      "title": "🦦 C241-L34: Masevich 1963 bibliography and facsimile custody (#573)",
+      "parents": [
+        "9c872a7953ea881c0789a496e084cc828a3ff4b4"
+      ],
+      "date": "2026-11-13T12:02:59-04:00",
+      "pr_number": 573,
+      "files": [
+        "research/tle_custody/evidence_matrix_C241-L34_2026-11-13.md",
+        "research/tle_custody/masevich_periodicals_1963_C241-L34.json",
+        "tests/test_masevich_periodicals_1963.py",
+        "tools/verify_masevich_periodicals_1963.py"
+      ],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "6c8db52802f36d7fee0dc677292f8c8f79f2934f",
+      "title": "🦀 CGEO-31: custodiar painel AJAX do SGB sem imagem atribuída",
+      "parents": [
+        "55f3ac35d4cce1191ab97de90eb66ffeb70d4d6a"
+      ],
+      "date": "2026-11-13T12:03:42-04:00",
+      "pr_number": null,
+      "files": [
+        "research/geo/cgeo31_usaf_ajax_delta.json",
+        "research/geo/cgeo31_usaf_ajax_delta.md",
+        "research/geo/evidence/cgeo31_ajax_document_panel.html",
+        "tests/test_cgeo31_usaf_ajax.py",
+        "tools/cgeo31_usaf_ajax.py"
+      ],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "5cf4e91046eee63253dca7ac934bbce85b1235cd",
+      "title": "90 🐙 C241-P21: certificar subconjunto editorial máximo dos SSR de 1963 (#572)",
+      "parents": [
+        "6c8db52802f36d7fee0dc677292f8c8f79f2934f"
+      ],
+      "date": "2026-11-13T12:05:45-04:00",
+      "pr_number": 572,
+      "files": [
+        ".github/workflows/lean-core.yml",
+        "formal/Conde1963.lean",
+        "formal/Conde1963/SsrEditionSurvivors.lean",
+        "formal/scripts/compile_ssr_edition_survivors.py",
+        "formal/tests/test_ssr_edition_survivors.py",
+        "research/constraints/C241-P21_ssr_edition_survivors.json"
+      ],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "5e14b94e6877e11bce1b6d963a949a8fe79fa5d9",
+      "title": "feat(ui): contextual SSG return links across lab routes (#575)",
+      "parents": [
+        "5cf4e91046eee63253dca7ac934bbce85b1235cd"
+      ],
+      "date": "2026-11-13T12:16:20-04:00",
+      "pr_number": 575,
+      "files": [
+        ".github/workflows/ui-keyboard-smoke.yml",
+        "src/components/Navigation.tsx",
+        "src/lib/editorialRoutes.ts",
+        "tests/editorialRoutes.test.mjs",
+        "tests/editorial_journey_smoke.mjs"
+      ],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "6ac419995dce7e9bd1c0de6f4094457851e2dc43",
+      "title": "86 🦇 Anunciar mudança de seção no Laboratório para leitores de tela (#576)",
+      "parents": [
+        "5e14b94e6877e11bce1b6d963a949a8fe79fa5d9"
+      ],
+      "date": "2026-11-13T12:22:15-04:00",
+      "pr_number": 576,
+      "files": [
+        "src/components/Navigation.tsx",
+        "tests/ui_keyboard_smoke.mjs"
+      ],
+      "ci_status": "NOT_CHECKED"
+    },
+    {
+      "sha": "5b72218b98621637d28000a3c82d86496585a9be",
+      "title": "🦉 Caderno 21: uma janela NORAD de outro objeto (#577)",
+      "parents": [
+        "6ac419995dce7e9bd1c0de6f4094457851e2dc43"
+      ],
+      "date": "2026-11-13T12:30:58-04:00",
+      "pr_number": 577,
+      "files": [
+        "stories/2026-11-13-a-janela-era-de-outro-satelite.md"
+      ],
+      "ci_status": "NOT_CHECKED"
+    }
+  ],
+  "historical_ci_status": "NOT_CHECKED",
+  "finding": {
+    "id": "G44-F1",
+    "kind": "RENDERED_HTML_LINK_AUDIT_GAP",
+    "origin_pr": 570,
+    "description": "HTML gate verified route strings and digest text, not actual navigable <a href> links on the built index or reverse links on individual occurrence pages.",
+    "contraproofs": "Two synthetic complete HTML site trees with inert path text and no occurrence reverse anchors passed old auditBuiltSite (tests red 2/2), then were rejected after patch (green 9/9).",
+    "scientific_effect": "NO_PHYSICAL_CONSTRAINT",
+    "verified_executor": "SSH ifro Node v20.19.2; Jatoba control plane"
+  },
+  "limits": "No physical orbit measurement or 1963 terminal epoch/position established. Real built HTML requires CI validation on exact PR SHA."
+}
