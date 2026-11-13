@@ -4,7 +4,7 @@ import {mkdirSync, writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 import {archiveKey,verifiedArchiveLinks} from './ssg-wayback-links.mjs';
 import {interpretArchiveStatus,archiveStatusGuide} from './archive-source-status.mjs';
-import {renderArchiveStatusIndex,ARCHIVE_ROOT,MATRIX_ROW_ROOT} from './archive-status-index.mjs';
+import {renderArchiveStatusIndex,archiveStatusLink,ARCHIVE_ROOT,MATRIX_ROW_ROOT} from './archive-status-index.mjs';
 
 const ROOT=ARCHIVE_ROOT;
 const MATRIX=MATRIX_ROW_ROOT;
@@ -24,12 +24,10 @@ const familySlug = family => {
   assert.match(family, /^[A-Z][A-Z0-9_]{1,79}$/, 'Identificador de família inválido');
   return family.toLowerCase().replaceAll('_', '-');
 };
-// Source identifiers are stable documentary keys, not physical witnesses.
 const sourceSlug = source => {
   assert.match(source, /^[A-Z][A-Z0-9_]{1,95}$/, 'Identificador de fonte inválido');
   return source.toLowerCase().replaceAll('_', '-');
 };
-// Work identifiers are documentary keys, never filesystem paths supplied by users.
 const workSlug = work => {
   assert.match(work, /^[A-Z][A-Z0-9_]{1,95}$/, 'Identificador de obra inválido');
   return work.toLowerCase().replaceAll('_', '-');
@@ -71,8 +69,7 @@ export function archivePages(citations, lineage, wayback=null) {
   }
   assert.equal(grouped.size, citations.curated_occurrences, 'Cobertura curada divergente');
   assert.equal(citations.curated_occurrences + citations.unmapped_occurrences, citations.total_matrix_occurrences);
-  // Every declared ancestry must have a corresponding curated citation. Otherwise
-  // unrendered, potentially misleading dependencies silently survive validation.
+  // Reject orphaned lineage entries.
   const citationKeys = new Set(citations.records.map(r =>
     JSON.stringify([r.snapshot_ref, r.source_id])));
   for (const entry of lineage.citation_lineages) {
@@ -100,7 +97,7 @@ export function archivePages(citations, lineage, wayback=null) {
         `- **Família:** [${safe(r.source_family)}](${ROOT}familias/${familySlug(r.source_family)}/)`,
         `- **Leitura do estado da fonte:** ${safe(reading.label)}. ${safe(reading.support)}`,
         `- **Não permite concluir:** ${safe(reading.limit)}`,
-        `- **Estado documental (código canônico, não veredito):** \`${r.source_status}\``,
+        `- **Estado documental (código canônico, não veredito):** [\`${r.source_status}\`](${archiveStatusLink(r.source_status)})`,
         `- **Relação:** ${safe(r.relation)}`, `- **Limite:** ${safe(r.scope)}`,
         `- **Localizador:** ${safe(r.locator)}`,
         `- **SHA-256 da linha na matriz:** \`${r.row_sha256}\``, '',
@@ -143,8 +140,7 @@ export function archivePages(citations, lineage, wayback=null) {
       }));
     return `- [${id}: ${safe(record.source_family)}](${ROOT}${slug}/) (${entries.length} referência(s))`;
   });
-  // A source family groups documentary references, not physical witnesses. One
-  // occurrence may belong to multiple families, without merging their custody.
+  // Multiple documentary families may cite the same occurrence.
   const byFamily = new Map();
   for (const [id, entries] of sorted) {
     for (const {record} of entries) {
@@ -168,6 +164,7 @@ export function archivePages(citations, lineage, wayback=null) {
         `### ${safe(id)} · ${safe(record.source_id)}`, '',
         `- **Obra:** ${safe(record.work_id)}`,
         `- **Localizador:** ${safe(record.locator)}`,
+        `- [Interpretar estado documental](${archiveStatusLink(record.source_status)})`,
         `- [Ver ocorrência e genealogia](${ROOT}${id.toLowerCase().replace('#','-')}/)`,
         `- [Ficha da fonte](${ROOT}fontes/${sourceSlug(record.source_id)}/)`,
         `- [Linha da matriz imutável](${MATRIX}${record.matrix_line})`,
@@ -179,8 +176,7 @@ export function archivePages(citations, lineage, wayback=null) {
       `Índice documental da família ${name}, sem presumir independência.`, familyBody));
     familyLinks.push(`- [${safe(name)}](${ROOT}familias/${slug}/) · ${occurrences.size} ocorrência(s), ${works.size} obra(s)`);
   }
-  // Reverse index per WORK, not per source and not per physical witness. A
-  // single publication may be cited in many occurrences, as can a single source.
+  // Reverse work index; reuses do not imply independent witnesses.
   const byWork = new Map();
   for (const [id, entries] of sorted) {
     for (const {record} of entries) {
@@ -202,6 +198,7 @@ export function archivePages(citations, lineage, wayback=null) {
         `### ${safe(id)} · ${safe(record.source_id)}`, '',
         `- **Família:** ${safe(record.source_family)}`,
         `- **Localizador:** ${safe(record.locator)}`,
+        `- [Interpretar estado documental](${archiveStatusLink(record.source_status)})`,
         `- **Relação:** ${safe(record.relation)}`,
         `- **Limite:** ${safe(record.scope)}`,
         `- **SHA-256 da linha na matriz:** \`${record.row_sha256}\``, '',
@@ -217,8 +214,7 @@ export function archivePages(citations, lineage, wayback=null) {
       `Índice reverso da obra ${work}; não prova de observação independente.`, body));
     workLinks.push(`- [${safe(work)}](${ROOT}obras/${slug}/) · ${occurrences.size} ocorrência(s), ${sources.size} fonte(s)`);
   }
-  // A source identifier may be reused across many matrix occurrences. This
-  // reverse index makes those reuses inspectable without counting witnesses.
+  // Reverse source index: repeat references, not independent physical witnesses.
   const bySource = new Map();
   for (const [id, entries] of sorted) {
     for (const {record} of entries) {
@@ -240,6 +236,7 @@ export function archivePages(citations, lineage, wayback=null) {
         `### ${safe(id)} · ${safe(record.work_id)}`, '',
         `- **Família:** ${safe(record.source_family)}`,
         `- **Localizador:** ${safe(record.locator)}`,
+        `- [Interpretar estado documental](${archiveStatusLink(record.source_status)})`,
         `- **Relação:** ${safe(record.relation)}`,
         `- **Limite:** ${safe(record.scope)}`,
         `- **SHA-256 da linha:** \`${record.row_sha256}\``,
