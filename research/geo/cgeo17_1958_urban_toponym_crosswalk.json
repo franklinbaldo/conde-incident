@@ -1,0 +1,207 @@
+{
+  "schema": "conde.gis.historic-urban-toponym-crosswalk/v1",
+  "id": "CGEO-17",
+  "event_date": "1963-11-08",
+  "municipality": {
+    "ibge_code": "2908606",
+    "name": "Conde",
+    "uf": "BA",
+    "country": "Brasil",
+    "excluded_homonyms": [
+      "Conde/PB",
+      "Condeúba/BA",
+      "São Francisco do Conde/BA",
+      "Vila do Conde/Portugal"
+    ]
+  },
+  "source": {
+    "custody_id": "LON-IBGE1958-CONDE-01",
+    "custody_path": "research/geo/ibge_1958_conde_photo_custody.json",
+    "ibge_pdf_url": "https://biblioteca.ibge.gov.br/visualizacao/livros/liv27295_20.pdf",
+    "ibge_pdf_sha256": "440bd7eaa42c712c89e65111fbebb7b8f77430f76ecff2be0a96d4eacb11a741",
+    "publication_year": 1958,
+    "source_family": "IBGE 1958 volume XX, única linhagem editorial",
+    "source_photo_capture_dates_authenticated": false
+  },
+  "historic_anchors": [
+    {
+      "id": "CGEO17-H01",
+      "photo_id": "praca_severiano_lima",
+      "printed_page": 186,
+      "verbatim_normalized": "Aspecto da Praça Severiano Lima, vendo-se ao fundo a igreja do Senhor do Bonfim",
+      "feature_type": "square_and_church_landmark",
+      "place_names": [
+        "Praça Severiano Lima",
+        "igreja do Senhor do Bonfim"
+      ],
+      "location": null,
+      "camera_point": null,
+      "photo_capture_date": null
+    },
+    {
+      "id": "CGEO17-H02",
+      "photo_id": "rua_marechal_floriano",
+      "printed_page": 188,
+      "verbatim_normalized": "Rua Marechal Floriano",
+      "feature_type": "street",
+      "place_names": [
+        "Rua Marechal Floriano"
+      ],
+      "location": null,
+      "camera_point": null,
+      "photo_capture_date": null
+    },
+    {
+      "id": "CGEO17-H03",
+      "photo_id": "rua_do_carro",
+      "printed_page": 187,
+      "verbatim_normalized": "Aspecto parcial da Rua do Carro",
+      "feature_type": "street",
+      "place_names": [
+        "Rua do Carro"
+      ],
+      "location": null,
+      "camera_point": null,
+      "photo_capture_date": null
+    },
+    {
+      "id": "CGEO17-H04",
+      "photo_id": "prefeitura_municipal",
+      "printed_page": 186,
+      "verbatim_normalized": "Prefeitura Municipal",
+      "feature_type": "civic_building",
+      "place_names": [
+        "Prefeitura Municipal"
+      ],
+      "location": null,
+      "camera_point": null,
+      "photo_capture_date": null
+    }
+  ],
+  "modern_occurrences": [
+    {
+      "id": "CGEO17-M01",
+      "name": "Praça Altamirando Requião, 27, Centro, Conde/BA",
+      "observed_era": "portal municipal consultado em 2026",
+      "source_class": "municipal_official_address",
+      "source_url": "https://www.conde.ba.gov.br/Site/SolicitacaoServico",
+      "reference_to_historic": "CGEO17-H04",
+      "candidate_relation": "MUNICIPAL_INSTITUTION_ONLY_NOT_SAME_BUILDING",
+      "same_1958_building": null,
+      "geometric_position": null
+    },
+    {
+      "id": "CGEO17-M02",
+      "name": "Rua Marechal Floriano Peixoto, Centro, Conde/BA",
+      "observed_era": "registro de estabelecimento aberto em 2025",
+      "source_class": "third_party_reproduction_of_business_registry",
+      "source_url": "https://cnpj.biz/60456334000104",
+      "reference_to_historic": "CGEO17-H02",
+      "candidate_relation": "POSSIBLE_TOPONYM_CONTINUITY_NOT_CONFIRMED",
+      "same_historic_street": null,
+      "geometric_position": null
+    },
+    {
+      "id": "CGEO17-M03",
+      "name": "Praça 10 de Agosto, Igreja Matriz de Nossa Senhora do Monte",
+      "observed_era": "foto e descrição comunitária de 2022",
+      "source_class": "wikimedia_commons_community_catalogue",
+      "source_url": "https://commons.wikimedia.org/wiki/Category:Igreja_Matriz_de_Nossa_Senhora_do_Monte_(Conde)",
+      "reference_to_historic": "CGEO17-H01",
+      "candidate_relation": "DIFFERENT_CHURCH_NAME_NOT_SPATIAL_IDENTITY",
+      "same_historic_square": null,
+      "geometric_position": null
+    },
+    {
+      "id": "CGEO17-M04",
+      "name": "Praça Doutor Severino Vieira, Centro, Conde/BA",
+      "observed_era": "Diário Oficial municipal de 30/09/2022",
+      "source_class": "municipal_official_address",
+      "source_url": "https://www.conde.ba.gov.br/Handler.ashx?c=205&f=diario&m=0&query=836",
+      "reference_to_historic": "CGEO17-H01",
+      "candidate_relation": "SIMILAR_NAME_NOT_VALIDATED_RENAME",
+      "same_historic_square": null,
+      "geometric_position": null
+    }
+  ],
+  "toponym_risks": [
+    {
+      "id": "CGEO17-R1",
+      "name_a": "Praça Severiano Lima",
+      "name_b": "Praça Doutor Severino Vieira",
+      "rule": "do_not_equate_by_string_similarity",
+      "identity_confirmed": false
+    },
+    {
+      "id": "CGEO17-R2",
+      "name_a": "igreja do Senhor do Bonfim",
+      "name_b": "Igreja Matriz de Nossa Senhora do Monte",
+      "rule": "do_not_conflate_distinct_titular_names",
+      "identity_confirmed": false
+    },
+    {
+      "id": "CGEO17-R3",
+      "name_a": "Praça Severiano Lima",
+      "name_b": "Praça 10 de Agosto",
+      "rule": "no_legal_renaming_or_survey_1920_1963",
+      "identity_confirmed": false
+    },
+    {
+      "id": "CGEO17-R4",
+      "name_a": "Prefeitura Municipal (imagem IBGE 1958)",
+      "name_b": "sede municipal na Praça Altamirando Requião (portal atual)",
+      "rule": "institution_does_not_prove_same_building",
+      "identity_confirmed": false
+    }
+  ],
+  "dependency_graph": [
+    {
+      "from": "CGEO-17",
+      "to": "LON-IBGE1958-CONDE-01",
+      "relation": "DERIVED_FROM_CAPTIONED_1958_PHOTO_CUSTODY"
+    },
+    {
+      "from": "CGEO-17",
+      "to": "CGEO-15",
+      "relation": "MODERN_VISUAL_CONTEXT_NOT_GEOREFERENCE"
+    },
+    {
+      "from": "CGEO-17",
+      "to": "CGEO-16",
+      "relation": "MODERN_STREET_PHOTO_NOT_IDENTIFIED"
+    },
+    {
+      "from": "CGEO-17",
+      "to": "CGEO-14",
+      "relation": "2014_EDITORIAL_PHOTOS_NO_DATE_OF_CAPTURE"
+    },
+    {
+      "from": "CGEO-17",
+      "to": "C24",
+      "relation": "PLACE_CONTEXT_NOT_EVENT_OBSERVATION"
+    }
+  ],
+  "castor_export": {
+    "historical_center_point": null,
+    "historical_center_polygon": null,
+    "photo_camera_positions_1958": null,
+    "legal_boundary_1963": null,
+    "impact_point_1963": null,
+    "horizontal_accuracy_m": null,
+    "crs": null,
+    "can_constrain_orbital_reentry": false,
+    "epistemic_status": "NAMED_1958_URBAN_FEATURES_NOT_GEOREFERENCED",
+    "pending": [
+      "recover period urban plan/aerial image and map toponyms",
+      "document exact source of 'centro da cidade' quotation",
+      "establish legal renaming and mapped geometry of 1958 squares/streets",
+      "verify matches by stable architectural landmarks across epochs"
+    ]
+  },
+  "limits": [
+    "1958 is publication year, not verified capture year for any individual photograph",
+    "1958 photographic montage is one IBGE editorial lineage, not multiple independent historical witnesses",
+    "2022 and current points identify different epochs, not 1963 camera positions",
+    "No claim of sphere impact, overflight, reentry time or location."
+  ]
+}
