@@ -1,0 +1,75 @@
+{
+  "id": "C241-L23",
+  "source": {
+    "ntrs_id": "19630012127",
+    "url": "https://ntrs.nasa.gov/citations/19630012127",
+    "pdf_url": "https://ntrs.nasa.gov/api/citations/19630012127/downloads/19630012127.pdf",
+    "publication_date": "1963-04-10",
+    "volume": 3,
+    "issue": 8,
+    "nasa_tm": "NASA-TM-X-50197",
+    "report": "X-533-63-1",
+    "compilation_as_of_utc": "1963-04-10T14:30:00Z",
+    "pdf_pages": 7,
+    "in_orbit_pdf_pages_one_based": [
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "printed_pages": "1-5",
+    "sha256": "f71ddf0477213e3ee1f47f5094f1d9afe7a52044e94cf18840805bdb48ba5f42",
+    "bytes": 206176,
+    "inspection": "VISUAL_ALL_FIVE_ROTATED_TABLE_PAGES_2026-11-13"
+  },
+  "negative_listing": {
+    "scope": "ONLY_OBJECTS_IN_ORBIT_TABLE_OF_APRIL_10_FACSIMILE",
+    "missing_designators": [
+      "1963 3A",
+      "1963 3B",
+      "1963 3C"
+    ],
+    "present_controls": [
+      "1963 4A",
+      "1963 4B",
+      "1963 9A",
+      "1963 9B"
+    ],
+    "basis": "VISUAL_PAGE_BY_PAGE_NOT_TEXT_OCR",
+    "interpretation": "NOT_LISTED_IN_THIS_EDITION_NOT_ABSENCE_FROM_ORBIT"
+  },
+  "subsequent_listing": {
+    "ntrs_id": "19630012128",
+    "publication_date": "1963-04-30",
+    "volume": 3,
+    "issue": 9,
+    "pdf_page_one_based": 7,
+    "printed_page": 5,
+    "designators": [
+      "1963 3A",
+      "1963 3B",
+      "1963 3C"
+    ],
+    "dependency": "C241-L16",
+    "elapsed_publication_days": 20
+  },
+  "limits": {
+    "family": "NASA_GODDARD_NORAD_SAO_COMPILED",
+    "documentary_change_only": true,
+    "listing_is_tracking_event": false,
+    "listing_is_launch_date": false,
+    "physical_absence_inferred": false,
+    "independent_instrument_measurements_added": 0,
+    "instrumental_epoch_utc": null,
+    "reference_frame": null,
+    "sensor": null,
+    "instrument_uncertainty": null,
+    "identity_of_528": null,
+    "terminal_time": null,
+    "terminal_location": null,
+    "lean_promoted": false,
+    "physical_domain": "UNCHANGED",
+    "conde": "INDETERMINATE"
+  }
+}

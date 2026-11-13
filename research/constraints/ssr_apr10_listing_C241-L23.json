@@ -1,0 +1,63 @@
+{
+  "id": "C241-L23:LISTING_GAP",
+  "schema": "conde.documentary-listing-gap/v1",
+  "source_ledger": "research/tle_custody/nasa_ssr_apr10_listing_C241-L23.json",
+  "source_family": "NASA_NORAD_SAO_SAME_COMPILATION_LINEAGE",
+  "crosswalk_depends_on": "C241-L10",
+  "prior_value_source": "C241-L16",
+  "records": [
+    {
+      "object_norad": 527,
+      "printed_designator": "1963 3A",
+      "april_10_listed": false,
+      "april_30_listed": true,
+      "operator": "publication_listing_indicator(document,designator)",
+      "measurement_epoch_utc": null,
+      "frame": null,
+      "sigma": null,
+      "meaning": "EDITORIAL_STATUS_NOT_PHYSICAL_STATE"
+    },
+    {
+      "object_norad": 528,
+      "printed_designator": "1963 3B",
+      "april_10_listed": false,
+      "april_30_listed": true,
+      "operator": "publication_listing_indicator(document,designator)",
+      "measurement_epoch_utc": null,
+      "frame": null,
+      "sigma": null,
+      "meaning": "EDITORIAL_STATUS_NOT_PHYSICAL_STATE"
+    },
+    {
+      "object_norad": 529,
+      "printed_designator": "1963 3C",
+      "april_10_listed": false,
+      "april_30_listed": true,
+      "operator": "publication_listing_indicator(document,designator)",
+      "measurement_epoch_utc": null,
+      "frame": null,
+      "sigma": null,
+      "meaning": "EDITORIAL_STATUS_NOT_PHYSICAL_STATE"
+    }
+  ],
+  "dependency_edges": [
+    {
+      "from": "19630012127:VOL3-NO8",
+      "to": "19630012128:VOL3-NO9",
+      "type": "DOCUMENTARY_LISTING_CHANGE_WITHIN_20_DAYS"
+    },
+    {
+      "from": "C241-L10",
+      "to": "C241-L23:LISTING_GAP",
+      "type": "SECONDARY_NORAD_CROSSWALK"
+    },
+    {
+      "from": "C241-L16",
+      "to": "C241-L23:LISTING_GAP",
+      "type": "CONFIRMS_NEXT_EDITION_ROWS"
+    }
+  ],
+  "independent_instrument_measurements_added": 0,
+  "physical_domain_reduced": false,
+  "lean_promoted": false
+}
