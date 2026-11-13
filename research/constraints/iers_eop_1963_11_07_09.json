@@ -1,0 +1,82 @@
+{
+  "id": "CASTOR-G46-IERS-EOP-1963",
+  "classification": "RETROSPECTIVE_EOP_ESTIMATE_NOT_ORBITAL_OBSERVATION",
+  "source": {
+    "url": "https://datacenter.iers.org/products/179/14334/orig/eopc04_05_IAU2000.63",
+    "sha256": "66711a146bd3a2752f8824a193431955a687ac7be013ebb0dfe0d86f64d5b264",
+    "bytes": 57612,
+    "series": "IERS 05 C04 IAU2000A, ITRF2005 (2011 edition)",
+    "description_url": "https://datacenter.iers.org/discontinued/www.iers.org/SharedDocs/Metadaten/EN/179_EOP_05_C04_2000/14334_EOP_C04_05_XX_IAU2000Af1a8.html?nn=12932",
+    "original_rows": 365,
+    "epoch_definition": "daily 00:00 UTC",
+    "lineage": "retrospective IERS solution, not primary 1963 NORAD tracking"
+  },
+  "units": {
+    "x_y_dX_dY_sigma": "arcseconds",
+    "UT1_minus_UTC_sigma": "seconds",
+    "LOD_sigma": "seconds"
+  },
+  "sample": [
+    {
+      "utc": "1963-11-07T00:00:00Z",
+      "mjd": 38340,
+      "x_arcsec": -0.095115,
+      "y_arcsec": -0.012515,
+      "ut1_minus_utc_s": -0.0364491,
+      "lod_s": 0.002042,
+      "dX_arcsec": null,
+      "dY_arcsec": null,
+      "sigma_x_arcsec": 0.03,
+      "sigma_y_arcsec": 0.03,
+      "sigma_ut1_minus_utc_s": 0.002,
+      "sigma_lod_s": 0.0014,
+      "sigma_dX_arcsec": 0.004774,
+      "sigma_dY_arcsec": 0.002,
+      "celestial_pole_offsets_status": "UNAVAILABLE_NOT_ZERO_MEASUREMENT"
+    },
+    {
+      "utc": "1963-11-08T00:00:00Z",
+      "mjd": 38341,
+      "x_arcsec": -0.098515,
+      "y_arcsec": -0.011315,
+      "ut1_minus_utc_s": -0.0373852,
+      "lod_s": 0.002076,
+      "dX_arcsec": null,
+      "dY_arcsec": null,
+      "sigma_x_arcsec": 0.03,
+      "sigma_y_arcsec": 0.03,
+      "sigma_ut1_minus_utc_s": 0.002,
+      "sigma_lod_s": 0.0014,
+      "sigma_dX_arcsec": 0.004774,
+      "sigma_dY_arcsec": 0.002,
+      "celestial_pole_offsets_status": "UNAVAILABLE_NOT_ZERO_MEASUREMENT"
+    },
+    {
+      "utc": "1963-11-09T00:00:00Z",
+      "mjd": 38342,
+      "x_arcsec": -0.101915,
+      "y_arcsec": -0.010015,
+      "ut1_minus_utc_s": -0.0383712,
+      "lod_s": 0.002138,
+      "dX_arcsec": null,
+      "dY_arcsec": null,
+      "sigma_x_arcsec": 0.03,
+      "sigma_y_arcsec": 0.03,
+      "sigma_ut1_minus_utc_s": 0.002,
+      "sigma_lod_s": 0.0014,
+      "sigma_dX_arcsec": 0.004774,
+      "sigma_dY_arcsec": 0.002,
+      "celestial_pole_offsets_status": "UNAVAILABLE_NOT_ZERO_MEASUREMENT"
+    }
+  ],
+  "limitations": {
+    "fractional_day_interpolation": "NOT_IMPLEMENTED",
+    "precession_nutation_model_transform": "NOT_IMPLEMENTED",
+    "teme_to_itrf_or_gcrs_operator": "NOT_IMPLEMENTED",
+    "historical_station_coordinates": null,
+    "independent_norad_527_529_instrumental_holdout": "NOT_RUN",
+    "measured_1963_003B_position": null,
+    "impact_location_or_probability": null,
+    "can_constrain_historical_reentry": false
+  }
+}
