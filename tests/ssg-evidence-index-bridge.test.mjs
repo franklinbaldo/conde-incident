@@ -89,18 +89,17 @@ test('built occurrence pages must expose live family, source and work reverse li
   const bundle=clean();
   const directory=mkdtempSync(join(tmpdir(),'conde-ssg-reverse-'));
   try {
-    const rows=bundle.shards.flatMap(part=>JSON.parse(part.raw).records);
-    const digests=rows.map(row=>row.row_sha256).join(' ');
-    for (const [name] of bundle.pages) {
-      const dest=join(directory,'evidencias/arquivo',name.replace(/index\.md$/,'index.html'));
-      mkdirSync(dirname(dest),{recursive:true});
-      writeFileSync(dest,`<!doctype html><html><body><p>${digests}</p></body></html>`);
-    }
-    // Index is truly clickable; occurrence pages are not.
-    writeFileSync(join(directory,'evidencias/arquivo/index.html'),
-      `<!doctype html><main>${[...new Set(rows.map(row=>row.archive_path))]
-        .map(path=>`<a href="${path}">go</a>`).join('')}</main>`);
-    assert.throws(()=>auditBuiltSite(bundle,directory),/Built occurrence missing reverse anchor/);
+    mockBuiltSite(bundle,directory);
+    const row=bundle.shards.flatMap(part=>JSON.parse(part.raw).records)[0];
+    const page=join(directory,'evidencias/arquivo/c01-1/index.html');
+    const html=readFileSync(page,'utf8');
+    const target='/conde-incident/evidencias/arquivo/familias/'+
+      row.source_family.toLowerCase().replaceAll('_','-')+'/';
+    assert.ok(html.includes('href="'+target+'"'));
+    writeFileSync(page,html.replaceAll('href="'+target+'"',
+      'data-inert-family="'+target+'"'));
+    assert.throws(()=>auditBuiltSite(bundle,directory),
+      /Built occurrence missing reverse anchor/);
   } finally {rmSync(directory,{recursive:true,force:true});}
 });
 
@@ -159,7 +158,7 @@ test('reverse source index must link back to the cited occurrence',()=>{
   try {
     const bundle=clean();
     mockBuiltSite(bundle,directory);
-    const row=bundle.citations.records[0];
+    const row=bundle.shards.flatMap(part=>JSON.parse(part.raw).records)[0];
     const page=join(directory,'evidencias/arquivo/fontes',
       row.source_id.toLowerCase().replaceAll('_','-'),'index.html');
     const html=readFileSync(page,'utf8');
