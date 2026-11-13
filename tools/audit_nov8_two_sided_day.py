@@ -68,11 +68,8 @@ def validate(ledger,primary,read):
                 "wrong two-sided probabilities")
     require(set(ledger["consumers"])==REQUIRED,"missing temporal consumer")
     for path in REQUIRED:read(path)
-    require(all(ledger["source_to_simulation_contract"][k] is False for k in (
-        "source_provides_historical_sigma",
-        "no_implicit_sigma_selection" if False else "historically_calibrated_posterior_available",
-        "scenario_weighting_does_not_imply_orbit_correct" if False else "geographic_distance_from_Conde_not_used_as_likelihood") ) is False,
-        "invalid inference flags")
+    require(not ledger["source_to_simulation_contract"]["source_provides_historical_sigma"],
+            "historical NASA error sigma fabricated")
     sim=ledger["source_to_simulation_contract"]
     require(sim["no_implicit_sigma_selection"] and
             sim["geographic_distance_from_Conde_not_used_as_likelihood"] and
