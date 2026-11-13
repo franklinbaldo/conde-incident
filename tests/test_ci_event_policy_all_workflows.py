@@ -144,7 +144,7 @@ class EntireWorkflowEventPolicy(unittest.TestCase):
                 'branches-ignore: [main]',
                 'types: [opened]',
             ):
-                mutant = original.replace('  pull_request:\\n', f'  pull_request:\\n    {restriction}\\n', 1)
+                mutant = original.replace('  pull_request:\n', f'  pull_request:\n    {restriction}\n', 1)
                 with self.subTest(workflow=name, restriction=restriction):
                     self.assertNotEqual(mutant, original, 'negative control must mutate')
                     with self.assertRaisesRegex(AssertionError, 'universal PR gate'):
