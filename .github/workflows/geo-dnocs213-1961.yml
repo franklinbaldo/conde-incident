@@ -15,11 +15,20 @@ on:
       - 'tools/cgeo32_dnocs213_crosswalk.py'
       - 'tests/test_cgeo32_dnocs213_crosswalk.py'
       - '.github/workflows/geo-dnocs213-1961.yml'
+permissions:
+  contents: read
 jobs:
   contract:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact source SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
