@@ -92,8 +92,9 @@ function covariancePushforward(f: readonly (readonly number[])[],
 
 /**
  * Compare separate errors rather than allowing perturbation-step and RK4-step
- * errors to cancel. Scale the Jacobian with explicit 1 km / 1 km/s reference
- * units, so the numeric drift threshold is dimensionless.
+ * errors to cancel. Normalize each Jacobian component by the ratio of
+ * explicitly dimensioned initial perturbations h[j]/h[i]; the numeric drift
+ * threshold is dimensionless, not an arbitrary mix of km and km/s.
  */
 export function auditCartesianStateTransition(
   initial: InertialComparisonState,
@@ -148,7 +149,7 @@ export function auditCartesianStateTransition(
   if (!f0 || !f1 || !f2) return result('PROPAGATION_UNRESOLVED');
   const drift = (a: number[][], b: number[][]): number =>
     Math.max(...a.flatMap((row, i) => row.map((v, j) =>
-      Math.abs((v - b[i][j]) * (j < 3 ? 1 : 1) / (i < 3 ? 1 : 1)))));
+      Math.abs((v - b[i][j]) * h[j] / h[i]))));
   const timeDrift = drift(f0, f1), perturbDrift = drift(f1, f2);
   if (![dr, dv, timeDrift, perturbDrift].every(Number.isFinite) ||
       dr > resolution.maxStateDifferenceKm ||
