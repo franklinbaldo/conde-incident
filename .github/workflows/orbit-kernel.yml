@@ -21,4 +21,4 @@ jobs:
         with:
           node-version: '22'
       - name: Cartesian RK4, J2, drag, events and synthetic inverse tests
-        run: node --experimental-strip-types --test tests/orbitPhysics.test.mjs tests/orbitConvergence.test.mjs tests/orbitSpaceWeatherAdapter.test.mjs tests/orbitFrameKinematics.test.mjs
+        run: node --experimental-strip-types --test tests/orbitPhysics.test.mjs tests/orbitConvergence.test.mjs tests/orbitSpaceWeatherAdapter.test.mjs tests/orbitFrameKinematics.test.mjs tests/orbitFrameCovariance.test.mjs
