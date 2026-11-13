@@ -35,21 +35,21 @@ export const Navigation: React.FC<NavigationProps> = ({
       labelPt: 'Síntese e limites',
       labelEn: 'Summary & limits',
       icon: ShieldCheck,
-      badge: 'Fontes',
+      badgePt: 'Fontes', badgeEn: 'Sources',
     },
     {
       id: 'map' as TabId,
       labelPt: 'Rastreamento & Mapa',
       labelEn: 'Tracking & Map',
       icon: Compass,
-      badge: '2D / 3D',
+      badgePt: '2D / 3D', badgeEn: '2D / 3D',
     },
     {
       id: 'inverse' as TabId,
       labelPt: 'Cenários inversos',
       labelEn: 'Inverse scenarios',
       icon: MapPin,
-      badge: '08/11/1963',
+      badgePt: '08/11/1963', badgeEn: '08 Nov 1963',
     },
     {
       id: 'triangulation' as TabId,
@@ -68,21 +68,21 @@ export const Navigation: React.FC<NavigationProps> = ({
       labelPt: 'Amostragem exploratória',
       labelEn: 'Exploratory sampling',
       icon: Activity,
-      badge: 'Sintético',
+      badgePt: 'Sintético', badgeEn: 'Synthetic',
     },
     {
       id: 'tles' as TabId,
       labelPt: 'Auditoria de TLEs',
       labelEn: 'TLEs & Checksums',
       icon: Binary,
-      badge: 'Sintaxe ≠ origem',
+      badgePt: 'Sintaxe ≠ origem', badgeEn: 'Syntax ≠ origin',
     },
     {
       id: 'documents' as TabId,
       labelPt: 'Arquivo e proveniência',
       labelEn: 'Archive & provenance',
       icon: FileText,
-      badge: 'Documental',
+      badgePt: 'Documental', badgeEn: 'Documents',
     },
   ];
 
@@ -97,7 +97,7 @@ export const Navigation: React.FC<NavigationProps> = ({
           </div>
           <span className="text-zinc-600">|</span>
           <span className="text-zinc-400 hidden sm:inline">
-            Missão NRO 7153 (Thor-Agena D / OPS 0180)
+            {lang === 'pt' ? 'Missão NRO 7153 (Thor-Agena D / OPS 0180)' : 'NRO mission 7153 (Thor-Agena D / OPS 0180)'}
           </span>
           <span className="text-zinc-600 hidden sm:inline">|</span>
           <div className="flex items-center gap-1 text-amber-400/90 font-mono">
@@ -111,10 +111,10 @@ export const Navigation: React.FC<NavigationProps> = ({
           <button
             onClick={onOpenPython}
             className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900 hover:bg-zinc-800 border border-zinc-700/80 text-zinc-300 hover:text-cyan-400 transition-colors font-mono cursor-pointer"
-            title="Exportar código Python reprodutível"
+            title={lang === 'pt' ? 'Exportar código Python reprodutível' : 'Export reproducible Python code'}
           >
             <Code className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Python Script</span>
+            <span>{lang === 'pt' ? 'Script Python' : 'Python Script'}</span>
           </button>
 
           {/* Language Toggle */}
@@ -163,7 +163,7 @@ export const Navigation: React.FC<NavigationProps> = ({
             >
               <Icon className={`w-4 h-4 ${isActive ? 'text-cyan-400' : 'text-zinc-500'}`} />
               <span>{lang === 'pt' ? tab.labelPt : tab.labelEn}</span>
-              {tab.badge && (
+              {tab.badgePt && (
                 <span
                   className={`text-[10px] px-1.5 py-0.2 rounded font-mono font-semibold ${
                     isActive
@@ -171,7 +171,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                       : 'bg-zinc-900 text-zinc-400 border border-zinc-800'
                   }`}
                 >
-                  {tab.badge}
+                  {lang === 'pt' ? tab.badgePt : tab.badgeEn}
                 </span>
               )}
             </a>
