@@ -56,9 +56,9 @@ export function renderTleCustody(raw) {
     '## Comparação dos três objetos', '',
     '| NORAD | Material exibido nesta página | Limite |',
     '|:--|:--|:--|',
-    '| 527 | Nenhum par TLE primário exibido | Não substituir com vetor ilustrativo |',
-    '| 528 | Par secundário acima, com checksum consistente | Não autentica observação, propagação ou impacto |',
-    '| 529 | Nenhum par TLE primário exibido | Não extrapolar a partir do 528 |', '',
+    '| NORAD 527 | Nenhum par TLE primário exibido | Não substituir com vetor ilustrativo |',
+    '| NORAD 528 | Par secundário acima, com checksum consistente | Não autentica observação, propagação ou impacto |',
+    '| NORAD 529 | Nenhum par TLE primário exibido | Não extrapolar a partir do 528 |', '',
     `O [boletim NASA de 15/11/1963](${NASA_URL}) registra o **dia 08/11/1963** para o decaimento catalogado de 1963-003B. Isso não fornece a hora, a posição terminal ou a confirmação de queda em Conde. Observações adicionais e sua linhagem são necessárias para qualquer restrição física conclusiva.`, '',
     `[Voltar à auditoria TLE](${ROOT}) · [Comparar 527/528/529](/conde-incident/simulacoes/triangulacao/) · [Arquivo de fontes](/conde-incident/evidencias/arquivo/) · [Ferramenta anterior no laboratório](/conde-incident/lab/#/tles)`, ''
   ].join('\n');
