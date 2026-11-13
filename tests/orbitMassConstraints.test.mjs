@@ -5,6 +5,7 @@ import {
   GCAT_MASS_FIELDS, auditMassBudgetScenario, conditionalTrackedMassEnvelope,
   ballisticFromMassScenario, atmosphereForMassScenario,
   conditionalBallisticCompatibility,
+  conditionalProjectedAreaEnvelope, conditionalCircularProjectedDiameter,
 } from '../src/lib/orbitMassConstraints.ts';
 import { dragAccelerationKmS2, EARTH } from '../src/lib/orbitPhysics.ts';
 import {
@@ -189,4 +190,44 @@ test('same mass budget feeds actual sourced MSISE/J2 drag and refuses inconsiste
   assert.deepEqual(dragAccelerationKmS2(state,m),dragAccelerationKmS2(state,baseline));
   assert.throws(()=>makeConditionalMassBudgetMsiseAtmosphere(
     msiseOptions,scenario({massesKg:{527:900,528:152,529:76}}),geometry()),/budget/);
+});
+
+
+test('dimension model refuses mass-only input: no arbitrary square metres or diameter',()=>{
+  const noB=conditionalProjectedAreaEnvelope({
+    massMinKg:1,massMaxKg:1176,
+    bMinM2Kg:null,bMaxM2Kg:null,
+    cdMin:null,cdMax:null,
+  });
+  assert.equal(noB.areaMinM2,null);
+  assert.equal(noB.areaMaxM2,null);
+  const diameter=conditionalCircularProjectedDiameter(noB.areaMinM2,noB.areaMaxM2,
+    'EXPLICIT_EQUIVALENT_CIRCULAR_PROJECTION');
+  assert.equal(diameter.maxDiameterM,null);
+  assert.equal(diameter.historicalConstraintActive,false);
+});
+
+test('a strictly CONDITIONAL joint mass/B/Cd interval narrows projected area and equivalent diameter',()=>{
+  const area=conditionalProjectedAreaEnvelope({
+    massMinKg:50,massMaxKg:200,
+    bMinM2Kg:.001,bMaxM2Kg:.004,
+    cdMin:1.5,cdMax:2.5,
+  });
+  assert.ok(Math.abs(area.areaMinM2-.02)<1e-12);
+  assert.ok(Math.abs(area.areaMaxM2-(.8/1.5))<1e-12);
+  assert.equal(area.historicalConstraintActive,false);
+  const diameter=conditionalCircularProjectedDiameter(area.areaMinM2,area.areaMaxM2,
+    'EXPLICIT_EQUIVALENT_CIRCULAR_PROJECTION');
+  assert.ok(diameter.minDiameterM>0 && diameter.maxDiameterM>diameter.minDiameterM);
+  assert.equal(diameter.historicalConstraintActive,false);
+});
+
+test('geometry inference rejects negative B, invalid order and unknown shape',()=>{
+  assert.throws(()=>conditionalProjectedAreaEnvelope({
+    massMinKg:0,massMaxKg:100,bMinM2Kg:.001,bMaxM2Kg:.005,cdMin:1,cdMax:2,
+  }),/Positive/);
+  assert.throws(()=>conditionalProjectedAreaEnvelope({
+    massMinKg:10,massMaxKg:5,bMinM2Kg:.001,bMaxM2Kg:.005,cdMin:1,cdMax:2,
+  }),/Ordered/);
+  assert.throws(()=>conditionalCircularProjectedDiameter(.1,.2,'sphere-as-observed'),/declared/);
 });
