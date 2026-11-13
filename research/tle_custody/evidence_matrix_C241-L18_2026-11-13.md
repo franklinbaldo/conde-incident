@@ -31,10 +31,10 @@ Dados, hash SHA-256, tamanho, índice de página e transcrição estão no
   o registro de seu decaimento no dia 8/11 feito no boletim de 15/11 (C197).
 - [NASA SSR v3 nº 25 de 31/12/1963, NTRS 19640005618, PDF p.7, impressa p.5](https://ntrs.nasa.gov/api/citations/19640005618/downloads/19640005618.pdf):
   3A 94,6 min, inclinação 81,89°, alturas 530/461 km; 3C
-  81,82°, alturas 335/333 km, com **período controverso**. O fac-símile
-  foi lido como 89,2 min nesta rodada, mas C227 havia anotado 89,6 min.
-  A divergência requer segunda leitura independente, sem apagamento da
-  transcrição anterior.
+  81,82°, alturas 335/333 km, **período impresso de 89,2 min**,
+  confirmado por nova inspeção visual independente em 13/11/2026.
+  C227 havia transcrito incorretamente 89,6 min: o registro antigo
+  permanece como valor substituído, não como alternativa instrumental.
 
 A referência "as of 1200Z" refere-se à situação **computada/compilada**
 para o boletim. Não é, sem o log de rastreamento original, o instante de cada
@@ -48,6 +48,23 @@ O ledger anterior e o PIN do auditor reproduziam 425 km por transcrição
 incorreta. O número antigo permanece documentado no ledger como valor
 substituído; URL, bytes e SHA do PDF permanecem inalterados. Esta correção
 **não** ativa parâmetro físico: não há época instrumental, frame ou σ.
+
+**Errata C227, 13/11/2026:** segunda leitura independente da
+[imagem da página 7](https://ntrs.nasa.gov/api/citations/19640005618/downloads/19640005618.pdf#page=7)
+(índice PDF 6, página impressa 5) confirma a linha `1963 3C`:
+`89.2` min, inclinação `81.82`°, apogeu `335` km,
+perigeu `333` km. A leitura `89.6` de C227 era erro de
+transcrição, não um resultado alternativo. Preservamos ambos no
+ledger com a cadeia de revisão; não editamos silenciosamente a
+matriz histórica C001–C238, cujo blob permanece legado e congelado.
+**Conciliação de texto não autentica as épocas, as alturas ou a física
+dos elementos orbitais compilados.** A diferença impressa 529
+entre 30/11 (92,2) e 31/12 (89,2) é de 3,0 min;
+com arredondamento decimal de 0,1 min de cada valor, o intervalo
+aritmético é **[2,90; 3,10] min**. Não dividir por 31 dias
+como se fossem épocas instrumentais. A prova Lean preexistente
+da cota inferior 2,40 min continua válida como cota conservadora
+não ótima; seu fortalecimento é trabalho separado do 🐙 Polvo.
 
 ## Assimilação temporal e restrições científicas
 
@@ -68,8 +85,9 @@ ou revelar que o modelo precisa ser ampliado.
 
 **Resultado aritmético condicional em Lean:** entre os boletins de
 30/11 e 31/12, a mudança impressa do 3C excede a mudança impressa do
-3A por pelo menos 2,40 minutos, admitindo ambos 89,2 e 89,6 e
-arredondamento hipotético de 0,1 min. Isso **não** é uma taxa atmosférica,
+3A por pelo menos 2,40 minutos, usando a cota originalmente conservadora que incluía a transcrição
+89,6 já substituída; o novo limite documental [2,90; 3,10] min
+não foi ainda promovido a teorema. Isso **não** é uma taxa atmosférica,
 nem uma medição de distância entre satélites, nem uma prova da hora/local de queda.
 
 - Fonte: C241-L18; vínculos prévios C241-L11, C241-L12, C241-L16, C241-L17 e C227.

@@ -58,9 +58,20 @@ def validate(ledger):
     if (conflict["matrix_occurrence"] != "C227" or
         conflict["prior_reported_period_min"] != "89.6" or
         conflict["facsimile_current_read_period_min"] != "89.2" or
-        conflict["status"] != "OPEN_REQUIRES_INDEPENDENT_REVIEW" or
+        conflict["status"] != "RESOLVED_AS_TRANSCRIPTION_ERRATUM_NOT_INSTRUMENT_VALIDATION" or
+        conflict.get("independent_review") != {
+            "reviewed_utc_date": "2026-11-13",
+            "method": "Independent visual inspection of NASA NTRS PDF page image, not extracted text/OCR",
+            "ntrs_id": "19640005618",
+            "pdf_page_index": 6,
+            "printed_page": 5,
+            "verified_1963_3c_period_min": "89.2",
+            "superseded_c227_period_min": "89.6",
+            "source_sha256": "d9504a8641baa65c208e41034e77b0e9b1cc01b4acb2a4f95541bd9e75d3783d",
+            "limits": "Printed compiled-period transcription only; original sensor epoch/frame/sigma unavailable"
+        } or
         conflict["eligible_for_calibrated_physical_fit"] is not False):
-        raise ValueError("unresolved conflicting readings must stay explicit")
+        raise ValueError("December erratum and its visual provenance must stay explicit")
     lim = ledger["data_lineage"]
     if (lim["original_instrument_tracking"] is not False or
         lim["shared_institutional_compiler"] != "NASA_GODDARD_NORAD_SMITHSONIAN" or
@@ -80,7 +91,7 @@ def validate(ledger):
         physics["independent_density_constraint_proven"] is not False or
         physics["quantified_uncertainty_reduction"] != "NOT_EVALUABLE" or
         physics["bridge"] != "C241-P10-three-object-relative-trajectories" or
-        physics["lean_numeric_use"] != "DOCUMENTARY_INTERVAL_ONLY_CONDITIONAL_ON_UNRESOLVED_DEC31_TRANSCRIPTION"):
+        physics["lean_numeric_use"] != "DOCUMENTARY_INTERVAL_89_2_TRANSCRIPTION_RECONCILED_NOT_INSTRUMENT_CALIBRATED"):
         raise ValueError("premature activation")
     jul, nov, dec = ledger["sources"]
     delta_c = Decimal(nov["rows"][1]["period_min"]) - Decimal(dec["rows"][1]["period_min"])
@@ -94,7 +105,7 @@ def validate(ledger):
         "survivor_529_nov_dec_current_facsimile_readings": [
             nov["rows"][1]["period_min"], dec["rows"][1]["period_min"]],
         "529_nov_dec_printed_delta_min_if_dec_reading_is_89_2": str(delta_c),
-        "529_nov_dec_conservative_delta_min_with_unresolved_89_2_or_89_6_and_tenth_rounding": ["2.50", "3.10"],
+        "529_nov_dec_delta_range_min_after_89_2_reconciliation_tenth_rounding": ["2.90", "3.10"],
         "new_physical_orbit_epochs_proven": 0,
         "physical_domain_reduced": False,
         "conde_outcome": "INDETERMINATE",

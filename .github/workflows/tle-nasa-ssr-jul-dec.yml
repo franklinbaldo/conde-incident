@@ -57,7 +57,7 @@ jobs:
           assert x["independent_instrument_measurements_found"] == 0
           assert x["physical_domain_reduced"] is False
           assert x["survivor_527_nov_dec_periods"] == ["94.6", "94.6"]
-          assert x["529_nov_dec_conservative_delta_min_with_unresolved_89_2_or_89_6_and_tenth_rounding"] == ["2.50", "3.10"]
+          assert x["529_nov_dec_delta_range_min_after_89_2_reconciliation_tenth_rounding"] == ["2.90", "3.10"]
           PY
       - uses: actions/upload-artifact@v4
         if: always()
