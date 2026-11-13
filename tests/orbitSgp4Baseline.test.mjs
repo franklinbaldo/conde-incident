@@ -30,6 +30,7 @@ test('SGP4 returns a finite TEME r/v model with dimensional rate consistency', (
   for (const sample of [zero, minus, plus]) {
     assert.equal(sample.status, 'SECONDARY_MODEL_ONLY');
     assert.equal(sample.frame, 'TEME');
+    assert.match(sample.epochUtc, /^1963-10-27T14:40:/);
     assert.equal(sample.model, 'SGP4');
     assert.equal(sample.sourceOccurrence, 'C179#1');
     assert.equal(sample.custody, 'DECLARED_DIGEST_NOT_AUTHENTICATED');

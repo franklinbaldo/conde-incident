@@ -1,0 +1,29 @@
+{
+  "id": "CASTOR-G28-TEME-KINEMATIC-DEPENDENCY",
+  "scientific_status": "CONDITIONAL_COMPUTATIONAL_GATE_NOT_HISTORICAL_RECONSTRUCTION",
+  "project_issue": 4,
+  "upstream_occurrences": ["C179#1", "C197#1", "C241-L12#1"],
+  "primary_source": {
+    "occurrence": "C197#1",
+    "document": "NASA/Goddard Satellite Situation Report, 1963-11-15, printed p.8",
+    "url": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf",
+    "support": "1963-003B catalog decay day 1963-11-08 only; no time, state, or location"
+  },
+  "secondary_lineage": {
+    "occurrence": "C179#1",
+    "type": "RETROSPECTIVE_TLE_MIRROR_NOT_INDEPENDENT_INSTRUMENT_RECORD",
+    "source_path": "research/tle_custody/mirror_528_1963-10-27.tle"
+  },
+  "model_equation": "r_ECI(t)=R(t)r_TEME(t); v_ECI(t)=R(t)v_TEME(t)+dR(t)/dt*r_TEME(t)",
+  "required_unavailable_inputs": [
+    "source-identified calibrated TEME-to-inertial transformation at target UTC epoch",
+    "Earth-orientation/time-scale provenance including UT1, precession/nutation and uncertainty",
+    "original 527/529 instrument position/velocity observations with epoch, frame and covariance",
+    "Lean-certified active historical parameter domain"
+  ],
+  "model_comparison_allowed": "SYNTHETIC_OR_CONDITIONAL_ONLY_WITH_DECLARED_TRANSFORMATION",
+  "validation": "tests/orbitFrameKinematics.test.mjs",
+  "historical_holdout": "NOT_RUN",
+  "lean_parameter_domain_reduction": false,
+  "impact_in_conde": "NOT_EVALUABLE"
+}
