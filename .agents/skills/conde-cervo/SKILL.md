@@ -22,3 +22,8 @@ Formalizar probabilidades condicionais apenas com prior, verossimilhança, covar
 ## Fatia 8: experimento MCMC sintético, não posterior histórico
 
 A interface de inferência angular mantém previsões H congeladas: o motor do Castor é a fonte futura de H físico. Para testar um sampler no círculo, use quatro cadeias realmente inicializadas separadamente, proposta simétrica de normal enrolada + salto global e compare E[exp(i theta)] com quadratura periódica sem MCMC. Sem âncora de viés de linhagem, um deslocamento de fase comum fica não identificado. Valores sintéticos nunca são prior histórico; exija fonte primária, frame, escala de erro, independência e holdouts antes de promover o modelo. Referências: tools/raan_synthetic_phase_mcmc.py e issue #219.
+
+## C241-P31: separar reconstrução retrospectiva de score prospectivo
+
+- Ao validar um holdout *as-of* histórico, auditar **o intervalo de suporte e a hora efetiva de liberação de cada driver**, não apenas a data do registro. NRLMSISE F107A é média **centrada** de 81 dias e contém 40 dias após a data-alvo; Ap diário usa o dia UTC completo, e o bin ap/Kp corrente exige seu fim. Não classificar índices definitivos como disponíveis em tempo real sem versões publicadas com timestamp.
+- Usar `tools/audit_space_weather_asof.py --check` e o certificado `research/constraints/C241-P31_space_weather_asof.json` para rejeitar avaliação prospectiva silenciosamente contaminada; séries definitivas seguem utilizáveis para reconstrução retrospectiva, com limitações físicas. Isso não é densidade nem posterior de 528. [Issue #607](https://github.com/franklinbaldo/conde-incident/issues/607).

@@ -24,3 +24,7 @@ jobs:
         run: python3 -m unittest discover -s tests -p 'test_texugo_weather_ci_events.py' -v
       - name: Reproduce audited GFZ and NRC inputs without network
         run: python3 tools/validate_1963_space_weather.py research/meteorology/space_weather_msise_inputs_1963_11_07_09.json
+      - name: Reject prospective leakage from retrospective 1963 inputs
+        run: |
+          python3 tools/audit_space_weather_asof.py --check
+          python3 -m unittest discover -s tests -p test_space_weather_asof.py -v
