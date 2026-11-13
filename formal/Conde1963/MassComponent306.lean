@@ -60,4 +60,29 @@ theorem composite_plus_separated_payload_at_least_306
   dsimp [payloadMassGrams] at *
   omega
 
+
+/-- Under exact 1176 kg total and full retention of the 306 kg payload
+inside the orbiting 527 composite, only at most 870 kg remains for the
+separated 528/529 and the residual X. These are source-uncertified premises. -/
+theorem if_whole_payload_retained_separated_budget_le_870kg
+    (m527 m528 m529 x : Nat)
+    (payloadInside527 : payloadMassGrams ≤ m527)
+    (closed : m527 + m528 + m529 + x = reportedTotalGrams) :
+    m528 + m529 + x ≤ 870000 := by
+  dsimp [payloadMassGrams, reportedTotalGrams] at *
+  omega
+
+/-- A closed 1176 kg inventory cannot simultaneously retain an entire
+nominal 306 kg payload PLUS an entire nominal 870 kg dry stage in 527
+while also containing both nonempty separately cataloged objects 528 and
+529. Which assumption fails remains an archival/engineering question. -/
+theorem cannot_retain_both_whole_dry_components_and_two_positive_fragments
+    (m527 m528 m529 x : Nat)
+    (completeDryComposite : payloadMassGrams + stageDryGrams ≤ m527)
+    (fragment528 : 0 < m528) (fragment529 : 0 < m529)
+    (closed : m527 + m528 + m529 + x = reportedTotalGrams) :
+    False := by
+  dsimp [payloadMassGrams, stageDryGrams, reportedTotalGrams] at *
+  omega
+
 end Conde1963.MassComponent306
