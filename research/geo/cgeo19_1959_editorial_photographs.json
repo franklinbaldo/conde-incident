@@ -1,0 +1,170 @@
+{
+  "schema": "conde.gis.photo-editorial-date-claim/v1",
+  "id": "CGEO-19",
+  "date_of_audit_utc": "2026-11-13",
+  "municipality": {
+    "ibge_code": "2908606",
+    "name": "Conde",
+    "uf": "BA",
+    "country": "Brasil",
+    "excluded_homonyms": [
+      "Conde/PB",
+      "São Francisco do Conde/BA",
+      "Vila do Conde/Portugal"
+    ]
+  },
+  "source": {
+    "title": "Fotos da Villa do Conde em Conde-BA. 1959-2012",
+    "publisher": "GEOGRAFIA: A VIDA DETALHADA (blog local)",
+    "url": "https://geografiadetalhada.blogspot.com/2012/12/fotos-da-villa-do-conde-em-conde-ba.html",
+    "publication_timestamp": "2012-12-10T16:15:00-03:00",
+    "html_bytes_retrieved": 103798,
+    "html_sha256_at_retrieval": "dbe5afead3991dfce8c5f1260a596979b46e897776e86b3eeedf295364aebf1f",
+    "image_links_extracted_from": "four direct imageanchor hrefs within post-body-4847477004328996887",
+    "source_type": "community_blog_secondary_editorial_caption",
+    "original_negative_archive_identified": false,
+    "author_or_photographer_of_1959_images_verified": false,
+    "license_for_redistribution_verified": false
+  },
+  "images": [
+    {
+      "order": 1,
+      "id": "vila_1959_claim",
+      "original_filename": "vila velha 001.jpg",
+      "caption": "VILLA DO CONDE, CONDE-BAHIA - 1959",
+      "published_capture_year_claim": 1959,
+      "source_url": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg0d9sxJJ714dVbe7juTyDzOXG5ngKfyU3W8O_UzjM3iUGsPJxlHjVOAjWoZYfhXlJb-eI4PwkYQSCsKKrNx8Id3EEb4Va23QgT5cKVUmzQfcNFh7HVdzMF-fdjLS_1nLREXkCnR0pk3zHl/s1600/vila+velha+001.jpg",
+      "byte_size": 316900,
+      "sha256": "b0c17c9bae3a4397d1572b300b26967e703fe1c0bdb05c624819dd34c16abde3",
+      "width_px": 1600,
+      "height_px": 1163,
+      "relation_note": "Same basename as a 2014 Conde, Brasil WordPress upload; original/copy relationship not verified",
+      "source_capture_date_authenticated": false,
+      "source_photographer_authenticated": false,
+      "exif_capture_datetime": null,
+      "exif_gps": null,
+      "camera_coordinates": null,
+      "geo_registration_points": null,
+      "location_verified_to_building_or_street": false
+    },
+    {
+      "order": 2,
+      "id": "passarela_2012_claim",
+      "original_filename": "WP_000819.jpg",
+      "caption": "PÔR DO SOL DE CONDE-BA. FOTO TIRADA SOBRE A PASSARELA EM NOVEMBRO 2012",
+      "published_capture_year_claim": 2012,
+      "source_url": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMgky3HjMd_iAiH_VkX97K73K3Z0wx8EZV74B8e166mmPRtBBoYZWlMPY6zD-3KfQ80OPSDIGuaDEeYhGXjKuQM-CLTfK-ySeZH4aEdPQ30nydP8yWSfzHwTyhNVPnsnyH541l2U4pfrSC/s1600/WP_000819.jpg",
+      "byte_size": 215602,
+      "sha256": "68f669f9e39896695f7d0deb677c81ae18ae93b941524f2bbde0cc76df1149c7",
+      "width_px": 1600,
+      "height_px": 1200,
+      "relation_note": "Post explicitly dates this image November 2012, not 1959",
+      "source_capture_date_authenticated": false,
+      "source_photographer_authenticated": false,
+      "exif_capture_datetime": null,
+      "exif_gps": null,
+      "camera_coordinates": null,
+      "geo_registration_points": null,
+      "location_verified_to_building_or_street": false
+    },
+    {
+      "order": 3,
+      "id": "alto_vila_1959_claim",
+      "original_filename": "villa velha 3 001.jpg",
+      "caption": "ALTO DA VILLA DO CONDE, CONDE-BAHIA - 1959",
+      "published_capture_year_claim": 1959,
+      "source_url": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiekVN49H50AURnoNwjrOGAS8F7o-KvYI5ShWtDSL-uBzYxncyhNyUKP1_N6P3N0G8D9NfBjJ4nSvc11QJ7laNi2tq_yK0Shk54XjNbxDjU50eYLQlSN9oAxGbhHZnvFYHnZc0hYVSRc3vm/s1600/villa+velha+3+001.jpg",
+      "byte_size": 235387,
+      "sha256": "01263381c8108b6a0e33f11861ac6cc7afe200d9f359d2077dd2d198e9f88a2f",
+      "width_px": 1600,
+      "height_px": 1163,
+      "relation_note": "1959 attributed by blog caption only",
+      "source_capture_date_authenticated": false,
+      "source_photographer_authenticated": false,
+      "exif_capture_datetime": null,
+      "exif_gps": null,
+      "camera_coordinates": null,
+      "geo_registration_points": null,
+      "location_verified_to_building_or_street": false
+    },
+    {
+      "order": 4,
+      "id": "igreja_monte_1959_claim",
+      "original_filename": "villa velha 2 001.jpg",
+      "caption": "IGREJA NOSSA SENHORA DO MONTE VILLA DO CONDE, CONDE-BAHIA - 1959",
+      "published_capture_year_claim": 1959,
+      "source_url": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjYDQC9OsmmX5549H-EgsqnLC-A40VVF2FLxBOGfgFyeaaZFPajZKtvrAkHuuYHi15EbCpGFdR5YCmus8ewSXGtecWiEfXP7xeRhBlKhwAhhVCor-EIHUT8RJy33m2VhzPhqVkpxGIq0WRC/s1600/villa+velha+2+001.jpg",
+      "byte_size": 237049,
+      "sha256": "071e3b27fa599beedb4f9e2e93bf597badee9c10b5acba120c4157f84fb441c6",
+      "width_px": 1600,
+      "height_px": 1163,
+      "relation_note": "Do not conflate with church of Senhor do Bonfim in IBGE 1958 caption",
+      "source_capture_date_authenticated": false,
+      "source_photographer_authenticated": false,
+      "exif_capture_datetime": null,
+      "exif_gps": null,
+      "camera_coordinates": null,
+      "geo_registration_points": null,
+      "location_verified_to_building_or_street": false
+    }
+  ],
+  "editorial_claims": {
+    "claimed_1959_images": 3,
+    "claimed_november_2012_images": 1,
+    "independent_publications_in_this_contract": 1,
+    "capture_year_1959_proven": false,
+    "photo_authenticity_and_location_1963_proven": false,
+    "first_photo_possible_republication_in_2014": "POSSIBLE_SAME_BASENAME_ONLY_NOT_PROVEN_DUPLICATE",
+    "first_photo_2014_wordpress_url": "https://condebahia.wordpress.com/wp-content/uploads/2014/03/vila-velha-001.jpg",
+    "first_photo_2014_copy_sha256": "233264fed3b4475e6ea3aae5efea521f56fe9a1fc8ee6d9c0c602787653ef154",
+    "original_image_byte_equality": false,
+    "transformation_or_pixel_identity_verified": false
+  },
+  "dependencies": [
+    {
+      "from": "CGEO-19",
+      "to": "CGEO-14",
+      "relation": "POSSIBLE_2014_EDITORIAL_REPUBLICATION_SAME_FILENAME_NOT_INDEPENDENT_WITNESS"
+    },
+    {
+      "from": "CGEO-19",
+      "to": "CGEO-17",
+      "relation": "HISTORIC_URBAN_CONTEXT_NOT_A_MAPPED_TOPONYM_CROSSWALK"
+    },
+    {
+      "from": "CGEO-19",
+      "to": "CGEO-18",
+      "relation": "IMAGE_CONTEXT_NOT_FBIS_EVENT_CONFIRMATION"
+    },
+    {
+      "from": "CGEO-19",
+      "to": "LON-IBGE1958-CONDE-01",
+      "relation": "SEPARATE_1958_EDITORIAL_FAMILY_NOT_PROVEN_INDEPENDENT_OR_SAME_FRAME"
+    }
+  ],
+  "geospatial_export": {
+    "historical_center_point": null,
+    "historical_center_polygon": null,
+    "matched_1958_ibge_square": null,
+    "landmark_point_1963": null,
+    "event_impact_location": null,
+    "camera_positions_1959": null,
+    "legal_boundary_1963": null,
+    "crs": null,
+    "horizontal_accuracy_m": null,
+    "can_constrain_orbital_reentry": false,
+    "epistemic_status": "2012_EDITORIAL_CLAIM_OF_1959_IMAGERY_WITH_UNVERIFIED_CAPTURE_DATES"
+  },
+  "next_tests": [
+    "Find original dated prints/negatives or accession records for three images labeled 1959",
+    "Compare the first 2012 Blogger image against the 2014 WordPress image with a reproducible pixel/feature comparison, not merely filename",
+    "Locate a period street plan and identify stable landmarks independently before any camera georeferencing"
+  ],
+  "limitations": [
+    "Three captions printed in 2012 attribute the year 1959; neither contemporaneous 1959 publication nor dated negative was recovered",
+    "The four files are derivative Google-hosted JPEGs with EXIF Software=Google but no authenticated original exposure timestamps",
+    "The November 2012 passarela image must not be counted as an image of 1959",
+    "One blog post is one editorial lineage; none is a photograph of the purported fall",
+    "Copyright/licensing of original photographs not established; catalogue links and checksums only; no images committed"
+  ]
+}
