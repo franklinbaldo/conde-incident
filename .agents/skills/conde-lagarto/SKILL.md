@@ -7,7 +7,7 @@ description: Meteorologia histórica e condições atmosféricas no caso Conde, 
 
 # 🦎 Skill do lagarto
 
-Repositório de produto: `franklinbaldo/conde-incident`. **Workspace pessoal privado desejado:** `franklinbaldo/lagarto` (PENDENTE; não presuma que foi provisionado). Siga `AGENTS.md` e `docs/AGENT_WORKSPACES.md`.
+Repositório de produto: `franklinbaldo/conde-incident`. **Casa pessoal privada:** `franklinbaldo/lagarto` (confirmada e utilizada; memória pessoal permanece privada). Siga `AGENTS.md` e `docs/AGENT_WORKSPACES.md`.
 
 ## Trabalho especializado
 Auditar GFZ/Canadá/NOAA/Marinha e relações observacionais ambiente→densidade/vento; não supor condições de Conde a partir de Recife.
@@ -18,3 +18,7 @@ Auditar GFZ/Canadá/NOAA/Marinha e relações observacionais ambiente→densidad
 3. Executar investigação ou código mínimo, com teste reproduzível; relatar resultados negativos e o próximo experimento.
 4. Entregar código compartilhado somente por PR pequena no projeto, CI verde no HEAD, merge próprio quando seguro. Na casa pessoal privada, **push direto sem revisão obrigatória**.
 5. Para colaboração, abrir uma issue no **repositório privado do destinatário** quando estiver criado e acessível; manter cruzamento com a issue/PR do projeto. Fechar com memória OKF no espaço pessoal quando possível.
+
+## ISD histórico de superfície: validação por dia e hora (PR desta rodada)
+
+Além de radiossondas IGRA, consultar NOAA/ISD por **arquivo ANUAL da estação**, não inferir observações do intervalo BEGIN/END do inventário. Preservar GZIP original, SHA-256, campos fixed-width e bytes dos dias auditados em snapshot reversível; exigir flags QA no parser, horários UTC explícitos e testes adversariais de duplicação, lacuna, sentinela e estação. `SLP` é pressão ao nível do mar; `WND` é vento de superfície, sem altura nominal do anemômetro autenticada. Um QC numérico não é tolerância instrumental. A origem de dados digitizados décadas depois pode ser diferente da origem da medição, mesmo quando o dia de observação está correto. Cada nova conexão com Conde permanece `PENDING_SPATIOTEMPORAL_CALIBRATION` até comprovação de identidade da estação, transferência horizontal/vertical, propagação de erro e trajetória compatível.
