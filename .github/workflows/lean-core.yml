@@ -98,3 +98,8 @@ jobs:
           python3 -m unittest discover -s formal/tests -p 'test_ssr_four_editions.py' -v
           python3 -m formal.scripts.compile_ssr_influence --check
           python3 -m unittest discover -s formal/tests -p 'test_ssr_influence.py' -v
+      - name: Minimum NASA print-cell exceptions, exact Lean guard (C241-P19)
+        run: |
+          set -euo pipefail
+          python3 -m formal.scripts.compile_ssr_cell_repairs --check
+          python3 -m unittest discover -s formal/tests -p 'test_ssr_cell_repairs.py' -v

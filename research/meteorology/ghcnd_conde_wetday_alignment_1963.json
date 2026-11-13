@@ -1,0 +1,763 @@
+{
+ "schema": "conde.ghcnd-wetday-alignment-1963/v1",
+ "id": "MET-GHCND-CONDE-1963-WETDAY-ALIGNMENT-01",
+ "baseline_evidence": "MET-GHCND-CONDE-19631107-09-01",
+ "source_url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/",
+ "fixed_source_digests": {
+  "BR048346820.dly": "f99557d7cb4187ea412b85b205ad2b04bf7449c0b89d27d4f546f75cbc717d53",
+  "BR048345380.dly": "db6b41b580b10728366eda6b95f02a178fa700d8fb3b180b72b44eaeec7bc62e",
+  "BR048441550.dly": "199e2d779d89bd7609a22ad25d7676117d95a71dcdb39cbb3492f9ac30f9e368",
+  "BR048345130.dly": "1107f12859308f555b1fea9a22dac13c401e9b79e8720e22dca861842d2964b2",
+  "BR048345070.dly": "071bcec32e1d365ef33b7d5c26caf4c10f5dfd0b3e41dad456f3da4dd2332f59",
+  "BR001137041.dly": "eb531edda42ca95a385efea419a526d59c34121d7cbf93f95543cf38dcdfbc12",
+  "BR048338870.dly": "a2951b0dc895d4a034b355aae4ca98cf19f38c175974557740acbf097247b183",
+  "BR048340980.dly": "841a054af83f0b9c005744b96dfc4d0d66e8ceb55f836f9a1499bfbec0e4fa31",
+  "BR001237001.dly": "aa788f7bc9697cbd9b488a904fd9f96e82a444f0f21a75fcd165373baaab9e6d",
+  "BR048249490.dly": "07ff6fbcc7b6b3b967d95b58b17cd0759578747dec8664d904e54bac2752c0e8",
+  "BR048158910.dly": "327a5c3f0f326a36214d7c2d37e9ecee82f676f8a6bf6e14056d82fe88673d03"
+ },
+ "variable": "binary wet-day PRCP>0 mm; no hour specified",
+ "threshold_mm": 0,
+ "lag_definition": "peer label at Conde date + lag, NOT physical transport time",
+ "lag_candidates_days": [
+  -2,
+  -1,
+  0,
+  1,
+  2
+ ],
+ "conde": {
+  "station_id": "BR048346820",
+  "valid_1963_days": 365,
+  "positive_1963_days": 136
+ },
+ "comparisons": [
+  {
+   "station_id": "BR048345380",
+   "station": "ALTAMIRA (IAA)",
+   "distance_to_modern_municipality_reference_km": 17.7,
+   "observed_1963_days_after_QC": 365,
+   "wet_days_after_QC": 131,
+   "excluded_QC_flagged_days": [],
+   "full_year": {
+    "overlap_days_fixed": 361,
+    "lag_results": [
+     {
+      "peer_label_minus_conde_label_days": -2,
+      "joint_wet_days": 59,
+      "conde_only_wet": 77,
+      "peer_only_wet": 70,
+      "joint_dry_days": 155,
+      "phi": 0.1241
+     },
+     {
+      "peer_label_minus_conde_label_days": -1,
+      "joint_wet_days": 69,
+      "conde_only_wet": 67,
+      "peer_only_wet": 61,
+      "joint_dry_days": 164,
+      "phi": 0.2385
+     },
+     {
+      "peer_label_minus_conde_label_days": 0,
+      "joint_wet_days": 65,
+      "conde_only_wet": 71,
+      "peer_only_wet": 65,
+      "joint_dry_days": 160,
+      "phi": 0.1908
+     },
+     {
+      "peer_label_minus_conde_label_days": 1,
+      "joint_wet_days": 57,
+      "conde_only_wet": 79,
+      "peer_only_wet": 73,
+      "joint_dry_days": 152,
+      "phi": 0.0956
+     },
+     {
+      "peer_label_minus_conde_label_days": 2,
+      "joint_wet_days": 57,
+      "conde_only_wet": 79,
+      "peer_only_wet": 74,
+      "joint_dry_days": 151,
+      "phi": 0.0909
+     }
+    ],
+    "strongest_lag_days": -1
+   },
+   "jan_jun": {
+    "overlap_days_fixed": 179,
+    "strongest_lag_days": -1
+   },
+   "jul_dec": {
+    "overlap_days_fixed": 182,
+    "strongest_lag_days": -1
+   }
+  },
+  {
+   "station_id": "BR048441550",
+   "station": "PALAME",
+   "distance_to_modern_municipality_reference_km": 23.1,
+   "observed_1963_days_after_QC": 122,
+   "wet_days_after_QC": 24,
+   "excluded_QC_flagged_days": [],
+   "full_year": {
+    "overlap_days_fixed": 118,
+    "lag_results": [
+     {
+      "peer_label_minus_conde_label_days": -2,
+      "joint_wet_days": 10,
+      "conde_only_wet": 25,
+      "peer_only_wet": 13,
+      "joint_dry_days": 70,
+      "phi": 0.1488
+     },
+     {
+      "peer_label_minus_conde_label_days": -1,
+      "joint_wet_days": 11,
+      "conde_only_wet": 24,
+      "peer_only_wet": 13,
+      "joint_dry_days": 70,
+      "phi": 0.1789
+     },
+     {
+      "peer_label_minus_conde_label_days": 0,
+      "joint_wet_days": 13,
+      "conde_only_wet": 22,
+      "peer_only_wet": 11,
+      "joint_dry_days": 72,
+      "phi": 0.2711
+     },
+     {
+      "peer_label_minus_conde_label_days": 1,
+      "joint_wet_days": 10,
+      "conde_only_wet": 25,
+      "peer_only_wet": 14,
+      "joint_dry_days": 69,
+      "phi": 0.1328
+     },
+     {
+      "peer_label_minus_conde_label_days": 2,
+      "joint_wet_days": 9,
+      "conde_only_wet": 26,
+      "peer_only_wet": 15,
+      "joint_dry_days": 68,
+      "phi": 0.0867
+     }
+    ],
+    "strongest_lag_days": 0
+   },
+   "jan_jun": {
+    "overlap_days_fixed": 0,
+    "strongest_lag_days": null
+   },
+   "jul_dec": {
+    "overlap_days_fixed": 118,
+    "strongest_lag_days": 0
+   }
+  },
+  {
+   "station_id": "BR048345130",
+   "station": "ESPLANADA",
+   "distance_to_modern_municipality_reference_km": 29.9,
+   "observed_1963_days_after_QC": 365,
+   "wet_days_after_QC": 168,
+   "excluded_QC_flagged_days": [],
+   "full_year": {
+    "overlap_days_fixed": 361,
+    "lag_results": [
+     {
+      "peer_label_minus_conde_label_days": -2,
+      "joint_wet_days": 77,
+      "conde_only_wet": 59,
+      "peer_only_wet": 87,
+      "joint_dry_days": 138,
+      "phi": 0.1747
+     },
+     {
+      "peer_label_minus_conde_label_days": -1,
+      "joint_wet_days": 85,
+      "conde_only_wet": 51,
+      "peer_only_wet": 80,
+      "joint_dry_days": 145,
+      "phi": 0.2621
+     },
+     {
+      "peer_label_minus_conde_label_days": 0,
+      "joint_wet_days": 98,
+      "conde_only_wet": 38,
+      "peer_only_wet": 68,
+      "joint_dry_days": 157,
+      "phi": 0.4068
+     },
+     {
+      "peer_label_minus_conde_label_days": 1,
+      "joint_wet_days": 89,
+      "conde_only_wet": 47,
+      "peer_only_wet": 78,
+      "joint_dry_days": 147,
+      "phi": 0.2991
+     },
+     {
+      "peer_label_minus_conde_label_days": 2,
+      "joint_wet_days": 78,
+      "conde_only_wet": 58,
+      "peer_only_wet": 90,
+      "joint_dry_days": 135,
+      "phi": 0.1686
+     }
+    ],
+    "strongest_lag_days": 0
+   },
+   "jan_jun": {
+    "overlap_days_fixed": 179,
+    "strongest_lag_days": 0
+   },
+   "jul_dec": {
+    "overlap_days_fixed": 182,
+    "strongest_lag_days": 0
+   }
+  },
+  {
+   "station_id": "BR048345070",
+   "station": "TIMBO (VFFLB)",
+   "distance_to_modern_municipality_reference_km": 33.1,
+   "observed_1963_days_after_QC": 364,
+   "wet_days_after_QC": 173,
+   "excluded_QC_flagged_days": [
+    {
+     "date": "1963-08-06",
+     "raw_eight_chars": " 1001 SI",
+     "quality_flag": "S"
+    }
+   ],
+   "full_year": {
+    "overlap_days_fixed": 356,
+    "lag_results": [
+     {
+      "peer_label_minus_conde_label_days": -2,
+      "joint_wet_days": 72,
+      "conde_only_wet": 63,
+      "peer_only_wet": 93,
+      "joint_dry_days": 128,
+      "phi": 0.1095
+     },
+     {
+      "peer_label_minus_conde_label_days": -1,
+      "joint_wet_days": 80,
+      "conde_only_wet": 55,
+      "peer_only_wet": 86,
+      "joint_dry_days": 135,
+      "phi": 0.1979
+     },
+     {
+      "peer_label_minus_conde_label_days": 0,
+      "joint_wet_days": 90,
+      "conde_only_wet": 45,
+      "peer_only_wet": 77,
+      "joint_dry_days": 144,
+      "phi": 0.3094
+     },
+     {
+      "peer_label_minus_conde_label_days": 1,
+      "joint_wet_days": 80,
+      "conde_only_wet": 55,
+      "peer_only_wet": 88,
+      "joint_dry_days": 133,
+      "phi": 0.1889
+     },
+     {
+      "peer_label_minus_conde_label_days": 2,
+      "joint_wet_days": 70,
+      "conde_only_wet": 65,
+      "peer_only_wet": 99,
+      "joint_dry_days": 122,
+      "phi": 0.0686
+     }
+    ],
+    "strongest_lag_days": 0
+   },
+   "jan_jun": {
+    "overlap_days_fixed": 179,
+    "strongest_lag_days": 0
+   },
+   "jul_dec": {
+    "overlap_days_fixed": 177,
+    "strongest_lag_days": 0
+   }
+  },
+  {
+   "station_id": "BR001137041",
+   "station": "ITAPICURU",
+   "distance_to_modern_municipality_reference_km": 40.8,
+   "observed_1963_days_after_QC": 365,
+   "wet_days_after_QC": 125,
+   "excluded_QC_flagged_days": [],
+   "full_year": {
+    "overlap_days_fixed": 361,
+    "lag_results": [
+     {
+      "peer_label_minus_conde_label_days": -2,
+      "joint_wet_days": 48,
+      "conde_only_wet": 88,
+      "peer_only_wet": 73,
+      "joint_dry_days": 152,
+      "phi": 0.0293
+     },
+     {
+      "peer_label_minus_conde_label_days": -1,
+      "joint_wet_days": 54,
+      "conde_only_wet": 82,
+      "peer_only_wet": 68,
+      "joint_dry_days": 157,
+      "phi": 0.0972
+     },
+     {
+      "peer_label_minus_conde_label_days": 0,
+      "joint_wet_days": 72,
+      "conde_only_wet": 64,
+      "peer_only_wet": 51,
+      "joint_dry_days": 174,
+      "phi": 0.3095
+     },
+     {
+      "peer_label_minus_conde_label_days": 1,
+      "joint_wet_days": 63,
+      "conde_only_wet": 73,
+      "peer_only_wet": 61,
+      "joint_dry_days": 164,
+      "phi": 0.196
+     },
+     {
+      "peer_label_minus_conde_label_days": 2,
+      "joint_wet_days": 58,
+      "conde_only_wet": 78,
+      "peer_only_wet": 67,
+      "joint_dry_days": 158,
+      "phi": 0.1311
+     }
+    ],
+    "strongest_lag_days": 0
+   },
+   "jan_jun": {
+    "overlap_days_fixed": 179,
+    "strongest_lag_days": 0
+   },
+   "jul_dec": {
+    "overlap_days_fixed": 182,
+    "strongest_lag_days": 0
+   }
+  },
+  {
+   "station_id": "BR048338870",
+   "station": "ENTRE RIOS (FABA)",
+   "distance_to_modern_municipality_reference_km": 41.9,
+   "observed_1963_days_after_QC": 365,
+   "wet_days_after_QC": 85,
+   "excluded_QC_flagged_days": [],
+   "full_year": {
+    "overlap_days_fixed": 361,
+    "lag_results": [
+     {
+      "peer_label_minus_conde_label_days": -2,
+      "joint_wet_days": 41,
+      "conde_only_wet": 95,
+      "peer_only_wet": 42,
+      "joint_dry_days": 183,
+      "phi": 0.1322
+     },
+     {
+      "peer_label_minus_conde_label_days": -1,
+      "joint_wet_days": 53,
+      "conde_only_wet": 83,
+      "peer_only_wet": 31,
+      "joint_dry_days": 194,
+      "phi": 0.2889
+     },
+     {
+      "peer_label_minus_conde_label_days": 0,
+      "joint_wet_days": 47,
+      "conde_only_wet": 89,
+      "peer_only_wet": 37,
+      "joint_dry_days": 188,
+      "phi": 0.2077
+     },
+     {
+      "peer_label_minus_conde_label_days": 1,
+      "joint_wet_days": 40,
+      "conde_only_wet": 96,
+      "peer_only_wet": 45,
+      "joint_dry_days": 180,
+      "phi": 0.1075
+     },
+     {
+      "peer_label_minus_conde_label_days": 2,
+      "joint_wet_days": 37,
+      "conde_only_wet": 99,
+      "peer_only_wet": 48,
+      "joint_dry_days": 177,
+      "phi": 0.0671
+     }
+    ],
+    "strongest_lag_days": -1
+   },
+   "jan_jun": {
+    "overlap_days_fixed": 179,
+    "strongest_lag_days": -1
+   },
+   "jul_dec": {
+    "overlap_days_fixed": 182,
+    "strongest_lag_days": -1
+   }
+  },
+  {
+   "station_id": "BR001237001",
+   "station": "CAMBUIS",
+   "distance_to_modern_municipality_reference_km": 42.5,
+   "observed_1963_days_after_QC": 92,
+   "wet_days_after_QC": 27,
+   "excluded_QC_flagged_days": [],
+   "full_year": {
+    "overlap_days_fixed": 88,
+    "lag_results": [
+     {
+      "peer_label_minus_conde_label_days": -2,
+      "joint_wet_days": 11,
+      "conde_only_wet": 13,
+      "peer_only_wet": 14,
+      "joint_dry_days": 50,
+      "phi": 0.2366
+     },
+     {
+      "peer_label_minus_conde_label_days": -1,
+      "joint_wet_days": 14,
+      "conde_only_wet": 10,
+      "peer_only_wet": 11,
+      "joint_dry_days": 53,
+      "phi": 0.4063
+     },
+     {
+      "peer_label_minus_conde_label_days": 0,
+      "joint_wet_days": 12,
+      "conde_only_wet": 12,
+      "peer_only_wet": 14,
+      "joint_dry_days": 50,
+      "phi": 0.2745
+     },
+     {
+      "peer_label_minus_conde_label_days": 1,
+      "joint_wet_days": 9,
+      "conde_only_wet": 15,
+      "peer_only_wet": 18,
+      "joint_dry_days": 46,
+      "phi": 0.0905
+     },
+     {
+      "peer_label_minus_conde_label_days": 2,
+      "joint_wet_days": 10,
+      "conde_only_wet": 14,
+      "peer_only_wet": 17,
+      "joint_dry_days": 47,
+      "phi": 0.1459
+     }
+    ],
+    "strongest_lag_days": -1
+   },
+   "jan_jun": {
+    "overlap_days_fixed": 0,
+    "strongest_lag_days": null
+   },
+   "jul_dec": {
+    "overlap_days_fixed": 88,
+    "strongest_lag_days": -1
+   }
+  },
+  {
+   "station_id": "BR048340980",
+   "station": "INDIAROBA",
+   "distance_to_modern_municipality_reference_km": 42.5,
+   "observed_1963_days_after_QC": 334,
+   "wet_days_after_QC": 99,
+   "excluded_QC_flagged_days": [],
+   "full_year": {
+    "overlap_days_fixed": 330,
+    "lag_results": [
+     {
+      "peer_label_minus_conde_label_days": -2,
+      "joint_wet_days": 39,
+      "conde_only_wet": 89,
+      "peer_only_wet": 59,
+      "joint_dry_days": 143,
+      "phi": 0.0134
+     },
+     {
+      "peer_label_minus_conde_label_days": -1,
+      "joint_wet_days": 47,
+      "conde_only_wet": 81,
+      "peer_only_wet": 51,
+      "joint_dry_days": 151,
+      "phi": 0.1223
+     },
+     {
+      "peer_label_minus_conde_label_days": 0,
+      "joint_wet_days": 54,
+      "conde_only_wet": 74,
+      "peer_only_wet": 43,
+      "joint_dry_days": 159,
+      "phi": 0.2235
+     },
+     {
+      "peer_label_minus_conde_label_days": 1,
+      "joint_wet_days": 45,
+      "conde_only_wet": 83,
+      "peer_only_wet": 52,
+      "joint_dry_days": 150,
+      "phi": 0.1007
+     },
+     {
+      "peer_label_minus_conde_label_days": 2,
+      "joint_wet_days": 43,
+      "conde_only_wet": 85,
+      "peer_only_wet": 54,
+      "joint_dry_days": 148,
+      "phi": 0.0734
+     }
+    ],
+    "strongest_lag_days": 0
+   },
+   "jan_jun": {
+    "overlap_days_fixed": 148,
+    "strongest_lag_days": 0
+   },
+   "jul_dec": {
+    "overlap_days_fixed": 182,
+    "strongest_lag_days": 0
+   }
+  },
+  {
+   "station_id": "BR048249490",
+   "station": "CRISTINAPOLIS (CRISTINA)",
+   "distance_to_modern_municipality_reference_km": 43.6,
+   "observed_1963_days_after_QC": 334,
+   "wet_days_after_QC": 94,
+   "excluded_QC_flagged_days": [],
+   "full_year": {
+    "overlap_days_fixed": 330,
+    "lag_results": [
+     {
+      "peer_label_minus_conde_label_days": -2,
+      "joint_wet_days": 38,
+      "conde_only_wet": 90,
+      "peer_only_wet": 56,
+      "joint_dry_days": 146,
+      "phi": 0.0212
+     },
+     {
+      "peer_label_minus_conde_label_days": -1,
+      "joint_wet_days": 44,
+      "conde_only_wet": 84,
+      "peer_only_wet": 50,
+      "joint_dry_days": 152,
+      "phi": 0.1039
+     },
+     {
+      "peer_label_minus_conde_label_days": 0,
+      "joint_wet_days": 46,
+      "conde_only_wet": 82,
+      "peer_only_wet": 47,
+      "joint_dry_days": 155,
+      "phi": 0.1372
+     },
+     {
+      "peer_label_minus_conde_label_days": 1,
+      "joint_wet_days": 51,
+      "conde_only_wet": 77,
+      "peer_only_wet": 42,
+      "joint_dry_days": 160,
+      "phi": 0.2063
+     },
+     {
+      "peer_label_minus_conde_label_days": 2,
+      "joint_wet_days": 44,
+      "conde_only_wet": 84,
+      "peer_only_wet": 49,
+      "joint_dry_days": 153,
+      "phi": 0.1096
+     }
+    ],
+    "strongest_lag_days": 1
+   },
+   "jan_jun": {
+    "overlap_days_fixed": 148,
+    "strongest_lag_days": 1
+   },
+   "jul_dec": {
+    "overlap_days_fixed": 182,
+    "strongest_lag_days": 0
+   }
+  },
+  {
+   "station_id": "BR048158910",
+   "station": "ARACAJU",
+   "distance_to_modern_municipality_reference_km": 126.3,
+   "observed_1963_days_after_QC": 365,
+   "wet_days_after_QC": 156,
+   "excluded_QC_flagged_days": [],
+   "full_year": {
+    "overlap_days_fixed": 361,
+    "lag_results": [
+     {
+      "peer_label_minus_conde_label_days": -2,
+      "joint_wet_days": 70,
+      "conde_only_wet": 66,
+      "peer_only_wet": 82,
+      "joint_dry_days": 143,
+      "phi": 0.1475
+     },
+     {
+      "peer_label_minus_conde_label_days": -1,
+      "joint_wet_days": 82,
+      "conde_only_wet": 54,
+      "peer_only_wet": 71,
+      "joint_dry_days": 154,
+      "phi": 0.2818
+     },
+     {
+      "peer_label_minus_conde_label_days": 0,
+      "joint_wet_days": 77,
+      "conde_only_wet": 59,
+      "peer_only_wet": 77,
+      "joint_dry_days": 148,
+      "phi": 0.2194
+     },
+     {
+      "peer_label_minus_conde_label_days": 1,
+      "joint_wet_days": 64,
+      "conde_only_wet": 72,
+      "peer_only_wet": 91,
+      "joint_dry_days": 134,
+      "phi": 0.0648
+     },
+     {
+      "peer_label_minus_conde_label_days": 2,
+      "joint_wet_days": 68,
+      "conde_only_wet": 68,
+      "peer_only_wet": 88,
+      "joint_dry_days": 137,
+      "phi": 0.1065
+     }
+    ],
+    "strongest_lag_days": -1
+   },
+   "jan_jun": {
+    "overlap_days_fixed": 179,
+    "strongest_lag_days": -1
+   },
+   "jul_dec": {
+    "overlap_days_fixed": 182,
+    "strongest_lag_days": -1
+   }
+  }
+ ],
+ "november_controls": {
+  "1963-11-08": {
+   "reported_positive": [
+    {
+     "station_id": "BR048346820",
+     "value_mm": 3.5
+    },
+    {
+     "station_id": "BR048340980",
+     "value_mm": 2.4
+    }
+   ],
+   "present": 11,
+   "missing": []
+  },
+  "1963-11-13": {
+   "reported_positive": [
+    {
+     "station_id": "BR048345380",
+     "value_mm": 14.4
+    },
+    {
+     "station_id": "BR048345130",
+     "value_mm": 60.4
+    },
+    {
+     "station_id": "BR048345070",
+     "value_mm": 91.1
+    },
+    {
+     "station_id": "BR001137041",
+     "value_mm": 40.3
+    },
+    {
+     "station_id": "BR048338870",
+     "value_mm": 4.4
+    },
+    {
+     "station_id": "BR001237001",
+     "value_mm": 4.2
+    },
+    {
+     "station_id": "BR048249490",
+     "value_mm": 45.8
+    },
+    {
+     "station_id": "BR048158910",
+     "value_mm": 13.6
+    }
+   ],
+   "present": 11,
+   "missing": []
+  },
+  "1963-11-14": {
+   "reported_positive": [
+    {
+     "station_id": "BR048346820",
+     "value_mm": 28.8
+    },
+    {
+     "station_id": "BR048345380",
+     "value_mm": 7.6
+    },
+    {
+     "station_id": "BR048441550",
+     "value_mm": 1.4
+    },
+    {
+     "station_id": "BR048345130",
+     "value_mm": 0.1
+    },
+    {
+     "station_id": "BR048345070",
+     "value_mm": 1.0
+    },
+    {
+     "station_id": "BR048338870",
+     "value_mm": 30.6
+    },
+    {
+     "station_id": "BR001237001",
+     "value_mm": 2.0
+    },
+    {
+     "station_id": "BR048158910",
+     "value_mm": 1.6
+    }
+   ],
+   "present": 11,
+   "missing": []
+  }
+ },
+ "not_proved": {
+  "station_independence": null,
+  "actual_1963_observation_clock": null,
+  "spatial_rainfall_homogeneity": null,
+  "weather_at_incident_hour": null,
+  "wind_or_drag": null,
+  "fall_geography": null
+ },
+ "status": "CONNECTED_PENDING_SPATIOTEMPORAL_CALIBRATION"
+}
