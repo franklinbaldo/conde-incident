@@ -23,6 +23,9 @@ h1,h2,h3{line-height:1.16;letter-spacing:-.025em}h1{font-size:clamp(2.4rem,5vw,4
 .story-visual img{height:auto}
 .story-visual iframe{height:420px}
 .story-document iframe{height:610px}
+.story-document-action{margin:0;padding:.85rem 1.2rem;background:#222833;font:700 .9rem/1.5 system-ui,sans-serif}
+.story-document-action a{color:var(--accent);text-decoration:underline;text-underline-offset:.16em}
+
 .story-visual figcaption{padding:1rem 1.2rem;color:#c7c8cd;font:400 .87rem/1.65 system-ui,sans-serif}
 .story-visual figcaption strong{color:var(--ink)}
 .story-visual figcaption a{overflow-wrap:anywhere}

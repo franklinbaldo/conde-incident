@@ -22,6 +22,7 @@ Encontramos isso no [*NORAD/CONAD Historical Summary, July–December 1963*](htt
 A página impressa **54**, terceira folha do PDF, apresenta a divisão das **17 câmeras Baker–Nunn** existentes naquele contexto: **quatro da Força Aérea dos Estados Unidos**, **uma operada pelo Canadá** e **doze pelo Smithsonian Astrophysical Observatory (SAO)** em apoio à NASA.
 
 <figure class="story-visual story-document">
+  <p class="story-document-action"><a href="https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/11.pdf#page=3" target="_blank" rel="noopener noreferrer">Abrir relatório NORAD (PDF, página impressa 54) em nova aba</a></p>
   <iframe loading="lazy" title="NORAD/CONAD Historical Summary July–December 1963, páginas impressas 54 e 55, sobre câmeras Baker–Nunn e SPADATS" src="https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/11.pdf#page=3" referrerpolicy="strict-origin-when-cross-origin"></iframe>
   <figcaption><strong>O papel de 1963.</strong> *NORAD/CONAD Historical Summary*, página impressa 54 (folha 3 do PDF), com a distribuição de 17 câmeras. A página seguinte, impressa 55, descreve a negociação sobre a rede militar. <a href="https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/11.pdf#page=4">Abrir diretamente a página 55</a> no National Security Archive. Se o leitor de PDF não aparecer aqui, os links abrem o documento original.</figcaption>
 </figure>
