@@ -66,6 +66,10 @@ try {
     const current = await page.getByRole('navigation', { name: 'Seções do laboratório' })
       .locator('[aria-current="page"]').textContent();
     assert.match(current || '', /Rastreamento & Mapa/);
+    await page.waitForFunction(() => document.querySelector('header [role="status"]')?.textContent?.includes('Seção ativa: Rastreamento & Mapa'));
+    assert.equal(await page.locator('header').getByRole('status').innerText(),
+      'Seção ativa: Rastreamento & Mapa',
+      'changing a hash route must announce the new section without shifting focus');
     // Real DOM check of independent, keyboard-operable context layers.
     const mapSvg = page.getByRole('img', { name: /Mapa orbital esquemático/ });
     await mapSvg.waitFor();
@@ -112,6 +116,9 @@ try {
     // Switching locale must also translate badges, export controls and footer,
     // not only the tab headings or the root html[lang] attribute.
     const englishNav = page.getByRole('navigation', { name: 'Laboratory sections' });
+    await page.waitForFunction(() => document.querySelector('header [role="status"]')?.textContent?.includes('Active section: Tracking & Map'));
+    assert.equal(await page.locator('header').getByRole('status').innerText(),
+      'Active section: Tracking & Map', 'section announcement must follow the locale');
     for (const badge of ['Sources', 'Synthetic', 'Syntax ≠ origin', 'Documents']) {
       assert.equal(await englishNav.getByText(badge, { exact: true }).count(), 1,
         `untranslated badge in English UI: ${badge}`);
@@ -124,6 +131,9 @@ try {
     assert.equal(await page.getByText('NRO mission 7153 (Thor-Agena D / OPS 0180)', { exact: true }).count(), 1);
     await page.getByRole('navigation', { name: 'Laboratory sections' })
       .getByRole('link', { name: /Summary & limits/ }).click();
+    await page.waitForFunction(() => document.querySelector('header [role="status"]')?.textContent?.includes('Active section: Summary & limits'));
+    assert.equal(await page.locator('header').getByRole('status').innerText(),
+      'Active section: Summary & limits', 'the announcement must follow further route changes');
     const horizontal = await page.evaluate(() => ({
       viewport: document.documentElement.clientWidth,
       document: document.documentElement.scrollWidth,
