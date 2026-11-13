@@ -71,6 +71,8 @@ def historical_gate(model,semantics):
         "historical_mcmc_executed":False,
         "source_C61_total_mass_kg_approx":1176,
         "catalogue_payload_527_component_mass_kg":semantics["sources"]["payload"]["Mass_kg"],
+        "catalogue_payload_527_component_dry_mass_kg":semantics["sources"]["payload"]["DryMass_kg"],
+        "canonical_source_audit_reference":"C241-L40 / PR #629",
         "catalogue_agena_stage_mass_at_insertion_kg":semantics["sources"]["stage"]["Mass_kg"],
         "catalogue_agena_stage_dry_mass_kg":semantics["sources"]["stage"]["DryMass_kg"],
         "catalogue_mass_basis_conflict_kg":semantics["nominal_kg"]["difference_mass_at_insertion_sum_minus_totmass"],
