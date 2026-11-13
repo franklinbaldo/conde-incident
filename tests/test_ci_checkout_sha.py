@@ -1,4 +1,8 @@
-"""All checkout-based checks must execute the explicit event source SHA."""
+"""All checkout-based checks must compare HEAD to the triggering event SHA.
+
+Keep this static audit small and fail closed for unsupported verification syntax:
+textual mentions of `git rev-parse HEAD` are not assertions.
+"""
 from pathlib import Path
 import re
 import unittest
@@ -10,20 +14,43 @@ CHECKOUT = re.compile(r'(?m)^      - uses: actions/checkout@[^\n]+\n')
 REF = re.compile(r'(?m)^          ref: (.+)$')
 
 
+def _is_exact_assertion(step: str, expected: str) -> bool:
+    """Recognize the explicit, tested comparison forms used by project CI."""
+    commands = {line.strip() for line in step.splitlines()
+                if line.strip() and not line.lstrip().startswith('#')}
+    commands |= {line.removeprefix('run: ').strip() for line in commands if line.startswith('run: ')}
+    head = '$(git rev-parse HEAD)'
+    if f'test "{head}" = "{expected}"' in commands:
+        return True
+
+    # `env: EXPECTED_SHA: ${{ ... }}` plus a shell comparison.
+    if re.search(r'(?m)^        env:\s*$', step):
+        for var, value in re.findall(r'(?m)^          ([A-Z][A-Z0-9_]*):\s*(.+)$', step):
+            if value.strip() == expected and f'test "{head}" = "${var}"' in commands:
+                return True
+
+    # Explicit shell assignments, used by the historical TLE workflows.
+    if (f'actual="{head}"' in commands
+            and f'expected="{expected}"' in commands
+            and 'test "$actual" = "$expected"' in commands):
+        return True
+    return False
+
+
 def check_checkout_sha(source: str, name: str) -> int:
     expected = PR_SHA if re.search(r'(?m)^  pull_request:', source) else RUN_SHA
     matches = list(CHECKOUT.finditer(source))
     for match in matches:
-        step = source[match.end():].split('      - ', 1)[0]
-        refs = REF.findall(step)
+        # The first step *after each* checkout must assert that checkout's SHA.
+        checkout, sep, tail = source[match.end():].partition('      - ')
+        refs = REF.findall(checkout)
         if refs != [expected]:
             raise AssertionError(f'{name}: checkout must pin {expected}, got {refs!r}')
-        if 'git rev-parse HEAD' not in source:
-            raise AssertionError(f'{name}: missing SHA assertion')
-        if name == 'ibge-source-live.yml':
-            if (f'          EXPECTED_SHA: {RUN_SHA}' not in source
-                    or '        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"' not in source):
-                raise AssertionError(f'{name}: live replay must compare checkout HEAD with event SHA')
+        if not sep:
+            raise AssertionError(f'{name}: checkout has no following SHA assertion step')
+        next_step = tail.split('      - ', 1)[0]
+        if not _is_exact_assertion(next_step, expected):
+            raise AssertionError(f'{name}: missing executable exact SHA assertion immediately after checkout')
     return len(matches)
 
 
@@ -49,6 +76,44 @@ class ExactCheckoutPolicy(unittest.TestCase):
             with self.subTest(mutant=mutant != source):
                 self.assertNotEqual(mutant, source)
                 with self.assertRaises(AssertionError):
+                    check_checkout_sha(mutant, name)
+
+    def test_sha_must_be_compared_not_just_printed(self):
+        cases = {
+            'integration-head.yml': ('test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD_SHA"',
+                                     'echo "$(git rev-parse HEAD)"'),
+            'tle-altitude-lineage.yml': ('test "$actual" = "$expected"',
+                                        'echo "$actual"'),
+            'tle-gcat-identity.yml': (
+                'test "$(git rev-parse HEAD)" = "' + PR_SHA + '"',
+                'echo "$(git rev-parse HEAD)"'),
+        }
+        for name, (old, new) in cases.items():
+            source = (ROOT / name).read_text(encoding='utf-8')
+            self.assertGreater(check_checkout_sha(source, name), 0)
+            self.assertIn(old, source)
+            for replacement in (new, '# ' + old):
+                mutant = source.replace(old, replacement, 1)
+                with self.subTest(workflow=name, change=replacement):
+                    self.assertNotEqual(mutant, source)
+                    with self.assertRaisesRegex(AssertionError, 'exact SHA assertion'):
+                        check_checkout_sha(mutant, name)
+
+    def test_expected_value_and_per_checkout_proximity_are_required(self):
+        name = 'integration-head.yml'
+        source = (ROOT / name).read_text(encoding='utf-8')
+        self.assertEqual(check_checkout_sha(source, name), 2)
+        for mutant in (
+            source.replace(f'EXPECTED_HEAD_SHA: {PR_SHA}', f'EXPECTED_HEAD_SHA: {RUN_SHA}', 1),
+            source.replace('test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD_SHA"',
+                           'echo "$(git rev-parse HEAD)"\n      - name: Late fake check\n'
+                           '        run: test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD_SHA"', 1),
+            source.replace('test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD_SHA"',
+                           'echo "$(git rev-parse HEAD)"', 1),
+        ):
+            with self.subTest(change=mutant != source):
+                self.assertNotEqual(mutant, source)
+                with self.assertRaisesRegex(AssertionError, 'exact SHA assertion'):
                     check_checkout_sha(mutant, name)
 
 
