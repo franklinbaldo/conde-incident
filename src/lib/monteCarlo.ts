@@ -4,6 +4,8 @@ import {
   HISTORICAL_ORBITAL_DATA,
 } from './constants';
 import { MonteCarloRunResult } from '../types/astrodynamics';
+import {ballisticFromMassScenario} from './orbitMassConstraints.ts';
+import type {MassBudgetScenario, DragGeometryScenario} from './orbitMassConstraints.ts';
 import {
   deg2rad,
   rad2deg,
@@ -32,6 +34,13 @@ export interface MonteCarloSummary {
   closestDistanceKm: number;
   closestRun: MonteCarloRunResult | null;
   results: MonteCarloRunResult[];
+  /** Null means the existing exploratory sampler, not a mass-calibrated run. */
+  conditionalMassScenario: null | {
+    sourceOccurrence: 'C61';
+    basis: string;
+    ballisticCoefficientM2Kg: number;
+    historicalProbabilityCertified: false;
+  };
 }
 
 export function runMonteCarloSimulation(
@@ -39,9 +48,19 @@ export function runMonteCarloSimulation(
   options?: {
     customScaleHeight?: number;
     decayWindowDay?: number; // 8 = Nov 8
+    /** Explicit four-component accounting and geometry; never historical default. */
+    massScenario?: MassBudgetScenario;
+    dragGeometry?: DragGeometryScenario;
   }
 ): MonteCarloSummary {
   const results: MonteCarloRunResult[] = [];
+  if (Boolean(options?.massScenario) !== Boolean(options?.dragGeometry))
+    throw new RangeError('Mass scenario and Cd/projected area must be provided together');
+  const bounded = options?.massScenario && options?.dragGeometry ?
+    ballisticFromMassScenario(options.massScenario, options.dragGeometry) : null;
+  if (bounded && (!bounded.budgetConsistent || bounded.object !== 528))
+    throw new RangeError('Conditional mass budget inconsistent or wrong target for NORAD 528');
+
   const epochDate = HISTORICAL_ORBITAL_DATA[528].epochDate; // 27 Oct 1963 14:40 UTC
   const epochMs = epochDate.getTime();
 
@@ -67,7 +86,11 @@ export function runMonteCarloSimulation(
     const scaleHeight = options?.customScaleHeight || (45 + randomGaussian(0, 4.0));
     const solarFlux = 76.5 + randomGaussian(0, 3.0);
     // Ballistic coefficient calibrated so decay lands around Nov 8 (12 days ± 1.5 days)
-    const ballisticCoeff = Math.max(0.005, 0.022 * Math.exp(randomGaussian(0, 0.18)));
+    // A source-declared scenario replaces ONLY the arbitrary B prior, NOT the
+    // empirical terminal lifetime law, trajectory phase, or historical evidence.
+    const ballisticCoeff = bounded ?
+      bounded.cdAreaOverMassM2Kg :
+      Math.max(0.005, 0.022 * Math.exp(randomGaussian(0, 0.18)));
 
     // 2. Sample lifetime to terminal reentry (altitude < 80 km)
     // Nominal lifetime is 12 days (Nov 8), with dispersion representing drag variability
@@ -151,6 +174,12 @@ export function runMonteCarloSimulation(
 
   return {
     totalRuns: sampleSize,
+    conditionalMassScenario: bounded && options?.massScenario ? {
+      sourceOccurrence:'C61',
+      basis:options.massScenario.basis,
+      ballisticCoefficientM2Kg:bounded.cdAreaOverMassM2Kg,
+      historicalProbabilityCertified:false,
+    } : null,
     runsDecayedOnNov8: countDecayedNov8,
     runsWithin50Km: countWithin50Km,
     runsWithin100Km: countWithin100Km,
