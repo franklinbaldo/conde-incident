@@ -51,10 +51,24 @@ jobs:
         run: node scripts/prepare-ssg.mjs
       - name: Validate generated OKF types
         run: node scripts/check-ssg-okf.mjs
+      - name: Snapshot versioned scientific JSON before SSG rebuild
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/conde-source-data"
+          cp -a public/data/. "$RUNNER_TEMP/conde-source-data/"
+          test -f "$RUNNER_TEMP/conde-source-data/conde-source-citations.json"
       - name: SSG check
         run: ssg check --config ssg.toml
       - name: SSG build
         run: ssg build --config ssg.toml
+      - name: Restore published JSON and verify custody after SSG rebuild
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p public/data
+          cp -a "$RUNNER_TEMP/conde-source-data/." public/data/
+          diff -qr "$RUNNER_TEMP/conde-source-data" public/data
       - name: Allow documentary frames in generated article CSP
         run: node scripts/enable-article-frames.mjs
       - name: Unite Vite lab and styles with SSG output
