@@ -2,7 +2,7 @@ repos:
   - repo: local
     hooks:
       - id: file-size-20kb
-        name: Enforce 20,000-byte file ceiling (frozen legacy hashes only)
+        name: Enforce 20,000-byte file ceiling (exact editable files and frozen legacy hashes)
         entry: python3 scripts/check_file_size.py
         language: system
         pass_filenames: false
