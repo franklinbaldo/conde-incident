@@ -1,5 +1,5 @@
 ---
-type: Document
+type: Guide
 title: '🦅 G34: auditoria retrospectiva, genealogia institucional e contraprova'
 description: 'Revisão de merges e defesa contra campos extrínsecos em proveniência pública.'
 date: '2026-11-13'
