@@ -110,19 +110,20 @@
         "CHILD_OBJECT_ID",
         "MEASUREMENT_EPOCH",
         "UPSTREAM_INDEPENDENCE",
-        "VISUAL_TRANSCRIPTION",
         "SENSOR_FRAME_ERROR"
       ],
       "child_528_perigee_from_this_row": null,
       "child_528_status_from_this_row": null,
       "factor_eligibility": "LAUNCH_GROUP_COMPILATION_NOT_528_OBSERVATION",
+      "group_launch_date_printed": "Jan. 16",
+      "group_period_minutes_printed": "94.6",
       "name": "NASA_SP4004_1963_LAUNCH_GROUP",
       "occurrences": [
         "C241-L15"
       ],
       "printed_group_designation": "1963-3",
       "printed_group_status": "Still in orbit.",
-      "printed_page": 501,
+      "printed_page": 502,
       "printed_perigee_statute_miles": 286,
       "published_year": 1964,
       "source_path": "research/tle_custody/nasa_sp4004_1963_group_custody_C241-L15.json",
@@ -178,7 +179,7 @@
     },
     {
       "path": "research/tle_custody/nasa_sp4004_1963_group_custody_C241-L15.json",
-      "sha256": "4cdbf9ab4f3fcb19b646417823b30e0648ff69aded2c3826783992dc21c9b368"
+      "sha256": "fdfe30eb79febb998f5eae8b206a86175696218d6b332b38cdf24e00c15932b7"
     }
   ],
   "model_contract": {
