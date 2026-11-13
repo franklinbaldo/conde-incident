@@ -33,7 +33,7 @@
   "evidence_boundary": {
     "source_html_is_not_original_1963_journal": true,
     "institution_contact_is_verified_current_custodian": false,
-    "museum_holds_station1078_journals": false,
+    "museum_custody_confirmed": false,
     "detailed_inventory_or_call_number_known": false,
     "target_norad_ids": [
       527,
