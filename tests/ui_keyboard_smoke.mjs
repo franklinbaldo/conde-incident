@@ -116,6 +116,39 @@ try {
     assert(await exportTrigger.evaluate(element => document.activeElement === element),
       'Escape must close export dialog and restore trigger focus');
 
+    // Check computed contrast in the browser, not just source CSS or a fixture.
+    // These small labels distinguish model results and must meet WCAG AA 4.5:1.
+    await page.getByRole('navigation', { name: 'Laboratory sections' })
+      .getByRole('link', { name: /Inverse scenarios/ }).click();
+    await page.getByRole('heading', { name: /Inverse Test:/ }).waitFor();
+    const inverseLabel = page.getByText('Tempo do cenário UTC:', { exact: true });
+    await inverseLabel.waitFor();
+    const samples = [
+      await inverseLabel.evaluate(el => ({
+        fg: getComputedStyle(el).color, bg: getComputedStyle(el.parentElement).backgroundColor,
+        fontSize: getComputedStyle(el).fontSize,
+      })),
+      await page.locator('footer').evaluate(el => ({
+        fg: getComputedStyle(el).color, bg: getComputedStyle(el).backgroundColor,
+        fontSize: getComputedStyle(el).fontSize,
+      })),
+    ];
+    const luminance = color => {
+      const rgb = color.match(/[\d.]+/g)?.slice(0, 3).map(Number);
+      assert(rgb?.length === 3, 'not an RGB color: ' + color);
+      return rgb.map(n => n / 255).map(n =>
+        n <= 0.04045 ? n / 12.92 : ((n + 0.055) / 1.055) ** 2.4
+      ).reduce((total, n, i) => total + n * [0.2126, 0.7152, 0.0722][i], 0);
+    };
+    for (const [i, sample] of samples.entries()) {
+      const a = luminance(sample.fg), b = luminance(sample.bg);
+      const ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+      assert(ratio >= 4.5, 'WCAG AA small-text contrast failure in ' +
+        (i ? 'footer' : 'inverse scenario label') + ': ' + ratio.toFixed(2) +
+        ':1; ' + JSON.stringify(sample));
+    }
+    await page.screenshot({ path: out + '/' + viewport.name + '-inverse-contrast.png', fullPage: true });
+
     assert.equal(errors.length, 0, `uncaught page errors: ${errors.join('; ')}`);
     findings.push({ viewport: viewport.name, skip_target: focused.id, hash_preserved: true, nav_hash: '#/map', html_lang: 'en', overflow_px: horizontal.document - horizontal.viewport });
     await page.close();
