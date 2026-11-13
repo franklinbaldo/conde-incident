@@ -1,0 +1,168 @@
+{
+  "schema": "conde.conditional-ssr-j2-print-only/v1",
+  "id": "CASTOR-G35-C241-P13-PRINTED-J2-INTERVALS",
+  "classification": "CONDITIONAL_COMPUTATIONAL_PRINT_BOX_NOT_HISTORICAL_ORBIT",
+  "depends_on": [
+    "C241-P11",
+    "C241-L12",
+    "C241-L19#1",
+    "C241-L18:19640002493",
+    "CASTOR-G34-C241-P11-SSR-PERIOD-DIMENSIONAL-AUDIT",
+    "CASTOR-G27-NASA-OCT15-J2-NODAL-SENSITIVITY-20261112"
+  ],
+  "graph": {
+    "nodes": [
+      "NASA_SSR_COMPILED_527_529_PERIGEE_APOGEE_INCLINATION",
+      "PRINT_QUANTIZATION_BOX",
+      "FIRST_ORDER_J2_SECULAR_RATE",
+      "PAIRED_SAME_EDITION_MODEL_CONTRAST",
+      "OBSERVED_EPOCH_UNKNOWN",
+      "ABSOLUTE_RAAN_UNKNOWN"
+    ],
+    "edges": [
+      {
+        "source": "NASA_SSR_COMPILED_527_529_PERIGEE_APOGEE_INCLINATION",
+        "target": "PRINT_QUANTIZATION_BOX",
+        "relation": "1km_and_0.01deg_print_precision_only"
+      },
+      {
+        "source": "PRINT_QUANTIZATION_BOX",
+        "target": "FIRST_ORDER_J2_SECULAR_RATE",
+        "relation": "conditional_osculating_assumption_not_verified"
+      },
+      {
+        "source": "FIRST_ORDER_J2_SECULAR_RATE",
+        "target": "PAIRED_SAME_EDITION_MODEL_CONTRAST",
+        "relation": "subtraction_with_shared_document_family"
+      },
+      {
+        "source": "OBSERVED_EPOCH_UNKNOWN",
+        "target": "ABSOLUTE_RAAN_UNKNOWN",
+        "relation": "not_identified_not_imputed"
+      }
+    ]
+  },
+  "model": "dOmega/dt=-1.5*n*J2*(Re/p)^2*cos(i); n=sqrt(mu/a^3), a=(rp+ra)/2, p=2*rp*ra/(rp+ra)",
+  "constants": {
+    "mu_km3_s2": 398600.4418,
+    "earth_radius_km": 6378.137,
+    "j2": 0.00108262668,
+    "day_seconds": 86400
+  },
+  "print_intervals": {
+    "perigee_apogee_half_width_km": 0.5,
+    "inclination_half_width_deg": 0.005,
+    "box_corner_count": 8,
+    "not_instrument_sigma": true
+  },
+  "results": [
+    {
+      "designator": "1963-003A",
+      "publication_date": "1963-10-15",
+      "source_id": "C241-L12",
+      "source_pdf_sha256": "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+      "nominal_deg_day": -1.08132852,
+      "print_only_signed_deg_day": [
+        -1.082266204,
+        -1.080391254
+      ]
+    },
+    {
+      "designator": "1963-003C",
+      "publication_date": "1963-10-15",
+      "source_id": "C241-L12",
+      "source_pdf_sha256": "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+      "nominal_deg_day": -1.119735759,
+      "print_only_signed_deg_day": [
+        -1.120707695,
+        -1.118764261
+      ]
+    },
+    {
+      "designator": "1963-003A",
+      "publication_date": "1963-11-15",
+      "source_id": "C241-L19#1",
+      "source_pdf_sha256": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+      "nominal_deg_day": -1.083224943,
+      "print_only_signed_deg_day": [
+        -1.084163487,
+        -1.082286818
+      ]
+    },
+    {
+      "designator": "1963-003C",
+      "publication_date": "1963-11-15",
+      "source_id": "C241-L19#1",
+      "source_pdf_sha256": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+      "nominal_deg_day": -1.140102858,
+      "print_only_signed_deg_day": [
+        -1.141093986,
+        -1.139112178
+      ]
+    },
+    {
+      "designator": "1963-003A",
+      "publication_date": "1963-11-30",
+      "source_id": "C241-L18:19640002493",
+      "source_pdf_sha256": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+      "nominal_deg_day": -1.082936759,
+      "print_only_signed_deg_day": [
+        -1.083875032,
+        -1.081998906
+      ]
+    },
+    {
+      "designator": "1963-003C",
+      "publication_date": "1963-11-30",
+      "source_id": "C241-L18:19640002493",
+      "source_pdf_sha256": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+      "nominal_deg_day": -1.152751073,
+      "print_only_signed_deg_day": [
+        -1.153753155,
+        -1.151749446
+      ]
+    }
+  ],
+  "paired_model_contrasts": [
+    {
+      "publication_date": "1963-10-15",
+      "a_minus_c_deg_day": [
+        0.036498057,
+        0.040316441
+      ],
+      "sign_positive_under_print_box": true,
+      "historical_ordering_in_time": "NOT_INFERRED"
+    },
+    {
+      "publication_date": "1963-11-15",
+      "a_minus_c_deg_day": [
+        0.054948691,
+        0.058807168
+      ],
+      "sign_positive_under_print_box": true,
+      "historical_ordering_in_time": "NOT_INFERRED"
+    },
+    {
+      "publication_date": "1963-11-30",
+      "a_minus_c_deg_day": [
+        0.067874414,
+        0.071754249
+      ],
+      "sign_positive_under_print_box": true,
+      "historical_ordering_in_time": "NOT_INFERRED"
+    }
+  ],
+  "limitations": {
+    "original_instrument_epoch": null,
+    "original_covariance": null,
+    "raan": null,
+    "osculating_element_convention": "UNVERIFIED",
+    "validation": "NOT_RUN",
+    "historical_domain_reduction": "NONE",
+    "impact_inference": "NOT_SUPPORTED",
+    "publication_dates_are_not_tracking_epochs": true,
+    "shared_source_family": "NASA_GODDARD_COMPILED_FROM_TRACKING",
+    "not_probability": true
+  },
+  "reproduction": "node --experimental-strip-types --test tests/orbitSsrJ2PrintIntervals.test.mjs"
+}
