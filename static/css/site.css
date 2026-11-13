@@ -48,3 +48,7 @@ a:focus-visible,button:focus-visible,iframe:focus-visible{outline:3px solid #ffd
 #ssg-search-close{flex:0 0 auto;min-width:44px;min-height:44px;padding:.55rem .7rem;border:2px solid #7a8596;border-radius:.45rem;background:#121720;color:#fff;font:600 .9rem/1.3 system-ui,sans-serif;cursor:pointer}
 #ssg-search-close:hover{background:#263042}
 #ssg-search-close:focus-visible{outline:3px solid #ffd278;outline-offset:2px}
+
+/* Evitar que ilustração de 1200px e IDs documentais criem rolagem lateral. */
+.full-story .editorial-cover{display:block;width:100%;max-width:100%;height:auto}
+.full-story .deck{overflow-wrap:anywhere}
