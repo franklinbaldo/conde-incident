@@ -16,8 +16,9 @@ test('arquivo SSG distingue índice Page e ocorrência Evidence',()=>{
  const familyCount=new Set(citations.records.map(r=>r.source_family)).size;
  const workCount=new Set(citations.records.map(r=>r.work_id)).size;
  const sourceCount=new Set(citations.records.map(r=>r.source_id)).size;
- assert.equal(pages.size,citations.curated_occurrences+4+familyCount+workCount+sourceCount);
+ assert.equal(pages.size,citations.curated_occurrences+5+familyCount+workCount+sourceCount);
  assert.match(pages.get('obras/index.md'),/^---\ntype: Page\n/);
+ assert.match(pages.get('estados/index.md'),/^---\ntype: Page\n/);
  assert.match(pages.get('familias/index.md'),/^---\ntype: Page\n/);
  assert.match(pages.get('fontes/index.md'),/^---\ntype: Page\n/);
  assert.match(pages.get('fontes/nasa-ssr-19631115/index.md'),/^---\ntype: Page\n/);
