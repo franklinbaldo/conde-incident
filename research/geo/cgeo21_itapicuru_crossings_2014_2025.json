@@ -1,0 +1,86 @@
+{
+  "schema": "conde.gis.itapicuru-crossing-chronology/v1",
+  "id": "CGEO-21",
+  "date_utc": "2026-11-13",
+  "municipality": {"ibge_code": "2908606", "name": "Conde", "uf": "BA"},
+  "sources": [
+    {
+      "id": "BLOG14", "family": "condebahia_wordpress", "kind": "local_blog",
+      "url": "https://condebahia.wordpress.com/2014/03/26/", "source_date": "2014-03-26",
+      "claim": "page labels a passarela between Conde and Vila do Conde over Rio Itapicuru",
+      "verification": "editorial_web_text", "file_acquired": false, "sha256": null
+    },
+    {
+      "id": "ALBA15", "family": "bahia_legislative_2015", "kind": "official_legislative_proposal_index",
+      "url": "https://www.al.ba.gov.br/atividade-legislativa/proposicao/IND-20.904-2015",
+      "source_date": "2015-02-06", "identifier": "IND/20.904/2015",
+      "claim": "proposal indicates construction of a bridge over Rio Itapicuru in Conde; does not date previous crossings",
+      "verification": "official_index_search_result", "file_acquired": false, "sha256": null
+    },
+    {
+      "id": "PNCP24", "family": "conde_public_procurement_2024", "kind": "official_procurement_record",
+      "url": "https://pncp.gov.br/app/editais/14126692000123/2024/22",
+      "source_date": "2024-05-29", "identifier": "14126692000123-1-000022/2024",
+      "claim": "procurement for completion of concrete bridge over Rio Itapicuru located in the Centro of Conde",
+      "verification": "official_portal_link_and_public_aggregator_summary", "file_acquired": false, "sha256": null
+    },
+    {
+      "id": "NEWS24", "family": "politica_livre_2024", "kind": "press_announced_future_inauguration",
+      "url": "https://www.politicalivre.com.br/2024/$12/prefeitura-do-conde-inaugura-ponte-afrisio-vieira-lima-nesta-segunda-30",
+      "source_date": "2024-12-29", "announced_event_date": "2024-12-30",
+      "claim": "announces inauguration of Afrisio Vieira Lima bridge connecting municipal seat and Vila do Conde",
+      "verification": "editorial_web_text", "file_acquired": false, "sha256": null
+    },
+    {
+      "id": "NEWS25", "family": "portal_da_cidade_conde_2025", "kind": "local_press_report",
+      "url": "https://conde.portaldacidade.com/noticias/achados-e-perdidos/chaves-sao-encontradas-em-ponte-que-liga-centro-e-vila-1939",
+      "source_date": "2025-07-16",
+      "claim": "report refers to a new bridge between Centro and Vila do Conde",
+      "verification": "editorial_web_text", "file_acquired": false, "sha256": null
+    }
+  ],
+  "candidate_assets": [
+    {
+      "id": "PEDESTRIAN_PASSARELA14", "type": "passarela", "documented_in": ["BLOG14"],
+      "geometry": null, "construction_date": null, "exists_in_1963": null
+    },
+    {
+      "id": "CONCRETE_BRIDGE24", "type": "concrete_bridge", "documented_in": ["PNCP24", "NEWS24", "NEWS25"],
+      "geometry": null, "construction_date": null, "inauguration_verified": null,
+      "exists_in_1963": null
+    }
+  ],
+  "observations": [
+    {"source": "BLOG14", "type": "passarela_reported_in_2014", "asserted_period": "2014", "supports_1963": null},
+    {"source": "ALBA15", "type": "new_bridge_proposal", "asserted_period": "2015", "supports_bridge_absence_before_2015": false},
+    {"source": "PNCP24", "type": "concrete_bridge_completion_procurement", "asserted_period": "2024", "proves_actual_completion": false},
+    {"source": "NEWS24", "type": "future_inauguration_announcement", "asserted_period": "2024", "proves_event_occurred_on_2024_12_30": false},
+    {"source": "NEWS25", "type": "new_bridge_reported_in_2025", "asserted_period": "2025", "proves_bridge_presence_in_1963": false}
+  ],
+  "links": [
+    {"from": "CGEO-20", "to": "PEDESTRIAN_PASSARELA14", "relation": "prior_2014_crossing_label"},
+    {"from": "CGEO-20", "to": "CONCRETE_BRIDGE24", "relation": "modern_centro_vila_connection"},
+    {"from": "CGEO-18", "to": "CGEO-21", "relation": "no_geocode_for_reported_city_center"},
+    {"from": "CGEO-17", "to": "CGEO-21", "relation": "1958_urban_placenames_not_located_by_bridge"},
+    {"from": "CGEO-19", "to": "CGEO-21", "relation": "1959_credited_vila_photos_not_bridge_survey"}
+  ],
+  "interpretation": {
+    "same_passarela_and_concrete_bridge": null,
+    "confirmed_2024_inauguration_date": null,
+    "proven_absence_of_bridge_in_1963": false,
+    "spatial_separation_in_2024_2025_reported": true,
+    "historical_1963_side_of_river_from_tupi": null,
+    "status": "CONNECTED_PENDING_HISTORICAL_SPATIAL_BRIDGE"
+  },
+  "castor_export": {
+    "event_date": "1963-11-08", "city_center_polygon_1963": null,
+    "crossing_point_1963": null, "crossing_present_1963": null,
+    "river_bank_of_reported_event_1963": null, "impact_point_1963": null,
+    "crs": null, "accuracy_m": null, "can_constrain_orbital_reentry": false
+  },
+  "pending": [
+    "Dated 1950-1963 urban plan, riverbank layout and crossing type",
+    "Original 1963 Portuguese Rádio Tupi transcript",
+    "Separate engineering documents identifying 2014 passarela versus concrete bridge 2024"
+  ]
+}
