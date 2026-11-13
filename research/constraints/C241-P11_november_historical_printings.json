@@ -182,6 +182,19 @@
     "C241-L18:19640002493",
     "C197#1"
   ],
+  "source_locked_bridge": {
+    "bridge_id": "C241-L18-L19-LEGACY527-NOV30",
+    "bridge_path": "public/data/conde-ssr-source-locked-links.json",
+    "canonical_527_nov30_period_min": "94.6",
+    "constraint_activation": false,
+    "linked_occurrences": [
+      "C241-L19#1",
+      "C241-L18:19640002493"
+    ],
+    "nov15_to_nov30_527_publication_delta_min": "0.0",
+    "observed_epoch": null,
+    "sensor_sigma": null
+  },
   "source_sha256": [
     "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
     "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
