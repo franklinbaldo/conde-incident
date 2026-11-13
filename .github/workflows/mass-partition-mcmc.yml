@@ -1,0 +1,67 @@
+name: C241 mass semantic review and synthetic MCMC gate
+on:
+  pull_request:
+    paths:
+      - research/constraints/C241_L39_stage_payload_mass_semantics_20261113.json
+      - research/statistics/C241_mass_partition_306kg_mcmc_20261113.md
+      - tools/gcat_mass_lineage_audit.py
+      - tests/test_gcat_mass_lineage_audit.py
+      - tools/mass_partition_mcmc.py
+      - tests/test_mass_partition_mcmc.py
+      - tests/fixtures/mass_partition_synthetic_c241.json
+      - .github/workflows/mass-partition-mcmc.yml
+  push:
+    branches: [main]
+    paths:
+      - research/constraints/C241_L39_stage_payload_mass_semantics_20261113.json
+      - research/statistics/C241_mass_partition_306kg_mcmc_20261113.md
+      - tools/gcat_mass_lineage_audit.py
+      - tests/test_gcat_mass_lineage_audit.py
+      - tools/mass_partition_mcmc.py
+      - tests/test_mass_partition_mcmc.py
+      - tests/fixtures/mass_partition_synthetic_c241.json
+      - .github/workflows/mass-partition-mcmc.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact source SHA
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Fail-closed historical mass semantics and MCMC controls
+        run: |
+          python3 -m unittest discover -s tests -p test_gcat_mass_lineage_audit.py -v
+          python3 -m unittest discover -s tests -p test_mass_partition_mcmc.py -v
+          python3 tools/gcat_mass_lineage_audit.py --output "$RUNNER_TEMP/306-source-semantics.json"
+          python3 tools/mass_partition_mcmc.py --output "$RUNNER_TEMP/no-historical-posterior.json"
+          python3 tools/mass_partition_mcmc.py --synthetic-fixture tests/fixtures/mass_partition_synthetic_c241.json --output "$RUNNER_TEMP/synthetic-mcmc.json"
+          python3 - "$RUNNER_TEMP/no-historical-posterior.json" "$RUNNER_TEMP/synthetic-mcmc.json" <<'PY'
+          import json,sys
+          historical,synthetic=[json.load(open(p)) for p in sys.argv[1:]]
+          assert historical['historical_likelihood'] is None
+          assert historical['posterior_most_probable_allocation'] is None
+          assert historical['catalogue_payload_527_component_mass_kg']==306
+          assert historical['catalogue_mass_basis_conflict_kg']==30
+          assert not historical['historical_mcmc_executed']
+          assert synthetic['inference_status']=='SYNTHETIC_FIXTURE_NOT_HISTORICAL_POSTERIOR'
+          assert synthetic['assumed_total_reference_kg']==1176
+          assert not synthetic['basis_is_historically_selected']
+          assert not synthetic['historical_masses_inferred']
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: c241-mass-mcmc-${{ github.event.pull_request.head.sha || github.sha }}
+          path: |
+            ${{ runner.temp }}/306-source-semantics.json
+            ${{ runner.temp }}/no-historical-posterior.json
+            ${{ runner.temp }}/synthetic-mcmc.json
+          if-no-files-found: warn
+          retention-days: 30
