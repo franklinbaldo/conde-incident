@@ -92,7 +92,8 @@ landing('evidencias','Evidências e fontes','Índice de textos, fontes e proveni
  ).join('\n')+'\n\n[Arquivo documental estático: proveniência e genealogia](/conde-incident/evidencias/arquivo/)\n\n[Pesquisa e evidências completas](https://github.com/franklinbaldo/conde-incident/tree/main/research)');
 const archiveCount = writeArchivePages('content/evidencias/arquivo',
   JSON.parse(readFileSync('public/data/conde-source-citations.json', 'utf8')),
-  JSON.parse(readFileSync('public/data/conde-declared-dependence.json', 'utf8')));
+  JSON.parse(readFileSync('public/data/conde-declared-dependence.json', 'utf8')), 
+  JSON.parse(readFileSync('public/data/conde-wayback-citation-links.json', 'utf8')));
 console.log('Arquivo SSG: '+archiveCount+' páginas Markdown para SSG sem JS.');
 const authoredCount=writeAuthoredPages();
 writeTleCustodyPage();
