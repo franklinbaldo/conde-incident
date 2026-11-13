@@ -17,11 +17,13 @@ class TupiLegacyFragmentTests(unittest.TestCase):
         cls.parent = json.loads((ROOT / bridge.PARENT).read_text())
         cls.lineage = json.loads((ROOT / bridge.LINEAGES).read_text())
         cls.editorial = (ROOT / bridge.EDITORIAL).read_bytes()
+        cls.locator = (ROOT / bridge.LOCATOR).read_bytes()
 
-    def build_with(self, parent=None, lineage=None, editorial=None):
+    def build_with(self, parent=None, lineage=None, editorial=None, locator=None):
         return bridge.build(parent if parent is not None else self.parent,
                             lineage if lineage is not None else self.lineage,
-                            editorial if editorial is not None else self.editorial, 'testsha')
+                            editorial if editorial is not None else self.editorial, 'testsha',
+                            locator if locator is not None else self.locator)
 
     def test_three_occurrences_single_transmission_family(self):
         self.assertEqual([x['occurrence_ref'].rsplit(':', 1)[-1] for x in self.record['documentary_occurrences']],
@@ -36,6 +38,32 @@ class TupiLegacyFragmentTests(unittest.TestCase):
         self.assertIsNone(x['direct_textual_dependency'])
         self.assertIsNone(x['independent_witness_count'])
         self.assertIsNone(x['tupi_broadcast_epoch_utc'])
+
+    def test_docreader_corrected_edition_without_page_promotion(self):
+        c = self.record['comparison']
+        self.assertEqual(c['other_document_locator_id'], 'DOC-UH-PE-1963-00471-LOCATOR')
+        self.assertEqual(c['other_source_url'], 'https://memoria.bn.gov.br/DocReader/765147/5339')
+        self.assertEqual(c['other_page8_candidate_url'], 'https://memoria.bn.gov.br/DocReader/765147/5346')
+        self.assertEqual(c['earlier_wrong_docreader_edition'], '00507')
+        self.assertEqual(c['other_pdf_head_status'], 403)
+        self.assertFalse(c['other_page8_raster_retrieved'])
+        self.assertFalse(c['other_printed_page8_inspected'])
+        self.assertEqual(self.record['delta_links'], 6)
+        self.assertIn({'from': c['other_document_locator_id'],
+                       'to': bridge.UH, 'kind': 'LOCATES_EDITION_NOT_PAGE_FACSIMILE'},
+                      self.record['graph_edges'])
+
+    def test_wrong_edition_or_false_facsimile_promotion_rejected(self):
+        for key, val in (('docreader_selected_edition', '00507'),
+                         ('docreader_requested_page8_candidate_id', 5756),
+                         ('page_8_inspected', True),
+                         ('four_metre_hole_verified', True),
+                         ('docreader_page8_raster_retrieved', True)):
+            with self.subTest(field=key):
+                locator = json.loads(self.locator)
+                locator[key] = val
+                with self.assertRaisesRegex(ValueError, 'locator bytes changed'):
+                    self.build_with(locator=bridge.encoded(locator))
 
     def test_hypotheses_and_simulator_stay_pending(self):
         self.assertEqual(len(self.record['hypotheses']), 4)

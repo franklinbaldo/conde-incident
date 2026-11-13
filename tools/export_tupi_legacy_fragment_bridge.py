@@ -18,6 +18,8 @@ OUTPUT = Path('public/data/conde-tupi-legacy-fragment-bridge.json')
 EDITORIAL = Path('research/editorial/tupi_fragmentos_20261113.md')
 LINEAGES = Path('research/provenance/lineages.json')
 PARENT = Path('public/data/conde-declared-dependence.json')
+LOCATOR = Path('research/archive/ultima_hora_pe_00471_1963_locator_20261113.json')
+LOCATOR_SHA256 = 'cf761332644243ec2943d4fd299d292408176c9a1dd5125295a63d16a8ab41a8'
 EDITORIAL_SHA256 = '9ab9ecb181bbe262e5696bed8fcf48ab4258a400fc1345bf94380c93f9f589eb'
 FBIS = 'FBIS_EOP_UAP_D001'
 TUPI = 'RADIO_TUPI_19631108'
@@ -33,9 +35,36 @@ def encoded(value: dict) -> bytes:
     return (json.dumps(value, sort_keys=True, ensure_ascii=False, separators=(',', ':')) + '\n').encode()
 
 
-def build(parent: dict, lineage: dict, editorial_bytes: bytes, parent_sha256: str) -> dict:
+def build(parent: dict, lineage: dict, editorial_bytes: bytes, parent_sha256: str,
+          locator_bytes: bytes) -> dict:
     require(hashlib.sha256(editorial_bytes).hexdigest() == EDITORIAL_SHA256,
             'editorial snapshot changed; re-audit source before updating pin')
+    require(hashlib.sha256(locator_bytes).hexdigest() == LOCATOR_SHA256,
+            'newspaper locator bytes changed; independently re-audit')
+    locator = json.loads(locator_bytes)
+    require(locator['id'] == 'DOC-UH-PE-1963-00471-LOCATOR'
+            and locator['edition'] == '00471'
+            and locator['catalog_identifier'] == '765147'
+            and locator['docreader_selected_edition'] == '00471'
+            and locator['docreader_first_physical_id'] == 5339
+            and locator['docreader_last_physical_id'] == 5346
+            and locator['docreader_requested_page8_candidate_id'] == 5346
+            and locator['docreader_requested_page8_candidate_url']
+                == 'https://memoria.bn.gov.br/DocReader/765147/5346'
+            and locator['catalog_url']
+                == 'https://memoria.bn.gov.br/DocReader/765147/5339'
+            and locator['earlier_catalog_selected_edition'] == '00507'
+            and locator['earlier_catalog_url']
+                == 'https://memoria.bn.gov.br/DocReader/765147/5756'
+            and locator['pdf_head_status'] == 403
+            and locator['pdf_sha256'] is None
+            and locator['page_image_sha256'] is None
+            and locator['original_text_verified'] is False
+            and locator['page_8_inspected'] is False
+            and locator['four_metre_hole_verified'] is False
+            and locator['docreader_page8_raster_retrieved'] is False
+            and locator['docreader_physical_ids_are_not_printed_pages'] is True,
+            'newspaper locator edition, page or custody state changed')
     require(parent['matrix_git_blob_sha1'] == pg.MATRIX_BLOB_SHA,
             'different frozen matrix')
     citations = parent['citation_lineages']
@@ -81,6 +110,8 @@ def build(parent: dict, lineage: dict, editorial_bytes: bytes, parent_sha256: st
             {'path': str(LINEAGES), 'identity': 'DECLARED_DOCUMENTARY_DEPENDENCE'},
             {'path': str(EDITORIAL), 'sha256': EDITORIAL_SHA256,
              'identity': 'EDITORIAL_INTERPRETATION_NOT_PRIMARY_FACSIMILE'},
+            {'path': str(LOCATOR), 'sha256': LOCATOR_SHA256,
+             'identity': 'FBN_DOCREADER_EDITION_LOCATOR_NOT_PAGE_FACSIMILE'},
         ],
         'documentary_occurrences': checked,
         'comparison': {
@@ -93,8 +124,17 @@ def build(parent: dict, lineage: dict, editorial_bytes: bytes, parent_sha256: st
             'tupi_time_zone_interpretation': None,
             'other_source_id': UH,
             'other_source_family': 'ULTIMA_HORA_NORDESTE_NEWSPAPER',
-            'other_source_url': 'https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00471.pdf#page=8',
-            'other_locator': 'Última Hora Nordeste, 08/11/1963, edição 00471, folha digital 8',
+            'other_source_url': locator['catalog_url'],
+            'other_locator': 'Última Hora Nordeste, edição 00471; IDs físicos '
+                             '5339–5346; 5346 apenas candidato à p.8 impressa',
+            'other_document_locator_id': locator['id'],
+            'other_page8_candidate_url': locator['docreader_requested_page8_candidate_url'],
+            'other_page8_raster_retrieved': locator['docreader_page8_raster_retrieved'],
+            'other_printed_page8_inspected': locator['page_8_inspected'],
+            'other_pdf_url': locator['pdf_exact_url'],
+            'other_pdf_head_status': locator['pdf_head_status'],
+            'earlier_wrong_docreader_url': locator['earlier_catalog_url'],
+            'earlier_wrong_docreader_edition': locator['earlier_catalog_selected_edition'],
             'other_matrix_occurrence_ref': None,
             'other_original_pdf_sha256': None,
             'other_reported_claim': 'FOUR_METRE_HOLE_IN_DISTINCT_STOLEN_STATUES_NEWS',
@@ -130,6 +170,8 @@ def build(parent: dict, lineage: dict, editorial_bytes: bytes, parent_sha256: st
         'graph_edges': [
             {'from': TUPI, 'to': FBIS, 'kind': 'TRANSCRIBED_BY'},
             {'from': FBIS, 'to': pg.matrix_ref('C02#1'), 'kind': 'REPORTS_NOT_OBSERVES'},
+            {'from': locator['id'], 'to': UH,
+             'kind': 'LOCATES_EDITION_NOT_PAGE_FACSIMILE'},
             {'from': UH, 'to': 'FOUR_METRE_WORDING_TUPI_VS_UH00471',
              'kind': 'SECONDARY_READING_ONLY'},
             {'from': pg.matrix_ref('C02#1'), 'to': 'FOUR_METRE_WORDING_TUPI_VS_UH00471',
@@ -137,7 +179,7 @@ def build(parent: dict, lineage: dict, editorial_bytes: bytes, parent_sha256: st
             {'from': 'FOUR_METRE_WORDING_TUPI_VS_UH00471', 'to': 'TUPI_1963_NARRATIVE_TRANSMISSION_PATH',
              'kind': 'PENDING_TEXTUAL_INFERENCE'},
         ],
-        'delta_links': 5,
+        'delta_links': 6,
         'delta_physical_domain': 'NONE',
         'independent_528_physical_observation_count': None,
     }
@@ -148,7 +190,8 @@ def from_repo(root: Path = ROOT) -> dict:
     # Rebuild the parent independently, rather than trusting a stale site file.
     require(raw == encoded(documentary.build(root)), 'stale or altered parent graph')
     return build(json.loads(raw), json.loads((root / LINEAGES).read_text()),
-                 (root / EDITORIAL).read_bytes(), hashlib.sha256(raw).hexdigest())
+                 (root / EDITORIAL).read_bytes(), hashlib.sha256(raw).hexdigest(),
+                 (root / LOCATOR).read_bytes())
 
 
 def main() -> None:
