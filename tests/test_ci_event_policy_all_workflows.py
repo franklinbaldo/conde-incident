@@ -66,7 +66,7 @@ UNIVERSAL_CRITICAL_STEPS = {
         },
         'lean': {
             'Assert exact head SHA': 'test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD_SHA"',
-            'Detect Lean package': 'if [[ -f formal/lean-toolchain',
+            'Detect Lean package': 'if [[ -f formal/lean-toolchain && ( -f formal/lakefile.toml || -f formal/lakefile.lean ) ]]; then',
             'Compile conditional proofs': 'lake build',
         },
     },
@@ -144,7 +144,7 @@ def assert_unskippable_critical_steps(source: str, filename: str,
             # A multiline step may have setup and shell guards, but must
             # still contain the actual test invocation as a command line.
             commands = [line.strip() for line in step[run.end():].splitlines()]
-            if not any(line == command or line.startswith(command) for line in commands):
+            if command not in commands:
                 raise AssertionError(f'{filename}: universal step command changed: {job}/{title}')
         elif run.group(1) != command:
             raise AssertionError(f'{filename}: universal step command changed: {job}/{title}')
