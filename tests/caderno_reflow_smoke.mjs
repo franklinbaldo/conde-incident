@@ -13,8 +13,8 @@ const browser = await chromium.launch({ headless: true });
 try {
   for (const path of sources) {
     const source = await fs.readFile(path, 'utf8');
-    const header = source.match(/<header class="masthead">[\\s\\S]*?<\\/header>/)?.[0];
-    const skip = source.match(/<a\\b[^>]*class="skip-link"[^>]*>[^<]+<\\/a>/)?.[0];
+    const header = source.match(/<header class="masthead">[\s\S]*?<\/header>/)?.[0];
+    const skip = source.match(/<a\b[^>]*class="skip-link"[^>]*>[^<]+<\/a>/)?.[0];
     assert(header && skip, `missing real header/skip-link markup: ${path}`);
 
     for (const width of [320, 375, 1440]) {
