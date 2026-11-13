@@ -43,6 +43,26 @@ class RainBridgeTests(unittest.TestCase):
                     "simulator_value"):
             self.assertIsNone(bridge[key])
 
+    def test_reject_fabricated_station_coordinates_from_unchanged_source_hash(self):
+        # The .dly SHA remains pinned, but it does not authenticate station
+        # coordinates, which are held in ghcnd-stations.txt.
+        for coordinates in ([0.0, 0.0], [89.0, -37.61]):
+            with self.subTest(coordinates=coordinates), self.assertRaises(ValueError):
+                self.mutate(0, lambda d: next(
+                    st for st in d["stations"] if st["id"] == "BR048346820"
+                ).update(coordinate_lat_lon=coordinates))
+
+    def test_reject_fabricated_station_name_and_inventory_bounds(self):
+        # Both values are catalog fields outside the 11 .dly files.
+        with self.assertRaises(ValueError):
+            self.mutate(0, lambda d: next(
+                st for st in d["stations"] if st["id"] == "BR048345380"
+            ).update(station="OBSERVATORIO 528"))
+        with self.assertRaises(ValueError):
+            self.mutate(0, lambda d: next(
+                st for st in d["stations"] if st["id"] == "BR048346820"
+            ).update(catalogue_prcp_year_bounds=[1963, 2026]))
+
     def test_full_station_file_hash_swap_rejected(self):
         with self.assertRaises(ValueError):
             self.mutate(0, lambda d: d["stations"][0].update(whole_file_sha256="0"*64))

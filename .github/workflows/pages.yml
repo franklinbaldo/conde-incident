@@ -51,6 +51,10 @@ jobs:
         run: node scripts/prepare-ssg.mjs
       - name: Validate generated OKF types
         run: node scripts/check-ssg-okf.mjs
+      - name: Verify reproducible, bounded documentary JSON index
+        run: |
+          python3 -m unittest discover -s tests -p test_ssg_evidence_index.py
+          python3 tools/export_ssg_evidence_index.py --check
       - name: Snapshot versioned scientific JSON before SSG rebuild
         shell: bash
         run: |

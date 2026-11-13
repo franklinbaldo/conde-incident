@@ -1,0 +1,295 @@
+{
+  "schema": "conde.gaviao-retrospective-window/v1",
+  "audit": "G42",
+  "reviewed_from_main_sha": "d1f6d53851e9a4d3564ed436c527ad0c2157f12e",
+  "reviewed_through_main_sha": "717e00fb59dec380f1ee8a8bb5453c81a1c88f64",
+  "first_parent_integrations": 14,
+  "dag_commits": 40,
+  "merge_commits": 4,
+  "lateral_commits": 26,
+  "main_cut_ci": {
+    "sha": "717e00fb59dec380f1ee8a8bb5453c81a1c88f64",
+    "workflow_runs_checked_via_official_github_api": 24,
+    "completed_success": 24,
+    "other_conclusions": 0,
+    "checked_at": "2026-11-13"
+  },
+  "ci_source": "Only main cutoff 24/24 checked; prior individual commit CI remains NOT_CHECKED",
+  "finding": {
+    "id": "G42-F1",
+    "location": "tools/export_ghcnd_conde_bridge.py",
+    "accepted_synthetic_mutants_before_fix": 4,
+    "failure": "Tampered source catalogue coordinates, station name and PRCP year bounds accepted despite unchanged pinned file hashes",
+    "patch": "Pin canonical report semantics at bridge consumption; source audit from full archived files remains separately required",
+    "caveat": "This guards repository snapshot consistency; does not replace independent NOAA re-download or prove 1963 station position"
+  },
+  "integrations_newest_first": [
+    {
+      "sha": "717e00fb59dec380f1ee8a8bb5453c81a1c88f64",
+      "parents": [
+        "fe55c7d6c200fc8186c5c23c5449979514bd27e6"
+      ],
+      "pr_number": 549,
+      "subject": "🦉 Caderno 19: quinze filmes RU301 sem identificação do 528 (#549)",
+      "commit_time": "2026-11-13T10:28:39-04:00",
+      "first_parent_changed_files": [
+        "stories/2026-11-13-quinze-filmes-sem-nome-para-o-satelite.md"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "Historical commit check-runs not individually queried"
+      }
+    },
+    {
+      "sha": "fe55c7d6c200fc8186c5c23c5449979514bd27e6",
+      "parents": [
+        "73a2d79d121f481832f02901df0de415602b4649"
+      ],
+      "pr_number": 548,
+      "subject": "🦦 Catalogar holdings soviéticos de 1963 sem promover medições (#548)",
+      "commit_time": "2026-11-13T10:28:21-04:00",
+      "first_parent_changed_files": [
+        "research/tle_custody/evidence_matrix_C241-L29_2026-11-13.md",
+        "research/tle_custody/soviet_1963_bibliographic_holdings_C241-L29.json",
+        "tests/test_soviet_1963_holdings.py",
+        "tools/verify_soviet_1963_holdings.py"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "Historical commit check-runs not individually queried"
+      }
+    },
+    {
+      "sha": "73a2d79d121f481832f02901df0de415602b4649",
+      "parents": [
+        "dd2903b14b37e937dabb7f2e3310a30e08e37cc1"
+      ],
+      "pr_number": 546,
+      "subject": "90 🦊 UX-04: percurso bidirecional de proveniência em cada citação (#546)",
+      "commit_time": "2026-11-13T10:27:26-04:00",
+      "first_parent_changed_files": [
+        "scripts/ssg-documentary-archive.mjs",
+        "tests/ssg-documentary-archive.test.mjs"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "Historical commit check-runs not individually queried"
+      }
+    },
+    {
+      "sha": "dd2903b14b37e937dabb7f2e3310a30e08e37cc1",
+      "parents": [
+        "0bafada702701a5fc5fea5dadd09690cb5471628"
+      ],
+      "pr_number": 547,
+      "subject": "70 🦇 Reflow do diálogo Python em 320–640px com regressão Chromium (#547)",
+      "commit_time": "2026-11-13T10:27:25-04:00",
+      "first_parent_changed_files": [
+        "src/components/PythonScriptModal.tsx",
+        "tests/ui_keyboard_smoke.mjs"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "Historical commit check-runs not individually queried"
+      }
+    },
+    {
+      "sha": "0bafada702701a5fc5fea5dadd09690cb5471628",
+      "parents": [
+        "626bbb33caec96932bc39c696d5e17bfe642de83"
+      ],
+      "pr_number": 544,
+      "subject": "fix(castor): reject geodetic altitudes inconsistent with orbital radius (#544)",
+      "commit_time": "2026-11-13T10:16:24-04:00",
+      "first_parent_changed_files": [
+        "src/lib/orbitSpaceWeatherAdapter.ts",
+        "tests/orbitSpaceWeatherAdapter.test.mjs"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "Historical commit check-runs not individually queried"
+      }
+    },
+    {
+      "sha": "626bbb33caec96932bc39c696d5e17bfe642de83",
+      "parents": [
+        "4404592b002f16d4b03f3157f96cfc8493701262"
+      ],
+      "pr_number": 542,
+      "subject": "test(ci): block skippable needs in universal gates (#542)",
+      "commit_time": "2026-11-13T10:07:17-04:00",
+      "first_parent_changed_files": [
+        "tests/test_ci_event_policy_all_workflows.py"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "Historical commit check-runs not individually queried"
+      }
+    },
+    {
+      "sha": "4404592b002f16d4b03f3157f96cfc8493701262",
+      "parents": [
+        "f2f77eb63c81c483ebcbfe5c9ceb60c8dbaafd64"
+      ],
+      "pr_number": 543,
+      "subject": "92 🦦 Fonte primária: redação final do PL 423, antecedente da Lei 628/1953 (#543)",
+      "commit_time": "2026-11-13T10:06:27-04:00",
+      "first_parent_changed_files": [
+        "research/archive/conde_lei628_projeto423_legislativo_20261113.json",
+        "tests/test_conde_lei628_projeto423.py",
+        "tools/verify_conde_lei628_projeto423.py"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "Historical commit check-runs not individually queried"
+      }
+    },
+    {
+      "sha": "f2f77eb63c81c483ebcbfe5c9ceb60c8dbaafd64",
+      "parents": [
+        "fa1e612150e002cee4b7d0b3d6999561af1d17be",
+        "54515cd8608a7a4e69f2dd60a294b6dd2baa3271"
+      ],
+      "pr_number": 540,
+      "subject": "Merge pull request #540 from franklinbaldo/cervo/autonomous-flow-time-gauge",
+      "commit_time": "2026-11-13T10:04:19-04:00",
+      "first_parent_changed_files": [
+        "research/constraints/autonomous_time_gauge_candidate_C241.json",
+        "research/statistics/AUTONOMOUS_FLOW_TIME_GAUGE_C241.md",
+        "research/statistics/autonomous_time_gauge_C241.json",
+        "tests/test_autonomous_time_gauge.py",
+        "tools/autonomous_time_gauge.py"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "Historical commit check-runs not individually queried"
+      }
+    },
+    {
+      "sha": "fa1e612150e002cee4b7d0b3d6999561af1d17be",
+      "parents": [
+        "f8f1b620aefc665e8497eeca15bfdfd635027fa0",
+        "c1a7afa7be7db22f3fa5da67df1fd30c0b1b2d1f"
+      ],
+      "pr_number": 535,
+      "subject": "Merge pull request #535 from franklinbaldo/caranguejo/cgeo28-docreader-query-state",
+      "commit_time": "2026-11-13T10:01:06-04:00",
+      "first_parent_changed_files": [
+        "research/geo/cgeo28_docreader_query_state.json",
+        "research/geo/cgeo28_docreader_query_state.md",
+        "research/geo/evidence/cgeo28_53_20D_dom.txt",
+        "research/geo/evidence/cgeo28_Esplanada_dom.txt",
+        "research/geo/evidence/cgeo28_MI_201850_dom.txt",
+        "tests/test_cgeo28_docreader_query_state.py",
+        "tools/cgeo28_docreader_query_state.py"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "Historical commit check-runs not individually queried"
+      }
+    },
+    {
+      "sha": "f8f1b620aefc665e8497eeca15bfdfd635027fa0",
+      "parents": [
+        "d04be76f5ef08501b12b5fbd85b013c611ee53be",
+        "42898b0780e5ed00c4778d6092d1ffa0d3813438"
+      ],
+      "pr_number": 537,
+      "subject": "Merge pull request #537 from franklinbaldo/abelha/ghcnd-conde-rain-candidate-20261113",
+      "commit_time": "2026-11-13T09:58:38-04:00",
+      "first_parent_changed_files": [
+        "formal/Conde1963.lean",
+        "formal/Conde1963/GhcndCondeCandidate.lean",
+        "public/data/conde-ghcnd-conde-bridge.json",
+        "tests/test_ghcnd_conde_bridge.py",
+        "tools/export_ghcnd_conde_bridge.py"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "Historical commit check-runs not individually queried"
+      }
+    },
+    {
+      "sha": "d04be76f5ef08501b12b5fbd85b013c611ee53be",
+      "parents": [
+        "d24387ee26391021b4c2c3d02114b666765e0b28",
+        "25089ef7390b50532f561afafedd642024b7aede"
+      ],
+      "pr_number": 539,
+      "subject": "Merge pull request #539 from franklinbaldo/research/lagarto-ghcnd-wetday-alignment-r27",
+      "commit_time": "2026-11-13T09:58:10-04:00",
+      "first_parent_changed_files": [
+        ".github/workflows/ghcnd-conde-wetday-1963.yml",
+        "research/meteorology/ghcnd_conde_wetday_alignment_1963.json",
+        "research/meteorology/ghcnd_conde_wetday_alignment_1963.md",
+        "tests/test_ghcnd_conde_wetday_alignment_1963.py",
+        "tools/audit_ghcnd_conde_wetday_alignment_1963.py"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "Historical commit check-runs not individually queried"
+      }
+    },
+    {
+      "sha": "d24387ee26391021b4c2c3d02114b666765e0b28",
+      "parents": [
+        "db711dd1b947cb61383765d8fe0d35986e4f74f0"
+      ],
+      "pr_number": 534,
+      "subject": "90 🐙 C241-P19: mínimo de duas exceções nas 12 células NASA SSR (#534)",
+      "commit_time": "2026-11-13T09:54:49-04:00",
+      "first_parent_changed_files": [
+        ".github/workflows/lean-core.yml",
+        "formal/Conde1963.lean",
+        "formal/Conde1963/SsrCellRepairs.lean",
+        "formal/scripts/compile_ssr_cell_repairs.py",
+        "formal/tests/test_ssr_cell_repairs.py",
+        "research/constraints/C241-P19_ssr_cell_repairs.json"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "Historical commit check-runs not individually queried"
+      }
+    },
+    {
+      "sha": "db711dd1b947cb61383765d8fe0d35986e4f74f0",
+      "parents": [
+        "b742a4a2cdd8a40e790eddf2ba4e33c9a0bad81d"
+      ],
+      "pr_number": 533,
+      "subject": "95 🐢 C241-L28: fonte NASA original confirma 1963 03A = 527 (#533)",
+      "commit_time": "2026-11-13T09:51:10-04:00",
+      "first_parent_changed_files": [
+        ".github/workflows/nasa-527-1964-1967-custody.yml",
+        "research/tle_custody/evidence_matrix_C241-L28_2026-11-13.md",
+        "research/tle_custody/nasa_527_1964_1967_crosswalk_C241-L28.json",
+        "tests/test_nasa_527_1964_1967_custody.py",
+        "tools/nasa_527_1964_1967_custody.py"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "Historical commit check-runs not individually queried"
+      }
+    },
+    {
+      "sha": "b742a4a2cdd8a40e790eddf2ba4e33c9a0bad81d",
+      "parents": [
+        "d1f6d53851e9a4d3564ed436c527ad0c2157f12e"
+      ],
+      "pr_number": 532,
+      "subject": "88 🦅 G41: guard multiline CI scripts against early success and shell override (#532)",
+      "commit_time": "2026-11-13T09:49:12-04:00",
+      "first_parent_changed_files": [
+        "research/audits/gaviao-main-window-20261113-g41.json",
+        "research/audits/gaviao-main-window-20261113-g41.md",
+        "tests/ci_critical_step_scripts.py",
+        "tests/test_ci_event_policy_all_workflows.py",
+        "tests/test_ci_universal_steps.py"
+      ],
+      "ci_snapshot": {
+        "status": "NOT_CHECKED",
+        "reason": "Historical commit check-runs not individually queried"
+      }
+    }
+  ]
+}
