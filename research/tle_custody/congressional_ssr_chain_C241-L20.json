@@ -1,0 +1,54 @@
+{
+  "id": "C241-L20#1",
+  "source_type": "primary_institutional_record_reprinted_in_1965",
+  "title": "Satellite Information from the National Aeronautics and Space Administration",
+  "publisher": "US House Committee on Government Operations",
+  "report": "H. Rept. 89-197, 89th Congress, 1st Session",
+  "report_published_on": "1965-03-22",
+  "historical_agreement_on": "1961-11-07",
+  "url": "https://www.govinfo.gov/content/pkg/SERIALSET-12667_05_00-002-0197-0000/pdf/SERIALSET-12667_05_00-002-0197-0000.pdf",
+  "pdf_sha256": "a08b4c505a37c09d1eb9c33ed14cc56228fd5e67f7ec1645f38554310bd60ca0",
+  "pdf_bytes": 9297493,
+  "printed_pages": [7, 14],
+  "pdf_page_indices": [12, 19],
+  "inspected_on": "2026-11-13",
+  "source_scope": "INSTITUTIONAL_DATA_FLOW_NOT_OBJECT_MEASUREMENT",
+  "transcribed_links": [
+    {
+      "from": "NASA_NORAD_SAO_COMPUTATION",
+      "to": "NASA_GSFC_SSR_PUBLICATION",
+      "relation": "COMPILATION_WITH_MULTIPLE_CONTRIBUTORS",
+      "printed_page": 7
+    },
+    {
+      "from": "NORAD_SPADATS_CATALOG",
+      "to": "NASA_GSFC",
+      "relation": "PERIODIC_UNCLASSIFIED_CATALOG_TRANSMISSION",
+      "printed_page": 14
+    },
+    {
+      "from": "NAVSPASUR",
+      "to": "NASA_GSFC",
+      "relation": "DIRECT_UNCLASSIFIED_ORBITAL_DATA_AUTHORIZED",
+      "printed_page": 14
+    },
+    {
+      "from": "NORAD_SPADATS_SENSORS",
+      "to": "NASA_GSFC",
+      "relation": "SENSOR_DATA_BY_REQUEST_FOR_NASA_TRACKING_RESPONSIBILITY",
+      "printed_page": 14
+    }
+  ],
+  "relevant_occurrences": [
+    "C179#1",
+    "C197#1",
+    "C241-L19#1",
+    "C241-L18:19640002493"
+  ],
+  "per_object_527_528_529_input_lineage_verified": false,
+  "observation_epoch_utc": null,
+  "instrument_covariance": null,
+  "activation": "DOCUMENTARY_DEPENDENCY_ONLY",
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "next_evidence": "Identify object-specific 1963 NORAD SPADATS/SAO/GSFC tracking records with actual observing site, UTC epoch, frame and error model"
+}

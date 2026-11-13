@@ -45,6 +45,52 @@
     529
   ],
   "source_family": "NASA_GODDARD_COMPILED_FROM_TRACKING",
+  "institutional_provenance": {
+    "occurrence_id": "C241-L20#1",
+    "source_url": "https://www.govinfo.gov/content/pkg/SERIALSET-12667_05_00-002-0197-0000/pdf/SERIALSET-12667_05_00-002-0197-0000.pdf",
+    "source_sha256": "a08b4c505a37c09d1eb9c33ed14cc56228fd5e67f7ec1645f38554310bd60ca0",
+    "source_bytes": 9297493,
+    "report_published_on": "1965-03-22",
+    "agreement_on": "1961-11-07",
+    "relevant_occurrences": [
+      "C179#1",
+      "C197#1",
+      "C241-L19#1",
+      "C241-L18:19640002493"
+    ],
+    "institutional_links": [
+      {
+        "from": "NASA_NORAD_SAO_COMPUTATION",
+        "to": "NASA_GSFC_SSR_PUBLICATION",
+        "relation": "COMPILATION_WITH_MULTIPLE_CONTRIBUTORS",
+        "printed_page": 7
+      },
+      {
+        "from": "NORAD_SPADATS_CATALOG",
+        "to": "NASA_GSFC",
+        "relation": "PERIODIC_UNCLASSIFIED_CATALOG_TRANSMISSION",
+        "printed_page": 14
+      },
+      {
+        "from": "NAVSPASUR",
+        "to": "NASA_GSFC",
+        "relation": "DIRECT_UNCLASSIFIED_ORBITAL_DATA_AUTHORIZED",
+        "printed_page": 14
+      },
+      {
+        "from": "NORAD_SPADATS_SENSORS",
+        "to": "NASA_GSFC",
+        "relation": "SENSOR_DATA_BY_REQUEST_FOR_NASA_TRACKING_RESPONSIBILITY",
+        "printed_page": 14
+      }
+    ],
+    "per_object_input_lineage": null,
+    "sensor_observation_epoch_utc": null,
+    "instrument_covariance": null,
+    "physical_constraint_activated": false,
+    "status": "CONNECTED_PENDING_CALIBRATION",
+    "physical_domain_effect": "THETA_UNCHANGED"
+  },
   "linked_lean_contract": "formal/Conde1963/SsrNovember.lean",
   "lean_claim_scope": "conditional_printed_number_arithmetic_only",
   "simulator_parameter": "observed_nodal_period_527_1963-11-30",
