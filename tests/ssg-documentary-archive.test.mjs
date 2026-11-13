@@ -13,7 +13,7 @@ test('SSG publishes one stable, no-JS page per curated occurrence', () => {
   const families=new Set(feed.records.map(r=>r.source_family));
   const works=new Set(feed.records.map(r=>r.work_id));
   const sources=new Set(feed.records.map(r=>r.source_id));
-  assert.equal(pages.size, feed.curated_occurrences+4+families.size+works.size+sources.size);
+  assert.equal(pages.size, feed.curated_occurrences+5+families.size+works.size+sources.size);
   const index=pages.get('index.md');
   assert.match(index,/28 ocorrências curadas de 241/);
   assert.match(index,/213 ocorrências não mapeadas/);
@@ -47,6 +47,23 @@ test('SSG publishes one stable, no-JS page per curated occurrence', () => {
   assert.match(pages.get('obras/nasa-ssr-vol3-22/index.md'),/C197#1/);
   assert.match(pages.get('obras/nasa-ssr-vol3-22/index.md'),/SHA-256 da linha na matriz/);
   assert.match(pages.get('c232-1/index.md'),/obras\/nara-bb-card-302531013\//);
+  assert.match(index,/Explorar por estado documental/);
+  assert.match(index,/\/conde-incident\/evidencias\/arquivo\/estados\//);
+  const byState=pages.get('estados/index.md');
+  assert.ok(byState,'SSG state browser missing');
+  assert.match(byState,/vínculos de fontes, não observações físicas independentes/);
+  assert.doesNotMatch(byState,/<script|onclick=|onload=/i);
+  for (const record of feed.records) {
+    const reading=interpretArchiveStatus(record.source_status);
+    const id=record.occurrence.toLowerCase().replace('#','-');
+    const source=record.source_id.toLowerCase().replaceAll('_','-');
+    assert.ok(byState.includes(reading.label), 'Estado não indexado: '+record.source_status);
+    assert.ok(byState.includes('['+record.occurrence+' · '+record.source_id+']('+
+      '/conde-incident/evidencias/arquivo/'+id+'/)'),
+      'Vínculo documental perdido no índice: '+record.occurrence);
+    assert.ok(byState.includes('/fontes/'+source+'/)'),'Ficha da fonte perdida: '+source);
+    assert.ok(byState.includes('#L'+record.matrix_line+')'), 'Linha da matriz perdida');
+  }
   assert.match(index,/Consultar identificadores de fontes/);
   assert.match(pages.get('fontes/index.md'),/Identificadores de fontes/);
   const repeated=pages.get('fontes/nasa-ssr-19631115/index.md');

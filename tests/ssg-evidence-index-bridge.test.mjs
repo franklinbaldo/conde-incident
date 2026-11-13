@@ -160,7 +160,7 @@ test('built HTML index must expose navigable href anchors, not inert path text',
     }
     // The index prints every route string, but gives readers zero links.
     writeFileSync(join(directory,'evidencias/arquivo/index.html'),
-      `<!doctype html><p>${shards.map(row=>row.archive_path).join(' ')}</p>`);
+      `<!doctype html><main><a href="/conde-incident/evidencias/arquivo/estados/">Estados</a><p>${shards.map(row=>row.archive_path).join(' ')}</p></main>`);
     assert.throws(()=>auditBuiltSite(bundle,directory),/Built index missing navigable anchor/);
   } finally {rmSync(directory,{recursive:true,force:true});}
 });
@@ -194,6 +194,20 @@ function mockBuiltSite(bundle,directory) {
     writeFileSync(dest,'<!doctype html><html><body><main>'+html+'</main></body></html>');
   }
 }
+
+test('state browser is a real navigable link in the built archive',()=>{
+  const directory=mkdtempSync(join(tmpdir(),'conde-ssg-state-'));
+  try {
+    const bundle=clean();
+    mockBuiltSite(bundle,directory);
+    const index=join(directory,'evidencias/arquivo/index.html');
+    const html=readFileSync(index,'utf8');
+    const state='/conde-incident/evidencias/arquivo/estados/';
+    assert.ok(html.includes('href="'+state+'"'));
+    writeFileSync(index,html.replace('href="'+state+'"','data-inert-state="'+state+'"'));
+    assert.throws(()=>auditBuiltSite(bundle,directory),/Built archive missing state browser link/);
+  } finally {rmSync(directory,{recursive:true,force:true});}
+});
 
 test('synthetic complete navigation passes the verifier before live SSG CI',()=>{
   const directory=mkdtempSync(join(tmpdir(),'conde-ssg-complete-'));
