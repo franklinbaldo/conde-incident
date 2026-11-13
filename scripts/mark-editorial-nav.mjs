@@ -21,7 +21,7 @@ export function markEditorialNav(html, file) {
   const href = prefix + (section ? section + '/' : '');
   const anchor = '<a href="' + href + '">';
   assert.equal(nav.split(anchor).length - 1, 1,
-    'Expected exactly one section link: ' + file + ' ' + href);
+    'Expected exactly one section link: ' + JSON.stringify({ file, route, section, href, anchor, nav }));
   const state = route === '' || route === section ? 'page' : 'location';
   const marked = '<a href="' + href + '" aria-current="' + state + '">';
   if (nav.includes(marked)) {
