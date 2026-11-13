@@ -24,6 +24,14 @@ STATION = "BR048346820"
 CONTROL = "BR048340980"
 DAYS = ("1963-11-07", "1963-11-08", "1963-11-09")
 LATENT = "precipitation_at_incident_site_and_epoch_unknown"
+# Canonical semantic fingerprint of the upstream report reconstructed from the
+# 11 SHA-pinned .dly files plus ghcnd-stations.txt/inventory/readme.  In
+# particular, a .dly digest DOES NOT authenticate station coordinates or
+# the station catalogue name. Any legitimate update requires re-running the
+# original-source audit and explicitly reviewing this pin.
+PINNED_REPORT_CANONICAL_SHA256 = (
+    "d3f804349c6753053ec3468a8694e9f097501eacc692e7763b1d6346595da714"
+)
 
 
 def require(ok: bool, message: str) -> None:
@@ -33,6 +41,12 @@ def require(ok: bool, message: str) -> None:
 
 def build(report: dict, graph: dict, obs: dict, caravelas: dict,
           parent_hashes: dict) -> dict:
+    canonical_report = json.dumps(
+        report, sort_keys=True, separators=(",", ":"), ensure_ascii=False
+    ).encode("utf-8")
+    require(hashlib.sha256(canonical_report).hexdigest() ==
+            PINNED_REPORT_CANONICAL_SHA256,
+            "original-source audited GHCNd report differs from approved snapshot")
     require(report["schema"] == "conde.ghcnd-conde-precipitation-1963/v1"
             and report["id"] == SOURCE
             and report["status"] == "CONNECTED_PENDING_SPATIOTEMPORAL_CALIBRATION"
