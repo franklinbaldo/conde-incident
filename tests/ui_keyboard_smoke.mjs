@@ -85,6 +85,19 @@ try {
     await page.getByRole('button', { name: 'English' }).click();
     assert.equal(await page.locator('html').getAttribute('lang'), 'en');
     assert.equal(await page.getByRole('link', { name: 'Skip to main content' }).count(), 1);
+    // Switching locale must also translate badges, export controls and footer,
+    // not only the tab headings or the root html[lang] attribute.
+    const englishNav = page.getByRole('navigation', { name: 'Laboratory sections' });
+    for (const badge of ['Sources', 'Synthetic', 'Syntax ≠ origin', 'Documents']) {
+      assert.equal(await englishNav.getByText(badge, { exact: true }).count(), 1,
+        `untranslated badge in English UI: ${badge}`);
+    }
+    assert.equal(await englishNav.getByText('Fontes', { exact: true }).count(), 0);
+    assert.equal(await page.getByRole('button', { name: 'Python Script' }).first()
+      .getAttribute('title'), 'Export reproducible Python code');
+    assert.equal(await page.getByRole('button', { name: 'Export Python' }).count(), 1);
+    assert.equal(await page.getByText('Models: SGP4, WGS84, J2, Solar-Min Thermosphere 1963', { exact: true }).count(), 1);
+    assert.equal(await page.getByText('NRO mission 7153 (Thor-Agena D / OPS 0180)', { exact: true }).count(), 1);
     await page.getByRole('navigation', { name: 'Laboratory sections' })
       .getByRole('link', { name: /Summary & limits/ }).click();
     const horizontal = await page.evaluate(() => ({
