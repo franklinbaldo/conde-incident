@@ -5,6 +5,7 @@ import Conde1963.ContractLineage
 import Conde1963.NmcCandidate
 import Conde1963.CaravelasCandidate
 import Conde1963.GhcndCondeCandidate
+import Conde1963.SovietCatalogueCandidate
 import Conde1963.NmcLayout
 import Conde1963.NoradContext
 import Conde1963.WaybackCitations
@@ -18,3 +19,4 @@ import Conde1963.SsrOffsetThreshold
 import Conde1963.SsrFourEditions
 import Conde1963.SsrInfluence
 import Conde1963.SsrCellRepairs
+import Conde1963.SsrNineEditions

@@ -75,3 +75,6 @@ class TestSsrCellRepairs(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+# The required P19 CI step also audits P20 against the nine-edition source locks.
+from formal.tests.test_ssr_nine_editions import NineEditionMinimaxTests

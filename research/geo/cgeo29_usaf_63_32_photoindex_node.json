@@ -21,10 +21,11 @@
     "node_ordinal_0_based": 679,
     "node_label_exact": "1850 Projeto USAF 63-32 - área A: SC.24-Z-C-VI",
     "node_excerpt": "research/geo/evidence/cgeo29_usaf_1850_node.html",
-    "node_excerpt_sha256": "001787e5b6b26dd457a464b64740cb4de4f680956eba3ee0d20313db03206652",
+    "node_excerpt_sha256": "82a1e552624c999a9d7db6cb35cc9d36619e01e36c511972136ddb58ba8a3a3d",
     "node_is_a_record_level_finding": true,
     "actual_photoindex_page_bytes_acquired": false,
-    "node_click_or_selection_verified": false
+    "node_click_or_selection_verified": false,
+    "node_excerpt_normalization": "CRLF_TO_LF_ONLY; literal DOM node text retained"
   },
   "crosswalk": {
     "sheet_mi": 1850,
