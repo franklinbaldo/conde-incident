@@ -1,0 +1,58 @@
+{
+  "schema": "conde.legislative-antecedent-custody/v1",
+  "document_id": "LONTRA-DOE-BA-1953-12-11-PL423-20261113",
+  "source": {
+    "institution": "Tribunal de Justica da Bahia, ArchiDoc",
+    "volume": "Diario Oficial do Estado da Bahia, dezembro de 1953",
+    "url": "https://acervo.tjba.jus.br/ConsultaWeb/downResource?id=dfdig000000000000000000000009008",
+    "sha256": "0c68c64c2d70281375c94918ea6b16107399cfdfa0c6ccb36b5dd933b378f4e9",
+    "bytes": 78342918,
+    "pdf_pages": 823,
+    "inspection_date": "2026-11-13",
+    "facsimile_retrieved": true,
+    "original_physical_master_compared": false
+  },
+  "located_entry": {
+    "periodical_section": "Diario da Assembleia Legislativa do Estado da Bahia",
+    "issue_date_printed": "1953-12-11",
+    "meeting_date_in_heading": "1953-12-07",
+    "pdf_page_1_based": 317,
+    "printed_page_number": null,
+    "item_heading": "Redacao final do Projeto de Lei n. 423",
+    "subject": "Divisao Territorial Administrativa da Bahia, quinquenio 1954-1958",
+    "observed_components": ["Projeto de Lei n. 423", "artigos 1 a 5", "debate parlamentar"],
+    "visual_page_inspected": true,
+    "embedded_ocr_used_as_locator_only": true,
+    "new_ocr_performed": false,
+    "full_annex_vi_on_this_page": false
+  },
+  "related_enacted_law": {
+    "law_number": 628,
+    "sanction_date": "1953-12-30",
+    "published_date": "1954-01-01",
+    "publication_volume_url": "https://acervo.tjba.jus.br/ConsultaWeb/downResource?id=dfdig000000000000000000000009009",
+    "publication_volume_sha256": "45fb60c544e0115c896706d4265f18b3a7bde551b9134c9bdce36e4c8d0e1237",
+    "printed_law_pdf_pages": [2, 3],
+    "relationship_status": "MATCHING_DRAFT_SUBJECT_AND_ARTICLES_NOT_OFFICIALLY_TRACED_BILL_TO_LAW",
+    "draft_is_enacted_law": false,
+    "separate_independent_historical_law": false
+  },
+  "research_limits": {
+    "annex_vi_original_located": false,
+    "jandaira_passage_checked_in_original": false,
+    "municipal_boundary_1963_proven": false,
+    "orbital_constraint_activated": false,
+    "relevant_to_conde_as_legal_genealogy_only": true
+  },
+  "limitations": [
+    "This scan documents a parliamentary draft and discussion, not a promulgated boundary annex. Legislative content is distinct from proof of its final adoption.",
+    "The printed page number was not confidently identified; PDF leaf 317 is one-based and must not be substituted for printed pagination.",
+    "The OCR layer is useful for searching but visually defective; the visible page is the evidence and no new OCR was performed.",
+    "The original Annex VI and intervening territorial acts of 1959-1963 remain unverified."
+  ],
+  "next_steps": [
+    "Follow the assembly proceedings and original annexes for Projeto de Lei 423 and Lei 628 of 1953",
+    "Locate original printed Annex VI and compare its Conde-Jandaira clause to the 2013 Casa Civil transcription",
+    "Check legal amendments through November 1963 before projecting a municipal boundary"
+  ]
+}
