@@ -10,6 +10,15 @@ for(const [name,html] of [['home',index],['stories',listing]]) {
   assert.match(html,/<html[^>]+lang=["']?pt-BR/i,name+' sem idioma pt-BR');
   assert.doesNotMatch(html,/(?:src|href)=["']\/(?:assets|css)\//i,name+' referencia assets da raiz');
 }
+for(const slug of ['cronologia','evidencias','hipoteses','simulacoes','metodo']){
+ const html=read(slug+'/index.html');
+ assert.ok(index.includes('/conde-incident/'+slug+'/'),'Rota SSG ausente: '+slug);
+ assert.match(html,/<html[^>]+lang=["']?pt-BR/i,'Idioma ausente: '+slug);
+ assert.match(html,/Content-Security-Policy/,'CSP ausente: '+slug);
+}
+for(const slug of ['summary','map','inverse','triangulation','sensitivity','montecarlo','tles','documents']){
+ assert.ok(read('simulacoes/index.html').includes('/conde-incident/lab/#/'+slug),'Link legado ausente: '+slug);
+}
 assert.match(lab,/\/conde-incident\/lab\/assets\//,'Assets Vite fora de /lab/');
 assert.doesNotMatch(lab,/(?:src|href)=["']\/assets\//,'Assets relativos à raiz, 404 no Pages');
 assert.ok(existsSync('public/lab/assets'),'Assets de laboratório ausentes');
