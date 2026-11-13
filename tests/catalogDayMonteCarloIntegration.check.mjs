@@ -26,4 +26,3 @@ test('existing Monte Carlo returns 3 timing scenarios, without historical claim'
     }
   }finally{Math.random=original;}
 });
-
