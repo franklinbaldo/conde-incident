@@ -1,0 +1,58 @@
+{
+  "record_id": "C241-L15",
+  "publication": {
+    "title": "Astronautics and Aeronautics, 1963: Chronology on Science, Technology, and Policy",
+    "agency": "NASA Historical Staff, Office of Policy Planning",
+    "publication_year": 1964,
+    "series": "NASA SP-4004",
+    "url": "https://www.nasa.gov/wp-content/uploads/2023/04/sp-4004-1963.pdf",
+    "sha256": "194fdcbc26509fc7ce4ec775aafa4914aa54c57c4617af99d1581790e10ef73d",
+    "bytes": 18442378,
+    "access_date": "2026-11-12",
+    "page_printed": 501,
+    "section": "APPENDIX A - SATELLITES, SPACE PROBES, AND MANNED SPACE FLIGHTS",
+    "transcription_method": "OFFICIAL_PDF_EXTRACTED_TEXT_NOT_VISUALLY_REINSPECTED",
+    "page_image_verified": false
+  },
+  "methodological_note": {
+    "compiler": "Dr. Frank W. Anderson, Jr., Assistant NASA Historian",
+    "orbit_data_source_options": ["initial orbit", "Satellite Situation Report", "President's Report on Space, 1963"],
+    "declares_compilation": true,
+    "specific_upstream_for_1963_3": null,
+    "measurement_independence": "NOT_ESTABLISHED"
+  },
+  "annual_row_extracted_text": {
+    "international_designation_printed": "1963-3",
+    "scope": "LAUNCH_GROUP_UNRESOLVED_CHILD",
+    "name_printed": "DOD Probe",
+    "vehicle_printed": "Thor-Agena",
+    "status_printed": "Still in orbit.",
+    "perigee_statute_miles_printed": 286,
+    "period_minutes_printed": null,
+    "observation_epoch": null,
+    "child_piece_identifier": null,
+    "visual_transcription_confirmed": false
+  },
+  "linked_sources": {
+    "october_report_id": "C241-L12",
+    "october_piece_printed": "1963 3B",
+    "november_report_id": "C241-L11",
+    "november_piece_printed": "1963 3B",
+    "november_decay_day": "1963-11-08"
+  },
+  "inference_guard": {
+    "aggregate_status_is_528_status": false,
+    "aggregate_date_is_tle_epoch": false,
+    "annual_is_independent_orbital_measurement": false,
+    "annual_is_primary_instrumental_tle": false,
+    "can_infer_terminal_time_or_place": false,
+    "legacy_raan_2841520_active": false,
+    "raan_1985261_primary": false,
+    "physical_identity_528": null,
+    "instrument_sigma": null,
+    "physical_frame": null,
+    "lean_constraint": "NOT_PROMOTED",
+    "graph_state": "CONNECTED_PENDING_CALIBRATION",
+    "conde_outcome": "INDETERMINATE"
+  }
+}
