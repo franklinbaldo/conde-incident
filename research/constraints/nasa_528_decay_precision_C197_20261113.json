@@ -1,0 +1,137 @@
+{
+  "schema": "conde.nasa-528-decay-precision/v1",
+  "id": "C197-PRECISION-20261113",
+  "status": "CONNECTED_PENDING_CALIBRATION",
+  "source": {
+    "occurrence": "C197#1",
+    "support": "C241-L11",
+    "ntrs": "19640001198",
+    "url": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf",
+    "sha256": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+    "pdf_page_index": 9,
+    "printed_page": 8,
+    "published_day": "1963-11-15",
+    "reported_decay_day": "1963-11-08",
+    "printed_object": "1963 3B",
+    "norad_crosswalk_secondary": 528,
+    "source_family": "NASA_GODDARD_NORAD_SHARED_COMPILATION",
+    "raw_sensor_observation": false
+  },
+  "precision_dimensions": [
+    {
+      "kind": "sensor_range_angle",
+      "value": null,
+      "units": null,
+      "status": "UNKNOWN_FOR_528"
+    },
+    {
+      "kind": "orbit_fit_covariance",
+      "value": null,
+      "units": null,
+      "status": "UNKNOWN_FOR_528"
+    },
+    {
+      "kind": "decay_forecast_error",
+      "value": null,
+      "units": null,
+      "status": "UNKNOWN_FOR_528"
+    },
+    {
+      "kind": "catalog_date_classification_error",
+      "value": null,
+      "units": null,
+      "status": "UNKNOWN_FOR_528"
+    }
+  ],
+  "date_label_resolution": "CALENDAR_DAY_NOT_EVENT_ACCURACY",
+  "reported_to_publication_calendar_days": 7,
+  "unknowns": {
+    "last_528_sensor_epoch_utc": null,
+    "station_and_sensor": null,
+    "frame": null,
+    "range_sigma_m": null,
+    "angle_sigma_deg": null,
+    "orbit_covariance": null,
+    "forecast_sigma_seconds": null,
+    "date_classification_sigma_seconds": null,
+    "report_latency_seconds": null,
+    "day_time_standard": null,
+    "physical_terminal_utc": null,
+    "determination_method": null
+  },
+  "conditional_methods": [
+    "DIRECT_OBSERVATION",
+    "FORECAST",
+    "COMBINED_OR_ADMINISTRATIVE"
+  ],
+  "method_selected": null,
+  "conditional_predicate": {
+    "if": "NASA label equals exact UTC day of physical decay",
+    "start_utc": "1963-11-08T00:00:00Z",
+    "end_exclusive_utc": "1963-11-09T00:00:00Z",
+    "active": false,
+    "assumption_verified": false
+  },
+  "comparator": {
+    "source_occurrence": "MOR-NOR-20261112-03",
+    "source_document": "MOR-NORAD-1963-NOV14",
+    "spadats_id": 688,
+    "window_start_utc": "1963-11-12T22:10:00Z",
+    "window_end_utc": "1963-11-13T00:00:00Z",
+    "same_as_object_528": false,
+    "precision_transfer_allowed": false,
+    "window_is_sigma": false
+  },
+  "likelihood": {
+    "symbolic": "P(report_day | true_event_time, tracking, fit, forecast_error, catalog_rule, latency)",
+    "numeric": null,
+    "parameters_fitted": false
+  },
+  "graph": {
+    "parent": "research/constraints/ssr_1963_observable_graph.json",
+    "dependencies": [
+      "research/tle_custody/nasa_ssr_1963_incremental_lineage_C241-L11.json",
+      "research/constraints/morcego_norad_1963_radar_source_audit.json",
+      "research/statistics/raan_catalog_day_missingness_C241.json"
+    ],
+    "edges": [
+      [
+        "C197#1",
+        "reported_day_528",
+        "PRINTED_CATALOG_ENTRY"
+      ],
+      [
+        "reported_day_528",
+        "true_terminal_time_528",
+        "REPORTING_MODEL_UNCALIBRATED"
+      ],
+      [
+        "MOR-NOR-20261112-03",
+        "historical_reporting_capability",
+        "COMPARATOR_ONLY_688"
+      ],
+      [
+        "NORAD_TRACKING",
+        "NASA_REPORT",
+        "SHARED_UPSTREAM_POSSIBLE"
+      ],
+      [
+        "true_terminal_time_528",
+        "future_528_simulator",
+        "CONDITIONAL_BRIDGE_PENDING"
+      ]
+    ],
+    "new_independent_sensor_observations": 0,
+    "physical_constraints_active": 0,
+    "domain_reduced": false,
+    "lean_activated": false,
+    "simulator_calibrated": false
+  },
+  "needed": [
+    "Last tracking station/UTC/frame of 528",
+    "Original SPADATS decay determination and classification method",
+    "Historical time standard of day labels and revision log",
+    "Error characterization for 528 timing and orbit fit"
+  ],
+  "negative_result": "No 528 temporal accuracy inferred; 688 is capability example only; no impact time or location inferred"
+}
