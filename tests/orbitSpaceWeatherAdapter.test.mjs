@@ -65,7 +65,7 @@ const options = (overrides = {}) => ({
   inertialFrame: 'SYNTHETIC-INERTIAL', frameTransformSource: 'SYNTHETIC_ONLY',
   toGeodetic: state => ({
     latitudeDeg: state.rKm[2] / 100, longitudeDeg: state.rKm[1] / 100,
-    altitudeKm: 500, localSolarTimeHours: 6,
+    altitudeKm: Math.hypot(...state.rKm) - 6378.137, localSolarTimeHours: 6,
   }),
   densityModelSource: 'SYNTHETIC_RHO_NOT_NRLMSISE',
   evaluateDensityKgM3: ({drivers}) => drivers.apHistory[1] * 1e-14,
@@ -134,4 +134,36 @@ test('outside historical driver coverage is a failed input, never assumed zero d
   const atmosphere = makeConditionalMsiseAtmosphere(options());
   assert.throws(() => dragAccelerationKmS2({...initialState, tS: 100 + 14 * 86400}, atmosphere),
     /centered 81-day|prior-day|ap history|daily planetary/);
+});
+
+
+test('geodetic altitude must match a physical radius envelope before density evaluation', () => {
+  let densityCalls = 0;
+  const transform = (altitudeKm) => () => ({
+    latitudeDeg: 0, longitudeDeg: 0, altitudeKm, localSolarTimeHours: 6,
+  });
+  const supplied = makeConditionalMsiseAtmosphere(options({
+    toGeodetic: transform(500_000), // metres mistaken for km
+    evaluateDensityKgM3: () => { densityCalls++; return 1e-12; },
+  }));
+  assert.throws(() => dragAccelerationKmS2(initialState, supplied), /inconsistent with inertial radius/);
+  const stale = makeConditionalMsiseAtmosphere(options({
+    toGeodetic: transform(500),
+    evaluateDensityKgM3: () => { densityCalls++; return 1e-12; },
+  }));
+  assert.throws(() => dragAccelerationKmS2({
+    ...initialState, rKm: [initialState.rKm[0] + 100, 0, 0],
+  }, stale), /inconsistent with inertial radius/);
+  assert.equal(densityCalls, 0, 'invalid geometry cannot feed the density solver');
+
+  // Polar WGS84 radius is shorter than the equatorial radius by 21.3847 km:
+  // a correct 500 km geodetic height is NOT 500 km of equatorial radial height.
+  const polarState = {...initialState, rKm: [0, 0, 6356.752314245 + 500]};
+  const polar = makeConditionalMsiseAtmosphere(options({
+    toGeodetic: () => ({latitudeDeg: 90, longitudeDeg: 0,
+      altitudeKm: 500, localSolarTimeHours: 6}),
+    evaluateDensityKgM3: () => { densityCalls++; return 1e-12; },
+  }));
+  assert.ok(dragAccelerationKmS2(polarState, polar).every(Number.isFinite));
+  assert.equal(densityCalls, 1);
 });
