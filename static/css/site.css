@@ -38,3 +38,6 @@ h1,h2,h3{line-height:1.16;letter-spacing:-.025em}h1{overflow-wrap:anywhere}h1{fo
 .skip-link{position:fixed;top:-6rem;left:1rem;z-index:1000;padding:.65rem 1rem;border-radius:.35rem;background:var(--accent);color:var(--paper);font:700 1rem/1.4 system-ui,sans-serif}
 .skip-link:focus-visible{top:1rem}
 a:focus-visible,button:focus-visible,iframe:focus-visible{outline:3px solid #ffd278;outline-offset:3px}
+
+/* Persistent orientation cue: visual underline plus aria-current for assistive tech. */
+.masthead nav a[aria-current]{color:var(--ink);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.48em}

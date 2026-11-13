@@ -19,6 +19,24 @@ for (const route of ['index.html','stories/index.html','evidencias/arquivo/index
   assert.match(html, /<kbd>Esc<\/kbd> fechar/, 'Ajuda de teclado em inglês: '+route);
   assert.doesNotMatch(html, /<span>Search<\/span>/, 'Busca não localizada: '+route);
 }
+// Expose active navigation on built pages, including nested documentary material.
+for (const [route, href, state] of [
+  ['index.html', '/', 'page'],
+  ['stories/index.html', '/stories/', 'page'],
+  ['cronologia/index.html', '/cronologia/', 'page'],
+  ['evidencias/index.html', '/evidencias/', 'page'],
+  ['mapa/index.html', '/mapa/', 'page'],
+  ['evidencias/arquivo/index.html', '/evidencias/', 'location'],
+  ['evidencias/arquivo/familias/bluebook-derivative-catalogues/index.html', '/evidencias/', 'location'],
+]) {
+  const html = read(route);
+  const nav = html.match(/<header class="masthead">[\s\S]*?<\/nav>/)?.[0] || '';
+  assert.ok(nav.includes('<a href="/conde-incident' + href + '" aria-current="' + state + '">'),
+    'Missing current-section semantic on ' + route);
+  assert.equal((nav.match(/aria-current=/g) || []).length, 1,
+    'Multiple active sections on ' + route);
+}
+
 const labNav = html => {
   const header = html.indexOf('<header class="masthead">');
   const nav = header < 0 ? -1 : html.indexOf('<nav', header);
