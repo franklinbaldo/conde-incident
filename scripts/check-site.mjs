@@ -10,8 +10,12 @@ for(const [name,html] of [['home',index],['stories',listing]]) {
   assert.match(html,/<html[^>]+lang=["']?pt-BR/i,name+' sem idioma pt-BR');
   assert.doesNotMatch(html,/(?:src|href)=["']\/(?:assets|css)\//i,name+' referencia assets da raiz');
 }
+const labNav = html => /<header class="masthead">[\\s\\S]*?<nav\\b[^>]*>[\\s\\S]*?<a href="\\/conde-incident\\/lab\\/">Laboratório<\\/a>[\\s\\S]*?<\\/nav>/.test(html);
+for(const [name, html] of [['home',index],['stories',listing]])
+  assert.ok(labNav(html),name+' sem acesso direto ao laboratório na navegação principal');
 for(const slug of ['cronologia','evidencias','hipoteses','simulacoes','metodo']){
  const html=read(slug+'/index.html');
+ assert.ok(labNav(html),'Navegação sem laboratório: '+slug);
  assert.ok(index.includes('/conde-incident/'+slug+'/'),'Rota SSG ausente: '+slug);
  assert.match(html,/<html[^>]+lang=["']?pt-BR/i,'Idioma ausente: '+slug);
  assert.match(html,/Content-Security-Policy/,'CSP ausente: '+slug);
