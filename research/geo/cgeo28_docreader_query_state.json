@@ -1,0 +1,87 @@
+{
+  "schema": "conde.gis.aerial-reader-query-state/v1",
+  "id": "CGEO-28",
+  "verified_on": "2026-11-13",
+  "municipality": {
+    "name": "Conde",
+    "state": "BA",
+    "ibge_code": 2908606
+  },
+  "question": "Does a DocReader GET with a pesq parameter return an executed catalogue search or merely pre-fill a search field?",
+  "observations": [
+    {
+      "query": "Esplanada",
+      "url": "https://acervo.sgb.gov.br/DocReader/DocReader.aspx?bib=CPRM&pesq=Esplanada",
+      "http_status": 200,
+      "bytes": 123422,
+      "sha256": "9ea3a93c875bbec75bda0abe364020b5e9b52fa46f9853bae47e92d4d62d2e7c",
+      "excerpt": "research/geo/evidence/cgeo28_Esplanada_dom.txt",
+      "excerpt_sha256": "d112bf3a7437f1c622262332136af2bfa74b08beff6c91715de48110653e0d4d",
+      "search_executed_confirmed": false
+    },
+    {
+      "query": "53 D",
+      "url": "https://acervo.sgb.gov.br/DocReader/DocReader.aspx?bib=CPRM&pesq=53%20D",
+      "http_status": 200,
+      "bytes": 123412,
+      "sha256": "2120c9eee63875c67006996837c00e3ec9a19282d59bc94f73a0e27a71386855",
+      "excerpt": "research/geo/evidence/cgeo28_53_20D_dom.txt",
+      "excerpt_sha256": "ff9557773240e773366714abb007a5e0ffbd5f28442582916491854c2b6a307b",
+      "search_executed_confirmed": false
+    },
+    {
+      "query": "MI 1850",
+      "url": "https://acervo.sgb.gov.br/DocReader/DocReader.aspx?bib=CPRM&pesq=MI%201850",
+      "http_status": 200,
+      "bytes": 123414,
+      "sha256": "1187223c4d5048dc39c0da60c98a641340682f62e65df80f48b6213efabc8365",
+      "excerpt": "research/geo/evidence/cgeo28_MI_201850_dom.txt",
+      "excerpt_sha256": "f1a56cacd6c6d833128bf7a8b0107adf1206ee9f6475bbc66cfea322631c699e",
+      "search_executed_confirmed": false
+    }
+  ],
+  "shared_active_folder": "Projeto 1 - Rondônia\\MI 1392 / CIM SC.20-V-B-V / Porto Velho\\001 a 146",
+  "shared_folder_pages": "/146",
+  "postback_attempt": {
+    "method": "POST",
+    "term": "Esplanada",
+    "url": "https://acervo.sgb.gov.br/DocReader/DocReader.aspx?bib=CPRM&pesq=Esplanada",
+    "http_status": 200,
+    "bytes": 127296,
+    "sha256": "2c223f4d66af1725fb34e2057334d048bdb646a9ffa095978e2168709e5d1144",
+    "includes_telerik_and_viewstate": true,
+    "active_folder_unchanged": true,
+    "search_execution_confirmed": false,
+    "search_results_extracted": false,
+    "interpretation": "POST returned HTML with same initial folder; no verified search-result listing or matched record. No negative search claim."
+  },
+  "conclusion": "URL_QUERY_PREPOPULATES_INPUT_NO_VERIFIED_SEARCH_EXECUTION",
+  "catalogue_result_status": "UNKNOWN_NOT_SEARCHED_OR_UNVERIFIED",
+  "target_record_found": null,
+  "target_record_absent": null,
+  "scientific_limits": {
+    "project_53d_mi1850_inventory_hit": null,
+    "aerial_frame_acquired": false,
+    "photo_index_acquired": false,
+    "date_of_individual_capture_verified": false,
+    "historical_center_geometry": null,
+    "event_position_1963": null,
+    "horizontal_error_m": null,
+    "can_constrain_orbital_reentry": false
+  },
+  "graph_edges": [
+    {
+      "to": "CGEO-27",
+      "relation": "AUDITS_ARCHIVE_READER_QUERY_SEMANTICS"
+    },
+    {
+      "to": "CGEO-26",
+      "relation": "DOES_NOT_CONFIRM_SECONDARY_53D_CATALOGUE_OCCURRENCE"
+    },
+    {
+      "to": "CGEO-18",
+      "relation": "DOES_NOT_RESOLVE_FBIS_CENTER_OF_CITY"
+    }
+  ],
+  "next_test": "Acquire a catalogue-search result with session-backed postback and record-level ID or obtain archival staff inventory; confirm photo-index/frame dates and coverage only from source objects."
+}
