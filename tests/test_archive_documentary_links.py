@@ -18,14 +18,24 @@ class ArchiveDocumentaryLinksTest(unittest.TestCase):
     def test_export_matches_reconstructed_source(self):
         data = archive.build()
         self.assertEqual((ROOT / archive.OUTPUT).read_bytes(), archive.encode(data))
-        self.assertEqual(len(data['nodes']), 4)
-        self.assertEqual(len(data['edges']), 3)
+        self.assertEqual(len(data['nodes']), 6)
+        self.assertEqual(len(data['edges']), 5)
         archived = data['nodes'][1]
         self.assertEqual(archived['document_year'], 1964)
         self.assertEqual(archived['capture_utc'], '2022-01-19T07:53:33Z')
         self.assertEqual(archived['retrieved_bytes_sha256'], archive.EXPECTED_SHA256)
-        self.assertIsNone(archived['cdx_digest_base32_sha1'])
-        self.assertFalse(data['epistemic_limits']['site_may_claim_cdx_verified'])
+        self.assertEqual(archived['cdx_digest_base32_sha1'],
+                         'WJ2GSUYH54TA2IUAFHSKWG2KCRX2WMIM')
+        self.assertTrue(data['epistemic_limits']['site_may_claim_cdx_verified'])
+        self.assertEqual(archived['preferred_archived_url'], data['nodes'][4]['archive_url'])
+        self.assertEqual(data['nodes'][4]['retrieved_bytes_sha256'],
+                         archived['retrieved_bytes_sha256'])
+        self.assertTrue(data['nodes'][4]['recommended_as_source_link'])
+        self.assertFalse(data['nodes'][5]['recommended_as_source_link'])
+        self.assertFalse(data['nodes'][5]['pdf_eof'])
+        self.assertEqual(data['nodes'][5]['http_status'], 200)
+        self.assertEqual(data['edges'][-1]['kind'],
+                         'EXACT_TRUNCATED_PREFIX_NOT_INDEPENDENT_EDITION')
         self.assertEqual(data['nodes'][3]['matrix_context_ref'].split(':')[-1], 'C151#1')
         self.assertIsNone(data['nodes'][3]['simulator_value'])
         self.assertFalse(data['nodes'][3]['activation'])
@@ -76,10 +86,33 @@ class ArchiveDocumentaryLinksTest(unittest.TestCase):
     def test_no_cdx_digest_imputed_from_sha256(self):
         x = archive.build()
         archived = x['nodes'][1]
-        self.assertEqual(archived['cdx_digest_verification'], 'NOT_RECORDED')
+        self.assertEqual(archived['cdx_digest_verification'],
+                         'REPLAY_SHA1_MATCHED_IN_LONTRA_MANIFEST')
         self.assertEqual(len(archived['retrieved_bytes_sha256']), 64)
-        self.assertIsNone(archived['cdx_digest_base32_sha1'])
+        self.assertNotEqual(archived['cdx_digest_base32_sha1'],
+                            archived['retrieved_bytes_sha256'])
         self.assertNotEqual(archived['capture_utc'][:4], str(archived['document_year']))
+
+    def test_rejects_200_ok_but_truncated_as_preferred(self):
+        self.mutated(archive.PREFIX, lambda x: x['snapshots'][0].update(
+            assessment='COMPLETE_PDF_REPLAY'))
+        self.mutated(archive.PREFIX, lambda x: x['snapshots'][0]['replay'].update(
+            pdf_eof=True))
+        self.mutated(archive.PREFIX, lambda x: x['comparison'].update(
+            earliest_pdf_is_complete=True))
+        self.mutated(archive.PREFIX, lambda x: x['snapshots'][1]['replay'].update(
+            sha256='f' * 64))
+        self.mutated(archive.PREFIX, lambda x: x['snapshots'][2]['cdx'].update(
+            digest='A' * 32))
+
+    def test_rejects_wrong_manifest_document_identity(self):
+        self.mutated(archive.PREFIX, lambda x: x.update(
+            document_id='WRONG-DOCUMENT'))
+        self.mutated(archive.PREFIX, lambda x: x.update(
+            document_publication_year=1963))
+        self.mutated(archive.PREFIX, lambda x: x['snapshots'][2].update(
+            archived_url='https://web.archive.org/web/20220119075333id_/http://example.org/else.pdf'))
+
 
 
 if __name__ == '__main__':
