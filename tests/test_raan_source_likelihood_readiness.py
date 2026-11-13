@@ -111,6 +111,61 @@ class SourceReadinessTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'secondary epoch'):
             build(*raw)
 
+    def test_annual_group_is_not_528_survival_or_perigee(self):
+        report = build(*raw_inputs())
+        groups = {g['name']: g for g in report['candidate_groups']}
+        annual = groups['NASA_SP4004_1963_LAUNCH_GROUP']
+        self.assertEqual(annual['printed_group_status'], 'Still in orbit.')
+        self.assertEqual(annual['printed_perigee_statute_miles'], 286)
+        self.assertIsNone(annual['child_528_status_from_this_row'])
+        self.assertIsNone(annual['child_528_perigee_from_this_row'])
+        self.assertFalse(report['model_contract']['active_constraint'])
+
+    def test_annual_group_cannot_be_promoted_to_528(self):
+        raw = list(raw_inputs())
+        raw[6] = mutate(raw[6], lambda p: p['annual_row_extracted_text'].__setitem__(
+            'child_piece_identifier', '1963 3B'))
+        with self.assertRaisesRegex(ValueError, 'group/child'):
+            build(*raw)
+
+    def test_annual_report_does_not_claim_visual_confirmation(self):
+        raw = list(raw_inputs())
+        raw[6] = mutate(raw[6], lambda p: p['publication'].__setitem__(
+            'page_image_verified', True))
+        with self.assertRaisesRegex(ValueError, 'documentary source'):
+            build(*raw)
+
+    def test_annual_status_changed_requires_reassessment(self):
+        raw = list(raw_inputs())
+        raw[6] = mutate(raw[6], lambda p: p['annual_row_extracted_text'].__setitem__(
+            'status_printed', 'Decayed.'))
+        with self.assertRaisesRegex(ValueError, 'group/child'):
+            build(*raw)
+
+    def test_gcat_labels_cannot_create_sensor_independence(self):
+        report = build(*raw_inputs())
+        gcat = {g['name']: g for g in report['candidate_groups']}[
+            'GCAT_MODERN_COMPILED_PIECE_LABELS']
+        self.assertIsNone(gcat['physical_piece'])
+        self.assertEqual(gcat['cospar'], '1963-003B')
+        self.assertIn('PRIMARY_INSTRUMENT_RECORD', gcat['blockers'])
+        self.assertEqual(report['independence'][
+            'number_of_independent_528_sensor_sources_identified_in_inputs'], 0)
+
+    def test_gcat_false_independence_must_be_reassessed(self):
+        raw = list(raw_inputs())
+        raw[5] = mutate(raw[5], lambda p: p['edges'][0].__setitem__(
+            'independent_observation', True))
+        with self.assertRaisesRegex(ValueError, 'GCAT'):
+            build(*raw)
+
+    def test_gcat_physical_identity_claim_must_be_reassessed(self):
+        raw = list(raw_inputs())
+        raw[5] = mutate(raw[5], lambda p: p['catalogue_labels']['00528'].__setitem__(
+            'physical_piece', 'UNVERIFIED_TEST_LABEL'))
+        with self.assertRaisesRegex(ValueError, 'GCAT'):
+            build(*raw)
+
     def test_structural_future_contract_not_authentication(self):
         candidate = dict.fromkeys(REQUIRED_OBSERVABLE_FIELDS, 'EXAMPLE_NOT_HISTORICAL')
         candidate.update(norad=528, observation_epoch_utc='1963-11-08T10:00:00Z')
