@@ -2,7 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { dragAccelerationKmS2, rk4 } from '../src/lib/orbitPhysics.ts';
-import { deriveMsiseDriversAtUtc, makeConditionalMsiseAtmosphere } from '../src/lib/orbitSpaceWeatherAdapter.ts';
+import { deriveMsiseDriversAtUtc, makeConditionalMsiseAtmosphere,
+  wgs84RadiusForGeodeticKm } from '../src/lib/orbitSpaceWeatherAdapter.ts';
 
 // Real GFZ/NRC historic *drivers* from Lagarto's declared snapshot. The
 // Cartesian states, coordinate transform and density evaluator below are
@@ -64,7 +65,7 @@ const options = (overrides = {}) => ({
   originEpochUtc: '1963-11-08T05:59:50Z', originStateTS: 100,
   inertialFrame: 'SYNTHETIC-INERTIAL', frameTransformSource: 'SYNTHETIC_ONLY',
   toGeodetic: state => ({
-    latitudeDeg: state.rKm[2] / 100, longitudeDeg: state.rKm[1] / 100,
+    latitudeDeg: 0, longitudeDeg: state.rKm[2] / 100,
     altitudeKm: Math.hypot(...state.rKm) - 6378.137, localSolarTimeHours: 6,
   }),
   densityModelSource: 'SYNTHETIC_RHO_NOT_NRLMSISE',
@@ -77,7 +78,7 @@ test('full r/v drag force samples historical drivers at actual RK4 substage UTC'
   const seen = [];
   const atmosphere = makeConditionalMsiseAtmosphere(options({
     evaluateDensityKgM3: ({drivers, epochUtc, geodetic}) => {
-      seen.push([epochUtc, drivers.apHistory[1], geodetic.latitudeDeg]);
+      seen.push([epochUtc, drivers.apHistory[1], geodetic.longitudeDeg]);
       return drivers.apHistory[1] * 1e-14;
     },
   }));
@@ -101,7 +102,7 @@ test('density depends on actual state passed to transform, not recycled starting
   const captured = [];
   const atmosphere = makeConditionalMsiseAtmosphere(options({
     evaluateDensityKgM3: request => {
-      captured.push(request.geodetic.latitudeDeg);
+      captured.push(request.geodetic.longitudeDeg);
       return 1e-12;
     },
   }));
@@ -166,4 +167,45 @@ test('geodetic altitude must match a physical radius envelope before density eva
   }));
   assert.ok(dragAccelerationKmS2(polarState, polar).every(Number.isFinite));
   assert.equal(densityCalls, 1);
+});
+
+test('WGS84 geodetic latitude-height radius rejects a mismatch hidden inside the broad a/b envelope', () => {
+  let densityCalls = 0;
+  const density = () => { densityCalls++; return 1e-12; };
+  const inconsistent = makeConditionalMsiseAtmosphere(options({
+    toGeodetic: () => ({latitudeDeg: 90, longitudeDeg: 0,
+      altitudeKm: 500, localSolarTimeHours: 6}),
+    evaluateDensityKgM3: density,
+  }));
+  // At a=6378.137 km, h=500 km is permitted by the G41 broad interval
+  // for either latitude, but latitude=90 requires r=b+500, not a+500.
+  assert.throws(() => dragAccelerationKmS2(initialState, inconsistent),
+    /latitude-height pair inconsistent/);
+  const middleHeight = 500 + (6378.137 - 6356.752314245) / 2;
+  const middle = makeConditionalMsiseAtmosphere(options({
+    toGeodetic: () => ({latitudeDeg: 0, longitudeDeg: 0,
+      altitudeKm: middleHeight, localSolarTimeHours: 6}),
+    evaluateDensityKgM3: density,
+  }));
+  assert.throws(() => dragAccelerationKmS2(initialState, middle),
+    /latitude-height pair inconsistent/);
+  assert.equal(densityCalls, 0, 'no inconsistent geodesy may reach density');
+});
+
+test('independent 45-degree WGS84 construction and polar/geodetic corners pass radial validation', () => {
+  const a = 6378.137, b = 6356.752314245, e2 = 1 - (b / a) ** 2;
+  const phi = Math.PI / 4, h = 500;
+  const N = a / Math.sqrt(1 - e2 * Math.sin(phi) ** 2);
+  const r = [(N + h) * Math.cos(phi), 0, (N * (1 - e2) + h) * Math.sin(phi)];
+  const state = {...initialState, rKm: r};
+  assert.ok(Math.abs(wgs84RadiusForGeodeticKm(45, h) - Math.hypot(...r)) < 1e-9);
+  const candidate = makeConditionalMsiseAtmosphere(options({
+    toGeodetic: () => ({latitudeDeg: 45, longitudeDeg: 15,
+      altitudeKm: h, localSolarTimeHours: 7}),
+    evaluateDensityKgM3: () => 1e-12,
+  }));
+  assert.ok(dragAccelerationKmS2(state, candidate).every(Number.isFinite));
+  assert.equal(wgs84RadiusForGeodeticKm(0, 500), a + 500);
+  assert.ok(Math.abs(wgs84RadiusForGeodeticKm(90, 500) - (b + 500)) < 1e-9);
+  assert.throws(() => wgs84RadiusForGeodeticKm(91, 500), /Invalid WGS84/);
 });
