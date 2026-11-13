@@ -24,6 +24,7 @@ export interface Sgp4TleInput {
 export interface Sgp4ReferenceSample {
   readonly status: 'SECONDARY_MODEL_ONLY' | 'SOURCE_NOT_ADMISSIBLE' | 'SGP4_UNRESOLVED';
   readonly frame: 'TEME';
+  readonly epochUtc: string;
   readonly model: 'SGP4';
   readonly tleAgeDays: number | null;
   readonly stateTeme: State | null;
@@ -68,7 +69,7 @@ export function sgp4ReferenceAtUtc(input: Sgp4TleInput, epochUtc: string): Sgp4R
   const milliseconds = utcMilliseconds(epochUtc);
   const result = (status: Sgp4ReferenceSample['status'], tleAgeDays: number | null,
     stateTeme: State | null): Sgp4ReferenceSample => ({
-    status, frame: 'TEME', model: 'SGP4', tleAgeDays, stateTeme,
+    status, frame: 'TEME', epochUtc, model: 'SGP4', tleAgeDays, stateTeme,
     sourceOccurrence: input.occurrence, custody: 'DECLARED_DIGEST_NOT_AUTHENTICATED',
     independentHistoricalHoldout: 'NOT_RUN', impactInference: 'NOT_SUPPORTED',
   });
