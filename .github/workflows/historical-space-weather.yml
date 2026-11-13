@@ -28,3 +28,7 @@ jobs:
         run: |
           python3 tools/audit_space_weather_asof.py --check
           python3 -m unittest discover -s tests -p test_space_weather_asof.py -v
+      - name: Audit causal flux backfill coverage without release-time invention
+        run: |
+          python3 tools/audit_causal_flux_backfill.py --check
+          python3 -m unittest discover -s tests -p test_causal_flux_backfill.py -v

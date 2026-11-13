@@ -1,0 +1,74 @@
+{
+  "schema": "conde.c241-p32-causal-flux-backfill/v1",
+  "source_snapshot": "research/meteorology/space_weather_msise_inputs_1963_11_07_09.json",
+  "source_snapshot_sha256": "a8601410663ef3f24b6b9f17cc0ff3103e1a97f24614617815357fa81cc5c955",
+  "parent_audit_schema": "conde.c241-p31-space-weather-asof-audit/v1",
+  "source_family": "Natural Resources Canada historical observed F10.7 (single lineage)",
+  "finding": "The bounded modern extract cannot compute the counterfactual trailing 81-day mean; its historical publication vintages are also unknown.",
+  "warning": "A trailing mean is NOT the centered 81-day F107A required by standard NRLMSISE; it is a candidate for a separately calibrated causal predictor only.",
+  "causal_forecast_score": "NOT_RUN",
+  "historical_orbit_inference": "NOT_RUN",
+  "physical_constraint": "CONNECTED_PENDING_CALIBRATION",
+  "rows": [
+    {
+      "model_evaluation_utc_not_event_time": "1963-11-07T12:00:00Z",
+      "candidate_definition": "counterfactual_trailing_81_completed_utc_days",
+      "required_window": {
+        "first": "1963-08-18",
+        "last": "1963-11-06",
+        "days": 81
+      },
+      "observed_dates_in_pinned_extract": 41,
+      "missing_dates_in_pinned_extract": 40,
+      "missing_first": "1963-08-18",
+      "missing_last": "1963-09-26",
+      "all_missing_dates_before_cutoff": true,
+      "complete_candidate_mean_computable": false,
+      "candidate_mean_sfu": null,
+      "historical_release_timestamp_audited": false,
+      "prospective_driver_eligible": false,
+      "standard_centered_f107a_replaced": false,
+      "historical_trajectory_constraint_active": false
+    },
+    {
+      "model_evaluation_utc_not_event_time": "1963-11-08T12:00:00Z",
+      "candidate_definition": "counterfactual_trailing_81_completed_utc_days",
+      "required_window": {
+        "first": "1963-08-19",
+        "last": "1963-11-07",
+        "days": 81
+      },
+      "observed_dates_in_pinned_extract": 42,
+      "missing_dates_in_pinned_extract": 39,
+      "missing_first": "1963-08-19",
+      "missing_last": "1963-09-26",
+      "all_missing_dates_before_cutoff": true,
+      "complete_candidate_mean_computable": false,
+      "candidate_mean_sfu": null,
+      "historical_release_timestamp_audited": false,
+      "prospective_driver_eligible": false,
+      "standard_centered_f107a_replaced": false,
+      "historical_trajectory_constraint_active": false
+    },
+    {
+      "model_evaluation_utc_not_event_time": "1963-11-09T12:00:00Z",
+      "candidate_definition": "counterfactual_trailing_81_completed_utc_days",
+      "required_window": {
+        "first": "1963-08-20",
+        "last": "1963-11-08",
+        "days": 81
+      },
+      "observed_dates_in_pinned_extract": 43,
+      "missing_dates_in_pinned_extract": 38,
+      "missing_first": "1963-08-20",
+      "missing_last": "1963-09-26",
+      "all_missing_dates_before_cutoff": true,
+      "complete_candidate_mean_computable": false,
+      "candidate_mean_sfu": null,
+      "historical_release_timestamp_audited": false,
+      "prospective_driver_eligible": false,
+      "standard_centered_f107a_replaced": false,
+      "historical_trajectory_constraint_active": false
+    }
+  ]
+}
