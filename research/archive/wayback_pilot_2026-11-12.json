@@ -1,0 +1,116 @@
+{
+  "schema": "conde.wayback-capture-pilot/v1",
+  "audit_utc": "2026-11-13T00:49:36Z",
+  "project_issue": "https://github.com/franklinbaldo/conde-incident/issues/308",
+  "rules": {
+    "replay_mode": "id_ returns original payload without Wayback HTML rewriting",
+    "cdx_length_semantics": "CDX length is not the downloaded HTTP payload byte count",
+    "digest_semantics": "CDX digest is BASE32(SHA1(payload)) without padding, not SHA-256",
+    "scope": "exact original URL only; no wildcard or redirected parent page",
+    "historical_authentication": false,
+    "no_new_orbital_constraint": true
+  },
+  "records": [
+    {
+      "id": "WB-NASA-SSR-19631115",
+      "source_refs": [
+        "C197#1",
+        "C198#1"
+      ],
+      "source_family": "NASA_NORAD_SSR_SINGLE_DOCUMENT",
+      "publication_date": "1963-11-15",
+      "original_url": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf",
+      "source_type": "NASA Satellite Situation Report, vol.3 no.22, NTRS 19640001198, printed p.8",
+      "status": "NO_EXACT_CAPTURE_IN_QUERIED_INDEX",
+      "cdx_lookup": {
+        "http_status": 200,
+        "exact_results": 0,
+        "output": "[]"
+      },
+      "availability_lookup": {
+        "http_status": 200,
+        "archived_snapshots": {}
+      },
+      "capture_utc": null,
+      "archived_url": null,
+      "cdx_record": null,
+      "replay": null,
+      "limits": "No exact match found by public CDX or Availability API at audit time; NOT proof this NASA work is absent under alternate URLs, captures, or repositories."
+    },
+    {
+      "id": "WB-NORAD-1963-H2",
+      "source_refs": [
+        "C241-P8"
+      ],
+      "source_family": "NORAD_CONAD_HISTORICAL_SUMMARY_1963",
+      "publication_date": null,
+      "original_url": "https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/11.pdf",
+      "source_type": "NORAD/CONAD Historical Summary July-December 1963 via National Security Archive, printed pp.54-58",
+      "status": "VERIFIED_REPLAY",
+      "cdx_lookup": {
+        "http_status": 200,
+        "exact_results_min": 1
+      },
+      "capture_utc": "2023-03-15T02:45:25Z",
+      "archived_url": "https://web.archive.org/web/20230315024525id_/https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/11.pdf",
+      "cdx_record": {
+        "timestamp": "20230315024525",
+        "original": "https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/11.pdf",
+        "statuscode": "200",
+        "mimetype": "application/pdf",
+        "digest": "FPRMCHQXINYIABHFGSOEOIT6ZAZOWVDF",
+        "length": 1330748
+      },
+      "replay": {
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 1459815,
+        "sha256": "cb3a9c4dc8bbdae6d2f72711d4dbb50887e576975e7f0e84f2e434c90fcee52b",
+        "sha1_base32": "FPRMCHQXINYIABHFGSOEOIT6ZAZOWVDF",
+        "pdf_magic": true,
+        "pdf_eof": true
+      },
+      "limits": "Archival replay of 2023 HTTP bytes; does not independently validate NORAD measurements of 1963 or show sensor observations of object 528.",
+      "covered_period": {
+        "start": "1963-07",
+        "end": "1963-12"
+      }
+    },
+    {
+      "id": "WB-SAO-RU301",
+      "source_refs": [
+        "SIA-FARU0301",
+        "BN-RU301-20261112-01"
+      ],
+      "source_family": "SMITHSONIAN_SAO_INSTITUTIONAL_ARCHIVE",
+      "publication_date": null,
+      "original_url": "https://sirismm.si.edu/EADpdfs/SIA.FARU0301.pdf",
+      "source_type": "Smithsonian Baker-Nunn films RU301 institutional finding aid, historical selection, not 528 sensor log",
+      "status": "VERIFIED_REPLAY",
+      "cdx_lookup": {
+        "http_status": 200,
+        "exact_results_min": 1
+      },
+      "capture_utc": "2021-02-28T10:52:02Z",
+      "archived_url": "https://web.archive.org/web/20210228105202id_/https://sirismm.si.edu/EADpdfs/SIA.FARU0301.pdf",
+      "cdx_record": {
+        "timestamp": "20210228105202",
+        "original": "https://sirismm.si.edu/EADpdfs/SIA.FARU0301.pdf",
+        "statuscode": "200",
+        "mimetype": "application/pdf",
+        "digest": "HHOYNIA3AQIBS73W2JDXYTUCZESQA2SW",
+        "length": 105084
+      },
+      "replay": {
+        "http_status": 200,
+        "content_type": "application/pdf",
+        "bytes": 124806,
+        "sha256": "e3acb2332415332dd14167db8d3d8c3d83ad2ef8897991f50f8b86c166b365cc",
+        "sha1_base32": "HHOYNIA3AQIBS73W2JDXYTUCZESQA2SW",
+        "pdf_magic": true,
+        "pdf_eof": true
+      },
+      "limits": "A curated archival inventory, not a dated observing log or proof of 528; replay is 2021 preservation, not 1963 provenance."
+    }
+  ]
+}
