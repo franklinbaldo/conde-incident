@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""C241-P10: source-locked 1963 NASA Nov15/30 documentary measurements.
+"""C241-P11: source-locked 1963 NASA Nov15/30 documentary measurements.
 
 These are table entries, not raw tracking records. Time splits refer only to
 publication dates. The November 30 issue is held out for prediction scoring.
@@ -13,9 +13,10 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-LEDGER = ROOT / "research/tle_custody/nasa_ssr_nov_1963_C241-L18.json"
+LEDGER = ROOT / "research/tle_custody/nasa_ssr_nov15_1963_C241-L19.json"
 OCTOBER = ROOT / "research/tle_custody/nasa_ssr_1963_oct15_C241-L12.json"
-REPORT = ROOT / "research/constraints/C241-P10_november_historical_printings.json"
+SURVIVORS = ROOT / "research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json"
+REPORT = ROOT / "research/constraints/C241-P11_november_historical_printings.json"
 LEAN = ROOT / "formal/Conde1963/SsrNovember.lean"
 EXPECTED = {
     "1963-11-15": {
@@ -65,36 +66,50 @@ def normalized_rows(document: dict) -> dict:
     return out
 
 
-def validate(ledger: dict, october: dict) -> dict:
-    if ledger["id"] != "C241-L18" or len(ledger["documents"]) != 2:
-        raise ValueError("incorrect ledger identity")
-    docs = {}
-    for doc in ledger["documents"]:
-        date_key = doc["date"]
-        if date_key in docs or date_key not in EXPECTED:
-            raise ValueError("duplicated/unknown publication")
-        expected = EXPECTED[date_key]
-        if (doc["ntrs"], doc["sha256"], doc["bytes"], doc["page_index"],
-                doc["printed_page"], doc["number"]) != (
-                expected["ntrs"], expected["sha"], expected["bytes"], 6, 5,
-                22 if date_key == "1963-11-15" else 23):
-            raise ValueError("source metadata/hash/page changed")
-        if doc["pdf"] != (f"https://ntrs.nasa.gov/api/citations/"
-                          f"{doc['ntrs']}/downloads/{doc['ntrs']}.pdf"):
-            raise ValueError("non-canonical document URL")
-        rows = normalized_rows(doc)
-        for key, vals in expected["rows"].items():
-            row = next(r for r in doc["rows"] if r["designator"] == key)
-            if tuple(str(row[f]) for f in FIELDS) != tuple(map(str, vals)):
-                raise ValueError("visual facsimile transcription mismatch")
-        docs[date_key] = rows
-    limits = ledger["limits"]
-    if any(limits[k] for k in ("publication_date_is_observation_epoch",
-                              "instrumental_epoch_known",
-                              "individual_sensor_known", "covariance_known",
-                              "nasa_original_tle_pair",
-                              "physical_constraint_activated")):
-        raise ValueError("unjustified physical observation")
+def validate(ledger: dict, october: dict, survivors: dict) -> dict:
+    if ledger["id"] != "C241-L19" or len(ledger["documents"]) != 1:
+        raise ValueError("November 15 ledger identity")
+    nov15 = ledger["documents"][0]
+    expected15 = EXPECTED["1963-11-15"]
+    if (nov15["date"], nov15["ntrs"], nov15["sha256"],
+        nov15["bytes"], nov15["page_index"], nov15["printed_page"],
+        nov15["number"]) != (
+        "1963-11-15", expected15["ntrs"], expected15["sha"],
+        expected15["bytes"], 6, 5, 22):
+        raise ValueError("Nov15 metadata, page or SHA mismatch")
+    if nov15["pdf"] != (f"https://ntrs.nasa.gov/api/citations/"
+                        f"{nov15['ntrs']}/downloads/{nov15['ntrs']}.pdf"):
+        raise ValueError("non-canonical November 15 URL")
+    docs = {"1963-11-15": normalized_rows(nov15)}
+    for key, vals in expected15["rows"].items():
+        row = next(r for r in nov15["rows"] if r["designator"] == key)
+        if tuple(str(row[f]) for f in FIELDS) != tuple(map(str, vals)):
+            raise ValueError("November 15 visual facsimile transcription mismatch")
+    if any(ledger["limits"][k] for k in (
+        "publication_date_is_observation_epoch", "instrumental_epoch_known",
+        "individual_sensor_known", "covariance_known", "nasa_original_tle_pair",
+        "physical_constraint_activated")):
+        raise ValueError("unjustified November 15 sensor observation")
+    if survivors["id"] != "C241-L18" or len(survivors["sources"]) != 3:
+        raise ValueError("must use Tartaruga C241-L18, not a duplicate November 30 ledger")
+    if survivors["data_lineage"]["original_instrument_tracking"]:
+        raise ValueError("compiled NASA tables are not sensor raw data")
+    nov30 = next((x for x in survivors["sources"] if x["published"] == "1963-11-30"), None)
+    if nov30 is None:
+        raise ValueError("Nov30 table missing from C241-L18")
+    expected30 = EXPECTED["1963-11-30"]
+    if (nov30["ntrs_id"], nov30["sha256"], nov30["bytes"],
+            nov30["pdf_page_index"], nov30["printed_page"], nov30["issue"]) != (
+            expected30["ntrs"], expected30["sha"], expected30["bytes"], 6, 5, 23):
+        raise ValueError("Nov30 C241-L18 metadata, SHA or issue mismatch")
+    if nov30["pdf_url"] != (f"https://ntrs.nasa.gov/api/citations/"
+                            f"{nov30['ntrs_id']}/downloads/{nov30['ntrs_id']}.pdf"):
+        raise ValueError("non-canonical November 30 URL")
+    docs["1963-11-30"] = normalized_rows(nov30)
+    for key, vals in expected30["rows"].items():
+        row = next(r for r in nov30["rows"] if r["designator"] == key)
+        if tuple(str(row[f]) for f in FIELDS) != tuple(map(str, vals)):
+            raise ValueError("November 30 visual facsimile transcription mismatch")
     if (october["record_id"] != "C241-L12"
             or october["source"]["sha256"] != OCT_SHA
             or october["source"]["publication_date"] != "1963-10-15"):
@@ -119,8 +134,8 @@ def validate(ledger: dict, october: dict) -> dict:
     return {"1963-10-15": october_rows, **docs}
 
 
-def compile_report(ledger: dict, october: dict) -> dict:
-    series = validate(ledger, october)
+def compile_report(ledger: dict, october: dict, survivors: dict) -> dict:
+    series = validate(ledger, october, survivors)
     keys = ("1963-10-15", "1963-11-15", "1963-11-30")
     days = [(date.fromisoformat(keys[i+1]) -
              date.fromisoformat(keys[i])).days for i in (0, 1)]
@@ -161,8 +176,8 @@ def compile_report(ledger: dict, october: dict) -> dict:
     if not all(expected_rank.values()):
         raise ValueError("falsified November documentary ranking")
     return {
-        "id": "C241-P10",
-        "source_ids": ["C241-L12", "C241-L18", "C197#1"],
+        "id": "C241-P11",
+        "source_ids": ["C241-L12", "C241-L19", "C241-L18", "C197#1"],
         "publication_dates": list(keys),
         "source_sha256": [OCT_SHA]+[EXPECTED[k]["sha"] for k in keys[1:]],
         "quantization_assumption": "nearest printed 0.1 min; 0.01 degree; 1 km, not sensor sigma",
@@ -224,16 +239,16 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
-    report = compile_report(json.loads(LEDGER.read_text()), json.loads(OCTOBER.read_text()))
+    report = compile_report(json.loads(LEDGER.read_text()), json.loads(OCTOBER.read_text()), json.loads(SURVIVORS.read_text()))
     encoded = json.dumps(report, indent=2, ensure_ascii=False, sort_keys=True) + "\n"
     lean = render_lean(report)
     if args.check:
         if REPORT.read_text() != encoded or LEAN.read_text() != lean:
-            raise SystemExit("C241-P10 generated artifact drift")
+            raise SystemExit("C241-P11 generated artifact drift")
     else:
         REPORT.write_text(encoded)
         LEAN.write_text(lean)
-    print("C241-P10: November table data, 2 objects, 2 publications, 4 fields, 2 holdout forecasts PASS")
+    print("C241-P11: November table data, 2 objects, 2 publications, 4 fields, 2 holdout forecasts PASS")
 
 
 if __name__ == "__main__":

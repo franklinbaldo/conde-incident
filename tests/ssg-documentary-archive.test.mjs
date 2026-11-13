@@ -9,7 +9,7 @@ const clone = obj=>JSON.parse(JSON.stringify(obj));
 
 test('SSG publishes one stable, no-JS page per curated occurrence', () => {
   const pages=archivePages(feed, ancestry);
-  assert.equal(pages.size, feed.curated_occurrences+1);
+  assert.equal(pages.size, feed.curated_occurrences+11);
   const index=pages.get('index.md');
   assert.match(index,/28 ocorrências curadas de 241/);
   assert.match(index,/213 ocorrências não mapeadas/);
@@ -27,6 +27,18 @@ test('SSG publishes one stable, no-JS page per curated occurrence', () => {
   assert.match(pages.get('c232-1/index.md'),/2 referência\(s\) curada\(s\)/);
   assert.match(pages.get('c01-1/index.md'),/RADIO\\_TUPI\\_19631108/);
   assert.match(pages.get('c197-1/index.md'),/C197#1/);
+  assert.match(index,/famílias documentais e ocorrências relacionadas/);
+  assert.match(pages.get('c232-1/index.md'),/familias\/usaf-aira-bluebook\//);
+  assert.match(pages.get('c232-1/index.md'),/familias\/bluebook-derivative-catalogues\//);
+  assert.match(pages.get('familias/index.md'),/Famílias de fontes/);
+  assert.match(pages.get('familias/radio-tupi-fbis/index.md'),/C01#1/);
+  assert.match(pages.get('familias/radio-tupi-fbis/index.md'),/C03#1/);
+  assert.match(pages.get('familias/norad-nasa-tracking/index.md'),/12 ocorrência\(s\)/);
+  assert.match(pages.get('familias/usaf-aira-bluebook/index.md'),/C232#1/);
+  assert.match(pages.get('familias/bluebook-derivative-catalogues/index.md'),/C232#1/);
+  for (const [path, html] of pages) {
+    assert.doesNotMatch(html, /<script|onclick=|onload=/i, `Página não estática: ${path}`);
+  }
 });
 
 test('SSG fails closed on lineage and snapshot errors', () => {
@@ -79,4 +91,13 @@ test('SSG rejects circular genealogy, including non-adjacent ancestry loops', ()
     ],
   };
   assert.doesNotThrow(()=>archivePages(feed,acyclic));
+});
+
+test('SSG rejects unsafe or ambiguous family identifiers', () => {
+  const changed=clone(feed);
+  changed.records[0].source_family='RADIO_TUPI_FBIS/../../escape';
+  const linked=clone(ancestry);
+  linked.citation_lineages.find(x=>x.snapshot_ref===changed.records[0].snapshot_ref
+    && x.source_id===changed.records[0].source_id).family_id=changed.records[0].source_family;
+  assert.throws(()=>archivePages(changed,linked), /Identificador de família inválido/);
 });

@@ -1,4 +1,5 @@
 import Conde1963.Core
+import Conde1963.SsrSurvivorIntervals
 import Conde1963.RelativeTrajectories
 import Conde1963.SsrNovember
 
@@ -19,3 +20,7 @@ does not authenticate observed positions or establish a 1963 reentry. -/
 
 #print axioms Conde1963.SsrNovember.printed_november_period_3c_gt_3a
 #print axioms Conde1963.SsrNovember.printed_november_apogee_3c_gt_3a
+#print axioms Conde1963.SsrSurvivorIntervals.b_july_to_october_published_difference
+#print axioms Conde1963.SsrSurvivorIntervals.c_post_b_november_to_december_published_difference
+#print axioms Conde1963.SsrSurvivorIntervals.a_post_b_november_to_december_published_difference
+#print axioms Conde1963.SsrSurvivorIntervals.post_b_529_change_exceeds_527_change_in_printed_tables

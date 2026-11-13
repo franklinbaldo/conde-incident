@@ -1,10 +1,10 @@
 ---
 type: Guide
-title: "C241-P10: 16 campos NASA de novembro, holdout e controle 3A"
+title: "C241-P11: 16 campos NASA de novembro, holdout e controle 3A"
 description: "Quatro linhas originais NASA, quantização condicional, erro de previsão fora da amostra e ausência de restrição orbital."
 ---
 
-# C241-P10: quatro novas linhas NASA, não uma órbita terminal
+# C241-P11: quatro novas linhas NASA, não uma órbita terminal
 
 **Pergunta falsificável (#15/#88):** entre os boletins de 15 e 30 de novembro
 de 1963, o objeto 1963 3C apresenta maior diferença impressa de período
@@ -19,12 +19,12 @@ vence em 3C, mas **perde para a persistência no apogeu do 3A**.
   vol. 3 nº 20, tabela OBJECTS IN ORBIT, p. impressa 5 (PDF p. 7);
   [PDF oficial](https://ntrs.nasa.gov/api/citations/19640000428/downloads/19640000428.pdf#page=7).
   Ledger anterior, SHA-256 fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2.
-- **C241-L18#1:** NASA SSR, 15/11/1963, vol. 3 nº 22, p. impressa 5
+- **C241-L19#1:** NASA SSR, 15/11/1963, vol. 3 nº 22, p. impressa 5
   (PDF p. 7), [NTRS 19640001198](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf#page=7).
   Fac-símile inspecionado visualmente. PDF oficial baixado integralmente em
   13/11/2026: 327.613 bytes, SHA-256
   0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674.
-- **C241-L18#2:** NASA SSR, 30/11/1963, vol. 3 nº 23, p. impressa 5
+- **C241-L18#1:** NASA SSR, 30/11/1963, vol. 3 nº 23, p. impressa 5
   (PDF p. 7), [NTRS 19640002493](https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf#page=7).
   Fac-símile inspecionado visualmente. PDF baixado integralmente:
   1.266.393 bytes, SHA-256
@@ -99,9 +99,9 @@ treinamento e não mede precisão instrumental ou dinâmica gravitacional.
   catálogo. Erro externo instrumental e propagação terminal **NOT_RUN**.
 - **Edição nº 21** próxima do decaimento do 3B: **NOT_RECOVERED**. Obter
   essa tabela poderá acrescentar um registro documental mais próximo.
-- Arquivos rastreáveis: ledger C241-L18 em
-  [nasa_ssr_nov_1963_C241-L18.json](../tle_custody/nasa_ssr_nov_1963_C241-L18.json),
-  saída [C241-P10](C241-P10_november_historical_printings.json),
+- Arquivos rastreáveis: ledger C241-L19 em
+  [nasa_ssr_nov15_1963_C241-L19.json](../tle_custody/nasa_ssr_nov15_1963_C241-L19.json), mais o ledger C241-L18 da Tartaruga (30/11),
+  saída [C241-P11](C241-P11_november_historical_printings.json),
   gerador formal/scripts/compile_ssr_november.py, Lean
   formal/Conde1963/SsrNovember.lean e testes adversariais.
 

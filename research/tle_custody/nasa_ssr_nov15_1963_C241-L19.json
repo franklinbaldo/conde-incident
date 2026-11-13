@@ -1,6 +1,6 @@
 {
-  "id": "C241-L18",
-  "source_family": "NASA_GODDARD_COMPILED_WITH_NORAD_SAO_SAME_UPSTREAM_NOT_INDEPENDENT_SENSORS",
+  "id": "C241-L19",
+  "source_family": "NASA_GODDARD_COMPILED_NOV15_SAME_TRACKING_FAMILY_NOT_INDEPENDENT_SENSORS",
   "inspection": "2026-11-13, direct visual facsimile p.5 (PDF page index 6), independently re-downloaded full bytes SHA-256",
   "documents": [
     {
@@ -29,39 +29,13 @@
           "perigee_km": 376
         }
       ]
-    },
-    {
-      "date": "1963-11-30",
-      "ntrs": "19640002493",
-      "volume": 3,
-      "number": 23,
-      "pdf": "https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf",
-      "sha256": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
-      "bytes": 1266393,
-      "page_index": 6,
-      "printed_page": 5,
-      "rows": [
-        {
-          "designator": "1963-003A",
-          "period_min": "94.6",
-          "inclination_deg": "81.88",
-          "apogee_km": 533,
-          "perigee_km": 459
-        },
-        {
-          "designator": "1963-003C",
-          "period_min": "92.2",
-          "inclination_deg": "81.86",
-          "apogee_km": 390,
-          "perigee_km": 368
-        }
-      ]
     }
   ],
   "related_ids": [
     "C241-L12",
     "C241-L16",
     "C241-L17",
+    "C241-L18",
     "C197#1",
     "C198#1"
   ],

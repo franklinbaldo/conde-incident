@@ -141,7 +141,7 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
                 ? `Cenários Regionais Gerados (${filteredPasses.length})`
                 : `Generated Regional Scenarios (${filteredPasses.length})`}
             </div>
-            <span className="text-[11px] text-zinc-500 font-mono">
+            <span className="text-[11px] text-zinc-400 font-mono">
               {isPt ? 'Selecione para inspecionar' : 'Select to inspect'}
             </span>
           </div>
@@ -171,7 +171,7 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
                       <span className="text-cyan-300 font-mono font-medium">
                         {p.utcString.substring(5, 16)} UTC
                       </span>
-                      <span className="text-[10px] text-zinc-500 font-mono">
+                      <span className="text-[10px] text-zinc-400 font-mono">
                         ({p.localTimeString.substring(0, 5)} Bahia)
                       </span>
                     </span>
@@ -219,7 +219,7 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
             <div className="space-y-4">
               <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
                 <div>
-                  <div className="text-xs font-mono text-zinc-500 uppercase">
+                  <div className="text-xs font-mono text-zinc-400 uppercase">
                     {isPt ? 'Saída do Modelo Exploratório' : 'Exploratory Model Output'}
                   </div>
                   <h3 className="text-base font-bold text-zinc-100 font-mono">
@@ -238,19 +238,19 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
               {/* Timing & Geometry Cards: model outputs, not measured epochs */}
               <div className="grid grid-cols-2 gap-2 text-xs font-mono">
                 <div className="p-2.5 rounded bg-zinc-950 border border-zinc-800">
-                  <div className="text-zinc-500">Tempo do cenário UTC:</div>
+                  <div className="text-zinc-400">Tempo do cenário UTC:</div>
                   <div className="text-zinc-100 font-bold mt-0.5">{selectedPass.utcString}</div>
                 </div>
                 <div className="p-2.5 rounded bg-zinc-950 border border-zinc-800">
-                  <div className="text-zinc-500">Tempo do cenário (BA):</div>
+                  <div className="text-zinc-400">Tempo do cenário (BA):</div>
                   <div className="text-cyan-300 font-bold mt-0.5">{selectedPass.localTimeString}</div>
                 </div>
                 <div className="p-2.5 rounded bg-zinc-950 border border-zinc-800">
-                  <div className="text-zinc-500">Distância calculada:</div>
+                  <div className="text-zinc-400">Distância calculada:</div>
                   <div className="text-amber-400 font-bold mt-0.5">{selectedPass.closestApproachDistanceKm} km</div>
                 </div>
                 <div className="p-2.5 rounded bg-zinc-950 border border-zinc-800">
-                  <div className="text-zinc-500">Altitude calculada:</div>
+                  <div className="text-zinc-400">Altitude calculada:</div>
                   <div className="text-zinc-100 font-bold mt-0.5">{selectedPass.altitudeKm} km</div>
                 </div>
               </div>
@@ -264,7 +264,7 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
 
                 <div className="space-y-2 text-xs">
                   <div className="flex justify-between items-center text-zinc-300 border-b border-zinc-900 pb-1.5 font-mono">
-                    <span className="text-zinc-500">Ajuste de Fase Along-Track (ΔM):</span>
+                    <span className="text-zinc-400">Ajuste de Fase Along-Track (ΔM):</span>
                     <span className="font-bold text-zinc-200">
                       {selectedPass.requiredMeanAnomalyDeltaDeg > 0 ? '+' : ''}
                       {selectedPass.requiredMeanAnomalyDeltaDeg}°
@@ -272,21 +272,21 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
                   </div>
 
                   <div className="flex justify-between items-center text-zinc-300 border-b border-zinc-900 pb-1.5 font-mono">
-                    <span className="text-zinc-500">Derivada de Movimento (dn/dt):</span>
+                    <span className="text-zinc-400">Derivada de Movimento (dn/dt):</span>
                     <span className="font-bold text-zinc-200">
                       {selectedPass.requiredMeanMotionDerivative} rev/dia²
                     </span>
                   </div>
 
                   <div className="flex justify-between items-center text-zinc-300 border-b border-zinc-900 pb-1.5 font-mono">
-                    <span className="text-zinc-500">Coeficiente Balístico B (C_D A/m):</span>
+                    <span className="text-zinc-400">Coeficiente Balístico B (C_D A/m):</span>
                     <span className="font-bold text-cyan-300">
                       {selectedPass.requiredBallisticCoeff} m²/kg
                     </span>
                   </div>
 
                   <div className="flex justify-between items-center text-zinc-300 font-mono">
-                    <span className="text-zinc-500">{isPt ? 'Heurística legada:' : 'Legacy heuristic:'}</span>
+                    <span className="text-zinc-400">{isPt ? 'Heurística legada:' : 'Legacy heuristic:'}</span>
                     <span
                       className="font-semibold text-zinc-300"
                     >
@@ -305,7 +305,7 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
               </div>
             </div>
           ) : (
-            <div className="text-center py-16 text-zinc-500 text-xs font-mono">
+            <div className="text-center py-16 text-zinc-400 text-xs font-mono">
               {isPt ? 'Nenhum cenário gerado para este filtro.' : 'No scenario generated for this filter.'}
             </div>
           )}

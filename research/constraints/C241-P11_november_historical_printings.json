@@ -6,7 +6,7 @@
   "difference_intervals_are_publication_table_only": true,
   "evaluation_holdout": "November 30 unobserved by predictors; October 15 and November 15 define fit",
   "holdout_dates_are_publication_dates_not_tracking_epochs": true,
-  "id": "C241-P10",
+  "id": "C241-P11",
   "instrumental_validation": "NOT_RUN_NO_ORIGINAL_SENSOR_EPOCH_FRAME_COVARIANCE",
   "norad_528_period_in_november": "NOT_IN_ORBIT_TABLE_DECAY_LISTED_08_NOV_C197",
   "objects": [
@@ -178,6 +178,7 @@
   "source_graph_legacy_conflict": "Nov30 3A=94.6, not 94.8 in old ssr_1963_observable_graph.json",
   "source_ids": [
     "C241-L12",
+    "C241-L19",
     "C241-L18",
     "C197#1"
   ],
