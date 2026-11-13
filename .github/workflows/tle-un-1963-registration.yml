@@ -1,0 +1,53 @@
+name: Tartaruga C241-L33 UN 1963 original registration
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/un_1963_registration_C241-L33.json
+      - research/tle_custody/evidence_matrix_C241-L33_2026-11-13.md
+      - tools/tle_un_1963_registration_audit.py
+      - tests/test_tle_un_1963_registration_audit.py
+      - .github/workflows/tle-un-1963-registration.yml
+  push:
+    branches: [main]
+    paths:
+      - research/tle_custody/un_1963_registration_C241-L33.json
+      - research/tle_custody/evidence_matrix_C241-L33_2026-11-13.md
+      - tools/tle_un_1963_registration_audit.py
+      - tests/test_tle_un_1963_registration_audit.py
+      - .github/workflows/tle-un-1963-registration.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Exact HEAD and adversarial metadata tests
+        run: |
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+          python3 -m unittest discover -s tests -p test_tle_un_1963_registration_audit.py -v
+          python3 tools/tle_un_1963_registration_audit.py
+      - name: Download four original UNOOSA PDFs and test their bytes
+        run: |
+          mkdir -p "$RUNNER_TEMP/unoosa-1963"
+          for n in 030 053 054 055; do
+            curl --fail --location --silent --show-error --retry 2 --max-time 60 "https://www.unoosa.org/documents/pdf/inf${n}E.pdf" -o "$RUNNER_TEMP/unoosa-1963/inf${n}E.pdf"
+          done
+          python3 tools/tle_un_1963_registration_audit.py --pdf-dir "$RUNNER_TEMP/unoosa-1963" --output "$RUNNER_TEMP/un-1963-source-report.json"
+          for n in 030 053 054 055; do
+            pdftoppm -f 2 -l 2 -scale-to 1400 -png -singlefile "$RUNNER_TEMP/unoosa-1963/inf${n}E.pdf" "$RUNNER_TEMP/unoosa-1963/inf${n}E-page2"
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: un-c241-l33-original-registration-${{ github.event.pull_request.head.sha || github.sha }}
+          path: |
+            ${{ runner.temp }}/un-1963-source-report.json
+            ${{ runner.temp }}/unoosa-1963/*page2.png
+          if-no-files-found: warn
+          retention-days: 30
