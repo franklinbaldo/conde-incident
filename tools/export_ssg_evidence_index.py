@@ -87,6 +87,11 @@ def build(root=ROOT):
         match = re.match(rb'^\|\s*\*{0,2}(C[0-9]+)\*{0,2}\s*\|', original_line)
         require(match is not None and match.group(1).decode('ascii') == occurrence.split('#')[0],
                 'ID da linha não corresponde à ocorrência')
+        # A valid row digest does not prove that the published headline came from
+        # that row: prohibit synchronized rewrites of citation + JSON shard.
+        matrix_claim = original_line.decode('utf-8').split('|')[2].strip()
+        require(record['claim_text'] == matrix_claim,
+                'Texto da alegação não corresponde à coluna original da matriz')
         require(record['not_a_verified_conde_physical_event'] is True,
                 'A referência não pode ser promovida a testemunho físico')
         require(isinstance(record['matrix_line'], int) and record['matrix_line'] > 0,

@@ -171,6 +171,8 @@ export function audit(bundle) {
       'Matrix row SHA-256 mismatch: '+record.occurrence);
     assert.equal(/^\|\s*\*{0,2}(C[0-9]+)\*{0,2}\s*\|/.exec(originalLine)?.[1],
       record.occurrence.split('#')[0],'Matrix row ID mismatch: '+record.occurrence);
+    assert.equal(record.claim_text,originalLine.split('|')[2]?.trim(),
+      'Matrix claim text mismatch: '+record.occurrence);
     const row=actual.get(key(record));
     assert.ok(row,'Citation missing from JSON: '+key(record));
     assert.deepEqual(take(row,tracked),take(record,tracked),'Citation data changed: '+key(record));
