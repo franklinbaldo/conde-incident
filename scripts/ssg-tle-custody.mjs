@@ -36,7 +36,7 @@ export function renderTleCustody(raw) {
   assert.match(raan, /^\d{1,3}\.\d{4}$/);
   assert.ok(Number(raan) >= 0 && Number(raan) < 360);
   const body = [
-    '# Inspeção estática do TLE secundário do NORAD 528', '',
+    '## Inspeção estática do TLE secundário do NORAD 528', '',
     '**Tipo de dado: par TLE de espelho secundário, não observação instrumental primária.** Os dois checksums conferem com os bytes custodiados; isso não autentica a estação de rastreamento, precisão ou validade histórica do modelo.', '',
     '## Proveniência e identificador', '',
     '- **Objeto:** NORAD 528 (1963-003B).',
@@ -67,6 +67,8 @@ export function renderTleCustody(raw) {
     'title: "Custódia do TLE secundário NORAD 528"',
     'description: "Checksum e proveniência do par TLE secundário; sem autenticação instrumental ou reentrada inferida."',
     'layout: page','language: pt-BR',
+    'date: "2026-11-13"',
+    'author: "Projeto Conde (página gerada de custódia documental)"',
     '---','',body
   ].join('\n');
 }
