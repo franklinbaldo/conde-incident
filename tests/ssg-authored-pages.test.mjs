@@ -13,13 +13,13 @@ test('todas as páginas canônicas têm URL própria, tipo e acesso à ferrament
   }
 });
 test('índice preserva todas as oito URLs anteriores do laboratório',()=>{
-  const content=readFileSync('pages/simulacoes/index.md','utf8');
+  const content=readFileSync('pages/simulacoes/page.md','utf8');
   for(const id of ['summary','map','inverse','triangulation','sensitivity','montecarlo','tles','documents'])
     assert.ok(content.includes('/conde-incident/lab/#/'+id),'Deep link legado perdido: '+id);
 });
 test('rota divergente, tipo errado, metadado repetido e ferramenta sem retorno falham',()=>{
   const slug='mapa';
-  const valid=readFileSync('pages/mapa/index.md','utf8');
+  const valid=readFileSync('pages/mapa/page.md','utf8');
   assert.throws(()=>checkPage(slug,valid.replace('type: Page','type: Story')));
   assert.throws(()=>checkPage(slug,valid.replace('/conde-incident/mapa/','/conde-incident/outra/')));
   assert.throws(()=>checkPage(slug,valid.replace('type: Page','type: Page\ntype: Page')));
