@@ -67,3 +67,9 @@ jobs:
           set -euo pipefail
           python3 formal/scripts/compile_ssr_print_intervals.py --check
           python3 -m unittest discover -s formal/tests -p 'test_ssr_print_intervals.py' -v
+
+      - name: Verify NASA April/August/October shared rounding and Lean ranks
+        run: |
+          set -euo pipefail
+          python3 formal/scripts/compile_ssr_three_editions.py --check
+          python3 -m unittest discover -s formal/tests -p 'test_ssr_three_editions.py' -v
