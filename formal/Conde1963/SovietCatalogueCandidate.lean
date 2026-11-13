@@ -90,4 +90,36 @@ def sovietContemporaryBibliographicLeads :
      observedNorad := none, observationEpochUtc := none,
      originalIssueAuthenticated := false, status := "BIBLIOGRAPHIC_LEAD_ONLY" }]
 
+/-! C241-L37: 2007 Masevich account differentiates the methods Bulletin
+from a raw-observations serial. RNB 1964 catalogues June 1963 records for
+OTHER named satellites, not authenticated targets 527/528/529. These typed
+routes request original observations; no target measurement is supplied. -/
+structure SovietRawSeriesRoute where
+  sourceRecord : String
+  retrospectivePdfSha256 : String
+  originalSeries : String
+  catalogueRecord : String
+  candidateNorad : Nat
+  originalTargetEntry : Option String
+  station : Option String
+  epochUtc : Option String
+  observationFrame : Option String
+  uncertainty : Option String
+  active : Bool
+  deriving Repr
+
+def sovietRawSeriesRoutes : List SovietRawSeriesRoute :=
+  [527, 528, 529].map fun norad =>
+    { sourceRecord := "C241-L37"
+      retrospectivePdfSha256 := "8dc0d5b54985ab53d394babbad36da03ae02cef17f5ad897ad94e05acf9005f5"
+      originalSeries := "Результаты наблюдений ИСЗ"
+      catalogueRecord := "RNB-1000287767"
+      candidateNorad := norad
+      originalTargetEntry := none
+      station := none
+      epochUtc := none
+      observationFrame := none
+      uncertainty := none
+      active := false }
+
 end Conde1963
