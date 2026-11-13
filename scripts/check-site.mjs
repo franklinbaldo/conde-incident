@@ -10,8 +10,18 @@ for(const [name,html] of [['home',index],['stories',listing]]) {
   assert.match(html,/<html[^>]+lang=["']?pt-BR/i,name+' sem idioma pt-BR');
   assert.doesNotMatch(html,/(?:src|href)=["']\/(?:assets|css)\//i,name+' referencia assets da raiz');
 }
+const labNav = html => {
+  const header = html.indexOf('<header class="masthead">');
+  const nav = header < 0 ? -1 : html.indexOf('<nav', header);
+  const end = nav < 0 ? -1 : html.indexOf('</nav>', nav);
+  const link = nav < 0 ? -1 : html.indexOf('<a href="/conde-incident/lab/">Laboratório</a>', nav);
+  return header >= 0 && nav >= 0 && end >= 0 && link > nav && link < end;
+};
+for(const [name, html] of [['home',index],['stories',listing]])
+  assert.ok(labNav(html),name+' sem acesso direto ao laboratório na navegação principal');
 for(const slug of ['cronologia','evidencias','hipoteses','simulacoes','metodo']){
  const html=read(slug+'/index.html');
+ assert.ok(labNav(html),'Navegação sem laboratório: '+slug);
  assert.ok(index.includes('/conde-incident/'+slug+'/'),'Rota SSG ausente: '+slug);
  assert.match(html,/<html[^>]+lang=["']?pt-BR/i,'Idioma ausente: '+slug);
  assert.match(html,/Content-Security-Policy/,'CSP ausente: '+slug);
