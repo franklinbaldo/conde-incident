@@ -1,0 +1,60 @@
+{
+  "schema": "conde.contemporary_satellite_tracking_bibliography/v1",
+  "id": "C241-LONTRA-R38",
+  "audit_date": "2026-11-13",
+  "status": "CONTEMPORARY_OBSERVATIONS_OF_ANOTHER_OBJECT_NOT_527_528_529",
+  "source": {
+    "kind": "digitized_full_text_of_1965_contemporary_scientific_paper",
+    "title": "Period changes of the satellite 1960 epsilon 3 in 1963/64 as deduced from observations within the Interobs program",
+    "authors": ["E. Illes-Almar", "I. Almar"],
+    "series": "Mitteilungen der Sternwarte der Ungarischen Akademie der Wissenschaften",
+    "number": 59,
+    "place": "Budapest",
+    "publication_year": 1965,
+    "url": "https://webarch.konkoly.hu/mitteilungen/Mitt059/059.html",
+    "http_status": 200,
+    "tls_validated": true,
+    "bytes": 57146,
+    "sha256": "70a0e99bf61528d28b48f583295a4984ae2b9056595d1bb9d7a626a61a47ebe5",
+    "web_format": "transcribed HTML, not image facsimile",
+    "original_print_facsimile_retrieved": false,
+    "original_station_logs_retrieved": false
+  },
+  "study": {
+    "object_designation": "1960 epsilon 3 (Sputnik 4 cabin)",
+    "object_is_1963_003_abc": false,
+    "reported_observation_windows": ["1963-08-21/1963-08-30", "1964-02-17", "1964-04-10/1964-04-13", "1964-06-08/1964-06-13", "1964-07-07/1964-07-12", "1964-09-18/1964-09-27"],
+    "campaign_includes_1963_nov_07_to_09": false,
+    "stations_in_table_2": 22,
+    "fixes_total_in_table_2": 793,
+    "simultaneous_positions_used_in_study": 393,
+    "passes_considered": 39,
+    "fixes_by_station_from_table_2": [
+      {"station_code": "1023", "place": "Kiev", "fixes": 29},
+      {"station_code": "1113", "place": "Baja", "fixes": 124},
+      {"station_code": "1111", "place": "Budapest", "fixes": 84}
+    ],
+    "station_counts_cover_all_study_windows_not_only_august_1963": true,
+    "inputs_are_from_multinational_network_not_independent_527_to_529": true
+  },
+  "original_campaign_volumes_cited_by_paper": {
+    "title": "Ergebnisse der im Rahmen des Interobs-Programms abgehaltenen Kooperationswochen",
+    "volumes": [1, 2],
+    "publication_years": [1964, 1965],
+    "place_of_publication_reported": "Baja, Hungary",
+    "citation_number_in_paper": 7,
+    "full_text_of_volumes_retrieved": false,
+    "whether_november_1963_is_covered": null,
+    "whether_norad_527_528_529_appear": null
+  },
+  "follow_up": "Locate original Interobs Kooperationswochen volume 1 (1964) and volume 2 (1965), inspect campaign dates/target list for 1963-11-07 through 1963-11-09 and aliases for 1963-003A/B/C or NORAD 527/528/529; separately seek original station 1023 logs. Never use the 1960 epsilon 3 rows as 1963-003 observations.",
+  "limits": {
+    "target_observations_identified": false,
+    "november_1963_campaign_confirmed": false,
+    "source_html_is_original_print_facsimile": false,
+    "raw_station_observations_accessed": false,
+    "orbital_constraints_activated": 0,
+    "new_target_orbital_measurements": 0,
+    "outreach_sent": false
+  }
+}
