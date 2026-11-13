@@ -44,7 +44,7 @@ def validate(doc, copies=None):
     e = doc["evidence_boundary"]
     assert e["source_html_is_not_original_1963_journal"] is True
     for field in ("institution_contact_is_verified_current_custodian",
-                  "museum_holds_station1078_journals",
+                  "museum_custody_confirmed",
                   "detailed_inventory_or_call_number_known",
                   "institutional_outreach_sent",
                   "pages_or_facsimiles_retrieved"):
