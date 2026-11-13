@@ -1,0 +1,47 @@
+name: Cervo - historical Telstar prediction residuals
+
+on:
+  pull_request:
+    paths:
+      - research/observations/telstar_1962_table_vii_C241.csv
+      - research/statistics/TELSTAR_1962_PREDICTION_BENCHMARK_C241.md
+      - research/statistics/telstar_1962_prediction_benchmark_C241.json
+      - tools/telstar_1962_prediction_benchmark.py
+      - tests/test_telstar_1962_prediction_benchmark.py
+      - .github/workflows/telstar-1962-prediction-benchmark.yml
+  push:
+    branches: [main]
+    paths:
+      - research/observations/telstar_1962_table_vii_C241.csv
+      - research/statistics/TELSTAR_1962_PREDICTION_BENCHMARK_C241.md
+      - research/statistics/telstar_1962_prediction_benchmark_C241.json
+      - tools/telstar_1962_prediction_benchmark.py
+      - tests/test_telstar_1962_prediction_benchmark.py
+      - .github/workflows/telstar-1962-prediction-benchmark.yml
+
+permissions:
+  contents: read
+
+jobs:
+  source-and-metrics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Check exact source SHA and adversarial tests
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          python3 -m unittest discover -s tests -p test_telstar_1962_prediction_benchmark.py -v
+          python3 tools/telstar_1962_prediction_benchmark.py --check
+      - name: Replay NASA historical facsimile hash
+        run: |
+          curl -fsSL --retry 2 --max-time 90 \
+            https://ntrs.nasa.gov/api/citations/19640000981/downloads/19640000981.pdf \
+            -o "$RUNNER_TEMP/19640000981.pdf"
+          python3 tools/telstar_1962_prediction_benchmark.py \
+            --source-pdf "$RUNNER_TEMP/19640000981.pdf" --check
