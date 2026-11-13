@@ -1,0 +1,264 @@
+{
+  "id": "C241-L22:OBSERVABLES",
+  "schema": "conde.cumulative-constraint-graph-extension/v1",
+  "parent_graph": "research/constraints/ssr_1963_observable_graph.json",
+  "source_ledger": "research/tle_custody/nasa_ssr_jun30_1963_C241-L22.json",
+  "source_family": "NASA_NORAD_SAO_COMPILED_NOT_AN_INDEPENDENT_SENSOR",
+  "crosswalk_depends_on": "C241-L10",
+  "observables": [
+    {
+      "id": "C241-L22:527:period_min",
+      "object_norad": 527,
+      "designator": "1963-003A",
+      "field": "period_min",
+      "printed": "94.6",
+      "unit": "min",
+      "operator": "nodal_period_catalogued(state_527,latent_epoch,frame,force_model)",
+      "latent_epoch_utc": null,
+      "frame": null,
+      "measurement_sigma": null,
+      "required_bridges": [
+        "individual tracking time",
+        "reference frame",
+        "instrumental uncertainty",
+        "dynamical model"
+      ],
+      "admissible_domain_effect": "PENDING_CALIBRATION"
+    },
+    {
+      "id": "C241-L22:527:inclination_deg",
+      "object_norad": 527,
+      "designator": "1963-003A",
+      "field": "inclination_deg",
+      "printed": "81.89",
+      "unit": "deg",
+      "operator": "inclination_catalogued(state_527,latent_epoch,frame,force_model)",
+      "latent_epoch_utc": null,
+      "frame": null,
+      "measurement_sigma": null,
+      "required_bridges": [
+        "individual tracking time",
+        "reference frame",
+        "instrumental uncertainty",
+        "dynamical model"
+      ],
+      "admissible_domain_effect": "PENDING_CALIBRATION"
+    },
+    {
+      "id": "C241-L22:527:apogee_km",
+      "object_norad": 527,
+      "designator": "1963-003A",
+      "field": "apogee_km",
+      "printed": 530,
+      "unit": "km",
+      "operator": "apogee_altitude_catalogued(state_527,latent_epoch,frame,force_model)",
+      "latent_epoch_utc": null,
+      "frame": null,
+      "measurement_sigma": null,
+      "required_bridges": [
+        "individual tracking time",
+        "reference frame",
+        "instrumental uncertainty",
+        "dynamical model"
+      ],
+      "admissible_domain_effect": "PENDING_CALIBRATION"
+    },
+    {
+      "id": "C241-L22:527:perigee_km",
+      "object_norad": 527,
+      "designator": "1963-003A",
+      "field": "perigee_km",
+      "printed": 465,
+      "unit": "km",
+      "operator": "perigee_altitude_catalogued(state_527,latent_epoch,frame,force_model)",
+      "latent_epoch_utc": null,
+      "frame": null,
+      "measurement_sigma": null,
+      "required_bridges": [
+        "individual tracking time",
+        "reference frame",
+        "instrumental uncertainty",
+        "dynamical model"
+      ],
+      "admissible_domain_effect": "PENDING_CALIBRATION"
+    },
+    {
+      "id": "C241-L22:528:period_min",
+      "object_norad": 528,
+      "designator": "1963-003B",
+      "field": "period_min",
+      "printed": "93.7",
+      "unit": "min",
+      "operator": "nodal_period_catalogued(state_528,latent_epoch,frame,force_model)",
+      "latent_epoch_utc": null,
+      "frame": null,
+      "measurement_sigma": null,
+      "required_bridges": [
+        "individual tracking time",
+        "reference frame",
+        "instrumental uncertainty",
+        "dynamical model"
+      ],
+      "admissible_domain_effect": "PENDING_CALIBRATION"
+    },
+    {
+      "id": "C241-L22:528:inclination_deg",
+      "object_norad": 528,
+      "designator": "1963-003B",
+      "field": "inclination_deg",
+      "printed": "81.88",
+      "unit": "deg",
+      "operator": "inclination_catalogued(state_528,latent_epoch,frame,force_model)",
+      "latent_epoch_utc": null,
+      "frame": null,
+      "measurement_sigma": null,
+      "required_bridges": [
+        "individual tracking time",
+        "reference frame",
+        "instrumental uncertainty",
+        "dynamical model"
+      ],
+      "admissible_domain_effect": "PENDING_CALIBRATION"
+    },
+    {
+      "id": "C241-L22:528:apogee_km",
+      "object_norad": 528,
+      "designator": "1963-003B",
+      "field": "apogee_km",
+      "printed": 478,
+      "unit": "km",
+      "operator": "apogee_altitude_catalogued(state_528,latent_epoch,frame,force_model)",
+      "latent_epoch_utc": null,
+      "frame": null,
+      "measurement_sigma": null,
+      "required_bridges": [
+        "individual tracking time",
+        "reference frame",
+        "instrumental uncertainty",
+        "dynamical model"
+      ],
+      "admissible_domain_effect": "PENDING_CALIBRATION"
+    },
+    {
+      "id": "C241-L22:528:perigee_km",
+      "object_norad": 528,
+      "designator": "1963-003B",
+      "field": "perigee_km",
+      "printed": 423,
+      "unit": "km",
+      "operator": "perigee_altitude_catalogued(state_528,latent_epoch,frame,force_model)",
+      "latent_epoch_utc": null,
+      "frame": null,
+      "measurement_sigma": null,
+      "required_bridges": [
+        "individual tracking time",
+        "reference frame",
+        "instrumental uncertainty",
+        "dynamical model"
+      ],
+      "admissible_domain_effect": "PENDING_CALIBRATION"
+    },
+    {
+      "id": "C241-L22:529:period_min",
+      "object_norad": 529,
+      "designator": "1963-003C",
+      "field": "period_min",
+      "printed": "94.0",
+      "unit": "min",
+      "operator": "nodal_period_catalogued(state_529,latent_epoch,frame,force_model)",
+      "latent_epoch_utc": null,
+      "frame": null,
+      "measurement_sigma": null,
+      "required_bridges": [
+        "individual tracking time",
+        "reference frame",
+        "instrumental uncertainty",
+        "dynamical model"
+      ],
+      "admissible_domain_effect": "PENDING_CALIBRATION"
+    },
+    {
+      "id": "C241-L22:529:inclination_deg",
+      "object_norad": 529,
+      "designator": "1963-003C",
+      "field": "inclination_deg",
+      "printed": "81.89",
+      "unit": "deg",
+      "operator": "inclination_catalogued(state_529,latent_epoch,frame,force_model)",
+      "latent_epoch_utc": null,
+      "frame": null,
+      "measurement_sigma": null,
+      "required_bridges": [
+        "individual tracking time",
+        "reference frame",
+        "instrumental uncertainty",
+        "dynamical model"
+      ],
+      "admissible_domain_effect": "PENDING_CALIBRATION"
+    },
+    {
+      "id": "C241-L22:529:apogee_km",
+      "object_norad": 529,
+      "designator": "1963-003C",
+      "field": "apogee_km",
+      "printed": 512,
+      "unit": "km",
+      "operator": "apogee_altitude_catalogued(state_529,latent_epoch,frame,force_model)",
+      "latent_epoch_utc": null,
+      "frame": null,
+      "measurement_sigma": null,
+      "required_bridges": [
+        "individual tracking time",
+        "reference frame",
+        "instrumental uncertainty",
+        "dynamical model"
+      ],
+      "admissible_domain_effect": "PENDING_CALIBRATION"
+    },
+    {
+      "id": "C241-L22:529:perigee_km",
+      "object_norad": 529,
+      "designator": "1963-003C",
+      "field": "perigee_km",
+      "printed": 427,
+      "unit": "km",
+      "operator": "perigee_altitude_catalogued(state_529,latent_epoch,frame,force_model)",
+      "latent_epoch_utc": null,
+      "frame": null,
+      "measurement_sigma": null,
+      "required_bridges": [
+        "individual tracking time",
+        "reference frame",
+        "instrumental uncertainty",
+        "dynamical model"
+      ],
+      "admissible_domain_effect": "PENDING_CALIBRATION"
+    }
+  ],
+  "dependency_edges": [
+    {
+      "from": "C241-L16:1963-04-30",
+      "to": "C241-L22:1963-06-30",
+      "type": "EDITORIAL_SEQUENCE_NOT_INSTRUMENTAL_INTERVAL"
+    },
+    {
+      "from": "C241-L22:1963-06-30",
+      "to": "C241-L18:1963-07-31",
+      "type": "EDITORIAL_SEQUENCE_NOT_INSTRUMENTAL_INTERVAL"
+    },
+    {
+      "from": "C241-L22:1963-06-30",
+      "to": "C241-L17:1963-08-15",
+      "type": "EDITORIAL_SEQUENCE_NOT_INSTRUMENTAL_INTERVAL"
+    },
+    {
+      "from": "C241-L10",
+      "to": "C241-L22",
+      "type": "SECONDARY_OBJECT_CROSSWALK_NOT_PRINTED_IN_1963"
+    }
+  ],
+  "new_documentary_scalar_fields": 12,
+  "independent_instrument_measurements_added": 0,
+  "physical_domain_reduced": false,
+  "lean_promoted": false
+}
