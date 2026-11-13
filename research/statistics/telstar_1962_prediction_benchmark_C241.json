@@ -1,0 +1,95 @@
+{
+  "all_rows_descriptive_los_max_deg": 0.0730545,
+  "all_rows_descriptive_los_rms_deg": 0.033459,
+  "classification": "EMPIRICAL_COMPARISON_OTHER_SATELLITE_NOT_528_CALIBRATION",
+  "eligibility": {
+    "active_conde_geographic_constraint": false,
+    "calibrated_historical_528_likelihood": false,
+    "empirical_prediction_residuals_for_telstar": true,
+    "historic_528_mcmc": "NOT_RUN",
+    "independent_tracking_network_from_norad_528": null,
+    "orbit_covariance_for_norad_528": null,
+    "sensor_sigma_for_norad_528": null,
+    "terminal_timing_distribution_for_norad_528": null
+  },
+  "limits": [
+    "Single named tracking site; five passes and 38 serial measurements are not 38 independent trials",
+    "Retrospective facsimile inspection; not a newly blind prospective holdout",
+    "Print rounding, individual forecast horizons and tracking biases are not calibrated here",
+    "Telstar 1962 does not transfer instrument-specific accuracy to NORAD 528"
+  ],
+  "method": {
+    "angle": "great-circle angular separation of observed and predicted sightlines",
+    "fit_epochs_and_raw_tracking": null,
+    "individual_prediction_horizon": null,
+    "measurements_are_independent": false,
+    "predictions": "paper reports five-day lookahead from preceding five days of tracking",
+    "print_resolution_deg": "0.01",
+    "rounding_rule_verified": false,
+    "rows_are_independent_realizations": false
+  },
+  "observations": {
+    "csv_sha256": "50c09ca2ac44f48b037e2efa5e4ad6c96740d6ca10f4f0189684a4845ac7d061",
+    "kind": "published observed versus predicted azimuth/elevation",
+    "object": "Telstar 1 (1962)",
+    "pass_count": 5,
+    "row_count": 38,
+    "site": "Andover",
+    "units": "degrees"
+  },
+  "passes": [
+    {
+      "count": 8,
+      "descriptive_los_max_deg": 0.0424729,
+      "descriptive_los_rms_deg": 0.0244658,
+      "end_utc": "1962-07-23T22:17Z",
+      "pass_id": 124,
+      "start_utc": "1962-07-23T21:35Z"
+    },
+    {
+      "count": 7,
+      "descriptive_los_max_deg": 0.0334327,
+      "descriptive_los_rms_deg": 0.0201106,
+      "end_utc": "1962-07-24T21:53Z",
+      "pass_id": 133,
+      "start_utc": "1962-07-24T21:17Z"
+    },
+    {
+      "count": 7,
+      "descriptive_los_max_deg": 0.0523442,
+      "descriptive_los_rms_deg": 0.0270227,
+      "end_utc": "1962-07-26T00:19Z",
+      "pass_id": 143,
+      "start_utc": "1962-07-25T23:43Z"
+    },
+    {
+      "count": 8,
+      "descriptive_los_max_deg": 0.0545954,
+      "descriptive_los_rms_deg": 0.033043,
+      "end_utc": "1962-07-26T21:13Z",
+      "pass_id": 151,
+      "start_utc": "1962-07-26T20:31Z"
+    },
+    {
+      "count": 8,
+      "descriptive_los_max_deg": 0.0730545,
+      "descriptive_los_rms_deg": 0.0513264,
+      "end_utc": "1962-07-27T20:50Z",
+      "pass_id": 160,
+      "start_utc": "1962-07-27T20:08Z"
+    }
+  ],
+  "schema": "conde.historical-prediction-pairs/v1",
+  "source": {
+    "ntrs_id": "19640000981",
+    "paper": "Claus et al., Orbit Determination and Prediction, and Computer Programs",
+    "pdf_bytes": 1148397,
+    "pdf_page_index_zero_based": 23,
+    "pdf_sha256": "98cbd80eb06d381df2d4e78c6c92a6d4436ec3ea3f55b2c4e92baf6640a776b9",
+    "printed_page": 1380,
+    "publication_year": 1963,
+    "publisher": "Bell System Technical Journal",
+    "table": "VII",
+    "url": "https://ntrs.nasa.gov/api/citations/19640000981/downloads/19640000981.pdf"
+  }
+}
