@@ -139,7 +139,7 @@ export default function App() {
       />
 
       {/* Scientific Footer */}
-      <footer className="border-t border-zinc-900 bg-zinc-950 py-6 text-xs text-zinc-500 font-mono">
+      <footer className="border-t border-zinc-900 bg-zinc-950 py-6 text-xs text-zinc-400 font-mono">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Satellite className="w-4 h-4 text-cyan-400" />
