@@ -227,6 +227,59 @@ export function atmosphereForMassScenario(
   };
 }
 
+/** Geometric area may be bounded only when MASS, aerodynamic Cd, and the
+ * independently calibrated B interval all have sourced finite bounds.
+ * No one of them follows solely from C61, even if total 1176 is assumed.
+ */
+export function conditionalProjectedAreaEnvelope(input: {
+  readonly massMinKg: number | null;
+  readonly massMaxKg: number | null;
+  readonly bMinM2Kg: number | null;
+  readonly bMaxM2Kg: number | null;
+  readonly cdMin: number | null;
+  readonly cdMax: number | null;
+}) {
+  const vals = Object.values(input);
+  if (vals.some(v => v === null))
+    return {areaMinM2:null,areaMaxM2:null,
+      historicalConstraintActive:false as const,
+      reason:'Mass, B and Cd are not jointly calibrated'};
+  const [mLo,mHi,bLo,bHi,cdLo,cdHi] = vals as number[];
+  positive(mLo,'lower mass');positive(mHi,'upper mass');
+  nonnegative(bLo,'lower B');nonnegative(bHi,'upper B');
+  positive(cdLo,'lower Cd');positive(cdHi,'upper Cd');
+  if (mLo>mHi || bLo>bHi || cdLo>cdHi)
+    throw new RangeError('Ordered mass, B and Cd ranges required');
+  return {
+    areaMinM2:bLo*mLo/cdHi,
+    areaMaxM2:bHi*mHi/cdLo,
+    historicalConstraintActive:false as const,
+    reason:'Conditioned on separately sourced masses, B and Cd',
+  };
+}
+
+/** Equivalent circular projected diameter only if the analyst explicitly
+ * selects that shape; it is not a measured maximum dimension or breakup size.
+ */
+export function conditionalCircularProjectedDiameter(
+  areaMinM2: number | null, areaMaxM2: number | null,
+  geometryModel: 'EXPLICIT_EQUIVALENT_CIRCULAR_PROJECTION',
+) {
+  if (geometryModel !== 'EXPLICIT_EQUIVALENT_CIRCULAR_PROJECTION')
+    throw new RangeError('Projected shape must be explicitly declared');
+  if (areaMinM2 === null || areaMaxM2 === null)
+    return {minDiameterM:null,maxDiameterM:null,historicalConstraintActive:false as const};
+  nonnegative(areaMinM2,'lower projected area');
+  nonnegative(areaMaxM2,'upper projected area');
+  if (areaMinM2>areaMaxM2)
+    throw new RangeError('Inverted projected-area bounds');
+  return {
+    minDiameterM:Math.sqrt(4*areaMinM2/Math.PI),
+    maxDiameterM:Math.sqrt(4*areaMaxM2/Math.PI),
+    historicalConstraintActive:false as const,
+  };
+}
+
 /** Inverse feasibility can compare required B with explicit A,Cd,m scenario;
  * without independently constrained area/Cd this MUST NOT reject a historic
  * orbit. A Boolean match here is only numeric compatibility with the scenario.
