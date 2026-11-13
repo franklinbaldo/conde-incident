@@ -1,0 +1,192 @@
+{
+  "schema": "conde.gaviao-retrospective-window/v1",
+  "review": "G34",
+  "date": "2026-11-13",
+  "reviewed_from_exclusive_main_sha": "c9b4482f7850434a9124dfe6a12c540006aa468f",
+  "reviewed_through_inclusive_main_sha": "06f1f11ca567ec37d260435fba233080b5365170",
+  "first_parent_integrations": 12,
+  "squash_merges": 10,
+  "conventional_merges": 2,
+  "dag_commits": 19,
+  "direct_commits": 0,
+  "additional_dag_commits": 7,
+  "entries": [
+    {
+      "main_sha": "44ef0af11d322934d6f2f5c30d1df4efc6fc4740",
+      "first_parent_sha": "c9b4482f7850434a9124dfe6a12c540006aa468f",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 400,
+      "subject": "88 🦅 G33: vedar genealogia órfã no SSG e auditar 18 integrações (#400)",
+      "changed_files": [
+        "research/audits/gaviao-main-window-20261113-g33.json",
+        "research/audits/gaviao-main-window-20261113-g33.md",
+        "scripts/ssg-documentary-archive.mjs",
+        "tests/ssg-documentary-archive.test.mjs"
+      ],
+      "claim_status": "REVIEWED_CHANGESET_WITH_DOCUMENTARY_LIMITS_NOT_HISTORICAL_TERMINAL_PROOF"
+    },
+    {
+      "main_sha": "5ed97fc898ebf76296bd8de503008b8a55766a40",
+      "first_parent_sha": "44ef0af11d322934d6f2f5c30d1df4efc6fc4740",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 401,
+      "subject": "90 🐝 C241-L18/L19: source-locked NASA 527 bridge (#401)",
+      "changed_files": [
+        "public/data/conde-ssr-source-locked-links.json",
+        "tests/test_ssr_source_locked_links.py",
+        "tools/export_ssr_source_locked_links.py"
+      ],
+      "claim_status": "REVIEWED_CHANGESET_WITH_DOCUMENTARY_LIMITS_NOT_HISTORICAL_TERMINAL_PROOF"
+    },
+    {
+      "main_sha": "441b3f8be6b9c63d1f9018c910c37e8777f14ca8",
+      "first_parent_sha": "5ed97fc898ebf76296bd8de503008b8a55766a40",
+      "other_parents": [
+        "93f4327d71a7d594073f34b874f41e82fc79fda2"
+      ],
+      "merge_method": "merge",
+      "pr": 402,
+      "subject": "Merge pull request #402 from franklinbaldo/research/lagarto-gts-lineage-r18",
+      "changed_files": [
+        "research/meteorology/igra_gts_1963_provenance.json",
+        "research/meteorology/igra_gts_1963_provenance.md",
+        "tests/test_igra_gts_1963_provenance.py",
+        "tools/validate_igra_gts_1963_provenance.py"
+      ],
+      "claim_status": "REVIEWED_CHANGESET_WITH_DOCUMENTARY_LIMITS_NOT_HISTORICAL_TERMINAL_PROOF"
+    },
+    {
+      "main_sha": "3b0ee40303d70ad58aafaeab8150d74b375b324a",
+      "first_parent_sha": "441b3f8be6b9c63d1f9018c910c37e8777f14ca8",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 403,
+      "subject": "90 🦌 Certificar limites de inferência conjunta 527/529 → 528 (#403)",
+      "changed_files": [
+        "research/statistics/JOINT_CONTROL_TRANSFER_IDENTIFIABILITY.md",
+        "research/statistics/joint_control_transfer_identifiability_C241.json",
+        "tests/test_joint_control_transfer_identifiability.py",
+        "tools/joint_control_transfer_identifiability.py"
+      ],
+      "claim_status": "REVIEWED_CHANGESET_WITH_DOCUMENTARY_LIMITS_NOT_HISTORICAL_TERMINAL_PROOF"
+    },
+    {
+      "main_sha": "1e90361a29ffb76908acd5e0b11d1ace260afb30",
+      "first_parent_sha": "3b0ee40303d70ad58aafaeab8150d74b375b324a",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 405,
+      "subject": "88 🦦 Fac-símile ALBA 13.720/2017: fonte oficial, costura de divisas e trava temporal (#405)",
+      "changed_files": [
+        ".github/workflows/conde-alba-legal-facsimile.yml",
+        "research/archive/conde_alba_law13720_custody_20261113.json",
+        "tests/test_conde_alba_law13720.py",
+        "tools/verify_conde_alba_law13720.py"
+      ],
+      "claim_status": "REVIEWED_CHANGESET_WITH_DOCUMENTARY_LIMITS_NOT_HISTORICAL_TERMINAL_PROOF"
+    },
+    {
+      "main_sha": "4cd40b8436ccc3aac692a04ce72f4d72bb3e3dd7",
+      "first_parent_sha": "1e90361a29ffb76908acd5e0b11d1ace260afb30",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 408,
+      "subject": "test(ci): protect universal main push gates from path filters (#408)",
+      "changed_files": [
+        "tests/test_ci_event_policy_all_workflows.py"
+      ],
+      "claim_status": "REVIEWED_CHANGESET_WITH_DOCUMENTARY_LIMITS_NOT_HISTORICAL_TERMINAL_PROOF"
+    },
+    {
+      "main_sha": "cba0376dfc7cf7b32b3e38f9c2a586cfc0a1a90a",
+      "first_parent_sha": "4cd40b8436ccc3aac692a04ce72f4d72bb3e3dd7",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 409,
+      "subject": "research: source-lock 1961 NORAD-GSFC data flow from House report (C241-L20) (#409)",
+      "changed_files": [
+        ".github/workflows/cumulative-connections.yml",
+        "public/data/conde-ssr-source-locked-links.json",
+        "research/tle_custody/congressional_ssr_chain_C241-L20.json",
+        "research/tle_custody/evidence_matrix_C241-L20_2026-11-13.md",
+        "tests/test_ssr_source_locked_links.py",
+        "tools/export_ssr_source_locked_links.py"
+      ],
+      "claim_status": "REVIEWED_CHANGESET_WITH_DOCUMENTARY_LIMITS_NOT_HISTORICAL_TERMINAL_PROOF"
+    },
+    {
+      "main_sha": "79b75144d443090455c53b075d4e8a2262aea615",
+      "first_parent_sha": "cba0376dfc7cf7b32b3e38f9c2a586cfc0a1a90a",
+      "other_parents": [
+        "7559aedda8e9c7f455531701ab9f5bf39744254f"
+      ],
+      "merge_method": "merge",
+      "pr": 406,
+      "subject": "Merge pull request #406 from franklinbaldo/research/caranguejo-cgeo20-centro-vila-2020",
+      "changed_files": [
+        "research/geo/cgeo20_centro_vila_2020.json",
+        "research/geo/cgeo20_centro_vila_2020.md",
+        "tests/test_cgeo20_center_vila.py",
+        "tools/cgeo20_center_vila.py"
+      ],
+      "claim_status": "REVIEWED_CHANGESET_WITH_DOCUMENTARY_LIMITS_NOT_HISTORICAL_TERMINAL_PROOF"
+    },
+    {
+      "main_sha": "75b77b316171b51cd63e5a4dbe9017f77337adf6",
+      "first_parent_sha": "79b75144d443090455c53b075d4e8a2262aea615",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 410,
+      "subject": "feat(castor): audit correlated off-axis covariance probes (#410)",
+      "changed_files": [
+        "research/constraints/stm_cross_direction_g33.json",
+        "src/lib/orbitStmEnvelope.ts",
+        "tests/orbitStmEnvelope.test.mjs"
+      ],
+      "claim_status": "REVIEWED_CHANGESET_WITH_DOCUMENTARY_LIMITS_NOT_HISTORICAL_TERMINAL_PROOF"
+    },
+    {
+      "main_sha": "44dc4ca9069e9886ea3e2edab70667498ccb4dd9",
+      "first_parent_sha": "75b77b316171b51cd63e5a4dbe9017f77337adf6",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 412,
+      "subject": "86 🦇 Reflow de títulos longos das famílias documentais em 320 px (#412)",
+      "changed_files": [
+        "static/css/site.css",
+        "tests/caderno_reflow_smoke.mjs"
+      ],
+      "claim_status": "REVIEWED_CHANGESET_WITH_DOCUMENTARY_LIMITS_NOT_HISTORICAL_TERMINAL_PROOF"
+    },
+    {
+      "main_sha": "561bfe494dec0b102ff66775306caf76af0b72c4",
+      "first_parent_sha": "44dc4ca9069e9886ea3e2edab70667498ccb4dd9",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 411,
+      "subject": "feat(ssg): custódia auditável do TLE secundário NORAD 528 (#411)",
+      "changed_files": [
+        "pages/simulacoes/tles/page.md",
+        "scripts/check-ssg-authored-site.mjs",
+        "scripts/prepare-ssg.mjs",
+        "scripts/ssg-tle-custody.mjs",
+        "tests/ssg-tle-custody.test.mjs"
+      ],
+      "claim_status": "REVIEWED_CHANGESET_WITH_DOCUMENTARY_LIMITS_NOT_HISTORICAL_TERMINAL_PROOF"
+    },
+    {
+      "main_sha": "06f1f11ca567ec37d260435fba233080b5365170",
+      "first_parent_sha": "561bfe494dec0b102ff66775306caf76af0b72c4",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 413,
+      "subject": "story(coruja): boletins NASA pós-528 e controles 527/529 (#413)",
+      "changed_files": [
+        "stories/2026-11-13-os-dois-que-ficaram.md"
+      ],
+      "claim_status": "REVIEWED_CHANGESET_WITH_DOCUMENTARY_LIMITS_NOT_HISTORICAL_TERMINAL_PROOF"
+    }
+  ]
+}
