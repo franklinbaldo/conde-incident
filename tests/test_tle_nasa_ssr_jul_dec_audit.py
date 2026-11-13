@@ -26,6 +26,14 @@ class LateNASAReports(unittest.TestCase):
         self.assertFalse(report["physical_domain_reduced"])
         self.assertEqual(report["independent_instrument_measurements_found"], 0)
 
+    def test_reject_old_july_3c_perigee_transcription(self):
+        self.mutate(lambda x: x["sources"][0]["rows"][2].update(perigee_km=425))
+
+    def test_erratum_chain_preserved(self):
+        self.assertEqual(LEDGER["sources"][0]["perigee_transcription_erratum"]["prior_ledger_value_km"], 425)
+        self.assertEqual(LEDGER["sources"][0]["rows"][2]["perigee_km"], 452)
+        self.mutate(lambda x: x["sources"][0].pop("perigee_transcription_erratum"))
+
     def test_date_forgery(self):
         self.mutate(lambda x: x["sources"][0].update(published="1963-08-01"))
 
