@@ -16,6 +16,7 @@ FILES = {
     'IBGE_CGEO10': 'research/geo/ibge_conde_1960_retro_mesh_2026-11-12.json',
     'UWM_10814': 'research/geo/uwm_aracaju_se_1954_1961_cartographic_custody.json',
     'NARA_302531012': 'research/archives/nara_bluebook_conde_naid_302531012_2026-11-12.md',
+    'MATRIX': 'research/evidence_matrix_C001-C238_2026-11-11.md',
 }
 OUTPUT = 'public/data/conde-historical-dependency-links.json'
 IBGE_ZIP = '261399b8557ee26c118e94b13cebf3b6b3e1c70e91b5e8438a348847b875120f'
@@ -41,6 +42,20 @@ def build(root: Path = ROOT) -> dict:
     raw = {k: (root / p).read_bytes() for k, p in FILES.items()}
     ibge, uwm = (json.loads(raw[k]) for k in ('IBGE_CGEO10', 'UWM_10814'))
     nara = raw['NARA_302531012'].decode('utf-8')
+    matrix = raw['MATRIX'].decode('utf-8')
+    required_rows = {
+        'C08': 'Telegrama DOS-UAP-D001',
+        'C10': 'Midkiff',
+        'C24': 'IBGE',
+        'C232': 'Blue Book',
+        'C234': 'Dark Forest Archive',
+        'C235': 'National Archives (NARA)',
+    }
+    for row_id, anchor in required_rows.items():
+        matches = [line for line in matrix.splitlines()
+                   if line.replace('**', '').startswith('| ' + row_id + ' |')]
+        require(len(matches) == 1 and anchor in matches[0],
+                'source matrix occurrence missing or silently renumbered: ' + row_id)
     geo = ibge['method_and_limits']
     ib = ibge['source']['binary']
     require(ibge['record_id'] == 'CGEO-10'
@@ -126,6 +141,22 @@ def build(root: Path = ROOT) -> dict:
          'physical_filter_activated': False},
         {'id': 'C24#1', 'kind': 'MATRIX_CURRENT_GEOGRAPHY_REFERENCE',
          'current_geography_is_1963_boundary': False},
+        {'id': 'CGEO-10-RETRO-PROXY', 'kind': 'LATENT_RETROSPECTIVE_GEOGRAPHIC_PROXY',
+         'variable_id': 'config_municipal_1960_retro_proxy',
+         'original_survey_year': None,
+         'source_dataset_year_label': 1960,
+         'known_reconstruction_year': 1991,
+         'valid_legal_boundary_on_1963_11_08': False},
+        {'id': 'C08#1', 'kind': 'MATRIX_DIPLOMATIC_CHAIN_CONTEXT',
+         'contemporaneous_telegram_is_independent_witness': False},
+        {'id': 'C10#1', 'kind': 'MATRIX_CONSULAR_INTERPRETATION_CONTEXT',
+         'administrative_judgment_proves_event': False},
+        {'id': 'C232#1', 'kind': 'MATRIX_SECONDARY_BLUEBOOK_INDEX_CLAIM',
+         'index_is_original_case_record': False},
+        {'id': 'C234#1', 'kind': 'MATRIX_UNVERIFIED_EXTERNAL_CATALOG',
+         'external_id_matched_to_NARA_NAID': None},
+        {'id': 'C235#1', 'kind': 'MATRIX_NARA_INSTITUTIONAL_LOCATOR',
+         'institutional_locator_is_witness': False},
     ]
     edges = [
         {'from': 'NARA-302531013', 'to': 'NARA-BB-302531012', 'kind': 'ADMINISTRATIVE_CLASSIFICATION_IN_CASE'},
@@ -134,6 +165,18 @@ def build(root: Path = ROOT) -> dict:
         {'from': 'NARA-302531014', 'to': 'O-GLOBO-1963-11-08-CANDIDATE', 'kind': 'CITES_UNRECOVERED_ISSUE_NOT_VERIFIED'},
         {'from': 'UWM-AGDM-10814', 'to': 'C24#1', 'kind': 'HISTORICAL_TOPONYM_CONTEXT_NOT_BOUNDARY'},
         {'from': 'IBGE-CGEO-10', 'to': 'C24#1', 'kind': 'RETROSPECTIVE_MUNICIPAL_PROXY_NOT_1963_SURVEY'},
+        {'from': 'IBGE-CGEO-10', 'to': 'CGEO-10-RETRO-PROXY',
+         'kind': 'DERIVES_RETROSPECTIVE_1960_PROXY_FROM_1991_MESH'},
+        {'from': 'CGEO-10-RETRO-PROXY', 'to': 'C24#1',
+         'kind': 'CONTEXT_ONLY_NOT_LEGAL_1963_BOUNDARY'},
+        {'from': 'NARA-302531013', 'to': 'C232#1',
+         'kind': 'ORIGINAL_ADMINISTRATIVE_CASE_CONTEXT_FOR_SECONDARY_INDEX'},
+        {'from': 'NARA-302531014', 'to': 'C08#1',
+         'kind': 'RELATED_USAIRA_DIPLOMATIC_CHAIN_NOT_IDENTICAL_RECORD'},
+        {'from': 'NARA-302531015', 'to': 'C10#1',
+         'kind': 'REPEATS_CONSULAR_JUDGMENT_NOT_NEW_PHYSICAL_WITNESS'},
+        {'from': 'NARA-BB-302531012', 'to': 'C235#1',
+         'kind': 'IDENTIFIED_FILE_UNIT_AT_PREVIOUSLY_LOCATED_INSTITUTION'},
     ]
     ids = [d['id'] for d in docs]
     require(len(ids) == len(set(ids)) and
@@ -153,8 +196,16 @@ def build(root: Path = ROOT) -> dict:
              'reason': 'BACKCAST_FROM_1991_MESH_NOT_1963_BOUNDARY'},
             {'from': 'NARA-302531013', 'to': 'CONDE-BOUNDARY-1963-PENDING',
              'reason': 'ADMINISTRATIVE_LABEL_NOT_PHYSICAL_GEOGRAPHY'},
+            {'from': 'NARA-BB-302531012', 'to': 'C234#1',
+             'reason': 'EXTERNAL_ARCHIVE_ID_9737078_NOT_MATCHED_TO_NARA_NAID_BY_BYTES'},
         ],
         'candidate_links': [
+            {'variable': 'config_municipal_1960_retro_proxy',
+             'source_candidates': ['IBGE-CGEO-10'],
+             'status': 'CONNECTED_SOURCE_DERIVED_RETROSPECTIVE_PROXY_ONLY',
+             'value': 'IBGE_1991_BASED_STATISTICAL_OUTLINE_1960_LABEL',
+             'legal_1963_geometry': None, 'lean_predicate': None,
+             'simulator_filter': None},
             {'variable': 'conde_municipal_boundary_1963',
              'source_candidates': ['UWM-AGDM-10814', 'IBGE-CGEO-10'],
              'status': 'CONNECTED_PENDING_CALIBRATION',
