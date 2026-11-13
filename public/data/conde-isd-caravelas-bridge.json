@@ -1,0 +1,63 @@
+{
+  "schema": "conde.isd-caravelas-provenance-bridge/v1",
+  "id": "ABELHA-G36-CARAVELAS-SURFACE-CONTEXT",
+  "parents_sha256": {
+    "research/meteorology/isd_caravelas_19631107_09.json": "ed919382e100301717c9c2d394ffa5fb0a2d85d04c7f040aed9d59668976e998",
+    "research/constraints/isd_caravelas_surface_1963.json": "66fedda539136c7522e11eb5d529b304f751dfaa3054fbb6c60fbf35d2abc713",
+    "research/constraints/nmc_y20175_pending_bridge.json": "dab8384382e841b3e54d4345232c3eba145aba9b7753e052c58947a8d9018623",
+    "public/data/conde-observable-dependency-links.json": "0cb27526d6c606a4bb2af23629fe56b4b20b9e7e264561bb7752d12686976154"
+  },
+  "source_occurrence_id": "MET-ISD-19631107-09-CARAVELAS-01",
+  "source_url": "https://www.ncei.noaa.gov/pub/data/noaa/1963/834970-99999-1963.gz",
+  "source_family": "NOAA_NCEI_ISD_DIGITIZED_SURFACE_OBSERVATIONS",
+  "full_gzip_sha256": "c4a0b2f625e8febcd03c4b6ca6ac37b91c9d38423a2ccddd6f0cd7a7712e7e05",
+  "excerpt_sha256": "c6926a86150df982d13286285c17a70e4752cb1ce0ffe1d44ae5330be215a000",
+  "observations_at_caravelas": 72,
+  "utc_interval": [
+    "1963-11-07T00:00:00Z",
+    "1963-11-09T23:00:00Z"
+  ],
+  "station_id": {
+    "usaf": "834970",
+    "wban": "99999"
+  },
+  "graph_edges": [
+    {
+      "from": "MET-ISD-19631107-09-CARAVELAS-01",
+      "to": "Caravelas_surface_wind_at_hour_t",
+      "type": "OBSERVES_DIGITIZED"
+    },
+    {
+      "from": "Caravelas_surface_wind_at_hour_t",
+      "to": "Conde_surface_wind_at_hour_t",
+      "type": "PENDING_SPATIAL_TRANSFER"
+    },
+    {
+      "from": "Conde_surface_wind_at_hour_t",
+      "to": "Conde_entry_drag_or_fall_location",
+      "type": "PENDING_TRAJECTORY_AND_ALTITUDE_MODEL"
+    },
+    {
+      "from": "MET-ISD-19631107-09-CARAVELAS-01",
+      "to": "C149-C151 Recife IGRA sounding family",
+      "type": "CONTEXT_NOT_INDEPENDENCE_CERTIFIED"
+    }
+  ],
+  "comparison_context": {
+    "source_id": "NOAA_IGRA_RECIFE_1963",
+    "matrix_ref": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C151#1",
+    "row_sha256": "d2efe77c596b9fc28b6cf968467e8e696533d1d473fa5d93e0532c767326330b",
+    "relationship": "CONTEXT_ONLY_NO_INDEPENDENCE_CERTIFIED"
+  },
+  "lean_module": "Conde1963.CaravelasCandidate",
+  "lean_status": "DOCUMENTARY_CANDIDATE_NOT_PHYSICAL_PROOF",
+  "simulator_latent_parameter": "wind_field_nov_1963_with_altitude_time_and_position",
+  "simulator_value": null,
+  "station_position_epoch_1963": null,
+  "instrument_error_covariance": null,
+  "spatial_transfer_to_conde": null,
+  "terminal_epoch_528": null,
+  "activation": false,
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "independent_physical_source_count": null
+}
