@@ -1,5 +1,6 @@
 import React from 'react';
 import { tabHref, type LabTab } from '../lib/tabRoutes';
+import { EDITORIAL_ROUTES } from '../lib/editorialRoutes';
 import {
   Satellite,
   Compass,
@@ -31,6 +32,7 @@ export const Navigation: React.FC<NavigationProps> = ({
   onOpenPython,
 }) => {
   const navRef = React.useRef<HTMLElement>(null);
+  const editorialContext = EDITORIAL_ROUTES[activeTab];
 
   // On narrow screens the tab strip scrolls horizontally. Deep links and
   // Back/Forward must reveal the active tab without scrolling the page itself.
@@ -121,6 +123,18 @@ export const Navigation: React.FC<NavigationProps> = ({
             <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
             <span>{lang === 'pt' ? 'Caderno' : 'Notebook'}</span>
           </a>
+          {activeTab !== 'summary' && (
+            <>
+              <span aria-hidden="true" className="text-zinc-600">|</span>
+              <a
+                href={editorialContext.href}
+                aria-label={lang === 'pt' ? 'Abrir no Caderno: ' + editorialContext.pt : 'Open in Notebook: ' + editorialContext.en}
+                className="inline-flex shrink-0 items-center rounded px-1 py-1 text-cyan-300 underline underline-offset-2 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
+              >
+                {lang === 'pt' ? editorialContext.pt : editorialContext.en}
+              </a>
+            </>
+          )}
           <span aria-hidden="true" className="text-zinc-600">|</span>
           <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-cyan-950/60 border border-cyan-800/80 text-cyan-300 font-mono font-medium">
             <Satellite className="w-3.5 h-3.5 animate-pulse" />
