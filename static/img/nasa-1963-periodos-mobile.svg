@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="340" height="590" viewBox="0 0 340 590" role="img" aria-labelledby="title desc">
+<title id="title">Os períodos publicados pela NASA em abril e outubro de 1963</title>
+<desc id="desc">1963 3A permaneceu em 94,6 minutos; 1963 3B passou de 94,1 para 92,4, menos 1,7; 1963 3C passou de 94,3 para 93,3, menos 1,0. Não são épocas instrumentais.</desc>
+<rect width="340" height="590" rx="14" fill="#151b25"/>
+<g font-family="system-ui,Arial,sans-serif">
+<text x="16" y="30" fill="#e4eff4" font-size="16" font-weight="700">DUAS TABELAS NASA · 1963</text>
+<text x="16" y="53" fill="#b5c9d2" font-size="13">Período nodal publicado, em minutos</text>
+<g fill="#243340" stroke="#4b6470"><rect x="15" y="74" width="310" height="140" rx="9"/><rect x="15" y="225" width="310" height="140" rx="9"/><rect x="15" y="376" width="310" height="140" rx="9"/></g>
+<g fill="#e4eff4" font-size="19" font-weight="700"><text x="26" y="103">1963 3A</text><text x="26" y="254">1963 3B</text><text x="26" y="405">1963 3C</text></g>
+<g fill="#b8dce0" font-size="13"><text x="27" y="128">ABRIL</text><text x="177" y="128">OUTUBRO</text><text x="27" y="279">ABRIL</text><text x="177" y="279">OUTUBRO</text><text x="27" y="430">ABRIL</text><text x="177" y="430">OUTUBRO</text></g>
+<g font-size="25" fill="#fff"><text x="27" y="159">94,6</text><text x="177" y="159">94,6</text><text x="27" y="310">94,1</text><text x="177" y="310">92,4</text><text x="27" y="461">94,3</text><text x="177" y="461">93,3</text></g>
+<g font-size="15" font-weight="700"><text x="27" y="193" fill="#cfdae2">Diferença: 0,0 min</text><text x="27" y="344" fill="#f1d4a6">Diferença: −1,7 min</text><text x="27" y="495" fill="#f1d4a6">Diferença: −1,0 min</text></g>
+<g fill="#bbc8cf" font-size="12"><text x="16" y="544">Datas editoriais, não épocas de medição.</text><text x="16" y="562">Fonte: NASA, páginas impressas 5.</text></g>
+</g></svg>
