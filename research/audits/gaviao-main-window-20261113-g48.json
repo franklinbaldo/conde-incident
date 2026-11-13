@@ -1,0 +1,114 @@
+{
+  "schema": "conde.gaviao-retrospective-main/v1",
+  "audit_id": "G48",
+  "reviewed_on_utc_date": "2026-11-13",
+  "base_exclusive": "9c884f7a995cb7de221694c41132cd4c11b8d2d4",
+  "head_inclusive": "7a579c17c389760f69c24f81da51fb002d2848dd",
+  "first_parent_integrations": 5,
+  "dag_commits": 6,
+  "conventional_merge_commits": 1,
+  "historical_check_policy": "NOT_CHECKED unless individually inspected",
+  "finding": {
+    "id": "G48-F1",
+    "severity": "UNVERIFIED_SEMANTIC_CLAIMS_ACCEPTED",
+    "status": "PATCH_TESTED_PR_PENDING",
+    "affected_validator": "tools/gcat_mass_semantics_C241_L40.py",
+    "red": "six altered interpretive claims and Python -O accepted despite intact simulated source fingerprint",
+    "green": "replay validates closed interpretive claims with runtime errors independent of Python optimization"
+  },
+  "integrations": [
+    {
+      "sha": "53c6d0d2f518cec80f27511353c64db886793c8e",
+      "parents": [
+        "9c884f7a995cb7de221694c41132cd4c11b8d2d4"
+      ],
+      "subject": "88 🐢 C241-L39: partição de 1.176 kg com incógnita X, sem ativação prematura (#622)",
+      "pr_number": 622,
+      "files": [
+        "research/tle_custody/evidence_matrix_C241-L39_2026-11-13.md",
+        "research/tle_custody/mass_partition_C241-L39.json",
+        "tests/test_mass_partition_C241_L39.py",
+        "tools/mass_partition_C241_L39.py"
+      ],
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "4c3261c009c4cb83210605ddae18ca348df72a26",
+      "parents": [
+        "53c6d0d2f518cec80f27511353c64db886793c8e"
+      ],
+      "subject": "90 🐢 Formalizar massas 527–529 com residual X, erro ε e limites condicionais (#621)",
+      "pr_number": 621,
+      "files": [
+        ".github/workflows/mass-budget-527-529.yml",
+        "formal/Conde1963.lean",
+        "formal/Conde1963/MassBudget527529.lean",
+        "research/constraints/C241_mass_budget_residual_2026-11-13.json",
+        "research/tle_custody/evidence_matrix_C241-mass-budget-X_2026-11-13.md",
+        "tests/test_mass_budget_527_529.py",
+        "tools/mass_budget_527_529.py"
+      ],
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "9a5262920132749e577b9a55d698c9a4b4d384a3",
+      "parents": [
+        "4c3261c009c4cb83210605ddae18ca348df72a26",
+        "84d1014eec6b803ab0404f770c1d0e6991e29e41"
+      ],
+      "subject": "Merge pull request #624 from franklinbaldo/research/abelha-round32-evidence",
+      "pr_number": 624,
+      "files": [
+        "formal/Conde1963/SovietCatalogueCandidate.lean",
+        "public/data/conde-yeniseisk-station1078-bridge.json",
+        "tests/test_yeniseisk_station1078_bridge.py",
+        "tools/export_yeniseisk_station1078_bridge.py",
+        ".github/workflows/mass-budget-527-529.yml",
+        "formal/Conde1963.lean",
+        "formal/Conde1963/MassBudget527529.lean",
+        "research/constraints/C241_mass_budget_residual_2026-11-13.json",
+        "research/tle_custody/evidence_matrix_C241-mass-budget-X_2026-11-13.md",
+        "tests/test_mass_budget_527_529.py",
+        "tools/mass_budget_527_529.py"
+      ],
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "025a1f63f881e660f76ff0aa2c9596e05820e746",
+      "parents": [
+        "9a5262920132749e577b9a55d698c9a4b4d384a3"
+      ],
+      "subject": "96 🐢 C241-L40: 1.176 kg é TotMass de 527, não soma comprovada de 527–529 (#629)",
+      "pr_number": 629,
+      "files": [
+        ".github/workflows/tle-gcat-mass-semantics.yml",
+        "research/tle_custody/evidence_matrix_C241-L39_2026-11-13.md",
+        "research/tle_custody/evidence_matrix_C241-L40_2026-11-13.md",
+        "research/tle_custody/gcat_mass_semantics_C241-L40.json",
+        "tests/test_gcat_mass_semantics_C241_L40.py",
+        "tools/gcat_mass_semantics_C241_L40.py"
+      ],
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "7a579c17c389760f69c24f81da51fb002d2848dd",
+      "parents": [
+        "025a1f63f881e660f76ff0aa2c9596e05820e746"
+      ],
+      "subject": "95 🦅 G47: executar replay orbital também quando insumos científicos mudam (#623)",
+      "pr_number": 623,
+      "files": [
+        ".github/workflows/norad528-effective-drag-screen.yml",
+        "research/audits/gaviao-main-window-20261113-g47.json",
+        "research/audits/gaviao-main-window-20261113-g47.md",
+        "tests/test_norad528_effective_drag_screen.py"
+      ],
+      "historical_checks": "NOT_CHECKED"
+    }
+  ],
+  "limitations": [
+    "Catalog source GCAT is modern secondary and mutable; tests use synthetic transport fixtures and mocked hash-verification, not a fresh download.",
+    "Original six 47.5 MB catalog files must be replayed by the specialized GitHub workflow on exact PR SHA.",
+    "No observed mass, independently measured track, or historical endpoint of NORAD 528 is inferred."
+  ]
+}
