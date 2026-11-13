@@ -1,0 +1,114 @@
+{
+  "schema": "conde.isd-caravelas-hourly-1963/v1",
+  "observation_interval_utc": [
+    "1963-11-07T00:00:00Z",
+    "1963-11-09T23:00:00Z"
+  ],
+  "station": {
+    "usaf": "834970",
+    "wban": "99999",
+    "archive_name": "CARAVELAS",
+    "archive_latitude": -17.633,
+    "archive_longitude": -39.25,
+    "position_epoch_in_1963_verified": null
+  },
+  "source": {
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/1963/834970-99999-1963.gz",
+    "format": "NOAA ISD fixed-width (retrospectively compiled, not 1963 facsimile)",
+    "full_gzip_sha256": "c4a0b2f625e8febcd03c4b6ca6ac37b91c9d38423a2ccddd6f0cd7a7712e7e05",
+    "excerpt_sha256": "c6926a86150df982d13286285c17a70e4752cb1ce0ffe1d44ae5330be215a000",
+    "full_archive_1963_observation_rows": 8532,
+    "excerpt_rows": 72,
+    "independence": "different surface station from Recife upper-air; upstream institutional lineage not established"
+  },
+  "quality": {
+    "is_digital_qc_code_1": true,
+    "qc_1_is_not_calibrated_instrument_error": true,
+    "instrument_identity_1963": null,
+    "measurement_uncertainty": null,
+    "station_specific_transfer_uncertainty_to_conde": null
+  },
+  "daily": {
+    "1963-11-07": {
+      "rows": 24,
+      "surface": {
+        "wind_speed_m_s": {
+          "min": 1.5,
+          "mean": 3.367,
+          "max": 5.1
+        },
+        "temperature_degC": {
+          "min": 23.0,
+          "mean": 26.192,
+          "max": 30.0
+        },
+        "dewpoint_degC": {
+          "min": 20.0,
+          "mean": 21.625,
+          "max": 23.0
+        },
+        "sea_level_pressure_hPa": {
+          "min": 1009.3,
+          "mean": 1010.938,
+          "max": 1012.9
+        }
+      }
+    },
+    "1963-11-08": {
+      "rows": 24,
+      "surface": {
+        "wind_speed_m_s": {
+          "min": 0.0,
+          "mean": 3.367,
+          "max": 7.7
+        },
+        "temperature_degC": {
+          "min": 24.2,
+          "mean": 26.196,
+          "max": 29.8
+        },
+        "dewpoint_degC": {
+          "min": 20.0,
+          "mean": 21.625,
+          "max": 23.0
+        },
+        "sea_level_pressure_hPa": {
+          "min": 1009.3,
+          "mean": 1011.121,
+          "max": 1013.1
+        }
+      }
+    },
+    "1963-11-09": {
+      "rows": 24,
+      "surface": {
+        "wind_speed_m_s": {
+          "min": 0.0,
+          "mean": 3.775,
+          "max": 7.7
+        },
+        "temperature_degC": {
+          "min": 22.7,
+          "mean": 26.075,
+          "max": 29.7
+        },
+        "dewpoint_degC": {
+          "min": 21.0,
+          "mean": 21.5,
+          "max": 22.0
+        },
+        "sea_level_pressure_hPa": {
+          "min": 1005.4,
+          "mean": 1008.4,
+          "max": 1011.0
+        }
+      }
+    }
+  },
+  "interpretation": {
+    "classification": "ARCHIVED_SURFACE_OBSERVATIONS_WITH_RETROSPECTIVE_STATION_METADATA",
+    "relation_to_conde": "CONNECTED_PENDING_SPATIOTEMPORAL_CALIBRATION",
+    "numeric_constraint_on_conde": null,
+    "physical_reference": "surface weather at Caravelas, not high-altitude density or winds in Conde"
+  }
+}

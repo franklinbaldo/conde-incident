@@ -1,0 +1,31 @@
+name: ISD Caravelas 1963 (pinned surface window)
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  caravelas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Exact tested SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check pinned offline observations and graph
+        run: python3 tools/audit_isd_caravelas_1963.py --check
+      - name: Adversarial ISD/QC tests
+        run: python3 -m unittest discover -s tests -p 'test_isd_caravelas_1963.py' -v
+      - name: Recover and compare full 1963 NOAA gzip
+        run: |
+          curl -fL --retry 3 --retry-all-errors --connect-timeout 15 --max-time 90 \
+            https://www.ncei.noaa.gov/pub/data/noaa/1963/834970-99999-1963.gz -o /tmp/caravelas-1963.gz
+          python3 tools/audit_isd_caravelas_1963.py --check --verify-full-gz /tmp/caravelas-1963.gz

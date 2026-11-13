@@ -1,0 +1,64 @@
+{
+  "schema": "conde.historical-surface-pending-bridge/v1",
+  "id": "MET-ISD-19631107-09-CARAVELAS-01",
+  "source": {
+    "url": "https://www.ncei.noaa.gov/pub/data/noaa/1963/834970-99999-1963.gz",
+    "excerpt_sha256": "c6926a86150df982d13286285c17a70e4752cb1ce0ffe1d44ae5330be215a000",
+    "full_gzip_sha256": "c4a0b2f625e8febcd03c4b6ca6ac37b91c9d38423a2ccddd6f0cd7a7712e7e05",
+    "independence_family": "NOAA_NCEI_ISD_DIGITIZED_SURFACE_OBSERVATIONS"
+  },
+  "observation": {
+    "station_usaf": "834970",
+    "station_wban": "99999",
+    "datetime_utc_start": "1963-11-07T00:00:00Z",
+    "datetime_utc_end": "1963-11-09T23:00:00Z",
+    "rows": 72,
+    "variables": {
+      "wind_speed": "m/s",
+      "wind_direction": "degree meteorological",
+      "temperature": "degC",
+      "dewpoint": "degC",
+      "sea_level_pressure": "hPa"
+    },
+    "measurement_method_in_1963": null,
+    "station_position_in_1963": null
+  },
+  "edges": [
+    {
+      "from": "MET-ISD-19631107-09-CARAVELAS-01",
+      "to": "Caravelas_surface_wind_at_hour_t",
+      "type": "OBSERVES_DIGITIZED"
+    },
+    {
+      "from": "Caravelas_surface_wind_at_hour_t",
+      "to": "Conde_surface_wind_at_hour_t",
+      "type": "PENDING_SPATIAL_TRANSFER"
+    },
+    {
+      "from": "Conde_surface_wind_at_hour_t",
+      "to": "Conde_entry_drag_or_fall_location",
+      "type": "PENDING_TRAJECTORY_AND_ALTITUDE_MODEL"
+    },
+    {
+      "from": "MET-ISD-19631107-09-CARAVELAS-01",
+      "to": "C149-C151 Recife IGRA sounding family",
+      "type": "CONTEXT_NOT_INDEPENDENCE_CERTIFIED"
+    }
+  ],
+  "status": "CONNECTED_PENDING_SPATIOTEMPORAL_CALIBRATION",
+  "active_conde_constraint": null,
+  "uncertainty_m_s": null,
+  "instrument_covariance": null,
+  "necessary_for_promotion": [
+    "1963 station/instrument identity and uncertainty",
+    "validated Caravelas->Conde spatial transfer and hourly covariance",
+    "height-resolved atmospheric model and specific terminal-epoch trajectory",
+    "independence audit versus reanalysis and other sources"
+  ],
+  "invalid_inferences": [
+    "72 hourly rows do not imply 72 independent physical sources",
+    "ISD QC flag 1 is not calibrated sigma",
+    "Caravelas surface wind does not bound Conde winds or 1963 reentry time",
+    "digitized archive station positions are not contemporary 1963 site survey"
+  ]
+}
