@@ -1,6 +1,6 @@
 /**
  * Independent finite-amplitude audit of the local 6D covariance linearization.
- * Uses 12 fully integrated sigma-point controls with the SAME documented
+ * Uses 72 fully integrated sigma-point controls with the SAME documented
  * RK4/J2/optional-drag model as the G31 state-transition Jacobian.
  *
  * C179#1: the 528 TLE is secondary, not an original covariance.
@@ -30,6 +30,11 @@ export interface StmEnvelopeAudit {
   readonly positionRemainderKm: number | null;
   readonly velocityRemainderKmS: number | null;
   readonly controlsEvaluated: number;
+  /** Separate maxima distinguish axial and cross-direction failures. */
+  readonly axialPositionRemainderKm: number | null;
+  readonly axialVelocityRemainderKmS: number | null;
+  readonly mixedPositionRemainderKm: number | null;
+  readonly mixedVelocityRemainderKmS: number | null;
   readonly frameSystematicsIncluded: false;
   readonly historicalHoldoutValidated: false;
   readonly impactInference: 'NOT_SUPPORTED';
@@ -83,13 +88,32 @@ function integrate(s: State, durationS: number, stepS: number,
 }
 
 /**
- * G32: before interpreting a first-order covariance pushforward, check the
- * six correlated Cholesky directions with both signs at finite amplitude.
- * A tiny Jacobian finite-difference drift (G31) does NOT guarantee that the
- * admitted covariance is small enough for a linear approximation.
- *
- * These directions are deterministic diagnostics, not a probabilistic
- * confidence region; 12 successful controls never establish a global bound.
+ * G33: use 12 axial +/- and 60 two-axis +/- combinations (6 choose 2 x 4).
+ * Pair vectors are divided by sqrt(2), keeping the SAME Mahalanobis radius
+ * as an axial displacement. Under x -> x_i*x_j, every axial control misses
+ * the nonlinear term, while a mixed control detects it: a falsifiable blind
+ * spot of G32, not a new historical observation.
+ * 72 directions still DO NOT certify a whole ellipsoid or likelihood.
+ */
+export function correlatedSigmaControls(c: CartesianCovariance6,
+  multiplier: number): readonly {kind: 'AXIAL' | 'MIXED'; delta: readonly number[]}[] | null {
+  if (!Number.isFinite(multiplier) || multiplier <= 0) return null;
+  const cols = sigmaDirections(c);
+  if (!cols) return null;
+  const controls: {kind: 'AXIAL' | 'MIXED'; delta: number[]}[] = [];
+  for (const col of cols) for (const sign of [-1,1])
+    controls.push({kind: 'AXIAL', delta: col.map(x => multiplier * sign * x)});
+  for (let i = 0; i < 6; i++) for (let j = i+1; j < 6; j++)
+    for (const a of [-1,1]) for (const b of [-1,1])
+      controls.push({kind: 'MIXED', delta: cols[i].map((x,k) =>
+        multiplier * (a*x + b*cols[j][k]) / Math.SQRT2)});
+  return controls.every(control => control.delta.every(Number.isFinite)) ? controls : null;
+}
+
+/**
+ * G33: test finite-amplitude off-axis cross couplings missed by G32.
+ * Controls are deterministic probes, not a probabilistic confidence region.
+ * G31 Jacobian convergence does not certify linearity at covariance scale.
  */
 export function auditStmNonlinearEnvelope(
   initial: InertialComparisonState, admitted: FrameCovarianceAudit,
@@ -97,9 +121,13 @@ export function auditStmNonlinearEnvelope(
   dynamics: Dynamics, resolution: StmResolutionContract, contract: StmEnvelopeContract,
 ): StmEnvelopeAudit {
   const report = (status: StmEnvelopeAudit['status'], dr: number | null = null,
-    dv: number | null = null, n = 0): StmEnvelopeAudit => ({
+    dv: number | null = null, n = 0,
+    aDr: number | null = null, aDv: number | null = null,
+    mDr: number | null = null, mDv: number | null = null): StmEnvelopeAudit => ({
     status, positionRemainderKm: dr, velocityRemainderKmS: dv,
-    controlsEvaluated: n, frameSystematicsIncluded: false,
+    controlsEvaluated: n, axialPositionRemainderKm: aDr,
+    axialVelocityRemainderKmS: aDv, mixedPositionRemainderKm: mDr,
+    mixedVelocityRemainderKmS: mDv, frameSystematicsIncluded: false,
     historicalHoldoutValidated: false, impactInference: 'NOT_SUPPORTED',
   });
   if (![durationS,stepS,thresholdKm,contract?.sigmaMultiplier,
@@ -131,8 +159,9 @@ export function auditStmNonlinearEnvelope(
   const f = stm.transitionMatrix;
   if (f.length !== 6 || f.some(row => row.length !== 6 || !row.every(Number.isFinite)))
     return report('BASELINE_NOT_ADMITTED');
-  const cols = sigmaDirections(admitted.transformedCovariance);
-  if (!cols) return report('BASELINE_NOT_ADMITTED');
+  const controls = correlatedSigmaControls(
+    admitted.transformedCovariance, contract.sigmaMultiplier);
+  if (!controls) return report('BASELINE_NOT_ADMITTED');
   // G31 returns the step-halved Jacobian; use that same integration
   // resolution for all finite-amplitude controls to avoid a mixed-step bias.
   const controlStepS = stepS / 2;
@@ -140,29 +169,37 @@ export function auditStmNonlinearEnvelope(
   if (!base) return report('PROPAGATION_UNRESOLVED');
   const start = vector(initial.state);
   let maxDr = 0, maxDv = 0, count = 0;
-  for (const col of cols) {
-    for (const sign of [-1,1]) {
-      const delta = col.map(x => x * sign * contract.sigmaMultiplier);
-      const shifted = start.map((x,i) => x + delta[i]);
-      if (!shifted.every(Number.isFinite) ||
-        shifted.some((x,i) => x === start[i] && delta[i] !== 0))
-        return report('LINEARIZATION_UNRESOLVED',maxDr,maxDv,count);
-      const state: State = {tS:initial.state.tS,
-        rKm: shifted.slice(0,3) as unknown as Vec3,
-        vKmS: shifted.slice(3,6) as unknown as Vec3};
-      const actual = integrate(state,durationS,controlStepS,thresholdKm,dynamics);
-      if (!actual) return report('PROPAGATION_UNRESOLVED',maxDr,maxDv,count);
-      const remainder = actual.map((x,i) => x-base[i]-
-        f[i].reduce((sum,a,j) => sum+a*delta[j],0));
-      const dr = norm(remainder.slice(0,3)), dv = norm(remainder.slice(3,6));
-      if (!Number.isFinite(dr) || !Number.isFinite(dv))
-        return report('LINEARIZATION_UNRESOLVED',maxDr,maxDv,count);
-      maxDr = Math.max(maxDr,dr); maxDv = Math.max(maxDv,dv);
-      count++;
+  let aDr = 0, aDv = 0, mDr = 0, mDv = 0;
+  const fail = (status: StmEnvelopeAudit['status']): StmEnvelopeAudit =>
+    report(status,maxDr,maxDv,count,
+      count ? aDr : null,count ? aDv : null,
+      count > 12 ? mDr : null,count > 12 ? mDv : null);
+  for (const control of controls) {
+    const delta = control.delta;
+    const shifted = start.map((x,i) => x + delta[i]);
+    if (!shifted.every(Number.isFinite) ||
+      shifted.some((x,i) => x === start[i] && delta[i] !== 0))
+      return fail('LINEARIZATION_UNRESOLVED');
+    const state: State = {tS:initial.state.tS,
+      rKm: shifted.slice(0,3) as unknown as Vec3,
+      vKmS: shifted.slice(3,6) as unknown as Vec3};
+    const actual = integrate(state,durationS,controlStepS,thresholdKm,dynamics);
+    if (!actual) return fail('PROPAGATION_UNRESOLVED');
+    const remainder = actual.map((x,i) => x-base[i]-
+      f[i].reduce((sum,a,j) => sum+a*delta[j],0));
+    const dr = norm(remainder.slice(0,3)), dv = norm(remainder.slice(3,6));
+    if (!Number.isFinite(dr) || !Number.isFinite(dv))
+      return fail('LINEARIZATION_UNRESOLVED');
+    maxDr = Math.max(maxDr,dr); maxDv = Math.max(maxDv,dv);
+    if (control.kind === 'AXIAL') {
+      aDr = Math.max(aDr,dr); aDv = Math.max(aDv,dv);
+    } else {
+      mDr = Math.max(mDr,dr); mDv = Math.max(mDv,dv);
     }
+    count++;
   }
   if (maxDr > contract.maxPositionRemainderKm ||
     maxDv > contract.maxVelocityRemainderKmS)
-    return report('LINEARIZATION_UNRESOLVED',maxDr,maxDv,count);
-  return report(stm.status,maxDr,maxDv,count);
+    return fail('LINEARIZATION_UNRESOLVED');
+  return report(stm.status,maxDr,maxDv,count,aDr,aDv,mDr,mDv);
 }
