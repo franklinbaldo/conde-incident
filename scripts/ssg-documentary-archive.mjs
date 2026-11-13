@@ -21,6 +21,11 @@ const familySlug = family => {
   assert.match(family, /^[A-Z][A-Z0-9_]{1,79}$/, 'Identificador de família inválido');
   return family.toLowerCase().replaceAll('_', '-');
 };
+// Source identifiers are stable documentary keys, not physical witnesses.
+const sourceSlug = source => {
+  assert.match(source, /^[A-Z][A-Z0-9_]{1,95}$/, 'Identificador de fonte inválido');
+  return source.toLowerCase().replaceAll('_', '-');
+};
 // Work identifiers are documentary keys, never filesystem paths supplied by users.
 const workSlug = work => {
   assert.match(work, /^[A-Z][A-Z0-9_]{1,95}$/, 'Identificador de obra inválido');
@@ -196,6 +201,49 @@ export function archivePages(citations, lineage, wayback=null) {
       `Índice reverso da obra ${work}; não prova de observação independente.`, body));
     workLinks.push(`- [${safe(work)}](${ROOT}obras/${slug}/) · ${occurrences.size} ocorrência(s), ${sources.size} fonte(s)`);
   }
+  // A source identifier may be reused across many matrix occurrences. This
+  // reverse index makes those reuses inspectable without counting witnesses.
+  const bySource = new Map();
+  for (const [id, entries] of sorted) {
+    for (const {record} of entries) {
+      const slug = sourceSlug(record.source_id);
+      if (!bySource.has(record.source_id)) bySource.set(record.source_id, {slug, rows: []});
+      bySource.get(record.source_id).rows.push({id, record});
+    }
+  }
+  const sourceLinks = [];
+  for (const [source, {slug, rows}] of [...bySource].sort(([a],[b])=>a.localeCompare(b,'en'))) {
+    const occurrences = new Set(rows.map(({id})=>id));
+    const works = new Set(rows.map(({record})=>record.work_id));
+    const families = new Set(rows.map(({record})=>record.source_family));
+    const body = [
+      `## Identificador de fonte: ${safe(source)}`, '',
+      '**Identificador documental, não testemunha física independente.** Cada ocorrência referencia sua linha imutável; múltiplas citações do mesmo identificador não validam um sobrevoo, uma hora ou uma queda.', '',
+      `**No recorte curado:** ${occurrences.size} ocorrência(s), ${rows.length} vínculo(s), ${works.size} obra(s), ${families.size} família(s).`, '',
+      ...rows.flatMap(({id,record})=>[
+        `### ${safe(id)} · ${safe(record.work_id)}`, '',
+        `- **Família:** ${safe(record.source_family)}`,
+        `- **Localizador:** ${safe(record.locator)}`,
+        `- **Relação:** ${safe(record.relation)}`,
+        `- **Limite:** ${safe(record.scope)}`,
+        `- **SHA-256 da linha:** \`${record.row_sha256}\``,
+        `- [Linha da matriz imutável](${MATRIX}${record.matrix_line})`,
+        `- [Ocorrência e genealogia](${ROOT}${id.toLowerCase().replace('#','-')}/)`,
+        `- [Obra relacionada](${ROOT}obras/${workSlug(record.work_id)}/)`,
+        `- [Documento original](${record.citation_url})`, '',
+      ]),
+      `[Índice de identificadores](${ROOT}fontes/) · [Arquivo curado](${ROOT})`,
+    ].join('\n');
+    files.set(`fontes/${slug}/index.md`, page(`Fonte ${source}: vínculos`,
+      `Referências da fonte documental ${source} na matriz curada.`, body));
+    sourceLinks.push(`- [${safe(source)}](${ROOT}fontes/${slug}/) · ${occurrences.size} ocorrência(s), ${works.size} obra(s)`);
+  }
+  files.set('fontes/index.md', page('Identificadores documentais: índice',
+    'Fontes citadas e reutilizações, sem presumir testemunhos independentes.', [
+      '## Identificadores de fontes', '',
+      '**Uma fonte pode aparecer em várias ocorrências.** O índice distingue referências documentais de observações instrumentais e conserva cada ligação à matriz.', '',
+      ...sourceLinks, '', `[Voltar ao arquivo curado](${ROOT})`,
+    ].join('\n')));
   files.set('obras/index.md', page('Obras documentais: índice',
     'Obras citadas no arquivo curado, com ocorrências e dependências rastreáveis.', [
       '## Obras documentais', '',
@@ -215,7 +263,7 @@ export function archivePages(citations, lineage, wayback=null) {
     '**Leitura estática gerada pelo SSG Rust a partir dos feeds curados do laboratório.** Sem React ou JavaScript. O laboratório anterior permanece disponível durante a migração. A data editorial deste índice não é a data de uma observação em 1963.', '',
     `**Cobertura:** ${citations.curated_occurrences} ocorrências curadas de ${citations.total_matrix_occurrences}. ${citations.unmapped_occurrences} ocorrências não mapeadas no feed parcial **não significam fonte inexistente**.`, '',
     'Uma mesma obra pode originar múltiplos vínculos documentais, sem criar novas testemunhas físicas. Ausência de genealogia declarada não significa independência. Datas NASA são entradas de catálogo, não posições ou horários observados de queda.', '',
-    '[Consultar famílias documentais e ocorrências relacionadas]('+ROOT+'familias/) · [Consultar obras e suas reutilizações]('+ROOT+'obras/)', '',
+    '[Consultar famílias documentais e ocorrências relacionadas]('+ROOT+'familias/) · [Consultar obras e suas reutilizações]('+ROOT+'obras/) · [Consultar identificadores de fontes]('+ROOT+'fontes/)', '',
     ...links, '',
     `**Matriz imutável (Git blob):** ${citations.matrix_git_blob_sha1}.`, '',
     '[Consultar documentos no laboratório interativo](/conde-incident/lab/#/documents) · [Evidências editoriais](/conde-incident/evidencias/)',
