@@ -52,3 +52,31 @@ test('SSG rejects source URL injection and unintended omissions',()=>{
   omitted.records=omitted.records.slice(1);
   assert.throws(()=>archivePages(omitted,ancestry), /Cobertura curada divergente/);
 });
+
+test('SSG rejects circular genealogy, including non-adjacent ancestry loops', () => {
+  const cyclic=clone(ancestry);
+  const item=cyclic.citation_lineages.find(x=>x.declared_upstream_paths.length);
+  assert.ok(item, 'Corpus requires a declared source dependency');
+  const origin=item.source_id;
+  item.declared_upstream_paths[0]={
+    upstream_source_id:origin,
+    edges:[
+      {from:origin,to:'SYNTHETIC_INTERMEDIARY',kind:'transcribes'},
+      {from:'SYNTHETIC_INTERMEDIARY',to:origin,kind:'reprints'},
+    ],
+  };
+  assert.throws(()=>archivePages(feed,cyclic), /Ciclo de proveniência documental/);
+
+  // Positive control: a new two-hop dependency with distinct nodes is permitted.
+  const acyclic=clone(ancestry);
+  const valid=acyclic.citation_lineages.find(x=>x.declared_upstream_paths.length);
+  const start=valid.source_id;
+  valid.declared_upstream_paths[0]={
+    upstream_source_id:'SYNTHETIC_UPSTREAM',
+    edges:[
+      {from:start,to:'SYNTHETIC_INTERMEDIARY',kind:'transcribes'},
+      {from:'SYNTHETIC_INTERMEDIARY',to:'SYNTHETIC_UPSTREAM',kind:'reprints'},
+    ],
+  };
+  assert.doesNotThrow(()=>archivePages(feed,acyclic));
+});

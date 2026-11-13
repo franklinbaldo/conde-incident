@@ -1,0 +1,407 @@
+{
+  "schema": "conde.retrospective-main-audit/v1",
+  "audit": "G32",
+  "checkpoint_sha": "4863347fba222da572827cf38bb867e7d5cc6336",
+  "reviewed_through_main_sha": "c98ccd9a2ef66d202108c8e6bf7f430b6eb25368",
+  "cut_utc": "2026-11-13T04:31:58Z",
+  "first_parent_integrations": 13,
+  "dag_commits": 13,
+  "squash_merges": 13,
+  "conventional_merges": 0,
+  "direct_main_commits": 0,
+  "lateral_commits": 0,
+  "source_examination": {
+    "original_pdf_visual": "NASA Apr 30 p.5 / Oct 15 p.5 / Nov 15 p.8, read at primary NTRS PDF pages 7/7/10",
+    "web_inspected": "2026-11-13",
+    "original_bytes_sha_recomputed": false
+  },
+  "material_findings": [
+    {
+      "id": "G32-F1",
+      "severity": "MEDIUM_PROVENANCE",
+      "pr_introduced": 374,
+      "problem": "archivePages accepted source A -> B -> A ancestry path, allowing a source to appear as its own upstream evidence.",
+      "reproducer": "synthetic change to FBIS_EOP_UAP_D001, two edges via SYNTHETIC_B; unpatched renderer accepted 29 pages.",
+      "fix": "reject repeated nodes in each declared upstream path; preserve acyclic 2-edge positive control.",
+      "historical_dataset_forgery_observed": false
+    }
+  ],
+  "no_new_terminal_time_or_position": true,
+  "no_new_historical_domain_reduction": true,
+  "ci_semantics": "Exact author PR HEAD and first-parent merge SHA, statuses checked via GitHub API check-runs; SKIPPED and CANCELLED are not SUCCESS.",
+  "reviewed": [
+    {
+      "pr": 361,
+      "merge_sha": "29eac172a70ba574e0505a2a1acca2bcd41f470e",
+      "first_parent_sha": "4863347fba222da572827cf38bb867e7d5cc6336",
+      "author_head_sha": "d34c92ad7c7d384f5f07cb7cb4c2964812b6dd56",
+      "merge_kind": "SQUASH",
+      "changed_files": [
+        ".github/workflows/tle-nasa-ssr-apr-oct.yml",
+        "research/tle_custody/evidence_matrix_C241-L16_2026-11-12.md",
+        "research/tle_custody/nasa_ssr_apr_oct_1963_C241-L16.json",
+        "tests/test_tle_nasa_ssr_apr_oct_audit.py",
+        "tools/tle_nasa_ssr_apr_oct_audit.py"
+      ],
+      "review_note": "C241-L16 NASA April/October 3A/B/C row custody and printed periods; publication is not sensor epoch; original p.5 independently visually checked.",
+      "author_head_checks": {
+        "success": 19,
+        "skipped": 1,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      },
+      "merge_sha_checks": {
+        "success": 20,
+        "skipped": 0,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      }
+    },
+    {
+      "pr": 363,
+      "merge_sha": "affb30d25d694bf09355807ff667d29b58fc5d9b",
+      "first_parent_sha": "29eac172a70ba574e0505a2a1acca2bcd41f470e",
+      "author_head_sha": "4ad7415dd772700c00ed511fd76ee7f812e878dc",
+      "merge_kind": "SQUASH",
+      "changed_files": [
+        "research/statistics/SOURCE_FAMILY_STATUS_GUARDS_L14_L15.md",
+        "research/statistics/raan_source_likelihood_readiness_C241.json",
+        "tests/test_raan_source_likelihood_readiness.py",
+        "tools/raan_source_likelihood_readiness.py"
+      ],
+      "review_note": "Guard forbids NASA group-wide annual row as individual NORAD 528 orbit, conditional readiness only.",
+      "author_head_checks": {
+        "success": 18,
+        "skipped": 1,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      },
+      "merge_sha_checks": {
+        "success": 19,
+        "skipped": 0,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      }
+    },
+    {
+      "pr": 364,
+      "merge_sha": "8210ca6ffca130465250f9a724945dab3520f083",
+      "first_parent_sha": "affb30d25d694bf09355807ff667d29b58fc5d9b",
+      "author_head_sha": "123189701849ff75d7255e480c6d846910e07dbc",
+      "merge_kind": "SQUASH",
+      "changed_files": [
+        "research/audits/gaviao-main-window-20261112-g31.json",
+        "research/audits/gaviao-main-window-20261112-g31.md",
+        "tests/test_raan_source_likelihood_readiness.py",
+        "tools/raan_source_likelihood_readiness.py"
+      ],
+      "review_note": "G31 retrospective correction: frozen UTC boundaries for 528 fit/validation/evaluation; synthetic swap rejected, no historical alteration inferred.",
+      "author_head_checks": {
+        "success": 18,
+        "skipped": 1,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      },
+      "merge_sha_checks": {
+        "success": 19,
+        "skipped": 0,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      }
+    },
+    {
+      "pr": 366,
+      "merge_sha": "3a862c39101b7a5ec00b618641da4dde1ef3a8c9",
+      "first_parent_sha": "8210ca6ffca130465250f9a724945dab3520f083",
+      "author_head_sha": "2f16ca212988c5ee8646ed2287a33761dc591383",
+      "merge_kind": "SQUASH",
+      "changed_files": [
+        "research/archive/bahia_lei628_1953_locator_20261113.json",
+        "tests/test_bahia_lei628_locator.py",
+        "tools/verify_bahia_lei628_locator.py"
+      ],
+      "review_note": "Bahia 1953 indexed legal locator; annexes and spatial bearing in 1963 remain missing.",
+      "author_head_checks": {
+        "success": 18,
+        "skipped": 1,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      },
+      "merge_sha_checks": {
+        "success": 19,
+        "skipped": 0,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      }
+    },
+    {
+      "pr": 365,
+      "merge_sha": "69e74cf723c38dcf6ce4a4df2780d4eed425caa5",
+      "first_parent_sha": "3a862c39101b7a5ec00b618641da4dde1ef3a8c9",
+      "author_head_sha": "dab6b91ed665a23a0d9918aa045f8a937a25868d",
+      "merge_kind": "SQUASH",
+      "changed_files": [
+        "research/meteorology/apac_recife_2004_periods.json",
+        "research/meteorology/apac_recife_2004_periods.md",
+        "research/meteorology/apac_recife_2004_variable_rows.txt",
+        "tests/test_apac_recife_2004_periods.py",
+        "tools/audit_apac_recife_2004_periods.py"
+      ],
+      "review_note": "APAC 2004 Curado/Recife variable coverage cannot be 1963 historical atmospheric measurement.",
+      "author_head_checks": {
+        "success": 18,
+        "skipped": 1,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      },
+      "merge_sha_checks": {
+        "success": 18,
+        "skipped": 0,
+        "cancelled": 1,
+        "failed": 0,
+        "pending": 0
+      }
+    },
+    {
+      "pr": 369,
+      "merge_sha": "8a2689e77da442f2eb67794db97b35ef77a003b6",
+      "first_parent_sha": "69e74cf723c38dcf6ce4a4df2780d4eed425caa5",
+      "author_head_sha": "7f0d12a4b4a4f2b064bfa22622ee281367c9ab0e",
+      "merge_kind": "SQUASH",
+      "changed_files": [
+        "research/geo/cgeo18_fbis_city_center_phrase.json",
+        "research/geo/cgeo18_fbis_city_center_phrase.md",
+        "tests/test_cgeo18_fbis_city_center.py",
+        "tools/cgeo18_fbis_city_center.py"
+      ],
+      "review_note": "FBIS phrase city-center cannot be assigned 1963 precise Conde coordinates without temporal place-name bridge.",
+      "author_head_checks": {
+        "success": 18,
+        "skipped": 1,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      },
+      "merge_sha_checks": {
+        "success": 19,
+        "skipped": 0,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      }
+    },
+    {
+      "pr": 370,
+      "merge_sha": "46cce258c0acd025262df34779796b29d13bc083",
+      "first_parent_sha": "8a2689e77da442f2eb67794db97b35ef77a003b6",
+      "author_head_sha": "d1cf8ad1acec78cdd4539123088bbf736a494de7",
+      "merge_kind": "SQUASH",
+      "changed_files": [
+        ".github/workflows/ibge-source-live.yml",
+        "tests/test_ci_checkout_sha.py"
+      ],
+      "review_note": "Scheduled IBGE upstream replay checkout pinned to event SHA; CI statement not source authenticity.",
+      "author_head_checks": {
+        "success": 18,
+        "skipped": 1,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      },
+      "merge_sha_checks": {
+        "success": 19,
+        "skipped": 0,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      }
+    },
+    {
+      "pr": 368,
+      "merge_sha": "a4c1ebe692b2d9b72159b306ebfee81e1296907e",
+      "first_parent_sha": "46cce258c0acd025262df34779796b29d13bc083",
+      "author_head_sha": "62316c4ccb8df5e7085c060aed6da4536759774e",
+      "merge_kind": "SQUASH",
+      "changed_files": [
+        "public/data/conde-archive-documentary-links.json",
+        "public/data/conde-observable-dependency-links.json",
+        "public/data/conde-on20-layout-link.json",
+        "public/data/conde-scientific-bridges.json",
+        "public/data/conde-wayback-citation-links.json",
+        "tests/test_archive_documentary_links.py",
+        "tools/export_archive_documentary_links.py",
+        "tools/export_nmc_on20_layout_link.py"
+      ],
+      "review_note": "ON20 2008 truncated Wayback replay rejected; later copies are shared bytes, not independent original captures.",
+      "author_head_checks": {
+        "success": 18,
+        "skipped": 1,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      },
+      "merge_sha_checks": {
+        "success": 19,
+        "skipped": 0,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      }
+    },
+    {
+      "pr": 371,
+      "merge_sha": "19dea862737a8ed442a6252f84b2530dfea9abea",
+      "first_parent_sha": "a4c1ebe692b2d9b72159b306ebfee81e1296907e",
+      "author_head_sha": "458ebbcedd78ab1fdc6abab2fb2f4113f572d020",
+      "merge_kind": "SQUASH",
+      "changed_files": [
+        ".github/workflows/lean-core.yml",
+        "formal/Conde1963.lean",
+        "formal/Conde1963/SsrPrintIntervals.lean",
+        "formal/scripts/compile_ssr_print_intervals.py",
+        "formal/tests/test_ssr_print_intervals.py",
+        "research/constraints/C241-P8_ssr_print_intervals.json",
+        "research/constraints/C241-P8_ssr_print_intervals.md"
+      ],
+      "review_note": "Lean interval theorems over 0.01-minute integer grid depend on nearest-0.1 rounding assumption; no instrument sigma.",
+      "author_head_checks": {
+        "success": 18,
+        "skipped": 1,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      },
+      "merge_sha_checks": {
+        "success": 19,
+        "skipped": 0,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      }
+    },
+    {
+      "pr": 372,
+      "merge_sha": "dfd33c6da9e65b71c7234970f02e9b0c1bd943f3",
+      "first_parent_sha": "19dea862737a8ed442a6252f84b2530dfea9abea",
+      "author_head_sha": "a37c68561580a9808f46ffa4eb8a17a6f384688f",
+      "merge_kind": "SQUASH",
+      "changed_files": [
+        ".github/workflows/orbit-kernel.yml",
+        "research/constraints/cartesian_stm_covariance_g31.json",
+        "src/lib/orbitFrameCovariance.ts",
+        "src/lib/orbitStateTransition.ts",
+        "tests/orbitStateTransition.test.mjs"
+      ],
+      "review_note": "6D J2/RK4 state transition covariance conditional on declared ECI state, frame, precision; no 528 sensor covariance or terminal fix.",
+      "author_head_checks": {
+        "success": 18,
+        "skipped": 1,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      },
+      "merge_sha_checks": {
+        "success": 19,
+        "skipped": 0,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      }
+    },
+    {
+      "pr": 373,
+      "merge_sha": "e46e4fefb71bab8d5766f5ab5e7efb4c387e75f9",
+      "first_parent_sha": "dfd33c6da9e65b71c7234970f02e9b0c1bd943f3",
+      "author_head_sha": "541eed10325ac2b9f3ef8e1dd8c38391f38e6ebf",
+      "merge_kind": "SQUASH",
+      "changed_files": [
+        "templates/index.html",
+        "templates/page.html",
+        "templates/post.html",
+        "templates/template.html",
+        "templates/tera/base.html",
+        "tests/caderno_reflow_smoke.mjs"
+      ],
+      "review_note": "Five SSG templates gain focusable main landmark; browser-control reflow is not screen-reader validation.",
+      "author_head_checks": {
+        "success": 19,
+        "skipped": 1,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      },
+      "merge_sha_checks": {
+        "success": 19,
+        "skipped": 0,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      }
+    },
+    {
+      "pr": 374,
+      "merge_sha": "cdb768b3585a9eece477139592b6983477076fb1",
+      "first_parent_sha": "e46e4fefb71bab8d5766f5ab5e7efb4c387e75f9",
+      "author_head_sha": "f91d5fd76c7666e68ee3c2afcd619d22f5d4dffe",
+      "merge_kind": "SQUASH",
+      "changed_files": [
+        "scripts/check-site.mjs",
+        "scripts/prepare-ssg.mjs",
+        "scripts/ssg-documentary-archive.mjs",
+        "tests/ssg-documentary-archive.test.mjs"
+      ],
+      "review_note": "29 SSG archive Markdown pages built from 28/241 curated occurrences; ancestor path validator admitted a two-hop cycle, corrected by G32-F1.",
+      "author_head_checks": {
+        "success": 18,
+        "skipped": 1,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      },
+      "merge_sha_checks": {
+        "success": 19,
+        "skipped": 0,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      }
+    },
+    {
+      "pr": 376,
+      "merge_sha": "c98ccd9a2ef66d202108c8e6bf7f430b6eb25368",
+      "first_parent_sha": "cdb768b3585a9eece477139592b6983477076fb1",
+      "author_head_sha": "10faa73f422892444e9cca7c29c93609e101d1f0",
+      "merge_kind": "SQUASH",
+      "changed_files": [
+        "scripts/check-site.mjs",
+        "static/img/nasa-1963-periodos-mobile.svg",
+        "static/img/nasa-1963-periodos.svg",
+        "stories/2026-11-13-102-segundos-na-tabela-da-nasa.md"
+      ],
+      "review_note": "NASA original pp.5 April 94.1 vs Oct 92.4 for 3B, delta 102 s; NASA Nov p.8 decay day 8 NOV without time or place, editorial distinction preserved.",
+      "author_head_checks": {
+        "success": 18,
+        "skipped": 1,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      },
+      "merge_sha_checks": {
+        "success": 19,
+        "skipped": 0,
+        "cancelled": 0,
+        "failed": 0,
+        "pending": 0
+      }
+    }
+  ]
+}
