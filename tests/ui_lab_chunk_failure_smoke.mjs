@@ -36,7 +36,7 @@ try {
       assert.equal(await navigation.locator('[aria-current="page"]').count(), 1);
       await page.screenshot({ path: `${out}/lazy-failure-${specimen.lang}-${specimen.width}.png` });
       await alert.getByRole('link', { name: specimen.back }).click();
-      await page.getByRole('heading', { level: 1, name: specimen.lang === 'pt' ? /Síntese/ : /Summary/ }).waitFor();
+      await page.getByRole('heading', { level: 1, name: specimen.lang === 'pt' ? /O que sabemos/ : /What we know/ }).waitFor({ timeout: 15000 });
       assert.equal(await page.getByRole('alert').count(), 0, 'recovering to summary must reset the route boundary');
     } finally {
       await page.close();
