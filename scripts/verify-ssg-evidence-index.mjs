@@ -112,14 +112,15 @@ export function readBundle(root='.') {
   const lineage=JSON.parse(lineageRaw);
   const manifest=JSON.parse(read(DATA+'conde-evidence-index-manifest.json'));
   const shards=manifest.shards.map(meta=>({path:meta.path, raw:read(meta.path)}));
-  return {citations,lineage,manifest,shards,matrixBytes,sourceBytes:new Map([
+  const gapShards=manifest.unmapped_shards.map(meta=>({path:meta.path, raw:read(meta.path)}));
+  return {citations,lineage,manifest,shards,gapShards,matrixBytes,sourceBytes:new Map([
     [DATA+'conde-source-citations.json',citationsRaw],
     [DATA+'conde-declared-dependence.json',lineageRaw],
   ]),pages:archivePages(citations,lineage)};
 }
 
 export function audit(bundle) {
-  const {citations,lineage,manifest,shards,matrixBytes,sourceBytes,pages}=bundle;
+  const {citations,lineage,manifest,shards,gapShards,matrixBytes,sourceBytes,pages}=bundle;
   assert.equal(manifest.schema,'conde.evidence-index/v1');
   assert.equal(manifest.matrix_git_blob_sha1,citations.matrix_git_blob_sha1);
   assert.equal(gitBlob(matrixBytes),manifest.matrix_git_blob_sha1,
@@ -142,6 +143,31 @@ export function audit(bundle) {
     'Matrix gap count does not match curated coverage');
   assert.deepEqual(manifest.unmapped_matrix_refs,gaps,
     'Unmapped matrix ledger differs from frozen source rows');
+  // Independently reconstruct the searchable *uncurated* texts from the blob.
+  // Two consistent counterfeit JSONs with recalculated SHA must still fail.
+  const expectedGaps=gaps.map(({occurrence,matrix_line})=>{
+    const line=matrixLines[matrix_line-1];
+    return {occurrence,matrix_line,row_sha256:hash(Buffer.from(line)),
+      claim_text:line.split('|')[2].trim()};
+  });
+  assert.equal(gapShards.length,manifest.unmapped_shards.length);
+  const publishedGaps=[];
+  for (const [i,meta] of manifest.unmapped_shards.entries()) {
+    const expectedPath=`public/data/conde-evidence-gaps/part-${String(i+1).padStart(3,'0')}.json`;
+    assert.equal(meta.path,expectedPath,'Unexpected gap shard path/order');
+    const part=gapShards[i];
+    assert.equal(part.path,meta.path);
+    assert.equal(meta.sha256,hash(part.raw),'Gap shard SHA mismatch: '+meta.path);
+    assert.equal(meta.bytes,part.raw.length,'Gap shard size mismatch: '+meta.path);
+    assert.ok(meta.bytes<=12_000,'Gap shard exceeds 12kB');
+    const parsed=JSON.parse(part.raw);
+    assert.equal(parsed.schema,'conde.evidence-gap-shard/v1');
+    assert.deepEqual(Object.keys(parsed).sort(),['records','schema']);
+    assert.equal(parsed.records.length,meta.record_count);
+    publishedGaps.push(...parsed.records);
+  }
+  assert.deepEqual(publishedGaps,expectedGaps,
+    'Uncurated claim text/hash differs from frozen matrix');
   assert.equal(lineage.matrix_git_blob_sha1,citations.matrix_git_blob_sha1);
   assert.equal(manifest.no_js_index,PREFIX);
   assert.equal(manifest.independent_physical_observation_count,null);
@@ -289,9 +315,15 @@ if (process.argv[1] && import.meta.url===pathToFileURL(resolve(process.argv[1]))
   const root=resolve(import.meta.dirname,'..');
   const bundle=readBundle(root);
   // Do not run a stale-shard audit if the directory holds extra unmapped parts.
-  const actual=readdirSync(join(root,'public/data/conde-evidence-index'))
-    .filter(name=>/^part-.*\.json$/.test(name)).sort();
-  assert.deepEqual(actual,bundle.manifest.shards.map(m=>m.path.split('/').at(-1)));
+  for (const [folder,refs] of [
+    ['conde-evidence-index',bundle.manifest.shards],
+    ['conde-evidence-gaps',bundle.manifest.unmapped_shards],
+  ]) {
+    const actual=readdirSync(join(root,'public/data',folder))
+      .filter(name=>/^part-.*\.json$/.test(name)).sort();
+    assert.deepEqual(actual,refs.map(m=>m.path.split('/').at(-1)),
+      'Orphan/missing '+folder+' shard');
+  }
   const result=process.argv.includes('--built-site')
     ? auditBuiltSite(bundle,join(root,'public')):audit(bundle);
   console.log('SSG ↔ JSON:',JSON.stringify(result));

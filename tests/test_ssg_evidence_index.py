@@ -48,6 +48,25 @@ class EvidenceIndexTest(unittest.TestCase):
                 self.assertEqual(row['archive_path'], '/conde-incident/evidencias/arquivo/'
                                  + row['occurrence'].lower().replace('#', '-') + '/')
         self.assertEqual(len(seen), manifest['curated_reference_count'])
+        published_gaps = []
+        for shard in manifest['unmapped_shards']:
+            raw = artifacts[Path(shard['path'])]
+            self.assertEqual(export.digest(raw), shard['sha256'])
+            self.assertEqual(len(raw), shard['bytes'])
+            self.assertLessEqual(len(raw), export.MAX_SHARD_BYTES)
+            document = json.loads(raw)
+            self.assertEqual(document['schema'], 'conde.evidence-gap-shard/v1')
+            self.assertEqual(len(document['records']), shard['record_count'])
+            published_gaps.extend(document['records'])
+        matrix = (ROOT / export.MATRIX).read_bytes().splitlines()
+        self.assertEqual([{'occurrence': gap['occurrence'],
+                           'matrix_line': gap['matrix_line'],
+                           'row_sha256': export.digest(matrix[gap['matrix_line'] - 1]),
+                           'claim_text': matrix[gap['matrix_line'] - 1].decode('utf-8').split('|')[2].strip()}
+                          for gap in gaps], published_gaps)
+        self.assertTrue(all(set(record) == {'occurrence', 'matrix_line',
+                                             'row_sha256', 'claim_text'}
+                            for record in published_gaps))
         for source in manifest['source_files']:
             self.assertEqual(export.digest((ROOT / source['path']).read_bytes()), source['sha256'])
         self.assertEqual(artifacts, export.build(), 'Mesma fonte deve gerar bytes idênticos')
@@ -160,6 +179,28 @@ class EvidenceIndexTest(unittest.TestCase):
             damaged = scratch / export.MANIFEST
             damaged.write_bytes(damaged.read_bytes() + b' ')
             with self.assertRaises(ValueError):
+                export.sync(artifacts, scratch, check=True)
+
+    def test_unindexed_gap_shard_rewrite_cannot_survive_check(self):
+        artifacts = export.build()
+        with tempfile.TemporaryDirectory() as directory:
+            scratch = Path(directory)
+            export.sync(artifacts, scratch)
+            target = scratch / export.GAPS_DEST / 'part-001.json'
+            data = json.loads(target.read_bytes())
+            data['records'][0]['claim_text'] = 'Impacto físico confirmado'
+            target.write_bytes(export.canonical(data))
+            with self.assertRaisesRegex(ValueError, 'Índice não reproduzível'):
+                export.sync(artifacts, scratch, check=True)
+
+    def test_orphan_gap_chunk_rejected(self):
+        artifacts = export.build()
+        with tempfile.TemporaryDirectory() as directory:
+            scratch = Path(directory)
+            export.sync(artifacts, scratch)
+            extra = scratch / export.GAPS_DEST / 'part-999.json'
+            extra.write_text('{}')
+            with self.assertRaisesRegex(ValueError, 'Lista de shards'):
                 export.sync(artifacts, scratch, check=True)
 
     def test_orphan_chunk_rejected(self):

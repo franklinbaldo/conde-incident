@@ -39,6 +39,28 @@ test('coverage ledger exposes every unindexed frozen matrix row',()=>{
   assert.throws(()=>audit(bundle),/Unmapped matrix ledger differs/);
 });
 
+test('gap claim rewrite fails even when the shard SHA is recomputed',()=>{
+  const bundle=clean();
+  const part=bundle.gapShards[0];
+  const forged=JSON.parse(part.raw);
+  forged.records[0].claim_text='Impacto físico comprovado em Conde';
+  part.raw=Buffer.from(JSON.stringify(forged));
+  bundle.manifest.unmapped_shards[0].sha256=createHash('sha256').update(part.raw).digest('hex');
+  bundle.manifest.unmapped_shards[0].bytes=part.raw.length;
+  assert.throws(()=>audit(bundle),/Uncurated claim text\/hash differs/);
+});
+
+test('gap shard cannot invent epistemic status even with recalculated SHA',()=>{
+  const bundle=clean();
+  const part=bundle.gapShards[0];
+  const forged=JSON.parse(part.raw);
+  forged.records[0].source_status='CONFIRMED_PHYSICAL_IMPACT';
+  part.raw=Buffer.from(JSON.stringify(forged));
+  bundle.manifest.unmapped_shards[0].sha256=createHash('sha256').update(part.raw).digest('hex');
+  bundle.manifest.unmapped_shards[0].bytes=part.raw.length;
+  assert.throws(()=>audit(bundle),/Uncurated claim text\/hash differs/);
+});
+
 test('coordinated coverage count shrink fails against original matrix rows',()=>{
   const bundle=clean();
   bundle.citations.total_matrix_occurrences--;
