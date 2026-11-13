@@ -35,6 +35,7 @@ const MAX_SIGMA_HOURS = 240;
  * Two-tailed likelihood has 2* this error at most, not an instrument sigma.
  */
 function erf(x: number): number {
+  if (x === 0) return 0; // exact center; avoid approximation offset at calendar boundaries
   const sign = x < 0 ? -1 : 1;
   const y = Math.abs(x);
   const t = 1/(1+0.3275911*y);
