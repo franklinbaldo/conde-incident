@@ -144,18 +144,18 @@ export default function App() {
           <div className="flex items-center gap-2">
             <Satellite className="w-4 h-4 text-cyan-400" />
             <span>
-              NORAD 528 (1963-003B) &amp; Caso Conde (1963) — Exploração Orbital Condicional
+              NORAD 528 (1963-003B) &amp; {lang === 'pt' ? 'Caso Conde (1963) — Exploração Orbital Condicional' : 'Conde case (1963) — Conditional orbital exploration'}
             </span>
           </div>
 
           <div className="flex items-center gap-4 text-[11px]">
-            <span>Modelos: SGP4, WGS84, J2, Termosfera Solar-Min 1963</span>
+            <span>{lang === 'pt' ? 'Modelos: SGP4, WGS84, J2, Termosfera Solar-Min 1963' : 'Models: SGP4, WGS84, J2, Solar-Min Thermosphere 1963'}</span>
             <span className="text-zinc-700">|</span>
             <button
               onClick={() => setIsPythonModalOpen(true)}
               className="text-cyan-400 hover:underline cursor-pointer"
             >
-              Exportar Python
+              {lang === 'pt' ? 'Exportar Python' : 'Export Python'}
             </button>
           </div>
         </div>
