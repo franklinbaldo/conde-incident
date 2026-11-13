@@ -13,6 +13,16 @@ const changes = [
   ['No results found', 'Nenhum resultado encontrado'],
   ["hits.length+' result'+(hits.length===1?'':'s')+' found'",
    "hits.length+' resultado'+(hits.length===1?'':'s')+' encontrado'+(hits.length===1?'':'s')"],
+  // The stock SSG dialog has no close control, focus restoration or Tab boundary.
+  // Scope these edits to exact upstream tokens and fail closed on runtime drift.
+  ["function close(){overlay.classList.remove('active');active=-1}",
+   "function close(){overlay.classList.remove('active');active=-1;btn.focus()}"],
+  ["btn.addEventListener('click',function(){open()});",
+   "var closeBtn=document.getElementById('ssg-search-close');if(!closeBtn)throw Error('SSG search close button missing');closeBtn.addEventListener('click',close);btn.addEventListener('click',open);"],
+  ["if(e.key==='Escape')close();",
+   "if(e.key==='Escape'){e.preventDefault();close()}if(e.key==='Tab'){var stops=Array.from(overlay.querySelectorAll('input:not([disabled]),button:not([disabled]),a[href],[tabindex]:not([tabindex=\"-1\"])'));if(stops.length){var first=stops[0],last=stops[stops.length-1];if(e.shiftKey&&(document.activeElement===first||!overlay.contains(document.activeElement))){e.preventDefault();last.focus()}else if(!e.shiftKey&&(document.activeElement===last||!overlay.contains(document.activeElement))){e.preventDefault();first.focus()}}}"],
+  ["if(e.key==='Enter'){e.preventDefault();var items=",
+   "if(e.key==='Enter'&&e.target!==closeBtn){e.preventDefault();var items="],
 ];
 const digest = (algorithm, body, encoding) => createHash(algorithm).update(body).digest(encoding);
 

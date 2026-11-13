@@ -11,7 +11,11 @@ import { localizeRuntime, localizeRuntimeSource } from '../scripts/localize-ssg-
 const source = "var results=document.getElementById('ssg-search-results');\n" +
   "results.innerHTML='<div class=\"ssg-no-results\" role=\"status\">No results for “&ldquo;'+esc(q)+'&rdquo;”</div>';\n" +
   "sr.textContent='No results found';\n" +
-  "sr.textContent=hits.length+' result'+(hits.length===1?'':'s')+' found';\n";
+  "sr.textContent=hits.length+' result'+(hits.length===1?'':'s')+' found';\n" +
+  "function close(){overlay.classList.remove('active');active=-1}\n" +
+  "btn.addEventListener('click',function(){open()});\n" +
+  "if(e.key==='Escape')close();\n" +
+  "if(e.key==='Enter'){e.preventDefault();var items=results.querySelectorAll('.ssg-result');}\n";
 const sha384 = text => 'sha384-' + createHash('sha384').update(text).digest('base64');
 test('Full dynamic locale: visible empty state, announcements for zero and N results', () => {
   const result = localizeRuntimeSource(source);
@@ -20,6 +24,11 @@ test('Full dynamic locale: visible empty state, announcements for zero and N res
   assert.match(result.code, /Nenhum resultado encontrado/);
   assert.match(result.code, /resultado.*encontrado/);
   assert.doesNotMatch(result.code, /No results| result'| found/);
+  assert.match(result.code, /ssg-search-close/);
+  assert.match(result.code, /btn\.focus\(\)/);
+  assert.match(result.code, /e\.key==='Tab'/);
+  assert.match(result.code, /document\.activeElement/);
+  assert.match(result.code, /e\.target!==closeBtn/);
   assert.deepEqual(localizeRuntimeSource(result.code), { ...result, changed: false });
   assert.throws(() => localizeRuntimeSource(source.replace('No results found', 'No matches')),
     /runtime drift/);

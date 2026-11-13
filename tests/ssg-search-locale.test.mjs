@@ -17,10 +17,12 @@ test('localizes visible and accessible SSG search strings without touching artic
   assert.equal(result.changed, true);
   for (const text of ['aria-label="Pesquisar"', '<span>Pesquisar</span>',
     'placeholder="Pesquisar no acervo..."', 'fechar', 'navegar', 'abrir',
-    'aria-keyshortcuts="Control+K Meta+K"', '<kbd>Ctrl/⌘+K</kbd>'])
+    'aria-keyshortcuts="Control+K Meta+K"', '<kbd>Ctrl/⌘+K</kbd>',
+    'aria-modal="true"', 'id="ssg-search-close"', 'aria-label="Fechar pesquisa"'])
     assert.ok(result.html.includes(text), text);
   assert.ok(result.html.includes('<p>Search is a research term</p>'));
   assert.ok(result.html.includes('integrity="sha384-test"'));
+  assert.equal((result.html.match(/id="ssg-search-close"/g)||[]).length,1);
   assert.deepEqual(localizeSearchWidget(result.html), { ...result, changed: false });
 });
 
