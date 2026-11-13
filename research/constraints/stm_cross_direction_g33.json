@@ -1,0 +1,41 @@
+{
+  "id": "CASTOR-G33-STM-CROSS-DIRECTION-CHECK",
+  "issue": 4,
+  "status": "CONNECTED_PENDING_HISTORICAL_CALIBRATION",
+  "depends_on": [
+    "CASTOR-G32-FINITE-AMPLITUDE-STM-COVARIANCE",
+    "CASTOR-G31-CARTESIAN-STATE-TRANSITION",
+    "C179#1",
+    "C197#1"
+  ],
+  "source_lineage": {
+    "C179#1": "Secondary NORAD 528 TLE, not instrumental covariance",
+    "C197#1": "NASA/Goddard SSR dated 1963-11-15, p.8; only the cataloged day 1963-11-08 of decay, no time/place",
+    "original_facsimile": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf"
+  },
+  "variables": {
+    "C0": "6x6 Cartesian covariance, axes [r km, v km/s] at a declared UTC epoch",
+    "L": "Cholesky(C0) preserving position/velocity correlations",
+    "delta_axis": "plus/minus multiplier times each column L[:,i] (12 controls)",
+    "delta_mixed": "multiplier/sqrt(2) times (plus/minus L[:,i] plus/minus L[:,j]) for i<j (60 controls)",
+    "residual": "RK4_J2(x0+delta)-RK4_J2(x0)-Phi delta, separately in km and km/s"
+  },
+  "equation_edges": [
+    "same Mahalanobis norm for all 72 deterministic probes: delta^T inv(C0) delta = multiplier^2",
+    "pair combinations test off-diagonal second-order response missed by axial-only probes",
+    "reject if any probe is nonfinite, hits conditional reentry event, or exceeds stated remainder budget"
+  ],
+  "falsifier": "Synthetic cross term F(u)=u0*u1 has zero residual on all 12 axes but nonzero residual on mixed pairs. This is a mathematical control, not a historical physical measurement.",
+  "scope_limit": "72 finite directions are not a global ellipsoid bound, stochastic probability, atmospheric calibration, or physical holdout",
+  "missing_dependencies": [
+    "original NORAD 527/529 Cartesian measurements with epoch/frame/covariance",
+    "authenticated 1963 orientation / EOP / UT1 and frame uncertainty",
+    "documented force-model and drag uncertainty",
+    "historical observation independence and calibrated out-of-sample validation"
+  ],
+  "implementation": "src/lib/orbitStmEnvelope.ts",
+  "regressions": "tests/orbitStmEnvelope.test.mjs",
+  "historical_holdout": "NOT_RUN",
+  "domain_reduced": false,
+  "impact_in_conde": "NOT_EVALUABLE"
+}
