@@ -10,9 +10,9 @@ const cases = [
   { id: 'synthetic-527', beta: 0.05,
     state: { rKm: [EARTH.radiusKm + 500, 0, 0], vKmS: [0, 1.15, 7.52], tS: 200 } },
   { id: 'synthetic-528', beta: 0.08,
-    state: { rKm: [0, EARTH.radiusKm + 460, 500], vKmS: [-7.4, 0.15, 0.05], tS: 500 } },
+    state: { rKm: [0, EARTH.radiusKm + 460, 500], vKmS: [-7.65, 0.15, 0.05], tS: 500 } },
   { id: 'synthetic-529', beta: 0.12,
-    state: { rKm: [-400, 100, EARTH.radiusKm + 560], vKmS: [7.1, 0.35, 0.2], tS: 800 } },
+    state: { rKm: [-400, 100, EARTH.radiusKm + 560], vKmS: [7.60, 0.35, 0.2], tS: 800 } },
 ];
 const baseDensity = (altitudeKm, tS) =>
   3e-11 * Math.exp(-(altitudeKm - 500) / 70) *
