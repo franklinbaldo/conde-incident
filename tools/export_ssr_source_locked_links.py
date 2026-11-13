@@ -20,6 +20,25 @@ LEGACY = ROOT / "research/constraints/ssr_1963_observable_graph.json"
 NOV15 = ROOT / "research/tle_custody/nasa_ssr_nov15_1963_C241-L19.json"
 NOV30 = ROOT / "research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json"
 OUT = ROOT / "public/data/conde-ssr-source-locked-links.json"
+HOUSE = ROOT / "research/tle_custody/congressional_ssr_chain_C241-L20.json"
+HOUSE_SPEC = {
+    "id": "C241-L20#1",
+    "url": "https://www.govinfo.gov/content/pkg/SERIALSET-12667_05_00-002-0197-0000/pdf/SERIALSET-12667_05_00-002-0197-0000.pdf",
+    "sha": "a08b4c505a37c09d1eb9c33ed14cc56228fd5e67f7ec1645f38554310bd60ca0",
+    "bytes": 9297493,
+    "report_date": "1965-03-22",
+    "agreement_date": "1961-11-07",
+}
+HOUSE_LINKS = {
+    ("NASA_NORAD_SAO_COMPUTATION", "NASA_GSFC_SSR_PUBLICATION",
+     "COMPILATION_WITH_MULTIPLE_CONTRIBUTORS", 7),
+    ("NORAD_SPADATS_CATALOG", "NASA_GSFC",
+     "PERIODIC_UNCLASSIFIED_CATALOG_TRANSMISSION", 14),
+    ("NAVSPASUR", "NASA_GSFC",
+     "DIRECT_UNCLASSIFIED_ORBITAL_DATA_AUTHORIZED", 14),
+    ("NORAD_SPADATS_SENSORS", "NASA_GSFC",
+     "SENSOR_DATA_BY_REQUEST_FOR_NASA_TRACKING_RESPONSIBILITY", 14),
+}
 
 SOURCE = {
     "1963-11-15": {
@@ -85,7 +104,57 @@ def _documents(nov15: dict, nov30: dict) -> dict:
     return result
 
 
-def build(nov15: dict, nov30: dict, graph: dict) -> dict:
+def validate_institutional_chain(source: dict) -> dict:
+    """Retrospective documentary ancestry, NEVER a 1963 observation."""
+    if (
+        source.get("id") != HOUSE_SPEC["id"]
+        or source.get("url") != HOUSE_SPEC["url"]
+        or source.get("pdf_sha256") != HOUSE_SPEC["sha"]
+        or source.get("pdf_bytes") != HOUSE_SPEC["bytes"]
+        or source.get("report_published_on") != HOUSE_SPEC["report_date"]
+        or source.get("historical_agreement_on") != HOUSE_SPEC["agreement_date"]
+        or source.get("printed_pages") != [7, 14]
+        or source.get("pdf_page_indices") != [12, 19]
+        or source.get("source_type") != "primary_institutional_record_reprinted_in_1965"
+        or source.get("source_scope") != "INSTITUTIONAL_DATA_FLOW_NOT_OBJECT_MEASUREMENT"
+    ):
+        raise ValueError("congressional report custody or date mismatch")
+    rows = source.get("transcribed_links")
+    if not isinstance(rows, list) or len(rows) != len(HOUSE_LINKS):
+        raise ValueError("incomplete or duplicate institutional provenance links")
+    keys = [(r["from"], r["to"], r["relation"], r["printed_page"]) for r in rows]
+    if len(set(keys)) != len(keys) or set(keys) != HOUSE_LINKS:
+        raise ValueError("altered institutional provenance relationship")
+    if (
+        source.get("per_object_527_528_529_input_lineage_verified") is not False
+        or source.get("observation_epoch_utc") is not None
+        or source.get("instrument_covariance") is not None
+        or source.get("activation") != "DOCUMENTARY_DEPENDENCY_ONLY"
+        or source.get("physical_domain_effect") != "THETA_UNCHANGED"
+        or set(source.get("relevant_occurrences", [])) !=
+        {"C179#1", "C197#1", "C241-L19#1", "C241-L18:19640002493"}
+    ):
+        raise ValueError("unverified institutional report promoted into sensor evidence")
+    return {
+        "occurrence_id": source["id"],
+        "source_url": source["url"],
+        "source_sha256": source["pdf_sha256"],
+        "source_bytes": source["pdf_bytes"],
+        "report_published_on": source["report_published_on"],
+        "agreement_on": source["historical_agreement_on"],
+        "relevant_occurrences": source["relevant_occurrences"],
+        "institutional_links": rows,
+        "per_object_input_lineage": None,
+        "sensor_observation_epoch_utc": None,
+        "instrument_covariance": None,
+        "physical_constraint_activated": False,
+        "status": "CONNECTED_PENDING_CALIBRATION",
+        "physical_domain_effect": "THETA_UNCHANGED",
+    }
+
+
+def build(nov15: dict, nov30: dict, graph: dict, house: dict) -> dict:
+    chain = validate_institutional_chain(house)
     docs = _documents(nov15, nov30)
     # Existing validator checks all 22 connected observations, eight edges,
     # frozen raw 94.8 error, and corrected public handoff 94.6 / delta zero.
@@ -154,6 +223,7 @@ def build(nov15: dict, nov30: dict, graph: dict) -> dict:
         "checked_control_cells": len(records),
         "checked_distinct_control_objects": [527, 529],
         "source_family": "NASA_GODDARD_COMPILED_FROM_TRACKING",
+        "institutional_provenance": chain,
         "linked_lean_contract": "formal/Conde1963/SsrNovember.lean",
         "lean_claim_scope": "conditional_printed_number_arithmetic_only",
         "simulator_parameter": cell["model_variable"],
@@ -175,7 +245,8 @@ def render() -> str:
     graph = json.loads(LEGACY.read_text(encoding="utf-8"))
     a = json.loads(NOV15.read_text(encoding="utf-8"))
     b = json.loads(NOV30.read_text(encoding="utf-8"))
-    return json.dumps(build(a, b, graph), ensure_ascii=False, indent=2) + "\n"
+    house = json.loads(HOUSE.read_text(encoding="utf-8"))
+    return json.dumps(build(a, b, graph, house), ensure_ascii=False, indent=2) + "\n"
 
 
 def main() -> None:

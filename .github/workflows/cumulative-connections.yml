@@ -24,6 +24,10 @@ jobs:
         run: python3 -m unittest discover -s tests -p "test_cumulative_constraints.py" -v
       - name: Reinspect NASA 1963 facsimile values and legacy erratum controls
         run: python3 -m unittest discover -s tests -p "test_texugo_ssr_facsimile_qa.py" -v
+      - name: Validate source-locked NASA cells and Congressional data-flow ancestry
+        run: |
+          python3 -m unittest discover -s tests -p "test_ssr_source_locked_links.py" -v
+          python3 tools/export_ssr_source_locked_links.py --check-site
       - name: Generate connected observable handoff
         run: python3 formal/scripts/check_cumulative_connections.py --output /tmp/conde-connected-handoff.json
       - uses: actions/upload-artifact@v4
