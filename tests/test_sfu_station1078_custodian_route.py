@@ -34,8 +34,8 @@ class SFUStation1078CustodianRoute(unittest.TestCase):
     def test_contact_not_custodian(self):
         self.reject(["evidence_boundary","institution_contact_is_verified_current_custodian"],True)
 
-    def test_museum_not_station_archive(self):
-        self.reject(["evidence_boundary","museum_holds_station1078_journals"],True)
+    def test_museum_custody_not_established(self):
+        self.reject(["evidence_boundary","museum_custody_confirmed"],True)
         self.reject(["sources",1,"museum_station1078_journals_listed"],True)
 
     def test_no_invented_facsimiles_or_contact(self):
