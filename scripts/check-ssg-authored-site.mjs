@@ -36,4 +36,11 @@ for(const [slug,id] of legacy){
     'Página independente ausente do índice de simulações: '+slug);
  }
 }
+const custody=read('simulacoes/tles/custodia');
+assert.ok(custody.includes('https://franklinbaldo.github.io/conde-incident/simulacoes/tles/custodia/'),
+ 'Custódia TLE sem URL canônica independente');
+for(const marker of ['63300.61129783','198.5261','18cf11665e061b5ec8679242e10b00b82accf29bc6f0b9b7b6330b9c44e341cd','C179#1'])
+ assert.ok(custody.includes(marker),'Custódia TLE ausente no HTML publicado: '+marker);
+assert.ok(read('simulacoes/tles').includes('/conde-incident/simulacoes/tles/custodia/'),
+ 'Auditoria TLE sem acesso à custódia SSG');
 console.log('PASS: '+AUTHORED_ROUTES.length+' URLs SSG canônicas com navegação e retorno ao laboratório.');
