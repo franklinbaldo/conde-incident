@@ -1,0 +1,57 @@
+{
+  "schema": "conde.gis.official-async-photoindex-probe/v1",
+  "id": "CGEO-31",
+  "verified_on": "2026-11-13",
+  "parent": "CGEO-30",
+  "source": "https://acervo.sgb.gov.br/DocReader/DocReader.aspx?bib=FotoUSAF",
+  "municipality": {"ibge_code": 2908606, "name": "Conde", "state": "BA"},
+  "question": "Did a Microsoft ASP.NET AJAX request for the selected USAF 63-32 folder return the actual image rather than just viewer markup?",
+  "request": {
+    "same_session_after_t1_selection": true,
+    "selected_tree_event": "s679",
+    "image_event_target": "CarregaImagemHiddenButton",
+    "script_manager_field": "DocumentoUpdatePanel|CarregaImagemHiddenButton",
+    "async_post": true,
+    "x_microsoftajax_header": "Delta=true",
+    "hPagFis": "1",
+    "hidden_size": "1000x850"
+  },
+  "response": {
+    "http_status": 200,
+    "content_type": "text/plain; charset=utf-8",
+    "body_bytes": 9024,
+    "body_sha256": "3e4d49a20fbcffef0ca57aa05bdbe23620dcfa0bb5a238a16899e9bc83938644",
+    "delta_format": "ASP_NET_AJAX_PIPE_DELIMITED",
+    "update_panel_id": "DocumentoUpdatePanel",
+    "update_panel_declared_length": 2752,
+    "excerpt_file": "research/geo/evidence/cgeo31_ajax_document_panel.html",
+    "excerpt_bytes": 2752,
+    "excerpt_sha256": "23c72cf7fb3cbdb7e4c715434e0ecfd3d1d32c45deb2e82b9555443bf247f8fb",
+    "doc_image_element_count": 1,
+    "doc_image_src": null,
+    "image_bytes_acquired": false
+  },
+  "evidence_state": "ASYNC_IMAGE_PANEL_RETURNED_WITHOUT_IMAGE_URL",
+  "independence": "Same SGB archive session and catalogue lineage as CGEO-29/30; additional technical observation, not a new historical witness.",
+  "scientific_limits": {
+    "original_photoindex_image_acquired": false,
+    "flight_date_verified": false,
+    "footprint_verified": false,
+    "historical_center_geometry": null,
+    "reentry_position": null,
+    "horizontal_uncertainty_m": null,
+    "can_constrain_orbital_reentry": false
+  },
+  "interpretive_limits": [
+    "An HTTP 200 AJAX delta with an empty img src is proof only of the returned panel, not that the archival image does not exist.",
+    "The selected folder label and its /1 page counter are not an image asset, an exposure count or a capture date.",
+    "No PDF or photograph bytes were acquired; rendering might require a different browser request, access condition, or backend handler.",
+    "The USAF 63-32 archival lineage is not automatically identical to PETROBRAS 53 D/1961."
+  ],
+  "graph_edges": [
+    {"to": "CGEO-30", "relation": "PROBES_ASYNC_IMAGE_AFTER_SELECTED_TREE_NODE"},
+    {"to": "CGEO-29", "relation": "SAME_ARCHIVAL_USAF_ITEM_FAMILY"},
+    {"to": "CGEO-18", "relation": "NO_SPATIAL_BRIDGE_TO_1963_REPORT"}
+  ],
+  "next_test": "Capture a real browser network log on a resource-adequate executor and identify any separate image-handler request; validate bytes, source, scale and flight-footprint before interpreting it."
+}
