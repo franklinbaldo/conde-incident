@@ -1,0 +1,80 @@
+{
+  "schema": "conde.gis.official-photoindex-node/v1",
+  "id": "CGEO-29",
+  "verified_on": "2026-11-13",
+  "municipality": {
+    "name": "Conde",
+    "state": "BA",
+    "ibge_code": 2908606
+  },
+  "question": "Is sheet MI-1850 listed by the official SGB aerial photoindex reader, and under which actual project?",
+  "official_reader": {
+    "url": "https://acervo.sgb.gov.br/DocReader/DocReader.aspx?bib=FotoUSAF",
+    "collection_alias": "FotoUSAF",
+    "collection_label": "Fotoindices USAF",
+    "http_status": 200,
+    "acquired_bytes": 585747,
+    "sha256": "02bc816f4c213f854dc3af119a3c840c3eb745fe3c2e9607a7d53ebe2c97d58b",
+    "source_html_stored_in_repo": false,
+    "title_observed": "Fotoindices da USAF - Lote 32A - DocReader Web",
+    "rendered_tree_node_count": 1809,
+    "node_ordinal_0_based": 679,
+    "node_label_exact": "1850 Projeto USAF 63-32 - área A: SC.24-Z-C-VI",
+    "node_excerpt": "research/geo/evidence/cgeo29_usaf_1850_node.html",
+    "node_excerpt_sha256": "001787e5b6b26dd457a464b64740cb4de4f680956eba3ee0d20313db03206652",
+    "node_is_a_record_level_finding": true,
+    "actual_photoindex_page_bytes_acquired": false,
+    "node_click_or_selection_verified": false
+  },
+  "crosswalk": {
+    "sheet_mi": 1850,
+    "usaf_cim_literal": "SC.24-Z-C-VI",
+    "cgeo26_cim_normalized": "SC-24-Z-C-VI",
+    "other_project": "PETROBRAS 53 D",
+    "usaf_project_literal": "USAF 63-32",
+    "same_cartographic_sheet_index": true,
+    "same_aerial_flight_or_photoindex_as_pet53d": null,
+    "same_observational_lineage": null,
+    "printed_project_code_is_a_capture_date": false,
+    "index_file_is_pre_incident": null
+  },
+  "evidence_state": "OFFICIAL_USAF_PHOTOINDEX_TREE_NODE_VERIFIED_NO_IMAGE_ACQUIRED",
+  "claims_not_established": {
+    "nominal_1963_means_acquisition_date": true,
+    "aerial_photograph_of_conde_available": true,
+    "photoindex_frame_georeferenced": true,
+    "petrobras_53d_available_in_usaf_collection": true
+  },
+  "scientific_limits": {
+    "original_photoindex_image_acquired": false,
+    "individual_aerial_frame_acquired": false,
+    "date_of_individual_capture_verified": false,
+    "historical_center_geometry": null,
+    "event_position_1963": null,
+    "horizontal_error_m": null,
+    "can_constrain_orbital_reentry": false
+  },
+  "graph_edges": [
+    {
+      "to": "CGEO-24",
+      "relation": "SAME_MI1850_SHEET_INDEX_DISTINCT_FROM_PHOTO_COVERAGE"
+    },
+    {
+      "to": "CGEO-26",
+      "relation": "DISTINCT_USAF63_32_CATALOGUE_FAMILY_FROM_PET53D"
+    },
+    {
+      "to": "CGEO-27",
+      "relation": "VERIFIED_NODE_IN_OFFICIAL_USAF_COLLECTION"
+    },
+    {
+      "to": "CGEO-28",
+      "relation": "TREE_NAVIGATION_NOT_EXECUTED_TEXT_SEARCH"
+    },
+    {
+      "to": "CGEO-18",
+      "relation": "NO_BRIDGE_TO_REPORTED_CITY_CENTER"
+    }
+  ],
+  "next_test": "Select exact USAF 63-32 MI-1850 tree node in SGB DocReader; acquire and hash its photoindex image; inspect printed flight/date labels, footprints and rights. Do not interpret 63-32 as exposure date."
+}
