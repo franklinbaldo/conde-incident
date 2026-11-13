@@ -48,3 +48,20 @@ test('duplicate custody edge cannot inflate the reported capture count', () => {
   forged.edges.push(clone(edge));
   assert.throws(() => verifiedArchiveLinks(forged, citations), /Captura Wayback duplicada/);
 });
+
+// G36: same NASA host and PDF basename are insufficient to bind a capture.
+test('same host and filename cannot silently substitute a different archived route', () => {
+  const forged = clone(graph);
+  const node = capture(forged);
+  node.cdx_original_url = 'http://ntrs.nasa.gov/unrelated/19640001198.pdf';
+  node.archived_url = 'https://web.archive.org/web/20150217133001id_/' + node.cdx_original_url;
+  assert.throws(() => verifiedArchiveLinks(forged, citations), /Caminho completo do PDF Wayback/);
+});
+
+test('an extra query parameter cannot silently change the archived document', () => {
+  const forged = clone(graph);
+  const node = capture(forged);
+  node.cdx_original_url += '?version=unverified';
+  node.archived_url = 'https://web.archive.org/web/20150217133001id_/' + node.cdx_original_url;
+  assert.throws(() => verifiedArchiveLinks(forged, citations), /Consulta da URL arquivada/);
+});

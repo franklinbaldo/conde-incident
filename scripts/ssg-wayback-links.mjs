@@ -77,8 +77,22 @@ export function verifiedArchiveLinks(graph, citations) {
       const archivedOrigin = new URL(match[2]);
       assert.equal(archivedOrigin.hostname, sourceUrl.hostname,
         'Host arquivado não corresponde à fonte curada');
-      assert.equal(archivedOrigin.pathname.split('/').at(-1), sourceUrl.pathname.split('/').at(-1),
-        'Documento arquivado não corresponde à fonte curada');
+      // A matching host and filename alone cannot identify the document:
+      // /unrelated/19640001198.pdf is not NASA's archived /archive/nasa/... URL.
+      // For old NTRS captures, permit only the explicit historical URL scheme
+      // corresponding to the modern /api/citations/<id>/downloads/<id>.pdf.
+      assert.equal(archivedOrigin.host, sourceUrl.host, 'Host/porta Wayback divergente');
+      assert.equal(archivedOrigin.username, '', 'Usuário em URL de arquivo não permitido');
+      assert.equal(archivedOrigin.password, '', 'Credencial em URL de arquivo não permitida');
+      assert.equal(archivedOrigin.hash, '', 'Fragmento em URL de arquivo não permitido');
+      assert.equal(archivedOrigin.search, sourceUrl.search,
+        'Consulta da URL arquivada não corresponde à origem curada');
+      const ntrs = /^\/api\/citations\/(\d+)\/downloads\/\1\.pdf$/u.exec(sourceUrl.pathname);
+      const expectedArchivedPath = ntrs && sourceUrl.hostname === 'ntrs.nasa.gov'
+        ? `/archive/nasa/casi.ntrs.nasa.gov/${ntrs[1]}.pdf`
+        : sourceUrl.pathname;
+      assert.equal(archivedOrigin.pathname, expectedArchivedPath,
+        'Caminho completo do PDF Wayback diverge da origem curada');
       assert.equal(c.retrieved_bytes_sha256, payload.sha256, 'Bytes Wayback divergentes');
       assert.ok(Number.isSafeInteger(payload.bytes) && payload.bytes > 0);
       assert.equal(c.retrieved_bytes_length, payload.bytes, 'Tamanho Wayback divergente');
