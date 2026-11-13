@@ -30,6 +30,27 @@ export const Navigation: React.FC<NavigationProps> = ({
   setLang,
   onOpenPython,
 }) => {
+  const navRef = React.useRef<HTMLElement>(null);
+
+  // On narrow screens the tab strip scrolls horizontally. Deep links and
+  // Back/Forward must reveal the active tab without scrolling the page itself.
+  React.useLayoutEffect(() => {
+    const revealActiveTab = () => {
+      const nav = navRef.current;
+      const active = nav?.querySelector<HTMLElement>('[aria-current="page"]');
+      if (!nav || !active) return;
+      const strip = nav.getBoundingClientRect();
+      const tab = active.getBoundingClientRect();
+      const left = strip.left + 16;
+      const right = strip.right - 16;
+      if (tab.left < left) nav.scrollLeft -= left - tab.left;
+      else if (tab.right > right) nav.scrollLeft += tab.right - right;
+    };
+    revealActiveTab();
+    window.addEventListener('resize', revealActiveTab);
+    return () => window.removeEventListener('resize', revealActiveTab);
+  }, [activeTab, lang]);
+
   const tabs = [
     {
       id: 'summary' as TabId,
@@ -156,7 +177,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       </div>
 
       {/* Main Navigation Tabs */}
-      <nav aria-label={lang === 'pt' ? 'Seções do laboratório' : 'Laboratory sections'} className="max-w-7xl mx-auto px-4 flex space-x-1 overflow-x-auto py-1.5 scrollbar-thin">
+      <nav ref={navRef} aria-label={lang === 'pt' ? 'Seções do laboratório' : 'Laboratory sections'} className="max-w-7xl mx-auto px-4 flex space-x-1 overflow-x-auto py-1.5 scrollbar-thin">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
