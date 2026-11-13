@@ -1,0 +1,37 @@
+name: NOAA ISD 1963 coastal inventory (pinned archive directory)
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact tested commit
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$HEAD_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Retrieve original NOAA metadata (not a weather observation)
+        run: |
+          curl -fLsS --retry 3 --retry-all-errors --connect-timeout 15 --max-time 90 \
+            https://www.ncei.noaa.gov/pub/data/noaa/isd-history.csv -o /tmp/noaa-isd-history.csv
+          curl -fLsS --retry 3 --retry-all-errors --connect-timeout 15 --max-time 90 \
+            https://www.ncei.noaa.gov/pub/data/noaa/1963/ -o /tmp/noaa-1963-directory.html
+      - name: Verify full-source hashes, catalog join and pending edges
+        run: |
+          python3 tools/audit_isd_bahia_coastal_1963_archive.py \
+            --history /tmp/noaa-isd-history.csv --index /tmp/noaa-1963-directory.html --check
+      - name: Test tampering, gaps and provenance over original bytes
+        env:
+          NOAA_ISD_HISTORY: /tmp/noaa-isd-history.csv
+          NOAA_ISD_INDEX_1963: /tmp/noaa-1963-directory.html
+        run: python3 -m unittest discover -s tests -p 'test_isd_bahia_coastal_1963_archive.py' -v

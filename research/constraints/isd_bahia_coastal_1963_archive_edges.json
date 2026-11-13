@@ -1,0 +1,21 @@
+{
+  "schema": "conde.isd-coastal-1963-archive-edges/v1",
+  "id": "MET-ISD-BAHIA-1963-ARCHIVE-EDGES-01",
+  "source": "MET-ISD-BAHIA-1963-ARCHIVE-COVERAGE-01",
+  "dependencies": [
+    "MET-ISD-19631107-09-CARAVELAS-01",
+    "MET-ISD-CARAVELAS-SOURCE-FLAGS-1963-01",
+    "igra_bahia_regional_1963"
+  ],
+  "edges": [
+    {"from": "NOAA_ISD_1963_directory_listing", "to": "archived_station_year_keys", "type": "ANNUAL_FILE_LISTING"},
+    {"from": "NOAA_ISD_station_history_retrospective", "to": "catalogue_BR_code_with_1963_in_range", "type": "CATALOGUE_YEAR_BOUNDS_NOT_DAILY_COVERAGE"},
+    {"from": "archived_station_year_keys", "to": "Caravelas_1963_surface_observations", "type": "ARCHIVED_FILE_PRESENT_SEPARATELY_VALIDATED_DAILY_ROWS"},
+    {"from": "no_Aracaju_Salvador_files_listed_in_1963_directory", "to": "surface_control_near_Conde", "type": "ARCHIVAL_COVERAGE_GAP_NOT_PHYSICAL_ABSENCE"},
+    {"from": "Caravelas_1963_surface_observations", "to": "Conde_1963_surface_or_upper_air", "type": "PENDING_SPATIOTEMPORAL_AND_INSTRUMENT_CALIBRATION"}
+  ],
+  "other_archives_or_instrument_log_searched": null,
+  "historical_geographic_transfer_error": null,
+  "active_conde_constraint": null,
+  "status": "CONNECTED_PENDING_SPATIOTEMPORAL_CALIBRATION"
+}

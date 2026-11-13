@@ -1,0 +1,66 @@
+{
+  "id": "CASTOR-G39-MIRROR-SELECTION",
+  "source_parquet_sha256": "c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09",
+  "source_csv_sha256": "3940715d7c15cf15c24e678a8c5b5fbb34a031b3ffd7e33c0580277377383231",
+  "derivation": "nearest UTC secondary mirror epoch not after per-edition report cutoff; neither time is a certified sensor epoch",
+  "source_repo": "oxzoid/space-track-tle-history",
+  "source_revision": "4b4fb3a",
+  "selected": [
+    {
+      "ntrs_id": "19630012290",
+      "designator": "1963-003A",
+      "source_row": 2966,
+      "norad_id": "527",
+      "epoch": "1963-07-04T06:47:24.213696Z",
+      "mean_motion_rev_day": "15.2371524"
+    },
+    {
+      "ntrs_id": "19630012290",
+      "designator": "1963-003B",
+      "source_row": 2996,
+      "norad_id": "528",
+      "epoch": "1963-07-26T02:49:36.245568Z",
+      "mean_motion_rev_day": "15.4256829"
+    },
+    {
+      "ntrs_id": "19630012290",
+      "designator": "1963-003C",
+      "source_row": 3039,
+      "norad_id": "529",
+      "epoch": "1963-07-28T17:12:27.086688Z",
+      "mean_motion_rev_day": "15.35680149"
+    },
+    {
+      "ntrs_id": "19640002493",
+      "designator": "1963-003A",
+      "source_row": 2971,
+      "norad_id": "527",
+      "epoch": "1963-11-19T20:21:49.593024Z",
+      "mean_motion_rev_day": "15.24361297"
+    },
+    {
+      "ntrs_id": "19640002493",
+      "designator": "1963-003C",
+      "source_row": 3063,
+      "norad_id": "529",
+      "epoch": "1963-11-29T08:49:54.580512Z",
+      "mean_motion_rev_day": "15.63965164"
+    },
+    {
+      "ntrs_id": "19640005618",
+      "designator": "1963-003A",
+      "source_row": 2972,
+      "norad_id": "527",
+      "epoch": "1963-12-17T05:43:24.184704Z",
+      "mean_motion_rev_day": "15.22982993"
+    },
+    {
+      "ntrs_id": "19640005618",
+      "designator": "1963-003C",
+      "source_row": 3071,
+      "norad_id": "529",
+      "epoch": "1963-12-30T11:25:41.443104Z",
+      "mean_motion_rev_day": "16.09825765"
+    }
+  ]
+}

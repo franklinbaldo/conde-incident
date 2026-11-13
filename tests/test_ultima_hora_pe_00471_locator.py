@@ -2,7 +2,7 @@
 import copy
 import json
 import unittest
-from tools.verify_ultima_hora_pe_00471_locator import MANIFEST, validate
+from tools.verify_ultima_hora_pe_00471_locator import MANIFEST, validate, selected_edition
 
 class TestSourceBoundary(unittest.TestCase):
     @classmethod
@@ -46,6 +46,34 @@ class TestSourceBoundary(unittest.TestCase):
         x = copy.deepcopy(self.data)
         x["original_text_verified"] = True
         self.assertTrue(validate(x))
+
+    def test_previous_catalog_url_was_different_edition(self):
+        x = copy.deepcopy(self.data)
+        x["catalog_url"] = "https://memoria.bn.gov.br/DocReader/765147/5756"
+        self.assertIn("catalog_url", validate(x))
+        self.assertEqual(self.data["earlier_catalog_selected_edition"], "00507")
+
+    def test_exact_physical_page_ids(self):
+        self.assertEqual(self.data["docreader_first_physical_id"], 5339)
+        self.assertEqual(self.data["docreader_last_physical_id"], 5346)
+        self.assertEqual(self.data["docreader_requested_page8_candidate_id"], 5346)
+        self.assertTrue(self.data["docreader_physical_ids_are_not_printed_pages"])
+
+    def test_page8_candidate_is_not_page8_inspection(self):
+        x = copy.deepcopy(self.data)
+        x["docreader_page8_raster_retrieved"] = True
+        self.assertIn("docreader_page8_raster_retrieved", validate(x))
+        x = copy.deepcopy(self.data)
+        x["docreader_requested_page8_candidate_url"] = x["earlier_catalog_url"]
+        self.assertIn("docreader_requested_page8_candidate_url", validate(x))
+
+    def test_selected_folder_not_sidebar_edition(self):
+        menu = '<span class="rtIn">Edição 00471</span>'
+        selected = '<span id="PastaTxt" title="Ano 1963\\Edição 00507">'
+        self.assertEqual(selected_edition(selected + menu), "00507")
+        good = '<span id="PastaTxt" title="Ano 1963\\Edição 00471">'
+        self.assertEqual(selected_edition(good + menu), "00471")
+        self.assertIsNone(selected_edition(menu))
 
 if __name__ == "__main__":
     unittest.main()
