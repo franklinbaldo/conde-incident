@@ -1,0 +1,59 @@
+{
+  "schema": "conde.conditional-optical-holdout-g36/v1",
+  "id": "CASTOR-G36-OPTICAL-LINE-OF-SIGHT-HOLDOUT",
+  "classification": "COMPUTATIONAL_FORWARD_OPERATOR_NOT_AN_OBSERVED_PASS",
+  "question": "Can independently recovered dated 1963 optical sightlines for NORAD 527/529 falsify a physically propagated trajectory without turning a NASA report date into a measurement epoch?",
+  "depends_on": [
+    "C241-L19#1",
+    "C241-L21",
+    "C197#1",
+    "sao_1963_optical_archive_locators",
+    "MOR-REL-20261112-01"
+  ],
+  "computational_file": "src/lib/orbitOpticalHoldout.ts",
+  "test_file": "tests/orbitOpticalHoldout.test.mjs",
+  "source_candidates": [
+    {
+      "type": "NASA_GSFC_COMPILED_REPORT",
+      "url": "https://ntrs.nasa.gov/citations/19640001198",
+      "publication_date": "1963-11-15",
+      "status": "NOT_AN_INSTRUMENT_ANGLE_OR_EPOCH"
+    },
+    {
+      "type": "SMITHSONIAN_ARCHIVAL_LOCATOR",
+      "url": "https://sova.si.edu/components/SIA.FARU0259",
+      "status": "FINDING_AID_ONLY_NOT_OPTICAL_MEASUREMENT"
+    }
+  ],
+  "forward_model": {
+    "data": "right ascension and declination in degrees, a claimed sigma in arcseconds, a claimed 3-vector station position in km in the SAME inertial frame and precise UTC epoch as an independently propagated satellite position",
+    "residual": "atan2(norm(u_observed cross u_predicted), dot(u_observed,u_predicted)) * 206264.80624709636 arcsec",
+    "classification": "CONDITIONAL_GEOMETRY_ONLY",
+    "withheld_test": "only observations strictly after predeclared cutoff UTC; fail all on any rejected row",
+    "supported_frames": [
+      "GCRF",
+      "EME2000",
+      "FK4_B1950",
+      "TEME"
+    ],
+    "conversions_performed": false,
+    "original_instrument_authenticated": false,
+    "station_ephemeris_authenticated": false,
+    "source_independence_verified": false,
+    "error_model": "isotropic declared sigma for diagnostic ratio; no chi-square or likelihood"
+  },
+  "scientific_status": {
+    "authenticated_instrument_angles_527": 0,
+    "authenticated_instrument_angles_529": 0,
+    "holdouts_527_529": "NOT_RUN",
+    "geographic_conclusion": "NOT_SUPPORTED",
+    "model_corrections_missing": [
+      "Earth orientation parameters and historical frame conversion",
+      "station ephemeris custody",
+      "topocentric refraction",
+      "annual/diurnal aberration and light-time",
+      "original angular calibration and cross-epoch correlation"
+    ],
+    "next_test": "Recover original station/film measurement with record ID, UTC, declared equinox/frame, station coordinates, calibration, SHA and errors; freeze model parameters before comparing withheld angles."
+  }
+}
