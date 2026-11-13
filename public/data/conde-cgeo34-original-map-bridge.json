@@ -1,0 +1,159 @@
+{
+  "activation": false,
+  "dependency_graph": [
+    {
+      "from": "CGEO-34",
+      "independent_physical_witness": false,
+      "relation": "ORIGINAL_JP2_SURROGATE_OF_SAME_CARTOGRAPHIC_SHEET",
+      "to": "ARCH-UWM-ARACAJU-SE-10814-20261112"
+    },
+    {
+      "from": "CGEO-34",
+      "relation": "CONTENTDM_ORIGINAL_DOWNLOAD_CUSTODY_WITH_WHOLE_FILE_SHA256",
+      "to": "UWM-AGDM-10814"
+    },
+    {
+      "from": "UWM-AGDM-10814",
+      "relation": "HISTORICAL_TOPONYM_CONTEXT_NOT_BOUNDARY_OR_EVENT",
+      "to": "C24#1"
+    },
+    {
+      "active_constraint": false,
+      "from": "CGEO-34",
+      "relation": "SAME_PRINTED_SHEET_ORIGINAL_BITSTREAM_NO_NEW_INDEPENDENCE",
+      "to": "CGEO-08"
+    },
+    {
+      "active_constraint": false,
+      "from": "CGEO-34",
+      "relation": "HISTORICAL_BASEMAP_CANDIDATE_WITH_UNCERTAIN_COVERAGE_AND_SCALE",
+      "to": "CGEO-33"
+    },
+    {
+      "active_constraint": false,
+      "from": "CGEO-34",
+      "relation": "CITY_LABEL_CONTEXT_NOT_EVENT_COORDINATE",
+      "to": "CGEO-18"
+    },
+    {
+      "active_constraint": false,
+      "from": "CGEO-34",
+      "relation": "MISSING_GEODETIC_DATUM_CONTROL_POINTS_AND_ERROR",
+      "to": "historical_map_georeference_1963"
+    },
+    {
+      "active_constraint": false,
+      "from": "historical_map_georeference_1963",
+      "relation": "NOT_A_LEGALLY_CERTIFIED_1963_ADMINISTRATIVE_BOUNDARY",
+      "to": "conde_municipal_boundary_1963"
+    },
+    {
+      "active_constraint": false,
+      "from": "CGEO-18",
+      "relation": "ORIGINAL_TUPI_WORDING_AND_1963_GEOMETRY_UNRECOVERED",
+      "to": "reported_city_center_1963_geometry"
+    }
+  ],
+  "documentary_context": {
+    "hypotheses": [
+      "H_CITY_CENTER_1963_UNLOCATED",
+      "H_CONDE_BOUNDARY_1963_UNCALIBRATED",
+      "H_528_REENTRY_LOCATION_UNOBSERVED"
+    ],
+    "independent_physical_witnesses_added": 0,
+    "lean_candidate": "Conde1963.historicalCartographyGeoreferenceCandidate",
+    "lean_status": "TYPED_CANDIDATE_NOT_COMPILED_OBSERVATIONAL_PROOF",
+    "same_map_family_as_parent": true,
+    "snapshot_occurrence": "C24#1"
+  },
+  "id": "ABELHA-CGEO34-ORIGINAL-JP2-01",
+  "limitations": [
+    "A downloaded JP2 surrogate is not the physical survey original.",
+    "2017 file processing metadata is not a 1963 survey or capture date.",
+    "Cartographic toponym is not a verified 1963 city-center polygon.",
+    "A 1:500000 map without datum/control/error is not a fall coordinate.",
+    "An independent instrument observation of 528 is still missing."
+  ],
+  "new_instrumental_observations": 0,
+  "new_numeric_orbital_constraints": 0,
+  "parent_occurrence": "ARCH-UWM-ARACAJU-SE-10814-20261112",
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "schema": "conde.cgeo34-original-map-scientific-bridge/v1",
+  "simulator_latent_parameters": [
+    {
+      "activation": false,
+      "effect_on_theta": "NONE_UNTIL_CALIBRATED",
+      "name": "historical_map_pixel_to_geodetic_transform",
+      "required_observables": [
+        "historical_geodetic_datum",
+        "georeferenced_control_points",
+        "horizontal_uncertainty_m"
+      ],
+      "uncertainty": null,
+      "value": null
+    },
+    {
+      "activation": false,
+      "effect_on_theta": "NONE_UNTIL_CALIBRATED",
+      "name": "conde_municipal_boundary_1963",
+      "required_observables": [
+        "legal_boundary_effective_1963",
+        "survey_epoch_and_datum",
+        "boundary_uncertainty_m"
+      ],
+      "uncertainty": null,
+      "value": null
+    },
+    {
+      "activation": false,
+      "effect_on_theta": "NONE_UNTIL_CALIBRATED",
+      "name": "reported_city_center_1963_geometry",
+      "required_observables": [
+        "original_tupi_portuguese_audio_or_transcript",
+        "dated_1963_urban_feature_identification",
+        "georeferencing_error_m"
+      ],
+      "uncertainty": null,
+      "value": null
+    },
+    {
+      "activation": false,
+      "effect_on_theta": "NONE_UNTIL_CALIBRATED",
+      "name": "reported_event_position_1963",
+      "required_observables": [
+        "independent_event_localization",
+        "timestamp_and_error",
+        "location_reference_frame"
+      ],
+      "uncertainty": null,
+      "value": null
+    }
+  ],
+  "source": {
+    "catalogue_url": "https://collections.lib.uwm.edu/digital/collection/agdm/id/10814/",
+    "communications_update_year": 1961,
+    "copyright_checked_for_redistribution": false,
+    "digital_item_id": "10814",
+    "downloaded_on": "2026-11-13",
+    "full_image_visual_inspection": false,
+    "geodetic_datum": null,
+    "header_sha256": "78c79685076a241f5466fa0e8db13a6dca3cd72c0c790307b417ad924b6e5356",
+    "height_px": 7783,
+    "historical_map_nominal_year": 1954,
+    "horizontal_error_m": null,
+    "institution": "University of Wisconsin-Milwaukee Libraries / AGSL",
+    "jp2_bytes": 110453331,
+    "jp2_sha256": "6637246d2a68a2e7024e07829caa35a8af0a707905e6c606109f1da52ae808b3",
+    "map_scale_denominator": 500000,
+    "original_download_url": "https://collections.lib.uwm.edu/digital/api/collection/agdm/id/10814/download",
+    "original_physical_survey_acquired": false,
+    "sha256_scope": "COMPLETE_DOWNLOADED_JP2_BITSTREAM_CUSTODIAN_REPLAY_NOT_THIS_EXPORT",
+    "width_px": 9603
+  },
+  "source_occurrence": "CGEO-34",
+  "source_sha256": {
+    "public/data/conde-historical-dependency-links.json": "265f26a009c4caeb8e0bd517567fa698f0d03e10c46c62d83bbb7ee4085d7003",
+    "research/geo/cgeo34_uwm_original_jp2_custody.json": "dde2305e334787298b35e70351d9fc879a380a19f5ec0ed990a05dae56292dfa",
+    "research/geo/uwm_aracaju_se_1954_1961_cartographic_custody.json": "b881065af2b51a9f2bde916a5f2df260089f9c0fe03e44fab10c6ed2d11a2644"
+  }
+}
