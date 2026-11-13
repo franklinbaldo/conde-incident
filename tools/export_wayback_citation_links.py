@@ -15,7 +15,9 @@ PILOT = "research/archive/wayback_pilot_2026-11-12.json"
 DEPENDENCE = "public/data/conde-declared-dependence.json"
 BRIDGES = "public/data/conde-scientific-bridges.json"
 OUTPUT = "public/data/conde-wayback-citation-links.json"
-INPUTS = (PILOT, DEPENDENCE, BRIDGES)
+NASA_LEGACY = "research/archive/nasa_ssr_19631115_legacy_wayback_20261113.json"
+INPUTS = (PILOT, DEPENDENCE, BRIDGES, NASA_LEGACY)
+NASA_BYTES_SHA256 = "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674"
 EXPECTED = {
     "WB-NASA-SSR-19631115": (
         "NO_EXACT_CAPTURE_IN_QUERIED_INDEX", "NASA_NORAD_SSR_SINGLE_DOCUMENT",
@@ -59,7 +61,7 @@ def encode(data: dict) -> bytes:
 def build(root: Path = ROOT) -> dict:
     raw = {name: (root / name).read_bytes() for name in INPUTS}
     feeds = {name: json.loads(value) for name, value in raw.items()}
-    pilot, documentary, science = (feeds[name] for name in INPUTS)
+    pilot, documentary, science, legacy = (feeds[name] for name in INPUTS)
     require(pilot["schema"] == "conde.wayback-capture-pilot/v1"
             and pilot["rules"]["historical_authentication"] is False
             and pilot["rules"]["no_new_orbital_constraint"] is True,
@@ -193,6 +195,39 @@ def build(root: Path = ROOT) -> dict:
     # NASA and its NTRS catalogue cite one SSR work; neither is a new sensor.
     require(cite[("C198#1", "NTRS_19640001198")]["declared_upstream_paths"][0]["upstream_source_id"]
             == NASA_SOURCE_IDS["C197#1"], "NTRS/NASA lineage broken")
+    # The newer URL had a negative exact-URL lookup; three older URL captures
+    # preserve one identical PDF payload. Both statements remain true.
+    from verify_nasa_ssr_legacy_wayback import validate as validate_legacy
+    require(not validate_legacy(legacy), "legacy NASA manifest failed custody validation")
+    require(legacy["source_family"] == "NASA_NORAD_SSR_SINGLE_DOCUMENT"
+            and legacy["current_api_url"] == EXPECTED["WB-NASA-SSR-19631115"][2]
+            and legacy["source_occurrences"] == list(EXPECTED["WB-NASA-SSR-19631115"][3])
+            and legacy["current_api_replay"]["sha256"] == NASA_BYTES_SHA256,
+            "NASA legacy work/payload identity")
+    payload_id = "WB-NASA-SSR-19631115:PDF-SHA256:" + NASA_BYTES_SHA256
+    nodes.append({"id": payload_id, "kind": "ONE_ARCHIVED_DOCUMENT_PAYLOAD",
+                  "sha256": NASA_BYTES_SHA256,
+                  "bytes": legacy["current_api_replay"]["bytes"],
+                  "distinct_documentary_payload_count": 1,
+                  "new_physical_observations": 0})
+    edges.append({"from": payload_id, "to": "WB-NASA-SSR-19631115",
+                  "kind": "SAME_SSR_WORK_NOT_NEW_INSTRUMENT"})
+    for row in legacy["captures"]:
+        cd, replay = row["cdx_record"], row["replay"]
+        stamp = cd["timestamp"]
+        capture_id = "WB-NASA-SSR-19631115:LEGACY-CAPTURE:" + stamp
+        nodes.append({"id": capture_id, "kind": "VERIFIED_ARCHIVAL_COPY",
+                      "archived_url": row["archived_url"],
+                      "capture_utc": datetime.strptime(stamp, "%Y%m%d%H%M%S")
+                      .replace(tzinfo=timezone.utc).isoformat().replace("+00:00", "Z"),
+                      "cdx_original_url": cd["original"],
+                      "cdx_digest_base32_sha1": cd["digest"],
+                      "cdx_record_length_not_pdf_bytes": cd["length"],
+                      "retrieved_bytes_sha256": replay["sha256"],
+                      "retrieved_bytes_length": replay["bytes"],
+                      "new_physical_observations": 0})
+        edges.append({"from": capture_id, "to": payload_id,
+                      "kind": "SAME_BYTES_NOT_INDEPENDENT_ARCHIVAL_WITNESS"})
     edges.append({
         "from": "WB-NASA-SSR-19631115:REF:C198#1",
         "to": "WB-NASA-SSR-19631115:REF:C197#1",
@@ -205,7 +240,9 @@ def build(root: Path = ROOT) -> dict:
         "matrix_git_blob_sha1": documentary["matrix_git_blob_sha1"],
         "nodes": nodes, "edges": edges,
         "counts": {
-            "documentary_works": len(records), "verified_archived_copies": verified,
+            "documentary_works": len(records), "verified_archived_copies": verified + len(legacy["captures"]),
+            "nasa_legacy_capture_timestamps": len(legacy["captures"]),
+            "nasa_legacy_distinct_pdf_payloads": 1,
             "negative_exact_url_lookups": negative,
             "matrix_occurrences_linked": 2, "supplementary_refs_not_matrix": 3,
             "independent_physical_observations_added": 0,
@@ -215,6 +252,7 @@ def build(root: Path = ROOT) -> dict:
             "NASA_NTRS_same_work_not_two_independent_sensors": True,
             "CDX_digest_is_base32_sha1_not_sha256": True,
             "negative_exact_lookup_does_not_prove_absence_at_other_urls": True,
+            "legacy_capture_identity_is_manifest_validated_not_live_replayed_here": True,
             "no_active_lean_constraint": True, "no_simulator_parameter_activated": True,
         },
     }
