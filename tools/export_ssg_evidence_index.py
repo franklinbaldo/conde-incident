@@ -14,6 +14,7 @@ CITATIONS = Path('public/data/conde-source-citations.json')
 LINEAGE = Path('public/data/conde-declared-dependence.json')
 MATRIX = Path('research/evidence_matrix_C001-C238_2026-11-11.md')
 DEST = Path('public/data/conde-evidence-index')
+GAPS_DEST = Path('public/data/conde-evidence-gaps')
 MANIFEST = Path('public/data/conde-evidence-index-manifest.json')
 MAX_SHARD_BYTES = 12_000  # Below repository-wide 20,000-byte rule.
 SHA256 = re.compile(r'[a-f0-9]{64}\Z')
@@ -197,6 +198,38 @@ def build(root=ROOT):
         artifacts[relative] = raw
         shard_refs.append({'path': str(relative), 'sha256': digest(raw),
                            'bytes': len(raw), 'record_count': len(records)})
+    # Searchable text for every uncurated row comes only from the frozen matrix.
+    # No citation, document status or physical-observation flag is invented.
+    gap_records = []
+    for gap in gaps:
+        raw_line = matrix_lines[gap['matrix_line'] - 1]
+        gap_records.append({
+            'occurrence': gap['occurrence'],
+            'matrix_line': gap['matrix_line'],
+            'row_sha256': digest(raw_line),
+            'claim_text': raw_line.decode('utf-8').split('|')[2].strip(),
+        })
+    gap_chunks, chunk = [], []
+    for row in gap_records:
+        schema = 'conde.evidence-gap-shard/v1'
+        alone = canonical({'schema': schema, 'records': [row]})
+        require(len(alone) <= MAX_SHARD_BYTES, 'Uma lacuna sozinha excede o teto')
+        candidate = canonical({'schema': schema, 'records': chunk + [row]})
+        if len(candidate) > MAX_SHARD_BYTES and chunk:
+            gap_chunks.append(chunk)
+            chunk = [row]
+        else:
+            chunk.append(row)
+    if chunk:
+        gap_chunks.append(chunk)
+    gap_shards = []
+    for i, records in enumerate(gap_chunks, 1):
+        relative = GAPS_DEST / f'part-{i:03d}.json'
+        raw = canonical({'schema': 'conde.evidence-gap-shard/v1', 'records': records})
+        require(len(raw) <= MAX_SHARD_BYTES, 'Shard de lacunas excedeu 12 kB')
+        artifacts[relative] = raw
+        gap_shards.append({'path': str(relative), 'sha256': digest(raw),
+                           'bytes': len(raw), 'record_count': len(records)})
     post_ids = [x['id'] for x in citations.get('post_matrix_occurrences', [])]
     require(len(post_ids) == len(set(post_ids)), 'ID pós-matriz repetido')
     manifest = {
@@ -213,6 +246,7 @@ def build(root=ROOT):
         # Machine-readable ledger of *unmapped*, not absent, evidence rows.
         # Line numbers resolve against the immutable Git blob above.
         'unmapped_matrix_refs': gaps,
+        'unmapped_shards': gap_shards,
         'total_matrix_occurrences': citations['total_matrix_occurrences'],
         'post_matrix_ids_not_in_curated_index': post_ids,
         'independent_physical_observation_count': None,
@@ -226,8 +260,9 @@ def build(root=ROOT):
 
 def sync(artifacts, root=ROOT, check=False):
     directory = root / DEST
-    existing = set(directory.glob('part-*.json')) if directory.exists() else set()
-    expected = {root / p for p in artifacts if p.parent == DEST}
+    existing = {p for folder in (DEST, GAPS_DEST)
+                for p in (root / folder).glob('part-*.json')}
+    expected = {root / p for p in artifacts if p.parent in (DEST, GAPS_DEST)}
     require(not check or existing == expected, 'Lista de shards desatualizada')
     for path, raw in artifacts.items():
         target = root / path
@@ -248,6 +283,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
     artifacts = build()
     sync(artifacts, check=args.check)
-    print(f"Índice OKF SSG: {len(artifacts)-1} shard(s), "
+    print(f"Índice OKF SSG: {len(artifacts)-1} shard(s) curados/lacunas, "
           f"{sum(len(v) for v in artifacts.values())} bytes; "
           f"{'verificado' if args.check else 'escrito'}.")

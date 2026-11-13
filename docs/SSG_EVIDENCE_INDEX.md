@@ -109,3 +109,22 @@ com o `matrix_git_blob_sha1` do próprio manifesto. O índice SSG existente
 continua navegável sem JavaScript; a Raposa pode oferecer filtragem opcional
 dessas lacunas, e Abelha deve revisar a curadoria antes de incorporá-las.
 Nenhuma nova fonte nem restrição física é introduzida por esta mudança.
+
+## Índice textual separado das 213 lacunas de curadoria (Lagarto r37)
+
+`unmapped_shards` no manifesto referencia partes de até 12.000 bytes em
+`public/data/conde-evidence-gaps/`. Cada registro contém **somente**
+`occurrence`, `matrix_line`, `row_sha256` e `claim_text`, todos derivados
+dos bytes congelados da matriz. Não há `source_status`, `citation_url`,
+`archive_path`, sensor, veracidade física ou independência inferidos.
+`unmapped_matrix_refs` permanece inalterado para compatibilidade com a
+interface existente. Os três shards de referências curadas continuam intactos.
+
+O exportador Python e o auditor Node reconstruem as linhas, verificam
+ordem, digest, títulos literais, tamanho, lista integral e ausência de
+arquivos órfãos. Contraprovas editam título/status de lacuna e recalculam
+SHA-256 do shard: a comparação com a matriz original rejeita a falsificação.
+A Raposa pode consumir o índice para buscas opcionais, sempre tratando
+`claim_text` como texto não confiável (escapando-o no DOM). Morcego deve
+verificar o fallback sem JS e Abelha decidir a curadoria de cada linha.
+Esse índice torna lacunas pesquisáveis, não as transforma em evidências curadas.
