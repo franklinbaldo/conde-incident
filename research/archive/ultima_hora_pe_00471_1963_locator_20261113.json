@@ -1,0 +1,36 @@
+{
+  "schema": "conde.archive-locator-negative/v1",
+  "id": "DOC-UH-PE-1963-00471-LOCATOR",
+  "source_institution": "Fundacao Biblioteca Nacional, Hemeroteca Digital",
+  "publication": "Ultima Hora (PE) - 1962 a 1964",
+  "year": 1963,
+  "edition": "00471",
+  "requested_printed_page": 8,
+  "requested_date": "1963-11-08",
+  "checked_utc_date": "2026-11-13",
+  "catalog_url": "https://memoria.bn.gov.br/DocReader/765147/5756",
+  "catalog_identifier": "765147",
+  "catalog_finding": "1963 > Edicao 00471 is listed; no page facsimile was retrieved in this check",
+  "pdf_exact_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00471.pdf",
+  "pdf_head_status": 403,
+  "pdf_sha256": null,
+  "pdf_size_bytes": null,
+  "page_image_sha256": null,
+  "original_text_verified": false,
+  "page_8_inspected": false,
+  "four_metre_hole_verified": false,
+  "archive_cdx_exact_url": "https://web.archive.org/cdx/search/cdx?url=hemeroteca-pdf.bn.gov.br%2F765147%2Fper765147_1963_00471.pdf&output=json&filter=statuscode%3A200&collapse=digest",
+  "archive_cdx_result": [],
+  "archive_cdx_scope": "NO_SUCCESS_CAPTURE_IN_QUERIED_EXACT_CDX_RESULT; not universal absence from Wayback or other URLs",
+  "dependencies": [
+    "franklinbaldo/lontra#6",
+    "franklinbaldo/conde-incident#494"
+  ],
+  "claim_limitation": "The secondary blog's four-metre story is unverified in source facsimile; identical numbers in separate reports do not establish copying or a shared physical event.",
+  "orbital_constraint_activated": false,
+  "next_steps": [
+    "Recover the actual PDF or page 8 image via original Hemeroteca reader or verifiable alternate URL.",
+    "Hash bytes, match issue date and printed page and transcribe context visually.",
+    "Test relationship to Tupi/FBIS story only after source-level verification."
+  ]
+}
