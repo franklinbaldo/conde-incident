@@ -1,0 +1,34 @@
+name: CGEO-33 SEI Bahia mapping history
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo33_sei_history.*'
+      - 'tools/cgeo33_sei_history.py'
+      - 'tests/test_cgeo33_sei_history.py'
+      - '.github/workflows/geo-sei-history.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo33_sei_history.*'
+      - 'tools/cgeo33_sei_history.py'
+      - 'tests/test_cgeo33_sei_history.py'
+      - '.github/workflows/geo-sei-history.yml'
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact checkout SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check official PDF provenance and epistemic constraints
+        run: |
+          python3 -m tools.cgeo33_sei_history
+          python3 -m unittest discover -s tests -p 'test_cgeo33_sei_history.py' -v
