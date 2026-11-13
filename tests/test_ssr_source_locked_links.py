@@ -107,6 +107,21 @@ class SourceLockedSSRSpec(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "promoted into sensor"):
             build(self.a, self.b, self.g, bad)
 
+    def test_unverified_sensor_epoch_cannot_be_smuggled_into_link(self):
+        # G34 synthetic counterexample: original code emitted this invented
+        # timestamp unchanged in the public institutional_provenance payload.
+        bad = copy.deepcopy(self.house)
+        bad["transcribed_links"][0]["norad_528_terminal_epoch_utc"] = (
+            "1963-11-08T12:00:00Z")
+        with self.assertRaisesRegex(ValueError, "unknown institutional link field"):
+            build(self.a, self.b, self.g, bad)
+
+    def test_repeated_occurrence_cannot_masquerade_as_another_parent(self):
+        bad = copy.deepcopy(self.house)
+        bad["relevant_occurrences"].append("C179#1")
+        with self.assertRaisesRegex(ValueError, "duplicate institutional occurrence"):
+            build(self.a, self.b, self.g, bad)
+
     def test_site_artifact_is_deterministic_source_consumer(self):
         self.assertEqual(OUT.read_text(encoding="utf-8"), render())
         self.assertLess(OUT.stat().st_size, 20000)
