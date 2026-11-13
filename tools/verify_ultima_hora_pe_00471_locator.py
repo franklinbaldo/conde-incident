@@ -9,7 +9,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "research/archive/ultima_hora_pe_00471_1963_locator_20261113.json"
 PDF = "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00471.pdf"
-CATALOG = "https://memoria.bn.gov.br/DocReader/765147/5756"
+CATALOG = "https://memoria.bn.gov.br/DocReader/765147/5339"
+PRIOR_CATALOG = "https://memoria.bn.gov.br/DocReader/765147/5756"
+PAGE8_CANDIDATE = "https://memoria.bn.gov.br/DocReader/765147/5346"
 
 def validate(d: dict) -> list[str]:
     errors = []
@@ -21,6 +23,16 @@ def validate(d: dict) -> list[str]:
         "requested_printed_page": 8,
         "requested_date": "1963-11-08",
         "catalog_url": CATALOG,
+        "earlier_catalog_url": PRIOR_CATALOG,
+        "earlier_catalog_selected_edition": "00507",
+        "docreader_selected_edition": "00471",
+        "docreader_first_physical_id": 5339,
+        "docreader_last_physical_id": 5346,
+        "docreader_requested_page8_candidate_id": 5346,
+        "docreader_requested_page8_candidate_url": PAGE8_CANDIDATE,
+        "docreader_html_http_status": 200,
+        "docreader_page8_raster_retrieved": False,
+        "docreader_physical_ids_are_not_printed_pages": True,
         "catalog_identifier": "765147",
         "pdf_exact_url": PDF,
         "pdf_head_status": 403,
@@ -52,6 +64,12 @@ def validate(d: dict) -> list[str]:
         errors.append("dependencies")
     return errors
 
+def selected_edition(html_text: str) -> str | None:
+    """Read selected DocReader folder, not an edition merely in the sidebar list."""
+    m = re.search(r'<span id="PastaTxt" title="[^"]*Edição (\d{5})"', html_text)
+    return m.group(1) if m else None
+
+
 def live_check(d: dict, opener=urllib.request.urlopen) -> dict:
     """Explicit optional replay; HTTP 403 and empty CDX may change over time."""
     result = {}
@@ -69,6 +87,20 @@ def live_check(d: dict, opener=urllib.request.urlopen) -> dict:
                     result["cdx_result"] = json.loads(resp.read(1024 * 1024))
         except urllib.error.HTTPError as e:
             result[label + "_http"] = e.code
+        except Exception as e:
+            result[label + "_error"] = str(e)[:200]
+    for label, url in (
+        ("docreader_first", d["catalog_url"]),
+        ("docreader_last", d["docreader_requested_page8_candidate_url"]),
+        ("docreader_old", d["earlier_catalog_url"]),
+    ):
+        req = urllib.request.Request(url, headers={"User-Agent": "CondeArchiveLedger/1.0"})
+        try:
+            with opener(req, timeout=20) as resp:
+                result[label + "_http"] = resp.status
+                result[label + "_selected"] = selected_edition(
+                    resp.read(400_000).decode("utf-8", errors="replace")
+                )
         except Exception as e:
             result[label + "_error"] = str(e)[:200]
     return result
