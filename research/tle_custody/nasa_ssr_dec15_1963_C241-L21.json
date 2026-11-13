@@ -1,0 +1,75 @@
+{
+  "id": "C241-L21",
+  "source": {
+    "ntrs_id": "19640003479",
+    "citation_url": "https://ntrs.nasa.gov/citations/19640003479",
+    "pdf_url": "https://ntrs.nasa.gov/api/citations/19640003479/downloads/19640003479.pdf",
+    "publication_date": "1963-12-15",
+    "volume": 3,
+    "issue": 24,
+    "nasa_tm": "NASA-TM-X-51375",
+    "printed_report": "X-533-63-1",
+    "pdf_page_index_zero_based": 6,
+    "pdf_page_one_based": 7,
+    "printed_page": 5,
+    "compilation_as_of_utc": "1963-12-15T12:00:00Z",
+    "bytes": 958927,
+    "sha256": "d31a064f8e03fd39be6fe75b88cd5852c0b74c9101fa635cb40ac25c77ef474f",
+    "inspection": "VISUAL_FACSIMILE_COVER_AND_TABLE_PDF_PAGES_2_AND_7_2026-11-13",
+    "report_compiled_by": [
+      "NASA_GODDARD",
+      "NORAD",
+      "SMITHSONIAN_ASTROPHYSICAL_OBSERVATORY"
+    ]
+  },
+  "rows": [
+    {
+      "designator": "1963-003A",
+      "norad_crosswalk": 527,
+      "period_min": "94.6",
+      "inclination_deg": "81.88",
+      "apogee_km": 532,
+      "perigee_km": 459
+    },
+    {
+      "designator": "1963-003C",
+      "norad_crosswalk": 529,
+      "period_min": "91.6",
+      "inclination_deg": "81.87",
+      "apogee_km": 352,
+      "perigee_km": 347
+    }
+  ],
+  "not_listed_in_objects_in_orbit": [
+    "1963-003B"
+  ],
+  "absence_meaning": "NOT_A_NEW_TERMINAL_OBSERVATION_AND_NOT_PROOF_OF_OBJECT_IDENTITY",
+  "dependencies": {
+    "nov15": "C241-L19",
+    "nov30": "C241-L18:19640002493",
+    "dec31": "C241-L18:19640005618",
+    "object_crosswalk": "C241-L10",
+    "institutional_provenance": "C241-L20#1",
+    "catalog_decay_day": "C197#1",
+    "observable_graph_parent": "research/constraints/ssr_1963_observable_graph.json"
+  },
+  "limits": {
+    "source_class": "CONTEMPORARY_PRIMARY_DOCUMENT_COMPILED_ORBITAL_TABLE",
+    "independent_sensor_observation": false,
+    "publication_is_element_epoch": false,
+    "instrumental_epoch_utc": null,
+    "physical_frame": null,
+    "tracking_station": null,
+    "measurement_sigma": null,
+    "instrument_covariance": null,
+    "original_tle_pair": null,
+    "material_identity_528": null,
+    "terminal_time": null,
+    "terminal_location": null,
+    "computed_rate_from_publication_delta": false,
+    "graph_status": "CONNECTED_PENDING_CALIBRATION",
+    "lean": "NOT_PROMOTED",
+    "physical_domain": "THETA_UNCHANGED",
+    "conde": "INDETERMINATE"
+  }
+}
