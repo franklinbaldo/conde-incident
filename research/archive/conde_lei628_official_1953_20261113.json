@@ -1,0 +1,47 @@
+{
+  "schema": "conde.legal-archive-transcription/v1",
+  "document_id": "CGEO-LEGISBA-L628-1953-01",
+  "enacted": "1953-12-30",
+  "stated_effective_from": "1954-01-01",
+  "stated_effective_until": "1958-12-31",
+  "source_portal": {
+    "url": "https://www.legislabahia.ba.gov.br/documentos/lei-no-628-de-30-de-dezembro-de-1953",
+    "institution": "Casa Civil do Estado da Bahia, Portal de Legislacao",
+    "publication_format": "modern_official_transcription_not_original_diario_fascimile",
+    "retrieval_date_utc": "2026-11-13",
+    "sample_html_bytes": 135360,
+    "sample_html_sha256": "83058c6afacdc5d8436c4bf0c7d932ecdbb51b37a8ad20cbe9dfc07d549702a1"
+  },
+  "official_annex_attachment": {
+    "url": "https://www.legislabahia.ba.gov.br/sites/default/files/anexos/66400/Lei628.Anexos.doc",
+    "format": "OLE2_MS_WORD",
+    "bytes": 830976,
+    "sha256": "dc83e4b4806b9cd758c500b322999ce72814dca68e1cb16fe5900d468e2ea581",
+    "internal_creation_date": "2013-01-07",
+    "internal_creation_date_is_1953_publication_proof": false,
+    "table_quadro_i_municipality_number": 38,
+    "table_quadro_i_districts_for_conde": ["Conde"],
+    "attachment_is_1953_printed_facsimile": false
+  },
+  "annex_vi_portal_transcription": {
+    "heading": "ANEXO VI",
+    "scope": "alteracoes nos limites municipais e divisas interdistritais no quinquenio 1954-1958",
+    "municipality": "Conde",
+    "neighbours_explicitly_described_in_section": ["Rio Real", "Jandaira"],
+    "landmark_strings": ["riacho dos Mangues", "rio Itapicurú", "riacho da Baixa da Vitorina", "riacho Caranguejo ou rio Branco"],
+    "contains_potential_textual_corruption": true,
+    "textual_corruption_example": "segue por esta reta até a dita nascente Pirangí",
+    "full_boundary_perimeter_described": false
+  },
+  "constraint_graph": {
+    "source_type": "official_later_transcription_of_1953_law",
+    "variables": ["conde_1954_1958_municipality_exists", "conde_1954_1958_single_district", "conde_1954_1958_annex_vi_named_boundary_edges"],
+    "connected_edges": ["Conde:Rio Real", "Conde:Jandaira"],
+    "pending_bridges": ["contemporary_1953_1954_diario_original", "textual_criticism_of_annex_vi", "acts_affecting_conde_between_1959_and_1963", "georeferenced_1963_boundary_geometry"],
+    "status": "CONNECTED_PENDING_DOCUMENTARY_VALIDATION",
+    "orbital_constraint_activated": false,
+    "1963_legal_polygon_proven": false,
+    "no_intervening_acts_proven": false
+  },
+  "dependencies": ["CGEO-ALBA-L13720-2017-01", "CGEO-SEI-MAP-2017-01"]
+}
