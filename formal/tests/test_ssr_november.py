@@ -25,7 +25,7 @@ class TestNovemberPrintedMeasures(unittest.TestCase):
         self.assertEqual(c["printed_values_scaled"][2]["apogee_km"], 780)
         self.assertEqual(c["printed_values_scaled"][2]["perigee_km"], 736)
         self.assertEqual(c["printed_values_scaled"][2]["inclination_deg"], 8186)
-        self.assertEqual(r["source_ids"], ["C241-L12", "C241-L19", "C241-L18", "C197#1"])
+        self.assertEqual(r["source_ids"], ["C241-L12", "C241-L19#1", "C241-L18:19640002493", "C197#1"])
 
     def test_november_c_period_decline_not_shared_with_a(self):
         a, c = compile_report(LED, OCT, SURV)["objects"]

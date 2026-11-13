@@ -177,7 +177,7 @@ def compile_report(ledger: dict, october: dict, survivors: dict) -> dict:
         raise ValueError("falsified November documentary ranking")
     return {
         "id": "C241-P11",
-        "source_ids": ["C241-L12", "C241-L19", "C241-L18", "C197#1"],
+        "source_ids": ["C241-L12", "C241-L19#1", "C241-L18:19640002493", "C197#1"],
         "publication_dates": list(keys),
         "source_sha256": [OCT_SHA]+[EXPECTED[k]["sha"] for k in keys[1:]],
         "quantization_assumption": "nearest printed 0.1 min; 0.01 degree; 1 km, not sensor sigma",

@@ -178,8 +178,8 @@
   "source_graph_legacy_conflict": "Nov30 3A=94.6, not 94.8 in old ssr_1963_observable_graph.json",
   "source_ids": [
     "C241-L12",
-    "C241-L19",
-    "C241-L18",
+    "C241-L19#1",
+    "C241-L18:19640002493",
     "C197#1"
   ],
   "source_sha256": [

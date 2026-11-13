@@ -24,7 +24,7 @@ vence em 3C, mas **perde para a persistência no apogeu do 3A**.
   Fac-símile inspecionado visualmente. PDF oficial baixado integralmente em
   13/11/2026: 327.613 bytes, SHA-256
   0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674.
-- **C241-L18#1:** NASA SSR, 30/11/1963, vol. 3 nº 23, p. impressa 5
+- **C241-L18 (NTRS 19640002493):** NASA SSR, 30/11/1963, vol. 3 nº 23, p. impressa 5
   (PDF p. 7), [NTRS 19640002493](https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf#page=7).
   Fac-símile inspecionado visualmente. PDF baixado integralmente:
   1.266.393 bytes, SHA-256
