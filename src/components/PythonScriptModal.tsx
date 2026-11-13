@@ -111,7 +111,7 @@ export const PythonScriptModal: React.FC<PythonScriptModalProps> = ({
             <h3 id={titleId} className="min-w-0 break-words text-sm font-bold font-mono">
               norad528_reconstruction.py
             </h3>
-            <span className="text-[11px] text-zinc-500 font-mono hidden sm:inline">
+            <span className="text-[11px] text-zinc-500 font-mono hidden lg:inline">
               {isPt ? '(Script reprodutível em Python 3)' : '(Reproducible Python 3 script)'}
             </span>
           </div>
