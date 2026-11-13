@@ -1,0 +1,44 @@
+name: CGEO-36 | Soper 1914 real archive replay
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo36_soper_1914_conde_sitio.*'
+      - 'tools/cgeo36_soper1914.py'
+      - 'tests/test_cgeo36_soper1914.py'
+      - '.github/workflows/geo-soper-1914.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo36_soper_1914_conde_sitio.*'
+      - 'tools/cgeo36_soper1914.py'
+      - 'tests/test_cgeo36_soper1914.py'
+      - '.github/workflows/geo-soper-1914.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  actual-binary-custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Require exact HEAD
+        env:
+          EXPECTED: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED"
+      - name: Offline contract and adversarial tests
+        run: |
+          python3 -m tools.cgeo36_soper1914
+          python3 -m unittest discover -s tests -p 'test_cgeo36_soper1914.py' -v
+      - name: Download and verify real archival PDF and actual public JPEG derivative
+        run: |
+          curl -fsSL --connect-timeout 20 --max-time 100 \
+            'https://upload.wikimedia.org/wikipedia/commons/d/d4/Mapa_do_estado_de_Sergipe_e_da_parte_nordeste_do_estado_da_Bahia_1914.pdf' \
+            -o "$RUNNER_TEMP/soper1914.pdf"
+          curl -fsSL --connect-timeout 20 --max-time 100 \
+            'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Mapa_do_estado_de_Sergipe_e_da_parte_nordeste_do_estado_da_Bahia_1914.pdf/page1-1920px-Mapa_do_estado_de_Sergipe_e_da_parte_nordeste_do_estado_da_Bahia_1914.pdf.jpg' \
+            -o "$RUNNER_TEMP/soper1914.jpg"
+          python3 -m tools.cgeo36_soper1914 --pdf "$RUNNER_TEMP/soper1914.pdf" --thumb "$RUNNER_TEMP/soper1914.jpg"
