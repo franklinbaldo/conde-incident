@@ -20,6 +20,36 @@ const tracked=['occurrence','snapshot_ref','source_id','source_family','work_id'
   'source_status','relation','scope','locator','claim_text','citation_url',
   'row_sha256','matrix_line'];
 const take=(row,fields)=>Object.fromEntries(fields.map(name=>[name,row[name]]));
+// Revalidate the dependency paths in the independent JS publication gate.
+// Comparing shard equality alone accepts two consistently forged feeds.
+function validateDeclaredPaths(sourceId, paths) {
+  assert.ok(Array.isArray(paths), 'Declared upstream paths are not an array');
+  for (const path of paths) {
+    assert.ok(path && typeof path==='object' && !Array.isArray(path),
+      'Invalid declared upstream path');
+    assert.deepEqual(Object.keys(path).sort(),['edges','upstream_source_id'],
+      'Unvalidated dependency path fields');
+    assert.ok(Array.isArray(path.edges) && path.edges.length>0,
+      'Empty declared dependency path');
+    let cursor=sourceId;
+    const seen=new Set([cursor]);
+    for (const edge of path.edges) {
+      assert.ok(edge && typeof edge==='object' && !Array.isArray(edge),
+        'Invalid dependency edge');
+      assert.deepEqual(Object.keys(edge).sort(),['from','kind','to'],
+        'Unvalidated dependency edge fields');
+      assert.equal(edge.from,cursor,'Discontinuous dependency chain');
+      assert.ok(typeof edge.to==='string' && edge.to.trim(),
+        'Missing dependency target');
+      assert.ok(typeof edge.kind==='string' && edge.kind.trim(),
+        'Missing dependency kind');
+      assert.ok(!seen.has(edge.to),'Cyclic dependency chain');
+      seen.add(edge.to);
+      cursor=edge.to;
+    }
+    assert.equal(path.upstream_source_id,cursor,'Dependency terminal ID mismatch');
+  }
+}
 // Audit the content readers can actually navigate, not strings in scripts,
 // comments, templates, metadata or a hidden clone of the link inventory.
 // This intentionally checks only the static DOM contract; an external CSS rule
@@ -149,6 +179,7 @@ export function audit(bundle) {
     assert.equal(row.independent_physical_observation_count,null);
     assert.deepEqual(row.declared_upstream_paths,
       lineageByKey.get(key(record))?.declared_upstream_paths,'Lineage changed: '+key(record));
+    validateDeclaredPaths(record.source_id,row.declared_upstream_paths);
     occurrences.add(record.occurrence);
     families.add(record.source_family);
     works.add(record.work_id);

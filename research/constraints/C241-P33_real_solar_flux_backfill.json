@@ -1,0 +1,52 @@
+{
+  "schema": "conde.c241-p33-real-f107-backfill/v1",
+  "source_archive_url": "https://www.spaceweather.gc.ca/solar_flux_data/daily_flux_values/F107_1947_1996.txt",
+  "source_archive_sha256": "60c51e8878dc70561e615b5cefb26315c201116fe4560799ec19237bed691c61",
+  "source_archive_bytes": 1184761,
+  "extract_path": "research/meteorology/f107_1963_08_18_09_26_nrc_extract.txt",
+  "extract_sha256": "26ee76e557dbe1ecf4eca35fa23e5f230b052c24bad15e21ffad3f408ca13351",
+  "parent_extract_sha256": "a8601410663ef3f24b6b9f17cc0ff3103e1a97f24614617815357fa81cc5c955",
+  "observed_column": "Obs.",
+  "units": "solar_flux_unit",
+  "backfilled_records": 40,
+  "same_documentary_lineage_as_parent": true,
+  "finding": "81 historical daily values are computable retrospectively, but no release-time proof or calibrated prospective model follows.",
+  "release_vintage": "UNKNOWN",
+  "causal_forecast_score": "NOT_RUN",
+  "physical_constraint": "CONNECTED_PENDING_CALIBRATION",
+  "rows": [
+    {
+      "model_evaluation_utc_not_event_time": "1963-11-07T12:00:00Z",
+      "trailing_81_observed_sfu": "84.34074074074074074074074074",
+      "window_days": 81,
+      "backfilled_dates_used": 40,
+      "missing_after_backfill": 0,
+      "historical_release_timestamp_audited": false,
+      "prospective_eligible": false,
+      "standard_centered_f107a_replaced": false,
+      "historical_orbit_inference": "NOT_RUN"
+    },
+    {
+      "model_evaluation_utc_not_event_time": "1963-11-08T12:00:00Z",
+      "trailing_81_observed_sfu": "84.29382716049382716049382716",
+      "window_days": 81,
+      "backfilled_dates_used": 39,
+      "missing_after_backfill": 0,
+      "historical_release_timestamp_audited": false,
+      "prospective_eligible": false,
+      "standard_centered_f107a_replaced": false,
+      "historical_orbit_inference": "NOT_RUN"
+    },
+    {
+      "model_evaluation_utc_not_event_time": "1963-11-09T12:00:00Z",
+      "trailing_81_observed_sfu": "84.24444444444444444444444444",
+      "window_days": 81,
+      "backfilled_dates_used": 38,
+      "missing_after_backfill": 0,
+      "historical_release_timestamp_audited": false,
+      "prospective_eligible": false,
+      "standard_centered_f107a_replaced": false,
+      "historical_orbit_inference": "NOT_RUN"
+    }
+  ]
+}

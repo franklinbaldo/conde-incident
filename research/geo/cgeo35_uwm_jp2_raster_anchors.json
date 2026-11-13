@@ -1,0 +1,101 @@
+{
+  "schema": "conde.gis.jp2-native-raster-inspection/v1",
+  "id": "CGEO-35",
+  "inspection_date": "2026-11-13",
+  "parent_id": "CGEO-34",
+  "source_same_sheet_as_parent": true,
+  "source_url": "https://collections.lib.uwm.edu/digital/collection/agdm/id/10814/",
+  "source_jp2_sha256": "6637246d2a68a2e7024e07829caa35a8af0a707905e6c606109f1da52ae808b3",
+  "raster_native_size_px": [
+    9603,
+    7783
+  ],
+  "inspection": {
+    "kind": "JP2_DECODE_FROM_SHA_VERIFIED_ORIGINAL",
+    "decoder": "Pillow 13.0.0 / OpenJPEG",
+    "reduction_levels": 1,
+    "decoded_size_px": [
+      4802,
+      3892
+    ],
+    "original_pixel_roi_xyxy": [
+      4250,
+      5200,
+      5000,
+      5670
+    ],
+    "decoded_pixel_roi_xyxy": [
+      2125,
+      2600,
+      2500,
+      2835
+    ],
+    "crop_size_px": [
+      375,
+      235
+    ],
+    "rgb_pixel_sha256": "a42b07caee45dd378a319de770d5d4dcf5a386b279874d64812710daf8329243",
+    "source_preview_committed_to_git": false,
+    "visual_inspection_scope": "Only this original-JP2 derived raster ROI, not every pixel of the full sheet."
+  },
+  "literal_visible_toponyms": [
+    "CONDE",
+    "Vila Velha",
+    "Itapicuru"
+  ],
+  "image_space_only": {
+    "conde_label_and_settlement_symbol_original_px_roi": [
+      4390,
+      5380,
+      4590,
+      5470
+    ],
+    "conde_symbol_original_px_visual_estimate": [
+      4465,
+      5413
+    ],
+    "visual_estimate_tolerance_px": 20,
+    "vila_velha_label_original_px_roi": [
+      4380,
+      5310,
+      4510,
+      5380
+    ],
+    "note": "Raster-pixel inspection and approximate manually reviewed graphics, not georeferenced GPS coordinates."
+  },
+  "historical_context": {
+    "printed_base_edition_year": 1954,
+    "roads_update_year": 1961,
+    "scale_denominator": 500000,
+    "source_family": "Conselho Nacional de Geografia / IBGE, one map in the UWM digital collection",
+    "new_independent_historical_witness": false,
+    "relation": "CONDE and Vila Velha are separate visible labels; they cannot be collapsed into the alleged 1963 city centre."
+  },
+  "graph_edges": [
+    {
+      "to": "CGEO-34",
+      "kind": "DERIVED_RASTER_VIEW_SAME_AUTHENTICATED_JP2"
+    },
+    {
+      "to": "CGEO-20",
+      "kind": "TWO_NAMED_LOCALITIES_NEED_TEMPORAL_GEOMETRIC_BRIDGE"
+    },
+    {
+      "to": "CGEO-18",
+      "kind": "NO_BRIDGE_TO_TRANSLATED_REPORT_OF_CITY_CENTER"
+    }
+  ],
+  "scientific_limits": {
+    "historical_city_center_polygon_1963": null,
+    "municipal_boundary_1963": null,
+    "original_map_geodetic_datum": null,
+    "control_points_with_error": null,
+    "center_world_coordinates": null,
+    "observed_reentry_location": null,
+    "ground_position_uncertainty_m": null,
+    "map_pixel_to_world_transform": null,
+    "can_constrain_orbital_reentry": false,
+    "supports_independent_historical_observation": false
+  },
+  "epistemic_status": "AUTHENTICATED_DIGITAL_SURROGATE_RASTER_INSPECTED_AT_REDUCED_RESOLUTION_NO_SPATIAL_CALIBRATION"
+}

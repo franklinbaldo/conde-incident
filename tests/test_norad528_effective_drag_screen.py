@@ -93,6 +93,38 @@ class OrbitalScreen(unittest.TestCase):
         m=fit(self.data[528]["fit"],60.)
         self.assertNotEqual(raan_at(m,1,zero_drag=True),m["anchor"]["raan"])
 
+    def test_workflow_covers_all_source_and_proof_inputs(self):
+        """A source-only PR must trigger the real Parquet/J2/Lean replay.
+
+        The universal integration job runs synthetic tests but does not
+        fetch the source-pinned numeric Parquet or emit this workflow's JSON.
+        """
+        import re
+        workflow=(ROOT/'.github/workflows/norad528-effective-drag-screen.yml').read_text()
+        required={
+            'tools/norad528_effective_drag_screen.py',
+            'tests/test_norad528_effective_drag_screen.py',
+            'tools/cross_object_epoch_support.py',
+            'tools/tle_secondary_1963_ledger.py',
+            'research/statistics/raan_chronological_holdout_1963.json',
+            'research/statistics/raan_527_528_529_1963.json',
+            'research/constraints/nasa_528_decay_precision_C197_20261113.json',
+            'research/tle_custody/mirror_528_1963-10-27.tle',
+            'formal/Conde1963/Norad528DecayWindow.lean',
+            'formal/Conde1963/CoreAxioms.lean',
+            'formal/lean-toolchain',
+            'formal/lakefile.toml',
+        }
+        for event in ('pull_request','push'):
+            section=re.search(r'(?ms)^  '+event+r':\n(.*?)(?=^  [a-z_]+:|^permissions:|\Z)',workflow)
+            self.assertIsNotNone(section, 'missing workflow event '+event)
+            block=re.search(r'(?m)^    paths:\n((?:^      - [^\n]+\n)+)',section.group(1))
+            self.assertIsNotNone(block,'missing path filters '+event)
+            listed={line.strip().removeprefix('- ').strip('\"\'')
+                    for line in block.group(1).splitlines()}
+            self.assertFalse(required-listed,
+                f'{event}: scientific replay will not run on source-only changes: {sorted(required-listed)}')
+
     def test_zero_drag_no_threshold(self):
         m=fit(self.data[528]["fit"],60.)
         m["k"]=0.

@@ -53,6 +53,61 @@ test('forged link fails even with recomputed shard SHA',()=>{
   assert.throws(()=>audit(bundle),/Broken archive route/);
 });
 
+// A source-feed SHA and shard SHA can both be recomputed after a forged edit.
+// Node must inspect the provenance graph itself, not simply compare two copies.
+function mutateSynchronizedLineage(bundle,change) {
+  const entry=bundle.lineage.citation_lineages.find(row=>row.declared_upstream_paths.length);
+  assert.ok(entry,'Expected at least one documented dependency chain');
+  change(entry.declared_upstream_paths[0],entry);
+  const raw=Buffer.from(JSON.stringify(bundle.lineage));
+  bundle.sourceBytes.set('public/data/conde-declared-dependence.json',raw);
+  bundle.manifest.source_files[1].sha256=createHash('sha256').update(raw).digest('hex');
+  const shard=bundle.shards.find(part=>JSON.parse(part.raw).records.some(row=>
+    row.snapshot_ref===entry.snapshot_ref && row.source_id===entry.source_id));
+  assert.ok(shard);
+  const data=JSON.parse(shard.raw);
+  const indexed=data.records.find(row=>row.snapshot_ref===entry.snapshot_ref &&
+    row.source_id===entry.source_id);
+  indexed.declared_upstream_paths=structuredClone(entry.declared_upstream_paths);
+  shard.raw=Buffer.from(JSON.stringify(data));
+  const meta=bundle.manifest.shards.find(item=>item.path===shard.path);
+  meta.sha256=createHash('sha256').update(shard.raw).digest('hex');
+  meta.bytes=shard.raw.length;
+}
+
+test('synchronized source and shard cannot smuggle an unvalidated terminal claim',()=>{
+  const bundle=clean();
+  mutateSynchronizedLineage(bundle,path=>{
+    path.norad_528_terminal_epoch_utc='1963-11-08T08:15:00Z';
+  });
+  assert.throws(()=>audit(bundle),/Unvalidated dependency path fields/);
+});
+
+test('synchronized source and shard cannot introduce a dependency cycle',()=>{
+  const bundle=clean();
+  mutateSynchronizedLineage(bundle,(path,entry)=>{
+    path.edges.push({from:path.upstream_source_id,to:entry.source_id,kind:'claims'});
+    path.upstream_source_id=entry.source_id;
+  });
+  assert.throws(()=>audit(bundle),/Cyclic dependency chain/);
+});
+
+test('synchronized source and shard cannot jump between dependency nodes',()=>{
+  const bundle=clean();
+  mutateSynchronizedLineage(bundle,path=>{
+    path.edges[0].from='UNKNOWN_INTERMEDIATE';
+  });
+  assert.throws(()=>audit(bundle),/Discontinuous dependency chain/);
+});
+
+test('synchronized source and shard cannot insert unvalidated edge fields',()=>{
+  const bundle=clean();
+  mutateSynchronizedLineage(bundle,path=>{
+    path.edges[0].terminal_latitude=-11.85;
+  });
+  assert.throws(()=>audit(bundle),/Unvalidated dependency edge fields/);
+});
+
 test('status reinterpretation fails even with recomputed shard SHA',()=>{
   const bundle=clean();
   mutateRow(bundle,row=>{row.source_status='PHYSICAL_IMPACT_CONFIRMED';});

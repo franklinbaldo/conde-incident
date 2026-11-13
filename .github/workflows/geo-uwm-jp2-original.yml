@@ -3,6 +3,9 @@ on:
   pull_request:
     paths:
       - 'research/geo/cgeo34_uwm_original_jp2_custody.*'
+      - 'research/geo/cgeo35_uwm_jp2_raster_anchors.*'
+      - 'tools/cgeo35_uwm_raster.py'
+      - 'tests/test_cgeo35_uwm_raster.py'
       - 'research/geo/evidence/cgeo34_uwm_jp2_header.hex'
       - 'tools/cgeo34_uwm_jp2.py'
       - 'tests/test_cgeo34_uwm_jp2.py'
@@ -11,6 +14,9 @@ on:
     branches: [main]
     paths:
       - 'research/geo/cgeo34_uwm_original_jp2_custody.*'
+      - 'research/geo/cgeo35_uwm_jp2_raster_anchors.*'
+      - 'tools/cgeo35_uwm_raster.py'
+      - 'tests/test_cgeo35_uwm_raster.py'
       - 'research/geo/evidence/cgeo34_uwm_jp2_header.hex'
       - 'tools/cgeo34_uwm_jp2.py'
       - 'tests/test_cgeo34_uwm_jp2.py'
@@ -34,6 +40,8 @@ jobs:
       - name: Validate source metadata and adversarial tests
         run: |
           python3 -m tools.cgeo34_uwm_jp2
+          python3 -m tools.cgeo35_uwm_raster
+          python3 -m unittest discover -s tests -p 'test_cgeo35_uwm_raster.py' -v
           python3 -m unittest discover -s tests -p 'test_cgeo34_uwm_jp2.py' -v
       - name: Acquire 110 MB original from UWM and replay exact bytes
         run: |
@@ -43,3 +51,5 @@ jobs:
             'https://collections.lib.uwm.edu/digital/api/collection/agdm/id/10814/download' \
             --output "$RUNNER_TEMP/uwm-agdm-10814.jp2"
           python3 -m tools.cgeo34_uwm_jp2 --original "$RUNNER_TEMP/uwm-agdm-10814.jp2"
+          python3 -m pip install --disable-pip-version-check --no-cache-dir Pillow==13.0.0
+          python3 -m tools.cgeo35_uwm_raster --original "$RUNNER_TEMP/uwm-agdm-10814.jp2"

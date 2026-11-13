@@ -1,0 +1,199 @@
+{
+  "schema": "conde.station1078-scientific-bridge/v1",
+  "id": "ABELHA-STATION1078-C241-L38-01",
+  "source_occurrence": "C241-L38",
+  "parent_sha256": {
+    "research/tle_custody/yeniseisk_station1078_journals_C241-L38.json": "72b3ecb2c7d1ef13607ab0d321fae64011314ff1a2a7da7d2131e67e68ce8a69",
+    "public/data/conde-soviet-raw-route-bridge.json": "e965ced61c6136bcbada4ecf9921c39a986a5e2973f3877b3e27a4e5d2ea6258"
+  },
+  "source": {
+    "kind": "UNDATED_INSTITUTIONAL_RETROSPECTIVE",
+    "url": "https://www.lpi.sfu-kras.ru/node/286",
+    "publication_date": null,
+    "transport_copy_sha256": "4df12d13cef3bcec550c0d53c34d0a8080f2b292080ebb51b7b0d9d66eab1721",
+    "transport_copy_bytes": 321424,
+    "transport_tls_authenticated": false,
+    "source_original_observation_facsimile": false,
+    "historical_station_identifier": "1078",
+    "historical_station_name": "Енисейск, Красноярский край",
+    "historic_journals_reported": true,
+    "november_1963_journal_confirmed": false,
+    "present_day_holding_confirmed": false,
+    "historical_coordinates_confirmed": false,
+    "station_1963_target_observation": null,
+    "epistemic_status": "INSTITUTIONAL_HISTORY_ARCHIVAL_LEAD_NOT_TARGET_OBSERVATION"
+  },
+  "dependency_graph": [
+    {
+      "from": "C241-L38",
+      "to": "SOVIET_STATION_1078",
+      "relation": "INSTITUTIONAL_HISTORY_NAMES_STATION",
+      "documentary": true
+    },
+    {
+      "from": "C241-L38",
+      "to": "STATION_1078_JOURNALS",
+      "relation": "RETROSPECTIVE_REPORTS_JOURNALS_AT_UNDATED_WRITING",
+      "documentary": true,
+      "present_day_holding_confirmed": false
+    },
+    {
+      "from": "STATION_1078_JOURNALS",
+      "to": "SOVIET_RAW_RESULTS_SERIAL",
+      "relation": "POSSIBLE_ARCHIVAL_JOIN_NOT_PROVEN",
+      "documentary": false,
+      "active": false
+    },
+    {
+      "from": "C241-L38",
+      "to": "C241-L29",
+      "relation": "RESEARCH_CONTEXT_NOT_OBSERVATION_DEPENDENCE",
+      "documentary": false,
+      "active": false
+    },
+    {
+      "from": "C241-L38",
+      "to": "C241-L31",
+      "relation": "RESEARCH_CONTEXT_NOT_OBSERVATION_DEPENDENCE",
+      "documentary": false,
+      "active": false
+    },
+    {
+      "from": "C241-L38",
+      "to": "C241-L34",
+      "relation": "RESEARCH_CONTEXT_NOT_OBSERVATION_DEPENDENCE",
+      "documentary": false,
+      "active": false
+    },
+    {
+      "from": "C241-L38",
+      "to": "C241-L35",
+      "relation": "RESEARCH_CONTEXT_NOT_OBSERVATION_DEPENDENCE",
+      "documentary": false,
+      "active": false
+    },
+    {
+      "from": "C241-L38",
+      "to": "C241-L37",
+      "relation": "RESEARCH_CONTEXT_NOT_OBSERVATION_DEPENDENCE",
+      "documentary": false,
+      "active": false
+    },
+    {
+      "from": "STATION_1078_JOURNALS",
+      "to": "NORAD_527_latent_track",
+      "relation": "TARGET_SPECIFIC_JOURNAL_SEARCH_NOT_AUTHENTICATED",
+      "active": false,
+      "original_page": null,
+      "observation_epoch_utc": null
+    },
+    {
+      "from": "STATION_1078_JOURNALS",
+      "to": "NORAD_528_latent_track",
+      "relation": "TARGET_SPECIFIC_JOURNAL_SEARCH_NOT_AUTHENTICATED",
+      "active": false,
+      "original_page": null,
+      "observation_epoch_utc": null
+    },
+    {
+      "from": "STATION_1078_JOURNALS",
+      "to": "NORAD_529_latent_track",
+      "relation": "TARGET_SPECIFIC_JOURNAL_SEARCH_NOT_AUTHENTICATED",
+      "active": false,
+      "original_page": null,
+      "observation_epoch_utc": null
+    }
+  ],
+  "source_independence": {
+    "relation_to_parent_soviet_publication": "UNDETERMINED",
+    "instrument_independence": "NOT_ESTABLISHED",
+    "observed_targets_count": 0,
+    "new_verified_instrument_observations": 0
+  },
+  "lean_candidate": "Conde1963.sovietStation1078JournalRoutes",
+  "lean_status": "TYPED_ARCHIVAL_SEARCH_NOT_COMPILED_PHYSICAL_RESTRICTION",
+  "simulator_latent_parameters": [
+    {
+      "name": "station1078_original_optical_direction_527",
+      "norad": 527,
+      "candidate_dates_utc": [
+        "1963-11-07",
+        "1963-11-08",
+        "1963-11-09"
+      ],
+      "forward_observable": "topocentric_direction(orbit_n, station_position_1963, epoch_utc, frame)",
+      "station_code": "1078",
+      "station_position_1963": null,
+      "original_journal_page": null,
+      "target_designation_original": null,
+      "observation_epoch_utc": null,
+      "clock_correction": null,
+      "observed_direction": null,
+      "units": null,
+      "frame": null,
+      "instrument_sigma": null,
+      "measurement_lineage": null,
+      "value": null,
+      "activation": false
+    },
+    {
+      "name": "station1078_original_optical_direction_528",
+      "norad": 528,
+      "candidate_dates_utc": [
+        "1963-11-07",
+        "1963-11-08",
+        "1963-11-09"
+      ],
+      "forward_observable": "topocentric_direction(orbit_n, station_position_1963, epoch_utc, frame)",
+      "station_code": "1078",
+      "station_position_1963": null,
+      "original_journal_page": null,
+      "target_designation_original": null,
+      "observation_epoch_utc": null,
+      "clock_correction": null,
+      "observed_direction": null,
+      "units": null,
+      "frame": null,
+      "instrument_sigma": null,
+      "measurement_lineage": null,
+      "value": null,
+      "activation": false
+    },
+    {
+      "name": "station1078_original_optical_direction_529",
+      "norad": 529,
+      "candidate_dates_utc": [
+        "1963-11-07",
+        "1963-11-08",
+        "1963-11-09"
+      ],
+      "forward_observable": "topocentric_direction(orbit_n, station_position_1963, epoch_utc, frame)",
+      "station_code": "1078",
+      "station_position_1963": null,
+      "original_journal_page": null,
+      "target_designation_original": null,
+      "observation_epoch_utc": null,
+      "clock_correction": null,
+      "observed_direction": null,
+      "units": null,
+      "frame": null,
+      "instrument_sigma": null,
+      "measurement_lineage": null,
+      "value": null,
+      "activation": false
+    }
+  ],
+  "promote_when": [
+    "identify_current_custodian_and_accession",
+    "authenticate_original_november_1963_log_page",
+    "verify_original_target_designation_without_catalogue_assumption",
+    "extract_instrument_epoch_and_clock",
+    "establish_station_1963_coordinates_and_frame",
+    "retrieve_actual_direction_units_and_uncertainty",
+    "audit_instrument_lineage"
+  ],
+  "new_numeric_orbital_constraints": 0,
+  "activation": false,
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "next_test": "Find accession and an original 7-9 Nov 1963 station 1078 log; a matching target is not assumed"
+}
