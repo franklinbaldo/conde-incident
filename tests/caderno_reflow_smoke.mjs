@@ -35,11 +35,20 @@ try {
           }))
         }));
         assert(layout.scroll <= layout.viewport + 1, `horizontal overflow ${path} ${width}: ${JSON.stringify(layout)}`);
-        assert.deepEqual(layout.anchors.map(a => a.href), [
+        // Some authored Page variants expose an additional static Map route.
+        // Verify the eight shared destinations in order, without rejecting a
+        // legitimate ninth destination or silently dropping its label.
+        const hrefs = layout.anchors.map(a => a.href);
+        const mapHref = '/conde-incident/mapa/';
+        if (hrefs.includes(mapHref)) {
+          assert.equal(hrefs.indexOf(mapHref), 5,
+            `the optional Map link must follow hypotheses: ${path} ${width}`);
+        }
+        assert.deepEqual(hrefs.filter(href => href !== mapHref), [
           '/conde-incident/', '/conde-incident/stories/', '/conde-incident/cronologia/',
           '/conde-incident/evidencias/', '/conde-incident/hipoteses/',
           '/conde-incident/simulacoes/', '/conde-incident/metodo/', '/conde-incident/lab/'
-        ], `all eight SSG navigation destinations must remain keyboard-accessible: ${path} ${width}`);
+        ], `all eight core SSG destinations must remain keyboard-accessible: ${path} ${width}`);
         assert(layout.anchors.every(a => a.whiteSpace === 'nowrap' && a.scroll <= a.width + 1),
           `broken navigation labels ${path} ${width}: ${JSON.stringify(layout)}`);
         if (width === 320) assert(new Set(layout.anchors.map(a => a.top)).size > 1,
