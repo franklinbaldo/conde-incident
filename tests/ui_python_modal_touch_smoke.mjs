@@ -8,16 +8,22 @@ const out = process.env.UI_AUDIT_OUT || 'test-results/ui';
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 try {
-  for (const width of [320, 375, 1440]) {
+  for (const { width, lang } of [
+    { width: 320, lang: 'pt' }, { width: 375, lang: 'en' },
+    { width: 640, lang: 'pt' }, { width: 1440, lang: 'en' },
+  ]) {
     const page = await browser.newPage({ viewport: { width, height: 812 }, reducedMotion: 'reduce' });
     try {
       const response = await page.goto(origin, { waitUntil: 'domcontentloaded' });
       assert(response?.ok(), 'laboratory must load');
-      const opener = page.getByRole('button', { name: 'Script Python' }).first();
+      if (lang === 'en') await page.getByRole('button', { name: 'English' }).click();
+      const opener = page.getByRole('button', { name: lang === 'pt' ? 'Script Python' : 'Python Script' }).first();
       await opener.click();
       const dialog = page.getByRole('dialog', { name: 'norad528_reconstruction.py' });
       await dialog.waitFor({ timeout: 15000 });
-      const names = ['Copiar código', 'Baixar .py', 'Fechar janela de exportação'];
+      const names = lang === 'pt'
+        ? ['Copiar código', 'Baixar .py', 'Fechar janela de exportação']
+        : ['Copy code', 'Download .py', 'Close export dialog'];
       const rects = [];
       for (const name of names) {
         const control = dialog.getByRole('button', { name });
@@ -43,11 +49,12 @@ try {
         .evaluate(el => ({ style: getComputedStyle(el).outlineStyle, width: getComputedStyle(el).outlineWidth }));
       assert(outline.style !== 'none' && parseFloat(outline.width) >= 2,
         `keyboard focus is not visible: ${JSON.stringify(outline)}`);
+      await page.screenshot({ path: `${out}/python-touch-modal-${lang}-${width}.png` });
       await page.keyboard.press('Escape');
       await dialog.waitFor({ state: 'hidden' });
       assert(await opener.evaluate(el => document.activeElement === el), 'Escape must return focus to the opener');
-      await page.screenshot({ path: `${out}/python-touch-return-${width}.png` });
-      await writeFile(`${out}/python-touch-targets-${width}.json`, JSON.stringify({ width, rects, horizontal, outline }, null, 2));
+      await page.screenshot({ path: `${out}/python-touch-return-${lang}-${width}.png` });
+      await writeFile(`${out}/python-touch-targets-${width}.json`, JSON.stringify({ width, lang, rects, horizontal, outline }, null, 2));
     } finally {
       await page.close();
     }
