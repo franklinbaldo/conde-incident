@@ -50,6 +50,35 @@ MUST_DUAL = {
 MUST_UNFILTERED_PR = {'integration-head.yml', 'prek.yml'}
 
 
+# Commands pinned at the policy boundary. This is intentionally a small
+# mandatory set, not an attempt to interpret arbitrary GitHub Actions YAML.
+# Values are exact single-line commands or required lines inside run: |.
+UNIVERSAL_CRITICAL_STEPS = {
+    'integration-head.yml': {
+        'web': {
+            'Assert exact head SHA': 'test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD_SHA"',
+            'Install exact locked dependencies': 'bun install --frozen-lockfile',
+            'TypeScript check': 'bun run lint',
+            'Build Vite frontend': 'bun run build',
+            'Execute all Python unittest suites (fail closed)':
+                "python3 -m unittest discover -s tests -p 'test_*.py' -v",
+            'Execute present Node regression suites': 'node --test "${tests[@]}"',
+        },
+        'lean': {
+            'Assert exact head SHA': 'test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD_SHA"',
+            'Detect Lean package': 'if [[ -f formal/lean-toolchain',
+            'Compile conditional proofs': 'lake build',
+        },
+    },
+    'prek.yml': {
+        'prek': {
+            'Assert exact source SHA': 'test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"',
+            'Run prek hooks over all tracked files':
+                'uvx --from prek==0.5.10 prek run --all-files',
+        },
+    },
+}
+
 # A green workflow with skipped or tolerated essential jobs is a false gate.
 UNIVERSAL_REQUIRED_JOBS = {
     'integration-head.yml': {'web', 'lean'},
@@ -78,7 +107,47 @@ def assert_unskippable_universal_jobs(source: str, filename: str) -> None:
             raise AssertionError(f'{filename}: universal job lacks steps: {marker.group(1)}')
         if re.search(r'(?m)^    (?:if|continue-on-error)\s*:', block):
             raise AssertionError(f'{filename}: conditional/tolerated universal job: {marker.group(1)}')
+        assert_unskippable_critical_steps(source, filename, marker.group(1), block)
 
+
+
+def assert_unskippable_critical_steps(source: str, filename: str,
+                                      job: str, block: str) -> None:
+    required = UNIVERSAL_CRITICAL_STEPS.get(filename, {}).get(job, {})
+    if not required:
+        return
+    # Only standard (non-anchor) YAML steps, at the precise job indentation.
+    markers = list(re.finditer(r'(?m)^      - (?:name|uses):[^\n]*$', block))
+    named = {}
+    for index, marker in enumerate(markers):
+        end = markers[index + 1].start() if index + 1 < len(markers) else len(block)
+        step = block[marker.start():end]
+        heading = re.match(r'      - name:\s*(.+?)\s*$', marker.group())
+        if heading:
+            named.setdefault(heading.group(1), []).append(step)
+    for title, command in required.items():
+        matches = named.get(title, [])
+        if len(matches) != 1:
+            raise AssertionError(f'{filename}: missing/duplicate universal step: {job}/{title}')
+        step = matches[0]
+        if re.search(r'(?m)^        continue-on-error\s*:', step):
+            raise AssertionError(f'{filename}: tolerated universal step: {job}/{title}')
+        conditions = re.findall(r'(?m)^        if:\s*(.*?)\s*$', step)
+        allowed = (["steps.detect.outputs.available == 'true'"]
+                   if job == 'lean' and title == 'Compile conditional proofs' else [])
+        if conditions != allowed:
+            raise AssertionError(f'{filename}: conditional universal step: {job}/{title}')
+        run = re.search(r'(?m)^        run:\s*(.*)$', step)
+        if run is None:
+            raise AssertionError(f'{filename}: missing command in universal step: {job}/{title}')
+        if run.group(1) == '|':
+            # A multiline step may have setup and shell guards, but must
+            # still contain the actual test invocation as a command line.
+            commands = [line.strip() for line in step[run.end():].splitlines()]
+            if not any(line == command or line.startswith(command) for line in commands):
+                raise AssertionError(f'{filename}: universal step command changed: {job}/{title}')
+        elif run.group(1) != command:
+            raise AssertionError(f'{filename}: universal step command changed: {job}/{title}')
 
 
 def event_blocks(source: str) -> dict[str, list[str]]:
