@@ -21,6 +21,11 @@ const familySlug = family => {
   assert.match(family, /^[A-Z][A-Z0-9_]{1,79}$/, 'Identificador de família inválido');
   return family.toLowerCase().replaceAll('_', '-');
 };
+// Work identifiers are documentary keys, never filesystem paths supplied by users.
+const workSlug = work => {
+  assert.match(work, /^[A-Z][A-Z0-9_]{1,95}$/, 'Identificador de obra inválido');
+  return work.toLowerCase().replaceAll('_', '-');
+};
 
 export function archivePages(citations, lineage, wayback=null) {
   assert.equal(citations.schema, 'conde.source-citations/v1');
@@ -91,7 +96,7 @@ export function archivePages(citations, lineage, wayback=null) {
           ];
         })() : []),
 
-        `[Outras ocorrências da família ${safe(r.source_family)}](${ROOT}familias/${familySlug(r.source_family)}/)`, '',
+        `[Outras ocorrências da família ${safe(r.source_family)}](${ROOT}familias/${familySlug(r.source_family)}/) · [Outras referências da obra ${safe(r.work_id)}](${ROOT}obras/${workSlug(r.work_id)}/)`, '',
         '**Genealogia declarada:**', '');
       if (!ancestry.declared_upstream_paths.length) {
         parts.push('Nenhuma cadeia ancestral declarada neste snapshot. **Independência desconhecida.**', '');
@@ -155,6 +160,49 @@ export function archivePages(citations, lineage, wayback=null) {
       `Índice documental da família ${name}, sem presumir independência.`, familyBody));
     familyLinks.push(`- [${safe(name)}](${ROOT}familias/${slug}/) · ${occurrences.size} ocorrência(s), ${works.size} obra(s)`);
   }
+  // Reverse index per WORK, not per source and not per physical witness. A
+  // single publication may be cited in many occurrences, as can a single source.
+  const byWork = new Map();
+  for (const [id, entries] of sorted) {
+    for (const {record} of entries) {
+      if (!byWork.has(record.work_id)) byWork.set(record.work_id, []);
+      byWork.get(record.work_id).push({id, record});
+    }
+  }
+  const workLinks = [];
+  for (const [work, rows] of [...byWork].sort(([a],[b])=>a.localeCompare(b,'en'))) {
+    const slug = workSlug(work);
+    const occurrences = new Set(rows.map(({id})=>id));
+    const sources = new Set(rows.map(({record})=>record.source_id));
+    const familiesOfWork = new Set(rows.map(({record})=>record.source_family));
+    const body = [
+      `## Obra documental: ${safe(work)}`, '',
+      '**Índice reverso de referências, não contagem de observações independentes.** Reutilizações da mesma obra não produzem novos testemunhos. As relações de genealogia e as incertezas permanecem nas páginas das ocorrências.', '',
+      `**No recorte curado:** ${occurrences.size} ocorrência(s), ${rows.length} vínculo(s), ${sources.size} fonte(s) identificada(s), ${familiesOfWork.size} família(s).`, '',
+      ...rows.flatMap(({id,record})=>[
+        `### ${safe(id)} · ${safe(record.source_id)}`, '',
+        `- **Família:** ${safe(record.source_family)}`,
+        `- **Localizador:** ${safe(record.locator)}`,
+        `- **Relação:** ${safe(record.relation)}`,
+        `- **Limite:** ${safe(record.scope)}`,
+        `- **SHA-256 da linha na matriz:** \`${record.row_sha256}\``, '',
+        `- [Abrir ocorrência e genealogia](${ROOT}${id.toLowerCase().replace('#','-')}/)`,
+        `- [Consultar documento](${record.citation_url})`,
+        `- [Ver família](${ROOT}familias/${familySlug(record.source_family)}/)`, '',
+      ]),
+      `[Índice de obras](${ROOT}obras/) · [Famílias documentais](${ROOT}familias/) · [Arquivo curado](${ROOT})`,
+    ].join('\n');
+    files.set(`obras/${slug}/index.md`, page(`Obra ${work}: referências`,
+      `Índice reverso da obra ${work}; não prova de observação independente.`, body));
+    workLinks.push(`- [${safe(work)}](${ROOT}obras/${slug}/) · ${occurrences.size} ocorrência(s), ${sources.size} fonte(s)`);
+  }
+  files.set('obras/index.md', page('Obras documentais: índice',
+    'Obras citadas no arquivo curado, com ocorrências e dependências rastreáveis.', [
+      '## Obras documentais', '',
+      '**Obra citada não equivale a medição independente.** Os vínculos são derivados do mesmo feed curado e de uma matriz imutável, sem preenchimento de fontes ausentes.', '',
+      ...workLinks, '', `[Voltar ao arquivo curado](${ROOT})`,
+    ].join('\n')));
+
   files.set('familias/index.md', page('Famílias documentais: índice',
     'Agrupamentos das referências curadas por família e obra documental.', [
       '## Famílias de fontes', '',
@@ -167,7 +215,7 @@ export function archivePages(citations, lineage, wayback=null) {
     '**Leitura estática gerada pelo SSG Rust a partir dos feeds curados do laboratório.** Sem React ou JavaScript. O laboratório anterior permanece disponível durante a migração. A data editorial deste índice não é a data de uma observação em 1963.', '',
     `**Cobertura:** ${citations.curated_occurrences} ocorrências curadas de ${citations.total_matrix_occurrences}. ${citations.unmapped_occurrences} ocorrências não mapeadas no feed parcial **não significam fonte inexistente**.`, '',
     'Uma mesma obra pode originar múltiplos vínculos documentais, sem criar novas testemunhas físicas. Ausência de genealogia declarada não significa independência. Datas NASA são entradas de catálogo, não posições ou horários observados de queda.', '',
-    '[Consultar famílias documentais e ocorrências relacionadas]('+ROOT+'familias/)', '',
+    '[Consultar famílias documentais e ocorrências relacionadas]('+ROOT+'familias/) · [Consultar obras e suas reutilizações]('+ROOT+'obras/)', '',
     ...links, '',
     `**Matriz imutável (Git blob):** ${citations.matrix_git_blob_sha1}.`, '',
     '[Consultar documentos no laboratório interativo](/conde-incident/lab/#/documents) · [Evidências editoriais](/conde-incident/evidencias/)',
