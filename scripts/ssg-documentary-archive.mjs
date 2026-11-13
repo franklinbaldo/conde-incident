@@ -4,6 +4,7 @@ import {mkdirSync, writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 import {archiveKey,verifiedArchiveLinks} from './ssg-wayback-links.mjs';
 import {interpretArchiveStatus,archiveStatusGuide} from './archive-source-status.mjs';
+import {renderArchiveStatusIndex} from './archive-status-index.mjs';
 
 const ROOT = '/conde-incident/evidencias/arquivo/';
 const MATRIX = 'https://github.com/franklinbaldo/conde-incident/blob/faf4dd0fd8dfbdd825e4e934b3b30ebd81bf61df/research/evidence_matrix_C001-C238_2026-11-11.md#L';
@@ -273,12 +274,17 @@ export function archivePages(citations, lineage, wayback=null) {
       ...familyLinks, '',
       '[Voltar ao arquivo curado]('+ROOT+')',
     ].join('\n')));
+  // Browse by the reviewed documentary classification without booting React.
+  // Keep every source link and immutable matrix row; categories are not witnesses.
+  files.set('estados/index.md', page('Estados documentais: índice de vínculos',
+    'Referências curadas agrupadas por estado, sem inferir observação física.',
+    renderArchiveStatusIndex(citations.records)));
   const index = [
     '## Arquivo de fontes documentais', '',
     '**Leitura estática gerada pelo SSG Rust a partir dos feeds curados do laboratório.** Sem React ou JavaScript. O laboratório anterior permanece disponível durante a migração. A data editorial deste índice não é a data de uma observação em 1963.', '',
     `**Cobertura:** ${citations.curated_occurrences} ocorrências curadas de ${citations.total_matrix_occurrences}. ${citations.unmapped_occurrences} ocorrências não mapeadas no feed parcial **não significam fonte inexistente**.`, '',
     'Uma mesma obra pode originar múltiplos vínculos documentais, sem criar novas testemunhas físicas. Ausência de genealogia declarada não significa independência. Datas NASA são entradas de catálogo, não posições ou horários observados de queda.', '',
-    '[Consultar famílias documentais e ocorrências relacionadas]('+ROOT+'familias/) · [Consultar obras e suas reutilizações]('+ROOT+'obras/) · [Consultar identificadores de fontes]('+ROOT+'fontes/)', '',
+    '[Consultar famílias documentais e ocorrências relacionadas]('+ROOT+'familias/) · [Consultar obras e suas reutilizações]('+ROOT+'obras/) · [Consultar identificadores de fontes]('+ROOT+'fontes/) · [Explorar por estado documental]('+ROOT+'estados/)', '',
     '## Ocorrências curadas', '',
     ...links, '',
     ...archiveStatusGuide(citations.records), '',
