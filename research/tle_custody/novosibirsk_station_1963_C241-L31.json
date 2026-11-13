@@ -1,0 +1,56 @@
+{
+  "schema": "conde.archival_station_locator/v1",
+  "id": "C241-L31",
+  "as_of": "2026-11-13",
+  "research_issue": 545,
+  "source": {
+    "institution": "Siberian State University of Geosystems and Technologies (SGUGiT)",
+    "title": "История кафедры космической и физической геодезии",
+    "url": "https://sgugit.ru/university/struct/kafedry/kifg/history/",
+    "source_kind": "INSTITUTIONAL_RETROSPECTIVE_HISTORY",
+    "http_status": 200,
+    "bytes": 163747,
+    "sha256": "4c73e1698dead48c64bba0366264c3cb2d4891662383e876c85372adc350a725",
+    "sha256_applies_to": "current institutional HTML, not historical records",
+    "retrieved_utc_date": "2026-11-13",
+    "original_1963_facsimile_retrieved": false
+  },
+  "station": {
+    "institution_1963": "Novosibirsk Institute of Engineers of Geodesy, Aerial Surveying and Cartography (НИИГАиК)",
+    "name": "Астросовет АН СССР station of optical satellite observation at НИИГАиК",
+    "city": "Novosibirsk",
+    "station_numbers_mentioned": [1035, 1090],
+    "station_number_usage": "1035 at institutional roof; 1090 at summer training ground; no dated November assignment",
+    "specific_site_on_1963_11_08": null,
+    "exact_site_coordinates": null,
+    "named_1963_station_director": "К. М. Антонович",
+    "reported_director_interval": "1963-1979",
+    "visual_observation_programs": [
+      "ephemeris service of Координационно-вычислительный центр Космос",
+      "Интеробс (proposed in 1963)"
+    ],
+    "photography_began_year": 1963,
+    "photographic_camera_1963": "НАФА-21",
+    "later_camera": {"model": "УФИСЗ-25", "delivered_year": 1965},
+    "aggregate_measurements_reported": {
+      "value": "more than 100000",
+      "interval": "1963-1979",
+      "attributed_to": "К. М. Антонович",
+      "measurements_in_1963_only": null
+    }
+  },
+  "requested_primary_record_targets": [
+    "station logs and instrument records for 1963-11-07 through 1963-11-09",
+    "site code 1035/1090 dated correspondence and geodetic positions",
+    "original INTEROBS and Cosmos ephemeris-service measurements",
+    "records explicitly identifying 1963-003A/B/C or NORAD 527/528/529"
+  ],
+  "target_objects": [527, 528, 529],
+  "primary_observations_for_targets_retrieved": 0,
+  "historical_1963_observing_epoch_verified": false,
+  "orbital_constraint_activated": false,
+  "station_position_or_site_code_promoted_to_orbit": false,
+  "library_contacted": false,
+  "dependencies": ["C241-L29", "C241-L30"],
+  "epistemic_level": "RETROSPECTIVE_INSTITUTIONAL_STATION_LOCATOR_ONLY"
+}
