@@ -90,15 +90,15 @@ test('CI discovers root and nested Node suites in both scripts/ and tests/', () 
   }
 });
 
-test('CI explicitly says NO_NODE_TEST_FILES only for an empty workspace', () => {
+test('CI rejects an empty workspace instead of certifying zero Node tests', () => {
   const match = ci.match(/- name: Execute present Node regression suites\n\s*shell: bash\n\s*run: \|\n((?: {10}[^\n]*\n)+)/);
   assert.ok(match);
   const script = match[1].split('\n').map(line => line.replace(/^ {10}/, '')).join('\n');
   const root = mkdtempSync(join(tmpdir(), 'conde-node-empty-'));
   try {
     const run = spawnSync('bash', ['-c', script], { cwd: root, encoding: 'utf8' });
-    assert.equal(run.status, 0, run.stderr);
-    assert.match(run.stdout, /NO_NODE_TEST_FILES/);
+    assert.equal(run.status, 1, run.stderr);
+    assert.match(run.stdout, /::error::NO_NODE_TEST_FILES/);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
