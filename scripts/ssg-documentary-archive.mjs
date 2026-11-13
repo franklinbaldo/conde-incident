@@ -4,10 +4,10 @@ import {mkdirSync, writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 import {archiveKey,verifiedArchiveLinks} from './ssg-wayback-links.mjs';
 import {interpretArchiveStatus,archiveStatusGuide} from './archive-source-status.mjs';
-import {renderArchiveStatusIndex} from './archive-status-index.mjs';
+import {renderArchiveStatusIndex,ARCHIVE_ROOT,MATRIX_ROW_ROOT} from './archive-status-index.mjs';
 
-const ROOT = '/conde-incident/evidencias/arquivo/';
-const MATRIX = 'https://github.com/franklinbaldo/conde-incident/blob/faf4dd0fd8dfbdd825e4e934b3b30ebd81bf61df/research/evidence_matrix_C001-C238_2026-11-11.md#L';
+const ROOT=ARCHIVE_ROOT;
+const MATRIX=MATRIX_ROW_ROOT;
 export const matrixRowUrl = line => MATRIX + line;
 const safe = value => String(value).replaceAll('\\', '\\\\').replace(/([\[\]_*`<>|])/g, '\\$1').replace(/\r?\n/g, ' ');
 const scalar = value => JSON.stringify(String(value));
