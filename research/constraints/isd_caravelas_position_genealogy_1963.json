@@ -1,0 +1,44 @@
+{
+  "schema": "conde.historical-meteorology-metadata-lineage/v1",
+  "id": "MET-ISD-CARAVELAS-POSITION-DISCREPANCY-1963-01",
+  "evidence": {
+    "original": "https://www.ncei.noaa.gov/pub/data/noaa/1963/834970-99999-1963.gz",
+    "history": "https://www.ncei.noaa.gov/pub/data/noaa/isd-history.csv",
+    "history_row_sha256": "b24514a2be25cf2fe2e59dce58f78f577e27878b69435b6db8098df74a4a7a7e",
+    "same_noaa_integrated_database_family": true
+  },
+  "observables": {
+    "position_in_1963_isd_rows": [-17.633, -39.25, 4.0],
+    "retrospective_history_catalog_position": [-17.652, -39.253, 11.0],
+    "horizontal_disagreement_km": 2.136489,
+    "vertical_disagreement_m": 7.0,
+    "coordinates_are_independent_field_surveys": false
+  },
+  "edges": [
+    {
+      "from": "MET-ISD-CARAVELAS-POSITION-DISCREPANCY-1963-01",
+      "to": "MET-ISD-19631107-09-CARAVELAS-01",
+      "type": "METADATA_LINEAGE_OF_EXISTING_HOURLY_OBSERVATIONS"
+    },
+    {
+      "from": "MET-ISD-CARAVELAS-POSITION-DISCREPANCY-1963-01",
+      "to": "Caravelas_true_instrument_site_1963",
+      "type": "SITE_LOCATION_NOT_AUTHENTICATED"
+    },
+    {
+      "from": "Caravelas_true_instrument_site_1963",
+      "to": "Conde_surface_wind_at_hour_t",
+      "type": "PENDING_SPATIAL_TRANSFER_WITH_SITE_UNCERTAINTY"
+    }
+  ],
+  "station_site_1963": null,
+  "instrument_covariance": null,
+  "active_conde_constraint": null,
+  "status": "CONNECTED_PENDING_SPATIOTEMPORAL_CALIBRATION",
+  "invalid_inferences": [
+    "metadata coordinate mismatch does not prove station physically moved",
+    "2.136489 km discrepancy is not a position error tolerance",
+    "7 m elevation difference is not a meteorological height correction",
+    "retrospective NOAA coordinate fields are not independent instruments"
+  ]
+}

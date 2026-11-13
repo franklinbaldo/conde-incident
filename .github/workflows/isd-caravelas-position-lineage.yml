@@ -1,0 +1,34 @@
+name: ISD Caravelas historical station position lineage
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  station-lineage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate pinned offline NOAA fields and pending graph
+        run: python3 tools/audit_isd_caravelas_station_lineage.py --check
+      - name: Adversarial record/history controls
+        run: python3 -m unittest discover -s tests -p 'test_isd_caravelas_station_lineage.py' -v
+      - name: Verify original NOAA GZIP and station history CSV
+        run: |
+          curl -fL --retry 3 --retry-all-errors --connect-timeout 15 --max-time 90 \
+            https://www.ncei.noaa.gov/pub/data/noaa/1963/834970-99999-1963.gz -o /tmp/caravelas-1963.gz
+          curl -fL --retry 3 --retry-all-errors --connect-timeout 15 --max-time 90 \
+            https://www.ncei.noaa.gov/pub/data/noaa/isd-history.csv -o /tmp/isd-history.csv
+          python3 tools/audit_isd_caravelas_station_lineage.py --check \
+            --verify-full-gz /tmp/caravelas-1963.gz --verify-history-csv /tmp/isd-history.csv
