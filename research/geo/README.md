@@ -113,3 +113,7 @@ O IBGE explicita na [Apresentação de sua série histórica, p. 1](ibge_1991_ba
 A [auditoria reprodutível](ibge_1960_topology_audit.md) deriva somente dos
 vértices CGEO-10, sem reclassificá-los como levantamento independente ou
 limite de 1963. Verifique com python3 -m tools.conde_ibge_1960_topology --check.
+
+## CGEO-19: fotos da Vila atribuídas a 1959
+
+[Contrato e contexto](cgeo19_1959_editorial_photographs.md): três fotos atribuídas a 1959 num blog de 2012, com JPEGs auditados, autoria/data de captura não comprovadas e nenhuma posição de reentrada inferida.
