@@ -13,6 +13,16 @@ import math
 import re
 from pathlib import Path
 
+# Reuse the independently pinned C241-L18 facsimile transcription; a declared
+# PDF SHA alone does not authenticate the mutable rows or the document URL.
+# Both direct CLI invocation and package-style test imports are supported.
+try:
+    from tools.tle_nasa_ssr_jul_dec_audit import validate as validate_source_ledger
+except ModuleNotFoundError as exc:
+    if exc.name != "tools":
+        raise
+    from tle_nasa_ssr_jul_dec_audit import validate as validate_source_ledger
+
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json"
 OUTPUT = ROOT / "research/constraints/CASTOR-G37_ssr_crossfield_screen.json"
@@ -107,6 +117,9 @@ def build(ledger: dict) -> dict:
         (c["printed_period_min"], c["printed_apogee_km"], c["printed_perigee_km"]) !=
         (89.2, 335, 333)):
         raise ValueError("NASA Dec 31 page cells changed")
+    # The focused dimensional checks above retain their diagnostic errors;
+    # the independent source audit then catches changes to *other* cells.
+    validate_source_ledger(ledger)
     return {
         "schema": "conde.ssr-crossfield-conditional-screen/v1",
         "id": "CASTOR-G37-DEC31-SSR-CROSSFIELD",

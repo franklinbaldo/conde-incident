@@ -1,0 +1,395 @@
+{
+  "schema": "conde.gaviao-retrospective-window/v1",
+  "review": "G38",
+  "start_exclusive": "4decea805580d59e0388508c6700f2a0c9df583c",
+  "end_inclusive": "1dd6e5619801c685c97a7b2bfc218bad5b811919",
+  "first_parent_integrations": 16,
+  "dag_commits": 18,
+  "side_branch_commits": 2,
+  "merge_commits": 2,
+  "mainline": [
+    {
+      "sha": "6981ca132cc49e5d18c2473b62ee3b0973fdb0b0",
+      "parents": [
+        "4decea805580d59e0388508c6700f2a0c9df583c"
+      ],
+      "subject": "🐢 Record NASA April 10–30 catalogue listing gap (C241-L23)",
+      "associated_prs": [
+        461
+      ],
+      "changed_files": [
+        ".github/workflows/tle-nasa-ssr-apr10.yml",
+        "research/constraints/ssr_apr10_listing_C241-L23.json",
+        "research/tle_custody/evidence_matrix_C241-L23_2026-11-13.md",
+        "research/tle_custody/nasa_ssr_apr10_listing_C241-L23.json",
+        "tests/test_tle_nasa_ssr_apr10_audit.py",
+        "tools/tle_nasa_ssr_apr10_audit.py"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "success": 23
+        }
+      }
+    },
+    {
+      "sha": "7d8eac5969bf0103a3a766847aa37f434c091a4f",
+      "parents": [
+        "6981ca132cc49e5d18c2473b62ee3b0973fdb0b0"
+      ],
+      "subject": "78 🦌 Cervo: rank and conditioning of paired optical holdouts (C241-P14) (#463)",
+      "associated_prs": [
+        463
+      ],
+      "changed_files": [
+        "research/statistics/OPTICAL_PARALLAX_DESIGN_C241.md",
+        "tests/test_optical_parallax_identifiability.py",
+        "tools/optical_parallax_identifiability.py"
+      ],
+      "ci_check_runs": {
+        "total_count": 22,
+        "conclusions": {
+          "success": 22
+        }
+      }
+    },
+    {
+      "sha": "eca19002dbdfe1229bbc61a1c40b86bda1a93326",
+      "parents": [
+        "7d8eac5969bf0103a3a766847aa37f434c091a4f"
+      ],
+      "subject": "88 🐝 G36: ligar ISD Caravelas ao Lean e a Θ latente sem promoção (#464)",
+      "associated_prs": [
+        464
+      ],
+      "changed_files": [
+        "formal/Conde1963.lean",
+        "formal/Conde1963/CaravelasCandidate.lean",
+        "public/data/conde-isd-caravelas-bridge.json",
+        "tests/test_isd_caravelas_bridge.py",
+        "tools/export_isd_caravelas_bridge.py"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "success": 23
+        }
+      }
+    },
+    {
+      "sha": "dee1ae5a3f5a14805b83c27cf97afd911b38b2f5",
+      "parents": [
+        "eca19002dbdfe1229bbc61a1c40b86bda1a93326"
+      ],
+      "subject": "90 🐙 C241-P14: IBGE/UWM/NARA documentary dependency links (#465)",
+      "associated_prs": [
+        465
+      ],
+      "changed_files": [
+        "public/data/conde-historical-dependency-links.json",
+        "tests/test_historical_dependency_links.py",
+        "tools/export_historical_dependency_links.py"
+      ],
+      "ci_check_runs": {
+        "total_count": 22,
+        "conclusions": {
+          "success": 22
+        }
+      }
+    },
+    {
+      "sha": "8aed377d9e0c23f74d9ad843fb1934d215c4b694",
+      "parents": [
+        "dee1ae5a3f5a14805b83c27cf97afd911b38b2f5"
+      ],
+      "subject": "90 🦦 ArchiDoc: distinguir índice vazio de imagens das páginas PDF 1953–1954 (#466)",
+      "associated_prs": [
+        466
+      ],
+      "changed_files": [
+        "research/archive/conde_tjba_image_index_20261113.json",
+        "tests/test_tjba_image_index.py",
+        "tools/verify_tjba_image_index.py"
+      ],
+      "ci_check_runs": {
+        "total_count": 22,
+        "conclusions": {
+          "success": 22
+        }
+      }
+    },
+    {
+      "sha": "c274914890f9eb409a1352e09541b0329bf8fce6",
+      "parents": [
+        "8aed377d9e0c23f74d9ad843fb1934d215c4b694"
+      ],
+      "subject": "CGEO-24: identificar MI-1850 Esplanada como folha das câmeras de 2022 sem inferir 1963 (#468)",
+      "associated_prs": [
+        468
+      ],
+      "changed_files": [
+        "research/geo/cgeo24_esplanada_sheet_index.json",
+        "research/geo/cgeo24_esplanada_sheet_index.md",
+        "tests/test_cgeo24_sheet_index.py",
+        "tools/cgeo24_sheet_index.py"
+      ],
+      "ci_check_runs": {
+        "total_count": 22,
+        "conclusions": {
+          "success": 22
+        }
+      }
+    },
+    {
+      "sha": "80e64408796553e21df87455bf772e503c61aad1",
+      "parents": [
+        "c274914890f9eb409a1352e09541b0329bf8fce6",
+        "2245543dc31cdb7eafecfda3a334619cd0db7e0c"
+      ],
+      "subject": "Merge pull request #469 from franklinbaldo/research/lagarto-caravelas-station-lineage-r22",
+      "associated_prs": [
+        469
+      ],
+      "changed_files": [
+        ".github/workflows/isd-caravelas-position-lineage.yml",
+        "research/constraints/isd_caravelas_position_genealogy_1963.json",
+        "research/meteorology/isd_caravelas_history_row_20261113.csv",
+        "research/meteorology/isd_caravelas_station_lineage_1963.json",
+        "research/meteorology/isd_caravelas_station_lineage_1963.md",
+        "tests/test_isd_caravelas_station_lineage.py",
+        "tools/audit_isd_caravelas_station_lineage.py"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "success": 23
+        }
+      }
+    },
+    {
+      "sha": "dcfebdabcf443cd108872f63b253cf6759383e6c",
+      "parents": [
+        "80e64408796553e21df87455bf772e503c61aad1"
+      ],
+      "subject": "90 🐙 C241-P14: source-lock CGEO and Blue Book Cnn dependencies (#470)",
+      "associated_prs": [
+        470
+      ],
+      "changed_files": [
+        "public/data/conde-historical-dependency-links.json",
+        "tests/test_historical_dependency_links.py",
+        "tools/export_historical_dependency_links.py"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "success": 23
+        }
+      }
+    },
+    {
+      "sha": "87e95cd8c53172e2691bf728d5360db4db787fc1",
+      "parents": [
+        "dcfebdabcf443cd108872f63b253cf6759383e6c"
+      ],
+      "subject": "88 🦅 G37: audit 14 integrations and guard checkout SHA checks (#472)",
+      "associated_prs": [
+        472
+      ],
+      "changed_files": [
+        "research/audits/gaviao-main-window-20261113-g37.json",
+        "research/audits/gaviao-main-window-20261113-g37.md",
+        "tests/test_ci_checkout_sha.py"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "success": 23
+        }
+      }
+    },
+    {
+      "sha": "7075e6f83995b74b5eca30414560582749bdfdb4",
+      "parents": [
+        "87e95cd8c53172e2691bf728d5360db4db787fc1"
+      ],
+      "subject": "86 🦡 Negar persistência de credenciais em todos os checkouts do CI (#473)",
+      "associated_prs": [
+        473
+      ],
+      "changed_files": [
+        ".github/workflows/polvo-j2-secondary-raan.yml",
+        ".github/workflows/tle-altitude-lineage.yml",
+        ".github/workflows/tle-cross-catalog-legacy.yml",
+        ".github/workflows/tle-cross-epoch-availability.yml",
+        ".github/workflows/tle-drag-lineage.yml",
+        ".github/workflows/tle-gcat-cross-catalog.yml",
+        ".github/workflows/tle-gcat-identity.yml",
+        ".github/workflows/tle-identity-lineage.yml",
+        ".github/workflows/tle-literal-layout.yml",
+        ".github/workflows/tle-mean-motion-secants.yml",
+        ".github/workflows/tle-nasa-annual-group.yml",
+        ".github/workflows/tle-nasa-ssr-apr-oct.yml",
+        ".github/workflows/tle-nasa-ssr-apr10.yml",
+        ".github/workflows/tle-nasa-ssr-aug15.yml",
+        ".github/workflows/tle-nasa-ssr-dec15.yml",
+        ".github/workflows/tle-nasa-ssr-delta.yml",
+        ".github/workflows/tle-nasa-ssr-jun30.yml",
+        ".github/workflows/tle-nasa-ssr-oct15.yml",
+        ".github/workflows/tle-numeric-precision.yml",
+        ".github/workflows/tle-raan-continuity.yml",
+        ".github/workflows/tle-secondary-epochs.yml",
+        "tests/test_ci_checkout_sha.py"
+      ],
+      "ci_check_runs": {
+        "total_count": 44,
+        "conclusions": {
+          "success": 44
+        }
+      }
+    },
+    {
+      "sha": "d7a8f051a1406134c51e9f4f66aba2ae8fe0d072",
+      "parents": [
+        "7075e6f83995b74b5eca30414560582749bdfdb4"
+      ],
+      "subject": "80 🦫 G37: auditar incongruência entre período e alturas SSR de dezembro (#471)",
+      "associated_prs": [
+        471
+      ],
+      "changed_files": [
+        "research/constraints/CASTOR-G37_ssr_crossfield_screen.json",
+        "tests/test_ssr_crossfield_screen_g37.py",
+        "tools/ssr_crossfield_screen_g37.py"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "success": 23
+        }
+      }
+    },
+    {
+      "sha": "b3adc2003bd52bae681de77bbf568dfe6b2cfd58",
+      "parents": [
+        "d7a8f051a1406134c51e9f4f66aba2ae8fe0d072",
+        "b40d239112fbaad91a6874093a6043a6e9756511"
+      ],
+      "subject": "Merge pull request #475 from franklinbaldo/research/lagarto-caravelas-wind-vectors-r23",
+      "associated_prs": [
+        475
+      ],
+      "changed_files": [
+        ".github/workflows/isd-caravelas-1963.yml",
+        "research/constraints/isd_caravelas_vector_edges_1963.json",
+        "research/meteorology/isd_caravelas_vectors_1963.json",
+        "research/meteorology/isd_caravelas_vectors_1963.md",
+        "tests/test_isd_caravelas_vectors_1963.py",
+        "tools/audit_isd_caravelas_vectors_1963.py"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "success": 23
+        }
+      }
+    },
+    {
+      "sha": "a3d8d27e1c5c92dbe9b093280f9db784163d9fba",
+      "parents": [
+        "b3adc2003bd52bae681de77bbf568dfe6b2cfd58"
+      ],
+      "subject": "88 🦅 G37: retificar genealogia das PRs #458 e #460 (#474)",
+      "associated_prs": [
+        474
+      ],
+      "changed_files": [
+        "research/audits/gaviao-main-window-20261113-g37.json",
+        "research/audits/gaviao-main-window-20261113-g37.md"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "success": 23
+        }
+      }
+    },
+    {
+      "sha": "a66e6487d3d130171f69e3829a50374609835447",
+      "parents": [
+        "a3d8d27e1c5c92dbe9b093280f9db784163d9fba"
+      ],
+      "subject": "docs(coruja): Caderno 15, três números NASA em desacordo",
+      "associated_prs": [
+        478
+      ],
+      "changed_files": [
+        "stories/2026-11-13-tres-numeros-uma-orbita.md"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "success": 23
+        }
+      }
+    },
+    {
+      "sha": "0964a0cba1ade3f877443bb0b5f82a64b686ac60",
+      "parents": [
+        "a66e6487d3d130171f69e3829a50374609835447"
+      ],
+      "subject": "72 🦇 Indicar seção ativa no Caderno SSG para visão e leitores de tela (#476)",
+      "associated_prs": [
+        476
+      ],
+      "changed_files": [
+        "scripts/check-site.mjs",
+        "scripts/enable-article-frames.mjs",
+        "scripts/mark-editorial-nav.mjs",
+        "static/css/site.css",
+        "templates/index.html",
+        "templates/post.html",
+        "templates/template.html",
+        "templates/tera/base.html",
+        "tests/ssg-current-nav.test.mjs"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "cancelled": 1,
+          "success": 22
+        }
+      }
+    },
+    {
+      "sha": "1dd6e5619801c685c97a7b2bfc218bad5b811919",
+      "parents": [
+        "0964a0cba1ade3f877443bb0b5f82a64b686ac60"
+      ],
+      "subject": "feat(ssg): mapa sem quota acessível no menu e CSP restrita (#479)",
+      "associated_prs": [
+        479
+      ],
+      "changed_files": [
+        "scripts/check-ssg-authored-site.mjs",
+        "templates/index.html",
+        "templates/page.html",
+        "templates/post.html",
+        "templates/template.html",
+        "templates/tera/base.html"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "success": 23
+        }
+      }
+    }
+  ],
+  "scientific_status": "INDETERMINATE: checks are documentary and computational; no sensor epochs or terminal position of NORAD 528 proven",
+  "ci_semantics": "Each SHA is checked separately; missing, cancelled, skipped and in-progress not treated as success; GitHub REST GET commit/check-runs snapshot.",
+  "limits": [
+    "CI status snapshot is not a PDF byte re-download or confirmation of evidence authenticity",
+    "A GitHub PR association does not prove deployment or the absence of out-of-band branch updates"
+  ]
+}
