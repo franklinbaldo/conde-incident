@@ -2,7 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
-import {mkdtempSync,mkdirSync,rmSync,writeFileSync} from 'node:fs';
+import {mkdtempSync,mkdirSync,readFileSync,rmSync,writeFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {dirname,join} from 'node:path';
 import {audit,auditBuiltSite,readBundle} from '../scripts/verify-ssg-evidence-index.mjs';
@@ -89,17 +89,98 @@ test('built occurrence pages must expose live family, source and work reverse li
   const bundle=clean();
   const directory=mkdtempSync(join(tmpdir(),'conde-ssg-reverse-'));
   try {
-    const rows=bundle.shards.flatMap(part=>JSON.parse(part.raw).records);
-    const digests=rows.map(row=>row.row_sha256).join(' ');
-    for (const [name] of bundle.pages) {
-      const dest=join(directory,'evidencias/arquivo',name.replace(/index\.md$/,'index.html'));
-      mkdirSync(dirname(dest),{recursive:true});
-      writeFileSync(dest,`<!doctype html><html><body><p>${digests}</p></body></html>`);
-    }
-    // Index is truly clickable; occurrence pages are not.
-    writeFileSync(join(directory,'evidencias/arquivo/index.html'),
-      `<!doctype html><main>${[...new Set(rows.map(row=>row.archive_path))]
-        .map(path=>`<a href="${path}">go</a>`).join('')}</main>`);
-    assert.throws(()=>auditBuiltSite(bundle,directory),/Built occurrence missing reverse anchor/);
+    mockBuiltSite(bundle,directory);
+    const row=bundle.shards.flatMap(part=>JSON.parse(part.raw).records)[0];
+    const page=join(directory,'evidencias/arquivo/c01-1/index.html');
+    const html=readFileSync(page,'utf8');
+    const target='/conde-incident/evidencias/arquivo/familias/'+
+      row.source_family.toLowerCase().replaceAll('_','-')+'/';
+    assert.ok(html.includes('href="'+target+'"'));
+    writeFileSync(page,html.replaceAll('href="'+target+'"',
+      'data-inert-family="'+target+'"'));
+    assert.throws(()=>auditBuiltSite(bundle,directory),
+      /Built occurrence missing reverse anchor/);
+  } finally {rmSync(directory,{recursive:true,force:true});}
+});
+
+// Synthetic HTML projection of generator Markdown. This tests the verifier,
+// not SSG itself (which is exercised by the Pages build on the exact SHA).
+function mockBuiltSite(bundle,directory) {
+  for (const [name,markdown] of bundle.pages) {
+    const dest=join(directory,'evidencias/arquivo',name.replace(/index\.md$/,'index.html'));
+    mkdirSync(dirname(dest),{recursive:true});
+    const html=markdown.replace(/\[([^\]]+)\]\(([^)]+)\)/g,(_match,label,url)=>
+      '<a href="'+url.replaceAll('&','&amp;')+'">'+label+'</a>');
+    writeFileSync(dest,'<!doctype html><html><body><main>'+html+'</main></body></html>');
+  }
+}
+
+test('synthetic complete navigation passes the verifier before live SSG CI',()=>{
+  const directory=mkdtempSync(join(tmpdir(),'conde-ssg-complete-'));
+  try {
+    const bundle=clean();
+    mockBuiltSite(bundle,directory);
+    assert.equal(auditBuiltSite(bundle,directory).references,bundle.citations.records.length);
+  } finally {rmSync(directory,{recursive:true,force:true});}
+});
+
+test('printed source URL is not a valid outbound documentary link',()=>{
+  const directory=mkdtempSync(join(tmpdir(),'conde-ssg-source-'));
+  try {
+    const bundle=clean();
+    mockBuiltSite(bundle,directory);
+    const row=bundle.citations.records[0];
+    const page=join(directory,'evidencias/arquivo/c01-1/index.html');
+    const html=readFileSync(page,'utf8');
+    assert.ok(html.includes('href="'+row.citation_url+'"'));
+    writeFileSync(page,html.replace('href="'+row.citation_url+'"',
+      'data-inert-source="'+row.citation_url+'"'));
+    assert.throws(()=>auditBuiltSite(bundle,directory),
+      /Built occurrence missing source\/matrix\/index anchor/);
+  } finally {rmSync(directory,{recursive:true,force:true});}
+});
+
+test('status code must be rendered in evidence, not just stored in JSON',()=>{
+  const directory=mkdtempSync(join(tmpdir(),'conde-ssg-status-'));
+  try {
+    const bundle=clean();
+    mockBuiltSite(bundle,directory);
+    const row=bundle.citations.records[0];
+    const page=join(directory,'evidencias/arquivo/c01-1/index.html');
+    writeFileSync(page,readFileSync(page,'utf8').replaceAll(row.source_status,'STATUS_HIDDEN'));
+    assert.throws(()=>auditBuiltSite(bundle,directory),
+      /Built HTML missing canonical epistemic status/);
+  } finally {rmSync(directory,{recursive:true,force:true});}
+});
+
+test('reverse source index must link back to the cited occurrence',()=>{
+  const directory=mkdtempSync(join(tmpdir(),'conde-ssg-backlink-'));
+  try {
+    const bundle=clean();
+    mockBuiltSite(bundle,directory);
+    const row=bundle.shards.flatMap(part=>JSON.parse(part.raw).records)[0];
+    const page=join(directory,'evidencias/arquivo/fontes',
+      row.source_id.toLowerCase().replaceAll('_','-'),'index.html');
+    const html=readFileSync(page,'utf8');
+    assert.ok(html.includes('href="'+row.archive_path+'"'));
+    writeFileSync(page,html.replaceAll('href="'+row.archive_path+'"',
+      'data-inert-route="'+row.archive_path+'"'));
+    assert.throws(()=>auditBuiltSite(bundle,directory),
+      /Built reverse page missing occurrence anchor/);
+  } finally {rmSync(directory,{recursive:true,force:true});}
+});
+
+test('immutable matrix row must be a link, not printed text',()=>{
+  const directory=mkdtempSync(join(tmpdir(),'conde-ssg-matrix-'));
+  try {
+    const bundle=clean();
+    mockBuiltSite(bundle,directory);
+    const page=join(directory,'evidencias/arquivo/c01-1/index.html');
+    const html=readFileSync(page,'utf8');
+    const matrix='https://github.com/franklinbaldo/conde-incident/blob/';
+    assert.ok(html.includes('href="'+matrix));
+    writeFileSync(page,html.replaceAll('href="'+matrix,'data-inert-matrix="'+matrix));
+    assert.throws(()=>auditBuiltSite(bundle,directory),
+      /Built occurrence missing source\/matrix\/index anchor/);
   } finally {rmSync(directory,{recursive:true,force:true});}
 });

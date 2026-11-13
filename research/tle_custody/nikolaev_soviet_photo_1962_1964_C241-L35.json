@@ -1,0 +1,69 @@
+{
+  "schema": "conde.archival_periodical_locator/v1",
+  "id": "C241-L35",
+  "as_of": "2026-11-13",
+  "research_issue": 545,
+  "source": {
+    "institution": "Mykolaiv Astronomical Observatory (historical publication list)",
+    "title": "Научные работы, опубликованные с 1917 по 1991 гг.",
+    "url": "https://mao.mk.ua/index.php?article_id=331",
+    "source_kind": "RETROSPECTIVE_INSTITUTIONAL_PUBLICATION_INDEX",
+    "http_status": 200,
+    "encoding": "windows-1251",
+    "bytes": 76869,
+    "sha256": "9c26ed15ddea6963e2e2b28ef05278a7419635abd66e9e382dc396748da884f6",
+    "hash_scope": "HTML downloaded 2026-11-13, not any original 1962/1964 journal page",
+    "original_journal_facsimiles_retrieved": false
+  },
+  "cross_catalogue": {
+    "url": "https://mao.kiev.ua/index.php/ua/gao-biblio-periodyka/specissues",
+    "kind": "INDEPENDENT_LIBRARY_HOLDINGS_INDEX",
+    "issues_present_in_holdings": [25, 38, 42],
+    "journal_contents_read_from_this_catalogue": false
+  },
+  "references": [
+    {
+      "year_of_publication": 1962,
+      "authors": "Бровенко В.Я.",
+      "title": "Определение оптического центра",
+      "description_in_index": "248 снимков, полученных на камере НАФА",
+      "journal_issue": 25,
+      "printed_pages": "21-22",
+      "original_issue_read": false,
+      "observation_epoch": null,
+      "satellite_identifier": null,
+      "target_specific_astrometry_verified": false
+    },
+    {
+      "year_of_publication": 1964,
+      "authors": "Ивакина Т.Я., Федорова Р.Т.",
+      "title": "Результаты фотографических наблюдений ИСЗ",
+      "journal_issue": 38,
+      "printed_pages": null,
+      "original_issue_read": false,
+      "observation_epoch": null,
+      "satellite_identifier": null,
+      "target_specific_astrometry_verified": false
+    },
+    {
+      "year_of_publication": 1964,
+      "authors": "Федорова Р.Т.",
+      "title": "Результаты фотографических наблюдений ИСЗ",
+      "journal_issue": 42,
+      "printed_pages": null,
+      "original_issue_read": false,
+      "observation_epoch": null,
+      "satellite_identifier": null,
+      "target_specific_astrometry_verified": false
+    }
+  ],
+  "search_priority": "Obtain original issues 38 and 42 (1964), inspect observation dates before discarding any 1963 measurements, then issue 25 for NAFA camera methods",
+  "requested_target_objects": [527, 528, 529],
+  "source_is_original_1963_instrumental_record": false,
+  "asserts_1963_publication_absent": false,
+  "target_specific_measurements_retrieved": 0,
+  "orbital_constraint_activated": false,
+  "archive_contacted": false,
+  "dependencies": ["C241-L29", "C241-L31", "C241-L34"],
+  "epistemic_level": "RETROSPECTIVE_BIBLIOGRAPHIC_LOCATOR_ONLY"
+}

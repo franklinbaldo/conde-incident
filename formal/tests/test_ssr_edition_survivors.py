@@ -5,6 +5,7 @@ from itertools import combinations
 import json
 import unittest
 from formal.scripts import compile_ssr_edition_survivors as m
+from formal.scripts import compile_ssr_jackknife as jackknife
 from formal.scripts import compile_ssr_nine_editions as p
 from tools import tle_ssr_editions_precision_audit as audit
 
@@ -58,6 +59,16 @@ class EditionSurvivorTests(unittest.TestCase):
             mutate(changed)
             with self.assertRaises(ValueError):
                 m.build(changed, copy.deepcopy(ledgers), decay)
+
+    def test_c241_p22_jackknife_ci_gate(self):
+        # This test is invoked by the existing pinned P21 workflow step.
+        result = jackknife.build()
+        self.assertEqual(len(result['delete_one']), 9)
+        self.assertEqual(json.loads(jackknife.REPORT.read_text()), result)
+        self.assertEqual(jackknife.LEAN.read_text(), jackknife.render_lean(result))
+        self.assertEqual([r['minimum_residual_centiminute']
+                          for r in result['delete_one']],
+                         [120, 128, 128, 128, 128, 128, 128, 128, 68])
 
     def test_generated_outputs_are_source_locked(self):
         r = m.build()
