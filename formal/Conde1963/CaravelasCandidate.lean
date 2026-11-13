@@ -32,3 +32,41 @@ def caravelasComparisonContext : MatrixRef :=
     label := 151, variant := 1 }
 
 end Conde1963
+
+-- ABELHA_CARAVELAS_VECTOR_CANDIDATE_BEGIN
+/-! Three derived daily means from ONE archived NOAA station, not three
+independent observations and not a measurement at Conde. The units
+are signed millimetres per second (not uncertainties). -/
+namespace Conde1963
+structure ArchivedDailyWindVector where
+  dateUTC : String
+  stationHours : Nat
+  calmHours : Nat
+  uMillimetresPerSecond : Int
+  vMillimetresPerSecond : Int
+  scalarSpeedMillimetresPerSecond : Nat
+  deriving Repr
+
+def caravelasDailyVectors : List ArchivedDailyWindVector :=
+[
+  { dateUTC := "1963-11-07"
+    stationHours := 24
+    calmHours := 0
+    uMillimetresPerSecond := -2709
+    vMillimetresPerSecond := -1702
+    scalarSpeedMillimetresPerSecond := 3367 },
+  { dateUTC := "1963-11-08"
+    stationHours := 24
+    calmHours := 3
+    uMillimetresPerSecond := -2334
+    vMillimetresPerSecond := -2382
+    scalarSpeedMillimetresPerSecond := 3367 },
+  { dateUTC := "1963-11-09"
+    stationHours := 24
+    calmHours := 1
+    uMillimetresPerSecond := -2372
+    vMillimetresPerSecond := -2812
+    scalarSpeedMillimetresPerSecond := 3775 }
+]
+end Conde1963
+-- ABELHA_CARAVELAS_VECTOR_CANDIDATE_END
