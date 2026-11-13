@@ -17,6 +17,7 @@ assert.ok(existsSync('public/css/site.css'),'CSS do Caderno ausente');
 assert.ok(existsSync('public/img/caderno.svg'),'Arte editorial ausente');
 for(const page of ['index.html','stories/index.html','lab/index.html']) assert.match(read(page),/Content-Security-Policy/,'CSP ausente em '+page);
 let chapters=0;
+let accessiblePdfEmbeds=0;
 for(const name of readdirSync('stories').filter(s=>/^\d{4}-\d{2}-\d{2}-.+\.md$/.test(s))){
   const slug=name.slice(0,-3);
   const source=readFileSync(join('stories',name),'utf8');
@@ -27,6 +28,21 @@ for(const name of readdirSync('stories').filter(s=>/^\d{4}-\d{2}-\d{2}-.+\.md$/.
   assert.ok(article.includes('/conde-incident/lab/'),'Artigo sem retorno ao laboratório: '+slug);
   assert.ok(article.includes('https://github.com/franklinbaldo/conde-incident/blob/main/stories/'+name),'Fonte canônica ausente: '+slug);
   assert.ok(article.includes('https://') && source.includes('https://'),'Sem referência externa: '+slug);
+  // A keyboard user must meet a direct PDF link before entering the embedded reader.
+  for (const [, figure] of article.matchAll(/<figure class="story-visual story-document">([\s\S]*?)<\/figure>/g)) {
+    const iframe = figure.match(/<iframe\b[^>]*\bsrc="([^"]+\.pdf(?:#[^"]*)?)"/i);
+    if (!iframe) continue;
+    accessiblePdfEmbeds++;
+    const action = figure.match(/<p class="story-document-action">\s*<a\b([^>]*)>([^<]+)<\/a>/i);
+    assert.ok(action, 'Alternativa de acesso direto ao PDF ausente: '+slug);
+    const href = action[1].match(/\bhref="([^"]+)"/)?.[1];
+    assert.equal(href, iframe[1], 'Link alternativo não abre a mesma página do PDF: '+slug);
+    assert.ok(figure.indexOf('class="story-document-action"') < figure.indexOf('<iframe'),
+      'Link alternativo aparece depois do iframe: '+slug);
+    assert.match(action[1], /\btarget="_blank"/, 'Link direto sem nova aba: '+slug);
+    assert.match(action[1], /\brel="noopener noreferrer"/, 'Link direto sem isolamento: '+slug);
+    assert.ok(action[2].trim().length >= 15, 'Rótulo do link PDF insuficiente: '+slug);
+  }
   chapters++;
 }
 
@@ -84,5 +100,6 @@ const archiveComparison=JSON.parse(readFileSync('research/archive/coruja_wayback
 assert.equal(archiveComparison.records.length,3,'Conjunto original e controle negativo incompleto');
 assert.equal(archiveComparison.records.filter(r=>r.byte_identity_observed===true).length,2,'Cotejo sem as duas igualdades documentais');
 
+assert.ok(accessiblePdfEmbeds>=3,'Regressão: menos de três PDFs incorporados com link anterior');
 assert.ok(chapters>0,'Nenhuma reportagem renderizada');
 console.log('PASS: '+chapters+' capítulos, índice, CSS, laboratório e rotas GitHub Pages.');
