@@ -1,0 +1,334 @@
+{
+  "schema": "conde.igra-recife-station-history-gap/v1",
+  "id": "LAG-IGRA-RECIFE-HISTORY-GAP-1963-01",
+  "source": {
+    "metadata_url": "https://www.ncei.noaa.gov/pub/data/igra/history/igra2-metadata.txt",
+    "metadata_readme_url": "https://www.ncei.noaa.gov/pub/data/igra/history/igra2-metadata-readme.txt",
+    "metadata_full_sha256": "fe1a0b23614306d453728ba499e48ac4efa180956b8f222c55eb1adcfedf68f7",
+    "metadata_full_bytes": 6595873,
+    "sonde_url": "https://www.ncei.noaa.gov/pub/data/igra/history/wmo-sonde-history.txt",
+    "sonde_format_url": "https://www.ncei.noaa.gov/pub/data/igra/history/wmo-history-format.txt",
+    "sonde_full_sha256": "e72e594b8f1c2ce3543e997e5bec0ca0a13d72d41b91197fa16325a1436af0fe",
+    "sonde_full_bytes": 8252302,
+    "metadata_excerpt_sha256": "c887966ab1380dee565e3641f2caf960bf26e4aacc91cae85a5600a5f5e8be25",
+    "sonde_excerpt_sha256": "24c32434b4b9857756dd95993ade5e86f2f28852692612cba41cf678e4cf2afc",
+    "readme_last_updated": "2023-01-19",
+    "retrieval_date_utc": "2026-11-13",
+    "metadata_archive_last_modified_utc": "2026-07-15",
+    "institution": "NOAA/NCEI",
+    "metadata_lineage": "historical catalog; Gaffen (1996) for IGRA 2; sources listed per row",
+    "independent_sounding_measurement": false
+  },
+  "event_records": [
+    {
+      "wmo_id": 82899,
+      "station_name": "RECIFE",
+      "latitude_deg": -8.133,
+      "longitude_deg": -34.917,
+      "station_elevation_m": 11.0,
+      "event_year": 1982,
+      "event_month": 99,
+      "event_day": 99,
+      "event_hour_utc": 99,
+      "uncertain_date_flag": 1,
+      "event_type": "USING SONDE MODEL",
+      "information_prior_or_static": "VAISALA RS21",
+      "information_after": null,
+      "reference": "UK Met. O. (pers. comm.)",
+      "row_sha256": "14edb39e4093e3bf5e8d5900a18ec6ffcbc44ca7c5ba0309d6640b1e6773ff15"
+    },
+    {
+      "wmo_id": 82899,
+      "station_name": "RECIFE",
+      "latitude_deg": -8.133,
+      "longitude_deg": -34.917,
+      "station_elevation_m": 11.0,
+      "event_year": 1982,
+      "event_month": 99,
+      "event_day": 99,
+      "event_hour_utc": 99,
+      "uncertain_date_flag": 1,
+      "event_type": "USING RADIAT. CORR.",
+      "information_prior_or_static": "NO RAD. CORRECTION",
+      "information_after": null,
+      "reference": "UK Met. O. (pers. comm.)",
+      "row_sha256": "9482f7c42042e4948610a09a24733b400e513be1f8937f5225edf2a89cb2c47b"
+    },
+    {
+      "wmo_id": 82899,
+      "station_name": "RECIFE",
+      "latitude_deg": -8.133,
+      "longitude_deg": -34.917,
+      "station_elevation_m": 11.0,
+      "event_year": 1986,
+      "event_month": 99,
+      "event_day": 99,
+      "event_hour_utc": 99,
+      "uncertain_date_flag": 1,
+      "event_type": "USING SONDE MODEL",
+      "information_prior_or_static": "VAISALA (Generic)",
+      "information_after": null,
+      "reference": "UK Met. O. (pers. comm.)",
+      "row_sha256": "c703d919c6170ece1e41ab5a794ae772ceeb008b57841c014c2fc089772cb832"
+    },
+    {
+      "wmo_id": 82899,
+      "station_name": "RECIFE",
+      "latitude_deg": -8.133,
+      "longitude_deg": -34.917,
+      "station_elevation_m": 11.0,
+      "event_year": 1986,
+      "event_month": 99,
+      "event_day": 99,
+      "event_hour_utc": 99,
+      "uncertain_date_flag": 1,
+      "event_type": "USING RADIAT. CORR.",
+      "information_prior_or_static": "NO RAD. CORRECTION",
+      "information_after": null,
+      "reference": "UK Met. O. (pers. comm.)",
+      "row_sha256": "a10bbf6fd7d5f0b7a5fe426e7fb8cd0db2786c83af36946eeda347712f91bac4"
+    },
+    {
+      "wmo_id": 82899,
+      "station_name": "RECIFE",
+      "latitude_deg": -8.133,
+      "longitude_deg": -34.917,
+      "station_elevation_m": 11.0,
+      "event_year": 1989,
+      "event_month": 99,
+      "event_day": 99,
+      "event_hour_utc": 99,
+      "uncertain_date_flag": 1,
+      "event_type": "USING SONDE MODEL",
+      "information_prior_or_static": "VAISALA RS80",
+      "information_after": null,
+      "reference": "UK Met. O. (pers. comm.)",
+      "row_sha256": "0470d1ec129ad04350095869fc4bf85f2c2a0e0c472bb9de910662a5b470fbf2"
+    },
+    {
+      "wmo_id": 82900,
+      "station_name": "RECIFE/CURADO",
+      "latitude_deg": -8.0667,
+      "longitude_deg": -34.8833,
+      "station_elevation_m": 19.0,
+      "event_year": 1982,
+      "event_month": 99,
+      "event_day": 99,
+      "event_hour_utc": 99,
+      "uncertain_date_flag": 1,
+      "event_type": "USING RADIAT. CORR.",
+      "information_prior_or_static": "NO RADIATION CORRECTION",
+      "information_after": null,
+      "reference": "UK Met. O. (pers. comm.)",
+      "row_sha256": "02db13bc3d548d924b150cf0be206867709e170d69d8f9f9aced92394ac7e13b"
+    },
+    {
+      "wmo_id": 82900,
+      "station_name": "RECIFE/CURADO",
+      "latitude_deg": -8.0667,
+      "longitude_deg": -34.8833,
+      "station_elevation_m": 19.0,
+      "event_year": 1982,
+      "event_month": 99,
+      "event_day": 99,
+      "event_hour_utc": 99,
+      "uncertain_date_flag": 1,
+      "event_type": "USING SONDE MODEL",
+      "information_prior_or_static": "VAISALA RS21 UNSPECIFIED",
+      "information_after": null,
+      "reference": "UK Met. O. (pers. comm.)",
+      "row_sha256": "a943a5ee2c2dffb39f7c54c7a74033ae73e2b6b5a8677f6a5375f8575c330a23"
+    },
+    {
+      "wmo_id": 82900,
+      "station_name": "RECIFE/CURADO",
+      "latitude_deg": -8.0667,
+      "longitude_deg": -34.8833,
+      "station_elevation_m": 19.0,
+      "event_year": 1986,
+      "event_month": 99,
+      "event_day": 99,
+      "event_hour_utc": 99,
+      "uncertain_date_flag": 1,
+      "event_type": "USING RADIAT. CORR.",
+      "information_prior_or_static": "NO RADIATION CORRECTION",
+      "information_after": null,
+      "reference": "UK Met. O. (pers. comm.)",
+      "row_sha256": "190a3863b08269006518a7acc175c8415fd13eca0282a011eb262a2a7f978588"
+    },
+    {
+      "wmo_id": 82900,
+      "station_name": "RECIFE/CURADO",
+      "latitude_deg": -8.0667,
+      "longitude_deg": -34.8833,
+      "station_elevation_m": 19.0,
+      "event_year": 1986,
+      "event_month": 99,
+      "event_day": 99,
+      "event_hour_utc": 99,
+      "uncertain_date_flag": 1,
+      "event_type": "USING SONDE MODEL",
+      "information_prior_or_static": "VAISALA UNSPECIFIED",
+      "information_after": null,
+      "reference": "UK Met. O. (pers. comm.)",
+      "row_sha256": "33f1d87af7e99268039ce072b307c0dc3c9b313f895bcc4f00c04c0d56fda495"
+    },
+    {
+      "wmo_id": 82900,
+      "station_name": "RECIFE/CURADO",
+      "latitude_deg": -8.0667,
+      "longitude_deg": -34.8833,
+      "station_elevation_m": 19.0,
+      "event_year": 1989,
+      "event_month": 99,
+      "event_day": 99,
+      "event_hour_utc": 99,
+      "uncertain_date_flag": 1,
+      "event_type": "USING SONDE MODEL",
+      "information_prior_or_static": "VAISALA RS80 UNSPECIFIED",
+      "information_after": null,
+      "reference": "UK Met. O. (pers. comm.)",
+      "row_sha256": "0490f29947ce706b1e3bed67d1c6ae905263d1d277f8d08ef319458c57043a50"
+    },
+    {
+      "wmo_id": 82900,
+      "station_name": "RECIFE (CURADO)",
+      "latitude_deg": -8.05,
+      "longitude_deg": -34.92,
+      "station_elevation_m": 11.0,
+      "event_year": 1992,
+      "event_month": 3,
+      "event_day": 99,
+      "event_hour_utc": 99,
+      "uncertain_date_flag": 0,
+      "event_type": "USING SONDE MODEL",
+      "information_prior_or_static": "VAISALA RS21 UNSPECIFIED",
+      "information_after": null,
+      "reference": "Gaffen (1993)",
+      "row_sha256": "07680f46c21dd6b58b549590188485d414abb35c141e5fc20fe3dd0c94a2f2bf"
+    },
+    {
+      "wmo_id": 82900,
+      "station_name": "RECIFE (CURADO)",
+      "latitude_deg": -8.05,
+      "longitude_deg": -34.92,
+      "station_elevation_m": 7.0,
+      "event_year": 1992,
+      "event_month": 12,
+      "event_day": 99,
+      "event_hour_utc": 99,
+      "uncertain_date_flag": 0,
+      "event_type": "USING SONDE MODEL",
+      "information_prior_or_static": "VAISALA RS80 UNSPECIFIED",
+      "information_after": null,
+      "reference": "Oakley (1993)",
+      "row_sha256": "e5977d1523de3b4609142f06720d82ffea4eaf1fbf1415d19f4b0ea868f0d76a"
+    }
+  ],
+  "sonde_code_intervals": [
+    {
+      "from_utc": "2000-01-01T12:00Z",
+      "to_utc": "2000-05-17T12:00Z",
+      "instrument_code": 61,
+      "row_sha256": "9417971267e2f9ba61332c5c75cf107e926c5ee61012b0fa33af6bae81656ba7"
+    },
+    {
+      "from_utc": "2000-05-18T12:00Z",
+      "to_utc": "2000-05-18T12:00Z",
+      "instrument_code": 65,
+      "row_sha256": "9600da5dc3cd17d084263663c10d5686830ac17fa3b65aa9d4eb2c1054af0d5f"
+    },
+    {
+      "from_utc": "2000-05-19T12:00Z",
+      "to_utc": "2007-02-10T12:00Z",
+      "instrument_code": 61,
+      "row_sha256": "65bc0ce8a7bec3ae2d0e96a3edbd059d3b8a42a55a1c796194a108b4d112bd7a"
+    },
+    {
+      "from_utc": "2007-03-15T12:00Z",
+      "to_utc": "2010-10-31T12:00Z",
+      "instrument_code": 79,
+      "row_sha256": "a5e9631d09861595bcbdcaa4a5412d83958dabead54505fbd8f1d0f8f3669c80"
+    },
+    {
+      "from_utc": "2010-11-01T12:00Z",
+      "to_utc": "2010-11-01T12:00Z",
+      "instrument_code": 49,
+      "row_sha256": "57c91a25ea497485e9837a6eb10a9eeb90c7b005b37d92e1664bbadd3987bd52"
+    },
+    {
+      "from_utc": "2010-11-03T12:00Z",
+      "to_utc": "2013-09-10T12:00Z",
+      "instrument_code": 79,
+      "row_sha256": "2c4fa9bafaf52f124904374b96ce3c7b05ad8b42bb40d9cfb13d7e39f2c59f17"
+    },
+    {
+      "from_utc": "2013-09-12T12:00Z",
+      "to_utc": "2015-10-20T12:00Z",
+      "instrument_code": 80,
+      "row_sha256": "290a21972fd19cf80df90e656be768b085dcf55ef2a4eb8857980c468ae0365a"
+    },
+    {
+      "from_utc": "2015-10-21T12:00Z",
+      "to_utc": "2015-10-21T12:00Z",
+      "instrument_code": 0,
+      "row_sha256": "71a349a529be1694f2249853fe62b5eaa38220c151c816abcd99152bdf89b488"
+    },
+    {
+      "from_utc": "2015-10-22T12:00Z",
+      "to_utc": "2016-02-14T12:00Z",
+      "instrument_code": 80,
+      "row_sha256": "24f128a6f523d194883b54bf3f1d96bf4cc4bc2647d04cc6831e1e8472a4d383"
+    },
+    {
+      "from_utc": "2018-10-03T12:00Z",
+      "to_utc": "2019-08-10T12:00Z",
+      "instrument_code": 14,
+      "row_sha256": "7d493c5764a4134f141e98f9141198754f1213482386453249109ad4a36fcd20"
+    },
+    {
+      "from_utc": "2019-08-11T12:00Z",
+      "to_utc": "2019-08-11T12:00Z",
+      "instrument_code": 1,
+      "row_sha256": "2882d2cecfad5d9529aab41d7881e6e26753efed6d8182c8b0caa1158725f740"
+    },
+    {
+      "from_utc": "2019-08-12T12:00Z",
+      "to_utc": "2019-12-01T15:00Z",
+      "instrument_code": 14,
+      "row_sha256": "fa2a7a7f2575dcd7fb2c609fdd38dc5950ef7077a79bf13087336419cf4314f1"
+    }
+  ],
+  "conclusions": {
+    "historical_target_nominal_dates_utc": [
+      "1963-11-07",
+      "1963-11-08",
+      "1963-11-09"
+    ],
+    "count_station_events": 12,
+    "station_event_year_range": [
+      1982,
+      1992
+    ],
+    "original_wmo_ids_in_later_records": [
+      82899,
+      82900
+    ],
+    "sonde_code_earliest_year": 2000,
+    "documented_1963_instrument": null,
+    "documented_1963_height_processing": null,
+    "documented_1963_station_coordinates": null,
+    "documented_1963_station_elevation_m": null,
+    "instrumental_sigma_1963": null,
+    "recife_to_conde_error": null,
+    "can_backdate_1982_sonde_to_1963": false,
+    "can_use_later_coordinates_as_1963_observation": false,
+    "can_activate_geographic_constraint": false,
+    "interpretation": "No station-history event in these NCEI sources spans or describes 1963; this is a metadata coverage gap, not evidence that no radiosonde launched in 1963.",
+    "graph_links": [
+      "C149-C151 -> original p/T/GPH from ncdc6301 -> station processing and historical location unknown -> density error PENDING",
+      "C17-C23 and C193 -> independent upper-atmospheric context, not station height calibration",
+      "C144-C146 -> separate surface-chart family, not a calibrated vertical transfer to Conde"
+    ]
+  }
+}
