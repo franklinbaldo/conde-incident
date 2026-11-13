@@ -46,5 +46,23 @@ class UniversalStepIntegrity(unittest.TestCase):
                 with self.assertRaisesRegex(AssertionError, 'universal step'):
                     assert_workflow_policy(mutant, name)
 
+    def test_multiline_commands_cannot_hide_tolerated_failure(self):
+        # A required command with an appended success clause can pass by text
+        # prefix matching while the actual test fails and the step stays green.
+        original = (WORKFLOWS / 'integration-head.yml').read_text(encoding='utf-8')
+        self.assertTrue(assert_workflow_policy(original, 'integration-head.yml'))
+        for command in (
+            'test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD_SHA"',
+            "python3 -m unittest discover -s tests -p 'test_*.py' -v",
+            'node --test "${tests[@]}"',
+        ):
+            for bypass in (' || true', ' ; true', ' || :'):
+                mutant = original.replace(command, command + bypass, 1)
+                with self.subTest(command=command, bypass=bypass):
+                    self.assertNotEqual(mutant, original)
+                    with self.assertRaisesRegex(AssertionError, 'universal step command'):
+                        assert_workflow_policy(mutant, 'integration-head.yml')
+
+
 if __name__ == '__main__':
     unittest.main()
