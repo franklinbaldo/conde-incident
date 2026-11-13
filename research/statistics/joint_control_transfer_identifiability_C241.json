@@ -1,0 +1,87 @@
+{
+  "classification": "COUNTERFACTUAL_EXACT_LINEAR_MODEL_NOT_AN_ORBITAL_INFERENCE",
+  "decision": {
+    "active_constraint": false,
+    "discriminating_inputs": [
+      "an authenticated calibrated extra 528 track at a distinct pre-holdout time",
+      "independent physical bounds on 528-specific ballistic/initial state parameters",
+      "validated shared dynamics, atmosphere and sensor covariance for 527/529 controls"
+    ],
+    "geographic_exclusion": "NOT_AUTHORIZED",
+    "historical_mcmc": "NOT_RUN",
+    "historical_terminal_time": "NOT_IDENTIFIED",
+    "holdout_rule": "exclude all evaluation 528 rows from training; no post-528 sibling track is a 528 measurement"
+  },
+  "model": {
+    "columns": [
+      "a527",
+      "v527",
+      "b527",
+      "a528",
+      "v528",
+      "b528",
+      "a529",
+      "v529",
+      "b529",
+      "g"
+    ],
+    "equation": "y_j(t)=a_j+v_j*t+(g+b_j)*t^2/2",
+    "not_a_physical_operator": true,
+    "shared_term": "g is common, b_j is object-specific unconstrained curvature",
+    "time": "exact dimensionless rational times 0,1,2,3 (DESIGN ONLY)"
+  },
+  "scenarios": {
+    "additional_528_epoch_before_holdout": {
+      "observation_status": "HYPOTHETICAL_NOT_A_RECOVERED_TRACK",
+      "rank": 9,
+      "terminal_528_row_estimable": true,
+      "training_rows": 9
+    },
+    "additional_control_after_missing_body": {
+      "observation_status": "HYPOTHETICAL_NOT_A_RECOVERED_TRACK",
+      "rank": 8,
+      "terminal_528_row_estimable": false,
+      "training_rows": 10
+    },
+    "baseline": {
+      "rank": 8,
+      "terminal_528_row_estimable": false,
+      "training_rows": 8,
+      "unknown_columns": 10
+    },
+    "known_control_specific_curvature": {
+      "rank": 9,
+      "status": "INDEPENDENT_CALIBRATION_ASSUMED_NOT_DOCUMENTED",
+      "terminal_528_row_estimable": false
+    },
+    "known_shared_and_528_specific_curvature": {
+      "rank": 10,
+      "status": "TWO_INDEPENDENT_CALIBRATIONS_ASSUMED_NOT_DOCUMENTED",
+      "terminal_528_row_estimable": true
+    }
+  },
+  "schema": "conde.joint-control-identifiability-counterexample/v1",
+  "source_context": {
+    "historical_observations_loaded": 0,
+    "issue": "https://github.com/franklinbaldo/conde-incident/issues/396",
+    "occurrence_ids": [
+      "C241-L18",
+      "C241-P10"
+    ],
+    "source_status": "ISSUE_CONTEXT_ONLY_NOT_INPUT_OBSERVATIONS"
+  },
+  "witnesses": {
+    "missing_528_curvature": {
+      "delta_b528": "1",
+      "delta_v528": "-1/2",
+      "target_528_t3_change": "3",
+      "training_and_control_changes": "0"
+    },
+    "shared_curvature_gauge": {
+      "delta_each_b": "-1",
+      "delta_g": "1",
+      "shared_g_separately_identified": false,
+      "training_and_target_changes": "0"
+    }
+  }
+}
