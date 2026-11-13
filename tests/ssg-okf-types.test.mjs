@@ -13,7 +13,8 @@ test('arquivo SSG distingue índice Page e ocorrência Evidence',()=>{
  const citations=JSON.parse(readFileSync('public/data/conde-source-citations.json','utf8'));
  const lineage=JSON.parse(readFileSync('public/data/conde-declared-dependence.json','utf8'));
  const pages=archivePages(citations,lineage);
- assert.equal(pages.size,citations.curated_occurrences+1);
+ assert.equal(pages.size,citations.curated_occurrences+2+new Set(citations.records.map(r=>r.source_family)).size);
+ assert.match(pages.get('familias/index.md'),/^---\ntype: Page\n/);
  assert.match(pages.get('index.md'),/^---\ntype: Page\n/);
  const record=pages.get('c197-1/index.md');
  assert.match(record,/^---\ntype: Evidence\n/);
