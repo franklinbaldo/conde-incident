@@ -12,6 +12,7 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlsplit
+from verify_on20_wayback_prefix import validate as validate_on20_manifest
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = Path('public/data/conde-archive-documentary-links.json')
@@ -19,7 +20,8 @@ CATALOG = 'research/meteorology/ncep_office_notes_1963_1968_locator.json'
 CUSTODY = 'research/meteorology/ncep_on20_wayback_custody_20261112.json'
 PAGE_AUDIT = 'research/meteorology/ncep_on20_page_audit_20261112.json'
 PENDING = 'research/constraints/nmc_y20175_pending_bridge.json'
-SOURCES = (CATALOG, CUSTODY, PAGE_AUDIT, PENDING)
+PREFIX = 'research/archive/on20_wayback_prefix_20261113.json'
+SOURCES = (CATALOG, CUSTODY, PAGE_AUDIT, PENDING, PREFIX)
 EXPECTED_SHA256 = '656984ac58ff1632e39b0f62ac80003785ddea0a0de32dfb19c8c612067aabbe'
 ORIGINAL = 'http://www.ncep.noaa.gov/officenotes/NOAA-NPM-NCEPON-0001/013FD4DB.pdf'
 
@@ -40,7 +42,7 @@ def build(root: Path = ROOT) -> dict:
         raw = (root / path).read_bytes()
         feeds[path] = json.loads(raw)
         hashes[path] = hashlib.sha256(raw).hexdigest()
-    catalog, custody, audit, pending = (feeds[p] for p in SOURCES)
+    catalog, custody, audit, pending, prefix = (feeds[p] for p in SOURCES)
     require(catalog['id'] == 'MET-NMC-NCEPON-20261112-01'
             and custody['id'] == 'MET-NMC-NCEPON-20261112-02'
             and custody['linked_catalog_id'] == catalog['id']
@@ -87,8 +89,26 @@ def build(root: Path = ROOT) -> dict:
             and pending['source_independence'] == 'UNKNOWN_NO_DECODE'
             and pending['matrix_context_ref'].endswith(':C151#1'),
             'archival copy incorrectly promoted into 1963 measurement')
-    # The preservation ledger does NOT supply CDX's Base32 SHA-1 digest.
-    # Neither the SHA-256 of the retrieved bytes nor a capture URL supplies it.
+    # A subsequent *separately custodied* replay audit now records CDX digests.
+    # Never derive CDX SHA-1 from the earlier SHA-256 or a timestamp alone.
+    require(validate_on20_manifest(prefix) == [], 'ON20 prefix manifest invalid')
+    july, september, january = prefix['snapshots']
+    require(prefix['document_id'] == custody['id']
+            and prefix['original_url'] == ORIGINAL
+            and prefix['document_publication_year'] == custody['published_year']
+            and january['archived_url'] == capture['replay_url']
+            and january['replay']['sha256'] == capture['sha256']
+            and january['replay']['bytes'] == capture['byte_length']
+            and september['replay']['sha256'] == EXPECTED_SHA256
+            and september['replay']['bytes'] == capture['byte_length']
+            and january['cdx']['digest'] == september['cdx']['digest']
+            == 'WJ2GSUYH54TA2IUAFHSKWG2KCRX2WMIM'
+            and september['replay']['pdf_eof'] is True
+            and july['replay']['pdf_eof'] is False
+            and july['assessment'] == 'TRUNCATED_PREFIX_NOT_RECOMMENDED'
+            and prefix['comparison']['earliest_is_exact_byte_prefix_of_complete_replay']
+            and prefix['comparison']['two_complete_replays_identical'],
+            'CDX/PDF identity, full replay or prefix status drift')
     return {
         'schema': 'conde.archive-documentary-links/v1',
         'custodian': 'Lontra', 'source_file_sha256': hashes,
@@ -102,7 +122,11 @@ def build(root: Path = ROOT) -> dict:
              'http_status': capture['http_status'], 'mime': capture['content_type'],
              'retrieved_bytes_sha256': EXPECTED_SHA256,
              'retrieved_bytes_length': capture['byte_length'],
-             'cdx_digest_base32_sha1': None, 'cdx_digest_verification': 'NOT_RECORDED',
+             'cdx_digest_base32_sha1': january['cdx']['digest'],
+             'cdx_digest_verification': 'REPLAY_SHA1_MATCHED_IN_LONTRA_MANIFEST',
+             'cdx_manifest_path': PREFIX,
+             'preferred_archived_url': september['archived_url'],
+             'preferred_capture_utc': '2008-09-20T17:55:18Z',
              'custody_status': 'PREVIOUSLY_RETRIEVED_AND_HASHED_NOT_REFETCHED_BY_EXPORTER'},
             {'id': audit['id'], 'kind': 'AUDIT_OF_SAME_PDF_BYTES',
              'page_tree_count': 23, 'pdf_sha256': EXPECTED_SHA256},
@@ -113,20 +137,49 @@ def build(root: Path = ROOT) -> dict:
              'matrix_context_row_sha256': pending['matrix_context_row_sha256'],
              'lean_status': 'NOT_PROMOTED', 'activation': False,
              'simulator_value': None, 'independent_physical_observation_count': None},
+            {'id': 'MET-NMC-NCEPON-20080920-FULL',
+             'kind': 'EARLIEST_VERIFIED_COMPLETE_ARCHIVED_PDF',
+             'original_url': ORIGINAL, 'archive_url': september['archived_url'],
+             'capture_utc': '2008-09-20T17:55:18Z',
+             'cdx_digest_base32_sha1': september['cdx']['digest'],
+             'retrieved_bytes_sha256': september['replay']['sha256'],
+             'retrieved_bytes_length': september['replay']['bytes'],
+             'http_status': september['replay']['http_status'],
+             'mime': september['replay']['content_type'],
+             'pdf_eof': True, 'recommended_as_source_link': True},
+            {'id': 'MET-NMC-NCEPON-20080724-PREFIX',
+             'kind': 'TRUNCATED_PREFIX_NOT_COMPLETE_SOURCE',
+             'original_url': ORIGINAL, 'archive_url': july['archived_url'],
+             'capture_utc': '2008-07-24T20:21:55Z',
+             'cdx_digest_base32_sha1': july['cdx']['digest'],
+             'retrieved_bytes_sha256': july['replay']['sha256'],
+             'retrieved_bytes_length': july['replay']['bytes'],
+             'http_status': july['replay']['http_status'],
+             'mime': july['replay']['content_type'],
+             'pdf_eof': False, 'recommended_as_source_link': False},
         ],
         'edges': [
             {'from': custody['id'], 'to': catalog['id'], 'kind': 'LOCATED_VIA_CATALOG'},
             {'from': audit['id'], 'to': custody['id'], 'kind': 'SAME_BYTES_PAGE_AUDIT'},
             {'from': 'NMC_Y20175_PENDING_BRIDGE', 'to': custody['id'],
              'kind': 'CONDITIONAL_DOCUMENTARY_REFERENCE_NOT_1963_CALIBRATION'},
+            {'from': 'MET-NMC-NCEPON-20080920-FULL', 'to': custody['id'],
+             'kind': 'SAME_PDF_BYTES_NOT_INDEPENDENT_SOURCES'},
+            {'from': 'MET-NMC-NCEPON-20080724-PREFIX',
+             'to': 'MET-NMC-NCEPON-20080920-FULL',
+             'kind': 'EXACT_TRUNCATED_PREFIX_NOT_INDEPENDENT_EDITION'},
         ],
         'epistemic_limits': {
             'distinct_physical_observations_added': 0,
-            'cdx_digest_retrieved': False,
+            'cdx_digest_retrieved': True,
+            'cdx_verification_from_custodian_manifest': PREFIX,
+            'pdf_capture_20080724_rejected_despite_http_200': True,
+            'one_distinct_complete_pdf_payload': True,
             'catalog_year_is_not_capture_year': True,
             'retrieved_wayback_sha256_is_not_master_sha256': True,
             'archive_pdf_not_validated_for_1963_y20175': True,
-            'site_may_claim_cdx_verified': False,
+            'site_may_claim_cdx_verified': True,
+            'site_must_prefer_complete_20080920_over_truncated_20080724': True,
         },
     }
 
