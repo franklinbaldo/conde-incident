@@ -1,0 +1,52 @@
+{
+  "schema": "conde.soviet_1963_holdings/v1",
+  "id": "C241-L29",
+  "research_issue": 545,
+  "verified_on": "2026-11-13",
+  "level": "INSTITUTIONAL_LIBRARY_HOLDINGS_ONLY",
+  "institution": "Main Astronomical Observatory of the National Academy of Sciences of Ukraine, library",
+  "records": [
+    {
+      "id": "C241-L29#1",
+      "journal": "Бюллетень станции оптического наблюдения ИСЗ",
+      "url": "https://mao.kiev.ua/index.php/ua/gao-biblio-periodyka/specissues",
+      "file": "specissues.html",
+      "bytes": 101106,
+      "sha256": "e09e9df83f2607b5f70020b3751ada86d87748dd8766e72dc829a984ced4f6fb",
+      "issues": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "year": 1963,
+      "http_status": 200,
+      "issue_pdf_sha256": null,
+      "facsimile_read": false,
+      "primary_observation_527_528_529": null
+    },
+    {
+      "id": "C241-L29#2",
+      "journal": "Наблюдения ИСЗ",
+      "url": "https://mao.kiev.ua/index.php/ua/gao-biblio-periodyka/sciencefilds-n",
+      "file": "sciencefilds-n.html",
+      "bytes": 36311,
+      "sha256": "fcb2bad3a905fe83f6f5d4a8bd796c3dd5ddbf95ee0258a0e08cf7492ad2d2f9",
+      "issues": [
+        2
+      ],
+      "year": 1963,
+      "http_status": 200,
+      "issue_pdf_sha256": null,
+      "facsimile_read": false,
+      "primary_observation_527_528_529": null
+    }
+  ],
+  "notes": "Two distinct catalog titles and holdings rows, not issues read or independent observations.",
+  "verified_observations": 0,
+  "orbital_constraint_activated": false,
+  "library_contacted": false,
+  "next_step": "Find issue facsimiles 32-37 and issue 2; inspect source pages for actual 1963-003A/B/C timed measurements before orbital use."
+}
