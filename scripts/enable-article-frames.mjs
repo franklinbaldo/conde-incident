@@ -1,4 +1,5 @@
 import { localizeGeneratedPages } from './localize-ssg-search.mjs';
+import { localizeRuntime } from './localize-ssg-search-runtime.mjs';
 import { markGeneratedNavigation } from './mark-editorial-nav.mjs';
 import assert from 'node:assert/strict';
 import {readFileSync,writeFileSync} from 'node:fs';
@@ -56,8 +57,10 @@ writeFileSync(camerasFile,camerasHtml);
 console.log('PASS: CSP restrita do capitulo 07 permite so o fac-simile NORAD.');
 
 // The same post-SSG integration step localizes its built-in search UI.
-// Only generated HTML text changes; the CSP/SRI-protected JS is untouched.
+// Static labels and the generated client search use the same pt-BR locale.
+// The runtime is versioned afresh and all HTML integrity attributes updated.
 localizeGeneratedPages();
+localizeRuntime();
 
 // Identify the active editorial section on every generated SSG page.
 markGeneratedNavigation();

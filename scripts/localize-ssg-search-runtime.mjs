@@ -1,0 +1,95 @@
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { existsSync, readFileSync, readdirSync, writeFileSync, unlinkSync } from 'node:fs';
+import { join, relative, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+// The pinned SSG 0.0.75 ships an English-only client-side search runtime.
+// Translate its visible empty state and screen-reader announcements as one
+// reproducible post-build asset, without weakening CSP or invalidating SRI.
+const changes = [
+  ['No results for “&ldquo;', 'Nenhum resultado para &ldquo;'],
+  ['&rdquo;”</div>', '&rdquo;</div>'],
+  ['No results found', 'Nenhum resultado encontrado'],
+  ["hits.length+' result'+(hits.length===1?'':'s')+' found'",
+   "hits.length+' resultado'+(hits.length===1?'':'s')+' encontrado'+(hits.length===1?'':'s')"],
+];
+const digest = (algorithm, body, encoding) => createHash(algorithm).update(body).digest(encoding);
+
+export function localizeRuntimeSource(input) {
+  assert.ok(input.includes("getElementById('ssg-search-results')"),
+    'SSG search runtime marker changed; audit upstream integration');
+  let output = input;
+  let translated = 0;
+  for (const [english, portuguese] of changes) {
+    const originalCount = output.split(english).length - 1;
+    const localizedCount = output.split(portuguese).length - 1;
+    assert.ok((originalCount === 1 && localizedCount === 0) ||
+              (originalCount === 0 && localizedCount === 1),
+      'SSG search runtime drift: ' + english);
+    if (originalCount) {
+      output = output.replace(english, portuguese);
+      translated++;
+    }
+  }
+  assert.ok(translated === 0 || translated === changes.length,
+    'Partially localized runtime is not safe to publish');
+  return { code: output, changed: translated > 0 };
+}
+
+function* htmlFiles(folder) {
+  for (const entry of readdirSync(folder, { withFileTypes: true })) {
+    const path = join(folder, entry.name);
+    if (entry.isDirectory()) yield* htmlFiles(path);
+    else if (entry.isFile() && entry.name.endsWith('.html')) yield path;
+  }
+}
+
+export function localizeRuntime({ root = resolve('public'), check = false } = {}) {
+  const cspDir = join(root, '_csp');
+  assert.ok(existsSync(cspDir), 'SSG CSP assets missing');
+  const runtimeNames = readdirSync(cspDir).filter(name => {
+    if (!name.endsWith('.js')) return false;
+    return readFileSync(join(cspDir, name), 'utf8')
+      .includes("getElementById('ssg-search-results')");
+  });
+  assert.equal(runtimeNames.length, 1, 'Expected exactly one SSG search runtime');
+  const originalName = runtimeNames[0];
+  const original = readFileSync(join(cspDir, originalName), 'utf8');
+  const result = localizeRuntimeSource(original);
+  assert.ok(!check || !result.changed, 'SSG search runtime not localized');
+  const localizedName = 'ssg-search-ptbr-' +
+    digest('sha256', result.code, 'hex').slice(0, 16) + '.js';
+  const oldUri = '/conde-incident/_csp/' + originalName;
+  const newUri = '/conde-incident/_csp/' + localizedName;
+  const oldSRI = 'sha384-' + digest('sha384', original, 'base64');
+  const newSRI = 'sha384-' + digest('sha384', result.code, 'base64');
+  const oldTag = 'src="' + oldUri + '" integrity="' + oldSRI + '"';
+  const newTag = 'src="' + newUri + '" integrity="' + newSRI + '"';
+  let pages = 0;
+  for (const path of htmlFiles(root)) {
+    const html = readFileSync(path, 'utf8');
+    if (!html.includes('id="ssg-search-widget"')) continue;
+    const oldCount = html.split(oldTag).length - 1;
+    const newCount = html.split(newTag).length - 1;
+    assert.ok((result.changed && oldCount === 1 && newCount === 0) ||
+      (!result.changed && newCount === 1 && oldCount === 1),
+      'Unexpected SSG search script/SRI on ' + relative(root, path));
+    pages++;
+    if (result.changed && !check)
+      writeFileSync(path, html.replace(oldTag, newTag));
+  }
+  assert.ok(pages >= 3, 'Search runtime not linked by generated pages');
+  if (result.changed && !check) {
+    writeFileSync(join(cspDir, localizedName), result.code, 'utf8');
+    unlinkSync(join(cspDir, originalName));
+  }
+  assert.ok(check || existsSync(join(cspDir, localizedName)),
+    'Translated runtime asset missing');
+  console.log('SSG search runtime PT-BR: ' + pages +
+    ' pages with verified script and SRI; changed=' + result.changed);
+  return { pages, asset: localizedName, changed: result.changed };
+}
+
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url))
+  localizeRuntime({ check: process.argv.includes('--check') });
