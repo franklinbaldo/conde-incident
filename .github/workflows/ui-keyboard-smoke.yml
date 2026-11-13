@@ -16,6 +16,8 @@ on:
       - 'src/components/OrbitalMap.tsx'
       - 'src/components/map/**'
       - 'tests/ui_keyboard_smoke.mjs'
+      - 'src/components/SourceCitationFeed.tsx'
+      - 'tests/ui_documentary_archive_smoke.mjs'
       - 'tests/lab_python_export_failure_smoke.mjs'
       - 'src/components/PythonScriptModal.tsx'
       - 'tests/ui_python_modal_touch_smoke.mjs'
@@ -73,6 +75,8 @@ jobs:
           exit 1
       - name: Browser keyboard and desktop/mobile screenshots
         run: node tests/ui_keyboard_smoke.mjs
+      - name: Chromium documentary archive provenance, links and reflow (320/390/1440)
+        run: node tests/ui_documentary_archive_smoke.mjs
       - name: Chromium lazy-download failure and recovery (PT/EN)
         run: node tests/ui_lab_chunk_failure_smoke.mjs
       - name: Browser export chunk failure, modal keyboard recovery and language
