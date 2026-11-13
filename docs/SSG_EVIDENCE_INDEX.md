@@ -32,3 +32,16 @@ outro catálogo nem observações físicas. Testes adversariais abrangem URL ine
 status ausente, retorno quebrado e linha imutável sem link. O fixture HTML
 sintético valida o auditor; somente o workflow Pages no SHA exato valida o SSG
 Rust real. Acessibilidade por teclado e viewport 320 px permanecem para o Morcego.
+
+
+## Falsos positivos de HTML inerte (Lagarto)
+
+O gate `--built-site` não deve contar texto de scripts, metadados,
+`template`, comentários, âncoras fora de `<main>` ou elementos com
+`hidden`, `inert`, `aria-hidden`, `display:none` ou `visibility:hidden`
+como navegação ou estado documental visível. O auditor examina o HTML
+estático produzido, não apenas substrings `href` ou `source_status`.
+Há testes adversariais de conteúdo e links falsificados mesmo quando o
+manifesto JSON permanece íntegro. Isso **não** substitui auditoria em
+navegador para CSS externo, JavaScript, foco/teclado, leitor de tela e
+320 px, sob responsabilidade do Morcego e da Raposa.
