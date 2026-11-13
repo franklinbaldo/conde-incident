@@ -73,5 +73,16 @@ assert.ok(mapa06.includes('CGEO-08') && mapa06.includes('CGEO-10/11'),'Linhagem 
 const mapaSource=readFileSync('stories/2026-11-12-o-mapa-que-conhecia-conde.md','utf8');
 assert.ok(mapaSource.includes('não foi demonstrado') && mapaSource.includes('não autentica'),'Qualificacao epistemica ausente do capitulo 06');
 
+
+const cameras07=read('stories/2026-11-12-as-cameras-que-o-norad-nao-ganhou/index.html');
+assert.match(cameras07,/<figure\b/i,'Capitulo 07 nao mostra fonte documental');
+assert.match(cameras07,/<iframe\b[^>]*src=["']https:\/\/nsarchive\.gwu\.edu\/sites\/default\/files\/documents\/rr5xh6-kw4gj\/11\.pdf#page=3/i,'Capitulo 07 sem original NORAD embutido');
+assert.ok(cameras07.includes('frame-src https://nsarchive.gwu.edu'),'CSP bloqueia fonte NORAD');
+assert.ok(cameras07.includes('coruja_wayback_live_comparison_20261113.json'),'Cotejo de hashes nao citado');
+assert.ok(cameras07.includes('20210228105202id_') && cameras07.includes('20230315024525id_'),'Links exatos das capturas nao preservados');
+const archiveComparison=JSON.parse(readFileSync('research/archive/coruja_wayback_live_comparison_20261113.json','utf8'));
+assert.equal(archiveComparison.records.length,3,'Conjunto original e controle negativo incompleto');
+assert.equal(archiveComparison.records.filter(r=>r.byte_identity_observed===true).length,2,'Cotejo sem as duas igualdades documentais');
+
 assert.ok(chapters>0,'Nenhuma reportagem renderizada');
 console.log('PASS: '+chapters+' capítulos, índice, CSS, laboratório e rotas GitHub Pages.');
