@@ -132,7 +132,13 @@ class MassMcmc(unittest.TestCase):
         self.assertEqual(out["chains"],4)
         self.assertTrue(out["observations_are_invented_for_test"])
         self.assertFalse(out["historical_masses_inferred"])
+        self.assertFalse(out["historical_posterior_certified"])
         self.assertFalse(out["physical_domain_reduced"])
+        self.assertEqual(out["numerical_convergence_gate_passed"],
+                         all(v["diagnostic"]["meets_reference_numerical_gate"]
+                             for v in out["mass_summary"].values()))
+        self.assertEqual(out["failed_diagnostics_forbid_marginal_interpretation"],
+                         not out["numerical_convergence_gate_passed"])
         self.assertEqual(set(out["mass_summary"]),set(OBJECTS))
         for obj in out["mass_summary"].values():
             self.assertGreaterEqual(obj["q95_kg"],obj["q05_kg"])
