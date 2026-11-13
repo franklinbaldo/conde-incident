@@ -31,5 +31,6 @@
       "kind": "mass"
     }
   ],
-  "note": "Invented mass and ballistic observations (Cd*A, B, uncertainty) for testing only. No historical 1963 mass/area or calibrated ballistic observation recovered."
+  "note": "Invented mass and ballistic observations (Cd*A, B, uncertainty) for testing only. No historical 1963 mass/area or calibrated ballistic observation recovered. Mass-basis TotMass 1176 selected only inside synthetic test; dry-stage and insertion bases are unverified alternatives.",
+  "mass_basis": "TOTMASS_REPORTED"
 }
