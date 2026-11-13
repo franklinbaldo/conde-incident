@@ -1,0 +1,83 @@
+{
+  "schema": "conde.gis.cartographic-edition-lineage/v1",
+  "id": "CGEO-25",
+  "date_verified": "2026-11-13",
+  "municipality": {"name": "Conde", "state": "BA", "ibge_code": 2908606},
+  "target_sheet": {
+    "mi": 1850,
+    "name": "Esplanada - BA/SE",
+    "nomenclature": "SC.24-Z-C-VI",
+    "scale_denominator": 100000,
+    "coverage_graticule": {"south": -12.0, "north": -11.5, "west": -38.0, "east": -37.5},
+    "publisher": "SUDENE; CRUZEIRO DO SUL S.A.",
+    "sheet_publication_year": 1973,
+    "sheet_original_acquired": false,
+    "sheet_prior_to_incident": false
+  },
+  "sources": {
+    "sudene_1997_catalogue": {
+      "url": "https://www.gov.br/sudene/pt-br/centrais-de-conteudo/catalogo-1-para-100000-pdf/@@display-file/file",
+      "local_filename": "sudene_catalogo.pdf",
+      "size_bytes": 1785142,
+      "sha256": "ab10ed33aa5e68094e519f83ec42fa200f908abd1d5de1b13a55312093785694",
+      "issued_year": 1997,
+      "pdf_page_index": 124,
+      "printed_page": 133,
+      "catalogue_record": "MI-1850",
+      "verified_pdf_bytes": true,
+      "full_map_sheet_in_pdf": false
+    },
+    "sgb_1998_planimetry": {
+      "url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/69f40826-c61e-4f46-b5a5-b50d2a279627/content",
+      "local_filename": "69f40826-c61e-4f46-b5a5-b50d2a279627.pdf",
+      "size_bytes": 579200,
+      "sha256": "8748db4313e80c660f65ba3d4b44c3ceb4ca9a8f202cf6eb30e61c33da102d1b",
+      "issued_year": 1998,
+      "pdf_page_index": 0,
+      "verified_pdf_bytes": true,
+      "map_subject": "Acajutiba, Apora e Rio Real; na Bahia"
+    },
+    "sgb_1998_topography": {
+      "url": "https://rigeo.sgb.gov.br/server/api/core/bitstreams/c7a40a7e-22d8-48f2-9276-a889e6d1a676/content",
+      "local_filename": "c7a40a7e-22d8-48f2-9276-a889e6d1a676.pdf",
+      "size_bytes": 1181396,
+      "sha256": "f0a34c1bc0f2eafbaf991d6c65d21a411ae0563c1f3490d7a332395bc1fc0cb9",
+      "issued_year": 1998,
+      "pdf_page_index": 0,
+      "verified_pdf_bytes": true,
+      "map_subject": "Acajutiba, Apora e Rio Real; na Bahia"
+    }
+  },
+  "prior_cartographic_inputs_reported_by_sgb": {
+    "source_family": "PETROBRAS / SACS / GEOFOTO",
+    "sheet_scale_denominator": 25000,
+    "production_year_interval_in_1998_source": [1956, 1963],
+    "sheet_identifiers": ["721-4-2", "721-4-3", "721-4-4", "725-1-1", "725-1-2", "725-1-4"],
+    "individual_sheet_dates_authenticated": false,
+    "individual_sheet_bytes_acquired": false,
+    "coverage_of_1963_conde_center_authenticated": false,
+    "interpretation": "Reported source sheets of a 1998 regional compilation, not necessarily covering urban Conde and not proof that each sheet existed before 1963-11-08"
+  },
+  "other_layers_reported_by_sgb": [
+    {"name": "Buquim SC.24-Z-C-III", "year": 1973, "scale_denominator": 100000},
+    {"name": "Inhambupe SC.24-Z-C-V", "year": 1967, "scale_denominator": 100000},
+    {"name": "PROSPEC/DNOCS", "year": 1961, "scale_denominator": 40000, "coverage_of_conde_center_authenticated": false}
+  ],
+  "historical_use": {
+    "event_date": "1963-11-08",
+    "edition_1973_is_direct_contemporary_evidence": false,
+    "sources_are_independent_observations_of_incident": false,
+    "center_point_1963": null,
+    "center_polygon_1963": null,
+    "fall_location_1963": null,
+    "horizontal_error_m": null,
+    "historic_datum": null,
+    "can_constrain_orbital_reentry": false,
+    "next_required": "Locate original dated PETROBRAS/SACS/GEOFOTO 1:25,000 sheet(s) and verify that individual footprint actually covers Conde's 1963 center, or acquire independent pre-1963 town plan/aerophoto"
+  },
+  "dependencies": [
+    {"to": "CGEO-24", "relation": "RESOLVES_MISSING_EDITION_YEAR_FOR_MI1850"},
+    {"to": "CGEO-17", "relation": "1958_URBAN_TOPONYMS_STILL_UNGEOREFERENCED"},
+    {"to": "CGEO-18", "relation": "FBIS_CITY_CENTER_IS_NOT_LOCATED"}
+  ]
+}
