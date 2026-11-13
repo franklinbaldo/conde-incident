@@ -63,5 +63,15 @@ for(const name of ['stanislaw-escalada.svg','stanislaw-escalada-mobile.svg']) {
  for(const word of ['Stanislaw','FBIS','satélite']) assert.ok(svg.toLowerCase().includes(word.toLowerCase()),'Diagrama sem contexto: '+word);
 }
 
+
+const mapa06=read('stories/2026-11-12-o-mapa-que-conhecia-conde/index.html');
+assert.match(mapa06,/<figure\b/i,'Capitulo 06 sem mapa historico exibido');
+assert.ok(mapa06.includes('https://collections.lib.uwm.edu/digital/iiif/agdm/10814/4300,3650,2700,2250/1900,/0/default.jpg'),'Fonte cartografica original UWM ausente no HTML');
+assert.ok(mapa06.includes('https://collections.lib.uwm.edu/digital/iiif/agdm/10814/650,5890,5800,370/2200,/0/default.jpg'),'Rodape com as datas do mapa nao publicado');
+assert.ok(mapa06.includes('Evolucao_da_divisao_territorial_do_Brasil_1872%20a%202010_apresentacao_do_conteudo_digital.pdf'),'Metodologia oficial IBGE de 1991 nao citada');
+assert.ok(mapa06.includes('CGEO-08') && mapa06.includes('CGEO-10/11'),'Linhagem da carta historica e da malha retrospectiva omitida');
+const mapaSource=readFileSync('stories/2026-11-12-o-mapa-que-conhecia-conde.md','utf8');
+assert.ok(mapaSource.includes('não foi demonstrado') && mapaSource.includes('não autentica'),'Qualificacao epistemica ausente do capitulo 06');
+
 assert.ok(chapters>0,'Nenhuma reportagem renderizada');
 console.log('PASS: '+chapters+' capítulos, índice, CSS, laboratório e rotas GitHub Pages.');
