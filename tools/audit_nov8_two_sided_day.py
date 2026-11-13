@@ -14,7 +14,8 @@ REQUIRED={
  "src/lib/catalogDayLikelihood.ts",
  "src/lib/monteCarlo.ts",
  "src/components/MonteCarloVisualizer.tsx",
- "tests/catalogDayLikelihood.test.mjs"
+ "tests/catalogDayLikelihood.test.mjs",
+ "tests/catalogDayMonteCarloIntegration.check.mjs"
 }
 
 def require(ok,why):
