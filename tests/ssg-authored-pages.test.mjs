@@ -6,7 +6,7 @@ import {AUTHORED_ROUTES,checkPage} from '../scripts/ssg-authored-pages.mjs';
 test('todas as páginas canônicas têm URL própria, tipo e acesso à ferramenta',()=>{
   assert.equal(AUTHORED_ROUTES.length,9);
   for(const slug of AUTHORED_ROUTES){
-    const page=readFileSync('pages/'+slug+'/index.md','utf8');
+    const page=readFileSync('pages/'+slug+'/page.md','utf8');
     assert.equal(checkPage(slug,page),page);
     assert.match(page,/^---\ntype: Page\n/);
     assert.ok(page.includes('canonical_route: "/conde-incident/'+slug+'/"'));

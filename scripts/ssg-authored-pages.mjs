@@ -31,7 +31,7 @@ export function checkPage(slug,source){
   }
   assert.equal(fields.get('canonical_route'),'/conde-incident/'+slug+'/',
     'URL declarada não coincide com o caminho OKF: '+slug);
-  assert.match(found[2],/^# [^\r\n]+\r?\n/,'Página sem H1');
+  assert.match(found[2],/^\s*# [^\r\n]+\r?\n/,'Página sem H1');
   if(slug==='mapa'||slug.startsWith('simulacoes/')){
     assert.ok(found[2].includes('/conde-incident/lab/#/'),
       'Página de ferramenta sem link de preservação do laboratório: '+slug);
@@ -46,7 +46,7 @@ function collect(dir,root,found){
     assert.ok(!stat.isSymbolicLink(),'Não incluir symlink em pages/');
     if(stat.isDirectory())collect(file,root,found);
     else {
-      assert.ok(file.endsWith('/index.md'),'Arquivo de Page sem rota: '+file);
+      assert.ok(file.endsWith('/page.md'),'Arquivo de Page sem rota: '+file);
       found.push(relative(root,dirname(file)).replaceAll('\\','/'));
     }
   }
@@ -58,7 +58,7 @@ export function writeAuthoredPages(sourceDir='pages',targetDir='content'){
   assert.deepEqual(actual.sort(),[...AUTHORED_ROUTES].sort(),
     'Fontes Page devem coincidir com rotas registradas; sem omissão nem URL órfã');
   for(const slug of AUTHORED_ROUTES){
-    const source=checkPage(slug,readFileSync(join(sourceDir,slug,'index.md'),'utf8'));
+    const source=checkPage(slug,readFileSync(join(sourceDir,slug,'page.md'),'utf8'));
     const target=join(targetDir,slug,'index.md');
     mkdirSync(dirname(target),{recursive:true});
     writeFileSync(target,source,'utf8');

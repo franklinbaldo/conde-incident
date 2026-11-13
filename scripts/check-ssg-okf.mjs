@@ -44,7 +44,7 @@ for(const path of files){
 for(const path of ['content/index.md','content/stories/index.md','content/evidencias/arquivo/index.md'])
  assert.match(readFileSync(path,'utf8'),/^---\ntype: Page\n/);
 for(const slug of AUTHORED_ROUTES){
- const path='pages/'+slug+'/index.md';
+ const path='pages/'+slug+'/page.md';
  const source=checkPage(slug,readFileSync(path,'utf8'));
  assert.equal(readFileSync('content/'+slug+'/index.md','utf8'),source,
    'Saída SSG diverge da página OKF canônica: '+slug);
