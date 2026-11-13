@@ -1,0 +1,43 @@
+{
+  "schema": "conde.meteorological-source-lineage/v1",
+  "id": "MET-ISD-CARAVELAS-SOURCE-FLAGS-1963-01",
+  "source_url": "https://www.ncei.noaa.gov/pub/data/noaa/1963/834970-99999-1963.gz",
+  "format_url": "https://www.ncei.noaa.gov/pub/data/noaa/isd-format-document.pdf",
+  "format_edition": "2018-01-12 (retrospective decoding, not a 1963 instrument log)",
+  "annual_gzip_sha256": "c4a0b2f625e8febcd03c4b6ca6ac37b91c9d38423a2ccddd6f0cd7a7712e7e05",
+  "window_sha256": "c6926a86150df982d13286285c17a70e4752cb1ce0ffe1d44ae5330be215a000",
+  "window_utc_days": [
+    "19631107",
+    "19631108",
+    "19631109"
+  ],
+  "window": {
+    "records": 72,
+    "source_flags": {
+      "N": 72
+    },
+    "report_type_codes": {
+      "BRAZ": 72
+    },
+    "quality_process_raw": {
+      "V020": 72
+    }
+  },
+  "annual_count_verified_when_archive_supplied": 8532,
+  "annual_source_flags_from_verified_gzip": {
+    "N": 8532
+  },
+  "annual_report_type_codes_from_verified_gzip": {
+    "BRAZ": 8532
+  },
+  "interpretation": {
+    "N": "NCAR / NCEI cooperative effort (various national datasets)",
+    "BRAZ": "Dataset from Brazil"
+  },
+  "upstream_archive_or_originating_operator_1963": null,
+  "original_station_instrument_1963": null,
+  "independence_from_other_noaa_products": null,
+  "historical_geographic_transfer_to_conde": null,
+  "active_conde_constraint": null,
+  "status": "CONNECTED_PENDING_SPATIOTEMPORAL_CALIBRATION"
+}
