@@ -29,7 +29,7 @@ class HistoricalLinksTest(unittest.TestCase):
     def test_source_locked_handoffs_and_rejected_bridges(self):
         artifact = graph.build(self.root)
         self.assertEqual(len(artifact['handoffs']), 3)
-        self.assertEqual(artifact['result']['new_connected_edges'], 6)
+        self.assertEqual(artifact['result']['new_connected_edges'], 12)
         self.assertEqual(artifact['result']['new_activated_physical_predicates'], 0)
         self.assertEqual(artifact['result']['admissible_orbital_domain'],
                          'UNCHANGED_NOT_EVALUATED')
@@ -44,8 +44,14 @@ class HistoricalLinksTest(unittest.TestCase):
         self.assertEqual(artifact['provenance']['nara_independent_physical_witnesses_added'], 0)
         self.assertFalse(next(n for n in artifact['nodes'] if n['id'] == 'UWM-AGDM-10814')
                          ['georeferenced_for_1963'])
+        self.assertEqual(artifact['candidate_links'][0]['variable'],
+                         'config_municipal_1960_retro_proxy')
         self.assertIsNone(artifact['candidate_links'][0]['simulator_filter'])
-        self.assertIsNone(artifact['candidate_links'][1]['value'])
+        self.assertIsNone(artifact['candidate_links'][0]['legal_1963_geometry'])
+        self.assertIn(('IBGE-CGEO-10', 'CGEO-10-RETRO-PROXY'), connected)
+        self.assertIn(('NARA-302531015', 'C10#1'), connected)
+        self.assertNotIn(('NARA-BB-302531012', 'C234#1'), connected)
+        self.assertIsNone(artifact['candidate_links'][2]['value'])
 
     def test_committed_export_matches_source_and_is_under_policy(self):
         built = graph.encode(graph.build())
@@ -53,6 +59,14 @@ class HistoricalLinksTest(unittest.TestCase):
         self.assertEqual((graph.ROOT / graph.OUTPUT).read_bytes(), built)
         self.assertLess((graph.ROOT / 'tools/export_historical_dependency_links.py').stat().st_size,
                         20_000)
+
+    def test_reject_matrix_occurrence_retcon(self):
+        path = self.root / graph.FILES['MATRIX']
+        source = path.read_text()
+        self.assertIn('Telegrama DOS-UAP-D001', source)
+        path.write_text(source.replace('Telegrama DOS-UAP-D001', 'TELEGRAM_RENAMED'))
+        with self.assertRaisesRegex(ValueError, 'matrix occurrence'):
+            graph.build(self.root)
 
     def test_reject_ibge_forged_survey_or_boundary(self):
         self.patch('IBGE_CGEO10', lambda x: x['method_and_limits'].update(
