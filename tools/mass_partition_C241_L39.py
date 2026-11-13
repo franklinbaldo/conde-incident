@@ -32,22 +32,74 @@ def check_candidate(masses: dict[str, object], *, total: object = 1176,
 
 
 def audit_ledger(path: Path = LEDGER) -> None:
-    data = json.loads(path.read_text(encoding="utf-8"))
-    assert data["schema"] == "conde.mass-partition-proposal/v1"
-    assert data["object_ids"] == [527, 528, 529]
-    assert data["nominal_total_kg"] == 1176
-    assert data["epistemic_grade"] == "USER_HYPOTHESIS_UNVERIFIED"
-    for key in ("primary_publication", "source_page", "source_sha256", "reference_epoch_utc", "mass_definition"):
-        assert data["source"][key] is None
-    assert data["source"]["object_coverage_confirmed"] is False
-    assert data["unknowns_kg"] == {k: None for k in (*KEYS, "delta_total_measurement")}
-    for key in ("epsilon_total_kg", "x_independently_bounded_kg"):
-        assert data["assumptions"][key] is None
-    for key in ("x_is_small", "full_partition_of_total"):
-        assert data["assumptions"][key] == "NOT_ESTABLISHED"
-    for guard in ("physical_constraint_active", "used_to_fit_drag", "used_for_lean_historical_facts"):
-        assert data["activation"][guard] is False
+    """Validate historical-activation invariants even under python -O.
 
+    The v1 ledger is a frozen *hypothesis*, not an observation. Unknown fields
+    and altered epistemic flags must fail closed instead of being forwarded to
+    downstream models as measurements.
+    """
+    def unique_keys(pairs: list[tuple[str, object]]) -> dict[str, object]:
+        result: dict[str, object] = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError(f"C241-L39: duplicate JSON key {key}")
+            result[key] = value
+        return result
+
+    data = json.loads(path.read_text(encoding="utf-8"),
+                      object_pairs_hook=unique_keys)
+    if not isinstance(data, dict) or set(data) != {
+        "schema", "id", "subject", "epistemic_grade", "source", "object_ids",
+        "nominal_total_kg", "unknowns_kg", "assumptions", "equation", "scope",
+        "activation", "links",
+    }:
+        raise ValueError("C241-L39: invalid ledger schema")
+
+    expected = {
+        "schema": "conde.mass-partition-proposal/v1",
+        "id": "C241-L39",
+        "subject": "1963-003A/B/C | NORAD 527/528/529",
+        "epistemic_grade": "USER_HYPOTHESIS_UNVERIFIED",
+        "source": {
+            "statement": "1176 kg is the combined mass of all three objects, with possible untracked or earlier-lost material",
+            "origin": "proprietor discussion, 2026-11-13",
+            "primary_publication": None,
+            "source_page": None,
+            "source_sha256": None,
+            "reference_epoch_utc": None,
+            "mass_definition": None,
+            "object_coverage_confirmed": False,
+        },
+        "object_ids": [527, 528, 529],
+        "nominal_total_kg": 1176,
+        "unknowns_kg": {key: None for key in (*KEYS, "delta_total_measurement")},
+        "assumptions": {
+            "masses_nonnegative": True,
+            "x_nonnegative": True,
+            "same_reference_epoch_required": True,
+            "epsilon_total_kg": None,
+            "x_independently_bounded_kg": None,
+            "x_is_small": "NOT_ESTABLISHED",
+            "full_partition_of_total": "NOT_ESTABLISHED",
+        },
+        "equation": "m_527 + m_528 + m_529 + x_unaccounted = 1176 + delta_total_measurement (kg)",
+        "scope": "CONDITIONAL_MASS_BUDGET_NOT_AN_ORBITAL_OBSERVATION",
+        "activation": {
+            "physical_constraint_active": False,
+            "used_to_fit_drag": False,
+            "used_for_lean_historical_facts": False,
+            "reason": "No primary mass source, definition, common epoch, or tolerance has been verified",
+        },
+        "links": {
+            "catalog_identity": "C241-L32",
+            "orbital_fits": "C241-P1",
+            "effective_drag_exploration": "Conde PR #619",
+            "independent_mass_provenance": "PENDING",
+        },
+    }
+    # Equality alone accepts 1176.0 == 1176 and True == 1. Reject those types.
+    if type(data["nominal_total_kg"]) is not int or data != expected:
+        raise ValueError("C241-L39: unverified source, allocation or physical activation")
 
 if __name__ == "__main__":
     audit_ledger()
