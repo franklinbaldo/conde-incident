@@ -105,10 +105,10 @@ export const PythonScriptModal: React.FC<PythonScriptModalProps> = ({
         className="bg-zinc-950 border border-zinc-800 rounded-xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden"
       >
         {/* Header */}
-        <div className="p-4 border-b border-zinc-800 bg-zinc-900/60 flex items-center justify-between">
-          <div className="flex items-center gap-2 text-zinc-100">
+        <div className="p-4 border-b border-zinc-800 bg-zinc-900/60 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex min-w-0 items-center gap-2 text-zinc-100">
             <Terminal className="w-4 h-4 text-cyan-400" />
-            <h3 id={titleId} className="text-sm font-bold font-mono">
+            <h3 id={titleId} className="min-w-0 break-words text-sm font-bold font-mono">
               norad528_reconstruction.py
             </h3>
             <span className="text-[11px] text-zinc-500 font-mono hidden sm:inline">
@@ -116,7 +116,7 @@ export const PythonScriptModal: React.FC<PythonScriptModalProps> = ({
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={handleCopy}
               className="px-3 py-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer"
@@ -146,8 +146,8 @@ export const PythonScriptModal: React.FC<PythonScriptModalProps> = ({
         </div>
 
         {/* Instructions banner */}
-        <div className="bg-zinc-900/80 px-4 py-2 text-[11px] font-mono text-zinc-400 border-b border-zinc-800 flex items-center justify-between">
-          <span>{isPt ? 'Como executar:' : 'Run:'} <code className="text-cyan-300">python3 norad528_reconstruction.py</code></span>
+        <div className="bg-zinc-900/80 px-4 py-2 text-[11px] font-mono text-zinc-400 border-b border-zinc-800 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+          <span className="break-words">{isPt ? 'Como executar:' : 'Run:'} <code className="text-cyan-300">python3 norad528_reconstruction.py</code></span>
           <span className="text-zinc-500">{isPt ? 'Dependências:' : 'Dependencies:'} numpy, scipy</span>
         </div>
 
