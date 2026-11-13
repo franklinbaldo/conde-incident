@@ -12,7 +12,10 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlsplit
-from verify_on20_wayback_prefix import validate as validate_on20_manifest
+if __package__:
+    from .verify_on20_wayback_prefix import validate as validate_on20_manifest
+else:
+    from verify_on20_wayback_prefix import validate as validate_on20_manifest
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = Path('public/data/conde-archive-documentary-links.json')
