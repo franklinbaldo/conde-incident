@@ -1,0 +1,20 @@
+{
+  "schema": "conde.meteorological-provenance-edges/v1",
+  "id": "MET-ISD-CARAVELAS-SOURCE-FLAGS-EDGES-1963-01",
+  "source": "MET-ISD-CARAVELAS-SOURCE-FLAGS-1963-01",
+  "dependencies": ["MET-ISD-19631107-09-CARAVELAS-01", "MET-ISD-CARAVELAS-WIND-VECTORS-19631107-09"],
+  "edges": [
+    {"from": "NOAA_ISD_Caravelas_1963_fixed_width_rows", "to": "source_flag_N", "type": "LITERAL_CONTROL_FIELD_POS_28"},
+    {"from": "NOAA_ISD_Caravelas_1963_fixed_width_rows", "to": "report_type_BRAZ", "type": "LITERAL_CONTROL_FIELD_POS_42_TO_46"},
+    {"from": "source_flag_N", "to": "NCAR_NCEI_cooperative_various_national_datasets", "type": "RETROSPECTIVE_FORMAT_DEFINITION"},
+    {"from": "report_type_BRAZ", "to": "dataset_from_Brazil", "type": "RETROSPECTIVE_FORMAT_DEFINITION"},
+    {"from": "Caravelas_surface_observables", "to": "Caravelas_1963_instrument_operator", "type": "HISTORICAL_PROVENANCE_PENDING"},
+    {"from": "Caravelas_surface_wind", "to": "Conde_surface_wind", "type": "TRANSFER_PENDING_CALIBRATION"}
+  ],
+  "separate_observing_station_proved": false,
+  "independent_custody_from_NOAA_IGRA": null,
+  "instrument_sigma": null,
+  "spatiotemporal_transfer_uncertainty": null,
+  "active_conde_constraint": null,
+  "status": "CONNECTED_PENDING_SPATIOTEMPORAL_CALIBRATION"
+}

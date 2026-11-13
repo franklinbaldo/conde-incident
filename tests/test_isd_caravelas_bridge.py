@@ -74,6 +74,11 @@ class BridgeTests(unittest.TestCase):
         lean = (ROOT / "formal/Conde1963/CaravelasCandidate.lean").read_text()
         self.assertIn("MET-ISD-19631107-09-CARAVELAS-01", lean)
         self.assertIn("CONNECTED_PENDING_SPATIOTEMPORAL_CALIBRATION", lean)
+        self.assertIn('observedVariable := "Caravelas_surface_wind_at_hour_t"', lean)
+        self.assertIn('spatialTarget := "Conde_surface_wind_at_hour_t"', lean)
+        self.assertIn('spatialTransfer := none', lean)
+        self.assertIn('instrumentCovariance := none', lean)
+        self.assertIn('terminalEpoch528 := none', lean)
         self.assertIn("c6926a86150df982d13286285c17a70e4752cb1ce0ffe1d44ae5330be215a000", lean)
         self.assertLessEqual(OUT.stat().st_size, 20_000)
 
