@@ -11,18 +11,18 @@ from ssr_post528_print_contrasts import build, read_sources, reports  # noqa: E4
 
 
 class SourceLockedSsrTests(unittest.TestCase):
-    def test_all_seven_issues_and_last_three_do_not_list_528(self):
+    def test_all_eight_issues_and_last_four_do_not_list_528(self):
         obj = build()
-        self.assertEqual(len(obj["sources"]), 7)
+        self.assertEqual(len(obj["sources"]), 8)
         self.assertEqual(obj["not_listed_528"],
-                         ["1963-11-15", "1963-11-30", "1963-12-31"])
+                         ["1963-11-15", "1963-11-30", "1963-12-15", "1963-12-31"])
         self.assertFalse(obj["not_listed_is_nondetection"])
 
     def test_post_october_529_declines_strictly_in_printed_rounding_bands(self):
         results = build()["post_october_adjacent_contrasts"]
         self.assertEqual([x["printed_earlier_minus_later"]["interval_centiminutes"]
                           for x in results["1963-003C"]],
-                         [[60, 80], [30, 50], [290, 310]])
+                         [[60, 80], [30, 50], [50, 70], [230, 250]])
         self.assertTrue(all(x["printed_earlier_minus_later"]
                             ["strictly_positive_under_rounding"]
                             for x in results["1963-003C"]))
@@ -40,7 +40,7 @@ class SourceLockedSsrTests(unittest.TestCase):
         self.assertEqual([x["C_minus_A_printed_change_contrast"]
                           ["center_centiminutes"]
                           for x in obj["C_minus_A_difference_in_differences"]],
-                         [70, 40, 300])
+                         [70, 40, 60, 240])
 
     def test_no_instrument_epoch_or_historical_posterior(self):
         obj = build()
@@ -77,6 +77,31 @@ class SourceLockedSsrTests(unittest.TestCase):
             copy.deepcopy(d["jul_dec"]["sources"][0]["rows"][0]))
         with self.assertRaisesRegex(ValueError, "duplicate"):
             reports(d)
+
+    def test_dec15_new_source_preserves_529_split_and_provenance(self):
+        obj = build()
+        row = [x for x in obj["sources"] if x["report_date_not_observation_epoch"]
+               == "1963-12-15"]
+        self.assertEqual(len(row), 1)
+        self.assertEqual(row[0]["occurrence"], "C241-L21")
+        self.assertEqual(row[0]["pdf_sha256"],
+                         "d31a064f8e03fd39be6fe75b88cd5852c0b74c9101fa635cb40ac25c77ef474f")
+        self.assertEqual(row[0]["printed_centiminutes"],
+                         {"1963-003A": 9460, "1963-003C": 9160})
+        self.assertEqual(obj["limits"]["rate_by_publication_interval"],
+                         "NOT_IDENTIFIED")
+
+    def test_dec15_rejects_source_or_object_drift(self):
+        for mutation in (lambda s: s["source"].__setitem__("sha256", "0"*64),
+                         lambda s: s["rows"][1].__setitem__("norad_crosswalk", 528),
+                         lambda s: s["not_listed_in_objects_in_orbit"].clear(),
+                         lambda s: s["limits"].__setitem__("instrumental_epoch_utc",
+                                                            "1963-12-15T12:00:00Z")):
+            with self.subTest(mutation=mutation):
+                d = read_sources()
+                mutation(d["dec15"])
+                with self.assertRaises(ValueError):
+                    reports(d)
 
     def test_fail_closed_on_period_rounding_drift(self):
         d = read_sources()
