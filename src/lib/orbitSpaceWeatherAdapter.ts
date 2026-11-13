@@ -7,7 +7,7 @@
  * a supplied density solver are mandatory. No 1963 terminal epoch/position
  * or instrumental orbital observations are inferred from these indices.
  */
-import { utcMilliseconds } from './orbitPhysics.ts';
+import { EARTH, utcMilliseconds } from './orbitPhysics.ts';
 import type { Atmosphere, State } from './orbitPhysics.ts';
 
 export interface SpaceWeatherSnapshot {
@@ -33,6 +33,10 @@ export interface MsiseDrivers {
 
 const DAY_MS = 86_400_000;
 const THREE_HOURS_MS = 10_800_000;
+// WGS84-like Earth model used by the Cartesian force. This envelope is a
+// necessary geometry check, NOT a substitute for a sourced frame transform.
+const POLAR_RADIUS_KM = 6356.752314245;
+const GEODETIC_RADIUS_TOLERANCE_KM = 1e-6;
 const utcDay = (ms: number) => new Date(Math.floor(ms / DAY_MS) * DAY_MS).toISOString().slice(0, 10);
 const dateKey = (ms: number) => new Date(ms).toISOString().replace('.000Z', 'Z');
 const validPositive = (x: unknown): x is number => typeof x === 'number' && Number.isFinite(x) && x >= 0;
@@ -135,7 +139,7 @@ export function makeConditionalMsiseAtmosphere(options: ConditionalMsiseOptions)
     cdAreaOverMassM2Kg,
     source: 'CONDITIONAL_NRLMSISE: '+densityModelSource+'; frame='+inertialFrame+
       '; transform='+frameTransformSource+'; GFZ/NRC declared provenance; NOT_CALIBRATED',
-    densityKgM3: (_radialAltitudeKm: number, tS: number, state: State): number => {
+    densityKgM3: (radialAltitudeKm: number, tS: number, state: State): number => {
       if (!state || !Number.isFinite(tS) || state.tS !== tS)
         throw new RangeError('Missing or inconsistent coupled r/v state for atmosphere');
       const epochMs = originMs + (tS - originStateTS) * 1000;
@@ -150,6 +154,15 @@ export function makeConditionalMsiseAtmosphere(options: ConditionalMsiseOptions)
           !Number.isFinite(geo.localSolarTimeHours) ||
           geo.localSolarTimeHours < 0 || geo.localSolarTimeHours >= 24)
         throw new RangeError('Missing sourced geodetic state or local solar time');
+      // For a WGS84 ellipsoidal height h>=0, the inertial distance r must
+      // satisfy b+h <= r <= a+h (a/b are equatorial/polar radii). Reject
+      // meter-vs-km mistakes and stale positions before invoking density.
+      // This NECESSARY bound cannot authenticate EOP/UT1 or the geodetic frame.
+      const maxAltitudeKm = radialAltitudeKm + EARTH.radiusKm - POLAR_RADIUS_KM;
+      if (!Number.isFinite(radialAltitudeKm) ||
+          geo.altitudeKm < radialAltitudeKm - GEODETIC_RADIUS_TOLERANCE_KM ||
+          geo.altitudeKm > maxAltitudeKm + GEODETIC_RADIUS_TOLERANCE_KM)
+        throw new RangeError('Geodetic altitude inconsistent with inertial radius (km)');
       const rho = evaluateDensityKgM3({epochUtc, drivers, geodetic: geo});
       if (!validPositive(rho)) throw new RangeError('Conditional density model returned invalid kg/m^3');
       return rho;
