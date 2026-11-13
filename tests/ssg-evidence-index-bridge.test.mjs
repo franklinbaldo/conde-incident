@@ -52,12 +52,14 @@ test('gap claim rewrite fails even when the shard SHA is recomputed',()=>{
 
 test('gap shard cannot invent epistemic status even with recalculated SHA',()=>{
   const bundle=clean();
-  const part=bundle.gapShards[0];
+  // Use the smallest final shard: test the semantic guard, not the byte ceiling.
+  const part=bundle.gapShards.at(-1);
   const forged=JSON.parse(part.raw);
   forged.records[0].source_status='CONFIRMED_PHYSICAL_IMPACT';
   part.raw=Buffer.from(JSON.stringify(forged));
-  bundle.manifest.unmapped_shards[0].sha256=createHash('sha256').update(part.raw).digest('hex');
-  bundle.manifest.unmapped_shards[0].bytes=part.raw.length;
+  const meta=bundle.manifest.unmapped_shards.at(-1);
+  meta.sha256=createHash('sha256').update(part.raw).digest('hex');
+  meta.bytes=part.raw.length;
   assert.throws(()=>audit(bundle),/Uncurated claim text\/hash differs/);
 });
 
