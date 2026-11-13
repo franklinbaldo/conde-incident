@@ -1,0 +1,183 @@
+{
+  "schema": "conde.ssr-edition-quantization-sequence/v1",
+  "id": "C241-L27",
+  "purpose": "Machine-check the nine unique NASA compiled editions already source-audited; expose nominal print precision without inventing instrumental accuracy.",
+  "source_family": "NASA_GODDARD_NORAD_SAO_COMPILED_SAME_UPSTREAM",
+  "independent_sensor_observations_added": 0,
+  "docs": [
+    {
+      "ntrs": "19630012128",
+      "published": "1963-04-30",
+      "issue": 9,
+      "ledger": "research/tle_custody/nasa_ssr_apr_oct_1963_C241-L16.json",
+      "selector": "april",
+      "pdf_sha256": "87b8c1be1d074dff4b605b422f6a8836c2ebdf80ca4ac0568373b168cc457a38",
+      "pdf_page_index": 6,
+      "printed_page": 5,
+      "objects": [
+        527,
+        528,
+        529
+      ]
+    },
+    {
+      "ntrs": "19630012130",
+      "published": "1963-06-30",
+      "issue": 13,
+      "ledger": "research/tle_custody/nasa_ssr_jun30_1963_C241-L22.json",
+      "selector": "source",
+      "pdf_sha256": "8add4b46734e992a213088ef58ba9d58b6385df7b89bb504f79fe8715ec418f3",
+      "pdf_page_index": 12,
+      "printed_page": 5,
+      "objects": [
+        527,
+        528,
+        529
+      ]
+    },
+    {
+      "ntrs": "19630012290",
+      "published": "1963-07-31",
+      "issue": 15,
+      "ledger": "research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json",
+      "selector": "sources[0]",
+      "pdf_sha256": "9b00bf8323b1de80a34920f73c658f70f766a51632a13473a408679f0e5a03d9",
+      "pdf_page_index": 6,
+      "printed_page": 5,
+      "objects": [
+        527,
+        528,
+        529
+      ]
+    },
+    {
+      "ntrs": "19630012289",
+      "published": "1963-08-15",
+      "issue": 16,
+      "ledger": "research/tle_custody/nasa_ssr_aug15_1963_C241-L17.json",
+      "selector": "source",
+      "pdf_sha256": "4e5cb0205577bc1b0959088db9ca3ae7a05f8de480b5ece9b86c385437636968",
+      "pdf_page_index": 6,
+      "printed_page": 5,
+      "objects": [
+        527,
+        528,
+        529
+      ]
+    },
+    {
+      "ntrs": "19640000428",
+      "published": "1963-10-15",
+      "issue": 20,
+      "ledger": "research/tle_custody/nasa_ssr_1963_oct15_C241-L12.json",
+      "selector": "source",
+      "pdf_sha256": "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+      "pdf_page_index": 6,
+      "printed_page": 5,
+      "objects": [
+        527,
+        528,
+        529
+      ]
+    },
+    {
+      "ntrs": "19640001198",
+      "published": "1963-11-15",
+      "issue": 22,
+      "ledger": "research/tle_custody/nasa_ssr_nov15_1963_C241-L19.json",
+      "selector": "documents[0]",
+      "pdf_sha256": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+      "pdf_page_index": 6,
+      "printed_page": 5,
+      "objects": [
+        527,
+        529
+      ]
+    },
+    {
+      "ntrs": "19640002493",
+      "published": "1963-11-30",
+      "issue": 23,
+      "ledger": "research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json",
+      "selector": "sources[1]",
+      "pdf_sha256": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+      "pdf_page_index": 6,
+      "printed_page": 5,
+      "objects": [
+        527,
+        529
+      ]
+    },
+    {
+      "ntrs": "19640003479",
+      "published": "1963-12-15",
+      "issue": 24,
+      "ledger": "research/tle_custody/nasa_ssr_dec15_1963_C241-L21.json",
+      "selector": "source",
+      "pdf_sha256": "d31a064f8e03fd39be6fe75b88cd5852c0b74c9101fa635cb40ac25c77ef474f",
+      "pdf_page_index": 6,
+      "printed_page": 5,
+      "objects": [
+        527,
+        529
+      ]
+    },
+    {
+      "ntrs": "19640005618",
+      "published": "1963-12-31",
+      "issue": 25,
+      "ledger": "research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json",
+      "selector": "sources[2]",
+      "pdf_sha256": "d9504a8641baa65c208e41034e77b0e9b1cc01b4acb2a4f95541bd9e75d3783d",
+      "pdf_page_index": 6,
+      "printed_page": 5,
+      "objects": [
+        527,
+        529
+      ]
+    }
+  ],
+  "secondary_norad_crosswalk": {
+    "1963-003A": 527,
+    "1963-003B": 528,
+    "1963-003C": 529
+  },
+  "raw_instrument_528_time": null,
+  "raw_instrument_528_sensor": null,
+  "raw_instrument_528_sigma": null,
+  "quantization_status": "PRINTED_DECIMAL_RESOLUTION_ONLY_NEAREST_ROUNDING_NOT_VERIFIED",
+  "nominal_half_steps_if_nearest_rounding": {
+    "period_min": "0.05",
+    "inclination_deg": "0.005",
+    "apogee_km": "0.5",
+    "perigee_km": "0.5"
+  },
+  "nominal_half_steps_are_sensor_sigma": false,
+  "printed_as_of_is_tracking_epoch": false,
+  "publication_gap_is_tracking_interval": false,
+  "report_rounding_rule_verified": false,
+  "independent_source_family_count": 1,
+  "guarded_facts": {
+    "july_3c_perigee_km": 452,
+    "dec31_3c_period_min": "89.2",
+    "nov15_3b_decay_day": "1963-11-08",
+    "nov15_3b_in_objects_in_orbit": false,
+    "oct15_last_3b_compiled_listing": true,
+    "oct27_secondary_mirror_epoch_not_in_ssr": true
+  },
+  "graph": {
+    "parent": "research/constraints/ssr_1963_observable_graph.json",
+    "new_editorial_sequence_edges": 8,
+    "physical_constraints_active": 0,
+    "uncertainty_domain_reduced": false,
+    "lean_promoted": false,
+    "link_status": "CONNECTED_PENDING_CALIBRATION"
+  },
+  "unsupported_conclusions": [
+    "No radar observation epochs from bulletin edition dates",
+    "No calibrated sigma from nominal print resolution",
+    "No inference of terminal time or location",
+    "Nine editions are not nine independent tracking networks",
+    "Post-08-Nov absence of 528 in in-orbit tables does not prove a sensor non-detection"
+  ]
+}
