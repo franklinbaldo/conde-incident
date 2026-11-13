@@ -66,13 +66,16 @@ class NmcOn20HistoricalLayoutTests(unittest.TestCase):
         cls.manual = json.loads((ROOT / on20.MANUAL).read_text())
         cls.pages = json.loads((ROOT / on20.PAGES).read_text())
         cls.tape = json.loads((ROOT / on20.TAPE).read_text())
+        cls.archive = on20.archive.build(ROOT)
 
     def test_real_1964_facsimile_connected_to_undecoded_1963_tape(self):
-        data = self.on20.build_from_data(self.manual, self.pages, self.tape)
+        data = self.on20.build_from_data(self.manual, self.pages, self.tape, self.archive)
         self.assertEqual(self.on20.encode(data), (ROOT / self.on20.OUTPUT).read_bytes())
         self.assertEqual(self.assemble(data), self.target.read_text())
         self.assertEqual(data["manual_publication_year"], 1964)
         self.assertEqual(data["wayback_pdf_bytes"], 932414)
+        self.assertEqual(data["revision_date_seen"], "1964-11-27")
+        self.assertTrue(data["not_an_independent_documentary_source"])
         self.assertEqual(data["wayback_capture_utc"], "2022-01-19T07:53:33Z")
         self.assertEqual(len(data["lineage"]), 3)
         self.assertIsNone(data["validated_1963_layout_reference"])
@@ -82,26 +85,33 @@ class NmcOn20HistoricalLayoutTests(unittest.TestCase):
         changed = copy.deepcopy(self.manual)
         changed["published_year"] = 1963
         with self.assertRaisesRegex(ValueError, "historical manual"):
-            self.on20.build_from_data(changed, self.pages, self.tape)
+            self.on20.build_from_data(changed, self.pages, self.tape, self.archive)
 
     def test_wrong_pdf_hash_or_page_identity_is_rejected(self):
         changed = copy.deepcopy(self.pages)
         changed["pdf_sha256"] = "0" * 64
         with self.assertRaisesRegex(ValueError, "page inventory"):
-            self.on20.build_from_data(self.manual, changed, self.tape)
+            self.on20.build_from_data(self.manual, changed, self.tape, self.archive)
 
     def test_false_station_decode_and_wind_activation_are_rejected(self):
         changed = copy.deepcopy(self.tape)
         changed["candidate_queries"][0]["query_status"] = "OBSERVED"
         with self.assertRaisesRegex(ValueError, "Y20175 observations"):
-            self.on20.build_from_data(self.manual, self.pages, changed)
+            self.on20.build_from_data(self.manual, self.pages, changed, self.archive)
         changed = copy.deepcopy(self.tape)
         changed["physical_domain"] = "NARROWED"
         with self.assertRaisesRegex(ValueError, "Y20175 observations"):
-            self.on20.build_from_data(self.manual, self.pages, changed)
+            self.on20.build_from_data(self.manual, self.pages, changed, self.archive)
+
+    def test_archive_graph_cannot_promote_conditional_manual_to_observation(self):
+        changed = copy.deepcopy(self.archive)
+        target = next(n for n in changed["nodes"] if n["id"] == "NMC_Y20175_PENDING_BRIDGE")
+        target["activation"] = True
+        with self.assertRaisesRegex(ValueError, "canonical Abelha"):
+            self.on20.build_from_data(self.manual, self.pages, self.tape, changed)
 
     def test_fabricated_1963_layout_provenance_does_not_compile(self):
-        data = self.on20.build_from_data(self.manual, self.pages, self.tape)
+        data = self.on20.build_from_data(self.manual, self.pages, self.tape, self.archive)
         data["validated_1963_layout_reference"] = "UNSOURCED"
         with self.assertRaisesRegex(ValueError, "conditionality"):
             self.assemble(data)

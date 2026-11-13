@@ -6,6 +6,11 @@ import hashlib
 import json
 from pathlib import Path
 
+if __package__:
+    from . import export_archive_documentary_links as archive
+else:
+    import export_archive_documentary_links as archive
+
 ROOT = Path(__file__).resolve().parents[1]
 MANUAL = "research/meteorology/ncep_on20_wayback_custody_20261112.json"
 PAGES = "research/meteorology/ncep_on20_page_audit_20261112.json"
@@ -18,7 +23,7 @@ def check(ok: bool, explanation: str) -> None:
         raise ValueError("NMC 1963 layout transfer not proven: " + explanation)
 
 
-def build_from_data(manual: dict, page: dict, tape: dict) -> dict:
+def build_from_data(manual: dict, page: dict, tape: dict, archived: dict) -> dict:
     capture = manual["preservation"]
     check(manual["id"] == "MET-NMC-NCEPON-20261112-02"
           and manual["linked_catalog_id"] == "MET-NMC-NCEPON-20261112-01"
@@ -39,10 +44,17 @@ def build_from_data(manual: dict, page: dict, tape: dict) -> dict:
           and page["pdf_bytes"] == capture["byte_length"]
           and page["page_tree_count"] == capture["page_object_count"] == 23,
           "page inventory not pinned to preserved bytes")
+    # The original custody snapshot predated Lontra's subsequent visual audit.
+    # Page-level inspection identified the November 1964 revision; it did NOT
+    # establish which binary format was in use the previous year.
     check(manual["page_visual_inspection"] == "NOT_RUN"
-          and manual["revision_beginning_page_12"] == "CATALOG_CLAIM_NOT_VISUALLY_VERIFIED"
+          and page["revision"]["date_seen_on_pdf_pages"] == "1964-11-27"
+          and page["revision"]["beginning_pdf_page"] == 11
+          and page["revision"]["continuation_pdf_page"] == 12
+          and page["layout_report_words"] == [50, 150]
+          and page["applicability_to_1963"] == "NOT_ESTABLISHED"
           and manual["tape_decoded"] is False and manual["station_day_matches"] is None,
-          "unread 1964 pages cannot establish active 1963 field format")
+          "visual 1964 revision does not establish active 1963 field format")
     check(tape["schema"] == "conde.pending-nmc-wind-bridge/v1"
           and tape["inventory_id"] == "MET-NMC-20261112-09"
           and tape["physical_domain"] == "UNCHANGED_NO_ACTIVE_CONSTRAINT"
@@ -56,6 +68,22 @@ def build_from_data(manual: dict, page: dict, tape: dict) -> dict:
           and "actual_station_day_hits_with_source_offsets_and_qc" in required
           and "validated_transfer_to_Conde_and_reentry_state" in required,
           "downstream physical calibration prerequisites removed")
+    # Abelha's canonical graph already owns archival catalogue/copy/page edges.
+    # This compiler is a derived *scientific* view, not another archive sensor.
+    nodes = {n["id"]: n for n in archived["nodes"]}
+    edges = {(e["from"], e["to"], e["kind"]) for e in archived["edges"]}
+    check(archived["schema"] == "conde.archive-documentary-links/v1"
+          and {manual["linked_catalog_id"], manual["id"], page["id"],
+               "NMC_Y20175_PENDING_BRIDGE"} == set(nodes)
+          and nodes[manual["id"]]["retrieved_bytes_sha256"] == capture["sha256"]
+          and nodes[manual["id"]]["document_year"] == 1964
+          and nodes["NMC_Y20175_PENDING_BRIDGE"]["activation"] is False
+          and nodes["NMC_Y20175_PENDING_BRIDGE"]["simulator_value"] is None
+          and nodes[manual["id"]]["cdx_digest_base32_sha1"] is None
+          and (page["id"], manual["id"], "SAME_BYTES_PAGE_AUDIT") in edges
+          and ("NMC_Y20175_PENDING_BRIDGE", manual["id"],
+               "CONDITIONAL_DOCUMENTARY_REFERENCE_NOT_1963_CALIBRATION") in edges,
+          "canonical Abelha custody/dependency graph changed")
     return {
         "schema": "conde.on20-historical-layout-candidate/v1",
         "id": "C241-L14-NMC-ON20-LAYOUT",
@@ -67,6 +95,9 @@ def build_from_data(manual: dict, page: dict, tape: dict) -> dict:
             {"from": "1963_ON20_LAYOUT_UNVERIFIED", "to": tape["inventory_id"],
              "kind": "conditional_decoder_prerequisite_not_observation"},
         ],
+        "derived_from_canonical_archive_feed": str(archive.OUTPUT),
+        "canonical_archive_feed_sha256": hashlib.sha256(archive.encode(archived)).hexdigest(),
+        "not_an_independent_documentary_source": True,
         "manual_source_path": MANUAL,
         "page_audit_path": PAGES,
         "manual_publication_year": manual["published_year"],
@@ -74,8 +105,10 @@ def build_from_data(manual: dict, page: dict, tape: dict) -> dict:
         "wayback_url": capture["replay_url"],
         "wayback_pdf_sha256": capture["sha256"],
         "wayback_pdf_bytes": capture["byte_length"],
-        "page_visual_inspection": manual["page_visual_inspection"],
-        "revision_on_page_12": manual["revision_beginning_page_12"],
+        "page_visual_inspection": "INSPECTED_IN_LATER_PAGE_AUDIT",
+        "revision_date_seen": page["revision"]["date_seen_on_pdf_pages"],
+        "revision_pdf_pages": [11, 12, 13, 14],
+        "catalogue_revision_page_label_unverified": manual["revision_beginning_page_12"],
         "validated_1963_layout_reference": None,
         "tape_source_id": tape["inventory_id"],
         "tape_sha256": tape["archive_sha256"],
@@ -92,7 +125,10 @@ def build_from_data(manual: dict, page: dict, tape: dict) -> dict:
 def build(root: Path = ROOT) -> dict:
     data = [json.loads((root / path).read_text(encoding="utf-8"))
             for path in (MANUAL, PAGES, TAPE)]
-    return build_from_data(*data)
+    archived = archive.build(root)
+    check((root / archive.OUTPUT).read_bytes() == archive.encode(archived),
+          "Abelha canonical archive feed not byte-reproducible")
+    return build_from_data(*data, archived)
 
 
 def encode(data: dict) -> bytes:
