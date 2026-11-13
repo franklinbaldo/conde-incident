@@ -1,0 +1,87 @@
+{
+  "classification": "DOCUMENTARY_COVERAGE_AUDIT_NOT_EVENT_TIME_INFERENCE",
+  "inference_gates": {
+    "active_constraint": false,
+    "catalog_retention_and_selection_model": null,
+    "detection_probability_by_epoch": null,
+    "geographical_exclusion": "NOT_RUN",
+    "historical_missingness_likelihood": "NOT_IDENTIFIED",
+    "historical_posterior": "NOT_RUN",
+    "historical_surveillance_schedule": null,
+    "status_label_to_physical_event_model": null,
+    "terminal_utc_time": "NOT_IDENTIFIED"
+  },
+  "interpretation": "A gap between secondary mirror epochs and a cataloged day is absence of retained rows, not an observed negative sensor event. Day-only NASA 1963-003B label cannot be converted into survival/terminal-time likelihood without documented sampling, retention and reporting models.",
+  "objects": {
+    "527": {
+      "catalog_designator": "1963-003A",
+      "catalog_status_day": "1969-01-09",
+      "catalog_status_source_kind": "MODERN_SECONDARY_CATALOG_DAY",
+      "excluded_same_object_same_epoch_duplicates": 1,
+      "first_mirror_epoch_utc": "1963-01-17T02:07:47.226720Z",
+      "gap_is_surveillance_interval": false,
+      "gap_last_mirror_epoch_to_status_day_start_days_exact": null,
+      "gap_not_computed_reason": "SOURCE_EXCERPT_ONLY_1963",
+      "last_mirror_epoch_utc": "1963-12-17T05:43:24.184704Z",
+      "mirror_epochs_on_or_after_status_day_start": 0,
+      "source_scope": "SECONDARY_MIRROR_ONLY_1963_EXCERPT",
+      "status_day_is_observed_non_detection_time": false,
+      "status_day_is_observed_terminal_time": false,
+      "unique_1963_epochs": 20
+    },
+    "528": {
+      "catalog_designator": "1963-003B",
+      "catalog_status_day": "1963-11-08",
+      "catalog_status_source_kind": "NASA_PRIMARY_DAY_ONLY_REPORT",
+      "excluded_same_object_same_epoch_duplicates": 0,
+      "first_mirror_epoch_utc": "1963-01-17T16:18:12.350304Z",
+      "gap_is_surveillance_interval": false,
+      "gap_last_mirror_epoch_to_status_day_start_days_exact": "1138870217/100000000",
+      "gap_not_computed_reason": null,
+      "last_mirror_epoch_utc": "1963-10-27T14:40:16.132512Z",
+      "mirror_epochs_on_or_after_status_day_start": 0,
+      "source_scope": "SECONDARY_MIRROR_ONLY_1963_EXCERPT",
+      "status_day_is_observed_non_detection_time": false,
+      "status_day_is_observed_terminal_time": false,
+      "unique_1963_epochs": 45
+    },
+    "529": {
+      "catalog_designator": "1963-003C",
+      "catalog_status_day": "1963-12-31",
+      "catalog_status_source_kind": "MODERN_SECONDARY_CATALOG_DAY",
+      "excluded_same_object_same_epoch_duplicates": 3,
+      "first_mirror_epoch_utc": "1963-01-17T16:20:21.950304Z",
+      "gap_is_surveillance_interval": false,
+      "gap_last_mirror_epoch_to_status_day_start_days_exact": "52382589/100000000",
+      "gap_not_computed_reason": null,
+      "last_mirror_epoch_utc": "1963-12-30T11:25:41.443104Z",
+      "mirror_epochs_on_or_after_status_day_start": 0,
+      "source_scope": "SECONDARY_MIRROR_ONLY_1963_EXCERPT",
+      "status_day_is_observed_non_detection_time": false,
+      "status_day_is_observed_terminal_time": false,
+      "unique_1963_epochs": 54
+    }
+  },
+  "schema": "conde.catalog-day-missingness/v1",
+  "sources": {
+    "frozen_retrospective_split": {
+      "path": "research/statistics/raan_chronological_holdout_1963.json",
+      "sha256": "a51ff61054da94587aa9c45631b3887572f238fe5967d2a8493c49d360c5e59f"
+    },
+    "object_identity": {
+      "path": "research/tle_custody/catalog_identity_527_529_2026-11-12.json",
+      "sha256": "9c129a3bb7f1fa56663f6cdd51c5ecfbcb271620730ebc353a8ac58b75d8daab"
+    },
+    "primary_528_status_report": {
+      "document_id": "NASA NTRS 19640001198",
+      "epistemic_status": "CONTEMPORARY_PRIMARY_REPORT_OF_CATALOG_DECAY_DAY",
+      "printed_page": 8,
+      "publication_date": "1963-11-15",
+      "url": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf"
+    },
+    "secondary_mirror": {
+      "path": "research/statistics/raan_527_528_529_1963.json",
+      "sha256": "b88564912c35167044d5fd4a0c1b50f6c624fcaf1066f82a7b70e503df8928f5"
+    }
+  }
+}
