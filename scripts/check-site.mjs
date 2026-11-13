@@ -100,6 +100,20 @@ const archiveComparison=JSON.parse(readFileSync('research/archive/coruja_wayback
 assert.equal(archiveComparison.records.length,3,'Conjunto original e controle negativo incompleto');
 assert.equal(archiveComparison.records.filter(r=>r.byte_identity_observed===true).length,2,'Cotejo sem as duas igualdades documentais');
 
+const fotos08=read('stories/2026-11-12-as-oito-fotografias-de-conde/index.html');
+for (const page of [181,182,183]) {
+  assert.ok(fotos08.includes('https://biblioteca.ibge.gov.br/visualizacao/livros/liv27295_20.pdf#page='+page),
+    'Capitulo 08 sem pagina original IBGE '+page);
+}
+for (const caption of ['Prefeitura Municipal','Praça Severiano Lima','Rua do Carro',
+  'Rua Marechal Floriano','Itapicuru','Condeúba']) {
+  assert.ok(fotos08.includes(caption),'Legenda ou desambiguacao ausente: '+caption);
+}
+assert.ok(fotos08.includes('ibge_1958_conde_photo_custody.json'),'Capitulo 08 sem manifesto de custodia');
+assert.ok(fotos08.includes('1958') && fotos08.includes('1963'),'Capitulo 08 perdeu distincao temporal');
+assert.doesNotMatch(fotos08,/<img[^>]+(?:liv27295|ibge_1958)/i,
+  'Capitulo 08 republica foto sem revisao de direitos');
+
 assert.ok(accessiblePdfEmbeds>=3,'Regressão: menos de três PDFs incorporados com link anterior');
 assert.ok(chapters>0,'Nenhuma reportagem renderizada');
 console.log('PASS: '+chapters+' capítulos, índice, CSS, laboratório e rotas GitHub Pages.');
