@@ -4,7 +4,7 @@ import {createHash} from 'node:crypto';
 import {existsSync, readFileSync, readdirSync} from 'node:fs';
 import {join, resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
-import {archivePages} from './ssg-documentary-archive.mjs';
+import {archivePages,matrixRowUrl} from './ssg-documentary-archive.mjs';
 
 const PREFIX='/conde-incident/evidencias/arquivo/';
 const DATA='public/data/';
@@ -98,6 +98,7 @@ export function audit(bundle) {
     assert.ok(rendered,'SSG route missing: '+row.archive_path);
     assert.ok(archiveIndex.includes(row.archive_path),'No-JS index missing: '+row.archive_path);
     assert.ok(rendered.includes(row.row_sha256),'SSG row checksum missing: '+row.archive_path);
+    assert.ok(rendered.includes(row.source_status),'SSG canonical status absent: '+row.archive_path);
     for (const target of [link('familias',row.source_family),
       link('obras',row.work_id),link('fontes',row.source_id)]) {
       assert.ok(rendered.includes(target),'SSG reverse link missing: '+target);
@@ -122,6 +123,15 @@ export function auditBuiltSite(bundle,siteRoot='public') {
   const allRows=bundle.shards.flatMap(part=>JSON.parse(part.raw).records);
   const index=readFileSync(join(siteRoot,'evidencias/arquivo/index.html'),'utf8');
   const indexAnchors=anchors(index);
+  // Cache reverse-link targets; each source/obra/família may cover many records.
+  const reverseCache=new Map();
+  const reversePage=path=>{
+    if (!reverseCache.has(path)) {
+      const filename=join(siteRoot,'evidencias/arquivo',path.slice(PREFIX.length),'index.html');
+      reverseCache.set(path,anchors(readFileSync(filename,'utf8')));
+    }
+    return reverseCache.get(path);
+  };
   for (const row of allRows) {
     assert.ok(indexAnchors.has(row.archive_path),
       'Built index missing navigable anchor: '+row.archive_path);
@@ -130,11 +140,21 @@ export function auditBuiltSite(bundle,siteRoot='public') {
       : 'evidencias/arquivo/index.html');
     const html=readFileSync(page,'utf8');
     assert.ok(html.includes(row.row_sha256),'Built HTML missing row digest: '+row.archive_path);
+    assert.ok(html.includes(row.source_status),
+      'Built HTML missing canonical epistemic status: '+row.archive_path);
     const reverseAnchors=anchors(html);
+    // This is a navigable citation, not a PDF URL printed as inert text.
+    for (const target of [row.citation_url,matrixRowUrl(row.matrix_line),PREFIX])
+      assert.ok(reverseAnchors.has(target),
+        'Built occurrence missing source/matrix/index anchor: '+row.archive_path+' -> '+target);
     for (const target of [link('familias',row.source_family),
       link('obras',row.work_id),link('fontes',row.source_id)])
       assert.ok(reverseAnchors.has(target),
         'Built occurrence missing reverse anchor: '+row.archive_path+' -> '+target);
+    for (const target of [link('familias',row.source_family),
+      link('obras',row.work_id),link('fontes',row.source_id)])
+      assert.ok(reversePage(target).has(row.archive_path),
+        'Built reverse page missing occurrence anchor: '+target+' -> '+row.archive_path);
   }
   return counts;
 }

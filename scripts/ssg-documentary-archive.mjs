@@ -6,6 +6,7 @@ import {archiveKey,verifiedArchiveLinks} from './ssg-wayback-links.mjs';
 
 const ROOT = '/conde-incident/evidencias/arquivo/';
 const MATRIX = 'https://github.com/franklinbaldo/conde-incident/blob/faf4dd0fd8dfbdd825e4e934b3b30ebd81bf61df/research/evidence_matrix_C001-C238_2026-11-11.md#L';
+export const matrixRowUrl = line => MATRIX + line;
 const safe = value => String(value).replaceAll('\\', '\\\\').replace(/([\[\]_*`<>|])/g, '\\$1').replace(/\r?\n/g, ' ');
 const scalar = value => JSON.stringify(String(value));
 const page = (title, description, body, type='Page', fields={}) => [
@@ -49,6 +50,8 @@ export function archivePages(citations, lineage, wayback=null) {
     assert.equal(record.not_a_verified_conde_physical_event, true);
     assert.ok(Number.isSafeInteger(record.matrix_line) && record.matrix_line > 0);
     assert.match(record.row_sha256, /^[a-f0-9]{64}$/);
+    assert.match(record.source_status, /^[A-Z0-9][A-Z0-9_]{0,159}$/,
+      'Estado documental canônico inválido');
     assert.ok(https(record.citation_url), 'URL documental deve ser HTTPS');
     for (const key of ['source_id', 'source_family', 'work_id', 'claim_text', 'locator', 'relation', 'scope'])
       assert.ok(typeof record[key] === 'string' && record[key].trim(), `Campo ${key} ausente`);
@@ -92,6 +95,7 @@ export function archivePages(citations, lineage, wayback=null) {
         `- **Obra:** [${safe(r.work_id)}](${ROOT}obras/${workSlug(r.work_id)}/)`,
         `- **Fonte:** [${safe(r.source_id)}](${ROOT}fontes/${sourceSlug(r.source_id)}/)`,
         `- **Família:** [${safe(r.source_family)}](${ROOT}familias/${familySlug(r.source_family)}/)`,
+        `- **Estado documental (código canônico, não veredito):** \`${r.source_status}\``,
         `- **Relação:** ${safe(r.relation)}`, `- **Limite:** ${safe(r.scope)}`,
         `- **Localizador:** ${safe(r.locator)}`,
         `- **SHA-256 da linha na matriz:** \`${r.row_sha256}\``, '',
