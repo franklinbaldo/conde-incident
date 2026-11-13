@@ -47,6 +47,8 @@ jobs:
         run: node scripts/prepare-ssg.mjs --check
       - name: Generate SSG inputs from canonical stories
         run: node scripts/prepare-ssg.mjs
+      - name: Validate generated OKF types
+        run: node scripts/check-ssg-okf.mjs
       - name: SSG check
         run: ssg check --config ssg.toml
       - name: SSG build

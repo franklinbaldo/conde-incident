@@ -24,7 +24,8 @@ const stories=names.map(filename=>{
     assert.ok(!Object.hasOwn(fm,match[1]),'Campo duplicado '+match[1]+' em '+filename);
     fm[match[1]]=scalar(match[2],filename);
   }
-  for(const field of ['title','date','summary','chapter','author','status']) {
+  assert.equal(fm.type,'Story','Capítulo não OKF Story: '+filename);
+  for(const field of ['title','description','date','summary','chapter','author','status']) {
     assert.ok(typeof fm[field]==='string'&&fm[field].trim(),field+' ausente em '+filename);
   }
   assert.match(fm.date,/^\d{4}-\d{2}-\d{2}$/);
@@ -47,7 +48,7 @@ rmSync('content',{recursive:true,force:true});
 mkdirSync('content/stories',{recursive:true});
 const quote=s=>JSON.stringify(String(s));
 function page(title,summary,layout,body) {
-  return ['---','title: '+quote(title),'description: '+quote(summary),
+  return ['---','type: Page','title: '+quote(title),'description: '+quote(summary),
     'layout: '+layout,'language: pt-BR','---','',body,''].join('\n');
 }
 const intro='Os documentos não demonstram que a notícia de Conde e o decaimento do NORAD 528 tenham a mesma causa. Cada capítulo distingue registro, relato e hipótese.';
@@ -57,9 +58,9 @@ const storiesBody='# Caderno de histórias\n\n'+intro+'\n\n'+listing+'\n\n[Labor
 writeFileSync('content/index.md',page('Conde, 1963: Caderno','Investigar não é confirmar uma queda.', 'index',indexBody));
 writeFileSync('content/stories/index.md',page('Caderno de histórias','Capítulos com fontes e hipóteses distinguíveis.', 'index',storiesBody));
 for(const s of stories){
-  const fm=['---','title: '+quote(s.title),'description: '+quote(s.summary),
+  const fm=['---','type: Story','title: '+quote(s.title),'description: '+quote(s.summary),
     'date: '+quote(s.date),'layout: page','language: pt-BR',
-    'chapter: '+quote(s.chapter),'author: '+quote(s.author),
+    'summary: '+quote(s.summary),'chapter: '+quote(s.chapter),'author: '+quote(s.author),
     'status: '+quote(s.status),
     'source_path: '+quote('stories/'+s.filename),'---',''];
   // Source custody is derived from the canonical filename, not optional SSG page metadata.

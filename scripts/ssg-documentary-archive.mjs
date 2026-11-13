@@ -7,11 +7,12 @@ const ROOT = '/conde-incident/evidencias/arquivo/';
 const MATRIX = 'https://github.com/franklinbaldo/conde-incident/blob/faf4dd0fd8dfbdd825e4e934b3b30ebd81bf61df/research/evidence_matrix_C001-C238_2026-11-11.md#L';
 const safe = value => String(value).replaceAll('\\', '\\\\').replace(/([\[\]_*`<>|])/g, '\\$1').replace(/\r?\n/g, ' ');
 const scalar = value => JSON.stringify(String(value));
-const page = (title, description, body) => [
-  '---', 'title: '+scalar(title), 'description: '+scalar(description),
+const page = (title, description, body, type='Page', fields={}) => [
+  '---', 'type: '+type, 'title: '+scalar(title), 'description: '+scalar(description),
   'layout: page', 'language: pt-BR',
   'date: '+scalar('2026-11-13'),
   'author: '+scalar('Projeto Conde (índice documental gerado)'),
+  ...Object.entries(fields).map(([key,value]) => key+': '+scalar(value)),
   '---', '', body, '',
 ].join('\n');
 const https = url => /^https:\/\/[^\s<>"'()]+$/u.test(url);
@@ -90,7 +91,11 @@ export function archivePages(citations, lineage) {
       }
     }
     parts.push('[Voltar ao índice curado]('+ROOT+') · [Abrir laboratório antigo](/conde-incident/lab/#/documents)');
-    files.set(slug+'/index.md', page(`${id}: referências documentais`, `Proveniência curada da ocorrência ${id}`, parts.join('\n')));
+    files.set(slug+'/index.md', page(`${id}: referências documentais`,
+      `Proveniência curada da ocorrência ${id}`, parts.join('\n'), 'Evidence', {
+        occurrence:id,matrix_snapshot:citations.matrix_git_blob_sha1,
+        verification_status:'documentary_record_only'
+      }));
     return `- [${id}: ${safe(record.source_family)}](${ROOT}${slug}/) (${entries.length} referência(s))`;
   });
   const index = [
