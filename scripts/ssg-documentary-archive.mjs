@@ -2,6 +2,7 @@
 import assert from 'node:assert/strict';
 import {mkdirSync, writeFileSync} from 'node:fs';
 import {join} from 'node:path';
+import {archiveKey,verifiedArchiveLinks} from './ssg-wayback-links.mjs';
 
 const ROOT = '/conde-incident/evidencias/arquivo/';
 const MATRIX = 'https://github.com/franklinbaldo/conde-incident/blob/faf4dd0fd8dfbdd825e4e934b3b30ebd81bf61df/research/evidence_matrix_C001-C238_2026-11-11.md#L';
@@ -21,7 +22,7 @@ const familySlug = family => {
   return family.toLowerCase().replaceAll('_', '-');
 };
 
-export function archivePages(citations, lineage) {
+export function archivePages(citations, lineage, wayback=null) {
   assert.equal(citations.schema, 'conde.source-citations/v1');
   assert.equal(lineage.schema, 'conde.declared-documentary-dependence/v1');
   assert.match(citations.matrix_git_blob_sha1, /^[a-f0-9]{40}$/);
@@ -30,6 +31,7 @@ export function archivePages(citations, lineage) {
   assert.equal(lineage.epistemic_limits?.absence_of_edge_does_not_prove_independence, true);
   assert.equal(lineage.epistemic_limits?.independent_physical_observation_count, null);
   assert.ok(Array.isArray(citations.records) && Array.isArray(lineage.citation_lineages));
+  const archived = wayback ? verifiedArchiveLinks(wayback, citations) : new Map();
   const grouped = new Map();
   for (const record of citations.records) {
     assert.match(record.occurrence, /^C[0-9]{1,3}#[1-9][0-9]*$/);
@@ -81,6 +83,14 @@ export function archivePages(citations, lineage) {
         `- **Relação:** ${safe(r.relation)}`, `- **Limite:** ${safe(r.scope)}`,
         `- **Localizador:** ${safe(r.locator)}`, '',
         `[Abrir documento original](${r.citation_url})`, '',
+        ...(archived.has(archiveKey(r.snapshot_ref,r.source_id)) ? (() => {
+          const copy=archived.get(archiveKey(r.snapshot_ref,r.source_id));
+          return [
+            `[PDF preservado no Wayback (${copy.utc.replace('T',' ').replace('Z',' UTC')})](${copy.url})`, '',
+            `**Custódia digital:** SHA-256 ${copy.sha256}; ${copy.count} captura(s) do mesmo PDF. Uma captura moderna não equivale a nova observação de 1963.`, '',
+          ];
+        })() : []),
+
         `[Outras ocorrências da família ${safe(r.source_family)}](${ROOT}familias/${familySlug(r.source_family)}/)`, '',
         '**Genealogia declarada:**', '');
       if (!ancestry.declared_upstream_paths.length) {
@@ -166,8 +176,8 @@ export function archivePages(citations, lineage) {
   return files;
 }
 
-export function writeArchivePages(outputDir, citations, lineage) {
-  const pages = archivePages(citations, lineage);
+export function writeArchivePages(outputDir, citations, lineage, wayback=null) {
+  const pages = archivePages(citations, lineage, wayback);
   for (const [name, data] of pages) {
     const file=join(outputDir,name);
     mkdirSync(file.slice(0, file.lastIndexOf('/')), {recursive: true});
