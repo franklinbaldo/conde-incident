@@ -21,8 +21,8 @@ class LateNASAReports(unittest.TestCase):
         self.assertEqual(report["distinct_source_editions"], 3)
         self.assertEqual(report["survivor_529_nov_dec_current_facsimile_readings"], ["92.2", "89.2"])
         self.assertEqual(report["survivor_527_nov_dec_periods"], ["94.6", "94.6"])
-        self.assertEqual(report["529_nov_dec_conservative_delta_min_with_unresolved_89_2_or_89_6_and_tenth_rounding"],
-                         ["2.50", "3.10"])
+        self.assertEqual(report["529_nov_dec_delta_range_min_after_89_2_reconciliation_tenth_rounding"],
+                         ["2.90", "3.10"])
         self.assertFalse(report["physical_domain_reduced"])
         self.assertEqual(report["independent_instrument_measurements_found"], 0)
 
@@ -68,6 +68,20 @@ class LateNASAReports(unittest.TestCase):
 
     def test_remove_old_disputed_reading(self):
         self.mutate(lambda x: x["sources"][2].pop("transcription_conflict"))
+
+    def test_c227_transcription_erratum_cannot_be_rolled_back(self):
+        self.assertEqual(LEDGER["sources"][2]["transcription_conflict"]["status"],
+                         "RESOLVED_AS_TRANSCRIPTION_ERRATUM_NOT_INSTRUMENT_VALIDATION")
+        self.mutate(lambda x: x["sources"][2]["transcription_conflict"].update(
+            status="OPEN_REQUIRES_INDEPENDENT_REVIEW"))
+
+    def test_reject_forged_visual_review_page(self):
+        self.mutate(lambda x: x["sources"][2]["transcription_conflict"]["independent_review"].update(
+            pdf_page_index=5))
+
+    def test_reject_missing_prior_c227_value(self):
+        self.mutate(lambda x: x["sources"][2]["transcription_conflict"]["independent_review"].update(
+            superseded_c227_period_min=None))
 
     def test_activate_disputed_value(self):
         self.mutate(lambda x: x["sources"][2]["transcription_conflict"].update(
