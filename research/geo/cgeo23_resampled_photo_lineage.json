@@ -1,0 +1,39 @@
+{
+  "schema": "conde.gis.resampled-photo-lineage/v1",
+  "id": "CGEO-23",
+  "audit_date_utc": "2026-11-13",
+  "source_families": ["CGEO-19", "CGEO-14"],
+  "source_editorial_dates": {"blogger": "2012-12-10", "wordpress": "2014-03-13"},
+  "sources": {
+    "blogger": {
+      "vila": {"parent_id": "vila_1959_claim", "byte_size": 316900, "sha256": "b0c17c9bae3a4397d1572b300b26967e703fe1c0bdb05c624819dd34c16abde3", "url": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg0d9sxJJ714dVbe7juTyDzOXG5ngKfyU3W8O_UzjM3iUGsPJxlHjVOAjWoZYfhXlJb-eI4PwkYQSCsKKrNx8Id3EEb4Va23QgT5cKVUmzQfcNFh7HVdzMF-fdjLS_1nLREXkCnR0pk3zHl/s1600/vila+velha+001.jpg"},
+      "passarela": {"parent_id": "passarela_2012_claim", "byte_size": 215602, "sha256": "68f669f9e39896695f7d0deb677c81ae18ae93b941524f2bbde0cc76df1149c7", "url": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMgky3HjMd_iAiH_VkX97K73K3Z0wx8EZV74B8e166mmPRtBBoYZWlMPY6zD-3KfQ80OPSDIGuaDEeYhGXjKuQM-CLTfK-ySeZH4aEdPQ30nydP8yWSfzHwTyhNVPnsnyH541l2U4pfrSC/s1600/WP_000819.jpg"},
+      "alto": {"parent_id": "alto_vila_1959_claim", "byte_size": 235387, "sha256": "01263381c8108b6a0e33f11861ac6cc7afe200d9f359d2077dd2d198e9f88a2f", "url": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiekVN49H50AURnoNwjrOGAS8F7o-KvYI5ShWtDSL-uBzYxncyhNyUKP1_N6P3N0G8D9NfBjJ4nSvc11QJ7laNi2tq_yK0Shk54XjNbxDjU50eYLQlSN9oAxGbhHZnvFYHnZc0hYVSRc3vm/s1600/villa+velha+3+001.jpg"},
+      "igreja": {"parent_id": "igreja_monte_1959_claim", "byte_size": 237049, "sha256": "071e3b27fa599beedb4f9e2e93bf597badee9c10b5acba120c4157f84fb441c6", "url": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjYDQC9OsmmX5549H-EgsqnLC-A40VVF2FLxBOGfgFyeaaZFPajZKtvrAkHuuYHi15EbCpGFdR5YCmus8ewSXGtecWiEfXP7xeRhBlKhwAhhVCor-EIHUT8RJy33m2VhzPhqVkpxGIq0WRC/s1600/villa+velha+2+001.jpg"}
+    },
+    "wordpress": {
+      "wp2": {"parent_id": "CGEO14-IMAGE-02", "byte_size": 17877, "sha256": "3f8a427524b6b4b6abfedf0473d054891608ac2e1e4a2905fec881caabd992a0", "url": "https://condebahia.wordpress.com/wp-content/uploads/2014/03/villa-velha-2-001.jpg"},
+      "wp3": {"parent_id": "CGEO14-IMAGE-03", "byte_size": 27755, "sha256": "468fd60bf0805e1b1dedc8be6e1a4fc9181b74225bc57650c454e31e2c6d46c3", "url": "https://condebahia.wordpress.com/wp-content/uploads/2014/03/villa-velha-3-001.jpg"}
+    }
+  },
+  "result": {
+    "method": "Pillow_13.0.0_RGB_LANCZOS_gray_Pearson",
+    "thumbnail_resolution_px": [320, 233],
+    "source_resolution_px": [1600, 1163],
+    "match_ids": {"wp2": "igreja", "wp3": "alto"},
+    "comparison_matrix": {
+      "wp2": {"vila": {"mae_rgb": 52.977, "gray_pearson": 0.598882}, "passarela": {"mae_rgb": 123.256, "gray_pearson": 0.048009}, "alto": {"mae_rgb": 91.986, "gray_pearson": -0.170021}, "igreja": {"mae_rgb": 1.554, "gray_pearson": 0.998983}},
+      "wp3": {"vila": {"mae_rgb": 85.84, "gray_pearson": -0.119396}, "passarela": {"mae_rgb": 89.601, "gray_pearson": 0.184939}, "alto": {"mae_rgb": 2.838, "gray_pearson": 0.998557}, "igreja": {"mae_rgb": 92.073, "gray_pearson": -0.169772}}
+    },
+    "resampled_reencoded_version_of_same_photo_frame_strongly_supported": true,
+    "exposure_date_1959_authenticated": false,
+    "original_negative_verified": false,
+    "same_originating_frame_proven_without_resampling_assumptions": false,
+    "direction_of_copying_verified": false,
+    "original_photographer_verified": false,
+    "two_independent_historical_witnesses": false,
+    "rights_to_redistribute_verified": false
+  },
+  "geospatial": {"center_1963_point": null, "center_1963_polygon": null, "impact_point": null, "historic_camera_location": null, "crs": null, "horizontal_error_m": null, "can_constrain_orbital_reentry": false},
+  "dependencies": [{"from":"CGEO-23","to":"CGEO-19","relation":"REUSES_2012_EDITORIAL_PHOTOS"},{"from":"CGEO-23","to":"CGEO-14","relation":"REUSES_2014_WEB_THUMBNAILS"},{"from":"CGEO-23","to":"CGEO-22","relation":"COMPLETES_TWO_REMAINING_GALLERY_PAIRS_DIFFERENT_ENCODING"},{"from":"CGEO-23","to":"CGEO-18","relation":"NOT_1963_FALL_OBSERVATION"}]
+}
