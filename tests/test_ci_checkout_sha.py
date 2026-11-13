@@ -15,7 +15,11 @@ REF = re.compile(r'(?m)^          ref: (.+)$')
 
 
 def _is_exact_assertion(step: str, expected: str) -> bool:
-    """Recognize the explicit, tested comparison forms used by project CI."""
+    """Recognize a mandatory, fail-closed comparison in the next CI step."""
+    # A conditional or tolerated assertion is not a gate, even if its shell
+    # command contains a byte-for-byte exact SHA comparison.
+    if re.search(r'(?m)^        (?:if|continue-on-error)\s*:', step):
+        return False
     commands = {line.strip() for line in step.splitlines()
                 if line.strip() and not line.lstrip().startswith('#')}
     commands |= {line.removeprefix('run: ').strip() for line in commands if line.startswith('run: ')}
@@ -97,6 +101,21 @@ class ExactCheckoutPolicy(unittest.TestCase):
                 with self.subTest(workflow=name, change=replacement):
                     self.assertNotEqual(mutant, source)
                     with self.assertRaisesRegex(AssertionError, 'exact SHA assertion'):
+                        check_checkout_sha(mutant, name)
+
+    def test_sha_assertion_cannot_be_skipped_or_ignored(self):
+        for name, marker in (
+            ('integration-head.yml', '      - name: Assert exact head SHA\n'),
+            ('prek.yml', '      - name: Assert exact source SHA\n'),
+        ):
+            original = (ROOT / name).read_text(encoding='utf-8')
+            self.assertGreater(check_checkout_sha(original, name), 0)
+            for bypass in ('        if: ${{ false }}\n',
+                           '        continue-on-error: true\n'):
+                mutant = original.replace(marker, marker + bypass, 1)
+                with self.subTest(workflow=name, bypass=bypass):
+                    self.assertNotEqual(mutant, original)
+                    with self.assertRaisesRegex(AssertionError, 'SHA assertion'):
                         check_checkout_sha(mutant, name)
 
     def test_expected_value_and_per_checkout_proximity_are_required(self):
