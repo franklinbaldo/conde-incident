@@ -2,6 +2,7 @@ import React from 'react';
 import { ExternalLink, FileText, ShieldAlert } from 'lucide-react';
 import { SourceCitationFeed } from './SourceCitationFeed';
 import custody from '../../research/archive/wayback_pilot_2026-11-12.json';
+import { negativeArchiveLabel } from '../lib/archiveCustodyLabel';
 import { matrixOccurrenceUrl } from '../lib/sourceCitationAudit';
 
 type Language = 'pt' | 'en';
@@ -122,7 +123,7 @@ export const DocumentArchive: React.FC<{ lang: Language }> = ({ lang }) => {
         </ul>
         {custody.records.filter(r => r.status === 'NO_EXACT_CAPTURE_IN_QUERIED_INDEX').map(r => (
           <p key={r.id} role="note" className="rounded border border-amber-900 p-3 text-sm text-amber-100">
-            <strong>NASA SSR 15/11/1963:</strong> {pt
+            <strong>{negativeArchiveLabel(r)}:</strong> {pt
               ? 'sem captura da URL exata nos índices consultados; isso não prova ausência do documento.'
               : 'no exact-URL capture in queried indexes; this does not prove the document is absent.'}
           </p>
