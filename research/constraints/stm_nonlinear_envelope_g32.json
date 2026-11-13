@@ -1,0 +1,41 @@
+{
+  "id": "CASTOR-G32-FINITE-AMPLITUDE-STM-COVARIANCE",
+  "issue": 4,
+  "status": "CONNECTED_PENDING_HISTORICAL_CALIBRATION",
+  "depends_on": ["CASTOR-G31-CARTESIAN-STATE-TRANSITION", "CASTOR-G29-TEME-6D-COVARIANCE-DEPENDENCY", "C179#1", "C197#1"],
+  "documentary_sources": [
+    {
+      "occurrence": "C197#1",
+      "source": "NASA/Goddard Satellite Situation Report, 1963-11-15, p.8",
+      "url": "https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf",
+      "supports": "Day-only catalog decay of 1963-003B on 1963-11-08",
+      "does_not_support": ["historical covariance", "original 527/529 Cartesian states", "reentry hour", "impact location"]
+    },
+    {
+      "occurrence": "C179#1",
+      "source": "Secondary retrospective TLE of NORAD 528",
+      "independence": "NOT_INDEPENDENT_INSTRUMENT_COVARIANCE",
+      "supports": "Secondary element scenario only"
+    }
+  ],
+  "variables": {
+    "x0": "[r0 km, v0 km/s] in ECI_DECLARED at exact UTC epoch",
+    "C0": "Admitted 6x6 Cartesian covariance in km and km/s, including cross correlations",
+    "Phi": "G31 numerically resolved state transition Jacobian",
+    "L": "Cholesky factor of C0 reconstructed from dimensionless correlations",
+    "delta_j_pm": "plus/minus sigmaMultiplier times jth column of L",
+    "nonlinear_remainder": "RK4(x0+delta) - RK4(x0) - Phi delta"
+  },
+  "audit": "Propagate twelve deterministic finite-amplitude correlated sigma directions with the same J2/optional-drag force and threshold; veto unresolved event, nonfinite, or remainder beyond explicitly declared km / km/s budgets.",
+  "scope_limit": "Finite 12-direction diagnostic, NOT a rigorous bound over the covariance ellipsoid; does not validate first-order propagation globally.",
+  "missing_dependencies": [
+    "historical NORAD 527/529 independent original Cartesian states and 6x6 covariances",
+    "time-specific EOP/UT1 frame-systematic covariance and lineage",
+    "documented drag if atmosphere is used",
+    "historically admissible Lean domain constraints"
+  ],
+  "tests": "tests/orbitStmEnvelope.test.mjs",
+  "historical_holdout": "NOT_RUN",
+  "domain_reduced": false,
+  "impact_in_conde": "NOT_EVALUABLE"
+}
