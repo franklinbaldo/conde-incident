@@ -5,6 +5,9 @@ on:
       - 'index.html'
       - 'src/App.tsx'
       - 'src/components/Navigation.tsx'
+      - 'src/lib/editorialRoutes.ts'
+      - 'tests/editorialRoutes.test.mjs'
+      - 'tests/editorial_journey_smoke.mjs'
       - 'src/components/OrbitalMap.tsx'
       - 'src/components/map/**'
       - 'tests/ui_keyboard_smoke.mjs'
@@ -75,6 +78,8 @@ jobs:
           tar -xzf "$RUNNER_TEMP/ssg-0.0.75.tar.gz" -C "$RUNNER_TEMP" ssg
           chmod 755 "$RUNNER_TEMP/ssg"
           echo "$RUNNER_TEMP" >> "$GITHUB_PATH"
+      - name: Build the actual Vite laboratory for the same Pages artifact
+        run: VITE_BASE_PATH=/conde-incident/lab/ bun run build
       - name: Build and serve SSG Pages artifact at production prefix
         shell: bash
         run: |
@@ -83,8 +88,9 @@ jobs:
           ssg check --config ssg.toml
           ssg build --config ssg.toml
           node scripts/enable-article-frames.mjs
-          mkdir -p public/css "$RUNNER_TEMP/search-audit/conde-incident"
+          mkdir -p public/css public/lab "$RUNNER_TEMP/search-audit/conde-incident"
           cp static/css/site.css public/css/site.css
+          cp -R dist/. public/lab/
           cp -R public/. "$RUNNER_TEMP/search-audit/conde-incident/"
           python3 -m http.server 4173 --directory "$RUNNER_TEMP/search-audit" > /tmp/conde-ssg-audit.log 2>&1 &
           for i in $(seq 1 40); do
@@ -95,6 +101,8 @@ jobs:
           exit 1
       - name: Chromium SSG search focus, tap targets and modal keyboard paths
         run: node tests/ssg_search_dialog_smoke.mjs
+      - name: Chromium editorial ↔ laboratory journeys (320px and desktop)
+        run: node tests/editorial_journey_smoke.mjs
       - name: Upload screenshots and findings even on failure
         if: always()
         uses: actions/upload-artifact@v4
