@@ -9,7 +9,10 @@ const safe = value => String(value).replaceAll('\\', '\\\\').replace(/([\[\]_*`<
 const scalar = value => JSON.stringify(String(value));
 const page = (title, description, body) => [
   '---', 'title: '+scalar(title), 'description: '+scalar(description),
-  'layout: page', 'language: pt-BR', '---', '', body, '',
+  'layout: page', 'language: pt-BR',
+  'date: '+scalar('2026-11-13'),
+  'author: '+scalar('Projeto Conde (índice documental gerado)'),
+  '---', '', body, '',
 ].join('\n');
 const https = url => /^https:\/\/[^\s<>"'()]+$/u.test(url);
 
@@ -54,7 +57,7 @@ export function archivePages(citations, lineage) {
   const links = sorted.map(([id, entries]) => {
     const slug = id.toLowerCase().replace('#','-');
     const record = entries[0].record;
-    const parts = [`# ${id}: fontes e limites`, '',
+    const parts = [`## ${id}: fontes e limites`, '',
       `**Resumo curado da ocorrência (não é transcrição literal do documento):** ${safe(record.claim_text)}`, '',
       '**Registro documental, não verificação de ocorrência física.** Nenhuma hora, local ou probabilidade de queda foi determinada.', '',
       `Esta ocorrência possui **${entries.length} referência(s) curada(s)**. Referências documentais não devem ser contadas como testemunhos físicos independentes.`, '',
@@ -88,8 +91,8 @@ export function archivePages(citations, lineage) {
     return `- [${id}: ${safe(record.source_family)}](${ROOT}${slug}/) (${entries.length} referência(s))`;
   });
   const index = [
-    '# Arquivo de fontes documentais', '',
-    '**Leitura estática gerada pelo SSG Rust a partir dos feeds curados do laboratório.** Sem React ou JavaScript. O laboratório anterior permanece disponível durante a migração.', '',
+    '## Arquivo de fontes documentais', '',
+    '**Leitura estática gerada pelo SSG Rust a partir dos feeds curados do laboratório.** Sem React ou JavaScript. O laboratório anterior permanece disponível durante a migração. A data editorial deste índice não é a data de uma observação em 1963.', '',
     `**Cobertura:** ${citations.curated_occurrences} ocorrências curadas de ${citations.total_matrix_occurrences}. ${citations.unmapped_occurrences} ocorrências não mapeadas no feed parcial **não significam fonte inexistente**.`, '',
     'Uma mesma obra pode originar múltiplos vínculos documentais, sem criar novas testemunhas físicas. Ausência de genealogia declarada não significa independência. Datas NASA são entradas de catálogo, não posições ou horários observados de queda.', '',
     ...links, '',
