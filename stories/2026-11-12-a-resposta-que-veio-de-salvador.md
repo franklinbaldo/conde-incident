@@ -54,6 +54,7 @@ A palavra *aparentemente* não deve desaparecer quando se conta essa conclusão.
 
 
 <figure class="story-visual story-document">
+  <p class="story-document-action"><a href="https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D002_Diplomatic-Cable_Brazil_November-20-1963.pdf#page=1" target="_blank" rel="noopener noreferrer">Abrir aerograma A-628 (PDF, página 1) em nova aba</a></p>
   <iframe loading="lazy" title="Fac-símile do aerograma A-628, de 20 de novembro de 1963, com a resposta consular sobre Conde" src="https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D002_Diplomatic-Cable_Brazil_November-20-1963.pdf#page=1" referrerpolicy="strict-origin-when-cross-origin"></iframe>
   <figcaption><strong>Leia o documento original.</strong> Aerograma A-628, Departamento de Estado dos EUA, 20/11/1963, com reprodução da resposta consular n.º 157. É um fac-símile hospedado em espelho documental, não um exame físico da alegada esfera. Caso seu navegador não exiba PDF incorporado, <a href="https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D002_Diplomatic-Cable_Brazil_November-20-1963.pdf">abra o PDF completo</a>.</figcaption>
 </figure>
