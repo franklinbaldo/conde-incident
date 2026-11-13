@@ -9,14 +9,21 @@
     "sha256": "194fdcbc26509fc7ce4ec775aafa4914aa54c57c4617af99d1581790e10ef73d",
     "bytes": 18442378,
     "access_date": "2026-11-12",
-    "page_printed": 501,
     "section": "APPENDIX A - SATELLITES, SPACE PROBES, AND MANNED SPACE FLIGHTS",
-    "transcription_method": "OFFICIAL_PDF_EXTRACTED_TEXT_NOT_VISUALLY_REINSPECTED",
-    "page_image_verified": false
+    "transcription_method": "VISUAL_REINSPECTION_PINNED_PDF_PAGE_502_2026-11-13",
+    "page_image_verified": true,
+    "methodology_page_printed": 501,
+    "row_page_printed": 502,
+    "row_pdf_page_index_zero_based": 509,
+    "visual_review_note": "Original facsimile rendered by PyMuPDF from SHA-pinned official NASA PDF; printed page 502 (PDF page index 509) in landscape. Flattened OCR text can misalign table rows."
   },
   "methodological_note": {
     "compiler": "Dr. Frank W. Anderson, Jr., Assistant NASA Historian",
-    "orbit_data_source_options": ["initial orbit", "Satellite Situation Report", "President's Report on Space, 1963"],
+    "orbit_data_source_options": [
+      "initial orbit",
+      "Satellite Situation Report",
+      "President's Report on Space, 1963"
+    ],
     "declares_compilation": true,
     "specific_upstream_for_1963_3": null,
     "measurement_independence": "NOT_ESTABLISHED"
@@ -24,14 +31,17 @@
   "annual_row_extracted_text": {
     "international_designation_printed": "1963-3",
     "scope": "LAUNCH_GROUP_UNRESOLVED_CHILD",
-    "name_printed": "DOD Probe",
-    "vehicle_printed": "Thor-Agena",
+    "name_printed": "DOD Spacecraft",
+    "vehicle_printed": "Thor-Agena D.",
     "status_printed": "Still in orbit.",
     "perigee_statute_miles_printed": 286,
-    "period_minutes_printed": null,
+    "period_minutes_printed": "94.6",
     "observation_epoch": null,
     "child_piece_identifier": null,
-    "visual_transcription_confirmed": false
+    "visual_transcription_confirmed": true,
+    "launch_date_printed": "Jan. 16",
+    "apogee_statute_miles_printed": 334,
+    "inclination_deg_printed": "81.89"
   },
   "linked_sources": {
     "october_report_id": "C241-L12",
@@ -54,5 +64,17 @@
     "lean_constraint": "NOT_PROMOTED",
     "graph_state": "CONNECTED_PENDING_CALIBRATION",
     "conde_outcome": "INDETERMINATE"
+  },
+  "source_correction_2026_11_13": {
+    "prior_status": "EXTRACTED_TEXT_ONLY",
+    "corrections": [
+      "source row on printed page 502, not methodology page 501",
+      "name DOD Spacecraft, not DOD Probe",
+      "period 94.6 min and inclination 81.89 degrees are printed group fields",
+      "launch date Jan. 16 and vehicle Thor-Agena D.",
+      "apogee 334 statute miles"
+    ],
+    "material_limit": "LAUNCH_GROUP_1963_3_NOT_SPECIFIC_NORAD_528",
+    "prior_material_retained": "Git history retains prior transcription"
   }
 }

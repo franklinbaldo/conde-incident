@@ -170,8 +170,10 @@ def build(norad_bytes: bytes, films_bytes: bytes, series_bytes: bytes,
     # This guard intentionally fails closed on future corrected source readings.
     if (annual['record_id'] != 'C241-L15'
             or annual['publication']['series'] != 'NASA SP-4004'
-            or annual['publication']['page_printed'] != 501
-            or annual['publication']['page_image_verified'] is not False
+            or annual['publication']['methodology_page_printed'] != 501
+            or annual['publication']['row_page_printed'] != 502
+            or annual['publication']['row_pdf_page_index_zero_based'] != 509
+            or annual['publication']['page_image_verified'] is not True
             or annual['methodological_note']['declares_compilation'] is not True
             or annual['methodological_note']['measurement_independence'] != 'NOT_ESTABLISHED'):
         raise ValueError('annual NASA documentary source changed: reassess')
@@ -182,7 +184,12 @@ def build(norad_bytes: bytes, films_bytes: bytes, series_bytes: bytes,
             or group['observation_epoch'] is not None
             or group['status_printed'] != 'Still in orbit.'
             or group['perigee_statute_miles_printed'] != 286
-            or group['visual_transcription_confirmed'] is not False
+            or group['visual_transcription_confirmed'] is not True
+            or group['name_printed'] != 'DOD Spacecraft'
+            or group['launch_date_printed'] != 'Jan. 16'
+            or group['period_minutes_printed'] != '94.6'
+            or group['inclination_deg_printed'] != '81.89'
+            or group['apogee_statute_miles_printed'] != 334
             or annual['linked_sources']['november_piece_printed'] != '1963 3B'
             or annual['linked_sources']['november_decay_day'] != primary['decay_day']
             or annual['inference_guard']['aggregate_status_is_528_status'] is not False
@@ -269,7 +276,9 @@ def build(norad_bytes: bytes, films_bytes: bytes, series_bytes: bytes,
                 'occurrences': ['C241-L15'],
                 'source_path': ANNUAL,
                 'source_url': annual['publication']['url'],
-                'printed_page': annual['publication']['page_printed'],
+                'printed_page': annual['publication']['row_page_printed'],
+                'group_period_minutes_printed': group['period_minutes_printed'],
+                'group_launch_date_printed': group['launch_date_printed'],
                 'published_year': annual['publication']['publication_year'],
                 'printed_group_designation': group['international_designation_printed'],
                 'printed_group_status': group['status_printed'],
@@ -278,7 +287,7 @@ def build(norad_bytes: bytes, films_bytes: bytes, series_bytes: bytes,
                 'child_528_perigee_from_this_row': None,
                 'factor_eligibility': 'LAUNCH_GROUP_COMPILATION_NOT_528_OBSERVATION',
                 'blockers': ['CHILD_OBJECT_ID', 'MEASUREMENT_EPOCH',
-                             'UPSTREAM_INDEPENDENCE', 'VISUAL_TRANSCRIPTION',
+                             'UPSTREAM_INDEPENDENCE',
                              'SENSOR_FRAME_ERROR'],
             },
         ],
