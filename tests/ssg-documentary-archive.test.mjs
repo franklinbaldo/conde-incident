@@ -40,7 +40,7 @@ test('SSG publishes one stable, no-JS page per curated occurrence', () => {
   assert.match(pages.get('familias/bluebook-derivative-catalogues/index.md'),/C232#1/);
   assert.match(index,/Consultar obras e suas reutilizações/);
   assert.match(pages.get('obras/index.md'),/Obras documentais/);
-  assert.match(pages.get('obras/index.md'),/NASA\_SSR\_VOL3\_22/);
+  assert.ok(pages.get('obras/index.md').includes('/obras/nasa-ssr-vol3-22/'));
   assert.match(pages.get('obras/nasa-ssr-vol3-22/index.md'),/8 ocorrência\(s\), 8 vínculo\(s\)/);
   assert.match(pages.get('obras/nasa-ssr-vol3-22/index.md'),/C197#1/);
   assert.match(pages.get('obras/nasa-ssr-vol3-22/index.md'),/SHA-256 da linha na matriz/);
