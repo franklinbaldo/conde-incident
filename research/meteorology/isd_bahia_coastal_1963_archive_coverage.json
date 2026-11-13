@@ -1,0 +1,208 @@
+{
+  "schema": "conde.isd-coastal-1963-archive-coverage/v1",
+  "id": "MET-ISD-BAHIA-1963-ARCHIVE-COVERAGE-01",
+  "source_urls": {
+    "retrospective_station_history": "https://www.ncei.noaa.gov/pub/data/noaa/isd-history.csv",
+    "directory_1963": "https://www.ncei.noaa.gov/pub/data/noaa/1963/"
+  },
+  "capture_date_utc": "2026-11-13",
+  "sha256": {
+    "station_history_full": "1994747ab4af1b97e63adb434b4d0d022f2daee76f0c144ea9ab46be2d906604",
+    "directory_html_full": "93627d0e6010063fc54d6029d67499952107784f47740d895a17516e6dfb401d",
+    "directory_sorted_filenames": "51140ef98cf946a8d885d9fb86ff4b8cefd0009708c7adae06a2e20efcf0832c"
+  },
+  "reference": {
+    "kind": "IBGE_2022_Conde_municipality_bbox_midpoint_not_1963",
+    "lat_lon": [
+      -11.8641854035,
+      -37.68935144749995
+    ],
+    "distance_method": "haversine_spherical_R6371km",
+    "historical_coordinate_uncertainty_km": null
+  },
+  "directory_gz_count": 5577,
+  "catalogue_br_country_code_with_1963_in_year_bounds": 129,
+  "matching_1963_files": 10,
+  "matched_nearest_first": [
+    {
+      "file": "834970-99999-1963.gz",
+      "catalogue_name": "CARAVELAS",
+      "distance_km": 665.2,
+      "catalogue_begin": "19610101",
+      "catalogue_end": "19971231"
+    },
+    {
+      "file": "835830-99999-1963.gz",
+      "catalogue_name": "PAMPULHA CARLOS DRUMMOND DE ANDRADE",
+      "distance_km": 1111.9,
+      "catalogue_begin": "19510101",
+      "catalogue_end": "20250824"
+    },
+    {
+      "file": "833780-99999-1963.gz",
+      "catalogue_name": "PRESIDENTE JUSCELINO KUBITSCHEK",
+      "distance_km": 1189.6,
+      "catalogue_begin": "19610101",
+      "catalogue_end": "20250824"
+    },
+    {
+      "file": "837210-99999-1963.gz",
+      "catalogue_name": "VIRACOPOS",
+      "distance_km": 1592.2,
+      "catalogue_begin": "19510120",
+      "catalogue_end": "20250824"
+    },
+    {
+      "file": "821930-99999-1963.gz",
+      "catalogue_name": "VAL DE CANS JULIO CEZAR RIBEIRO INTL",
+      "distance_km": 1665.7,
+      "catalogue_begin": "19421001",
+      "catalogue_end": "20250824"
+    },
+    {
+      "file": "829300-99999-1963.gz",
+      "catalogue_name": "CACHIMBO / CAMPO DE PROVAS BRIGADEIRO VELOSO",
+      "distance_km": 1908.6,
+      "catalogue_begin": "19610101",
+      "catalogue_end": "20250824"
+    },
+    {
+      "file": "838400-99999-1963.gz",
+      "catalogue_name": "AFONSO PENA",
+      "distance_km": 1939.7,
+      "catalogue_begin": "19610101",
+      "catalogue_end": "20250824"
+    },
+    {
+      "file": "836120-99999-1963.gz",
+      "catalogue_name": "CAMPO GRANDE",
+      "distance_km": 2048.4,
+      "catalogue_begin": "19360824",
+      "catalogue_end": "20250824"
+    },
+    {
+      "file": "860880-99999-1963.gz",
+      "catalogue_name": "PUERTO PINASCO",
+      "distance_km": 2228.1,
+      "catalogue_begin": "19600202",
+      "catalogue_end": "19640413"
+    },
+    {
+      "file": "839810-99999-1963.gz",
+      "catalogue_name": "COMANDANTE GUSTAVO KRAEMER",
+      "distance_km": 2748.1,
+      "catalogue_begin": "19610101",
+      "catalogue_end": "20250824"
+    }
+  ],
+  "catalogue_nearest_12": [
+    {
+      "file": "830960-99999-1963.gz",
+      "catalogue_name": "ARACAJU",
+      "distance_km": 126.3,
+      "catalogue_begin": "19310104",
+      "catalogue_end": "20201231",
+      "annual_file_listed": false
+    },
+    {
+      "file": "832480-99999-1963.gz",
+      "catalogue_name": "DEPUTADO LUIS EDUARDO MAGALHAES",
+      "distance_km": 135.7,
+      "catalogue_begin": "19430809",
+      "catalogue_end": "20250824",
+      "annual_file_listed": false
+    },
+    {
+      "file": "832290-99999-1963.gz",
+      "catalogue_name": "SALVADOR",
+      "distance_km": 156.6,
+      "catalogue_begin": "19310101",
+      "catalogue_end": "20240520",
+      "annual_file_listed": false
+    },
+    {
+      "file": "830970-99999-1963.gz",
+      "catalogue_name": "PROPRIA",
+      "distance_km": 205.7,
+      "catalogue_begin": "19310104",
+      "catalogue_end": "20240702",
+      "annual_file_listed": false
+    },
+    {
+      "file": "829900-99999-1963.gz",
+      "catalogue_name": "PAO DE ACUCAR",
+      "distance_km": 236.7,
+      "catalogue_begin": "19310104",
+      "catalogue_end": "20240619",
+      "annual_file_listed": false
+    },
+    {
+      "file": "829890-99999-1963.gz",
+      "catalogue_name": "AGUA BRANCA",
+      "distance_km": 287.9,
+      "catalogue_begin": "19360824",
+      "catalogue_end": "20231213",
+      "annual_file_listed": false
+    },
+    {
+      "file": "829940-99999-1963.gz",
+      "catalogue_name": "MACEIO",
+      "distance_km": 327.0,
+      "catalogue_begin": "19310105",
+      "catalogue_end": "20210325",
+      "annual_file_listed": false
+    },
+    {
+      "file": "828930-99999-1963.gz",
+      "catalogue_name": "GARANHUNS",
+      "distance_km": 355.4,
+      "catalogue_begin": "19310104",
+      "catalogue_end": "20231015",
+      "annual_file_listed": false
+    },
+    {
+      "file": "833480-99999-1963.gz",
+      "catalogue_name": "ILHEUS",
+      "distance_km": 358.9,
+      "catalogue_begin": "19310101",
+      "catalogue_end": "19971124",
+      "annual_file_listed": false
+    },
+    {
+      "file": "829840-99999-1963.gz",
+      "catalogue_name": "SENADOR NILO COELHO",
+      "distance_km": 420.1,
+      "catalogue_begin": "19430401",
+      "catalogue_end": "20250824",
+      "annual_file_listed": false
+    },
+    {
+      "file": "827970-99999-1963.gz",
+      "catalogue_name": "SURUBIM",
+      "distance_km": 497.6,
+      "catalogue_begin": "19380503",
+      "catalogue_end": "20240617",
+      "annual_file_listed": false
+    },
+    {
+      "file": "828990-99999-1963.gz",
+      "catalogue_name": "GUARARAPES GILBERTO FREYRE INTL",
+      "distance_km": 514.2,
+      "catalogue_begin": "19310104",
+      "catalogue_end": "20250824",
+      "annual_file_listed": false
+    }
+  ],
+  "matched_within_500km": 0,
+  "matched_within_800km": 1,
+  "warning_country_code": "CTRY=BR is a literal catalog field; includes PUERTO PINASCO (860880), whose location/country assignment requires independent checking.",
+  "not_proved": {
+    "absence_of_1963_real_world_observations_in_unlisted_stations": null,
+    "presence_of_1963_11_07_09_observations_in_listed_annual_files": null,
+    "historical_station_coordinates_and_instruments": null,
+    "independent_measurement_lineage": null,
+    "transfer_conde_wind_or_density": null,
+    "active_conde_constraint": null
+  },
+  "status": "CONNECTED_PENDING_SPATIOTEMPORAL_CALIBRATION"
+}
