@@ -1,4 +1,5 @@
 import Conde1963.Core
+import Conde1963.SsrSurvivorIntervals
 import Conde1963.RelativeTrajectories
 
 /-! Audit axiom dependencies of existing documentary results and new
@@ -15,3 +16,7 @@ does not authenticate observed positions or establish a 1963 reentry. -/
 #print axioms Conde1963.more_constraints_never_expand
 #print axioms Conde1963.RelativeTrajectories.controls_exclude_candidate_if_x_envelopes_disjoint
 #print axioms Conde1963.RelativeTrajectories.one_disjoint_epoch_rejects_trajectory
+#print axioms Conde1963.SsrSurvivorIntervals.b_july_to_october_published_difference
+#print axioms Conde1963.SsrSurvivorIntervals.c_post_b_november_to_december_published_difference
+#print axioms Conde1963.SsrSurvivorIntervals.a_post_b_november_to_december_published_difference
+#print axioms Conde1963.SsrSurvivorIntervals.post_b_529_change_exceeds_527_change_in_printed_tables
