@@ -24,7 +24,7 @@ test('indica uma única seção ativa no acervo e nos capítulos, sem alterar li
     const expected = '/conde-incident/' + (section ? section + '/' : '');
     assert.ok(selected(result.html)[0].includes('href="' + expected + '"'));
     assert.ok(result.html.includes('href="/conde-incident/mapa/">Veja a fonte</a>'));
-    assert.ok(result.html.includes('href="/conde-incident/mapa/">Mapa</a>'));
+    assert.match(result.html, /href="\/conde-incident\/mapa\/"(?: aria-current="page")?>Mapa<\/a>/);
     assert.deepEqual(annotateNavigation(result.html, route), {...result, changed: false});
   }
 });

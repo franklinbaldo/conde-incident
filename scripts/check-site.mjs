@@ -30,7 +30,7 @@ for (const [file, section] of [
   const rendered = read(file);
   const nav = /<nav aria-label="Navegação principal">([\s\S]*?)<\/nav>/.exec(rendered)?.[1];
   assert.ok(nav, 'Navegação SSG ausente: ' + file);
-  assert.ok(nav.includes('<a href="/conde-incident/mapa/">Mapa</a>'), 'Mapa ausente da navegação: ' + file);
+  assert.match(nav, /<a href="\/conde-incident\/mapa\/"(?: aria-current="page")?>Mapa<\/a>/, 'Mapa ausente da navegação: ' + file);
   assert.equal((nav.match(/aria-current="page"/g) || []).length, 1, 'Seção atual ambígua: ' + file);
   assert.ok(nav.includes('<a href="/conde-incident/' + (section ? section+'/' : '') + '" aria-current="page">'),
     'Seção atual incorreta: ' + file);
