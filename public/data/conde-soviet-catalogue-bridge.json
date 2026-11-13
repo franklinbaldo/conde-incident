@@ -4,7 +4,8 @@
   "parent_sha256": {
     "research/tle_custody/soviet_1963_bibliographic_holdings_C241-L29.json": "5bd0d5fe22630b5ff5322cc713b7277a67f043e0a1913ddddd07817e9177d483",
     "research/tle_custody/soviet_1963_cross_id_C241-L30.json": "e11c2a3b952651685500da93d3be662aa4fbe7ac2974d3dd4e3267de6706f851",
-    "research/tle_custody/nasa_527_1964_1967_crosswalk_C241-L28.json": "4dcd4df46288883c6da93f711721b2101fa2a1b39668187c1d3b0c272d992372"
+    "research/tle_custody/nasa_527_1964_1967_crosswalk_C241-L28.json": "4dcd4df46288883c6da93f711721b2101fa2a1b39668187c1d3b0c272d992372",
+    "research/tle_custody/nasa_ssr_dec1977_528_identity_C241-L32.json": "4de614ade9f8850bbacb09bf9d7b597dff905657b3815e8f7d1be27c6fcfdaa7"
   },
   "source_occurrences": [
     "C241-L29#1",
@@ -15,6 +16,37 @@
     "CNII-AA00826990"
   ],
   "nasa_documentary_crosswalk": "C241-L28:527=1963 03A",
+  "primary_nasa_catalogue_identifications": [
+    {
+      "source_id": "C241-L28",
+      "norad": 527,
+      "designator": "1963 03A",
+      "evidence_level": "ORIGINAL_NASA_RETROSPECTIVE_CATALOG_ONLY"
+    },
+    {
+      "source_id": "C241-L32",
+      "norad": 528,
+      "designator": "1963 003B",
+      "evidence_level": "VISUALLY_VERIFIED_NASA_1977_CATALOG_ONLY"
+    },
+    {
+      "source_id": "C241-L32",
+      "norad": 529,
+      "designator": "1963 003C",
+      "evidence_level": "VISUALLY_VERIFIED_NASA_1977_CONTROL_ROW_ONLY"
+    }
+  ],
+  "primary_nasa_1977_source": {
+    "source_id": "C241-L32",
+    "pdf_url": "https://ntrs.nasa.gov/api/citations/19780009188/downloads/19780009188.pdf",
+    "pdf_sha256": "c5c66eb7eab242ab5b3dd56567de8bab2d404d0a6776baeb3b79383c86bc5ba8",
+    "printed_page": 43,
+    "editorial_date": "1977-12-31",
+    "instrument_observation_epoch": null,
+    "decay_day_528": "1963-11-08",
+    "physical_reentry_time": null,
+    "physical_reentry_place": null
+  },
   "source_relation": "TWO_TITLES_HOLDINGS_NOT_INDEPENDENT_TRACKING",
   "evidence_level": "BIBLIOGRAPHIC_METADATA_NOT_INSTRUMENTAL",
   "candidate_join_count": 6,
@@ -115,9 +147,34 @@
       "observing_epoch_utc": null,
       "instrument_sigma": null,
       "activation": false
+    },
+    {
+      "from": "C241-L32",
+      "to": "NORAD_528_latent_track",
+      "type": "RETROSPECTIVE_NASA_IDENTITY_NOT_SOVIET_OBSERVATION",
+      "international_designator": "1963 003B",
+      "ntrs_id": "19780009188",
+      "pdf_sha256": "c5c66eb7eab242ab5b3dd56567de8bab2d404d0a6776baeb3b79383c86bc5ba8",
+      "printed_page": 43,
+      "observation_epoch_utc": null,
+      "instrument_covariance": null,
+      "activation": false
+    },
+    {
+      "from": "C241-L32",
+      "to": "NORAD_529_latent_track",
+      "type": "RETROSPECTIVE_NASA_IDENTITY_NOT_SOVIET_OBSERVATION",
+      "international_designator": "1963 003C",
+      "ntrs_id": "19780009188",
+      "pdf_sha256": "c5c66eb7eab242ab5b3dd56567de8bab2d404d0a6776baeb3b79383c86bc5ba8",
+      "printed_page": 43,
+      "observation_epoch_utc": null,
+      "instrument_covariance": null,
+      "activation": false
     }
   ],
   "lean_module": "Conde1963.SovietCatalogueCandidate",
+  "lean_catalogue_identity_declaration": "Conde1963.nasaRetrospective1977Labels",
   "lean_status": "TYPED_RETRIEVAL_CANDIDATE_NOT_PHYSICAL_THEOREM",
   "simulator_latent_parameters": [
     {

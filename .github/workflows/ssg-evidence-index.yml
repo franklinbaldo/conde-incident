@@ -21,6 +21,10 @@ jobs:
         run: |
           python3 -m unittest discover -s tests -p test_ssg_evidence_index.py -v
           python3 tools/export_ssg_evidence_index.py --check
+      - name: Cross-check JSON shards, source IDs and SSG deep links
+        run: |
+          node --test tests/ssg-evidence-index-bridge.test.mjs
+          node scripts/verify-ssg-evidence-index.mjs
       - name: Size policy for generated documentary shards
         run: |
           python3 - <<'PY'
