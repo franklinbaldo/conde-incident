@@ -62,3 +62,15 @@ Há testes adversariais de conteúdo e links falsificados mesmo quando o
 manifesto JSON permanece íntegro. Isso **não** substitui auditoria em
 navegador para CSS externo, JavaScript, foco/teclado, leitor de tela e
 320 px, sob responsabilidade do Morcego e da Raposa.
+
+## Validação independente do grafo no gate Node
+
+O gate de publicação em Node não se limita à igualdade entre JSON genealógico
+e shards: valida a forma exata de cada cadeia declarada (somente `edges` e
+`upstream_source_id`), de cada aresta (`from`, `to`, `kind`), continuidade,
+ausência de ciclo e concordância do identificador terminal. Isso espelha
+a validação Python e detecta uma adulteração sincronizada dos dois feeds
+mesmo com hashes SHA-256 recalculados. Quatro contraprovas (campo terminal
+inventado, ciclo, salto e campo extra em aresta) exercitam esse requisito.
+A checagem protege a representação versionada, não afirma que a origem
+documental foi autenticada ou que há observação física independente.
