@@ -39,6 +39,7 @@ jobs:
         run: |
           set -euo pipefail
           python3 formal/scripts/compile_nmc_candidate.py --check
+          python3 tools/export_archive_documentary_links.py --check-site
           python3 tools/export_nmc_on20_layout_link.py --check
           python3 formal/scripts/compile_nmc_layout_link.py --check
           python3 -m unittest discover -s formal/tests -p 'test_nmc_candidate.py' -v
