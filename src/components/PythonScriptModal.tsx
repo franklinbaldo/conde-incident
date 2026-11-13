@@ -119,7 +119,7 @@ export const PythonScriptModal: React.FC<PythonScriptModalProps> = ({
           <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={handleCopy}
-              className="px-3 py-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer"
+              className="min-h-11 px-3 py-2 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
             >
               {copyState === 'copied' ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copyState === 'copied' ? (isPt ? 'Copiado!' : 'Copied!') : (isPt ? 'Copiar código' : 'Copy code')}</span>
@@ -127,7 +127,7 @@ export const PythonScriptModal: React.FC<PythonScriptModalProps> = ({
 
             <button
               onClick={handleDownload}
-              className="px-3 py-1.5 rounded bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer shadow"
+              className="min-h-11 px-3 py-2 rounded bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-mono flex items-center gap-1.5 transition-colors cursor-pointer shadow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
             >
               <Download className="w-3.5 h-3.5" />
               <span>{isPt ? 'Baixar .py' : 'Download .py'}</span>
@@ -138,7 +138,7 @@ export const PythonScriptModal: React.FC<PythonScriptModalProps> = ({
               type="button"
               onClick={onClose}
               aria-label={isPt ? 'Fechar janela de exportação' : 'Close export dialog'}
-              className="p-1.5 rounded hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer"
+              className="inline-flex min-h-11 min-w-11 items-center justify-center rounded hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
             >
               <X className="w-4 h-4" />
             </button>

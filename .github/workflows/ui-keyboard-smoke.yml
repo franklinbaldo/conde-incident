@@ -17,6 +17,8 @@ on:
       - 'src/components/map/**'
       - 'tests/ui_keyboard_smoke.mjs'
       - 'tests/lab_python_export_failure_smoke.mjs'
+      - 'src/components/PythonScriptModal.tsx'
+      - 'tests/ui_python_modal_touch_smoke.mjs'
       - 'tests/caderno_reflow_smoke.mjs'
       - 'static/css/site.css'
       - 'scripts/localize-ssg-search.mjs'
@@ -75,6 +77,8 @@ jobs:
         run: node tests/ui_lab_chunk_failure_smoke.mjs
       - name: Browser export chunk failure, modal keyboard recovery and language
         run: node tests/lab_python_export_failure_smoke.mjs
+      - name: Chromium Python export controls 44px and keyboard focus
+        run: node tests/ui_python_modal_touch_smoke.mjs
       - name: Caderno 320px reflow and focus in Chromium (source templates)
         run: node tests/caderno_reflow_smoke.mjs
       - name: Install pinned SSG binary for the real editorial UI
