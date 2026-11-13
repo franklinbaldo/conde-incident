@@ -1,0 +1,354 @@
+{
+  "schema": "conde.gaviao-retrospective-window/v1",
+  "review": "G36",
+  "date": "2026-11-13",
+  "reviewed_from_exclusive_main_sha": "0d0f51f0eec06421b895372b6390d7f309ad61fa",
+  "reviewed_through_inclusive_main_sha": "070481978ae7493ecae19d82acfc144072f792bb",
+  "first_parent_integrations": 13,
+  "squash_merges": 11,
+  "conventional_merges": 2,
+  "dag_commits": 15,
+  "additional_dag_commits": 2,
+  "direct_commits": 0,
+  "entries": [
+    {
+      "main_sha": "19291a6b9792967836085b8ccd1cc591d17ab5a3",
+      "first_parent_sha": "0d0f51f0eec06421b895372b6390d7f309ad61fa",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 429,
+      "author_head_sha": "6cf1c2065d87e2444adfa8f026555d007c8144d5",
+      "subject": "90 🐢 C241-L21: recuperar NASA nº 24, ligar quatro edições sem inventar épocas (#429)",
+      "changed_files": [
+        ".github/workflows/tle-nasa-ssr-dec15.yml",
+        "research/constraints/ssr_dec15_1963_observables_C241-L21.json",
+        "research/tle_custody/evidence_matrix_C241-L21_2026-11-13.md",
+        "research/tle_custody/nasa_ssr_dec15_1963_C241-L21.json",
+        "tests/test_tle_nasa_ssr_dec15_audit.py",
+        "tools/tle_nasa_ssr_dec15_audit.py"
+      ],
+      "main_check_runs": {
+        "total_count": 21,
+        "conclusions": {
+          "SUCCESS": 21
+        },
+        "non_success": [],
+        "api": "GitHub REST /commits/{main_sha}/check-runs (2026-11-13)"
+      },
+      "audit_note": "NASA SSR nº 24 em 15 Dec, distingue a data editorial de época instrumental",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "0d90b6b286c22bee63199151e29d0b5b785545bb",
+      "first_parent_sha": "19291a6b9792967836085b8ccd1cc591d17ab5a3",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 430,
+      "author_head_sha": "9ee63f4b50326484a7ce6ad4fe9e4665aaebc125",
+      "subject": "feat(abelha): source-lock six NASA SSR Kepler unit diagnostics (#430)",
+      "changed_files": [
+        "public/data/conde-ssr-kepler-provenance.json",
+        "tests/test_ssr_kepler_provenance.py",
+        "tools/export_ssr_kepler_provenance.py"
+      ],
+      "main_check_runs": {
+        "total_count": 20,
+        "conclusions": {
+          "SUCCESS": 20
+        },
+        "non_success": [],
+        "api": "GitHub REST /commits/{main_sha}/check-runs (2026-11-13)"
+      },
+      "audit_note": "seis células NASA SSR e diagnóstico Kepler não são seis sensores independentes",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "7c0d07e79ee50bcbd5605e39a76cec7a8d1761a8",
+      "first_parent_sha": "0d90b6b286c22bee63199151e29d0b5b785545bb",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 431,
+      "author_head_sha": "0bb98026f9f85142eec406f65619edd8a22a7a45",
+      "subject": "88 🦅 G35: impedir troca silenciosa de PDF Wayback e auditar 13 integrações (#431)",
+      "changed_files": [
+        ".github/workflows/pages.yml",
+        "research/audits/gaviao-main-window-20261113-g35.json",
+        "research/audits/gaviao-main-window-20261113-g35.md",
+        "scripts/ssg-wayback-links.mjs",
+        "tests/ssg-wayback-custody.test.mjs"
+      ],
+      "main_check_runs": {
+        "total_count": 20,
+        "conclusions": {
+          "SUCCESS": 20
+        },
+        "non_success": [],
+        "api": "GitHub REST /commits/{main_sha}/check-runs (2026-11-13)"
+      },
+      "audit_note": "revisão retrospectiva anterior; conferir a correção Wayback em main",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "029409039a00bd2f71e9dccc2eee92ab1d506567",
+      "first_parent_sha": "7c0d07e79ee50bcbd5605e39a76cec7a8d1761a8",
+      "other_parents": [
+        "0f06e341adba51785b4df71e9d82fbc6dbbc2cf4"
+      ],
+      "merge_method": "merge",
+      "pr": 432,
+      "author_head_sha": "0f06e341adba51785b4df71e9d82fbc6dbbc2cf4",
+      "subject": "Merge pull request #432 from franklinbaldo/research/lagarto-bahia-1963-coverage-r20",
+      "changed_files": [
+        ".github/workflows/igra-bahia-1963.yml",
+        "research/meteorology/igra_bahia_regional_1963.json",
+        "research/meteorology/igra_bahia_regional_1963.md",
+        "tests/test_igra_bahia_1963.py",
+        "tools/audit_igra_bahia_1963.py"
+      ],
+      "main_check_runs": {
+        "total_count": 21,
+        "conclusions": {
+          "SUCCESS": 21
+        },
+        "non_success": [],
+        "api": "GitHub REST /commits/{main_sha}/check-runs (2026-11-13)"
+      },
+      "audit_note": "cobertura regional IGRA: inventários de estações não representam campo de vento em Conde",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "cc34086c0b430c7302065fb7ae239ae9dc8f1d53",
+      "first_parent_sha": "029409039a00bd2f71e9dccc2eee92ab1d506567",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 436,
+      "author_head_sha": "6ca59acdea8f754b700fe7f574d8d13b525fc967",
+      "subject": "test(ci): reject skipped or tolerated checkout SHA assertions (#436)",
+      "changed_files": [
+        "tests/test_ci_checkout_sha.py"
+      ],
+      "main_check_runs": {
+        "total_count": 21,
+        "conclusions": {
+          "SUCCESS": 21
+        },
+        "non_success": [],
+        "api": "GitHub REST /commits/{main_sha}/check-runs (2026-11-13)"
+      },
+      "audit_note": "verificação do SHA de checkout de CI; inspecionar a aplicação real de cada assertion",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "e8ff055b732cfba20c0a39c4024d68b889c10811",
+      "first_parent_sha": "cc34086c0b430c7302065fb7ae239ae9dc8f1d53",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 434,
+      "author_head_sha": "75cf2c67ea6e05a31fc3bbcdaa7e5a78d639b606",
+      "subject": "feat(cervo): NASA SSR 15 Dec source-locked printed contrasts (#434)",
+      "changed_files": [
+        "research/statistics/SSR_POST528_PRINT_CONTRASTS.md",
+        "research/statistics/ssr_post528_print_contrasts_C241.json",
+        "tests/test_ssr_post528_print_contrasts.py",
+        "tools/ssr_post528_print_contrasts.py"
+      ],
+      "main_check_runs": {
+        "total_count": 21,
+        "conclusions": {
+          "SUCCESS": 21
+        },
+        "non_success": [],
+        "api": "GitHub REST /commits/{main_sha}/check-runs (2026-11-13)"
+      },
+      "audit_note": "contrastes de período impresso, não deriva temporal observada",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "b99b7f8848b70e9d9ad62bb22811305e1de7c37f",
+      "first_parent_sha": "e8ff055b732cfba20c0a39c4024d68b889c10811",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 437,
+      "author_head_sha": "d71ca8b92452b87e945c4088d50f5eec5268f6a1",
+      "subject": "90 🐙 C241-P12: testar viés editorial comum com Lean e G34 (#437)",
+      "changed_files": [
+        ".github/workflows/lean-core.yml",
+        "formal/Conde1963.lean",
+        "formal/Conde1963/SsrEditionOffset.lean",
+        "formal/scripts/compile_ssr_edition_offset.py",
+        "formal/tests/test_ssr_edition_offset.py",
+        "research/constraints/C241-P12_edition_offset.json"
+      ],
+      "main_check_runs": {
+        "total_count": 22,
+        "conclusions": {
+          "SUCCESS": 22
+        },
+        "non_success": [],
+        "api": "GitHub REST /commits/{main_sha}/check-runs (2026-11-13)"
+      },
+      "audit_note": "Lean prova incompatibilidade condicional com viés aditivo comum; impressão não é erro instrumental",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "b858f28ac7c26c49cca30f42a55eaf191591dbae",
+      "first_parent_sha": "b99b7f8848b70e9d9ad62bb22811305e1de7c37f",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 439,
+      "author_head_sha": "a97fb849df8266c45a700d4447a94b37d46aa8fc",
+      "subject": "feat(castor): bound NASA SSR 527/529 J2 print-only intervals (#439)",
+      "changed_files": [
+        "research/constraints/C241-P13_ssr_j2_print_rates_g35.json",
+        "src/lib/orbitSsrJ2PrintIntervals.ts",
+        "tests/orbitSsrJ2PrintIntervals.test.mjs"
+      ],
+      "main_check_runs": {
+        "total_count": 21,
+        "conclusions": {
+          "CANCELLED": 2,
+          "SUCCESS": 19
+        },
+        "non_success": [
+          {
+            "name": "deploy",
+            "conclusion": "CANCELLED"
+          },
+          {
+            "name": "build",
+            "conclusion": "CANCELLED"
+          }
+        ],
+        "api": "GitHub REST /commits/{main_sha}/check-runs (2026-11-13)"
+      },
+      "audit_note": "taxas seculares J2 condicionais, sem épocas de observação nem RAAN histórica",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "5e10f8702c885d993d48b567fae8734f0fdbb7d1",
+      "first_parent_sha": "b858f28ac7c26c49cca30f42a55eaf191591dbae",
+      "other_parents": [
+        "2d88c0b66fa953e79c803c0f38c29708114b9861"
+      ],
+      "merge_method": "merge",
+      "pr": 440,
+      "author_head_sha": "2d88c0b66fa953e79c803c0f38c29708114b9861",
+      "subject": "Merge pull request #440 from franklinbaldo/research/caranguejo-cgeo22-jpeg-lineage",
+      "changed_files": [
+        "research/geo/README.md",
+        "research/geo/cgeo22_jpeg_scan_lineage.json",
+        "research/geo/cgeo22_jpeg_scan_lineage.md",
+        "tests/test_cgeo22_jpeg_lineage.py",
+        "tools/cgeo22_jpeg_lineage.py"
+      ],
+      "main_check_runs": {
+        "total_count": 21,
+        "conclusions": {
+          "SUCCESS": 21
+        },
+        "non_success": [],
+        "api": "GitHub REST /commits/{main_sha}/check-runs (2026-11-13)"
+      },
+      "audit_note": "identidade de bytes codificados de fotografia republicada, não duas observações independentes",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "7a4db049e5fdbfe2b6ac7694993397e6bb88ac9e",
+      "first_parent_sha": "5e10f8702c885d993d48b567fae8734f0fdbb7d1",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 441,
+      "author_head_sha": "389a720adb299ff1546ff4744ab93b570aa7dd90",
+      "subject": "feat(raposa): SSG documentary work reverse index (#441)",
+      "changed_files": [
+        "scripts/check-site.mjs",
+        "scripts/ssg-documentary-archive.mjs",
+        "tests/ssg-documentary-archive.test.mjs",
+        "tests/ssg-okf-types.test.mjs"
+      ],
+      "main_check_runs": {
+        "total_count": 21,
+        "conclusions": {
+          "SUCCESS": 21
+        },
+        "non_success": [],
+        "api": "GitHub REST /commits/{main_sha}/check-runs (2026-11-13)"
+      },
+      "audit_note": "índice documental reverso; 14 obras e múltiplas reutilizações não são múltiplos sensores",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "480a9efea85fb53c45856ae476414a28bd9f38b1",
+      "first_parent_sha": "7a4db049e5fdbfe2b6ac7694993397e6bb88ac9e",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 442,
+      "author_head_sha": "e7ae60b13f1e456302530fc15ac97ef173469ff2",
+      "subject": "fix(ui): localize laboratory controls and microcopy (#442)",
+      "changed_files": [
+        "src/App.tsx",
+        "src/components/Navigation.tsx",
+        "tests/ui_keyboard_smoke.mjs"
+      ],
+      "main_check_runs": {
+        "total_count": 21,
+        "conclusions": {
+          "SUCCESS": 21
+        },
+        "non_success": [],
+        "api": "GitHub REST /commits/{main_sha}/check-runs (2026-11-13)"
+      },
+      "audit_note": "traduções de UI; testar não confundir com mudanças científicas",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "bd6739ba805e7b77c2d1e00d39d440ac1c1051cd",
+      "first_parent_sha": "480a9efea85fb53c45856ae476414a28bd9f38b1",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 444,
+      "author_head_sha": "a568f9365f8d1be901154e4c922a94b0cfc4af7d",
+      "subject": "story(coruja): Caderno 13 refuta viés comum nas edições NASA (#444)",
+      "changed_files": [
+        "stories/2026-11-13-o-minuto-que-nao-cabia-no-erro-de-edicao.md"
+      ],
+      "main_check_runs": {
+        "total_count": 21,
+        "conclusions": {
+          "SUCCESS": 21
+        },
+        "non_success": [],
+        "api": "GitHub REST /commits/{main_sha}/check-runs (2026-11-13)"
+      },
+      "audit_note": "capítulo editorial condicional, não inferir taxa orbital de datas dos boletins",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    },
+    {
+      "main_sha": "070481978ae7493ecae19d82acfc144072f792bb",
+      "first_parent_sha": "bd6739ba805e7b77c2d1e00d39d440ac1c1051cd",
+      "other_parents": [],
+      "merge_method": "squash",
+      "pr": 443,
+      "author_head_sha": "91f26f4b0b2347ed56da4438c804afcd8ff6c681",
+      "subject": "90 🦦 L21: custodiar volume original digitalizado DOE Bahia dez/1953 (ArchiDoc) (#443)",
+      "changed_files": [
+        "research/archive/conde_tjba_doe_1953_12_20261113.json",
+        "tests/test_tjba_doe_1953.py",
+        "tools/verify_tjba_doe_1953.py"
+      ],
+      "main_check_runs": {
+        "total_count": 21,
+        "conclusions": {
+          "SUCCESS": 21
+        },
+        "non_success": [],
+        "api": "GitHub REST /commits/{main_sha}/check-runs (2026-11-13)"
+      },
+      "audit_note": "cópia mensal DOE de dezembro de 1953, Lei 628 ainda não localizada no volume",
+      "claim_status": "REVIEWED_WITH_EPISTEMIC_LIMITS"
+    }
+  ],
+  "review_scope": "Historical publication dates not sensor epochs. No new terminal position/epoch of NORAD 528. Source locks prove bytes only after real replay.",
+  "finding": "G36-F1: frozen Wayback NASA PDF could be substituted with another same-host same-basename path/query after changing CDX original URL; source URL path not checked.",
+  "status": "CODE_PATCH_PREPARED_CI_PENDING"
+}
