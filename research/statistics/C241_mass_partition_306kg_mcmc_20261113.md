@@ -70,6 +70,12 @@ O módulo [MassComponent306.lean](../../formal/Conde1963/MassComponent306.lean) 
 
 O Lean certifica implicações das premissas; não autentica retrospectivamente os valores secundários do catálogo.
 
+## Implicação física condicional dos 306 kg
+
+Se o inventário dos três objetos mais X fosse exatamente **1.176 kg** na época da separação, e se a carga útil de **306 kg** permanecesse **integralmente** no conjunto orbital 527, a conservação implicaria **m528+m529+X ≤ 870 kg**. Essa cota foi provada no módulo Lean, mas depende de duas hipóteses ainda não verificadas.
+
+Há também uma contradição discriminante: se o 527 retivesse a carga útil inteira (306 kg) **e** todo o estágio seco (870 kg), já consumiria **1.176 kg**. Então não sobraria massa positiva para ambos 528 e 529 num inventário fechado de 1.176 kg. Logo, pelo menos uma premissa teria de falhar: composição intacta, total catalogado como inventário fechado, época de referência ou contabilidade de perdas. Não atribuir a falha automaticamente a combustível ou ao tamanho dos detritos.
+
 ## Falsificabilidade e reprodução
 
 ```sh
