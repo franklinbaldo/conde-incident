@@ -1,0 +1,89 @@
+{
+  "schema": "conde.cumulative-constraint-graph-supplement/v1",
+  "id": "C241-P9-three-object-relative-trajectories",
+  "purpose": "Constrain candidate NORAD 528 positions jointly by the past and future propagated positions of NORAD 527 and 529, at matching epochs; never assume fixed or observed separation.",
+  "parents": [
+    "research/constraints/ssr_1963_observable_graph.json",
+    "research/constraints/C241-P7_nasa_oct15_kepler_j2_nodal.md",
+    "research/constraints/C241-P8_ssr_print_intervals.json"
+  ],
+  "formal_model": "formal/Conde1963/RelativeTrajectories.lean",
+  "source_dependencies": [
+    {
+      "id": "C179#1",
+      "role": "Secondary NORAD 528 mean-element state at 1963-10-27T14:40:16.132512Z, not original tracker readings",
+      "uncertainty": "Unknown original sensor epochs, error covariance, provenance and frame calibration"
+    },
+    {
+      "id": "C197#1",
+      "role": "NASA SSR 1963-11-15 catalogues decay DAY 1963-11-08",
+      "uncertainty": "No independently certified terminal UTC, geolocation or observed reentry"
+    },
+    {
+      "id": "NASA-SSR-1963-11-15/30-527-529",
+      "role": "Printed period/inclination/apogee/perigee of 527 and 529, controls from one compiled family",
+      "uncertainty": "Publication date is not the epoch of each observation; common upstream tracking is possible"
+    }
+  ],
+  "time_axis": {
+    "reference": "1963-10-27T14:40:16.132512Z",
+    "unit": "seconds",
+    "signed": true,
+    "past": "t < 0",
+    "future": "t > 0",
+    "qualification": "Element-fit reference of secondary 528 mirror, not a timestamp of original measurement"
+  },
+  "state": {
+    "objects": [527, 528, 529],
+    "position_units": "m",
+    "frame": "same calibrated Earth-centered inertial frame, otherwise reject model input",
+    "variables": ["r527(t)", "r528(t)", "r529(t)"],
+    "force_model": "shared validated gravity/drag model with object-specific ballistic properties and propagated uncertainty",
+    "controls": "527 and 529 propagated at EXACTLY the candidate 528 epoch, including backwards or forwards when needed"
+  },
+  "constraints": [
+    {
+      "id": "pairwise-distance-527-528",
+      "predicate": "L527528(t) <= |r527(t)-r528(t)|^2 <= U527528(t)",
+      "units": "m^2",
+      "status": "CANDIDATE_NOT_ACTIVATED"
+    },
+    {
+      "id": "pairwise-distance-528-529",
+      "predicate": "L528529(t) <= |r528(t)-r529(t)|^2 <= U528529(t)",
+      "units": "m^2",
+      "status": "CANDIDATE_NOT_ACTIVATED"
+    },
+    {
+      "id": "pairwise-distance-control-527-529",
+      "predicate": "L527529(t) <= |r527(t)-r529(t)|^2 <= U527529(t)",
+      "units": "m^2",
+      "role": "negative control / detect model inconsistency without using 528 to fit the controls",
+      "status": "CANDIDATE_NOT_ACTIVATED"
+    },
+    {
+      "id": "coordinate-envelopes-527-529",
+      "predicate": "for every axis j: |r528_j(t)-r527_j(t)| <= B527_j(t) AND |r528_j(t)-r529_j(t)| <= B529_j(t)",
+      "units": "m",
+      "role": "conservative overapproximation for certified distance/uncertainty bands",
+      "status": "CANDIDATE_NOT_ACTIVATED"
+    },
+    {
+      "id": "signed-epoch-intersection",
+      "predicate": "for every t in a declared past/future evaluation grid, all three pair bands and both coordinate envelopes hold",
+      "role": "one disjoint certified 527/529 envelope on any axis excludes the full 528 candidate trajectory",
+      "status": "FORMAL_CONDITIONAL_ONLY"
+    }
+  ],
+  "requirements_before_activation": [
+    "Authenticated tracking records or independently verified physical orbit elements for the relevant dates",
+    "Observation epochs, error ranges, covariance and frame transformations for each object",
+    "Consistent numerical propagator with drag, J2 and uncertainty budget for both time directions",
+    "Calibration/holdout against independent data, avoiding upstream shared-source double counting",
+    "Derived conservative separation intervals per common epoch, not guessed distances"
+  ],
+  "epistemic_status": "CONNECTED_PENDING_CALIBRATION",
+  "historical_impact_claim": "NONE",
+  "active_physical_domain_reduction": "NOT_EVALUABLE",
+  "output_intent": "If calibrated sets exclude Conde and reported time for all candidate 528 trajectories, reject that branch; otherwise retain alternate branches and quantified uncertainty."
+}
