@@ -14,6 +14,7 @@ from pathlib import Path
 import export_cgeo10_provenance as cgeo
 import export_documentary_dependence as depend
 import export_norad_context as norad
+import export_nmc_on20_layout_link as on20
 import provenance_graph as pg
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -183,6 +184,14 @@ def build(root: Path = ROOT) -> dict:
         "independent_physical_observation_count": None,
     })
 
+    # Supplementary post-snapshot scientific candidate: real archived 1964
+    # format manual, but transfer to 1963 Y20175 is explicitly unverified.
+    on20_path = root / on20.OUTPUT
+    on20_bytes = on20_path.read_bytes()
+    expect(on20_bytes == on20.encode(on20.build(root)),
+           "stale/tampered supplementary NMC layout bridge")
+    on20_digest = hashlib.sha256(on20_bytes).hexdigest()
+
     expect(len({r["id"] for r in records}) == len(records) == 9,
            "duplicate or missing scientific crosswalk entries")
 
@@ -239,6 +248,9 @@ def build(root: Path = ROOT) -> dict:
         "schema": "conde.scientific-documentary-bridge-index/v1",
         "matrix_git_blob_sha1": MATRIX,
         "source_feeds_sha256": input_hashes,
+        "supplementary_links": [{"id": "C241-L14-NMC-ON20-LAYOUT",
+                                 "path": on20.OUTPUT,
+                                 "sha256": on20_digest}],
         "records": records,
         "citation_coverage": coverage,
         "citation_coverage_counts": {
