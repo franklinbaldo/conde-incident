@@ -1,0 +1,43 @@
+name: CGEO-34 original UWM JPEG 2000 custody
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo34_uwm_original_jp2_custody.*'
+      - 'research/geo/evidence/cgeo34_uwm_jp2_header.hex'
+      - 'tools/cgeo34_uwm_jp2.py'
+      - 'tests/test_cgeo34_uwm_jp2.py'
+      - '.github/workflows/geo-uwm-jp2-original.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo34_uwm_original_jp2_custody.*'
+      - 'research/geo/evidence/cgeo34_uwm_jp2_header.hex'
+      - 'tools/cgeo34_uwm_jp2.py'
+      - 'tests/test_cgeo34_uwm_jp2.py'
+      - '.github/workflows/geo-uwm-jp2-original.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  archival-byte-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact checkout revision
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Validate source metadata and adversarial tests
+        run: |
+          python3 -m tools.cgeo34_uwm_jp2
+          python3 -m unittest discover -s tests -p 'test_cgeo34_uwm_jp2.py' -v
+      - name: Acquire 110 MB original from UWM and replay exact bytes
+        run: |
+          curl --fail --show-error --silent --location --retry 2 --max-time 200 \
+            'https://collections.lib.uwm.edu/digital/api/collection/agdm/id/10814/download' \
+            --output "$RUNNER_TEMP/uwm-agdm-10814.jp2"
+          python3 -m tools.cgeo34_uwm_jp2 --original "$RUNNER_TEMP/uwm-agdm-10814.jp2"

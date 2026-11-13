@@ -1,0 +1,78 @@
+{
+  "schema": "conde.gis.original-jp2-custody/v1",
+  "id": "CGEO-34",
+  "reviewed_on": "2026-11-13",
+  "parent_occurrence": "ARCH-UWM-ARACAJU-SE-10814-20261112",
+  "parent_file": "research/geo/uwm_aracaju_se_1954_1961_cartographic_custody.json",
+  "same_physical_map_as_parent": true,
+  "asset": {
+    "custodian": "University of Wisconsin-Milwaukee Libraries / AGSL",
+    "collection": "agdm",
+    "contentdm_item_id": "10814",
+    "url": "https://collections.lib.uwm.edu/digital/api/collection/agdm/id/10814/download",
+    "catalog": "https://collections.lib.uwm.edu/digital/collection/agdm/id/10814/",
+    "downloaded_on": "2026-11-13",
+    "response_mime": "image/jp2",
+    "bytes": 110453331,
+    "sha256": "6637246d2a68a2e7024e07829caa35a8af0a707905e6c606109f1da52ae808b3",
+    "signature": "0000000c6a5020200d0a870a",
+    "format": "JP2 / JPEG 2000 Part 1",
+    "header_bytes": 103,
+    "header_sha256": "78c79685076a241f5466fa0e8db13a6dca3cd72c0c790307b417ad924b6e5356",
+    "header_fixture": "research/geo/evidence/cgeo34_uwm_jp2_header.hex",
+    "jp2_box_sequence": [
+      "jP  ",
+      "ftyp",
+      "jp2h",
+      "xml ",
+      "jp2c"
+    ],
+    "width_px": 9603,
+    "height_px": 7783,
+    "components": 3,
+    "bits_per_component": 8,
+    "derived_from_catalog_item": true,
+    "acquired_original_bitstream": true,
+    "full_image_visual_inspection_performed": false,
+    "full_jp2_kept_outside_git": true,
+    "copyright_checked_for_redistribution": false
+  },
+  "map_historical_readings": {
+    "catalog_year": 1954,
+    "printed_editorial_imprint_year": 1954,
+    "communications_update_year": 1961,
+    "map_scale": 500000,
+    "conde_toponym_reported_in_prior_verified_iiif_crop": true,
+    "geodetic_datum": null,
+    "position_accuracy_m": null,
+    "source": "CGEO-08 / ARCH-UWM-ARACAJU-SE-10814-20261112",
+    "notes": "Years apply to editorial map and communications update, not a 1963 survey."
+  },
+  "graph_edges": [
+    {
+      "to": "CGEO-08",
+      "relation": "SAME_PRINTED_SHEET_ORIGINAL_BITSTREAM_NO_NEW_INDEPENDENCE"
+    },
+    {
+      "to": "CGEO-33",
+      "relation": "HISTORICAL_BASEMAP_CANDIDATE_WITH_UNCERTAIN_COVERAGE_AND_SCALE"
+    },
+    {
+      "to": "CGEO-18",
+      "relation": "CITY_LABEL_CONTEXT_NOT_EVENT_COORDINATE"
+    }
+  ],
+  "epistemic_status": "ORIGINAL_DIGITAL_SURROGATE_ACQUIRED_SHA256_VERIFIED_NO_ORIGINAL_SURVEY_FILM",
+  "scientific_limits": {
+    "municipal_boundary_1963": null,
+    "urban_center_geometry_1963": null,
+    "observed_reentry_location": null,
+    "date_of_original_aerial_capture": null,
+    "georeferenced_control_points": null,
+    "horizontal_error_m": null,
+    "can_constrain_orbital_reentry": false,
+    "known_1963_reentry_point": false,
+    "source_survey_independent_of_parent": false,
+    "original_historical_physical_map_acquired": false
+  }
+}
