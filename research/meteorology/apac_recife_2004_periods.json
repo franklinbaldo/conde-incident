@@ -1,0 +1,122 @@
+{
+  "schema": "conde.apac-recife-variable-coverage/v1",
+  "source": {
+    "url": "https://www.apac.pe.gov.br/images/media/1642199099_Tomo%20I%20-%20Completo.pdf",
+    "institution": "Government of Pernambuco / APAC archive",
+    "publication_month": "2004-11",
+    "read_on": "2026-11-13",
+    "pdf_sha256": null,
+    "visual_pdf_verified": false,
+    "acquisition": "indexed PDF text; binary/screenshot timed out",
+    "transcription_sha256": "292a1a8ca5ff3994934ef8c7cb2aba8271509379ca4cddd3c10a475924f6fe9d"
+  },
+  "station": {
+    "wmo_id": 82900,
+    "label": "CURADO (RECIFE) - INMET",
+    "sonde_launch_coordinates_1963": null
+  },
+  "records": [
+    {
+      "variable": "temperature_min",
+      "table": "1.4",
+      "wmo_id": 82900,
+      "latitude_catalogue": -8.05,
+      "longitude_catalogue": -34.9167,
+      "period_mean": 21.6,
+      "unit": "degC",
+      "start_month": 3,
+      "start_year": 1961,
+      "end_month": 12,
+      "end_year": 1978,
+      "reported_total_months": 216,
+      "reported_months_with_data": 185,
+      "period_overlaps_1963_11": true,
+      "observed_at_1963_11_08": null,
+      "verified_november_1963_monthly_value": null,
+      "calibrated_uncertainty": null
+    },
+    {
+      "variable": "relative_humidity",
+      "table": "1.7",
+      "wmo_id": 82900,
+      "latitude_catalogue": -8.05,
+      "longitude_catalogue": -34.9167,
+      "period_mean": 77.7,
+      "unit": "percent",
+      "start_month": 3,
+      "start_year": 1961,
+      "end_month": 12,
+      "end_year": 1978,
+      "reported_total_months": 216,
+      "reported_months_with_data": 186,
+      "period_overlaps_1963_11": true,
+      "observed_at_1963_11_08": null,
+      "verified_november_1963_monthly_value": null,
+      "calibrated_uncertainty": null
+    },
+    {
+      "variable": "wind_speed",
+      "table": "1.8",
+      "wmo_id": 82900,
+      "latitude_catalogue": -8.05,
+      "longitude_catalogue": -34.9167,
+      "period_mean": 2.6,
+      "unit": "m/s",
+      "start_month": 3,
+      "start_year": 1961,
+      "end_month": 12,
+      "end_year": 1978,
+      "reported_total_months": 216,
+      "reported_months_with_data": 185,
+      "period_overlaps_1963_11": true,
+      "observed_at_1963_11_08": null,
+      "verified_november_1963_monthly_value": null,
+      "calibrated_uncertainty": null
+    },
+    {
+      "variable": "surface_pressure",
+      "table": "1.9",
+      "wmo_id": 82900,
+      "latitude_catalogue": -8.05,
+      "longitude_catalogue": -34.9167,
+      "period_mean": 1011.9,
+      "unit": "hPa",
+      "start_month": 8,
+      "start_year": 1966,
+      "end_month": 12,
+      "end_year": 1978,
+      "reported_total_months": 156,
+      "reported_months_with_data": 124,
+      "period_overlaps_1963_11": false,
+      "observed_at_1963_11_08": null,
+      "verified_november_1963_monthly_value": null,
+      "calibrated_uncertainty": null
+    }
+  ],
+  "uncertainty": {
+    "1963_surface_measurement": null,
+    "independent_igra_observation": null,
+    "sonde_instrument_1963": null,
+    "recife_to_conde_transfer_error": null
+  },
+  "dependencies": [
+    "C149",
+    "C150",
+    "C151",
+    "C193"
+  ],
+  "edges": [
+    {
+      "from": "APAC-PE-2004-tables-1.4-1.7-1.8-1.9",
+      "to": "C149-C151",
+      "relation": "retrospective_surface_coverage"
+    },
+    {
+      "from": "C149-C151",
+      "to": "Castor_drag_and_drift",
+      "relation": "PENDING_observation_and_transfer"
+    }
+  ],
+  "status": "CONNECTED_PENDING_CALIBRATION",
+  "admissible_domain_reduction": false
+}
