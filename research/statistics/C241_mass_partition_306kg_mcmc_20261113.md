@@ -53,6 +53,17 @@ As massas remanescentes dependem de separações, combustível e origem exata do
 
 Os três inventários possíveis não têm pesos históricos conhecidos. O MCMC permite selecionar uma base explicitamente para experimentos **sintéticos**, sem convertê-la em “modelo mais provável”. Quatro cadeias Metropolis-Hastings com sementes independentes, propostas sobre log-razões e epsilon, priors explícitos, observações artificiais de massa e Cd·A/m e diagnósticos rank-Rhat/ESS exercitam o método. Passar diagnóstico de convergência numérico **não autentica dados ou prior**. A primeira inferência histórica só será permitida após obter medições de área/massa ou arrasto calibrado, dados independentes de densidade, genealogia de componentes, erros e referências temporais.
 
+## Prova Lean da ambiguidade e dos limites de componente
+
+O módulo [MassComponent306.lean](../../formal/Conde1963/MassComponent306.lean) está importado no projeto Lean e prova aritmeticamente:
+
+- 306+900=1176+30 kg, enquanto 306+870=1176 kg;
+- a diferença de campos Mass e DryMass do estágio é 30 kg, **não** uma perda de combustível observada em 1963;
+- sob hipótese de inventário físico válido, se o objeto dinâmico 527 contiver carga útil remanescente e estágio anexado, sua massa total é pelo menos a massa dessa carga útil remanescente;
+- a carga inicial de 306 kg deve estar distribuída entre material retido e material separado, que pode incluir 528, 529 e X; não atribuir toda a carga diretamente ao 527.
+
+O Lean certifica implicações das premissas; não autentica retrospectivamente os valores secundários do catálogo.
+
 ## Falsificabilidade e reprodução
 
 ```sh
