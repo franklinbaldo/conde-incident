@@ -1,0 +1,38 @@
+name: CGEO-32 DNOCS 213 archival crosswalk
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo32_dnocs213_1961_mi1850.*'
+      - 'research/geo/cgeo26_pet53d_1961_aerial_locator.json'
+      - 'research/geo/cgeo29_usaf_63_32_photoindex_node.json'
+      - 'tools/cgeo32_dnocs213_crosswalk.py'
+      - 'tests/test_cgeo32_dnocs213_crosswalk.py'
+      - '.github/workflows/geo-dnocs213-1961.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo32_dnocs213_1961_mi1850.*'
+      - 'tools/cgeo32_dnocs213_crosswalk.py'
+      - 'tests/test_cgeo32_dnocs213_crosswalk.py'
+      - '.github/workflows/geo-dnocs213-1961.yml'
+permissions:
+  contents: read
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact source SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify real existing contracts and epistemic boundaries
+        run: |
+          python3 -m tools.cgeo32_dnocs213_crosswalk
+          python3 -m unittest discover -s tests -p 'test_cgeo32_dnocs213_crosswalk.py' -v
