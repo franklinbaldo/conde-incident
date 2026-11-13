@@ -5,24 +5,30 @@ on:
       - .github/workflows/iers-eop-1963.yml
       - tools/iers_1963_eop.py
       - tools/iers_1963_timescales.py
+      - tools/iers_1963_frame.py
       - tests/test_iers_1963_eop.py
       - tests/test_iers_1963_timescales.py
+      - tests/test_iers_1963_frame.py
       - research/constraints/iers_eop_1963_11_07_09.json
       - research/constraints/iers_eop_1963_G46.md
       - research/constraints/iers_1963_timescales_G47.json
       - research/constraints/iers_1963_timescales_G47.md
+      - research/constraints/iers_1963_frame_G48.md
   push:
     branches: [main]
     paths:
       - .github/workflows/iers-eop-1963.yml
       - tools/iers_1963_eop.py
       - tools/iers_1963_timescales.py
+      - tools/iers_1963_frame.py
       - tests/test_iers_1963_eop.py
       - tests/test_iers_1963_timescales.py
+      - tests/test_iers_1963_frame.py
       - research/constraints/iers_eop_1963_11_07_09.json
       - research/constraints/iers_eop_1963_G46.md
       - research/constraints/iers_1963_timescales_G47.json
       - research/constraints/iers_1963_timescales_G47.md
+      - research/constraints/iers_1963_frame_G48.md
 permissions:
   contents: read
 jobs:
@@ -39,6 +45,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install SOFA-derived ERFA
+        run: python3 -m pip install pyerfa==2.0.1.5
       - name: Replay source and adversarial tests
         shell: bash
         run: |
@@ -48,3 +56,6 @@ jobs:
           curl -fsSL --retry 3 --max-time 45 https://datacenter.iers.org/products/179/14334/orig/eopc04_05_IAU2000.63 -o /tmp/iers-1963-eop.bin
           python3 tools/iers_1963_eop.py --source /tmp/iers-1963-eop.bin --check
           python3 tools/iers_1963_timescales.py --source /tmp/iers-1963-eop.bin --check
+          python3 -m unittest discover -s tests -p 'test_iers_1963_frame.py' -v
+          python3 tools/iers_1963_frame.py > /tmp/iers-1963-frame-G48.json
+          python3 -c "import json; a=json.load(open('/tmp/iers-1963-frame-G48.json')); assert len(a['daily_00_utc_only']) == 3 and a['limitations']['holdout_527_529'] == 'NOT_RUN'"
