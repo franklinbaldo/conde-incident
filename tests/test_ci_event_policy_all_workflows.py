@@ -112,6 +112,10 @@ def assert_unskippable_universal_jobs(source: str, filename: str) -> None:
             raise AssertionError(f'{filename}: universal job lacks steps: {marker.group(1)}')
         if re.search(r'(?m)^    (?:if|continue-on-error)\s*:', block):
             raise AssertionError(f'{filename}: conditional/tolerated universal job: {marker.group(1)}')
+        # `needs` propagates an upstream skip to this required job; GitHub
+        # can then report a successful workflow with the gate never run.
+        if re.search(r'(?m)^    needs\s*:', block):
+            raise AssertionError(f'{filename}: universal job depends on potentially skipped prerequisites: {marker.group(1)}')
         assert_unskippable_critical_steps(source, filename, marker.group(1), block)
 
 
@@ -357,6 +361,37 @@ class EntireWorkflowEventPolicy(unittest.TestCase):
                 with self.subTest(workflow=name, job=job, bypass='missing job'):
                     with self.assertRaisesRegex(AssertionError, 'universal job'):
                         assert_workflow_policy(removed, name)
+
+    def test_universal_jobs_cannot_depend_on_skippable_jobs(self):
+        # `needs` inherits the upstream job's skipped state. A required job
+        # can therefore be silently skipped even without its own `if` key.
+        gate = (
+            '  optional_gate:\n'
+            '    if: ${{ false }}\n'
+            '    runs-on: ubuntu-latest\n'
+            '    steps:\n'
+            '      - run: echo not-executed\n'
+        )
+        for name, jobs in (
+            ('integration-head.yml', ('web', 'lean')),
+            ('prek.yml', ('prek',)),
+        ):
+            original = (WORKFLOWS / name).read_text(encoding='utf-8')
+            self.assertTrue(assert_workflow_policy(original, name))
+            with_gate = original.replace('jobs:\n', 'jobs:\n' + gate, 1)
+            for job in jobs:
+                marker = f'  {job}:\n'
+                self.assertIn(marker, with_gate)
+                for needs in (
+                    '    needs: optional_gate\n',
+                    '    needs: [optional_gate]\n',
+                    '    needs:\n      - optional_gate\n',
+                ):
+                    mutant = with_gate.replace(marker, marker + needs, 1)
+                    with self.subTest(workflow=name, job=job, needs=needs.strip()):
+                        self.assertNotEqual(mutant, original)
+                        with self.assertRaisesRegex(AssertionError, 'universal job'):
+                            assert_workflow_policy(mutant, name)
 
     def test_one_event_only_is_not_falsely_classified_as_double(self):
         single = 'name: replay\non:\n  workflow_dispatch:\njobs:\n  run:\n    runs-on: ubuntu-latest\n'
