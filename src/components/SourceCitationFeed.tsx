@@ -7,6 +7,28 @@ import {
 type Props = { lang: 'pt' | 'en' };
 const examples = ['C197#1', 'C198#1', 'C232#1', 'C01#1', 'C02#1', 'C03#1', 'C44#1'];
 
+// Show HTTPS documentary Markdown links as native links, never as clipped URL text.
+// Everything outside the narrow [label](https://...) grammar stays verbatim;
+// React escapes it instead of interpreting arbitrary Markdown/HTML from the feed.
+function documentaryClaimParts(text: string): React.ReactNode[] {
+  const parts: React.ReactNode[] = [];
+  const link = /\[([^\]\r\n]+)\]\((https:\/\/[^\s)]+)\)/g;
+  let cursor = 0;
+  for (const match of text.matchAll(link)) {
+    const start = match.index;
+    parts.push(text.slice(cursor, start));
+    parts.push(
+      <a key={start} href={match[2]} target="_blank" rel="noopener noreferrer"
+        className="text-cyan-300 underline underline-offset-2 [overflow-wrap:anywhere] focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300">
+        {match[1]}
+      </a>,
+    );
+    cursor = start + match[0].length;
+  }
+  parts.push(text.slice(cursor));
+  return parts;
+}
+
 export function SourceCitationFeed({ lang }: Props) {
   const pt = lang === 'pt';
   const [feed, setFeed] = useState<CitationFeed | null>(null);
@@ -86,7 +108,7 @@ export function SourceCitationFeed({ lang }: Props) {
         ))}
       </div>
 
-      <div aria-live="polite" aria-atomic="true" className="text-sm text-zinc-200">
+      <div aria-live="polite" aria-atomic="true" className="min-w-0 text-sm text-zinc-200 [overflow-wrap:anywhere]">
         {error && <p role="alert">{pt ? 'Feed indisponível ou formato não reconhecido. Nenhuma citação foi confirmada nesta consulta.' : 'Feed unavailable or unrecognized format. No citations were confirmed in this lookup.'}</p>}
         {!feed && !error && <p>{pt ? 'Carregando feed documental…' : 'Loading documentary feed…'}</p>}
         {context?.state === 'invalid' && <p>{pt ? 'Informe Cnn#ocorrência, incluindo #1. C44, C45 e C46 possuem IDs repetidos.' : 'Enter Cnn#occurrence, including #1. C44, C45 and C46 contain colliding IDs.'}</p>}
@@ -97,7 +119,7 @@ export function SourceCitationFeed({ lang }: Props) {
         </p>}
         {context?.state === 'mapped' && (
           <div className="space-y-3">
-            <p><strong className="font-mono text-cyan-200">{context.occurrence}</strong> · {context.record.claim_text}</p>
+            <p><strong className="font-mono text-cyan-200">{context.occurrence}</strong> · {documentaryClaimParts(context.record.claim_text)}</p>
             <p className="text-xs text-amber-200">{pt
               ? `${context.records.length} referências documentais curadas para esta ocorrência. Não equivalem a testemunhos independentes nem a novas observações físicas.`
               : `${context.records.length} curated documentary references for this occurrence. These are not independent witnesses or additional physical observations.`}</p>
