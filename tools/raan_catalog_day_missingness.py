@@ -13,6 +13,8 @@ import hashlib
 import json
 from pathlib import Path
 
+from raan_chronological_holdout import build_manifest
+
 ROOT = Path(__file__).resolve().parents[1]
 SERIES = 'research/statistics/raan_527_528_529_1963.json'
 IDENTITY = 'research/tle_custody/catalog_identity_527_529_2026-11-12.json'
@@ -54,6 +56,14 @@ def build(series_bytes: bytes, identity_bytes: bytes, split_bytes: bytes) -> dic
             or primary['document_id'] != 'NASA NTRS 19640001198'
             or primary['decay_day'] != '1963-11-08'):
         raise ValueError('primary day-only documentary binding drift')
+    # Validate the actual UTC partition, not only disjointness and totals.
+    # A within-object validation/evaluation swap preserves both, but leaks
+    # future epochs into the retrospective design (G31-F1, Gavião inbox #1).
+    expected = build_manifest(series_bytes)
+    if (split.get('memberships') != expected['memberships']
+            or split.get('boundaries') != expected['boundaries']
+            or split.get('totals') != expected['totals']):
+        raise ValueError('holdout UTC partition drift; recompute and review')
     if split['unique_total'] != 119:
         raise ValueError('chronological frozen membership drift')
     if (split['boundaries']['fit_before_utc'] != '1963-08-01T00:00:00Z'

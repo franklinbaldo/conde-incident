@@ -17,3 +17,14 @@ O evento observado aqui é somente **não haver outra linha retida no extrato**.
 **Holdout:** 61/23/35 é retrospectivo, não cego e da mesma linhagem; o relatório não ajusta parâmetros usando nenhuma época da avaliação. Nenhum teste empírico de detecção independente foi produzido. `active_constraint=false`; `historical_posterior=NOT_RUN`.
 
 **Próxima evidência discriminante:** ficha primária identificada de acompanhamento do 528 contendo estação, horários e critérios de busca/seleção/publicação, incluindo ausência explicitamente registrada, se houver. A pesquisa da ficha e custódia cabe à Tartaruga; o desenho da likelihood e o teste de identificação permanecem com Cervo. Sem essas variáveis, a lacuna numérica não constitui dado negativo.
+
+## Controle negativo do holdout cronológico (G31-F1)
+
+O consumidor `raan_catalog_day_missingness.py` reconstrói agora as
+atribuições UTC com `build_manifest` antes de produzir seu relatório.
+Uma troca entre uma época de agosto e outra de outubro do NORAD 528,
+mesmo preservando 119 épocas únicas, conjuntos, contagens e SHA da fonte,
+é rejeitada, assim como uma mudança isolada no corte da validação.
+O controle protege apenas a interpretação da partição retrospectiva; não
+converte o espelho secundário em observações independentes nem permite
+probabilidade histórica de ausência ou reentrada.

@@ -105,6 +105,24 @@ class CatalogDayMissingnessTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             build(series, identity, changed)
 
+    def test_cross_partition_swap_same_counts_is_rejected(self):
+        # G31-F1: an August and October epoch must not be exchanged merely
+        # because set membership, object totals and source SHA still agree.
+        series, identity, split = source_bytes()
+        frozen = json.loads(split)
+        slots = frozen['memberships']['528']
+        slots['validation'][0], slots['evaluation'][0] = (slots['evaluation'][0],
+                                                          slots['validation'][0])
+        with self.assertRaisesRegex(ValueError, 'holdout'):
+            build(series, identity, json.dumps(frozen).encode())
+
+    def test_validation_boundary_mutation_is_rejected(self):
+        series, identity, split = source_bytes()
+        frozen = json.loads(split)
+        frozen['boundaries']['validation_before_utc'] = '1963-09-01T00:00:00Z'
+        with self.assertRaisesRegex(ValueError, 'holdout'):
+            build(series, identity, json.dumps(frozen).encode())
+
     def test_bad_timestamp_and_day_inputs(self):
         for t in ('1963-11-08T00:00:00', '1963-11-08T00:00:00+01:00', 'fooZ'):
             with self.assertRaises(ValueError):
