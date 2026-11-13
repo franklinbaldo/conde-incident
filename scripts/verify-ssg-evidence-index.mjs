@@ -17,11 +17,58 @@ const tracked=['occurrence','snapshot_ref','source_id','source_family','work_id'
   'source_status','relation','scope','locator','claim_text','citation_url',
   'row_sha256','matrix_line'];
 const take=(row,fields)=>Object.fromEntries(fields.map(name=>[name,row[name]]));
-// Inspect actual anchor attributes in the generated HTML, not inert text in
-// paragraphs, metadata, comments or pre-rendered Markdown source.
-const anchors=html=>new Set([...html.replace(/<!--[\s\S]*?-->/g,'')
-  .matchAll(/<a\b[^>]*\bhref\s*=\s*(['"])([^'"]+)\1/gi)]
-  .map(match=>match[2].replaceAll('&amp;','&')));
+// Audit the content readers can actually navigate, not strings in scripts,
+// comments, templates, metadata or a hidden clone of the link inventory.
+// This intentionally checks only the static DOM contract; an external CSS rule
+// or a runtime JS mutation still requires the browser/UX audit.
+const voidTags=new Set(['area','base','br','col','embed','hr','img','input','link',
+  'meta','param','source','track','wbr']);
+const rawTags=new Set(['script','style','template','noscript','svg']);
+const attribute=(source,name)=>{
+  const match=new RegExp('(?:^|\\s)'+name+
+    '(?:\\s*=\\s*(?:"([^"]*)"|\'([^\']*)\'|([^\\s>]+)))?(?=\\s|$)','i').exec(source);
+  return match ? (match[1] ?? match[2] ?? match[3] ?? '') : null;
+};
+const suppressed=(tag,attrs)=>rawTags.has(tag) ||
+  ['hidden','inert'].some(name=>attribute(attrs,name)!==null) ||
+  attribute(attrs,'aria-hidden')?.toLowerCase()==='true' ||
+  attribute(attrs,'aria-disabled')?.toLowerCase()==='true' ||
+  /(?:^|;)\s*(?:display\s*:\s*none|visibility\s*:\s*hidden)(?:\s*[;!]|$)/i
+    .test(attribute(attrs,'style') ?? '');
+
+export function visibleDocument(html) {
+  const links=new Set(),content=[];
+  const stack=[];
+  let last=0;
+  // Quote-aware tags: a '>' inside an attribute must not terminate a tag.
+  const tokens=/<!--[\s\S]*?-->|<(?:[^>"']|"[^"]*"|'[^']*')*>/g;
+  for (const match of html.matchAll(tokens)) {
+    const parent=stack.at(-1);
+    if (parent?.main && !parent.hidden && match.index>last)
+      content.push(html.slice(last,match.index));
+    last=match.index+match[0].length;
+    const token=match[0];
+    if (token.startsWith('<!--') || /^<!/.test(token)) continue;
+    const closing=/^<\s*\/\s*([\w:-]+)/.exec(token);
+    if (closing) {
+      const i=stack.findLastIndex(item=>item.tag===closing[1].toLowerCase());
+      if (i!==-1) stack.length=i;
+      continue;
+    }
+    const opening=/^<\s*([\w:-]+)\b/.exec(token);
+    if (!opening) continue;
+    const tag=opening[1].toLowerCase();
+    const attrs=token.slice(opening[0].length,-1);
+    const hidden=Boolean(parent?.hidden || suppressed(tag,attrs));
+    const main=Boolean(parent?.main || tag==='main');
+    if (tag==='a' && main && !hidden && attribute(attrs,'tabindex')!=='-1') {
+      const href=attribute(attrs,'href');
+      if (href) links.add(href.replaceAll('&amp;','&'));
+    }
+    if (!voidTags.has(tag) && !/\/\s*>$/.test(token)) stack.push({tag,hidden,main});
+  }
+  return {links,visibleText:content.join(' ')};
+}
 
 export function readBundle(root='.') {
   const read=path=>readFileSync(join(root,path));
@@ -122,13 +169,13 @@ export function auditBuiltSite(bundle,siteRoot='public') {
   }
   const allRows=bundle.shards.flatMap(part=>JSON.parse(part.raw).records);
   const index=readFileSync(join(siteRoot,'evidencias/arquivo/index.html'),'utf8');
-  const indexAnchors=anchors(index);
+  const indexAnchors=visibleDocument(index).links;
   // Cache reverse-link targets; each source/obra/família may cover many records.
   const reverseCache=new Map();
   const reversePage=path=>{
     if (!reverseCache.has(path)) {
       const filename=join(siteRoot,'evidencias/arquivo',path.slice(PREFIX.length),'index.html');
-      reverseCache.set(path,anchors(readFileSync(filename,'utf8')));
+      reverseCache.set(path,visibleDocument(readFileSync(filename,'utf8')).links);
     }
     return reverseCache.get(path);
   };
@@ -139,10 +186,11 @@ export function auditBuiltSite(bundle,siteRoot='public') {
       ? 'evidencias/arquivo/'+row.archive_path.slice(PREFIX.length)+'index.html'
       : 'evidencias/arquivo/index.html');
     const html=readFileSync(page,'utf8');
-    assert.ok(html.includes(row.row_sha256),'Built HTML missing row digest: '+row.archive_path);
-    assert.ok(html.includes(row.source_status),
+    const {links:reverseAnchors,visibleText}=visibleDocument(html);
+    assert.ok(visibleText.includes(row.row_sha256),
+      'Built HTML missing visible row digest: '+row.archive_path);
+    assert.ok(visibleText.includes(row.source_status),
       'Built HTML missing canonical epistemic status: '+row.archive_path);
-    const reverseAnchors=anchors(html);
     // This is a navigable citation, not a PDF URL printed as inert text.
     for (const target of [row.citation_url,matrixRowUrl(row.matrix_line),PREFIX])
       assert.ok(reverseAnchors.has(target),
