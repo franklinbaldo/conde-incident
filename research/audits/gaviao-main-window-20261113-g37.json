@@ -1,0 +1,257 @@
+{
+  "schema": "conde.gaviao-retrospective-window/v1",
+  "review": "G37",
+  "start_exclusive": "070481978ae7493ecae19d82acfc144072f792bb",
+  "end_inclusive": "4decea805580d59e0388508c6700f2a0c9df583c",
+  "first_parent_integrations": 14,
+  "dag_commits": 18,
+  "side_branch_commits": 4,
+  "merge_commits": 3,
+  "empty_first_parent_diffs": [
+    "162cbb2512ed6fc9399378ce223c9a3bc116148f"
+  ],
+  "mainline": [
+    {
+      "sha": "d86cf51a633b412b49d51b372cd3f6ec207dfea2",
+      "parents": [
+        "070481978ae7493ecae19d82acfc144072f792bb"
+      ],
+      "subject": "research(tartaruga): custody June 1963 NASA SSR #13 with graph and adversarial replay (C241-L22) (#446)",
+      "pr_numbers_in_subject": [
+        "13",
+        "446"
+      ],
+      "first_parent_changed_files": [
+        ".github/workflows/tle-nasa-ssr-jun30.yml",
+        "research/constraints/ssr_jun30_1963_observables_C241-L22.json",
+        "research/tle_custody/evidence_matrix_C241-L22_2026-11-13.md",
+        "research/tle_custody/nasa_ssr_jun30_1963_C241-L22.json",
+        "tests/test_tle_nasa_ssr_jun30_audit.py",
+        "tools/tle_nasa_ssr_jun30_audit.py"
+      ],
+      "first_parent_diff_empty": false
+    },
+    {
+      "sha": "294838f520fbd8e6e32d96ecdb002c33b3b72713",
+      "parents": [
+        "d86cf51a633b412b49d51b372cd3f6ec207dfea2",
+        "9cc6bc05e0fc8fd1c7e5836543de411c7ca332d1"
+      ],
+      "subject": "Merge pull request #448 from franklinbaldo/research/caranguejo-cgeo23-thumb-lineage",
+      "pr_numbers_in_subject": [
+        "448"
+      ],
+      "first_parent_changed_files": [
+        "research/geo/README.md",
+        "research/geo/cgeo23_resampled_photo_lineage.json",
+        "research/geo/cgeo23_resampled_photo_lineage.md",
+        "tests/test_cgeo23_resampled_photos.py",
+        "tools/cgeo23_resampled_photos.py"
+      ],
+      "first_parent_diff_empty": false
+    },
+    {
+      "sha": "4a56c654e6985a5c71576a45407fa346e4d6d5c8",
+      "parents": [
+        "294838f520fbd8e6e32d96ecdb002c33b3b72713"
+      ],
+      "subject": "88 🦅 G36: fix Wayback archived path substitution and audit 13 merges (#445)",
+      "pr_numbers_in_subject": [
+        "445"
+      ],
+      "first_parent_changed_files": [
+        "research/audits/gaviao-main-window-20261113-g36.json",
+        "research/audits/gaviao-main-window-20261113-g36.md",
+        "scripts/ssg-wayback-links.mjs",
+        "tests/ssg-wayback-custody.test.mjs"
+      ],
+      "first_parent_diff_empty": false
+    },
+    {
+      "sha": "654b5d23652ab26066ca3101a7bdd720cf262805",
+      "parents": [
+        "4a56c654e6985a5c71576a45407fa346e4d6d5c8"
+      ],
+      "subject": "88 🐝 G35: vincular J2 condicional à custódia NASA, Lean e Θ latente (#449)",
+      "pr_numbers_in_subject": [
+        "449"
+      ],
+      "first_parent_changed_files": [
+        "public/data/conde-ssr-j2-provenance.json",
+        "tests/test_ssr_j2_provenance.py",
+        "tools/export_ssr_j2_provenance.py"
+      ],
+      "first_parent_diff_empty": false
+    },
+    {
+      "sha": "b051bc97ca6d56df5309490ae1a8449a738281b1",
+      "parents": [
+        "654b5d23652ab26066ca3101a7bdd720cf262805"
+      ],
+      "subject": "90 🐙 C241-P13: limite mínimo exato de viés editorial comum NASA 527/529 (#450)",
+      "pr_numbers_in_subject": [
+        "450"
+      ],
+      "first_parent_changed_files": [
+        ".github/workflows/lean-core.yml",
+        "formal/Conde1963.lean",
+        "formal/Conde1963/SsrOffsetThreshold.lean",
+        "formal/scripts/compile_ssr_offset_threshold.py",
+        "formal/tests/test_ssr_offset_threshold.py",
+        "research/constraints/C241-P13_offset_robustness.json"
+      ],
+      "first_parent_diff_empty": false
+    },
+    {
+      "sha": "55d9ea3f65009cff1b5b073e03d732f753d294f3",
+      "parents": [
+        "b051bc97ca6d56df5309490ae1a8449a738281b1"
+      ],
+      "subject": "test(ci): audit named checkouts in SHA gate (#453)",
+      "pr_numbers_in_subject": [
+        "453"
+      ],
+      "first_parent_changed_files": [
+        "tests/test_ci_checkout_sha.py"
+      ],
+      "first_parent_diff_empty": false
+    },
+    {
+      "sha": "bad7a121c5bb48bbc88f05aca158f86889952175",
+      "parents": [
+        "55d9ea3f65009cff1b5b073e03d732f753d294f3"
+      ],
+      "subject": "78 🦌 Certificar com frações exatas o falso relógio dos SSR (#452) (#454)",
+      "pr_numbers_in_subject": [
+        "452",
+        "454"
+      ],
+      "first_parent_changed_files": [
+        "research/statistics/SSR_REPORT_DATE_PROXY_C241.md",
+        "research/statistics/ssr_report_date_proxy_C241.json",
+        "tests/test_ssr_report_date_proxy_falsifier.py",
+        "tools/ssr_report_date_proxy_falsifier.py"
+      ],
+      "first_parent_diff_empty": false
+    },
+    {
+      "sha": "2151092bcac3679a8d8daa5652d47baf3aa2d930",
+      "parents": [
+        "bad7a121c5bb48bbc88f05aca158f86889952175"
+      ],
+      "subject": "90 🦦 Custodiar DOE Bahia janeiro de 1954 (#455)",
+      "pr_numbers_in_subject": [
+        "455"
+      ],
+      "first_parent_changed_files": [
+        "research/archive/conde_tjba_doe_1954_01_20261113.json",
+        "tests/test_tjba_doe_1954.py",
+        "tools/verify_tjba_doe_1954.py"
+      ],
+      "first_parent_diff_empty": false
+    },
+    {
+      "sha": "bf2dcc293728ce9ac3a59ad29d3be85107635192",
+      "parents": [
+        "2151092bcac3679a8d8daa5652d47baf3aa2d930",
+        "af3f0a6ab71ca2057aa3f989e2804f2c60fd2439"
+      ],
+      "subject": "Merge pull request #456 from franklinbaldo/research/lagarto-caravelas-isd-1963-r21",
+      "pr_numbers_in_subject": [
+        "456"
+      ],
+      "first_parent_changed_files": [
+        ".agents/skills/conde-lagarto/SKILL.md",
+        ".github/workflows/isd-caravelas-1963.yml",
+        "research/constraints/isd_caravelas_surface_1963.json",
+        "research/meteorology/isd_caravelas_19631107_09.json",
+        "research/meteorology/isd_caravelas_19631107_09.md",
+        "research/meteorology/isd_caravelas_19631107_09.zlib.b64",
+        "tests/test_isd_caravelas_1963.py",
+        "tools/audit_isd_caravelas_1963.py"
+      ],
+      "first_parent_diff_empty": false
+    },
+    {
+      "sha": "9398db84d884741b116388b52bdf9e0c5f327ec4",
+      "parents": [
+        "bf2dcc293728ce9ac3a59ad29d3be85107635192"
+      ],
+      "subject": "80 🦫 Optical angular holdout gate with provenance, epoch and station controls (#457)",
+      "pr_numbers_in_subject": [
+        "457"
+      ],
+      "first_parent_changed_files": [
+        "research/constraints/CASTOR-G36_optical_holdout_geometry.json",
+        "src/lib/orbitOpticalHoldout.ts",
+        "tests/orbitOpticalHoldout.test.mjs"
+      ],
+      "first_parent_diff_empty": false
+    },
+    {
+      "sha": "16de6f6ed6bff9d0838239773e6b08db4ddbbc41",
+      "parents": [
+        "9398db84d884741b116388b52bdf9e0c5f327ec4"
+      ],
+      "subject": "feat(ssg): navegação documental por identificador de fonte (#458)",
+      "pr_numbers_in_subject": [
+        "458"
+      ],
+      "first_parent_changed_files": [
+        "scripts/ssg-documentary-archive.mjs",
+        "tests/ssg-documentary-archive.test.mjs",
+        "tests/ssg-okf-types.test.mjs"
+      ],
+      "first_parent_diff_empty": false
+    },
+    {
+      "sha": "162cbb2512ed6fc9399378ce223c9a3bc116148f",
+      "parents": [
+        "16de6f6ed6bff9d0838239773e6b08db4ddbbc41"
+      ],
+      "subject": "feat(ssg): navegação documental por identificador de fonte (#458)",
+      "pr_numbers_in_subject": [
+        "458"
+      ],
+      "first_parent_changed_files": [],
+      "first_parent_diff_empty": true
+    },
+    {
+      "sha": "78d9210442ad51bf811680cccb890fe90e78d864",
+      "parents": [
+        "162cbb2512ed6fc9399378ce223c9a3bc116148f",
+        "b8fc91421c233e6f0b690ad15b95e73280bdf76d"
+      ],
+      "subject": "Merge pull request #459 from franklinbaldo/audit/morcego-ssg-search-ptbr-r16",
+      "pr_numbers_in_subject": [
+        "459"
+      ],
+      "first_parent_changed_files": [
+        "scripts/check-site.mjs",
+        "scripts/enable-article-frames.mjs",
+        "scripts/localize-ssg-search.mjs",
+        "tests/ssg-search-locale.test.mjs"
+      ],
+      "first_parent_diff_empty": false
+    },
+    {
+      "sha": "4decea805580d59e0388508c6700f2a0c9df583c",
+      "parents": [
+        "78d9210442ad51bf811680cccb890fe90e78d864"
+      ],
+      "subject": "docs(coruja): Caderno 14, limite de quinze segundos da hipótese editorial",
+      "pr_numbers_in_subject": [],
+      "first_parent_changed_files": [
+        "stories/2026-11-13-quinze-segundos-para-salvar-uma-explicacao.md"
+      ],
+      "first_parent_diff_empty": false
+    }
+  ],
+  "ci_status": "not_yet_verified_per_commit",
+  "scientific_status": "INDETERMINATE",
+  "limits": [
+    "Commit subject PR markers do not alone prove platform merge provenance",
+    "Prior checks are not interpreted as all green without independent checks",
+    "Direct story commit has no PR marker; association needs GitHub verification"
+  ]
+}
