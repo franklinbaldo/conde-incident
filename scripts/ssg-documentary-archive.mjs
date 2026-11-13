@@ -30,6 +30,14 @@ export function archivePages(citations, lineage) {
   assert.equal(lineage.epistemic_limits?.absence_of_edge_does_not_prove_independence, true);
   assert.equal(lineage.epistemic_limits?.independent_physical_observation_count, null);
   assert.ok(Array.isArray(citations.records) && Array.isArray(lineage.citation_lineages));
+  // Every declared ancestry must have a corresponding curated citation. Otherwise
+  // unrendered, potentially misleading dependencies silently survive validation.
+  const citationKeys = new Set(citations.records.map(r =>
+    JSON.stringify([r.snapshot_ref, r.source_id])));
+  for (const entry of lineage.citation_lineages) {
+    assert.ok(citationKeys.has(JSON.stringify([entry.snapshot_ref, entry.source_id])),
+      'Genealogia órfã: não corresponde a uma citação curada');
+  }
   const grouped = new Map();
   for (const record of citations.records) {
     assert.match(record.occurrence, /^C[0-9]{1,3}#[1-9][0-9]*$/);
