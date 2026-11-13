@@ -137,6 +137,34 @@ try {
     await exportTrigger.click();
     const dialog = page.getByRole('dialog', { name: 'norad528_reconstruction.py' });
     await dialog.waitFor();
+    // At mobile/reflow widths, all three modal actions must remain reachable.
+    // A wide filename and a non-wrapping toolbar previously pushed close
+    // and download beyond the visible dialog, even though keyboard focus worked.
+    const mobileLayout = await dialog.evaluate(node => {
+      const header = node.children[0];
+      const instructions = node.children[1];
+      const rect = node.getBoundingClientRect();
+      return {
+        viewport: window.innerWidth,
+        dialog: { left: rect.left, right: rect.right },
+        header: { scroll: header.scrollWidth, client: header.clientWidth },
+        instructions: { scroll: instructions.scrollWidth, client: instructions.clientWidth },
+        controls: Array.from(node.querySelectorAll('button')).map(button => {
+          const box = button.getBoundingClientRect();
+          return { left: box.left, right: box.right, label: button.getAttribute('aria-label') || button.textContent?.trim() };
+        }),
+      };
+    });
+    assert(mobileLayout.header.scroll <= mobileLayout.header.client + 1,
+      'export toolbar overflows at ' + viewport.name + ': ' + JSON.stringify(mobileLayout));
+    assert(mobileLayout.instructions.scroll <= mobileLayout.instructions.client + 1,
+      'export instructions overflow at ' + viewport.name + ': ' + JSON.stringify(mobileLayout));
+    assert.equal(mobileLayout.controls.length, 3, 'expected copy, download and close actions');
+    for (const control of mobileLayout.controls) {
+      assert(control.left >= Math.max(0, mobileLayout.dialog.left) - 1 &&
+        control.right <= Math.min(mobileLayout.viewport, mobileLayout.dialog.right) + 1,
+      'export action clipped at ' + viewport.name + ': ' + JSON.stringify(mobileLayout));
+    }
     const close = dialog.getByRole('button', { name: 'Close export dialog' });
     const copy = dialog.getByRole('button', { name: 'Copy code' });
     assert(await close.evaluate(element => document.activeElement === element),
