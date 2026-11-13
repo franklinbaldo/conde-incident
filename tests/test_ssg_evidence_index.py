@@ -1,0 +1,104 @@
+"""Adversarial custody tests for the documentary SSG index."""
+import copy
+import importlib.util
+import json
+from pathlib import Path
+import tempfile
+import unittest
+
+ROOT = Path(__file__).resolve().parents[1]
+SPEC = importlib.util.spec_from_file_location('evidence_export', ROOT / 'tools/export_ssg_evidence_index.py')
+export = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(export)
+
+
+class EvidenceIndexTest(unittest.TestCase):
+    def test_source_custody_and_bounded_shards(self):
+        artifacts = export.build()
+        manifest = json.loads(artifacts[export.MANIFEST])
+        self.assertEqual(manifest['schema'], 'conde.evidence-index/v1')
+        self.assertIsNone(manifest['independent_physical_observation_count'])
+        self.assertFalse(manifest['absence_of_declared_dependency_proves_independence'])
+        self.assertEqual(len(manifest['post_matrix_ids_not_in_curated_index']), 1)
+        seen = set()
+        for shard in manifest['shards']:
+            raw = artifacts[Path(shard['path'])]
+            self.assertEqual(export.digest(raw), shard['sha256'])
+            self.assertEqual(len(raw), shard['bytes'])
+            self.assertLessEqual(len(raw), export.MAX_SHARD_BYTES)
+            rows = json.loads(raw)['records']
+            self.assertEqual(len(rows), shard['record_count'])
+            for row in rows:
+                key = (row['snapshot_ref'], row['source_id'])
+                self.assertNotIn(key, seen)
+                seen.add(key)
+                self.assertTrue(row['not_a_verified_conde_physical_event'])
+                self.assertIsNone(row['independent_physical_observation_count'])
+                self.assertEqual(row['archive_path'], '/conde-incident/evidencias/arquivo/'
+                                 + row['occurrence'].lower().replace('#', '-') + '/')
+        self.assertEqual(len(seen), manifest['curated_reference_count'])
+        for source in manifest['source_files']:
+            self.assertEqual(export.digest((ROOT / source['path']).read_bytes()), source['sha256'])
+        self.assertEqual(artifacts, export.build(), 'Mesma fonte deve gerar bytes idênticos')
+        export.sync(artifacts, check=True)
+
+    def mutate(self, filename, alter):
+        with tempfile.TemporaryDirectory() as directory:
+            scratch = Path(directory)
+            (scratch / 'public/data').mkdir(parents=True)
+            for path in (export.CITATIONS, export.LINEAGE):
+                data = json.loads((ROOT / path).read_text())
+                if path == filename:
+                    alter(data)
+                (scratch / path).write_text(json.dumps(data))
+            with self.assertRaises(ValueError):
+                export.build(scratch)
+
+    def test_duplicate_document_link_rejected(self):
+        self.mutate(export.CITATIONS, lambda d: d['records'].append(copy.deepcopy(d['records'][0])))
+
+    def test_broken_row_sha_rejected(self):
+        self.mutate(export.CITATIONS, lambda d: d['records'][0].update(row_sha256='0' * 64))
+
+    def test_unknown_snapshot_id_rejected(self):
+        self.mutate(export.CITATIONS, lambda d: d['records'][0].update(snapshot_ref='matrix:wrong:C01#1'))
+
+    def test_unmatched_genealogy_rejected(self):
+        self.mutate(export.LINEAGE, lambda d: d['citation_lineages'][0].update(source_id='MISSING_SOURCE'))
+
+    def test_promotion_to_physical_witness_rejected(self):
+        self.mutate(export.CITATIONS, lambda d: d['records'][0].update(not_a_verified_conde_physical_event=False))
+
+    def test_cyclic_dependency_rejected(self):
+        def change(data):
+            chain = next(x for x in data['citation_lineages'] if x['declared_upstream_paths'])
+            path = chain['declared_upstream_paths'][0]
+            path['edges'].append({'from': path['upstream_source_id'],
+                                  'to': chain['source_id'], 'kind': 'claims'})
+            path['upstream_source_id'] = chain['source_id']
+        self.mutate(export.LINEAGE, change)
+
+    def test_manual_edit_does_not_survive_check(self):
+        artifacts = export.build()
+        with tempfile.TemporaryDirectory() as directory:
+            scratch = Path(directory)
+            export.sync(artifacts, scratch)
+            export.sync(artifacts, scratch, check=True)
+            damaged = scratch / export.MANIFEST
+            damaged.write_bytes(damaged.read_bytes() + b' ')
+            with self.assertRaises(ValueError):
+                export.sync(artifacts, scratch, check=True)
+
+    def test_orphan_chunk_rejected(self):
+        artifacts = export.build()
+        with tempfile.TemporaryDirectory() as directory:
+            scratch = Path(directory)
+            export.sync(artifacts, scratch)
+            extra = scratch / export.DEST / 'part-999.json'
+            extra.write_text('{}')
+            with self.assertRaises(ValueError):
+                export.sync(artifacts, scratch, check=True)
+
+
+if __name__ == '__main__':
+    unittest.main()

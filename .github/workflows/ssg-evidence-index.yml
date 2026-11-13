@@ -1,0 +1,31 @@
+name: Deterministic documentary SSG data index
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Exact head gate
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Check source provenance, exact exported bytes and adversarial cases
+        run: |
+          python3 -m unittest discover -s tests -p test_ssg_evidence_index.py -v
+          python3 tools/export_ssg_evidence_index.py --check
+      - name: Size policy for generated documentary shards
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          for path in [*Path('public/data/conde-evidence-index').glob('*.json'),
+                       Path('public/data/conde-evidence-index-manifest.json')]:
+              assert path.stat().st_size <= 20_000, (path, path.stat().st_size)
+          PY
