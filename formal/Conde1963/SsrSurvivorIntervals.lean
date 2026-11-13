@@ -10,9 +10,10 @@ Report reference dates are not individual instrument measurement epochs.
 
 The December 1963 C (529) cell has a documented discrepancy:
 C227 transcribed 89.6 min; independent review of the current facsimile
-reads 89.2 min. This file intentionally keeps an enclosing interval that
-admits EITHER reading plus conditional decimal rounding. It does not
-resolve that conflict and is not a reconstructed physical orbit.
+reads 89.2 min, now reconciled in C241-L18 on the source facsimile.
+The older proofs keep their conservative bounds for compatibility. The
+new source-locked result below uses only the reconciled printed interval.
+No statement here reconstructs a physical orbit.
 
 Integer units are hundredths of a minute; all proofs are conditional
 on the assumed nearest-0.1-minute editorial rounding, not instrument sigma.
@@ -28,7 +29,7 @@ theorem b_july_to_october_published_difference
     110 ≤ july - oct ∧ july - oct ≤ 130 := by
   omega
 
-/-- November-to-December C (529): includes disputed 89.2/89.6 readings. -/
+/-- Legacy broad bound for C (529): includes both historical transcriptions. -/
 theorem c_post_b_november_to_december_published_difference
     (nov dec : Int)
     (hn0 : 9215 ≤ nov) (hn1 : nov ≤ 9225)
@@ -57,6 +58,20 @@ theorem post_b_529_change_exceeds_527_change_in_printed_tables
     (hnA0 : 9455 ≤ nA) (hnA1 : nA ≤ 9465)
     (hdA0 : 9455 ≤ dA) (hdA1 : dA ≤ 9465) :
     240 ≤ (nC - dC) - (nA - dA) ∧
+    (nC - dC) - (nA - dA) ≤ 320 := by
+  omega
+
+/-- Source-locked C241-L18: once the 31 Dec 3C printed cell is read as
+    89.2 min, and assuming nearest-tenth editorial rounding for 529 and 527,
+    the differential *printed* change lies in [2.80,3.20] min.
+    This is not an observation of drag, instrument epoch or 528 decay. -/
+theorem post_b_529_reconciled_printed_gap_over_527
+    (nC dC nA dA : Int)
+    (hnC0 : 9215 ≤ nC) (hnC1 : nC ≤ 9225)
+    (hdC0 : 8915 ≤ dC) (hdC1 : dC ≤ 8925)
+    (hnA0 : 9455 ≤ nA) (hnA1 : nA ≤ 9465)
+    (hdA0 : 9455 ≤ dA) (hdA1 : dA ≤ 9465) :
+    280 ≤ (nC - dC) - (nA - dA) ∧
     (nC - dC) - (nA - dA) ≤ 320 := by
   omega
 
