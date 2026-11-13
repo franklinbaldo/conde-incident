@@ -1,0 +1,334 @@
+{
+  "schema": "conde.gaviao-retrospective-window/v1",
+  "review": "G39",
+  "start_exclusive": "1dd6e5619801c685c97a7b2bfc218bad5b811919",
+  "end_inclusive": "4a5f0d35bc10c14927e1b948b63c516f5184ddfb",
+  "first_parent_integrations": 14,
+  "dag_commits": 15,
+  "side_branch_commits": 1,
+  "merge_commits": 1,
+  "mainline": [
+    {
+      "sha": "0860820d0533dc38cfab3b49d0e7203e09054644",
+      "parents": [
+        "1dd6e5619801c685c97a7b2bfc218bad5b811919"
+      ],
+      "subject": "90 🦇 UX: liberar cabeçalho fixo em largura reduzida e reforçar teste de reflow (#480)",
+      "associated_prs_from_subject": [
+        480
+      ],
+      "changed_files": [
+        "src/components/Navigation.tsx",
+        "tests/ui_keyboard_smoke.mjs"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "success": 23
+        }
+      }
+    },
+    {
+      "sha": "c1ac65837de73480faea397af3b9b1914e4aab7a",
+      "parents": [
+        "0860820d0533dc38cfab3b49d0e7203e09054644"
+      ],
+      "subject": "88 🦅 G38: validate all C241-L18 source cells before SSR screening (#481)",
+      "associated_prs_from_subject": [
+        481
+      ],
+      "changed_files": [
+        "research/audits/gaviao-main-window-20261113-g38.json",
+        "research/audits/gaviao-main-window-20261113-g38.md",
+        "tests/test_ssr_crossfield_screen_g37.py",
+        "tools/ssr_crossfield_screen_g37.py"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "success": 23
+        }
+      }
+    },
+    {
+      "sha": "0d8993d9fbe9a2b870852c0207f5bcf3c8f0dc13",
+      "parents": [
+        "c1ac65837de73480faea397af3b9b1914e4aab7a"
+      ],
+      "subject": "feat(polvo): connect Caravelas spatial transfer pending edge to cumulative graph (#483)",
+      "associated_prs_from_subject": [
+        483
+      ],
+      "changed_files": [
+        "formal/Conde1963/CaravelasCandidate.lean",
+        "public/data/conde-isd-caravelas-bridge.json",
+        "public/data/conde-observable-dependency-links.json",
+        "tests/test_isd_caravelas_bridge.py",
+        "tests/test_observable_dependency_links.py",
+        "tools/export_observable_dependency_links.py"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "cancelled": 1,
+          "success": 22
+        }
+      }
+    },
+    {
+      "sha": "7d5122c349b423abc8e68e8cd4a50e3f06f1e6a9",
+      "parents": [
+        "0d8993d9fbe9a2b870852c0207f5bcf3c8f0dc13",
+        "212e51fd87d383513ded6a5a176244905424f456"
+      ],
+      "subject": "Merge pull request #484 from franklinbaldo/research/lagarto-caravelas-source-flags-r23",
+      "associated_prs_from_subject": [
+        484
+      ],
+      "changed_files": [
+        ".agents/skills/conde-lagarto/SKILL.md",
+        ".github/workflows/isd-caravelas-1963.yml",
+        "research/constraints/isd_caravelas_source_flags_edges_1963.json",
+        "research/meteorology/isd_caravelas_source_flags_1963.json",
+        "research/meteorology/isd_caravelas_source_flags_1963.md",
+        "tests/test_isd_caravelas_source_flags_1963.py",
+        "tools/audit_isd_caravelas_source_flags_1963.py"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "success": 23
+        }
+      }
+    },
+    {
+      "sha": "298ed61396caca99fb8427056bc91d52d6c3cd22",
+      "parents": [
+        "7d5122c349b423abc8e68e8cd4a50e3f06f1e6a9"
+      ],
+      "subject": "95 🐢 C241-L24: canais instrumentais GSFC–NORAD (acordo de 1962) (#485)",
+      "associated_prs_from_subject": [
+        485
+      ],
+      "changed_files": [
+        ".github/workflows/tle-gsfc-norad-moa.yml",
+        "research/tle_custody/evidence_matrix_C241-L24_2026-11-13.md",
+        "research/tle_custody/gsfc_norad_moa_1962_C241-L24.json",
+        "tests/test_tle_gsfc_norad_moa_audit.py",
+        "tools/tle_gsfc_norad_moa_audit.py"
+      ],
+      "ci_check_runs": {
+        "total_count": 24,
+        "conclusions": {
+          "success": 24
+        }
+      }
+    },
+    {
+      "sha": "479dfd01eec61b436a2644474e963d381d8b3d7d",
+      "parents": [
+        "298ed61396caca99fb8427056bc91d52d6c3cd22"
+      ],
+      "subject": "test(ci): fail closed on custom shells in checkout SHA audit (#489)",
+      "associated_prs_from_subject": [
+        489
+      ],
+      "changed_files": [
+        "tests/test_ci_checkout_sha.py"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "success": 23
+        }
+      }
+    },
+    {
+      "sha": "94b7abe40a52821973ed151b3902c84f8bce6eb0",
+      "parents": [
+        "479dfd01eec61b436a2644474e963d381d8b3d7d"
+      ],
+      "subject": "80 🦌 Certificar não-identificabilidade de paralaxe assíncrona (C241-P15) (#486)",
+      "associated_prs_from_subject": [
+        486
+      ],
+      "changed_files": [
+        "research/statistics/OPTICAL_TEMPORAL_OBSERVABILITY_C241.md",
+        "tests/test_optical_temporal_observability.py",
+        "tools/optical_temporal_observability.py"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "cancelled": 2,
+          "success": 21
+        }
+      }
+    },
+    {
+      "sha": "08feec822b561b35d3f7a9fde918e5e11b91d36e",
+      "parents": [
+        "94b7abe40a52821973ed151b3902c84f8bce6eb0"
+      ],
+      "subject": "88 🦀 CGEO-25: datar Esplanada MI-1850 (1973) e rastrear fontes 1956–1963 (#488)",
+      "associated_prs_from_subject": [
+        488
+      ],
+      "changed_files": [
+        "research/geo/cgeo25_esplanada_edition_lineage.json",
+        "research/geo/cgeo25_esplanada_edition_lineage.md",
+        "tests/test_cgeo25_esplanada_lineage.py",
+        "tools/cgeo25_esplanada_lineage.py"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "cancelled": 1,
+          "success": 22
+        }
+      }
+    },
+    {
+      "sha": "bcac9779da1916cfb80100ba4901b80a7922a494",
+      "parents": [
+        "08feec822b561b35d3f7a9fde918e5e11b91d36e"
+      ],
+      "subject": "85 🐝 Caravelas NOAA daily vectors source-locked to typed Lean and inactive atmosphere (#487)",
+      "associated_prs_from_subject": [
+        487
+      ],
+      "changed_files": [
+        "formal/Conde1963/CaravelasCandidate.lean",
+        "public/data/conde-isd-caravelas-vectors-bridge.json",
+        "tests/test_isd_caravelas_vector_bridge.py",
+        "tools/export_isd_caravelas_vector_bridge.py"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "success": 23
+        }
+      }
+    },
+    {
+      "sha": "5c45d3b9b4910a951c2a7b21a7143b1cb8db972a",
+      "parents": [
+        "bcac9779da1916cfb80100ba4901b80a7922a494"
+      ],
+      "subject": "82 🦫 G38: testar correção J2 do período nodal NASA de dezembro (#490)",
+      "associated_prs_from_subject": [
+        490
+      ],
+      "changed_files": [
+        "research/constraints/CASTOR-G38_ssr_dec31_nodal_scale.json",
+        "tests/test_ssr_dec31_nodal_g38.py",
+        "tools/ssr_dec31_nodal_g38.py"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "success": 23
+        }
+      }
+    },
+    {
+      "sha": "df6a7a7fabcf75fb16cc5e0f2799a28a73ba4098",
+      "parents": [
+        "5c45d3b9b4910a951c2a7b21a7143b1cb8db972a"
+      ],
+      "subject": "fix(pages): preserve source-linked JSON after SSG build (#492)",
+      "associated_prs_from_subject": [
+        492
+      ],
+      "changed_files": [
+        ".github/workflows/pages.yml",
+        "scripts/check-site.mjs"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "cancelled": 2,
+          "success": 21
+        }
+      }
+    },
+    {
+      "sha": "8d99847a7deb9fe2e5400f2389e96e1a1e47ddbd",
+      "parents": [
+        "df6a7a7fabcf75fb16cc5e0f2799a28a73ba4098"
+      ],
+      "subject": "92 🦦 Lei 628/1953: publicação primária DOE 1º/01/1954 (#491)",
+      "associated_prs_from_subject": [
+        491
+      ],
+      "changed_files": [
+        "research/archive/conde_lei628_1953_doe_pagelevel_20261113.json",
+        "research/geo/conde_lei628_doe_publicacao_1954_01_01.md",
+        "tests/test_tjba_lei628_print.py",
+        "tools/verify_tjba_lei628_print.py"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "success": 23
+        }
+      }
+    },
+    {
+      "sha": "12ddc2de71d9e97a9bd382014517130e792ca850",
+      "parents": [
+        "8d99847a7deb9fe2e5400f2389e96e1a1e47ddbd"
+      ],
+      "subject": "94 🦇 Laboratório: retorno acessível ao Caderno, inclusive em 320px (#493)",
+      "associated_prs_from_subject": [
+        493
+      ],
+      "changed_files": [
+        "src/components/Navigation.tsx",
+        "tests/ui_keyboard_smoke.mjs"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "success": 23
+        }
+      }
+    },
+    {
+      "sha": "4a5f0d35bc10c14927e1b948b63c516f5184ddfb",
+      "parents": [
+        "12ddc2de71d9e97a9bd382014517130e792ca850"
+      ],
+      "subject": "87 🦉 Caderno 16: dois buracos de quatro metros e genealogia da Tupi (#496)",
+      "associated_prs_from_subject": [
+        496
+      ],
+      "changed_files": [
+        "research/editorial/tupi_fragmentos_20261113.md",
+        "stories/2026-11-13-dois-buracos-de-quatro-metros.md"
+      ],
+      "ci_check_runs": {
+        "total_count": 23,
+        "conclusions": {
+          "success": 23
+        }
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "G39-F1",
+      "kind": "DOCUMENTARY_CUSTODY_VALIDATION_GAP",
+      "introducing_pr": 488,
+      "affected_validator": "tools/cgeo25_esplanada_lineage.py",
+      "reproduction": "Six independent mutants (external catalogue URL, SGB bitstream substitution, filename, map subject, page index and invented NORAD 528 coordinate) were all accepted by the original validator; one synthetic positive control passes unchanged.",
+      "minimal_correction": "Pin complete source URL and document/page metadata and reject unreviewed source fields",
+      "historical_assertion": "NONE: no real archived source was demonstrated altered"
+    }
+  ],
+  "epistemic_limits": [
+    "Recorded source SHA fields are not independent verification of PDF bytes",
+    "CI run conclusions are per observed GitHub check run, not proof of scientific accuracy",
+    "Historical Conde position and terminal hour remain undetermined"
+  ]
+}
