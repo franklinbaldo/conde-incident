@@ -1,0 +1,189 @@
+{
+  "schema": "conde.ssr-j2-print-bridge/v1",
+  "id": "ABELHA-G35-C241-P13-J2-CUSTODY-BRIDGE",
+  "parents": [
+    "research/constraints/C241-P11_november_historical_printings.json",
+    "public/data/conde-ssr-kepler-provenance.json",
+    "research/constraints/C241-P13_ssr_j2_print_rates_g35.json",
+    "research/constraints/C241-P10_three_object_relative_trajectories.json"
+  ],
+  "source_family": "NASA_GODDARD_COMPILED_SHARED_TRACKING_NOT_SIX_SENSORS",
+  "source_to_model": "NASA_SSR_PRINTED_ELEMENTS -> PRINT_BOX -> J2_FIRST_ORDER -> SAME_EDITION_CONTRAST",
+  "cells": [
+    {
+      "source_occurrence": "C241-L12",
+      "source_pdf_sha256": "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+      "publication_date_not_epoch": "1963-10-15",
+      "object": "1963-003A",
+      "upstream_cell": "C241-L12:1963-003A:period_apogee_perigee",
+      "derived_model": "CASTOR-G35-C241-P13-PRINTED-J2-INTERVALS",
+      "conditional_j2_deg_day": -1.08132852,
+      "print_box_only_deg_day_not_sigma": [
+        -1.082266204,
+        -1.080391254
+      ],
+      "instrument_epoch_utc": null,
+      "instrument_covariance": null,
+      "raan_deg": null,
+      "status": "CONNECTED_PENDING_CALIBRATION"
+    },
+    {
+      "source_occurrence": "C241-L19#1",
+      "source_pdf_sha256": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+      "publication_date_not_epoch": "1963-11-15",
+      "object": "1963-003A",
+      "upstream_cell": "C241-L19#1:1963-003A:period_apogee_perigee",
+      "derived_model": "CASTOR-G35-C241-P13-PRINTED-J2-INTERVALS",
+      "conditional_j2_deg_day": -1.083224943,
+      "print_box_only_deg_day_not_sigma": [
+        -1.084163487,
+        -1.082286818
+      ],
+      "instrument_epoch_utc": null,
+      "instrument_covariance": null,
+      "raan_deg": null,
+      "status": "CONNECTED_PENDING_CALIBRATION"
+    },
+    {
+      "source_occurrence": "C241-L18:19640002493",
+      "source_pdf_sha256": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+      "publication_date_not_epoch": "1963-11-30",
+      "object": "1963-003A",
+      "upstream_cell": "C241-L18:19640002493:1963-003A:period_apogee_perigee",
+      "derived_model": "CASTOR-G35-C241-P13-PRINTED-J2-INTERVALS",
+      "conditional_j2_deg_day": -1.082936759,
+      "print_box_only_deg_day_not_sigma": [
+        -1.083875032,
+        -1.081998906
+      ],
+      "instrument_epoch_utc": null,
+      "instrument_covariance": null,
+      "raan_deg": null,
+      "status": "CONNECTED_PENDING_CALIBRATION"
+    },
+    {
+      "source_occurrence": "C241-L12",
+      "source_pdf_sha256": "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+      "publication_date_not_epoch": "1963-10-15",
+      "object": "1963-003C",
+      "upstream_cell": "C241-L12:1963-003C:period_apogee_perigee",
+      "derived_model": "CASTOR-G35-C241-P13-PRINTED-J2-INTERVALS",
+      "conditional_j2_deg_day": -1.119735759,
+      "print_box_only_deg_day_not_sigma": [
+        -1.120707695,
+        -1.118764261
+      ],
+      "instrument_epoch_utc": null,
+      "instrument_covariance": null,
+      "raan_deg": null,
+      "status": "CONNECTED_PENDING_CALIBRATION"
+    },
+    {
+      "source_occurrence": "C241-L19#1",
+      "source_pdf_sha256": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+      "publication_date_not_epoch": "1963-11-15",
+      "object": "1963-003C",
+      "upstream_cell": "C241-L19#1:1963-003C:period_apogee_perigee",
+      "derived_model": "CASTOR-G35-C241-P13-PRINTED-J2-INTERVALS",
+      "conditional_j2_deg_day": -1.140102858,
+      "print_box_only_deg_day_not_sigma": [
+        -1.141093986,
+        -1.139112178
+      ],
+      "instrument_epoch_utc": null,
+      "instrument_covariance": null,
+      "raan_deg": null,
+      "status": "CONNECTED_PENDING_CALIBRATION"
+    },
+    {
+      "source_occurrence": "C241-L18:19640002493",
+      "source_pdf_sha256": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+      "publication_date_not_epoch": "1963-11-30",
+      "object": "1963-003C",
+      "upstream_cell": "C241-L18:19640002493:1963-003C:period_apogee_perigee",
+      "derived_model": "CASTOR-G35-C241-P13-PRINTED-J2-INTERVALS",
+      "conditional_j2_deg_day": -1.152751073,
+      "print_box_only_deg_day_not_sigma": [
+        -1.153753155,
+        -1.151749446
+      ],
+      "instrument_epoch_utc": null,
+      "instrument_covariance": null,
+      "raan_deg": null,
+      "status": "CONNECTED_PENDING_CALIBRATION"
+    }
+  ],
+  "contrasts": [
+    {
+      "publication_date_not_epoch": "1963-10-15",
+      "source_occurrence": "C241-L12",
+      "source_pdf_sha256": "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+      "object_pair": [
+        "1963-003A",
+        "1963-003C"
+      ],
+      "conditional_a_minus_c_deg_day": [
+        0.036498057,
+        0.040316441
+      ],
+      "activation": false,
+      "not_an_observed_temporal_drift": true
+    },
+    {
+      "publication_date_not_epoch": "1963-11-15",
+      "source_occurrence": "C241-L19#1",
+      "source_pdf_sha256": "0f27ed20f8428e44e8dd1f5d4e932661b01a0f8188aaddcae1360ea128336674",
+      "object_pair": [
+        "1963-003A",
+        "1963-003C"
+      ],
+      "conditional_a_minus_c_deg_day": [
+        0.054948691,
+        0.058807168
+      ],
+      "activation": false,
+      "not_an_observed_temporal_drift": true
+    },
+    {
+      "publication_date_not_epoch": "1963-11-30",
+      "source_occurrence": "C241-L18:19640002493",
+      "source_pdf_sha256": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+      "object_pair": [
+        "1963-003A",
+        "1963-003C"
+      ],
+      "conditional_a_minus_c_deg_day": [
+        0.067874414,
+        0.071754249
+      ],
+      "activation": false,
+      "not_an_observed_temporal_drift": true
+    }
+  ],
+  "lean_related_existing_theorem": "Conde1963.SsrEditionOffset.no_shared_additive_edition_offset",
+  "lean_existing_theorem_scope": "printed_period_arithmetic_only_not_J2",
+  "lean_j2_proof": null,
+  "lean_j2_status": "CANDIDATE_NOT_PROMOTED",
+  "simulator_contract": "research/constraints/C241-P10_three_object_relative_trajectories.json",
+  "conditional_forward_operator": "src/lib/orbitSsrJ2PrintIntervals.ts:firstOrderJ2RateDegDay",
+  "latent_parameters": {
+    "original_observation_epochs_utc": null,
+    "inertial_frame": null,
+    "osculating_vs_mean_element_mapping": null,
+    "instrument_covariance": null,
+    "absolute_raan_of_controls": null,
+    "observed_528_state": null
+  },
+  "missing_activation_prerequisites": [
+    "original_time_tagged_tracking",
+    "source_specific_genealogy",
+    "inertial_frame",
+    "instrument_calibration_and_covariance",
+    "mean_osculating_convention",
+    "validated_propagator_and_independent_holdout"
+  ],
+  "simulator_calibrated_values": null,
+  "active_physical_constraint": false,
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "historical_raan_or_overflight_inference": "NOT_SUPPORTED"
+}

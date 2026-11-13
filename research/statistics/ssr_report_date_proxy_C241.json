@@ -1,0 +1,100 @@
+{
+  "classification": "CONDITIONAL_DOCUMENTARY_FALSIFICATION_NOT_ORBITAL_ACCELERATION",
+  "hypothesis_tested": "Affine printed period in report/publication date, assuming the reports themselves are instrument epochs (counterfactual, not established)",
+  "limits": {
+    "active_physical_constraint": false,
+    "historical_mcmc": "NOT_RUN",
+    "instrumental_epoch_utc": null,
+    "measurement_error_and_covariance": null,
+    "next_discriminant": "Primary object-dated tracking times and frame/covariance to replace the counterfactual report-date proxy",
+    "rate_or_acceleration_of_orbit": "NOT_IDENTIFIED",
+    "reentry_or_conde_exclusion": "NOT_AUTHORIZED",
+    "source_independence": "NOT_ESTABLISHED_SHARED_NASA_NORAD_LINEAGE"
+  },
+  "printing_assumption": "Each one-decimal printed period differs from the compiled underlying number by at most 0.05 minute; not a sensor bound",
+  "schema": "conde.ssr-report-date-affine-proxy/v1",
+  "source_rows": [
+    {
+      "occurrence": "C241-L18",
+      "pdf_sha256": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+      "report_date_not_observation_epoch": "1963-11-30",
+      "source_family": "NASA_GODDARD_COMPILED_SHARED_TRACKING"
+    },
+    {
+      "occurrence": "C241-L21",
+      "pdf_sha256": "d31a064f8e03fd39be6fe75b88cd5852c0b74c9101fa635cb40ac25c77ef474f",
+      "report_date_not_observation_epoch": "1963-12-15",
+      "source_family": "NASA_GODDARD_COMPILED_SHARED_TRACKING"
+    },
+    {
+      "occurrence": "C241-L18",
+      "pdf_sha256": "d9504a8641baa65c208e41034e77b0e9b1cc01b4acb2a4f95541bd9e75d3783d",
+      "report_date_not_observation_epoch": "1963-12-31",
+      "source_family": "NASA_GODDARD_COMPILED_SHARED_TRACKING"
+    }
+  ],
+  "tests_by_designator": {
+    "1963-003A": {
+      "affine_publication_date_proxy_feasible_under_rounding": true,
+      "conditional_residual_interval_centiminutes": [
+        {
+          "denominator": 1,
+          "numerator": -10
+        },
+        {
+          "denominator": 1,
+          "numerator": 10
+        }
+      ],
+      "interpolation_weight_last": {
+        "denominator": 31,
+        "numerator": 15
+      },
+      "midpoint_minus_affine_interpolation_centiminutes": {
+        "denominator": 1,
+        "numerator": 0
+      },
+      "printed_centiminutes": [
+        9460,
+        9460,
+        9460
+      ],
+      "report_dates_not_instrument_epochs": [
+        "1963-11-30",
+        "1963-12-15",
+        "1963-12-31"
+      ]
+    },
+    "1963-003C": {
+      "affine_publication_date_proxy_feasible_under_rounding": false,
+      "conditional_residual_interval_centiminutes": [
+        {
+          "denominator": 31,
+          "numerator": 2330
+        },
+        {
+          "denominator": 31,
+          "numerator": 2950
+        }
+      ],
+      "interpolation_weight_last": {
+        "denominator": 31,
+        "numerator": 15
+      },
+      "midpoint_minus_affine_interpolation_centiminutes": {
+        "denominator": 31,
+        "numerator": 2640
+      },
+      "printed_centiminutes": [
+        9220,
+        9160,
+        8920
+      ],
+      "report_dates_not_instrument_epochs": [
+        "1963-11-30",
+        "1963-12-15",
+        "1963-12-31"
+      ]
+    }
+  }
+}
