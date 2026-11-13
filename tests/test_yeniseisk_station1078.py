@@ -55,7 +55,7 @@ class YeniseiskArchiveLead(unittest.TestCase):
 
     def test_source_bytes_reject_forgery(self):
         with self.assertRaises(AssertionError):
-            mod.validate(self.doc, b"СОН ИЗС № 1078")
+            mod.validate(self.doc, "СОН ИЗС № 1078".encode("utf-8"))
         bad = b"A" * self.doc["retrieved_transport_copy"]["bytes"]
         with self.assertRaises(AssertionError):
             mod.validate(self.doc, bad)
