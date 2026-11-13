@@ -1,0 +1,123 @@
+{
+  "schema": "conde.gis.center-vila-distinction/v1",
+  "id": "CGEO-20",
+  "date_utc": "2026-11-13",
+  "municipality": {
+    "ibge_code": "2908606",
+    "name": "Conde",
+    "uf": "BA"
+  },
+  "sources": [
+    {
+      "id": "MUNI20",
+      "url": "https://www.conde.ba.gov.br/Handler.ashx?f=f&name=PADISP10.pdf&query=81844712-82f9-45bd-9201-d30b853780a2.pdf",
+      "type": "official_municipal_2020",
+      "document_date": "2020-02-26",
+      "pages_visually_inspected": [
+        1,
+        2
+      ],
+      "pdf_sha256": null,
+      "binary_acquired": false,
+      "family": "single_2020_official_proceeding"
+    },
+    {
+      "id": "BLOG14",
+      "url": "https://condebahia.wordpress.com/2014/03/26/",
+      "type": "local_blog_editorial_2014",
+      "document_date": "2014-03-26",
+      "family": "condebahia_wordpress"
+    }
+  ],
+  "observations": [
+    {
+      "source": "MUNI20",
+      "page": 1,
+      "verbatim": "CENTRO DA CIDADE, VILA DO CONDE",
+      "applies_in_1963": null
+    },
+    {
+      "source": "MUNI20",
+      "page": 2,
+      "verbatim": "Praça Severino Vieira (centro), Praça Vila do Conde (Vila)",
+      "applies_in_1963": null
+    },
+    {
+      "source": "BLOG14",
+      "page": null,
+      "verbatim": "Passarela que liga o Conde a Vila do Conde",
+      "applies_in_1963": null
+    },
+    {
+      "source": "BLOG14",
+      "page": null,
+      "verbatim": "Passarela sobre o rio Itapicuru",
+      "applies_in_1963": null
+    }
+  ],
+  "named_localities": [
+    {
+      "id": "CENTRO20",
+      "name": "Centro da cidade",
+      "example_square": "Praça Severino Vieira",
+      "point": null,
+      "polygon": null
+    },
+    {
+      "id": "VILA20",
+      "name": "Vila do Conde",
+      "example_square": "Praça Vila do Conde",
+      "point": null,
+      "polygon": null
+    }
+  ],
+  "dependency_edges": [
+    {
+      "from": "CGEO-17",
+      "to": "CENTRO20",
+      "relation": "similar_square_names_no_confirmed_rename"
+    },
+    {
+      "from": "CGEO-18",
+      "to": "CENTRO20",
+      "relation": "possible_1963_center_not_confirmed"
+    },
+    {
+      "from": "CGEO-18",
+      "to": "VILA20",
+      "relation": "possible_1963_center_not_excluded"
+    },
+    {
+      "from": "CGEO-19",
+      "to": "VILA20",
+      "relation": "1959_claim_images_not_proof_of_reported_city_center"
+    }
+  ],
+  "interpretation": {
+    "distinction_of_locality_names_in_2020": true,
+    "2020_source_proves_1963_urban_extent": false,
+    "2014_bridge_proves_1963_bridge": false,
+    "same_2020_process_multiple_independent_observers": false,
+    "1958_severiano_lima_is_2020_severino_vieira": null,
+    "1963_center_is_2020_centro": null,
+    "1963_center_is_2020_vila": null,
+    "senhor_do_bonfim_is_nossa_senhora_do_monte": false,
+    "status": "CONNECTED_PENDING_HISTORICAL_SPATIAL_BRIDGE"
+  },
+  "castor_export": {
+    "event_date": "1963-11-08",
+    "center_1963_point": null,
+    "center_1963_polygon": null,
+    "centro_vila_boundary_1963": null,
+    "bridge_present_1963": null,
+    "impact_point_1963": null,
+    "crs": null,
+    "accuracy_m": null,
+    "can_constrain_orbital_reentry": false
+  },
+  "pending": [
+    "Period 1950–1963 urban map with dated streets and squares",
+    "A dated source for Rio Itapicuru bridge construction/presence",
+    "Portuguese contemporaneous Rádio Tupi wording"
+  ]
+}
