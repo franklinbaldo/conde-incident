@@ -1,6 +1,6 @@
 {
   "schema": "conde.conditional-ssr-j2-print-only/v1",
-  "id": "CASTOR-G35-C241-P12-PRINTED-J2-INTERVALS",
+  "id": "CASTOR-G35-C241-P13-PRINTED-J2-INTERVALS",
   "classification": "CONDITIONAL_COMPUTATIONAL_PRINT_BOX_NOT_HISTORICAL_ORBIT",
   "depends_on": [
     "C241-P11",

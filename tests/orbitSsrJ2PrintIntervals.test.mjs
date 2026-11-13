@@ -84,9 +84,9 @@ test('missing custody, fake precision, wrong units and mismatched editions fail 
   }), RangeError);
 });
 
-test('connected C241-P12 record reproduces the six nominal and three paired print intervals', () => {
+test('connected C241-P13 record reproduces the six nominal and three paired print intervals', () => {
   const record = JSON.parse(readFileSync(new URL(
-    '../research/constraints/C241-P12_ssr_j2_print_rates_g35.json', import.meta.url,
+    '../research/constraints/C241-P13_ssr_j2_print_rates_g35.json', import.meta.url,
   )));
   assert.ok(record.depends_on.includes('C241-P11'));
   assert.equal(record.graph.edges.length, 4);
