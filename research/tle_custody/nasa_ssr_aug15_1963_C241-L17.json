@@ -1,0 +1,79 @@
+{
+  "id": "C241-L17",
+  "source": {
+    "agency": "NASA/Goddard Space Flight Center, Space Operations Control Center",
+    "ntrs_id": "19630012289",
+    "ntrs_metadata_title": "Saatellite Situation Report",
+    "citation_url": "https://ntrs.nasa.gov/citations/19630012289",
+    "pdf_url": "https://ntrs.nasa.gov/api/citations/19630012289/downloads/19630012289.pdf",
+    "publication": "1963-08-15",
+    "volume": 3,
+    "number": 16,
+    "printed_report_number": "X-533-63-1",
+    "nasa_tm": "NASA-TM-X-50364",
+    "pdf_page_index_zero_based": 6,
+    "pdf_page_one_based": 7,
+    "printed_page": 5,
+    "data_as_of": "1200Z AUG 15 1963",
+    "bytes": 252639,
+    "sha256": "4e5cb0205577bc1b0959088db9ca3ae7a05f8de480b5ece9b86c385437636968",
+    "inspection": "VISUAL_FACSIMILE_PDF_PAGE_7_ON_2026-11-13"
+  },
+  "rows": [
+    {
+      "designator": "1963-003A",
+      "printed": "1963 3A",
+      "launch": "1963-01-16",
+      "source": "US",
+      "nodal_period_min": "94.6",
+      "inclination_deg": "81.88",
+      "apogee_km": 537,
+      "perigee_km": 458
+    },
+    {
+      "designator": "1963-003B",
+      "printed": "1963 3B",
+      "launch": "1963-01-16",
+      "source": "US",
+      "nodal_period_min": "93.3",
+      "inclination_deg": "81.87",
+      "apogee_km": 455,
+      "perigee_km": 412
+    },
+    {
+      "designator": "1963-003C",
+      "printed": "1963 3C",
+      "launch": "1963-01-16",
+      "source": "US",
+      "nodal_period_min": "93.8",
+      "inclination_deg": "81.89",
+      "apogee_km": 493,
+      "perigee_km": 422
+    }
+  ],
+  "dependencies": {
+    "april": "research/tle_custody/nasa_ssr_apr_oct_1963_C241-L16.json",
+    "october": "research/tle_custody/nasa_ssr_1963_oct15_C241-L12.json",
+    "object_id_crosswalk": "C241-L10",
+    "november_decay_day": "C241-L11"
+  },
+  "limits": {
+    "source_class": "PRIMARY_CONTEMPORARY_DOCUMENT_NOT_INSTRUMENTAL_TLE",
+    "same_institutional_compilation": true,
+    "independent_sensor_observation": false,
+    "publication_date_is_element_epoch": false,
+    "rate_from_publication_interval": false,
+    "physical_frame": null,
+    "measurement_sigma": null,
+    "observing_station": null,
+    "original_tle_pair": null,
+    "raan_deg": null,
+    "material_identity_528": null,
+    "terminal_time": null,
+    "terminal_location": null,
+    "issue_21": "NOT_RECOVERED",
+    "graph": "CONNECTED_PENDING_CALIBRATION",
+    "lean": "NOT_PROMOTED",
+    "conde": "INDETERMINATE"
+  }
+}
