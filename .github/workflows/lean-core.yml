@@ -103,6 +103,22 @@ jobs:
           set -euo pipefail
           python3 -m formal.scripts.compile_ssr_cell_repairs --check
           python3 -m unittest discover -s formal/tests -p 'test_ssr_cell_repairs.py' -v
+      - name: Recompute all nine SSR publication cells and Lean minimax witness (C241-P20)
+        run: |
+          set -euo pipefail
+          python3 -m formal.scripts.compile_ssr_nine_editions --check
+          python3 -m unittest discover -s formal/tests -p 'test_ssr_nine_editions.py' -v
+      - name: Audit nine leave-one-edition certificates (C241-P22)
+        run: |
+          set -euo pipefail
+          python3 -m formal.scripts.compile_ssr_jackknife --check
+          python3 -m unittest discover -s formal/tests -p 'test_ssr_jackknife.py' -v
+      - name: Verify UN/NASA cross-agency assumptions and all 26 print cells (C241-P23)
+        run: |
+          set -euo pipefail
+          python3 -m formal.scripts.compile_un_ssr_cross_compilation --check
+          python3 -m unittest discover -s formal/tests -p 'test_un_ssr_cross_compilation.py' -v
+
       - name: Certify maximal publication-level SSR survivors (C241-P21)
         run: |
           set -euo pipefail
