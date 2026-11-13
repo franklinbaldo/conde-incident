@@ -127,6 +127,8 @@ class ScientificBridgeTests(unittest.TestCase):
             for path, _ in bridge.INPUTS:
                 (root / path).write_bytes((ROOT / path).read_bytes())
             (root / bridge.on20.OUTPUT).write_bytes((ROOT / bridge.on20.OUTPUT).read_bytes())
+            (root / bridge.on20.archive.OUTPUT).write_bytes(
+                (ROOT / bridge.on20.archive.OUTPUT).read_bytes())
             (root / "public/data/conde-source-citations.json").write_bytes(
                 (ROOT / "public/data/conde-source-citations.json").read_bytes())
             (root / "research").symlink_to(ROOT / "research", target_is_directory=True)
@@ -147,6 +149,8 @@ class ScientificBridgeTests(unittest.TestCase):
             root.joinpath("research").symlink_to(ROOT / "research", target_is_directory=True)
             root.joinpath("formal").symlink_to(ROOT / "formal", target_is_directory=True)
             (root / bridge.on20.OUTPUT).write_bytes((ROOT / bridge.on20.OUTPUT).read_bytes())
+            (root / bridge.on20.archive.OUTPUT).write_bytes(
+                (ROOT / bridge.on20.archive.OUTPUT).read_bytes())
             inputs = []
             for path, builder in bridge.INPUTS:
                 data = copy.deepcopy(builder(ROOT))
