@@ -6,7 +6,7 @@ const origin = process.env.UI_AUDIT_URL || 'http://127.0.0.1:3000/';
 const browser = await chromium.launch({ headless: true });
 try {
   for (const { width, lang, trigger, close, message } of [
-    { width: 320, lang: 'pt', trigger: 'Python Script', close: 'Fechar exportação', message: /Não foi possível carregar/ },
+    { width: 320, lang: 'pt', trigger: 'Script Python', close: 'Fechar exportação', message: /Não foi possível carregar/ },
     { width: 1440, lang: 'en', trigger: 'Python Script', close: 'Close export', message: /could not be loaded/ },
   ]) {
     const page = await browser.newPage({ viewport: { width, height: 800 } });
@@ -47,3 +47,4 @@ try {
   await browser.close();
 }
 console.log('PASS: lazy Python module failure retains a usable, localized and keyboard-accessible exit');
+
