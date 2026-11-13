@@ -38,6 +38,11 @@ class JP2CustodyTests(unittest.TestCase):
         self.mutate(lambda d:d['scientific_limits'].update(observed_reentry_location=[0,0]))
         self.mutate(lambda d:d['scientific_limits'].update(horizontal_error_m=1))
 
+    def test_change_history_not_historical_survey_date(self):
+        self.mutate(lambda d:d['asset']['embedded_xml'].update(change_history_date='1963-11-08'))
+        self.mutate(lambda d:d['asset']['embedded_xml'].update(bitsperpixel_consistent_with_ihdr=True))
+        self.mutate(lambda d:d['asset']['embedded_xml'].update(bitsperpixel_literal='8'))
+
     def test_no_fabricated_aerial_date(self):
         self.mutate(lambda d:d['scientific_limits'].update(date_of_original_aerial_capture='1961-01-01'))
         self.mutate(lambda d:d['scientific_limits'].update(can_constrain_orbital_reentry=True))
