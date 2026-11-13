@@ -1,0 +1,496 @@
+{
+  "schema": "conde.ghcnd-conde-precipitation-1963/v1",
+  "id": "MET-GHCND-CONDE-19631107-09-01",
+  "capture_utc_date": "2026-11-13",
+  "observed_variable": "archival daily precipitation PRCP in tenths-mm; not hourly wind",
+  "archival_family": "NOAA/NCEI GHCN-Daily; NOT NOAA/ISD Caravelas",
+  "source_flag_I_meaning": "international collection (non-U.S. data via personal contacts); historical collector and instrument not identified",
+  "source_document_urls": [
+    "https://www.ncei.noaa.gov/pub/data/ghcn/daily/readme.txt",
+    "https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-stations.txt",
+    "https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt"
+  ],
+  "full_source_sha256": {
+    "readme.txt": "0e4e6f0e6947cf1add884c328a01760f31c56ef5fb86b85ed57dd5dc4c4aeaa6",
+    "ghcnd-stations.txt": "437ee87f0343bcad408a492cf7a02163fb69255364c541b4006d5d76055d0dc3",
+    "ghcnd-inventory.txt": "3d7378c3ecad6841340b47392f10b391c42a5f47369765e6bb032704d2301125"
+  },
+  "reference": {
+    "kind": "modern IBGE 2022 municipality bbox midpoint, not 1963 incident site",
+    "lat_lon": [
+      -11.8641854035,
+      -37.68935144749995
+    ],
+    "distance_method": "haversine spherical radius 6371km"
+  },
+  "days": [
+    "1963-11-07",
+    "1963-11-08",
+    "1963-11-09"
+  ],
+  "stations": [
+    {
+      "id": "BR048346820",
+      "station": "CONDE",
+      "coordinate_lat_lon": [
+        -11.81,
+        -37.61
+      ],
+      "approx_distance_to_modern_bbox_midpoint_km": 10.5,
+      "catalogue_prcp_year_bounds": [
+        1943,
+        1983
+      ],
+      "whole_file_sha256": "f99557d7cb4187ea412b85b205ad2b04bf7449c0b89d27d4f546f75cbc717d53",
+      "archive_url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/BR048346820.dly",
+      "daily": [
+        {
+          "date": "1963-11-07",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        },
+        {
+          "date": "1963-11-08",
+          "raw_eight_chars": "   35  I",
+          "precipitation_mm": 3.5,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        },
+        {
+          "date": "1963-11-09",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        }
+      ]
+    },
+    {
+      "id": "BR048345380",
+      "station": "ALTAMIRA (IAA)",
+      "coordinate_lat_lon": [
+        -11.77,
+        -37.82
+      ],
+      "approx_distance_to_modern_bbox_midpoint_km": 17.7,
+      "catalogue_prcp_year_bounds": [
+        1952,
+        1983
+      ],
+      "whole_file_sha256": "db6b41b580b10728366eda6b95f02a178fa700d8fb3b180b72b44eaeec7bc62e",
+      "archive_url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/BR048345380.dly",
+      "daily": [
+        {
+          "date": "1963-11-07",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        },
+        {
+          "date": "1963-11-08",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        },
+        {
+          "date": "1963-11-09",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        }
+      ]
+    },
+    {
+      "id": "BR048441550",
+      "station": "PALAME",
+      "coordinate_lat_lon": [
+        -12.07,
+        -37.72
+      ],
+      "approx_distance_to_modern_bbox_midpoint_km": 23.1,
+      "catalogue_prcp_year_bounds": [
+        1963,
+        1983
+      ],
+      "whole_file_sha256": "199e2d779d89bd7609a22ad25d7676117d95a71dcdb39cbb3492f9ac30f9e368",
+      "archive_url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/BR048441550.dly",
+      "daily": [
+        {
+          "date": "1963-11-07",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        },
+        {
+          "date": "1963-11-08",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        },
+        {
+          "date": "1963-11-09",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        }
+      ]
+    },
+    {
+      "id": "BR048345130",
+      "station": "ESPLANADA",
+      "coordinate_lat_lon": [
+        -11.78,
+        -37.95
+      ],
+      "approx_distance_to_modern_bbox_midpoint_km": 29.9,
+      "catalogue_prcp_year_bounds": [
+        1913,
+        1983
+      ],
+      "whole_file_sha256": "1107f12859308f555b1fea9a22dac13c401e9b79e8720e22dca861842d2964b2",
+      "archive_url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/BR048345130.dly",
+      "daily": [
+        {
+          "date": "1963-11-07",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        },
+        {
+          "date": "1963-11-08",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        },
+        {
+          "date": "1963-11-09",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        }
+      ]
+    },
+    {
+      "id": "BR048345070",
+      "station": "TIMBO (VFFLB)",
+      "coordinate_lat_lon": [
+        -11.75,
+        -37.97
+      ],
+      "approx_distance_to_modern_bbox_midpoint_km": 33.1,
+      "catalogue_prcp_year_bounds": [
+        1941,
+        1967
+      ],
+      "whole_file_sha256": "071bcec32e1d365ef33b7d5c26caf4c10f5dfd0b3e41dad456f3da4dd2332f59",
+      "archive_url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/BR048345070.dly",
+      "daily": [
+        {
+          "date": "1963-11-07",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        },
+        {
+          "date": "1963-11-08",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        },
+        {
+          "date": "1963-11-09",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        }
+      ]
+    },
+    {
+      "id": "BR001137041",
+      "station": "ITAPICURU",
+      "coordinate_lat_lon": [
+        -11.6,
+        -37.95
+      ],
+      "approx_distance_to_modern_bbox_midpoint_km": 40.8,
+      "catalogue_prcp_year_bounds": [
+        1939,
+        1990
+      ],
+      "whole_file_sha256": "eb531edda42ca95a385efea419a526d59c34121d7cbf93f95543cf38dcdfbc12",
+      "archive_url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/BR001137041.dly",
+      "daily": [
+        {
+          "date": "1963-11-07",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        },
+        {
+          "date": "1963-11-08",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        },
+        {
+          "date": "1963-11-09",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        }
+      ]
+    },
+    {
+      "id": "BR048338870",
+      "station": "ENTRE RIOS (FABA)",
+      "coordinate_lat_lon": [
+        -11.92,
+        -38.07
+      ],
+      "approx_distance_to_modern_bbox_midpoint_km": 41.9,
+      "catalogue_prcp_year_bounds": [
+        1949,
+        1969
+      ],
+      "whole_file_sha256": "a2951b0dc895d4a034b355aae4ca98cf19f38c175974557740acbf097247b183",
+      "archive_url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/BR048338870.dly",
+      "daily": [
+        {
+          "date": "1963-11-07",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        },
+        {
+          "date": "1963-11-08",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        },
+        {
+          "date": "1963-11-09",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        }
+      ]
+    },
+    {
+      "id": "BR048340980",
+      "station": "INDIAROBA",
+      "coordinate_lat_lon": [
+        -11.52,
+        -37.52
+      ],
+      "approx_distance_to_modern_bbox_midpoint_km": 42.5,
+      "catalogue_prcp_year_bounds": [
+        1963,
+        1983
+      ],
+      "whole_file_sha256": "841a054af83f0b9c005744b96dfc4d0d66e8ceb55f836f9a1499bfbec0e4fa31",
+      "archive_url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/BR048340980.dly",
+      "daily": [
+        {
+          "date": "1963-11-07",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        },
+        {
+          "date": "1963-11-08",
+          "raw_eight_chars": "   24  I",
+          "precipitation_mm": 2.4,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        },
+        {
+          "date": "1963-11-09",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        }
+      ]
+    },
+    {
+      "id": "BR001237001",
+      "station": "CAMBUIS",
+      "coordinate_lat_lon": [
+        -12.13,
+        -37.97
+      ],
+      "approx_distance_to_modern_bbox_midpoint_km": 42.5,
+      "catalogue_prcp_year_bounds": [
+        1963,
+        1995
+      ],
+      "whole_file_sha256": "aa788f7bc9697cbd9b488a904fd9f96e82a444f0f21a75fcd165373baaab9e6d",
+      "archive_url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/BR001237001.dly",
+      "daily": [
+        {
+          "date": "1963-11-07",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        },
+        {
+          "date": "1963-11-08",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        },
+        {
+          "date": "1963-11-09",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        }
+      ]
+    },
+    {
+      "id": "BR048249490",
+      "station": "CRISTINAPOLIS (CRISTINA)",
+      "coordinate_lat_lon": [
+        -11.48,
+        -37.77
+      ],
+      "approx_distance_to_modern_bbox_midpoint_km": 43.6,
+      "catalogue_prcp_year_bounds": [
+        1963,
+        1983
+      ],
+      "whole_file_sha256": "07ff6fbcc7b6b3b967d95b58b17cd0759578747dec8664d904e54bac2752c0e8",
+      "archive_url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/BR048249490.dly",
+      "daily": [
+        {
+          "date": "1963-11-07",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        },
+        {
+          "date": "1963-11-08",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        },
+        {
+          "date": "1963-11-09",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        }
+      ]
+    },
+    {
+      "id": "BR048158910",
+      "station": "ARACAJU",
+      "coordinate_lat_lon": [
+        -10.917,
+        -37.05
+      ],
+      "approx_distance_to_modern_bbox_midpoint_km": 126.3,
+      "catalogue_prcp_year_bounds": [
+        1912,
+        1996
+      ],
+      "whole_file_sha256": "327a5c3f0f326a36214d7c2d37e9ecee82f676f8a6bf6e14056d82fe88673d03",
+      "archive_url": "https://www.ncei.noaa.gov/pub/data/ghcn/daily/all/BR048158910.dly",
+      "daily": [
+        {
+          "date": "1963-11-07",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        },
+        {
+          "date": "1963-11-08",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        },
+        {
+          "date": "1963-11-09",
+          "raw_eight_chars": "    0  I",
+          "precipitation_mm": 0.0,
+          "measurement_flag": null,
+          "quality_flag": null,
+          "source_flag": "I"
+        }
+      ]
+    }
+  ],
+  "not_proved": {
+    "observation_time_within_day": null,
+    "historical_instrument_and_collecting_agency": null,
+    "1963_station_coordinates_verified": null,
+    "station_observation_independence": null,
+    "rainfall_at_incident_site": null,
+    "contemporary_wind_in_conde": null,
+    "atmospheric_transfer_to_orbital_object": null,
+    "calibrated_uncertainty": null,
+    "active_fall_constraint": null
+  },
+  "status": "CONNECTED_PENDING_SPATIOTEMPORAL_CALIBRATION"
+}
