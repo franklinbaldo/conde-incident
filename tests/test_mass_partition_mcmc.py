@@ -19,6 +19,7 @@ class MassMcmc(unittest.TestCase):
         m,semantics=read_sources()
         self.assertFalse(m["conditional_budget"]["physically_calibrated_historical_constraint"])
         self.assertEqual(semantics["sources"]["payload"]["Mass_kg"],306)
+        self.assertEqual(semantics["sources"]["payload"]["DryMass_kg"],306)
         self.assertFalse(semantics["physical_model"]["m527_equals_306_directly"])
 
     def test_no_historical_likelihood_no_posterior(self):
@@ -84,6 +85,7 @@ class MassMcmc(unittest.TestCase):
         m,semantics=read_sources()
         r=historical_gate(m,semantics)
         self.assertEqual(r["catalogue_payload_527_component_mass_kg"],306)
+        self.assertEqual(r["catalogue_payload_527_component_dry_mass_kg"],306)
         self.assertIsNone(r["posterior_most_probable_allocation"])
         self.assertTrue(r["component_306kg_is_not_direct_mass_observation_of_528"])
 
