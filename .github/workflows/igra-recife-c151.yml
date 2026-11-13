@@ -2,8 +2,7 @@ name: IGRA Recife C151 wind audit
 on:
   pull_request:
   push:
-    branches:
-      - 'lagarto/**'
+    branches: [main]
 permissions:
   contents: read
 jobs:
@@ -21,6 +20,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Regression controls for workflow event deduplication
+        run: python3 -m unittest discover -s tests -p 'test_texugo_weather_ci_events.py' -v
       - name: Verify pinned original NOAA sounding and JSON
         run: python3 tools/audit_igra_recife_winds.py --check
       - name: Run independent pressure, vector and negative controls

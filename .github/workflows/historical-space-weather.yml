@@ -1,9 +1,7 @@
 name: 🦎 Historical space-weather driver audit
 on:
   push:
-    branches:
-      - main
-      - 'lagarto/**'
+    branches: [main]
   pull_request:
 permissions:
   contents: read
@@ -12,8 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact source HEAD
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Regression controls for workflow event deduplication
+        run: python3 -m unittest discover -s tests -p 'test_texugo_weather_ci_events.py' -v
       - name: Reproduce audited GFZ and NRC inputs without network
         run: python3 tools/validate_1963_space_weather.py research/meteorology/space_weather_msise_inputs_1963_11_07_09.json
