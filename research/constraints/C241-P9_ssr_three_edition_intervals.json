@@ -1,0 +1,122 @@
+{
+  "activation_blockers": [
+    "observation_epochs",
+    "instrumental_error",
+    "common_element_definition",
+    "validated_dynamical_forward_operator"
+  ],
+  "arithmetic": "April-August + August-October = April-October; shared August uncertainty cancels",
+  "conditional_robust_printed_rank": {
+    "apr_aug_b_strictly_greater_than_c": true,
+    "apr_aug_c_strictly_greater_than_a": true,
+    "aug_oct_b_strictly_greater_than_c": true,
+    "aug_oct_c_strictly_greater_than_a": true
+  },
+  "document_sha256": [
+    "87b8c1be1d074dff4b605b422f6a8836c2ebdf80ca4ac0568373b168cc457a38",
+    "4e5cb0205577bc1b0959088db9ca3ae7a05f8de480b5ece9b86c385437636968",
+    "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2"
+  ],
+  "hypothesis": "NEAREST_TENTH_MINUTE_ROUNDING_OF_PRINTED_VALUES",
+  "id": "C241-P9",
+  "interpretation": "DOCUMENTARY_CROSS_EDITION_RANK_ONLY_NOT_PHYSICAL_CHANGE",
+  "link_status": "CONNECTED_PENDING_CALIBRATION",
+  "objects": [
+    {
+      "apr_minus_aug": [
+        -10,
+        10
+      ],
+      "apr_minus_oct_shared_aug_eliminated": [
+        -10,
+        10
+      ],
+      "aug_minus_oct": [
+        -10,
+        10
+      ],
+      "designator": "1963-003A",
+      "instrumental_epochs_utc": null,
+      "measurement_uncertainty": null,
+      "physical_decay_rate": null,
+      "printed_period_centiminutes": [
+        9460,
+        9460,
+        9460
+      ],
+      "robust_positive_adjacent_differences": [
+        false,
+        false
+      ]
+    },
+    {
+      "apr_minus_aug": [
+        70,
+        90
+      ],
+      "apr_minus_oct_shared_aug_eliminated": [
+        160,
+        180
+      ],
+      "aug_minus_oct": [
+        80,
+        100
+      ],
+      "designator": "1963-003B",
+      "instrumental_epochs_utc": null,
+      "measurement_uncertainty": null,
+      "physical_decay_rate": null,
+      "printed_period_centiminutes": [
+        9410,
+        9330,
+        9240
+      ],
+      "robust_positive_adjacent_differences": [
+        true,
+        true
+      ]
+    },
+    {
+      "apr_minus_aug": [
+        40,
+        60
+      ],
+      "apr_minus_oct_shared_aug_eliminated": [
+        90,
+        110
+      ],
+      "aug_minus_oct": [
+        40,
+        60
+      ],
+      "designator": "1963-003C",
+      "instrumental_epochs_utc": null,
+      "measurement_uncertainty": null,
+      "physical_decay_rate": null,
+      "printed_period_centiminutes": [
+        9430,
+        9380,
+        9330
+      ],
+      "robust_positive_adjacent_differences": [
+        true,
+        true
+      ]
+    }
+  ],
+  "physical_domain_change": "NONE",
+  "quantization_unit": "0.01 minute",
+  "schema": "conde.ssr-three-edition-printed-bounds/v1",
+  "source_family": "NASA_GODDARD_COMPILED_REPORT_NOT_INDEPENDENT_SENSORS",
+  "source_ids": [
+    "C241-L16",
+    "C241-L17",
+    "C241-L12"
+  ],
+  "source_publication_dates": [
+    "1963-04-30",
+    "1963-08-15",
+    "1963-10-15"
+  ],
+  "uncertainty": "Each actual printed value in center ±0.05 min; not sensor sigma"
+}
