@@ -1,0 +1,388 @@
+{
+  "schema": "conde.gaviao-retrospective-window/v1",
+  "audit": "G40",
+  "reviewed_from_main_sha": "4a5f0d35bc10c14927e1b948b63c516f5184ddfb",
+  "reviewed_through_main_sha": "9a2f98151d3e9db98384f532cee6d5cea90958dd",
+  "checked_utc": "2026-11-13T12:45:07.341684+00:00",
+  "first_parent_integrations": 16,
+  "dag_commits": 23,
+  "merge_commits": 2,
+  "lateral_commits": 7,
+  "ci_source": "GitHub REST GET /commits/{sha}/check-runs, read-only snapshot; cancellations/skips distinguished",
+  "integrations_newest_first": [
+    {
+      "sha": "9a2f98151d3e9db98384f532cee6d5cea90958dd",
+      "parents": [
+        "6a29621a035d82c20cc477bd51dc0e1e332a7958"
+      ],
+      "pr_number": 515,
+      "subject": "85 🦉 Caderno 17: a página que apontava para outra edição (#515)",
+      "first_parent_changed_files": [
+        "stories/2026-11-13-a-pagina-que-apontava-para-outro-jornal.md"
+      ],
+      "ci_snapshot": {
+        "checks_total": 24,
+        "checks_seen": 24,
+        "conclusions": {
+          "success": 24
+        },
+        "non_success_checks": []
+      }
+    },
+    {
+      "sha": "6a29621a035d82c20cc477bd51dc0e1e332a7958",
+      "parents": [
+        "dcf5dbb2c38eac4ae03471dca80537b7d54ebbd0"
+      ],
+      "pr_number": 514,
+      "subject": "80 🦇 Laboratório: H1 único e alternativa sem JavaScript (#514)",
+      "first_parent_changed_files": [
+        ".github/workflows/ui-keyboard-smoke.yml",
+        "index.html",
+        "tests/ui_keyboard_smoke.mjs"
+      ],
+      "ci_snapshot": {
+        "checks_total": 24,
+        "checks_seen": 24,
+        "conclusions": {
+          "success": 24
+        },
+        "non_success_checks": []
+      }
+    },
+    {
+      "sha": "dcf5dbb2c38eac4ae03471dca80537b7d54ebbd0",
+      "parents": [
+        "e9f1da48978fb4d8be31b3c7da66a52abdc7dcf4"
+      ],
+      "pr_number": 513,
+      "subject": "fix(ssg): localize runtime search states with strict CSP and SRI (#513)",
+      "first_parent_changed_files": [
+        "scripts/check-site.mjs",
+        "scripts/enable-article-frames.mjs",
+        "scripts/localize-ssg-search-runtime.mjs",
+        "tests/ssg-search-runtime.test.mjs"
+      ],
+      "ci_snapshot": {
+        "checks_total": 24,
+        "checks_seen": 24,
+        "conclusions": {
+          "success": 24
+        },
+        "non_success_checks": []
+      }
+    },
+    {
+      "sha": "e9f1da48978fb4d8be31b3c7da66a52abdc7dcf4",
+      "parents": [
+        "1ec5fe44ad9b77c34064acc7150484db094f7d98"
+      ],
+      "pr_number": 512,
+      "subject": "94 🐢 Modelar precisão histórica da data de decaimento do NORAD 528 (#512)",
+      "first_parent_changed_files": [
+        ".github/workflows/nasa-528-decay-precision.yml",
+        "research/constraints/nasa_528_decay_precision_C197_20261113.json",
+        "research/tle_custody/evidence_matrix_C197-precision_2026-11-13.md",
+        "tests/test_nasa_528_decay_precision_audit.py",
+        "tools/nasa_528_decay_precision_audit.py"
+      ],
+      "ci_snapshot": {
+        "checks_total": 25,
+        "checks_seen": 25,
+        "conclusions": {
+          "success": 25
+        },
+        "non_success_checks": []
+      }
+    },
+    {
+      "sha": "1ec5fe44ad9b77c34064acc7150484db094f7d98",
+      "parents": [
+        "8fb914ab5e31fc654d07349acb37fda10cedfb4e"
+      ],
+      "pr_number": 509,
+      "subject": "test(ci): require unskippable universal jobs (#509)",
+      "first_parent_changed_files": [
+        "tests/test_ci_event_policy_all_workflows.py"
+      ],
+      "ci_snapshot": {
+        "checks_total": 24,
+        "checks_seen": 24,
+        "conclusions": {
+          "success": 24
+        },
+        "non_success_checks": []
+      }
+    },
+    {
+      "sha": "8fb914ab5e31fc654d07349acb37fda10cedfb4e",
+      "parents": [
+        "4e8c0fe2d0cd02cbf3b613001b204f3df7a5478f"
+      ],
+      "pr_number": 511,
+      "subject": "95 🐢 C241-L26: precisão histórica do acompanhamento de 528 (#511)",
+      "first_parent_changed_files": [
+        ".github/workflows/tle-tracking-precision.yml",
+        "research/tle_custody/evidence_matrix_C241-L26_2026-11-13.md",
+        "research/tle_custody/tracking_precision_1963_C241-L26.json",
+        "tests/test_tle_1963_tracking_precision_audit.py",
+        "tools/tle_1963_tracking_precision_audit.py"
+      ],
+      "ci_snapshot": {
+        "checks_total": 25,
+        "checks_seen": 25,
+        "conclusions": {
+          "success": 25
+        },
+        "non_success_checks": []
+      }
+    },
+    {
+      "sha": "4e8c0fe2d0cd02cbf3b613001b204f3df7a5478f",
+      "parents": [
+        "a3e1b0a1fdea156f734cdf23b0d836d5b741f410"
+      ],
+      "pr_number": 510,
+      "subject": "91 🦦 Corrigir o DocReader: edição 00471 ocupa IDs 5339–5346, não 5756 (#510)",
+      "first_parent_changed_files": [
+        "research/archive/ultima_hora_pe_00471_1963_locator_20261113.json",
+        "research/editorial/ultima_hora_pe_00471_custody_20261113.md",
+        "tests/test_ultima_hora_pe_00471_locator.py",
+        "tools/verify_ultima_hora_pe_00471_locator.py"
+      ],
+      "ci_snapshot": {
+        "checks_total": 24,
+        "checks_seen": 24,
+        "conclusions": {
+          "success": 24
+        },
+        "non_success_checks": []
+      }
+    },
+    {
+      "sha": "a3e1b0a1fdea156f734cdf23b0d836d5b741f410",
+      "parents": [
+        "0ecbdb9254752ce012a47a22098f1eb611253f25"
+      ],
+      "pr_number": 507,
+      "subject": "80 🦫 G39: auditar divergência NASA × época TLE secundária (#507)",
+      "first_parent_changed_files": [
+        "research/constraints/CASTOR-G39_ssr_mirror_period_screen.json",
+        "research/tle_custody/CASTOR-G39_mirror_selection.json",
+        "tests/test_ssr_secondary_period_g39.py",
+        "tools/ssr_secondary_period_g39.py"
+      ],
+      "ci_snapshot": {
+        "checks_total": 24,
+        "checks_seen": 24,
+        "conclusions": {
+          "success": 24
+        },
+        "non_success_checks": []
+      }
+    },
+    {
+      "sha": "0ecbdb9254752ce012a47a22098f1eb611253f25",
+      "parents": [
+        "7dfe401e3543ce78bca94ad38c09b609dbaf2509"
+      ],
+      "pr_number": 504,
+      "subject": "88 🦀 CGEO-26: arquivo aerofotográfico PETROBRAS 1961, folha Esplanada MI-1850 (#504)",
+      "first_parent_changed_files": [
+        "research/geo/cgeo26_pet53d_1961_aerial_locator.json",
+        "research/geo/cgeo26_pet53d_1961_aerial_locator.md",
+        "tests/test_cgeo26_aerial_locator.py",
+        "tools/cgeo26_aerial_locator.py"
+      ],
+      "ci_snapshot": {
+        "checks_total": 24,
+        "checks_seen": 24,
+        "conclusions": {
+          "success": 24
+        },
+        "non_success_checks": []
+      }
+    },
+    {
+      "sha": "7dfe401e3543ce78bca94ad38c09b609dbaf2509",
+      "parents": [
+        "03159ebc9880ca0607c00c457df07d29642bd9f5",
+        "8765bbdc3711c8e4b330a37e88c3f36aa1991b19"
+      ],
+      "pr_number": 506,
+      "subject": "Merge pull request #506 from franklinbaldo/research/lagarto-coastal-isd-1963-index-r25",
+      "first_parent_changed_files": [
+        ".agents/skills/conde-lagarto/SKILL.md",
+        ".github/workflows/isd-bahia-coastal-1963-index.yml",
+        "research/constraints/isd_bahia_coastal_1963_archive_edges.json",
+        "research/meteorology/isd_bahia_coastal_1963_archive_coverage.json",
+        "research/meteorology/isd_bahia_coastal_1963_archive_coverage.md",
+        "tests/test_isd_bahia_coastal_1963_archive.py",
+        "tools/audit_isd_bahia_coastal_1963_archive.py"
+      ],
+      "ci_snapshot": {
+        "checks_total": 24,
+        "checks_seen": 24,
+        "conclusions": {
+          "success": 24
+        },
+        "non_success_checks": []
+      }
+    },
+    {
+      "sha": "03159ebc9880ca0607c00c457df07d29642bd9f5",
+      "parents": [
+        "b308d9ccf8f95606215c519ab04bc0ae4e8061b1"
+      ],
+      "pr_number": 505,
+      "subject": "86 🦌 Certify synthetic optical clock-offset gauge (#505)",
+      "first_parent_changed_files": [
+        "research/statistics/OPTICAL_CLOCK_BIAS_C241.md",
+        "tests/test_optical_clock_bias_observability.py",
+        "tools/optical_clock_bias_observability.py"
+      ],
+      "ci_snapshot": {
+        "checks_total": 23,
+        "checks_seen": 23,
+        "conclusions": {
+          "success": 23
+        },
+        "non_success_checks": []
+      }
+    },
+    {
+      "sha": "b308d9ccf8f95606215c519ab04bc0ae4e8061b1",
+      "parents": [
+        "d8e17d37d42ed14394c009f9566cb0a54235743f",
+        "37e296d5c4463da891565897b47bc1356c7bcb8f"
+      ],
+      "pr_number": 501,
+      "subject": "Merge pull request #501 from franklinbaldo/abelha/tupi-legacy-bridge-r24",
+      "first_parent_changed_files": [
+        "public/data/conde-tupi-legacy-fragment-bridge.json",
+        "tests/test_tupi_legacy_fragment_bridge.py",
+        "tools/export_tupi_legacy_fragment_bridge.py"
+      ],
+      "ci_snapshot": {
+        "checks_total": 23,
+        "checks_seen": 23,
+        "conclusions": {
+          "success": 23
+        },
+        "non_success_checks": []
+      }
+    },
+    {
+      "sha": "d8e17d37d42ed14394c009f9566cb0a54235743f",
+      "parents": [
+        "1bba56145ec55b180350edfd9902339df51b5954"
+      ],
+      "pr_number": 498,
+      "subject": "95 🐢 C241-L25: auditar índice NASA SSR 1963 (#498)",
+      "first_parent_changed_files": [
+        ".github/workflows/tle-ntrs-ssr-index.yml",
+        "research/tle_custody/evidence_matrix_C241-L25_2026-11-13.md",
+        "research/tle_custody/ntrs_ssr_1963_index_C241-L25.json",
+        "tests/test_tle_ntrs_ssr_index_audit.py",
+        "tools/tle_ntrs_ssr_index_audit.py"
+      ],
+      "ci_snapshot": {
+        "checks_total": 24,
+        "checks_seen": 24,
+        "conclusions": {
+          "cancelled": 2,
+          "success": 22
+        },
+        "non_success_checks": [
+          {
+            "name": "deploy",
+            "conclusion": "cancelled",
+            "url": "https://github.com/franklinbaldo/conde-incident/actions/runs/43421199423/job/131871475544"
+          },
+          {
+            "name": "build",
+            "conclusion": "cancelled",
+            "url": "https://github.com/franklinbaldo/conde-incident/actions/runs/43421199423/job/131871346415"
+          }
+        ]
+      }
+    },
+    {
+      "sha": "1bba56145ec55b180350edfd9902339df51b5954",
+      "parents": [
+        "bcbe20197be4cf0aee78380070df489b81b65834"
+      ],
+      "pr_number": 500,
+      "subject": "90 🐙 C241-P16: certify three-object NASA SSR documentary minimax (#500)",
+      "first_parent_changed_files": [
+        ".github/workflows/lean-core.yml",
+        "formal/Conde1963.lean",
+        "formal/Conde1963/SsrFourEditions.lean",
+        "formal/scripts/compile_ssr_four_editions.py",
+        "formal/tests/test_ssr_four_editions.py",
+        "research/constraints/C241-P16_ssr_panel_minimax.json"
+      ],
+      "ci_snapshot": {
+        "checks_total": 24,
+        "checks_seen": 24,
+        "conclusions": {
+          "success": 24
+        },
+        "non_success_checks": []
+      }
+    },
+    {
+      "sha": "bcbe20197be4cf0aee78380070df489b81b65834",
+      "parents": [
+        "76f7533fc8cc961ae44c9bb299f276dd6d808948"
+      ],
+      "pr_number": 499,
+      "subject": "88 🦅 G39: fixar identidade das fontes CGEO-25 e auditar 14 merges (#499)",
+      "first_parent_changed_files": [
+        "research/audits/gaviao-main-window-20261113-g39.json",
+        "research/audits/gaviao-main-window-20261113-g39.md",
+        "tests/test_cgeo25_esplanada_lineage.py",
+        "tools/cgeo25_esplanada_lineage.py"
+      ],
+      "ci_snapshot": {
+        "checks_total": 23,
+        "checks_seen": 23,
+        "conclusions": {
+          "success": 23
+        },
+        "non_success_checks": []
+      }
+    },
+    {
+      "sha": "76f7533fc8cc961ae44c9bb299f276dd6d808948",
+      "parents": [
+        "4a5f0d35bc10c14927e1b948b63c516f5184ddfb"
+      ],
+      "pr_number": 497,
+      "subject": "88 🦦 Última Hora PE 00471: catálogo BN, PDF 403 e negativo CDX limitado (#497)",
+      "first_parent_changed_files": [
+        "research/archive/ultima_hora_pe_00471_1963_locator_20261113.json",
+        "research/editorial/ultima_hora_pe_00471_custody_20261113.md",
+        "tests/test_ultima_hora_pe_00471_locator.py",
+        "tools/verify_ultima_hora_pe_00471_locator.py"
+      ],
+      "ci_snapshot": {
+        "checks_total": 23,
+        "checks_seen": 23,
+        "conclusions": {
+          "cancelled": 1,
+          "success": 22
+        },
+        "non_success_checks": [
+          {
+            "name": "deploy",
+            "conclusion": "cancelled",
+            "url": "https://github.com/franklinbaldo/conde-incident/actions/runs/43420551739/job/131869259989"
+          }
+        ]
+      }
+    }
+  ],
+  "finding": "G40-F1 step-level if/continue-on-error/command replacement bypasses #509 job-level universal gates",
+  "science_limit": "No new instrumental observation or terminal geolocation established."
+}

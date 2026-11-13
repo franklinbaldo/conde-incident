@@ -1,0 +1,50 @@
+"""Adversarial controls for indispensable CI steps (G40)."""
+from pathlib import Path
+import re
+import unittest
+
+from test_ci_event_policy_all_workflows import assert_workflow_policy
+
+WORKFLOWS = Path(__file__).resolve().parents[1] / '.github' / 'workflows'
+
+
+class UniversalStepIntegrity(unittest.TestCase):
+    def test_universal_critical_step_bypass_is_rejected(self):
+        # A required *job* may succeed while its one required test step is
+        # silently skipped, tolerated or replaced by an inert command.
+        cases = (
+            ('prek.yml', 'Run prek hooks over all tracked files',
+             'run: uvx --from prek==0.5.10 prek run --all-files'),
+            ('integration-head.yml', 'TypeScript check', 'run: bun run lint'),
+            ('integration-head.yml', 'Build Vite frontend', 'run: bun run build'),
+            ('integration-head.yml', 'Execute all Python unittest suites (fail closed)',
+             "python3 -m unittest discover -s tests -p 'test_*.py' -v"),
+            ('integration-head.yml', 'Compile conditional proofs', 'run: lake build'),
+        )
+        for name, label, required in cases:
+            source = (WORKFLOWS / name).read_text(encoding='utf-8')
+            self.assertTrue(assert_workflow_policy(source, name))
+            marker = f'      - name: {label}\n'
+            self.assertIn(marker, source)
+            for injection in ('        if: false\n', '        continue-on-error: true\n'):
+                # Lean compile has a legitimate conditional; an injected
+                # second condition must be rejected rather than shadowed.
+                mutant = source.replace(marker, marker + injection, 1)
+                with self.subTest(name=name, step=label, bypass=injection.strip()):
+                    with self.assertRaisesRegex(AssertionError, 'universal step'):
+                        assert_workflow_policy(mutant, name)
+            # The display name cannot serve as evidence that the command ran.
+            mutant = source.replace(required, 'run: echo gate-disabled', 1)
+            with self.subTest(name=name, step=label, bypass='command removed'):
+                with self.assertRaisesRegex(AssertionError, 'universal step'):
+                    assert_workflow_policy(mutant, name)
+            # Removing a required step entirely must also fail the gate.
+            start = source.index(marker)
+            later = re.search(r'(?m)^      - (?:name|uses):', source[start + len(marker):])
+            mutant = source[:start] + (source[start + len(marker) + later.start():] if later else '')
+            with self.subTest(name=name, step=label, bypass='step removed'):
+                with self.assertRaisesRegex(AssertionError, 'universal step'):
+                    assert_workflow_policy(mutant, name)
+
+if __name__ == '__main__':
+    unittest.main()
