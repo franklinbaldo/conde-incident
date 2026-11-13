@@ -1,0 +1,239 @@
+{
+  "ci_check_policy": "Per-integration historical checks NOT_CHECKED; no inference of PASS from merge.",
+  "dag_commit_count": 13,
+  "finding": {
+    "classification": "CODE_VALIDATION_GAP",
+    "id": "G43-F1",
+    "integrated_source_pr": 554,
+    "paths": [
+      "tools/export_ssg_evidence_index.py",
+      "tests/test_ssg_evidence_index.py"
+    ],
+    "reproduction": "Synthetic extra terminal-epoch field in lineage path and synthetic terminal-latitude field in lineage edge were accepted and published in index shards; 2/2 red before fix.",
+    "resolution": "Closed schema of path and edge before verbatim export; positive corpus preserved.",
+    "scientific_effect": "NO_ORBITAL_CONSTRAINT"
+  },
+  "first_parent_integrations": 13,
+  "integrations": [
+    {
+      "ci_status": "NOT_CHECKED",
+      "date": "2026-11-13T10:49:08-04:00",
+      "files": [
+        ".github/workflows/soviet-1963-cross-id.yml",
+        "research/tle_custody/evidence_matrix_C241-L30_2026-11-13.md",
+        "research/tle_custody/soviet_1963_cross_id_C241-L30.json",
+        "tests/test_soviet_1963_cross_id.py",
+        "tools/audit_soviet_1963_cross_id.py"
+      ],
+      "parent_shas": [
+        "717e00fb59dec380f1ee8a8bb5453c81a1c88f64"
+      ],
+      "pr_number": 550,
+      "sha": "3c974172a63da703a3030235d83041c0d799832f",
+      "title": "92 🐢 C241-L30: verificar cruzamentos soviéticos 1963 sem inventar órbitas (#550)"
+    },
+    {
+      "ci_status": "NOT_CHECKED",
+      "date": "2026-11-13T10:54:29-04:00",
+      "files": [
+        "research/audits/gaviao-main-window-20261113-g42.json",
+        "research/audits/gaviao-main-window-20261113-g42.md",
+        "tests/test_ghcnd_conde_bridge.py",
+        "tools/export_ghcnd_conde_bridge.py"
+      ],
+      "parent_shas": [
+        "3c974172a63da703a3030235d83041c0d799832f"
+      ],
+      "pr_number": 551,
+      "sha": "9871032000bec1bb6d214d950a994fcaf491fa46",
+      "title": "🦅 G42: fixar catálogo GHCNd e auditar 14 integrações (#551)"
+    },
+    {
+      "ci_status": "NOT_CHECKED",
+      "date": "2026-11-13T10:57:28-04:00",
+      "files": [
+        ".github/workflows/pages.yml",
+        ".github/workflows/ssg-evidence-index.yml",
+        "docs/SSG_EVIDENCE_INDEX.md",
+        "public/data/conde-evidence-index-manifest.json",
+        "public/data/conde-evidence-index/part-001.json",
+        "public/data/conde-evidence-index/part-002.json",
+        "public/data/conde-evidence-index/part-003.json",
+        "scripts/prepare-ssg.mjs",
+        "tests/test_ssg_evidence_index.py",
+        "tools/export_ssg_evidence_index.py"
+      ],
+      "parent_shas": [
+        "9871032000bec1bb6d214d950a994fcaf491fa46"
+      ],
+      "pr_number": 554,
+      "sha": "d53a00b4cd6c38e4393b5548fbce5348841d6cb6",
+      "title": "🦎 Publish source-locked deterministic evidence JSON for SSG (#554)"
+    },
+    {
+      "ci_status": "NOT_CHECKED",
+      "date": "2026-11-13T11:00:01-04:00",
+      "files": [
+        "research/statistics/DRAG_DENSITY_SCALE_GAUGE_C241.md",
+        "tests/orbitDragDensityGauge.test.mjs"
+      ],
+      "parent_shas": [
+        "d53a00b4cd6c38e4393b5548fbce5348841d6cb6"
+      ],
+      "pr_number": 553,
+      "sha": "4599ae63842933fef9562b97c813033f7ae5fbae",
+      "title": "🦌 C241-P27: certify drag-density amplitude gauge (#553)"
+    },
+    {
+      "ci_status": "NOT_CHECKED",
+      "date": "2026-11-13T11:01:10-04:00",
+      "files": [
+        "research/tle_custody/evidence_matrix_C241-L31_2026-11-13.md",
+        "research/tle_custody/novosibirsk_station_1963_C241-L31.json",
+        "tests/test_novosibirsk_station_1963.py",
+        "tools/verify_novosibirsk_station_1963.py"
+      ],
+      "parent_shas": [
+        "4599ae63842933fef9562b97c813033f7ae5fbae"
+      ],
+      "pr_number": 555,
+      "sha": "7fd9ad484fa13d4c07b0ec0a60b7c3241c527bcc",
+      "title": "🦦 C241-L31: estação de Novosibirsk como pista arquivística (#555)"
+    },
+    {
+      "ci_status": "NOT_CHECKED",
+      "date": "2026-11-13T11:03:39-04:00",
+      "files": [
+        "formal/Conde1963.lean",
+        "formal/Conde1963/SovietCatalogueCandidate.lean",
+        "public/data/conde-soviet-catalogue-bridge.json",
+        "tests/test_soviet_catalogue_bridge.py",
+        "tools/export_soviet_catalogue_bridge.py"
+      ],
+      "parent_shas": [
+        "7fd9ad484fa13d4c07b0ec0a60b7c3241c527bcc"
+      ],
+      "pr_number": 556,
+      "sha": "a09af40a4db57cab94c543fbfd6e95f7f5584a8d",
+      "title": "85 🐝 C241-L29/L30: bridge Soviet holdings to typed latent graph (#556)"
+    },
+    {
+      "ci_status": "NOT_CHECKED",
+      "date": "2026-11-13T11:03:46-04:00",
+      "files": [
+        "formal/Conde1963.lean",
+        "formal/Conde1963/SsrNineEditions.lean",
+        "formal/scripts/compile_ssr_nine_editions.py",
+        "formal/tests/test_ssr_cell_repairs.py",
+        "formal/tests/test_ssr_nine_editions.py",
+        "research/constraints/C241-P20_ssr_nine_edition_minimax.json"
+      ],
+      "parent_shas": [
+        "a09af40a4db57cab94c543fbfd6e95f7f5584a8d"
+      ],
+      "pr_number": 557,
+      "sha": "58a37443ff4e80d6a6a79f873fe99ade021b2d50",
+      "title": "90 🐙 C241-P20: nine-edition NASA SSR minimax + Lean"
+    },
+    {
+      "ci_status": "NOT_CHECKED",
+      "date": "2026-11-13T11:08:35-04:00",
+      "files": [
+        "src/lib/orbitSpaceWeatherAdapter.ts",
+        "tests/orbitSpaceWeatherAdapter.test.mjs"
+      ],
+      "parent_shas": [
+        "58a37443ff4e80d6a6a79f873fe99ade021b2d50"
+      ],
+      "pr_number": 560,
+      "sha": "7696a9f913190ba2b887c19102dc1df985be673c",
+      "title": "80 🦫 G42: validar raio WGS84 do par latitude-altitude antes da densidade (#560)"
+    },
+    {
+      "ci_status": "NOT_CHECKED",
+      "date": "2026-11-13T11:20:27-04:00",
+      "files": [
+        "research/geo/cgeo29_usaf_63_32_photoindex_node.json",
+        "research/geo/cgeo29_usaf_63_32_photoindex_node.md",
+        "research/geo/evidence/cgeo29_usaf_1850_node.html",
+        "tests/test_cgeo29_usaf_photoindex_locator.py",
+        "tools/cgeo29_usaf_photoindex_locator.py"
+      ],
+      "parent_shas": [
+        "7696a9f913190ba2b887c19102dc1df985be673c"
+      ],
+      "pr_number": 559,
+      "sha": "26d8c1983d01a2811d3d3c6c147de7c38d131373",
+      "title": "🦀 CGEO-29: localizar fotoíndice USAF 63-32 na folha Esplanada"
+    },
+    {
+      "ci_status": "NOT_CHECKED",
+      "date": "2026-11-13T11:21:46-04:00",
+      "files": [
+        "src/components/Navigation.tsx",
+        "tests/ui_keyboard_smoke.mjs"
+      ],
+      "parent_shas": [
+        "26d8c1983d01a2811d3d3c6c147de7c38d131373"
+      ],
+      "pr_number": 561,
+      "sha": "9be3f0b06b5e5b873171e2d4e55a8806723b2473",
+      "title": "90 🦇 UX: revelar aba ativa nos links diretos do Laboratório móvel (#561)"
+    },
+    {
+      "ci_status": "NOT_CHECKED",
+      "date": "2026-11-13T11:26:47-04:00",
+      "files": [
+        ".github/workflows/ui-keyboard-smoke.yml",
+        "scripts/check-site.mjs",
+        "scripts/localize-ssg-search-runtime.mjs",
+        "scripts/localize-ssg-search.mjs",
+        "static/css/site.css",
+        "tests/ssg-search-locale.test.mjs",
+        "tests/ssg-search-runtime.test.mjs",
+        "tests/ssg_search_dialog_smoke.mjs"
+      ],
+      "parent_shas": [
+        "9be3f0b06b5e5b873171e2d4e55a8806723b2473"
+      ],
+      "pr_number": 562,
+      "sha": "d1c17f9630fe2ad8babb290c018d033a95cf9cf0",
+      "title": "92 🦊 UX-12: SSG search dialog accessible close, focus and keyboard (#562)"
+    },
+    {
+      "ci_status": "NOT_CHECKED",
+      "date": "2026-11-13T11:31:45-04:00",
+      "files": [
+        "stories/2026-11-13-o-jornal-na-mensagem-militar.md"
+      ],
+      "parent_shas": [
+        "d1c17f9630fe2ad8babb290c018d033a95cf9cf0"
+      ],
+      "pr_number": 563,
+      "sha": "39d72ddfdb4fef1be4ae957780bc021a0f7834e6",
+      "title": "85 🦉 Caderno 20: o jornal que apareceu na mensagem militar (#563)"
+    },
+    {
+      "ci_status": "NOT_CHECKED",
+      "date": "2026-11-13T11:32:05-04:00",
+      "files": [
+        "research/geo/cgeo30_usaf_selected_node.json",
+        "research/geo/cgeo30_usaf_selected_node.md",
+        "research/geo/evidence/cgeo30_usaf_selected_excerpt.html",
+        "tests/test_cgeo30_usaf_selected.py",
+        "tools/cgeo30_usaf_selected.py"
+      ],
+      "parent_shas": [
+        "39d72ddfdb4fef1be4ae957780bc021a0f7834e6"
+      ],
+      "pr_number": 564,
+      "sha": "7aed7403d39f2d097f0a9eedc44a83a342f2f215",
+      "title": "84 🦀 CGEO-30: seleção real do fotoíndice USAF MI-1850, imagem ainda pendente (#564)"
+    }
+  ],
+  "merge_commits": 0,
+  "reviewed_from_main_sha_exclusive": "717e00fb59dec380f1ee8a8bb5453c81a1c88f64",
+  "reviewed_through_main_sha_inclusive": "7aed7403d39f2d097f0a9eedc44a83a342f2f215",
+  "round": "G43",
+  "schema": "conde.gaviao-retrospective-window/v1"
+}
