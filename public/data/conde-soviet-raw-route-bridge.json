@@ -1,0 +1,187 @@
+{
+  "schema": "conde.soviet-raw-route-scientific-bridge/v1",
+  "id": "ABELHA-SOVIET-C241-L37-01",
+  "source_occurrence": "C241-L37",
+  "parent_sha256": {
+    "research/tle_custody/soviet_raw_observations_route_C241-L37.json": "01fe6c7bd57e2db97479f64fd755732f7f40302e1c54f47bce5f9f6e60c9b1ef",
+    "public/data/conde-soviet-catalogue-bridge.json": "be8c3626db558359bdf844493c89b650992c80f0bcad3057209dfad65564aa92"
+  },
+  "source": {
+    "kind": "RETROSPECTIVE_AUTHOR_DESCRIPTION_NOT_INSTRUMENT",
+    "editorial_year": 2007,
+    "url": "https://iki.cosmos.ru/sites/default/files/publications/2007pervaya_r.pdf",
+    "pdf_sha256": "8dc0d5b54985ab53d394babbad36da03ae02cef17f5ad897ad94e05acf9005f5",
+    "printed_pages": [
+      104,
+      105
+    ],
+    "pdf_index_zero_based": 52,
+    "hash_scope": "entire 2007 host PDF, not any original 1963 observation or bulletin",
+    "documentary_status": "ORIGINAL_2007_PDF_CUSTODIAN_VISUAL_AUDIT"
+  },
+  "two_serials": {
+    "methods_title": "Бюллетень станций оптического наблюдения искусственных спутников Земли",
+    "raw_title": "Результаты наблюдений ИСЗ",
+    "identity_equivalent": false,
+    "raw_target_measurements_read": false
+  },
+  "catalogue_leads": [
+    {
+      "id": "RNB-1000287767",
+      "url": "https://rusneb.ru/catalog/000200_000018_RU_NLR_INFOCOMM10_1000287767/",
+      "publication_year": 1964,
+      "described_observation_month": "June 1963",
+      "facsimile_sha256": null,
+      "target_identified": false,
+      "epistemic_status": "CATALOGUE_METADATA_ONLY"
+    },
+    {
+      "id": "GOOGLE-BOOKS-V224",
+      "url": "https://books.google.com/books?id=kfi6AAAAIAAJ",
+      "facsimile_sha256": null,
+      "target_identified": false,
+      "epistemic_status": "CATALOGUE_METADATA_ONLY"
+    }
+  ],
+  "source_dependency_graph": [
+    {
+      "from": "C241-L37",
+      "to": "SOVIET_METHODS_SERIAL",
+      "relation": "RETROSPECTIVE_AUTHOR_DESCRIBES_METHODS_SERIES",
+      "active": false
+    },
+    {
+      "from": "C241-L37",
+      "to": "SOVIET_RAW_RESULTS_SERIAL",
+      "relation": "RETROSPECTIVE_AUTHOR_DESCRIBES_RAW_DATA_SERIES",
+      "active": false
+    },
+    {
+      "from": "SOVIET_RAW_RESULTS_SERIAL",
+      "to": "RNB-1000287767",
+      "relation": "CATALOGUE_SAME_TITLE_NOT_TARGET_OBSERVATION",
+      "active": false
+    },
+    {
+      "from": "SOVIET_RAW_RESULTS_SERIAL",
+      "to": "GOOGLE-BOOKS-V224",
+      "relation": "CATALOGUE_METADATA_NO_FACSIMILE",
+      "active": false
+    },
+    {
+      "from": "C241-L37",
+      "to": "C241-L29",
+      "relation": "RESEARCH_CONTEXT_SERIES_IDENTITY_UNPROVEN",
+      "active": false
+    },
+    {
+      "from": "C241-L37",
+      "to": "C241-L31",
+      "relation": "RESEARCH_CONTEXT_SERIES_IDENTITY_UNPROVEN",
+      "active": false
+    },
+    {
+      "from": "C241-L37",
+      "to": "C241-L34",
+      "relation": "RESEARCH_CONTEXT_SERIES_IDENTITY_UNPROVEN",
+      "active": false
+    },
+    {
+      "from": "C241-L37",
+      "to": "C241-L35",
+      "relation": "RESEARCH_CONTEXT_SERIES_IDENTITY_UNPROVEN",
+      "active": false
+    },
+    {
+      "from": "SOVIET_RAW_RESULTS_SERIAL",
+      "to": "NORAD_527_latent_track",
+      "relation": "TARGET_SPECIFIC_RECORD_SEARCH_NOT_IDENTIFIED",
+      "active": false,
+      "observing_epoch_utc": null,
+      "original_page": null,
+      "frame": null,
+      "instrument_sigma": null
+    },
+    {
+      "from": "SOVIET_RAW_RESULTS_SERIAL",
+      "to": "NORAD_528_latent_track",
+      "relation": "TARGET_SPECIFIC_RECORD_SEARCH_NOT_IDENTIFIED",
+      "active": false,
+      "observing_epoch_utc": null,
+      "original_page": null,
+      "frame": null,
+      "instrument_sigma": null
+    },
+    {
+      "from": "SOVIET_RAW_RESULTS_SERIAL",
+      "to": "NORAD_529_latent_track",
+      "relation": "TARGET_SPECIFIC_RECORD_SEARCH_NOT_IDENTIFIED",
+      "active": false,
+      "observing_epoch_utc": null,
+      "original_page": null,
+      "frame": null,
+      "instrument_sigma": null
+    }
+  ],
+  "existing_soviet_candidate_joins": 6,
+  "new_retrieval_paths": 3,
+  "lean_candidate": "Conde1963.sovietRawSeriesRoutes",
+  "lean_status": "TYPED_SOURCE_SEARCH_NOT_COMPILED_PHYSICAL_RESTRICTION",
+  "simulator_latent_parameters": [
+    {
+      "name": "soviet_1963_raw_angular_obs_527",
+      "norad": 527,
+      "forward_observable": "topocentric_direction_from_orbit_and_station_at_epoch",
+      "original_observation": null,
+      "unit": null,
+      "time_utc": null,
+      "station": null,
+      "frame": null,
+      "sigma": null,
+      "source_identity_confirmed": false,
+      "value": null,
+      "activation": false
+    },
+    {
+      "name": "soviet_1963_raw_angular_obs_528",
+      "norad": 528,
+      "forward_observable": "topocentric_direction_from_orbit_and_station_at_epoch",
+      "original_observation": null,
+      "unit": null,
+      "time_utc": null,
+      "station": null,
+      "frame": null,
+      "sigma": null,
+      "source_identity_confirmed": false,
+      "value": null,
+      "activation": false
+    },
+    {
+      "name": "soviet_1963_raw_angular_obs_529",
+      "norad": 529,
+      "forward_observable": "topocentric_direction_from_orbit_and_station_at_epoch",
+      "original_observation": null,
+      "unit": null,
+      "time_utc": null,
+      "station": null,
+      "frame": null,
+      "sigma": null,
+      "source_identity_confirmed": false,
+      "value": null,
+      "activation": false
+    }
+  ],
+  "promote_when": [
+    "original_issue_scan_and_page",
+    "target_designation_verified",
+    "actual_instrument_epoch_and_clock",
+    "station_and_frame",
+    "angular_measurement_units_and_sigma",
+    "independent_lineage_review"
+  ],
+  "new_independent_instrument_observations": 0,
+  "new_numeric_orbital_constraints": 0,
+  "activation": false,
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "next_test": "Find a November 7-9 1963 raw-data issue and verify an original line for 1963-003A/B/C before fitting"
+}
