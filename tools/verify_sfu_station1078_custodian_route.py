@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-MANIFEST = ROOT / "research/tle_custody/sfu_station1078_custodian_route_C241-L39.json"
+MANIFEST = ROOT / "research/tle_custody/sfu_station1078_custodian_route_C241-LONTRA-R34.json"
 EXPECTED = [
     ("https://lpi.sfu-kras.ru/contact", 110177,
      "2adb4e614387eaed3b194b271ccf57db20322cdb5b0ee1f3cec2d69c54013971",
@@ -18,7 +18,7 @@ EXPECTED = [
 
 def validate(doc, copies=None):
     assert doc["schema"] == "conde.archival_custodian_route/v1"
-    assert doc["id"] == "C241-L39" and doc["predecessor"] == "C241-L38"
+    assert doc["id"] == "C241-LONTRA-R34" and doc["predecessor"] == "C241-L38"
     assert len(doc["sources"]) == len(EXPECTED)
     for i, (url, size, digest, phrases) in enumerate(EXPECTED):
         s = doc["sources"][i]
@@ -66,4 +66,4 @@ if __name__ == "__main__":
     assert (args.contact_html is None) == (args.museum_html is None), "supply both copies"
     raw = None if args.contact_html is None else [args.contact_html.read_bytes(), args.museum_html.read_bytes()]
     validate(json.loads(MANIFEST.read_text(encoding="utf-8")), raw)
-    print("PASS: L39 contact-only archival lead, no simulated custody or orbital observation")
+    print("PASS: LONTRA-R34 contact-only archival lead, no simulated custody or orbital observation")
