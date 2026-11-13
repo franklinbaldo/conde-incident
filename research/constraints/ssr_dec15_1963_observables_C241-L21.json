@@ -1,0 +1,83 @@
+{
+  "id": "C241-L21:OBSERVABLES",
+  "schema": "conde.cumulative-constraint-graph-extension/v1",
+  "parent_graph": "research/constraints/ssr_1963_observable_graph.json",
+  "source_ledger": "research/tle_custody/nasa_ssr_dec15_1963_C241-L21.json",
+  "source_family": "NASA_NORAD_SAO_COMPILED_NOT_AN_INDEPENDENT_SENSOR",
+  "crosswalk_depends_on": "C241-L10",
+  "observables": [
+    {
+      "id": "C241-L21:527:period",
+      "object_norad": 527,
+      "printed": "94.6",
+      "unit": "min",
+      "operator": "nodal_period_catalogued(state_527,latent_epoch,frame,force_model)",
+      "latent_epoch_utc": null,
+      "frame": null,
+      "measurement_sigma": null,
+      "required_bridges": [
+        "individual tracking time",
+        "reference frame",
+        "instrumental uncertainty",
+        "dynamical model"
+      ],
+      "admissible_domain_effect": "PENDING_CALIBRATION"
+    },
+    {
+      "id": "C241-L21:529:period",
+      "object_norad": 529,
+      "printed": "91.6",
+      "unit": "min",
+      "operator": "nodal_period_catalogued(state_529,latent_epoch,frame,force_model)",
+      "latent_epoch_utc": null,
+      "frame": null,
+      "measurement_sigma": null,
+      "required_bridges": [
+        "individual tracking time",
+        "reference frame",
+        "instrumental uncertainty",
+        "dynamical model"
+      ],
+      "admissible_domain_effect": "PENDING_CALIBRATION"
+    }
+  ],
+  "other_printed_fields": [
+    {
+      "object_norad": 527,
+      "inclination_deg": "81.88",
+      "apogee_km": 532,
+      "perigee_km": 459
+    },
+    {
+      "object_norad": 529,
+      "inclination_deg": "81.87",
+      "apogee_km": 352,
+      "perigee_km": 347
+    }
+  ],
+  "dependency_edges": [
+    {
+      "from": "C241-L19:1963-11-15",
+      "to": "C241-L21:1963-12-15",
+      "type": "EDITORIAL_SEQUENCE_NOT_INSTRUMENTAL_INTERVAL"
+    },
+    {
+      "from": "C241-L18:1963-11-30",
+      "to": "C241-L21:1963-12-15",
+      "type": "EDITORIAL_SEQUENCE_NOT_INSTRUMENTAL_INTERVAL"
+    },
+    {
+      "from": "C241-L21:1963-12-15",
+      "to": "C241-L18:1963-12-31",
+      "type": "EDITORIAL_SEQUENCE_NOT_INSTRUMENTAL_INTERVAL"
+    },
+    {
+      "from": "C241-L20#1",
+      "to": "C241-L21",
+      "type": "INSTITUTIONAL_COMPILATION_LINEAGE_ONLY"
+    }
+  ],
+  "independent_instrument_measurements_added": 0,
+  "physical_domain_reduced": false,
+  "lean_promoted": false
+}
