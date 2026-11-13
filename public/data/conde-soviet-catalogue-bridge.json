@@ -1,0 +1,149 @@
+{
+  "schema": "conde.soviet-catalogue-scientific-bridge/v1",
+  "id": "ABELHA-SOVIET-C241-L29-L30-01",
+  "parent_sha256": {
+    "research/tle_custody/soviet_1963_bibliographic_holdings_C241-L29.json": "5bd0d5fe22630b5ff5322cc713b7277a67f043e0a1913ddddd07817e9177d483",
+    "research/tle_custody/soviet_1963_cross_id_C241-L30.json": "e11c2a3b952651685500da93d3be662aa4fbe7ac2974d3dd4e3267de6706f851",
+    "research/tle_custody/nasa_527_1964_1967_crosswalk_C241-L28.json": "4dcd4df46288883c6da93f711721b2101fa2a1b39668187c1d3b0c272d992372"
+  },
+  "source_occurrences": [
+    "C241-L29#1",
+    "C241-L29#2"
+  ],
+  "bibliographic_catalogue_ids": [
+    "CNII-AA00566856",
+    "CNII-AA00826990"
+  ],
+  "nasa_documentary_crosswalk": "C241-L28:527=1963 03A",
+  "source_relation": "TWO_TITLES_HOLDINGS_NOT_INDEPENDENT_TRACKING",
+  "evidence_level": "BIBLIOGRAPHIC_METADATA_NOT_INSTRUMENTAL",
+  "candidate_join_count": 6,
+  "source_dependency_graph": [
+    {
+      "from": "C241-L29#1",
+      "to": "C241-L30",
+      "type": "BIBLIOGRAPHIC_HOLDING_NOT_MEASUREMENT",
+      "source_url": "https://mao.kiev.ua/index.php/ua/gao-biblio-periodyka/specissues",
+      "html_sha256": "e09e9df83f2607b5f70020b3751ada86d87748dd8766e72dc829a984ced4f6fb",
+      "issue_numbers": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "issue_page": null
+    },
+    {
+      "from": "C241-L29#2",
+      "to": "C241-L30",
+      "type": "BIBLIOGRAPHIC_HOLDING_NOT_MEASUREMENT",
+      "source_url": "https://mao.kiev.ua/index.php/ua/gao-biblio-periodyka/sciencefilds-n",
+      "html_sha256": "fcb2bad3a905fe83f6f5d4a8bd796c3dd5ddbf95ee0258a0e08cf7492ad2d2f9",
+      "issue_numbers": [
+        2
+      ],
+      "issue_page": null
+    },
+    {
+      "from": "CNII-AA00566856",
+      "to": "C241-L29#1",
+      "type": "UNCONFIRMED_TITLE_SIMILARITY",
+      "source_url": "https://ci.nii.ac.jp/ncid/AA00566856",
+      "html_sha256": "da7b7e445ccaf5569bccbb42809f9da471318cebebe6d713ec0deb0a08c31034",
+      "issue_page": null
+    },
+    {
+      "from": "CNII-AA00826990",
+      "to": null,
+      "type": "NO_DOCUMENTED_MATCH",
+      "source_url": "https://ci.nii.ac.jp/ncid/AA00826990",
+      "html_sha256": "0f349be2b3655f29ba1f8a518143ee807d58ba970b507629a5ed1fcf39c8740b",
+      "issue_page": null
+    },
+    {
+      "from": "C241-L29#1",
+      "to": "NORAD_527_latent_track",
+      "type": "RETRIEVAL_CANDIDATE_NOT_IDENTIFIED_TRACK",
+      "original_page": null,
+      "observing_epoch_utc": null,
+      "instrument_sigma": null,
+      "activation": false
+    },
+    {
+      "from": "C241-L29#1",
+      "to": "NORAD_528_latent_track",
+      "type": "RETRIEVAL_CANDIDATE_NOT_IDENTIFIED_TRACK",
+      "original_page": null,
+      "observing_epoch_utc": null,
+      "instrument_sigma": null,
+      "activation": false
+    },
+    {
+      "from": "C241-L29#1",
+      "to": "NORAD_529_latent_track",
+      "type": "RETRIEVAL_CANDIDATE_NOT_IDENTIFIED_TRACK",
+      "original_page": null,
+      "observing_epoch_utc": null,
+      "instrument_sigma": null,
+      "activation": false
+    },
+    {
+      "from": "C241-L29#2",
+      "to": "NORAD_527_latent_track",
+      "type": "RETRIEVAL_CANDIDATE_NOT_IDENTIFIED_TRACK",
+      "original_page": null,
+      "observing_epoch_utc": null,
+      "instrument_sigma": null,
+      "activation": false
+    },
+    {
+      "from": "C241-L29#2",
+      "to": "NORAD_528_latent_track",
+      "type": "RETRIEVAL_CANDIDATE_NOT_IDENTIFIED_TRACK",
+      "original_page": null,
+      "observing_epoch_utc": null,
+      "instrument_sigma": null,
+      "activation": false
+    },
+    {
+      "from": "C241-L29#2",
+      "to": "NORAD_529_latent_track",
+      "type": "RETRIEVAL_CANDIDATE_NOT_IDENTIFIED_TRACK",
+      "original_page": null,
+      "observing_epoch_utc": null,
+      "instrument_sigma": null,
+      "activation": false
+    }
+  ],
+  "lean_module": "Conde1963.SovietCatalogueCandidate",
+  "lean_status": "TYPED_RETRIEVAL_CANDIDATE_NOT_PHYSICAL_THEOREM",
+  "simulator_latent_parameters": [
+    {
+      "name": "soviet_1963_independent_track_527_unknown",
+      "norad": 527,
+      "value": null,
+      "active": false
+    },
+    {
+      "name": "soviet_1963_independent_track_528_unknown",
+      "norad": 528,
+      "value": null,
+      "active": false
+    },
+    {
+      "name": "soviet_1963_independent_track_529_unknown",
+      "norad": 529,
+      "value": null,
+      "active": false
+    }
+  ],
+  "temporal_alignment": null,
+  "instrument_covariance": null,
+  "original_facsimile_sha256": null,
+  "independent_observations": 0,
+  "activation": false,
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "next_test": "Acquire any 1963 issue 32-37 of Soviet optical-station Bulletin or Observations ISZ issue 2, inspect actual pages and record exact designator and sensor epoch, without contacting libraries absent authorization."
+}
