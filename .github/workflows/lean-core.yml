@@ -96,3 +96,5 @@ jobs:
           set -euo pipefail
           python3 -m formal.scripts.compile_ssr_four_editions --check
           python3 -m unittest discover -s formal/tests -p 'test_ssr_four_editions.py' -v
+          python3 -m formal.scripts.compile_ssr_influence --check
+          python3 -m unittest discover -s formal/tests -p 'test_ssr_influence.py' -v
