@@ -6,7 +6,10 @@ import hashlib
 import json
 from pathlib import Path
 
-import export_archive_documentary_links as archive
+if __package__:
+    from . import export_archive_documentary_links as archive
+else:
+    import export_archive_documentary_links as archive
 
 ROOT = Path(__file__).resolve().parents[1]
 MANUAL = "research/meteorology/ncep_on20_wayback_custody_20261112.json"
