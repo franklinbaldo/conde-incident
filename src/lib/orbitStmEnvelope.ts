@@ -49,10 +49,11 @@ function sigmaDirections(c: CartesianCovariance6): number[][] | null {
   if (!Array.isArray(c) || c.length !== 6 ||
       c.some(row => !Array.isArray(row) || row.length !== 6 ||
         !row.every(Number.isFinite))) return null;
-  const sigma = c.map((row, i) => Math.sqrt(row[i]));
+  const sigma: number[] = c.map((row: readonly number[], i: number) => Math.sqrt(row[i]));
   if (!sigma.every(x => Number.isFinite(x) && x > 0)) return null;
-  const corr = c.map((row, i) => row.map((x, j) => x / sigma[i] / sigma[j]));
-  if (corr.some((row, i) => row.some((x, j) =>
+  const corr: number[][] = c.map((row: readonly number[], i: number) =>
+    row.map((x: number, j: number) => x / sigma[i] / sigma[j]));
+  if (corr.some((row: number[], i: number) => row.some((x: number, j: number) =>
       !Number.isFinite(x) || Math.abs(x - corr[j][i]) > 1e-9 ||
       (i === j && Math.abs(x - 1) > 1e-9)))) return null;
   const l = Array.from({length: 6}, () => Array(6).fill(0) as number[]);
