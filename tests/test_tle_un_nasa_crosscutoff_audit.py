@@ -44,6 +44,23 @@ class USPrintDifferences(unittest.TestCase):
     def test_nasa_528_period_mutation(self):
         self.corrupt(2, lambda x: x["april_rows"][1].update(nodal_period_min="94.2"))
 
+    def test_joint_un_transcription_and_result_forgery_rejected(self):
+        # The PDF SHA still identifies the original UN bytes. A coordinated
+        # change to the JSON ledger and its derived value must not pass.
+        data = copy.deepcopy(FROZEN)
+        data[1]["docs"][0]["printed_rows"][1]["perigee_km_printed"] = "477.4"
+        data[0]["objects"][1]["nominal_deltas"]["perigee_km"] = "-42.4"
+        with self.assertRaises(ValueError):
+            validate(*data)
+
+    def test_joint_nasa_transcription_and_result_forgery_rejected(self):
+        # Changing both parts of the arithmetic must not preserve custody.
+        data = copy.deepcopy(FROZEN)
+        data[2]["april_rows"][1]["nodal_period_min"] = "94.2"
+        data[0]["objects"][1]["nominal_deltas"]["nodal_period_min"] = "-0.3"
+        with self.assertRaises(ValueError):
+            validate(*data)
+
     def test_different_delta_is_rejected(self):
         self.corrupt(0, lambda x: x["objects"][1]["nominal_deltas"].update(
             perigee_km="-41.3"))
