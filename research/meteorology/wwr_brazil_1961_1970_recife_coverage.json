@@ -1,0 +1,56 @@
+{
+  "schema": "conde.noaa-wwr-1961-1970-coverage/v1",
+  "evidence": "WWR-S6-1963-BRAZIL-RECIFE-COVERAGE",
+  "source": {
+    "url": "https://www.ncei.noaa.gov/data/world-weather-records/series-6/access/data/WWR_v01_global_array_1961-1970.txt",
+    "provider": "NOAA/NCEI World Weather Records series 6",
+    "coverage": "1961-1970; surface monthly/annual summaries",
+    "sha256": "5e0dfd3c64449a93bdf88f37dcf6ec81db5852c8d8fe08cb4fb2e77857577c09",
+    "bytes": 6840540,
+    "snapshot_header_sha256": "016dcdb00be9775e9dc32716fc32b5080c2afdbb0c8c7d4c495a239a9298851b",
+    "station_header_width_bytes": 89
+  },
+  "brazil_station_header_count": 21,
+  "brazil_station_ids": [
+    "82741",
+    "83096",
+    "82191",
+    "83587",
+    "83377",
+    "82425",
+    "82861",
+    "83361",
+    "83842",
+    "83897",
+    "82397",
+    "83423",
+    "83766",
+    "82331",
+    "83967",
+    "83064",
+    "82825",
+    "82586",
+    "83743",
+    "83780",
+    "82243"
+  ],
+  "recife_wmo_candidates": [
+    "82899",
+    "82900"
+  ],
+  "recife_wmo_candidates_present": [],
+  "station_names_containing_recife_or_curado": [],
+  "independent_upper_air_observation": false,
+  "reported_actual_1963_11_08_wind": false,
+  "spatial_transfer_calibration": null,
+  "historical_1963_station_metadata_resolved": false,
+  "claim": "Recife/Curado (82899/82900) not listed among 21 Brazilian stations in this WWR series-6 file only",
+  "interpretation": "WWR absence is archive-specific; cannot negate IGRA Recife soundings, identify 1963 radiosonde, or bound atmospheric drift in Conde",
+  "links": [
+    "C149",
+    "C150",
+    "C151",
+    "C193"
+  ],
+  "status": "CONNECTED_PENDING_CALIBRATION"
+}

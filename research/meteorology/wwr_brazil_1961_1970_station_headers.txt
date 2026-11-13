@@ -1,0 +1,21 @@
+  827411 721S05731WBRAZIL                  ALTO TAPAJOS              140        706010235
+  8309611055S03705WBRAZIL                  ARACAJU                     7        706010345
+  821911 127S04828WBRAZIL                  BELEM                      24        706010465
+  8358711956S04356WBRAZIL                  BELO HORIZONTE            850        706010525
+  8337711547S04756WBRAZIL                  BRASILIA                 1158        706010665
+  824251 405S06308WBRAZIL                  COARI                      46        706014225
+  828611 815S04917WBRAZIL                  CONCEICAO DO ARAGUAIA     157        706015325
+  8336111536S05606WBRAZIL                  CUIABA                    153        706016445
+  8384212526S04916WBRAZIL                  CURITIBA                  915        706016485
+  8389712735S04834WBRAZIL                  FLORIANOPOLIS               2        706022035
+  823971 343S03828WBRAZIL                  FORTALEZA                  20        706022185
+  8342311641S04917WBRAZIL                  GOIANIA                   729        706023325
+  8376612323S05111WBRAZIL                  LONDRINA                  566        706031140
+  823311 308S06001WBRAZIL                  MANAUS                     60        706040645
+  8396713002S05113WBRAZIL                  PORTO ALEGRE               10        706050165
+  8306411043S04825WBRAZIL                  PORTO NACIONAL            244        706051225
+  828251 846S06355WBRAZIL                  PORTO VELHO               106        706052635
+  825861 512S03918WBRAZIL                  QUIXERAMOBIM              212        706056125
+  8374312254S04310WBRAZIL                  RIO DE JANEIRO             31        706057045
+  8378012330S04637WBRAZIL                  SAO PAULO/M SANTANA       792        706060885
+  822431 225S05442WBRAZIL                  TAPERINHA                  20        706061165
