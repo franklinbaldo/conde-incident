@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {archivePages} from '../scripts/ssg-documentary-archive.mjs';
 import {interpretArchiveStatus} from '../scripts/archive-source-status.mjs';
+import {archiveStatusAnchor,archiveStatusLink} from '../scripts/archive-status-index.mjs';
 
 const feed = JSON.parse(readFileSync('public/data/conde-source-citations.json','utf8'));
 const ancestry = JSON.parse(readFileSync('public/data/conde-declared-dependence.json','utf8'));
@@ -64,6 +65,28 @@ test('SSG publishes one stable, no-JS page per curated occurrence', () => {
     assert.ok(byState.includes('/fontes/'+source+'/)'),'Ficha da fonte perdida: '+source);
     assert.ok(byState.includes('#L'+record.matrix_line+')'), 'Linha da matriz perdida');
   }
+  // Each status is a stable, shareable, keyboard-usable in-page destination.
+  const codes=[...new Set(feed.records.map(r=>r.source_status))];
+  assert.equal(codes.length,14);
+  for (const code of codes) {
+    const fragment=archiveStatusAnchor(code);
+    const {label}=interpretArchiveStatus(code);
+    assert.match(fragment,/^estado-[a-z0-9-]+$/);
+    assert.ok(byState.includes('<a id="'+fragment+'"></a>'), 'Sem âncora: '+code);
+    assert.ok(byState.includes('](#'+fragment+')'), 'Sem sumário navegável: '+code);
+    assert.ok(byState.includes(label), 'Rótulo de estado ausente: '+code);
+  }
+  for (const record of feed.records) {
+    const slug=record.occurrence.toLowerCase().replace('#','-');
+    const link=archiveStatusLink(record.source_status);
+    assert.ok(pages.get(slug+'/index.md').includes(link), 'Sem volta ao estado na ocorrência');
+    assert.ok(pages.get('fontes/'+record.source_id.toLowerCase().replaceAll('_','-')+'/index.md').includes(link),
+      'Sem volta ao estado na ficha da fonte');
+    assert.ok(pages.get('obras/'+record.work_id.toLowerCase().replaceAll('_','-')+'/index.md').includes(link),
+      'Sem volta ao estado na obra');
+  }
+  assert.throws(()=>archiveStatusAnchor('NOT_A_REAL_STATUS'),/sem leitura editorial revisada/);
+  assert.throws(()=>archiveStatusAnchor('<script>'),/Código documental inválido/);
   assert.match(index,/Consultar identificadores de fontes/);
   assert.match(pages.get('fontes/index.md'),/Identificadores de fontes/);
   const repeated=pages.get('fontes/nasa-ssr-19631115/index.md');
