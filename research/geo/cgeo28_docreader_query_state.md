@@ -1,5 +1,5 @@
 ---
-type: ResearchNote
+type: Guide
 title: "CGEO-28: consulta preenchida no DocReader não comprova busca executada"
 description: "Replay de três respostas GET oficiais e uma tentativa POST, sem promover ausência de resultado ou geometria"
 ---
