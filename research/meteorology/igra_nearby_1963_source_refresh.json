@@ -1,0 +1,78 @@
+{
+  "schema": "conde.igra-nearby-source-refresh/v1",
+  "observation_date_utc": "2026-11-13",
+  "sources": {
+    "archive_pattern": "https://www.ncei.noaa.gov/pub/data/igra/data/data-por/{station_id}-data.txt.zip",
+    "official_station_list": "https://www.ncei.noaa.gov/pub/data/igra/igra2-station-list.txt",
+    "official_station_list_sha256_at_retrieval": "9515d29b0c61fcfc912028830c37f47e723ba32c14d88fb48cf6d8bf727060ab",
+    "source_institution": "NOAA/NCEI",
+    "raw_zip_snapshot_is_not_committed": true
+  },
+  "stations": [
+    {
+      "station_id": "BRM00082599",
+      "catalogue_name": "NATAL (AERO)",
+      "snapshot_zip_bytes": 19067487,
+      "snapshot_zip_sha256": "e8ffc9be391d97674b95624eda8d57cd94ddac599404cdea775aa6e95202f7be",
+      "first_report_date": "1943-10-18",
+      "last_before_1963": "1946-02-28",
+      "first_after_1963": "1967-01-18",
+      "total_sounding_headers": 20448,
+      "sounding_headers_1963": 0,
+      "dates_1963_nov_07_to_09": [],
+      "nov_1963_excerpt_matches_previous_sha": null
+    },
+    {
+      "station_id": "BRM00082900",
+      "catalogue_name": "RECIFE (82900-0)",
+      "snapshot_zip_bytes": 7834492,
+      "snapshot_zip_sha256": "df4fcd10e1920723b3cf337b745301b505810ee1dc8a6c5006b84e52b2c871df",
+      "first_report_date": "1952-07-01",
+      "last_before_1963": "1962-12-31",
+      "first_after_1963": "1964-01-01",
+      "total_sounding_headers": 14977,
+      "sounding_headers_1963": 346,
+      "dates_1963_nov_07_to_09": [
+        "1963-11-07",
+        "1963-11-08",
+        "1963-11-09"
+      ],
+      "nov_1963_excerpt_matches_previous_sha": {
+        "07": "d77a3bc79935199cc5606a21a464f2836edc1191105ea44a03e58a3fce8375c6",
+        "08": "577224172e19552f5ce87081897479255596dc44debacc674dfd9d9ec418207e",
+        "09": "73e963250891689bf39baf5c29963dd3e42ed13180cf72355237cf98a70d00b2"
+      }
+    },
+    {
+      "station_id": "BRM00083229",
+      "catalogue_name": "SALVADOR (83229-0)",
+      "snapshot_zip_bytes": 6115358,
+      "snapshot_zip_sha256": "d6bd80590ec72906726def8959df95b99f6abf9be0752b505c7c7d0c33c5e240",
+      "first_report_date": "1970-01-02",
+      "last_before_1963": null,
+      "first_after_1963": "1970-01-02",
+      "total_sounding_headers": 7954,
+      "sounding_headers_1963": 0,
+      "dates_1963_nov_07_to_09": [],
+      "nov_1963_excerpt_matches_previous_sha": null
+    }
+  ],
+  "recife_archive_previously_pinned_sha256": "0655b3ea80312abe888a5474f82233affc0a2496ee1fd8bc678162924f52ecdc",
+  "recife_current_zip_sha_differs_from_older_pin": true,
+  "recife_1963_nov_07_09_original_byte_excerpts_unchanged": true,
+  "cause_of_whole_zip_change": null,
+  "conclusions": {
+    "nearby_Natal_and_Salvador_have_no_1963_headers_in_these_IGRA_station_archives": true,
+    "no_historical_launch_in_those_cities_in_1963": null,
+    "independent_regional_wind_profile_for_1963_11_08": null,
+    "recife_to_conde_transfer_error_m_s": null,
+    "calibrated_instrument_error": null,
+    "geographic_or_orbital_constraint_activated": false,
+    "status": "CONNECTED_PENDING_SPATIOTEMPORAL_CALIBRATION",
+    "evidence_links": [
+      "C149",
+      "C150",
+      "C151"
+    ]
+  }
+}
