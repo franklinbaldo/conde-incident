@@ -17,13 +17,15 @@ class WaybackCitationGraphTests(unittest.TestCase):
     def test_canonical_graph_and_no_double_count(self):
         graph = wb.build()
         self.assertEqual((ROOT / wb.OUTPUT).read_bytes(), wb.encode(graph))
-        self.assertEqual(graph["counts"]["verified_archived_copies"], 2)
+        self.assertEqual(graph["counts"]["verified_archived_copies"], 5)
+        self.assertEqual(graph["counts"]["nasa_legacy_capture_timestamps"], 3)
+        self.assertEqual(graph["counts"]["nasa_legacy_distinct_pdf_payloads"], 1)
         self.assertEqual(graph["counts"]["negative_exact_url_lookups"], 1)
         self.assertEqual(graph["counts"]["matrix_occurrences_linked"], 2)
         self.assertEqual(graph["counts"]["independent_physical_observations_added"], 0)
         capture = [n for n in graph["nodes"]
                    if n["kind"] == "VERIFIED_ARCHIVAL_COPY"]
-        self.assertEqual(len(capture), 2)
+        self.assertEqual(len(capture), 5)
         self.assertNotEqual(capture[0]["cdx_digest_base32_sha1"],
                             capture[0]["retrieved_bytes_sha256"])
         nasa = [n for n in graph["nodes"]
@@ -33,6 +35,42 @@ class WaybackCitationGraphTests(unittest.TestCase):
         self.assertEqual(len({n["snapshot_ref"] for n in nasa}), 2)
         self.assertTrue(all(n["simulator_value"] is None
                             and n["activation"] is False for n in nasa))
+
+    def test_legacy_nasa_three_copies_one_payload_not_three_sensors(self):
+        graph = wb.build()
+        nasa_copies = [n for n in graph["nodes"]
+                       if ":LEGACY-CAPTURE:" in n["id"]]
+        self.assertEqual({n["capture_utc"] for n in nasa_copies}, {
+            "2015-02-17T13:30:01Z", "2017-02-28T14:48:59Z",
+            "2017-03-02T09:31:49Z"})
+        self.assertEqual({n["retrieved_bytes_sha256"] for n in nasa_copies},
+                         {wb.NASA_BYTES_SHA256})
+        payloads = [n for n in graph["nodes"]
+                    if n["kind"] == "ONE_ARCHIVED_DOCUMENT_PAYLOAD"]
+        self.assertEqual(len(payloads), 1)
+        self.assertEqual(len([e for e in graph["edges"]
+                              if e["kind"] == "SAME_BYTES_NOT_INDEPENDENT_ARCHIVAL_WITNESS"
+                              and e["to"] == payloads[0]["id"]]), 3)
+        self.assertEqual(graph["counts"]["independent_physical_observations_added"], 0)
+        self.assertEqual(graph["counts"]["negative_exact_url_lookups"], 1)
+        self.assertEqual({n["simulator_value"] for n in graph["nodes"]
+                          if n["kind"] == "FROZEN_MATRIX_CITATION"}, {None})
+
+    def test_legacy_nasa_rejects_forgery_and_false_independence(self):
+        self.mutate(wb.NASA_LEGACY, lambda x: x["captures"][0]["cdx_record"].update(
+            digest="A" * 32))
+        self.mutate(wb.NASA_LEGACY, lambda x: x["captures"][1]["replay"].update(
+            sha256="0" * 64))
+        self.mutate(wb.NASA_LEGACY, lambda x: x["captures"][2]["cdx_record"].update(
+            timestamp="20150217133001"))
+        self.mutate(wb.NASA_LEGACY, lambda x: x["interpretation"].update(
+            captures_are_independent_historical_witnesses=True))
+        self.mutate(wb.NASA_LEGACY, lambda x: x.update(
+            source_occurrences=["C197#1", "C197#1"]))
+        self.mutate(wb.NASA_LEGACY, lambda x: x["current_api_replay"].update(
+            sha256="0" * 64))
+        self.mutate(wb.NASA_LEGACY, lambda x: x.update(
+            source_family="INDEPENDENT_SENSOR"))
 
     def mutate(self, filename, fn):
         with tempfile.TemporaryDirectory() as temp:
