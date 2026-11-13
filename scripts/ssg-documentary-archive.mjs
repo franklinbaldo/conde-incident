@@ -89,10 +89,13 @@ export function archivePages(citations, lineage, wayback=null) {
       `[Abrir ocorrência na matriz imutável](${MATRIX}${record.matrix_line})`, ''];
     for (const [i, {record:r, ancestry}] of entries.entries()) {
       parts.push(`## Referência ${i+1}: ${safe(r.source_id)}`, '',
-        `- **Obra:** ${safe(r.work_id)}`, `- **Família da fonte:** ${safe(r.source_family)}`,
+        `- **Obra:** [${safe(r.work_id)}](${ROOT}obras/${workSlug(r.work_id)}/)`,
+        `- **Fonte:** [${safe(r.source_id)}](${ROOT}fontes/${sourceSlug(r.source_id)}/)`,
+        `- **Família:** [${safe(r.source_family)}](${ROOT}familias/${familySlug(r.source_family)}/)`,
         `- **Relação:** ${safe(r.relation)}`, `- **Limite:** ${safe(r.scope)}`,
-        `- **Localizador:** ${safe(r.locator)}`, '',
-        `[Abrir documento original](${r.citation_url})`, '',
+        `- **Localizador:** ${safe(r.locator)}`,
+        `- **SHA-256 da linha na matriz:** \`${r.row_sha256}\``, '',
+        `[Abrir linha desta referência na matriz imutável](${MATRIX}${r.matrix_line}) · [Abrir documento original](${r.citation_url})`, '',
         ...(archived.has(archiveKey(r.snapshot_ref,r.source_id)) ? (() => {
           const copy=archived.get(archiveKey(r.snapshot_ref,r.source_id));
           return [
@@ -157,6 +160,8 @@ export function archivePages(citations, lineage, wayback=null) {
         `- **Obra:** ${safe(record.work_id)}`,
         `- **Localizador:** ${safe(record.locator)}`,
         `- [Ver ocorrência e genealogia](${ROOT}${id.toLowerCase().replace('#','-')}/)`,
+        `- [Ficha da fonte](${ROOT}fontes/${sourceSlug(record.source_id)}/)`,
+        `- [Linha da matriz imutável](${MATRIX}${record.matrix_line})`,
         `- [Consultar fonte documental](${record.citation_url})`, '',
       ]),
       '[Todas as famílias documentais]('+ROOT+'familias/) · [Arquivo curado]('+ROOT+')',
@@ -192,6 +197,8 @@ export function archivePages(citations, lineage, wayback=null) {
         `- **Limite:** ${safe(record.scope)}`,
         `- **SHA-256 da linha na matriz:** \`${record.row_sha256}\``, '',
         `- [Abrir ocorrência e genealogia](${ROOT}${id.toLowerCase().replace('#','-')}/)`,
+        `- [Ficha da fonte](${ROOT}fontes/${sourceSlug(record.source_id)}/)`,
+        `- [Linha da matriz imutável](${MATRIX}${record.matrix_line})`,
         `- [Consultar documento](${record.citation_url})`,
         `- [Ver família](${ROOT}familias/${familySlug(record.source_family)}/)`, '',
       ]),
