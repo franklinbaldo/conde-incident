@@ -13,6 +13,29 @@ EXPECTED_SOURCES = {
 }
 SHEETS = ('721-4-2', '721-4-3', '721-4-4', '725-1-1', '725-1-2', '725-1-4')
 
+# Pin *which* documents and printed claims each digest describes. Merely checking
+# HTTPS, length and a declared SHA lets an unrelated URL inherit source custody.
+SOURCE_DETAILS = {
+    'sudene_1997_catalogue': {
+        'url': 'https://www.gov.br/sudene/pt-br/centrais-de-conteudo/catalogo-1-para-100000-pdf/@@display-file/file',
+        'local_filename': 'sudene_catalogo.pdf',
+        'pdf_page_index': 124, 'printed_page': 133,
+        'catalogue_record': 'MI-1850', 'full_map_sheet_in_pdf': False,
+    },
+    'sgb_1998_planimetry': {
+        'url': 'https://rigeo.sgb.gov.br/server/api/core/bitstreams/69f40826-c61e-4f46-b5a5-b50d2a279627/content',
+        'local_filename': '69f40826-c61e-4f46-b5a5-b50d2a279627.pdf',
+        'pdf_page_index': 0, 'map_subject': 'Acajutiba, Apora e Rio Real; na Bahia',
+    },
+    'sgb_1998_topography': {
+        'url': 'https://rigeo.sgb.gov.br/server/api/core/bitstreams/c7a40a7e-22d8-48f2-9276-a889e6d1a676/content',
+        'local_filename': 'c7a40a7e-22d8-48f2-9276-a889e6d1a676.pdf',
+        'pdf_page_index': 0, 'map_subject': 'Acajutiba, Apora e Rio Real; na Bahia',
+    },
+}
+SOURCE_BASE_FIELDS = {'size_bytes', 'sha256', 'issued_year', 'verified_pdf_bytes'}
+
+
 
 def load():
     return json.loads(CONTRACT.read_text(encoding='utf-8'))
@@ -35,12 +58,13 @@ def validate(data):
     require(set(data['sources']) == set(EXPECTED_SOURCES), 'sources')
     for key, (size, sha, year) in EXPECTED_SOURCES.items():
         src = data['sources'][key]
-        require(src['size_bytes'] == size and src['sha256'] == sha and src['issued_year'] == year, f'custody {key}')
-        require(src['verified_pdf_bytes'] is True and src['url'].startswith('https://'), f'URL/status {key}')
-        require(src['local_filename'].endswith('.pdf') and '/' not in src['local_filename'], f'filename {key}')
-    catalog = data['sources']['sudene_1997_catalogue']
-    require(catalog['pdf_page_index'] == 124 and catalog['printed_page'] == 133
-            and catalog['catalogue_record'] == 'MI-1850' and catalog['full_map_sheet_in_pdf'] is False, 'catalog versus actual sheet')
+        details = SOURCE_DETAILS[key]
+        require(set(src) == SOURCE_BASE_FIELDS | set(details), f'unreviewed source field {key}')
+        require(src['size_bytes'] == size and src['sha256'] == sha and src['issued_year'] == year,
+                f'custody {key}')
+        require(src['verified_pdf_bytes'] is True, f'PDF status {key}')
+        for field, expected in details.items():
+            require(src[field] == expected, f'source document identity {key}:{field}')
     old = data['prior_cartographic_inputs_reported_by_sgb']
     require(old['source_family'] == 'PETROBRAS / SACS / GEOFOTO', 'source family')
     require(old['sheet_scale_denominator'] == 25000 and old['production_year_interval_in_1998_source'] == [1956, 1963], 'source period')
