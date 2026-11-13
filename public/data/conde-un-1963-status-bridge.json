@@ -1,0 +1,235 @@
+{
+  "schema": "conde.un-1963-status-scientific-bridge/v1",
+  "id": "ABELHA-UN-C241-L33-01",
+  "parent_sha256": {
+    "research/tle_custody/un_1963_registration_C241-L33.json": "190949d59f53b1f158648bd912de7b3e47572f18dd3c53cbc75844f4f4eceb86",
+    "research/tle_custody/nasa_ssr_dec1977_528_identity_C241-L32.json": "4de614ade9f8850bbacb09bf9d7b597dff905657b3815e8f7d1be27c6fcfdaa7",
+    "research/constraints/nasa_528_decay_precision_C197_20261113.json": "94945f3490ff9c2b7221c1f8760364851bac3c5a54007635d16c242f0d3fe80b"
+  },
+  "custodial_occurrence": "C241-L33",
+  "matrix_occurrence": "C197#1",
+  "source_documents": [
+    {
+      "id": "UN-INF30",
+      "url": "https://www.unoosa.org/documents/pdf/inf030E.pdf",
+      "sha256": "fbee0e928a2d81e62c97c102eef70d4f4931dd500372a4bf735bd8891c6188b8",
+      "bytes": 189499,
+      "pdf_page_index": 1,
+      "report_cutoff_printed": "2400Z 31 JANUARY 1963",
+      "publication_day": "1963-03-13",
+      "document_kind": "JAN31_FULL_NEW_REGISTRATION"
+    },
+    {
+      "id": "UN-INF53",
+      "url": "https://www.unoosa.org/documents/pdf/inf053E.pdf",
+      "sha256": "1439a1c1ec49b3922bb7f86e4b868b8ab8a1c9e34e34803b78c1aea2c541c84c",
+      "bytes": 850470,
+      "pdf_page_index": 1,
+      "report_cutoff_printed": "2400Z 15 NOVEMBER 1963",
+      "publication_day": "1963-12-31",
+      "document_kind": "NOV15_INCREMENTS_AND_DELETIONS"
+    },
+    {
+      "id": "UN-INF54",
+      "url": "https://www.unoosa.org/documents/pdf/inf054E.pdf",
+      "sha256": "8a67ca12769e935877429125a6d446f4e04189698d0e356536f588fef507acf4",
+      "bytes": 377974,
+      "pdf_page_index": 1,
+      "report_cutoff_printed": "2400Z 31 OCTOBER 1963",
+      "publication_day": "1963-12-31",
+      "document_kind": "OCT31_INCREMENT_ONLY_CONTROL"
+    },
+    {
+      "id": "UN-INF55",
+      "url": "https://www.unoosa.org/documents/pdf/inf055E.pdf",
+      "sha256": "2f69e814a277e3a5fae8b27db8f7566f39a401a8089f1287dbea65d47b94cbcd",
+      "bytes": 286501,
+      "pdf_page_index": 1,
+      "report_cutoff_printed": "2400Z 15 OCTOBER 1963",
+      "publication_day": "1963-12-31",
+      "document_kind": "OCT15_INCREMENT_ONLY_CONTROL"
+    }
+  ],
+  "catalogued_elements": [
+    {
+      "source_id": "C241-L33:UN-INF30",
+      "source_pdf_sha256": "fbee0e928a2d81e62c97c102eef70d4f4931dd500372a4bf735bd8891c6188b8",
+      "printed_designator": "1963-3-A",
+      "norad_via_retrospective_c241_l32": 527,
+      "report_cutoff_printed": "2400Z 31 JANUARY 1963",
+      "publication_day": "1963-03-13",
+      "instrument_epoch_utc": null,
+      "source_kind": "GOVERNMENT_REGISTRATION_COMPILED_ELEMENTS",
+      "reported_elements": {
+        "nodal_period_min": "94.7",
+        "inclination_deg": "81.97",
+        "apogee_km": "518.6",
+        "perigee_km": "479.5"
+      },
+      "simulator_observable": "catalogued_period_inclination_apogee_perigee",
+      "pending": [
+        "source_orbit_fit",
+        "instrument_epoch",
+        "reference_frame",
+        "catalogue_rounding_model",
+        "instrument_covariance"
+      ],
+      "activation": false
+    },
+    {
+      "source_id": "C241-L33:UN-INF30",
+      "source_pdf_sha256": "fbee0e928a2d81e62c97c102eef70d4f4931dd500372a4bf735bd8891c6188b8",
+      "printed_designator": "1963-3-B",
+      "norad_via_retrospective_c241_l32": 528,
+      "report_cutoff_printed": "2400Z 31 JANUARY 1963",
+      "publication_day": "1963-03-13",
+      "instrument_epoch_utc": null,
+      "source_kind": "GOVERNMENT_REGISTRATION_COMPILED_ELEMENTS",
+      "reported_elements": {
+        "nodal_period_min": "94.5",
+        "inclination_deg": "81.97",
+        "apogee_km": "505.5",
+        "perigee_km": "476.4"
+      },
+      "simulator_observable": "catalogued_period_inclination_apogee_perigee",
+      "pending": [
+        "source_orbit_fit",
+        "instrument_epoch",
+        "reference_frame",
+        "catalogue_rounding_model",
+        "instrument_covariance"
+      ],
+      "activation": false
+    },
+    {
+      "source_id": "C241-L33:UN-INF30",
+      "source_pdf_sha256": "fbee0e928a2d81e62c97c102eef70d4f4931dd500372a4bf735bd8891c6188b8",
+      "printed_designator": "1963-3-C",
+      "norad_via_retrospective_c241_l32": 529,
+      "report_cutoff_printed": "2400Z 31 JANUARY 1963",
+      "publication_day": "1963-03-13",
+      "instrument_epoch_utc": null,
+      "source_kind": "GOVERNMENT_REGISTRATION_COMPILED_ELEMENTS",
+      "reported_elements": {
+        "nodal_period_min": "94.7",
+        "inclination_deg": "81.97",
+        "apogee_km": "525.5",
+        "perigee_km": "476.4"
+      },
+      "simulator_observable": "catalogued_period_inclination_apogee_perigee",
+      "pending": [
+        "source_orbit_fit",
+        "instrument_epoch",
+        "reference_frame",
+        "catalogue_rounding_model",
+        "instrument_covariance"
+      ],
+      "activation": false
+    }
+  ],
+  "documentary_status_528": {
+    "original_designator": "1963-3B",
+    "norad_from_c241_l32": 528,
+    "reported_not_in_orbit_by": "2400Z 15 NOVEMBER 1963",
+    "report_publication_day": "1963-12-31",
+    "nasa_catalogued_decay_day": "1963-11-08",
+    "reporting_independence": "UNKNOWN_POSSIBLY_SHARED_NASA_NORAD_UPSTREAM",
+    "actual_terminal_time_utc": null,
+    "actual_event_location": null,
+    "sensor_epoch_utc": null,
+    "sensor_covariance": null,
+    "status": "DOCUMENTARY_REPORT_PENDING_CALIBRATION"
+  },
+  "control_absence_is_negative_observation": false,
+  "source_dependency_graph": [
+    {
+      "from": "UN-INF30-JAN31",
+      "to": "1963-3-B-528",
+      "type": "REGISTERED_ORBITAL_ELEMENTS_AS_OF_REPORT_CUTOFF",
+      "activation": "DOCUMENTARY_ONLY"
+    },
+    {
+      "from": "UN-INF53-NOV15",
+      "to": "1963-3B-528",
+      "type": "REGISTERED_NO_LONGER_IN_ORBIT_BY_REPORT_CUTOFF",
+      "activation": "DOCUMENTARY_ONLY"
+    },
+    {
+      "from": "UN-INF54-OCT31",
+      "to": "UN-DECAY-DELTA-CONTROL",
+      "type": "INCREMENTAL_LIST_NO_3B",
+      "activation": "NO_NEGATIVE_SENSOR_EVIDENCE"
+    },
+    {
+      "from": "UN-INF55-OCT15",
+      "to": "UN-DECAY-DELTA-CONTROL",
+      "type": "INCREMENTAL_LIST_NO_3B",
+      "activation": "NO_NEGATIVE_SENSOR_EVIDENCE"
+    },
+    {
+      "from": "UN-INF30-JAN31",
+      "to": "NASA-SSR-1977-C241-L32",
+      "type": "ORIGINAL_1963_NAME_CROSSWALK_RETROSPECTIVE",
+      "activation": "CATALOGUE_BRIDGE"
+    },
+    {
+      "from": "UN-INF53-NOV15",
+      "to": "NASA-C197-DAY-1963-11-08",
+      "type": "DAY_LABEL_CONSISTENCY_SAME_UPSTREAM_POSSIBLE",
+      "activation": "NO_INDEPENDENT_MEASUREMENT"
+    },
+    {
+      "from": "UN-INF30-JAN31",
+      "to": "latent_1963_528_state_epoch",
+      "type": "COMPILED_ORBITAL_ELEMENTS_REQUIRE_EPOCH_AND_FIT",
+      "activation": false
+    },
+    {
+      "from": "UN-INF53-NOV15",
+      "to": "latent_528_true_terminal_time",
+      "type": "REPORTED_STATUS_REQUIRES_CATALOG_REPORTING_MODEL",
+      "activation": false
+    },
+    {
+      "from": "C197#1",
+      "to": "latent_528_true_terminal_time",
+      "type": "REPORTED_NASA_DAY_REQUIRES_DECAY_DATE_ERROR_MODEL",
+      "activation": false
+    },
+    {
+      "from": "latent_528_true_terminal_time",
+      "to": "simulator_terminal_event_528",
+      "type": "FORWARD_MODEL_NOT_CALIBRATED",
+      "activation": false
+    }
+  ],
+  "lean_module": "Conde1963.UnRegistrationCandidate",
+  "lean_definition": "Conde1963.un1963RegistrationElements",
+  "lean_status": "TYPED_DOCUMENTARY_CANDIDATE_NO_PHYSICAL_THEOREM",
+  "simulator_latent_parameters": [
+    {
+      "name": "state_epoch_528_utc",
+      "value": null,
+      "active": false
+    },
+    {
+      "name": "true_terminal_time_528_utc",
+      "value": null,
+      "active": false
+    },
+    {
+      "name": "reporting_date_error_528_seconds",
+      "value": null,
+      "active": false
+    },
+    {
+      "name": "fit_covariance_528",
+      "value": null,
+      "active": false
+    }
+  ],
+  "independent_instrument_observations_added": 0,
+  "activation": false,
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "next_test": "Locate original 528 station track and the rule mapping SPADATS decay events to UN cutoffs"
+}

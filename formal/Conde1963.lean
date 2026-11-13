@@ -6,6 +6,7 @@ import Conde1963.NmcCandidate
 import Conde1963.CaravelasCandidate
 import Conde1963.GhcndCondeCandidate
 import Conde1963.SovietCatalogueCandidate
+import Conde1963.UnRegistrationCandidate
 import Conde1963.NmcLayout
 import Conde1963.NoradContext
 import Conde1963.WaybackCitations
