@@ -96,7 +96,7 @@ def audit(doc, raw=None):
     validate_ledger(doc)
     result = {
         "record_id": "C241-L13",
-        "gcat_row_authenticated_by_live_snapshot": False,
+        "gcat_row_matches_expected_fields": False,
         "gcat_source_sha256": None,
         "gcat_source_bytes": None,
         "gcat_row": None,
@@ -111,7 +111,7 @@ def audit(doc, raw=None):
         result["gcat_row"] = find_gcat_row(raw)
         result["gcat_source_sha256"] = hashlib.sha256(raw).hexdigest()
         result["gcat_source_bytes"] = len(raw)
-        result["gcat_row_authenticated_by_live_snapshot"] = True
+        result["gcat_row_matches_expected_fields"] = True
     return result
 
 
