@@ -32,6 +32,21 @@ assert.ok(read('evidencias/index.html').includes('/conde-incident/evidencias/arq
 assert.match(archiveIndex,/28 ocorrências curadas de 241/,'Cobertura curada estática ausente');
 assert.match(archiveIndex,/213 ocorrências não mapeadas/,'Limite de cobertura omitido');
 assert.ok(archiveIndex.includes('/conde-incident/lab/#/documents'),'Arquivo sem link de retorno ao laboratório');
+
+ // A documentary page is not a numbered chapter. Never fabricate chapter
+ // number, author status, or an editorial return destination.
+ for(const route of ['evidencias/arquivo/index.html',
+   'evidencias/arquivo/familias/index.html',
+   'evidencias/arquivo/familias/bluebook-derivative-catalogues/index.html',
+   'evidencias/arquivo/c232-1/index.html']){
+   const html=read(route);
+   assert.doesNotMatch(html,/Capítulo\s*\?/,'Índice com capítulo fictício: '+route);
+   assert.doesNotMatch(html,/Status não definido/,'Estado fictício: '+route);
+   assert.doesNotMatch(html,/Todos os capítulos/,'Retorno editorial incorreto: '+route);
+   assert.match(html,/Edição documental/,'Edição documental sem rótulo: '+route);
+   assert.match(html,/\/conde-incident\/evidencias\/arquivo\//,'Retorno ao arquivo ausente: '+route);
+ }
+
 for(const [slug,id] of [['c01-1','C01#1'],['c197-1','C197#1'],['c232-1','C232#1']]){
   const html=read('evidencias/arquivo/'+slug+'/index.html');
   assert.ok(archiveIndex.includes('/conde-incident/evidencias/arquivo/'+slug+'/'),'Deep link ausente: '+id);
