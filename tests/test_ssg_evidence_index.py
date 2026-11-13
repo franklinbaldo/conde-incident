@@ -80,6 +80,11 @@ class EvidenceIndexTest(unittest.TestCase):
             entry['matrix_line'] = row['matrix_line']
         self.mutate_inputs(forge)
 
+    def test_rewritten_claim_rejected_even_when_matrix_row_hash_is_valid(self):
+        def forge(data):
+            data[export.CITATIONS]['records'][0]['claim_text'] = 'Impacto físico confirmado em Conde'
+        self.mutate_inputs(forge)
+
     def test_mutated_frozen_matrix_rejected_even_with_same_feeds(self):
         self.mutate_inputs(lambda _: None, lambda raw: raw + b'\n<!-- altered -->\n')
 
