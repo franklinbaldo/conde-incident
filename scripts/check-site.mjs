@@ -18,6 +18,8 @@ for (const route of ['index.html','stories/index.html','evidencias/arquivo/index
   assert.match(html, /id="ssg-search-btn"[^>]*aria-label="Pesquisar"/, 'Busca sem nome PT-BR: '+route);
   assert.match(html, /id="ssg-search-input"[^>]*placeholder="Pesquisar no acervo\.\.\."/, 'Campo de busca em inglês: '+route);
   assert.match(html, /<kbd>Esc<\/kbd> fechar/, 'Ajuda de teclado em inglês: '+route);
+  assert.match(html, /id="ssg-search-overlay"[^>]*aria-modal="true"/, 'Busca sem modalidade acessível: '+route);
+  assert.match(html, /id="ssg-search-close"[^>]*aria-label="Fechar pesquisa"/, 'Busca sem botão de fechar: '+route);
   assert.doesNotMatch(html, /<span>Search<\/span>/, 'Busca não localizada: '+route);
 }
 // The SSG's English runtime must also be localized, not just the input label.
@@ -30,6 +32,9 @@ assert.equal(runtimeMatch[2], 'sha384-' + createHash('sha384').update(runtimeJs)
 assert.match(runtimeJs, /Nenhum resultado para &ldquo;/, 'Dynamic empty result in English');
 assert.match(runtimeJs, /Nenhum resultado encontrado/, 'Screen-reader empty state in English');
 assert.match(runtimeJs, /resultado.*encontrado/, 'Plural result count not translated');
+assert.match(runtimeJs, /ssg-search-close/, 'Close button not wired');
+assert.match(runtimeJs, /e\.key==='Tab'/, 'Modal Tab boundaries not handled');
+assert.match(runtimeJs, /btn\.focus\(\)/, 'Dialog close does not restore trigger focus');
 assert.doesNotMatch(runtimeJs, /No results found|No results for/, 'English result announcement remains');
 for (const route of ['stories/index.html', 'evidencias/arquivo/index.html']) {
   assert.ok(read(route).includes(runtimeMatch[0]), 'SSG search runtime differs on ' + route);
