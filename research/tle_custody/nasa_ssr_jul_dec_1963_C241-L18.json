@@ -34,10 +34,21 @@
           "period_min": "93.9",
           "inclination_deg": "81.88",
           "apogee_km": 498,
-          "perigee_km": 425
+          "perigee_km": 452
         }
       ],
-      "source_status": "NEW_FACSIMILE_VERIFIED_L18"
+      "source_status": "NEW_FACSIMILE_VERIFIED_L18",
+      "perigee_transcription_erratum": {
+        "reviewed_utc_date": "2026-11-13",
+        "designator": "1963-003C",
+        "field": "perigee_km",
+        "prior_ledger_value_km": 425,
+        "verified_facsimile_value_km": 452,
+        "pdf_page_index": 6,
+        "printed_page": 5,
+        "review_method": "Second independent visual reading of the official NASA NTRS 19630012290 facsimile, not OCR",
+        "effect_on_physical_constraints": "NONE_UNTIL_INSTRUMENT_EPOCH_FRAME_AND_SIGMA_RETRIEVED"
+      }
     },
     {
       "ntrs_id": "19640002493",

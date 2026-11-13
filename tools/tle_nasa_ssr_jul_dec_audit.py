@@ -11,7 +11,7 @@ PINS = [
      "9b00bf8323b1de80a34920f73c658f70f766a51632a13473a408679f0e5a03d9",
      [("1963-003A", "94.6", "81.88", 537, 458),
       ("1963-003B", "93.6", "81.88", 463, 415),
-      ("1963-003C", "93.9", "81.88", 498, 425)]),
+      ("1963-003C", "93.9", "81.88", 498, 452)]),
     ("19640002493", "1963-11-30", 23, "1963-11-30T12:00:00Z", 1266393,
      "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
      [("1963-003A", "94.6", "81.88", 533, 459),
@@ -48,6 +48,12 @@ def validate(ledger):
                 not isinstance(row["perigee_km"], int) or
                 row["perigee_km"] > row["apogee_km"]):
                 raise ValueError("implausible printed altitude")
+    erratum = ledger["sources"][0].get("perigee_transcription_erratum")
+    if not erratum or (erratum.get("designator"), erratum.get("field"),
+            erratum.get("prior_ledger_value_km"), erratum.get("verified_facsimile_value_km"),
+            erratum.get("pdf_page_index"), erratum.get("printed_page")) != (
+            "1963-003C", "perigee_km", 425, 452, 6, 5):
+        raise ValueError("July 3C perigee erratum missing")
     conflict = ledger["sources"][2]["transcription_conflict"]
     if (conflict["matrix_occurrence"] != "C227" or
         conflict["prior_reported_period_min"] != "89.6" or
