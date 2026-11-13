@@ -75,6 +75,19 @@ def verify_manifest(d:dict, parent:dict, header:bytes)->str:
         raise ValueError('incorrect JP2 signature/independence')
     if a['jp2_box_sequence']!=['jP  ','ftyp','jp2h','xml ','jp2c']:
         raise ValueError('wrong JP2 boxes')
+    xml=a['embedded_xml']
+    if xml!={
+       'payload_bytes':1660,
+       'payload_sha256':'34324b6e4d426531c0796aa8a28d52dde53b01b7a2840bd3e9af334f50c6200d',
+       'change_history_date':'2017-06-23',
+       'change_history_meaning':'PROCESSING_HISTORY_NOT_SURVEY_OR_PHOTOGRAPH_CAPTURE_DATE',
+       'bitsperpixel_literal':'1953391977',
+       'bitsperpixel_consistent_with_ihdr':False,
+       'header_bits_per_component':8,
+       'original_internal_source_path_republished':False,
+       'transform':'5x3 reversible wavlet transform','levels':8,'layers':20,
+       'tile_width':1024,'tile_height':1024}:
+        raise ValueError('wrong embedded XML evidence or misread processing date')
     if (parent['object']['iiif_width_px'],parent['object']['iiif_height_px'])!=(a['width_px'],a['height_px']):
         raise ValueError('wrong IIIF crosscheck')
     if (d['map_historical_readings']['catalog_year'],d['map_historical_readings']['communications_update_year'],
@@ -99,6 +112,16 @@ def verify_original(path:Path,d:dict,header:bytes)->str:
         fp.seek(0)
         for part in iter(lambda: fp.read(1<<20),b''):digest.update(part)
     if digest.hexdigest()!=a['sha256']:raise ValueError('original SHA256 mismatch')
+    with path.open('rb') as fp:
+        fp.seek(103)
+        xml_header=fp.read(8)
+        xml_payload=fp.read(1660)
+    if xml_header!=bytes.fromhex('00000684786d6c20'):
+        raise ValueError('XML container not at authenticated offset')
+    if hashlib.sha256(xml_payload).hexdigest()!=a['embedded_xml']['payload_sha256']:
+        raise ValueError('XML payload changed')
+    if b'<date>2017-06-23</date>' not in xml_payload or b'<bitsperpixel>1953391977</bitsperpixel>' not in xml_payload:
+        raise ValueError('original change history or corrupt metadata altered')
     names,identity=boxes(path)
     if names!=a['jp2_box_sequence'] or identity!={
         'width_px':9603,'height_px':7783,'components':3,'bits_per_component':8,'compression':7}:
