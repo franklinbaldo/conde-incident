@@ -40,6 +40,20 @@ def load_json(path, root):
     return json.loads(raw), digest(raw)
 
 
+def matrix_inventory(lines):
+    # Number repeated IDs by their actual *row* order, not by numeric label:
+    # C44/C45/C46 each occur twice in the immutable matrix.
+    counts = {}
+    inventory = {}
+    for line_number, line in enumerate(lines, 1):
+        match = re.match(rb'^\|\s*\*{0,2}(C[0-9]+)\*{0,2}\s*\|', line)
+        if match:
+            label = match.group(1).decode('ascii')
+            counts[label] = counts.get(label, 0) + 1
+            inventory[f'{label}#{counts[label]}'] = line_number
+    return inventory
+
+
 def build(root=ROOT):
     citations, citations_sha = load_json(CITATIONS, root)
     lineage, lineage_sha = load_json(LINEAGE, root)
@@ -53,6 +67,9 @@ def build(root=ROOT):
     ).hexdigest()
     require(actual_blob == matrix, 'Snapshot da matriz não corresponde ao Git blob real')
     matrix_lines = matrix_raw.splitlines()
+    inventory = matrix_inventory(matrix_lines)
+    require(len(inventory) == citations['total_matrix_occurrences'],
+            'Cobertura declarada não reflete linhas reais da matriz')
     require(bool(SHA1.fullmatch(matrix)), 'SHA-1 de snapshot inválido')
     require(matrix == lineage['matrix_git_blob_sha1'], 'Snapshots de matriz diferentes')
     require(lineage['epistemic_limits']['independent_physical_observation_count'] is None,
@@ -81,6 +98,8 @@ def build(root=ROOT):
         number = record['matrix_line']
         require(isinstance(number, int) and 0 < number <= len(matrix_lines),
                 'Linha da matriz fora do snapshot')
+        require(inventory.get(occurrence) == number,
+                'Ocorrência numerada não corresponde à linha da matriz')
         original_line = matrix_lines[number - 1]
         require(digest(original_line) == record['row_sha256'],
                 'SHA-256 da linha não corresponde à matriz original')
@@ -146,6 +165,12 @@ def build(root=ROOT):
                              occurrence.lower().replace('#', '-') + '/'),
         })
     require(used == set(ancestry), 'Genealogia órfã não exportada')
+    curated = {row['occurrence'] for row in rows}
+    gaps = [{'occurrence': occurrence, 'matrix_line': number}
+            for occurrence, number in inventory.items() if occurrence not in curated]
+    require(len(curated) == citations['curated_occurrences'] and
+            len(gaps) == citations['unmapped_occurrences'],
+            'Ocorrências fora do índice não reconciliadas com a matriz')
     rows.sort(key=lambda r: (int(r['occurrence'].split('#')[0][1:]),
                              int(r['occurrence'].split('#')[1]), r['source_id']))
     # Separate chunks are immutable by content hash and small enough for repository policy.
@@ -185,6 +210,9 @@ def build(root=ROOT):
         'curated_occurrences': citations['curated_occurrences'],
         'curated_reference_count': len(rows),
         'unmapped_matrix_occurrences': citations['unmapped_occurrences'],
+        # Machine-readable ledger of *unmapped*, not absent, evidence rows.
+        # Line numbers resolve against the immutable Git blob above.
+        'unmapped_matrix_refs': gaps,
         'total_matrix_occurrences': citations['total_matrix_occurrences'],
         'post_matrix_ids_not_in_curated_index': post_ids,
         'independent_physical_observation_count': None,
