@@ -12,20 +12,24 @@
       "object": "527",
       "mass_kg": 620,
       "sigma_kg": 50,
-      "source_class": "SYNTHETIC_NOT_HISTORICAL"
+      "source_class": "SYNTHETIC_NOT_HISTORICAL",
+      "kind": "mass"
     },
     {
+      "kind": "ballistic",
       "object": "528",
-      "mass_kg": 240,
-      "sigma_kg": 45,
+      "observed_B_m2_kg": 0.002,
+      "sigma_B_m2_kg": 0.0004,
+      "assumed_Cd_area_m2": 0.48,
       "source_class": "SYNTHETIC_NOT_HISTORICAL"
     },
     {
       "object": "529",
       "mass_kg": 230,
       "sigma_kg": 50,
-      "source_class": "SYNTHETIC_NOT_HISTORICAL"
+      "source_class": "SYNTHETIC_NOT_HISTORICAL",
+      "kind": "mass"
     }
   ],
-  "note": "Entirely invented calibration to test the algorithm. Not 1963 data. None of the three objects has an authenticated historical mass measurement."
+  "note": "Invented mass and ballistic observations (Cd*A, B, uncertainty) for testing only. No historical 1963 mass/area or calibrated ballistic observation recovered."
 }
