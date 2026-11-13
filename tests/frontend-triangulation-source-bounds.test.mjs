@@ -7,7 +7,8 @@ const tri = read('../src/components/TriangulationDashboard.tsx');
 const app = read('../src/App.tsx');
 
 test('triangulation is a reachable site route, not an unused legacy string', () => {
-  assert.match(app, /import \{ TriangulationDashboard \}/);
+  // A lazily imported route is still reachable; the compiled graph is audited separately.
+  assert.match(app, /import\('\.\/components\/TriangulationDashboard'\)/);
   assert.match(app, /activeTab === 'triangulation'/);
   assert.match(app, /<TriangulationDashboard lang=\{lang\}/);
 });

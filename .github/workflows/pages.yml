@@ -27,6 +27,8 @@ jobs:
       - run: bun run lint
       - name: Build scientific lab at nested Pages path
         run: VITE_BASE_PATH=/conde-incident/lab/ bun run build
+      - name: Verify lazy instrument chunks and lab entry payload (UX-08)
+        run: node --test tests/lab-code-split.test.mjs
       - name: Install verified SSG Rust 0.0.75 binary
         shell: bash
         run: |

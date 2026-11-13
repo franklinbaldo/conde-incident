@@ -8,15 +8,18 @@ import { Navigation, type TabId } from './components/Navigation';
 import { mapTimeHref, parseLabRoute, tabHref } from './lib/tabRoutes';
 import { skipToMain } from './lib/skipToMain';
 import { ExecutiveSummary } from './components/ExecutiveSummary';
-import { OrbitalMap } from './components/OrbitalMap';
-import { InversePassInspector } from './components/InversePassInspector';
-import { TriangulationDashboard } from './components/TriangulationDashboard';
-import { AtmosphereSensitivity } from './components/AtmosphereSensitivity';
-import { MonteCarloVisualizer } from './components/MonteCarloVisualizer';
-import { DocumentArchive } from './components/DocumentArchive';
-import { TleAuditViewer } from './components/TleAuditViewer';
-import { PythonScriptModal } from './components/PythonScriptModal';
 import { Satellite, Shield, Globe, Terminal, ExternalLink } from 'lucide-react';
+
+// Technical instruments and the Python export are loaded only when requested.
+// The documentary summary remains eagerly available for a quick first reading.
+const OrbitalMap = React.lazy(() => import('./components/OrbitalMap').then(module => ({ default: module.OrbitalMap })));
+const InversePassInspector = React.lazy(() => import('./components/InversePassInspector').then(module => ({ default: module.InversePassInspector })));
+const TriangulationDashboard = React.lazy(() => import('./components/TriangulationDashboard').then(module => ({ default: module.TriangulationDashboard })));
+const AtmosphereSensitivity = React.lazy(() => import('./components/AtmosphereSensitivity').then(module => ({ default: module.AtmosphereSensitivity })));
+const MonteCarloVisualizer = React.lazy(() => import('./components/MonteCarloVisualizer').then(module => ({ default: module.MonteCarloVisualizer })));
+const DocumentArchive = React.lazy(() => import('./components/DocumentArchive').then(module => ({ default: module.DocumentArchive })));
+const TleAuditViewer = React.lazy(() => import('./components/TleAuditViewer').then(module => ({ default: module.TleAuditViewer })));
+const PythonScriptModal = React.lazy(() => import('./components/PythonScriptModal').then(module => ({ default: module.PythonScriptModal })));
 
 export default function App() {
   const [route, setRoute] = useState(() => parseLabRoute(window.location.hash));
@@ -88,6 +91,7 @@ export default function App() {
               : 'This section is not available in the laboratory. Showing the summary; choose an existing tab.'}
           </p>
         )}
+        <React.Suspense fallback={<p role="status" className="rounded-lg border border-zinc-700 bg-zinc-900 p-5 text-sm text-zinc-200">{lang === 'pt' ? 'Carregando a seção do laboratório…' : 'Loading laboratory section…'}</p>}>
         {activeTab === 'summary' && (
           <ExecutiveSummary
             lang={lang}
@@ -129,14 +133,19 @@ export default function App() {
         {activeTab === 'documents' && (
           <DocumentArchive lang={lang} />
         )}
+        </React.Suspense>
       </main>
 
       {/* Python Script Modal */}
-      <PythonScriptModal
-        isOpen={isPythonModalOpen}
-        onClose={() => setIsPythonModalOpen(false)}
-        lang={lang}
-      />
+      {isPythonModalOpen && (
+        <React.Suspense fallback={<p role="status" className="sr-only">{lang === 'pt' ? 'Preparando exportação…' : 'Preparing export…'}</p>}>
+          <PythonScriptModal
+            isOpen={isPythonModalOpen}
+            onClose={() => setIsPythonModalOpen(false)}
+            lang={lang}
+          />
+        </React.Suspense>
+      )}
 
       {/* Scientific Footer */}
       <footer className="border-t border-zinc-900 bg-zinc-950 py-6 text-xs text-zinc-400 font-mono">
