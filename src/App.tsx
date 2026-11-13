@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { Navigation, type TabId } from './components/Navigation';
 import { mapTimeHref, parseLabRoute, tabHref } from './lib/tabRoutes';
 import { skipToMain } from './lib/skipToMain';
+import { PythonExportBoundary, PythonExportFallback } from './components/PythonExportFallback';
 import { ExecutiveSummary } from './components/ExecutiveSummary';
 import { LabLoadErrorBoundary } from './components/LabLoadErrorBoundary';
 import { Satellite, Shield, Globe, Terminal, ExternalLink } from 'lucide-react';
@@ -30,6 +31,15 @@ export default function App() {
     route.timeMs ?? new Date('1963-10-27T14:40:16.132Z').getTime()
   );
   const [isPythonModalOpen, setIsPythonModalOpen] = useState<boolean>(false);
+  const pythonExportOpener = React.useRef<HTMLElement | null>(null);
+  const openPythonExport = () => {
+    pythonExportOpener.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    setIsPythonModalOpen(true);
+  };
+  const closePythonExport = () => {
+    setIsPythonModalOpen(false);
+    if (pythonExportOpener.current?.isConnected) pythonExportOpener.current.focus();
+  };
 
   // Hash URLs are stable even after reload and follow native Back/Forward navigation.
   // Only already-shipped lab tabs are recognized. Unavailable SSG routes remain explicit.
@@ -80,7 +90,7 @@ export default function App() {
         activeTab={activeTab}
         lang={lang}
         setLang={setLang}
-        onOpenPython={() => setIsPythonModalOpen(true)}
+        onOpenPython={openPythonExport}
       />
 
       {/* Main Content Body */}
@@ -141,13 +151,15 @@ export default function App() {
 
       {/* Python Script Modal */}
       {isPythonModalOpen && (
-        <React.Suspense fallback={<p role="status" className="sr-only">{lang === 'pt' ? 'Preparando exportação…' : 'Preparing export…'}</p>}>
-          <PythonScriptModal
-            isOpen={isPythonModalOpen}
-            onClose={() => setIsPythonModalOpen(false)}
-            lang={lang}
-          />
-        </React.Suspense>
+        <PythonExportBoundary lang={lang} onClose={closePythonExport}>
+          <React.Suspense fallback={<PythonExportFallback lang={lang} onClose={closePythonExport} status="loading" />}>
+            <PythonScriptModal
+              isOpen={isPythonModalOpen}
+              onClose={closePythonExport}
+              lang={lang}
+            />
+          </React.Suspense>
+        </PythonExportBoundary>
       )}
 
       {/* Scientific Footer */}
@@ -164,7 +176,7 @@ export default function App() {
             <span>{lang === 'pt' ? 'Modelos: SGP4, WGS84, J2, Termosfera Solar-Min 1963' : 'Models: SGP4, WGS84, J2, Solar-Min Thermosphere 1963'}</span>
             <span className="text-zinc-700">|</span>
             <button
-              onClick={() => setIsPythonModalOpen(true)}
+              onClick={openPythonExport}
               className="text-cyan-400 hover:underline cursor-pointer"
             >
               {lang === 'pt' ? 'Exportar Python' : 'Export Python'}
