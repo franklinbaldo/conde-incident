@@ -164,6 +164,9 @@ export function audit(bundle) {
   const families=new Set(),works=new Set(),sources=new Set();
   const archiveIndex=pages.get('index.md');
   assert.ok(archiveIndex?.includes(PREFIX+'familias/'),'No-JS root absent');
+  assert.ok(archiveIndex.includes(PREFIX+'estados/'),'No-JS state index absent');
+  const stateIndex=pages.get('estados/index.md');
+  assert.ok(stateIndex,'Missing SSG state index');
   for (const record of citations.records) {
     const originalLine=matrixLines[record.matrix_line-1];
     assert.ok(originalLine,'Matrix line missing: '+record.occurrence);
@@ -190,6 +193,9 @@ export function audit(bundle) {
     const rendered=pages.get(route);
     assert.ok(rendered,'SSG route missing: '+row.archive_path);
     assert.ok(archiveIndex.includes(row.archive_path),'No-JS index missing: '+row.archive_path);
+    assert.ok(stateIndex.includes(row.archive_path),'State index missing: '+row.archive_path);
+    assert.ok(stateIndex.includes(matrixRowUrl(row.matrix_line)),
+      'State index missing immutable row: '+row.archive_path);
     assert.ok(rendered.includes(row.row_sha256),'SSG row checksum missing: '+row.archive_path);
     assert.ok(rendered.includes(row.source_status),'SSG canonical status absent: '+row.archive_path);
     for (const target of [link('familias',row.source_family),
@@ -199,7 +205,7 @@ export function audit(bundle) {
     }
   }
   assert.equal(occurrences.size,manifest.curated_occurrences);
-  assert.equal(pages.size,occurrences.size+4+families.size+works.size+sources.size,
+  assert.equal(pages.size,occurrences.size+5+families.size+works.size+sources.size,
     'SSG page inventory no longer matches JSON IDs');
   for (const id of occurrences)
     assert.ok(pages.has(idPath(id).slice(PREFIX.length)+'index.md'));
@@ -216,6 +222,9 @@ export function auditBuiltSite(bundle,siteRoot='public') {
   const allRows=bundle.shards.flatMap(part=>JSON.parse(part.raw).records);
   const index=readFileSync(join(siteRoot,'evidencias/arquivo/index.html'),'utf8');
   const indexAnchors=visibleDocument(index).links;
+  const stateHtml=readFileSync(join(siteRoot,'evidencias/arquivo/estados/index.html'),'utf8');
+  const stateAnchors=visibleDocument(stateHtml).links;
+  assert.ok(indexAnchors.has(PREFIX+'estados/'),'Built archive missing state browser link');
   // Cache reverse-link targets; each source/obra/família may cover many records.
   const reverseCache=new Map();
   const reversePage=path=>{
@@ -228,6 +237,10 @@ export function auditBuiltSite(bundle,siteRoot='public') {
   for (const row of allRows) {
     assert.ok(indexAnchors.has(row.archive_path),
       'Built index missing navigable anchor: '+row.archive_path);
+    assert.ok(stateAnchors.has(row.archive_path),
+      'Built state browser missing occurrence: '+row.archive_path);
+    assert.ok(stateAnchors.has(matrixRowUrl(row.matrix_line)),
+      'Built state browser missing matrix row: '+row.archive_path);
     const page=join(siteRoot,row.archive_path.slice(PREFIX.length)
       ? 'evidencias/arquivo/'+row.archive_path.slice(PREFIX.length)+'index.html'
       : 'evidencias/arquivo/index.html');
