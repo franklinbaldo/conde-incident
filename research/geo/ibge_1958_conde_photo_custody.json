@@ -1,0 +1,260 @@
+{
+  "schema": "conde.ibge1958-conde-facsimile-custody/v1",
+  "id": "LON-IBGE1958-CONDE-01",
+  "source": {
+    "institution": "IBGE",
+    "title": "Enciclopédia dos Municípios Brasileiros, volume XX, Bahia",
+    "print_year": 1958,
+    "source_url": "https://biblioteca.ibge.gov.br/visualizacao/livros/liv27295_20.pdf",
+    "pdf_size_bytes": 72579243,
+    "pdf_sha256": "440bd7eaa42c712c89e65111fbebb7b8f77430f76ecff2be0a96d4eacb11a741",
+    "pdf_page_count": 398,
+    "pdf_format": "PDF 1.3",
+    "pdf_creation_metadata": "D:20000309104646-02'00'",
+    "pdf_modification_metadata": "D:20140310180430-03'00'",
+    "file_retrieval_date_utc": "2026-11-13",
+    "inspected_pages": [
+      {
+        "pdf_page": 180,
+        "printed_page": 185,
+        "scope": "opening Conde - BA entry, area and neighboring municipalities"
+      },
+      {
+        "pdf_page": 181,
+        "printed_page": 186,
+        "scope": "Conde - BA, 3 captioned photographs"
+      },
+      {
+        "pdf_page": 182,
+        "printed_page": 187,
+        "scope": "Conde - BA, 3 captioned photographs"
+      },
+      {
+        "pdf_page": 183,
+        "printed_page": 188,
+        "scope": "Conde - BA continuation, 2 photographs; Condeúba - BA starts below"
+      }
+    ]
+  },
+  "method": {
+    "visual_inspection": "Facsimiles of PDF pages 181, 182 and 183 rendered and read against captions, not derived solely from searchable text",
+    "pdf_text_layer": "pre-existing OCR/searchable layer; no new OCR performed",
+    "ocr_limits": [
+      "existing searchable text reads 'Ruo do Corro' for the Rua do Carro caption",
+      "existing searchable text may read 'ltapicuru' for Itapicuru",
+      "PDF page index is not printed page number"
+    ],
+    "crop_derivative": "PyMuPDF 1.26.7, page.get_pixmap(matrix=fitz.Matrix(2,2),clip=fitz.Rect(rect_pt),colorspace=fitz.csGRAY,alpha=False).tobytes(output='png')",
+    "crop_sha_semantics": "SHA256 of derivative PNG render, NOT original camera negative or independent scan",
+    "image_objects": "Each scanned PDF page has one page-raster XObject, not one PDF XObject per historic photo"
+  },
+  "photos": [
+    {
+      "id": "prefeitura_municipal",
+      "pdf_page": 181,
+      "printed_page": 186,
+      "rect_pt": [
+        62,
+        81,
+        332,
+        245
+      ],
+      "caption_visually_inspected": "Prefeitura Municipal",
+      "caption_transcription": "normalized from facsimile",
+      "render_size_px": [
+        540,
+        328
+      ],
+      "crop_png_sha256": "2a8e3545e8a4ab66b36b93ed59e92c4e630a577fc82ebaa3119db30171be043b",
+      "capture_date": null,
+      "photographer": null,
+      "individual_camera_location": null,
+      "confirmed_city": "Conde, Bahia (within printed municipality entry)",
+      "georeferenced": false
+    },
+    {
+      "id": "trecho_rio_itapicuru",
+      "pdf_page": 181,
+      "printed_page": 186,
+      "rect_pt": [
+        356,
+        400,
+        625,
+        577
+      ],
+      "caption_visually_inspected": "Vista de um trecho do rio Itapicuru",
+      "caption_transcription": "normalized from facsimile",
+      "render_size_px": [
+        538,
+        354
+      ],
+      "crop_png_sha256": "422092702a451d8f381a80eaa4ad79067e8f86fccb654f4af1b45f75008e588e",
+      "capture_date": null,
+      "photographer": null,
+      "individual_camera_location": null,
+      "confirmed_city": "Conde, Bahia (within printed municipality entry)",
+      "georeferenced": false
+    },
+    {
+      "id": "praca_severiano_lima",
+      "pdf_page": 181,
+      "printed_page": 186,
+      "rect_pt": [
+        62,
+        690,
+        332,
+        855
+      ],
+      "caption_visually_inspected": "Aspecto da Praça Severiano Lima, vendo-se ao fundo a igreja do Senhor do Bonfim",
+      "caption_transcription": "normalized from facsimile",
+      "render_size_px": [
+        540,
+        330
+      ],
+      "crop_png_sha256": "e4659b5123c32a5a8dabf397fd2d52320dbdd71f15a6855a854a25c6f106e3d3",
+      "capture_date": null,
+      "photographer": null,
+      "individual_camera_location": null,
+      "confirmed_city": "Conde, Bahia (within printed municipality entry)",
+      "georeferenced": false
+    },
+    {
+      "id": "rua_do_carro",
+      "pdf_page": 182,
+      "printed_page": 187,
+      "rect_pt": [
+        340,
+        78,
+        606,
+        241
+      ],
+      "caption_visually_inspected": "Aspecto parcial da Rua do Carro",
+      "caption_transcription": "normalized from facsimile",
+      "render_size_px": [
+        532,
+        326
+      ],
+      "crop_png_sha256": "930b8eb3e6a83f402ea7439e46e4eb525c5fdfbb8efaf7eb3fe7e60b22423ada",
+      "capture_date": null,
+      "photographer": null,
+      "individual_camera_location": null,
+      "confirmed_city": "Conde, Bahia (within printed municipality entry)",
+      "georeferenced": false
+    },
+    {
+      "id": "trecho_cidade",
+      "pdf_page": 182,
+      "printed_page": 187,
+      "rect_pt": [
+        44,
+        414,
+        315,
+        588
+      ],
+      "caption_visually_inspected": "Vista parcial de um trecho da cidade",
+      "caption_transcription": "normalized from facsimile",
+      "render_size_px": [
+        542,
+        348
+      ],
+      "crop_png_sha256": "b7d57ef75371fc5b51883a28782320624bb9521932685978d8c1668300a2f432",
+      "capture_date": null,
+      "photographer": null,
+      "individual_camera_location": null,
+      "confirmed_city": "Conde, Bahia (within printed municipality entry)",
+      "georeferenced": false
+    },
+    {
+      "id": "margem_esquerda_rio_itapicuru",
+      "pdf_page": 182,
+      "printed_page": 187,
+      "rect_pt": [
+        339,
+        695,
+        608,
+        860
+      ],
+      "caption_visually_inspected": "Vista parcial da margem esquerda do rio Itapicuru",
+      "caption_transcription": "normalized from facsimile",
+      "render_size_px": [
+        538,
+        330
+      ],
+      "crop_png_sha256": "b3e3ce09ffbdcb9b1eb282a1c27a212749b7f797d9b08162fb0270e6b6458590",
+      "capture_date": null,
+      "photographer": null,
+      "individual_camera_location": null,
+      "confirmed_city": "Conde, Bahia (within printed municipality entry)",
+      "georeferenced": false
+    },
+    {
+      "id": "vista_parcial_cidade",
+      "pdf_page": 183,
+      "printed_page": 188,
+      "rect_pt": [
+        65,
+        272,
+        331,
+        441
+      ],
+      "caption_visually_inspected": "Vista parcial da cidade",
+      "caption_transcription": "normalized from facsimile",
+      "render_size_px": [
+        532,
+        338
+      ],
+      "crop_png_sha256": "89ded8d53e9e8932393878754b70827d8c6f683efdadf01be3ae45957e4382fd",
+      "capture_date": null,
+      "photographer": null,
+      "individual_camera_location": null,
+      "confirmed_city": "Conde, Bahia (within printed municipality entry)",
+      "georeferenced": false
+    },
+    {
+      "id": "rua_marechal_floriano",
+      "pdf_page": 183,
+      "printed_page": 188,
+      "rect_pt": [
+        358,
+        78,
+        627,
+        244
+      ],
+      "caption_visually_inspected": "Rua Marechal Floriano",
+      "caption_transcription": "normalized from facsimile",
+      "render_size_px": [
+        538,
+        332
+      ],
+      "crop_png_sha256": "176e91ef2d2596194a9d8cf29ade73d21d00c66711b7a5de502b000b08b8acdf",
+      "capture_date": null,
+      "photographer": null,
+      "individual_camera_location": null,
+      "confirmed_city": "Conde, Bahia (within printed municipality entry)",
+      "georeferenced": false
+    }
+  ],
+  "photo_count": 8,
+  "links": {
+    "related_matrix_occurrences": [
+      "C24"
+    ],
+    "recipient_inbox": "https://github.com/franklinbaldo/lontra/issues/5",
+    "separate_modern_context": "https://github.com/franklinbaldo/conde-incident/pull/326"
+  },
+  "epistemic_limits": {
+    "document_date_is_photo_date": false,
+    "printed_page_is_pdf_page": false,
+    "photos_are_1963_observations": false,
+    "can_locate_historic_buildings_precisely": false,
+    "can_constrain_reentry": false,
+    "source_family": "IBGE 1958 ENCYCLOPEDIA PRINTED EDITION; 8 photos inside ONE editorial source",
+    "independence": "Multiple photographs in one volume are not independent documentary sources or 1963 orbital measurements",
+    "negative_findings": [
+      "No acquisition dates or individual photographers verified in the audited captions",
+      "No surveyed 1963 coordinates, legal 1963 boundary, camera georeference or proof of 1963 streetscape",
+      "The 'Mapa Municipal no 4.o Vol.' locator is not a city plan visible in these pages"
+    ],
+    "status": "VISUALLY_VERIFIED_PHOTO_CAPTIONS_NO_GEOREFERENCE"
+  }
+}
