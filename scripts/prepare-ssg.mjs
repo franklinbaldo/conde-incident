@@ -4,6 +4,7 @@ import {join} from 'node:path';
 import {writeArchivePages} from './ssg-documentary-archive.mjs';
 import {writeTleCustodyPage} from './ssg-tle-custody.mjs';
 import {writeAuthoredPages} from './ssg-authored-pages.mjs';
+import {editorialChronology} from './ssg-chronology.mjs';
 
 // stories/*.md is the sole human-authored content; content/ is regenerated.
 const names=readdirSync('stories').filter(n=>/^\d{4}-\d{2}-\d{2}-[a-z0-9-]+\.md$/.test(n)).sort();
@@ -83,9 +84,7 @@ function landing(slug,title,description,content){
  writeFileSync('content/'+slug+'/index.md',page(title,description,'index',content+'\n\n[Início](/conde-incident/) · [Caderno](/conde-incident/stories/)'));
 }
 landing('cronologia','Cronologia da investigação','Datas editoriais da investigação do Conde.',
- '# Cronologia da investigação\n\n**Estas datas são de publicação dos capítulos, não datas de observação, passagem ou queda.**\n\n'+stories.map(s=>
- '- **'+s.date+'**: [Capítulo '+s.chapter+': '+s.title+'](/conde-incident/stories/'+s.slug+'/). '+s.summary
- ).join('\n'));
+ '# Cronologia da investigação\n\n**Estas datas são de publicação dos capítulos, não datas de observação, passagem ou queda.**\n\n'+editorialChronology(stories));
 landing('evidencias','Evidências e fontes','Índice de textos, fontes e proveniência.',
  '# Evidências e fontes\n\nEste índice cobre os capítulos editoriais, **não toda a matriz científica**. Verifique as fontes originais e a dependência entre relatos.\n\n'+stories.map(s=>
  '- [Capítulo '+s.chapter+': '+s.title+'](/conde-incident/stories/'+s.slug+'/) · [Markdown canônico](https://github.com/franklinbaldo/conde-incident/blob/main/stories/'+s.filename+')'
