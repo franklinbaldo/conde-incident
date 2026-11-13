@@ -35,6 +35,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Install pinned scientific Python dependency (G48 ERFA)
+        run: python3 -m pip install pyerfa==2.0.1.5
       - name: Execute all Python unittest suites (fail closed)
         shell: bash
         run: |
