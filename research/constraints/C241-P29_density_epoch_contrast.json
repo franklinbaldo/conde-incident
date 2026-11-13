@@ -1,0 +1,77 @@
+{
+  "id": "C241-P29",
+  "status": "SYNTHETIC_CONDITIONAL_DESIGN_NOT_HISTORICAL_MEASUREMENT",
+  "source_inventory": {
+    "source_path": "research/constraints/baker_nunn_ru301_1963_film_index.json",
+    "source_sha256": "bd7bd05a6530af496b840da2edb7aa056ff0cdb9f25588d8831e92bff7b2562c",
+    "archival_film_locators": 15,
+    "locators_explicitly_attributed_to_528": 0,
+    "candidate_calibrated_528_records": 0,
+    "caution": "Index-only inventory is neither complete tracking log nor negative detection."
+  },
+  "design_assumptions": [
+    "Two distinct bodies each observed at two shared epochs, with true altitude and isolated drag acceleration known.",
+    "Log-normalized drag = log A + log B_object + log q_epoch - (h-h0)/H.",
+    "Positive common temporal multiplier q_epoch across both objects, constant positive B per object.",
+    "Source-linked calibration, physical propagation, sensor errors and independence are NOT available for 1963."
+  ],
+  "synthetic_cells_object_epoch_altitude_km": [
+    [
+      527,
+      0,
+      480
+    ],
+    [
+      529,
+      0,
+      520
+    ],
+    [
+      527,
+      1,
+      500
+    ],
+    [
+      529,
+      1,
+      510
+    ]
+  ],
+  "interaction": {
+    "contrast": "-z527_0+z529_0+z527_1-z529_1",
+    "weights": [
+      -1,
+      1,
+      1,
+      -1
+    ],
+    "delta_relative_altitude_km": 30,
+    "coefficient_of_inverse_scale_height_km": -30,
+    "nuisance_coefficients_exactly_zero": true
+  },
+  "exact_rank_diagnostic": {
+    "nuisance_rank": 3,
+    "full_rank": 4,
+    "three_cell_nuisance_rank": 3,
+    "three_cell_full_rank": 3,
+    "unchanged_separation_nuisance_rank": 3,
+    "unchanged_separation_full_rank": 3,
+    "object_specific_q_nuisance_rank": 4,
+    "object_specific_q_full_rank": 4,
+    "528_absent_full_rank": 4,
+    "altitude_interaction_km": 30,
+    "contrast_columns": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      -30
+    ]
+  },
+  "fourth_cell": "Required to identify 1/H under two arbitrary shared epoch factors; not a prospective predictive holdout.",
+  "missing_528": "Neither q(t) cancellation nor 527/529 controls identifies B_528 absent 528 measurements.",
+  "historical_mcmc": "NOT_RUN",
+  "historical_domain_reduction": "NOT_EVALUABLE",
+  "active_constraint": false
+}
