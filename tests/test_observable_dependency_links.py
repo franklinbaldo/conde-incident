@@ -33,6 +33,53 @@ class ObservableDependencyLinkTests(unittest.TestCase):
         self.assertTrue(self.data['epistemic_limits']['recife_is_not_conde'])
         self.assertIsNone(self.data['epistemic_limits']['independent_physical_observation_count'])
 
+    def test_caravelas_external_occurrence_is_connected_but_not_activated(self):
+        self.assertEqual(len(self.data['external_source_edges']), 1)
+        ext = self.data['external_source_edges'][0]
+        self.assertEqual(ext['source_id'], 'MET-ISD-19631107-09-CARAVELAS-01')
+        self.assertIsNone(ext['matrix_occurrence'])
+        self.assertEqual(ext['digitized_station_hour_rows'], 72)
+        self.assertEqual(ext['source_family'], 'NOAA_NCEI_ISD_DIGITIZED_SURFACE_OBSERVATIONS')
+        self.assertEqual(ext['graph_edges'][1], {
+            'from': 'Caravelas_surface_wind_at_hour_t',
+            'to': 'Conde_surface_wind_at_hour_t',
+            'type': 'PENDING_SPATIAL_TRANSFER'})
+        self.assertEqual(ext['recife_context']['source_id'], 'NOAA_IGRA_RECIFE_1963')
+        self.assertTrue(ext['recife_context']['matrix_occurrence'].endswith(':C151#1'))
+        self.assertFalse(ext['recife_context']['independence_certified'])
+        self.assertFalse(ext['activation'])
+        self.assertEqual(len(ext['activation_requirements']), 4)
+        self.assertEqual(ext['physical_domain_effect'], 'THETA_UNCHANGED')
+        for name in ('station_position_1963', 'instrument_covariance',
+                     'spatial_transfer_operator', 'terminal_epoch_528', 'simulator_value'):
+            self.assertIsNone(ext[name], name)
+
+    def test_caravelas_spatial_transfer_and_error_require_real_evidence(self):
+        paths = ('research/meteorology/isd_caravelas_19631107_09.json',
+                 'research/constraints/isd_caravelas_surface_1963.json')
+        report, graph = (json.loads((ROOT / x).read_text()) for x in paths)
+        context = next(x for x in self.data['edges']
+                       if x['source_id'] == 'NOAA_IGRA_RECIFE_1963')
+        def audit(r, g, c):
+            return links.build_caravelas_external(r, g, c, {})
+        assert audit(report, graph, context)['activation'] is False
+        mutated = copy.deepcopy(graph)
+        mutated['edges'][1]['type'] = 'OBSERVED_AT_CONDE'
+        with self.assertRaisesRegex(ValueError, 'Caravelas edges'):
+            audit(report, mutated, context)
+        mutated = copy.deepcopy(graph)
+        mutated['active_conde_constraint'] = True
+        with self.assertRaisesRegex(ValueError, 'activated'):
+            audit(report, mutated, context)
+        mutated = copy.deepcopy(report)
+        mutated['quality']['measurement_uncertainty'] = 0.05
+        with self.assertRaisesRegex(ValueError, 'custody'):
+            audit(mutated, graph, context)
+        mutated = copy.deepcopy(context)
+        mutated['matrix_occurrence'] = mutated['matrix_occurrence'].replace('C151#1', 'C179#1')
+        with self.assertRaisesRegex(ValueError, 'Recife context'):
+            audit(report, graph, mutated)
+
     def test_export_matches_exact_canonical_bytes(self):
         raw = (ROOT / links.OUTPUT).read_bytes()
         self.assertEqual(raw, links.encoded(self.data))
