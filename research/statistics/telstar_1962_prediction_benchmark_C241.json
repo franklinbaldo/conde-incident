@@ -37,6 +37,49 @@
     "site": "Andover",
     "units": "degrees"
   },
+  "pass_deletion_sensitivity": {
+    "assumes_independent_passes": false,
+    "classification": "PASS_BLOCK_DELETION_SENSITIVITY_NOT_CROSS_VALIDATION",
+    "estimates_population_uncertainty": false,
+    "max_deletion_rms_deg": 0.0357907,
+    "min_deletion_rms_deg": 0.0267494,
+    "passes": [
+      {
+        "descriptive_los_rms_deg": 0.0354742,
+        "excluded_pass_id": 124,
+        "remaining_passes": 4,
+        "remaining_rows": 30
+      },
+      {
+        "descriptive_los_rms_deg": 0.0357907,
+        "excluded_pass_id": 133,
+        "remaining_passes": 4,
+        "remaining_rows": 31
+      },
+      {
+        "descriptive_los_rms_deg": 0.0347478,
+        "excluded_pass_id": 143,
+        "remaining_passes": 4,
+        "remaining_rows": 31
+      },
+      {
+        "descriptive_los_rms_deg": 0.0335691,
+        "excluded_pass_id": 151,
+        "remaining_passes": 4,
+        "remaining_rows": 30
+      },
+      {
+        "descriptive_los_rms_deg": 0.0267494,
+        "excluded_pass_id": 160,
+        "remaining_passes": 4,
+        "remaining_rows": 30
+      }
+    ],
+    "prospective_or_blind_holdout": false,
+    "refits_prediction_model": false,
+    "rms_range_deg": 0.0090413,
+    "unit_of_deletion": "complete_tracking_pass"
+  },
   "passes": [
     {
       "count": 8,

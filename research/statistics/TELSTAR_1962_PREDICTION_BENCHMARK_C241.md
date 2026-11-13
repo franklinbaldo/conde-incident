@@ -18,6 +18,22 @@ O auditor calcula separação angular da visada esférica, não diferença plana
 
 A resolução decimal publicada (0,01°) não identifica a regra de arredondamento, a resolução física do rastreador ou o erro verdadeiro de cada observação. A seleção da tabela é editorial, examinada retrospectivamente, não um holdout cegamente registrado agora. A incerteza de 528 permanece `null`.
 
+## Sensibilidade ao bloqueio por passagem (sem validação preditiva)
+
+A análise adicional exclui integralmente uma das **cinco passagens** por vez e recalcula o RMS *dos 30 ou 31 registros restantes*, sem alterar o modelo que produziu as previsões históricas. Não é leave-one-pass-out cross-validation: **não há retreinamento, novas previsões, nem holdout cego**. O exercício mede somente quanto o descritivo publicado depende de cada cluster da própria tabela, sem inferir independência entre passagens.
+
+| Passagem excluída | Linhas remanescentes | RMS descritivo (graus) |
+|---|---:|---:|
+| 124 | 30 | 0,0354742 |
+| 133 | 31 | 0,0357907 |
+| 143 (cruza meia-noite) | 31 | 0,0347478 |
+| 151 | 30 | 0,0335691 |
+| 160 | 30 | 0,0267494 |
+
+O intervalo dos cinco RMS recalculados é **0,0267494°–0,0357907°**, largura **0,0090413°**; o RMS de todas as linhas era **0,0334590°**. A passagem 160 tem RMS próprio 0,0513264°, e sua exclusão causa a maior redução no agregado. Isso é heterogeneidade **descritiva de seleção**, não evidência de que a passagem 160 está errada nem estimativa de variância entre passagens. A tabela foi selecionada pelos autores e lida retrospectivamente; não há base para IC/SE, jackknife inferencial, distribuição preditiva de outra campanha ou sigma do NORAD 528.
+
+O próximo teste realmente discriminante deve reservar passagens/estações **antes do ajuste** e exigir previsões datadas e observações posteriores independentes, com logs de origem e erros instrumentais. Nunca sortear 38 linhas como 38 unidades independentes.
+
 ## Diagnóstico de identificabilidade e próximo discriminante
 
 - **Identificável nesta fonte:** resíduos de apontamento *impressos* para o satélite, local e passagens publicados; estatísticas descritivas condicionadas à amostra, com unidades explícitas.
