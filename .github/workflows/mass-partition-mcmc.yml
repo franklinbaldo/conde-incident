@@ -58,6 +58,9 @@ jobs:
           assert synthetic['assumed_total_reference_kg']==1176
           assert not synthetic['basis_is_historically_selected']
           assert not synthetic['historical_masses_inferred']
+          assert not synthetic['historical_posterior_certified']
+          assert synthetic['numerical_convergence_gate_passed'] == all(
+              v['diagnostic']['meets_reference_numerical_gate'] for v in synthetic['mass_summary'].values())
           PY
       - uses: actions/upload-artifact@v4
         if: always()
