@@ -1,0 +1,588 @@
+{
+  "schema": "conde.gaviao-retrospective-window/v1",
+  "audit": "G31",
+  "checkpoint_sha": "d73e66678dbaf0583064f88da7e4702baeb7d5b0",
+  "reviewed_through_main_sha": "4863347fba222da572827cf38bb867e7d5cc6336",
+  "main_cut_utc": "2026-11-13T03:38:29Z",
+  "first_parent_integrations": 15,
+  "squash_merges": 15,
+  "conventional_merges": 0,
+  "lateral_commits": 0,
+  "direct_main_commits": 0,
+  "dag_commits": 15,
+  "closed_unmerged_recent_query": "GitHub search is:pr is:closed is:unmerged closed:2026-11-13T02:40:00Z..2026-11-13T03:38:30Z returned 0; scoped search, not proof of all closure history.",
+  "source_policy": "C77/C84 journalism and NASA 528 catalog day distinguish claims from physical events; source lineage and uncertainties preserved. External primary PDF byte validation and independent Lean axioms audit NOT_RUN.",
+  "material_findings": [
+    {
+      "id": "G31-F1",
+      "severity": "HIGH_METHOD",
+      "source_pr": 354,
+      "path": "tools/raan_source_likelihood_readiness.py",
+      "reproduction": "Swapping NORAD 528 validation 1963-08-03 epoch with evaluation 1963-10-02 epoch preserved membership sets and 61/23/35 counts; original build() returned a report instead of rejecting wrong temporal partitions. Two pre-fix tests failed.",
+      "correction": "Pin split schema and UTC boundaries, verify each partition epoch (fit before Aug1, validation Aug1–Sep30, evaluation from Oct1). Two new adversarial regressions pass; no historical records changed.",
+      "historical_observation_created": false,
+      "scientific_parameter_reduction": false
+    }
+  ],
+  "no_new_terminal_time_or_position": true,
+  "no_new_historical_domain_reduction": true,
+  "reviewed": [
+    {
+      "pr": 343,
+      "sha": "0de1acc7b50c68500d9ba6bbeb8bc4450a73b53e",
+      "first_parent_sha": "d73e66678dbaf0583064f88da7e4702baeb7d5b0",
+      "type": "SQUASH",
+      "author_head_sha": "3c0b041ed26c64ab021254c293086cce9252aba3",
+      "changed_files": [
+        "scripts/check-site.mjs",
+        "scripts/prepare-ssg.mjs",
+        "templates/index.html",
+        "templates/page.html",
+        "templates/post.html",
+        "templates/template.html",
+        "templates/tera/base.html",
+        "tests/caderno_reflow_smoke.mjs"
+      ],
+      "review_note": "SSG-first unified navigation; no evidence added; availability != deployed artifact identity",
+      "author_ci": {
+        "sha": "3c0b041ed26c64ab021254c293086cce9252aba3",
+        "counts": {
+          "skipped": 1,
+          "success": 19
+        },
+        "total": 20,
+        "non_success": [
+          {
+            "name": "deploy",
+            "conclusion": "skipped"
+          }
+        ]
+      },
+      "push_ci": {
+        "sha": "0de1acc7b50c68500d9ba6bbeb8bc4450a73b53e",
+        "counts": {
+          "success": 19
+        },
+        "total": 19,
+        "non_success": []
+      }
+    },
+    {
+      "pr": 344,
+      "sha": "07893cc6a628639d287f330e2dc3253e2ed71dea",
+      "first_parent_sha": "0de1acc7b50c68500d9ba6bbeb8bc4450a73b53e",
+      "type": "SQUASH",
+      "author_head_sha": "5e5de12b7944b1e828c57b56001acbf8c4b64037",
+      "changed_files": [
+        "research/audits/gaviao-main-window-20261112-g30.json",
+        "research/audits/gaviao-main-window-20261112-g30.md",
+        "tests/test_nasa_ssr_legacy_wayback.py",
+        "tools/verify_nasa_ssr_legacy_wayback.py"
+      ],
+      "review_note": "NASA API live-fetch code added with synthetic HTTP digest negative controls; external replay not repeated",
+      "author_ci": {
+        "sha": "5e5de12b7944b1e828c57b56001acbf8c4b64037",
+        "counts": {
+          "skipped": 1,
+          "success": 18
+        },
+        "total": 19,
+        "non_success": [
+          {
+            "name": "deploy",
+            "conclusion": "skipped"
+          }
+        ]
+      },
+      "push_ci": {
+        "sha": "07893cc6a628639d287f330e2dc3253e2ed71dea",
+        "counts": {
+          "success": 19
+        },
+        "total": 19,
+        "verification": "GitHub connected fetch; unauth API 422"
+      }
+    },
+    {
+      "pr": 346,
+      "sha": "2ec8e1c4bf92757d98b0d81b12e7e8650b85cec6",
+      "first_parent_sha": "07893cc6a628639d287f330e2dc3253e2ed71dea",
+      "type": "SQUASH",
+      "author_head_sha": "a9423110f2a2bef5ac52f441255e92a9796b985a",
+      "changed_files": [
+        "research/geo/cgeo17_1958_urban_toponym_crosswalk.json",
+        "research/geo/cgeo17_1958_urban_toponym_crosswalk.md",
+        "tests/test_cgeo17_urban_toponym_crosswalk.py"
+      ],
+      "review_note": "IBGE-1958 square and modern toponyms linked as candidates; no historical centroid or camera bearing",
+      "author_ci": {
+        "sha": "a9423110f2a2bef5ac52f441255e92a9796b985a",
+        "counts": {
+          "skipped": 1,
+          "success": 18
+        },
+        "total": 19,
+        "non_success": [
+          {
+            "name": "deploy",
+            "conclusion": "skipped"
+          }
+        ]
+      },
+      "push_ci": {
+        "sha": "2ec8e1c4bf92757d98b0d81b12e7e8650b85cec6",
+        "counts": {
+          "success": 19
+        },
+        "total": 19,
+        "non_success": []
+      }
+    },
+    {
+      "pr": 347,
+      "sha": "63036aa968c6d377386a0787e22d9626071ade86",
+      "first_parent_sha": "2ec8e1c4bf92757d98b0d81b12e7e8650b85cec6",
+      "type": "SQUASH",
+      "author_head_sha": "e013e1faaa8925f1d46707d8bc11b29ed25ee939",
+      "changed_files": [
+        "scripts/check-site.mjs",
+        "stories/2026-11-12-oito-fotografias-antes-da-esfera.md"
+      ],
+      "review_note": "Eight captioned IBGE photographs from one editorial family; no camera epoch or impact image",
+      "author_ci": {
+        "sha": "e013e1faaa8925f1d46707d8bc11b29ed25ee939",
+        "counts": {
+          "skipped": 1,
+          "success": 18
+        },
+        "total": 19,
+        "non_success": [
+          {
+            "name": "deploy",
+            "conclusion": "skipped"
+          }
+        ]
+      },
+      "push_ci": {
+        "sha": "63036aa968c6d377386a0787e22d9626071ade86",
+        "counts": {
+          "success": 19
+        },
+        "total": 19,
+        "non_success": []
+      }
+    },
+    {
+      "pr": 349,
+      "sha": "add9ac1df51e4dba717ea17cecb712d0dab9add0",
+      "first_parent_sha": "63036aa968c6d377386a0787e22d9626071ade86",
+      "type": "SQUASH",
+      "author_head_sha": "e92ba3b462ebcbead599a7cdbda561d767460d7f",
+      "changed_files": [
+        "public/data/conde-wayback-citation-links.json",
+        "tests/test_wayback_citation_links.py",
+        "tools/export_wayback_citation_links.py"
+      ],
+      "review_note": "Three legacy Wayback replays traced to a single NASA PDF; not 3 independent observations",
+      "author_ci": {
+        "sha": "e92ba3b462ebcbead599a7cdbda561d767460d7f",
+        "counts": {
+          "skipped": 1,
+          "success": 18
+        },
+        "total": 19,
+        "non_success": [
+          {
+            "name": "deploy",
+            "conclusion": "skipped"
+          }
+        ]
+      },
+      "push_ci": {
+        "sha": "add9ac1df51e4dba717ea17cecb712d0dab9add0",
+        "counts": {
+          "cancelled": 1,
+          "success": 18
+        },
+        "total": 19,
+        "non_success": [
+          {
+            "name": "deploy",
+            "conclusion": "cancelled"
+          }
+        ]
+      }
+    },
+    {
+      "pr": 350,
+      "sha": "7ddb2887a22748816b10b40fff826c5563473a87",
+      "first_parent_sha": "add9ac1df51e4dba717ea17cecb712d0dab9add0",
+      "type": "SQUASH",
+      "author_head_sha": "c34905ceb6c59c087cdccdad85dc406ead6a6f04",
+      "changed_files": [
+        "research/meteorology/recife_wmoid_catalogue_excerpts.txt",
+        "research/meteorology/recife_wmoid_catalogues_1963_bridge.json",
+        "research/meteorology/recife_wmoid_catalogues_1963_bridge.md",
+        "tests/test_recife_wmoid_catalogues.py",
+        "tools/audit_recife_wmoid_catalogues.py"
+      ],
+      "review_note": "NOAA/WMO station identifiers 82899 and 82900 kept distinct; metadata not calibration of Nov 1963 instrument",
+      "author_ci": {
+        "sha": "c34905ceb6c59c087cdccdad85dc406ead6a6f04",
+        "counts": {
+          "skipped": 1,
+          "success": 18
+        },
+        "total": 19,
+        "non_success": [
+          {
+            "name": "deploy",
+            "conclusion": "skipped"
+          }
+        ]
+      },
+      "push_ci": {
+        "sha": "7ddb2887a22748816b10b40fff826c5563473a87",
+        "counts": {
+          "cancelled": 1,
+          "success": 18
+        },
+        "total": 19,
+        "non_success": [
+          {
+            "name": "deploy",
+            "conclusion": "cancelled"
+          }
+        ]
+      }
+    },
+    {
+      "pr": 352,
+      "sha": "0c82f3e034cf252848f40002734f4258cc52a27d",
+      "first_parent_sha": "7ddb2887a22748816b10b40fff826c5563473a87",
+      "type": "SQUASH",
+      "author_head_sha": "11de3d3297701e3a6024311578553f75d3bcfed5",
+      "changed_files": [
+        ".github/workflows/tle-nasa-annual-group.yml",
+        "research/tle_custody/evidence_matrix_C241-L15_2026-11-12.md",
+        "research/tle_custody/nasa_sp4004_1963_group_custody_C241-L15.json",
+        "tests/test_tle_nasa_annual_group_audit.py",
+        "tools/tle_nasa_annual_group_audit.py"
+      ],
+      "review_note": "NASA SP-4004 1963-3 launch group not individual 528; no refutation of component decay day",
+      "author_ci": {
+        "sha": "11de3d3297701e3a6024311578553f75d3bcfed5",
+        "counts": {
+          "skipped": 1,
+          "success": 19
+        },
+        "total": 20,
+        "non_success": [
+          {
+            "name": "deploy",
+            "conclusion": "skipped"
+          }
+        ]
+      },
+      "push_ci": {
+        "sha": "0c82f3e034cf252848f40002734f4258cc52a27d",
+        "counts": {
+          "success": 20
+        },
+        "total": 20,
+        "non_success": []
+      }
+    },
+    {
+      "pr": 353,
+      "sha": "899db2dd11936619355c0ffe49ef0b36f0a6c88f",
+      "first_parent_sha": "0c82f3e034cf252848f40002734f4258cc52a27d",
+      "type": "SQUASH",
+      "author_head_sha": "c6104e0c0e5f5bed1ed5794bbbd7ffaecf48b221",
+      "changed_files": [
+        "tests/test_ci_event_policy_all_workflows.py"
+      ],
+      "review_note": "YAML workflow parser checks multiline branches; no physical evidence claimed",
+      "author_ci": {
+        "sha": "c6104e0c0e5f5bed1ed5794bbbd7ffaecf48b221",
+        "counts": {
+          "skipped": 1,
+          "success": 18
+        },
+        "total": 19,
+        "non_success": [
+          {
+            "name": "deploy",
+            "conclusion": "skipped"
+          }
+        ]
+      },
+      "push_ci": {
+        "sha": "899db2dd11936619355c0ffe49ef0b36f0a6c88f",
+        "counts": {
+          "success": 19
+        },
+        "total": 19,
+        "non_success": []
+      }
+    },
+    {
+      "pr": 354,
+      "sha": "158f1c94b83107412df2d4ba6ffaa6e724382de3",
+      "first_parent_sha": "899db2dd11936619355c0ffe49ef0b36f0a6c88f",
+      "type": "SQUASH",
+      "author_head_sha": "5fc970852d19536501623aff936e2363117ae476",
+      "changed_files": [
+        "research/statistics/raan_source_likelihood_readiness_C241.json",
+        "tests/test_raan_source_likelihood_readiness.py",
+        "tools/raan_source_likelihood_readiness.py"
+      ],
+      "review_note": "SOURCE G31-F1: factor-readiness holdout accepted cross-partition October/August swap despite frozen UTC cuts",
+      "author_ci": {
+        "sha": "5fc970852d19536501623aff936e2363117ae476",
+        "counts": {
+          "skipped": 1,
+          "success": 18
+        },
+        "total": 19,
+        "non_success": [
+          {
+            "name": "deploy",
+            "conclusion": "skipped"
+          }
+        ]
+      },
+      "push_ci": {
+        "sha": "158f1c94b83107412df2d4ba6ffaa6e724382de3",
+        "counts": {
+          "cancelled": 1,
+          "success": 18
+        },
+        "total": 19,
+        "non_success": [
+          {
+            "name": "deploy",
+            "conclusion": "cancelled"
+          }
+        ]
+      }
+    },
+    {
+      "pr": 355,
+      "sha": "cbe23bf2a346e77340a0430a923fd61ad8fa3fcd",
+      "first_parent_sha": "158f1c94b83107412df2d4ba6ffaa6e724382de3",
+      "type": "SQUASH",
+      "author_head_sha": "968473557131c1ab4f158bfc7a549fe45bc4b945",
+      "changed_files": [
+        "research/archive/on20_wayback_prefix_20261113.json",
+        "tests/test_on20_wayback_prefix.py",
+        "tools/verify_on20_wayback_prefix.py"
+      ],
+      "review_note": "ON20 2008 July replay is exact truncated prefix versus full 2008 Sep/2022 PDF; neither validates 1963 data layout",
+      "author_ci": {
+        "sha": "968473557131c1ab4f158bfc7a549fe45bc4b945",
+        "counts": {
+          "skipped": 1,
+          "success": 18
+        },
+        "total": 19,
+        "non_success": [
+          {
+            "name": "deploy",
+            "conclusion": "skipped"
+          }
+        ]
+      },
+      "push_ci": {
+        "sha": "cbe23bf2a346e77340a0430a923fd61ad8fa3fcd",
+        "counts": {
+          "success": 19
+        },
+        "total": 19,
+        "non_success": []
+      }
+    },
+    {
+      "pr": 356,
+      "sha": "7b98f55827baad20a69ea2469f0313b1599f814a",
+      "first_parent_sha": "cbe23bf2a346e77340a0430a923fd61ad8fa3fcd",
+      "type": "SQUASH",
+      "author_head_sha": "c7ff91962071aec8f6c7f642c55f707d0edb8daf",
+      "changed_files": [
+        ".github/workflows/lean-core.yml",
+        "formal/Conde1963.lean",
+        "formal/Conde1963/WaybackCitations.lean",
+        "formal/scripts/compile_wayback_citations.py",
+        "formal/tests/test_wayback_citations.py",
+        "research/constraints/C241-L16_wayback_citation_lean_bridge.md"
+      ],
+      "review_note": "Five Wayback captures represent three documents, NASA C197/C198 same work; Lean proof conditional, axioms local NOT_RUN",
+      "author_ci": {
+        "sha": "c7ff91962071aec8f6c7f642c55f707d0edb8daf",
+        "counts": {
+          "skipped": 1,
+          "success": 18
+        },
+        "total": 19,
+        "non_success": [
+          {
+            "name": "deploy",
+            "conclusion": "skipped"
+          }
+        ]
+      },
+      "push_ci": {
+        "sha": "7b98f55827baad20a69ea2469f0313b1599f814a",
+        "counts": {
+          "success": 19
+        },
+        "total": 19,
+        "non_success": []
+      }
+    },
+    {
+      "pr": 335,
+      "sha": "8e163f26b7f6cfe3264ba126cd80b48a5449bd89",
+      "first_parent_sha": "7b98f55827baad20a69ea2469f0313b1599f814a",
+      "type": "SQUASH",
+      "author_head_sha": "83c66858c665b984c708c794b754016b0736af37",
+      "changed_files": [
+        ".github/workflows/orbit-kernel.yml",
+        "research/constraints/teme_covariance_transport_g29.json",
+        "src/lib/orbitFrameCovariance.ts",
+        "src/lib/orbitFrameKinematics.ts",
+        "tests/orbitFrameCovariance.test.mjs"
+      ],
+      "review_note": "6D covariance J=[R,0;Rdot,R] and SPD synthetic checks; real sensor covariance/frame systematics unavailable",
+      "author_ci": {
+        "sha": "83c66858c665b984c708c794b754016b0736af37",
+        "counts": {
+          "skipped": 1,
+          "success": 18
+        },
+        "total": 19,
+        "non_success": [
+          {
+            "name": "deploy",
+            "conclusion": "skipped"
+          }
+        ]
+      },
+      "push_ci": {
+        "sha": "8e163f26b7f6cfe3264ba126cd80b48a5449bd89",
+        "counts": {
+          "success": 19
+        },
+        "total": 19,
+        "non_success": []
+      }
+    },
+    {
+      "pr": 357,
+      "sha": "a95830d582bf8fde86115476b9c28adcea3ebad6",
+      "first_parent_sha": "8e163f26b7f6cfe3264ba126cd80b48a5449bd89",
+      "type": "SQUASH",
+      "author_head_sha": "c57bbf645e87ed6b2077c082c7f66b5de073cb55",
+      "changed_files": [
+        "scripts/check-site.mjs",
+        "templates/index.html",
+        "templates/page.html",
+        "templates/post.html",
+        "templates/template.html",
+        "templates/tera/base.html",
+        "tests/caderno_reflow_smoke.mjs"
+      ],
+      "review_note": "SSG navigation link to lab validated by static checks; not independent evidence of live deployment",
+      "author_ci": {
+        "sha": "c57bbf645e87ed6b2077c082c7f66b5de073cb55",
+        "counts": {
+          "skipped": 1,
+          "success": 19
+        },
+        "total": 20,
+        "non_success": [
+          {
+            "name": "deploy",
+            "conclusion": "skipped"
+          }
+        ]
+      },
+      "push_ci": {
+        "sha": "a95830d582bf8fde86115476b9c28adcea3ebad6",
+        "counts": {
+          "success": 19
+        },
+        "total": 19,
+        "non_success": []
+      }
+    },
+    {
+      "pr": 358,
+      "sha": "cd416d54d21326411b2d280f5382f4ffdbe66f2c",
+      "first_parent_sha": "a95830d582bf8fde86115476b9c28adcea3ebad6",
+      "type": "SQUASH",
+      "author_head_sha": "fda0e2e84e8f5afb7897c93d34b0a0bfeee4e8a8",
+      "changed_files": [
+        "src/components/TriangulationDashboard.tsx",
+        "tests/frontend-triangulation-source-bounds.test.mjs"
+      ],
+      "review_note": "Triangulation UI removed invented 1963-11-08 19:48 UTC encounter; synthetic comparison distinguished from observed pass",
+      "author_ci": {
+        "sha": "fda0e2e84e8f5afb7897c93d34b0a0bfeee4e8a8",
+        "counts": {
+          "skipped": 1,
+          "success": 18
+        },
+        "total": 19,
+        "non_success": [
+          {
+            "name": "deploy",
+            "conclusion": "skipped"
+          }
+        ]
+      },
+      "push_ci": {
+        "sha": "cd416d54d21326411b2d280f5382f4ffdbe66f2c",
+        "counts": {
+          "success": 19
+        },
+        "total": 19,
+        "non_success": []
+      }
+    },
+    {
+      "pr": 360,
+      "sha": "4863347fba222da572827cf38bb867e7d5cc6336",
+      "first_parent_sha": "cd416d54d21326411b2d280f5382f4ffdbe66f2c",
+      "type": "SQUASH",
+      "author_head_sha": "548d2635bf8465e0bc77361b618bde4698d4369f",
+      "changed_files": [
+        "scripts/check-site.mjs",
+        "stories/2026-11-12-o-balao-que-chegou-ao-jornal.md"
+      ],
+      "review_note": "JB 09-Nov-1963 balloon headline is report not verified balloon; body through derivative transcript, O Globo facsimile absent",
+      "author_ci": {
+        "sha": "548d2635bf8465e0bc77361b618bde4698d4369f",
+        "counts": {
+          "skipped": 1,
+          "success": 18
+        },
+        "total": 19,
+        "non_success": [
+          {
+            "name": "deploy",
+            "conclusion": "skipped"
+          }
+        ]
+      },
+      "push_ci": {
+        "sha": "4863347fba222da572827cf38bb867e7d5cc6336",
+        "counts": {
+          "success": 19
+        },
+        "total": 19,
+        "non_success": []
+      }
+    }
+  ]
+}
