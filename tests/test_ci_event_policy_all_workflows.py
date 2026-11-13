@@ -45,6 +45,10 @@ MUST_DUAL = {
     'tle-secondary-epochs.yml',
 }
 
+# These two universal gates must run for EVERY pull request, regardless of files.
+# Other scientific workflows may intentionally select input paths.
+MUST_UNFILTERED_PR = {'integration-head.yml', 'prek.yml'}
+
 
 def event_blocks(source: str) -> dict[str, list[str]]:
     lines = source.splitlines()
@@ -93,6 +97,8 @@ def assert_workflow_policy(source: str, filename: str) -> bool:
             raise AssertionError(f'{filename}: unrecognized push trigger: {line.strip()}')
     if values != ['main']:
         raise AssertionError(f'{filename}: push+PR requires exactly main, got {values!r}')
+    if filename in MUST_UNFILTERED_PR and events['pull_request']:
+        raise AssertionError(f'{filename}: universal PR gate may not filter paths, branches or event types')
     return True
 
 
@@ -125,6 +131,24 @@ class EntireWorkflowEventPolicy(unittest.TestCase):
                     self.assertNotEqual(mutant, original, 'fixture must actually mutate')
                     with self.assertRaises(AssertionError):
                         self.assertTrue(assert_workflow_policy(mutant, name))
+
+    def test_universal_pr_gates_are_unfiltered_and_reject_negative_controls(self):
+        self.assertTrue(MUST_UNFILTERED_PR <= MUST_DUAL)
+        for name in sorted(MUST_UNFILTERED_PR):
+            original = (WORKFLOWS / name).read_text(encoding='utf-8')
+            self.assertTrue(assert_workflow_policy(original, name))
+            for restriction in (
+                'paths: [docs/**]',
+                'paths-ignore: [tests/**]',
+                'branches: [main]',
+                'branches-ignore: [main]',
+                'types: [opened]',
+            ):
+                mutant = original.replace('  pull_request:\n', f'  pull_request:\n    {restriction}\n', 1)
+                with self.subTest(workflow=name, restriction=restriction):
+                    self.assertNotEqual(mutant, original, 'negative control must mutate')
+                    with self.assertRaisesRegex(AssertionError, 'universal PR gate'):
+                        assert_workflow_policy(mutant, name)
 
     def test_one_event_only_is_not_falsely_classified_as_double(self):
         single = 'name: replay\non:\n  workflow_dispatch:\njobs:\n  run:\n    runs-on: ubuntu-latest\n'
