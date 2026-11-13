@@ -17,3 +17,18 @@ Reproduzir com `python3 tools/export_ssg_evidence_index.py --check` e `python3 -
 ## Ponte verificável JSON → SSG (Lagarto)
 
 `node scripts/verify-ssg-evidence-index.mjs` confere os hashes e tamanhos dos shards, a correspondência literal dos atributos documentais, genealogias, IDs e as rotas individuais `archive_path` com páginas geradas pelo SSG sem JavaScript. Também exige links reversos para fontes, obras e famílias. `node --test tests/ssg-evidence-index-bridge.test.mjs` inclui contraprovas com digest recalculado, rota inexistente e falsa promoção de status. Após `ssg build`, `node scripts/verify-ssg-evidence-index.mjs --built-site` verifica cada HTML da edição real, em vez de supor que o Markdown gerado virou rota publicada. O verificador não identifica sensores independentes, não autentica documentos externos nem valida uma queda.
+
+## Percurso documental auditável (Lagarto, 13/11/2026)
+
+Cada ocorrência apresenta literalmente o código source_status da fonte canônica
+(classificação documental, **não** comprovação de impacto), digest row_sha256,
+localizador e origem HTTPS. O verificador agora exige no HTML realmente compilado
+links clicáveis: índice → ocorrência → documento original e linha imutável da
+matriz; ocorrência → família/obra/fonte → ocorrência. Um endereço impresso sem
+âncora não satisfaz o gate.
+
+Este percurso usa somente os dois feeds canônicos versionados; não cria
+outro catálogo nem observações físicas. Testes adversariais abrangem URL inerte,
+status ausente, retorno quebrado e linha imutável sem link. O fixture HTML
+sintético valida o auditor; somente o workflow Pages no SHA exato valida o SSG
+Rust real. Acessibilidade por teclado e viewport 320 px permanecem para o Morcego.
