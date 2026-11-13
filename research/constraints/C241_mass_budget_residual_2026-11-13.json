@@ -1,0 +1,126 @@
+{
+  "schema": "conde.mass-budget-527-529-residual/v1",
+  "id": "C241-MASS-X-20261113",
+  "status": "CONNECTED_CONDITIONAL_NOT_HISTORICAL_BOUND",
+  "source": {
+    "matrix_occurrence": "C61",
+    "matrix_path": "research/evidence_matrix_C001-C238_2026-11-11.md",
+    "catalog_url": "https://planet4589.org/space/gcat/data/cat/satcat.html",
+    "provenance": "MODERN_SECONDARY_GCAT_REPORTED_IN_C61",
+    "associated_total_mass_kg_approx": 1176,
+    "mass_type": "ASSOCIATED_TOTAL_MASS_APPROXIMATE_NOT_AUTHENTICATED_THREE_PARTITION_INVENTORY",
+    "other_c61_quantity_dry_mass_kg_approx": 306,
+    "observed_individual_mass_of_528_kg": null,
+    "claim_that_1176_is_closed_orbital_mass_for_three": false,
+    "reference_mass_epoch_utc": null,
+    "satellite_crosswalk": "C241-L14",
+    "catalog_family_is_independent_engineering_measurement": false
+  },
+  "variables": [
+    {
+      "id": "mass_527",
+      "unit": "kg",
+      "kind": "individual_nonnegative_with_positive_mass_if_object"
+    },
+    {
+      "id": "mass_528",
+      "unit": "kg",
+      "kind": "individual_nonnegative_with_positive_mass_if_object"
+    },
+    {
+      "id": "mass_529",
+      "unit": "kg",
+      "kind": "individual_nonnegative_with_positive_mass_if_object"
+    },
+    {
+      "id": "X_untracked",
+      "unit": "kg",
+      "kind": "mass_outside_three_at_same_bookkeeping_reference_or_cumulative_losses_since_initial_reference",
+      "value": null,
+      "may_include": [
+        "other debris",
+        "expended propellant if included in starting mass",
+        "untracked separated material",
+        "material already reentered after selected initial reference"
+      ],
+      "automatically_small": false
+    },
+    {
+      "id": "epsilon_reference",
+      "unit": "kg",
+      "kind": "signed_uncertainty_or_difference_between_true_initial_inventory_and_approximate_catalog_mass",
+      "value": null,
+      "numeric_error_bound": null
+    }
+  ],
+  "conditional_budget": {
+    "equation": "m_527 + m_528 + m_529 + X_untracked = 1176 kg + epsilon_reference",
+    "applies_only_if": "1176 kg is a valid mass inventory for selected reference time, and X accounts for ALL non-527/528/529 mass/losses from that starting inventory with no double counting",
+    "positive_individual_masses_assumed": true,
+    "untracked_nonnegative_assumed": true,
+    "epsilon_sign": "unknown",
+    "epsilon_numeric_distribution": null,
+    "closed_three_body_equation_activated": false,
+    "physically_calibrated_historical_constraint": false,
+    "mass_accounting_epoch_utc": null,
+    "mass_reference_convention_verified": false
+  },
+  "conditional_derived_bounds": {
+    "if_epsilon_is_exactly_zero": "0 < each m_i < 1176 kg and m_527+m_528+m_529 <=1176 kg",
+    "if_X_and_epsilon_are_both_zero": "m_527+m_528+m_529=1176 kg",
+    "if_abs_epsilon_le_E_and_X_le_R": "max(0,1176-E-R) <= tracked_mass_sum <=1176+E; 0<each m_i<1176+E",
+    "E_kg": null,
+    "R_kg": null,
+    "bound_on_individual_area_m2": null,
+    "bound_on_individual_diameter_m": null,
+    "bound_on_individual_Cd_A_over_m": null,
+    "numeric_historical_domain_reduction": false
+  },
+  "drag_bridge": {
+    "physical_relation": "B_j = Cd_j * A_projected_j / m_j, with B in m^2/kg",
+    "shared_atmosphere_scale_unidentified": true,
+    "direct_identification_of_masses_from_effective_k": false,
+    "source_dependency": "research/statistics/DRAG_DENSITY_SCALE_GAUGE_C241.md",
+    "prior_screen": "research/tle_custody/evidence_matrix_C241-orbital-screen_2026-11-13.md"
+  },
+  "graph_edges": [
+    {
+      "from": "C61",
+      "to": "reference_mass_approx_1176_kg",
+      "kind": "SECONDARY_CATALOGUE_ASSOCIATION"
+    },
+    {
+      "from": "reference_mass_approx_1176_kg",
+      "to": "epsilon_reference",
+      "kind": "UNQUANTIFIED_REFERENCE_ERROR"
+    },
+    {
+      "from": "reference_mass_approx_1176_kg",
+      "to": "X_untracked",
+      "kind": "CONDITIONAL_SHARED_INVENTORY"
+    },
+    {
+      "from": "X_untracked",
+      "to": "mass_budget_527_528_529",
+      "kind": "PARTITION_CONSERVATION_IF_SOURCE_SEMANTICS_VERIFIED"
+    },
+    {
+      "from": "mass_528",
+      "to": "B_528",
+      "kind": "DRAG_RELATION_PENDING_AREA_CD_DENSITY"
+    },
+    {
+      "from": "C241-L14",
+      "to": "mass_528",
+      "kind": "DEBRIS_LABEL_WITHOUT_ENGINEERING_MASS"
+    }
+  ],
+  "next_evidence": [
+    "Find documented meaning of GCAT 1176 kg for object A00324 and which mass epoch/mass type it represents",
+    "Recover engineering breakup inventory and determine whether 527+528+529 were exhaustive",
+    "Obtain independent mass/area/attitude/drag characterization for one or more components",
+    "Bound material lost or noncataloged separately from catalog measurement error"
+  ],
+  "historical_mass_of_any_object_estimated": false,
+  "conde_impact_inference": "NOT_SUPPORTED"
+}
