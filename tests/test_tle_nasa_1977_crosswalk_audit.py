@@ -16,9 +16,14 @@ class NASA1977Crosswalk(unittest.TestCase):
         with self.assertRaises((ValueError, KeyError, TypeError)):
             validate(d)
 
-    def test_valid_only_candidate_until_visual(self):
+    def test_three_visual_crosswalks_are_documentary_not_instrumental(self):
         x = validate(LEDGER)
         self.assertEqual(x["catalog_pair"], ["1963 003B", 528])
+        self.assertEqual(x["other_primary_retrospective_pairs"],
+                         [["1963 003A", 527], ["1963 003C", 529]])
+        self.assertEqual(x["528_reported_decay_day"], "1963-11-08")
+        self.assertEqual(x["printed_page"], 43)
+        self.assertEqual(x["epistemic_grade"], "DIRECT_VISUAL_VERIFIED")
         self.assertEqual(x["source_kind"],
                          "ORIGINAL_NASA_1977_PUBLICATION_RETROSPECTIVE_CATALOG_NOT_1963_SENSOR")
         self.assertEqual(x["independent_instrumental_observations"], 0)
@@ -53,12 +58,31 @@ class NASA1977Crosswalk(unittest.TestCase):
     def test_fabricated_sensor(self):
         self.reject(lambda x: x["row"].update(source_528_sensor_id="SHEMYA"))
 
-    def test_promote_visual_from_ocr(self):
+    def test_demote_without_changing_provenance(self):
         self.reject(lambda x: x["row"].update(
-            identity_match="DIRECT_VISUAL_VERIFIED"))
+            identity_match="CANDIDATE_OCR_PENDING_PAGE_IMAGE"))
 
     def test_invent_historical_visual_page(self):
-        self.reject(lambda x: x["source"].update(printed_page=43))
+        self.reject(lambda x: x["source"].update(printed_page=42))
+
+
+    def test_wrong_visual_page_index(self):
+        self.reject(lambda x: x["source"].update(page_index_zero_based=45))
+
+    def test_wrong_03c_catalog_number(self):
+        self.reject(lambda x: x["control_rows"][1].update(catalog_number_printed=528))
+
+    def test_wrong_03a_catalog_decay(self):
+        self.reject(lambda x: x["control_rows"][0].update(decay_day_printed="1969-01-10"))
+
+    def test_wrong_03b_decay_day(self):
+        self.reject(lambda x: x["row"].update(reported_decay_day_from_1977_table="1963-11-09"))
+
+    def test_invented_03b_utc_accuracy(self):
+        self.reject(lambda x: x["row"].update(decay_day_error_seconds=3600))
+
+    def test_wrong_visual_audit_link(self):
+        self.reject(lambda x: x["source"].update(visual_basis="unverified screenshot"))
 
     def test_count_as_independent_observation(self):
         self.reject(lambda x: x["independence"].update(
