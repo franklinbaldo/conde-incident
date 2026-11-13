@@ -1,0 +1,469 @@
+{
+ "schema": "conde.gaviao-retrospective-window/v1",
+ "audit": "G29",
+ "checkpoint_sha": "0031f2a894fcbf6b2c59fb2d80d0f31a3d95e099",
+ "reviewed_through_main_sha": "b3a632d6da60c9b054473b89211579cbb488d525",
+ "main_cut_utc": "2026-11-13T01:41:17Z",
+ "first_parent_integrations": 15,
+ "squash_merges": 14,
+ "conventional_merges": 1,
+ "lateral_commits": 3,
+ "direct_main_commits": 0,
+ "dag_commits": 18,
+ "lateral_sha_for_pr314": [
+  "0643fb1cb0ece61417c7010ab8648284701b4c5c",
+  "935fbfb2f1665fd65ff5ef23e002f98c0ea40e98",
+  "75d2f7debea818c2ad51584f44011edd199caf69"
+ ],
+ "closed_unmerged_recent_query": "GitHub REST /pulls?state=closed recent and search is:closed is:unmerged returned 0 at cut; scoped result, not permanent nonexistence.",
+ "source_policy": "Review covers documentary authentication, dependence and period, physical/Lean conditional claims, author SHA and integration push CI; not sensor validation",
+ "material_findings": [
+  {
+   "id": "G29-F1",
+   "severity": "MEDIUM",
+   "source_pr": 322,
+   "path": "src/components/DocumentArchive.tsx",
+   "reproduction": "All NO_EXACT_CAPTURE_IN_QUERIED_INDEX rows were labeled NASA SSR 15/11/1963, even synthetic non-NASA row",
+   "remediation": "Dynamic label from row source_type/id, adversarial test under tests/archiveCustody.test.mjs"
+  }
+ ],
+ "no_new_terminal_time_or_position": true,
+ "no_new_historical_domain_reduction": true,
+ "reviewed": [
+  {
+   "sha": "499acbae93fda3491502714ff4d6625a2e0194f3",
+   "first_parent_sha": "0031f2a894fcbf6b2c59fb2d80d0f31a3d95e099",
+   "other_parents": [],
+   "type": "SQUASH",
+   "pr": 309,
+   "author_head_sha": "75c8416fe28770e320d45099807c3b5a45837638",
+   "changed_files": [
+    ".github/workflows/tle-gcat-identity.yml",
+    "research/tle_custody/evidence_matrix_C241-L13_2026-11-12.md",
+    "research/tle_custody/gcat_identity_527_529_C241-L13.json",
+    "tests/test_tle_gcat_identity_audit.py",
+    "tools/tle_gcat_identity_audit.py"
+   ],
+   "review_note": "GCAT/KeepTrack 527 taxonomy conflicts with 528/529 debris material description; catalogs are secondary shared lineage, not sensor or hardware ID.",
+   "author_ci": {
+    "sha": "75c8416fe28770e320d45099807c3b5a45837638",
+    "event": "pull_request",
+    "success": 17,
+    "total": 17
+   },
+   "push_ci": {
+    "sha": "499acbae93fda3491502714ff4d6625a2e0194f3",
+    "event": "push",
+    "success": 18,
+    "cancelled": 0,
+    "total": 18
+   }
+  },
+  {
+   "sha": "b0728ef070fbed6e817ec25333ce9faaf7670d20",
+   "first_parent_sha": "499acbae93fda3491502714ff4d6625a2e0194f3",
+   "other_parents": [],
+   "type": "SQUASH",
+   "pr": 311,
+   "author_head_sha": "7102168a34c2ab3555c9f81f4c5dea0bdf3c547f",
+   "changed_files": [
+    "research/constraints/raan_527_third_epoch_design_C241.json",
+    "tests/test_raan_527_third_epoch_design.py",
+    "tools/raan_527_third_epoch_design.py"
+   ],
+   "review_note": "Three-epoch circular RAAN alias design uses exact rational counterfactual timing; no sigma, angle measurement or calibrated F527.",
+   "author_ci": {
+    "sha": "7102168a34c2ab3555c9f81f4c5dea0bdf3c547f",
+    "event": "pull_request",
+    "success": 16,
+    "total": 16
+   },
+   "push_ci": {
+    "sha": "b0728ef070fbed6e817ec25333ce9faaf7670d20",
+    "event": "push",
+    "success": 17,
+    "cancelled": 0,
+    "total": 17
+   }
+  },
+  {
+   "sha": "0b9d6daf984834c38d1a13340a8bcac932bcdc1a",
+   "first_parent_sha": "b0728ef070fbed6e817ec25333ce9faaf7670d20",
+   "other_parents": [],
+   "type": "SQUASH",
+   "pr": 312,
+   "author_head_sha": "97e5126ddaaa25c1fc9a5e9033c9f5b50cebdee7",
+   "changed_files": [
+    "docs/OKF_PREK_POLICY.md",
+    "research/audits/gaviao-main-window-20261112-g28.json",
+    "research/audits/gaviao-main-window-20261112-g28.md",
+    "scripts/check_file_size.py",
+    "tests/test_file_size_policy.py"
+   ],
+   "review_note": "G28 audit and bun.lock-only editable exception keep oversize scientific files gated; tests prove earlier arbitrary-manifest bypass.",
+   "author_ci": {
+    "sha": "97e5126ddaaa25c1fc9a5e9033c9f5b50cebdee7",
+    "event": "pull_request",
+    "success": 16,
+    "total": 16
+   },
+   "push_ci": {
+    "sha": "0b9d6daf984834c38d1a13340a8bcac932bcdc1a",
+    "event": "push",
+    "success": 17,
+    "cancelled": 0,
+    "total": 17
+   }
+  },
+  {
+   "sha": "0941c9a6ea3a05cb15cb785b1af6c8cf3ce5fad2",
+   "first_parent_sha": "0b9d6daf984834c38d1a13340a8bcac932bcdc1a",
+   "other_parents": [],
+   "type": "SQUASH",
+   "pr": 313,
+   "author_head_sha": "feb273489cf165401a836e3686068ed9397d3cb0",
+   "changed_files": [
+    "tests/test_ci_event_policy_all_workflows.py"
+   ],
+   "review_note": "CI event deduplication tests all 34 push+PR YAMLs; trigger check does not authenticate claims or fetched sources.",
+   "author_ci": {
+    "sha": "feb273489cf165401a836e3686068ed9397d3cb0",
+    "event": "pull_request",
+    "success": 16,
+    "total": 16
+   },
+   "push_ci": {
+    "sha": "0941c9a6ea3a05cb15cb785b1af6c8cf3ce5fad2",
+    "event": "push",
+    "success": 17,
+    "cancelled": 0,
+    "total": 17
+   }
+  },
+  {
+   "sha": "0caf16daf46b841cbf5e5cefa04ed09eaddbff39",
+   "first_parent_sha": "0941c9a6ea3a05cb15cb785b1af6c8cf3ce5fad2",
+   "other_parents": [
+    "75d2f7debea818c2ad51584f44011edd199caf69"
+   ],
+   "type": "CONVENTIONAL_MERGE",
+   "pr": 314,
+   "author_head_sha": "75d2f7debea818c2ad51584f44011edd199caf69",
+   "changed_files": [
+    "public/data/conde-archive-documentary-links.json",
+    "tests/test_archive_documentary_links.py",
+    "tools/export_archive_documentary_links.py"
+   ],
+   "review_note": "Conventional merge: ON20 PDF catalog, archived copy and page audit typed dependency; 1964 manual not proof of 1963 tape decoder.",
+   "author_ci": {
+    "sha": "75d2f7debea818c2ad51584f44011edd199caf69",
+    "event": "pull_request",
+    "success": 16,
+    "total": 16
+   },
+   "push_ci": {
+    "sha": "0caf16daf46b841cbf5e5cefa04ed09eaddbff39",
+    "event": "push",
+    "success": 17,
+    "cancelled": 0,
+    "total": 17
+   }
+  },
+  {
+   "sha": "39c0ab05bcb490b4623bbba5a666f1270c8c37ae",
+   "first_parent_sha": "0caf16daf46b841cbf5e5cefa04ed09eaddbff39",
+   "other_parents": [],
+   "type": "SQUASH",
+   "pr": 315,
+   "author_head_sha": "56aea33d0ec84d120555d4fb256213d1e8788900",
+   "changed_files": [
+    "research/geo/cgeo15_vila_matriz_2022.md",
+    "research/geo/cgeo15_vila_matriz_2022_camera_points.json",
+    "tests/test_cgeo15_matriz_camera.py",
+    "tools/cgeo15_matriz_camera.py"
+   ],
+   "review_note": "2022 camera-location photos of Conde church do not reconstruct 1963 camera pose, town center or reentry location.",
+   "author_ci": {
+    "sha": "56aea33d0ec84d120555d4fb256213d1e8788900",
+    "event": "pull_request",
+    "success": 16,
+    "total": 16
+   },
+   "push_ci": {
+    "sha": "39c0ab05bcb490b4623bbba5a666f1270c8c37ae",
+    "event": "push",
+    "success": 17,
+    "cancelled": 0,
+    "total": 17
+   }
+  },
+  {
+   "sha": "28610ff64eba6f1659f472c716901e5c26ce5128",
+   "first_parent_sha": "39c0ab05bcb490b4623bbba5a666f1270c8c37ae",
+   "other_parents": [],
+   "type": "SQUASH",
+   "pr": 316,
+   "author_head_sha": "6b0ed466d00843e1c9de61721f108c0b6e64cecf",
+   "changed_files": [
+    "research/meteorology/igra_recife_1963_sonde_code_excerpt.txt",
+    "research/meteorology/igra_recife_1963_station_history_excerpt.txt",
+    "research/meteorology/igra_recife_1963_station_history_gap.json",
+    "research/meteorology/igra_recife_1963_station_history_gap.md",
+    "tests/test_igra_recife_station_history_gap.py",
+    "tools/audit_igra_recife_station_history.py"
+   ],
+   "review_note": "NOAA IGRA station/sonde history entries 1982–1992 do not identify Recife instrument used in 1963; no meteorological transfer.",
+   "author_ci": {
+    "sha": "6b0ed466d00843e1c9de61721f108c0b6e64cecf",
+    "event": "pull_request",
+    "success": 16,
+    "total": 16
+   },
+   "push_ci": {
+    "sha": "28610ff64eba6f1659f472c716901e5c26ce5128",
+    "event": "push",
+    "success": 16,
+    "cancelled": 1,
+    "total": 17
+   }
+  },
+  {
+   "sha": "391477f940f60d04fd13ee584cf20d672495969c",
+   "first_parent_sha": "28610ff64eba6f1659f472c716901e5c26ce5128",
+   "other_parents": [],
+   "type": "SQUASH",
+   "pr": 317,
+   "author_head_sha": "858056d78b4002019f84ab919f57f1011fc63966",
+   "changed_files": [
+    "research/archive/wayback_pilot_2026-11-12.json",
+    "research/archive/wayback_pilot_2026-11-12.md",
+    "tests/test_wayback_pilot.py",
+    "tools/verify_wayback_pilot.py"
+   ],
+   "review_note": "Two Wayback replay byte digests and NASA exact-URL negative are archive custody; no independent 1963 tracking.",
+   "author_ci": {
+    "sha": "858056d78b4002019f84ab919f57f1011fc63966",
+    "event": "pull_request",
+    "success": 16,
+    "total": 16
+   },
+   "push_ci": {
+    "sha": "391477f940f60d04fd13ee584cf20d672495969c",
+    "event": "push",
+    "success": 17,
+    "cancelled": 0,
+    "total": 17
+   }
+  },
+  {
+   "sha": "9049542a9a8d96129ae70d8e4451cb01e5a201cf",
+   "first_parent_sha": "391477f940f60d04fd13ee584cf20d672495969c",
+   "other_parents": [],
+   "type": "SQUASH",
+   "pr": 318,
+   "author_head_sha": "9e30d5f498e0b51ac4fd01c1e9a67b24f56a4b36",
+   "changed_files": [
+    ".github/workflows/lean-core.yml",
+    "formal/Conde1963.lean",
+    "formal/Conde1963/NmcLayout.lean",
+    "formal/scripts/compile_nmc_layout_link.py",
+    "formal/tests/test_nmc_candidate.py",
+    "public/data/conde-observable-dependency-links.json",
+    "public/data/conde-on20-layout-link.json",
+    "public/data/conde-scientific-bridges.json",
+    "research/constraints/C241-L14_nmc_on20_historical_layout.md",
+    "tests/test_contextual_scientific_bridges.py",
+    "tools/export_contextual_scientific_bridges.py",
+    "tools/export_nmc_on20_layout_link.py"
+   ],
+   "review_note": "NMC ON20 1964 -> Y20175 1963 conditional Lean/JSON structure, no decoded winds, historical layout or physical bound.",
+   "author_ci": {
+    "sha": "9e30d5f498e0b51ac4fd01c1e9a67b24f56a4b36",
+    "event": "pull_request",
+    "success": 16,
+    "total": 16
+   },
+   "push_ci": {
+    "sha": "9049542a9a8d96129ae70d8e4451cb01e5a201cf",
+    "event": "push",
+    "success": 17,
+    "cancelled": 0,
+    "total": 17
+   }
+  },
+  {
+   "sha": "013ae48e3613fd4fdb6250f07f58008d5379067a",
+   "first_parent_sha": "9049542a9a8d96129ae70d8e4451cb01e5a201cf",
+   "other_parents": [],
+   "type": "SQUASH",
+   "pr": 320,
+   "author_head_sha": "c9afcf92b20d0ad781813ea546146acea2b62704",
+   "changed_files": [
+    ".github/workflows/orbit-kernel.yml",
+    "research/constraints/sgp4_frame_kinematics_g28.json",
+    "src/lib/orbitFrameKinematics.ts",
+    "src/lib/orbitSgp4Baseline.ts",
+    "tests/orbitFrameKinematics.test.mjs",
+    "tests/orbitSgp4Baseline.test.mjs"
+   ],
+   "review_note": "SGP4 TEME vs ECI comparison requires R and Rdot with epoch/provenance; only conditional/synthetic, secondary TLE, no holdout.",
+   "author_ci": {
+    "sha": "c9afcf92b20d0ad781813ea546146acea2b62704",
+    "event": "pull_request",
+    "success": 16,
+    "total": 16
+   },
+   "push_ci": {
+    "sha": "013ae48e3613fd4fdb6250f07f58008d5379067a",
+    "event": "push",
+    "success": 17,
+    "cancelled": 0,
+    "total": 17
+   }
+  },
+  {
+   "sha": "7830cf9cb4378898780b2207e3c885871f1dc81b",
+   "first_parent_sha": "013ae48e3613fd4fdb6250f07f58008d5379067a",
+   "other_parents": [],
+   "type": "SQUASH",
+   "pr": 321,
+   "author_head_sha": "93038b7b37b3c162f1e72e95712d4682df8d36a3",
+   "changed_files": [
+    "bun.lock",
+    "package.json",
+    "tests/google-maps-dependency.test.mjs",
+    "tests/quota-free-map.test.mjs"
+   ],
+   "review_note": "Removes inactive Google Maps dependency/lock without changing observational data; package build CI needed.",
+   "author_ci": {
+    "sha": "93038b7b37b3c162f1e72e95712d4682df8d36a3",
+    "event": "pull_request",
+    "success": 16,
+    "total": 16
+   },
+   "push_ci": {
+    "sha": "7830cf9cb4378898780b2207e3c885871f1dc81b",
+    "event": "push",
+    "success": 17,
+    "cancelled": 0,
+    "total": 17
+   }
+  },
+  {
+   "sha": "607571950d7481596c612c910e29001b779354c0",
+   "first_parent_sha": "7830cf9cb4378898780b2207e3c885871f1dc81b",
+   "other_parents": [],
+   "type": "SQUASH",
+   "pr": 319,
+   "author_head_sha": "247afd0c2cc87c4420ab48eb2b81369288e4016a",
+   "changed_files": [
+    ".github/workflows/lean-core.yml",
+    "formal/tests/test_nmc_candidate.py",
+    "public/data/conde-observable-dependency-links.json",
+    "public/data/conde-on20-layout-link.json",
+    "public/data/conde-scientific-bridges.json",
+    "research/constraints/C241-L14_nmc_on20_historical_layout.md",
+    "tests/test_contextual_scientific_bridges.py",
+    "tools/export_nmc_on20_layout_link.py"
+   ],
+   "review_note": "Canonical ON20 page/wayback feed and revision provenance refined; no uncalibrated bridge activated in Lean or simulator.",
+   "author_ci": {
+    "sha": "247afd0c2cc87c4420ab48eb2b81369288e4016a",
+    "event": "pull_request",
+    "success": 16,
+    "total": 16
+   },
+   "push_ci": {
+    "sha": "607571950d7481596c612c910e29001b779354c0",
+    "event": "push",
+    "success": 17,
+    "cancelled": 0,
+    "total": 17
+   }
+  },
+  {
+   "sha": "274840b6a7487a2af424e324c9b8ea0e1059bf1e",
+   "first_parent_sha": "607571950d7481596c612c910e29001b779354c0",
+   "other_parents": [],
+   "type": "SQUASH",
+   "pr": 322,
+   "author_head_sha": "1ca4f73e0081d62e681c51451b0e27722fdade14",
+   "changed_files": [
+    "src/components/DocumentArchive.tsx",
+    "tests/archiveCustody.test.mjs"
+   ],
+   "review_note": "Wayback UI labels every negative lookup as NASA regardless of row identity; G29-F1: fix source-specific title and adversarial synthetic test.",
+   "author_ci": {
+    "sha": "1ca4f73e0081d62e681c51451b0e27722fdade14",
+    "event": "pull_request",
+    "success": 16,
+    "total": 16
+   },
+   "push_ci": {
+    "sha": "274840b6a7487a2af424e324c9b8ea0e1059bf1e",
+    "event": "push",
+    "success": 17,
+    "cancelled": 0,
+    "total": 17
+   }
+  },
+  {
+   "sha": "b34603b8f6faeec0638a4b91dd75f16af5c6d08a",
+   "first_parent_sha": "274840b6a7487a2af424e324c9b8ea0e1059bf1e",
+   "other_parents": [],
+   "type": "SQUASH",
+   "pr": 324,
+   "author_head_sha": "7a8ed8058de371710c9b34458c649aa7991659ca",
+   "changed_files": [
+    "research/archive/coruja_wayback_live_comparison_20261113.json",
+    "scripts/check-site.mjs",
+    "scripts/enable-article-frames.mjs",
+    "stories/2026-11-12-as-cameras-que-o-norad-nao-ganhou.md",
+    "tests/test_coruja_wayback_live_comparison.py"
+   ],
+   "review_note": "Coruja Caderno 07 NORAD 1963 Baker-Nunn camera allocation vs SAO RU301 inventory; no photo/epoch of object 528; 2021/2023 archives same bytes.",
+   "author_ci": {
+    "sha": "7a8ed8058de371710c9b34458c649aa7991659ca",
+    "event": "pull_request",
+    "success": 16,
+    "total": 16
+   },
+   "push_ci": {
+    "sha": "b34603b8f6faeec0638a4b91dd75f16af5c6d08a",
+    "event": "push",
+    "success": 17,
+    "cancelled": 0,
+    "total": 17
+   }
+  },
+  {
+   "sha": "b3a632d6da60c9b054473b89211579cbb488d525",
+   "first_parent_sha": "b34603b8f6faeec0638a4b91dd75f16af5c6d08a",
+   "other_parents": [],
+   "type": "SQUASH",
+   "pr": 325,
+   "author_head_sha": "e25e48e12ff336920cfc824bc8b90efda620aa5a",
+   "changed_files": [
+    ".github/workflows/tle-gcat-cross-catalog.yml",
+    "research/tle_custody/evidence_matrix_C241-L14_2026-11-12.md",
+    "research/tle_custody/gcat_full_catalog_lineage_C241-L14.json",
+    "tests/test_tle_gcat_cross_catalog_audit.py",
+    "tools/tle_gcat_cross_catalog_audit.py"
+   ],
+   "review_note": "GCAT currentcat and satcat from same compiler family; Agena B parent 527 vs Agena D debris 528/529 not material proof; source files mutable.",
+   "author_ci": {
+    "sha": "e25e48e12ff336920cfc824bc8b90efda620aa5a",
+    "event": "pull_request",
+    "success": 17,
+    "total": 17
+   },
+   "push_ci": {
+    "sha": "b3a632d6da60c9b054473b89211579cbb488d525",
+    "event": "push",
+    "success": 18,
+    "cancelled": 0,
+    "total": 18
+   }
+  }
+ ]
+}
