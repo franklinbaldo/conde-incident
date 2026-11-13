@@ -4,6 +4,8 @@ import {
   HISTORICAL_ORBITAL_DATA,
 } from './constants';
 import { MonteCarloRunResult } from '../types/astrodynamics';
+import { calendarSpreadScenario, scenarioWeightedCells,
+  PREDECLARED_DAY_SCENARIOS } from './catalogDayLikelihood.ts';
 import {
   deg2rad,
   rad2deg,
@@ -32,6 +34,21 @@ export interface MonteCarloSummary {
   closestDistanceKm: number;
   closestRun: MonteCarloRunResult | null;
   results: MonteCarloRunResult[];
+  /** Reweighted exploratory candidate frequencies under explicit hypothetical
+   * NASA calendar-day measurement errors. NOT a historic impact posterior.
+   */
+  twoSidedDaySensitivity: readonly {
+    sigmaHoursAssumed: number;
+    probabilityBeforeDay8: number;
+    probabilityDuringDay8: number;
+    probabilityAfterDay8: number;
+    weightedWithin100Km: number | null;
+    weightedWithin500Km: number | null;
+    weightedWithin2000Km: number | null;
+    effectiveSampleSize: number | null;
+    provenance: 'C197_DAY_LABEL_SCENARIO_NOT_HISTORICAL_IMPACT';
+  }[];
+
 }
 
 export function runMonteCarloSimulation(
@@ -149,8 +166,36 @@ export function runMonteCarloSimulation(
     results.push(runResult);
   }
 
+  // Candidate weights use P(NASA label Nov8 | sampled terminal UTC, σ).
+  // This is a SENSITIVITY TABLE. Legacy orbit phase/RAAN, arbitrary ballistic
+  // priors, and no fragment-survival physics forbid an impact posterior claim.
+  const twoSidedDaySensitivity = PREDECLARED_DAY_SCENARIOS.map(sigmaHours => {
+    const weighted = scenarioWeightedCells(results.map(p => ({
+      eventEpochMs: p.decayTimestampMs,
+      priorWeight: 1,
+      cellId: p.distanceToCondeKm <= 100 ? 'within100' :
+        p.distanceToCondeKm <= 500 ? 'within500' :
+        p.distanceToCondeKm <= 2000 ? 'within2000' : 'outside2000',
+    })), sigmaHours);
+    const spread = calendarSpreadScenario(sigmaHours);
+    const bins = weighted.cellProbabilities;
+    const sum = (...keys: string[]) => weighted.effectiveSampleSize === null ?
+      null : keys.reduce((total,key) => total + (bins[key] ?? 0), 0);
+    return {
+      sigmaHoursAssumed: sigmaHours,
+      probabilityBeforeDay8: spread.probabilityBeforeNov8,
+      probabilityDuringDay8: spread.probabilityDuringNov8,
+      probabilityAfterDay8: spread.probabilityAfterNov8,
+      weightedWithin100Km: sum('within100'),
+      weightedWithin500Km: sum('within100','within500'),
+      weightedWithin2000Km: sum('within100','within500','within2000'),
+      effectiveSampleSize: weighted.effectiveSampleSize,
+      provenance: 'C197_DAY_LABEL_SCENARIO_NOT_HISTORICAL_IMPACT' as const,
+    };
+  });
   return {
     totalRuns: sampleSize,
+    twoSidedDaySensitivity,
     runsDecayedOnNov8: countDecayedNov8,
     runsWithin50Km: countWithin50Km,
     runsWithin100Km: countWithin100Km,
