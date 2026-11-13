@@ -1,0 +1,74 @@
+{
+  "schema": "conde.gis.historical-aerial-archive-locator/v1",
+  "id": "CGEO-26",
+  "verified_on": "2026-11-13",
+  "municipality": {"name": "Conde", "state": "BA", "ibge_code": 2908606},
+  "catalogue_occurrence": {
+    "claimed_issuing_body": "CPRM / Servico Geologico do Brasil / DIDOTE Multimeios",
+    "catalogue_title": "Acervo Fotografico Multimeios",
+    "catalogue_date": "2003-06",
+    "source_grade": "SECONDARY_WEB_TRANSCRIPTION_OF_UNACQUIRED_CATALOGUE",
+    "catalogue_original_pdf_acquired": false,
+    "catalogue_page_verified": false,
+    "catalogue_sha256": null,
+    "web_mirrors": [
+      "https://it.scribd.com/doc/190899422/acervo-foto-pdf",
+      "https://pt.scribd.com/doc/50811476/acervo-foto",
+      "https://www.yumpu.com/pt/document/view/8190809/acervo-fotografico-multimeios-cprm"
+    ],
+    "mirror_pages_independent": false,
+    "observed_entry": {
+      "project": "PETROBRAS - Projeto 53 D",
+      "region": "Nordeste",
+      "project_nominal_year": 1961,
+      "aerial_photo_nominal_scale_denominator": 25000,
+      "photo_index_nominal_scale_denominator": 100000,
+      "sheet_mi": 1850,
+      "sheet_cim": "SC-24-Z-C-VI",
+      "sheet_label": "Esplanada",
+      "sheet_states": ["BA", "SE"]
+    }
+  },
+  "nominal_coverage_crosswalk": {
+    "parent": "CGEO-24",
+    "target_mi": 1850,
+    "sheet_bbox_w_s_e_n": [-38.0, -12.0, -37.5, -11.5],
+    "modern_cameras_in_nominal_sheet": ["CGEO-15-1708", "CGEO-15-1709"],
+    "full_sheet_aerial_coverage_verified": false,
+    "individual_flight_line_or_photo_footprint_known": false,
+    "historical_urban_center_inside_flight_footprint_verified": false,
+    "note": "Sheet catalogue index is a regional locator; photographs may cover only part of the nominal sheet"
+  },
+  "artifact_status": {
+    "original_photo_index_acquired": false,
+    "original_aerial_frames_acquired": false,
+    "original_negative_acquired": false,
+    "individual_frame_capture_date": null,
+    "film_roll_and_frame_ids": null,
+    "flight_coverage_geometry": null,
+    "photo_control_points": null,
+    "horizontal_datum": null,
+    "horizontal_error_m": null,
+    "current_holding_status_confirmed": false
+  },
+  "temporal_and_independence": {
+    "incident_date": "1963-11-08",
+    "nominal_project_year_predates_incident": true,
+    "each_frame_proven_pre_incident": false,
+    "same_observational_lineage_as_1956_1963_sacs_geofoto_sheets": null,
+    "same_artifact_as_sudene_1973_mi1850": false,
+    "separate_independent_1963_witness": false,
+    "candidate_for_retrospective_urban_geometry": true,
+    "center_point_1963": null,
+    "center_polygon_1963": null,
+    "fall_location_1963": null,
+    "can_constrain_orbital_reentry": false
+  },
+  "graph_edges": [
+    {"to": "CGEO-24", "type": "SHEET_INDEX_CROSSWALK_NOT_PHOTO_FOOTPRINT"},
+    {"to": "CGEO-25", "type": "POTENTIAL_EARLIER_AERIAL_DISTINCT_FROM_1973_MAP"},
+    {"to": "CGEO-17", "type": "POTENTIAL_1958_URBAN_CONTROL_PENDING_FRAMES"},
+    {"to": "CGEO-18", "type": "NO_GEOREFERENCE_FOR_FBIS_CITY_CENTER"}
+  ],
+  "next_falsifiable_test": "Obtain CPRM DIDOTE June 2003 original catalog page, then Project 53 D MI-1850 photo-index with original flight strips and negative/frame IDs. Test whether dated strips cover historical Centro de Conde; only then compare with IBGE 1958 landmarks."
+}
