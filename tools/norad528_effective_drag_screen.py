@@ -124,6 +124,60 @@ def crossing(m):
     t=m["H"]*(m["z0"]-target)/m["k"]
     return m["anchor"]["t"]+timedelta(days=t) if math.isfinite(t) and t>=0 else None
 
+
+def plane_angle_deg(i1, raan1, i2, raan2):
+    """Angle between orbital plane normals; NOT physical distance of satellites."""
+    require(all(math.isfinite(v) for v in (i1,raan1,i2,raan2))
+            and 0<=i1<=180 and 0<=i2<=180,"invalid orbital plane")
+    a,b=math.radians(i1),math.radians(i2)
+    cospsi=math.cos(a)*math.cos(b)+math.sin(a)*math.sin(b)*math.cos(math.radians(raan1-raan2))
+    return math.degrees(math.acos(max(-1.,min(1.,cospsi))))
+
+def angular_pair_diagnostics(blocks,models,max_offset_hours=72):
+    """Asynchronous catalog pairs. Never label as coepoch geometry or NASA sigma."""
+    require(max_offset_hours==72,"pairing window is a query, not error")
+    result={}
+    for sid in (527,529):
+        records=[]
+        for target in blocks[528]["evaluation"]:
+            peer=min(blocks[sid]["evaluation"],key=lambda r:
+                     (abs((r["t"]-target["t"]).total_seconds()),r["t"]))
+            delta=abs((peer["t"]-target["t"]).total_seconds())/3600.
+            if delta>max_offset_hours:continue
+            a,b=models[528],models[sid]
+            ra=raan_at(a,elapsed(target["t"],a["anchor"]["t"]))
+            rb=raan_at(b,elapsed(peer["t"],b["anchor"]["t"]))
+            if ra is None or rb is None:continue
+            obs=plane_angle_deg(target["i"],target["raan"],peer["i"],peer["raan"])
+            pred=plane_angle_deg(a["anchor"]["i"],ra,b["anchor"]["i"],rb)
+            ra_obs=(target["raan"]-peer["raan"]+180)%360-180
+            ra_pred=(ra-rb+180)%360-180
+            records.append({
+                "target_epoch_utc":iso(target["t"]),
+                "sibling_epoch_utc":iso(peer["t"]),
+                "epoch_offset_hours_NOT_sigma":round(delta,6),
+                "source_rows_528":target["rows"],
+                "source_rows_sibling":peer["rows"],
+                "observed_asynchronous_plane_angle_deg":round(obs,6),
+                "modeled_asynchronous_plane_angle_deg":round(pred,6),
+                "plane_angle_absolute_residual_deg":round(abs(obs-pred),6),
+                "raan_contrast_absolute_residual_deg":round(
+                    abs((ra_obs-ra_pred+180)%360-180),6),
+            })
+        result[str(sid)]={
+            "pair_count":len(records),
+            "max_time_offset_hours_NOT_sigma":max_offset_hours,
+            "plane_angle_mae_deg":round(sum(x["plane_angle_absolute_residual_deg"]
+                for x in records)/len(records),6) if records else None,
+            "raan_contrast_mae_deg":round(sum(x["raan_contrast_absolute_residual_deg"]
+                for x in records)/len(records),6) if records else None,
+            "records":records,
+            "coepoch_or_independent_sensor_measurement":False,
+            "historical_angular_sigma_deg":None,
+            "hard_angular_cap_active":False,
+        }
+    return result
+
 def compute(raw,manifest,precision):
     require(precision["id"]=="C197-PRECISION-20261113" and
         precision["source"]["reported_decay_day"]=="1963-11-08" and
@@ -152,6 +206,7 @@ def compute(raw,manifest,precision):
                 for k,v in tested.items() if v["eligible"]]
     chosen=min(candidates)[1] if candidates else None
     objects={}
+    models={sid:fit(data[sid]["fit"],float(chosen)) for sid in IDS} if chosen is not None else {}
     for sid in IDS:
         if chosen is None:
             objects[str(sid)]={"status":"NO_ELIGIBLE_MODEL"}
@@ -180,6 +235,10 @@ def compute(raw,manifest,precision):
         "H_chosen_using_validation_only":chosen,
         "evaluation_used_for_selection":False,
         "candidate_models":tested,"objects":objects,
+        "angular_evaluation_asynchronous":angular_pair_diagnostics(data,models) if models else {},
+        "angular_model_drift_allowed":True,
+        "angular_separation_is_not_satellite_distance":True,
+        "nasa_norad_constant_angular_sigma":None,
         "terminal_scenario":{"start_utc":iso(START),"end_exclusive_utc":iso(END),
             "assumed_threshold_km":THRESHOLD_KM,"source_proves_window":False,
             "physical_constraint_active":False},
