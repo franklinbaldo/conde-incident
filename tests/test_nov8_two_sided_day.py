@@ -1,6 +1,7 @@
 """NASA catalog day C197 source and two-sided temporal scenario adversarial gates."""
 import copy
 import json
+import re
 import unittest
 from pathlib import Path
 from tools.audit_nov8_two_sided_day import validate
@@ -13,6 +14,37 @@ def read(path):
     return (ROOT/path).read_text(encoding="utf-8")
 
 class BilateralDayTests(unittest.TestCase):
+    def test_dedicated_replay_triggers_for_all_first_party_inputs(self):
+        """A source-only PR must run this dedicated NASA-day replay, not only generic CI."""
+        workflow=(ROOT/".github/workflows/c241-nov8-two-sided-date.yml").read_text()
+        required={
+            ".github/workflows/c241-nov8-two-sided-date.yml",
+            "src/lib/catalogDayLikelihood.ts",
+            "src/lib/monteCarlo.ts",
+            "src/lib/constants.ts",
+            "src/lib/astrodynamics.ts",
+            "src/types/astrodynamics.ts",
+            "src/components/MonteCarloVisualizer.tsx",
+            "research/constraints/nasa_528_decay_precision_C197_20261113.json",
+            "research/constraints/C241_nov8_two_sided_day_likelihood_2026-11-13.json",
+            "research/statistics/C241_nov8_two_sided_day_likelihood_2026-11-13.md",
+            "tests/catalogDayLikelihood.test.mjs",
+            "tests/catalogDayMonteCarloIntegration.check.mjs",
+            "tests/test_nov8_two_sided_day.py",
+            "tools/audit_nov8_two_sided_day.py",
+            "package.json",
+        }
+        for event in ("pull_request", "push"):
+            section=re.search(r"(?ms)^  "+event+r":\n(.*?)(?=^  [a-z_]+:|^permissions:|\Z)",workflow)
+            self.assertIsNotNone(section, f"missing {event} trigger")
+            block=re.search(r"(?m)^    paths:\n((?:^      - [^\n]+\n)+)",section.group(1))
+            self.assertIsNotNone(block, f"missing {event} path filter")
+            listed={line.strip().removeprefix("- ").strip("\"'")
+                    for line in block.group(1).splitlines()}
+            self.assertFalse(required-listed,
+                f"{event} fails to run C241 dedicated replay on source-only changes: "
+                f"{sorted(required-listed)}")
+
     def test_source_locked_default_is_sensitivity_only(self):
         o=validate(LEDGER,NASA,read)
         self.assertEqual(o["scenario_sigmas_hours"],[6,12,24])
