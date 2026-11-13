@@ -1,0 +1,47 @@
+name: CGEO-37 | ETH Soper cross-custody replay
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo37_eth_soper_crosscustody.*'
+      - 'tools/cgeo37_eth_soper.py'
+      - 'tests/test_cgeo37_eth_soper.py'
+      - '.github/workflows/geo-eth-soper-crosscustody.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo37_eth_soper_crosscustody.*'
+      - 'tools/cgeo37_eth_soper.py'
+      - 'tests/test_cgeo37_eth_soper.py'
+      - '.github/workflows/geo-eth-soper-crosscustody.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect-real-eth-assets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact HEAD
+        env:
+          EXPECTED: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED"
+      - name: Verify contract and negative tests
+        run: |
+          python3 -m tools.cgeo37_eth_soper
+          python3 -m unittest discover -s tests -p 'test_cgeo37_eth_soper.py' -v
+      - name: Acquire and verify actual ETH bytes
+        run: |
+          curl -fsSL --retry 2 --connect-timeout 20 --max-time 100 \
+            'https://www.e-rara.ch/zut/download/pdf/32574892' -o "$RUNNER_TEMP/eth-soper.pdf"
+          curl -fsSL --retry 2 --connect-timeout 20 --max-time 60 \
+            'https://www.e-rara.ch/i3f/v20/32574892/manifest' -o "$RUNNER_TEMP/eth-soper-manifest.json"
+          curl -fsSL --retry 2 --connect-timeout 20 --max-time 60 \
+            'https://www.e-rara.ch/i3f/v20/32574893/full/1000,/0/default.jpg' -o "$RUNNER_TEMP/eth-soper.jpg"
+          python3 -m tools.cgeo37_eth_soper \
+            --pdf "$RUNNER_TEMP/eth-soper.pdf" \
+            --manifest "$RUNNER_TEMP/eth-soper-manifest.json" \
+            --jpeg "$RUNNER_TEMP/eth-soper.jpg"
