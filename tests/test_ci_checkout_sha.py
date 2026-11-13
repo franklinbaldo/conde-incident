@@ -15,6 +15,34 @@ CHECKOUT_USE = re.compile(r"(?m)^(?:uses| {8}uses): [\"']?actions/checkout@[^\n]
 REF = re.compile(r'(?m)^          ref: (.+)$')
 
 
+
+def _is_unconditional_guard(step: str, assertion: str, expected: str) -> bool:
+    """Accept a SHA guard only if no preceding shell command can skip it.
+
+    This is intentionally a small allowlist, not a general shell interpreter.
+    Unknown commands before the guard require explicit audit of the workflow.
+    """
+    run = re.search(r'(?m)^        run: (.*)$', step)
+    if not run:
+        return False
+    head = run.group(1).strip()
+    if head in ('|', '|-', '>'):
+        commands = [line.strip() for line in step[run.end():].splitlines()
+                    if line.strip() and not line.lstrip().startswith('#')]
+    else:
+        commands = [head]
+    if assertion not in commands:
+        return False
+    allowed_before = {
+        'set -euo pipefail',
+        'actual="$(git rev-parse HEAD)"',
+        f'expected="{expected}"',
+        'echo "audited_source_head=$actual"',
+        'echo "audited_head=$actual"',
+    }
+    return all(line in allowed_before for line in commands[:commands.index(assertion)])
+
+
 def _is_exact_assertion(step: str, expected: str) -> bool:
     """Recognize a mandatory, fail-closed comparison in the next CI step."""
     # A conditional or tolerated assertion is not a gate, even if its shell
@@ -26,19 +54,19 @@ def _is_exact_assertion(step: str, expected: str) -> bool:
     commands |= {line.removeprefix('run: ').strip() for line in commands if line.startswith('run: ')}
     head = '$(git rev-parse HEAD)'
     if f'test "{head}" = "{expected}"' in commands:
-        return True
+        return _is_unconditional_guard(step, f'test "{head}" = "{expected}"', expected)
 
     # `env: EXPECTED_SHA: ${{ ... }}` plus a shell comparison.
     if re.search(r'(?m)^        env:\s*$', step):
         for var, value in re.findall(r'(?m)^          ([A-Z][A-Z0-9_]*):\s*(.+)$', step):
             if value.strip() == expected and f'test "{head}" = "${var}"' in commands:
-                return True
+                return _is_unconditional_guard(step, f'test "{head}" = "${var}"', expected)
 
     # Explicit shell assignments, used by the historical TLE workflows.
     if (f'actual="{head}"' in commands
             and f'expected="{expected}"' in commands
             and 'test "$actual" = "$expected"' in commands):
-        return True
+        return _is_unconditional_guard(step, 'test "$actual" = "$expected"', expected)
     return False
 
 
@@ -141,6 +169,24 @@ class ExactCheckoutPolicy(unittest.TestCase):
                     self.assertNotEqual(mutant, original)
                     with self.assertRaisesRegex(AssertionError, 'SHA assertion'):
                         check_checkout_sha(mutant, name)
+
+    def test_sha_guard_must_not_be_bypassed_by_prior_shell_commands(self):
+        name = 'integration-head.yml'
+        source = (ROOT / name).read_text(encoding='utf-8')
+        guard = '          test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD_SHA"\n'
+        self.assertIn(guard, source)
+        # Default bash -e does not help after an unconditional exit or when
+        # errexit is disabled before the guard. A false if-branch skips it.
+        for before, after in (
+            ('          exit 0\n', ''),
+            ('          if false; then\n', '          fi\n'),
+            ('          set +e\n', ''),
+        ):
+            mutant = source.replace(guard, before + guard + after, 1)
+            with self.subTest(bypass=before.strip()):
+                self.assertNotEqual(mutant, source)
+                with self.assertRaisesRegex(AssertionError, 'exact SHA assertion'):
+                    check_checkout_sha(mutant, name)
 
     def test_expected_value_and_per_checkout_proximity_are_required(self):
         name = 'integration-head.yml'
