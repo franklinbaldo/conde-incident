@@ -94,7 +94,7 @@ class UN1963Primary(unittest.TestCase):
         from tempfile import TemporaryDirectory
         with TemporaryDirectory() as d:
             for x in SOURCES[0]["docs"]:
-                (Path(d)/f"inf{x['number']}E.pdf").write_bytes(b"%PDF-1.4\nforged\n")
+                (Path(d)/f"inf{int(x['number']):03d}E.pdf").write_bytes(b"%PDF-1.4\nforged\n")
             with self.assertRaisesRegex(ValueError,"bytes changed"):
                 check_pdf_bytes(SOURCES[0],d)
 
