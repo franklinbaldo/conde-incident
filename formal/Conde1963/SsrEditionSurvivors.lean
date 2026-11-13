@@ -49,8 +49,13 @@ theorem unique_pair_under_necessary_screens :
   intro i j hij hac hab
   have hi : i.val < 9 := i.isLt
   have hj : j.val < 9 := j.isLt
-  simp only [gapAC, gapAB, within20] at hac hab
-  split_ifs at hac hab <;> omega
+  have hi_cases : i.val = 0 ∨ i.val = 1 ∨ i.val = 2 ∨ i.val = 3 ∨
+      i.val = 4 ∨ i.val = 5 ∨ i.val = 6 ∨ i.val = 7 ∨ i.val = 8 := by omega
+  have hj_cases : j.val = 0 ∨ j.val = 1 ∨ j.val = 2 ∨ j.val = 3 ∨
+      j.val = 4 ∨ j.val = 5 ∨ j.val = 6 ∨ j.val = 7 ∨ j.val = 8 := by omega
+  rcases hi_cases with h0 | h1 | h2 | h3 | h4 | h5 | h6 | h7 | h8 <;>
+    rcases hj_cases with k0 | k1 | k2 | k3 | k4 | k5 | k6 | k7 | k8 <;>
+    simp_all [gapAC, gapAB, within20] <;> omega
 
 /-- Any three survivors would contain two different ordered pairs, each
 forced to be indices 1 and 2, contradiction. -/
