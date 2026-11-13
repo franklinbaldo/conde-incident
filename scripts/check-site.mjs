@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
 import {readFileSync,readdirSync,existsSync} from 'node:fs';
 import {join} from 'node:path';
 const root='public';
@@ -19,6 +20,21 @@ for (const route of ['index.html','stories/index.html','evidencias/arquivo/index
   assert.match(html, /<kbd>Esc<\/kbd> fechar/, 'Ajuda de teclado em inglês: '+route);
   assert.doesNotMatch(html, /<span>Search<\/span>/, 'Busca não localizada: '+route);
 }
+// The SSG's English runtime must also be localized, not just the input label.
+// Validate the immutable filename and SHA384 referenced by actual Pages HTML.
+const runtimeMatch = index.match(/<script src="\/conde-incident\/_csp\/(ssg-search-ptbr-[a-f0-9]{16}\.js)" integrity="(sha384-[^"]+)"/);
+assert.ok(runtimeMatch, 'SSG runtime pt-BR not linked from home');
+const runtimeJs = read('_csp/' + runtimeMatch[1]);
+assert.equal(runtimeMatch[2], 'sha384-' + createHash('sha384').update(runtimeJs).digest('base64'),
+  'SRI mismatch in localized SSG search');
+assert.match(runtimeJs, /Nenhum resultado para &ldquo;/, 'Dynamic empty result in English');
+assert.match(runtimeJs, /Nenhum resultado encontrado/, 'Screen-reader empty state in English');
+assert.match(runtimeJs, /resultado.*encontrado/, 'Plural result count not translated');
+assert.doesNotMatch(runtimeJs, /No results found|No results for/, 'English result announcement remains');
+for (const route of ['stories/index.html', 'evidencias/arquivo/index.html']) {
+  assert.ok(read(route).includes(runtimeMatch[0]), 'SSG search runtime differs on ' + route);
+}
+
 // Expose active navigation on built pages, including nested documentary material.
 for (const [route, href, state] of [
   ['index.html', '/', 'page'],
