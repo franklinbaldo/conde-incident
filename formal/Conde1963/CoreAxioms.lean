@@ -1,5 +1,6 @@
 import Conde1963.Core
 import Conde1963.RelativeTrajectories
+import Conde1963.SsrNovember
 
 /-! Audit axiom dependencies of existing documentary results and new
 conditional, three-object orbital exclusion theorem. Lean compilation
@@ -15,3 +16,6 @@ does not authenticate observed positions or establish a 1963 reentry. -/
 #print axioms Conde1963.more_constraints_never_expand
 #print axioms Conde1963.RelativeTrajectories.controls_exclude_candidate_if_x_envelopes_disjoint
 #print axioms Conde1963.RelativeTrajectories.one_disjoint_epoch_rejects_trajectory
+
+#print axioms Conde1963.SsrNovember.printed_november_period_3c_gt_3a
+#print axioms Conde1963.SsrNovember.printed_november_apogee_3c_gt_3a

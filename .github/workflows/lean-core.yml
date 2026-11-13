@@ -73,3 +73,9 @@ jobs:
           set -euo pipefail
           python3 formal/scripts/compile_ssr_three_editions.py --check
           python3 -m unittest discover -s formal/tests -p 'test_ssr_three_editions.py' -v
+
+      - name: Validate NASA November source-locked fields and Lean conditional comparisons
+        run: |
+          set -euo pipefail
+          python3 formal/scripts/compile_ssr_november.py --check
+          python3 -m unittest discover -s formal/tests -p 'test_ssr_november.py' -v
