@@ -1,0 +1,66 @@
+{
+  "schema": "c241-l48-nro-7153-mission-scope/v1",
+  "id": "C241-L48",
+  "status": "INSTITUTIONAL_RETROSPECTIVE_SCOPE_ONLY",
+  "source": {
+    "institution": "National Reconnaissance Office",
+    "authors": "David D. Bradburn, John O. Copley, Raymond B. Potts et al.",
+    "title": "The SIGINT Satellite Story",
+    "authored_year": 1994,
+    "release_event": "NRO appellate release approved February 2016",
+    "textual_page": 90,
+    "url": "https://www.governmentattic.org/19docs/NRO-SIGINTsatStory_1994u.pdf",
+    "institutional_landing": "https://www.nro.gov/foia-home/foia-sigint-satellite-story/",
+    "retrieval": "WEB_TEXT_EXCERPT_ONLY",
+    "pdf_sha256": null,
+    "pdf_bytes": null,
+    "visual_verification": "PENDING_REMOTE_403",
+    "contemporaneous_1963_record": false,
+    "independent_orbital_measurement": false
+  },
+  "mission": {
+    "vehicle": "2313",
+    "number": 7153,
+    "program": "698BK",
+    "payload": "Group 1 digital",
+    "launch_date": "1963-01-16",
+    "reported_operational_duration_days": 2,
+    "duration_precision": "NARRATIVE_NOT_INSTRUMENTAL",
+    "failure_cause": "BATTERY_FAILURE",
+    "failure_timestamp_utc": null,
+    "orbit_decay_timestamp_utc": null,
+    "structural_breakup_utc": null
+  },
+  "identity": {
+    "vehicle_catalog_link": "FTV 2313 / OPS 0180 / NORAD 527 / 1963-003A",
+    "link_kind": "CROSS_REFERENCE_SECONDARY_CATALOG",
+    "norad_528": "1963-003B",
+    "norad_529": "1963-003C",
+    "debris_identity_verified_by_nro_history": false,
+    "debris_separation_epoch_utc": null,
+    "failure_means_structural_breakup": false,
+    "mission_end_means_528_decay": false
+  },
+  "scientific_readiness": {
+    "orbital_measurements_527_528_529_added": 0,
+    "tracking_sensor": null,
+    "observed_angular_or_range_data": null,
+    "error_covariance": null,
+    "observation_selection": null,
+    "operator_H": null,
+    "historical_likelihood": null,
+    "historical_mcmc": "NOT_RUN",
+    "physical_constraint_active": false,
+    "conde_geographic_contraction": false
+  },
+  "observations_needed": [
+    "1963 contemporaneous telemetry or mission operation log with end-of-power epoch",
+    "engineering separation/breakup record mapping specific parts to NORAD 528/529",
+    "object-specific dated optical/radar observations with sensor, frame and uncertainty",
+    "original debris tracking reports spanning the end of mission 7153"
+  ],
+  "sources_not_independent": [
+    "Secondary Ferret summaries quoting the NRO 1994 narrative do not add a second measurement",
+    "GCAT 1963-003 catalog metadata do not measure the battery failure"
+  ]
+}
