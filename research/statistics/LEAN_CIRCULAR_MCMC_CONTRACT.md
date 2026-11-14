@@ -42,6 +42,32 @@ entre a fórmula e o código é testada independentemente com aritmética racion
 exata de malha pequena, e o amostrador continua testado numericamente contra
 quadratura no próprio módulo Cervo.
 
+### Extensão: propostas assimétricas e correção Hastings exata
+
+A hipótese de proposta simétrica é uma propriedade do protótipo numérico
+**atual**, não uma garantia para propostas futuras adaptativas, direcionais
+ou de densidade desigual. Para taxas `qᵢⱼ` e `qⱼᵢ` em unidade comum,
+a aceitação MH válida produz o fluxo **máximo reversível**:
+
+`F(i,j) = min(wᵢ qᵢⱼ, wⱼ qⱼᵢ)`.
+
+O Lean acrescenta `hastingsFlow_detailed_balance` (sem hipótese de simetria),
+`hastingsFlow_le_forward` (capacidade de proposta),
+`hastingsFlow_maximal` (maior fluxo admissível nos dois sentidos),
+`hastingsFlow_list_balance` (conservação finita do fluxo aceito) e
+`hastingsFlow_asymmetric_example` (controle 3:1 corrigido para 2:2).
+Testes independentes usam frações exatas e cobrem 625 combinações de
+pesos/taxas, além de 500 verificações da razão, incluindo taxas reversas
+nulas. Quando `q` é representada por contagens, todas as linhas devem ter
+**o mesmo denominador**: caso contrário as contagens não são probabilidades
+comparáveis.
+
+**Limites:** não há prova da soma de linha de um kernel estocástico completo,
+da medida estacionária normalizada, da convergência de cadeias, da execução de
+RNG ou de quaisquer medições de 1963. Esta correção protege a coerência
+matemática da eventual implementação de propostas não simétricas; não ativa
+nenhuma restrição histórica nem produz posterior para Conde.
+
 ## 2. Identificabilidade: fase absoluta × viés de linhagem
 
 A observação RAAN sintética usa previsão congelada `H_i(θ)=H_i(0)+θ`
