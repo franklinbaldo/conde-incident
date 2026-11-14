@@ -50,6 +50,7 @@ class G54OpticalResidual(unittest.TestCase):
             "station_wgs84_geodetic": copy.deepcopy(p["station_wgs84_geodetic"]),
             "right_ascension_deg": p["right_ascension_deg"],
             "declination_deg": p["declination_deg"],
+            "instrument_covariance_basis": "PREDICTED_GCRS_TANGENT_EAST_NORTH",
             "instrument_covariance_arcsec2": [[4., 0.], [0., 9.]],
         }
 
@@ -94,6 +95,15 @@ class G54OpticalResidual(unittest.TestCase):
                 compare_geometric_gcrs(self.prediction, bad, DOCUMENT)
         d["epoch_utc"] = "1963-11-08T12:00:01Z"
         with self.assertRaisesRegex(ValueError, "clock bias"):
+            compare_geometric_gcrs(self.prediction, d, DOCUMENT)
+
+    def test_instrument_error_basis_cannot_be_assumed(self):
+        d = self.datum()
+        del d["instrument_covariance_basis"]
+        with self.assertRaisesRegex(ValueError, "basis"):
+            compare_geometric_gcrs(self.prediction, d, DOCUMENT)
+        d["instrument_covariance_basis"] = "RAW_RA_DEC"
+        with self.assertRaisesRegex(ValueError, "basis"):
             compare_geometric_gcrs(self.prediction, d, DOCUMENT)
 
     def test_document_digest_station_and_source_required(self):

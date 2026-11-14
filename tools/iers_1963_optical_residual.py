@@ -90,6 +90,8 @@ def compare_geometric_gcrs(predicted: Mapping, observed: Mapping,
         raise ValueError("Station survey contract is not supported")
     if observed.get("frame") != FRAME or observed.get("angle_type") != ANGLE_TYPE:
         raise ValueError("Observation frame/angle type requires explicit conversion")
+    if observed.get("instrument_covariance_basis") != "PREDICTED_GCRS_TANGENT_EAST_NORTH":
+        raise ValueError("Instrument covariance basis must be predicted GCRS east/north")
     if not isinstance(observed.get("epoch_utc"), str) or observed["epoch_utc"] != predicted.get("epoch_utc"):
         raise ValueError("Unmatched UTC epoch; clock bias is not calibrated")
     for name in ("object_id", "station_id", "document_uri"):
