@@ -10,7 +10,7 @@ const out = process.env.UI_AUDIT_OUT || 'test-results/ui';
 await fs.mkdir(out, { recursive: true });
 const browser = await chromium.launch({ headless: true });
 try {
-  for (const width of [320, 390, 1440]) {
+  for (const width of [320, 375, 390, 1440]) {
     const page = await browser.newPage({ viewport: { width, height: 844 }, reducedMotion: 'reduce' });
     const errors = [];
     page.on('pageerror', (error) => errors.push(error.message));
@@ -42,6 +42,22 @@ try {
     // previously pushed a 375px viewport to 464 CSS pixels.
     if (width <= 390) {
       await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+      // The whole document, not only the input, must reflow at doubled text.
+      // The published archive previously scrolled to 428px at viewport 320px
+      // and 375px because its heading and long documentary strings were unbreakable.
+      for (const locale of ['en', 'pt']) {
+        if (locale === 'pt') {
+          await page.getByRole('button', { name: 'Português (Brasil)' }).click();
+          await page.getByRole('heading', { name: 'Documentos, relatos e lacunas' }).waitFor();
+        }
+        const dimensions = await page.evaluate(() => ({
+          viewport: document.documentElement.clientWidth,
+          scrollWidth: document.documentElement.scrollWidth,
+        }));
+        assert(dimensions.scrollWidth <= dimensions.viewport + 1,
+          `documentary archive 200% text overflow at ${width}px in ${locale}: ${JSON.stringify(dimensions)}`);
+        await page.screenshot({ path: `${out}/documentary-archive-reflow-200pct-${locale}-${width}.png` });
+      }
       const citation = page.locator('#source-citations-heading').locator('xpath=..');
       // The feed can legitimately be unavailable in dev: its runtime error state
       // must not block checking the always-rendered input. Check records when served.
