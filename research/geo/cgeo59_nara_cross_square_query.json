@@ -1,0 +1,226 @@
+{
+  "schema": "conde.cgeo.nara-combined-catalog-lookup/v1",
+  "id": "CGEO-59",
+  "observed_on": "2026-11-14",
+  "parents": [
+    "CGEO-53",
+    "CGEO-56",
+    "CGEO-57",
+    "CGEO-58"
+  ],
+  "source": "NARA catalog metadata; not original aerial photographs",
+  "endpoint": "https://catalog.archives.gov/proxy/v3/records/search",
+  "method": "HTTPS JSON query, quoted 2-3017 and limit=20; mutable catalog",
+  "queries": [
+    {
+      "id": "op125374_23017",
+      "q": "125374 \"2-3017\"",
+      "limit": 20,
+      "http_status": 200,
+      "body_bytes": 660611,
+      "sha256": "fd0e2e97968c9c1ff2476a3cf0be898c94813b1218db42997c3ecb73fe4727a7",
+      "total_hits": 11,
+      "results": [
+        {
+          "naid": "46713817",
+          "level": "fileUnit",
+          "title": "Overlay indexes for degree square 03S040W"
+        },
+        {
+          "naid": "46715024",
+          "level": "fileUnit",
+          "title": "Overlay indexes for degree square 06S038W"
+        },
+        {
+          "naid": "46714641",
+          "level": "fileUnit",
+          "title": "Overlay indexes for degree square 05S038W"
+        },
+        {
+          "naid": "46714226",
+          "level": "fileUnit",
+          "title": "Overlay indexes for degree square 04S039W"
+        },
+        {
+          "naid": "46713809",
+          "level": "fileUnit",
+          "title": "Overlay indexes for degree square 03S039W"
+        },
+        {
+          "naid": "46716877",
+          "level": "fileUnit",
+          "title": "Overlay indexes for degree square 12S037W"
+        },
+        {
+          "naid": "46716637",
+          "level": "fileUnit",
+          "title": "Overlay indexes for degree square 11S037W"
+        },
+        {
+          "naid": "46716645",
+          "level": "fileUnit",
+          "title": "Overlay indexes for degree square 11S038W"
+        },
+        {
+          "naid": "46714210",
+          "level": "fileUnit",
+          "title": "Overlay indexes for degree square 04S038W"
+        },
+        {
+          "naid": "46714652",
+          "level": "fileUnit",
+          "title": "Overlay indexes for degree square 05S039W"
+        },
+        {
+          "naid": "195573162",
+          "level": "fileUnit",
+          "title": "Reel 95-53, 1953"
+        }
+      ]
+    },
+    {
+      "id": "op125370_23017",
+      "q": "125370 \"2-3017\"",
+      "limit": 20,
+      "http_status": 200,
+      "body_bytes": 759984,
+      "sha256": "fc8efca8a9d622cb1b05823639ccc199c99df7f8c24fe60ddea39b0e52688ebe",
+      "total_hits": 7,
+      "results": [
+        {
+          "naid": "46716645",
+          "level": "fileUnit",
+          "title": "Overlay indexes for degree square 11S038W"
+        },
+        {
+          "naid": "46716877",
+          "level": "fileUnit",
+          "title": "Overlay indexes for degree square 12S037W"
+        },
+        {
+          "naid": "46716637",
+          "level": "fileUnit",
+          "title": "Overlay indexes for degree square 11S037W"
+        },
+        {
+          "naid": "46716347",
+          "level": "fileUnit",
+          "title": "Overlay indexes for degree square 10S037W"
+        },
+        {
+          "naid": "251023884",
+          "level": "fileUnit",
+          "title": "Half Moon (W 378), April 1962"
+        },
+        {
+          "naid": "506436652",
+          "level": "fileUnit",
+          "title": "Number 812"
+        },
+        {
+          "naid": "506578626",
+          "level": "fileUnit",
+          "title": "Number 895"
+        }
+      ]
+    },
+    {
+      "id": "constrained_conde",
+      "q": "125374 \"2-3017\" 11S037W",
+      "limit": 20,
+      "http_status": 200,
+      "body_bytes": 6703,
+      "sha256": "5d0db7eb20212f30c736d58bad543374238d2796c9a53a082ca2de843b5b77d0",
+      "total_hits": 1,
+      "results": [
+        {
+          "naid": "46716637",
+          "level": "fileUnit",
+          "title": "Overlay indexes for degree square 11S037W"
+        }
+      ]
+    },
+    {
+      "id": "nonsense_negative",
+      "q": "125374 \"2-3017\" impossible_zzz_2026",
+      "limit": 20,
+      "http_status": 200,
+      "body_bytes": 1130,
+      "sha256": "71ff934b10ccf8e43c20617ee260b2d8d868873619e65e3488deeb0f427a5ed5",
+      "total_hits": 0,
+      "results": []
+    }
+  ],
+  "derived": {
+    "candidate_overlay_file_units": [
+      {
+        "naid": "46713809",
+        "degree_square": "03S039W"
+      },
+      {
+        "naid": "46713817",
+        "degree_square": "03S040W"
+      },
+      {
+        "naid": "46714210",
+        "degree_square": "04S038W"
+      },
+      {
+        "naid": "46714226",
+        "degree_square": "04S039W"
+      },
+      {
+        "naid": "46714641",
+        "degree_square": "05S038W"
+      },
+      {
+        "naid": "46714652",
+        "degree_square": "05S039W"
+      },
+      {
+        "naid": "46715024",
+        "degree_square": "06S038W"
+      },
+      {
+        "naid": "46716347",
+        "degree_square": "10S037W"
+      },
+      {
+        "naid": "46716637",
+        "degree_square": "11S037W"
+      },
+      {
+        "naid": "46716645",
+        "degree_square": "11S038W"
+      },
+      {
+        "naid": "46716877",
+        "degree_square": "12S037W"
+      }
+    ],
+    "candidate_count": 11,
+    "common_naids_between_primary_queries": [
+      "46716637",
+      "46716645",
+      "46716877"
+    ],
+    "unrelated_file_units": [
+      "195573162",
+      "251023884",
+      "506436652",
+      "506578626"
+    ],
+    "catalog_indexing_not_same_flight_proof": true
+  },
+  "limits": {
+    "original_aerial_photograms_acquired": 0,
+    "spot_number": null,
+    "film_can": null,
+    "verified_flight_identity": null,
+    "verified_photographic_coverage": null,
+    "historical_urban_center_1963": null,
+    "reported_fall_location": null,
+    "orbital_constraint_activated": false,
+    "contact_sent": false
+  }
+}
