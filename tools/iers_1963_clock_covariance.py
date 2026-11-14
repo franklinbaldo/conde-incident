@@ -44,7 +44,11 @@ def _covariance(value):
     if (abs(float(c[0, 1] - c[1, 0])) >
             64*np.finfo(float).eps*offdiag_scale):
         raise ValueError("Asymmetric clock covariance")
-    c = (c+c.T)/2
+    # Symmetrize the off-diagonal only: summing a diagonal with itself
+    # overflows for large but valid clock variances. Halving both tiny
+    # subnormal off-diagonals first can instead underflow to zero.
+    cross = float(c[0, 1]) + (float(c[1, 0]) - float(c[0, 1])) / 2
+    c = np.array([[c[0, 0], cross], [cross, c[1, 1]]])
     if c[0, 0] == 0 or c[1, 1] == 0:
         if c[0, 1] != 0:
             raise ValueError("Nonzero cross term with zero clock variance")
@@ -52,8 +56,12 @@ def _covariance(value):
     else:
         rho = float((c[0, 1] / math.sqrt(float(c[0, 0]))) /
                     math.sqrt(float(c[1, 1])))
-        if not math.isfinite(rho) or abs(rho) > 1:
+        # A floating-point rank-one PSD matrix formed as sigma_A*sigma_B
+        # can round to |rho|=1+1 ulp under extreme unit scales. Admit at
+        # most a few rounding ulps; do not admit material negative spectra.
+        if not math.isfinite(rho) or abs(rho) > 1 + 4*np.finfo(float).eps:
             raise ValueError("Clock correlation not positive semidefinite")
+        rho = max(-1.0, min(1.0, rho))
     return c, rho
 
 
