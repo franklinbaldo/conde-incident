@@ -15,6 +15,10 @@ on:
       - 'tests/editorial_journey_smoke.mjs'
       - 'tests/ssg_simulacoes_bridge_smoke.mjs'
       - 'pages/simulacoes/page.md'
+      - 'pages/simulacoes/tles/page.md'
+      - 'static/js/ssg-tle-syntax.mjs'
+      - 'tests/ssg-tle-syntax.test.mjs'
+      - 'tests/ssg_tle_syntax_smoke.mjs'
       - 'tests/ssg-authored-pages.test.mjs'
       - 'stories/2026-11-11-o-dia-em-que-dois-relatos-se-cruzaram.md'
       - 'src/components/OrbitalMap.tsx'
@@ -115,8 +119,9 @@ jobs:
           ssg check --config ssg.toml
           ssg build --config ssg.toml
           node scripts/enable-article-frames.mjs
-          mkdir -p public/css public/lab "$RUNNER_TEMP/search-audit/conde-incident"
+          mkdir -p public/css public/js public/lab "$RUNNER_TEMP/search-audit/conde-incident"
           cp static/css/site.css public/css/site.css
+          cp static/js/ssg-tle-syntax.mjs public/js/ssg-tle-syntax.mjs
           cp -R dist/. public/lab/
           cp -R public/. "$RUNNER_TEMP/search-audit/conde-incident/"
           python3 -m http.server 4173 --directory "$RUNNER_TEMP/search-audit" > /tmp/conde-ssg-audit.log 2>&1 &
@@ -134,6 +139,8 @@ jobs:
         run: node tests/editorial_journey_smoke.mjs
       - name: Chromium eight SSG ↔ lab instrument pairs (320/390/1440)
         run: node tests/ssg_simulacoes_bridge_smoke.mjs
+      - name: Chromium SSG standalone TLE syntax audit (320/390/1440)
+        run: node tests/ssg_tle_syntax_smoke.mjs
       - name: Chromium TLE custody mobile code reflow and keyboard focus
         run: node tests/ssg_tle_code_scroll_smoke.mjs
       - name: Upload screenshots and findings even on failure
