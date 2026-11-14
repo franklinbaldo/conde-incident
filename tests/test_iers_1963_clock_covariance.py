@@ -86,6 +86,36 @@ class G64ClockCovariance(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "propagation overflow"):
             self.cov([1e300, 1], [1, 0], [[1e10, 0], [0, 1]])
 
+    def test_rank_one_psd_across_extreme_clock_scales(self):
+        # PSD by construction, but naive rho can round to 1+one ulp.
+        va, vb = 1e-300, 1e10
+        cross = np.sqrt(va) * np.sqrt(vb)
+        out = self.cov([1e-4, 0], [1e-4, 0], [[va, cross], [cross, vb]])
+        self.assertEqual(out["clock_correlation"], 1.)
+        self.assertTrue(np.isfinite(out["clock_only_joint_covariance_rad2"]).all())
+        # A genuinely non-PSD covariance must still be refused.
+        with self.assertRaisesRegex(ValueError, "not positive semidefinite"):
+            self.cov([1e-4, 0], [1e-4, 0], [[1, 1.001], [1.001, 1]])
+
+    def test_large_finite_variance_is_not_rejected_by_symmetrization(self):
+        variance = 1e308
+        out = self.cov([1e-10, 0], [0, 1e-10],
+                       [[variance, 0], [0, variance]])
+        joint = np.asarray(out["clock_only_joint_covariance_rad2"])
+        self.assertTrue(np.isfinite(joint).all())
+        self.assertAlmostEqual(joint[0, 0] / 1e288, 1., delta=1e-12)
+        self.assertAlmostEqual(joint[3, 3] / 1e288, 1., delta=1e-12)
+
+    def test_subnormal_cross_covariance_is_not_erased(self):
+        v = np.nextafter(0., 1.)
+        out = self.cov([1, 0], [-1, 0], [[v, v], [v, v]])
+        joint = np.asarray(out["clock_only_joint_covariance_rad2"])
+        # BLAS may flush subnormal joint products; the factored delta
+        # still preserves the physically nonzero common clock term.
+        self.assertGreater(out["clock_only_difference_covariance_rad2"][0][0], 0)
+        self.assertEqual(out["clock_correlation"], 1.)
+        self.assertEqual(out["historical_holdout"], "NOT_RUN")
+
     def test_zero_rate_does_not_certify_historical_clock(self):
         o = self.cov([0, 0], [0, 0], [[1, 0], [0, 1]])
         self.assertEqual(o["clock_only_difference_covariance_rad2"],
