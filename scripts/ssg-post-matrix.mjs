@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {mkdirSync,writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 
-const esc=s=>String(s).replaceAll('\\','\\\\').replace(/([\\[\\]_*\x60<>|])/g,'\\$1').replace(/\r?\n/g,' ');
+const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('\\','\\\\').replaceAll('_','\\_').replaceAll('*','\\*').replaceAll('`','\\`').replaceAll('[','\\[').replaceAll(']','\\]').replaceAll('|','\\|').replace(/\r?\n/g,' ');
 const identifier=s=>typeof s==='string'&&/^[A-Z0-9][A-Z0-9_-]{2,99}$/.test(s);
 const https=s=>typeof s==='string'&&/^https:\/\/[^\s<>"'()]+$/.test(s);
 const report=s=>typeof s==='string'&&/^research\/archives\/[a-z0-9_/-]+\.md$/.test(s)&&!s.includes('..');
