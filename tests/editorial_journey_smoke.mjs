@@ -6,6 +6,19 @@ import { mkdir } from 'node:fs/promises';
 
 const origin = process.env.SSG_SEARCH_AUDIT_URL || 'http://127.0.0.1:4173/conde-incident/';
 await mkdir('test-results/ui', { recursive: true });
+async function enterLabFromEditorial(page, width) {
+  const primary = page.getByRole('navigation', { name: 'Navegação principal' });
+  if (width <= 720) {
+    const mobile = page.locator('.masthead details.mobile-navigation');
+    assert(await mobile.isVisible(), 'mobile editorial menu missing');
+    assert.equal(await primary.count(), 0,
+      'collapsed mobile links should be hidden from the accessibility tree');
+    await mobile.locator('summary').click();
+  }
+  assert.equal(await primary.count(), 1, 'exactly one navigation should be exposed');
+  await primary.getByRole('link', { name: 'Laboratório' }).click();
+}
+
 const browser = await chromium.launch({ headless: true });
 try {
   for (const width of [320, 1440]) {
@@ -14,8 +27,7 @@ try {
     page.on('pageerror', error => errors.push(error.message));
     let response = await page.goto(origin);
     assert(response?.ok(), 'SSG home must load at Pages prefix');
-    const primary = page.getByRole('navigation', { name: 'Navegação principal' });
-    await primary.getByRole('link', { name: 'Laboratório' }).click();
+    await enterLabFromEditorial(page, width);
     await page.getByRole('navigation', { name: 'Seções do laboratório' }).waitFor();
     assert.match(new URL(page.url()).pathname, /\/conde-incident\/lab\/$/);
 
@@ -37,9 +49,7 @@ try {
       assert.equal(new URL(page.url()).pathname, expected);
       await page.locator('main#main').waitFor();
       assert.equal(await page.locator('html').getAttribute('lang'), 'pt-BR');
-      assert.equal(await page.getByRole('navigation', { name: 'Navegação principal' }).count(), 1);
-      await page.getByRole('navigation', { name: 'Navegação principal' })
-        .getByRole('link', { name: 'Laboratório' }).click();
+      await enterLabFromEditorial(page, width);
       await page.getByRole('navigation', { name: 'Seções do laboratório' }).waitFor();
     }
     await page.screenshot({ path: 'test-results/ui/editorial-lab-' + width + '.png' });

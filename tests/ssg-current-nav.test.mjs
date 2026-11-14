@@ -34,3 +34,21 @@ test('Fails closed when a nav link disappears or duplicates', () => {
   assert.throws(() => markEditorialNav(html.replace('</nav>',
     '<a href="/conde-incident/stories/">again</a></nav>'), 'stories/index.html'), /exactly one/);
 });
+
+import { readFileSync } from 'node:fs';
+const templates = ['index', 'page', 'post', 'template'].map(x => `templates/${x}.html`).concat('templates/tera/base.html');
+for (const path of templates) test('Desktop and native mobile links preserve active section: ' + path, () => {
+  const template = readFileSync(path, 'utf8');
+  assert.match(template, /<details class="mobile-navigation"><summary>Explorar as 9 seções<\/summary>/);
+  const marked = markEditorialNav(template, 'evidencias/arquivo/index.html');
+  assert.equal(marked.found, true);
+  assert.equal(marked.changed, true);
+  assert.equal((marked.html.match(/aria-current="location"/g) || []).length, 2);
+  assert.equal((marked.html.match(/<nav aria-label="Navegação principal">/g) || []).length, 2);
+  assert.equal((marked.html.match(/href="\/conde-incident\/lab\/"/g) || []).length, 2);
+  assert.deepEqual(markEditorialNav(marked.html, 'evidencias/arquivo/index.html'),
+    { ...marked, changed: false });
+  assert.throws(() => markEditorialNav(template.replace('</details>',
+    '<a href="/conde-incident/stories/">unexpected</a></details>')
+    .replaceAll('/conde-incident/evidencias/', '/wrong/'), 'evidencias/index.html'), /exactly one/);
+});
