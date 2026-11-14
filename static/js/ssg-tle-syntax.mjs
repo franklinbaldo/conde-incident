@@ -30,11 +30,36 @@ export function auditTlePair(line1, line2) {
   return { catalogId, first, second, valid: catalogId !== null && first.valid && second.valid };
 }
 
+/**
+ * Accept a copied two-line TLE block without changing either 69-column line.
+ * Only line separators are consumed; headers, extra lines and stray CRs do
+ * not qualify. Each line still goes through the minimal audit on submit.
+ */
+export function splitTlePairPaste(raw) {
+  const match = /^([^\r\n]*)\r?\n([^\r\n]*)(?:\r?\n)?$/.exec(raw);
+  return match ? [match[1], match[2]] : null;
+}
+
 function attachChecker() {
   const form = document.getElementById('ssg-tle-audit');
   const output = document.getElementById('ssg-tle-results');
   if (!form || !output) return;
   form.hidden = false;
+  const firstInput = form.elements.namedItem('line1');
+  const secondInput = form.elements.namedItem('line2');
+  // A previous PASS belongs to the previous bytes, never to edited input.
+  form.addEventListener('input', event => {
+    if (event.target === firstInput || event.target === secondInput) output.replaceChildren();
+  });
+  firstInput.addEventListener('paste', event => {
+    const pair = splitTlePairPaste(event.clipboardData?.getData('text/plain') ?? '');
+    if (!pair) return; // Retain native paste for a single line or malformed block.
+    event.preventDefault();
+    firstInput.value = pair[0];
+    secondInput.value = pair[1];
+    output.replaceChildren();
+    secondInput.focus();
+  });
   form.addEventListener('submit', event => {
     event.preventDefault();
     const line1 = form.elements.namedItem('line1').value;
