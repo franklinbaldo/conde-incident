@@ -113,6 +113,100 @@ def intersection(records: list[dict], stress_range: tuple[float, float]) -> dict
     return result
 
 
+
+def common_h_under_day_shift(records: list[dict], shift_min_hours: float,
+                             shift_max_hours: float) -> dict:
+    """Solve H>0 and all half-open date windows under ONE common clock shift.
+
+    A shift is a stress variable (UTC start relative to printed civil midnight),
+    not an estimated historical timezone. Each interval moves by v*shift/24.
+    All inequalities are strict because terminal day windows are half-open.
+    The pairwise linear inequalities are solved algebraically, not by grid scan.
+    """
+    if not (math.isfinite(shift_min_hours) and math.isfinite(shift_max_hours)
+            and shift_min_hours <= shift_max_hours):
+        raise ValueError("invalid finite, ordered clock-shift stress bounds")
+    result = {
+        "assumed_common_utc_start_shift_hours": [shift_min_hours, shift_max_hours],
+        "status": "NOT_ESTIMABLE_ALL_CUTOFFS",
+        "feasible_shift_hours": None,
+        "feasible_shift_endpoints_inclusive": None,
+        "incompatible_pair_witness": None,
+        "calibrated_timezone": False,
+    }
+    if not records or any(r["status"] != "COUNTERFACTUAL_INTERVAL_ONLY"
+                          for r in records):
+        return result
+    intervals = []
+    for record in records:
+        limits = record["required_H_km_UTC_DAY_COUNTERFACTUAL"]
+        v = record["decay_magnitude_km_day_LOCAL_PROXY"]
+        if (limits is None or len(limits) != 2
+                or not all(math.isfinite(x) for x in (*limits, v))
+                or not (0 <= limits[0] < limits[1] and v > 0)):
+            raise ValueError("invalid positive-decay source record")
+        intervals.append((limits[0], limits[1], v))
+
+    # A + B*delta > 0, with delta measured in hours, for every constraint:
+    # (1) each upper bound must be positive, (2) every lower_i < upper_j.
+    # The latter, together with (1), is equivalent to a common positive H.
+    constraints = [(hi, v / 24, None) for lo, hi, v in intervals]
+    for i, (lo_i, _, v_i) in enumerate(intervals):
+        for j, (_, hi_j, v_j) in enumerate(intervals):
+            constraints.append((hi_j - lo_i, (v_j - v_i) / 24, (i, j)))
+
+    lower, upper = shift_min_hours, shift_max_hours
+    lower_inclusive, upper_inclusive = True, True
+    impossible = False
+    for intercept, slope, _ in constraints:
+        if slope == 0:
+            if intercept <= 0:
+                impossible = True
+                break
+            continue
+        boundary = -intercept / slope
+        if slope > 0:
+            if boundary > lower:
+                lower, lower_inclusive = boundary, False
+            elif boundary == lower:
+                lower_inclusive = False
+        else:
+            if boundary < upper:
+                upper, upper_inclusive = boundary, False
+            elif boundary == upper:
+                upper_inclusive = False
+    feasible = not impossible and (
+        lower < upper or
+        (lower == upper and lower_inclusive and upper_inclusive))
+    if feasible:
+        result["status"] = "FEASIBLE_ONLY_IN_ASSUMED_SHIFT_MODEL"
+        result["feasible_shift_hours"] = [lower, upper]
+        result["feasible_shift_endpoints_inclusive"] = [
+            lower_inclusive, upper_inclusive]
+        return result
+
+    result["status"] = "NO_COMMON_H_FOR_ANY_SHIFT_IN_STRESS_WINDOW"
+    # Strongest simple negative certificate, when available: a pair of
+    # cutoffs whose two intervals never overlap anywhere in the whole window.
+    witnesses = []
+    for intercept, slope, pair in constraints:
+        if pair is None:
+            continue
+        maximum_slack_km = max(intercept + slope * shift_min_hours,
+                               intercept + slope * shift_max_hours)
+        if maximum_slack_km <= 0:
+            witnesses.append((maximum_slack_km, pair))
+    if witnesses:
+        slack, (i, j) = min(witnesses, key=lambda item: (item[0], item[1]))
+        result["incompatible_pair_witness"] = {
+            "lower_cutoff_index": i,
+            "upper_cutoff_index": j,
+            "max_upper_minus_lower_km_over_shift_range": slack,
+            "conclusion": "upper_j <= lower_i for every shift in bounds",
+        }
+    return result
+
+
 def report(groups: dict[int, list[dict]]) -> dict:
     if 528 not in groups or 637 not in groups:
         raise ValueError("required objects 528 and 637 missing")
@@ -126,7 +220,11 @@ def report(groups: dict[int, list[dict]]) -> dict:
             records = [required_h_for_one_origin(groups[norad], cutoff, label, variant)
                        for cutoff in cutoffs]
             variants[variant] = {
-                "origins": records, "fixed_H_test": intersection(records, H_STRESS_KM)
+                "origins": records, "fixed_H_test": intersection(records, H_STRESS_KM),
+                "day_boundary_shift_stress": {
+                    "plus_minus_14h": common_h_under_day_shift(records, -14, 14),
+                    "plus_minus_24h": common_h_under_day_shift(records, -24, 24),
+                }
             }
         objects[str(norad)] = {
             "NASA_calendar_day_timezone_UNVERIFIED": label,
