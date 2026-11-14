@@ -113,3 +113,38 @@ test('loopback Chromium server is safe while HTTP outside loopback remains rejec
   await assert.rejects(loadCondeSourceLookup({baseUrl:'http://example.org/conde-incident/',
     fetcher,hashBytes}),e=>e.code==='unsafe-origin');
 });
+
+
+// These checks protect consumers even if the pointer and shard digest are
+// rewritten together. A digest is a checksum, not a semantic authorization.
+function resealed(index) {
+  const changed=bytes(index), digest=hashBytes(changed);
+  const pointer=structuredClone(stockPointer);
+  const newPath=`data/conde-source-lookup/part-${digest}.json`;
+  pointer.source_index={path:'public/'+newPath,sha256:digest,bytes:changed.length};
+  return fixture(new Map([[P,bytes(pointer)],[newPath,changed]]));
+}
+
+test('duplicate source ID cannot silently overwrite a browser Map entry',async()=>{
+  const index=JSON.parse(stock.get(shardPath));
+  index.sources[1].source_id=index.sources[0].source_id;
+  await fails(resealed(index),'index-shape');
+});
+
+test('orphan and duplicate family membership cannot pass by re-signing shard',async()=>{
+  const index=JSON.parse(stock.get(shardPath));
+  index.families[0].source_ids.push(index.families[0].source_ids[0]);
+  await fails(resealed(index),'index-shape');
+});
+
+test('reverse catalog coverage must equal the independent evidence manifest',async()=>{
+  const index=JSON.parse(stock.get(shardPath));
+  index.unmapped_occurrence_count+=1;
+  await fails(resealed(index),'coverage-mismatch');
+});
+
+test('malformed base URL returns a typed integrity failure, not a raw URL exception',async()=>{
+  await assert.rejects(loadCondeSourceLookup({baseUrl:'https://[bad]/',
+    fetcher:()=>assert.fail('should not fetch'),hashBytes}),
+  e=>e instanceof SourceLookupIntegrityError && e.code==='invalid-base-url');
+});
