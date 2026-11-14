@@ -1,0 +1,257 @@
+{
+  "activation": false,
+  "graph": [
+    {
+      "activation": false,
+      "new_instrumental_observation": false,
+      "relation": "PRINT_ROW_CUSTODIED_NOT_RAW_OBSERVATION",
+      "source": "C241-LONTRA-R48",
+      "target": "DOC:BSE1964:p503:r3"
+    },
+    {
+      "activation": false,
+      "new_instrumental_observation": false,
+      "relation": "SSR_COMPILATION_NOT_RAW_OBSERVATION",
+      "source": "C241-L18",
+      "target": "DOC:NASA1963:19640002493:p5:A"
+    },
+    {
+      "activation": false,
+      "new_instrumental_observation": false,
+      "relation": "CROSSWALK_INPUT",
+      "source": "C241-LONTRA-R49",
+      "target": "DOC:BSE1964:p503:r3"
+    },
+    {
+      "activation": false,
+      "new_instrumental_observation": false,
+      "relation": "CROSSWALK_INPUT",
+      "source": "C241-LONTRA-R49",
+      "target": "DOC:NASA1963:19640002493:p5:A"
+    },
+    {
+      "activation": false,
+      "new_instrumental_observation": false,
+      "relation": "459_533_KM_PRINTED",
+      "source": "DOC:BSE1964:p503:r3",
+      "target": "DATUM:PRINTED_ALTITUDE_PAIR"
+    },
+    {
+      "activation": false,
+      "new_instrumental_observation": false,
+      "relation": "459_533_KM_PRINTED",
+      "source": "DOC:NASA1963:19640002493:p5:A",
+      "target": "DATUM:PRINTED_ALTITUDE_PAIR"
+    },
+    {
+      "activation": false,
+      "new_instrumental_observation": false,
+      "relation": "POSSIBLE_SHARED_SOURCE_NOT_PROVEN",
+      "source": "DATUM:PRINTED_ALTITUDE_PAIR",
+      "target": "H:COMMON_UPSTREAM"
+    },
+    {
+      "activation": false,
+      "new_instrumental_observation": false,
+      "relation": "NO_INSTRUMENTAL_EVIDENCE",
+      "source": "DATUM:PRINTED_ALTITUDE_PAIR",
+      "target": "H:INDEPENDENT_SOVIET_SENSOR"
+    },
+    {
+      "activation": false,
+      "new_instrumental_observation": false,
+      "relation": "NUMERIC_SIMILARITY_NOT_IDENTIFIER",
+      "source": "DATUM:PRINTED_ALTITUDE_PAIR",
+      "target": "H:ROW_IS_1963_003A"
+    },
+    {
+      "activation": false,
+      "new_instrumental_observation": false,
+      "relation": "WESTERN_PERIODICALS_UNTRACED",
+      "source": "H:COMMON_UPSTREAM",
+      "target": "LATENT:source_lineage"
+    },
+    {
+      "activation": false,
+      "new_instrumental_observation": false,
+      "relation": "UNKNOWN_NOT_ZERO",
+      "source": "H:INDEPENDENT_SOVIET_SENSOR",
+      "target": "LATENT:instrumental_independence"
+    },
+    {
+      "activation": false,
+      "new_instrumental_observation": false,
+      "relation": "ROW_HAS_NO_NORAD_COSPAR",
+      "source": "H:ROW_IS_1963_003A",
+      "target": "LATENT:soviet_row_identity"
+    },
+    {
+      "activation": false,
+      "new_instrumental_observation": false,
+      "relation": "CONDITIONAL_IDENTITY_AND_EPOCH",
+      "source": "H:ROW_IS_1963_003A",
+      "target": "MODEL:orbital_element_comparison"
+    },
+    {
+      "activation": false,
+      "new_instrumental_observation": false,
+      "relation": "PREMISES_MISSING_NOT_COMPILED",
+      "source": "MODEL:orbital_element_comparison",
+      "target": "LEAN:candidatePrintedElementConsistency"
+    }
+  ],
+  "hypotheses": [
+    "H:COMMON_UPSTREAM",
+    "H:INDEPENDENT_SOVIET_SENSOR",
+    "H:ROW_IS_1963_003A"
+  ],
+  "id": "ABELHA-C241-LONTRA-R49-01",
+  "independent_instrumental_families": null,
+  "instrumental_observation_epoch_utc": null,
+  "latents": [
+    {
+      "activation": false,
+      "id": "LATENT:source_lineage",
+      "unit": "upstream_document_id",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:instrumental_independence",
+      "unit": "instrument_family_id",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:soviet_row_identity",
+      "unit": "NORAD_or_COSPAR_id",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:sensor",
+      "unit": "instrument_id",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:observation_epoch",
+      "unit": "UTC",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:reference_frame",
+      "unit": "frame_identifier",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:instrument_sigma",
+      "unit": "angular_or_element_uncertainty",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:time_calibration",
+      "unit": "seconds",
+      "value": null
+    }
+  ],
+  "lean_candidate": "candidatePrintedElementConsistency",
+  "lean_status": "CANDIDATE_ONLY_NO_COMPILED_EMPIRICAL_PROOF",
+  "model_observable": {
+    "name": "orbital_element_comparison",
+    "required": [
+      "identified_object",
+      "measurement_epoch_utc",
+      "reference_frame",
+      "instrumental_covariance",
+      "upstream_genealogy"
+    ],
+    "status": "CONDITIONAL_NOT_EVALUABLE"
+  },
+  "nasa_print_row": "1963-003A",
+  "new_activated_physical_constraints": 0,
+  "new_confirmed_norad_528_observations": 0,
+  "next_test": "Retrieve cited Western periodical 1963 tables and row-level upstream; demand historical object identity, UTC, measurement basis, frame and uncertainty before any 527/528/529 orbital constraint.",
+  "other_target_candidates": [
+    {
+      "activation": false,
+      "new_orbital_measurement": null,
+      "norad_id": 527,
+      "row_identified_as_target": false
+    },
+    {
+      "activation": false,
+      "new_orbital_measurement": null,
+      "norad_id": 528,
+      "row_identified_as_target": false
+    },
+    {
+      "activation": false,
+      "new_orbital_measurement": null,
+      "norad_id": 529,
+      "row_identified_as_target": false
+    }
+  ],
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "printed_orbital_comparison": {
+    "apogee_km": {
+      "match": "EXACT_IN_PRINT",
+      "nasa": 533,
+      "soviet": 533
+    },
+    "inclination_deg": {
+      "absolute_difference_deg": "0.01",
+      "nasa": "81.88",
+      "soviet": "81.89"
+    },
+    "perigee_km": {
+      "match": "EXACT_IN_PRINT",
+      "nasa": 459,
+      "soviet": 459
+    },
+    "period_min": {
+      "absolute_difference_min": "0.06",
+      "nasa": "94.6",
+      "nasa_one_decimal_rounding_of_soviet": false,
+      "soviet": "94.66"
+    }
+  },
+  "publication_years": {
+    "nasa": 1963,
+    "soviet": 1964
+  },
+  "schema": "conde.soviet-nasa-documentary-dependency/v1",
+  "source_classes": {
+    "nasa": "NASA_SSR_COMPILED_ELEMENTS",
+    "soviet": "CONTEMPORARY_PRINT_RETROSPECTIVE"
+  },
+  "source_custody": {
+    "nasa_pdf_sha256": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+    "nasa_pdf_url": "https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf",
+    "nasa_print_page": 5,
+    "soviet_pdf_sha256": "d2372fe5b073c95366681bf550a0688ee47a6d2b6c4c612125e006a79fcdc613",
+    "soviet_print_page": 503,
+    "soviet_scan_url": "https://istmat.org/files/uploads/35454/14_nauka_i_tehnika.pdf"
+  },
+  "sources": [
+    {
+      "ledger_sha256": "17f9095ae14630cc881c6ace9f9709a4e41a41bdeca3a6e5ed3ff806493dfca3",
+      "occurrence_id": "C241-LONTRA-R49",
+      "path": "research/tle_custody/soviet_nasa_crosswalk_C241_LONTRA_R49.json"
+    },
+    {
+      "ledger_sha256": "1901a3cc28c12a50507791c64eb940ce999c579f20984cd42485fde4cdf4a4f3",
+      "occurrence_id": "C241-LONTRA-R48",
+      "path": "research/tle_custody/soviet_bse1964_1963_003_C241_LONTRA_R48.json"
+    },
+    {
+      "ledger_sha256": "6cc3b54429deca2e43ccb7ddc7f2ae6ebaa80955b4f142c258cbb6e7ac82a435",
+      "occurrence_id": "C241-L18",
+      "path": "research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json"
+    }
+  ],
+  "soviet_row_explicit_norad_id": null
+}
