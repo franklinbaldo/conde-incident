@@ -7,6 +7,17 @@ on:
       - 'research/geo/CGEO49_NARA_HEADER_CROSSSHEET.md'
       - 'tools/cgeo49_nara_headers.py'
       - 'tests/test_cgeo49_nara_headers.py'
+      - 'tests/test_gaviao_g65_specialist_coverage.py'
+      - '.github/workflows/cgeo49-nara-headers.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo49_nara_header_crosssheet.json'
+      - 'research/geo/cgeo47_nara_m1765_conde_pre1963.json'
+      - 'research/geo/CGEO49_NARA_HEADER_CROSSSHEET.md'
+      - 'tools/cgeo49_nara_headers.py'
+      - 'tests/test_cgeo49_nara_headers.py'
+      - 'tests/test_gaviao_g65_specialist_coverage.py'
       - '.github/workflows/cgeo49-nara-headers.yml'
 permissions:
   contents: read
@@ -26,6 +37,7 @@ jobs:
         run: |
           python3 tools/cgeo49_nara_headers.py
           python3 -m unittest discover -s tests -p 'test_cgeo49_nara_headers.py' -v
+          python3 -m unittest discover -s tests -p 'test_gaviao_g65_specialist_coverage.py' -v
           python3 -O -m unittest discover -s tests -p 'test_cgeo49_nara_headers.py' -v
       - name: Acquire four original NARA JPEGs and compare SHA-256
         run: python3 tools/cgeo49_nara_headers.py --live

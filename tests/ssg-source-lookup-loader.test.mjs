@@ -93,6 +93,34 @@ test('post-matrix document cannot become a claimed physical observation after po
   await fails(fixture(new Map([[P,bytes(pointer)],[newPath,changed]])),'post-matrix-promotion');
 });
 
+// A valid reverse-index checksum is insufficient if the evidence manifest
+// still describes an earlier generation of source citations / genealogy.
+for (const sourcePath of ['public/data/conde-source-citations.json',
+  'public/data/conde-declared-dependence.json']) {
+  test('same matrix and counts cannot mix new source generation: '+sourcePath,async()=>{
+    const pointer=structuredClone(stockPointer);
+    const index=JSON.parse(stock.get(shardPath));
+    const changedSource='f'.repeat(64);
+    pointer.inputs_sha256[sourcePath]=changedSource;
+    index.source_files_sha256[sourcePath]=changedSource;
+    const changed=bytes(index), digest=hashBytes(changed);
+    const newPath=`data/conde-source-lookup/part-${digest}.json`;
+    pointer.source_index={path:'public/'+newPath,sha256:digest,bytes:changed.length};
+    await fails(fixture(new Map([[P,bytes(pointer)],[newPath,changed]])),
+      'mixed-source-generation');
+  });
+}
+
+test('duplicate source in evidence manifest is rejected even if new digest is pinned',async()=>{
+  const evidence=JSON.parse(stock.get(E));
+  evidence.source_files[1]={...evidence.source_files[0]};
+  const changed=bytes(evidence);
+  const pointer=structuredClone(stockPointer);
+  pointer.inputs_sha256['public/data/conde-evidence-index-manifest.json']=hashBytes(changed);
+  await fails(fixture(new Map([[E,changed],[P,bytes(pointer)]])),
+    'mixed-source-generation');
+});
+
 test('wrong origin is rejected before any fetch',async()=>{
   const f=fixture();
   await assert.rejects(loadCondeSourceLookup({baseUrl:'http://example.org/conde-incident/',
