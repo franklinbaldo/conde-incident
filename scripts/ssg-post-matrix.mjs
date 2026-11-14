@@ -46,6 +46,7 @@ export function postMatrixPage(citations,lineage) {
     assert.equal(item.observation_type,'DOCUMENTARY_CITATION_NOT_PHYSICAL_OBSERVATION');
     assert.equal(item.journalistic_source_independence,'UNRESOLVED',
       'Pós-matriz: independência jornalística não validada');
+    assert.ok(identifier(item.status),'Pós-matriz: código de estado inválido');
     assert.ok(https(item.report_citation_url),'Pós-matriz: URL externa deve ser HTTPS');
     assert.ok(report(item.report_path),'Pós-matriz: caminho de pesquisa inválido');
     assert.ok(sha(item.image_sha256)&&item.image_sha256===item.report_object_sha256,
@@ -82,7 +83,7 @@ export function postMatrixPage(citations,lineage) {
     }
     lines.push(`### ${esc(item.id)}`,'',
       `**Fonte:** ${esc(item.source_id)} · **Família:** ${esc(dep.source_family)}`,'',
-      `**Estado canônico:** \`${esc(item.status)}\` · **Independência jornalística:** \`${esc(item.journalistic_source_independence)}\`.`,'',
+      `**Estado canônico:** \`${item.status}\` · **Independência jornalística:** \`${item.journalistic_source_independence}\`.`,'',
       `**O que o documento afirma:** ${esc(item.proposition)}`,'',
       `**Verificação e limite:** ${esc(item.verification)}`,'',
       `**Localizador:** ${esc(item.report_locator)}`,'',
