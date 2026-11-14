@@ -41,14 +41,14 @@
     620,
     620
   ],
-  "printed_altitude_unit": null,
+  "printed_altitude_unit": "miles",
   "printed_designation": "1963 3A",
-  "printed_mean_altitude_unit_unknown": [
+  "printed_mean_altitude_in_printed_miles": [
     "310",
     "310"
   ],
   "source_pdf_sha256": "f77b0e8998d467dd457d0ab8e8012e6e9d69c60fb6180aa3d68f1e8422b32786",
-  "source_sha256": "18cdbed4e9a2d31d3b402b4456f547c3902bbcb0ecfc992efe4c4c3a3a24bcb5",
+  "source_sha256": "9968e90450c3d50affca87014b8b1dcbfeb1aa000c2ddaf6beccf04d60def98d",
   "two_body_invariance": {
     "actual_physical_periods_equal": null,
     "actual_semimajor_axes_equal": null,
