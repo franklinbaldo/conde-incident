@@ -1,0 +1,41 @@
+name: C241 Smithsonian Space Log index R55
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/smithsonian_ru398_stl_index_C241_LONTRA_R55.json
+      - research/tle_custody/evidence_matrix_C241-LONTRA-R55_2026-11-14.md
+      - tools/audit_smithsonian_ru398_r55.py
+      - tests/test_smithsonian_ru398_r55.py
+      - .github/workflows/c241-smithsonian-space-log-r55.yml
+  push:
+    branches: [main]
+    paths:
+      - research/tle_custody/smithsonian_ru398_stl_index_C241_LONTRA_R55.json
+      - research/tle_custody/evidence_matrix_C241-LONTRA-R55_2026-11-14.md
+      - tools/audit_smithsonian_ru398_r55.py
+      - tests/test_smithsonian_ru398_r55.py
+      - .github/workflows/c241-smithsonian-space-log-r55.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Exact HEAD
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Tests normal and -O
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p test_smithsonian_ru398_r55.py -v
+          python3 -O -m unittest discover -s tests -p test_smithsonian_ru398_r55.py -v
+          # A manifest asserting the historical SHA is not a replay of original bytes.
+          curl --fail --location --silent --show-error --retry 2 --max-time 90 \
+            'https://sirismm.si.edu/EADpdfs/SIA.FARU0398.pdf' \
+            --output /tmp/smithsonian-ru398.pdf
+          python3 -m tools.audit_smithsonian_ru398_r55 --pdf /tmp/smithsonian-ru398.pdf

@@ -1,0 +1,53 @@
+{
+  "id": "C241-LONTRA-R55",
+  "audit_date_utc": "2026-11-14",
+  "evidence_class": "INSTITUTIONAL_FINDING_AID_PHYSICAL_LOCATORS",
+  "predecessors": [
+    "C241-LONTRA-R51",
+    "C241-LONTRA-R52",
+    "C241-LONTRA-R53"
+  ],
+  "source": {
+    "institution": "Smithsonian Institution Archives",
+    "collection": "Record Unit 398, National Air and Space Museum Department of Astronautics, Correspondence",
+    "catalogue_url": "https://siarchives.si.edu/collections/siris_arc_216965",
+    "pdf_url": "https://sirismm.si.edu/EADpdfs/SIA.FARU0398.pdf",
+    "http_status": 200,
+    "mime": "application/pdf",
+    "downloaded_bytes": 233242,
+    "sha256": "fa53dca4b1a819e45700dd88fc0858e0299ff0cc7a0e28f2364686de05eb5436",
+    "magic_and_eof": true,
+    "printed_page": 61,
+    "pdf_page_one_based": 63,
+    "page_visually_checked": true,
+    "finding_aid_integral_retrieved": true,
+    "archival_folder_contents_retrieved": false
+  },
+  "locators": [
+    {
+      "box": 63,
+      "folder": 6,
+      "description": "TRW Space Log, Index, Volumes 1-5, undated",
+      "material": "index_not_fascicle",
+      "folder_item_read": false
+    },
+    {
+      "box": 63,
+      "folder": 8,
+      "description": "Soviet Space Log, 1957-1967, A Space Publication",
+      "material": "separate_publication_not_soviet_sensor",
+      "folder_item_read": false
+    }
+  ],
+  "conclusions": {
+    "locators_found": 2,
+    "stl_vol3_no4_original_retrieved": false,
+    "stl_vol3_no4_listed_within_index_confirmed": false,
+    "stl_original_unit_legend_read": false,
+    "soviet_log_1963_primary_observations_confirmed": false,
+    "new_norad_527_528_529_measurements": 0,
+    "new_independent_sensors": 0,
+    "activated_orbital_constraints": 0,
+    "institutional_contacts_sent": 0
+  }
+}

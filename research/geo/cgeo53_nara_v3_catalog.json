@@ -1,0 +1,95 @@
+{
+  "schema": "conde.cgeo.nara-catalog-v3/v1",
+  "id": "CGEO-53",
+  "observed_on": "2026-11-14",
+  "parents": [
+    "CGEO-47",
+    "CGEO-48",
+    "CGEO-49",
+    "CGEO-50",
+    "CGEO-51",
+    "CGEO-52"
+  ],
+  "method": "Direct HTTP GET; response must parse as application/json with body.hits; JSON and counts mutable",
+  "endpoint": "https://catalog.archives.gov/proxy/v3/records/search",
+  "queries": [
+    {
+      "q": "11S037W",
+      "limit": 10,
+      "http_status": 200,
+      "body_format": "JSON",
+      "body_bytes": 1878,
+      "sha256": "b1d3dd3ee52f898a61afcb28bc1abfa789da5dd4778df3726a39bbf66017579c",
+      "total_hits": 1,
+      "matched_naid": "46716637",
+      "title": "Overlay indexes for degree square 11S037W",
+      "level": "fileUnit"
+    },
+    {
+      "q": "11S038W",
+      "limit": 10,
+      "http_status": 200,
+      "body_format": "JSON",
+      "body_bytes": 7519,
+      "sha256": "62d40bb409c395f926f47955dc77a988741604daab8beee4e1e6c2d9bdf1039d",
+      "total_hits": 1,
+      "matched_naid": "46716645",
+      "title": "Overlay indexes for degree square 11S038W",
+      "level": "fileUnit"
+    },
+    {
+      "q": "125374",
+      "limit": 10,
+      "http_status": 200,
+      "body_format": "JSON",
+      "body_bytes": 7473,
+      "sha256": "2009fb27dca4fa05f1a52baace69ed5f4baf741b78715982de7458570c135d9b",
+      "total_hits": 183,
+      "matched_naid": null,
+      "title": null,
+      "level": null
+    },
+    {
+      "q": "133002",
+      "limit": 10,
+      "http_status": 200,
+      "body_format": "JSON",
+      "body_bytes": 8439,
+      "sha256": "22013197a13f7fbbe27e89ecfc9fa23dbf3cee0d525fc7756e83d1cb6d0f14a1",
+      "total_hits": 3451,
+      "matched_naid": null,
+      "title": null,
+      "level": null
+    }
+  ],
+  "archival_lineage": {
+    "record_group": "373",
+    "series": "306062",
+    "degree_square": "11S037W",
+    "file_unit": "46716637",
+    "overlay": "m1765-317-00248.jpg",
+    "op_file_number": "125374",
+    "candidate_exposures": [
+      26,
+      16
+    ],
+    "spot_number": null,
+    "negative_can": null
+  },
+  "interpretation": {
+    "catalog_search_operational": true,
+    "matched_file_units": 2,
+    "individual_frame_found": false,
+    "op_file_number_is_spot_confirmed": false,
+    "numeric_query_hits_are_relevant_negatives": false,
+    "search_result_counts_are_complete_photo_inventory": false,
+    "nara_source_family_independent_photographs": 0
+  },
+  "limitations": {
+    "center_geometry_1963": null,
+    "alleged_event_location": null,
+    "individual_exposure_date": null,
+    "orbit_constraints_activated": false
+  },
+  "next_check": "Obtain NARA RG373 can locator or separately proven original frame; confirm spot, can, exact exposure, date, spatial coverage and provenance before any geographic claim."
+}

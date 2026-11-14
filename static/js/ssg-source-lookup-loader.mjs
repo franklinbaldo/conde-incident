@@ -136,6 +136,36 @@ export async function loadCondeSourceLookup({baseUrl, fetcher=globalThis.fetch,
       ===evidence.total_matrix_occurrences
     && dependencies['research/evidence_matrix_C001-C238_2026-11-11.md']
       ===evidence.matrix_source?.sha256, 'coverage-mismatch');
+  // A digest proves bytes, not that a re-sealed shard points to the right
+  // occurrence or documentary chain. Reconstruct the unambiguous route and
+  // snapshot key from the independent matrix blob identity, before UI use.
+  requireTrue(/^[a-f0-9]{40}$/.test(index.matrix_git_blob_sha1), 'reference-contract');
+  const byOccurrence=new Map();
+  const citationKeys=new Set();
+  for(const source of index.sources) {
+    for(const ref of source.references) {
+      const occurrence=ref?.occurrence;
+      const expectedArchive=typeof occurrence==='string' && /^C[0-9]+#[1-9][0-9]*$/.test(occurrence)
+        ? `/conde-incident/evidencias/arquivo/${occurrence.toLowerCase().replace('#','-')}/` : null;
+      requireTrue(expectedArchive!==null && ref.archive_path===expectedArchive
+        && ref.snapshot_ref===`matrix:${index.matrix_git_blob_sha1}:${occurrence}`
+        && Number.isSafeInteger(ref.matrix_line) && ref.matrix_line>0
+        && SHA.test(ref.row_sha256) && typeof ref.work_id==='string'
+        && ref.work_id.length>0 && Array.isArray(ref.upstream_edges)
+        && ref.upstream_edges.every(edge=>Array.isArray(edge) && edge.length===3
+          && edge[0]===source.source_id && /^[a-z][a-z0-9_]*$/.test(edge[1])
+          && typeof edge[2]==='string' && edge[2].length>0), 'reference-contract');
+      const edgeKeys=ref.upstream_edges.map(edge=>JSON.stringify(edge));
+      requireTrue(new Set(edgeKeys).size===edgeKeys.length, 'reference-contract');
+      const citationKey=JSON.stringify([source.source_id,occurrence]);
+      requireTrue(!citationKeys.has(citationKey), 'reference-contract');
+      citationKeys.add(citationKey);
+      const identity=JSON.stringify([ref.matrix_line,ref.row_sha256]);
+      requireTrue(!byOccurrence.has(occurrence) || byOccurrence.get(occurrence)===identity,
+        'reference-contract');
+      byOccurrence.set(occurrence,identity);
+    }
+  }
   const references=index.sources.flatMap(s=>s.references??[]);
   requireTrue(index.curated_reference_count===references.length
     && index.curated_occurrence_count===new Set(references.map(x=>x.occurrence)).size

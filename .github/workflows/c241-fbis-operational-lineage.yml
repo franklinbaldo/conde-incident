@@ -10,6 +10,7 @@ on:
       - 'tests/test_fbis_operational_lineage.py'
       - 'research/evidence_matrix_C001-C238_2026-11-11.md'
       - 'public/data/conde-fbis-operational-lineage.json'
+      - 'research/constraints/C241-P42_fbis_1972_operational_lineage.md'
       - '.github/workflows/c241-fbis-operational-lineage.yml'
   pull_request:
     paths:
@@ -18,6 +19,7 @@ on:
       - 'tests/test_fbis_operational_lineage.py'
       - 'research/evidence_matrix_C001-C238_2026-11-11.md'
       - 'public/data/conde-fbis-operational-lineage.json'
+      - 'research/constraints/C241-P42_fbis_1972_operational_lineage.md'
       - '.github/workflows/c241-fbis-operational-lineage.yml'
 jobs:
   source-locked-lineage:
@@ -36,6 +38,14 @@ jobs:
           python-version: '3.12'
       - name: Replay frozen matrix and FBIS documentary feed
         run: python3 tools/export_fbis_operational_lineage.py --check-site
+      - name: Replay pinned original CIA PDF (SHA-256, size and EOF)
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 --retry-all-errors --connect-timeout 15 --max-time 180 \
+            'https://www.govinfo.gov/content/pkg/GOVPUB-PREX3-PURL-gpo254964/pdf/GOVPUB-PREX3-PURL-gpo254964.pdf' \
+            --output "$RUNNER_TEMP/fbis-part-3.pdf"
+          python3 tools/export_fbis_operational_lineage.py --check-site --source-pdf "$RUNNER_TEMP/fbis-part-3.pdf"
       - name: Adversarial custody and cross-feed tests
         run: python3 -m unittest discover -s tests -p 'test_fbis_operational_lineage.py' -v
       - name: Audit cumulative provenance counters

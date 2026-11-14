@@ -1,0 +1,40 @@
+name: CGEO-52 NARA NCAP digital route
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo52_ncap_crossarchive_route.json'
+      - 'research/geo/cgeo51_nara_copy_access.json'
+      - 'research/geo/CGEO52_NCAP_CROSSARCHIVE_ROUTE.md'
+      - 'tools/cgeo52_ncap_crossarchive.py'
+      - 'tests/test_cgeo52_ncap_crossarchive.py'
+      - '.github/workflows/cgeo52-ncap-crossarchive.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo52_ncap_crossarchive_route.json'
+      - 'research/geo/cgeo51_nara_copy_access.json'
+      - 'research/geo/CGEO52_NCAP_CROSSARCHIVE_ROUTE.md'
+      - 'tools/cgeo52_ncap_crossarchive.py'
+      - 'tests/test_cgeo52_ncap_crossarchive.py'
+      - '.github/workflows/cgeo52-ncap-crossarchive.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Exact head gate
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+      - name: Validate source classification and adversarial checks
+        run: |
+          python3 tools/cgeo52_ncap_crossarchive.py
+          python3 -m unittest discover -s tests -p 'test_cgeo52_ncap_crossarchive.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_cgeo52_ncap_crossarchive.py' -v
+      - name: Live NARA partnership content recheck
+        run: python3 tools/cgeo52_ncap_crossarchive.py --live

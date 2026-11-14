@@ -1,0 +1,78 @@
+{
+  "schema": "conde.cgeo.ncap-crossarchive-route/v1",
+  "id": "CGEO-52",
+  "observed_on": "2026-11-14",
+  "parents": [
+    "CGEO-47",
+    "CGEO-48",
+    "CGEO-49",
+    "CGEO-50",
+    "CGEO-51"
+  ],
+  "nara": {
+    "record_group": "373",
+    "series": "306062",
+    "file_unit": "46716637",
+    "degree_square": "11S037W",
+    "overlay": "m1765-317-00248.jpg",
+    "op_file_number": "125374",
+    "candidate_exposures": [
+      26,
+      16
+    ],
+    "spot_number": null,
+    "negative_can": null
+  },
+  "sources": [
+    {
+      "kind": "nara_primary_guide",
+      "url": "https://www.archives.gov/research/cartographic/aerial-photography/rg-373-dia-foreign-aerial-photography",
+      "http_status": 200,
+      "body_bytes": 51079,
+      "sha256": "326b33c82aaef86bfba3b4be2a201c311ad167a6a2a0785dcb366ed1ff836648",
+      "content_acquired": true,
+      "method": "HTTP GET direct",
+      "last_reviewed": "2025-02-18"
+    },
+    {
+      "kind": "ncap_partner_catalog",
+      "url": "https://www.ncap.org/image-collection/nara",
+      "http_status": 403,
+      "error_response_bytes": 5432,
+      "content_acquired": false,
+      "method": "Jatoba HTTP GET blocked; separate browser-rendered page read",
+      "published_geographical_coverage_mentions_brazil": false,
+      "absence_of_brazil_photographs_proven": false
+    },
+    {
+      "kind": "catalog_search_attempt",
+      "url": "https://catalog.archives.gov/proxy/records/search?limit=25&page=1&q=11S037W",
+      "http_status": 200,
+      "body_bytes": 5454,
+      "body_format": "HTML_APP_SHELL_NOT_SEARCH_JSON",
+      "catalog_results_parsed": false,
+      "zero_photograph_hits_proven": false
+    }
+  ],
+  "route": {
+    "nara_reports_ncap_scans_added_to_catalog": true,
+    "ncap_reports_rg373_digitization_partnership": true,
+    "ncap_page_lists_argentina_but_not_brazil": true,
+    "individual_conde_film_digitized": null,
+    "public_negative_url": null,
+    "can_locator_accessed": false,
+    "contact_sent": false,
+    "physical_negative_requested": false
+  },
+  "limitations": {
+    "source_families_independent_photographs": 0,
+    "conclusive_absence_of_coverage": false,
+    "conde_urban_photo_acquired": false,
+    "exposure_date_verified": null,
+    "center_geometry_1963": null,
+    "event_location": null,
+    "orbital_constraints_activated": false,
+    "status": "DIGITIZATION_ROUTE_IDENTIFIED_BRAZIL_COVERAGE_UNVERIFIED"
+  },
+  "next_check": "Use a functioning NCAP Air Photo Finder/map browser or structured NARA records browser to look for dated frames in 11S037W; require record-level spot/exposure, exact image, date and coverage before asserting a match; NARA can locator/onsite route remains open."
+}
