@@ -32,6 +32,10 @@ class R51Tests(unittest.TestCase):
         with self.assertRaises(ValueError):
             mod.audit(data)
 
+    def test_reject_as_of_note_drift(self):
+        self.reject(['printed_row', 'row_note'],
+                    'In orbit: classified payload (initial orbital data as of February 1, 1963)')
+
     def test_reject_merged_period_values(self):
         self.reject(['printed_row', 'period_minutes_in_printed_order'], [94.7])
 

@@ -15,6 +15,11 @@ class STLPairCoherence(unittest.TestCase):
     def test_exact_printed_pair(self):
         r = inspect(self.data, self.raw)
         self.assertEqual(r['printed_altitude_sum'], [620, 620])
+        self.assertEqual(r['row_note_initial_data_as_of_day'], '1963-01-31')
+        self.assertIn('initial orbital data as of January 31, 1963', r['source_row_note'])
+        self.assertIsNone(r['initial_data_column_index'])
+        self.assertIsNone(r['other_column_measurement_utc'])
+        self.assertIsNone(r['columns_are_coepoch'])
         self.assertEqual(r['printed_mean_altitude_in_printed_miles'], ['310', '310'])
         self.assertEqual(r['period_nominal_difference_first_minus_second_seconds'], '6')
         self.assertEqual(r['conditional_rounding_model']['intervals_touch_at_minutes'], '94.65')
@@ -55,6 +60,10 @@ class STLPairCoherence(unittest.TestCase):
                           (Fraction(1), 'half-down')):
             with self.subTest(bad=bad, mode=mode), self.assertRaises(ValueError):
                 round_nearest_tenth_positive(bad, tie=mode)
+
+    def test_reject_invented_as_of_date(self):
+        self.invalid('printed_row', 'row_note',
+                     'In orbit: classified payload (initial orbital data as of November 8, 1963)')
 
     def test_reject_altitude_transcription_drift(self):
         self.invalid('printed_row', 'perigee_altitudes_in_printed_order', [298, 287])
