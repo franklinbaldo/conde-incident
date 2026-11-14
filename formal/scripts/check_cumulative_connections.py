@@ -22,9 +22,7 @@ CANONICAL = {
 }
 PENDING = "CANDIDATE_NOT_ACTIVATED"
 
-# A NASA SSR table field is not a new observable merely because its label,
-# operator or input-state links were renamed. This schema describes the four
-# already-registered tabular columns, not an orbital forward model.
+# SSR columns cannot become independent observations by relabeling.
 NASA_SSR_FIELDS = {
     "nodal_period": ("nodal_period_model", "min"),
     "inclination": ("inclination_model", "deg"),
@@ -181,6 +179,7 @@ def validate(graph: dict) -> dict:
             raise ValueError("unregistered NASA SSR document requires custody review")
     output = []
     ids = set()
+    model_variables = set()
     observation_signatures = set()
     families = set()
     upstream = set()
@@ -199,6 +198,10 @@ def validate(graph: dict) -> dict:
         if signature in observation_signatures:
             raise ValueError(f"duplicate source/table observation with new ID: {oid}")
         observation_signatures.add(signature)
+        var = o.get("variable_id")
+        if not isinstance(var, str) or not var.strip() or var in model_variables:
+            raise ValueError(f"duplicate or invalid model variable: {oid}")
+        model_variables.add(var)
         if o["source_id"] not in sources:
             raise ValueError(f"orphan observation source: {oid}")
         src = sources[o["source_id"]]
