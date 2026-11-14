@@ -1,0 +1,123 @@
+{
+  "schema": "conde.cgeo.nara-12s037w-overlays/v1",
+  "id": "CGEO-55",
+  "date_of_inspection": "2026-11-14",
+  "parent": "CGEO-54",
+  "catalog": {
+    "naid": "46716877",
+    "square": "12S037W",
+    "record_group": "373",
+    "series": "306062",
+    "microfilm": "M1765",
+    "roll": "317",
+    "media_type": "microfilm_scan_of_flight_overlay_or_reference",
+    "source_url": "https://catalog.archives.gov/id/46716877"
+  },
+  "scans": [
+    {
+      "sheet": "00429",
+      "square": "12S037W",
+      "role": "cover_sheet",
+      "bytes": 2238940,
+      "sha256": "58e1f0f08a2f91df260f429bc4c6d326ff31a2e7aa9ba59e817fbb6e586686aa",
+      "width": 3188,
+      "height": 3988,
+      "op_file_no": null,
+      "visible_annotation": "1942"
+    },
+    {
+      "sheet": "00430",
+      "square": "12S037W",
+      "role": "reference_chart",
+      "bytes": 2488224,
+      "sha256": "8f7b9cf864083ef628429165fc72a07cad55730401316ee22220586d5da5f75d",
+      "width": 3620,
+      "height": 3988,
+      "op_file_no": null,
+      "visible_annotation": "Conde; Sambauma; Baixio; WAC 1141"
+    },
+    {
+      "sheet": "00431",
+      "square": "12S037W",
+      "role": "flight_overlay",
+      "bytes": 2487325,
+      "sha256": "b4422aad1d0ca1a53dbb762c20e653cb34c42785abcd4e162e3f943300c6227d",
+      "width": 3620,
+      "height": 3988,
+      "op_file_no": "125374",
+      "visible_annotation": "SEP 42 (multiple dates handwritten; reading provisional)"
+    },
+    {
+      "sheet": "00432",
+      "square": "12S037W",
+      "role": "flight_overlay",
+      "bytes": 2420414,
+      "sha256": "fcd14c0cd438c40e4ce6733c896869d12e8899e31d2cf9c5cb62ce03ba4af6b9",
+      "width": 3620,
+      "height": 3988,
+      "op_file_no": "125370",
+      "visible_annotation": "27 SEP 42"
+    },
+    {
+      "sheet": "00247",
+      "square": "11S037W",
+      "role": "flight_overlay_cross_reference",
+      "bytes": 2497049,
+      "sha256": "b671f0378e2b57502f616be5aaa57ae45041048aa576bbf04c6eed9a6843a404",
+      "width": 3620,
+      "height": 3988,
+      "op_file_no": "125370",
+      "visible_annotation": "27 SEP 42"
+    },
+    {
+      "sheet": "00248",
+      "square": "11S037W",
+      "role": "flight_overlay_cross_reference",
+      "bytes": 2519162,
+      "sha256": "21016e6c141d5ac495893e13bc9a4b01bbf992e596416054fd0c03c164f3d2a0",
+      "width": 3620,
+      "height": 3988,
+      "op_file_no": "125374",
+      "visible_annotation": "SEP 42 (multiple dates handwritten; reading provisional)"
+    }
+  ],
+  "cross_square_matches": [
+    {
+      "op_file_no": "125374",
+      "sheets": [
+        "00248",
+        "00431"
+      ],
+      "meaning": "same handwritten O.P. FILE NO. in distinct degree-square fileUnits; not same exposure/spot"
+    },
+    {
+      "op_file_no": "125370",
+      "sheets": [
+        "00247",
+        "00432"
+      ],
+      "meaning": "same handwritten O.P. FILE NO. in distinct degree-square fileUnits; not same exposure/spot"
+    }
+  ],
+  "interpretation": {
+    "scans_acquired": 6,
+    "scans_new_for_square_12S037W": 4,
+    "flight_overlays_in_square_12S037W": 2,
+    "op_file_cross_square_matches": 2,
+    "original_individual_aerial_frames_acquired": 0,
+    "independent_photographic_observations": 0,
+    "cross_square_identifier_reuse": true,
+    "spatial_overlap_of_exposures_proven": false
+  },
+  "limits": {
+    "date_of_individual_exposure": null,
+    "spot_number": null,
+    "negative_can": null,
+    "flight_footprint_georeferenced": null,
+    "coverage_of_conde_center": null,
+    "historical_city_center_geometry_1963": null,
+    "alleged_fall_location": null,
+    "orbital_constraint_activated": false
+  },
+  "next": "Locate film-can/spot crosswalk for O.P. FILE NO. 125370 and 125374; verify individual exposure/date and registered footprint before GIS or orbital inference."
+}
