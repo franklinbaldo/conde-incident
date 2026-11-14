@@ -49,6 +49,8 @@ jobs:
         run: node --test tests/ssg-documentary-archive.test.mjs tests/ssg-wayback-custody.test.mjs tests/ssg-matrix-catalog.test.mjs
       - name: Verify quota-free local geography from pinned Natural Earth
         run: python3 scripts/build-conde-context-map.py --check
+      - name: Test no-JS map on the independent SSG page
+        run: node --test tests/ssg-map-context.test.mjs
       - name: Validate chapter schema and chronology
         run: node scripts/prepare-ssg.mjs --check
       - name: Generate SSG inputs from canonical stories
