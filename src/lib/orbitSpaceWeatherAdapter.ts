@@ -30,6 +30,12 @@ export interface MsiseDrivers {
   /** [daily Ap, ap(t), ap(t-3h), ap(t-6h), ap(t-9h),
    *   average ap(t-12h..t-33h), average ap(t-36h..t-57h)]. */
   readonly apHistory: readonly [number, number, number, number, number, number, number];
+  /** Definitive data are only a retrospective reconstruction, not 1963 as-of inputs. */
+  readonly temporalEligibility: 'RETROSPECTIVE_ONLY_NO_ASOF_FORECAST';
+  /** Last UTC day of the centered window (40 days after evaluation day). */
+  readonly f107aWindowLastUtcDay: string;
+  readonly apDailyPeriodEndExclusiveUtc: string;
+  readonly currentApBinEndExclusiveUtc: string;
   readonly inputStatus: 'PLANETARY_DRIVERS_ONLY_NOT_DENSITY_OR_CALIBRATION';
 }
 
@@ -112,6 +118,10 @@ export function deriveMsiseDriversAtUtc(snapshot: SpaceWeatherSnapshot, epochUtc
     apDaily,
     apHistory: [apDaily, apAt(0), apAt(1), apAt(2), apAt(3),
       average(4, 11), average(12, 19)],
+    temporalEligibility: 'RETROSPECTIVE_ONLY_NO_ASOF_FORECAST',
+    f107aWindowLastUtcDay: utcDay(dayStart + 40 * DAY_MS),
+    apDailyPeriodEndExclusiveUtc: dateKey(dayStart + DAY_MS),
+    currentApBinEndExclusiveUtc: dateKey(bin + THREE_HOURS_MS),
     inputStatus: 'PLANETARY_DRIVERS_ONLY_NOT_DENSITY_OR_CALIBRATION',
   };
 }
@@ -129,6 +139,8 @@ export interface ConditionalDensityRequest {
   readonly geodetic: ConditionalGeodeticPosition;
 }
 export interface ConditionalMsiseOptions {
+  /** Explicit declaration prevents silently using definitive future inputs as an as-of forecast. */
+  readonly temporalUse: 'RETROSPECTIVE_RECONSTRUCTION';
   readonly snapshot: SpaceWeatherSnapshot;
   /** UTC corresponding to the provided originStateTS, not a guessed decay time. */
   readonly originEpochUtc: string;
@@ -160,11 +172,13 @@ export interface ConditionalMsiseOptions {
  * The actual density is a conditional model output, never measured here.
  */
 export function makeConditionalMsiseAtmosphere(options: ConditionalMsiseOptions): Atmosphere {
-  const {snapshot, originEpochUtc, originStateTS, inertialFrame, frameTransformSource,
+  const {temporalUse, snapshot, originEpochUtc, originStateTS, inertialFrame, frameTransformSource,
     toGeodetic, inertialEarthPoleAtUtc, earthPoleSource,
     inertialPrimeMeridianAtUtc, primeMeridianSource,
     inertialSunDirectionAtUtc, sunDirectionSource,
     densityModelSource, evaluateDensityKgM3, cdAreaOverMassM2Kg} = options;
+  if (temporalUse !== 'RETROSPECTIVE_RECONSTRUCTION')
+    throw new RangeError('Definitive centered F10.7/Ap inputs require retrospective mode; not an as-of forecast');
   const originMs = utcMilliseconds(originEpochUtc);
   if (!Number.isFinite(originStateTS) || !inertialFrame?.trim() ||
       !frameTransformSource?.trim() || !densityModelSource?.trim() ||
@@ -192,7 +206,7 @@ export function makeConditionalMsiseAtmosphere(options: ConditionalMsiseOptions)
         '; full-geodesy=NOT_CHECKED')+
       (sunDirectionSource ? '; local-solar-time='+sunDirectionSource+' (CHECK_ONLY)' :
         '; local-solar-time=NOT_CHECKED')+
-      '; GFZ/NRC declared provenance; NOT_CALIBRATED',
+      '; GFZ/NRC declared provenance; RETROSPECTIVE_ONLY_NOT_ASOF_FORECAST; NOT_CALIBRATED',
     densityKgM3: (radialAltitudeKm: number, tS: number, state: State): number => {
       if (!state || !Number.isFinite(tS) || state.tS !== tS ||
           !Array.isArray(state.rKm) || state.rKm.length !== 3 ||

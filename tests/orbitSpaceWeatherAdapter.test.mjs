@@ -61,7 +61,7 @@ test('missing earlier ap history, wrong schema and false provenance are rejected
 
 const initialState = {rKm: [6878.137, 0, 0], vKmS: [0, 7.6, 0], tS: 100};
 const options = (overrides = {}) => ({
-  snapshot,
+  snapshot, temporalUse: 'RETROSPECTIVE_RECONSTRUCTION',
   originEpochUtc: '1963-11-08T05:59:50Z', originStateTS: 100,
   inertialFrame: 'SYNTHETIC-INERTIAL', frameTransformSource: 'SYNTHETIC_ONLY',
   toGeodetic: state => ({
@@ -267,4 +267,30 @@ test('G43 valid oblique and rotated unit poles pass; missing or invalid provenan
     ...opt, inertialEarthPoleAtUtc: () => [0, 0, 1],
   }));
   assert.throws(() => dragAccelerationKmS2(state, wrongDirection), /latitude inconsistent/);
+});
+
+test('G73 definitive index windows are retrospective and reject as-of use before density', () => {
+  const atNoon = deriveMsiseDriversAtUtc(snapshot, '1963-11-08T12:00:00Z');
+  assert.equal(atNoon.temporalEligibility, 'RETROSPECTIVE_ONLY_NO_ASOF_FORECAST');
+  assert.equal(atNoon.f107aWindowLastUtcDay, '1963-12-18');
+  assert.equal(atNoon.apDailyPeriodEndExclusiveUtc, '1963-11-09T00:00:00Z');
+  assert.equal(atNoon.currentApBinEndExclusiveUtc, '1963-11-08T15:00:00Z');
+  const late = deriveMsiseDriversAtUtc(snapshot, '1963-11-08T23:59:59Z');
+  assert.equal(late.f107aWindowLastUtcDay, '1963-12-18');
+  assert.equal(late.currentApBinEndExclusiveUtc, '1963-11-09T00:00:00Z');
+  const asofAudit = JSON.parse(readFileSync(new URL(
+    '../research/constraints/C241-P31_space_weather_asof.json', import.meta.url)));
+  assert.equal(asofAudit.prospective_driver_status, 'PROSPECTIVE_SCORE_NOT_AUTHORIZED');
+  assert.deepEqual(asofAudit.rows.map(r => r.f107a_centered_window_utc_days.last),
+    ['1963-12-17', '1963-12-18', '1963-12-19']);
+  let calls = 0;
+  for (const temporalUse of [undefined, 'PROSPECTIVE_AS_OF', '', null]) {
+    assert.throws(() => makeConditionalMsiseAtmosphere(options({
+      temporalUse, evaluateDensityKgM3: () => { calls++; return 1e-12; },
+    })), /retrospective mode; not an as-of forecast/);
+  }
+  assert.equal(calls, 0);
+  const retrospective = makeConditionalMsiseAtmosphere(options());
+  assert.match(retrospective.source, /RETROSPECTIVE_ONLY_NOT_ASOF_FORECAST/);
+  assert.ok(dragAccelerationKmS2(initialState, retrospective).every(Number.isFinite));
 });
