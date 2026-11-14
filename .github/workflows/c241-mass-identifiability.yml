@@ -12,6 +12,10 @@ on:
       - research/statistics/C241_stage_epoch_ambiguity.md
       - research/statistics/C241_mass_prior_sensitivity_C241.md
       - research/tle_custody/gcat_mass_semantics_C241-L40.json
+      - research/tle_custody/ferret_1500_crosssource_C241.json
+      - research/statistics/C241_ferret_1500_crosssource.md
+      - tools/ferret_mass_crosssource_C241.py
+      - tests/test_ferret_mass_crosssource_C241.py
       - .github/workflows/c241-mass-identifiability.yml
   push:
     branches: [main]
@@ -26,6 +30,10 @@ on:
       - research/statistics/C241_stage_epoch_ambiguity.md
       - research/statistics/C241_mass_prior_sensitivity_C241.md
       - research/tle_custody/gcat_mass_semantics_C241-L40.json
+      - research/tle_custody/ferret_1500_crosssource_C241.json
+      - research/statistics/C241_ferret_1500_crosssource.md
+      - tools/ferret_mass_crosssource_C241.py
+      - tests/test_ferret_mass_crosssource_C241.py
       - .github/workflows/c241-mass-identifiability.yml
   workflow_dispatch:
 permissions:
@@ -44,6 +52,8 @@ jobs:
       - name: Exact rational tests and catalog gate
         run: |
           python3 -m unittest discover -s tests -p test_mass_identifiability_C241.py -v
+          python3 -m unittest discover -s tests -p test_ferret_mass_crosssource_C241.py -v
+          python3 -m tools.ferret_mass_crosssource_C241 > "$RUNNER_TEMP/ferret-mass-crosssource.json"
           python3 -m unittest discover -s tests -p test_c241_stage_epoch_ambiguity.py -v
           python3 -m tools.c241_stage_epoch_ambiguity > "$RUNNER_TEMP/mass-stage-epoch.json"
           python3 -m unittest discover -s tests -p test_mass_prior_sensitivity_C241.py -v
