@@ -172,6 +172,15 @@ test('later archival leads have exact reciprocal links without promoting matrix 
     '<p>Pista documental posterior à matriz, sem curadoria nova ou observação independente: '+
     '<a href="'+target.url+'">'+target.id+'</a></p></main>';
   assert.equal(auditBuiltMatrixSections(good,[linked],related),1);
+
+  // The historic assertion only checked href presence: a bogus label passed.
+  const authentic='<a href="'+target.url+'">'+target.id+'</a>';
+  assert.throws(()=>auditBuiltMatrixSections(good.replace(authentic,
+    '<a href="'+target.url+'">observação física comprovada</a>'),[linked],related),
+    /rótulo diverge do identificador canônico/);
+  assert.throws(()=>auditBuiltMatrixSections(good.replace(authentic,authentic+authentic),
+    [linked],related),/link visível ausente ou duplicado/);
+
   assert.throws(()=>auditBuiltMatrixSections(good.replace(target.url,'/wrong/'),[linked],related),
     /backlinks changed/);
   assert.throws(()=>auditBuiltMatrixSections(good.replace('Pista documental posterior à matriz','Alegação confirmada'),[linked],related),
