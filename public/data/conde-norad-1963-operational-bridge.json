@@ -1,0 +1,263 @@
+{
+  "activation": false,
+  "crosswalk_identity_status": "TOPIC_MATCH_UNVERIFIED_EXACT_DOCUMENT_IDENTITY",
+  "dependency_graph": [
+    {
+      "activation": false,
+      "from": "C241-L46",
+      "independent_physical_observation": false,
+      "relation": "ORIGINAL_FACSIMILE_IDENTIFIED",
+      "to": "C241-L46-D07"
+    },
+    {
+      "activation": false,
+      "from": "C241-L46-D07",
+      "independent_physical_observation": false,
+      "relation": "ORBITAL_CONTEXT_OTHER_MISSION",
+      "to": "NORAD:1963-044:687_688"
+    },
+    {
+      "activation": false,
+      "from": "C241-L46-D07",
+      "independent_physical_observation": false,
+      "relation": "SAME_REPORTING_TOPIC_DOCUMENT_IDENTITY_NOT_YET_PROVEN",
+      "to": "MOR-NORAD-1963-NOV12"
+    },
+    {
+      "activation": false,
+      "from": "C241-L46",
+      "independent_physical_observation": false,
+      "relation": "ORIGINAL_FACSIMILE_IDENTIFIED",
+      "to": "C241-L46-D08"
+    },
+    {
+      "activation": false,
+      "from": "C241-L46-D08",
+      "independent_physical_observation": false,
+      "relation": "ORBITAL_CONTEXT_OTHER_MISSION",
+      "to": "NORAD:1963-044:687_688"
+    },
+    {
+      "activation": false,
+      "from": "C241-L46-D08",
+      "independent_physical_observation": false,
+      "relation": "SAME_REPORTING_TOPIC_DOCUMENT_IDENTITY_NOT_YET_PROVEN",
+      "to": "MOR-NORAD-1963-NOV14"
+    },
+    {
+      "activation": false,
+      "from": "C241-L46-D08",
+      "independent_physical_observation": false,
+      "relation": "ORIGINAL_688_INTERVAL_NOT_TRANSFERABLE_TO_528",
+      "to": "NORAD:688:DECAY_INTERVAL_1963-11-12"
+    },
+    {
+      "activation": false,
+      "from": "C241-L46",
+      "independent_physical_observation": false,
+      "relation": "CONTEXTUAL_TIMING_COMPARISON_DIFFERENT_OBJECT_UPSTREAM_UNKNOWN",
+      "to": "C241-L33:UN-INF53"
+    },
+    {
+      "activation": false,
+      "from": "C241-L46",
+      "independent_physical_observation": false,
+      "relation": "SEARCH_TARGET_UNPROVEN",
+      "to": "H_NORAD_528_ORIGINAL_OPERATIONAL_LOG_FOUND"
+    },
+    {
+      "activation": false,
+      "from": "H_NORAD_528_ORIGINAL_OPERATIONAL_LOG_FOUND",
+      "independent_physical_observation": false,
+      "relation": "PENDING_PRIMARY_INSTRUMENTAL_RECORD",
+      "to": "LATENT:NORAD528:MEASUREMENT"
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "H_NORAD_528_ORIGINAL_OPERATIONAL_LOG_FOUND",
+      "missing": "ORIGINAL_SPADATS_528_REPORT_WITH_STATION_EPOCH_FRAME_RESIDUALS",
+      "state": "OPEN_UNVERIFIED"
+    },
+    {
+      "id": "H_688_DECAY_INTERVAL_IS_528_SIGMA",
+      "missing": "NOT_APPLICABLE",
+      "state": "REJECTED_CROSS_OBJECT_TRANSFER"
+    }
+  ],
+  "id": "ABELHA-C241-L46-NORAD-01",
+  "independent_528_instrumental_observations_added": 0,
+  "input_sha256": {
+    "public/data/conde-norad-context.json": "78e8d88a5bcdb570d0afec854497720987f29fdfdebbe785c27418a988fb5e3b",
+    "public/data/conde-un-1963-status-bridge.json": "bc31cff4f2b24f88cc600cab47033c92ba5de3d60c12e2a158132563ccf1966c",
+    "research/tle_custody/norad_spadats_context_C241-L46.json": "2ca04b17b8dc5d2a8852de94362316c5d75825d691843af5873f49cf8e74d852"
+  },
+  "lean_candidate": "Conde1963.noradOperationalReports1963Context",
+  "lean_status": "DOCUMENTARY_CANDIDATE_NOT_COMPILED_ORBITAL_CONSTRAINT",
+  "nasa_catalogued_decay_day_528": "1963-11-08",
+  "next_test": "AF IN and NORAD Space Intelligence Bulletin reports covering 1963-003B / SPADATS 528 prior to 8 Nov 1963; request originals and tracking residuals, not infer from 687/688",
+  "observation_candidates_527_528_529": [
+    {
+      "activation": false,
+      "designator": "1963-003A",
+      "epoch_utc": null,
+      "frame": null,
+      "norad": 527,
+      "sigma": null,
+      "source_measurement": null
+    },
+    {
+      "activation": false,
+      "designator": "1963-003B",
+      "epoch_utc": null,
+      "frame": null,
+      "norad": 528,
+      "sigma": null,
+      "source_measurement": null
+    },
+    {
+      "activation": false,
+      "designator": "1963-003C",
+      "epoch_utc": null,
+      "frame": null,
+      "norad": 529,
+      "sigma": null,
+      "source_measurement": null
+    }
+  ],
+  "other_object_688_reported_decay_window": {
+    "date_utc": "1963-11-12",
+    "end": "2400Z",
+    "kind": "REPORTED_INTERVAL_FOR_DIFFERENT_OBJECT_NOT_SIGMA",
+    "object_id": 688,
+    "start": "2210Z"
+  },
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "related_matrix_occurrence": "C197#1",
+  "reported_administrative_status_528_by": "2400Z 15 NOVEMBER 1963",
+  "schema": "conde.norad-1963-operational-scientific-bridge/v1",
+  "simulator_latent_parameters": [
+    {
+      "activation": false,
+      "id": "NORAD528:log_document_identifier",
+      "source_occurrence": "C241-L46",
+      "uncertainty": "UNKNOWN_NOT_ZERO",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "NORAD528:station_528",
+      "source_occurrence": "C241-L46",
+      "uncertainty": "UNKNOWN_NOT_ZERO",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "NORAD528:measured_epoch_utc_528",
+      "source_occurrence": "C241-L46",
+      "uncertainty": "UNKNOWN_NOT_ZERO",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "NORAD528:reference_frame_528",
+      "source_occurrence": "C241-L46",
+      "uncertainty": "UNKNOWN_NOT_ZERO",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "NORAD528:sigma_528",
+      "source_occurrence": "C241-L46",
+      "uncertainty": "UNKNOWN_NOT_ZERO",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "NORAD528:clock_calibration_528",
+      "source_occurrence": "C241-L46",
+      "uncertainty": "UNKNOWN_NOT_ZERO",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "NORAD528:operational_decay_interval_528",
+      "source_occurrence": "C241-L46",
+      "uncertainty": "UNKNOWN_NOT_ZERO",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "NORAD528:reentry_position_528",
+      "source_occurrence": "C241-L46",
+      "uncertainty": "UNKNOWN_NOT_ZERO",
+      "value": null
+    }
+  ],
+  "source_documents": [
+    {
+      "bytes": 929016,
+      "document_date": "1963-11-12",
+      "findings": [
+        {
+          "page_index": 1,
+          "printed": "2 of 6",
+          "text": "NORAD Space Intelligence Bulletin 35-63, explicitly preliminary and revisable"
+        },
+        {
+          "page_index": 2,
+          "printed": "3 of 6",
+          "text": "Shemya radar 0642Z 11 Nov 1963; three objects detected, orbital elements for two; object 687 as of revolution 7"
+        },
+        {
+          "page_index": 3,
+          "printed": "4 of 6",
+          "text": "object 688, 1963-44B, orbital parameters as of revolution 7"
+        }
+      ],
+      "hash_scope": "COMPLETE_SOURCE_PDF_VERIFIED_BY_TARTARUGA",
+      "independence_family": "USAF_NORAD_SPADATS_1963_044_REPORTING",
+      "message": "AF IN 20080",
+      "object_ids": [
+        687,
+        688
+      ],
+      "observed_launch": "1963-044",
+      "pdf_pages": 6,
+      "pdf_sha256": "b1d6a37572e6c7ffa806f07f30ae714730a8d17724942638ac591c661bef97fe",
+      "physical_observation_528": null,
+      "source_id": "C241-L46-D07",
+      "url": "https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/07.pdf"
+    },
+    {
+      "bytes": 520901,
+      "document_date": "1963-11-14",
+      "findings": [
+        {
+          "page_index": 1,
+          "printed": "2 of 3",
+          "text": "object 688 stated to decay 2210Z to 2400Z on 12 Nov; object 687 still in orbit as of 1900Z 13 Nov, revolution 41"
+        },
+        {
+          "page_index": 2,
+          "printed": "3 of 3",
+          "text": "object 687 forecast to decay in next few days, not a measured time"
+        }
+      ],
+      "hash_scope": "COMPLETE_SOURCE_PDF_VERIFIED_BY_TARTARUGA",
+      "independence_family": "USAF_NORAD_SPADATS_1963_044_REPORTING",
+      "message": "AF IN 23784 (corrected copy of AF IN 22976)",
+      "object_ids": [
+        687,
+        688
+      ],
+      "observed_launch": "1963-044",
+      "pdf_pages": 3,
+      "pdf_sha256": "65452b827428bdbef37bf96fb915a1411c2798d5a16939d845abe561aa12e13e",
+      "physical_observation_528": null,
+      "source_id": "C241-L46-D08",
+      "url": "https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/08.pdf"
+    }
+  ],
+  "source_occurrence": "C241-L46"
+}
