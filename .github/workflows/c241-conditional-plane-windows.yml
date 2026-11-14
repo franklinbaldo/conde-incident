@@ -18,6 +18,10 @@ on:
       - 'research/geo/cgeo20_centro_vila_2020.json'
       - 'research/statistics/C241_CONDITIONAL_PLANE_WINDOWS_20261114.md'
       - 'research/statistics/c241_plane_*.json'
+      - 'tools/c241_modern_boundary_plane_g77.py'
+      - 'tests/test_c241_modern_boundary_plane_g77.py'
+      - 'research/statistics/c241_modern_boundary_plane_g77.json'
+      - 'research/geo/conde_ibge_2025_sirgas2000.json'
   push:
     branches: [main]
     paths:
@@ -37,6 +41,10 @@ on:
       - 'research/geo/cgeo20_centro_vila_2020.json'
       - 'research/statistics/C241_CONDITIONAL_PLANE_WINDOWS_20261114.md'
       - 'research/statistics/c241_plane_*.json'
+      - 'tools/c241_modern_boundary_plane_g77.py'
+      - 'tests/test_c241_modern_boundary_plane_g77.py'
+      - 'research/statistics/c241_modern_boundary_plane_g77.json'
+      - 'research/geo/conde_ibge_2025_sirgas2000.json'
   workflow_dispatch:
 permissions:
   contents: read
@@ -81,3 +89,9 @@ jobs:
         run: |
           set -euo pipefail
           python3 tools/c241_plane_proxy_clock_g76.py --repo . --output research/statistics/c241_plane_proxy_clock_g76.json --check
+      - name: Replay G77 modern IBGE boundary vertices, with negative tests
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p 'test_c241_modern_boundary_plane_g77.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_c241_modern_boundary_plane_g77.py' -v
+          python3 tools/c241_modern_boundary_plane_g77.py --repo . --output research/statistics/c241_modern_boundary_plane_g77.json --check
