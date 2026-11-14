@@ -13,6 +13,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      manifest_sha: ${{ steps.pages_provenance.outputs.sha256 }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -141,6 +143,18 @@ jobs:
         run: node scripts/check-ssg-authored-site.mjs
       - name: Verify real SSG casefile journey and CSS tokens
         run: node --test tests/ssg-casefile.test.mjs tests/ssg-casefile-built.check.mjs
+      - name: Pin exact Pages bytes before artifact upload
+        id: pages_provenance
+        shell: bash
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p test_pages_provenance.py -v
+          python3 -O -m unittest discover -s tests -p test_pages_provenance.py -v
+          sha="$(python3 tools/pages_provenance.py build --root public --commit "$EXPECTED_SHA" --run-id "$GITHUB_RUN_ID")"
+          python3 tools/pages_provenance.py verify-local --root public --commit "$EXPECTED_SHA" --sha256 "$sha"
+          echo "sha256=$sha" >> "$GITHUB_OUTPUT"
       - name: Upload Pages artifact
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
@@ -161,3 +175,24 @@ jobs:
       - uses: actions/configure-pages@v5
       - id: deployment
         uses: actions/deploy-pages@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert deployed workflow source SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Compare deployed Pages manifest and four served files with build bytes
+        shell: bash
+        env:
+          EXPECTED_SHA: ${{ github.sha }}
+          BUILD_MANIFEST_SHA: ${{ needs.build.outputs.manifest_sha }}
+          PUBLIC_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          test -n "$BUILD_MANIFEST_SHA"
+          python3 tools/pages_provenance.py verify-live \
+            --commit "$EXPECTED_SHA" \
+            --sha256 "$BUILD_MANIFEST_SHA" \
+            --url "$PUBLIC_URL"
