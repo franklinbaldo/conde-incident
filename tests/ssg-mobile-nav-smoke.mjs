@@ -42,6 +42,11 @@ try {
       const visible = width <= 720 ? mobile.locator('nav') : desktop;
       assert.equal(await desktop.locator('a').count(), 9);
       assert.equal(await mobile.locator('a').count(), 9);
+      const namedGroups = ['Entender', 'Verificar', 'Experimentar'];
+      assert.deepEqual(await mobile.locator('.nav-cluster').evaluateAll(
+        groups => groups.map(g => g.getAttribute('aria-label'))), namedGroups);
+      assert.deepEqual(await desktop.locator('.nav-cluster').evaluateAll(
+        groups => groups.map(g => g.getAttribute('aria-label'))), namedGroups);
       if (width <= 720) {
         assert(await mobile.isVisible() && !(await desktop.isVisible()), 'mobile disclosure not active');
         assert(stats.header <= 200, `mobile header too tall: ${route} ${width} ${zoom} ${stats.header}`);
