@@ -1,0 +1,86 @@
+{
+  "id": "C241-L61",
+  "type": "HistoricalClockConvention",
+  "title": "SAO P-17: ramo de novembro de 1963 em A.1 − WWV",
+  "source": {
+    "ntrs": "19680020675",
+    "url": "https://ntrs.nasa.gov/api/citations/19680020675/downloads/19680020675.pdf",
+    "date_published": "1968-05-14",
+    "pdf_bytes": 10988993,
+    "pdf_pages": 176,
+    "sha256": "6b77e832e4273f7781cb61bfea7d38685c99d63e2f6b370a76d0b28a225ddf86",
+    "visual_pages": [
+      {
+        "pdf_page_1based": 7,
+        "printed_page": 3,
+        "claim": "ramos temporais e frame FK4 1950.0"
+      },
+      {
+        "pdf_page_1based": 9,
+        "printed_page": 5,
+        "claim": "estacoes e coordenadas em SAO Standard Earth"
+      }
+    ],
+    "prior_manifest": "research/tle_custody/sao_p17_oct_dec_1963_scope_C241-L44.json"
+  },
+  "model": {
+    "time_scale_output": "smoothed preliminary A.1",
+    "time_scale_input": "WWV emitted",
+    "unit": "seconds",
+    "mjd_zero_date": "1858-11-17",
+    "mjd_reference": "38030.0",
+    "slope_seconds_per_day": "0.001118458",
+    "branches": [
+      {
+        "start_mjd": "38030.0",
+        "end_mjd_exclusive": "38334.0",
+        "intercept_seconds": "2.292725",
+        "printed_period": "1963-01-01 through 1963-11-01 exclusive"
+      },
+      {
+        "start_mjd": "38334.0",
+        "end_mjd_exclusive": "38395.0",
+        "intercept_seconds": "2.392725",
+        "printed_period": "1963-11-01 through 1964-01-01 exclusive"
+      }
+    ],
+    "boundary_mjd": "38334.0",
+    "intercept_difference_seconds": "0.100000",
+    "observed_target_528": false,
+    "utc_conversion_proven": false,
+    "clock_assumption": "P-17 historical publication applies only to published A.1/WWV convention, not an authenticated 528 clock"
+  },
+  "station_table_context": [
+    {
+      "station_id": 9008,
+      "site": "Shiraz, Iran",
+      "x_Mm": "3.376882",
+      "y_Mm": "4.403985",
+      "z_Mm": "3.136254"
+    },
+    {
+      "station_id": 9114,
+      "site": "Cold Lake, Canada",
+      "x_Mm": "-1.264846",
+      "y_Mm": "-3.466880",
+      "z_Mm": "5.185464"
+    }
+  ],
+  "geodetic_reference": "SAO Standard Earth, f=1/298.25, a=6.378155 Mm; not ITRF or a certified epoch-1963 geodesy for NORAD 528",
+  "target_id": "NORAD 528 / 1963-003B",
+  "target_in_p17_published_sample": false,
+  "source_family": "SAO_PHOTOREDUCTION_PUBLICATIONS",
+  "dependencies": [
+    "C241-L44",
+    "C241-L59",
+    "RU301:SC8:14881-14902"
+  ],
+  "input_528_observation": null,
+  "station_for_528": null,
+  "epoch_utc_528": null,
+  "covariance_528": null,
+  "independent_528_observations_added": 0,
+  "hard_constraints_activated": 0,
+  "physical_model_modified": false,
+  "status": "CONTEXT_CLOCK_CONVENTION_ONLY_NOT_APPLIED_TO_528"
+}
