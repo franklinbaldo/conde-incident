@@ -2,6 +2,11 @@
 import assert from 'node:assert/strict';
 
 export async function checkSensitivityA11y(page, viewport, locale) {
+  const headingLevels = await page.locator('main h1, main h2, main h3').evaluateAll(
+    nodes => nodes.map(node => Number(node.tagName.slice(1))),
+  );
+  assert.deepEqual(headingLevels, [1, 2, 2, 2],
+    `sensitivity heading levels must be H1/H2/H2/H2 (${viewport.name}, ${locale})`);
   const sliders = await page.locator('input[type="range"]').evaluateAll(inputs =>
     inputs.map(input => ({ id: input.id, label: input.labels?.[0]?.textContent?.trim(), valueText: input.getAttribute('aria-valuetext') }))
   );

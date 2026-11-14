@@ -35,3 +35,19 @@ test('negative: removing one visible label causes the audit to fail', () => {
   assert.notEqual(mutant, component, 'mutant must change the source');
   assert.throws(() => assertAccessibleSliders(mutant));
 });
+
+function assertSequentialSensitivityHeadings(source) {
+  const levels = (source.match(/<h[1-6]/g) ?? []).map(tag => Number(tag.at(-1)));
+  assert.deepEqual(levels, [1, 2, 2, 2], 'component headings follow H1 → H2 without skipped levels');
+  assert.equal(source.split('</h2>').length - 1, 3, 'all H2 headings close correctly');
+}
+
+test('sensitivity heading outline is sequential and complete', () => {
+  assertSequentialSensitivityHeadings(component);
+});
+
+test('negative: returning to H3 without H2 breaks heading outline', () => {
+  const mutant = component.replace('<h2 className=', '<h3 className=');
+  assert.notEqual(mutant, component, 'heading mutant must change the source');
+  assert.throws(() => assertSequentialSensitivityHeadings(mutant));
+});
