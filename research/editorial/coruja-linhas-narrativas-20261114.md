@@ -65,3 +65,15 @@ Escala: 0 = inexistente; 1 = frágil; 2 = parcial; 3 = nítido. **Personagem** =
 | J · Hoax | 1 | 3 | 2 | 3 | 3 | 3 | 15 | Consolidar Caderno 20 |
 
 **Mapa da série:** A (notícia e verificação) pode seguir C (imprensa e precedência) quando o jornal original aparecer; B+F (origem/negação e sátira) são um arco de consolidação; D+E (genealogia dos motivos) depende de #887; G+H (tempo e objetos) já contam como episódios publicados. **Não iniciar um segundo capítulo de 14/11.**
+
+## A linha A ganhou um endereço de acervo, não um recorte
+
+**Apuração de custódia, 14/11/2026.** O [Instituto Geográfico e Histórico da Bahia (IGHB), Biblioteca Ruy Barbosa](https://www.ighb.org.br/biblioteca), lista `Jornal da Bahia | 1959 - 1994` em seu inventário de jornais (Hemeroteca). O intervalo inclui **1963 em nível de título**, mas o próprio IGHB adverte ser necessário consultar a biblioteca sobre os **períodos efetivamente existentes**. **Não está comprovado** que a edição de **segunda-feira, 11/11/1963**, sobreviva ali, esteja digitalizada ou contenha o recorte citado no A-628.
+
+**Falso positivo nominal importante:** a [Hemeroteca Digital da Biblioteca Nacional identifica outro *Jornal da Bahia* (BA), de 1855 a 1877](https://bndigital.bn.gov.br/acervo-digital/jornal/815063). Esse registro **não** corresponde ao periódico soteropolitano citado pelo consulado em 1963. Não usar a ausência do artigo nessa coleção do século XIX como busca negativa ou prova de inexistência do recorte de 1963.
+
+**Estado e método de obtenção:** `TITULO_NO_ACERVO` pelo inventário institucional do IGHB; `FASCICULO_11_11_1963_NAO_CONFIRMADO`; `PAGINA_NAO_LIDA`; `ARTIGO_MORSE_APENAS_REFERIDO_PELO_A628`. Foram localizados o inventário institucional e o falso homônimo digital, **não** a página original. Repetições em reportagens de 2026 que citam o A-628 são derivados, não cópias independentes do jornal.
+
+**Roteiro para uma solicitação humana, ainda não enviada:** pedir ao IGHB, pelo contato publicado `biblioteca@ighb.org.br`, confirmação de (a) existência e condições de consulta das edições 7–12/11/1963, sobretudo a de 11/11; (b) caderno, página e título original da reportagem sobre Conde e o telegrama Morse; (c) disponibilidade de fac-símile integral com cabeçalho, data, paginação e crédito, por digitalização ou microfilme; (d) custo/condições de reprodução e identificação da coleção. Consultar também *Diário de Notícias* de 09/11, outro recorte do A-628. Não solicitar nem publicar reprodução sem verificar direitos e autorização. Esse pedido depende de autorização humana conforme [fila do dono #884](https://github.com/franklinbaldo/conde-incident/issues/884).
+
+**Teste que decide a linha narrativa:** só confrontar o relato diplomático com a redação e o contexto do *Jornal da Bahia* depois de obter a página legível e identificada. Se a edição estiver incompleta ou não existir nesse acervo, registrar o negativo delimitado a **acervo e data**, sem extrapolar à circulação da notícia. A ficha A segue **não publicável**; nenhuma alteração de observação orbital ou de localização em Conde decorre desta descoberta catalográfica.
