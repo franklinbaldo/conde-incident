@@ -46,3 +46,6 @@ does not authenticate observed positions or establish a 1963 reentry. -/
 #print axioms Conde1963.CircularMCMC.likelihood_gauge_invariant
 #print axioms Conde1963.CircularMCMC.fixed_bias_can_break_gauge
 #print axioms Conde1963.CircularMCMC.unanchored_phase_has_compensator
+
+#print axioms Conde1963.CircularMCMC.calibrated_anchor_identifies_phase_modulo
+#print axioms Conde1963.CircularMCMC.calibrated_anchor_rejects_noncongruent_phase
