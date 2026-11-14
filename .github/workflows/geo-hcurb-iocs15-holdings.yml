@@ -1,0 +1,41 @@
+name: CGEO-42 | HCUrb 2014 IOCS15 holding with verified PDF
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo42_hcurb_iocs15_holdings.*'
+      - 'tools/cgeo42_hcurb_iocs15_holdings.py'
+      - 'tests/test_cgeo42_hcurb_iocs15_holdings.py'
+      - '.github/workflows/geo-hcurb-iocs15-holdings.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo42_hcurb_iocs15_holdings.*'
+      - 'tools/cgeo42_hcurb_iocs15_holdings.py'
+      - 'tests/test_cgeo42_hcurb_iocs15_holdings.py'
+      - '.github/workflows/geo-hcurb-iocs15-holdings.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-scholarship-not-map:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact checkout SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Verify contract and adversarial tests
+        run: |
+          python3 -m tools.cgeo42_hcurb_iocs15_holdings
+          python3 -m unittest discover -s tests -p 'test_cgeo42_hcurb_iocs15_holdings.py' -v
+      - name: Replay identical 2014 PDF from publisher legacy domain
+        run: |
+          curl -fsSL --retry 2 --connect-timeout 20 --max-time 90 \
+            'https://www.ub.edu/geocrit/sn/sn-493/493-38.pdf' \
+            -o "$RUNNER_TEMP/hcurb2014.pdf"
+          python3 -m tools.cgeo42_hcurb_iocs15_holdings --pdf "$RUNNER_TEMP/hcurb2014.pdf"
