@@ -1,0 +1,65 @@
+{
+  "schema": "conde.cgeo.nara-rg373-overlays/v1",
+  "id": "CGEO-46",
+  "observed_on": "2026-11-14",
+  "nara_guide": {
+    "institution": "US National Archives (NARA)",
+    "url": "https://www.archives.gov/research/cartographic/aerial-photography/rg-373-dia-foreign-aerial-photography",
+    "status": "GUIDE_ACQUIRED",
+    "bytes": 51079,
+    "sha256": "db4337b75f4d51523e3cda23655117fc84c70e37346c48ec160c4c4070c68ace",
+    "record_group": "373",
+    "series": "Aerial Photographs, 1935-1970",
+    "index_series": "Overlay Indexes for Aerial Photography, 1935-1971"
+  },
+  "candidate": {
+    "municipality": "Conde",
+    "state": "BA",
+    "country": "Brazil",
+    "ibge_code": "2908606",
+    "location_reference_url": "https://mapcarta.com/24987310",
+    "location_epoch": "modern_approximate_search_only",
+    "latitude": -11.813,
+    "longitude": -37.6139,
+    "degree_square_candidate": "11S037W",
+    "catalog_search_url": "https://catalog.archives.gov/search?q=11S037W",
+    "catalog_result_status": "NOT_VERIFIED",
+    "aerial_coverage_status": "NOT_VERIFIED"
+  },
+  "sgb_provenance": {
+    "based_on": "CGEO-45",
+    "image_sha256": "45d72dff84520bb387d5b8ce7c5a8f4c9361457841341b2c21016e992c0fef79",
+    "roll": "58",
+    "line": "X-NNI",
+    "frame_labels": [
+      "7150",
+      "7157"
+    ],
+    "year_range_on_index": "1964-1970"
+  },
+  "nara_identifier_resolution": {
+    "overlay_id": null,
+    "mission_number": null,
+    "spot_number": null,
+    "exposure_number": null,
+    "can_id": null,
+    "flight_date": null,
+    "original_negative": null,
+    "sgb_nara_same_flight": null
+  },
+  "limitations": {
+    "guide_is_inventory_of_conde": false,
+    "original_frames_acquired": false,
+    "exposure_date_authenticated": false,
+    "center_conde_nov_1963": null,
+    "georeferenced_footprint": null,
+    "reentry_point": null,
+    "can_constrain_orbital_reentry": false
+  },
+  "next_steps": [
+    "Search the NARA catalog with the candidate degree-square; verify a returned RG 373 overlay exists before asserting custody.",
+    "For every matching overlay, read dates, mission and spot numbers, then identify actual exposure and original negative in RG 373 can locator.",
+    "Only compare NARA and SGB after an authenticated mission and photographic-frame identity bridge; do not interpret an empty catalog result as absence of historical coverage."
+  ]
+}
+
