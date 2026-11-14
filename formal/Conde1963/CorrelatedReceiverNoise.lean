@@ -27,12 +27,6 @@ theorem zero_cross_independence_is_a_distinct_model :
     contrastVariance 2 2 0 = 4 := by
   decide
 
-/-- Every single shared latent error yields a nonnegative contrast variance;
-this is a Gram-factor/PSD certificate, not a measured sigma. -/
-theorem shared_latent_receiver_contrast_psd (ha hb : Int) :
-    0 ≤ (ha - hb) * (ha - hb) := by
-  exact mul_self_nonneg (ha - hb)
-
 /-- The full cross-covariance cannot be replaced by marginals: a shared
 latent state uses one perturbation with sensitivities ha and hb. -/
 theorem shared_latent_receiver_contrast_identity (ha hb : Int) :

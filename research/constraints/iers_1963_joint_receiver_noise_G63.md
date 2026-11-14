@@ -37,8 +37,7 @@ cancela), correlação zero (soma dos erros), anticorrelação perfeita
 (amplificação), PSD singular legítima e rejeição de matrizes não PSD,
 não simétricas, de dimensão errada ou não finitas. O módulo Lean
 CorrelatedReceiverNoise formaliza a identidade escalar dos termos cruzados,
-mostra dois erros opostos do atalho diagonal e certifica a não negatividade
-para um fator latente compartilhado. A prova estrutural **não autentica**
+e mostra dois erros opostos do atalho diagonal. A prova estrutural **não autentica**
 a matriz fornecida pelo usuário nem substitui o validador numérico 4×4.
 
 ## Fontes faltantes e ativação
