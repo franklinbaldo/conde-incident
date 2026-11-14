@@ -15,6 +15,8 @@ test('Custódia em SSG com SHA imutável, checksum, RAAN e limites explícitos',
     'não observação instrumental primária','hora, a posição terminal','/conde-incident/lab/#/tles'])
     assert.ok(page.includes(item),`Informação estática ausente: ${item}`);
   assert.doesNotMatch(page,/<script|onload=|onclick=/i);
+  assert.match(page, /<pre class="tle-source-lines" tabindex="0" role="region" aria-label="[^"]+"><code>/);
+  assert.ok(page.includes('<code>'+first+'\n'+second+'</code>'), 'Preservar as duas linhas TLE de 69 colunas sem reflow textual');
 });
 
 test('Checksum rejeita alteração, prefixo, tamanho e linha trocada',()=>{
