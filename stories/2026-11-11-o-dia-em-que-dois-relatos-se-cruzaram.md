@@ -21,6 +21,8 @@ O objeto espacial aparece no [*Satellite Situation Report* da NASA, de 15 de nov
 
 O boletim não traz uma hora terminal nem indica país, oceano ou coordenadas. Também não descreve fragmentos encontrados em terra. O dia anotado no catálogo não permite, por si só, localizar uma queda no mapa.
 
+Para inspecionar a cadeia da fonte NASA, a [ocorrência C131#1 no arquivo curado](/conde-incident/evidencias/arquivo/c131-1/) liga o registro documental, a classificação de seus limites e a linha identificada na matriz histórica. Essa referência não fornece uma trajetória terminal.
+
 Essa distinção é decisiva: **deixar a órbita não é o mesmo que comprovar que um objeto reconhecível atingiu o solo**. Para estabelecer esse segundo acontecimento, seria preciso outro tipo de evidência.
 
 ## Uma notícia que chegou pelo rádio
@@ -32,6 +34,8 @@ Já nessa transmissão monitorada aparecem alegações de uma esfera, uma crater
 O cabeçalho da notícia contém a marca `2330 8 NOV 63 W`. Ela não informa, sem a convenção de horários do serviço devidamente identificada, a hora da suposta ocorrência em Conde. **A hora de transmissão e a hora do acontecimento narrado também não são necessariamente a mesma coisa.**
 
 O documento prova que aquela história estava circulando. Não é uma gravação original da rádio, uma fotografia autenticada do local ou um exame material da esfera.
+
+A [ocorrência C01#1 no arquivo curado](/conde-incident/evidencias/arquivo/c01-1/) documenta a proveniência do relato atribuído à rádio, com sua fonte e suas limitações. O registro não equivale a uma testemunha presencial independente.
 
 ## A coincidência tem duas explicações muito diferentes
 
