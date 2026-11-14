@@ -1,5 +1,6 @@
 """G49: source-bound conditional intra-day Earth-frame regression tests."""
 import copy
+from decimal import Decimal
 import json
 import math
 import os
@@ -67,6 +68,23 @@ class G49AuthenticatedIntraday(unittest.TestCase):
         self.assertEqual(fractional_mjd("1963-11-08T00:00:00Z"), 38341)
         self.assertEqual(fractional_mjd("1963-11-09T00:00:00Z"), 38342)
         self.assertGreater(fractional_mjd("1963-11-08T00:00:00.000001Z"), 38341)
+
+    def test_subsecond_rotation_against_independent_split_jd_erfa(self):
+        # A two-part JD must preserve the fractional day rather than rounding
+        # it onto the 38,341-day MJD in a single binary64 number.
+        utc = "1963-11-08T12:00:00.123456Z"
+        row = interpolate_at(utc, self.eop, self.times)
+        mjd = fractional_mjd(utc)
+        jd1 = 2400000.5 + int(mjd)
+        frac = mjd - Decimal(int(mjd))
+        ut1 = float(frac + Decimal(str(row["ut1_minus_utc_s"])) / 86400)
+        tt = float(frac + Decimal(str(row["tt_minus_utc_s"])) / 86400)
+        from iers_1963_frame import AS2RAD
+        reference = erfa.c2t00a(jd1, tt, jd1, ut1,
+                                 row["x_arcsec"] * AS2RAD,
+                                 row["y_arcsec"] * AS2RAD)
+        self.assertLess(max(abs(reference[i][j] - row["gcrs_to_itrs"][i][j])
+                            for i in range(3) for j in range(3)), 2e-14)
 
     def test_source_binding_rejects_mutated_numbers_without_sha_change(self):
         # G48 previously checked only the string SHA lineage, not the payload cells.

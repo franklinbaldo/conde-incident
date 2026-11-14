@@ -1,5 +1,6 @@
 """G50: physically typed TEME/ITRS/GCRS state, Jacobian and provenance tests."""
 import copy
+from decimal import Decimal
 import json
 import math
 import os
@@ -13,6 +14,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 from iers_1963_frame import EOP, TIME
+from iers_1963_timescales import UTC_RATE_S_PER_DAY
 from iers_1963_intraday import interpolate_at
 from iers_1963_teme import (
     frame_operator, jacobian_6d, matrices_at, transform_covariance,
@@ -111,6 +113,36 @@ class G50TEMEFrame(unittest.TestCase):
         self.assertLess(np.max(abs(transformed-transformed.T)), 1e-12)
         restored = np.linalg.inv(jac) @ transformed @ np.linalg.inv(jac).T
         self.assertLess(np.max(abs(restored-c)), 1e-12)
+
+    def test_split_jd_stabilizes_terrestrial_velocity_refinement(self):
+        # In the old JD representation, .5s vs 1s gave >0.0000001 km/s
+        # spurious velocity variation, much larger than physical h^2 error.
+        utc = "1963-11-08T12:00:00Z"
+        point = np.array([7000., 0., 0.])
+        coarse = frame_operator(utc, self.eop, self.times, step_seconds=1.)[1] @ point
+        fine = frame_operator(utc, self.eop, self.times, step_seconds=.5)[1] @ point
+        self.assertLess(np.linalg.norm(coarse - fine), 2e-8)  # km/s
+        self.assertGreater(np.linalg.norm(coarse), .5)
+
+    def test_rate_uses_si_seconds_not_1963_utc_labels(self):
+        # TAI-UTC increased continuously in Nov 1963. UTC clock-label
+        # difference is not identical to elapsed TAI (physical SI) seconds.
+        from datetime import datetime, timedelta, timezone
+        utc = "1963-11-08T12:00:00Z"
+        epoch = datetime(1963, 11, 8, 12, tzinfo=timezone.utc)
+        steps = [((epoch+timedelta(seconds=sign)).strftime(
+            "%Y-%m-%dT%H:%M:%S.%fZ")) for sign in (-1,1)]
+        before = matrices_at(steps[0], self.eop, self.times)["teme_to_itrs"]
+        after = matrices_at(steps[1], self.eop, self.times)["teme_to_itrs"]
+        delta_utc = (after - before) / 2.
+        tai_ratio = 1 + float(UTC_RATE_S_PER_DAY / Decimal(86400))
+        expected = delta_utc / tai_ratio
+        _, measured = frame_operator(utc, self.eop, self.times)
+        self.assertLess(np.linalg.norm(expected-measured), 1e-15)
+        # A zero TEME velocity at 7000 km exposes the sub-0.01 mm/s effect.
+        point = np.array([7000., 0., 0.])
+        self.assertGreater(np.linalg.norm((delta_utc-measured) @ point), 6e-9)
+        self.assertLess(np.linalg.norm((delta_utc-measured) @ point), 8e-9)
 
     def test_rejects_unauthenticated_bytes_and_tampered_polar_motion(self):
         utc = "1963-11-08T12:00:00Z"
