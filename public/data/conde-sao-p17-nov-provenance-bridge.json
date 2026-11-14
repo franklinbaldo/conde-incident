@@ -1,0 +1,196 @@
+{
+  "activation": false,
+  "clock": {
+    "a1_minus_wwv_example_seconds": "2.740565438",
+    "difference_at_boundary_seconds": "0.100000",
+    "example_is_not_a_528_observation": true,
+    "mjd_1963_11_08_example": "38341.0",
+    "mjd_nov_transition": "38334.0",
+    "published_input": "WWV_EMITTED_NOT_UTC",
+    "published_output": "SMOOTHED_PRELIMINARY_A1",
+    "utc_transform_calibrated": false
+  },
+  "dependencies": [
+    "C241-L44",
+    "C241-L59",
+    "C241-L61",
+    "RU301:SC8:14881-14902"
+  ],
+  "graph": [
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_CONDITIONAL",
+      "relation": "SAME_P17_PDF_NEW_PAGE_LEVEL_METHOD",
+      "source": "C241-L61",
+      "target": "C241-L44"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_CONDITIONAL",
+      "relation": "CUSTODIED_HISTORIC_CATALOG",
+      "source": "C241-L44",
+      "target": "DOC:SAO:P17:SR275"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_CONDITIONAL",
+      "relation": "PUBLISHED_METHOD_ONLY",
+      "source": "DOC:SAO:P17:SR275",
+      "target": "CLOCK:P17:A1_MINUS_WWV"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_CONDITIONAL",
+      "relation": "1963_11_01_DISCONTINUITY",
+      "source": "CLOCK:P17:A1_MINUS_WWV",
+      "target": "CLOCK:P17:NOV_BRANCH"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_CONDITIONAL",
+      "relation": "MISSING_CONVERSION",
+      "source": "CLOCK:P17:NOV_BRANCH",
+      "target": "LATENT:WWV_EMITTED_TO_UTC"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_CONDITIONAL",
+      "relation": "EARLIER_NONTRANSFERABLE_CLOCK_BRANCH",
+      "source": "C241-L59",
+      "target": "DOC:SAO:P14:SR185"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_CONDITIONAL",
+      "relation": "STATION_CONTEXT_NOT_528_MEASUREMENT",
+      "source": "C241-L61",
+      "target": "RU301:SC8:14881-14902"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_CONDITIONAL",
+      "relation": "SELECTIVE_CATALOG_SCOPE",
+      "source": "DOC:SAO:P17:SR275",
+      "target": "H:P17_528_UNLISTED"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_CONDITIONAL",
+      "relation": "GLOBAL_OBSERVATIONS_UNKNOWN",
+      "source": "H:P17_528_UNLISTED",
+      "target": "LATENT:RAW_528_IDENTIFICATION"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_CONDITIONAL",
+      "relation": "IDENTITY_REQUIRED",
+      "source": "LATENT:RAW_528_IDENTIFICATION",
+      "target": "LEAN:candidateSaoClockCompatibility"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_CONDITIONAL",
+      "relation": "TIME_CONVERSION_REQUIRED",
+      "source": "LATENT:WWV_EMITTED_TO_UTC",
+      "target": "LEAN:candidateSaoClockCompatibility"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_CONDITIONAL",
+      "relation": "NOT_COMPILED_NOT_ACTIVATED",
+      "source": "LEAN:candidateSaoClockCompatibility",
+      "target": "PARAM:orbit_measurement_epoch_528"
+    }
+  ],
+  "hypotheses": [
+    "H:P17_528_UNLISTED",
+    "H:528_INSTRUMENTAL_OBSERVATION_UNKNOWN"
+  ],
+  "id": "ABELHA-C241-L61-01",
+  "latents": [
+    {
+      "activation": false,
+      "id": "LATENT:WWV_EMITTED_TO_UTC",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:RAW_528_IDENTIFICATION",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:RAW_528_FRAME",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:RAW_528_STATION",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:RAW_528_COVARIANCE",
+      "value": null
+    }
+  ],
+  "lean_candidate": "candidateSaoClockCompatibility",
+  "lean_required_premises": [
+    "original_identified_528_frame",
+    "sensor_station",
+    "WWV_emission_to_UTC_calibration",
+    "target_epoch_and_scale",
+    "reference_frame_transform",
+    "covariance_and_dependency"
+  ],
+  "lean_status": "CANDIDATE_ONLY_NOT_COMPILED",
+  "matrix_line": null,
+  "matrix_snapshot_ref": null,
+  "new_activated_physical_constraints": 0,
+  "new_independent_instrumental_measurements_528": 0,
+  "next_falsifiable_test": "Recover a 528-identified primary optical frame/ledger and its station, clock-to-UTC chain and covariance before assigning an orbital constraint.",
+  "observations_528_elsewhere_count": null,
+  "parent_bridge": {
+    "path": "public/data/conde-sao-clock-methods-bridge.json",
+    "sha256": "89979692b06017d81780ac870629b21bee4991d803b539f9ebe16ee406b0b873",
+    "shares_method_family_not_independent_sensor": true
+  },
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "row_sha256": null,
+  "schema": "conde.sao-p17-nov-source-dependencies/v1",
+  "simulator_parameters": [
+    {
+      "activation": false,
+      "id": "PARAM:orbit_measurement_epoch_528",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "PARAM:orbit_line_of_sight_528",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "PARAM:measurement_independence_weight_528",
+      "value": null
+    }
+  ],
+  "source_lineage": [
+    {
+      "independent_instrumental_measurement_528": false,
+      "manifest": "research/tle_custody/sao_p17_oct_dec_1963_scope_C241-L44.json",
+      "manifest_sha256": "3e0e3530f31a506d9af7acc52180bca97c8406bf904a93d12e3370b8c073273c",
+      "occurrence_id": "C241-L44",
+      "original_pdf_sha256": "6b77e832e4273f7781cb61bfea7d38685c99d63e2f6b370a76d0b28a225ddf86",
+      "original_pdf_url": "https://ntrs.nasa.gov/api/citations/19680020675/downloads/19680020675.pdf"
+    },
+    {
+      "independent_instrumental_measurement_528": false,
+      "manifest": "research/tle_custody/sao_p17_nov_clock_C241-L61.json",
+      "manifest_sha256": "03c706b04cb865b9b0f6437525789c95c1c4d5b6afc3ce5e878d96d2b3b5d8a9",
+      "occurrence_id": "C241-L61",
+      "original_pdf_sha256": "6b77e832e4273f7781cb61bfea7d38685c99d63e2f6b370a76d0b28a225ddf86",
+      "original_pdf_url": "https://ntrs.nasa.gov/api/citations/19680020675/downloads/19680020675.pdf"
+    }
+  ]
+}

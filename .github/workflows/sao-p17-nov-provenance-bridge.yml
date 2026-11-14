@@ -1,0 +1,56 @@
+name: C241 L61 to inactive SAO scientific bridge
+on:
+  pull_request:
+    paths:
+      - "research/tle_custody/sao_p17_oct_dec_1963_scope_C241-L44.json"
+      - "research/tle_custody/sao_p17_nov_clock_C241-L61.json"
+      - "research/tle_custody/sao_p14_a1_clock_1963_C241-L59.json"
+      - "research/tle_custody/sao_sr266_synthetic_1963_C241-L60.json"
+      - "tools/tle_sao_p17_wwv_step_c241_l61.py"
+      - "tools/export_sao_clock_methods_bridge.py"
+      - "tools/export_sao_p17_nov_provenance_bridge.py"
+      - "tests/test_sao_p17_nov_provenance_bridge.py"
+      - "public/data/conde-sao-clock-methods-bridge.json"
+      - "public/data/conde-sao-p17-nov-provenance-bridge.json"
+      - ".github/workflows/sao-p17-nov-provenance-bridge.yml"
+  push:
+    branches: [main]
+    paths:
+      - "research/tle_custody/sao_p17_oct_dec_1963_scope_C241-L44.json"
+      - "research/tle_custody/sao_p17_nov_clock_C241-L61.json"
+      - "research/tle_custody/sao_p14_a1_clock_1963_C241-L59.json"
+      - "research/tle_custody/sao_sr266_synthetic_1963_C241-L60.json"
+      - "tools/tle_sao_p17_wwv_step_c241_l61.py"
+      - "tools/export_sao_clock_methods_bridge.py"
+      - "tools/export_sao_p17_nov_provenance_bridge.py"
+      - "tests/test_sao_p17_nov_provenance_bridge.py"
+      - "public/data/conde-sao-clock-methods-bridge.json"
+      - "public/data/conde-sao-p17-nov-provenance-bridge.json"
+      - ".github/workflows/sao-p17-nov-provenance-bridge.yml"
+  workflow_dispatch:
+jobs:
+  source-locked-bridge:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Exact HEAD verification
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Replay adversarial tests and -O
+        run: |
+          python3 -m unittest discover -s tests -p 'test_sao_p17_nov_provenance_bridge.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_sao_p17_nov_provenance_bridge.py' -v
+      - name: Deterministic JSON and clock regression
+        run: |
+          python3 tools/export_sao_p17_nov_provenance_bridge.py --check-site
+          python3 -m unittest discover -s tests -p 'test_sao_clock_methods_bridge.py' -v
+          python3 -m unittest discover -s tests -p 'test_tle_sao_p17_wwv_step_c241_l61.py' -v
+
