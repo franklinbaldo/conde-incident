@@ -15,24 +15,32 @@ export function markEditorialNav(html, file) {
   if (!sections.has(section)) return { html, changed: false, found: false };
   const header = html.indexOf('<header class="masthead">');
   if (header < 0) return { html, changed: false, found: false };
-  const start = html.indexOf('<nav', header), end = html.indexOf('</nav>', start);
-  assert(start > header && end > start, 'Missing editorial navigation: ' + file);
-  const nav = html.slice(start, end);
+  // The SSG header exposes one nav at a time: desktop links and a native
+  // mobile disclosure. Mark both, while preserving the single-nav legacy input.
+  const headerEnd = html.indexOf('</header>', header);
+  assert(headerEnd > header, 'Missing editorial header end: ' + file);
+  const source = html.slice(header, headerEnd);
+  const navs = [...source.matchAll(/<nav aria-label="Navegação principal">[\s\S]*?<\/nav>/g)];
+  assert(navs.length >= 1 && navs.length <= 2, 'Unexpected editorial nav count: ' + file);
   const href = prefix + (section ? section + '/' : '');
   const anchor = '<a href="' + href + '">';
   const state = route === '' || route === section ? 'page' : 'location';
   const marked = '<a href="' + href + '" aria-current="' + state + '">';
-  if (nav.includes(marked)) {
-    assert.equal((nav.match(/aria-current=/g) || []).length, 1,
-      'Conflicting current links: ' + file);
-    return { html, changed: false, found: true };
-  }
-  assert.equal(nav.split(anchor).length - 1, 1,
-    'Expected exactly one section link: ' + JSON.stringify({ file, route, section, href, anchor, nav }));
-
-  assert.doesNotMatch(nav, /aria-current=/, 'Unexpected active marker: ' + file);
-  return { html: html.slice(0, start) + nav.replace(anchor, marked) + html.slice(end),
-    changed: true, found: true };
+  let changed = false;
+  const updated = source.replace(/<nav aria-label="Navegação principal">[\s\S]*?<\/nav>/g, nav => {
+    if (nav.includes(marked)) {
+      assert.equal((nav.match(/aria-current=/g) || []).length, 1,
+        'Conflicting current links: ' + file);
+      return nav;
+    }
+    assert.equal(nav.split(anchor).length - 1, 1,
+      'Expected exactly one section link: ' + JSON.stringify({ file, href }));
+    assert.doesNotMatch(nav, /aria-current=/, 'Unexpected active marker: ' + file);
+    changed = true;
+    return nav.replace(anchor, marked);
+  });
+  return { html: html.slice(0, header) + updated + html.slice(headerEnd),
+    changed, found: true };
 }
 function* htmlFiles(path) {
   for (const ent of readdirSync(path, { withFileTypes: true })) {

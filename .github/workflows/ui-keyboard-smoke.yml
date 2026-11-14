@@ -42,6 +42,12 @@ on:
       - 'src/components/PythonScriptModal.tsx'
       - 'tests/ui_python_modal_touch_smoke.mjs'
       - 'tests/caderno_reflow_smoke.mjs'
+      - 'tests/ssg-mobile-nav-smoke.mjs'
+      - 'tests/ssg-current-nav.test.mjs'
+      - 'scripts/mark-editorial-nav.mjs'
+      - 'templates/index.html'
+      - 'templates/page.html'
+      - 'templates/post.html'
       - 'static/css/site.css'
       - 'scripts/localize-ssg-search.mjs'
       - 'scripts/localize-ssg-search-runtime.mjs'
@@ -100,6 +106,12 @@ on:
       - 'src/components/PythonScriptModal.tsx'
       - 'tests/ui_python_modal_touch_smoke.mjs'
       - 'tests/caderno_reflow_smoke.mjs'
+      - 'tests/ssg-mobile-nav-smoke.mjs'
+      - 'tests/ssg-current-nav.test.mjs'
+      - 'scripts/mark-editorial-nav.mjs'
+      - 'templates/index.html'
+      - 'templates/page.html'
+      - 'templates/post.html'
       - 'static/css/site.css'
       - 'scripts/localize-ssg-search.mjs'
       - 'scripts/localize-ssg-search-runtime.mjs'
@@ -219,6 +231,8 @@ jobs:
           exit 1
       - name: Chromium SSG search focus, tap targets and modal keyboard paths
         run: node tests/ssg_search_dialog_smoke.mjs
+      - name: Chromium native mobile SSG menu and active section (no JS, 100/200% text)
+        run: node tests/ssg-mobile-nav-smoke.mjs
       - name: Chromium real SSG mobile headings, orphaned words and reflow (320/375/1440)
         run: node tests/ssg_mobile_heading_smoke.mjs
       - name: Chromium editorial ↔ laboratory journeys (320px and desktop)
