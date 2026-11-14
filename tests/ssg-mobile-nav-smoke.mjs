@@ -10,7 +10,7 @@ const expected = ['','stories/','cronologia/','evidencias/','hipoteses/',
 const browser = await chromium.launch({ headless: true });
 try {
   for (const route of routes) for (const [width, zoom] of [[320,1], [320,2], [375,2], [1440,1]]) {
-    const page = await browser.newPage({ viewport: {width, height: 812}, javaScriptEnabled: false });
+    const page = await browser.newPage({ viewport: {width, height: 812}, javaScriptEnabled: false, bypassCSP: true });
     try {
       const res = await page.goto(new URL(route, base).href, {waitUntil: 'domcontentloaded'});
       assert(res?.ok(), `HTML unavailable: ${route} ${res?.status()}`);
