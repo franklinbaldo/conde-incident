@@ -25,6 +25,8 @@ def validate_contract(c):
         or ref["pdf_acquired"] is not True
         or ref["pdf_bytes"] != 410611
         or ref["pdf_sha256"] != EXPECTED_SHA256
+        or ref["alternate_publisher_url"] != "https://www.ub.edu/geocrit/sn/sn-493/493-38.pdf"
+        or ref["alternate_sha256_identical_to_primary"] is not True
         or ref["pdf_pages"] != 18
         or ref["table_pdf_page_1based"] != 9):
         raise ValueError("scholarly reference changed")
