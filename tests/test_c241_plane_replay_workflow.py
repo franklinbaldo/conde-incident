@@ -63,7 +63,7 @@ def validate(text: str) -> None:
         ):
             if not re.search(r"(?m)^          " + re.escape(command) + r"$", text):
                 raise ValueError("missing actual normal/-O test " + command)
-    if SOURCE_URL not in text or SOURCE_SHA256 not in text:
+    if SOURCE_URL.replace("/blob/", "/resolve/") not in text or SOURCE_SHA256 not in text:
         raise ValueError("source not pinned to imported digest/url")
     if not re.search(r"(?m)^          echo '[0-9a-f]{64}' .* \| sha256sum -c -$", text):
         raise ValueError("missing actual original-bytes SHA gate")
