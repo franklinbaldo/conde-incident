@@ -1,0 +1,30 @@
+name: Lontra Kettering Polyot 1 archival control R45
+on:
+  pull_request:
+    paths:
+      - 'research/tle_custody/*LONTRA-R45*'
+      - 'research/tle_custody/kettering_polyot1963_C241_LONTRA_R45.json'
+      - 'tests/test_kettering_polyot1963_r45.py'
+      - '.github/workflows/lontra-kettering-polyot-r45.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/tle_custody/*LONTRA-R45*'
+      - 'research/tle_custody/kettering_polyot1963_C241_LONTRA_R45.json'
+      - 'tests/test_kettering_polyot1963_r45.py'
+      - '.github/workflows/lontra-kettering-polyot-r45.yml'
+  workflow_dispatch:
+jobs:
+  archival-scope:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact HEAD
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Adversarial tests in both Python modes
+        run: |
+          python3 -m unittest discover -s tests -p 'test_kettering_polyot1963_r45.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_kettering_polyot1963_r45.py' -v
