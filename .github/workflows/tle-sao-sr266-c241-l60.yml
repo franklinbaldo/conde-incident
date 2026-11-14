@@ -1,0 +1,44 @@
+name: C241-L60 SAO synthetic optical observations custody
+
+on:
+  pull_request:
+    paths:
+      - "research/tle_custody/sao_sr266_synthetic_1963_C241-L60.*"
+      - "tools/tle_sao_sr266_c241_l60.py"
+      - "tests/test_tle_sao_sr266_c241_l60.py"
+      - ".github/workflows/tle-sao-sr266-c241-l60.yml"
+  push:
+    branches: [main]
+    paths:
+      - "research/tle_custody/sao_sr266_synthetic_1963_C241-L60.*"
+      - "tools/tle_sao_sr266_c241_l60.py"
+      - "tests/test_tle_sao_sr266_c241_l60.py"
+      - ".github/workflows/tle-sao-sr266-c241-l60.yml"
+  workflow_dispatch:
+
+jobs:
+  original-source-replay:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Check exact head
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: astral-sh/setup-uv@v6
+      - name: Exercise normal and optimized runtimes
+        run: |
+          python -m unittest discover -s tests -p 'test_tle_sao_sr266_c241_l60.py' -v
+          python -O -m unittest discover -s tests -p 'test_tle_sao_sr266_c241_l60.py' -v
+      - name: Replay immutable NASA facsimile and provenance
+        run: |
+          curl -fLsS --retry 2 --max-time 120 \
+            'https://ntrs.nasa.gov/api/citations/19690000806/downloads/19690000806.pdf' -o /tmp/sao-sr266.pdf
+          uv run --with pypdf==6.1.3 python tools/tle_sao_sr266_c241_l60.py --pdf /tmp/sao-sr266.pdf
