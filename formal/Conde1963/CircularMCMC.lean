@@ -126,4 +126,27 @@ theorem unanchored_phase_has_compensator (rows : List CircularRow)
   exact ⟨(fun g => offset g - delta),
     residualVector_gauge_invariant rows phase delta offset⟩
 
+/-- With the *same fixed, calibrated* lineage offset on both sides, an
+    equal wrapped residual determines phase modulo one full revolution.
+    A real-world use requires an independently justified calibrated offset;
+    this theorem does not produce one or quantify observational errors. -/
+theorem calibrated_anchor_identifies_phase_modulo (row : CircularRow)
+    (phaseA phaseB : Int) (fixedOffset : Nat → Int)
+    (h : residual row phaseA fixedOffset =
+         residual row phaseB fixedOffset) :
+    (phaseA - phaseB) % 360000 = 0 := by
+  simp only [residual] at h
+  omega
+
+/-- Contrapositive: distinct phases modulo 360 degrees cannot reproduce
+    a fixed-bias anchor's *exact* conditional residual. -/
+theorem calibrated_anchor_rejects_noncongruent_phase (row : CircularRow)
+    (phaseA phaseB : Int) (fixedOffset : Nat → Int)
+    (h : (phaseA - phaseB) % 360000 ≠ 0) :
+    residual row phaseA fixedOffset ≠
+      residual row phaseB fixedOffset := by
+  intro heq
+  exact h (calibrated_anchor_identifies_phase_modulo row phaseA phaseB
+    fixedOffset heq)
+
 end Conde1963.CircularMCMC

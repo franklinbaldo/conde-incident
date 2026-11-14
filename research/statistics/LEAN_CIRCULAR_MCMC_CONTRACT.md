@@ -71,6 +71,23 @@ posterior marginal normalizada**. Uma prior sintética concentrada em `θ` ou
 `b_g` pode selecionar uma fase, mas isso é informação adicionada pelo prior.
 Sem base histórica independente, não é localização inferida.
 
+### Âncora calibrada: condição mínima, não dado encontrado
+
+O teorema `calibrated_anchor_identifies_phase_modulo` agora explicita uma
+condição necessária para sair da ambiguidade anterior: se **a mesma correção
+angular de linhagem estiver fixada por calibração independente** e duas fases
+produzirem o mesmo resíduo circular exato, essas fases são congruentes módulo
+360°. `calibrated_anchor_rejects_noncongruent_phase` dá a forma falsificadora.
+O controle adversarial Python muda fase e offset conjuntamente e confirma
+que a ambiguidade retorna quando o offset não é conhecido.
+
+Esse resultado **não** afirma que um registro NASA, outro registro derivado
+de Space-Track ou um simples prior concentrado forneça a âncora. Tampouco
+formaliza observação ruidosa, calibração histórica, independência instrumental
+ou identificação de local/instante de reentrada. Para ativar restrição física
+é necessário documento com instante UTC, referencial/operador, offset
+identificado e incerteza correlacionada calibrada; até lá `ΔΘ=0`.
+
 ## 3. Inventário dos avanços que permanecem numéricos
 
 | Componente | Estado verificável | O que não comprova |

@@ -45,6 +45,29 @@ class CircularMCMCFormalContract(unittest.TestCase):
         self.assertNotEqual(circular_residual(0, 0, 1, 0),
                             circular_residual(0, 0, 0, 0))
 
+    def test_exact_fixed_bias_anchor_identifies_phase_only_modulo_turn(self):
+        # This is conditional on a genuinely fixed, independently calibrated
+        # offset; the historical catalogue does not provide such an anchor.
+        y, prediction, fixed_bias = 120, 359_999, 17
+        phases = (-720_001, -360_000, -1, 0, 1, 359_999, 360_000, 720_001)
+        for phase_a, phase_b in product(phases, repeat=2):
+            with self.subTest(phase_a=phase_a, phase_b=phase_b):
+                same_residual = (
+                    circular_residual(y, prediction, phase_a, fixed_bias) ==
+                    circular_residual(y, prediction, phase_b, fixed_bias)
+                )
+                self.assertEqual(
+                    same_residual, (phase_a - phase_b) % 360_000 == 0
+                )
+
+    def test_unanchored_lineage_still_compensates_noncongruent_phase(self):
+        y, prediction, theta, bias, delta = 120, 359_999, 21, 17, 1
+        self.assertNotEqual(delta % 360_000, 0)
+        self.assertEqual(
+            circular_residual(y, prediction, theta, bias),
+            circular_residual(y, prediction, theta + delta, bias - delta),
+        )
+
     def test_lean_module_is_registered_for_compilation_and_axiom_audit(self):
         module = (ROOT / "formal/Conde1963/CircularMCMC.lean").read_text()
         aggregator = (ROOT / "formal/Conde1963.lean").read_text()
@@ -56,6 +79,8 @@ class CircularMCMCFormalContract(unittest.TestCase):
             "asymmetric_proposal_counterexample", "residual_gauge_invariant",
             "residualVector_gauge_invariant", "likelihood_gauge_invariant",
             "fixed_bias_can_break_gauge", "unanchored_phase_has_compensator",
+            "calibrated_anchor_identifies_phase_modulo",
+            "calibrated_anchor_rejects_noncongruent_phase",
         )
         for name in theorem_names:
             self.assertIn("theorem " + name, module)
