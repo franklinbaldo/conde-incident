@@ -18,7 +18,7 @@ canonical_route: "/conde-incident/evidencias/fontes/"
   <select id="source-lookup-id" name="source" required aria-describedby="source-lookup-help">
     <option value="">Escolha uma fonte</option>
   </select>
-  <p id="source-lookup-help">Selecione um identificador para ver as ocorrências e seus vínculos. A seleção não consulta serviços de terceiros.</p>
+  <p id="source-lookup-help">Selecione um identificador para ver as ocorrências e seus vínculos. A URL é atualizada para compartilhar a fonte ou voltar à seleção anterior. Nenhum dado é enviado a serviços de terceiros.</p>
 </form>
 <section id="source-lookup-results" aria-label="Referências da fonte selecionada" aria-live="polite" aria-atomic="true"></section>
 
