@@ -1,0 +1,21 @@
+---
+type: Experiment
+title: "C241: auditabilidade do intervalo terminal do NORAD 688"
+description: "Controle documental independente do 528, mas apenas uma época orbital anterior no espelho 1963"
+experiment_id: C241-688-TERMINAL-READINESS-20261114
+verification_status: HISTORICAL_CATALOGUE_AUDIT_NO_TIME_CALIBRATION
+---
+
+# NORAD 688: intervalo terminal histórico não basta para calibrar um preditor
+
+**Pergunta científica:** há dados suficientes para usar o NORAD **688**, do lançamento **1963-044**, como controle independente de erro temporal de reentrada para o NORAD **528**, do lançamento **1963-003**? A resposta sobre os dados disponíveis é **não**, mesmo havendo um intervalo terminal muito mais preciso do que o dia civil reportado para 528.
+
+**Fonte documental:** ledger [C241-L46](../tle_custody/norad_spadats_context_C241-L46.json), custódia anterior do fac-símile [AF IN 23784, 14/11/1963, cópia corrigida de AF IN 22976](https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/08.pdf), SHA-256 `65452b827428bdbef37bf96fb915a1411c2798d5a16939d845abe561aa12e13e`, página impressa 2 de 3: reporta para o **688** o intervalo `2210Z–2400Z em 12/11/1963`. `2400Z` é **00h de 13/11 UTC**, e a largura do intervalo é **110 minutos**. Trata-se de uma afirmação documental de intervalo, não de observações de sensores nos extremos, não de desvio-padrão, não do objeto 528. Não há reinspeção independente nova do fac-símile nesta fatia.
+
+**Fonte orbital:** espelho secundário [oxzoid/Space-Track 1963](https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/4b4fb3a/data/tle_1963.parquet), SHA-256 integral `c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09`, 4.567 linhas. O replay identifica **uma única época catalogada anterior à janela para 688** (`11/11/1963 16:35:05 UTC`) e **duas para 687** (`11/11 07:45:03` e `12/11 01:28:10 UTC`). São observações secundárias, sem estação, residuais, sigma, data de emissão ou cadeia instrumental rastreada. As duas linhas de 687 não são medidas repetidas de 688, mesmo pertencendo ao mesmo lançamento. Seus parâmetros aerodinâmicos e papéis físicos não estão estabelecidos.
+
+**Diagnóstico de identificabilidade:** no modelo local de duas incógnitas `n(t)=n0+s·(t-t0)`, uma época de `n` para 688 tem posto 1/2, portanto o coeficiente de crescimento `s=dn/dt` **não é identificável** apenas pelo catálogo do 688. O intervalo de decaimento relatado não fornece um segundo `n(t)` nem uma condição física terminal calibrada. A secante do 687, embora algebricamente disponível com duas épocas, não identifica a do 688 sem hipótese externa validada de transferência. Logo, o modelo `T≈H_eff/|da/dt|` não pode ser pontuado com o 688 usando o mesmo contrato da [fatia King-Hele](C241_KING_HELE_DAY_HOLDOUT_20261114.md). O intervalo de 110 minutos é largura do relato, **não precisão de previsão**. Mesmo se um preditor compatível surgir, a seleção deste caso após conhecer o registro torna o primeiro exercício retrospectivo, não uma avaliação cega.
+
+**Observações discriminantes prioritárias:** (i) segunda época orbital anterior à janela de 688 e sua proveniência instrumental, (ii) estado, observáveis, quadro, convenções, sigma e estação de cada rastreio, (iii) modelo dinâmico congelado com critério terminal físico, (iv) conjunto de controles próximos com janelas terminais atestadas independentemente e seleção prévia, evitando transferência silenciosa de parâmetros de 687 ou 688 para 528. A evidência não justifica ativar limite temporal, nem probabilidade de impacto, nem região de Conde. `terminal_time_sigma_hours=null`, `historical_mcmc=NOT_RUN`, `active_constraint_528=false`.
+
+**Reprodução:** `python3 -m unittest discover -s tests -p 'test_c241_688_terminal_holdout_readiness.py' -v`; o workflow específico valida a transcrição via ledger e SHA do Parquet, produz JSON e bloqueia promoção de inferência. A custódia PDF já registrada é reusada sem simular novo download ou criar uma origem independente. Relaciona-se a [Cervo #4](https://github.com/franklinbaldo/cervo/issues/4), [Conde #647](https://github.com/franklinbaldo/conde-incident/issues/647) e [Cafezinho #14](https://github.com/franklinbaldo/cafezinho/issues/14).
