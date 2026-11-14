@@ -1,0 +1,86 @@
+{
+  "schema": "conde.archival_interobs_translation/v1",
+  "id": "C241-LONTRA-R41",
+  "audit_date": "2026-11-14",
+  "status": "DECLASSIFIED_TRANSLATION_VIEWED_NO_TARGET_OBSERVATION_NO_VERIFIED_PDF_DOWNLOAD",
+  "document": {
+    "title": "Artificial Satellite Tracking: 1957–1967",
+    "report_number": "FTD-HT-23-856-68",
+    "accession": "AD 684833",
+    "translator": "J. Miller / TDBRO-2",
+    "translation_date": "1968-09-20",
+    "publisher": "USAF Foreign Technology Division",
+    "document_received_stamp": "1969-04-09",
+    "original_series": "Наблюдения искусственных спутников Земли",
+    "original_issue": 6,
+    "original_year": 1967,
+    "original_pages": "1–60",
+    "original_copy_retrieved": false,
+    "facsimile_viewer": "https://scispace.com/pdf/artificial-satellite-tracking-1957-1967-46qi6y1apc.pdf",
+    "legacy_locator": "https://www.dtic.mil/cgi-bin/GetTRDoc?AD=AD684833&Location=U2&doc=GetTRDoc.pdf",
+    "provenance": "1967 Soviet compilation -> 1968 USAF translated edition -> contemporary PDF viewer; NOT three independent witnesses"
+  },
+  "access": {
+    "cover_pdf_page_zero_based": 0,
+    "critical_pdf_pages_zero_based": [
+      25,
+      26
+    ],
+    "critical_printed_pages": [
+      18,
+      19
+    ],
+    "cover_and_critical_pages_visually_inspected": true,
+    "pdf_viewer_readable": true,
+    "local_pdf_download_http_status": 403,
+    "local_pdf_download_success": false,
+    "full_pdf_bytes": null,
+    "full_pdf_sha256": null,
+    "full_pdf_page_count": null,
+    "downloaded_pdf_replay": "NOT_RUN",
+    "original_russian_facsimile_retrieved": false
+  },
+  "report": {
+    "author": "M. Ill",
+    "section": "The Scientific Use of Quasi-Synchronous Visual Satellite Tracking Data",
+    "first_detailed_interobs_observation_year": 1963,
+    "first_detailed_observation_month": "August",
+    "regular_special_sessions_from_year": 1964,
+    "positions_approximate_by_year": {
+      "1963": 600,
+      "1964": 6400,
+      "1965": 12200,
+      "1966": 40000
+    },
+    "positions_are_approximate": true,
+    "all_observations_reported_sent_to": "Baja, Hungary",
+    "observations_received_from_soviet_kosmos_ephemerides": true,
+    "printed_references_to_interobs_series": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "original_station_logs_retrieved": false,
+    "observations_are_not_specific_to_norad_targets": true
+  },
+  "scope": {
+    "target_international_designators": [
+      "1963-003A",
+      "1963-003B",
+      "1963-003C"
+    ],
+    "target_norad_ids": [
+      527,
+      528,
+      529
+    ],
+    "target_observations_identified": false,
+    "target_specific_1963_11_07_to_09_campaign_confirmed": false,
+    "orbital_constraints_activated": 0,
+    "new_instrumental_target_measurements": 0,
+    "independent_target_sensor_claimed": false,
+    "external_outreach_sent": false
+  },
+  "follow_up": "Locate INTEROBS Folge I-II original List 1 object index and List 2 observation records; query Soviet Nablyudeniya ISZ No. 6 (1967), p. 14–22, for bibliographic continuity; recover official AD 684833 PDF bytes and original Russian issue; then search 1963-11-07 through 1963-11-09 only with explicit object identity and provenance."
+}
