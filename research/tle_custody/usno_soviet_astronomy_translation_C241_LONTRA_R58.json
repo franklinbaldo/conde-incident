@@ -1,0 +1,59 @@
+{
+  "id": "C241-LONTRA-R58",
+  "audit_date_utc": "2026-11-14",
+  "evidence_class": "SERIAL_TRANSLATION_CATALOGUE_AND_DUAL_LANGUAGE_ACCESS_ROUTE",
+  "upstream": {
+    "source_id": "C241-LONTRA-R57",
+    "digest_id": "C241-LONTRA-R56",
+    "report_number": "1521678463",
+    "report_date": "1963-06-19",
+    "claimed_russian_issue": "Astronomicheskii Zhurnal no. 5, May 1963",
+    "conflict": "ISSUE_NUMBER_MONTH_UNRESOLVED"
+  },
+  "catalog": {
+    "institution": "United States Naval Observatory Library",
+    "url": "https://1535.sydneyplus.com/genieplus/final/ViewRecord.aspx?record=aa7060ad-8a7f-459c-a99a-6c4ff9955c7d&template=Books",
+    "record_bib_id": "09761",
+    "record_id": "36461",
+    "title": "Soviet astronomy. AJ",
+    "publisher": "American Institute of Physics",
+    "publication_range": "1957-1973",
+    "translation_of": "Astronomicheskii zhurnal",
+    "translation_begins_at": "Russian volume 34 (1957)",
+    "catalogue_number_translation": "QB 1 .A456",
+    "catalogue_number_russian_original": "QB 1 .A455",
+    "holdings_english": "Vol. 1 (1957)–Vol. 16 (1972/73)",
+    "other_set": "Flagstaff, translation vols. 1–10",
+    "accession_v6_onward": "not accessioned, per catalogue",
+    "catalogue_replay": {
+      "status": 200,
+      "bytes": 249067,
+      "sha256": "d1b1efbc8db7e7d39692ed61da31a3cb4b3c02f6c3c2480490f467fe0c59bc85",
+      "fetched_date_utc": "2026-11-14",
+      "scope": "HTML catalogue page, not article, original journal or scanned translation"
+    }
+  },
+  "inference_limits": {
+    "english_volume_1963_candidate": 7,
+    "candidate_volume_is_inference": true,
+    "issue_by_issue_mapping_verified": false,
+    "original_russian_volume_40_issue_3_seen": false,
+    "original_russian_volume_40_issue_5_seen": false,
+    "translation_article_seen": false,
+    "intermediary_intelligence_report_seen": false,
+    "original_article_author": null,
+    "original_article_title": null,
+    "original_article_pages": null,
+    "original_article_pdf_sha256": null,
+    "observation_rows_527_528_529": [],
+    "activated_orbital_constraints": 0,
+    "independent_sensor_identified": false,
+    "contacting_institution": false
+  },
+  "next_verifications": [
+    "Check USNO English translation catalogue QB 1 .A456 for content and precise issue/date pairing, without inferring scanned access from a library record",
+    "Inspect original Russian QB 1 .A455 in corresponding 1963 issue, especially issue 3 and 5",
+    "Compare exact author/title/page/camera and chronograph strings with UAH November 1963 p.24 and report 1521678463",
+    "Do not count Russian original and English translation as independent instrumental evidence"
+  ]
+}
