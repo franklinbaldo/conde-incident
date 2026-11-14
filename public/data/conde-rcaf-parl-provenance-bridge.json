@@ -1,0 +1,349 @@
+{
+  "document_anchors": [
+    {
+      "anchor_id": "RCAF_COLD_LAKE_SPADATS",
+      "epistemic_status": "NETWORK_DESCRIPTION_NOT_528_OBSERVATION",
+      "occurrence_id": "C241-L55",
+      "pdf_page_zero_based": 6,
+      "printed_page": 5
+    },
+    {
+      "anchor_id": "DRB_PRINCE_ALBERT",
+      "epistemic_status": "NETWORK_DESCRIPTION_NOT_528_OBSERVATION",
+      "occurrence_id": "C241-L55",
+      "pdf_page_zero_based": 6,
+      "printed_page": 5
+    },
+    {
+      "anchor_id": "RCAF_CAMERA_PHOTO",
+      "epistemic_status": "NETWORK_DESCRIPTION_NOT_528_OBSERVATION",
+      "occurrence_id": "C241-L55",
+      "pdf_page_zero_based": 6,
+      "printed_page": 5
+    },
+    {
+      "anchor_id": "COLD_LAKE_CONTROL",
+      "epistemic_status": "ADMINISTRATIVE_HISTORY_NOT_528_OBSERVATION",
+      "occurrence_id": "C241-L56",
+      "pdf_page_zero_based": 70,
+      "printed_page": 55
+    },
+    {
+      "anchor_id": "PRINCE_ALBERT_PART_TIME",
+      "epistemic_status": "ADMINISTRATIVE_HISTORY_NOT_528_OBSERVATION",
+      "occurrence_id": "C241-L56",
+      "pdf_page_zero_based": 72,
+      "printed_page": 57
+    },
+    {
+      "anchor_id": "PRINCE_ALBERT_JAN1964",
+      "epistemic_status": "ADMINISTRATIVE_HISTORY_NOT_528_OBSERVATION",
+      "occurrence_id": "C241-L56",
+      "pdf_page_zero_based": 72,
+      "printed_page": 57
+    }
+  ],
+  "existing_parent": {
+    "duplicate_new_measurement": false,
+    "occurrence_id": "C241-L52",
+    "pdf_sha256": "eb8682425a393b016642165a9c00b6be8868a27954ddd0e55c40c1e14da425b4"
+  },
+  "graph": [
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "CONTEMPORARY_EDITORIAL_PDF",
+      "source": "C241-L55",
+      "target": "PDF:RCAF_ROUNDEL_1963_09"
+    },
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "SAME_BINARY_AS_C241_L52",
+      "source": "C241-L56",
+      "target": "PDF:NORAD1963_JUL_DEC"
+    },
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "PARENT_SOURCE_NOT_NEW_SENSOR",
+      "source": "C241-L52",
+      "target": "PDF:NORAD1963_JUL_DEC"
+    },
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "PAGE_5_SYSTEM_LEVEL",
+      "source": "PDF:RCAF_ROUNDEL_1963_09",
+      "target": "CLAIM:RCAF_COLD_LAKE_SPADATS"
+    },
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "PAGE_5_NETWORK_DESCRIPTION",
+      "source": "PDF:RCAF_ROUNDEL_1963_09",
+      "target": "CLAIM:DRB_PRINCE_ALBERT"
+    },
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "CAPTION_WITHOUT_TIME_SITE",
+      "source": "PDF:RCAF_ROUNDEL_1963_09",
+      "target": "CLAIM:RCAF_CAMERA_PHOTO"
+    },
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "PAGE_55_INSTITUTIONAL_CONTROL",
+      "source": "PDF:NORAD1963_JUL_DEC",
+      "target": "CLAIM:COLD_LAKE_CONTROL"
+    },
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "PAGE_57_SPADATS_GENERAL_FEED",
+      "source": "PDF:NORAD1963_JUL_DEC",
+      "target": "CLAIM:PRINCE_ALBERT_PART_TIME"
+    },
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "PAGE_57_LATER_ADMINISTRATIVE_STATUS",
+      "source": "PDF:NORAD1963_JUL_DEC",
+      "target": "CLAIM:PRINCE_ALBERT_JAN1964"
+    },
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "RCAF_INPUT_AT_NETWORK_LEVEL",
+      "source": "CLAIM:RCAF_COLD_LAKE_SPADATS",
+      "target": "SITE:COLD_LAKE_OPTICAL_CAMERA"
+    },
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "OPERATIONAL_CONTROL_NOT_528_DATA",
+      "source": "CLAIM:COLD_LAKE_CONTROL",
+      "target": "SITE:COLD_LAKE_OPTICAL_CAMERA"
+    },
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "DIFFERENT_SITE_SENSOR_TYPE",
+      "source": "CLAIM:DRB_PRINCE_ALBERT",
+      "target": "SITE:PRINCE_ALBERT_RADAR"
+    },
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "PART_TIME_FEED_UNSPECIFIED_TARGET",
+      "source": "CLAIM:PRINCE_ALBERT_PART_TIME",
+      "target": "SITE:PRINCE_ALBERT_RADAR"
+    },
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "POST_1963_STATUS_NOT_MEASUREMENT",
+      "source": "CLAIM:PRINCE_ALBERT_JAN1964",
+      "target": "H:PARL_528_RETURN"
+    },
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "PHOTO_NOT_OBJECT_OR_SITE_PROOF",
+      "source": "CLAIM:RCAF_CAMERA_PHOTO",
+      "target": "H:COLD_LAKE_528_ANGLES"
+    },
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "NAMED_528_EXPOSURE_REQUIRED",
+      "source": "SITE:COLD_LAKE_OPTICAL_CAMERA",
+      "target": "H:COLD_LAKE_528_ANGLES"
+    },
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "NAMED_528_RADAR_RETURN_REQUIRED",
+      "source": "SITE:PRINCE_ALBERT_RADAR",
+      "target": "H:PARL_528_RETURN"
+    },
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "PREMISES_PENDING",
+      "source": "H:COLD_LAKE_528_ANGLES",
+      "target": "LEAN:opticalObservationConstraint"
+    },
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "PREMISES_PENDING",
+      "source": "H:PARL_528_RETURN",
+      "target": "LEAN:radarObservationConstraintCandidate"
+    },
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "INACTIVE_NO_ANGLES",
+      "source": "LEAN:opticalObservationConstraint",
+      "target": "PARAM:528_optical_direction"
+    },
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "INACTIVE_NO_RANGE",
+      "source": "LEAN:radarObservationConstraintCandidate",
+      "target": "PARAM:528_radar_range"
+    },
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "RECEIPT_REQUIRED",
+      "source": "H:COLD_LAKE_528_ANGLES",
+      "target": "LATENT:528:spadats_receipt"
+    },
+    {
+      "active": false,
+      "instrumental_528_measurement": false,
+      "relation": "RECEIPT_REQUIRED",
+      "source": "H:PARL_528_RETURN",
+      "target": "LATENT:528:spadats_receipt"
+    }
+  ],
+  "hypotheses": [
+    "H:COLD_LAKE_528_ANGLES",
+    "H:PARL_528_RETURN"
+  ],
+  "id": "ABELHA-C241-L55-L56-01",
+  "independent_instrumental_families_established_for_528": null,
+  "latents": [
+    {
+      "activation": false,
+      "id": "LATENT:528:target_id",
+      "status": "MISSING_OBJECT_SPECIFIC_PRIMARY_RECORD",
+      "unit": "NORAD_catalogue_id",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:528:epoch_utc",
+      "status": "MISSING_OBJECT_SPECIFIC_PRIMARY_RECORD",
+      "unit": "UTC",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:528:station",
+      "status": "MISSING_OBJECT_SPECIFIC_PRIMARY_RECORD",
+      "unit": "station_identifier",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:528:observable",
+      "status": "MISSING_OBJECT_SPECIFIC_PRIMARY_RECORD",
+      "unit": "angle_or_range",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:528:reference_frame",
+      "status": "MISSING_OBJECT_SPECIFIC_PRIMARY_RECORD",
+      "unit": "frame_id",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:528:clock_calibration",
+      "status": "MISSING_OBJECT_SPECIFIC_PRIMARY_RECORD",
+      "unit": "time_bias_distribution",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:528:covariance",
+      "status": "MISSING_OBJECT_SPECIFIC_PRIMARY_RECORD",
+      "unit": "instrument_covariance",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:528:spadats_receipt",
+      "status": "MISSING_OBJECT_SPECIFIC_PRIMARY_RECORD",
+      "unit": "message_or_log_id",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:528:family_independence",
+      "status": "MISSING_OBJECT_SPECIFIC_PRIMARY_RECORD",
+      "unit": "sensor_genealogy",
+      "value": null
+    }
+  ],
+  "lean_candidates": [
+    "opticalObservationConstraint",
+    "radarObservationConstraintCandidate"
+  ],
+  "lean_status": "CONDITIONAL_UNCOMPILED_NO_EMPIRICAL_PREMISES",
+  "named_527_528_529_observations_recovered": 0,
+  "next_acquisition": "Recover 528-specific Cold Lake exposure or PARL radar return with UTC, instrument, station geodesy, calibration, frame, uncertainties and SPADATS receipt; do not infer two independent 528 sensors from network descriptions.",
+  "physical_constraint_active": false,
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "schema": "conde.rcaf-parl-provenance-bridge/v1",
+  "simulator_parameters": [
+    {
+      "activation": false,
+      "id": "PARAM:528_optical_direction",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "PARAM:528_radar_range",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "PARAM:528_station_link",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "PARAM:528_clock_bias",
+      "value": null
+    }
+  ],
+  "sources": [
+    {
+      "class": "CONTEMPORARY_EDITORIAL_NOT_SENSOR",
+      "manifest_git_blob_sha1": "7e7a1fdc831924f8ce4e012e0d293bfa71fc861d",
+      "manifest_path": "research/tle_custody/rcaf_roundel_spadats_1963_C241-L55.json",
+      "manifest_sha256": "9d951ba9b75a655dec5432fa8957e1cc4965bebd337138e21eb40611c4f8d5a0",
+      "occurrence_id": "C241-L55",
+      "pdf_sha256": "830a7707f3ce611172ff6b6942794654b1fc30d564f97e2b7bf78f2c981657b3",
+      "pdf_url": "https://publications.rcaf.info/RCAF/Roundel/1963/Roundel-1963-09.pdf"
+    },
+    {
+      "class": "NORAD_REPORT_DUPLICATE_OF_C241-L52",
+      "manifest_git_blob_sha1": "ce1dcef9a8469362a72e1d7ceb7d68e26cc88fdb",
+      "manifest_path": "research/tle_custody/norad_parl_cold_lake_addendum_C241-L56.json",
+      "manifest_sha256": "faf5141ee96f618e38b064846e6fc23aee4975b3d482963807510226aa229cda",
+      "occurrence_id": "C241-L56",
+      "pdf_sha256": "eb8682425a393b016642165a9c00b6be8868a27954ddd0e55c40c1e14da425b4",
+      "pdf_url": "https://documents.theblackvault.com/documents/afhistory/norad/%28U%29%201963%20NORAD%20CONAD%20History%20Jul-Dec.pdf"
+    }
+  ],
+  "stations": [
+    {
+      "confirmed_528_measurements_in_sources": 0,
+      "id": "SITE:COLD_LAKE_OPTICAL_CAMERA",
+      "instrument": "Baker-Nunn optical"
+    },
+    {
+      "confirmed_528_measurements_in_sources": 0,
+      "id": "SITE:PRINCE_ALBERT_RADAR",
+      "instrument": "DRB radar"
+    }
+  ]
+}
