@@ -130,8 +130,8 @@ export function auditBuiltMatrixCatalog(bundle,siteRoot='public') {
     for(const {pointer,record} of entries.slice(i*PER_PAGE,(i+1)*PER_PAGE)){
       const id=anchor(pointer.occurrence);
       assert.ok(index.links.has(pages[i].url+'#'+id),'Missing anchored index link '+pointer.occurrence);
-      assert.ok(html.includes('<span id="'+id+'" tabindex="-1"></span>'),
-        'Missing visible target anchor '+pointer.occurrence);
+      assert.ok(doc.activeAnchors.get(id)===1 && doc.idCounts.get(id)===1,
+        'Missing unique active target anchor '+pointer.occurrence);
       assert.ok(doc.visibleText.includes(pointer.occurrence),'Missing occurrence '+pointer.occurrence);
       assert.ok(doc.visibleText.includes(record.row_sha256),'Missing row digest '+pointer.occurrence);
       assert.ok(doc.links.has(matrixRowUrl(record.matrix_line)),
