@@ -6,6 +6,7 @@ import {join} from 'node:path';
 import {readBundle,audit,visibleDocument} from './verify-ssg-evidence-index.mjs';
 import {matrixCatalogPages} from './ssg-matrix-catalog.mjs';
 import {postMatrixAnchor,auditVisibleIdentityLinks} from './ssg-post-matrix-backlinks.mjs';
+import {documentDateClaims} from './ssg-post-matrix-temporal.mjs';
 
 const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('\\','\\\\').replaceAll('_','\\_').replaceAll('*','\\*').replaceAll('`','\\`').replaceAll('[','\\[').replaceAll(']','\\]').replaceAll('|','\\|').replace(/\r?\n/g,' ');
 const identifier=s=>typeof s==='string'&&/^[A-Z0-9][A-Z0-9_-]{2,99}$/.test(s);
@@ -105,6 +106,11 @@ export function auditBuiltPostMatrix(html,citations,bundle=readBundle()) {
       assert.match(visible.visibleMarkup,expression,
         'Pós-matriz: campo visível vinculado ao registro ausente: '+item.id+' / '+label);
     };
+    const dates=documentDateClaims(item);
+    field('Data documental do telegrama',dates.telegramDate);
+    field('Data jornalística apenas citada',dates.citedDate);
+    assert.ok(visible.visibleText.includes('Edição, página e hora do jornal: não verificadas'),
+      'Cronologia: limites temporais não visíveis: '+item.id);
     field('Estado canônico',item.status);
     field('Independência jornalística',item.journalistic_source_independence);
     field('SHA-256 da imagem arquivística',item.image_sha256);
@@ -169,6 +175,7 @@ export function postMatrixPage(citations,lineage,bundle=readBundle()) {
     assert.ok(sha(item.image_sha256)&&item.image_sha256===item.report_object_sha256,
       'Pós-matriz: digest de objeto inconsistente');
     const reportDigest=auditedReportDigest(item);
+    const dates=documentDateClaims(item);
     assert.ok(Array.isArray(item.related_matrix_occurrences)&&
       Array.isArray(item.related_matrix_snapshot_refs)&&
       item.related_matrix_occurrences.length===item.related_matrix_snapshot_refs.length,
@@ -209,6 +216,10 @@ export function postMatrixPage(citations,lineage,bundle=readBundle()) {
       `**SHA-256 da imagem arquivística:** \`${item.image_sha256}\``,'',
       '**SHA-256 do relatório de custódia versionado:** `'+reportDigest+'`','',
       `[Abrir objeto no catálogo NARA](${item.report_citation_url}) · [Ler relatório de custódia no repositório](https://github.com/franklinbaldo/conde-incident/blob/main/${item.report_path})`,'',
+      '**Cronologia documental, não cronologia da alegada queda:**','',
+      '**Data documental do telegrama:** `'+dates.telegramDate+'` (cabeçalho da imagem NARA, não data da queda).','',
+      '**Data jornalística apenas citada:** `'+dates.citedDate+'` (atribuição no telegrama; exemplar de O Globo não recuperado).','',
+      '**Edição, página e hora do jornal: não verificadas.** A ordem da publicação em relação à Rádio Tupi não está estabelecida.','',
       '**Relações de proveniência declaradas, não testemunhas independentes:**','',
       ...(edges.length?edges:['- Nenhuma relação adicional declarada.']),'',
       '**IDs da matriz relacionados, sem atribuir um novo número histórico:**',
