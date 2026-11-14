@@ -27,13 +27,16 @@ try {
       const navigation = page.getByRole('navigation', {
         name: specimen.lang === 'pt' ? 'Seções do laboratório' : 'Laboratory sections',
       });
+      if (specimen.width < 768) await navigation.locator('summary').click();
       await navigation.getByRole('link', { name: specimen.tab }).click();
       const alert = page.getByRole('alert', { name: specimen.title });
       await alert.waitFor({ timeout: 15000 });
       assert(abortedModules > 0, 'the requested lazy module must really be blocked');
       assert.equal(await page.getByRole('heading', { level: 1 }).count(), 1);
       assert.equal(await page.locator('header').count(), 1, 'failed import must not unmount navigation');
-      assert.equal(await navigation.locator('[aria-current="page"]').count(), 1);
+      assert.equal(await navigation.locator(specimen.width < 768
+        ? '[data-mobile-tabs] [aria-current="page"]'
+        : '[data-desktop-tabs] [aria-current="page"]').count(), 1);
       await page.screenshot({ path: `${out}/lazy-failure-${specimen.lang}-${specimen.width}.png` });
       await alert.getByRole('link', { name: specimen.back }).click();
       await page.getByRole('heading', { level: 1, name: specimen.lang === 'pt' ? /O que sabemos/ : /What we know/ }).waitFor({ timeout: 15000 });
