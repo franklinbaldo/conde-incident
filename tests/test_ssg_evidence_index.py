@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location('evidence_export', ROOT / 'tools/export_ssg_evidence_index.py')
@@ -75,6 +76,62 @@ class EvidenceIndexTest(unittest.TestCase):
             self.assertEqual(export.digest((ROOT / source['path']).read_bytes()), source['sha256'])
         self.assertEqual(artifacts, export.build(), 'Mesma fonte deve gerar bytes idênticos')
         export.sync(artifacts, check=True)
+
+    def test_staged_publication_preserves_old_bytes_on_write_failure(self):
+        # Reproduce a disk-write failure BEFORE the first published replacement.
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            initial = {export.DEST / 'part-001.json': b'old-shard\n',
+                       export.MANIFEST: b'old-manifest\n'}
+            export.sync(initial, root=root)
+            updated = {export.DEST / 'part-001.json': b'new-shard\n',
+                       export.MANIFEST: b'new-manifest\n'}
+            with patch.object(Path, 'write_bytes', side_effect=OSError('stage full')):
+                with self.assertRaisesRegex(OSError, 'stage full'):
+                    export.sync(updated, root=root)
+            for relative, raw in initial.items():
+                self.assertEqual((root / relative).read_bytes(), raw)
+            self.assertFalse(list((root / 'public/data').glob('.conde-evidence-stage-*')))
+            export.sync(initial, root=root, check=True)
+
+    def test_manifest_is_promoted_last_and_stale_shards_removed_afterwards(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            old = {export.DEST / 'part-001.json': b'old\n',
+                   export.DEST / 'part-002.json': b'stale\n',
+                   export.MANIFEST: b'old-manifest\n'}
+            export.sync(old, root=root)
+            revised = {export.DEST / 'part-001.json': b'revised\n',
+                       export.MANIFEST: b'new-manifest\n'}
+            with patch.object(export.os, 'replace', wraps=export.os.replace) as replace:
+                export.sync(revised, root=root)
+            targets = [call.args[1] for call in replace.call_args_list]
+            self.assertEqual(targets[-1], root / export.MANIFEST)
+            self.assertFalse((root / export.DEST / 'part-002.json').exists())
+            export.sync(revised, root=root, check=True)
+            with self.assertRaisesRegex(ValueError, 'Lista de shards'):
+                export.sync(old, root=root, check=True)
+
+    def test_manifest_install_failure_retains_old_manifest_and_stale_shards(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            old = {export.DEST / 'part-001.json': b'old\n',
+                   export.DEST / 'part-002.json': b'stale\n',
+                   export.MANIFEST: b'old-manifest\n'}
+            export.sync(old, root=root)
+            revised = {export.DEST / 'part-001.json': b'changed\n',
+                       export.MANIFEST: b'new-manifest\n'}
+            replace = export.os.replace
+            def fail_manifest(src, dest):
+                if dest == root / export.MANIFEST:
+                    raise OSError('manifest write failed')
+                return replace(src, dest)
+            with patch.object(export.os, 'replace', side_effect=fail_manifest):
+                with self.assertRaisesRegex(OSError, 'manifest write failed'):
+                    export.sync(revised, root=root)
+            self.assertEqual((root / export.MANIFEST).read_bytes(), b'old-manifest\n')
+            self.assertTrue((root / export.DEST / 'part-002.json').exists())
+            self.assertFalse(list((root / 'public/data').glob('.conde-evidence-stage-*')))
 
     def mutate_inputs(self, alter, edit_matrix=lambda raw: raw):
         with tempfile.TemporaryDirectory() as directory:
