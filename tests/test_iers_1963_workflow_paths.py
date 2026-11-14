@@ -12,6 +12,11 @@ REQUIRED = {
     'tests/test_iers_1963_workflow_paths.py',
     'tests/test_iers_1963_lighttime_accel.py',
     'research/constraints/iers_1963_acceleration_sensitivity_G63.md',
+    'tests/test_optical_joint_receiver_noise.py',
+    'research/constraints/iers_1963_joint_receiver_noise_G63.md',
+    'tools/iers_1963_clock_covariance.py',
+    'tests/test_iers_1963_clock_covariance.py',
+    'research/constraints/iers_1963_clock_covariance_G64.md',
 }
 
 
@@ -44,6 +49,11 @@ def assert_replay_paths(source):
         raise AssertionError('G63 acceleration sensitivity regression must execute')
     if "python3 -O -m unittest discover -s tests -p 'test_iers_1963_lighttime_accel.py' -v" not in source:
         raise AssertionError('G63 accelerated regression must also execute with -O')
+    for module in ('test_optical_joint_receiver_noise.py', 'test_iers_1963_clock_covariance.py'):
+        for python in ('python3', 'python3 -O'):
+            command = f"{python} -m unittest discover -s tests -p '{module}' -v"
+            if command not in source:
+                raise AssertionError(f'Specialized IERS replay missing execution: {command}')
     if "python3 -m unittest discover -s tests -p 'test_iers_1963_workflow_paths.py' -v" not in source:
         raise AssertionError('Source-only trigger regression must execute')
 
@@ -66,6 +76,17 @@ class IERSWorkflowSourceOnly(unittest.TestCase):
                 with self.subTest(event=event, file=relative):
                     with self.assertRaisesRegex(AssertionError, event):
                         assert_replay_paths(head + f'  {event}:' + tail)
+
+
+    def test_mutants_fail_when_new_g63_g64_commands_are_removed(self):
+        source = WORKFLOW.read_text(encoding='utf-8')
+        assert_replay_paths(source)
+        for module in ('test_optical_joint_receiver_noise.py', 'test_iers_1963_clock_covariance.py'):
+            for python in ('python3', 'python3 -O'):
+                command = f"{python} -m unittest discover -s tests -p '{module}' -v"
+                self.assertIn(command, source)
+                with self.subTest(command=command), self.assertRaisesRegex(AssertionError, 'missing execution'):
+                    assert_replay_paths(source.replace(command, '# omitted for G64 adversarial control', 1))
 
 
 if __name__ == '__main__':
