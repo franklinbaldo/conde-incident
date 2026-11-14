@@ -31,6 +31,8 @@ jobs:
         run: |
           python3 -m unittest discover -s tests -p test_matrix_coverage.py -v
           python3 tools/audit_matrix_coverage.py
+          python3 -m unittest discover -s tests -p test_matrix_link_status.py -v
+          python3 tools/export_matrix_link_status.py --check-site
       - name: Export conservative Castor handoff
         run: |
           python3 formal/scripts/physical_observable_bridge.py --matrix research/evidence_matrix_C001-C238_2026-11-11.md --descent-vertical-speed-mps 50 --output /tmp/conde-physical-observables.json
