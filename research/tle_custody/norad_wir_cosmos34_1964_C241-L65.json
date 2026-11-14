@@ -1,0 +1,47 @@
+{
+  "id": "C241-L65",
+  "kind": "NORAD_1964_INTELLIGENCE_DEORBIT_WINDOW_CONTEXT_ONLY",
+  "source": {
+    "publisher": "North American Air Defense Command (NORAD)",
+    "publication": "Weekly Intelligence Review 29/64",
+    "published_on": "1964-07-17",
+    "url": "https://www.archives.gov/files/declassification/iscap/pdf/2009-068-doc35.pdf",
+    "source_class": "ORIGINAL_NORAD_REPORT_RELEASED_BY_NARA_ISCAP",
+    "declassification_record": "ISCAP 2009-068 document 35",
+    "pdf_bytes": 30133149,
+    "pdf_sha256": "2063f4f8d9082c55990dd4be91b8eb096333143230b6f726639fc58bef7251c5",
+    "pdf_pages": 10,
+    "pdf_page_one_indexed": 4,
+    "printed_page": 6,
+    "visually_checked_on": "2026-11-14"
+  },
+  "report": {
+    "object_name_as_printed": "Cosmos 34",
+    "launch_printed": "about 1100Z, 1 July",
+    "event_printed": "apparently de-orbited sometime between 0931-0936Z, 9 July",
+    "event_date": "1964-07-09",
+    "start_as_printed": "0931Z",
+    "end_as_printed": "0936Z",
+    "printed_interval_minutes": 5,
+    "qualifier": "apparently",
+    "described_revolution": 127,
+    "sensor": null,
+    "instrument_observation_id": null,
+    "observation_epoch": null,
+    "estimation_method": null,
+    "time_uncertainty_sigma_seconds": null
+  },
+  "interpretation": {
+    "evidence_type": "NORAD_INTELLIGENCE_ASSESSMENT_NOT_SENSOR_LOG",
+    "event_type": "APPARENT_DEORBIT_NOT_NATURAL_DECAY_CALIBRATION",
+    "same_event_as_1963_norad_308": false,
+    "same_event_as_1963_norad_528": false,
+    "permits_five_minute_sigma_for_528": false,
+    "permits_utc_terminal_point_for_528": false,
+    "original_independent_measurements_528": 0,
+    "activated_orbital_constraints_528": 0,
+    "conditional_value": "Show that one 1964 NORAD narrative printed a Z-labelled de-orbit estimate; no proof of typical 1963 date accuracy or automatic decay clock",
+    "related_primary": "C241-L24 NORAD/GSFC 1962 release memorandum; C241-L64 NASA SSR 1963 date-only catalogue",
+    "note": "1964 source is neither a 1963 object observation nor a new terminal calibration sample"
+  }
+}
