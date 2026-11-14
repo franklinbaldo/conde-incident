@@ -16,13 +16,14 @@ Um checksum TLE válido verifica somente a estrutura da linha examinada. Não au
 
 ## Verificador local de checksum
 
-Insira **duas linhas de sua escolha**, cada uma com exatamente 69 caracteres. Você pode colar as duas linhas juntas no campo **Linha 1**: o formulário as separa sem modificar os caracteres internos; confira as duas antes de verificar. Esta ferramenta roda no navegador, sem enviar o texto a serviços externos, e reproduz apenas as verificações mínimas de comprimento, prefixo/NORAD e dígito módulo 10 do laboratório legado. Ela não autentica TLE histórico, sensor, época, parâmetros orbitais ou local de reentrada.
+Insira **duas linhas de sua escolha**, cada uma com exatamente 69 caracteres. Você pode colar as duas linhas juntas no campo **Linha 1**, inclusive com um título opcional acima delas: o formulário separa os campos sem modificar os 69 caracteres de cada linha. Qualquer título é apenas texto copiado, **não identifica nem autentica a fonte**. Confira as linhas antes de verificar. Esta ferramenta roda no navegador, sem enviar o texto a serviços externos, e reproduz apenas as verificações mínimas de comprimento, prefixo/NORAD e dígito módulo 10 do laboratório legado. Ela não autentica TLE histórico, sensor, época, parâmetros orbitais ou local de reentrada.
 
 <form id="ssg-tle-audit" class="tle-audit" hidden>
   <label for="ssg-tle-line1">Linha 1</label>
   <textarea id="ssg-tle-line1" name="line1" rows="2" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off" required aria-describedby="ssg-tle-instructions"></textarea>
   <label for="ssg-tle-line2">Linha 2</label>
   <textarea id="ssg-tle-line2" name="line2" rows="2" wrap="off" spellcheck="false" autocapitalize="off" autocomplete="off" required aria-describedby="ssg-tle-instructions"></textarea>
+  <p id="ssg-tle-import-note" role="status" hidden></p>
   <p id="ssg-tle-instructions">Espaços e quebras contam. Nenhuma linha é corrigida automaticamente. O resultado é local e não é armazenado. Em caso de erro, cada linha aponta para seu diagnóstico; ao editar, a análise anterior é descartada.</p>
   <button type="submit" aria-label="Verificar duas linhas">Verificar duas linhas</button>
   <div id="ssg-tle-results" class="tle-audit-results" role="status" aria-live="polite" tabindex="-1"></div>

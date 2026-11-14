@@ -40,16 +40,36 @@ export function splitTlePairPaste(raw) {
   return match ? [match[1], match[2]] : null;
 }
 
+/**
+ * A standard two-line clipboard block may have one *untrusted* name line.
+ * Keep the 69-column orbital lines byte-for-byte; the heading is merely a
+ * user-supplied label, not NORAD provenance or an authenticated source.
+ */
+export function parseTleClipboard(raw) {
+  const pair = splitTlePairPaste(raw);
+  if (pair) return { lines: pair, title: null };
+  const triple = /^([^\r\n]+)\r?\n([^\r\n]*)\r?\n([^\r\n]*)(?:\r?\n)?$/.exec(raw);
+  if (!triple) return null;
+  const [, title, first, second] = triple;
+  if (title.length > 120 || /[\x00-\x1f\x7f]/.test(title)
+      || /^[12] /.test(title) || !first.startsWith('1 ') || !second.startsWith('2 ')) return null;
+  return { lines: [first, second], title };
+}
+
 function attachChecker() {
   const form = document.getElementById('ssg-tle-audit');
   const output = document.getElementById('ssg-tle-results');
   if (!form || !output) return;
+  const importNote = document.getElementById('ssg-tle-import-note');
+  if (!importNote) return;
   form.hidden = false;
   const firstInput = form.elements.namedItem('line1');
   const secondInput = form.elements.namedItem('line2');
   // Never leave invalid states referencing a verdict for previous bytes.
   function clearVerdict() {
     output.replaceChildren();
+    importNote.hidden = true;
+    importNote.textContent = '';
     for (const input of [firstInput, secondInput]) {
       input.removeAttribute('aria-invalid');
       input.setAttribute('aria-describedby', 'ssg-tle-instructions');
@@ -59,12 +79,16 @@ function attachChecker() {
     if (event.target === firstInput || event.target === secondInput) clearVerdict();
   });
   firstInput.addEventListener('paste', event => {
-    const pair = splitTlePairPaste(event.clipboardData?.getData('text/plain') ?? '');
-    if (!pair) return; // Retain native paste for a single line or malformed block.
+    const imported = parseTleClipboard(event.clipboardData?.getData('text/plain') ?? '');
+    if (!imported) return; // Native paste for a single line or malformed block.
     event.preventDefault();
-    firstInput.value = pair[0];
-    secondInput.value = pair[1];
+    firstInput.value = imported.lines[0];
+    secondInput.value = imported.lines[1];
     clearVerdict();
+    if (imported.title !== null) {
+      importNote.textContent = 'Título copiado (não autenticado): ' + imported.title;
+      importNote.hidden = false;
+    }
     secondInput.focus();
   });
   form.addEventListener('submit', event => {
