@@ -20,6 +20,12 @@ on:
       - 'scripts/ssg-source-lookup-loader.mjs'
       - 'pages/evidencias/fontes/page.md'
       - 'tests/ssg_source_lookup_smoke.mjs'
+      - 'tests/ssg_post_matrix_visibility_smoke.mjs'
+      - 'scripts/ssg-post-matrix.mjs'
+      - 'scripts/verify-ssg-evidence-index.mjs'
+      - 'scripts/ssg-post-matrix-backlinks.mjs'
+      - 'public/data/conde-source-citations.json'
+      - 'static/css/tokens.css'
       - 'tests/ssg-tle-syntax.test.mjs'
       - 'tests/ssg_tle_syntax_smoke.mjs'
       - 'tests/ssg-authored-pages.test.mjs'
@@ -90,6 +96,12 @@ on:
       - 'scripts/ssg-source-lookup-loader.mjs'
       - 'pages/evidencias/fontes/page.md'
       - 'tests/ssg_source_lookup_smoke.mjs'
+      - 'tests/ssg_post_matrix_visibility_smoke.mjs'
+      - 'scripts/ssg-post-matrix.mjs'
+      - 'scripts/verify-ssg-evidence-index.mjs'
+      - 'scripts/ssg-post-matrix-backlinks.mjs'
+      - 'public/data/conde-source-citations.json'
+      - 'static/css/tokens.css'
       - 'tests/ssg-tle-syntax.test.mjs'
       - 'tests/ssg_tle_syntax_smoke.mjs'
       - 'tests/ssg-authored-pages.test.mjs'
@@ -261,6 +273,8 @@ jobs:
         run: node tests/ssg_tle_code_scroll_smoke.mjs
       - name: Chromium source → occurrence → archive and fail-closed integrity (320/1440)
         run: node tests/ssg_source_lookup_smoke.mjs
+      - name: Chromium SSG pós-matriz CSS-computed custody fields (320/375/1440)
+        run: node tests/ssg_post_matrix_visibility_smoke.mjs
       - name: Upload screenshots and findings even on failure
         if: always()
         uses: actions/upload-artifact@v4
