@@ -61,6 +61,18 @@ def build(root=ROOT):
             'Non-bijective source-to-lineage citation mapping')
     by_key = {key(r): r for r in lineage_rows}
     matrix_lines = inputs[MATRIX].decode('utf-8').splitlines()
+    # The row hash alone identifies bytes, not the ordinal of repeated C44–C46.
+    # Reconstruct Cnn#N from the frozen matrix instead of trusting the feed.
+    occurrence_by_line = {}
+    number_seen = defaultdict(int)
+    for number, line in enumerate(matrix_lines, 1):
+        match = re.match(r'^\|\s*\*{0,2}(C[0-9]+)\*{0,2}\s*\|', line)
+        if match:
+            label = match.group(1)
+            number_seen[label] += 1
+            occurrence_by_line[number] = f'{label}#{number_seen[label]}'
+    fail_if(len(occurrence_by_line) != citations['total_matrix_occurrences'],
+            'Matrix occurrence inventory differs from declared coverage')
     grouped = defaultdict(list)
     for row in references:
         family, source = row['source_family'], row['source_id']
@@ -72,6 +84,10 @@ def build(root=ROOT):
         fail_if(not isinstance(i, int) or i < 1 or i > len(matrix_lines)
                 or digest(matrix_lines[i - 1].encode('utf-8')) != row['row_sha256'],
                 'Source citation no longer matches frozen matrix bytes')
+        fail_if(occurrence_by_line.get(i) != row['occurrence']
+                or row['snapshot_ref'] !=
+                f"matrix:{citations['matrix_git_blob_sha1']}:{row['occurrence']}",
+                'Source citation occurrence identity differs from matrix ordinal')
         fail_if(not row['not_a_verified_conde_physical_event']
                 or dep['independent_physical_observation_count'] is not None,
                 'Attempted promotion of documentary citation to physical observation')
