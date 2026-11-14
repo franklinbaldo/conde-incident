@@ -1,0 +1,70 @@
+{
+  "id": "C241-LONTRA-R54",
+  "predecessor_id": "C241-LONTRA-R53",
+  "audit_date_utc": "2026-11-14",
+  "evidence_class": "INSTITUTIONAL_SERIAL_HOLDINGS_METADATA_ONLY",
+  "subject": {
+    "series_title": "Бюллетень станции оптического наблюдения ИСЗ",
+    "catalog_year": 1963,
+    "issue_numbers_in_ukrainian_catalog": [32, 33, 34, 35, 36, 37],
+    "issue_publication_months_verified": false,
+    "issue_contents_read": false,
+    "november_1963_coverage_verified": false,
+    "target_designations_in_contents_verified": false,
+    "physical_facsimile_retrieved": false,
+    "facsimile_pdf_sha256": null,
+    "pages_or_observation_utc_verified": null
+  },
+  "locators": [
+    {
+      "id": "R54-UA1",
+      "institution": "Main Astronomical Observatory of the National Academy of Sciences of Ukraine, Scientific and Technical Library",
+      "url": "https://maoling.mao.kiev.ua/index.php/ua/gao-biblio-periodyka/specissues",
+      "role": "institutional_holdings_list",
+      "web_search_index_visible": true,
+      "direct_jatoba_http_status": null,
+      "direct_jatoba_error_class": "TLS_HOSTNAME_MISMATCH",
+      "holdings_year": 1963,
+      "issues": [32, 33, 34, 35, 36, 37],
+      "retrieved_facsimile": false,
+      "content_sha256": null,
+      "independent_instrumental_observation": false
+    },
+    {
+      "id": "R54-UA2",
+      "institution": "Main Astronomical Observatory of the National Academy of Sciences of Ukraine, Scientific and Technical Library",
+      "url": "https://maoling.mao.kiev.ua/index.php/ua/gao-biblio-periodyka/sciencefilds-a-b",
+      "role": "same_institution_duplicate_holdings_list",
+      "web_search_index_visible": true,
+      "same_catalog_as": "R54-UA1",
+      "holdings_year": 1963,
+      "issues": [32, 33, 34, 35, 36, 37],
+      "retrieved_facsimile": false,
+      "content_sha256": null,
+      "independent_instrumental_observation": false
+    },
+    {
+      "id": "R54-JP1",
+      "institution": "CiNii Books, Japanese academic library union catalogue",
+      "url": "https://ci.nii.ac.jp/ncid/AA00566856",
+      "role": "independent_bibliographic_locator_not_sensor",
+      "catalog_id": "AA00566856",
+      "serial_coverage": "No. 1 (1958)-no. 59 (1971)",
+      "kyoto_holdings": "32-59, 1963-1971",
+      "retrieved_facsimile": false,
+      "content_sha256": null,
+      "independent_instrumental_observation": false
+    }
+  ],
+  "epistemic_limits": {
+    "copies_or_scans_inspected": 0,
+    "bibliographic_institutions": 2,
+    "independent_instrumental_sensors": 0,
+    "new_527_528_529_observations_1963_11_07_to_09": 0,
+    "new_orbital_constraints_activated": 0,
+    "current_physical_holdings_verified": false,
+    "same_scanned_copy_proven": false,
+    "bibliographic_issue_number_establishes_observation_date": false,
+    "external_institution_contact_sent": false
+  }
+}
