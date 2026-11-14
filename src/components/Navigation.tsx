@@ -129,7 +129,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       <div className="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs border-b border-zinc-900">
         <div className="flex flex-wrap items-center gap-2 text-zinc-300">
           <a
-            href="https://franklinbaldo.github.io/conde-incident/"
+            href={EDITORIAL_ROUTES.summary.href}
             aria-label={lang === 'pt' ? 'Voltar ao Caderno' : 'Back to the Notebook'}
             className="inline-flex shrink-0 items-center gap-1 rounded px-1 py-1 text-cyan-300 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
           >

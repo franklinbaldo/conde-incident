@@ -25,7 +25,7 @@ try {
     page.on('pageerror', error => exceptions.push(error.message));
     try {
       for (const [tab, context] of Object.entries(routes)) {
-        const res = await page.goto(new URL('simulacoes/', origin), { waitUntil: 'domcontentloaded' });
+        const res = await page.goto(new URL('simulacoes/', origin).toString(), { waitUntil: 'domcontentloaded' });
         assert(res?.ok(), 'SSG simulations index did not load');
         const card = page.locator('.instrument-grid > li[data-lab-tab="' + tab + '"]');
         assert.equal(await card.count(), 1, 'missing or duplicated instrument card: ' + tab);
@@ -50,7 +50,10 @@ try {
         const backToContext = tab === 'summary'
           ? page.getByRole('link', { name: 'Voltar ao Caderno' })
           : page.getByRole('link', { name: /^Abrir no Caderno:/ });
-        assert.equal(await backToContext.getAttribute('href'), prefix + context);
+        const contextHref = new URL(await backToContext.getAttribute('href'), page.url());
+        assert.equal(contextHref.pathname, prefix + context);
+        assert.equal(contextHref.origin, new URL(origin).origin,
+          'return must stay inside the same deployed SSG + lab artifact');
         await backToContext.click();
         assert.equal(new URL(page.url()).pathname, prefix + context, 'SSG counterpart route: ' + tab);
         await page.locator('main#main').waitFor();
