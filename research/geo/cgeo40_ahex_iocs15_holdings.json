@@ -1,0 +1,60 @@
+{
+  "schema": "conde.geo.iocs15-ahex-holdings/v1",
+  "id": "CGEO-40",
+  "checked_on": "2026-11-14",
+  "previous_id": "CGEO-39",
+  "source": {
+    "institution": "Arquivo Histórico do Exército (AHEx), Mapoteca",
+    "url": "https://www.ahex.eb.mil.br/images/DDA/2023/Atendimento_ao_Publico/Catalogo_Mapoteca_Completo.pdf",
+    "catalogue_generated_on": "2023-04-04",
+    "catalogue_page_printed": 125,
+    "catalogue_pages_declared": 196,
+    "record_id": "05.36.334",
+    "module": 5,
+    "drawer": 36,
+    "map_number": 334,
+    "source_kind": "CATALOGUE_RECORD",
+    "source_bytes_acquired": false,
+    "source_sha256": null,
+    "facsimile_acquired": false,
+    "verification_channel": "OFFICIAL_URL_INDEXED_TEXT",
+    "transport_status": "TLS_CERT_EXPIRED_AND_HTTP_403_ON_BYPASS",
+    "title_literal": "MAPA DA BACIA DO RIO ITAPICURÚ, ESTADO DA BAHIA",
+    "year_catalogued": 1912,
+    "material": "impresso, colorido, com escala, legenda e convenções, papel comum telado",
+    "condition_catalogued": "bom estado",
+    "dimensions_cm": [
+      87,
+      67.5
+    ]
+  },
+  "comparison": {
+    "other_archive": "Arquivo Nacional",
+    "other_archive_reference": "BR AN,RIO F4.0.MAP.448",
+    "other_archive_dimensions_cm": [
+      64,
+      89
+    ],
+    "other_archive_catalogue_url": "https://www.gov.br/arquivonacional/pt-br/servicos/copy_of_instrumentos-de-pesquisa/bhering-final-14-fev-13.pdf",
+    "ibram_series": "BR RJMRAHI EP-IC-MA",
+    "relation": "THIRD_CUSTODY_CATALOGUE_CANDIDATE_SAME_WORK",
+    "copy_identity_verified": false,
+    "edition_identity_verified": false,
+    "independent_topographic_survey_proven": false,
+    "dimensions_prove_distinct_edition": false
+  },
+  "limits": {
+    "original_map_image": null,
+    "spatial_coverage_1912": null,
+    "center_1963": null,
+    "reported_fall": null,
+    "horizontal_uncertainty_m": null,
+    "flight_date": null,
+    "can_constrain_orbital_reentry": false
+  },
+  "next_actions": [
+    "Solicitar digitalizacao do item 05.36.334 ao AHEx, sem afirmar contato realizado",
+    "Comparar verso, cartuchos e feicoes entre itens do AHEx, Arquivo Nacional e Museu da Republica",
+    "Manter USAF 63-32 como linha documental independente, sem geometria ate adquirir o fotoindice"
+  ]
+}
