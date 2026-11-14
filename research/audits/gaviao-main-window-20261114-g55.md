@@ -1,5 +1,5 @@
 ---
-type: ResearchNote
+type: Guide
 title: 'G55: breadcrumbs SSG devem provar a trilha real'
 description: 'Auditoria retrospectiva de 13 integrações e contraprova de falso PASS na navegação estática.'
 date: 2026-11-14
