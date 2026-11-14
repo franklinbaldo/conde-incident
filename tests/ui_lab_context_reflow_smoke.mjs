@@ -23,6 +23,11 @@ try {
         assert(response?.ok(), `${route}: laboratory HTTP failed`);
         await page.locator('main h1').first().waitFor();
         await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+        // In the compact mobile shell the editorial context lives inside
+        // an accessible disclosure, rather than occupying the first fold.
+        if (width < 768) {
+          await page.locator('header [data-lab-metadata] summary').click();
+        }
 
         for (const lang of ['pt', 'en']) {
           if (lang === 'en') {
