@@ -106,7 +106,7 @@ export function visibleDocument(html) {
     // Count IDs across the document; require exactly one active target inside main.
     const id=attribute(attrs,'id');
     if(id) idCounts.set(id,(idCounts.get(id)??0)+1);
-    if(tag==='span' && main && !hidden && attribute(attrs,'tabindex')==='-1' && id)
+    if((tag==='span'||tag==='h3') && main && !hidden && attribute(attrs,'tabindex')==='-1' && id)
       activeAnchors.set(id,(activeAnchors.get(id)??0)+1);
     if (tag==='a' && main && !hidden && attribute(attrs,'tabindex')!=='-1') {
       const href=attribute(attrs,'href');
