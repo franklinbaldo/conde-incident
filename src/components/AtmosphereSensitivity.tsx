@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useId } from 'react';
 import {
   Wind,
   Sun,
@@ -23,6 +23,9 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
   lang,
 }) => {
   const isPt = lang === 'pt';
+  const scaleHeightId = useId();
+  const solarFluxId = useId();
+  const ballisticCoeffId = useId();
 
   const [scaleHeightKm, setScaleHeightKm] = useState<number>(45);
   const [solarFluxF107, setSolarFluxF107] = useState<number>(76.5);
@@ -82,9 +85,9 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
   }, [scaleHeightKm]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 min-w-0">
       {/* Intro Header */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+      <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6">
         <div className="space-y-1 max-w-3xl">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-800 text-cyan-300 text-xs font-mono">
             <Wind className="w-3.5 h-3.5 text-cyan-400" />
@@ -104,9 +107,9 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
       </div>
 
       {/* Sliders & Active Projection */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 min-w-0">
         {/* Controls (7 Cols) */}
-        <div className="lg:col-span-7 bg-zinc-900 border border-zinc-800 rounded-xl p-6 space-y-5">
+        <div className="lg:col-span-7 min-w-0 bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6 space-y-5">
           <h3 className="text-sm font-bold text-zinc-100 flex items-center gap-2">
             <Gauge className="w-4 h-4 text-cyan-400" />
             <span>{isPt ? 'Parâmetros Físicos e Ambientais de 1963' : '1963 Physical & Environmental Parameters'}</span>
@@ -114,14 +117,15 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
 
           {/* Scale Height Slider */}
           <div className="space-y-2">
-            <div className="flex justify-between text-xs font-mono">
-              <span className="text-zinc-300">
+            <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-xs font-mono min-w-0">
+              <label htmlFor={scaleHeightId} className="text-zinc-200 min-w-0 break-words">
                 {isPt ? 'Escala de Altura Termoesférica (H):' : 'Thermospheric Scale Height (H):'}{' '}
                 <strong className="text-cyan-300">{scaleHeightKm} km</strong>
-              </span>
-              <span className="text-zinc-500">Padrão solar mínimo: 45 km</span>
+              </label>
+              <span className="text-zinc-400">Padrão solar mínimo: 45 km</span>
             </div>
             <input
+              id={scaleHeightId}
               type="range"
               min={35}
               max={65}
@@ -134,14 +138,15 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
 
           {/* Solar Flux F10.7 Slider */}
           <div className="space-y-2">
-            <div className="flex justify-between text-xs font-mono">
-              <span className="text-zinc-300">
+            <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-xs font-mono min-w-0">
+              <label htmlFor={solarFluxId} className="text-zinc-200 min-w-0 break-words">
                 {isPt ? 'Fluxo Solar F10.7 (comprimento 10,7 cm):' : 'Solar Flux F10.7 (10.7 cm):'}{' '}
                 <strong className="text-amber-300">{solarFluxF107} sfu</strong>
-              </span>
-              <span className="text-zinc-500">Média nov/1963: 76,5 sfu</span>
+              </label>
+              <span className="text-zinc-400">Média nov/1963: 76,5 sfu</span>
             </div>
             <input
+              id={solarFluxId}
               type="range"
               min={65}
               max={120}
@@ -154,14 +159,15 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
 
           {/* Ballistic Coefficient B */}
           <div className="space-y-2">
-            <div className="flex justify-between text-xs font-mono">
-              <span className="text-zinc-300">
+            <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-xs font-mono min-w-0">
+              <label htmlFor={ballisticCoeffId} className="text-zinc-200 min-w-0 break-words">
                 {isPt ? 'Coeficiente Balístico B (C_D · A / m):' : 'Ballistic Coefficient B (C_D · A / m):'}{' '}
                 <strong className="text-emerald-300">{ballisticCoeff.toFixed(4)} m²/kg</strong>
-              </span>
-              <span className="text-zinc-500">Agena debris: 0,015 - 0,035</span>
+              </label>
+              <span className="text-zinc-400">Agena debris: 0,015 - 0,035</span>
             </div>
             <input
+              id={ballisticCoeffId}
               type="range"
               min={0.008}
               max={0.05}
@@ -174,13 +180,13 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
 
           {/* Simulated Decay Output Card */}
           <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 space-y-2 font-mono text-xs">
-            <div className="text-zinc-500 uppercase tracking-wider text-[10px]">
+            <div className="text-zinc-400 uppercase tracking-wider text-[10px]">
               {isPt ? 'Resultado da Integração Numérica' : 'Numerical Integration Result'}
             </div>
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 min-w-0">
               <div>
                 <span className="text-zinc-400">Chegada simulada a 120 km:</span>{' '}
-                <span className="text-base font-bold text-zinc-100">
+                <span className="text-base font-bold text-zinc-100 break-words">
                   {simulatedDecayDate.toISOString().substring(0, 10)}
                 </span>
               </div>
@@ -200,7 +206,7 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
         </div>
 
         {/* Reference Table (5 Cols) */}
-        <div className="lg:col-span-5 bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex flex-col justify-between space-y-4">
+        <div className="lg:col-span-5 min-w-0 bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-5 flex flex-col justify-between space-y-4">
           <div className="space-y-3">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-cyan-400" />
@@ -218,7 +224,7 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
               {sensitivityTable.map((row) => (
                 <div
                   key={row.scale}
-                  className={`p-3 rounded-lg border text-xs font-mono flex items-center justify-between ${
+                  className={`p-3 rounded-lg border text-xs font-mono flex flex-wrap items-start justify-between gap-2 min-w-0 ${
                     row.scale === 45
                       ? 'bg-cyan-950/40 border-cyan-800'
                       : 'bg-zinc-950 border-zinc-800/80'
@@ -228,7 +234,7 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
                     <div className="text-zinc-200 font-bold">H = {row.scale} km</div>
                     <div className="text-[11px] text-zinc-400">Decaimento: {row.arrivalDate}</div>
                   </div>
-                  <span className={`text-[10px] ${row.matchColor}`}>
+                  <span className={`text-[10px] min-w-0 break-words ${row.matchColor}`}>
                     {row.matchStatus}
                   </span>
                 </div>
@@ -250,17 +256,17 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
       </div>
 
       {/* Thermospheric Density Profile Card */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6 space-y-3">
+      <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6 space-y-3">
         <h3 className="text-sm font-bold text-zinc-100 flex items-center gap-2">
           <Layers className="w-4 h-4 text-cyan-400" />
           <span>{isPt ? 'Perfil de Densidade Atmosférica (80 a 350 km)' : 'Atmospheric Density Profile (80 to 350 km)'}</span>
         </h3>
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 font-mono text-xs">
+        <div className="grid grid-cols-1 min-[420px]:grid-cols-2 sm:grid-cols-5 gap-3 font-mono text-xs">
           {altitudeProfile.map((pt) => (
             <div key={pt.alt} className="p-2.5 rounded-lg bg-zinc-950 border border-zinc-800">
-              <div className="text-zinc-500 font-semibold">{pt.alt} km</div>
+              <div className="text-zinc-400 font-semibold">{pt.alt} km</div>
               <div className="text-cyan-300 font-bold mt-1">{pt.rho.toExponential(2)}</div>
-              <div className="text-[10px] text-zinc-500">kg/m³</div>
+              <div className="text-[10px] text-zinc-400">kg/m³</div>
             </div>
           ))}
         </div>
