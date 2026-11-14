@@ -67,3 +67,9 @@ a:focus-visible,button:focus-visible,iframe:focus-visible{outline:3px solid #ffd
 .breadcrumbs [aria-current="page"]{color:var(--ink)}
 .breadcrumbs a{display:inline-block;min-height:28px}
 .breadcrumbs a:focus-visible{outline:3px solid #ffd278;outline-offset:2px}
+/* Editorial mobile title: keep whole Portuguese words together at 320 CSS px.
+   The default 2.4rem minimum split “documentada” after its penultimate letter.
+   Preserve desktop type scale and long-identifier fallback separately. */
+@media(max-width:620px){
+  h1{font-size:clamp(2rem,7.5vw,2.35rem)}
+}
