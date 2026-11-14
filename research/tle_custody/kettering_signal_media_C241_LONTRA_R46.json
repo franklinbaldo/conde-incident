@@ -1,0 +1,78 @@
+{
+  "schema": "conde.archival_locator_custody/v1",
+  "id": "C241-LONTRA-R46",
+  "audit_date_utc": "2026-11-14",
+  "status": "CATALOGUE_ONLY_CROSS_MEDIA_CONTROL_NO_TARGET_OBSERVATION",
+  "custodian": "Science Museum Group Collection",
+  "archive": "Geoffrey Perry archive relating to operation of the Kettering Group",
+  "archive_identifier": "KET",
+  "sources": [
+    {
+      "id": "KET-E-19",
+      "shelfmark": "KET/E/19",
+      "catalogue_url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110093443/geoffrey-perry-archive-relating-to-operation-of-the-kettering-group",
+      "locator_granularity": "parent_inventory",
+      "medium_as_described": "paper tapes of satellite telemetry",
+      "mentioned_objects": ["Cosmos 13", "Cosmos 22", "Cosmos 24", "Cosmos 29", "Cosmos 30", "Proton 1", "Vostok 6", "Voskhod 2"],
+      "date_of_each_record_established": false,
+      "paper_tape_physical_original_inspected": false,
+      "signal_values_transcribed": false,
+      "facsimile_retrieved": false,
+      "facsimile_sha256": null,
+      "facsimile_bytes": null,
+      "rights": "Institutional copyright and copying rules apply"
+    },
+    {
+      "id": "KET-C-3-06",
+      "shelfmark": "KET/C/3/06",
+      "catalogue_url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110121259",
+      "locator_granularity": "item_inventory",
+      "catalogued_year": 1963,
+      "target_in_catalogue": "Cosmos 13 1963-06A",
+      "medium_as_described": "folder containing signal logs, 15 Doppler curves, one diamond grid, predictions and correspondence",
+      "related_external_document": {
+        "name": "DSIR Radio Research Station Bulletin No 18: Cosmos 13 satellite and rocket (1963-06 A & B)",
+        "date_in_catalogue": "1963-08",
+        "relation": "described as held within the folder",
+        "bulletin_original_retrieved": false,
+        "bulletin_sha256": null
+      },
+      "date_of_each_signal_established": false,
+      "facsimile_retrieved": false,
+      "facsimile_sha256": null,
+      "facsimile_bytes": null
+    }
+  ],
+  "genealogy": {
+    "paper_tape_and_folder_may_refer_to_same_cosmos_13_signals": true,
+    "independent_instrumental_origins_demonstrated": false,
+    "dsir_bulletin_is_external_document_not_proof_of_independent_sensor": true,
+    "multiple_formats_must_not_be_counted_as_independent_measurements": true,
+    "same_year_does_not_establish_same_observation_date": true
+  },
+  "requested_target": {
+    "norad": [527, 528, 529],
+    "designations": ["1963-003A", "1963-003B", "1963-003C"],
+    "date_window_utc": ["1963-11-07", "1963-11-09"],
+    "explicitly_named_in_either_catalogue": false,
+    "identified_measurements_retrieved": 0,
+    "observation_utc_verified": false,
+    "observer_station_verified": false,
+    "frame_and_clock_verified": false,
+    "instrumental_errors_verified": false,
+    "new_orbital_constraints_activated": 0
+  },
+  "source_handling": {
+    "institutional_catalogue_inspected_in_web_viewer": true,
+    "catalogue_html_binary_custody_performed": false,
+    "catalogue_html_sha256": null,
+    "not_a_negative_search_of_unseen_folios": true,
+    "external_contact_sent": false
+  },
+  "priority": [
+    "Obtain the Cosmos 13 tape segment at KET/E/19 and match its labels to KET/C/3/06 without asserting independence",
+    "Inspect date and source chain in DSIR Bulletin No 18 and check original Kettering logs, curves, and clock",
+    "Request no third-party action without authorization; continue discovery of 7-9 November 1963 in KET/A/1/09, KET/A/6 and KET/A/2/1",
+    "Do not substitute other 1963 missions for NORAD 527-529"
+  ]
+}
