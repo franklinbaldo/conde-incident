@@ -23,6 +23,14 @@ try {
         'Fonte documental control below first 720px viewport at '+width+'px: '+JSON.stringify(rect));
       assert.equal(await selector.locator('option').count(),16,'15 curated sources plus prompt');
       await selector.selectOption({index:1});
+      // One polite summary announces the change. Do not announce every link and
+      // 64-character digest via a second atomic live region.
+      assert.equal(await page.getByRole('status').count(),1);
+      assert.equal(await page.locator('#source-lookup-results').getAttribute('aria-live'),null);
+      assert.equal(await page.locator('#source-lookup-results').getAttribute('aria-atomic'),null);
+      assert.match(await page.getByRole('status').innerText(),/vínculo\(s\) curado\(s\)/);
+      assert.doesNotMatch(await page.getByRole('status').innerText(),/[a-f0-9]{64}/);
+      assert.equal(await page.getByRole('region',{name:'Referências da fonte selecionada'}).count(),1);
       const selected=await selector.inputValue();
       assert.equal(new URL(page.url()).searchParams.get('source'),selected,
         'source selection must be shareable');
