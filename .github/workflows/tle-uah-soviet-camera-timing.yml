@@ -1,0 +1,35 @@
+name: UAH Soviet satellite camera context C241-L47
+on:
+  pull_request:
+    paths:
+      - 'research/tle_custody/uah_soviet_camera_timing_C241-L47.json'
+      - 'research/tle_custody/evidence_matrix_C241-L47_2026-11-14.md'
+      - 'tools/tle_uah_soviet_camera_timing_audit.py'
+      - 'tests/test_tle_uah_soviet_camera_timing.py'
+      - '.github/workflows/tle-uah-soviet-camera-timing.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/tle_custody/uah_soviet_camera_timing_C241-L47.json'
+      - 'research/tle_custody/evidence_matrix_C241-L47_2026-11-14.md'
+      - 'tools/tle_uah_soviet_camera_timing_audit.py'
+      - 'tests/test_tle_uah_soviet_camera_timing.py'
+      - '.github/workflows/tle-uah-soviet-camera-timing.yml'
+  workflow_dispatch:
+jobs:
+  custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Original UAH PDFs are scanned and must not become observations
+        run: python -m pip install pypdf==6.1.3
+      - name: Adversarial scientific scope in standard and optimized Python
+        run: |
+          python -m unittest discover -s tests -p test_tle_uah_soviet_camera_timing.py -v
+          python -O -m unittest discover -s tests -p test_tle_uah_soviet_camera_timing.py -v
+      - name: Validate archival PDF bytes, page counts and absent text layer
+        run: python tools/tle_uah_soviet_camera_timing_audit.py --verify-remote
