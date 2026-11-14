@@ -73,3 +73,6 @@ a:focus-visible,button:focus-visible,iframe:focus-visible{outline:3px solid #ffd
 .context-map img{display:block;width:100%;height:auto;max-width:100%}
 .context-map figcaption{padding:1rem 1.2rem;color:var(--muted);font:.9rem/1.7 system-ui,sans-serif;overflow-wrap:anywhere}
 .context-map figcaption a{display:inline-block;padding:.15rem 0}
+@media(max-width:620px){
+  h1{font-size:clamp(2rem,7.5vw,2.35rem)}
+}
