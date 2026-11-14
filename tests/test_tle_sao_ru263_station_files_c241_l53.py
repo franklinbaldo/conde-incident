@@ -19,7 +19,7 @@ class RU263Tests(unittest.TestCase):
             audit(candidate)
 
     def test_verified_manifest(self):
-        self.assertEqual(audit(self.model)["holdings_located"], 4)
+        self.assertEqual(audit(self.model)["holdings_located"], 6)
 
     def test_wrong_sha(self):
         self.reject(lambda x: x["source"].update(sha256="0" * 64))
@@ -35,6 +35,18 @@ class RU263Tests(unittest.TestCase):
 
     def test_wrong_archive_label(self):
         self.reject(lambda x: x["anchors"][2].update(phrase="NORAD 528 optical observations"))
+
+    def test_cold_lake_operations_1963_box_72(self):
+        self.reject(lambda x: x["anchors"][4].update(box=67))
+
+    def test_cold_lake_operations_1963_section(self):
+        self.reject(lambda x: x["anchors"][4].update(series=8))
+
+    def test_cold_lake_inventory_1963_label(self):
+        self.reject(lambda x: x["anchors"][5].update(phrase="#130 Inventory and audits, 1964."))
+
+    def test_cold_lake_operations_cannot_be_called_a_detection(self):
+        self.reject(lambda x: x["anchors"][4].update(scope="Confirmed individual observation of NORAD 528"))
 
     def test_fabricated_utc(self):
         self.reject(lambda x: x.update(norad_528_utc="1963-11-08T12:00:00Z"))
