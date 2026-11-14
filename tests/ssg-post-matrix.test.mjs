@@ -141,18 +141,29 @@ test('post-matrix built HTML binds navigation, source identity and custody in ea
   assert.throws(()=>auditBuiltPostMatrix(base.replace(heading,'<h3>OTHER</h3>'),citations),
     /cabeçalhos ausentes/);
   assert.throws(()=>auditBuiltPostMatrix(base.replace(state,
-    '<div hidden>'+state+'</div>'),citations),/valor visível ausente/);
+    '<div hidden>'+state+'</div>'),citations),/campo visível vinculado/);
+  // G74 adversarial: hidden field plus a visible, unbound echo.
+  // Text somewhere in a record does not make the authentic field visible.
+  for(const [original,value] of [
+    [state,item.status],[independence,item.journalistic_source_independence],
+    [imageDigest,item.image_sha256],[report,reportDigest],
+  ]) {
+    const decoy=base.replace(original,
+      '<div hidden>'+original+'</div><span>'+value+'</span>');
+    assert.throws(()=>auditBuiltPostMatrix(decoy,citations),/campo visível vinculado/);
+  }
+
   assert.throws(()=>auditBuiltPostMatrix(base.replace(independence,
-    field('Independência jornalística','CONFIRMED')),citations),/campo vinculado/);
+    field('Independência jornalística','CONFIRMED')),citations),/campo visível vinculado/);
   assert.throws(()=>auditBuiltPostMatrix(base.replace(imageDigest,
-    field('SHA-256 da imagem arquivística','0'.repeat(64))),citations),/campo vinculado/);
+    field('SHA-256 da imagem arquivística','0'.repeat(64))),citations),/campo visível vinculado/);
   assert.throws(()=>auditBuiltPostMatrix(base.replace(report,
     field('SHA-256 do relatório de custódia versionado','0'.repeat(64))),citations),
-    /campo vinculado/);
+    /campo visível vinculado/);
   assert.throws(()=>auditBuiltPostMatrix(base.replace(source,
     '<a href="https://example.org/not-nara">NARA</a>'),citations),/link NARA ausente/);
   assert.throws(()=>auditBuiltPostMatrix(base.replace(custody,''),citations),
     /relatório de custódia não navegável/);
   assert.throws(()=>auditBuiltPostMatrix(base.replace(report,'')+report,citations),
-    /campo vinculado/);
+    /campo visível vinculado/);
 });
