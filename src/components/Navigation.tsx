@@ -127,7 +127,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     <header className="border-b border-zinc-800 bg-zinc-950/90 backdrop-blur md:sticky md:top-0 z-50">
       {/* Keep the scientific metadata accessible without letting it crowd
           the mobile first fold, including at 200% resized text. */}
-      <div data-mobile-lab-header className="mx-auto max-w-7xl border-b border-zinc-900 px-3 py-2 text-xs md:hidden">
+      <div data-mobile-lab-header className="mx-auto max-w-7xl border-b border-zinc-900 px-2 py-2 text-xs md:hidden">
         <div className="flex min-w-0 flex-wrap items-center justify-between gap-2">
           <a href={EDITORIAL_ROUTES.summary.href}
             aria-label={lang === 'pt' ? 'Voltar ao Caderno' : 'Back to the Notebook'}
