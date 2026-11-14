@@ -164,7 +164,7 @@ export const Navigation: React.FC<NavigationProps> = ({
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap min-w-0 items-center gap-3">
           {/* Python Export Button */}
           <button
             onClick={onOpenPython}
@@ -209,7 +209,7 @@ export const Navigation: React.FC<NavigationProps> = ({
             strip at mobile/reflow widths. Desktop retains the compact tabs. */}
         <details ref={mobileMenuRef} className="group md:hidden">
           <summary className="flex min-h-11 list-none cursor-pointer items-center justify-between gap-3 rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-zinc-100 [&::-webkit-details-marker]:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
-            <span className="shrink-0 font-semibold">{lang === 'pt' ? 'Explorar 8 seções' : 'Explore 8 sections'}</span>
+            <span className="min-w-0 break-words font-semibold">{lang === 'pt' ? 'Explorar 8 seções' : 'Explore 8 sections'}</span>
             <span className="min-w-0 text-right text-cyan-300">{lang === 'pt' ? currentTab?.labelPt : currentTab?.labelEn}</span>
             <ChevronDown className="h-4 w-4 shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
           </summary>
