@@ -167,7 +167,7 @@ a:focus-visible,button:focus-visible,iframe:focus-visible{outline:3px solid #ffd
 .casefile .cf-card .cf-links a{padding:.28rem 0}
 .casefile .cf-note{font-size:.91rem;color:var(--cf-muted);margin-top:1rem}
 .casefile .cf-text-link{display:inline-block;padding:.6rem .15rem}
-.casefile .cf-bottom{border-left:4px solid var(--cf-accent);background:#e8f0ee;padding:1rem 1.2rem}
+.casefile .cf-bottom{border-left:4px solid var(--cf-accent);background:var(--color-casefile-highlight);padding:1rem 1.2rem}
 .casefile .cf-bottom p{color:var(--cf-muted)}
 .intro:has(.casefile){padding-top:clamp(1.25rem,3vw,2.5rem)}
 .intro:has(.casefile) h1{font-size:clamp(2rem,4vw,3.35rem);max-width:none}
