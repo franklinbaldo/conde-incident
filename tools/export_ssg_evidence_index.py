@@ -306,13 +306,7 @@ def build(root=ROOT):
 
 
 def sync(artifacts, root=ROOT, check=False):
-    """Publish immutable SHA-addressed parts before swapping the mutable manifest.
-
-    Once written, historical digest-named shards stay readable for clients
-    holding a previous manifest. The manifest is the only mutable pointer.
-    A legacy part-001.json set is removed *only after* the first transition,
-    which cannot retroactively protect clients holding a legacy manifest.
-    """
+    """Publish digest-addressed parts, retaining pinned old and new generations."""
     folders = (DEST, GAPS_DEST, LOOKUP_DEST)
     existing = {p for folder in folders for p in (root / folder).glob('part-*.json')}
     expected = {root / p for p in artifacts if p.parent in folders}
@@ -325,19 +319,30 @@ def sync(artifacts, root=ROOT, check=False):
         match = CONTENT_PART.fullmatch(relative.name)
         require(match is not None and match.group(1) == digest(raw),
                 'Shard sem endereço imutável válido: ' + str(relative))
-    # Fail closed on stale files: only digest-named *and digest-valid* history
-    # is retained. Legacy names are allowed solely for the one-time migration.
-    legacy = set()
+    frozen = {}
+    ledger_path = root / 'tools/ssg-legacy-shards.json'
+    if ledger_path.exists():
+        ledger = json.loads(ledger_path.read_bytes())
+        require(ledger['schema'] == 'conde.ssg-legacy-shards/v1',
+                'Schema da custódia legada incorreto')
+        for entry in ledger['shards']:
+            relative = Path(entry['path'])
+            require(relative.parent in folders and LEGACY_PART.fullmatch(relative.name),
+                    'Caminho legado fora do namespace reservado')
+            path = root / relative
+            require(path in existing, 'Shard legado ausente: ' + str(relative))
+            raw = path.read_bytes()
+            require(len(raw) == entry['bytes'] and digest(raw) == entry['sha256'],
+                    'Shard legado adulterado: ' + str(relative))
+            require(path not in frozen, 'Shard legado duplicado: ' + str(relative))
+            frozen[path] = entry
     for path in existing - expected:
+        if path in frozen:
+            continue
         match = CONTENT_PART.fullmatch(path.name)
-        if match:
-            require(digest(path.read_bytes()) == match.group(1),
-                    'Shard histórico com digest adulterado: ' + str(path))
-        elif LEGACY_PART.fullmatch(path.name) and not check:
-            legacy.add(path)
-        else:
-            require(False, 'Lista de shards contém arquivo não endereçado: ' + str(path))
-    # Existing digest-named files may never change in place.
+        require(match is not None, 'Lista de shards contém arquivo não endereçado: ' + str(path))
+        require(digest(path.read_bytes()) == match.group(1),
+                'Shard histórico com digest adulterado: ' + str(path))
     for path in expected & existing:
         relative = path.relative_to(root)
         require(path.read_bytes() == artifacts[relative],
@@ -352,7 +357,6 @@ def sync(artifacts, root=ROOT, check=False):
 
     base = root / 'public/data'
     base.mkdir(parents=True, exist_ok=True)
-    # Stage first, then install only new digest-named shards, manifest last.
     with tempfile.TemporaryDirectory(prefix='.conde-evidence-stage-', dir=base) as temp:
         stage = Path(temp)
         for relative, raw in artifacts.items():
@@ -366,8 +370,6 @@ def sync(artifacts, root=ROOT, check=False):
             target.parent.mkdir(parents=True, exist_ok=True)
             os.replace(stage / relative.relative_to('public/data'), target)
         os.replace(stage / MANIFEST.relative_to('public/data'), root / MANIFEST)
-        for stale in sorted(legacy):
-            stale.unlink()
 
 
 if __name__ == '__main__':
