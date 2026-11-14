@@ -29,6 +29,7 @@ class R53(unittest.TestCase):
         self.assertEqual(len(results), 5)
         for row in results:
             self.assertLess(row["miles_residual_minutes"], row["km_residual_minutes"])
+            self.assertLess(row["miles_residual_minutes"], row["nautical_residual_minutes"])
 
     def test_syncom_independent_scale_control(self):
         row = mod.audit(self.data)[3]
@@ -46,8 +47,8 @@ class R53(unittest.TestCase):
     def test_not_certified_in_original(self):
         self.invalid(["conclusion", "unit_in_original_STL_issue_certified"], True)
 
-    def test_not_certified_on_page(self):
-        self.invalid(["conclusion", "unit_printed_on_B12_directly_certified"], True)
+    def test_printed_miles_must_remain_certified(self):
+        self.invalid(["conclusion", "printed_unit_miles_certified_on_B12"], False)
 
     def test_not_independent_from_nasa_R51(self):
         self.invalid(["conclusion", "independent_from_R51"], True)
@@ -60,6 +61,13 @@ class R53(unittest.TestCase):
 
     def test_not_new_orbital_constraint(self):
         self.invalid(["conclusion", "new_orbital_constraints_activated"], 1)
+
+    def test_statute_subtype_not_textually_certified(self):
+        self.invalid(["conclusion", "statute_subtype_certified_by_printed_legend"], True)
+
+    def test_nonautical_control(self):
+        row = mod.audit(self.data)[3]
+        self.assertGreater(row["nautical_residual_minutes"], 200)
 
     def test_sha_mutation(self):
         self.invalid(["source", "pdf_sha256"], "0" * 64)
