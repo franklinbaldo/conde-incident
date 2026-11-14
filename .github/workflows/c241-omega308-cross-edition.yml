@@ -1,0 +1,57 @@
+name: C241-L66 NASA Omega 308 cross-edition integrity
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/nasa_ssr_omega308_cross_edition_C241-L66.json
+      - research/tle_custody/nasa_ssr_omega308_cross_edition_C241-L66.md
+      - tools/tle_ssr_omega308_cross_edition_c241_l66.py
+      - tests/test_tle_ssr_omega308_cross_edition_c241_l66.py
+      - .github/workflows/c241-omega308-cross-edition.yml
+  push:
+    branches: [main]
+    paths:
+      - research/tle_custody/nasa_ssr_omega308_cross_edition_C241-L66.json
+      - research/tle_custody/nasa_ssr_omega308_cross_edition_C241-L66.md
+      - tools/tle_ssr_omega308_cross_edition_c241_l66.py
+      - tests/test_tle_ssr_omega308_cross_edition_c241_l66.py
+      - .github/workflows/c241-omega308-cross-edition.yml
+permissions:
+  contents: read
+jobs:
+  original-pdf-crosswalk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact HEAD
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          echo "tested_sha=$(git rev-parse HEAD)"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run 18 adversarial cases in normal and optimized Python
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p test_tle_ssr_omega308_cross_edition_c241_l66.py -v
+          python3 -O -m unittest discover -s tests -p test_tle_ssr_omega308_cross_edition_c241_l66.py -v
+      - name: Retrieve and verify both original PDFs, including negative mutant
+        run: |
+          set -euo pipefail
+          curl -fLsS --retry 3 --connect-timeout 15 --max-time 120             https://ntrs.nasa.gov/api/citations/19640003479/downloads/19640003479.pdf             -o "$RUNNER_TEMP/ssr1963.pdf"
+          curl -fLsS --retry 3 --connect-timeout 15 --max-time 120             https://ntrs.nasa.gov/api/citations/19780009188/downloads/19780009188.pdf             -o "$RUNNER_TEMP/ssr1977.pdf"
+          echo "d31a064f8e03fd39be6fe75b88cd5852c0b74c9101fa635cb40ac25c77ef474f  $RUNNER_TEMP/ssr1963.pdf" | sha256sum -c -
+          echo "c5c66eb7eab242ab5b3dd56567de8bab2d404d0a6776baeb3b79383c86bc5ba8  $RUNNER_TEMP/ssr1977.pdf" | sha256sum -c -
+          python3 tools/tle_ssr_omega308_cross_edition_c241_l66.py             --pdf63 "$RUNNER_TEMP/ssr1963.pdf" --pdf77 "$RUNNER_TEMP/ssr1977.pdf"
+          printf '%s' '%PDF- deliberate corrupt example' > "$RUNNER_TEMP/damaged.pdf"
+          if python3 tools/tle_ssr_omega308_cross_edition_c241_l66.py             --pdf63 "$RUNNER_TEMP/damaged.pdf" --pdf77 "$RUNNER_TEMP/ssr1977.pdf"; then
+            echo "FAIL: corrupt PDF accepted"
+            exit 1
+          fi
+          echo "NEGATIVE_PDF_MUTANT_REJECTED"
