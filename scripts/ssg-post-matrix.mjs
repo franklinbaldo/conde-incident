@@ -1,6 +1,7 @@
 /** Post-matrix documents are archival leads, never new rows in the frozen matrix. */
 import assert from 'node:assert/strict';
-import {mkdirSync,writeFileSync} from 'node:fs';
+import {mkdirSync,readFileSync,writeFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
 import {join} from 'node:path';
 import {readBundle,audit,visibleDocument} from './verify-ssg-evidence-index.mjs';
 import {matrixCatalogPages} from './ssg-matrix-catalog.mjs';
@@ -11,6 +12,35 @@ const https=s=>typeof s==='string'&&/^https:\/\/[^\s<>"'()]+$/.test(s);
 const report=s=>typeof s==='string'&&/^research\/archives\/[a-z0-9_/-]+\.md$/.test(s)&&!s.includes('..');
 const sha=s=>typeof s==='string'&&/^[0-9a-f]{64}$/.test(s);
 const matrixId=s=>typeof s==='string'&&/^C[0-9]{1,3}#[1-9][0-9]*$/.test(s);
+
+/** Cross-check the digital object against the separately versioned custodial report.
+ * Recalculating coordinated JSON digests alone must not forge an NARA object. */
+export function auditedReportDigest(item) {
+  assert.ok(report(item.report_path),'Pós-matriz: caminho de pesquisa inválido');
+  const bytes=readFileSync(item.report_path);
+  const body=bytes.toString('utf8');
+  const unit=body.match(/unidade documental \x60naId: (\d+)\x60/);
+  assert.equal(unit?.[1],String(item.nara_fileunit_naid),
+    'Pós-matriz: NAID da unidade diverge do relatório original');
+  assert.equal(item.report_file_unit_id,'NARA_BB_UNIT_'+item.nara_fileunit_naid,
+    'Pós-matriz: identificador da unidade divergente');
+  const rows=[...body.matchAll(/^\|\s*(\d+)\s*\|\s*(\d+)\s*\|\s*\[([a-z0-9_.-]+)\]\((https:\/\/[^)\s]+)\)\s*\|\s*[\d.]+\s*\|\s*\x60([0-9a-f]{64})\x60\s*\|$/gm)];
+  const matches=rows.filter(row=>row[2]===String(item.nara_object_id));
+  assert.equal(matches.length,1,'Pós-matriz: objeto NARA ausente ou duplicado no relatório');
+  const [,page,,filename,url,digest]=matches[0];
+  assert.equal(item.image_filename,filename,'Pós-matriz: nome do objeto diverge do relatório');
+  assert.equal(item.report_citation_url,url,'Pós-matriz: URL diverge do relatório');
+  assert.equal(item.image_sha256,digest,'Pós-matriz: SHA-256 diverge do relatório');
+  if(item.source_id==='NARA_AIRA_TELEGRAM_19631114') {
+    const backtick=String.fromCharCode(96);
+    const marker='**Imagem '+page+', '+backtick+filename+backtick+':**';
+    const description=body.split('\n').find(line=>line.startsWith(marker));
+    assert.ok(description?.includes('mensagem')&&description.includes('14 NOV 1963'),
+      'Pós-matriz: telegrama não corresponde à imagem documental indicada');
+  }
+  return createHash('sha256').update(bytes).digest('hex');
+}
+
 
 /** Bind every supplemental reference to the audited, frozen 241-row index.
  * A syntactically valid Cnn#N and a matching string ref are not enough. */
@@ -89,6 +119,7 @@ export function postMatrixPage(citations,lineage,bundle=readBundle()) {
     assert.ok(report(item.report_path),'Pós-matriz: caminho de pesquisa inválido');
     assert.ok(sha(item.image_sha256)&&item.image_sha256===item.report_object_sha256,
       'Pós-matriz: digest de objeto inconsistente');
+    const reportDigest=auditedReportDigest(item);
     assert.ok(Array.isArray(item.related_matrix_occurrences)&&
       Array.isArray(item.related_matrix_snapshot_refs)&&
       item.related_matrix_occurrences.length===item.related_matrix_snapshot_refs.length,
@@ -127,6 +158,7 @@ export function postMatrixPage(citations,lineage,bundle=readBundle()) {
       `**Verificação e limite:** ${esc(item.verification)}`,'',
       `**Localizador:** ${esc(item.report_locator)}`,'',
       `**SHA-256 da imagem arquivística:** \`${item.image_sha256}\``,'',
+      '**SHA-256 do relatório de custódia versionado:** `'+reportDigest+'`','',
       `[Abrir objeto no catálogo NARA](${item.report_citation_url}) · [Ler relatório de custódia no repositório](https://github.com/franklinbaldo/conde-incident/blob/main/${item.report_path})`,'',
       '**Relações de proveniência declaradas, não testemunhas independentes:**','',
       ...(edges.length?edges:['- Nenhuma relação adicional declarada.']),'',
