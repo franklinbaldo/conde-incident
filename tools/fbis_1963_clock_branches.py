@@ -103,6 +103,9 @@ def anchors_from_manifest(data: dict) -> list:
         for name in ("fbis_sha256", "independent_source_sha256"):
             demand(bool(re.fullmatch("[0-9a-f]{64}", row[name])),
                    "anchor digest is not SHA-256")
+        for name in ("fbis_page", "independent_page"):
+            demand(bool(re.fullmatch(r"[1-9][0-9]*", row[name])),
+                   "anchor has no positive page index: " + name)
         demand(row["item_id"] not in used, "duplicate FBIS item")
         used.add(row["item_id"])
         occurrence = (row["fbis_sha256"], row["fbis_page"],
@@ -117,6 +120,14 @@ def anchors_from_manifest(data: dict) -> list:
                "same source cannot supply independent broadcast time")
         demand(len(row["independence_rationale"]) >= 25,
                "independence must be explained")
+    # A cited external reference cannot secretly be a different FBIS item
+    # inside this very calibration corpus. Pairwise own-row checks miss this.
+    fbis_digests = {row["fbis_sha256"] for row in rows}
+    fbis_urls = {row["fbis_document_url"] for row in rows}
+    for row in rows:
+        demand(row["independent_source_sha256"] not in fbis_digests
+               and row["independent_source_url"] not in fbis_urls,
+               "independent source is another FBIS facsimile")
     return rows
 
 
