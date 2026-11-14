@@ -69,6 +69,21 @@ a:focus-visible,button:focus-visible,iframe:focus-visible{outline:3px solid #ffd
 .breadcrumbs a{display:inline-block;min-height:28px}
 .breadcrumbs a:focus-visible{outline:3px solid #ffd278;outline-offset:2px}
 
+/* Progressive enhancement without JS: concise return path on narrow screens.
+   Full ancestry remains available in an accessible native disclosure. */
+.breadcrumbs-mobile{display:none}
+@media(max-width:620px){
+  .breadcrumbs>.breadcrumbs-trail{display:none}
+  .breadcrumbs-mobile{display:flex;flex-wrap:wrap;align-items:baseline;gap:.35rem 1rem}
+  .breadcrumb-parent{font-weight:700;max-width:100%;overflow-wrap:anywhere}
+  .breadcrumbs-mobile details{max-width:100%}
+  .breadcrumbs-mobile summary{cursor:pointer;text-decoration:underline;text-underline-offset:.16em}
+  .breadcrumbs-mobile details[open]{flex-basis:100%}
+  .breadcrumbs-mobile ol{margin:.5rem 0 .7rem}
+  .breadcrumbs-mobile a,.breadcrumbs-mobile summary{min-height:28px}
+  .breadcrumbs-mobile summary:focus-visible{outline:3px solid #ffd278;outline-offset:2px}
+}
+
 /* Mapa SSG independente do laboratório e de serviços de tiles. */
 .context-map{margin:1.5rem 0 2rem;max-width:100%;overflow:hidden;border:1px solid var(--line);border-radius:.75rem;background:var(--panel)}
 .context-map img{display:block;width:100%;height:auto;max-width:100%}
