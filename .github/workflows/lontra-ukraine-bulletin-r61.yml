@@ -1,0 +1,39 @@
+name: C241 Kyiv bulletin holdings R61
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/ukraine_bulletin32_holdings_C241_LONTRA_R61.json
+      - tools/audit_ukraine_bulletin_r61.py
+      - tests/test_ukraine_bulletin_r61.py
+      - .github/workflows/lontra-ukraine-bulletin-r61.yml
+  push:
+    branches: [main]
+    paths:
+      - research/tle_custody/ukraine_bulletin32_holdings_C241_LONTRA_R61.json
+      - tools/audit_ukraine_bulletin_r61.py
+      - tests/test_ukraine_bulletin_r61.py
+      - .github/workflows/lontra-ukraine-bulletin-r61.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  holdings-custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact HEAD
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Audit snapshot and negative cases
+        run: |
+          set -euo pipefail
+          python3 -m tools.audit_ukraine_bulletin_r61
+          python3 -m unittest discover -s tests -p 'test_ukraine_bulletin_r61.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_ukraine_bulletin_r61.py' -v
+      - name: Replay institutional holdings catalogue
+        run: |
+          set -euo pipefail
+          python3 -m tools.audit_ukraine_bulletin_r61 --live
