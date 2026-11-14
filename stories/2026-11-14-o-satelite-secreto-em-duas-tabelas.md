@@ -55,6 +55,14 @@ O rodapé da **própria B-12** especifica *miles* para as altitudes, mas não di
 
 Há ainda uma assinatura de proveniência: o quadro declara ter sido **reproduzido do *STL Space Log*, volume 3, número 4**. O exemplar original desse número ainda não foi inspecionado na investigação. A reprodução mostra que, antes das tabelas posteriores, já circulavam valores do objeto A, **mas não são os mesmos quatro números** do anuário soviético de 1964 e do SIPRI de 1973. Também não se pode tratar as duas cifras na célula como observações de dois sensores independentes: faltam a legenda que explique a duplicidade, o instrumento, a estação e o instante da medição.
 
+### O original ganhou endereço, ainda não ganhou voz
+
+O número citado na reprodução já tem **localizadores bibliográficos verificáveis**. O [Google Books registra *TRW Space Log*, volume 3 (1963)](https://books.google.com/books?id=uUhwtQJoegAC), indicando como origem do exemplar a **University of Colorado Boulder** e digitalização em **9 de maio de 2023**. Outro [registro agrupa *STL Space Log*, volumes 3–4 (1963)](https://books.google.com/books?id=vTkOAQAAIAAJ). Ambos mostram informação de catálogo e trechos limitados: **não lemos por eles a página original da tabela**.
+
+Há também um [anúncio bibliográfico de exemplar usado](https://www.nadirkitap.com/kitapara.php?ara=kitaplari&birincibaski=0&ceviren=&cilt=0&dil=0&eskiyeni=0&fiyat1=&fiyat2=&guzelciltli=0&page=2&kategori=52) que identifica **volume 3, número 4, dezembro de 1963**, com **Thomas L. Branigan** associado à edição. É descrição comercial, não autenticação do miolo nem atribuição de autoria da tabela. Os nomes *STL Space Log* e *TRW Space Log* aparecem em cadastros distintos; ambos devem orientar a procura.
+
+Um testemunho da própria época ajuda a entender por que esses dados se repetiam. No [*Air Force/Space Digest* de abril de 1963, página impressa 121](https://www.airandspaceforces.com/app/uploads/2025/11/0463_April1963_LR.pdf), os editores descreviam o *STL Space Log* como publicação **trimestral** e declaravam utilizá-la, junto com documentos da NASA, para seu quadro de lançamentos. É evidência de **circulação editorial entre compilações**, não de sensor autônomo ou prova de cópia da linha específica do objeto 1963-003A. Falta localizar o **cabeçalho, a legenda e a linha original de dezembro de 1963**, preservando as duas colunas e respectivas fontes. Catálogos são caminhos até a prova, não a própria prova.
+
 Por isso, a aparição do *Space Log* não resolve a pergunta de onde surgiram **459/533, 94,66 e 81,89°**. Ela elimina um atalho: unir números extraídos de páginas, datas e unidades diferentes para criar uma aparente sequência orbital contínua.
 
 ## Dez anos depois, os números reapareceram na Suécia
