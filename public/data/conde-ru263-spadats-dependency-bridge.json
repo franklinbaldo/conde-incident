@@ -1,0 +1,417 @@
+{
+  "activation": false,
+  "actual_1963_sao_to_spadats_528_transfer": null,
+  "anchors": [
+    {
+      "box": 36,
+      "classification": "INVENTORY_LOCATOR_NOT_OBSERVATION",
+      "id": "RU263-COLD-LAKE-OPERATIONS",
+      "pdf_page_index_zero_based": 15,
+      "printed_page": 14,
+      "series": 2
+    },
+    {
+      "box": 67,
+      "classification": "INVENTORY_LOCATOR_NOT_OBSERVATION",
+      "id": "RU263-COLD-LAKE-ENGINEERING",
+      "pdf_page_index_zero_based": 44,
+      "printed_page": 43,
+      "series": 8
+    },
+    {
+      "box": 69,
+      "classification": "INVENTORY_LOCATOR_NOT_OBSERVATION",
+      "id": "RU263-IRAN-ENGINEERING",
+      "pdf_page_index_zero_based": 44,
+      "printed_page": 43,
+      "series": 8
+    },
+    {
+      "box": 68,
+      "classification": "INVENTORY_LOCATOR_NOT_OBSERVATION",
+      "id": "RU263-CURACAO-ENGINEERING",
+      "pdf_page_index_zero_based": 44,
+      "printed_page": 43,
+      "series": 8
+    }
+  ],
+  "catalogue_target_candidates": [
+    {
+      "activation": false,
+      "instrumental_independence": null,
+      "measured_by_these_manifests": false,
+      "norad_id": 527,
+      "observation_utc": null,
+      "station": null
+    },
+    {
+      "activation": false,
+      "instrumental_independence": null,
+      "measured_by_these_manifests": false,
+      "norad_id": 528,
+      "observation_utc": null,
+      "station": null
+    },
+    {
+      "activation": false,
+      "instrumental_independence": null,
+      "measured_by_these_manifests": false,
+      "norad_id": 529,
+      "observation_utc": null,
+      "station": null
+    }
+  ],
+  "confirmed_norad_528_observations_from_manifests": 0,
+  "events": [
+    {
+      "classification": "administrative-plan-decision",
+      "date_as_documented": "1963-07-17",
+      "id": "JCS_1963_07_17",
+      "observation_epoch_528_utc": null,
+      "pdf_page_index_zero_based": 70,
+      "printed_page": 55
+    },
+    {
+      "classification": "data-sharing-request",
+      "date_as_documented": "1963-07-17",
+      "id": "JCS_NASA_DATA_REQUEST",
+      "observation_epoch_528_utc": null,
+      "pdf_page_index_zero_based": 70,
+      "printed_page": 55
+    },
+    {
+      "classification": "planned-system-integration",
+      "date_as_documented": "1963-09",
+      "id": "NORAD_REPLAN_1963_09",
+      "observation_epoch_528_utc": null,
+      "pdf_page_index_zero_based": 71,
+      "printed_page": 56
+    },
+    {
+      "classification": "calibration-plan-change",
+      "date_as_documented": "1963-10",
+      "id": "NAVY_CALIBRATION_1963_10",
+      "observation_epoch_528_utc": null,
+      "pdf_page_index_zero_based": 71,
+      "printed_page": 56
+    },
+    {
+      "classification": "communications-availability-context",
+      "date_as_documented": "1963-12",
+      "id": "COLD_LAKE_COMMS_1963_12",
+      "observation_epoch_528_utc": null,
+      "pdf_page_index_zero_based": 71,
+      "printed_page": 56
+    }
+  ],
+  "graph": [
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "FINDING_AID_CUSTODIED",
+      "source": "C241-L53",
+      "target": "PDF:RU263"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "CONTEMPORARY_SUMMARY_CUSTODIED",
+      "source": "C241-L52",
+      "target": "PDF:NORAD1963"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "EARLIER_SAO_FINDING_AID",
+      "source": "C241-L45",
+      "target": "PDF:RU478"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "COLLECTION_CREATOR_NOT_SENSOR",
+      "source": "PDF:RU263",
+      "target": "PROGRAM:SAO"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "SAME_PROGRAM_POSSIBLE_OVERLAP",
+      "source": "PDF:RU478",
+      "target": "PROGRAM:SAO"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "PLANNING_HISTORY_NOT_DATA_RECEIPT",
+      "source": "PDF:NORAD1963",
+      "target": "PROGRAM:SPADATS"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "REQUEST_NOT_ACTUAL_TRANSFER",
+      "source": "EVENT:JCS_NASA_DATA_REQUEST",
+      "target": "H:SAO_TO_SPADATS_528"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "PLAN_NOT_COMPLETION",
+      "source": "EVENT:NORAD_REPLAN_1963_09",
+      "target": "H:NETWORK_INTEGRATION"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "LATER_COMMUNICATIONS_CONTEXT",
+      "source": "EVENT:COLD_LAKE_COMMS_1963_12",
+      "target": "H:COLD_LAKE_REALTIME"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "RECEIPT_LOG_REQUIRED",
+      "source": "H:SAO_TO_SPADATS_528",
+      "target": "LATENT:528:receipt"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "GENEALOGY_REQUIRED",
+      "source": "H:NETWORK_INTEGRATION",
+      "target": "LATENT:network:independent_instruments"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "NOT_EVIDENCE_OF_528_STATION",
+      "source": "H:COLD_LAKE_REALTIME",
+      "target": "LATENT:528:station"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "RAW_CALIBRATED_ANGLES_REQUIRED",
+      "source": "H:528_OBSERVATION",
+      "target": "OBS:optical_direction"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "CONDITIONAL_FORWARD_MODEL",
+      "source": "OBS:optical_direction",
+      "target": "MODEL:topocentric_direction_residual"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "PENDING_PREMISES_NOT_COMPILED",
+      "source": "MODEL:topocentric_direction_residual",
+      "target": "LEAN:opticalObservationConstraint"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "BOX_PAGE_LOCATOR_NOT_CONTENTS",
+      "source": "PDF:RU263",
+      "target": "FILE:RU263-COLD-LAKE-OPERATIONS"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "BOX_PAGE_LOCATOR_NOT_CONTENTS",
+      "source": "PDF:RU263",
+      "target": "FILE:RU263-COLD-LAKE-ENGINEERING"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "BOX_PAGE_LOCATOR_NOT_CONTENTS",
+      "source": "PDF:RU263",
+      "target": "FILE:RU263-IRAN-ENGINEERING"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "BOX_PAGE_LOCATOR_NOT_CONTENTS",
+      "source": "PDF:RU263",
+      "target": "FILE:RU263-CURACAO-ENGINEERING"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "DATE_RECORDED_IN_1964_REPORT",
+      "source": "PDF:NORAD1963",
+      "target": "EVENT:JCS_1963_07_17"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "DATE_RECORDED_IN_1964_REPORT",
+      "source": "PDF:NORAD1963",
+      "target": "EVENT:JCS_NASA_DATA_REQUEST"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "DATE_RECORDED_IN_1964_REPORT",
+      "source": "PDF:NORAD1963",
+      "target": "EVENT:NORAD_REPLAN_1963_09"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "DATE_RECORDED_IN_1964_REPORT",
+      "source": "PDF:NORAD1963",
+      "target": "EVENT:NAVY_CALIBRATION_1963_10"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "DATE_RECORDED_IN_1964_REPORT",
+      "source": "PDF:NORAD1963",
+      "target": "EVENT:COLD_LAKE_COMMS_1963_12"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "SUGGESTED_ARCHIVAL_SEARCH_NOT_DETECTION",
+      "source": "FILE:RU263-COLD-LAKE-OPERATIONS",
+      "target": "H:528_OBSERVATION"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "SUGGESTED_ARCHIVAL_SEARCH_NOT_DETECTION",
+      "source": "FILE:RU263-COLD-LAKE-ENGINEERING",
+      "target": "H:528_OBSERVATION"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "SUGGESTED_ARCHIVAL_SEARCH_NOT_DETECTION",
+      "source": "FILE:RU263-IRAN-ENGINEERING",
+      "target": "H:528_OBSERVATION"
+    },
+    {
+      "active": false,
+      "independent_instrumental_observation": false,
+      "relation": "SUGGESTED_ARCHIVAL_SEARCH_NOT_DETECTION",
+      "source": "FILE:RU263-CURACAO-ENGINEERING",
+      "target": "H:528_OBSERVATION"
+    }
+  ],
+  "hypotheses": [
+    "H:SAO_TO_SPADATS_528",
+    "H:NETWORK_INTEGRATION",
+    "H:COLD_LAKE_REALTIME",
+    "H:528_OBSERVATION"
+  ],
+  "id": "ABELHA-C241-L53-L52-01",
+  "independent_instrumental_families": null,
+  "latents": [
+    {
+      "activation": false,
+      "id": "LATENT:528:receipt",
+      "source_status": "PENDING_PRIMARY_OBSERVATION",
+      "unit": "document_identifier",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:528:station",
+      "source_status": "PENDING_PRIMARY_OBSERVATION",
+      "unit": "station_identifier",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:528:epoch",
+      "source_status": "PENDING_PRIMARY_OBSERVATION",
+      "unit": "UTC",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:528:ra",
+      "source_status": "PENDING_PRIMARY_OBSERVATION",
+      "unit": "radians",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:528:dec",
+      "source_status": "PENDING_PRIMARY_OBSERVATION",
+      "unit": "radians",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:528:frame",
+      "source_status": "PENDING_PRIMARY_OBSERVATION",
+      "unit": "reference_frame",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:528:covariance",
+      "source_status": "PENDING_PRIMARY_OBSERVATION",
+      "unit": "radians_squared",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:network:independent_instruments",
+      "source_status": "PENDING_INSTRUMENT_GENEALOGY",
+      "unit": "count_unknown",
+      "value": null
+    }
+  ],
+  "lean_candidate": "opticalObservationConstraint",
+  "lean_status": "PENDING_PREMISES_NO_COMPILED_EMPIRICAL_PROOF",
+  "next_test": "Read original RU263 boxes 36/67 and RU478 boxes 59/65 plus SPADATS intake logs; identify NORAD 528, station, UTC, calibration, RA/Dec, frame, covariance before activating physics.",
+  "observable_operator": {
+    "inputs_required": [
+      "target_528_identity",
+      "raw_angles",
+      "station_geodesy",
+      "epoch_utc",
+      "frame",
+      "clock_calibration",
+      "instrument_covariance"
+    ],
+    "name": "topocentric_direction_residual",
+    "status": "CONDITIONAL_NOT_EVALUABLE"
+  },
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "related_matrix_occurrence": null,
+  "schema": "conde.ru263-spadats-dependency-bridge/v1",
+  "sources": [
+    {
+      "document_class": "OFFICIAL_FINDING_AID_NOT_INSTRUMENTAL_OBSERVATIONS",
+      "manifest_path": "research/tle_custody/sao_ru263_station_files_C241-L53.json",
+      "manifest_sha256": "40bbfda2f2440bae8344f9b42177622e1c3d7eee6aed34560f69e203b01cc473",
+      "occurrence_id": "C241-L53",
+      "pdf_sha256": "0648a4807160099c1c5146f9a90e8ab291af8cb7a0eff1f5a9ca0bc53e074603",
+      "pdf_url": "https://sirismm.si.edu/EADpdfs/SIA.FARU0263.pdf"
+    },
+    {
+      "document_class": "CONTEMPORARY_INSTITUTIONAL_SUMMARY_NOT_RAW_TRACKING",
+      "manifest_path": "research/tle_custody/norad_1963_spadats_operational_C241-L52.json",
+      "manifest_sha256": "59de53b50a29c23c5d286b59b72591ee51efb055081f9fd57c29fe3aea8154eb",
+      "occurrence_id": "C241-L52",
+      "pdf_sha256": "eb8682425a393b016642165a9c00b6be8868a27954ddd0e55c40c1e14da425b4",
+      "pdf_url": "https://documents.theblackvault.com/documents/afhistory/norad/%28U%29%201963%20NORAD%20CONAD%20History%20Jul-Dec.pdf"
+    },
+    {
+      "document_class": "OFFICIAL_FINDING_AID_NOT_INSTRUMENTAL_LOG",
+      "manifest_path": "research/tle_custody/sao_ru478_finding_aid_C241-L45.json",
+      "manifest_sha256": "f51192f1e1776c0c4d35ea4c4bc5ee33182a44823a53fa024139c378423d5812",
+      "occurrence_id": "C241-L45",
+      "pdf_sha256": "e4f2b29b9882cdfac1812b41251b087354e311822d7302e4655a89bc4a06c07e",
+      "pdf_url": "https://sirismm.si.edu/EADpdfs/SIA.FARU0478.pdf"
+    }
+  ],
+  "unknown_observations_in_unopened_archive": null
+}
