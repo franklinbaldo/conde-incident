@@ -9,6 +9,7 @@ on:
       - tools/iers_1963_intraday.py
       - tools/iers_1963_teme.py
       - tools/iers_1963_optical.py
+      - tools/optical_wgs84_ray_range.py
       - tools/iers_1963_optical_residual.py
       - tests/test_iers_1963_eop.py
       - tests/test_iers_1963_timescales.py
@@ -16,6 +17,7 @@ on:
       - tests/test_iers_1963_intraday.py
       - tests/test_iers_1963_teme.py
       - tests/test_iers_1963_optical.py
+      - tests/test_optical_wgs84_ray_range.py
       - tests/test_iers_1963_optical_residual.py
       - research/constraints/iers_eop_1963_11_07_09.json
       - research/constraints/iers_eop_1963_G46.md
@@ -38,6 +40,7 @@ on:
       - tools/iers_1963_intraday.py
       - tools/iers_1963_teme.py
       - tools/iers_1963_optical.py
+      - tools/optical_wgs84_ray_range.py
       - tools/iers_1963_optical_residual.py
       - tests/test_iers_1963_eop.py
       - tests/test_iers_1963_timescales.py
@@ -45,6 +48,7 @@ on:
       - tests/test_iers_1963_intraday.py
       - tests/test_iers_1963_teme.py
       - tests/test_iers_1963_optical.py
+      - tests/test_optical_wgs84_ray_range.py
       - tests/test_iers_1963_optical_residual.py
       - research/constraints/iers_eop_1963_11_07_09.json
       - research/constraints/iers_eop_1963_G46.md
@@ -90,6 +94,7 @@ jobs:
           python3 tools/iers_1963_intraday.py --source /tmp/iers-1963-eop.bin --check
           IERS_1963_SOURCE=/tmp/iers-1963-eop.bin python3 -m unittest discover -s tests -p 'test_iers_1963_teme.py' -v
           python3 tools/iers_1963_teme.py --source /tmp/iers-1963-eop.bin --check
+          python3 -m unittest discover -s tests -p 'test_optical_wgs84_ray_range.py' -v
           IERS_1963_SOURCE=/tmp/iers-1963-eop.bin python3 -m unittest discover -s tests -p 'test_iers_1963_optical.py' -v
           IERS_1963_SOURCE=/tmp/iers-1963-eop.bin python3 -m unittest discover -s tests -p 'test_iers_1963_optical_residual.py' -v
           python3 -c "import json; a=json.load(open('/tmp/iers-1963-frame-G48.json')); assert len(a['daily_00_utc_only']) == 3 and a['limitations']['holdout_527_529'] == 'NOT_RUN'"

@@ -31,3 +31,4 @@ import Conde1963.MassComponent306
 
 import Conde1963.CircularMCMC
 import Conde1963.HastingsKernel
+import Conde1963.OpticalRayVisibility
