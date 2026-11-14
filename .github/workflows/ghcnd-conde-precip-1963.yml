@@ -20,18 +20,31 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Download the entire original metadata and 11 monthly station archives
+      - name: Download authenticated Wayback inventory and 11 original monthly station archives
         run: |
           mkdir -p /tmp/ghcnd-1963
           base=https://www.ncei.noaa.gov/pub/data/ghcn/daily
-          for f in readme.txt ghcnd-stations.txt ghcnd-inventory.txt; do
+          for f in readme.txt ghcnd-stations.txt; do
             curl -fLsS --retry 3 --retry-all-errors --connect-timeout 15 --max-time 180 \
               "$base/$f" -o "/tmp/ghcnd-1963/$f"
           done
+          # The global inventory is mutable. Recover exactly the approved
+          # 2026-11-13 original from the 2026-10-25 Wayback snapshot plus
+          # reviewed, compact, SHA-locked delta. Both full-file SHAs are checked.
+          curl -fLsS --retry 3 --retry-all-errors --connect-timeout 15 --max-time 180 \
+            'https://web.archive.org/web/20261025021909id_/https://www.ncei.noaa.gov/pub/data/ghcn/daily/ghcnd-inventory.txt' \
+            -o /tmp/ghcnd-1963/ghcnd-inventory-wayback.txt
+          python3 tools/reconstruct_ghcnd_inventory.py \
+            --archive /tmp/ghcnd-1963/ghcnd-inventory-wayback.txt \
+            --output /tmp/ghcnd-1963/ghcnd-inventory.txt
           for id in BR048346820 BR048345380 BR048441550 BR048345130 BR048345070 BR001137041 BR048338870 BR048340980 BR001237001 BR048249490 BR048158910; do
             curl -fLsS --retry 3 --retry-all-errors --connect-timeout 15 --max-time 90 \
               "$base/all/$id.dly" -o "/tmp/ghcnd-1963/$id.dly"
           done
+      - name: Adversarial checks for Wayback and reconstruction (no mutable repin)
+        env:
+          GHCND_WAYBACK_INVENTORY: /tmp/ghcnd-1963/ghcnd-inventory-wayback.txt
+        run: python3 -m unittest discover -s tests -p 'test_ghcnd_inventory_replay.py' -v
       - name: Check full original SHA-256 and reproducible 33 daily observations
         run: python3 tools/audit_ghcnd_conde_rain_1963.py --source-dir /tmp/ghcnd-1963 --check
       - name: Run negative controls on source, source flags, station, date, missingness, epistemic status
