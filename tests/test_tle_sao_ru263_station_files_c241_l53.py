@@ -1,5 +1,6 @@
 """Adversarial custody and inference guards for Smithsonian RU263."""
 import copy
+import tempfile
 import sys
 import unittest
 from pathlib import Path
@@ -61,6 +62,19 @@ class RU263Tests(unittest.TestCase):
 
     def test_inventory_not_a_telemetry_source(self):
         self.reject(lambda x: x["source"].update(source_class="PRIMARY_OBSERVATION"))
+
+    def test_unexpected_manifest_field(self):
+        self.reject(lambda x: x.update(fake_sensor_measurement=1))
+
+    def test_unexpected_anchor_field(self):
+        self.reject(lambda x: x["anchors"][0].update(fake_observation=True))
+
+    def test_duplicate_json_keys(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "duplicate.json"
+            path.write_text('{"id":"C241-L53","id":"fabricated"}', encoding="utf-8")
+            with self.assertRaises(ValueError):
+                read_model(path)
 
     def test_wrong_pdf_bytes(self):
         with self.assertRaises(ValueError):
