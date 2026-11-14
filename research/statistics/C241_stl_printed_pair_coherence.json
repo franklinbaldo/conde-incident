@@ -27,6 +27,7 @@
     "zero_underlying_difference_excluded": false
   },
   "id": "C241-CERVO-STL-PAIR-COHERENCE",
+  "initial_data_column_index": null,
   "observational_design": {
     "acquire": [
       "original STL SPACE LOG volume 3 issue 4 table caption, legend, unit and paired-column headings",
@@ -42,6 +43,7 @@
     "new_instrumental_sensors": 0
   },
   "original_stl_issue_retrieved": false,
+  "other_column_measurement_utc": null,
   "perigee_difference_second_minus_first_printed_units": -12,
   "period_and_altitude_element_conventions_equal": null,
   "period_nominal_difference_first_minus_second_seconds": "6",
@@ -56,7 +58,9 @@
     "310",
     "310"
   ],
+  "row_note_initial_data_as_of_day": "1963-01-31",
   "source_pdf_sha256": "f77b0e8998d467dd457d0ab8e8012e6e9d69c60fb6180aa3d68f1e8422b32786",
+  "source_row_note": "In orbit: classified payload (initial orbital data as of January 31, 1963)",
   "source_sha256": "2943e1f0a1ea6b4267f95a9ff14c022a55f7b4b0a7132cf5b37a489480bcf7e9",
   "two_body_invariance": {
     "actual_physical_periods_equal": null,

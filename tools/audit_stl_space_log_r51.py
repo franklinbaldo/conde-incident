@@ -31,6 +31,7 @@ def audit(data, pdf_path=None):
     require(data['stl_original_issue_retrieved'] is False, 'Original STL issue not seen')
     row = data['printed_row']
     require(row['international_designation_as_printed'] == '1963 3A' and row['launch_date_as_printed'] == 'Jan 16, 1963', 'Identity')
+    require(row['row_note'] == 'In orbit: classified payload (initial orbital data as of January 31, 1963)', 'Printed initial-data as-of note drifted')
     require(row['period_minutes_in_printed_order'] == [94.7, 94.6], 'Both periods')
     require(row['perigee_altitudes_in_printed_order'] == [298, 286], 'Both perigees')
     require(row['apogee_altitudes_in_printed_order'] == [322, 334], 'Both apogees')

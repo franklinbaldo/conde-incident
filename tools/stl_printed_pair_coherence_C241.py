@@ -6,6 +6,7 @@ Never infers an observation epoch, measurement uncertainty, physical units or or
 from __future__ import annotations
 
 import argparse
+from datetime import datetime
 from fractions import Fraction
 import hashlib
 import json
@@ -44,6 +45,10 @@ def inspect(doc: dict, source_bytes: bytes) -> dict:
     require(audit(doc) == 'EDITORIAL_REPRODUCTION_MILES_PRINTED_SUBTYPE_PENDING_ZERO_CONSTRAINTS',
             'STL R51 provenance not validated')
     row = doc['printed_row']
+    # A printed 'initial data as of' date is a dated editorial label, not
+    # a sensor UTC or proof of which of the two columns is initial/current.
+    row_note_day = doc['printed_row']['row_note'].split('as of ', 1)[1].removesuffix(')')
+    initial_day = datetime.strptime(row_note_day, '%B %d, %Y').date().isoformat()
     p = row['perigee_altitudes_in_printed_order']
     a = row['apogee_altitudes_in_printed_order']
     period = row['period_minutes_in_printed_order']
@@ -85,6 +90,10 @@ def inspect(doc: dict, source_bytes: bytes) -> dict:
         'printed_designation': row['international_designation_as_printed'],
         'printed_altitude_unit': 'miles',
         'original_stl_issue_retrieved': False,
+        'source_row_note': row['row_note'],
+        'row_note_initial_data_as_of_day': initial_day,
+        'initial_data_column_index': None,
+        'other_column_measurement_utc': None,
         'columns_are_coepoch': None,
         'period_and_altitude_element_conventions_equal': None,
         'printed_altitude_sum': sums,
