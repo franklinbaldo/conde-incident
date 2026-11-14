@@ -107,3 +107,56 @@ a:focus-visible,button:focus-visible,iframe:focus-visible{outline:3px solid #ffd
 #source-lookup-results li{overflow-wrap:anywhere;margin:1rem 0}
 #source-lookup-results li p{margin:.25rem 0;font-size:.85rem;line-height:1.65;color:var(--muted)}
 #source-lookup-retry{min-height:44px;padding:.65rem 1rem;cursor:pointer}
+
+/* Dossiê SSG v1: tokens e componentes HTML sem dependência de JS ou SPA.
+   Escopo local: o laboratório mantém sua paridade numérica e UI existentes. */
+.casefile{
+  --cf-paper:#f5f2e9;--cf-surface:#fffdf8;--cf-ink:#20313c;
+  --cf-muted:#445865;--cf-line:#b5c4ca;--cf-accent:#174f61;
+  --cf-warm:#74512d;--cf-focus:#94461c;
+  color-scheme:light;background:var(--cf-paper);color:var(--cf-ink);
+  padding:clamp(1.1rem,3vw,2.2rem);border:1px solid var(--cf-line);
+  border-radius:1rem;font:400 1rem/1.65 system-ui,sans-serif;
+  overflow-wrap:anywhere;margin-block:1rem 2rem
+}
+.casefile *{min-width:0}
+.casefile :is(h2,h3){color:var(--cf-ink);letter-spacing:-.025em;line-height:1.24}
+.casefile h2{font-size:clamp(1.45rem,2.5vw,2.15rem);margin:.2rem 0 1rem}
+.casefile h3{font-size:1.16rem;margin:.4rem 0 .7rem}
+.casefile p{margin:.5rem 0 1.1rem}
+.casefile a{color:var(--cf-accent);text-decoration-thickness:1px;text-underline-offset:.2em}
+.casefile a:focus-visible{outline:3px solid var(--cf-focus);outline-offset:3px}
+.casefile .cf-kicker{text-transform:uppercase;letter-spacing:.1em;font:750 .76rem/1.5 system-ui,sans-serif;color:var(--cf-warm);margin:0 0 1rem}
+.casefile .cf-hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(1rem,3vw,2.2rem);align-items:start}
+.casefile .cf-lead{font:400 clamp(1.1rem,1.9vw,1.34rem)/1.57 Georgia,serif;max-width:58ch}
+.casefile .cf-status{padding:.8rem 1rem;border-left:4px solid var(--cf-warm);background:#eee8dd}
+.casefile .cf-figure{margin:0;border:1px solid var(--cf-line);background:var(--cf-surface);border-radius:.7rem;overflow:hidden}
+.casefile .cf-figure img{display:block;width:100%;height:auto;max-width:100%}
+.casefile .cf-figure figcaption{padding:.9rem 1rem;font-size:.82rem;color:var(--cf-muted)}
+.casefile .cf-actions,.casefile .cf-links{display:flex;flex-wrap:wrap;gap:.65rem;align-items:center}
+.casefile .cf-button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.65rem 1rem;border:2px solid var(--cf-accent);border-radius:.5rem;font-weight:750;text-decoration:none}
+.casefile .cf-button-primary{background:var(--cf-accent);color:#fff}
+.casefile .cf-button-primary:hover{color:#fff;background:#123d4d}
+.casefile .cf-section{padding-block:clamp(1.6rem,3vw,2.7rem);border-top:1px solid var(--cf-line)}
+.casefile .cf-trail{list-style:none;counter-reset:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.7rem;padding:0;margin:1.5rem 0 0}
+.casefile .cf-trail li{display:grid;gap:.2rem;border-top:3px solid var(--cf-accent);padding:.65rem .3rem}
+.casefile .cf-trail li span{font-weight:800;color:var(--cf-accent);font-size:.8rem}
+.casefile .cf-trail li small{color:var(--cf-muted);font-size:.85rem}
+.casefile .cf-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+.casefile .cf-card{padding:clamp(1rem,2.3vw,1.45rem);border:1px solid var(--cf-line);border-radius:.75rem;background:var(--cf-surface)}
+.casefile .cf-type{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--cf-warm)}
+.casefile .cf-card p{color:var(--cf-muted)}
+.casefile .cf-card .cf-links{margin-top:1rem;align-items:flex-start;flex-direction:column}
+.casefile .cf-card .cf-links a{padding:.28rem 0}
+.casefile .cf-note{font-size:.91rem;color:var(--cf-muted);margin-top:1rem}
+.casefile .cf-text-link{display:inline-block;padding:.6rem .15rem}
+.casefile .cf-bottom{border-left:4px solid var(--cf-accent);background:#e8f0ee;padding:1rem 1.2rem}
+.casefile .cf-bottom p{color:var(--cf-muted)}
+.intro:has(.casefile){padding-top:clamp(1.25rem,3vw,2.5rem)}
+.intro:has(.casefile) h1{font-size:clamp(2rem,4vw,3.35rem);max-width:none}
+@media(max-width:700px){
+  .casefile .cf-hero,.casefile .cf-cards{grid-template-columns:1fr}
+  .casefile .cf-trail{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:370px){.casefile .cf-trail{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.casefile *{scroll-behavior:auto}}

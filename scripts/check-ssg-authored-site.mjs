@@ -22,6 +22,30 @@ for(const slug of AUTHORED_ROUTES){
 }
 const lookupPage=read('evidencias/fontes');
 assert.match(lookupPage,/id="source-lookup-form"/, 'Consulta documental SSG ausente');
+// Fail the Pages build if a reverse-index source would lead to a missing or
+// foreign profile. This checks all profiles, not only one smoke-test click.
+const sourcePointer=JSON.parse(readFileSync('public/data/conde-source-lookup-manifest.json'));
+const sourceShard=readFileSync(sourcePointer.source_index.path);
+assert.equal(sourceShard.length,sourcePointer.source_index.bytes);
+const sourceIndex=JSON.parse(sourceShard);
+const sourceRoutes=new Set();
+for(const source of sourceIndex.sources){
+  assert.match(source.source_id,/^[A-Z][A-Z0-9_]{1,95}$/);
+  const slug=source.source_id.toLowerCase().replaceAll('_','-');
+  assert.ok(!sourceRoutes.has(slug),'Colisão de slug na consulta reversa: '+slug);
+  sourceRoutes.add(slug);
+  const html=read('evidencias/arquivo/fontes/'+slug);
+  assert.ok(html.includes(source.source_id),'Ficha sem identificador: '+slug);
+  for(const ref of source.references){
+    assert.ok(html.includes(ref.occurrence),'Ficha sem ocorrência: '+slug+' / '+ref.occurrence);
+    assert.ok(html.includes(ref.row_sha256),'Ficha sem digest de linha: '+slug);
+    assert.ok(html.includes(ref.archive_path),'Ficha sem link de ocorrência: '+slug);
+  }
+}
+assert.ok(read('evidencias/arquivo/fontes').includes('Identificadores de fontes'),
+  'Índice estático de fontes ausente');
+assert.ok(lookupPage.includes('/conde-incident/evidencias/arquivo/fontes/'),
+  'Consulta reversa sem fallback direto para fichas estáticas');
 assert.match(lookupPage,/js\/ssg-source-lookup-ui\.mjs/, 'Módulo de consulta não publicado');
 assert.match(lookupPage,/evidencias\/arquivo\//, 'Fallback sem JS não publicado');
 // The SSG Map page is useful offline, without the React lab or tile-provider quota.

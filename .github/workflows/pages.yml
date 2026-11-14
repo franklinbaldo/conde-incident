@@ -125,6 +125,8 @@ jobs:
         run: node --test scripts/check-ssg-footer.mjs
       - name: Verify independent authored Page URLs
         run: node scripts/check-ssg-authored-site.mjs
+      - name: Verify real SSG casefile journey and CSS tokens
+        run: node --test tests/ssg-casefile.test.mjs tests/ssg-casefile-built.check.mjs
       - name: Upload Pages artifact
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
