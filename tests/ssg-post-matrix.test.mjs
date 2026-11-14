@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {postMatrixPage} from '../scripts/ssg-post-matrix.mjs';
+import {postMatrixPage,postMatrixLinks,auditBuiltPostMatrix} from '../scripts/ssg-post-matrix.mjs';
 
 const citations=JSON.parse(readFileSync('public/data/conde-source-citations.json','utf8'));
 const lineage=JSON.parse(readFileSync('public/data/conde-declared-dependence.json','utf8'));
@@ -42,7 +42,7 @@ test('post-matrix refuses physical promotion and invented independence',()=>{
 test('post-matrix fails on retargeting frozen snapshots and orphan genealogy',()=>{
   const moved=clone(citations);
   moved.post_matrix_occurrences[0].related_matrix_occurrences[0]='C999#1';
-  assert.throws(()=>postMatrixPage(moved,lineage),/relação sem snapshot imutável/);
+  assert.throws(()=>postMatrixPage(moved,lineage),/ocorrência não existe no snapshot da matriz/);
   const duplicate=clone(citations);
   duplicate.post_matrix_occurrences.push(clone(duplicate.post_matrix_occurrences[0]));
   assert.throws(()=>postMatrixPage(duplicate,lineage),/ID duplicado/);
@@ -68,4 +68,41 @@ test('post-matrix rejects links, paths and digests that fail custody',()=>{
   const rendered=postMatrixPage(xss,lineage);
   assert.doesNotMatch(rendered,/<script>/);
   assert.match(rendered,/&lt;script&gt;/);
+});
+
+test('post-matrix references open real no-JS matrix anchors and reject coordinated fake IDs',()=>{
+  const page=postMatrixPage(citations,lineage);
+  const locations=postMatrixLinks(citations);
+  for(const id of citations.post_matrix_occurrences[0].related_matrix_occurrences)
+    assert.ok(page.includes('['+id+']('+locations.get(id)+')'),id);
+  const counterfeit=clone(citations);
+  counterfeit.post_matrix_occurrences[0].related_matrix_occurrences[0]='C999#1';
+  counterfeit.post_matrix_occurrences[0].related_matrix_snapshot_refs[0]=
+    'matrix:'+citations.matrix_git_blob_sha1+':C999#1';
+  assert.throws(()=>postMatrixPage(counterfeit,lineage),
+    /ocorrência não existe no snapshot da matriz/);
+  const wrongSnapshot=clone(citations);
+  wrongSnapshot.matrix_git_blob_sha1='0'.repeat(40);
+  assert.throws(()=>postMatrixPage(wrongSnapshot,lineage),
+    /snapshot diferente do índice canônico auditado/);
+});
+
+test('post-matrix built HTML must expose each actual matrix link in visible main',()=>{
+  const locations=postMatrixLinks(citations);
+  const expected=citations.post_matrix_occurrences[0].related_matrix_occurrences
+    .map(id=>locations.get(id));
+  const links=expected.map(url=>'<a href="'+url+'">linha real</a>').join('');
+  const base='<main><a href="/conde-incident/evidencias/matriz/">Matriz</a>'+
+    links+'</main>';
+  assert.equal(auditBuiltPostMatrix(base,citations),expected.length);
+  const target='<a href="'+expected[0]+'">linha real</a>';
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(target,
+    '<template>'+target+'</template>'),citations),
+    /link visível para a ocorrência ausente/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(target,
+    '<div aria-hidden="true">'+target+'</div>'),citations),
+    /link visível para a ocorrência ausente/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(target,
+    '<a href="/conde-incident/evidencias/matriz/">linha errada</a>'),citations),
+    /link visível para a ocorrência ausente/);
 });

@@ -32,6 +32,12 @@ test('SSG publishes one stable, no-JS page per curated occurrence', () => {
   assert.match(pages.get('c232-1/index.md'),/2 referência\(s\) curada\(s\)/);
   assert.match(pages.get('c01-1/index.md'),/RADIO\\_TUPI\\_19631108/);
   assert.match(pages.get('c197-1/index.md'),/C197#1/);
+  // Bidirectional no-JS journey: casefile -> occurrence -> casefile sources.
+  const dossierReturn='[Retornar ao dossiê de abertura: comparar as duas fontes](/conde-incident/dossie/#fontes)';
+  for(const key of ['c01-1/index.md','c197-1/index.md']){
+    assert.equal(pages.get(key).split(dossierReturn).length,2, 'Retorno ao dossiê ausente ou duplicado: '+key);
+  }
+  assert.doesNotMatch(pages.get('c232-1/index.md'),/Retornar ao dossiê de abertura/);
   assert.match(index,/famílias documentais e ocorrências relacionadas/);
   assert.match(pages.get('c232-1/index.md'),/familias\/usaf-aira-bluebook\//);
   assert.match(pages.get('c232-1/index.md'),/familias\/bluebook-derivative-catalogues\//);
