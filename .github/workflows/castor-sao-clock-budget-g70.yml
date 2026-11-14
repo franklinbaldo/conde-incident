@@ -40,8 +40,7 @@ jobs:
           curl -fsSL --retry 3 --max-time 75 \
             'https://ntrs.nasa.gov/api/citations/19740019249/downloads/19740019249.pdf' \
             -o "$RUNNER_TEMP/19740019249.pdf"
-          echo '10f2d85593af7be543326471f8c1eaf234aefc0565515cd4ff059edad20922c8' \
-            "  $RUNNER_TEMP/19740019249.pdf" | sha256sum -c -
+          printf '%s  %s\n' '10f2d85593af7be543326471f8c1eaf234aefc0565515cd4ff059edad20922c8' "$RUNNER_TEMP/19740019249.pdf" | sha256sum -c -
           python3 tools/sao_baker_nunn_budget_G70.py --source-pdf "$RUNNER_TEMP/19740019249.pdf"
       - name: Run adversarial source and activation controls
         run: |
