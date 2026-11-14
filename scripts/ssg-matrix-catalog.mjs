@@ -14,7 +14,9 @@ const safe=value=>String(value).replaceAll('\\','\\\\')
 const page=(title,description,body)=>[
   '---','type: Page','title: '+JSON.stringify(title),
   'description: '+JSON.stringify(description),'layout: page','language: pt-BR',
-  '---','','# '+safe(title),'',body,'',
+  'date: '+JSON.stringify('2026-11-13'),
+  'author: '+JSON.stringify('Projeto Conde (índice documental gerado)'),
+  '---','',body,'',
 ].join('\n');
 const url=index=>ROOT+'paginas/'+String(index+1).padStart(2,'0')+'/';
 const data=bundle=>bundle.lookupShards.flatMap(part=>JSON.parse(part.raw).records)
