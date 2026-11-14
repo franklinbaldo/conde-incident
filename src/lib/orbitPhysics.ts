@@ -155,10 +155,13 @@ export function propagate(
   if (!initial || !Array.isArray(initial.rKm) || !finiteVec(initial.rKm) ||
       !Array.isArray(initial.vKmS) || !finiteVec(initial.vKmS) ||
       !Number.isFinite(initial.tS) ||
-      !Number.isFinite(norm(initial.rKm)) ||
-      !Number.isFinite(norm(initial.vKmS)) ||
       !(norm(initial.rKm) > EARTH.radiusKm * 0.5))
     throw new RangeError('Invalid initial osculating state');
+  // Finite coordinates can still overflow the Euclidean norm. Preserve the
+  // distinction used by ensemble audits: this is a numerical breakdown,
+  // not an observed physical exclusion or an ignored ensemble member.
+  if (!Number.isFinite(norm(initial.rKm)) || !Number.isFinite(norm(initial.vKmS)))
+    throw new NumericalIntegrationBreakdown();
   // A threshold is a stopping convention, NOT a measured breakup or impact altitude.
   if (altitudeKm(initial) <= terminationAltitudeKm) return { state: initial, event: 'reentry-threshold', steps: 0 };
   let current = initial;
