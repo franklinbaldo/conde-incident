@@ -10,8 +10,6 @@ canonical_route: "/conde-incident/evidencias/fontes/"
 
 # Fontes e ocorrências
 
-Uma fonte pode aparecer em várias fichas; isso **não significa múltiplas observações físicas independentes**. Este índice reúne apenas referências curadas da matriz, não todas as fontes que possam existir. Uma ocorrência ainda não mapeada não é prova de ausência de documento. A listagem é derivada de arquivos JSON versionados e sua integridade é conferida no navegador antes de qualquer resultado.
-
 ## Consultar por identificador
 
 <p id="source-lookup-status" role="status" aria-live="polite">O índice dinâmico requer JavaScript. Você pode consultar o arquivo estático abaixo.</p>
@@ -23,6 +21,8 @@ Uma fonte pode aparecer em várias fichas; isso **não significa múltiplas obse
   <p id="source-lookup-help">Selecione um identificador para ver as ocorrências e seus vínculos. A seleção não consulta serviços de terceiros.</p>
 </form>
 <section id="source-lookup-results" aria-label="Referências da fonte selecionada" aria-live="polite" aria-atomic="true"></section>
+
+Uma fonte pode aparecer em várias fichas; isso **não significa múltiplas observações físicas independentes**. Este índice reúne apenas referências curadas da matriz, não todas as fontes que possam existir. Uma ocorrência ainda não mapeada não é prova de ausência de documento. A listagem é derivada de arquivos JSON versionados e sua integridade é conferida no navegador antes de qualquer resultado.
 <button type="button" id="source-lookup-retry" hidden>Recarregar índice verificado</button>
 <script type="module" src="/conde-incident/js/ssg-source-lookup-ui.mjs"></script>
 
