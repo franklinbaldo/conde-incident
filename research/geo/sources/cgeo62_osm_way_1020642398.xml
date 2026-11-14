@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="openstreetmap-cgimap 2.1.1 (4094116 spike-06.openstreetmap.org)" copyright="OpenStreetMap and contributors" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+ <node id="9413538056" visible="true" version="1" changeset="116080109" timestamp="2022-01-12T19:38:26Z" user="wille" uid="360183" lat="-11.8133260" lon="-37.6121699"/>
+ <node id="9413538057" visible="true" version="1" changeset="116080109" timestamp="2022-01-12T19:38:26Z" user="wille" uid="360183" lat="-11.8131969" lon="-37.6119990"/>
+ <node id="9413538058" visible="true" version="1" changeset="116080109" timestamp="2022-01-12T19:38:26Z" user="wille" uid="360183" lat="-11.8131863" lon="-37.6119536"/>
+ <node id="9413538059" visible="true" version="1" changeset="116080109" timestamp="2022-01-12T19:38:26Z" user="wille" uid="360183" lat="-11.8136964" lon="-37.6115514"/>
+ <node id="9413538060" visible="true" version="1" changeset="116080109" timestamp="2022-01-12T19:38:26Z" user="wille" uid="360183" lat="-11.8137256" lon="-37.6115454"/>
+ <node id="9413538061" visible="true" version="1" changeset="116080109" timestamp="2022-01-12T19:38:26Z" user="wille" uid="360183" lat="-11.8138421" lon="-37.6118043"/>
+ <node id="9413538062" visible="true" version="1" changeset="116080109" timestamp="2022-01-12T19:38:26Z" user="wille" uid="360183" lat="-11.8138479" lon="-37.6118386"/>
+ <node id="9413538063" visible="true" version="1" changeset="116080109" timestamp="2022-01-12T19:38:26Z" user="wille" uid="360183" lat="-11.8138363" lon="-37.6118534"/>
+ <node id="9413538064" visible="true" version="1" changeset="116080109" timestamp="2022-01-12T19:38:26Z" user="wille" uid="360183" lat="-11.8133643" lon="-37.6121734"/>
+ <node id="9413538065" visible="true" version="1" changeset="116080109" timestamp="2022-01-12T19:38:26Z" user="wille" uid="360183" lat="-11.8133439" lon="-37.6121793"/>
+ <way id="1020642398" visible="true" version="1" changeset="116080109" timestamp="2022-01-12T19:38:26Z" user="wille" uid="360183">
+  <nd ref="9413538056"/>
+  <nd ref="9413538057"/>
+  <nd ref="9413538058"/>
+  <nd ref="9413538059"/>
+  <nd ref="9413538060"/>
+  <nd ref="9413538061"/>
+  <nd ref="9413538062"/>
+  <nd ref="9413538063"/>
+  <nd ref="9413538064"/>
+  <nd ref="9413538065"/>
+  <nd ref="9413538056"/>
+  <tag k="leisure" v="park"/>
+  <tag k="name" v="Praça Severino Vieira"/>
+ </way>
+</osm>

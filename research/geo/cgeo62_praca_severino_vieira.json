@@ -1,0 +1,124 @@
+{
+  "id": "CGEO-62",
+  "schema": "conde.gis.osm-plaza-multigeometry/v1",
+  "municipality": {
+    "name": "Conde",
+    "uf": "BA",
+    "ibge_code": "2908606"
+  },
+  "source": {
+    "provider": "OpenStreetMap API 0.6",
+    "license": "ODbL 1.0",
+    "acquisition_date_utc": "2026-11-14",
+    "coordinate_reference": "OSM geographic lat/lon, nominal WGS84",
+    "horizontal_accuracy_m": null,
+    "survey_epoch": null,
+    "feature_count": 4,
+    "independent_historical_observations": 0
+  },
+  "features": [
+    {
+      "osm_way_id": 1571425857,
+      "role": "park",
+      "osm_version": 1,
+      "osm_revision_utc": "2026-10-24T19:25:38Z",
+      "raw_bytes": 6022,
+      "raw_sha256": "061edc2ac58a4d15c1a235ae49f53a03b3d079f6f04ae6c8b8ee97d30bd4194f",
+      "url": "https://api.openstreetmap.org/api/0.6/way/1571425857/full",
+      "node_count": 28,
+      "closed": true,
+      "bbox_latlon": [
+        -11.8127637,
+        -37.6116646,
+        -11.8118839,
+        -37.611077
+      ],
+      "area_local_planar_m2": 1039.09,
+      "planar_centroid_latlon": [
+        -11.812374018,
+        -37.611393292
+      ]
+    },
+    {
+      "osm_way_id": 1020642398,
+      "role": "park",
+      "osm_version": 1,
+      "osm_revision_utc": "2022-01-12T19:38:26Z",
+      "raw_bytes": 2473,
+      "raw_sha256": "8e16d32e2525bb80a1374db24880dd307a61780e8263d6ce1746f0f21dce2371",
+      "url": "https://api.openstreetmap.org/api/0.6/way/1020642398/full",
+      "node_count": 11,
+      "closed": true,
+      "bbox_latlon": [
+        -11.8138479,
+        -37.6121793,
+        -11.8131863,
+        -37.6115454
+      ],
+      "area_local_planar_m2": 2423.692,
+      "planar_centroid_latlon": [
+        -11.813528322,
+        -37.611874115
+      ]
+    },
+    {
+      "osm_way_id": 206041518,
+      "role": "road",
+      "osm_version": 4,
+      "osm_revision_utc": "2026-10-24T19:25:38Z",
+      "raw_bytes": 2014,
+      "raw_sha256": "70e10f18d052c5704792d5e3ce3270fcfefa309cdab34cb79f1d0925a1b3f7f4",
+      "url": "https://api.openstreetmap.org/api/0.6/way/206041518/full",
+      "node_count": 7,
+      "closed": false,
+      "bbox_latlon": [
+        -11.8127984,
+        -37.6116358,
+        -11.8118195,
+        -37.6109787
+      ]
+    },
+    {
+      "osm_way_id": 1571425854,
+      "role": "road",
+      "osm_version": 1,
+      "osm_revision_utc": "2026-10-24T19:25:38Z",
+      "raw_bytes": 1170,
+      "raw_sha256": "59dbd93dcc5714bdebc395fb042f37614e9b94a201d50f36af25b799cf1a807b",
+      "url": "https://api.openstreetmap.org/api/0.6/way/1571425854/full",
+      "node_count": 3,
+      "closed": false,
+      "bbox_latlon": [
+        -11.8133,
+        -37.6122448,
+        -11.8127901,
+        -37.6116358
+      ]
+    }
+  ],
+  "comparisons": {
+    "park_centroid_separation_m": 138.611,
+    "park_boundary_gap_approx_m": 61.795,
+    "park_centroid_to_osm_town_node_m": [
+      277.799,
+      225.805
+    ],
+    "park_centroid_to_conder_sede_m": [
+      494.746,
+      533.002
+    ],
+    "town_proxy_source": "research/geo/cgeo60_modern_osm_cut.json",
+    "conder_proxy_source": "research/geo/cgeo61_conder_sede_point.json",
+    "projection_note": "equirectangular local approximation at -11.813 deg for areas/gap; not an accuracy claim"
+  },
+  "interpretation": {
+    "same_name_features_are_one_1963_center": null,
+    "separate_physical_public_squares_proven": false,
+    "plaza_from_1958_is_identical": null,
+    "municipal_document_2020_same_geometry": null,
+    "plaza_polygon_in_1963": null,
+    "impact_location": null,
+    "can_constrain_orbital_reentry": false,
+    "active_constraint": false
+  }
+}
