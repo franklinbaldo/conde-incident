@@ -56,10 +56,10 @@ function page(title,summary,layout,body) {
   return ['---','type: Page','title: '+quote(title),'description: '+quote(summary),
     'layout: '+layout,'language: pt-BR','---','',body,''].join('\n');
 }
-const intro='Os documentos não demonstram que a notícia de Conde e o decaimento do NORAD 528 tenham a mesma causa. Cada capítulo distingue registro, relato e hipótese.';
+const intro='Os documentos não demonstram que a notícia de Conde e o decaimento do NORAD 528 tenham a mesma causa. Cada capítulo distingue registro, relato e hipótese.';\nconst opening='[O que sabemos até agora: comece por aqui](/conde-incident/o-que-sabemos/)';
 const listing=stories.map(s=>'- [Capítulo '+s.chapter+': '+s.title+'](/conde-incident/stories/'+s.slug+'/) — '+s.summary).join('\n');
-const indexBody='# Conde, 1963: investigação documentada\n\n'+intro+'\n\n[Abrir o dossiê de investigação: fontes, hipóteses e instrumentos](/conde-incident/dossie/)\n\n## Caderno de histórias\n\n'+listing+'\n\n[Laboratório científico](/conde-incident/lab/)';
-const storiesBody='# Caderno de histórias\n\n'+intro+'\n\n'+listing+'\n\n[Laboratório científico](/conde-incident/lab/)';
+const indexBody='# Conde, 1963: investigação documentada\n\n'+intro+'\n\n'+opening+'\n\n[Abrir o dossiê de investigação: fontes, hipóteses e instrumentos](/conde-incident/dossie/)\n\n## Caderno de histórias\n\n'+listing+'\n\n[Laboratório científico](/conde-incident/lab/)';
+const storiesBody='# Caderno de histórias\n\n'+intro+'\n\n'+opening+'\n\n'+listing+'\n\n[Laboratório científico](/conde-incident/lab/)';
 writeFileSync('content/index.md',page('Conde, 1963: Caderno','Investigar não é confirmar uma queda.', 'index',indexBody));
 writeFileSync('content/stories/index.md',page('Caderno de histórias','Capítulos com fontes e hipóteses distinguíveis.', 'index',storiesBody));
 for(const s of stories){
