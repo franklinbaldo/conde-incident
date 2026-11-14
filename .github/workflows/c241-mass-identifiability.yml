@@ -3,6 +3,9 @@ on:
   pull_request:
     paths:
       - tools/mass_identifiability_C241.py
+      - tools/mass_observation_design_C241.py
+      - tests/test_mass_observation_design_C241.py
+      - research/statistics/C241_mass_observation_design_C241.md
       - tools/c241_stage_epoch_ambiguity.py
       - tools/mass_prior_sensitivity_C241.py
       - tests/test_mass_identifiability_C241.py
@@ -25,6 +28,9 @@ on:
     branches: [main]
     paths:
       - tools/mass_identifiability_C241.py
+      - tools/mass_observation_design_C241.py
+      - tests/test_mass_observation_design_C241.py
+      - research/statistics/C241_mass_observation_design_C241.md
       - tools/c241_stage_epoch_ambiguity.py
       - tools/mass_prior_sensitivity_C241.py
       - tests/test_mass_identifiability_C241.py
@@ -60,6 +66,8 @@ jobs:
       - name: Exact rational tests and catalog gate
         run: |
           python3 -m unittest discover -s tests -p test_mass_identifiability_C241.py -v
+          python3 -m unittest discover -s tests -p test_mass_observation_design_C241.py -v
+          python3 -m tools.mass_observation_design_C241 > "$RUNNER_TEMP/mass-nuisance-observation-design.json"
           python3 -m unittest discover -s tests -p test_ferret_mass_crosssource_C241.py -v
           python3 -m unittest discover -s tests -p test_ftv2313_secondary_geometry_C241.py -v
           python3 -m tools.ftv2313_secondary_geometry_C241 > "$RUNNER_TEMP/ftv2313-geometry.json"
