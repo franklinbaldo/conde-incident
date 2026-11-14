@@ -7,6 +7,7 @@ import {existsSync, readFileSync, readdirSync} from 'node:fs';
 import {join, resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {archivePages,matrixRowUrl} from './ssg-documentary-archive.mjs';
+import {auditLookup} from './verify-ssg-evidence-lookup.mjs';
 
 const PREFIX='/conde-incident/evidencias/arquivo/';
 const DATA='public/data/';
@@ -112,14 +113,15 @@ export function readBundle(root='.') {
   const manifest=JSON.parse(read(DATA+'conde-evidence-index-manifest.json'));
   const shards=manifest.shards.map(meta=>({path:meta.path, raw:read(meta.path)}));
   const gapShards=manifest.unmapped_shards.map(meta=>({path:meta.path, raw:read(meta.path)}));
-  return {citations,lineage,manifest,shards,gapShards,matrixBytes,sourceBytes:new Map([
+  const lookupShards=manifest.lookup_shards.map(meta=>({path:meta.path, raw:read(meta.path)}));
+  return {citations,lineage,manifest,shards,gapShards,lookupShards,matrixBytes,sourceBytes:new Map([
     [DATA+'conde-source-citations.json',citationsRaw],
     [DATA+'conde-declared-dependence.json',lineageRaw],
   ]),pages:archivePages(citations,lineage)};
 }
 
 export function audit(bundle) {
-  const {citations,lineage,manifest,shards,gapShards,matrixBytes,sourceBytes,pages}=bundle;
+  const {citations,lineage,manifest,shards,gapShards,lookupShards,matrixBytes,sourceBytes,pages}=bundle;
   exactKeys(manifest,manifestKeys,'manifest');
   assert.equal(manifest.schema,'conde.evidence-index/v1');
   assert.equal(manifest.matrix_git_blob_sha1,citations.matrix_git_blob_sha1);
@@ -258,6 +260,7 @@ export function audit(bundle) {
       assert.ok(pages.has(target.slice(PREFIX.length)+'index.md'),'SSG reverse route missing: '+target);
     }
   }
+  auditLookup(manifest,shards,gapShards,lookupShards,matrixInventory);
   assert.equal(occurrences.size,manifest.curated_occurrences);
   assert.equal(pages.size,occurrences.size+5+families.size+works.size+sources.size,
     'SSG page inventory no longer matches JSON IDs');
@@ -327,6 +330,7 @@ if (process.argv[1] && import.meta.url===pathToFileURL(resolve(process.argv[1]))
   for (const [folder,refs] of [
     ['conde-evidence-index',bundle.manifest.shards],
     ['conde-evidence-gaps',bundle.manifest.unmapped_shards],
+    ['conde-evidence-lookup',bundle.manifest.lookup_shards],
   ]) {
     const actual=readdirSync(join(root,'public/data',folder))
       .filter(name=>/^part-.*\.json$/.test(name)).sort();

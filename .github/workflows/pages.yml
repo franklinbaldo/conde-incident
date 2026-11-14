@@ -57,9 +57,9 @@ jobs:
         run: node scripts/check-ssg-okf.mjs
       - name: Verify reproducible, bounded documentary JSON index
         run: |
-          python3 -m unittest discover -s tests -p test_ssg_evidence_index.py
+          python3 -m unittest discover -s tests -p test_ssg_evidence_*.py
           python3 tools/export_ssg_evidence_index.py --check
-          node --test tests/ssg-evidence-index-bridge.test.mjs
+          node --test tests/ssg-evidence-index-bridge.test.mjs tests/ssg-evidence-lookup.test.mjs
           node scripts/verify-ssg-evidence-index.mjs
       - name: Snapshot versioned scientific JSON before SSG rebuild
         shell: bash
