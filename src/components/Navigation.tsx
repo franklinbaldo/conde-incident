@@ -209,7 +209,7 @@ export const Navigation: React.FC<NavigationProps> = ({
             <span className="col-span-2 min-w-0 break-words text-cyan-300">{lang === 'pt' ? currentTab?.labelPt : currentTab?.labelEn}</span>
             <ChevronDown className="col-start-2 row-start-1 h-4 w-4 shrink-0 justify-self-end transition-transform group-open:rotate-180" aria-hidden="true" />
           </summary>
-          <div data-mobile-tabs className="grid gap-1 pt-2 pb-1">
+          <div data-mobile-tabs className="hidden min-w-0 group-open:grid gap-1 pt-2 pb-1">
             {tabs.map(tab => {
               const isActive = activeTab === tab.id;
               const Icon = tab.icon;
@@ -225,14 +225,14 @@ export const Navigation: React.FC<NavigationProps> = ({
                       menu.querySelector<HTMLElement>('summary')?.focus();
                     }
                   }}
-                  className={`flex min-h-11 items-center gap-3 rounded-md border px-3 py-2 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 ${
+                  className={`flex min-h-11 min-w-0 items-center gap-3 rounded-md border px-3 py-2 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 ${
                     isActive
                       ? 'border-cyan-800 bg-zinc-800 text-cyan-300'
                       : 'border-zinc-800 bg-zinc-950 text-zinc-200 hover:bg-zinc-800'
                   }`}
                 >
                   <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
-                  <span>{lang === 'pt' ? tab.labelPt : tab.labelEn}</span>
+                  <span className="min-w-0 break-words">{lang === 'pt' ? tab.labelPt : tab.labelEn}</span>
                 </a>
               );
             })}
