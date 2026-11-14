@@ -93,10 +93,34 @@ def paired_clock_covariance(rate_a_rad_s, rate_b_rad_s,
     j[:2, 0] = a
     j[2:, 1] = b
     d = np.hstack((np.eye(2), -np.eye(2)))
-    joint = j @ c @ j.T
-    difference = d @ joint @ d.T
-    out["clock_only_joint_covariance_rad2"] = ((joint+joint.T)/2).tolist()
-    out["clock_only_difference_covariance_rad2"] = (
-        (difference+difference.T)/2).tolist()
+    # G65: D @ (J C J.T) @ D.T subtracts nearly equal variances.
+    # With a perfectly shared clock and rates differing by 1e-9 it can
+    # falsely report *zero* uncertainty. Use a PSD factor instead.
+    # For sigma_A and sigma_B, let B = rho*z0 + sqrt(1-rho²)*z1.
+    # Then delta = (sigma_A*a-rho*sigma_B*b)*z0
+    #              -sqrt(1-rho²)*sigma_B*b*z1.
+    correlation = 0.0 if rho is None else rho
+    with np.errstate(over="ignore", invalid="ignore"):
+        joint = j @ c @ j.T
+        scale_a = math.sqrt(float(c[0, 0]))
+        scale_b = math.sqrt(float(c[1, 1]))
+        scaled_b = scale_b * b
+        # Avoid another subtraction of close numbers when rates nearly
+        # coincide (rho=+1) or oppose each other (rho=-1).
+        if correlation >= 0:
+            shared = (scale_a * (a-b) +
+                      ((scale_a-scale_b) + (1.0-correlation)*scale_b) * b)
+        else:
+            shared = (scale_a * (a+b) +
+                      ((scale_b-scale_a) - (1.0+correlation)*scale_b) * b)
+        residual = math.sqrt(max(0.0, (1.0-correlation)*(1.0+correlation))) * scaled_b
+        difference = np.outer(shared, shared) + np.outer(residual, residual)
+        symmetric_joint = 0.5 * joint + 0.5 * joint.T
+    if not (np.isfinite(symmetric_joint).all() and
+            np.isfinite(difference).all()):
+        raise ValueError("Clock covariance propagation overflow")
+    out["clock_only_joint_covariance_rad2"] = symmetric_joint.tolist()
+    out["clock_only_difference_covariance_rad2"] = difference.tolist()
     out["clock_correlation"] = rho
     return out
+

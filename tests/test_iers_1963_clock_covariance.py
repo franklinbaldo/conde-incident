@@ -58,6 +58,34 @@ class G64ClockCovariance(unittest.TestCase):
                     - c[0, 1]*(np.outer(a, b)+np.outer(b, a)))
         self.assertTrue(np.allclose(d, expected, atol=1e-24, rtol=1e-13))
 
+    def test_nearly_equal_rates_common_clock_retains_small_uncertainty(self):
+        # D@joint@D.T rounds to zero when large common-mode terms cancel.
+        variance = 1e-4
+        rate_a, rate_b = 1.0, 1.0 - 1e-9
+        observed = self.cov([rate_a, 0], [rate_b, 0],
+                            [[variance, variance], [variance, variance]])
+        d = np.asarray(observed["clock_only_difference_covariance_rad2"])
+        expected = variance * (rate_a - rate_b)**2
+        self.assertGreater(d[0, 0], 0)
+        self.assertAlmostEqual(d[0, 0] / expected, 1.0, delta=1e-12)
+        self.assertEqual(d[1, 1], 0.)
+        self.assertEqual(observed["historical_holdout"], "NOT_RUN")
+
+    def test_nearly_opposite_rates_anticorrelated_clock_retains_variance(self):
+        variance = 1e-4
+        a, b = 1., -1. + 1e-9
+        observed = self.cov([a, 0], [b, 0],
+                            [[variance, -variance], [-variance, variance]])
+        expected = variance * (a + b)**2
+        self.assertAlmostEqual(
+            observed["clock_only_difference_covariance_rad2"][0][0] / expected,
+            1.0, delta=1e-12)
+
+    def test_finite_inputs_overflow_fail_closed(self):
+        # A finite 2x2 clock covariance and rates can still yield Inf/NaN.
+        with self.assertRaisesRegex(ValueError, "propagation overflow"):
+            self.cov([1e300, 1], [1, 0], [[1e10, 0], [0, 1]])
+
     def test_zero_rate_does_not_certify_historical_clock(self):
         o = self.cov([0, 0], [0, 0], [[1, 0], [0, 1]])
         self.assertEqual(o["clock_only_difference_covariance_rad2"],
@@ -91,3 +119,4 @@ class G64ClockCovariance(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
