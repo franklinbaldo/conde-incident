@@ -1,0 +1,69 @@
+{
+  "id": "C241-LONTRA-R64",
+  "schema": "conde.archival_bibliography_locator/v1",
+  "date_checked_utc": "2026-11-14",
+  "source": {
+    "type": "LATER_AUTHOR_BIBLIOGRAPHY_SCANNED_IN_HUNGARIAN_ACADEMY_ARCHIVE",
+    "repository": "Hungarian Academy of Sciences institutional repository (REAL-MS)",
+    "url": "https://real-ms.mtak.hu/30094/1/1.pdf",
+    "title_displayed_by_pdf": "Körlevél",
+    "appendix_heading_original": "Almár Iván idegennyelvű tudományos publikációinak jegyzéke",
+    "appendix_heading_translation_pt": "Lista de publicações científicas em língua estrangeira de Iván Almár",
+    "pdf_size_bytes": 46217178,
+    "pdf_sha256": "cc91eb383c90ecd5f15f5d2db89e08860642c6a8a683401350e97af8bb4098ac",
+    "pdf_pages": 167,
+    "source_page_appendix_heading_one_based": 93,
+    "source_page_bibliography_one_based": 95,
+    "appendix_printed_page": 3,
+    "visual_verification": "RENDERED_PAGES_93_AND_95_INSPECTED",
+    "whole_pdf_download": "IFRO_EXECUTOR_HTTP_SUCCESS",
+    "source_publication_year_known": false
+  },
+  "references": [
+    {
+      "item": 27,
+      "title_original": "Международное сотрудничество в исследовании некоторых геофизических величин по базисным наблюдениям искусственных спутников",
+      "series": "Наблюдения ИСЗ",
+      "issue": 1,
+      "place": "Москва",
+      "year": 1962
+    },
+    {
+      "item": 28,
+      "title_original": "О точности базисных визуальных наблюдений, выполненных по программе ИНТЕРОБС за 1962 год",
+      "series": "Наблюдения ИСЗ",
+      "issue": 2,
+      "place": "Варшава",
+      "year": 1963,
+      "subject_observation_year": 1962
+    },
+    {
+      "item": 29,
+      "title_original": "О вычислении мгновенных элементов орбиты ИСЗ по базисным наблюдениям",
+      "series": "Наблюдения ИСЗ",
+      "issue": 3,
+      "place": "Берлин",
+      "year": 1964
+    }
+  ],
+  "context": {
+    "kyiv_holding_title": "Наблюдения ИСЗ",
+    "kyiv_holding_issue": 2,
+    "kyiv_holding_year": 1963,
+    "kyiv_holding_url": "https://mao.kiev.ua/index.php/ua/gao-biblio-periodyka/sciencefilds-n",
+    "different_series": "Бюллетень станций оптического наблюдения ИСЗ",
+    "different_series_first_1963_issue": 32,
+    "series_identity_status": "ISSUE_2_BIBLIOGRAPHIC_LINK_NOT_FACSIMILE_OF_THE_ORIGINAL"
+  },
+  "boundaries": {
+    "original_1963_article_recovered": false,
+    "original_soviet_bulletin_32_recovered": false,
+    "observation_date_1963_in_article_demonstrated": false,
+    "observations_identified_norad_527_528_529": [],
+    "new_orbital_constraints": 0,
+    "independent_sensor_measurements_confirmed": false,
+    "archive_contacted": false,
+    "epistemic_class": "RETROSPECTIVE_BIBLIOGRAPHY_NOT_OBSERVATION"
+  },
+  "next_step": "Locate the original Наблюдения ИСЗ no. 2 (Warsaw 1963), especially the 1962 INTEROBS accuracy study; separately continue bulletin no. 32 (1963)."
+}
