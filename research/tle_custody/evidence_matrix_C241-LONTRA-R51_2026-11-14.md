@@ -1,0 +1,19 @@
+---
+type: Guide
+title: 'C241-LONTRA-R51: genealogia STL Space Log em reprodução NASA'
+description: 'Fac-símile B-12 com dois conjuntos impressos para 1963 3A, unidade ainda pendente e nenhuma medição de novembro.'
+---
+
+# C241-LONTRA-R51 · Fonte intermediária encontrada, sensor não
+
+Recuperei diretamente do [NTRS/NASA](https://ntrs.nasa.gov/api/citations/19670008638/downloads/19670008638.pdf) o fac-símile do *Data Book for Environmental Testing and Spacecraft Evaluation*, volume 2, NASA TM X-59315 / N167-17917. O PDF tem **117 folhas, 31.749.209 bytes e SHA-256 `f77b0e8998d467dd457d0ab8e8012e6e9d69c60fb6180aa3d68f1e8422b32786`**. A folha **105 do PDF (índice 104)** foi renderizada e inspecionada visualmente via executor Colab, sem elevar o limite de RAM do Jatobá. O quadro corresponde à página **B-12** impressa, *International Log of Space Launches*.
+
+A linha `None / 1963 3A / USAF / Jan 16, 1963 / VAFB / Thor-Agena D` tem **dois números por célula**, na ordem impressa: período **94,7 e 94,6 min**, perigeu **298 e 286**, apogeu **322 e 334**, inclinação **82,0° e 81,9°**. O comentário é *classified payload*, com dados iniciais atribuídos a **31 de janeiro de 1963**, e não a novembro. A extração web automatizada colapsava as duplas e interpretava incorretamente a inclinação como `82.9`; a inspeção do fac-símile corrige ambos os problemas. **As unidades dos perigeus/apogeus não foram identificadas na página B-12**: não rotulá-las automaticamente como quilômetros. O anexo tem outras notas de unidades em páginas distintas, cuja transferência para esta tabela ainda requer crítica editorial.
+
+O rodapé da **mesma página B-12** declara, explicitamente, que a tabela foi reproduzida de ***STL Space Log*, volume 3, número 4**. O exemplar original desta edição **não foi recuperado nem inspecionado**. Uma fonte contemporânea independente da reprodução, o [*Air Force/Space Digest* de abril de 1963](https://www.airandspaceforces.com/app/uploads/2025/11/0463_April1963_LR.pdf), também credita o *STL Space Log* como obra de referência da sua lista de lançamentos. Ela não comprova que o periódico trazia os quatro valores do anuário soviético, tampouco constitui segundo sensor. O [catálogo Google Books do *STL Space Log*, vols. 3–4](https://books.google.com/books/about/STL_Space_Log.html?id=QpUPAAAAIAAJ) é somente localizador bibliográfico, não fac-símile do nº 4.
+
+**Diagnóstico dimensional, não identificação de unidade:** com órbita circular aproximada em dois corpos (raio terrestre 6.371 km, parâmetro gravitacional 398.600,4418 km³/s²), ler 298/322 como quilômetros implicaria período aproximado **90,58 min**, incompatível com os **94,7 min** da mesma linha; como milhas terrestres, daria **94,45 min**. Isso **não prova** que a fonte estava em milhas ou que os números sejam corretos. Exigir a legenda original do STL e/ou outro testemunho editorial antes de converter unidades ou ativar qualquer restrição orbital.
+
+**Hipótese editorial sob investigação:** localizar *STL Space Log* v.3 n.4 e a primeira impressão 1963 com os valores do anuário soviético 1964 (**459/533 km; 94,66 min; 81,89°**), hoje também presentes no SIPRI 1973. A tabela NASA/STL B-12 tem números diferentes, provável data distinta e unidade pendente. Ela **não demonstra que a BSE soviética a copiou**. NORAD **527/1963-003A** é o objeto identificado na linha NASA; isso não mede o decaimento do **528/1963-003B**.
+
+**Estado epistemológico:** reprodução editorial com fac-símile auditado e assinatura binária; nenhuma época de sensor, estação, incerteza ou identificação de 528/529; **0 sensores, 0 observações em 7–9/11/1963 e 0 restrições físicas ativadas**. Não houve contato externo. [Manifesto tipado](stl_space_log_nasa_r51.json) e auditor ficam no repositório, sem publicar o PDF de 31 MB no Git.
