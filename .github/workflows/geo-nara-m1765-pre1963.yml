@@ -1,0 +1,46 @@
+name: CGEO-47 NARA M1765 pre-1963 overlays
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo47_nara_m1765_conde_pre1963.json'
+      - 'research/geo/CGEO47_NARA_1942_1945_OVERLAYS.md'
+      - 'tools/cgeo47_nara_m1765.py'
+      - 'tests/test_cgeo47_nara_m1765.py'
+      - '.github/workflows/geo-nara-m1765-pre1963.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo47_nara_m1765_conde_pre1963.json'
+      - 'research/geo/CGEO47_NARA_1942_1945_OVERLAYS.md'
+      - 'tools/cgeo47_nara_m1765.py'
+      - 'tests/test_cgeo47_nara_m1765.py'
+      - '.github/workflows/geo-nara-m1765-pre1963.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  authentic-nara-replay:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - name: Checkout exact PR head, no persisted credentials
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact commit SHA
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+      - name: Validate manifest and 18 adversarial tests
+        run: |
+          python3 tools/cgeo47_nara_m1765.py
+          python3 -m unittest discover -s tests -p 'test_cgeo47_nara_m1765.py' -v
+      - name: Real NARA replay of both catalog records and 14 full JPEGs
+        run: python3 tools/cgeo47_nara_m1765.py --live
+      - name: Verify no generated changes
+        run: |
+          git diff --check
+          test -z "$(git status --porcelain)"

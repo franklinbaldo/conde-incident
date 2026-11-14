@@ -1,0 +1,171 @@
+{
+  "schema": "conde.cgeo.nara-m1765-pre1963/v1",
+  "id": "CGEO-47",
+  "observed_on": "2026-11-14",
+  "lineage": {
+    "prior": "CGEO-46",
+    "related_sgb": "CGEO-45",
+    "same_flight_as_sgb": null
+  },
+  "units": [
+    {
+      "degree_square": "11S037W",
+      "nara_id": "46716637",
+      "title": "Overlay indexes for degree square 11S037W",
+      "microform": "M1765",
+      "roll": "317",
+      "record_group": "373",
+      "series_id": "306062",
+      "cover_period_printed": "1942-1943",
+      "catalog_query_url": "https://catalog.archives.gov/proxy/records/search?limit=10&page=1&q=11S037W",
+      "catalog_response_bytes": 6129,
+      "catalog_response_sha256": "d2dc4cbfc430c1b2c58cb4ca0f280143dcdeae273d4356cdfb7b52d1ec209069",
+      "images": [
+        {
+          "filename": "m1765-317-00245.jpg",
+          "object_id": "46716638",
+          "url": "https://catalog.archives.gov/medialz/cartographic/rg-373/306062/m1765-317/m1765-317/m1765-317-00245.jpg",
+          "bytes": 2288825,
+          "sha256": "403c5bbacdd4707dfc17eebf57c536d4bf7e0d9ea2a5e341f9e38e561f84fc79",
+          "role": "index_cover"
+        },
+        {
+          "filename": "m1765-317-00246.jpg",
+          "object_id": "46716640",
+          "url": "https://catalog.archives.gov/medialz/cartographic/rg-373/306062/m1765-317/m1765-317/m1765-317-00246.jpg",
+          "bytes": 2254327,
+          "sha256": "902ce5bb15f6b40ddeecd793ec6407d3728a880e91cfd0d455519bdddbd33dda",
+          "role": "geographic_base_map"
+        },
+        {
+          "filename": "m1765-317-00247.jpg",
+          "object_id": "46716641",
+          "url": "https://catalog.archives.gov/medialz/cartographic/rg-373/306062/m1765-317/m1765-317/m1765-317-00247.jpg",
+          "bytes": 2497049,
+          "sha256": "b671f0378e2b57502f616be5aaa57ae45041048aa576bbf04c6eed9a6843a404",
+          "role": "flight_overlay"
+        },
+        {
+          "filename": "m1765-317-00248.jpg",
+          "object_id": "46716642",
+          "url": "https://catalog.archives.gov/medialz/cartographic/rg-373/306062/m1765-317/m1765-317/m1765-317-00248.jpg",
+          "bytes": 2519162,
+          "sha256": "21016e6c141d5ac495893e13bc9a4b01bbf992e596416054fd0c03c164f3d2a0",
+          "role": "flight_overlay"
+        },
+        {
+          "filename": "m1765-317-00249.jpg",
+          "object_id": "46716643",
+          "url": "https://catalog.archives.gov/medialz/cartographic/rg-373/306062/m1765-317/m1765-317/m1765-317-00249.jpg",
+          "bytes": 2426513,
+          "sha256": "5116df3dee9d0a78ac12b4984c1d211f81008ed395f219adeb6ad1bba72ad470",
+          "role": "flight_overlay"
+        },
+        {
+          "filename": "m1765-317-00250.jpg",
+          "object_id": "46716644",
+          "url": "https://catalog.archives.gov/medialz/cartographic/rg-373/306062/m1765-317/m1765-317/m1765-317-00250.jpg",
+          "bytes": 2497206,
+          "sha256": "1cb357a05384e763c893924b79ff1711aceea8f602e6d94eab31bf61b6bfed26",
+          "role": "flight_overlay"
+        }
+      ]
+    },
+    {
+      "degree_square": "11S038W",
+      "nara_id": "46716645",
+      "title": "Overlay indexes for degree square 11S038W",
+      "microform": "M1765",
+      "roll": "317",
+      "record_group": "373",
+      "series_id": "306062",
+      "cover_period_printed": "1942-1945",
+      "catalog_query_url": "https://catalog.archives.gov/proxy/records/search?limit=10&page=1&q=11S038W",
+      "catalog_response_bytes": 6791,
+      "catalog_response_sha256": "605ec940469120640082f1defc59250067e2b60e8a8e0eab773aa4e298f5c298",
+      "images": [
+        {
+          "filename": "m1765-317-00251.jpg",
+          "object_id": "46716646",
+          "url": "https://catalog.archives.gov/medialz/cartographic/rg-373/306062/m1765-317/m1765-317/m1765-317-00251.jpg",
+          "bytes": 2220369,
+          "sha256": "023b15027b121815f09dbd8e7bf217759a1e2855329739a2beda1afd899dce59",
+          "role": "index_cover"
+        },
+        {
+          "filename": "m1765-317-00252.jpg",
+          "object_id": "46716648",
+          "url": "https://catalog.archives.gov/medialz/cartographic/rg-373/306062/m1765-317/m1765-317/m1765-317-00252.jpg",
+          "bytes": 2170280,
+          "sha256": "0415bf15ba87039bab9603a0f0428024f649d53793fbe532acea1c7d47b5d709",
+          "role": "geographic_base_map"
+        },
+        {
+          "filename": "m1765-317-00253.jpg",
+          "object_id": "46716649",
+          "url": "https://catalog.archives.gov/medialz/cartographic/rg-373/306062/m1765-317/m1765-317/m1765-317-00253.jpg",
+          "bytes": 2512941,
+          "sha256": "22c31289f3990b812fc1b8684511ae5ab604d0611bc8d2a86cf42192dbef92c4",
+          "role": "flight_overlay"
+        },
+        {
+          "filename": "m1765-317-00254.jpg",
+          "object_id": "46716650",
+          "url": "https://catalog.archives.gov/medialz/cartographic/rg-373/306062/m1765-317/m1765-317/m1765-317-00254.jpg",
+          "bytes": 2538227,
+          "sha256": "4831cf040e5b23f9603bd1e1f0ecac847ea8bb0fe1ff0a7dec4d38b1141329a3",
+          "role": "flight_overlay"
+        },
+        {
+          "filename": "m1765-317-00255.jpg",
+          "object_id": "46716651",
+          "url": "https://catalog.archives.gov/medialz/cartographic/rg-373/306062/m1765-317/m1765-317/m1765-317-00255.jpg",
+          "bytes": 2414502,
+          "sha256": "a3bdf232484e81d4d4c2c5b15ab58930ca88fe9f1f49122ebe3955104bc73d37",
+          "role": "flight_overlay"
+        },
+        {
+          "filename": "m1765-317-00256.jpg",
+          "object_id": "46716652",
+          "url": "https://catalog.archives.gov/medialz/cartographic/rg-373/306062/m1765-317/m1765-317/m1765-317-00256.jpg",
+          "bytes": 2499044,
+          "sha256": "bbd462ca7dd53d29e076f00708d38f7a2cf6042f7367dfa3b85e68d658c9a22c",
+          "role": "flight_overlay"
+        },
+        {
+          "filename": "m1765-317-00257.jpg",
+          "object_id": "46716653",
+          "url": "https://catalog.archives.gov/medialz/cartographic/rg-373/306062/m1765-317/m1765-317/m1765-317-00257.jpg",
+          "bytes": 2464172,
+          "sha256": "5ddf9977e272690e63d7ec17406cdf6fef1209dd3cc7b5c446a1fb9dceb7113d",
+          "role": "flight_overlay"
+        },
+        {
+          "filename": "m1765-317-00258.jpg",
+          "object_id": "46716654",
+          "url": "https://catalog.archives.gov/medialz/cartographic/rg-373/306062/m1765-317/m1765-317/m1765-317-00258.jpg",
+          "bytes": 2551491,
+          "sha256": "3b9b88c32e916e260b5e1e93248b90b94015d2ff6546c2390eb115860afc37d2",
+          "role": "flight_overlay"
+        }
+      ]
+    }
+  ],
+  "direct_visual_inspection": {
+    "11S037W_base_map": "m1765-317-00246.jpg",
+    "conde_label_visible_on_base_map": true,
+    "index_overlays_are_flight_diagrams_not_aerial_photographs": true,
+    "mission_date_scope": "cover pages identify 1942-1943 and 1942-1945; actual exposure dates require negatives and source validation"
+  },
+  "limitations": {
+    "units_in_catalog_verified": true,
+    "all_listed_geographic_jpegs_custodied": true,
+    "individual_original_negatives_acquired": false,
+    "georeferenced_footprints_validated": false,
+    "photograph_of_conde_town_acquired": false,
+    "town_center_geometry_1963": null,
+    "event_reentry_location": null,
+    "orbital_constraints_activated": false
+  },
+  "next_action": "Crosswalk flight overlay positions against base map, identify confirmed mission/spot/exposure IDs and request negative provenance; do not equate SGB 1964-1970 with these 1942-1945 holdings."
+}
