@@ -236,6 +236,10 @@ def build(root=ROOT):
         'schema': 'conde.evidence-index/v1',
         'description': 'Referências documentais curadas; não é matriz integral nem evidência física',
         'matrix_git_blob_sha1': matrix,
+        # Full-content SHA-256 complements Git's blob SHA-1 and makes the
+        # frozen matrix independently retrievable/verifiable by consumers.
+        'matrix_source': {'path': str(MATRIX), 'bytes': len(matrix_raw),
+                          'sha256': digest(matrix_raw)},
         'source_files': [
             {'path': str(CITATIONS), 'sha256': citations_sha},
             {'path': str(LINEAGE), 'sha256': lineage_sha},
