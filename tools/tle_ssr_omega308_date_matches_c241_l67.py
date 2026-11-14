@@ -12,14 +12,14 @@ SHA63 = "d31a064f8e03fd39be6fe75b88cd5852c0b74c9101fa635cb40ac25c77ef474f"
 SHA77 = "c5c66eb7eab242ab5b3dd56567de8bab2d404d0a6776baeb3b79383c86bc5ba8"
 
 EXPECTED_63 = [
-    ("OMEGA 1", "18 JUN 62", "29-30 OCT 63"),
-    ("OMEGA 2", "18 JUN 62", "12 JUL 62"),
-    ("OMEGA 3", "18 JUN 62", "14 JUL 62"),
+    ("OMEGA 1", "18 JUN", "29-30 OCT 63"),
+    ("OMEGA 2", "18 JUN", "12 JUL 62"),
+    ("OMEGA 3", "18 JUN", "14 JUL 62"),
 ]
 EXPECTED_77 = [
-    ("OMEGA 2", 308, "18 JUN 62", "29-30 OCT 63"),
-    ("OMEGA 3", 310, "18 JUN 62", "12 JUL 62"),
-    ("A-ALPHA 5", 314, "18 JUN 62", "14 JUL 62"),
+    ("OMEGA 2", 308, "18 JUN", "29-30 OCT 63"),
+    ("OMEGA 3", 310, "18 JUN", "12 JUL 62"),
+    ("A-ALPHA 5", 314, "18 JUN", "14 JUL 62"),
 ]
 
 
@@ -115,14 +115,16 @@ def validate(data, parent):
     exact(source77["sha256"], SHA77, "parent 1977 bytes")
     for index, old in enumerate(c):
         original = source63["visually_read_rows"][index]
-        exact((old["printed_name"], old["decay"]),
-              (original["designator"], original["decay"]), "parent 1963 row")
+        exact((old["printed_name"], old["launch"], old["decay"]),
+              (original["designator"], original["launch"], original["decay"]),
+              "parent 1963 row")
     for index in (0, 1):
         old = r[index]
         original = source77["visually_read_rows"][index + 1]
-        exact((old["printed_name"], old["catalog_number"], old["decay"]),
+        exact((old["printed_name"], old["catalog_number"], old["launch"],
+               old["decay"]),
               (original["designator"], original["catalog_number"],
-               original["decay"]), "parent 1977 row")
+               original["launch"], original["decay"]), "parent 1977 row")
     return True
 
 

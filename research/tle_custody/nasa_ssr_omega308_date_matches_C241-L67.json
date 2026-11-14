@@ -28,17 +28,17 @@
   "contemporary_rows": [
     {
       "printed_name": "OMEGA 1",
-      "launch": "18 JUN 62",
+      "launch": "18 JUN",
       "decay": "29-30 OCT 63"
     },
     {
       "printed_name": "OMEGA 2",
-      "launch": "18 JUN 62",
+      "launch": "18 JUN",
       "decay": "12 JUL 62"
     },
     {
       "printed_name": "OMEGA 3",
-      "launch": "18 JUN 62",
+      "launch": "18 JUN",
       "decay": "14 JUL 62"
     }
   ],
@@ -46,19 +46,19 @@
     {
       "printed_name": "OMEGA 2",
       "catalog_number": 308,
-      "launch": "18 JUN 62",
+      "launch": "18 JUN",
       "decay": "29-30 OCT 63"
     },
     {
       "printed_name": "OMEGA 3",
       "catalog_number": 310,
-      "launch": "18 JUN 62",
+      "launch": "18 JUN",
       "decay": "12 JUL 62"
     },
     {
       "printed_name": "A-ALPHA 5",
       "catalog_number": 314,
-      "launch": "18 JUN 62",
+      "launch": "18 JUN",
       "decay": "14 JUL 62"
     }
   ],
