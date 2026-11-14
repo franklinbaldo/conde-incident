@@ -12,6 +12,7 @@ h1,h2,h3{line-height:1.16;letter-spacing:-.025em}h1{overflow-wrap:anywhere}h1{fo
 .full-story{max-width:760px;margin:auto;padding:3.8rem 0 5rem}.full-story header{padding-bottom:2rem;border-bottom:1px solid var(--line)}
 .deck{font-size:1.3rem;color:#c1c3c7;line-height:1.55}.byline{letter-spacing:0;text-transform:none}
 .story-body{font-size:1.1rem;line-height:1.9;overflow-wrap:anywhere}.story-body h2{font-size:1.85rem;margin-top:2.8rem}
+.story-body h3[id^="postmatrix-"]:focus{outline:3px solid var(--color-focus);outline-offset:4px;scroll-margin-block:1rem}
 .story-body p{margin:1.3rem 0}.story-body blockquote{padding-left:1.2rem;border-left:3px solid var(--accent);color:var(--muted)}
 .story-body a{overflow-wrap:anywhere}.story-body code{font-size:.87em;background:var(--panel);padding:.15em .3em}
 .story-end{margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--line);color:var(--muted);font-size:.88rem}

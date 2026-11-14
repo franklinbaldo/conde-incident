@@ -126,10 +126,9 @@ test('post-matrix built HTML binds navigation, source identity and custody in ea
   const independence=field('Independência jornalística',item.journalistic_source_independence);
   const imageDigest=field('SHA-256 da imagem arquivística',item.image_sha256);
   const report=field('SHA-256 do relatório de custódia versionado',reportDigest);
-  const heading='<h3>'+item.id+'</h3>';
-  const marker='<span id="'+postMatrixAnchor(item.id)+'" tabindex="-1"></span>';
+  const heading='<h3 id="'+postMatrixAnchor(item.id)+'" tabindex="-1">'+item.id+'</h3>';
   const base='<main><a href="/conde-incident/evidencias/matriz/">Matriz</a>'+
-    marker+heading+state+independence+imageDigest+report+source+custody+links+'</main>';
+    heading+state+independence+imageDigest+report+source+custody+links+'</main>';
   assert.equal(auditBuiltPostMatrix(base,citations),expected.length);
 
   // A raw <h3> cannot authenticate a record when an ancestor hides it.
@@ -145,12 +144,14 @@ test('post-matrix built HTML binds navigation, source identity and custody in ea
       'hidden headings must not be accepted as visible record headings');
   }
 
-  assert.throws(()=>auditBuiltPostMatrix(base.replace(marker,''),citations),
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(' tabindex="-1"',''),citations),
     /âncora documental ativa e única ausente/);
-  assert.throws(()=>auditBuiltPostMatrix(base.replace(marker,marker+marker),citations),
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(' id="'+postMatrixAnchor(item.id)+'"',''),citations),
     /âncora documental ativa e única ausente/);
-  assert.throws(()=>auditBuiltPostMatrix(base.replace(marker,'<template>'+marker+'</template>'),citations),
-    /âncora documental ativa e única ausente/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(heading,heading+heading),citations),
+    /cabeçalhos ausentes|âncora documental ativa e única ausente/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(heading,'<template>'+heading+'</template>'),citations),
+    /cabeçalhos ausentes|âncora documental ativa e única ausente/);
 
   const target='<a href="'+expected[0]+'">'+item.related_matrix_occurrences[0]+'</a>';
   assert.throws(()=>auditBuiltPostMatrix(base.replace(target,
