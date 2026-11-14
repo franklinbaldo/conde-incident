@@ -11,7 +11,7 @@ test('o dossiê é uma Page canônica do SSG, não uma SPA',()=>{
   assert.ok(AUTHORED_ROUTES.includes('dossie'));
   assert.equal(checkPage('dossie',src),src);
   assert.doesNotMatch(src,/<script\b|on(click|load|mouseover)\s*=/i);
-  for(const term of ['C01#1','C197#1','Rádio Tupi','NASA','não demonstra','não informa']) {
+  for(const term of ['C01#1','C197#1','Rádio Tupi','NASA','não demonstra','Não informa']) {
     assert.ok(src.includes(term),'limite epistemológico ausente: '+term);
   }
   for(const target of [
