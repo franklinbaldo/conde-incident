@@ -20,7 +20,7 @@ canonical_route: "/conde-incident/evidencias/fontes/"
   </select>
   <p id="source-lookup-help">Selecione um identificador para ver as ocorrências e seus vínculos. A URL é atualizada para compartilhar a fonte ou voltar à seleção anterior. Nenhum dado é enviado a serviços de terceiros.</p>
 </form>
-<section id="source-lookup-results" aria-label="Referências da fonte selecionada" aria-live="polite" aria-atomic="true"></section>
+<section id="source-lookup-results" aria-label="Referências da fonte selecionada"></section>
 
 Uma fonte pode aparecer em várias fichas; isso **não significa múltiplas observações físicas independentes**. Este índice reúne apenas referências curadas da matriz, não todas as fontes que possam existir. Uma ocorrência ainda não mapeada não é prova de ausência de documento. A listagem é derivada de arquivos JSON versionados e sua integridade é conferida no navegador antes de qualquer resultado.
 <button type="button" id="source-lookup-retry" hidden>Recarregar índice verificado</button>
