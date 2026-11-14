@@ -20,7 +20,9 @@
     "pdf_sha256": "e92fcfd90536a7b4ddd0dee21af69d4a089938e98989c57fd99fcb42d5096a26",
     "pdf_pages": 18,
     "table_pdf_page_1based": 9,
-    "table_name": "Quadro 01 – Síntese dos mapas elaborados pela IOCS, constantes no acervo do HCUrb"
+    "table_name": "Quadro 01 – Síntese dos mapas elaborados pela IOCS, constantes no acervo do HCUrb",
+    "alternate_publisher_url": "https://www.ub.edu/geocrit/sn/sn-493/493-38.pdf",
+    "alternate_sha256_identical_to_primary": true
   },
   "new_holdings_route": {
     "institution": "Grupo de Pesquisa História da Cidade, do Território e do Urbanismo (HCUrb)",
