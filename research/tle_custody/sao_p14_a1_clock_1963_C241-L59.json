@@ -1,0 +1,83 @@
+{
+  "id": "C241-L59",
+  "type": "HISTORICAL_OPTICAL_TIME_REFERENCE_SCOPE",
+  "source": {
+    "agency": "Smithsonian Astrophysical Observatory",
+    "title": "Catalog of Precisely Reduced Observations, P-14 / Special Report 185",
+    "ntrs_id": "19660001360",
+    "publication_date": "1965-09-03",
+    "pdf_url": "https://ntrs.nasa.gov/api/citations/19660001360/downloads/19660001360.pdf",
+    "pdf_bytes": 6173834,
+    "pdf_sha256": "d7140f9b78991d1bb75857ba6a109fb553b80eab16f7dd89c41cc799d9e53980",
+    "pdf_pages": 128,
+    "pages_zero_based": {
+      "cover": 0,
+      "table_of_contents": 2,
+      "intro_printed_1": 3,
+      "clock_printed_2": 4,
+      "frame_printed_3": 5
+    },
+    "visual_verification": "PDF pages 0, 2, 3, 4, 5 checked against scans on 2026-11-14"
+  },
+  "observations_scope": {
+    "listed_targets": [
+      "Vanguard 2",
+      "Vanguard 3",
+      "Echo 1 Rocket Body",
+      "Explorer 9",
+      "Transit 4A",
+      "Injun",
+      "Midas 4",
+      "Telstar 1",
+      "A15 Relay"
+    ],
+    "selected_counts": [545, 276, 960, 1230, 212, 166, 775, 601, 375],
+    "primary_calendar_window": ["1963-01-01", "1963-03-31"],
+    "one_series_starts": "1962-12-16",
+    "norad_527_528_529_in_list": false,
+    "scope_interpretation": "ABSENT_FROM_NAMED_PUBLISHED_SERIES_NOT_ABSENT_FROM_HISTORICAL_SENSORS"
+  },
+  "measurement_method_context_only": {
+    "time_scale": "SMOOTHED_PRELIMINARY_A1_NOT_UTC",
+    "time_emission_reference": "WWV_EMITTED",
+    "a1_minus_wwv_seconds": {
+      "mjd_lower_inclusive": 38030.0,
+      "mjd_upper_exclusive": 38334.0,
+      "reference_mjd": 38030.0,
+      "intercept_seconds": 2.292725,
+      "slope_seconds_per_day": 0.001118458
+    },
+    "time_uncertainty_milliseconds_range": [0.5, 20.0],
+    "typical_time_uncertainty_milliseconds": 2.0,
+    "assigned_angular_standard_error_arcsec": 4.0,
+    "angular_reference": "TOPOCENTRIC_RA_DEC_MEAN_EQUATOR_EQUINOX_1950_NOT_UNIFORM_STAR_CATALOG",
+    "refraction": "PARALLACTIC_REFRACTION_NOT_CORRECTED",
+    "station_geodetic_reference": "KAULA_ELLIPSOID_1964",
+    "catalog_rows_include": [
+      "A1_time",
+      "time_standard_error_ms",
+      "topocentric_right_ascension",
+      "topocentric_declination",
+      "angular_standard_error_arcsec",
+      "station_code",
+      "film_and_frame",
+      "measurer"
+    ]
+  },
+  "target_527_528_529": {
+    "raw_observations": null,
+    "instrumental_epoch_utc": null,
+    "station": null,
+    "measurement_error_model": null,
+    "covariance": null,
+    "independent_instrumental_measurements_added": 0,
+    "physical_constraints_activated": 0,
+    "reentry_location": null
+  },
+  "scientific_policy": [
+    "This historical A1-WWV formula describes P-14 data only, never a NORAD 528 UTC conversion",
+    "The 4 arcsec assigned row error and 0.5-20 ms range do not identify error of object 528",
+    "The lack of target entries in this selected catalogue cannot establish non-observation",
+    "No hard spatial, orbital, or time constraint is activated by this source"
+  ]
+}
