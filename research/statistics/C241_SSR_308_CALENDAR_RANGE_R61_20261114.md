@@ -3,7 +3,7 @@ type: Experiment
 title: "C241 R61: faixa impressa NASA 29–30 outubro e teste de H fixo do 308"
 description: "Reavaliação condicional da hipótese de dia civil do NORAD 308 sem promover catálogo a observação terminal"
 experiment_id: C241-SSR-308-RANGE-R61
-verification_status: PENDING_CI_CONDITIONAL_PROXY
+verification_status: CONDITIONAL_PROXY_REPLAYED_NOT_HISTORICAL
 ---
 
 # R61: intervalo civil impresso muda o teste, não a identificabilidade terminal
@@ -17,6 +17,19 @@ O experimento [R60](C241_1963_ARCHIVE_FIXED_H_STRESS_20261114.md) usava, contraf
 Testar uma translação de relógio comum de ±24 h com o certificado exato de R58 e, em separado, translações independentes de ±1 dia, aplicando neste último caso a velocidade `v`, **não** a largura `2v` da faixa alargada. Todos esses relógios são cenários de estresse, não conversões de fuso verificadas.
 
 O resultado permanece apenas compatibilidade ou incompatibilidade **da aproximação local H constante sob convenções de calendário postuladas**. O documento não fornece hora UTC, instrumento, incerteza, observação de reentrada, massa nem longitude de impacto. Duas datas impressas não são duas medições nem dois holdouts; não são autorizadas likelihood, posterior de massa, estimativa de erro horário ou restrição espacial para Conde.
+
+## Resultado do replay do Parquet pinado (14/11/2026)
+
+A nova faixa impressa não salva todos os estimadores do R60. Sob a hipótese **contrafactual** de 29–30/10 como dois dias UTC contíguos, origem e cortes congelados:
+
+| Método de secante | H comum, relógio compartilhado ±24h | H com deslocamento independente ±1 dia por origem |
+|---|---|---|
+| Últimas duas épocas | INCOMPATÍVEL | INCOMPATÍVEL |
+| Mediana de três secantes | COMPATÍVEL SOMENTE NO PROXY ASSUMIDO | INCONCLUSIVO |
+
+Para as últimas duas épocas, o certificado de par incompatível `lower[0] / upper[1]` tem folga máxima **-6,74820109 km** em todos os deslocamentos comuns permitidos. Essa distância entre intervalos do H auxiliar **não é altitude de satélite nem erro físico observado**. No método da mediana, a ampliação de um para dois dias faz reaparecer interseção admissível, o que revoga a alegação genérica de R60 de que qualquer das duas secantes é incompatível sob o novo documento. Não é evidência favorável à hipótese física de H constante: rótulo editorial, identidade por fonte secundária e nenhum horário de observação seguem pendentes.
+
+Reprodução no Ifro, HEAD de desenvolvimento `6eb852b2a48bcc4b4002e852059472cceac72a1a`: SHA-256 do Parquet verificado, replay R60→R61 executado, 14/14 testes normais e 14/14 otimizados aprovados, Prek 2/2 aprovado, controles negativos de 20.001 bytes e `OKF001` rejeitados. O primeiro rerun encontrou `/tmp` lotado no Ifro; a repetição integral do parser usou `TMPDIR` em `/var/tmp`, preservando gates e restaurando a mesma árvore Git. O CI do GitHub deve comprovar novamente o **HEAD final** da PR antes do merge.
 
 ## Execução, evidência e limiares
 
