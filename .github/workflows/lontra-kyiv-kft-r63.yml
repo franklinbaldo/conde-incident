@@ -1,0 +1,29 @@
+name: C241 Kyiv KFT chronology R63
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/kyiv_kft_instrument_era_C241_LONTRA_R63.json
+      - research/tle_custody/evidence_matrix_C241-LONTRA-R63_2026-11-14.md
+      - tools/audit_kyiv_kft_r63.py
+      - tests/test_kyiv_kft_r63.py
+      - .github/workflows/lontra-kyiv-kft-r63.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  kft-chronology:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Confirm exact HEAD
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Fail-closed chronology and mutations
+        run: |
+          set -euo pipefail
+          python3 -m tools.audit_kyiv_kft_r63
+          python3 -m unittest discover -s tests -p 'test_kyiv_kft_r63.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_kyiv_kft_r63.py' -v
