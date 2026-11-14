@@ -1,18 +1,11 @@
 import React, { useState, useMemo, useId } from 'react';
 import {
   Wind,
-  Sun,
-  Activity,
   Layers,
   Gauge,
-  AlertTriangle,
-  Info,
   Calendar,
 } from 'lucide-react';
-import {
-  SPACE_ENVIRONMENT_NOV_1963,
-  HISTORICAL_ORBITAL_DATA,
-} from '../lib/constants';
+import { HISTORICAL_ORBITAL_DATA } from '../lib/constants';
 import { getThermosphericDensity } from '../lib/astrodynamics';
 
 interface AtmosphereSensitivityProps {
@@ -30,7 +23,6 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
   const [scaleHeightKm, setScaleHeightKm] = useState<number>(45);
   const [solarFluxF107, setSolarFluxF107] = useState<number>(76.5);
   const [ballisticCoeff, setBallisticCoeff] = useState<number>(0.022);
-  const [geomagneticAp, setGeomagneticAp] = useState<number>(9.0);
 
   // Compute simulated arrival at 120 km interface based on sliders
   const simulatedDecayDays = useMemo(() => {
@@ -51,25 +43,25 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
     {
       scale: 40,
       arrivalDate: '06/11/1963',
-      matchStatus: 'Anterior ao Catálogo (-2 dias)',
+      matchStatus: isPt ? 'Anterior ao dia catalogado (−2 dias)' : 'Before the catalogued day (−2 days)',
       matchColor: 'text-zinc-400',
     },
     {
       scale: 45,
       arrivalDate: '08/11/1963',
-      matchStatus: 'EXATA CONCORDÂNCIA COM CATÁLOGO',
+      matchStatus: isPt ? 'MESMO DIA DO CATÁLOGO (não é validação)' : 'SAME CATALOGUED DAY (not validation)',
       matchColor: 'text-emerald-400 font-bold',
     },
     {
       scale: 50,
       arrivalDate: '09/11/1963',
-      matchStatus: 'Posterior ao Catálogo (+1 dia)',
+      matchStatus: isPt ? 'Posterior ao dia catalogado (+1 dia)' : 'After the catalogued day (+1 day)',
       matchColor: 'text-amber-400',
     },
     {
       scale: 60,
       arrivalDate: '11/11/1963',
-      matchStatus: 'Posterior ao Catálogo (+3 dias)',
+      matchStatus: isPt ? 'Posterior ao dia catalogado (+3 dias)' : 'After the catalogued day (+3 days)',
       matchColor: 'text-zinc-400',
     },
   ];
@@ -122,11 +114,12 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
                 {isPt ? 'Escala de Altura Termoesférica (H):' : 'Thermospheric Scale Height (H):'}{' '}
                 <strong className="text-cyan-300">{scaleHeightKm} km</strong>
               </label>
-              <span className="text-zinc-400">Padrão solar mínimo: 45 km</span>
+              <span className="text-zinc-400">{isPt ? 'Referência do cenário: 45 km' : 'Scenario reference: 45 km'}</span>
             </div>
             <input
               id={scaleHeightId}
               type="range"
+              aria-valuetext={`${scaleHeightKm} km`}
               min={35}
               max={65}
               step={1}
@@ -143,11 +136,12 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
                 {isPt ? 'Fluxo Solar F10.7 (comprimento 10,7 cm):' : 'Solar Flux F10.7 (10.7 cm):'}{' '}
                 <strong className="text-amber-300">{solarFluxF107} sfu</strong>
               </label>
-              <span className="text-zinc-400">Média nov/1963: 76,5 sfu</span>
+              <span className="text-zinc-400">{isPt ? 'Referência do cenário: 76,5 sfu' : 'Scenario reference: 76.5 sfu'}</span>
             </div>
             <input
               id={solarFluxId}
               type="range"
+              aria-valuetext={`${solarFluxF107} sfu`}
               min={65}
               max={120}
               step={0.5}
@@ -164,11 +158,12 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
                 {isPt ? 'Coeficiente Balístico B (C_D · A / m):' : 'Ballistic Coefficient B (C_D · A / m):'}{' '}
                 <strong className="text-emerald-300">{ballisticCoeff.toFixed(4)} m²/kg</strong>
               </label>
-              <span className="text-zinc-400">Agena debris: 0,015 - 0,035</span>
+              <span className="text-zinc-400">{isPt ? 'Faixa ilustrativa: 0,015–0,035 m²/kg' : 'Illustrative range: 0.015–0.035 m²/kg'}</span>
             </div>
             <input
               id={ballisticCoeffId}
               type="range"
+              aria-valuetext={`${ballisticCoeff.toFixed(4)} m²/kg`}
               min={0.008}
               max={0.05}
               step={0.001}
@@ -181,11 +176,11 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
           {/* Simulated Decay Output Card */}
           <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 space-y-2 font-mono text-xs">
             <div className="text-zinc-400 uppercase tracking-wider text-[10px]">
-              {isPt ? 'Resultado da Integração Numérica' : 'Numerical Integration Result'}
+              {isPt ? 'Resultado do modelo simplificado' : 'Simplified model result'}
             </div>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 min-w-0">
               <div>
-                <span className="text-zinc-400">Chegada simulada a 120 km:</span>{' '}
+                <span className="text-zinc-400">{isPt ? 'Chegada simulada a 120 km:' : 'Simulated arrival at 120 km:'}</span>{' '}
                 <span className="text-base font-bold text-zinc-100 break-words">
                   {simulatedDecayDate.toISOString().substring(0, 10)}
                 </span>
@@ -198,8 +193,8 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
                 }`}
               >
                 {simulatedDecayDate.toISOString().substring(0, 10) === '1963-11-08'
-                  ? '✓ CONVERGE COM CATÁLOGO NORAD (08/11)'
-                  : 'DIVERGE DO CATÁLOGO HISTÓRICO'}
+                  ? (isPt ? 'Mesmo dia catalogado (não valida queda)' : 'Same catalogued day (not impact proof)')
+                  : (isPt ? 'Dia diferente do catálogo (não valida queda)' : 'Different catalogued day (not impact proof)')}
               </span>
             </div>
           </div>
@@ -211,13 +206,13 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
             <div className="flex flex-wrap items-center gap-2 min-w-0">
               <Calendar className="w-4 h-4 text-cyan-400" />
               <h3 className="text-sm font-bold text-zinc-100">
-                {isPt ? 'Tabela Histórica de Sensibilidade (Handoff)' : 'Historical Sensitivity Table (Handoff)'}
+                {isPt ? 'Cenários ilustrativos de sensibilidade' : 'Illustrative sensitivity scenarios'}
               </h3>
             </div>
             <p className="text-xs text-zinc-400">
               {isPt
-                ? 'Resultados da integração partindo de 27/10/1963 sob diferentes escalas de altura:'
-                : 'Integration outcomes starting from 27/10/1963 across various scale heights:'}
+                ? 'Datas ilustrativas da tabela legada, partindo de 27/10/1963 em diferentes escalas de altura:'
+                : 'Illustrative legacy-table dates starting 27 Oct 1963 across different scale heights:'}
             </p>
 
             <div className="space-y-2">
@@ -232,7 +227,7 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
                 >
                   <div>
                     <div className="text-zinc-200 font-bold">H = {row.scale} km</div>
-                    <div className="text-[11px] text-zinc-400">Decaimento: {row.arrivalDate}</div>
+                    <div className="text-[11px] text-zinc-400">{isPt ? 'Cenário:' : 'Scenario:'} {row.arrivalDate}</div>
                   </div>
                   <span className={`text-[10px] min-w-0 break-words ${row.matchColor}`}>
                     {row.matchStatus}
