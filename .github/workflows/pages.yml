@@ -48,7 +48,7 @@ jobs:
           ssg --help
           ssg build --help
       - name: Exercise documentary archive and Wayback custody adversarial tests
-        run: node --test tests/ssg-documentary-archive.test.mjs tests/ssg-wayback-custody.test.mjs tests/ssg-matrix-catalog.test.mjs
+        run: node --test tests/ssg-documentary-archive.test.mjs tests/ssg-wayback-custody.test.mjs tests/ssg-matrix-catalog.test.mjs tests/ssg-post-matrix.test.mjs
       - name: Verify quota-free local geography from pinned Natural Earth
         run: python3 scripts/build-conde-context-map.py --check
       - name: Test SSG local TLE syntax audit with adversarial bytes
@@ -121,6 +121,8 @@ jobs:
         run: node scripts/verify-ssg-evidence-index.mjs --built-site
       - name: Verify matrix catalog against real SSG HTML and links
         run: node scripts/ssg-matrix-catalog.mjs --built-site
+      - name: Check built post-matrix links into frozen matrix
+        run: node tests/ssg-post-matrix-built.check.mjs
       - name: Verify every article and /conde-incident/ paths
         run: node scripts/check-site.mjs
       - name: Verify centered SSG footer in built Pages HTML
