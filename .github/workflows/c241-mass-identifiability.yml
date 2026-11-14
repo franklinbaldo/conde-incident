@@ -1,0 +1,45 @@
+name: C241 exact mass identifiability
+on:
+  pull_request:
+    paths:
+      - tools/mass_identifiability_C241.py
+      - tests/test_mass_identifiability_C241.py
+      - research/statistics/C241_mass_identifiability_C241.md
+      - research/tle_custody/gcat_mass_semantics_C241-L40.json
+      - .github/workflows/c241-mass-identifiability.yml
+  push:
+    branches: [main]
+    paths:
+      - tools/mass_identifiability_C241.py
+      - tests/test_mass_identifiability_C241.py
+      - research/statistics/C241_mass_identifiability_C241.md
+      - research/tle_custody/gcat_mass_semantics_C241-L40.json
+      - .github/workflows/c241-mass-identifiability.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact SHA
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Exact rational tests and catalog gate
+        run: |
+          python3 -m unittest discover -s tests -p test_mass_identifiability_C241.py -v
+          python3 tools/mass_identifiability_C241.py > "$RUNNER_TEMP/mass-identifiability.json"
+          python3 - "$RUNNER_TEMP/mass-identifiability.json" <<'PY'
+          import json,sys
+          d=json.load(open(sys.argv[1],encoding="utf-8"))
+          assert d["historical_mass_observation_rank"] == 0
+          assert d["scenario_only_total_rank"] == 1
+          assert d["scenario_total_plus_two_masses_rank"] == 3
+          assert d["scenario_total_plus_three_masses_rank"] == 4
+          assert d["historical_mass_posterior"] is None
+          assert not d["physical_domain_reduction"]
+          PY
