@@ -46,7 +46,7 @@ try {
     const chapterPath = '/conde-incident/stories/2026-11-11-o-dia-em-que-dois-relatos-se-cruzaram/';
     const chapterUrl = new URL(chapterPath, origin).toString();
     for (const { label, occurrence, source, id } of [
-      { label: 'ocorrência C131#1 no arquivo curado', occurrence: '/conde-incident/evidencias/arquivo/c131-1/', source: '/conde-incident/evidencias/arquivo/fontes/nasa-ssr-19631115/', id: 'NASA_SSR_19631115' },
+      { label: 'ocorrência C197#1 no arquivo curado', occurrence: '/conde-incident/evidencias/arquivo/c197-1/', source: '/conde-incident/evidencias/arquivo/fontes/nasa-ssr-19631115/', id: 'NASA_SSR_19631115' },
       { label: 'ocorrência C01#1 no arquivo curado', occurrence: '/conde-incident/evidencias/arquivo/c01-1/', source: '/conde-incident/evidencias/arquivo/fontes/fbis-eop-uap-d001/', id: 'FBIS_EOP_UAP_D001' },
     ]) {
       response = await page.goto(chapterUrl);
