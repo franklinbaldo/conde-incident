@@ -54,6 +54,29 @@ class Secondary12DayTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'SHA mismatch'):
                 h.read_secondary_csv(path)
 
+    def test_target_block_rmse_not_pair_pseudoreplication(self):
+        def pair(target, error):
+            return {'norad': 529, 'target_epoch_utc': target,
+                    'signed_errors': {'raan_j2_deg': error}}
+        # Two origin predictions of ONE future target, versus one other target.
+        pairs = [pair('A', 3.0), pair('A', 3.0), pair('B', 0.0)]
+        out = h.target_block_sensitivity(pairs)
+        self.assertEqual(out['distinct_future_targets'], 2)
+        self.assertEqual(out['target_multiplicity'], [1, 2])
+        self.assertAlmostEqual(out['equal_target_weight_rmse']['raan_j2_deg'],
+                               (9/2)**0.5)
+        self.assertNotAlmostEqual(out['equal_target_weight_rmse']['raan_j2_deg'],
+                                  6**0.5)
+        self.assertEqual(out['leave_one_target_out_rmse_range']['raan_j2_deg'],
+                         [0.0, 3.0])
+
+    def test_target_deletion_not_invented_with_one_target(self):
+        record = {'norad': 527, 'target_epoch_utc': 'A',
+                  'signed_errors': {'raan_j2_deg': .5}}
+        out = h.target_block_sensitivity([record])
+        self.assertIsNone(out['leave_one_target_out_rmse_range']['raan_j2_deg'])
+        self.assertEqual(h.target_block_sensitivity([])['distinct_future_targets'], 0)
+
     def test_wrap_and_frozen_rate(self):
         self.assertEqual(h.wrap(359), -1)
         self.assertEqual(h.wrap(-359), 1)

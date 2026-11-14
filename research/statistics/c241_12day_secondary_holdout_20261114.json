@@ -302,6 +302,76 @@
       "target_source_row": 3058
     }
   ],
+  "october_target_sensitivity": {
+    "527": {
+      "distinct_future_targets": 1,
+      "equal_target_weight_rmse": {
+        "eccentricity_persistence": 0.0002204999,
+        "inclination_persistence_deg": 0.0046005249,
+        "mean_motion_persistence_rev_day": 0.00044677,
+        "mean_motion_two_point_rev_day": 0.0003787909,
+        "raan_j2_deg": 0.0211694454,
+        "raan_two_point_deg": 0.0655665305
+      },
+      "leave_one_target_out_rmse_range": {
+        "eccentricity_persistence": null,
+        "inclination_persistence_deg": null,
+        "mean_motion_persistence_rev_day": null,
+        "mean_motion_two_point_rev_day": null,
+        "raan_j2_deg": null,
+        "raan_two_point_deg": null
+      },
+      "pair_count_correlated": 1,
+      "status": "DESCRIPTIVE_NO_REFIT_NOT_INDEPENDENT_VALIDATION",
+      "target_multiplicity": [
+        1
+      ]
+    },
+    "529": {
+      "distinct_future_targets": 3,
+      "equal_target_weight_rmse": {
+        "eccentricity_persistence": 0.0004919094,
+        "inclination_persistence_deg": 0.0108290299,
+        "mean_motion_persistence_rev_day": 0.0351590508,
+        "mean_motion_two_point_rev_day": 0.0117821756,
+        "raan_j2_deg": 0.0955321023,
+        "raan_two_point_deg": 0.1761525318
+      },
+      "leave_one_target_out_rmse_range": {
+        "eccentricity_persistence": [
+          0.0003848288,
+          0.0005693805
+        ],
+        "inclination_persistence_deg": [
+          0.0060318519,
+          0.0129580331
+        ],
+        "mean_motion_persistence_rev_day": [
+          0.0325049877,
+          0.0380912316
+        ],
+        "mean_motion_two_point_rev_day": [
+          0.0096717448,
+          0.012833354
+        ],
+        "raan_j2_deg": [
+          0.057615157,
+          0.1143850639
+        ],
+        "raan_two_point_deg": [
+          0.0535845959,
+          0.2155224678
+        ]
+      },
+      "pair_count_correlated": 5,
+      "status": "DESCRIPTIVE_NO_REFIT_NOT_INDEPENDENT_VALIDATION",
+      "target_multiplicity": [
+        1,
+        2,
+        2
+      ]
+    }
+  },
   "schema": "conde.secondary-12day-controls/v1",
   "source": {
     "extracted_csv_sha256_checked": "3940715d7c15cf15c24e678a8c5b5fbb34a031b3ffd7e33c0580277377383231",

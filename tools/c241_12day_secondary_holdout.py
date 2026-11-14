@@ -158,6 +158,35 @@ def summarize(pairs: list[dict]) -> dict:
             'metrics': metrics}
 
 
+
+def target_block_sensitivity(pairs: list[dict]) -> dict:
+    """Equal target weighting, not an independence estimate or cross-validation.
+
+    Count each future catalogue epoch once, even if multiple origins forecast it.
+    The within-target squared errors are averaged before the across-target RMS.
+    Leave-one-target-out is descriptive deletion, WITHOUT refitting a model.
+    """
+    blocks: dict[tuple[int, str], list[dict]] = defaultdict(list)
+    for pair in pairs:
+        blocks[(pair['norad'], pair['target_epoch_utc'])].append(pair)
+    names = pairs[0]['signed_errors'] if pairs else []
+    equal_rms = {}
+    deletion_ranges = {}
+    for name in names:
+        target_mse = [math.fsum(item['signed_errors'][name]**2 for item in records)
+                      / len(records) for records in blocks.values()]
+        equal_rms[name] = round(math.sqrt(math.fsum(target_mse) / len(target_mse)), 10)
+        deletion = [math.sqrt((math.fsum(target_mse)-v)/(len(target_mse)-1))
+                    for v in target_mse] if len(target_mse)>1 else []
+        deletion_ranges[name] = ([round(min(deletion), 10), round(max(deletion), 10)]
+                                 if deletion else None)
+    return {'pair_count_correlated': len(pairs), 'distinct_future_targets': len(blocks),
+            'target_multiplicity': sorted(len(v) for v in blocks.values()),
+            'equal_target_weight_rmse': equal_rms,
+            'leave_one_target_out_rmse_range': deletion_ranges,
+            'status': 'DESCRIPTIVE_NO_REFIT_NOT_INDEPENDENT_VALIDATION'}
+
+
 def report(rows: list[dict]) -> dict:
     full = make_pairs(rows)
     oct_pairs = make_pairs(rows, start='1963-10-01', end='1963-10-27')
@@ -178,6 +207,9 @@ def report(rows: list[dict]) -> dict:
         'october_origins_through_oct27': {
             str(s): summarize([p for p in oct_pairs if p['norad']==s]) for s in SATELLITES},
         'october_pairs': oct_pairs,
+        'october_target_sensitivity': {
+            str(s): target_block_sensitivity([p for p in oct_pairs if p['norad']==s])
+            for s in SATELLITES},
         'decay_time_error_hours': None,
         'terminal_position_or_phase_error': None,
         'limitations': ['Not external measurements, no source sensor covariance/frame verified',
