@@ -1,0 +1,87 @@
+{
+  "id": "C241-LONTRA-R60",
+  "audit_date_utc": "2026-11-14",
+  "evidence_class": "VERIFIED_1969_TECHNICAL_BIBLIOGRAPHY_AND_1963_PRIMARY_LOCATOR",
+  "upstream": [
+    "C241-LONTRA-R56",
+    "C241-LONTRA-R57",
+    "C241-LONTRA-R59"
+  ],
+  "source": {
+    "institution": "Polskie Towarzystwo Astronomiczne / Urania digital archive",
+    "author": "S. Oszczak",
+    "article": "Opóźnienia aparatury rejestrującej moment ekspozycji dla niektórych kamer satelitarnych typu NAFA",
+    "publication": "Postępy Astronomii",
+    "volume": 17,
+    "issue": 1,
+    "year": 1969,
+    "printed_pages": "61-71",
+    "pdf_page_indices_zero_based_verified_visually": [
+      62,
+      72
+    ],
+    "url": "https://www.urania.edu.pl/sites/default/files/archiwum/postepy_astronomii_1969_01.pdf",
+    "bytes": 7630958,
+    "sha256": "f83992fecb15d01fbba0a9e8e3b94bdc81d6620f89ed4790dc4c5ee940bed0c4",
+    "pdf_magic": "%PDF-1.6",
+    "pdf_eof_seen": true,
+    "verification": "Downloaded completely on Ifro; SHA-256 and magic/EOF checked; printed 61 and 71 visually inspected against PDF p.62 and p.72 (zero-indexed).",
+    "custody_scope": "1969 review article, not original 1963 Soviet bulletin nor observation record"
+  },
+  "source_references": [
+    {
+      "reference": 1,
+      "bulletin_issue": 11,
+      "year": 1960,
+      "topic": "constant checks of photographic satellite timing delays",
+      "status": "CITED_NOT_RETRIEVED"
+    },
+    {
+      "reference": 2,
+      "bulletin_issue": 8,
+      "year": 1960,
+      "topic": "NAFA-3s/25 shutter modification in Kharkov",
+      "status": "CITED_NOT_RETRIEVED"
+    },
+    {
+      "reference": 7,
+      "bulletin_issue": 25,
+      "year": 1962,
+      "topic": "measurement instant tied to precise time signals",
+      "status": "CITED_NOT_RETRIEVED"
+    },
+    {
+      "reference": 10,
+      "bulletin_issue": 25,
+      "year": 1962,
+      "topic": "adaptation of NAFA cameras for satellite tracking",
+      "status": "CITED_NOT_RETRIEVED"
+    },
+    {
+      "reference": 13,
+      "bulletin_issue": 32,
+      "year": 1963,
+      "authors": [
+        "L. I. Medvedeva",
+        "B. A. Firago"
+      ],
+      "title_transliteration": "O vychislenii rasstoyanii do sputnika zemli",
+      "topic": "calculating distances to Earth satellites",
+      "status": "CITED_NOT_RETRIEVED"
+    }
+  ],
+  "boundaries": {
+    "original_1963_bulletin_32_retrieved": false,
+    "original_1963_azh_article_retrieved": false,
+    "chronograph_21p_same_instrument_proven": false,
+    "observations_norad_527_528_529": [],
+    "independent_instrumental_observations": 0,
+    "new_orbital_constraints": 0,
+    "institutional_contact_sent": false
+  },
+  "next_actions": [
+    "Locate Bulletin of Optical Satellite Observation Stations issue 32 (1963) and authors L.I. Medvedeva / B.A. Firago through journal catalogues",
+    "Cross-check whether the 1963 UAH digest refers to the same NAFA equipment or a distinct study before merging genealogies",
+    "Only if original data identify target, station, UTC and instrument should any orbital constraint be considered"
+  ]
+}
