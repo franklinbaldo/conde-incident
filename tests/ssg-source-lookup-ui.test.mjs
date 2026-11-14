@@ -40,6 +40,14 @@ test('page is progressive, CSP-local and explicitly limits inference',()=>{
   assert.match(loader,/mixed-snapshot/);
 });
 
+test('source lookup announces concise status without replaying the full SHA-256 result list',()=>{
+  const region=page.match(/<section id="source-lookup-results"[^>]*>/)?.[0]??'';
+  assert.match(region,/aria-label="Referências da fonte selecionada"/);
+  assert.doesNotMatch(region,/aria-live=|aria-atomic=/);
+  assert.match(page,/id="source-lookup-status" role="status" aria-live="polite"/);
+  assert.match(ui,/status\.textContent=source[\s\S]*?vínculo\(s\) curado\(s\)/);
+});
+
 test('shareable reverse-source selection trusts only verified IDs, preserves unrelated URL state',()=>{
   const known=new Map(index.sources.map(s=>[s.source_id,s]));
   const id=index.sources[0].source_id;
