@@ -102,10 +102,10 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 min-w-0">
         {/* Controls (7 Cols) */}
         <div className="lg:col-span-7 min-w-0 bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6 space-y-5">
-          <h3 className="text-sm font-bold text-zinc-100 flex flex-wrap items-center gap-2 min-w-0 break-words">
+          <h2 className="text-sm font-bold text-zinc-100 flex flex-wrap items-center gap-2 min-w-0 break-words">
             <Gauge className="w-4 h-4 text-cyan-400" />
             <span>{isPt ? 'Parâmetros Físicos e Ambientais de 1963' : '1963 Physical & Environmental Parameters'}</span>
-          </h3>
+          </h2>
 
           {/* Scale Height Slider */}
           <div className="space-y-2">
@@ -205,9 +205,9 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-2 min-w-0">
               <Calendar className="w-4 h-4 text-cyan-400" />
-              <h3 className="text-sm font-bold text-zinc-100">
+              <h2 className="text-sm font-bold text-zinc-100">
                 {isPt ? 'Cenários ilustrativos de sensibilidade' : 'Illustrative sensitivity scenarios'}
-              </h3>
+              </h2>
             </div>
             <p className="text-xs text-zinc-400">
               {isPt
@@ -252,10 +252,10 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
 
       {/* Thermospheric Density Profile Card */}
       <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6 space-y-3">
-        <h3 className="text-sm font-bold text-zinc-100 flex items-center gap-2">
+        <h2 className="text-sm font-bold text-zinc-100 flex items-center gap-2">
           <Layers className="w-4 h-4 text-cyan-400" />
           <span>{isPt ? 'Perfil de Densidade Atmosférica (80 a 350 km)' : 'Atmospheric Density Profile (80 to 350 km)'}</span>
-        </h3>
+        </h2>
         <div className="grid grid-cols-1 min-[420px]:grid-cols-2 sm:grid-cols-5 gap-3 font-mono text-xs">
           {altitudeProfile.map((pt) => (
             <div key={pt.alt} className="p-2.5 rounded-lg bg-zinc-950 border border-zinc-800">
