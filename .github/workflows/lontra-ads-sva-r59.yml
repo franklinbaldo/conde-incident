@@ -1,0 +1,35 @@
+name: C241 ADS Soviet Astronomy digitization R59
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/ads_soviet_astronomy_scan_locator_C241_LONTRA_R59.json
+      - tools/audit_ads_sva_r59.py
+      - tests/test_ads_sva_r59.py
+      - .github/workflows/lontra-ads-sva-r59.yml
+  push:
+    branches: [main]
+    paths:
+      - research/tle_custody/ads_soviet_astronomy_scan_locator_C241_LONTRA_R59.json
+      - tools/audit_ads_sva_r59.py
+      - tests/test_ads_sva_r59.py
+      - .github/workflows/lontra-ads-sva-r59.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  index-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Confirm audited HEAD
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Audit and falsification tests
+        run: |
+          set -euo pipefail
+          python3 -m tools.audit_ads_sva_r59
+          python3 -m unittest discover -s tests -p 'test_ads_sva_r59.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_ads_sva_r59.py' -v

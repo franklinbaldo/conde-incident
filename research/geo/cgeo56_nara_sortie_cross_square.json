@@ -1,0 +1,103 @@
+{
+  "schema": "conde.cgeo.nara-flight-header-pairs/v1",
+  "id": "CGEO-56",
+  "parent": "CGEO-55",
+  "source": "NARA RG373, series 306062, microfilm M1765, reel 317, file units 46716637 and 46716877",
+  "method": "Human reading of full-resolution original JPEG headers and plotting symbols; no OCR; no georeferencing",
+  "scans": [
+    {
+      "sheet": "00248",
+      "square": "11S037W",
+      "bytes": 2519162,
+      "sha256": "21016e6c141d5ac495893e13bc9a4b01bbf992e596416054fd0c03c164f3d2a0",
+      "op_file_no": "125374",
+      "orgn_sortie_reading": "ROLL 601 2-3017",
+      "header_date_reading": "7, 14, 18, 20 SEP 42",
+      "header_reading_status": "provisional",
+      "additional_visible_note": "ROLL 1 / ROLL 2",
+      "frame_label_16_visible": true
+    },
+    {
+      "sheet": "00431",
+      "square": "12S037W",
+      "bytes": 2487325,
+      "sha256": "b4422aad1d0ca1a53dbb762c20e653cb34c42785abcd4e162e3f943300c6227d",
+      "op_file_no": "125374",
+      "orgn_sortie_reading": "ROLL 601 2-3017",
+      "header_date_reading": "7, 14, 18, 20 SEP 42",
+      "header_reading_status": "provisional",
+      "additional_visible_note": "ROLL 4",
+      "frame_label_16_visible": true
+    },
+    {
+      "sheet": "00247",
+      "square": "11S037W",
+      "bytes": 2497049,
+      "sha256": "b671f0378e2b57502f616be5aaa57ae45041048aa576bbf04c6eed9a6843a404",
+      "op_file_no": "125370",
+      "orgn_sortie_reading": "ROLL 502 2-3017",
+      "header_date_reading": "27 SEP 42",
+      "header_reading_status": "provisional",
+      "additional_visible_note": "ROLL 1 / ROLL 2",
+      "frame_label_16_visible": false
+    },
+    {
+      "sheet": "00432",
+      "square": "12S037W",
+      "bytes": 2420414,
+      "sha256": "fcd14c0cd438c40e4ce6733c896869d12e8899e31d2cf9c5cb62ce03ba4af6b9",
+      "op_file_no": "125370",
+      "orgn_sortie_reading": "ROLL 502 2-3017",
+      "header_date_reading": "27 SEP 42",
+      "header_reading_status": "provisional",
+      "additional_visible_note": "ROLL 2",
+      "frame_label_16_visible": false
+    }
+  ],
+  "pairs": [
+    {
+      "op_file_no": "125374",
+      "sheets": [
+        "00248",
+        "00431"
+      ],
+      "shared_orgn_sortie_reading": "ROLL 601 2-3017",
+      "shared_date_header_reading": "7, 14, 18, 20 SEP 42",
+      "interpretation": "multi-field same-flight-family candidate, not a validated common photo or spot"
+    },
+    {
+      "op_file_no": "125370",
+      "sheets": [
+        "00247",
+        "00432"
+      ],
+      "shared_orgn_sortie_reading": "ROLL 502 2-3017",
+      "shared_date_header_reading": "27 SEP 42",
+      "interpretation": "multi-field same-flight-family candidate, not a validated common photo or spot"
+    }
+  ],
+  "cross_sheet_frame_label_example": {
+    "frame_label": "16",
+    "sheets": [
+      "00248",
+      "00431"
+    ],
+    "meaning": "same written number in different index sheets; does not establish an identical photographic frame or physical film roll"
+  },
+  "counts": {
+    "header_records": 4,
+    "multi_field_cross_square_pairs": 2,
+    "original_individual_aerial_photographs_acquired": 0,
+    "demonstrated_1963_ground_control_points": 0
+  },
+  "limits": {
+    "verified_spot_number": null,
+    "negative_can": null,
+    "individual_exposure_utc": null,
+    "roll_to_exposure_mapping": null,
+    "footprint_georeferenced": null,
+    "conde_1963_city_center": null,
+    "alleged_fall_location": null,
+    "orbital_constraint_activated": false
+  }
+}
