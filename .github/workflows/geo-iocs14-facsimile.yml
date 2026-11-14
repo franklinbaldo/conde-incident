@@ -1,0 +1,41 @@
+name: CGEO-41 | IOCS 14 facsimile verified custody
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo41_iocs14_facsimile.*'
+      - 'tools/cgeo41_iocs14_facsimile.py'
+      - 'tests/test_cgeo41_iocs14_facsimile.py'
+      - '.github/workflows/geo-iocs14-facsimile.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo41_iocs14_facsimile.*'
+      - 'tools/cgeo41_iocs14_facsimile.py'
+      - 'tests/test_cgeo41_iocs14_facsimile.py'
+      - '.github/workflows/geo-iocs14-facsimile.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-primary-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact checkout
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Contract and adversarial controls
+        run: |
+          python3 -m tools.cgeo41_iocs14_facsimile
+          python3 -m unittest discover -s tests -p 'test_cgeo41_iocs14_facsimile.py' -v
+      - name: Retrieve original GLAM PDF and verify all bytes
+        run: |
+          curl -fsSL --retry 2 --connect-timeout 20 --max-time 90 \
+            'https://upload.wikimedia.org/wikipedia/commons/6/6c/Mapa_de_parte_dos_Estados_de_Pernambuco%2C_Piau%C3%AD_e_Bahia_1912.pdf' \
+            -o "$RUNNER_TEMP/iocs14.pdf"
+          python3 -m tools.cgeo41_iocs14_facsimile --pdf "$RUNNER_TEMP/iocs14.pdf"

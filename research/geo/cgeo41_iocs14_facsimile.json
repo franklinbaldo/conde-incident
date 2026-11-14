@@ -1,0 +1,67 @@
+{
+  "schema": "conde.geo.iocs14-facsimile-custody/v1",
+  "id": "CGEO-41",
+  "previous_id": "CGEO-40",
+  "acquired_on": "2026-11-14",
+  "source": {
+    "work_title": "Mapa de parte dos Estados de Pernambuco, Piauí e Bahia",
+    "issuing_body": "Inspetoria de Obras Contra as Secas",
+    "publication_number": 14,
+    "series": "1-G",
+    "nominal_date": "1912-03",
+    "nominal_scale": "1:500000",
+    "original_archive": "Arquivo Nacional",
+    "original_accession": "BR RJANRIO DS.0.MAP.22",
+    "portal": "Wikimedia Commons GLAM com Arquivo Nacional",
+    "landing_page": "https://commons.wikimedia.org/wiki/File:Mapa_de_parte_dos_Estados_de_Pernambuco,_Piau%C3%AD_e_Bahia_1912.pdf",
+    "download_url": "https://upload.wikimedia.org/wikipedia/commons/6/6c/Mapa_de_parte_dos_Estados_de_Pernambuco%2C_Piau%C3%AD_e_Bahia_1912.pdf",
+    "source_kind": "DIGITIZED_MAP_FACSIMILE",
+    "pdf_acquired": true,
+    "pdf_bytes": 1803202,
+    "pdf_sha256": "f0ca966501154833d8fd011b4e00c5e50a9c148b20233f3578dc94706c10340f",
+    "pdf_sha1": "3920fdc7e8db516af62eb8f60ac2089ed5c55646",
+    "pages": 1,
+    "source_raster_dimensions_px": [
+      4870,
+      4868
+    ],
+    "wikimedia_upload_date": "2021-10-14",
+    "pdf_digitization_metadata_date": "2018-07-17",
+    "visual_cartographic_inspection_completed": false,
+    "selected_conde_footprint_verified": false
+  },
+  "lineage": {
+    "iocs15": {
+      "title": "Mapa da bacia do rio Itapicuru, estado da Bahia",
+      "year": 1912,
+      "publication_number": 15,
+      "archive_accession": "BR AN,RIO F4.0.MAP.448",
+      "facsimile_acquired": false
+    },
+    "iocs29": {
+      "title": "Mapa parcial do estado da Bahia",
+      "year": 1913,
+      "publication_number": 29,
+      "archive_accession": "BR RJANRIO DS.0.MAP.5"
+    },
+    "relation_to_iocs15": "DISTINCT_PUBLICATIONS_SAME_INSTITUTION_NOT_PROVEN_INDEPENDENT_SURVEYS",
+    "relation_to_iocs29": "DOCUMENTARY_GENEALOGY_NOT_DEMONSTRATED",
+    "direct_cartographic_reuse_proven": false,
+    "independent_observations_proven": false
+  },
+  "limits": {
+    "conde_present_on_map": null,
+    "coverage_of_conde": null,
+    "datum": null,
+    "georeferenced_bounds": null,
+    "center_1963": null,
+    "reported_fall_location": null,
+    "reported_fall_uncertainty_m": null,
+    "can_constrain_orbital_reentry": false
+  },
+  "next_actions": [
+    "Inspecionar integralmente o raster de IOCS nº 14 e confirmar extensão, referências, topônimos e legendas",
+    "Recuperar imagem efetiva do IOCS nº 15 e comparar feições, editor e área coberta, sem presumir independência",
+    "Continuar a aquisição do fotoíndice USAF 63-32 (issue #558)"
+  ]
+}
