@@ -220,7 +220,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                       menu.querySelector<HTMLElement>('summary')?.focus();
                     }
                   }}
-                  className={`flex min-h-11 items-center gap-3 rounded-md border px-3 py-2 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 \${
+                  className={`flex min-h-11 items-center gap-3 rounded-md border px-3 py-2 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 ${
                     isActive
                       ? 'border-cyan-800 bg-zinc-800 text-cyan-300'
                       : 'border-zinc-800 bg-zinc-950 text-zinc-200 hover:bg-zinc-800'
