@@ -1,5 +1,6 @@
 import Conde1963.Core
 import Conde1963.CircularMCMC
+import Conde1963.HastingsKernel
 import Conde1963.SsrSurvivorIntervals
 import Conde1963.RelativeTrajectories
 import Conde1963.SsrNovember
