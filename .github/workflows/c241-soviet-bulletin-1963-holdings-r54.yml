@@ -1,0 +1,36 @@
+name: C241 Soviet optical bulletin holdings R54
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/soviet_optical_bulletin_holdings_C241_LONTRA_R54.json
+      - research/tle_custody/evidence_matrix_C241-LONTRA-R54_2026-11-14.md
+      - tools/audit_soviet_1963_bulletin_holdings_r54.py
+      - tests/test_soviet_1963_bulletin_holdings_r54.py
+      - .github/workflows/c241-soviet-bulletin-1963-holdings-r54.yml
+  push:
+    branches: [main]
+    paths:
+      - research/tle_custody/soviet_optical_bulletin_holdings_C241_LONTRA_R54.json
+      - research/tle_custody/evidence_matrix_C241-LONTRA-R54_2026-11-14.md
+      - tools/audit_soviet_1963_bulletin_holdings_r54.py
+      - tests/test_soviet_1963_bulletin_holdings_r54.py
+      - .github/workflows/c241-soviet-bulletin-1963-holdings-r54.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Exact HEAD check
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Verify epistemic guards in normal and optimized Python
+        run: |
+          python3 -m unittest discover -s tests -p test_soviet_1963_bulletin_holdings_r54.py -v
+          python3 -O -m unittest discover -s tests -p test_soviet_1963_bulletin_holdings_r54.py -v
+          python3 -m tools.audit_soviet_1963_bulletin_holdings_r54
