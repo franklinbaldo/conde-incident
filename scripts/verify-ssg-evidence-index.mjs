@@ -1,5 +1,7 @@
 /** Verify the exact JSON-to-SSG documentary route contract; no physical inference. */
 import assert from 'node:assert/strict';
+import {tracked,exactKeys,manifestKeys,curatedKeys,shardMetaKeys,gapKeys}
+  from './ssg-evidence-index-schema.mjs';
 import {createHash} from 'node:crypto';
 import {existsSync, readFileSync, readdirSync} from 'node:fs';
 import {join, resolve} from 'node:path';
@@ -16,9 +18,6 @@ const slug=value=>value.toLowerCase().replaceAll('_','-');
 const link=(kind,id)=>PREFIX+kind+'/'+slug(id)+'/';
 const idPath=id=>PREFIX+id.toLowerCase().replace('#','-')+'/';
 const key=row=>JSON.stringify([row.snapshot_ref,row.source_id]);
-const tracked=['occurrence','snapshot_ref','source_id','source_family','work_id',
-  'source_status','relation','scope','locator','claim_text','citation_url',
-  'row_sha256','matrix_line'];
 const take=(row,fields)=>Object.fromEntries(fields.map(name=>[name,row[name]]));
 // Revalidate the dependency paths in the independent JS publication gate.
 // Comparing shard equality alone accepts two consistently forged feeds.
@@ -121,10 +120,12 @@ export function readBundle(root='.') {
 
 export function audit(bundle) {
   const {citations,lineage,manifest,shards,gapShards,matrixBytes,sourceBytes,pages}=bundle;
+  exactKeys(manifest,manifestKeys,'manifest');
   assert.equal(manifest.schema,'conde.evidence-index/v1');
   assert.equal(manifest.matrix_git_blob_sha1,citations.matrix_git_blob_sha1);
   assert.equal(gitBlob(matrixBytes),manifest.matrix_git_blob_sha1,
     'Frozen matrix Git blob mismatch');
+  exactKeys(manifest.matrix_source,['path','bytes','sha256'],'matrix_source');
   assert.deepEqual(manifest.matrix_source,{
     path:MATRIX,bytes:matrixBytes.length,sha256:hash(matrixBytes),
   },'Frozen matrix SHA-256/size/path mismatch');
@@ -156,6 +157,7 @@ export function audit(bundle) {
   assert.equal(gapShards.length,manifest.unmapped_shards.length);
   const publishedGaps=[];
   for (const [i,meta] of manifest.unmapped_shards.entries()) {
+    exactKeys(meta,shardMetaKeys,'gap shard metadata');
     const expectedPath=`public/data/conde-evidence-gaps/part-${String(i+1).padStart(3,'0')}.json`;
     assert.equal(meta.path,expectedPath,'Unexpected gap shard path/order');
     const part=gapShards[i];
@@ -167,6 +169,7 @@ export function audit(bundle) {
     assert.equal(parsed.schema,'conde.evidence-gap-shard/v1');
     assert.deepEqual(Object.keys(parsed).sort(),['records','schema']);
     assert.equal(parsed.records.length,meta.record_count);
+    for (const row of parsed.records) exactKeys(row,gapKeys,'gap record');
     publishedGaps.push(...parsed.records);
   }
   assert.deepEqual(publishedGaps,expectedGaps,
@@ -183,11 +186,13 @@ export function audit(bundle) {
     citations.post_matrix_occurrences.map(item=>item.id));
   const sourcePaths=[DATA+'conde-source-citations.json',DATA+'conde-declared-dependence.json'];
   assert.deepEqual(manifest.source_files.map(file=>file.path),sourcePaths);
+  for (const file of manifest.source_files) exactKeys(file,['path','sha256'],'source file metadata');
   for (const file of manifest.source_files)
     assert.equal(file.sha256,hash(sourceBytes.get(file.path)), 'Source SHA mismatch: '+file.path);
   assert.equal(shards.length,manifest.shards.length);
   const actual=new Map();
   for (const [i,meta] of manifest.shards.entries()) {
+    exactKeys(meta,shardMetaKeys,'curated shard metadata');
     assert.equal(meta.path,`public/data/conde-evidence-index/part-${String(i+1).padStart(3,'0')}.json`,
       'Unexpected shard path/order');
     const part=shards[i];
@@ -199,6 +204,7 @@ export function audit(bundle) {
     assert.equal(parsed.schema,'conde.evidence-index-shard/v1');
     assert.equal(parsed.records.length,meta.record_count);
     for (const row of parsed.records) {
+      exactKeys(row,curatedKeys,'curated record');
       assert.ok(!actual.has(key(row)),'Duplicate JSON key: '+key(row));
       actual.set(key(row),row);
     }
