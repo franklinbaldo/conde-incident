@@ -1,0 +1,22 @@
+/* SSG Conde design tokens. No runtime or CSS processor required. */
+:root {
+  color-scheme: dark;
+  --color-page: #11141b;
+  --color-surface: #1a1d25;
+  --color-text: #e8e7e4;
+  --color-subtle-text: #aaa9ac;
+  --color-border: #343741;
+  --color-link: #b8dce0;
+  --color-focus: #ffd278;
+  --font-reading: Georgia, serif;
+  --font-interface: system-ui, sans-serif;
+  --measure-reading: 760px;
+  --measure-layout: 960px;
+  /* Compatibility API for existing SSG widgets and editorial components. */
+  --paper: var(--color-page);
+  --panel: var(--color-surface);
+  --ink: var(--color-text);
+  --muted: var(--color-subtle-text);
+  --line: var(--color-border);
+  --accent: var(--color-link);
+}
