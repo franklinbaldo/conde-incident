@@ -23,6 +23,10 @@ test('post-matrix SSG preserves archived source, frozen IDs and epistemic limit'
   assert.match(page,/C232#1/);
   assert.match(page,/C01#1/);
   assert.match(page,/Independência jornalística/);
+  assert.match(page,/Data documental do telegrama:.*1963-11-14/);
+  assert.match(page,/Data jornalística apenas citada:.*1963-11-08/);
+  assert.match(page,/Edição, página e hora do jornal: não verificadas/);
+
   assert.match(page,/Próxima fonte necessária/);
   assert.match(page,/Consultar identificadores documentais/);
   assert.match(page,/evidencias\/arquivo\/fontes\//);
@@ -72,6 +76,21 @@ test('post-matrix rejects links, paths and digests that fail custody',()=>{
   const rendered=postMatrixPage(xss,lineage);
   assert.doesNotMatch(rendered,/<script>/);
   assert.match(rendered,/&lt;script&gt;/);
+});
+
+test('post-matrix chronology is source-locked and never invents newspaper timing',()=>{
+  for(const [key,value,pattern] of [
+    ['telegram_date','1963-11-08',/data do telegrama diverge/],
+    ['reported_newspaper_date','1963-11-14',/data jornalística citada diverge/],
+    ['newspaper_publication_time','23:30',/metadado jornalístico não verificado/],
+    ['newspaper_page','1',/metadado jornalístico não verificado/],
+    ['newspaper_edition','matutina',/metadado jornalístico não verificado/],
+    ['quoted_source_id','O_GLOBO_19631108_VERIFIED',/obra jornalística ainda não autenticada/],
+  ]) {
+    const mutated=clone(citations);
+    mutated.post_matrix_occurrences[0][key]=value;
+    assert.throws(()=>postMatrixPage(mutated,lineage),pattern,key);
+  }
 });
 
 test('post-matrix cross-checks digital object against the actual archived report',()=>{
@@ -124,6 +143,9 @@ test('post-matrix built HTML binds navigation, source identity and custody in ea
   const source='<a href="'+item.report_citation_url+'">NARA</a>';
   const custody='<a href="https://github.com/franklinbaldo/conde-incident/blob/main/'+
     item.report_path+'">Relatório</a>';
+  const telegramDate=field('Data documental do telegrama',item.telegram_date);
+  const citedDate=field('Data jornalística apenas citada',item.reported_newspaper_date);
+  const unknown='<p>Edição, página e hora do jornal: não verificadas</p>';
   const state=field('Estado canônico',item.status);
   const independence=field('Independência jornalística',item.journalistic_source_independence);
   const imageDigest=field('SHA-256 da imagem arquivística',item.image_sha256);
@@ -131,8 +153,17 @@ test('post-matrix built HTML binds navigation, source identity and custody in ea
   const heading='<h3 id="'+postMatrixAnchor(item.id)+'" tabindex="-1">'+item.id+'</h3>';
   const base='<main><a href="/conde-incident/evidencias/matriz/">Matriz</a>'+
     '<a href="/conde-incident/evidencias/arquivo/fontes/">Fontes</a>'+
-    heading+state+independence+imageDigest+report+source+custody+links+'</main>';
+    heading+telegramDate+citedDate+unknown+state+independence+imageDigest+report+source+custody+links+'</main>';
   assert.equal(auditBuiltPostMatrix(base,citations),expected.length);
+  for(const [original,changed] of [
+    [telegramDate,field('Data documental do telegrama','1963-11-08')],
+    [citedDate,field('Data jornalística apenas citada','1963-11-14')],
+    [unknown,'<div hidden>'+unknown+'</div>'],
+    [telegramDate,'<div hidden>'+telegramDate+'</div><span>'+item.telegram_date+'</span>'],
+  ])
+    assert.throws(()=>auditBuiltPostMatrix(base.replace(original,changed),citations),
+      /Cronologia: limites temporais|campo visível vinculado/, 'visible and bound temporal claim');
+
   assert.throws(()=>auditBuiltPostMatrix(base.replace('<a href="/conde-incident/evidencias/arquivo/fontes/">Fontes</a>',''),citations),
     /falta retorno visível ao índice de fontes/);
 
