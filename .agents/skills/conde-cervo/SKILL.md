@@ -39,3 +39,10 @@ A interface de inferência angular mantém previsões H congeladas: o motor do C
 - Testar conteúdo bruto e colunas, preservar linha original e validar hash do arquivo integral opcionalmente.
 - Cobertura retrospectiva completa não é disponibilidade de vintage as-of; trailing de 81 dias não substitui entrada centrada de NRLMSISE sem calibração.
 - Conectar os resultados ao grafo, mantendo parâmetros atmosféricos e MCMC do 528 em NOT_RUN sem observáveis próprios.
+
+## C241: teste de transporte antes de transferir densidade entre objetos
+
+- Em holdouts entre 527/528, decompor o log-proxy de arrasto em massa, CdA, nível de densidade comum e desvio espacial/temporal. Não tratar o nível comum como fato entre órbitas diferentes.
+- Calcular a diferença-em-diferenças coetânea, preservando pares de sensores e relógios. Com desvio relativo estável ela pode ser zero sem massa identificada; com desvio variável, um controle em e1 não identifica o proxy do 528 em e1.
+- Testar o posto exato para hipóteses aninhadas e requerer calibração independente do desvio para transferir controle entre trajetórias. Pré-registro e erro instrumental precedem qualquer alegação de refutação empírica.
+- Referências: `tools/drag_transport_difference_in_differences_C241.py`, guia C241 e issue Cervo #2. MCMC histórico NOT_RUN.

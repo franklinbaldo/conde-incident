@@ -3,15 +3,21 @@ on:
   pull_request:
     paths:
       - tools/drag_density_mass_gauge_C241.py
+      - tools/drag_transport_difference_in_differences_C241.py
       - tests/test_drag_density_mass_gauge_C241.py
+      - tests/test_drag_transport_difference_in_differences_C241.py
       - research/statistics/C241_drag_density_mass_gauge.md
+      - research/statistics/C241_drag_transport_difference_in_differences.md
       - .github/workflows/c241-drag-density-mass-gauge.yml
   push:
     branches: [main]
     paths:
       - tools/drag_density_mass_gauge_C241.py
+      - tools/drag_transport_difference_in_differences_C241.py
       - tests/test_drag_density_mass_gauge_C241.py
+      - tests/test_drag_transport_difference_in_differences_C241.py
       - research/statistics/C241_drag_density_mass_gauge.md
+      - research/statistics/C241_drag_transport_difference_in_differences.md
       - .github/workflows/c241-drag-density-mass-gauge.yml
   workflow_dispatch:
 permissions:
@@ -30,7 +36,9 @@ jobs:
       - name: Unit tests and reproducible evidence
         run: |
           python3 -m unittest discover -s tests -p test_drag_density_mass_gauge_C241.py -v
+          python3 -m unittest discover -s tests -p test_drag_transport_difference_in_differences_C241.py -v
           python3 -m tools.drag_density_mass_gauge_C241 > "$RUNNER_TEMP/c241-gauge.json"
+          python3 -m tools.drag_transport_difference_in_differences_C241 > "$RUNNER_TEMP/c241-transport.json"
           python3 - "$RUNNER_TEMP/c241-gauge.json" <<'PY'
           import json, sys
           p = json.load(open(sys.argv[1], encoding="utf-8"))
@@ -41,4 +49,20 @@ jobs:
           assert p["historical_mcmc"] == "NOT_RUN"
           assert not p["historical_constraint_active"]
           assert p["historical_mass_posterior"] is None
+          PY
+      - name: Assert transport drift holdout and mass veto
+        run: |
+          python3 - "$RUNNER_TEMP/c241-transport.json" <<'PY'
+          import json,sys
+          p=json.load(open(sys.argv[1],encoding="utf-8"))
+          a=p["scenarios"]
+          assert a["shared"]["future_528_proxy_estimable_from_e0_and_527_e1"]
+          assert a["static_offset_uncalibrated"]["future_528_proxy_estimable_from_e0_and_527_e1"]
+          assert not a["epoch_offset_uncalibrated"]["future_528_proxy_estimable_from_e0_and_527_e1"]
+          assert a["epoch_offset_with_drift"]["future_528_proxy_estimable_from_e0_and_527_e1"]
+          assert not a["epoch_offset_with_drift"]["q528_estimable_after_calibrations"]
+          assert not p["historical_constraint_active"]
+          assert p["historical_mcmc"] == "NOT_RUN"
+          assert p["mass_posterior_528"] is None
+          assert p["conde_impact_probability"] is None
           PY
