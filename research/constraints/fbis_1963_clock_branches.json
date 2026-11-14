@@ -1,0 +1,81 @@
+{
+  "schema": "conde.fbis-clock-branches/v1",
+  "project_issue": 886,
+  "verification_status": "UNRESOLVED",
+  "source": {
+    "fbis_header_verbatim": "RIO DE JANEIRO RADIO TUPI IN PORTUGUESE 2330 8 NOV 63 W",
+    "fbis_footer_verbatim_unparsed": "9 NOV 111A RWS/GY",
+    "facsimile_url": "https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf",
+    "facsimile_sha256": "63654bcd90c0515f30e31ed511a12a05f170ff4470e3d8a6f40fca12012a1adb",
+    "same_broadcast_lineage_as_C01": true,
+    "reported_phenomenon_time": null,
+    "footer_clock_meaning": null,
+    "header_timezone_verified": false
+  },
+  "civil_time_basis": {
+    "decree": "Decreto 52.700 de 18/10/1963, art. 1",
+    "official_original_text": "https://www2.camara.leg.br/legin/fed/decret/1960-1969/decreto-52700-18-outubro-1963-393059-publicacaooriginal-1-pe.html",
+    "guanabara_utc_offset_on_1963_11_08_minutes": -120,
+    "bahia_utc_offset_on_1963_11_08_minutes": -180,
+    "guaranteed_by_decree": "Guanabara special time; Bahia excluded"
+  },
+  "anchor_rule": {
+    "preregistered_before_anchor_collection": true,
+    "required_independent_1963_items": 10,
+    "maximum_clock_difference_minutes": 5,
+    "choice": "Unanimity of 10+ independently time-anchored broadcasts",
+    "other_cities_or_eras": "OUTSIDE_SCOPE",
+    "recorded_independent_anchors": 0,
+    "decision": {
+      "status": "UNRESOLVED",
+      "qualifying_anchors": 0,
+      "reason": "LESS_THAN_10_INDEPENDENT_TIME_ANCHORS"
+    }
+  },
+  "conditional_branches": {
+    "GMT": {
+      "broadcast_utc_if_assumption_holds": "1963-11-08T23:30Z",
+      "broadcast_bahia_civil_if_assumption_holds": "1963-11-08T20:30",
+      "reported_event_latest_possible_utc_if_report_precedes_broadcast": "1963-11-08T23:30Z",
+      "condition": "2330 interpreted as GMT",
+      "plane_crossing_nominal_minutes_after_broadcast": 14,
+      "plane_crossing_nominal_order": "AFTER",
+      "plane_crossing_is_measured_event": false,
+      "orbit_exclusion_licensed": false
+    },
+    "RIO_LOCAL": {
+      "broadcast_utc_if_assumption_holds": "1963-11-09T01:30Z",
+      "broadcast_bahia_civil_if_assumption_holds": "1963-11-08T22:30",
+      "reported_event_latest_possible_utc_if_report_precedes_broadcast": "1963-11-09T01:30Z",
+      "condition": "2330 interpreted as Rio/Guanabara local DST",
+      "plane_crossing_nominal_minutes_after_broadcast": -106,
+      "plane_crossing_nominal_order": "BEFORE",
+      "plane_crossing_is_measured_event": false,
+      "orbit_exclusion_licensed": false
+    },
+    "OTHER_UNVERIFIED": {
+      "broadcast_utc_if_assumption_holds": null,
+      "broadcast_bahia_civil_if_assumption_holds": null,
+      "reported_event_latest_possible_utc_if_report_precedes_broadcast": null,
+      "orbit_exclusion_licensed": false
+    }
+  },
+  "modern_proxy_plane_comparison": {
+    "reference": "C241-PLANE-20261114 / Conde PR #892",
+    "object": "NORAD 528",
+    "geometry": "CGEO15-CAMERA-01 modern 2022 proxy, not Conde 1963",
+    "date": "1963-11-08",
+    "crossing_bahia_nominal": "1963-11-08T20:44:00",
+    "crossing_utc_nominal": "1963-11-08T23:44Z",
+    "not_a_dynamically_fitted_orbit": true
+  },
+  "limits": {
+    "event_could_precede_report_by_unknown_interval": true,
+    "actual_broadcast_time_not_independently_verified": true,
+    "footer_111A_is_not_parsed_as_a_timestamp": true,
+    "new_1963_independent_broadcast_anchors": 0,
+    "new_instrumental_orbital_measurements": 0,
+    "active_physical_lean_predicates": 0,
+    "physical_domain_effect": "THETA_UNCHANGED"
+  }
+}
