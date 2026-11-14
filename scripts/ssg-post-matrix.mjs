@@ -189,7 +189,7 @@ export function postMatrixPage(citations,lineage,bundle=readBundle()) {
       }
       assert.equal(current,path.upstream_source_id,'Pós-matriz: origem declarada divergente');
     }
-    lines.push('<span id="'+postMatrixAnchor(item.id)+'"></span>','',
+    lines.push('<span id="'+postMatrixAnchor(item.id)+'" tabindex="-1"></span>','',
       `### ${esc(item.id)}`,'',
       `**Fonte:** ${esc(item.source_id)} · **Família:** ${esc(dep.source_family)}`,'',
       `**Estado canônico:** \`${item.status}\` · **Independência jornalística:** \`${item.journalistic_source_independence}\`.`,'',
