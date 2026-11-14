@@ -231,3 +231,37 @@ test('geometry inference rejects negative B, invalid order and unknown shape',()
   }),/Ordered/);
   assert.throws(()=>conditionalCircularProjectedDiameter(.1,.2,'sphere-as-observed'),/declared/);
 });
+
+test("G79: projected area is invariant under JSON property order",()=>{
+  const normal={massMinKg:50,massMaxKg:200,bMinM2Kg:.001,bMaxM2Kg:.004,cdMin:1.5,cdMax:2.5};
+  const shuffled=JSON.parse(JSON.stringify({
+    bMinM2Kg:.001,cdMax:2.5,massMaxKg:200,
+    cdMin:1.5,massMinKg:50,bMaxM2Kg:.004,
+  }));
+  const a=conditionalProjectedAreaEnvelope(normal);
+  const b=conditionalProjectedAreaEnvelope(shuffled);
+  assert.deepEqual(b,a);
+  assert.equal(a.areaMinM2,.02);
+  assert.ok(Math.abs(a.areaMaxM2-8/15)<1e-12);
+  assert.equal(a.historicalConstraintActive,false);
+});
+
+test("G79: reject prototype basis and unaudited extra area keys",()=>{
+  for (const basis of ["toString","__proto__","constructor"]) {
+    assert.throws(()=>auditMassBudgetScenario(scenario({basis})),RangeError);
+    assert.throws(()=>conditionalTrackedMassEnvelope({
+      basis,maxAbsCatalogErrorKg:0,maxUntrackedKg:0,maxPriorLossKg:0,
+    }),RangeError);
+  }
+  const fields={massMinKg:50,massMaxKg:200,bMinM2Kg:.001,bMaxM2Kg:.004,cdMin:1.5,cdMax:2.5};
+  assert.throws(()=>conditionalProjectedAreaEnvelope({...fields, unexpected:null}),RangeError);
+  assert.throws(()=>conditionalProjectedAreaEnvelope({...fields, unexpected:9}),RangeError);
+  assert.throws(()=>conditionalProjectedAreaEnvelope({massMinKg:50}),RangeError);
+});
+
+test("G79: finite inputs cannot silently yield infinite projected area",()=>{
+  assert.throws(()=>conditionalProjectedAreaEnvelope({
+    massMinKg:1,massMaxKg:1e308,
+    bMinM2Kg:0,bMaxM2Kg:1e308,cdMin:1,cdMax:2,
+  }),RangeError);
+});
