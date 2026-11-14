@@ -31,7 +31,8 @@ export function auditLookup(manifest,shards,gapShards,lookupShards,matrixInvento
   for (const [i,meta] of manifest.lookup_shards.entries()) {
     exactKeys(meta,shardMetaKeys,'lookup metadata');
     assert.equal(meta.path,
-      'public/data/conde-evidence-lookup/part-'+String(i+1).padStart(3,'0')+'.json',
+      'public/data/conde-evidence-lookup/part-'+String(i+1).padStart(3,'0')+
+        '-'+meta.sha256+'.json',
       'Unexpected lookup path/order');
     const part=lookupShards[i];
     assert.equal(part.path,meta.path);

@@ -22,6 +22,8 @@ MANIFEST = Path('public/data/conde-evidence-index-manifest.json')
 MAX_SHARD_BYTES = 12_000  # Below repository-wide 20,000-byte rule.
 SHA256 = re.compile(r'[a-f0-9]{64}\Z')
 SHA1 = re.compile(r'[a-f0-9]{40}\Z')
+CONTENT_PART = re.compile(r'part-[0-9]{3}-([a-f0-9]{64})\.json\Z')
+LEGACY_PART = re.compile(r'part-[0-9]{3}\.json\Z')
 OCCURRENCE = re.compile(r'C[0-9]{1,3}#[1-9][0-9]*\Z')
 
 
@@ -32,6 +34,10 @@ def canonical(value):
 
 def digest(raw):
     return hashlib.sha256(raw).hexdigest()
+
+
+def addressed_part(directory, index, raw):
+    return directory / f'part-{index:03d}-{digest(raw)}.json'
 
 
 def require(condition, message):
@@ -195,8 +201,8 @@ def build(root=ROOT):
     artifacts = {}
     shard_refs = []
     for i, records in enumerate(chunks, 1):
-        relative = DEST / f'part-{i:03d}.json'
         raw = canonical({'schema': 'conde.evidence-index-shard/v1', 'records': records})
+        relative = addressed_part(DEST, i, raw)
         require(len(raw) <= MAX_SHARD_BYTES, 'Shard excedeu 12 kB')
         artifacts[relative] = raw
         shard_refs.append({'path': str(relative), 'sha256': digest(raw),
@@ -227,8 +233,8 @@ def build(root=ROOT):
         gap_chunks.append(chunk)
     gap_shards = []
     for i, records in enumerate(gap_chunks, 1):
-        relative = GAPS_DEST / f'part-{i:03d}.json'
         raw = canonical({'schema': 'conde.evidence-gap-shard/v1', 'records': records})
+        relative = addressed_part(GAPS_DEST, i, raw)
         require(len(raw) <= MAX_SHARD_BYTES, 'Shard de lacunas excedeu 12 kB')
         artifacts[relative] = raw
         gap_shards.append({'path': str(relative), 'sha256': digest(raw),
@@ -260,8 +266,8 @@ def build(root=ROOT):
         lookup_chunks.append(chunk)
     lookup_shards = []
     for index, group in enumerate(lookup_chunks, 1):
-        relative = LOOKUP_DEST / f'part-{index:03d}.json'
         raw = canonical({'schema': schema, 'records': group})
+        relative = addressed_part(LOOKUP_DEST, index, raw)
         require(len(raw) <= MAX_SHARD_BYTES, 'Shard de busca excedeu 12 kB')
         artifacts[relative] = raw
         lookup_shards.append({'path': str(relative), 'sha256': digest(raw),
@@ -300,12 +306,12 @@ def build(root=ROOT):
 
 
 def sync(artifacts, root=ROOT, check=False):
-    """Stage complete outputs before replacing any published file.
+    """Publish immutable SHA-addressed parts before swapping the mutable manifest.
 
-    The manifest is committed last: a failed staging write must not expose
-    partial JSON or new metadata. Per-file replacement is atomic; publishing
-    multiple files is NOT a filesystem-wide transaction. Git/CI remains the
-    publication boundary for a coherent version of this directory.
+    Once written, historical digest-named shards stay readable for clients
+    holding a previous manifest. The manifest is the only mutable pointer.
+    A legacy part-001.json set is removed *only after* the first transition,
+    which cannot retroactively protect clients holding a legacy manifest.
     """
     folders = (DEST, GAPS_DEST, LOOKUP_DEST)
     existing = {p for folder in folders for p in (root / folder).glob('part-*.json')}
@@ -313,8 +319,31 @@ def sync(artifacts, root=ROOT, check=False):
     require(MANIFEST in artifacts, 'Manifesto obrigatório antes de publicar shards')
     require(all(p == MANIFEST or p.parent in folders for p in artifacts),
             'Artefato fora do diretório canônico de publicação')
+    for relative, raw in artifacts.items():
+        if relative == MANIFEST:
+            continue
+        match = CONTENT_PART.fullmatch(relative.name)
+        require(match is not None and match.group(1) == digest(raw),
+                'Shard sem endereço imutável válido: ' + str(relative))
+    # Fail closed on stale files: only digest-named *and digest-valid* history
+    # is retained. Legacy names are allowed solely for the one-time migration.
+    legacy = set()
+    for path in existing - expected:
+        match = CONTENT_PART.fullmatch(path.name)
+        if match:
+            require(digest(path.read_bytes()) == match.group(1),
+                    'Shard histórico com digest adulterado: ' + str(path))
+        elif LEGACY_PART.fullmatch(path.name) and not check:
+            legacy.add(path)
+        else:
+            require(False, 'Lista de shards contém arquivo não endereçado: ' + str(path))
+    # Existing digest-named files may never change in place.
+    for path in expected & existing:
+        relative = path.relative_to(root)
+        require(path.read_bytes() == artifacts[relative],
+                'Shard imutável divergente: ' + str(relative))
     if check:
-        require(existing == expected, 'Lista de shards desatualizada')
+        require(expected.issubset(existing), 'Lista de shards desatualizada')
         for relative, raw in artifacts.items():
             path = root / relative
             require(path.exists() and path.read_bytes() == raw,
@@ -323,23 +352,21 @@ def sync(artifacts, root=ROOT, check=False):
 
     base = root / 'public/data'
     base.mkdir(parents=True, exist_ok=True)
-    # Same filesystem as the published data so os.replace is atomic per file.
+    # Stage first, then install only new digest-named shards, manifest last.
     with tempfile.TemporaryDirectory(prefix='.conde-evidence-stage-', dir=base) as temp:
         stage = Path(temp)
         for relative, raw in artifacts.items():
             staged = stage / relative.relative_to('public/data')
             staged.parent.mkdir(parents=True, exist_ok=True)
             staged.write_bytes(raw)
-        # Never publish the manifest pointing at incompletely staged bytes.
         for relative in artifacts:
-            if relative == MANIFEST:
+            if relative == MANIFEST or root / relative in existing:
                 continue
             target = root / relative
             target.parent.mkdir(parents=True, exist_ok=True)
             os.replace(stage / relative.relative_to('public/data'), target)
         os.replace(stage / MANIFEST.relative_to('public/data'), root / MANIFEST)
-        # Remove obsolete shards only after the new manifest is in place.
-        for stale in sorted(existing - expected):
+        for stale in sorted(legacy):
             stale.unlink()
 
 

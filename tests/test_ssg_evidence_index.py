@@ -77,14 +77,17 @@ class EvidenceIndexTest(unittest.TestCase):
         self.assertEqual(artifacts, export.build(), 'Mesma fonte deve gerar bytes idênticos')
         export.sync(artifacts, check=True)
 
+    def named(self, folder, n, raw):
+        return export.addressed_part(folder, n, raw)
+
     def test_staged_publication_preserves_old_bytes_on_write_failure(self):
         # Reproduce a disk-write failure BEFORE the first published replacement.
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            initial = {export.DEST / 'part-001.json': b'old-shard\n',
+            initial = {self.named(export.DEST, 1, b'old-shard\n'): b'old-shard\n',
                        export.MANIFEST: b'old-manifest\n'}
             export.sync(initial, root=root)
-            updated = {export.DEST / 'part-001.json': b'new-shard\n',
+            updated = {self.named(export.DEST, 1, b'new-shard\n'): b'new-shard\n',
                        export.MANIFEST: b'new-manifest\n'}
             with patch.object(Path, 'write_bytes', side_effect=OSError('stage full')):
                 with self.assertRaisesRegex(OSError, 'stage full'):
@@ -94,32 +97,33 @@ class EvidenceIndexTest(unittest.TestCase):
             self.assertFalse(list((root / 'public/data').glob('.conde-evidence-stage-*')))
             export.sync(initial, root=root, check=True)
 
-    def test_manifest_is_promoted_last_and_stale_shards_removed_afterwards(self):
+    def test_manifest_is_promoted_last_and_previous_shards_retained(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            old = {export.DEST / 'part-001.json': b'old\n',
-                   export.DEST / 'part-002.json': b'stale\n',
+            old = {self.named(export.DEST, 1, b'old\n'): b'old\n',
+                   self.named(export.DEST, 2, b'stale\n'): b'stale\n',
                    export.MANIFEST: b'old-manifest\n'}
             export.sync(old, root=root)
-            revised = {export.DEST / 'part-001.json': b'revised\n',
+            revised = {self.named(export.DEST, 1, b'revised\n'): b'revised\n',
                        export.MANIFEST: b'new-manifest\n'}
             with patch.object(export.os, 'replace', wraps=export.os.replace) as replace:
                 export.sync(revised, root=root)
             targets = [call.args[1] for call in replace.call_args_list]
             self.assertEqual(targets[-1], root / export.MANIFEST)
-            self.assertFalse((root / export.DEST / 'part-002.json').exists())
+            self.assertTrue((root / self.named(export.DEST, 2, b'stale\n')).exists())
+            self.assertTrue((root / self.named(export.DEST, 1, b'old\n')).exists())
             export.sync(revised, root=root, check=True)
-            with self.assertRaisesRegex(ValueError, 'Lista de shards'):
+            with self.assertRaises(ValueError):
                 export.sync(old, root=root, check=True)
 
     def test_manifest_install_failure_retains_old_manifest_and_stale_shards(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            old = {export.DEST / 'part-001.json': b'old\n',
-                   export.DEST / 'part-002.json': b'stale\n',
+            old = {self.named(export.DEST, 1, b'old\n'): b'old\n',
+                   self.named(export.DEST, 2, b'stale\n'): b'stale\n',
                    export.MANIFEST: b'old-manifest\n'}
             export.sync(old, root=root)
-            revised = {export.DEST / 'part-001.json': b'changed\n',
+            revised = {self.named(export.DEST, 1, b'changed\n'): b'changed\n',
                        export.MANIFEST: b'new-manifest\n'}
             replace = export.os.replace
             def fail_manifest(src, dest):
@@ -130,7 +134,7 @@ class EvidenceIndexTest(unittest.TestCase):
                 with self.assertRaisesRegex(OSError, 'manifest write failed'):
                     export.sync(revised, root=root)
             self.assertEqual((root / export.MANIFEST).read_bytes(), b'old-manifest\n')
-            self.assertTrue((root / export.DEST / 'part-002.json').exists())
+            self.assertTrue((root / self.named(export.DEST, 2, b'stale\n')).exists())
             self.assertFalse(list((root / 'public/data').glob('.conde-evidence-stage-*')))
 
     def mutate_inputs(self, alter, edit_matrix=lambda raw: raw):
@@ -247,12 +251,59 @@ class EvidenceIndexTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             scratch = Path(directory)
             export.sync(artifacts, scratch)
-            target = scratch / export.GAPS_DEST / 'part-001.json'
+            target = scratch / json.loads(artifacts[export.MANIFEST])['unmapped_shards'][0]['path']
             data = json.loads(target.read_bytes())
             data['records'][0]['claim_text'] = 'Impacto físico confirmado'
             target.write_bytes(export.canonical(data))
-            with self.assertRaisesRegex(ValueError, 'Índice não reproduzível'):
+            with self.assertRaisesRegex(ValueError, 'imutável'):
                 export.sync(artifacts, scratch, check=True)
+
+    def test_previous_manifest_remains_readable_after_successful_switch(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            old_raw, new_raw = b'old\n', b'new\n'
+            old_path = self.named(export.DEST, 1, old_raw)
+            new_path = self.named(export.DEST, 1, new_raw)
+            export.sync({old_path: old_raw, export.MANIFEST: b'm1\n'}, root=root)
+            export.sync({new_path: new_raw, export.MANIFEST: b'm2\n'}, root=root)
+            self.assertEqual((root / old_path).read_bytes(), old_raw)
+            self.assertEqual((root / new_path).read_bytes(), new_raw)
+            export.sync({new_path: new_raw, export.MANIFEST: b'm2\n'}, root=root, check=True)
+            (root / old_path).write_bytes(b'tampered\n')
+            with self.assertRaisesRegex(ValueError, 'histórico'):
+                export.sync({new_path: new_raw, export.MANIFEST: b'm2\n'}, root=root, check=True)
+
+    def test_digest_named_shard_collision_fails_before_manifest_switch(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            raw = b'original\n'
+            path = self.named(export.DEST, 1, raw)
+            document = {path: raw, export.MANIFEST: b'manifest\n'}
+            export.sync(document, root=root)
+            (root / path).write_bytes(b'forged\n')
+            with self.assertRaisesRegex(ValueError, 'imutável'):
+                export.sync(document, root=root)
+            self.assertEqual((root / export.MANIFEST).read_bytes(), b'manifest\n')
+
+    def test_publish_rejects_unaddressed_new_parts(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            with self.assertRaisesRegex(ValueError, 'endereço imutável'):
+                export.sync({export.DEST / 'part-001.json': b'forged\n',
+                             export.MANIFEST: b'manifest\n'}, root=root)
+            self.assertFalse((root / export.MANIFEST).exists())
+
+    def test_one_time_legacy_migration_removes_old_numbered_files(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            legacy = root / export.DEST / 'part-001.json'
+            legacy.parent.mkdir(parents=True)
+            legacy.write_bytes(b'legacy\n')
+            raw = b'new\n'
+            path = self.named(export.DEST, 1, raw)
+            export.sync({path: raw, export.MANIFEST: b'new manifest\n'}, root=root)
+            self.assertFalse(legacy.exists())
+            self.assertEqual((root / path).read_bytes(), raw)
 
     def test_orphan_gap_chunk_rejected(self):
         artifacts = export.build()
