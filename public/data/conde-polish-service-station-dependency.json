@@ -1,0 +1,299 @@
+{
+  "activation": false,
+  "delta_links": 26,
+  "delta_orbital_constraints": 0,
+  "graph": [
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "ORIGINAL_1964_FACSIMILE",
+      "source": "PDF:POSTEPY-1964-XII-3",
+      "target": "DOC:C241-LONTRA-R65"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "MULTIYEAR_SUMMARY",
+      "source": "DOC:C241-LONTRA-R65",
+      "target": "AGG:POLISH-1957-1963"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "AGGREGATE_NOT_ANNUAL",
+      "source": "AGG:POLISH-1957-1963",
+      "target": "H:NOT_YEAR_1963_COUNT"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NO_TARGET_ROWS",
+      "source": "AGG:POLISH-1957-1963",
+      "target": "H:NOT_NORAD_528"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "STATION_ID_RANGE",
+      "source": "DOC:C241-LONTRA-R65",
+      "target": "IDS:COSPAR-1151-1162"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "IDENTIFIERS_NOT_MEASUREMENTS",
+      "source": "IDS:COSPAR-1151-1162",
+      "target": "H:NO_STATION_LOGS"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "REPORTED_METHOD_FAMILIES",
+      "source": "DOC:C241-LONTRA-R65",
+      "target": "METHOD:VISUAL-PHOTO-RADIO"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "METHOD_NOT_SENSOR",
+      "source": "METHOD:VISUAL-PHOTO-RADIO",
+      "target": "H:NO_INSTRUMENT_CALIBRATION"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "REPORTED_COORDINATION",
+      "source": "DOC:C241-LONTRA-R65",
+      "target": "COORD:MOSCOW"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "COORDINATION_NOT_INDEPENDENCE",
+      "source": "COORD:MOSCOW",
+      "target": "H:NO_INDEPENDENCE_PROOF"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "TARGET_ID_MISSING",
+      "source": "H:NOT_NORAD_528",
+      "target": "LATENT:POLAND:target_identity"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "RAW_RECORD_MISSING",
+      "source": "H:NO_STATION_LOGS",
+      "target": "LATENT:POLAND:station_log"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "CLOCK_CALIBRATION_MISSING",
+      "source": "H:NO_INSTRUMENT_CALIBRATION",
+      "target": "LATENT:POLAND:clock"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "REFERENCE_FRAME_MISSING",
+      "source": "H:NO_INSTRUMENT_CALIBRATION",
+      "target": "LATENT:POLAND:frame"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "UNCERTAINTY_MISSING",
+      "source": "H:NO_INSTRUMENT_CALIBRATION",
+      "target": "LATENT:POLAND:covariance"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "INDIVIDUAL_UTC_MISSING",
+      "source": "H:NOT_YEAR_1963_COUNT",
+      "target": "LATENT:POLAND:epoch"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "RAW_LINEAGE_MISSING",
+      "source": "H:NO_INDEPENDENCE_PROOF",
+      "target": "LATENT:POLAND:dependencies"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "TARGET_MISSING",
+      "source": "LATENT:POLAND:target_identity",
+      "target": "LEAN:candidatePolishStationObservation"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "LOG_MISSING",
+      "source": "LATENT:POLAND:station_log",
+      "target": "LEAN:candidatePolishStationObservation"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "UTC_CONVERSION_MISSING",
+      "source": "LATENT:POLAND:clock",
+      "target": "LEAN:candidatePolishStationObservation"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "FRAME_MISSING",
+      "source": "LATENT:POLAND:frame",
+      "target": "LEAN:candidatePolishStationObservation"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "ERROR_MODEL_MISSING",
+      "source": "LATENT:POLAND:covariance",
+      "target": "LEAN:candidatePolishStationObservation"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "EPOCH_MISSING",
+      "source": "LATENT:POLAND:epoch",
+      "target": "LEAN:candidatePolishStationObservation"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "INDEPENDENCE_UNVERIFIED",
+      "source": "LATENT:POLAND:dependencies",
+      "target": "LEAN:candidatePolishStationObservation"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NOT_PROMOTED",
+      "source": "LEAN:candidatePolishStationObservation",
+      "target": "PARAM:polish_optical_clock_sigma_528"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NOT_PROMOTED",
+      "source": "LEAN:candidatePolishStationObservation",
+      "target": "PARAM:polish_direction_sigma_528"
+    }
+  ],
+  "historical_mcmc": "NOT_RUN",
+  "id": "C241-ABELHA-R59-POLISH-SERVICE",
+  "independent_target_measurements_newly_recovered": 0,
+  "latents": [
+    {
+      "activation": false,
+      "id": "LATENT:POLAND:target_identity",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:POLAND:station_log",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:POLAND:clock",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:POLAND:frame",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:POLAND:covariance",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:POLAND:epoch",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:POLAND:dependencies",
+      "value": null
+    }
+  ],
+  "lean_candidate": {
+    "compiled_theorem_claimed": false,
+    "id": "candidatePolishStationObservation",
+    "missing_premises": [
+      "target_identity",
+      "station_log",
+      "clock",
+      "frame",
+      "covariance",
+      "epoch",
+      "dependencies"
+    ],
+    "status": "NOT_PROMOTED"
+  },
+  "matrix_C001_C238_unchanged": true,
+  "next_test": "Recover 1963 Polish station logs for COSPAR IDs 1151-1162; match a target identifier, exposure epoch, instrument, clock, frame, uncertainty, and raw-record dependencies.",
+  "number_of_historical_independent_528_measurements": null,
+  "occurrence_ids": [
+    "C241-LONTRA-R65"
+  ],
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "reported_service": {
+    "aggregate_count_lower_bound_exclusive": 25000,
+    "aggregate_scope": "MULTI_YEAR_MULTI_TARGET_ALL_STATIONS",
+    "cospar_station_identifier_range": [
+      1151,
+      1162
+    ],
+    "norad_528_observations_in_report": null,
+    "station_ids_are_observation_rows": false,
+    "stations_approx_before_1964": 10,
+    "stations_in_1964": 12
+  },
+  "schema": "conde.documentary-scientific-bridge/v1",
+  "simulator_parameters": [
+    {
+      "activation": false,
+      "id": "polish_optical_clock_sigma_528",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "polish_direction_sigma_528",
+      "value": null
+    }
+  ],
+  "source_family": "POLISH_SPACE_OBSERVATION_SERVICE",
+  "sources": [
+    {
+      "classification": "CONTEMPORANEOUS_AGGREGATE_NOT_INSTRUMENTAL_LOG",
+      "id": "C241-LONTRA-R65",
+      "manifest_sha256": "d1940d39f411e449572cc8c9848251e1d9223117733fb5aebe4afa3b92118473",
+      "original_pdf_bytes": 4882674,
+      "original_pdf_sha256": "0664d3134c15e999a67158c1dfd013a49e435fc00dbe86c78fc2b2452b526c94",
+      "path": "research/tle_custody/polish_observation_service_C241_LONTRA_R65.json",
+      "pdf_pages_one_based": [
+        30,
+        31
+      ],
+      "printed_pages": [
+        190,
+        191
+      ],
+      "report_year": 1964,
+      "reported_span": [
+        1957,
+        1963
+      ]
+    }
+  ]
+}
