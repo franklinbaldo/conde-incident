@@ -52,7 +52,7 @@ try {
         if (tab === 'summary' && width <= 390) {
           const scaled = await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
           const controls = [
-            page.getByRole('button', { name: 'Exportar código Python reprodutível' }),
+            page.getByRole('button', { name: 'Script Python' }),
             page.getByRole('button', { name: 'Português (Brasil)' }),
             page.getByRole('button', { name: 'English' }),
             page.locator('nav details summary'),
