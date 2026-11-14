@@ -1,0 +1,99 @@
+{
+  "counts": {
+    "active_orbital_constraints": 0,
+    "documentary_variables": 3,
+    "frozen_occurrences_linked": 3,
+    "independent_instrumental_sources": 0,
+    "source_works": 1
+  },
+  "edges": [
+    {
+      "activation": false,
+      "active_physical_constraint": false,
+      "dependency_type": "INSTITUTIONAL_OPERATIONAL_HISTORY",
+      "documentary_variable_id": "fbis_brazil_spoken_radio_monitoring_capacity",
+      "independent_instrument_1963": false,
+      "instrument_epoch_utc": null,
+      "matrix_line": 948,
+      "matrix_occurrence": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C212#1",
+      "matrix_row_sha256": "3caae1476507e1fe41a5dc0f3e38f0e9c03c6fe353dc208d816ee848338c4997",
+      "pdf_zero_based_index": 55,
+      "physical_domain_effect": "THETA_UNCHANGED",
+      "printed_page": 54,
+      "source_work_id": "CIA-RDP05-01429R000100010001-0",
+      "station_attributed_to_tupi": null,
+      "status": "CONNECTED_PENDING_ATTRIBUTION",
+      "tupi_reception_log": null,
+      "unknown_needed_for_attribution": "No 1963 Tupi reception station, date/time or raw audio located"
+    },
+    {
+      "activation": false,
+      "active_physical_constraint": false,
+      "dependency_type": "INSTITUTIONAL_OPERATIONAL_HISTORY",
+      "documentary_variable_id": "fbis_panama_1963_country_coverage",
+      "independent_instrument_1963": false,
+      "instrument_epoch_utc": null,
+      "matrix_line": 949,
+      "matrix_occurrence": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C213#1",
+      "matrix_row_sha256": "62e676593522977bda733aa3b16ecfda11b6c1267d025c28472211ccfb47cde2",
+      "pdf_zero_based_index": 70,
+      "physical_domain_effect": "THETA_UNCHANGED",
+      "printed_page": 69,
+      "source_work_id": "CIA-RDP05-01429R000100010001-0",
+      "station_attributed_to_tupi": null,
+      "status": "CONNECTED_PENDING_ATTRIBUTION",
+      "tupi_reception_log": null,
+      "unknown_needed_for_attribution": "Seventeen countries not enumerated; Brazil and Tupi attribution unproven"
+    },
+    {
+      "activation": false,
+      "active_physical_constraint": false,
+      "dependency_type": "INSTITUTIONAL_OPERATIONAL_HISTORY",
+      "documentary_variable_id": "fbis_1964_daily_report_editorial_selection",
+      "independent_instrument_1963": false,
+      "instrument_epoch_utc": null,
+      "matrix_line": 950,
+      "matrix_occurrence": "matrix:a7978c3a75a153b16ab70118a92c434bba674cb7:C214#1",
+      "matrix_row_sha256": "93b2603a1457f2e344b9f186a45f1ea46d4e70638db1c522fe441f29e086218c",
+      "pdf_zero_based_index": 6,
+      "physical_domain_effect": "THETA_UNCHANGED",
+      "printed_page": 5,
+      "source_work_id": "CIA-RDP05-01429R000100010001-0",
+      "station_attributed_to_tupi": null,
+      "status": "CONNECTED_PENDING_ATTRIBUTION",
+      "tupi_reception_log": null,
+      "unknown_needed_for_attribution": "1964 selection rate cannot be assigned to individual 1963 broadcasts"
+    }
+  ],
+  "epistemic_limits": {
+    "1964_editorial_fraction_not_1963_event_probability": true,
+    "negative_archive_search_not_negative_historical_event": true,
+    "new_528_tracking_observations": 0,
+    "new_instrumental_observations": 0,
+    "no_1963_tupi_original_audio": true,
+    "one_CIA_work_not_three_independent_sensors": true,
+    "panama_did_not_prove_tupi_interception": true,
+    "physical_domain_effect": "THETA_UNCHANGED",
+    "retrospective_1972_not_1963_measurement": true
+  },
+  "id": "C241-P42-FBIS-1972-C212-C214",
+  "matrix_git_blob_sha1": "a7978c3a75a153b16ab70118a92c434bba674cb7",
+  "schema": "conde.fbis-operational-lineage/v1",
+  "source": {
+    "author": "CIA Historical Staff",
+    "declassification_release_date": "2012-11-01",
+    "pages_visually_reinspected": [
+      5,
+      54,
+      69
+    ],
+    "publication_date": "1972-05",
+    "raw_pdf_bytes_replayed_this_run": false,
+    "source_class": "RETROSPECTIVE_PRIMARY_INSTITUTIONAL_HISTORY",
+    "source_count": 1,
+    "source_pdf_sha256": null,
+    "title": "Foreign Broadcast Information Service History, Part III: 1957-1967",
+    "url": "https://www.govinfo.gov/content/pkg/GOVPUB-PREX3-PURL-gpo254964/pdf/GOVPUB-PREX3-PURL-gpo254964.pdf",
+    "work_id": "CIA-RDP05-01429R000100010001-0"
+  }
+}
