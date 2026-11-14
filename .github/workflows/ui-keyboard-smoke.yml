@@ -37,6 +37,7 @@ on:
       - 'src/components/map/**'
       - 'tests/ui_keyboard_smoke.mjs'
       - 'tests/ui_mobile_sections_smoke.mjs'
+      - 'tests/ui_lab_language_smoke.mjs'
       - 'src/components/SourceCitationFeed.tsx'
       - 'tests/ui_documentary_archive_smoke.mjs'
       - 'tests/lab_python_export_failure_smoke.mjs'
@@ -106,6 +107,7 @@ on:
       - 'src/components/map/**'
       - 'tests/ui_keyboard_smoke.mjs'
       - 'tests/ui_mobile_sections_smoke.mjs'
+      - 'tests/ui_lab_language_smoke.mjs'
       - 'src/components/SourceCitationFeed.tsx'
       - 'tests/ui_documentary_archive_smoke.mjs'
       - 'tests/lab_python_export_failure_smoke.mjs'
@@ -185,6 +187,8 @@ jobs:
         run: node tests/ui_keyboard_smoke.mjs
       - name: Chromium native mobile section navigation (320/375/640)
         run: node tests/ui_mobile_sections_smoke.mjs
+      - name: Chromium PT/EN laboratory language, reload and native history (320/1440)
+        run: node tests/ui_lab_language_smoke.mjs
       - name: Chromium documentary archive provenance, links and reflow (320/390/1440)
         run: node tests/ui_documentary_archive_smoke.mjs
       - name: Chromium quota-free map 200% text reflow, SVG, dates and zoom (PT/EN)

@@ -6,6 +6,7 @@
 import React, { useState } from 'react';
 import { Navigation, type TabId } from './components/Navigation';
 import { mapTimeHref, parseLabRoute, tabHref } from './lib/tabRoutes';
+import { getLabLanguage, labLanguagePath, type LabLanguage } from './lib/labLanguage';
 import { skipToMain } from './lib/skipToMain';
 import { PythonExportBoundary, PythonExportFallback } from './components/PythonExportFallback';
 import { ExecutiveSummary } from './components/ExecutiveSummary';
@@ -26,7 +27,7 @@ const PythonScriptModal = React.lazy(() => import('./components/PythonScriptModa
 export default function App() {
   const [route, setRoute] = useState(() => parseLabRoute(window.location.hash));
   const activeTab = route.tab;
-  const [lang, setLang] = useState<'pt' | 'en'>('pt');
+  const [lang, setLang] = useState<LabLanguage>(() => getLabLanguage(window.location.search));
   const [sharedTimeMs, setSharedTimeMs] = useState<number>(
     route.timeMs ?? new Date('1963-10-27T14:40:16.132Z').getTime()
   );
@@ -47,16 +48,27 @@ export default function App() {
     const handleHashChange = () => {
       const next = parseLabRoute(window.location.hash);
       setRoute(next);
+      setLang(getLabLanguage(window.location.search));
       if (next.timeMs !== undefined) setSharedTimeMs(next.timeMs);
     };
     window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener('popstate', handleHashChange);
     handleHashChange();
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener('popstate', handleHashChange);
+    };
   }, []);
 
   React.useEffect(() => {
     document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
   }, [lang]);
+
+  // Language belongs to the shareable URL, not cookies or device storage.
+  const selectLanguage = (next: LabLanguage) => {
+    window.history.replaceState(window.history.state, '', labLanguagePath(window.location.href, next));
+    setLang(next);
+  };
 
   const navigateTab = (tab: TabId) => {
     const target = tabHref(tab);
@@ -89,7 +101,7 @@ export default function App() {
       <Navigation
         activeTab={activeTab}
         lang={lang}
-        setLang={setLang}
+        setLang={selectLanguage}
         onOpenPython={openPythonExport}
       />
 
