@@ -138,7 +138,6 @@ export const Navigation: React.FC<NavigationProps> = ({
           </a>
           {activeTab !== 'summary' && (
             <>
-              <span aria-hidden="true" className="text-zinc-600">|</span>
               <a
                 href={editorialContext.href}
                 aria-label={lang === 'pt' ? 'Abrir no Caderno: ' + editorialContext.pt : 'Open in Notebook: ' + editorialContext.en}
@@ -148,16 +147,13 @@ export const Navigation: React.FC<NavigationProps> = ({
               </a>
             </>
           )}
-          <span aria-hidden="true" className="text-zinc-600">|</span>
           <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-cyan-950/60 border border-cyan-800/80 text-cyan-300 font-mono font-medium">
             <Satellite className="w-3.5 h-3.5 animate-pulse" />
             <span>NORAD 528 (1963-003B)</span>
           </div>
-          <span className="text-zinc-600">|</span>
           <span className="text-zinc-400 hidden sm:inline">
             {lang === 'pt' ? 'Missão NRO 7153 (Thor-Agena D / OPS 0180)' : 'NRO mission 7153 (Thor-Agena D / OPS 0180)'}
           </span>
-          <span className="text-zinc-600 hidden sm:inline">|</span>
           <div className="flex items-center gap-1 text-amber-400/90 font-mono">
             <Calendar className="w-3.5 h-3.5" />
             <span>{lang === 'pt' ? 'NASA: dia catalogado 08/11/1963' : 'NASA: catalogued day 08 Nov 1963'}</span>
