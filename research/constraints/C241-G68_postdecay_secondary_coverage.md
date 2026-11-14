@@ -13,4 +13,19 @@ description: 'Audita cobertura dos TLEs secundários de 1963 em torno de 8/11 se
 - Operador: `tools/cross_object_epoch_support.py` estende a auditoria SHA já existente com a janela pós-dia e colapso de duplicatas. Conta separadamente épocas **anteriores a 08/11**, **durante 08/11** e **desde 09/11**, com índices originais por linha, primeiro/último suporte e lacuna temporal observada no *catálogo*. Não interpola vetores nem aplica SGP4/J2/arrasto.
 - Reexecução no CI já existente `.github/workflows/tle-cross-epoch-availability.yml`: controles adversariais, download, verificação SHA, ledger e artefato JSON por commit; sem novo workflow nem alteração de permissões. Testes locais também executados com `python -O`.
 
+
+## Resultado do replay SHA-pinned (14/11/2026)
+
+[CI no HEAD `41f8c85b`](https://github.com/franklinbaldo/conde-incident/actions/runs/43598248409) executou os 12 testes novos, gerou o CSV derivado SHA-256 `3940715d...` e publicou o artefato `c241-l3-temporal-availability-41f8c85b...` com `cross_object_epoch_support.json` de 37.177 bytes. Valores abaixo resultam de **épocas de catálogo secundário distintas**, não exposições instrumentais:
+
+| NORAD | Antes de 08/11 | No próprio 08/11 | Desde 09/11 | Última antes do dia | Primeira após o dia |
+|---|---:|---:|---:|---|---|
+| 527 | 18 | 0 | **2** | 16/10 10:14:13Z | **19/11 20:21:49Z** |
+| 528 | 45 | 0 | **0** | **27/10 14:40:16Z** | nenhuma |
+| 529 | 41 | 0 | **13** | 05/11 04:52:35Z | **17/11 11:57:46Z** |
+
+O intervalo entre a **última época anterior** e a **primeira posterior** do catálogo é **34,422 dias para 527** e **12,295 dias para 529**. Mesmo no espelho secundário, o controle posterior mais próximo do dia de decaimento começa **17/11**, nove dias depois do dia NASA; para 527, **19/11**, onze dias depois. Não existe, nesse conjunto, linha do dia 08/11 para nenhum dos três objetos. A ausência de linhas é **ausência neste espelho**, não evidência de que não houve observação histórica. O objeto 528 termina no espelho em 27/10, deixando sem medida catalográfica direta a última janela anterior ao dia NASA.
+
+O replay preserva a deduplicação: as duas épocas posteriores de 527 provêm de três linhas físicas, e as treze épocas posteriores de 529 vêm de dezesseis linhas físicas. Não contar versões duplicadas como observações independentes. O potencial valor dos controles posteriores depende de recuperar as medições e calibrações de 1963, não de preencher a lacuna por extrapolação arbitrária.
+
 **Critério de interpretação:** a existência de dados catalográficos de 527/529 depois do dia de decaimento de 528 **não significa** que os três foram observados conjuntamente por um instrumento, nem que se mantiveram vizinhos. Não extrapolar uma separação observada, taxa orbital ou localização de reentrada de tais índices. A fonte inicial 528 de outubro e os controles 527/529 compartilham possível genealogia de rastreamento. Até obter registros independentes com estação/UTC/erro, `historical_holdout=NOT_RUN`, `physical_joint_fit=NOT_RUN` e **nenhuma restrição física nova** sobre a trajetória de 528.
