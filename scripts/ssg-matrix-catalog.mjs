@@ -86,9 +86,17 @@ export function matrixCatalogPages(bundle) {
         manifest.matrix_source.sha256+'` ('+manifest.matrix_source.bytes+' bytes).', '',
       '## Percorrer as ocorrências', '',
       ...pages.map(p=>'- [Registros '+p.start+'–'+p.end+' ('+p.first+' até '+p.last+')]('+p.url+')'),
-      '', '[Arquivo de fichas curadas](/conde-incident/evidencias/arquivo/) · '+
+      '', '## Localizador rápido por identificador', '',
+      'Use a busca do navegador pelo identificador `Cnn#N`. Cada atalho abre a página estática que contém a ocorrência; nenhum JavaScript é necessário.', '',
+      ...pages.flatMap((p,i)=>[
+        '**Registros '+p.start+'–'+p.end+':** '+entries.slice(i*PER_PAGE,(i+1)*PER_PAGE)
+          .map(({pointer})=>'['+pointer.occurrence+']('+p.url+')').join(' · '),
+        '',
+      ]),
+      '[Arquivo de fichas curadas](/conde-incident/evidencias/arquivo/) · '+
         '[Evidências editoriais](/conde-incident/evidencias/)',
     ].join('\n'));
+  assert.ok(Buffer.byteLength(index,'utf8')<=20000,'Índice de IDs acima do teto de 20 KB');
   files.set('index.md',index);
   return {files,entries,pages};
 }
