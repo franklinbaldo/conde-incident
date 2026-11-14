@@ -1,0 +1,3 @@
+PastaTxt: 0335 Projeto USAF 63-32 - área A: SA.22-X-B-V
+_selectedValue: 1
+DocumentoImg: <img id="DocumentoImg" onDragStart="return false;" onMouseDown="return false;" src="cache/235750731193/I0000001-0-0-003928-003767-004096-003928.JPG" />
