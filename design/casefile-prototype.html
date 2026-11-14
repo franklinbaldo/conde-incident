@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Protótipo: Conde como dossiê verificável</title>
+<style>
+:root{color-scheme:light;--paper:#f7f4ed;--surface:#fffdf7;--ink:#172e3a;--muted:#526671;--line:#c4cdd0;--brand:#215a68;--warm:#765133;--focus:#bc571d;--radius:14px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1rem/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+a{color:#164e61;text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+.skip{position:absolute;top:-80px;left:1rem;padding:.6rem 1rem;background:white;z-index:99}
+.skip:focus{top:.5rem}
+.wrap{max-width:1140px;padding-inline:clamp(1rem,4vw,3rem);margin:auto}
+.mast{border-bottom:1px solid var(--line);background:var(--surface)}
+.mast .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding-block:1rem}
+.brand{text-decoration:none;color:var(--ink);font-size:1.15rem;font-weight:790;letter-spacing:-.03em}
+.brand small{display:block;letter-spacing:.08em;color:var(--muted);font-size:.62rem;text-transform:uppercase}
+nav ul{display:flex;gap:.3rem;list-style:none;padding:0;margin:0;flex-wrap:wrap}
+nav a{display:inline-block;padding:.65rem .8rem;border-radius:.5rem;font-size:.95rem;font-weight:650;text-decoration:none;color:var(--ink)}
+nav a[aria-current=page]{background:#e1eff0;text-decoration:underline;text-decoration-thickness:2px}
+.eyebrow{font-size:.78rem;text-transform:uppercase;letter-spacing:.12em;font-weight:780;color:var(--warm)}
+.hero{padding-block:clamp(2.5rem,7vw,6rem);display:grid;grid-template-columns:minmax(0,1.45fr) minmax(265px,.7fr);align-items:start;gap:clamp(1rem,4vw,5rem)}
+h1,h2,h3{line-height:1.17;letter-spacing:-.035em;overflow-wrap:anywhere}
+h1{font-size:clamp(2rem,5vw,4.2rem);max-width:14ch;margin:.4rem 0 1.3rem}
+h2{font-size:clamp(1.55rem,2.6vw,2.25rem);margin:0 0 .8rem}
+h3{font-size:1.16rem;margin:0 0 .6rem}
+p{margin:.35rem 0 1.25rem}p.lead{font-size:clamp(1.08rem,2vw,1.3rem);max-width:62ch;color:#344b57}
+.label{display:inline-block;border:1px solid #73959a;border-radius:100px;padding:.1rem .65rem;font-size:.78rem;font-weight:770;color:#245363}
+.link{display:inline-flex;align-items:center;padding:.65rem 1rem;border:2px solid var(--brand);border-radius:.5rem;text-decoration:none;font-weight:750;min-height:44px;margin-right:.55rem;margin-bottom:.5rem}
+.link.primary{background:var(--brand);color:#fff}
+.panel{border:1px solid var(--line);background:var(--surface);border-radius:var(--radius);padding:clamp(1.1rem,2.5vw,1.65rem)}
+.panel p:last-child{margin-bottom:0}
+.stateline{border-left:4px solid var(--warm);padding-left:1rem;color:#3e5159;margin-top:1.2rem}
+.sub{font-size:.86rem;color:var(--muted)}
+.section{padding-block:2rem 3.5rem;border-top:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.tile{text-decoration:none;color:var(--ink);display:block;min-height:195px}
+.tile:hover{background:#f2f7f6}
+.tile .arrow{color:var(--brand);font-weight:850}
+.path{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:0;margin:1.4rem 0;gap:.65rem;counter-reset:steps}
+.path li{border-top:4px solid var(--brand);padding:.65rem .4rem;counter-increment:steps}
+.path li::before{content:"0" counter(steps);display:block;font-weight:800;font-size:.8rem;color:var(--brand)}
+.placeholder{border:1px dashed #657f87;background:#edf3f1;padding:1.3rem;border-radius:var(--radius);margin-top:1.25rem}
+footer{background:#e7e9e3;border-top:1px solid var(--line);padding:2rem 0;color:#3b535e;font-size:.9rem}
+@media(max-width:760px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.tile{min-height:0}.path{grid-template-columns:repeat(2,minmax(0,1fr))}.mast .wrap{display:block}.mast nav{margin-top:.7rem}nav ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}nav a{display:block;padding:.58rem .7rem}h1{max-width:21ch}}
+@media(max-width:370px){nav ul{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.path{grid-template-columns:1fr}.link{display:flex;justify-content:center;margin-right:0}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para conteúdo</a>
+<header class="mast"><div class="wrap"><a class="brand" href="/conde-incident/">Conde <small>Dossiê de investigação · 1963</small></a><nav aria-label="Navegação principal proposta"><ul><li><a href="/conde-incident/" aria-current="page">O caso</a></li><li><a href="/conde-incident/stories/">Histórias</a></li><li><a href="/conde-incident/evidencias/">Fontes</a></li><li><a href="/conde-incident/simulacoes/">Explorar</a></li></ul></nav></div></header>
+<main id="conteudo" tabindex="-1"><div class="wrap"><div class="hero"><div><span class="eyebrow">Um caso, diferentes tipos de prova</span><h1>Conde, 1963. O que sabemos, e como sabemos?</h1><p class="lead">Um dossiê para acompanhar a história, examinar os documentos e testar hipóteses sem confundir um relato com uma medição orbital.</p><div><a class="link primary" href="/conde-incident/stories/">Começar pela história</a><a class="link" href="/conde-incident/evidencias/">Conferir as fontes</a></div><p class="sub">Protótipo de arquitetura visual: não apresenta novos fatos nem conclusões científicas.</p></div><aside class="panel" aria-labelledby="situacao"><span class="eyebrow">Estado da investigação</span><h2 id="situacao">O que está em disputa</h2><p>Relação entre relatos históricos, documentos preservados e hipóteses sobre objetos orbitais.</p><div class="stateline"><strong>Não confundir</strong><p>Uma simulação reproduz um cenário sob premissas. Ela não transforma esse cenário em observação documentada.</p></div><a href="/conde-incident/hipoteses/">Comparar hipóteses</a></aside></div>
+<section class="section" aria-labelledby="caminhos"><span class="eyebrow">Escolha sua pergunta</span><h2 id="caminhos">Três maneiras de investigar</h2><div class="grid"><a class="panel tile" href="/conde-incident/stories/"><span class="label">Entender</span><h3>Como a história foi registrada?</h3><p>Leia o Caderno e acompanhe como as versões dos relatos mudaram.</p><span class="arrow">Ler histórias →</span></a><a class="panel tile" href="/conde-incident/evidencias/"><span class="label">Verificar</span><h3>Qual documento sustenta uma afirmação?</h3><p>Consulte obras, fontes, ocorrências e as limitações de cada registro.</p><span class="arrow">Abrir arquivo →</span></a><a class="panel tile" href="/conde-incident/simulacoes/"><span class="label">Experimentar</span><h3>O que as hipóteses permitem calcular?</h3><p>Explore cenários condicionais com parâmetros e limites explícitos.</p><span class="arrow">Ir às ferramentas →</span></a></div></section>
+<section class="section" aria-labelledby="trilha"><span class="eyebrow">Proposta de navegação por evidência</span><h2 id="trilha">Toda afirmação deve ter um caminho de volta à fonte</h2><p>O novo padrão de ficha segue uma trilha verificável, em vez de levar o leitor diretamente a um painel técnico sem contexto.</p><ol class="path"><li>Afirmação e classe do conhecimento</li><li>Fonte, página e custódia</li><li>Hipótese e premissas</li><li>Experimento e retorno</li></ol><div class="placeholder"><strong>Componente demonstrativo, sem registro histórico preenchido</strong><p>Um cartão real deverá mostrar ID OKF, citação localizável, dependências, estado epistêmico e links bidirecionais. Não há número de certeza ou conclusão fictícia neste protótipo.</p><a href="/conde-incident/metodo/">Entenda o método de avaliação de fontes</a></div></section></div></main>
+<footer><div class="wrap"><strong>Conde · protótipo UX</strong><p>Leitura deve funcionar sem JavaScript. Este arquivo é um ensaio de arquitetura e não substitui o site publicado.</p><a href="/conde-incident/cronologia/">Cronologia</a> · <a href="/conde-incident/mapa/">Mapa</a> · <a href="/conde-incident/lab/">Laboratório</a> · <a href="/conde-incident/metodo/">Método</a></div></footer>
+</body></html>
