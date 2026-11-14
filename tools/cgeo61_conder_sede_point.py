@@ -60,7 +60,13 @@ def validate(data: dict, osm: dict) -> dict:
          and src["license"] == "NOT_VERIFIED", "source metadata inflated")
     queries = src["service_queries"]
     need(len(queries) == len(SERVICES), "wrong number of source queries")
-    for record, (name, where) in zip(queries, SERVICES):
+    pinned = (
+        (232, "dbb93fe280700e3931a30fcef07414030a2eedf5a00b9629ed6496104c2fb7d3"),
+        (489, "6d2cbd335863ca5525824312fed51c52c4361a2efcd1d3c5e28a202552c6d708"),
+    )
+    for record, (name, where), (size, digest) in zip(queries, SERVICES, pinned):
+        need(record["raw_bytes"] == size and record["raw_sha256"] == digest,
+             "source acquisition hash/size tampered")
         need(record["service"] == name and record["where"] == where
              and record["url"] == expected_url(name,where), "query identity changed")
         need(record["acquired_http_status"] == 200
