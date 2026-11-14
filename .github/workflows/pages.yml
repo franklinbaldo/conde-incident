@@ -83,7 +83,7 @@ jobs:
           node scripts/ssg-shell-sync.mjs --check
           node --test tests/ssg-shell-sync.test.mjs
       - name: Verify shared SSG design tokens and contrast
-        run: node --test tests/ssg-design-tokens.test.mjs
+        run: node --test tests/ssg-design-tokens.test.mjs tests/ssg-casefile-theme.test.mjs
       - name: SSG check
         run: ssg check --config ssg.toml
       - name: SSG build
@@ -107,7 +107,7 @@ jobs:
       - name: Verify native SSG print mode against built documentary pages
         run: SSG_PRINT_BUILT=1 node --test tests/ssg-print-mode.test.mjs
       - name: Verify design tokens in final Pages artifact
-        run: node tests/ssg-design-tokens.test.mjs --built-site
+        run: node tests/ssg-design-tokens.test.mjs --built-site && node tests/ssg-casefile-theme.test.mjs --built-site
       - name: Build and verify no-JS SSG deep-page breadcrumbs
         run: |
           node --test tests/ssg-breadcrumbs.test.mjs
