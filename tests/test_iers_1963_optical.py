@@ -161,7 +161,11 @@ class G53StationOptical(unittest.TestCase):
         self.assertAlmostEqual(got["wgs84_ray_first_earth_entry_km"],
                                67.542593239, places=5)
         self.assertEqual(got["historical_holdout"], "NOT_RUN")
-        far = [a+2.-100.*math.sin(depression), 100.*math.cos(depression), 0.]
+        middle = [a+2.-100.*math.sin(depression), 100.*math.cos(depression), 0.]
+        with self.assertRaisesRegex(ValueError, "Satellite lies inside"):
+            self.call(self.from_itrs(middle), h=2000)
+        # 500 km is past the far exit: the endpoint itself is again outside.
+        far = [a+2.-500.*math.sin(depression), 500.*math.cos(depression), 0.]
         with self.assertRaisesRegex(ValueError, "Earth-occluded"):
             self.call(self.from_itrs(far), h=2000)
 
