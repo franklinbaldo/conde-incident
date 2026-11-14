@@ -24,10 +24,15 @@ jobs:
         run: |
           mkdir -p /tmp/ghcnd-1963
           base=https://www.ncei.noaa.gov/pub/data/ghcn/daily/all
-          for id in BR048346820 BR048345380 BR048441550 BR048345130 BR048345070 BR001137041 BR048338870 BR048340980 BR001237001 BR048249490 BR048158910; do
+          for id in BR048346820 BR048345380 BR048441550 BR048345130 BR048345070 BR001137041 BR048338870 BR048340980 BR001237001 BR048249490; do
             curl -fLsS --retry 3 --retry-all-errors --connect-timeout 15 --max-time 90 \
               "$base/$id.dly" -o "/tmp/ghcnd-1963/$id.dly"
           done
+          # Original full station file pinned on 13/11 (live NOAA corrected one
+          # non-1963 quality flag on 14/11). Decode 3 small source shards.
+          python3 tools/reconstruct_ghcnd_station.py --output /tmp/ghcnd-1963/BR048158910.dly
+      - name: Confirm original Aracaju source and reject tampered archives
+        run: python3 -m unittest discover -s tests -p 'test_ghcnd_station_replay.py' -v
       - name: Reconstruct 1963 report from pinned original sources
         run: python3 tools/audit_ghcnd_conde_wetday_alignment_1963.py --source-dir /tmp/ghcnd-1963 --check
       - name: Test missingness, quality flags, lag support, time and negative controls
