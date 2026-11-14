@@ -52,16 +52,25 @@ function collect(dir,root,found){
   }
 }
 
-export function writeAuthoredPages(sourceDir='pages',targetDir='content'){
+/** Check the complete route inventory, not just the pages that happen to exist.
+ * This is shared by the read-only preflight and the regular SSG writer. */
+export function auditAuthoredPages(sourceDir='pages'){
   const actual=[];
   collect(sourceDir,sourceDir,actual);
   assert.deepEqual(actual.sort(),[...AUTHORED_ROUTES].sort(),
     'Fontes Page devem coincidir com rotas registradas; sem omissão nem URL órfã');
+  for(const slug of AUTHORED_ROUTES)
+    checkPage(slug,readFileSync(join(sourceDir,slug,'page.md'),'utf8'));
+  return actual.length;
+}
+
+export function writeAuthoredPages(sourceDir='pages',targetDir='content'){
+  const count=auditAuthoredPages(sourceDir);
   for(const slug of AUTHORED_ROUTES){
-    const source=checkPage(slug,readFileSync(join(sourceDir,slug,'page.md'),'utf8'));
+    const source=readFileSync(join(sourceDir,slug,'page.md'),'utf8');
     const target=join(targetDir,slug,'index.md');
     mkdirSync(dirname(target),{recursive:true});
     writeFileSync(target,source,'utf8');
   }
-  return actual.length;
+  return count;
 }
