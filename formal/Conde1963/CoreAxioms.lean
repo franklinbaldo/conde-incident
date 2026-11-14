@@ -33,3 +33,6 @@ does not authenticate observed positions or establish a 1963 reentry. -/
 #print axioms Conde1963.UnSsrPrintRounding.round_robust_lower_bound
 #print axioms Conde1963.UnSsrPrintRounding.rounded_half_step_lower_bound
 #print axioms Conde1963.UnSsrPrintRounding.all_26_cells_attain_130
+#print axioms Conde1963.UnSsrPrintRounding.half_up_discrete_lower_bound
+#print axioms Conde1963.UnSsrPrintRounding.half_even_discrete_lower_bound
+#print axioms Conde1963.UnSsrPrintRounding.all_26_strict_interior_attain_131

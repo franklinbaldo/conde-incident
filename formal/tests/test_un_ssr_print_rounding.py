@@ -20,6 +20,14 @@ class PrintRoundingTests(unittest.TestCase):
         self.assertEqual(result["printed_no_rounding_optimum_centiminute"], 135)
         self.assertEqual(result["rounded_print_optimum_centiminute"], 130)
         self.assertEqual(result["rounded_print_optimum_seconds"], "78.0")
+        self.assertEqual(result["rounded_print_optimum_means"],
+                         "CLOSED_SYMMETRIC_ENVELOPE_ALLOWING_BOTH_ENDPOINT_TIES")
+        self.assertEqual(result["closed_envelope_endpoint_ties_used"], 13)
+        self.assertEqual(result["discrete_round_half_up_optimum_centiminute"], 131)
+        self.assertEqual(result["discrete_round_half_even_optimum_centiminute"], 131)
+        self.assertEqual(result["discrete_round_half_up_or_even_optimum_seconds"], "78.6")
+        self.assertEqual(result["half_step_tie_convention_of_historical_printing"], "UNKNOWN")
+        self.assertTrue(result["strict_interior_witness_all_26_cells_attained"])
         self.assertEqual(result["sharp_certificate"]["difference_centiminute"], 540)
         self.assertEqual(result["physical_domain"], "THETA_UNCHANGED")
         self.assertEqual(result["independent_tracking_rows_added"], 0)
@@ -31,8 +39,12 @@ class PrintRoundingTests(unittest.TestCase):
         self.assertEqual(rounding.LEAN.read_text(), rounding.render_lean(result))
         self.assertNotIn("sorry", rounding.LEAN.read_text())
         self.assertIn("all_26_cells_attain_130", rounding.LEAN.read_text())
+        self.assertIn("half_up_discrete_lower_bound", rounding.LEAN.read_text())
+        self.assertIn("half_even_discrete_lower_bound", rounding.LEAN.read_text())
+        self.assertIn("all_26_strict_interior_attain_131", rounding.LEAN.read_text())
         corrected = 0
         max_residual = 0
+        max_strict_residual = 0
         for r in result["cells"]:
             printed = r["printed_centiminute"]
             latent = r["latent_centiminute"]
@@ -45,11 +57,25 @@ class PrintRoundingTests(unittest.TestCase):
             self.assertEqual(printed % 10, 0)
             self.assertLessEqual(abs(delta), 5)
             self.assertLessEqual(abs(e), 130)
+            strict_delta = r["strict_print_minus_latent_centiminute"]
+            strict_latent = r["strict_latent_centiminute"]
+            strict_e = r["strict_offset_model_residual_centiminute"]
+            self.assertEqual(strict_latent, expected + strict_e)
+            self.assertEqual(strict_delta, printed - strict_latent)
+            self.assertLessEqual(abs(strict_delta), 4)
+            self.assertLessEqual(abs(strict_e), 131)
+            # For strictly positive printed periods and a 0.01-minute
+            # latent grid, all |q|<=4 values round correctly under half-up
+            # and half-even, regardless of the parity of the final digit.
+            self.assertGreaterEqual(strict_delta, -4)
+            self.assertLessEqual(strict_delta, 4)
+            max_strict_residual = max(max_strict_residual, abs(strict_e))
             corrected += delta != 0
             max_residual = max(max_residual, abs(e))
         self.assertEqual(corrected, result["rounding_corrections_nonzero"])
         self.assertGreater(corrected, 0)
         self.assertEqual(max_residual, 130)
+        self.assertEqual(max_strict_residual, 131)
 
     def test_four_cell_certificate_is_sharp(self):
         result = rounding.build()
@@ -59,6 +85,10 @@ class PrintRoundingTests(unittest.TestCase):
         # Four residuals and four ROUNDING corrections, each bounded.
         self.assertGreater(gap_delta, 4 * (129 + 5))
         self.assertLessEqual(gap_delta, 4 * (130 + 5))
+        # Under either integer-grid deterministic tie convention,
+        # the largest four-rounding-term contrast is 18, NOT 20.
+        self.assertGreater(gap_delta, 4 * 130 + 18)
+        self.assertLessEqual(gap_delta, 4 * 131 + 18)
 
     def test_no_rounded_input_is_promoted_to_instrument_measurement(self):
         result = rounding.build()

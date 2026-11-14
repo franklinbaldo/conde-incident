@@ -7,7 +7,10 @@
       "object": 527,
       "offset_model_residual_centiminute": -130,
       "print_minus_latent_centiminute": -5,
-      "printed_centiminute": 9470
+      "printed_centiminute": 9470,
+      "strict_latent_centiminute": 9474,
+      "strict_offset_model_residual_centiminute": -131,
+      "strict_print_minus_latent_centiminute": -4
     },
     {
       "document_or_cutoff": "1963-04-30",
@@ -15,7 +18,10 @@
       "object": 527,
       "offset_model_residual_centiminute": -105,
       "print_minus_latent_centiminute": 0,
-      "printed_centiminute": 9460
+      "printed_centiminute": 9460,
+      "strict_latent_centiminute": 9460,
+      "strict_offset_model_residual_centiminute": -105,
+      "strict_print_minus_latent_centiminute": 0
     },
     {
       "document_or_cutoff": "1963-06-30",
@@ -23,7 +29,10 @@
       "object": 527,
       "offset_model_residual_centiminute": -75,
       "print_minus_latent_centiminute": 0,
-      "printed_centiminute": 9460
+      "printed_centiminute": 9460,
+      "strict_latent_centiminute": 9460,
+      "strict_offset_model_residual_centiminute": -75,
+      "strict_print_minus_latent_centiminute": 0
     },
     {
       "document_or_cutoff": "1963-07-31",
@@ -31,7 +40,10 @@
       "object": 527,
       "offset_model_residual_centiminute": -65,
       "print_minus_latent_centiminute": 0,
-      "printed_centiminute": 9460
+      "printed_centiminute": 9460,
+      "strict_latent_centiminute": 9460,
+      "strict_offset_model_residual_centiminute": -65,
+      "strict_print_minus_latent_centiminute": 0
     },
     {
       "document_or_cutoff": "1963-08-15",
@@ -39,7 +51,10 @@
       "object": 527,
       "offset_model_residual_centiminute": -55,
       "print_minus_latent_centiminute": 0,
-      "printed_centiminute": 9460
+      "printed_centiminute": 9460,
+      "strict_latent_centiminute": 9460,
+      "strict_offset_model_residual_centiminute": -55,
+      "strict_print_minus_latent_centiminute": 0
     },
     {
       "document_or_cutoff": "1963-10-15",
@@ -47,7 +62,10 @@
       "object": 527,
       "offset_model_residual_centiminute": -5,
       "print_minus_latent_centiminute": 0,
-      "printed_centiminute": 9460
+      "printed_centiminute": 9460,
+      "strict_latent_centiminute": 9460,
+      "strict_offset_model_residual_centiminute": -5,
+      "strict_print_minus_latent_centiminute": 0
     },
     {
       "document_or_cutoff": "1963-11-15",
@@ -55,7 +73,10 @@
       "object": 527,
       "offset_model_residual_centiminute": 65,
       "print_minus_latent_centiminute": 0,
-      "printed_centiminute": 9460
+      "printed_centiminute": 9460,
+      "strict_latent_centiminute": 9460,
+      "strict_offset_model_residual_centiminute": 65,
+      "strict_print_minus_latent_centiminute": 0
     },
     {
       "document_or_cutoff": "1963-11-30",
@@ -63,7 +84,10 @@
       "object": 527,
       "offset_model_residual_centiminute": 105,
       "print_minus_latent_centiminute": 0,
-      "printed_centiminute": 9460
+      "printed_centiminute": 9460,
+      "strict_latent_centiminute": 9460,
+      "strict_offset_model_residual_centiminute": 105,
+      "strict_print_minus_latent_centiminute": 0
     },
     {
       "document_or_cutoff": "1963-12-15",
@@ -71,7 +95,10 @@
       "object": 527,
       "offset_model_residual_centiminute": 130,
       "print_minus_latent_centiminute": 5,
-      "printed_centiminute": 9460
+      "printed_centiminute": 9460,
+      "strict_latent_centiminute": 9456,
+      "strict_offset_model_residual_centiminute": 131,
+      "strict_print_minus_latent_centiminute": 4
     },
     {
       "document_or_cutoff": "1963-12-31",
@@ -79,7 +106,10 @@
       "object": 527,
       "offset_model_residual_centiminute": 130,
       "print_minus_latent_centiminute": 5,
-      "printed_centiminute": 9460
+      "printed_centiminute": 9460,
+      "strict_latent_centiminute": 9456,
+      "strict_offset_model_residual_centiminute": 131,
+      "strict_print_minus_latent_centiminute": 4
     },
     {
       "document_or_cutoff": "1963-01-31_UN_ASOF_NOT_PUBLICATION",
@@ -87,7 +117,10 @@
       "object": 528,
       "offset_model_residual_centiminute": -65,
       "print_minus_latent_centiminute": 0,
-      "printed_centiminute": 9450
+      "printed_centiminute": 9450,
+      "strict_latent_centiminute": 9450,
+      "strict_offset_model_residual_centiminute": -65,
+      "strict_print_minus_latent_centiminute": 0
     },
     {
       "document_or_cutoff": "1963-04-30",
@@ -95,7 +128,10 @@
       "object": 528,
       "offset_model_residual_centiminute": -65,
       "print_minus_latent_centiminute": 0,
-      "printed_centiminute": 9410
+      "printed_centiminute": 9410,
+      "strict_latent_centiminute": 9410,
+      "strict_offset_model_residual_centiminute": -65,
+      "strict_print_minus_latent_centiminute": 0
     },
     {
       "document_or_cutoff": "1963-06-30",
@@ -103,7 +139,10 @@
       "object": 528,
       "offset_model_residual_centiminute": -75,
       "print_minus_latent_centiminute": 0,
-      "printed_centiminute": 9370
+      "printed_centiminute": 9370,
+      "strict_latent_centiminute": 9370,
+      "strict_offset_model_residual_centiminute": -75,
+      "strict_print_minus_latent_centiminute": 0
     },
     {
       "document_or_cutoff": "1963-07-31",
@@ -111,7 +150,10 @@
       "object": 528,
       "offset_model_residual_centiminute": -75,
       "print_minus_latent_centiminute": 0,
-      "printed_centiminute": 9360
+      "printed_centiminute": 9360,
+      "strict_latent_centiminute": 9360,
+      "strict_offset_model_residual_centiminute": -75,
+      "strict_print_minus_latent_centiminute": 0
     },
     {
       "document_or_cutoff": "1963-08-15",
@@ -119,7 +161,10 @@
       "object": 528,
       "offset_model_residual_centiminute": -95,
       "print_minus_latent_centiminute": 0,
-      "printed_centiminute": 9330
+      "printed_centiminute": 9330,
+      "strict_latent_centiminute": 9330,
+      "strict_offset_model_residual_centiminute": -95,
+      "strict_print_minus_latent_centiminute": 0
     },
     {
       "document_or_cutoff": "1963-10-15",
@@ -127,7 +172,10 @@
       "object": 528,
       "offset_model_residual_centiminute": -130,
       "print_minus_latent_centiminute": -5,
-      "printed_centiminute": 9240
+      "printed_centiminute": 9240,
+      "strict_latent_centiminute": 9244,
+      "strict_offset_model_residual_centiminute": -131,
+      "strict_print_minus_latent_centiminute": -4
     },
     {
       "document_or_cutoff": "1963-01-31_UN_ASOF_NOT_PUBLICATION",
@@ -135,7 +183,10 @@
       "object": 529,
       "offset_model_residual_centiminute": 130,
       "print_minus_latent_centiminute": 5,
-      "printed_centiminute": 9470
+      "printed_centiminute": 9470,
+      "strict_latent_centiminute": 9466,
+      "strict_offset_model_residual_centiminute": 131,
+      "strict_print_minus_latent_centiminute": 4
     },
     {
       "document_or_cutoff": "1963-04-30",
@@ -143,7 +194,10 @@
       "object": 529,
       "offset_model_residual_centiminute": 130,
       "print_minus_latent_centiminute": 5,
-      "printed_centiminute": 9430
+      "printed_centiminute": 9430,
+      "strict_latent_centiminute": 9426,
+      "strict_offset_model_residual_centiminute": 131,
+      "strict_print_minus_latent_centiminute": 4
     },
     {
       "document_or_cutoff": "1963-06-30",
@@ -151,7 +205,10 @@
       "object": 529,
       "offset_model_residual_centiminute": 130,
       "print_minus_latent_centiminute": 5,
-      "printed_centiminute": 9400
+      "printed_centiminute": 9400,
+      "strict_latent_centiminute": 9396,
+      "strict_offset_model_residual_centiminute": 131,
+      "strict_print_minus_latent_centiminute": 4
     },
     {
       "document_or_cutoff": "1963-07-31",
@@ -159,7 +216,10 @@
       "object": 529,
       "offset_model_residual_centiminute": 130,
       "print_minus_latent_centiminute": 5,
-      "printed_centiminute": 9390
+      "printed_centiminute": 9390,
+      "strict_latent_centiminute": 9386,
+      "strict_offset_model_residual_centiminute": 131,
+      "strict_print_minus_latent_centiminute": 4
     },
     {
       "document_or_cutoff": "1963-08-15",
@@ -167,7 +227,10 @@
       "object": 529,
       "offset_model_residual_centiminute": 130,
       "print_minus_latent_centiminute": 5,
-      "printed_centiminute": 9380
+      "printed_centiminute": 9380,
+      "strict_latent_centiminute": 9376,
+      "strict_offset_model_residual_centiminute": 131,
+      "strict_print_minus_latent_centiminute": 4
     },
     {
       "document_or_cutoff": "1963-10-15",
@@ -175,7 +238,10 @@
       "object": 529,
       "offset_model_residual_centiminute": 130,
       "print_minus_latent_centiminute": 5,
-      "printed_centiminute": 9330
+      "printed_centiminute": 9330,
+      "strict_latent_centiminute": 9326,
+      "strict_offset_model_residual_centiminute": 131,
+      "strict_print_minus_latent_centiminute": 4
     },
     {
       "document_or_cutoff": "1963-11-15",
@@ -183,7 +249,10 @@
       "object": 529,
       "offset_model_residual_centiminute": 130,
       "print_minus_latent_centiminute": 5,
-      "printed_centiminute": 9260
+      "printed_centiminute": 9260,
+      "strict_latent_centiminute": 9256,
+      "strict_offset_model_residual_centiminute": 131,
+      "strict_print_minus_latent_centiminute": 4
     },
     {
       "document_or_cutoff": "1963-11-30",
@@ -191,7 +260,10 @@
       "object": 529,
       "offset_model_residual_centiminute": 130,
       "print_minus_latent_centiminute": 5,
-      "printed_centiminute": 9220
+      "printed_centiminute": 9220,
+      "strict_latent_centiminute": 9216,
+      "strict_offset_model_residual_centiminute": 131,
+      "strict_print_minus_latent_centiminute": 4
     },
     {
       "document_or_cutoff": "1963-12-15",
@@ -199,7 +271,10 @@
       "object": 529,
       "offset_model_residual_centiminute": 105,
       "print_minus_latent_centiminute": 0,
-      "printed_centiminute": 9160
+      "printed_centiminute": 9160,
+      "strict_latent_centiminute": 9160,
+      "strict_offset_model_residual_centiminute": 105,
+      "strict_print_minus_latent_centiminute": 0
     },
     {
       "document_or_cutoff": "1963-12-31",
@@ -207,15 +282,23 @@
       "object": 529,
       "offset_model_residual_centiminute": -130,
       "print_minus_latent_centiminute": -5,
-      "printed_centiminute": 8920
+      "printed_centiminute": 8920,
+      "strict_latent_centiminute": 8924,
+      "strict_offset_model_residual_centiminute": -131,
+      "strict_print_minus_latent_centiminute": -4
     }
   ],
+  "closed_envelope_endpoint_ties_used": 13,
   "cross_agency_common_offset_validated": false,
   "discrete_centiminute_grid_ASSUMED": true,
+  "discrete_round_half_even_optimum_centiminute": 131,
+  "discrete_round_half_up_optimum_centiminute": 131,
+  "discrete_round_half_up_or_even_optimum_seconds": "78.6",
+  "half_step_tie_convention_of_historical_printing": "UNKNOWN",
   "id": "C241-P34",
   "independent_tracking_rows_added": 0,
   "instrument_covariance": null,
-  "interpretation": "The exact-print documentary residual bound 81 seconds becomes 78 seconds under an explicitly hypothetical nearest-tenth-minute rounding envelope; a SHARP bound on a common-offset printed-table model, NOT historical sensor accuracy, physical orbital dynamics, or an impact/reentry location.",
+  "interpretation": "The exact-print documentary residual bound 81 seconds becomes 78 seconds under an explicitly hypothetical CLOSED symmetric +/-0.05-min print-value envelope (both endpoint ties allowed), but 78.6 seconds under integer-centiminute round-half-up or half-even conventions. The historical printer tie convention is UNKNOWN. These are SHARP bounds on a common-offset printed-table model, NOT historical sensor accuracy, physical orbital dynamics, or a reentry location.",
   "model_ASSUMED_not_physics": "P(obj,doc) = baseline(obj) + shared_offset(doc) + residual(obj,doc)",
   "nasa_sources": [
     {
@@ -290,12 +373,15 @@
   "printed_no_rounding_optimum_seconds": "81.0",
   "publication_date_is_observation_epoch": false,
   "rounded_print_optimum_centiminute": 130,
+  "rounded_print_optimum_means": "CLOSED_SYMMETRIC_ENVELOPE_ALLOWING_BOTH_ENDPOINT_TIES",
   "rounded_print_optimum_seconds": "78.0",
   "rounding_corrections_nonzero": 13,
   "schema": "conde.c241-p34-un-ssr-print-rounding/v1",
   "sharp_certificate": {
     "conditional_inequality": "4*(E+R) >= 540; E+R >= 135",
     "difference_centiminute": 540,
+    "discrete_half_up_even_consequence": "E >= 131; half-step ties have a chosen direction",
+    "discrete_half_up_even_inequality": "4*E + 18 >= 540",
     "documents": [
       "1963-01-31_UN_ASOF_NOT_PUBLICATION",
       "1963-12-31"
@@ -308,8 +394,9 @@
       0,
       540
     ],
-    "rounded_consequence": "R=5 => E >= 130"
+    "rounded_consequence": "CLOSED +/-5 envelope: E >= 130"
   },
+  "strict_interior_witness_all_26_cells_attained": true,
   "un_administrative_cutoff_is_sensor_epoch": false,
   "un_source": {
     "cutoff_key_NOT_publication": "1963-01-31_UN_ASOF_NOT_PUBLICATION",
