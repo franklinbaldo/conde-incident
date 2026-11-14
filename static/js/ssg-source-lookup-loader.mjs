@@ -39,7 +39,9 @@ export async function loadCondeSourceLookup({baseUrl, fetcher=globalThis.fetch,
   hashBytes=sha256Browser}={}) {
   requireTrue(typeof baseUrl === 'string' && baseUrl.endsWith('/'), 'invalid-base-url');
   requireTrue(typeof fetcher === 'function', 'fetch-unavailable');
-  const base = new URL(baseUrl);
+  let base;
+  try { base=new URL(baseUrl); }
+  catch { throw new SourceLookupIntegrityError('invalid-base-url'); }
   requireTrue(base.protocol === 'https:' || (base.protocol === 'http:' &&
     ['localhost','127.0.0.1','[::1]'].includes(base.hostname)), 'unsafe-origin');
   const get = async (relative, cache, limit) => {
@@ -94,6 +96,30 @@ export async function loadCondeSourceLookup({baseUrl, fetcher=globalThis.fetch,
     .every(([p,hash])=>hash===dependencies[p]), 'source-snapshot');
   requireTrue(Array.isArray(index.sources) && Array.isArray(index.families)
     && Array.isArray(index.post_matrix_only), 'index-shape');
+  // A verified digest does not make duplicated source IDs or broken family joins safe
+  // for the browser: the UI selects sources by ID and would silently overwrite them.
+  const ids=index.sources.map(s=>s.source_id);
+  const families=index.families.map(f=>f.family_id);
+  requireTrue(ids.every(id=>typeof id==='string' && id.length>0)
+    && new Set(ids).size===ids.length
+    && families.every(id=>typeof id==='string' && id.length>0)
+    && new Set(families).size===families.length
+    && index.sources.every(s=>typeof s.source_family==='string'
+      && Array.isArray(s.references) && s.references.length>0)
+    && index.families.every(f=>Array.isArray(f.source_ids)
+      && new Set(f.source_ids).size===f.source_ids.length
+      && f.source_ids.every(id=>ids.includes(id)))
+    && index.sources.every(s=>index.families.some(f=>f.family_id===s.source_family
+      && f.source_ids.includes(s.source_id)))
+    && index.families.reduce((n,f)=>n+f.source_ids.length,0)===ids.length,
+  'index-shape');
+  requireTrue(index.curated_reference_count===evidence.curated_reference_count
+    && index.curated_occurrence_count===evidence.curated_occurrences
+    && index.unmapped_occurrence_count===evidence.unmapped_matrix_occurrences
+    && index.curated_occurrence_count+index.unmapped_occurrence_count
+      ===evidence.total_matrix_occurrences
+    && dependencies['research/evidence_matrix_C001-C238_2026-11-11.md']
+      ===evidence.matrix_source?.sha256, 'coverage-mismatch');
   const references=index.sources.flatMap(s=>s.references??[]);
   requireTrue(index.curated_reference_count===references.length
     && index.curated_occurrence_count===new Set(references.map(x=>x.occurrence)).size
