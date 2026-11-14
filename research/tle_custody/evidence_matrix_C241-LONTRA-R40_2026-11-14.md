@@ -1,0 +1,17 @@
+---
+type: Guide
+title: 'C241-LONTRA-R40: prefácio de 1968 delimita a série INTEROBS e sua continuação soviética'
+description: 'Fac-símile do prefácio de Heft 7, encerramento editorial e estrutura de listas; sem dados de novembro de 1963 ou identificação dos objetos 527–529.'
+---
+
+# C241-LONTRA-R40 · Encerramento editorial da série INTEROBS
+
+**Documento contemporâneo recuperado:** [registro institucional REAL/MTA](https://real.mtak.hu/143828/) e seu [PDF de três páginas](https://real.mtak.hu/143828/1/vorwort_interobs_programs.pdf). É o **prefácio** de Márton Ill ao *Heft Nr. 7* de *Ergebnisse der im Rahmen des INTEROBS-Programms abgehaltenen Kooperationswochen*, datado em **Baja, 1º de julho de 1968**. A primeira folha PDF (índice zero 0) preserva a **página impressa 3**; as outras duas são fac-símiles da capa/folha de título. Todas foram inspecionadas visualmente. O excerto **não** contém a edição integral do Heft 7.
+
+**Informação documental nova:** Ill afirma que o **Heft 7 encerra essa série editorial**. O prefácio explica a organização interna: listas de resumo nº 1 agrupadas por satélite, seguidas do material efetivo de observação em listas nº 2, também agrupadas por satélite. **Nenhuma dessas listas foi recuperada no PDF de três páginas**. O próprio Heft 7 reúne trabalhos feitos em **1966** e cita os identificadores **65-106-01, 65-106-02, 65-112-01**. A fonte ainda anuncia que as observações subsequentes do programa INTEROBS seriam publicadas na série romanizada no documento como *Resultati Nabljudenij Sowjetskich Iskustwennich Sputnikow Semli*, com apoio financeiro do Conselho Astronômico da Academia de Ciências da URSS. Isto é declaração editorial de **intenção de publicação**, não prova de um fascículo efetivamente publicado nem de conteúdo sobre satélites norte-americanos.
+
+**Relevância para a busca:** a [L39, PR #691](https://github.com/franklinbaldo/conde-incident/pull/691) documentou que o anuário de Baja de 1965 afirma haver publicado as **Folge I–II** de dados obtidos em 1963–1964. Agora sabemos, pela introdução de um número posterior, **como procurar a estrutura dos volumes anteriores** (listas 1 e 2 por objeto) e temos o nome de uma possível série sucessora. Ainda não sabemos datas de campanhas nos dias **7–9/11/1963**, nem o conteúdo de Folge I/II, nem se qualquer documento registra **1963-003A/B/C ou NORAD 527–529**. Os IDs `65-106-*` e `65-112-*` não são substitutos desses alvos. Não converter correspondência de data, autor ou título em independência instrumental.
+
+**Custódia:** PDF obtido por HTTPS com TLS válido no repositório REAL/MTA em 14/11/2026, **725.023 bytes**, **3 páginas**, SHA-256 integral `997ff8bed4924b9cfcba7a018ebeed176ac9602e0484e41c899235b2515e110c`. A cópia foi recuperada e seu hash reproduzido; extração textual com `pypdf` e inspeção visual da página crítica. O registro bibliográfico informa depósito digital em 25/08/2022 e atualização da ficha em 18/12/2025; essas datas **não são datas do documento histórico**. O hash autentica somente os bytes baixados, não o exemplar físico. Sem licença inferida de reprodução e sem incorporar o PDF binário ao Git.
+
+**Critério de ativação:** obter folha de lista 2 ou caderno instrumental com estação, época, objeto, observável, unidade, referencial e proveniência verificáveis, depois remeter à Tartaruga para correspondência de designações. Até lá: `target_observations_identified=false`, `orbital_constraints_activated=0`, nenhuma hipótese de queda confirmada e nenhum contato externo enviado.
