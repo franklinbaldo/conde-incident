@@ -11,8 +11,6 @@ for(const [name,html] of [['home',index],['stories',listing]]) {
   assert.match(html,/<html[^>]+lang=["']?pt-BR/i,name+' sem idioma pt-BR');
   assert.doesNotMatch(html,/(?:src|href)=["']\/(?:assets|css)\//i,name+' referencia assets da raiz');
 }
-// SSG 0.0.75 emits English search copy even on pt-BR sites. The existing
-// post-build integration localizes the generated widget without touching SRI.
 for (const route of ['index.html','stories/index.html','evidencias/arquivo/index.html']) {
   const html = read(route);
   assert.match(html, /id="ssg-search-btn"[^>]*aria-label="Pesquisar"/, 'Busca sem nome PT-BR: '+route);
@@ -40,7 +38,6 @@ for (const route of ['stories/index.html', 'evidencias/arquivo/index.html']) {
   assert.ok(read(route).includes(runtimeMatch[0]), 'SSG search runtime differs on ' + route);
 }
 
-// Expose active navigation on built pages, including nested documentary material.
 for (const [route, href, state] of [
   ['index.html', '/', 'page'],
   ['stories/index.html', '/stories/', 'page'],
@@ -114,8 +111,6 @@ for(const slug of ['summary','map','inverse','triangulation','sensitivity','mont
 }
 assert.match(lab,/\/conde-incident\/lab\/assets\//,'Assets Vite fora de /lab/');
 assert.doesNotMatch(lab,/(?:src|href)=["']\/assets\//,'Assets relativos à raiz, 404 no Pages');
-// The SSG output directory is regenerated. Versioned research feeds must
-// survive into the actual Pages artifact; a green HTML build is not proof.
 for (const feed of [
   'conde-source-citations.json',
   'conde-declared-dependence.json',
