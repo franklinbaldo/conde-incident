@@ -14,6 +14,24 @@ EXPECTED = (
 )
 
 
+# Bind free-form review notes to the inspected snapshot, not merely to keywords.
+# A new snapshot needs explicit editorial/source review before updating this pin.
+REVIEWED_NARRATIVE_SHA256 = "e838df48b5de96dff61e2604d54fe189546c2c423d69eb84995a5739f4343b9d"
+
+
+def verify_reviewed_narrative(d):
+    notes = {
+        "source_lineage": d["source_lineage"],
+        "next_test": d["next_test"],
+        "interpretation": d["inspected_context"]["interpretation"],
+        "visual_check": d["inspected_context"]["visual_check"],
+    }
+    payload = json.dumps(notes, sort_keys=True, ensure_ascii=False,
+                         separators=(",", ":")).encode("utf-8")
+    if hashlib.sha256(payload).hexdigest() != REVIEWED_NARRATIVE_SHA256:
+        raise ValueError("scientific narrative differs from reviewed C241-L47 snapshot")
+
+
 def reject_duplicate_keys(pairs):
     d = {}
     for key, value in pairs:
@@ -80,6 +98,7 @@ def audit(d):
         raise ValueError("context schema")
     if "not a tracking record" not in c["interpretation"] or "No OCR" not in c["visual_check"]:
         raise ValueError("physical overclaim")
+    verify_reviewed_narrative(d)
     return True
 
 
