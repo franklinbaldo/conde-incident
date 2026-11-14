@@ -13,7 +13,7 @@ status: "Catálogo secundário GCAT 1.8.9, seis arquivos com hashes na matriz C2
 
 Uma conta cabe na margem de um caderno: **306 + 870 = 1.176**. Uma segunda, igualmente correta, dá outro resultado: **306 + 900 = 1.206**. A diferença são trinta quilos. Seria a história de um combustível gasto? De uma peça desprendida do foguete? Nenhuma das duas. Por enquanto, é apenas a distância entre **duas leituras possíveis de uma tabela**.
 
-A história começa em **16 de janeiro de 1963**, quando a missão militar **OPS 0180** partiu da Califórnia a bordo de um **Thor Agena B**. O [registro de lançamento no GCAT](https://planet4589.org/space/gcat/data/launch/Thor.html) lhe atribui a designação **1963-003** e imprime **1,176 tonelada** na coluna `OrbPay`. Em novembro daquele ano, o objeto **1963-003B / NORAD 528** apareceria na investigação de uma suposta queda em Conde, na Bahia. Não existe nesses números um registro de impacto no solo.
+A história começa em **16 de janeiro de 1963**, quando a missão militar **OPS 0180** partiu da Califórnia a bordo de um **Thor-Agena** cuja versão é classificada como B em catálogos atuais e D em duas tabelas históricas. O [registro de lançamento no GCAT](https://planet4589.org/space/gcat/data/launch/Thor.html) lhe atribui a designação **1963-003** e imprime **1,176 tonelada** na coluna `OrbPay`. Em novembro daquele ano, o objeto **1963-003B / NORAD 528** apareceria na investigação de uma suposta queda em Conde, na Bahia. Não existe nesses números um registro de impacto no solo.
 
 ## Três números NORAD, mas não três pesagens
 
