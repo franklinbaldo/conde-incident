@@ -17,7 +17,8 @@ canonical_route: "/conde-incident/dossie/"
       <p class="cf-lead">Uma notícia extraordinária chegou pelos serviços de rádio. Um boletim da NASA registrou um decaimento orbital no mesmo período. O que os documentos realmente conectam?</p>
       <p class="cf-status"><strong>Estado da investigação:</strong> a coincidência de datas não demonstra que o objeto espacial caiu em Conde.</p>
       <div class="cf-actions">
-        <a class="cf-button cf-button-primary" href="/conde-incident/stories/2026-11-11-o-dia-em-que-dois-relatos-se-cruzaram/">Ler o capítulo completo</a>
+        <a class="cf-button cf-button-primary" href="/conde-incident/o-que-sabemos/">O que sabemos até agora</a>
+        <a class="cf-button" href="/conde-incident/stories/2026-11-11-o-dia-em-que-dois-relatos-se-cruzaram/">Ler a primeira reportagem</a>
         <a class="cf-button" href="#fontes">Examinar as fontes</a>
       </div>
     </div>
