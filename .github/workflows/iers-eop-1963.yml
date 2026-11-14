@@ -8,11 +8,13 @@ on:
       - tools/iers_1963_frame.py
       - tools/iers_1963_intraday.py
       - tools/iers_1963_teme.py
+      - tools/iers_1963_optical.py
       - tests/test_iers_1963_eop.py
       - tests/test_iers_1963_timescales.py
       - tests/test_iers_1963_frame.py
       - tests/test_iers_1963_intraday.py
       - tests/test_iers_1963_teme.py
+      - tests/test_iers_1963_optical.py
       - research/constraints/iers_eop_1963_11_07_09.json
       - research/constraints/iers_eop_1963_G46.md
       - research/constraints/iers_1963_timescales_G47.json
@@ -22,6 +24,7 @@ on:
       - research/constraints/iers_1963_intraday_G49.json
       - research/constraints/iers_1963_teme_G50.md
       - research/constraints/iers_1963_covariance_G52.md
+      - research/constraints/iers_1963_optical_G53.md
   push:
     branches: [main]
     paths:
@@ -31,11 +34,13 @@ on:
       - tools/iers_1963_frame.py
       - tools/iers_1963_intraday.py
       - tools/iers_1963_teme.py
+      - tools/iers_1963_optical.py
       - tests/test_iers_1963_eop.py
       - tests/test_iers_1963_timescales.py
       - tests/test_iers_1963_frame.py
       - tests/test_iers_1963_intraday.py
       - tests/test_iers_1963_teme.py
+      - tests/test_iers_1963_optical.py
       - research/constraints/iers_eop_1963_11_07_09.json
       - research/constraints/iers_eop_1963_G46.md
       - research/constraints/iers_1963_timescales_G47.json
@@ -45,6 +50,7 @@ on:
       - research/constraints/iers_1963_intraday_G49.json
       - research/constraints/iers_1963_teme_G50.md
       - research/constraints/iers_1963_covariance_G52.md
+      - research/constraints/iers_1963_optical_G53.md
 permissions:
   contents: read
 jobs:
@@ -78,4 +84,5 @@ jobs:
           python3 tools/iers_1963_intraday.py --source /tmp/iers-1963-eop.bin --check
           IERS_1963_SOURCE=/tmp/iers-1963-eop.bin python3 -m unittest discover -s tests -p 'test_iers_1963_teme.py' -v
           python3 tools/iers_1963_teme.py --source /tmp/iers-1963-eop.bin --check
+          IERS_1963_SOURCE=/tmp/iers-1963-eop.bin python3 -m unittest discover -s tests -p 'test_iers_1963_optical.py' -v
           python3 -c "import json; a=json.load(open('/tmp/iers-1963-frame-G48.json')); assert len(a['daily_00_utc_only']) == 3 and a['limitations']['holdout_527_529'] == 'NOT_RUN'"

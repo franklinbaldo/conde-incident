@@ -22,3 +22,7 @@ Implementar propagação (r,v), J2, arrasto calibrável, eventos numéricos, tes
 
 ## Fronteiras
 Nada de geolocalização conclusiva sem estado/arrasto/erro validados. Não substituir o SGP4 por edição de longitude/altitude; não ocultar contraprovas.
+
+## Interface de observáveis ópticos (G53)
+
+Use `tools/iers_1963_optical.py` para testar a sensibilidade de RA/Dec **geométricas GCRS** a posição TEME, orientação terrestre IERS e localização WGS84 **de cenário**, inclusive paralaxe e covariância angular derivada apenas do estado. Nunca identificar coordenadas WGS84 hipotéticas com estação observada em 1963, nem comparar diretamente com fichas SAO FK4/B1950: antes precisam existir estação/datum/época, conversão FK4, relógio A.1→UTC, erros e correções ópticas pertinentes. Regressões com bytes originais IERS e jacobiana por diferenças finitas em `tests/test_iers_1963_optical.py`. O operador é preparação para holdout, não reentrada demonstrada.
