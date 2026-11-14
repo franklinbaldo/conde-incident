@@ -213,7 +213,7 @@ try {
     if (viewport.width < 768) await englishNav.locator('summary').click();
     await englishNav.getByRole('link', { name: /Inverse scenarios/ }).click();
     await page.getByRole('heading', { name: /Inverse Test:/ }).waitFor();
-    const inverseLabel = page.getByText('Tempo do cenário UTC:', { exact: true });
+    const inverseLabel = page.getByText('Scenario time (UTC):', { exact: true });
     await inverseLabel.waitFor();
     const samples = [
       await inverseLabel.evaluate(el => ({
