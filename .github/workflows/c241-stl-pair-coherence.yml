@@ -2,6 +2,10 @@ name: C241 STL printed pair coherence
 on:
   pull_request:
     paths:
+      - research/tle_custody/stl_space_log_nasa_r51.json
+      - tools/audit_stl_space_log_r51.py
+      - tests/test_stl_space_log_r51.py
+      - tests/test_gaviao_g65_specialist_coverage.py
       - tools/stl_printed_pair_coherence_C241.py
       - tests/test_stl_printed_pair_coherence_C241.py
       - research/statistics/C241_STL_PRINTED_PAIR_COHERENCE.md
@@ -10,6 +14,10 @@ on:
   push:
     branches: [main]
     paths:
+      - research/tle_custody/stl_space_log_nasa_r51.json
+      - tools/audit_stl_space_log_r51.py
+      - tests/test_stl_space_log_r51.py
+      - tests/test_gaviao_g65_specialist_coverage.py
       - tools/stl_printed_pair_coherence_C241.py
       - tests/test_stl_printed_pair_coherence_C241.py
       - research/statistics/C241_STL_PRINTED_PAIR_COHERENCE.md
@@ -32,6 +40,7 @@ jobs:
       - name: Verify documentary source and numeric invariants
         run: |
           python3 -m unittest discover -s tests -p test_stl_space_log_r51.py -v
+          python3 -m unittest discover -s tests -p 'test_gaviao_g65_specialist_coverage.py' -v
           python3 -m unittest discover -s tests -p test_stl_printed_pair_coherence_C241.py -v
           python3 -O -m unittest discover -s tests -p test_stl_printed_pair_coherence_C241.py -v
           python3 -m tools.stl_printed_pair_coherence_C241 --check
