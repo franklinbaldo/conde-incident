@@ -1,0 +1,78 @@
+{
+  "schema": "conde.cgeo.nara-copy-access/v1",
+  "id": "CGEO-51",
+  "observed_on": "2026-11-14",
+  "lineage": [
+    "CGEO-47",
+    "CGEO-48",
+    "CGEO-49",
+    "CGEO-50"
+  ],
+  "nara": {
+    "unit": "46716637",
+    "series": "306062",
+    "film": "M1765",
+    "roll": "317",
+    "overlay": "m1765-317-00248.jpg",
+    "op_file_number": "125374",
+    "candidate_exposures": [
+      26,
+      16
+    ],
+    "spot_number": null,
+    "can_number": null
+  },
+  "sources": [
+    {
+      "kind": "nara_order",
+      "url": "https://www.archives.gov/research/cartographic/order",
+      "source_date": "2024-02-09",
+      "bytes": 36123,
+      "sha256": "ae45c7e44eaaab9d70e899e485747dd244b542b37a3a0e0c6b295feddb49befc",
+      "http_status": 200
+    },
+    {
+      "kind": "nara_locator",
+      "url": "https://unwritten-record.blogs.archives.gov/2019/09/11/researching-foreign-aerial-photography/",
+      "source_date": "2019-09-11",
+      "bytes": 129449,
+      "sha256": "5050d5254807d0f7fd8474fd5f800a96345a6312c82c0940e9f3ab6e5f88d068",
+      "http_status": 200
+    },
+    {
+      "kind": "nara_staff_reply",
+      "url": "https://openhistoryhub.com/t/how-aerial-photos-from-2ww-can-be-researched/61447",
+      "source_date": "2025-09-10",
+      "bytes": 16367,
+      "sha256": "1ac6f18462ef76470d7296b2340e62e2703b1acff3b1648ea38f5e1515304467",
+      "http_status": 200
+    }
+  ],
+  "access_policy": {
+    "digital_locator_can_be_requested": true,
+    "locator_is_open_online": false,
+    "remote_film_copy_offered": false,
+    "onsite_researcher_or_representative_needed": true,
+    "onsite_camera_or_scanner_possible": true,
+    "advance_request_for_original_negative_may_be_needed": true
+  },
+  "questions": [
+    "Is O.P. FILE NO. 125374 a spot number or a different archival identifier for overlay 00248?",
+    "If cross-referenced, which spot identifier, ON/DN can and barcode identify the original negative?",
+    "Can exposure labels 26 and 16 be tied to individual frames, flight dates and actual coverage of Conde?"
+  ],
+  "actions": {
+    "contact_sent": false,
+    "can_locator_obtained": false,
+    "on_site_research_arranged": false,
+    "negatives_acquired": false
+  },
+  "limitations": {
+    "authentic_photo_of_urban_conde": null,
+    "photo_exposure_date": null,
+    "historical_city_center_1963": null,
+    "event_location": null,
+    "orbital_constraint_activated": false,
+    "status": "ONSITE_ACQUISITION_PATH_ONLY"
+  }
+}
