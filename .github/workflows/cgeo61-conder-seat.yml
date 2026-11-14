@@ -33,7 +33,7 @@ jobs:
         run: |
           test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
           git show -s --format='HEAD=%H TREE=%T' HEAD
-      - name: Validate contract and 24 adversarial cases
+      - name: Validate contract and 26 adversarial cases
         run: |
           python3 tools/cgeo61_conder_sede_point.py
           python3 -m unittest discover -s tests -p 'test_cgeo61_conder_sede_point.py' -v
