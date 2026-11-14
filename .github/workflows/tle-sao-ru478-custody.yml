@@ -1,0 +1,37 @@
+name: TLE SAO RU478 original custody
+on:
+  pull_request:
+    paths:
+      - 'tools/tle_sao_ru478_finding_aid_c241_l45.py'
+      - 'tests/test_tle_sao_ru478_finding_aid_c241_l45.py'
+      - 'research/tle_custody/sao_ru478_finding_aid_C241-L45.json'
+      - 'research/constraints/morcego_sao_ru478_1963_crosswalk.json'
+      - '.github/workflows/tle-sao-ru478-custody.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/tle_sao_ru478_finding_aid_c241_l45.py'
+      - 'tests/test_tle_sao_ru478_finding_aid_c241_l45.py'
+      - 'research/tle_custody/sao_ru478_finding_aid_C241-L45.json'
+      - 'research/constraints/morcego_sao_ru478_1963_crosswalk.json'
+      - '.github/workflows/tle-sao-ru478-custody.yml'
+  workflow_dispatch:
+jobs:
+  custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact triggering HEAD
+        run: |
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check pypdf==5.9.0
+      - run: python -m unittest discover -s tests -p test_tle_sao_ru478_finding_aid_c241_l45.py -v
+      - run: python -O -m unittest discover -s tests -p test_tle_sao_ru478_finding_aid_c241_l45.py -v
+      - run: python tools/tle_sao_ru478_finding_aid_c241_l45.py --live

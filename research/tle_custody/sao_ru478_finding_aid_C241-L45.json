@@ -1,0 +1,59 @@
+{
+  "schema": "conde.sao-ru478-finding-aid-custody/v1",
+  "id": "C241-L45",
+  "source": {
+    "collection": "Smithsonian Astrophysical Observatory Satellite Tracking Program, Record Unit 478",
+    "url": "https://sirismm.si.edu/EADpdfs/SIA.FARU0478.pdf",
+    "sha256": "e4f2b29b9882cdfac1812b41251b087354e311822d7302e4655a89bc4a06c07e",
+    "bytes": 118909,
+    "pdf_pages": 30,
+    "printed_pages": 28,
+    "source_class": "OFFICIAL_FINDING_AID_NOT_INSTRUMENTAL_LOG",
+    "relation_to_existing": "research/constraints/morcego_sao_ru478_1963_crosswalk.json"
+  },
+  "anchors": [
+    {
+      "id": "RU478-WEATHER-1963",
+      "box": 1,
+      "printed_page": 3,
+      "pdf_page_index_zero_based": 4,
+      "phrase": "Iran #9008, 1966, 1965, 1964, 1963",
+      "fact": "The inventory lists Iran station 9008 weather files for 1963; no daily report was opened."
+    },
+    {
+      "id": "RU478-AF-NORAD",
+      "box": 4,
+      "printed_page": 5,
+      "pdf_page_index_zero_based": 6,
+      "phrase": "Air Force - NORAD",
+      "fact": "Agreement files include an Air Force/NORAD heading; no agreement contents or tracking data were opened."
+    },
+    {
+      "id": "RU478-MONTHLY-REPORTS",
+      "box": 59,
+      "printed_page": 24,
+      "pdf_page_index_zero_based": 25,
+      "phrase": "Baker-Nunn Observation Monthly Reports, 1961-1968",
+      "fact": "A series covers 1963; neither the November 1963 issue nor an object observation was inspected."
+    },
+    {
+      "id": "RU478-TAPE-12546",
+      "box": 65,
+      "printed_page": 25,
+      "pdf_page_index_zero_based": 26,
+      "phrase": "12546 All Photo-Reduced Observations through 1974",
+      "fact": "This is the archive label for tape 12546; its contents, completeness and coverage of NORAD 528 remain unverified."
+    }
+  ],
+  "derived_from_same_sao_program": true,
+  "object_ids_not_printed_in_these_anchors": [527, 528, 529],
+  "individual_observation_utc": null,
+  "station_for_target_528": null,
+  "observation_angles_for_target_528": null,
+  "target_528_sensor_sigma": null,
+  "independent_instrumental_observations_recovered": 0,
+  "physical_constraints_activated": 0,
+  "impact_at_conde": "NOT_ESTABLISHED",
+  "next_acquisition": "Retrieve box 59 November 1963 original monthly report and inventory/content of box 65 tape 12546, then check individual object, station, clock, epoch and angular error.",
+  "inference": "ARCHIVE_HOLDING_ONLY_NOT_528_DETECTION_OR_NONDETECTION"
+}
