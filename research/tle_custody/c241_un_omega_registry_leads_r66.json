@@ -1,0 +1,70 @@
+{
+  "schema": "conde.c241.un-omega-registration-leads.r66/v1",
+  "evidence_class": "SECONDARY_TRANSCRIPTION_OF_UN_REGISTRY_NOT_PRIMARY_SCAN",
+  "sources": {
+    "a1": "https://planet4589.org/space/un/un_taba.html",
+    "a3": "https://planet4589.org/space/un/un_taba3.html",
+    "b1": "https://planet4589.org/space/un/un_tabb1.html",
+    "nasa_1963": "https://ntrs.nasa.gov/api/citations/19640003479/downloads/19640003479.pdf#page=17",
+    "un_registration_first": "A/AC.105/INF.013",
+    "un_reporting_later": "A/AC.105/INF.054",
+    "original_un_document_scans_verified": false,
+    "instrumental_independence_from_nasa_catalog_verified": false
+  },
+  "transcribed_rows": [
+    {
+      "table": "A1",
+      "cospar_1962": "1962 Omega 1",
+      "launch_day": "1962-06-18",
+      "role": "MAIN_REGISTERED_OBJECT",
+      "period_min": 92.4,
+      "perigee_km": 367,
+      "apogee_km": 408,
+      "inclination_deg": 82.1,
+      "un_document": "A/AC.105/INF.013"
+    },
+    {
+      "table": "B1",
+      "cospar_1962": "1962 Omega 2",
+      "launch_day": "1962-06-18",
+      "role": "FRAGMENT",
+      "un_document": "A/AC.105/INF.013"
+    },
+    {
+      "table": "B1",
+      "cospar_1962": "1962 Omega 3",
+      "launch_day": "1962-06-18",
+      "role": "FRAGMENT",
+      "un_document": "A/AC.105/INF.013"
+    },
+    {
+      "table": "A3",
+      "cospar_1962": "1962 Omega 1",
+      "field_heading": "Decay before",
+      "reported_before_date": "1963-10-31",
+      "date_type": "REGISTER_CUTOFF_NOT_EVENT_TIMESTAMP",
+      "un_document": "A/AC.105/INF.054"
+    }
+  ],
+  "nasa_1963_row": {
+    "name": "OMEGA 1",
+    "launch_day": "1962-06-18",
+    "printed_decay_days": [
+      "1963-10-29",
+      "1963-10-30"
+    ],
+    "norad_id_printed": null,
+    "utc_convention_established": false
+  },
+  "boundaries": {
+    "direct_un_to_norad_308_crosswalk": false,
+    "un_report_contains_terminal_sensor_time": false,
+    "independent_terminal_holdouts_added": 0,
+    "terminal_sigma_hours": null,
+    "terminal_instant_utc": null,
+    "identity_probability": null,
+    "active_constraint_528": false,
+    "impact_geography": null,
+    "historical_mcmc": "NOT_RUN"
+  }
+}
