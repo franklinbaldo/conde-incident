@@ -35,5 +35,5 @@ test('the laboratory keeps the home link and exposes contextual links as native 
   assert.match(nav, /href=\{editorialContext\.href\}/);
   assert.match(nav, /activeTab !== 'summary'/);
   assert.match(nav, /aria-label=\{lang === 'pt'/);
-  assert.match(nav, /href="https:\/\/franklinbaldo\.github\.io\/conde-incident\/"/);
+  assert.match(nav, /href=\{EDITORIAL_ROUTES\.summary\.href\}/);
 });

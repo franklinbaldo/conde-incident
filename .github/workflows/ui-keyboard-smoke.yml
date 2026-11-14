@@ -13,6 +13,9 @@ on:
       - 'src/lib/editorialRoutes.ts'
       - 'tests/editorialRoutes.test.mjs'
       - 'tests/editorial_journey_smoke.mjs'
+      - 'tests/ssg_simulacoes_bridge_smoke.mjs'
+      - 'pages/simulacoes/page.md'
+      - 'tests/ssg-authored-pages.test.mjs'
       - 'stories/2026-11-11-o-dia-em-que-dois-relatos-se-cruzaram.md'
       - 'src/components/OrbitalMap.tsx'
       - 'src/components/map/**'
@@ -129,6 +132,8 @@ jobs:
         run: node tests/ssg_mobile_heading_smoke.mjs
       - name: Chromium editorial ↔ laboratory journeys (320px and desktop)
         run: node tests/editorial_journey_smoke.mjs
+      - name: Chromium eight SSG ↔ lab instrument pairs (320/390/1440)
+        run: node tests/ssg_simulacoes_bridge_smoke.mjs
       - name: Chromium TLE custody mobile code reflow and keyboard focus
         run: node tests/ssg_tle_code_scroll_smoke.mjs
       - name: Upload screenshots and findings even on failure

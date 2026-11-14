@@ -34,8 +34,8 @@ try {
     // published editorial Caderno, including on the narrowest mobile layout.
     const backToCaderno = page.getByRole('link', { name: 'Voltar ao Caderno' });
     assert.equal(await backToCaderno.count(), 1, 'missing accessible return to Caderno');
-    assert.equal(await backToCaderno.getAttribute('href'),
-      'https://franklinbaldo.github.io/conde-incident/');
+    assert.equal(await backToCaderno.getAttribute('href'), '/conde-incident/',
+      'return to Caderno must remain on the current Pages origin');
     const backRect = await backToCaderno.boundingBox();
     assert(backRect && backRect.x >= 0 && backRect.x + backRect.width <= viewport.width + 1,
       'Caderno return link is clipped off screen at ' + viewport.name + ': ' + JSON.stringify(backRect));
