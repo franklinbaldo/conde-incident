@@ -1,0 +1,37 @@
+name: C241 STL printed pair coherence
+on:
+  pull_request:
+    paths:
+      - tools/stl_printed_pair_coherence_C241.py
+      - tests/test_stl_printed_pair_coherence_C241.py
+      - research/statistics/C241_STL_PRINTED_PAIR_COHERENCE.md
+      - research/statistics/C241_stl_printed_pair_coherence.json
+      - .github/workflows/c241-stl-pair-coherence.yml
+  push:
+    branches: [main]
+    paths:
+      - tools/stl_printed_pair_coherence_C241.py
+      - tests/test_stl_printed_pair_coherence_C241.py
+      - research/statistics/C241_STL_PRINTED_PAIR_COHERENCE.md
+      - research/statistics/C241_stl_printed_pair_coherence.json
+      - .github/workflows/c241-stl-pair-coherence.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact HEAD
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Verify documentary source and numeric invariants
+        run: |
+          python3 -m unittest discover -s tests -p test_stl_space_log_r51.py -v
+          python3 -m unittest discover -s tests -p test_stl_printed_pair_coherence_C241.py -v
+          python3 -O -m unittest discover -s tests -p test_stl_printed_pair_coherence_C241.py -v
+          python3 -m tools.stl_printed_pair_coherence_C241 --check

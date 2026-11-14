@@ -1,0 +1,58 @@
+{
+  "apogee_difference_second_minus_first_printed_units": 12,
+  "classification": "DOCUMENTARY_INTERNAL_CONSISTENCY_NOT_INSTRUMENT_TRACK",
+  "columns_are_coepoch": null,
+  "conditional_rounding_model": {
+    "display_half_width_seconds": "3",
+    "first_possible_minutes_closed_envelope": [
+      "94.65",
+      "94.75"
+    ],
+    "hypothesis": "each displayed tenth of a minute rounds an unknown underlying period",
+    "intervals_touch_at_minutes": "94.65",
+    "second_possible_minutes_closed_envelope": [
+      "94.55",
+      "94.65"
+    ],
+    "tie_handling_unknown": true,
+    "zero_underlying_difference_excluded": false
+  },
+  "id": "C241-CERVO-STL-PAIR-COHERENCE",
+  "observational_design": {
+    "acquire": [
+      "original STL SPACE LOG volume 3 issue 4 table caption, legend, unit and paired-column headings",
+      "time-tagged source observations and definitions of period and altitude fields",
+      "separate original sensor provenance and measurement covariance",
+      "catalog-to-piece crosswalk for NORAD 528, independent orbital observations near terminal epoch"
+    ],
+    "active_constraint": false,
+    "condes_geographic_domain_reduced": false,
+    "historical_mass_rank_gain": 0,
+    "historical_mcmc": "NOT_RUN",
+    "new_528_tracking_observations": 0,
+    "new_instrumental_sensors": 0
+  },
+  "original_stl_issue_retrieved": false,
+  "perigee_difference_second_minus_first_printed_units": -12,
+  "period_and_altitude_element_conventions_equal": null,
+  "period_nominal_difference_first_minus_second_seconds": "6",
+  "pinned_source_id": "C241-LONTRA-R51",
+  "printed_altitude_sum": [
+    620,
+    620
+  ],
+  "printed_altitude_unit": null,
+  "printed_designation": "1963 3A",
+  "printed_mean_altitude_unit_unknown": [
+    "310",
+    "310"
+  ],
+  "source_pdf_sha256": "f77b0e8998d467dd457d0ab8e8012e6e9d69c60fb6180aa3d68f1e8422b32786",
+  "source_sha256": "18cdbed4e9a2d31d3b402b4456f547c3902bbcb0ecfc992efe4c4c3a3a24bcb5",
+  "two_body_invariance": {
+    "actual_physical_periods_equal": null,
+    "actual_semimajor_axes_equal": null,
+    "claim": "same printed mean height implies same Kepler period for any common unit scale, GM and Earth radius, if the columns are comparable",
+    "not_a_fit_to_the_periods": true
+  }
+}
