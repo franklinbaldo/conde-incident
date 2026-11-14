@@ -60,6 +60,7 @@ class G53StationOptical(unittest.TestCase):
         self.assertEqual(out["output_frame"], "GCRS")
         self.assertIsNone(out["historical_527_528_529_observation"])
         self.assertEqual(out["historical_holdout"], "NOT_RUN")
+        self.assertIsNone(out["wgs84_ray_first_earth_entry_km"])
         self.assertIsNone(out["state_only_angular_covariance_rad2"])
         self.assertIn("FK4_B1950", out["model_omissions"])
 
@@ -148,6 +149,21 @@ class G53StationOptical(unittest.TestCase):
         self.assertAlmostEqual(got["elevation_deg"], -.1, places=7)
         self.assertEqual(got["earth_occultation"],
                          "CLEAR_AGAINST_WGS84_ELLIPSOID_ONLY")
+
+    def test_polvo_conditional_range_cutoff_not_historical_instrument(self):
+        # At 2 km above the equator, -2 degrees crosses the WGS84 ellipsoid
+        # after 67.54 km. A 50 km target is visible; farther targets along
+        # the SAME ray are occulted, including those beyond the far horizon.
+        a = 6378.137
+        depression = math.radians(2.)
+        near = [a+2.-50.*math.sin(depression), 50.*math.cos(depression), 0.]
+        got = self.call(self.from_itrs(near), h=2000)
+        self.assertAlmostEqual(got["wgs84_ray_first_earth_entry_km"],
+                               67.542593239, places=5)
+        self.assertEqual(got["historical_holdout"], "NOT_RUN")
+        far = [a+2.-100.*math.sin(depression), 100.*math.cos(depression), 0.]
+        with self.assertRaisesRegex(ValueError, "Earth-occluded"):
+            self.call(self.from_itrs(far), h=2000)
 
     def test_g59_source_bound_prediction_rejects_occulted_state(self):
         # A synthetic observed angle can be made to agree exactly with a
