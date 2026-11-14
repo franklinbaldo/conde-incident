@@ -1,0 +1,93 @@
+{
+  "id": "C241-L67",
+  "kind": "NASA_SSR_PRINTED_DATE_SIGNATURE_MATCH_WITHOUT_IDENTITY_PROOF",
+  "inherited": [
+    "C241-L65",
+    "C241-L66"
+  ],
+  "editions": {
+    "contemporary": {
+      "ntrs_id": "19640003479",
+      "publication": "1963-12-15",
+      "pdf_page_1based": 17,
+      "sha256": "d31a064f8e03fd39be6fe75b88cd5852c0b74c9101fa635cb40ac25c77ef474f",
+      "catalog_number_printed": false
+    },
+    "retrospective": {
+      "ntrs_id": "19780009188",
+      "publication": "1977-12-31",
+      "pdf_page_1based": 46,
+      "sha256": "c5c66eb7eab242ab5b3dd56567de8bab2d404d0a6776baeb3b79383c86bc5ba8",
+      "catalog_number_printed": true
+    }
+  },
+  "match_fields": [
+    "launch",
+    "decay"
+  ],
+  "contemporary_rows": [
+    {
+      "printed_name": "OMEGA 1",
+      "launch": "18 JUN 62",
+      "decay": "29-30 OCT 63"
+    },
+    {
+      "printed_name": "OMEGA 2",
+      "launch": "18 JUN 62",
+      "decay": "12 JUL 62"
+    },
+    {
+      "printed_name": "OMEGA 3",
+      "launch": "18 JUN 62",
+      "decay": "14 JUL 62"
+    }
+  ],
+  "retrospective_rows": [
+    {
+      "printed_name": "OMEGA 2",
+      "catalog_number": 308,
+      "launch": "18 JUN 62",
+      "decay": "29-30 OCT 63"
+    },
+    {
+      "printed_name": "OMEGA 3",
+      "catalog_number": 310,
+      "launch": "18 JUN 62",
+      "decay": "12 JUL 62"
+    },
+    {
+      "printed_name": "A-ALPHA 5",
+      "catalog_number": 314,
+      "launch": "18 JUN 62",
+      "decay": "14 JUL 62"
+    }
+  ],
+  "date_signature_matches": [
+    {
+      "contemporary_name": "OMEGA 1",
+      "retrospective_name": "OMEGA 2",
+      "retrospective_catalog_number": 308
+    },
+    {
+      "contemporary_name": "OMEGA 2",
+      "retrospective_name": "OMEGA 3",
+      "retrospective_catalog_number": 310
+    },
+    {
+      "contemporary_name": "OMEGA 3",
+      "retrospective_name": "A-ALPHA 5",
+      "retrospective_catalog_number": 314
+    }
+  ],
+  "limits": {
+    "date_match_is_instrumental_identity": false,
+    "edition_independence": "SAME_NASA_GSFC_REPORT_FAMILY",
+    "calendar_is_utc_timing_measurement": false,
+    "terminal_event_utc": null,
+    "terminal_sigma_seconds": null,
+    "independent_instrumental_measurements": 0,
+    "historical_mcmc": "NOT_RUN",
+    "active_constraint_528": false,
+    "impact_probability": null
+  }
+}
