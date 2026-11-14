@@ -5,6 +5,7 @@ import {createHash} from 'node:crypto';
 import {join} from 'node:path';
 import {readBundle,audit,visibleDocument} from './verify-ssg-evidence-index.mjs';
 import {matrixCatalogPages} from './ssg-matrix-catalog.mjs';
+import {postMatrixAnchor} from './ssg-post-matrix-backlinks.mjs';
 
 const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('\\','\\\\').replaceAll('_','\\_').replaceAll('*','\\*').replaceAll('`','\\`').replaceAll('[','\\[').replaceAll(']','\\]').replaceAll('|','\\|').replace(/\r?\n/g,' ');
 const identifier=s=>typeof s==='string'&&/^[A-Z0-9][A-Z0-9_-]{2,99}$/.test(s);
@@ -79,6 +80,9 @@ export function auditBuiltPostMatrix(html,citations,bundle=readBundle()) {
   let checked=0;
   for(let i=0;i<items.length;i++) {
     const item=items[i];
+    const anchor=postMatrixAnchor(item.id);
+    assert.ok(doc.activeAnchors.get(anchor)===1&&doc.idCounts.get(anchor)===1,
+      'Pós-matriz: âncora documental ativa e única ausente: '+item.id);
     const heading=headings[i];
     const headingDoc=visibleDocument('<main>'+heading[0]+'</main>');
     assert.ok(headingDoc.visibleText.includes(item.id),
@@ -183,7 +187,8 @@ export function postMatrixPage(citations,lineage,bundle=readBundle()) {
       }
       assert.equal(current,path.upstream_source_id,'Pós-matriz: origem declarada divergente');
     }
-    lines.push(`### ${esc(item.id)}`,'',
+    lines.push('<span id="'+postMatrixAnchor(item.id)+'" tabindex="-1"></span>','',
+      `### ${esc(item.id)}`,'',
       `**Fonte:** ${esc(item.source_id)} · **Família:** ${esc(dep.source_family)}`,'',
       `**Estado canônico:** \`${item.status}\` · **Independência jornalística:** \`${item.journalistic_source_independence}\`.`,'',
       `**O que o documento afirma:** ${esc(item.proposition)}`,'',
