@@ -130,6 +130,45 @@ class FBISClockTests(unittest.TestCase):
                         "independent_anchors": rows,
                     })
 
+    def test_malformed_single_anchor_rejected_below_quorum(self):
+        variants = [
+            ("header_local_text", "2561 8 NOV 63"),
+            ("header_local_text", "2330 31 NOV 63"),
+            ("external_broadcast_utc", "1963-11-35T23:30Z"),
+            ("external_broadcast_utc", "1963-12-02T01:30Z"),
+        ]
+        for key, bad in variants:
+            with self.subTest(key=key, bad=bad):
+                row = synthetic_anchor(0)
+                row[key] = bad
+                with self.assertRaises(ValueError):
+                    f.qualification([row])
+                with self.assertRaises(ValueError):
+                    f.anchors_from_manifest({
+                        "schema": "conde.fbis-clock-anchors/v1",
+                        "independent_anchors": [row],
+                    })
+
+    def test_duplicate_fbis_occurrence_cannot_be_rebranded_as_second_item(self):
+        a = synthetic_anchor(0)
+        b = synthetic_anchor(1)
+        b["fbis_sha256"] = a["fbis_sha256"]
+        b["fbis_page"] = a["fbis_page"]
+        b["header_local_text"] = a["header_local_text"]
+        with self.assertRaisesRegex(ValueError, "duplicate FBIS occurrence"):
+            f.anchors_from_manifest({
+                "schema": "conde.fbis-clock-anchors/v1",
+                "independent_anchors": [a, b],
+            })
+
+    def test_november_30_rio_header_may_have_december_1_utc_anchor(self):
+        rows = [synthetic_anchor(i, "1963-12-01T01:30Z")
+                for i in range(10)]
+        for row in rows:
+            row["header_local_text"] = "2330 30 NOV 63"
+        self.assertEqual(f.qualification(rows)["status"], "RIO_LOCAL")
+        # All examples are synthetic. This is a boundary-of-calendar test only.
+
     def test_hash_and_source_lineage_are_pinned(self):
         self.assertEqual(self.report["source"]["facsimile_sha256"],
                          "63654bcd90c0515f30e31ed511a12a05f170ff4470e3d8a6f40fca12012a1adb")

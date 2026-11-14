@@ -60,12 +60,37 @@ def iso_utc(value: datetime) -> str:
     return value.isoformat(timespec="minutes").replace("+00:00", "Z")
 
 
+def anchor_clock_pair(row: dict) -> tuple[datetime, datetime]:
+    """Validate date/time for every putative anchor, even before quorum."""
+    header = row["header_local_text"]
+    match = re.fullmatch(r"(\d{2})(\d{2}) (\d{1,2}) NOV 63", header)
+    demand(match is not None, "clock anchor outside preregistered format")
+    hour, minute, day = map(int, match.groups())
+    try:
+        local = datetime(1963, 11, day, hour, minute)
+    except ValueError as exc:
+        raise ValueError("C241-P48: invalid November clock anchor") from exc
+
+    stamp = row["external_broadcast_utc"]
+    demand(bool(re.fullmatch(
+        r"1963-(?:11-\d{2}|12-01)T\d{2}:\d{2}Z", stamp)),
+        "external UTC must be November, or December 1 rollover")
+    try:
+        external = datetime.fromisoformat(stamp.replace("Z", "+00:00"))
+    except ValueError as exc:
+        raise ValueError("C241-P48: invalid independent UTC time") from exc
+    demand(external < datetime(1963, 12, 1, 2, 5, tzinfo=timezone.utc),
+           "external UTC beyond possible November DST rollover")
+    return local, external
+
+
 def anchors_from_manifest(data: dict) -> list:
     demand(data.get("schema") == "conde.fbis-clock-anchors/v1",
            "manifest schema invalid")
     rows = data.get("independent_anchors")
     demand(isinstance(rows, list), "anchors must be a list")
     used = set()
+    used_occurrences = set()
     for row in rows:
         demand(isinstance(row, dict), "anchor must be an object")
         for name in ("item_id", "fbis_document_url", "fbis_sha256",
@@ -80,6 +105,12 @@ def anchors_from_manifest(data: dict) -> list:
                    "anchor digest is not SHA-256")
         demand(row["item_id"] not in used, "duplicate FBIS item")
         used.add(row["item_id"])
+        occurrence = (row["fbis_sha256"], row["fbis_page"],
+                      row["header_local_text"])
+        demand(occurrence not in used_occurrences,
+               "duplicate FBIS occurrence under another item ID")
+        used_occurrences.add(occurrence)
+        anchor_clock_pair(row)
         demand(row["independent_source_sha256"] != row["fbis_sha256"],
                "self-confirming FBIS source")
         demand(row["fbis_document_url"] != row["independent_source_url"],
@@ -96,24 +127,15 @@ def qualification(anchors: list) -> dict:
     Source identity is checked above; human source review remains mandatory.
     An external timestamp cannot be inferred from the FBIS heading itself.
     """
+    parsed = [anchor_clock_pair(row) for row in anchors]
     count = len(anchors)
     if count < THRESHOLD:
         return {"status": "UNRESOLVED", "qualifying_anchors": count,
                 "reason": "LESS_THAN_10_INDEPENDENT_TIME_ANCHORS"}
     votes = {"GMT": 0, "RIO_LOCAL": 0, "INCONCLUSIVE": 0}
-    for row in anchors:
-        # Deliberately compare only headers in the Guanabara DST interval.
-        # Another city/season requires an explicit separate model.
-        header = row["header_local_text"]
-        m = re.fullmatch(r"(\d{2})(\d{2}) (\d{1,2}) NOV 63", header)
-        demand(m is not None, "clock anchor outside preregistered format")
-        hour, minute, day = map(int, m.groups())
-        demand(1 <= day <= 30, "November 1963 date outside month")
-        naive = datetime(1963, 11, day, hour, minute)
-        stamp = row["external_broadcast_utc"]
-        demand(bool(re.fullmatch(r"1963-11-\d{2}T\d{2}:\d{2}Z", stamp)),
-               "external time must be explicit UTC in November 1963")
-        independent_utc = datetime.fromisoformat(stamp.replace("Z", "+00:00"))
+    for naive, independent_utc in parsed:
+        # Every anchor was parsed even when fewer than ten are available.
+        # Dec 1 UTC is legal for a late-November Guanabara broadcast.
         distances = {
             "GMT": abs((as_utc(naive, 0) - independent_utc).total_seconds()) / 60,
             "RIO_LOCAL": abs((as_utc(naive, RIO_UTC_OFFSET_MINUTES)
