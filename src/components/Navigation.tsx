@@ -141,7 +141,7 @@ export const Navigation: React.FC<NavigationProps> = ({
               <a
                 href={editorialContext.href}
                 aria-label={lang === 'pt' ? 'Abrir no Caderno: ' + editorialContext.pt : 'Open in Notebook: ' + editorialContext.en}
-                className="inline-flex shrink-0 items-center rounded px-1 py-1 text-cyan-300 underline underline-offset-2 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
+                className="inline-flex min-w-0 max-w-full items-center break-words rounded px-1 py-1 text-cyan-300 underline underline-offset-2 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
               >
                 {lang === 'pt' ? editorialContext.pt : editorialContext.en}
               </a>

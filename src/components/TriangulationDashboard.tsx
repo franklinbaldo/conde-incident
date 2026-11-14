@@ -29,7 +29,7 @@ function formatDate(instant: Date) {
 function SourceLink({ href, label }: { href: string; label: string }) {
   return (
     <a href={href} target="_blank" rel="noopener noreferrer"
-      className="inline-flex items-center gap-1 underline underline-offset-2 text-cyan-300 hover:text-cyan-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
+      className="inline-flex min-w-0 max-w-full flex-wrap items-center gap-1 break-words underline underline-offset-2 text-cyan-300 hover:text-cyan-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
       {label}<ExternalLink className="h-3 w-3" aria-hidden="true" />
     </a>
   );
@@ -51,13 +51,13 @@ export const TriangulationDashboard: React.FC<TriangulationDashboardProps> = ({ 
   };
 
   return (
-    <section className="space-y-5" aria-labelledby="triangulation-title">
+    <section className="min-w-0 space-y-5 break-words" aria-labelledby="triangulation-title">
       <header className="rounded-xl border border-zinc-700 bg-zinc-900 p-5 space-y-3">
         <div className="flex items-center gap-2 text-cyan-300 text-xs font-semibold uppercase tracking-wide">
           <Satellite className="h-4 w-4" aria-hidden="true" />
           {isPt ? 'Comparação documental e condicional' : 'Documentary and conditional comparison'}
         </div>
-        <h1 id="triangulation-title" className="text-xl font-bold text-zinc-100">
+        <h1 id="triangulation-title" className="break-words text-xl font-bold text-zinc-100">
           {isPt ? 'Objetos 527, 528 e 529: o que sabemos e o que calculamos'
             : 'Objects 527, 528 and 529: records versus calculations'}
         </h1>
@@ -108,7 +108,7 @@ export const TriangulationDashboard: React.FC<TriangulationDashboardProps> = ({ 
 
       <section aria-labelledby="triangulation-model-title"
         className="rounded-xl border border-cyan-900 bg-zinc-900 p-5 space-y-4">
-        <div className="flex items-center gap-2">
+        <div className="flex min-w-0 flex-wrap items-center gap-2">
           <ArrowRightLeft className="h-4 w-4 text-cyan-300" aria-hidden="true" />
           <h3 id="triangulation-model-title" className="font-semibold text-zinc-100">
             {isPt ? 'Experimento: sensibilidade à época escolhida'

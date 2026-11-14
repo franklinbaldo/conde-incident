@@ -2,6 +2,23 @@ name: C241 STL unit crosscheck R53
 on:
   pull_request:
     paths:
+      - research/tle_custody/stl_space_log_nasa_r51.json
+      - research/statistics/C241_stl_printed_pair_coherence.json
+      - public/data/conde-stl-mile-subtype-bridge.json
+      - public/data/conde-stl-space-log-dependency-bridge.json
+      - public/data/conde-soviet-nasa-dependency-bridge.json
+      - public/data/conde-stl-epoch-independence-bridge.json
+      - research/tle_custody/soviet_nasa_crosswalk_C241_LONTRA_R49.json
+      - research/tle_custody/soviet_bse1964_1963_003_C241_LONTRA_R48.json
+      - research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json
+      - tools/audit_stl_space_log_r51.py
+      - tools/audit_soviet_nasa_crosswalk_r49.py
+      - tools/export_soviet_nasa_dependency_bridge.py
+      - tools/export_stl_r51_dependency_bridge.py
+      - tools/export_stl_mile_subtype_bridge.py
+      - tools/export_stl_epoch_independence_bridge.py
+      - tests/test_stl_epoch_independence_bridge.py
+      - tests/test_gaviao_g72_stl_epoch_gate.py
       - research/tle_custody/stl_unit_crosscheck_C241_LONTRA_R53.json
       - research/tle_custody/evidence_matrix_C241-LONTRA-R53_2026-11-14.md
       - tools/audit_stl_unit_crosscheck_r53.py
@@ -10,6 +27,23 @@ on:
   push:
     branches: [main]
     paths:
+      - research/tle_custody/stl_space_log_nasa_r51.json
+      - research/statistics/C241_stl_printed_pair_coherence.json
+      - public/data/conde-stl-mile-subtype-bridge.json
+      - public/data/conde-stl-space-log-dependency-bridge.json
+      - public/data/conde-soviet-nasa-dependency-bridge.json
+      - public/data/conde-stl-epoch-independence-bridge.json
+      - research/tle_custody/soviet_nasa_crosswalk_C241_LONTRA_R49.json
+      - research/tle_custody/soviet_bse1964_1963_003_C241_LONTRA_R48.json
+      - research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json
+      - tools/audit_stl_space_log_r51.py
+      - tools/audit_soviet_nasa_crosswalk_r49.py
+      - tools/export_soviet_nasa_dependency_bridge.py
+      - tools/export_stl_r51_dependency_bridge.py
+      - tools/export_stl_mile_subtype_bridge.py
+      - tools/export_stl_epoch_independence_bridge.py
+      - tests/test_stl_epoch_independence_bridge.py
+      - tests/test_gaviao_g72_stl_epoch_gate.py
       - research/tle_custody/stl_unit_crosscheck_C241_LONTRA_R53.json
       - research/tle_custody/evidence_matrix_C241-LONTRA-R53_2026-11-14.md
       - tools/audit_stl_unit_crosscheck_r53.py
@@ -34,3 +68,10 @@ jobs:
           python3 -m unittest discover -s tests -p test_stl_unit_crosscheck_r53.py -v
           python3 -O -m unittest discover -s tests -p test_stl_unit_crosscheck_r53.py -v
           python3 -m tools.audit_stl_unit_crosscheck_r53
+      - name: Check STL epoch bridge without sensor promotion
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p test_stl_epoch_independence_bridge.py -v
+          python3 -O -m unittest discover -s tests -p test_stl_epoch_independence_bridge.py -v
+          python3 -m unittest discover -s tests -p test_gaviao_g72_stl_epoch_gate.py -v
+          python3 tools/export_stl_epoch_independence_bridge.py --check-site

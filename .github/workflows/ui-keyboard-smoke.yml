@@ -33,6 +33,7 @@ on:
       - 'src/components/TleAuditViewer.tsx'
       - 'src/components/TriangulationDashboard.tsx'
       - 'tests/ui_inverse_reflow_smoke.mjs'
+      - 'tests/ui_lab_context_reflow_smoke.mjs'
       - 'src/components/map/**'
       - 'tests/ui_keyboard_smoke.mjs'
       - 'tests/ui_mobile_sections_smoke.mjs'
@@ -101,6 +102,7 @@ on:
       - 'src/components/TleAuditViewer.tsx'
       - 'src/components/TriangulationDashboard.tsx'
       - 'tests/ui_inverse_reflow_smoke.mjs'
+      - 'tests/ui_lab_context_reflow_smoke.mjs'
       - 'src/components/map/**'
       - 'tests/ui_keyboard_smoke.mjs'
       - 'tests/ui_mobile_sections_smoke.mjs'
@@ -191,6 +193,8 @@ jobs:
         run: node tests/ui_montecarlo_reflow_smoke.mjs
       - name: Chromium inverse filter 200% text, PT/EN, dates and reflow
         run: node tests/ui_inverse_reflow_smoke.mjs
+      - name: Chromium lab context link, TLE note and map note at 200% text (PT/EN)
+        run: node tests/ui_lab_context_reflow_smoke.mjs
       - name: Chromium lazy-download failure and recovery (PT/EN)
         run: node tests/ui_lab_chunk_failure_smoke.mjs
       - name: Browser export chunk failure, modal keyboard recovery and language
