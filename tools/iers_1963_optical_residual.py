@@ -17,7 +17,8 @@ from collections.abc import Mapping
 
 import numpy as np
 
-from iers_1963_optical import decode_source_bound_state, STATE_SCHEMA
+from iers_1963_optical import (decode_source_bound_state, forward_source_bound_optical,
+                               STATE_SCHEMA)
 
 ARCSEC_RAD = math.pi / (180.0 * 3600.0)
 FRAME = "GCRS"
@@ -127,18 +128,22 @@ def _unit(ra_deg: float, dec_deg: float) -> np.ndarray:
 
 def compare_geometric_gcrs(predicted: Mapping, observed: Mapping,
                            original_document_bytes: bytes, original_state_document_bytes: bytes,
-                           original_extraction_bytes: bytes) -> dict:
+                           original_extraction_bytes: bytes, original_iers_bytes: bytes,
+                           eop: Mapping, times: Mapping) -> dict:
     """Evaluate a conditional angular residual, NOT a 527/529 holdout.
 
     Source PDF bytes and separately versioned typed-extraction JSON bytes
-    are required, as well as the TEME state record bytes. Neither digest is
+    are required, as well as the TEME state record and original IERS 1963
+    bytes. The reported RA/Dec are independently replayed from those inputs.
+    Neither digest is
     proof of historical authorship or independence.
 
     The observation must declare its own instrumental error covariance in
     arcsec^2, document digest, UTC, exact frame/angle type, and station
     geodetic parameters. No uncertainty, catalogue transformation or clock
-    correction is silently supplied. State angular uncertainty is optional,
-    never silently interpreted as instrument calibration.
+    correction is silently supplied. Source contract TEME_POSITION_ONLY_V1
+    supplies no covariance; accepting an editable predicted covariance could
+    artificially suppress an angular residual, so it is rejected.
     """
     if not isinstance(predicted, Mapping) or not isinstance(observed, Mapping):
         raise ValueError("Prediction and observation must be records")
@@ -201,6 +206,24 @@ def compare_geometric_gcrs(predicted: Mapping, observed: Mapping,
         if p != o:
             raise ValueError("Observation station differs from prediction")
 
+    # G58: original state JSON binds the input vector, but did not bind the
+    # output RA/Dec to that vector. Recompute with authenticated original IERS
+    # bytes and versioned derived EOP/time records, never trust editable angles.
+    # The state source is POSITION_ONLY. A caller-provided state covariance is
+    # not evidence bound and can arbitrarily reduce Mahalanobis distance.
+    if predicted.get("state_only_angular_covariance_rad2") is not None:
+        raise ValueError("Unbound state covariance is not admissible with POSITION_ONLY source")
+    replayed = forward_source_bound_optical(
+        original_iers_bytes, eop, times, predicted["epoch_utc"],
+        original_state_document_bytes, binding["document_uri"],
+        _finite_number(ps.get("longitude_deg"), "station longitude"),
+        _finite_number(ps.get("latitude_deg"), "station latitude"),
+        _finite_number(ps.get("height_m"), "station height"))
+    for name in ("right_ascension_deg", "declination_deg"):
+        candidate = _finite_number(predicted.get(name), "predicted " + name)
+        if candidate != replayed[name]:
+            raise ValueError("Predicted GCRS angles differ from original IERS/state replay")
+
     pra = _finite_number(predicted.get("right_ascension_deg"), "predicted RA")
     pdec = _finite_number(predicted.get("declination_deg"), "predicted Dec")
     ora = _finite_number(observed.get("right_ascension_deg"), "observed RA")
@@ -220,10 +243,7 @@ def compare_geometric_gcrs(predicted: Mapping, observed: Mapping,
     instrument_arcsec2 = _covariance(observed.get("instrument_covariance_arcsec2"),
                                     "Instrument covariance", require_pd=True)
     instrument = instrument_arcsec2 * ARCSEC_RAD**2
-    state = predicted.get("state_only_angular_covariance_rad2")
-    model = np.zeros((2, 2)) if state is None else _covariance(
-        state, "State covariance", require_pd=False)
-    total = instrument + model
+    total = instrument
     # Cholesky avoids explicitly inverting a covariance in disparate units.
     # Preserve exact typed-input/extraction binding before emitting a statistic.
     z = np.linalg.solve(np.linalg.cholesky(total), residual)
@@ -243,7 +263,8 @@ def compare_geometric_gcrs(predicted: Mapping, observed: Mapping,
         "residual_east_north_arcsec": (residual / ARCSEC_RAD).tolist(),
         "combined_covariance_arcsec2": (total / ARCSEC_RAD**2).tolist(),
         "squared_mahalanobis_2d": chi2,
-        "uncertainty_contract": "SUPPLIED_INSTRUMENT_PLUS_OPTIONAL_STATE_NOT_CALIBRATED",
+        "uncertainty_contract": "SUPPLIED_INSTRUMENT_ONLY_POSITION_ONLY_STATE_NO_COVARIANCE",
+        "prediction_binding": "REPLAYED_FROM_ORIGINAL_TEME_AND_IERS_BYTES",
         "object_binding": "ORIGINAL_TEME_STATE_BYTES_AND_ID_MATCHED_NOT_HISTORICALLY_VERIFIED",
         "comparison_status": "CONDITIONAL_GEOMETRIC_ONLY",
         "extraction_binding": "TYPED_FIELDS_MATCH_SUPPLIED_EXTRACTION_NOT_PRIMARY_AUTHENTICITY",
