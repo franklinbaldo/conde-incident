@@ -6,7 +6,7 @@ const url=new URL('evidencias/fontes/',base).href;
 const browser=await chromium.launch({headless:true});
 try {
   for(const width of [320,390,1440]){
-    const page=await browser.newPage({viewport:{width,height:850}});
+    const page=await browser.newPage({viewport:{width,height:720}});
     const errors=[];
     page.on('pageerror',error=>errors.push(error.message));
     try {
@@ -17,6 +17,10 @@ try {
       assert.equal(await form.isVisible(),true,'O formulário não abriu: '+await page.locator('#source-lookup-status').innerText());
       assert.match(await page.locator('#source-lookup-status').innerText(),/Índice verificado/);
       const selector=page.getByLabel('Fonte documental');
+      // A reverse-lookup page should expose its primary control without scrolling on mobile.
+      const rect=await selector.boundingBox();
+      assert(rect && rect.y>=0 && rect.y+rect.height<=720,
+        'Fonte documental control below first 720px viewport at '+width+'px: '+JSON.stringify(rect));
       assert.equal(await selector.locator('option').count(),16,'15 curated sources plus prompt');
       await selector.selectOption({index:1});
       const entries=page.locator('#source-lookup-results li');
