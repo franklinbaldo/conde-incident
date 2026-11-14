@@ -16,6 +16,8 @@ from collections.abc import Mapping
 
 import numpy as np
 
+from iers_1963_optical import decode_source_bound_state, STATE_SCHEMA
+
 ARCSEC_RAD = math.pi / (180.0 * 3600.0)
 FRAME = "GCRS"
 ANGLE_TYPE = "INSTANTANEOUS_GEOMETRIC_NOT_APPARENT_FK4"
@@ -71,7 +73,7 @@ def _unit(ra_deg: float, dec_deg: float) -> np.ndarray:
 
 
 def compare_geometric_gcrs(predicted: Mapping, observed: Mapping,
-                           original_document_bytes: bytes) -> dict:
+                           original_document_bytes: bytes, original_state_document_bytes: bytes) -> dict:
     """Evaluate a conditional angular residual, NOT a 527/529 holdout.
 
     The observation must declare its own instrumental error covariance in
@@ -88,6 +90,34 @@ def compare_geometric_gcrs(predicted: Mapping, observed: Mapping,
         raise ValueError("Unexpected historical holdout status")
     if predicted.get("station_coordinate_contract") != "WGS84_GEODETIC_SCENARIO_NOT_1963_SURVEY":
         raise ValueError("Station survey contract is not supported")
+    # A geometrically plausible angle is not a match to a NORAD object if
+    # its *predicted* Cartesian input has no verified source/content binding.
+    binding = predicted.get("state_source_binding")
+    if not isinstance(binding, Mapping) or binding.get("schema") != STATE_SCHEMA:
+        raise ValueError("Prediction lacks source-bound TEME object identity")
+    digest_state = binding.get("document_sha256")
+    if not isinstance(digest_state, str) or not SHA256.fullmatch(digest_state):
+        raise ValueError("Invalid TEME state source digest")
+    if not isinstance(original_state_document_bytes, bytes) or not original_state_document_bytes:
+        raise ValueError("Original TEME state source bytes required")
+    if hashlib.sha256(original_state_document_bytes).hexdigest() != digest_state:
+        raise ValueError("Original TEME state source digest mismatch")
+    state_record = decode_source_bound_state(original_state_document_bytes)
+    if (state_record["object_id"] != binding.get("object_id") or
+            state_record["object_id"] != observed.get("object_id")):
+        raise ValueError("Prediction and observation object identities differ")
+    if state_record["epoch_utc"] != predicted.get("epoch_utc"):
+        raise ValueError("TEME input and predicted UTC epochs differ")
+    if state_record["record_class"] != binding.get("record_class"):
+        raise ValueError("TEME state source evidence class differs")
+    if not isinstance(binding.get("document_uri"), str) or not binding["document_uri"].strip():
+        raise ValueError("Missing TEME state source URI")
+    try:
+        psource = np.asarray(predicted["input_teme_position_km"], dtype=float)
+    except (KeyError, TypeError, ValueError, OverflowError) as exc:
+        raise ValueError("Missing source-bound TEME coordinates") from exc
+    if psource.shape != (3,) or not np.array_equal(psource, state_record["teme_position_km"]):
+        raise ValueError("TEME prediction coordinates differ from source bytes")
     if observed.get("frame") != FRAME or observed.get("angle_type") != ANGLE_TYPE:
         raise ValueError("Observation frame/angle type requires explicit conversion")
     if observed.get("instrument_covariance_basis") != "PREDICTED_GCRS_TANGENT_EAST_NORTH":
@@ -144,11 +174,15 @@ def compare_geometric_gcrs(predicted: Mapping, observed: Mapping,
     return {
         "epoch_utc": predicted["epoch_utc"], "object_id": observed["object_id"],
         "station_id": observed["station_id"], "document_uri": observed["document_uri"],
-        "document_sha256_verified": digest, "frame": FRAME,
+        "document_sha256_verified": digest,
+        "state_document_sha256_verified": digest_state,
+        "state_source_uri": binding["document_uri"],
+        "state_source_class": state_record["record_class"], "frame": FRAME,
         "residual_east_north_arcsec": (residual / ARCSEC_RAD).tolist(),
         "combined_covariance_arcsec2": (total / ARCSEC_RAD**2).tolist(),
         "squared_mahalanobis_2d": chi2,
         "uncertainty_contract": "SUPPLIED_INSTRUMENT_PLUS_OPTIONAL_STATE_NOT_CALIBRATED",
+        "object_binding": "ORIGINAL_TEME_STATE_BYTES_AND_ID_MATCHED_NOT_HISTORICALLY_VERIFIED",
         "comparison_status": "CONDITIONAL_GEOMETRIC_ONLY",
         "historical_holdout": "NOT_RUN",
         "impact_inference": "NOT_SUPPORTED",

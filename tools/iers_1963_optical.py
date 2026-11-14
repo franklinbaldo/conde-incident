@@ -9,9 +9,11 @@ IERS original bytes are required; no original 527/528/529 observation exists.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 from pathlib import Path
+from collections.abc import Mapping
 
 import erfa
 import numpy as np
@@ -107,6 +109,81 @@ def forward_optical(source: bytes, eop: dict, times: dict, utc: str,
         "historical_holdout": "NOT_RUN", "impact_inference": "NOT_SUPPORTED",
     }
 
+
+
+STATE_SCHEMA = "TEME_POSITION_ONLY_V1"
+STATE_CLASSES = {"SYNTHETIC_SCENARIO", "SECONDARY_DERIVATIVE_NOT_INSTRUMENT"}
+
+
+def decode_source_bound_state(raw_bytes: bytes) -> dict:
+    """Parse source bytes with duplicate-key rejection; never infer provenance.
+
+    This narrowly defined JSON interchange is a *scenario input*, not a
+    historical catalogue or proof that the labelled object was observed.
+    """
+    if not isinstance(raw_bytes, bytes) or not raw_bytes:
+        raise ValueError("Original TEME state source bytes required")
+
+    def unique_pairs(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError("Duplicate TEME state source key")
+            result[key] = value
+        return result
+
+    def reject_constant(value):
+        raise ValueError("Nonfinite TEME state source constant")
+
+    try:
+        record = json.loads(raw_bytes.decode("utf-8"),
+                            object_pairs_hook=unique_pairs,
+                            parse_constant=reject_constant)
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ValueError("TEME state source must be UTF-8 JSON") from exc
+    if not isinstance(record, Mapping) or set(record) != {
+        "schema", "object_id", "epoch_utc", "frame", "teme_position_km", "record_class"
+    }:
+        raise ValueError("Unrecognized TEME state source schema")
+    if record["schema"] != STATE_SCHEMA or record["frame"] != "TEME":
+        raise ValueError("TEME state source frame/schema mismatch")
+    if not isinstance(record["object_id"], str) or not record["object_id"].strip():
+        raise ValueError("TEME state source object identity required")
+    if not isinstance(record["epoch_utc"], str) or not record["epoch_utc"].endswith("Z"):
+        raise ValueError("TEME state source UTC epoch required")
+    if not isinstance(record["record_class"], str) or record["record_class"] not in STATE_CLASSES:
+        raise ValueError("Unsupported TEME state source evidence class")
+    raw_position = record["teme_position_km"]
+    if not isinstance(raw_position, list) or len(raw_position) != 3 or any(
+        isinstance(x, (bool, str)) or not isinstance(x, (int, float)) for x in raw_position
+    ):
+        raise ValueError("TEME state source position must be three numeric km values")
+    position = _validated_vector(raw_position, "TEME state source position (km)")
+    return {**record, "teme_position_km": position.tolist()}
+
+
+def forward_source_bound_optical(source: bytes, eop: dict, times: dict,
+                                 utc: str, state_document_bytes: bytes,
+                                 state_document_uri: str, station_lon_deg: float,
+                                 station_lat_deg: float, station_height_m: float) -> dict:
+    """Bind a G53 scenario prediction to original state JSON bytes and ID."""
+    if not isinstance(state_document_uri, str) or not state_document_uri.strip():
+        raise ValueError("TEME state source URI required")
+    state = decode_source_bound_state(state_document_bytes)
+    if state["epoch_utc"] != utc:
+        raise ValueError("TEME state source UTC does not match prediction epoch")
+    result = forward_optical(source, eop, times, utc,
+                             state["teme_position_km"], station_lon_deg,
+                             station_lat_deg, station_height_m)
+    result["input_teme_position_km"] = state["teme_position_km"]
+    result["state_source_binding"] = {
+        "schema": STATE_SCHEMA,
+        "document_uri": state_document_uri,
+        "document_sha256": hashlib.sha256(state_document_bytes).hexdigest(),
+        "object_id": state["object_id"],
+        "record_class": state["record_class"],
+    }
+    return result
 
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
