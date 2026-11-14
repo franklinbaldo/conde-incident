@@ -1,0 +1,84 @@
+{
+  "schema": "conde.archival_locator_custody/v1",
+  "id": "C241-LONTRA-R45",
+  "audit_date_utc": "2026-11-14",
+  "status": "CATALOGUE_ONLY_CONTEMPORANEOUS_CONTROL_NOT_TARGET_OBSERVATION",
+  "institutional_source": {
+    "institution": "Science Museum Group Collection",
+    "archive": "Geoffrey Perry archive relating to operation of the Kettering Group",
+    "collection_id": "KET",
+    "locator": "KET/C/3/10",
+    "title": "File for Polyot 1 1963-43A radio observations",
+    "catalogue_url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110121264",
+    "parent_url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110093443",
+    "catalogued_creation_year": 1963,
+    "extent": "1 folder",
+    "described_contents": [
+      "press cuttings",
+      "GE Perry press release",
+      "log of signals",
+      "GE Perry notes",
+      "graph",
+      "track diagram"
+    ],
+    "access_label": "Open Access",
+    "rights_notice": "Copies may be supplied according to copyright law and Science Museum Group terms"
+  },
+  "control_object": {
+    "name": "Polyot 1",
+    "international_designation": "1963-043A",
+    "norad_id": 683,
+    "launch_date": "1963-11-01",
+    "catalog_crosscheck_url": "https://keeptrack.space/satellite/683",
+    "target_mismatch": true,
+    "observation_dates_verified": false,
+    "confirms_measurement_on_1963_11_07_09": false
+  },
+  "sibling_context": {
+    "diary_1963": "KET/A/1/09",
+    "radio_by_year_1963": "KET/A/6",
+    "submitted_results_1960_1964": "KET/A/2/1",
+    "earliest_item_in_sublibrary_radio_logs": "KET/A/5/2/01",
+    "earliest_item_year": 1965,
+    "independence_between_items_confirmed": false
+  },
+  "retrieval": {
+    "catalogue_inspected_via_web_viewer": true,
+    "catalogue_html_bytes_recovered": false,
+    "catalogue_html_sha256": null,
+    "facsimile_recovered": false,
+    "facsimile_sha256": null,
+    "folio_count_read": 0,
+    "timestamp_of_signal_verified": false,
+    "graph_coordinates_verified": false
+  },
+  "requested_observation": {
+    "target_norad_ids": [
+      527,
+      528,
+      529
+    ],
+    "target_designations": [
+      "1963-003A",
+      "1963-003B",
+      "1963-003C"
+    ],
+    "date_window_utc": [
+      "1963-11-07",
+      "1963-11-09"
+    ],
+    "target_identity_verified": false,
+    "target_epoch_utc_verified": false,
+    "clock_frame_calibration_verified": false,
+    "genealogy_checked": false,
+    "independent_measurements_retrieved": 0,
+    "new_orbital_constraints_activated": 0
+  },
+  "next_steps": [
+    "Locate scans or individual folios of KET/C/3/10 and distinguish signal logs, graphs and track diagrams before transcription",
+    "Check actual dates on Polyot 1 pages; the folder year does not establish observations 7-9 November 1963",
+    "Cross-check KET/A/1/09, KET/A/6 and KET/A/2/1; never count copied logs as separate sensors",
+    "Search 1963-003A/B/C or 527/528/529 only in recovered original pages, with clock, referential, identification provenance and errors"
+  ],
+  "external_contact_sent": false
+}
