@@ -1,0 +1,84 @@
+{
+  "schema": "conde.archival_locator_custody/v1",
+  "id": "C241-LONTRA-R43",
+  "audit_date_utc": "2026-11-14",
+  "status": "ARCHIVAL_CATALOGUE_IDENTIFIED_ONLY_NO_ORIGINAL_OBSERVATION_READ",
+  "repository": {
+    "name": "Science Museum Group Collection",
+    "collection": "Geoffrey Perry archive relating to operation of the Kettering Group",
+    "collection_identifier": "KET",
+    "catalog_url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110093443",
+    "rights": "Open Access listed; reproduction subject to institution's copyright conditions",
+    "physical_extent_description": "approximately 90 boxes"
+  },
+  "items": [
+    {
+      "id": "KET/A/1/09",
+      "catalog_url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110118009",
+      "catalog_title": "GE Perry desk diary for the year 1963",
+      "date_coverage": "1963",
+      "physical_extent": "one volume",
+      "catalogue_claim": "Handwritten satellite observation notes in margins and marked press predictions; summary of observed satellites on pages 116-117",
+      "november_7_to_9_entries_read": false,
+      "priority": 1
+    },
+    {
+      "id": "KET/A/2/1",
+      "catalog_url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110118047",
+      "catalog_title": "Observation results sent to DSIR and related correspondence for the years 1960-1964",
+      "date_coverage": "1960-1964",
+      "physical_extent": "one folder",
+      "catalogue_claim": "Correspondence and sent results for several years, including description of first Sputnik 4 signals in May 1960",
+      "november_7_to_9_entries_read": false,
+      "priority": 2
+    },
+    {
+      "id": "KET/A/4",
+      "catalog_url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110118053",
+      "catalog_title": "Observation totals and information on Russian launches",
+      "date_coverage": "1957-1980",
+      "physical_extent": "one folder",
+      "catalogue_claim": "Radio observation totals 1957-1963, visual observation totals 1957-1969; totals are not individual astrometric measurements",
+      "november_7_to_9_entries_read": false,
+      "priority": 3
+    },
+    {
+      "id": "KET/C/3/11",
+      "catalog_url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110121265",
+      "catalog_title": "File for Cosmos 22 1963-45A and 24 1963-52A radio observations",
+      "date_coverage": "1963",
+      "physical_extent": "one folder",
+      "catalogue_claim": "Signals, notes and Doppler curves for explicitly different 1963 satellites; do not associate with 1963-003",
+      "november_7_to_9_entries_read": false,
+      "priority": 4
+    }
+  ],
+  "retrieval": {
+    "catalogue_text_examined_via_web_viewer": true,
+    "direct_get_attempted_from_jatoba": true,
+    "direct_get_date_utc": "2026-11-14",
+    "direct_get_result": "HTTP_403_FIRST_THREE_CATALOGUE_ITEMS_FOURTH_NOT_TESTED",
+    "direct_get_scope_note": "HTTP 403 actually tested on first three entries only; fourth catalogued through web viewer",
+    "html_bytes_sha256": null,
+    "original_diary_facsimile_downloaded": false,
+    "original_1963_observation_log_read": false,
+    "catalogue_is_primary_instrumental_source": false,
+    "physical_source_located_in_catalogue": true,
+    "november_1963_content_verified": false
+  },
+  "targets": {
+    "international_designations": ["1963-003A", "1963-003B", "1963-003C"],
+    "norad_ids": [527, 528, 529],
+    "target_match_confirmed": false,
+    "target_astrometric_observations_retrieved": 0,
+    "target_radio_observations_retrieved": 0,
+    "new_orbital_constraints_activated": 0
+  },
+  "next_steps": [
+    "Request or find digitized pages for 7-9 November 1963 of KET/A/1/09, including margins and references to observed satellites",
+    "Inspect KET/A/2/1 for 1963 transmitted measurements, original target identifiers, UTC/frequency and actual observation records",
+    "Cross-check KET/A/4 yearly totals without treating a summary count as orbit data",
+    "Consult archival staff only after outreach is explicitly authorized; no message has been sent"
+  ],
+  "outreach_sent": false
+}
