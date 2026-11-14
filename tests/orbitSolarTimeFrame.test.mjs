@@ -13,7 +13,7 @@ const snapshot = JSON.parse(readFileSync(new URL(
   '../research/meteorology/space_weather_msise_inputs_1963_11_07_09.json', import.meta.url)));
 const state = {rKm: [6878.137, 0, 0], vKmS: [0, 7.6, 0], tS: 100};
 const opts = (overrides = {}) => ({
-  snapshot, originEpochUtc: '1963-11-08T12:00:00Z', originStateTS: 100,
+  snapshot, temporalUse: 'RETROSPECTIVE_RECONSTRUCTION', originEpochUtc: '1963-11-08T12:00:00Z', originStateTS: 100,
   inertialFrame: 'SYNTHETIC-ECI', frameTransformSource: 'SYNTHETIC_GEODESY',
   toGeodetic: () => ({latitudeDeg: 0, longitudeDeg: 0,
     altitudeKm: 500, localSolarTimeHours: 12}),
