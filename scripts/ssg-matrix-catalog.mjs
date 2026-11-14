@@ -6,6 +6,7 @@ import {dirname,join,resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {readBundle,audit,visibleDocument} from './verify-ssg-evidence-index.mjs';
 import {matrixRowUrl} from './ssg-documentary-archive.mjs';
+import {relatedDocumentBacklinks,POST_MATRIX_URL,auditVisibleIdentityLinks} from './ssg-post-matrix-backlinks.mjs';
 
 const ROOT='/conde-incident/evidencias/matriz/';
 const PER_PAGE=20;
@@ -38,9 +39,11 @@ const data=bundle=>bundle.lookupShards.flatMap(part=>JSON.parse(part.raw).record
     return {pointer,record};
   });
 
-export function matrixCatalogPages(bundle) {
+export function matrixCatalogPages(bundle,citations=null) {
   const entries=data(bundle);
   const {manifest}=bundle;
+  const related=citations?relatedDocumentBacklinks(citations,
+    entries.map(({pointer})=>pointer.occurrence),manifest.matrix_git_blob_sha1):new Map();
   assert.equal(entries.length,manifest.total_matrix_occurrences);
   assert.equal(entries.filter(x=>x.pointer.kind==='curated').length,manifest.curated_occurrences);
   assert.equal(entries.filter(x=>x.pointer.kind==='unmapped').length,manifest.unmapped_matrix_occurrences);
@@ -52,6 +55,7 @@ export function matrixCatalogPages(bundle) {
     const items=slice.flatMap(({pointer,record})=>{
       const curated=pointer.kind==='curated';
       const target=curated?record.archive_path:null;
+      const later=related.get(pointer.occurrence)||[];
       if(curated) assert.match(target,/^\/conde-incident\/evidencias\/arquivo\/c\d+-\d+\/$/);
       return [
         '<span id="'+anchor(pointer.occurrence)+'" tabindex="-1"></span>','',
@@ -61,6 +65,11 @@ export function matrixCatalogPages(bundle) {
             ' referência(s). [Abrir fonte, estado e genealogia]('+target+')'
           : '**Cobertura do índice:** ainda sem ficha documental curada. Isso não significa que a alegação seja falsa, que falte uma fonte ou que tenha ocorrido um evento físico.',
         '',
+        ...(later.length?[
+          '**Pista documental posterior à matriz, sem curadoria nova ou observação independente:** '+
+            later.map(ref=>'['+ref.id+']('+ref.url+')').join(' · '),
+          '',
+        ]:[]),
         '[Consultar linha '+record.matrix_line+' da matriz]('+matrixRowUrl(record.matrix_line)+') · '+
           '**SHA-256 da linha:** `'+record.row_sha256+'`','',
       ];
@@ -103,12 +112,13 @@ export function matrixCatalogPages(bundle) {
     ].join('\n'));
   assert.ok(Buffer.byteLength(index,'utf8')<=20000,'Índice de IDs acima do teto de 20 KB');
   files.set('index.md',index);
-  return {files,entries,pages};
+  return {files,entries,pages,related};
 }
 
-export function writeMatrixCatalogPages(outputDir,bundle=readBundle()) {
+export function writeMatrixCatalogPages(outputDir,bundle=readBundle(),
+  citations=JSON.parse(readFileSync('public/data/conde-source-citations.json','utf8'))) {
   audit(bundle); // The generator refuses a coherent but forged lookup+shard pair.
-  const {files}=matrixCatalogPages(bundle);
+  const {files}=matrixCatalogPages(bundle,citations);
   for(const [name,content] of files){
     const path=join(outputDir,name);
     mkdirSync(dirname(path),{recursive:true});
@@ -125,7 +135,7 @@ const htmlPlain=source=>source.replace(/<[^>]*>/g,'').replace(/&(#x[0-9a-f]+|#[0
   return {amp:'&',lt:'<',gt:'>',quot:'"',apos:"'",nbsp:'\u00a0'}[key];
 });
 
-export function auditBuiltMatrixSections(html,expected) {
+export function auditBuiltMatrixSections(html,expected,related=new Map()) {
   const tokens=[...html.matchAll(/<span id="(C[0-9]{2,3}-[0-9]+)" tabindex="-1"><\/span>/g)];
   const ids=expected.map(({pointer})=>anchor(pointer.occurrence));
   assert.deepEqual(tokens.map(match=>match[1]),ids,
@@ -145,6 +155,14 @@ export function auditBuiltMatrixSections(html,expected) {
     const sha=/<strong>SHA-256 da linha:<\/strong>\s*<code>([0-9a-f]{64})<\/code>/.exec(fragment)?.[1];
     assert.equal(sha,record.row_sha256,
       'Per-occurrence digest differs from frozen row: '+pointer.occurrence);
+    const backlinks=related.get(pointer.occurrence)||[];
+    const found=[...section.links].filter(href=>href.startsWith(POST_MATRIX_URL+'#')).sort();
+    assert.deepEqual(found,backlinks.map(ref=>ref.url).sort(),
+      'Matrix post-matrix backlinks changed for '+pointer.occurrence);
+    auditVisibleIdentityLinks(section.visibleMarkup,backlinks,POST_MATRIX_URL+'#',
+      'Matrix '+pointer.occurrence);
+    if(backlinks.length) assert.ok(section.visibleText.includes('Pista documental posterior à matriz'),
+      'Matrix post-matrix epistemic warning missing: '+pointer.occurrence);
     if(pointer.kind==='curated') {
       assert.ok(section.visibleText.includes('ficha documental curada'),
         'Curated coverage label absent: '+pointer.occurrence);
@@ -160,9 +178,10 @@ export function auditBuiltMatrixSections(html,expected) {
   return expected.length;
 }
 
-export function auditBuiltMatrixCatalog(bundle,siteRoot='public') {
+export function auditBuiltMatrixCatalog(bundle,siteRoot='public',
+  citations=JSON.parse(readFileSync('public/data/conde-source-citations.json','utf8'))) {
   audit(bundle);
-  const {entries,pages}=matrixCatalogPages(bundle);
+  const {entries,pages,related}=matrixCatalogPages(bundle,citations);
   const index=visibleDocument(readFileSync(join(siteRoot,'evidencias/matriz/index.html'),'utf8'));
   for(const item of pages) assert.ok(index.links.has(item.url),'Index missing page '+item.url);
   for(let i=0;i<pages.length;i++){
@@ -182,7 +201,7 @@ export function auditBuiltMatrixCatalog(bundle,siteRoot='public') {
       if(pointer.kind==='curated')assert.ok(doc.links.has(record.archive_path),
         'Missing curated evidence link '+pointer.occurrence);
     }
-    auditBuiltMatrixSections(html,entries.slice(i*PER_PAGE,(i+1)*PER_PAGE));
+    auditBuiltMatrixSections(html,entries.slice(i*PER_PAGE,(i+1)*PER_PAGE),related);
   }
   for(const path of ['evidencias/index.html','evidencias/arquivo/index.html']){
     const doc=visibleDocument(readFileSync(join(siteRoot,path),'utf8'));

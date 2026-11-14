@@ -30,6 +30,7 @@ REQUIRED_SMOKE_ENTRYPOINTS = (
     "tests/ssg_tle_syntax_smoke.mjs",
     "tests/ssg_tle_code_scroll_smoke.mjs",
     "tests/ssg_source_lookup_smoke.mjs",
+    "tests/ssg_post_matrix_visibility_smoke.mjs",
 )
 
 REQUIRED_INPUTS = (
@@ -41,6 +42,11 @@ REQUIRED_INPUTS = (
     "scripts/prepare-ssg.mjs",
     "scripts/enable-article-frames.mjs",
     "ssg.toml",
+    "scripts/ssg-post-matrix.mjs",
+    "scripts/verify-ssg-evidence-index.mjs",
+    "scripts/ssg-post-matrix-backlinks.mjs",
+    "public/data/conde-source-citations.json",
+    "static/css/tokens.css",
 )
 
 
@@ -121,6 +127,14 @@ class UIKeyboardTriggerContractTest(unittest.TestCase):
         needle = "        run: node tests/ui_keyboard_smoke.mjs"
         self.assertIn(needle, original)
         mutated = original.replace(needle, "        run: echo skipped keyboard smoke", 1)
+        with self.assertRaisesRegex(AssertionError, "mandatory browser smoke executions missing"):
+            assert_covered(mutated)
+
+    def test_post_matrix_browser_gate_cannot_be_replaced_with_echo(self):
+        original = WORKFLOW.read_text()
+        needle = "        run: node tests/ssg_post_matrix_visibility_smoke.mjs"
+        self.assertIn(needle, original)
+        mutated = original.replace(needle, "        run: echo no CSS audit", 1)
         with self.assertRaisesRegex(AssertionError, "mandatory browser smoke executions missing"):
             assert_covered(mutated)
 

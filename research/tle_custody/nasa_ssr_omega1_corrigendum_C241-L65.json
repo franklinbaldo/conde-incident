@@ -1,0 +1,42 @@
+{
+  "id": "C241-L65",
+  "kind": "NASA_SSR_VISUAL_TRANSCRIPTION_CORRIGENDUM",
+  "corrects": {
+    "record": "C241-L64",
+    "field": "original_row.printed_designator",
+    "legacy_value": "A OMEGA 1",
+    "correct_value": "OMEGA 1",
+    "legacy_record_immutable": true
+  },
+  "source": {
+    "ntrs_id": "19640003479",
+    "pdf_url": "https://ntrs.nasa.gov/api/citations/19640003479/downloads/19640003479.pdf",
+    "pdf_sha256": "d31a064f8e03fd39be6fe75b88cd5852c0b74c9101fa635cb40ac25c77ef474f",
+    "zero_based_page": 16,
+    "printed_page": 15,
+    "section_year": "1962 LAUNCHES (CONT'D)",
+    "printed_source": "US",
+    "launch_printed": "18 JUN",
+    "decay_printed": "29-30 OCT 63",
+    "visual_inspection": "raster page reexamined 2026-11-14; line OMEGA 1 is followed by OMEGA 2 and OMEGA 3, before A BETA 1"
+  },
+  "disambiguation": {
+    "correct_us_label": "1962 OMEGA 1",
+    "other_label": "1962 A OMEGA 1",
+    "other_country": "USSR",
+    "other_launch_date": "1962-09-27",
+    "other_identification": "Cosmos 9",
+    "other_reference": "https://planet4589.org/space/un/un_taba1.html",
+    "other_reference_class": "SECONDARY_UN_INDEX",
+    "primary_norad_id_printed": null,
+    "crosswalk_norad_308": "SECONDARY_ONLY"
+  },
+  "inference": {
+    "new_independent_sensor_observations": 0,
+    "actual_terminal_utc": null,
+    "terminal_sigma_hours": null,
+    "historical_mcmc": "NOT_RUN",
+    "active_constraint_528": false,
+    "impact_geography": null
+  }
+}

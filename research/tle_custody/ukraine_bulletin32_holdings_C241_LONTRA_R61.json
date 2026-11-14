@@ -1,0 +1,54 @@
+{
+  "id": "C241-LONTRA-R61",
+  "audit_date_utc": "2026-11-14",
+  "evidence_class": "INSTITUTIONAL_SERIAL_HOLDINGS_NOT_PRIMARY_FACSIMILE",
+  "upstream": [
+    "C241-LONTRA-R60",
+    "C241-LONTRA-R57"
+  ],
+  "catalog": {
+    "holding_institution": "Main Astronomical Observatory, National Academy of Sciences of Ukraine; scientific and technical library",
+    "source_url": "https://mao.kiev.ua/index.php/ua/gao-biblio-periodyka/sciencefilds-a-b",
+    "original_catalog_language": "uk",
+    "serial_title": "Бюллетень станций оптического наблюдения ИСЗ",
+    "1962_holding": "N25-31",
+    "1963_holding": "N32-37",
+    "1964_holding": "N38-43",
+    "continuation_note": "From no. 60: Наблюдения искусственных небесных тел",
+    "verified_http_status": 200,
+    "verified_html_bytes": 63640,
+    "html_sha256": "5ec7eeef7492fb0c4d135f6d5ae5f0378c7290fffd86d49d633da4e1f53e0480",
+    "verification": "Complete HTTPS HTML downloaded on external executor Ifro on 2026-11-14; hash and context of issue 32 checked in text; not a scan of issue 32",
+    "custody_scope": "Hash belongs only to a current library holdings HTML snapshot, not to the 1963 Soviet printed fascicles"
+  },
+  "cross_catalog": {
+    "japan_nii_ncid": "AA00566856",
+    "url": "https://ci.nii.ac.jp/ncid/AA00566856",
+    "verified_issue_32_held": true,
+    "interpretation": "Two institutional holding descriptions for issue 32, not independent technical observations"
+  },
+  "target": {
+    "soviet_bulletin_issue": 32,
+    "soviet_bulletin_year": 1963,
+    "article_authors_from_1969_secondary": [
+      "L. I. Medvedeva",
+      "B. A. Firago"
+    ],
+    "link_to_target_article_status": "BIBLIOGRAPHIC_CITATION_ONLY_NOT_IN_HOLDINGS_TEXT",
+    "primary_article_pages_known": false
+  },
+  "boundaries": {
+    "issue_32_facsimile_retrieved": false,
+    "original_article_retrieved": false,
+    "original_page_read": false,
+    "station_identified_for_527_529": false,
+    "independent_observations_norad_527_528_529": [],
+    "new_orbital_constraints": 0,
+    "institutional_contact_sent": false
+  },
+  "next_actions": [
+    "Seek digital scans or authorized access routes for no. 32 (1963) fascicle in Kyiv or Japanese holdings",
+    "Verify title, authors and page range in original before treating Medvedeva/Firago as article located in catalogue",
+    "Search issue 33-37 for date-specific satellite observations and target identities; do not project modern catalogue holdings back to sensors"
+  ]
+}

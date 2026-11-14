@@ -1,0 +1,40 @@
+name: CGEO-60 modern OSM controls
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo60_modern_osm_cut.json'
+      - 'research/geo/CGEO60_MODERN_OSM_PROXY_CUT.md'
+      - 'tools/cgeo60_modern_osm_cut.py'
+      - 'tests/test_cgeo60_modern_osm_cut.py'
+      - '.github/workflows/cgeo60-modern-osm.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo60_modern_osm_cut.json'
+      - 'research/geo/CGEO60_MODERN_OSM_PROXY_CUT.md'
+      - 'tools/cgeo60_modern_osm_cut.py'
+      - 'tests/test_cgeo60_modern_osm_cut.py'
+      - '.github/workflows/cgeo60-modern-osm.yml'
+permissions:
+  contents: read
+jobs:
+  source-and-adversarial:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact checkout SHA and tree
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          git show -s --format='HEAD=%H TREE=%T' HEAD
+      - name: Validate scientific contract and adversarial tests
+        run: |
+          python3 tools/cgeo60_modern_osm_cut.py
+          python3 -m unittest discover -s tests -p 'test_cgeo60_modern_osm_cut.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_cgeo60_modern_osm_cut.py' -v
+      - name: Independently read current OSM XML nodes
+        run: python3 tools/cgeo60_modern_osm_cut.py --live

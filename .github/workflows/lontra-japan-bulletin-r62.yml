@@ -1,0 +1,32 @@
+name: C241 NII Soviet satellite bulletin holdings R62
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/japan_bulletin32_issues_C241_LONTRA_R62.json
+      - tools/audit_japan_bulletin_r62.py
+      - tests/test_japan_bulletin_r62.py
+      - .github/workflows/lontra-japan-bulletin-r62.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  japanese-catalogue-custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Confirm exact HEAD
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Audit JSON provenance and adversarial mutations
+        run: |
+          set -euo pipefail
+          python3 -m tools.audit_japan_bulletin_r62
+          python3 -m unittest discover -s tests -p 'test_japan_bulletin_r62.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_japan_bulletin_r62.py' -v
+      - name: Replay CiNii live HTML checksum and holdings
+        run: |
+          set -euo pipefail
+          python3 -m tools.audit_japan_bulletin_r62 --live

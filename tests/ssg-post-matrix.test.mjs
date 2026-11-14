@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {postMatrixPage,postMatrixLinks,auditBuiltPostMatrix} from '../scripts/ssg-post-matrix.mjs';
+import {postMatrixAnchor} from '../scripts/ssg-post-matrix-backlinks.mjs';
 
 const citations=JSON.parse(readFileSync('public/data/conde-source-citations.json','utf8'));
 const lineage=JSON.parse(readFileSync('public/data/conde-declared-dependence.json','utf8'));
@@ -110,22 +111,93 @@ test('post-matrix references open real no-JS matrix anchors and reject coordinat
     /snapshot diferente do índice canônico auditado/);
 });
 
-test('post-matrix built HTML must expose each actual matrix link in visible main',()=>{
+test('post-matrix built HTML binds navigation, source identity and custody in each visible record',()=>{
+  const item=citations.post_matrix_occurrences[0];
+  const reportDigest=createHash('sha256').update(readFileSync(item.report_path)).digest('hex');
   const locations=postMatrixLinks(citations);
-  const expected=citations.post_matrix_occurrences[0].related_matrix_occurrences
-    .map(id=>locations.get(id));
-  const links=expected.map(url=>'<a href="'+url+'">linha real</a>').join('');
+  const expected=item.related_matrix_occurrences.map(id=>locations.get(id));
+  const links=item.related_matrix_occurrences.map((id,i)=>
+    '<a href="'+expected[i]+'">'+id+'</a>').join('');
+  const field=(label,value)=>'<p><strong>'+label+':</strong> <code>'+value+'</code></p>';
+  const source='<a href="'+item.report_citation_url+'">NARA</a>';
+  const custody='<a href="https://github.com/franklinbaldo/conde-incident/blob/main/'+
+    item.report_path+'">Relatório</a>';
+  const state=field('Estado canônico',item.status);
+  const independence=field('Independência jornalística',item.journalistic_source_independence);
+  const imageDigest=field('SHA-256 da imagem arquivística',item.image_sha256);
+  const report=field('SHA-256 do relatório de custódia versionado',reportDigest);
+  const heading='<h3>'+item.id+'</h3>';
+  const marker='<span id="'+postMatrixAnchor(item.id)+'" tabindex="-1"></span>';
   const base='<main><a href="/conde-incident/evidencias/matriz/">Matriz</a>'+
-    links+'</main>';
+    marker+heading+state+independence+imageDigest+report+source+custody+links+'</main>';
   assert.equal(auditBuiltPostMatrix(base,citations),expected.length);
-  const target='<a href="'+expected[0]+'">linha real</a>';
+
+  // A raw <h3> cannot authenticate a record when an ancestor hides it.
+  // Earlier auditing detached the heading from its hidden parent.
+  for(const hidden of [
+    '<div hidden>'+heading+'</div>',
+    '<section aria-hidden="true">'+heading+'</section>',
+    '<template>'+heading+'</template>',
+    '<div style="display:none">'+heading+'</div>',
+  ]) {
+    assert.throws(()=>auditBuiltPostMatrix(base.replace(heading,hidden),citations),
+      /cabeçalhos ausentes|cabeçalho não visível/,
+      'hidden headings must not be accepted as visible record headings');
+  }
+
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(marker,''),citations),
+    /âncora documental ativa e única ausente/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(marker,marker+marker),citations),
+    /âncora documental ativa e única ausente/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(marker,'<template>'+marker+'</template>'),citations),
+    /âncora documental ativa e única ausente/);
+
+  const target='<a href="'+expected[0]+'">'+item.related_matrix_occurrences[0]+'</a>';
   assert.throws(()=>auditBuiltPostMatrix(base.replace(target,
-    '<template>'+target+'</template>'),citations),
-    /link visível para a ocorrência ausente/);
+    '<template>'+target+'</template>'),citations),/link visível na ficha/);
   assert.throws(()=>auditBuiltPostMatrix(base.replace(target,
-    '<div aria-hidden="true">'+target+'</div>'),citations),
-    /link visível para a ocorrência ausente/);
+    '<div aria-hidden="true">'+target+'</div>'),citations),/link visível na ficha/);
   assert.throws(()=>auditBuiltPostMatrix(base.replace(target,
     '<a href="/conde-incident/evidencias/matriz/">linha errada</a>'),citations),
-    /link visível para a ocorrência ausente/);
+    /link visível na ficha/);
+
+  // A valid href with a counterfeit label or a duplicated visible link is not a valid citation.
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(target,
+    '<a href="'+expected[0]+'">queda física confirmada</a>'),citations),
+    /rótulo diverge do identificador canônico/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(target,target+target),citations),
+    /link visível ausente ou duplicado/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(target,
+    '<a href="'+expected[1]+'">'+item.related_matrix_occurrences[0]+'</a>'),citations),
+    /rótulo diverge do identificador canônico|link visível na ficha/);
+
+
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(heading,'<h3>OTHER</h3>'),citations),
+    /cabeçalhos ausentes/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(state,
+    '<div hidden>'+state+'</div>'),citations),/campo visível vinculado/);
+  // G74 adversarial: hidden field plus a visible, unbound echo.
+  // Text somewhere in a record does not make the authentic field visible.
+  for(const [original,value] of [
+    [state,item.status],[independence,item.journalistic_source_independence],
+    [imageDigest,item.image_sha256],[report,reportDigest],
+  ]) {
+    const decoy=base.replace(original,
+      '<div hidden>'+original+'</div><span>'+value+'</span>');
+    assert.throws(()=>auditBuiltPostMatrix(decoy,citations),/campo visível vinculado/);
+  }
+
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(independence,
+    field('Independência jornalística','CONFIRMED')),citations),/campo visível vinculado/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(imageDigest,
+    field('SHA-256 da imagem arquivística','0'.repeat(64))),citations),/campo visível vinculado/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(report,
+    field('SHA-256 do relatório de custódia versionado','0'.repeat(64))),citations),
+    /campo visível vinculado/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(source,
+    '<a href="https://example.org/not-nara">NARA</a>'),citations),/link NARA ausente/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(custody,''),citations),
+    /relatório de custódia não navegável/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(report,'')+report,citations),
+    /campo visível vinculado/);
 });

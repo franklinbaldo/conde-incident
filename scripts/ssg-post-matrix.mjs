@@ -5,6 +5,7 @@ import {createHash} from 'node:crypto';
 import {join} from 'node:path';
 import {readBundle,audit,visibleDocument} from './verify-ssg-evidence-index.mjs';
 import {matrixCatalogPages} from './ssg-matrix-catalog.mjs';
+import {postMatrixAnchor,auditVisibleIdentityLinks} from './ssg-post-matrix-backlinks.mjs';
 
 const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('\\','\\\\').replaceAll('_','\\_').replaceAll('*','\\*').replaceAll('`','\\`').replaceAll('[','\\[').replaceAll(']','\\]').replaceAll('|','\\|').replace(/\r?\n/g,' ');
 const identifier=s=>typeof s==='string'&&/^[A-Z0-9][A-Z0-9_-]{2,99}$/.test(s);
@@ -61,19 +62,61 @@ export function postMatrixLinks(citations,bundle=readBundle()) {
 
 /** Check actual, visible built HTML, not a matching href inside scripts or templates. */
 export function auditBuiltPostMatrix(html,citations,bundle=readBundle()) {
-  const doc=visibleDocument(html);
   const locations=postMatrixLinks(citations,bundle);
-  let checked=0;
-  for(const item of citations.post_matrix_occurrences) {
-    for(const id of item.related_matrix_occurrences) {
-      assert.ok(locations.has(id),'Pós-matriz: ID ausente da matriz: '+id);
-      assert.ok(doc.links.has(locations.get(id)),
-        'Pós-matriz: link visível para a ocorrência ausente: '+id);
-      checked++;
-    }
-  }
+  const main=/<main\b[^>]*>([\s\S]*?)<\/main>/i.exec(html)?.[1];
+  assert.ok(main,'Pós-matriz: HTML sem região principal');
+  const doc=visibleDocument(html);
   assert.ok(doc.links.has('/conde-incident/evidencias/matriz/'),
     'Pós-matriz: falta retorno visível à matriz');
+
+  // A valid link or digest elsewhere on the page cannot authenticate a record.
+  // Audit each rendered record separately against its canonical source and
+  // source-locked custody report, including the epistemic qualifications.
+  const items=[...citations.post_matrix_occurrences].sort((a,b)=>
+    a.id.localeCompare(b.id,'en'));
+  // Read headings and record boundaries from the SAME visible DOM projection.
+  // A raw <h3> nested in <template>, [hidden] or aria-hidden is not a
+  // documentary heading, even if its text looks canonical.
+  const visibleMain=visibleDocument('<main>'+main+'</main>').visibleMarkup;
+  const headings=[...visibleMain.matchAll(/<h3\b[^>]*>([^<>]*)<\/h3>/gi)];
+  assert.deepEqual(headings.map(match=>match[1]),items.map(item=>item.id),
+    'Pós-matriz: cabeçalhos ausentes, duplicados ou fora da ordem canônica');
+  let checked=0;
+  for(let i=0;i<items.length;i++) {
+    const item=items[i];
+    const anchor=postMatrixAnchor(item.id);
+    assert.ok(doc.activeAnchors.get(anchor)===1&&doc.idCounts.get(anchor)===1,
+      'Pós-matriz: âncora documental ativa e única ausente: '+item.id);
+    const heading=headings[i];
+    const headingDoc=visibleDocument('<main>'+heading[0]+'</main>');
+    assert.ok(headingDoc.visibleText.includes(item.id),
+      'Pós-matriz: cabeçalho não visível: '+item.id);
+    const section=visibleMain.slice(heading.index+heading[0].length,
+      headings[i+1]?.index??visibleMain.length);
+    const visible=visibleDocument('<main>'+section+'</main>');
+    const field=(label,value)=>{
+      const expression=new RegExp('<strong>'+label+':<\/strong>\\s*<code>'+value+'<\/code>');
+      assert.match(visible.visibleMarkup,expression,
+        'Pós-matriz: campo visível vinculado ao registro ausente: '+item.id+' / '+label);
+    };
+    field('Estado canônico',item.status);
+    field('Independência jornalística',item.journalistic_source_independence);
+    field('SHA-256 da imagem arquivística',item.image_sha256);
+    field('SHA-256 do relatório de custódia versionado',auditedReportDigest(item));
+    assert.ok(visible.links.has(item.report_citation_url),
+      'Pós-matriz: link NARA ausente na ficha: '+item.id);
+    assert.ok(visible.links.has('https://github.com/franklinbaldo/conde-incident/blob/main/'+item.report_path),
+      'Pós-matriz: relatório de custódia não navegável: '+item.id);
+    for(const id of item.related_matrix_occurrences) {
+      assert.ok(locations.has(id),'Pós-matriz: ID ausente da matriz: '+id);
+      assert.ok(visible.links.has(locations.get(id)),
+        'Pós-matriz: link visível na ficha para a ocorrência ausente: '+id);
+      checked++;
+    }
+    auditVisibleIdentityLinks(visible.visibleMarkup,
+      item.related_matrix_occurrences.map(id=>({id,url:locations.get(id)})),
+      '/conde-incident/evidencias/matriz/paginas/','Pós-matriz '+item.id);
+  }
   return checked;
 }
 
@@ -151,7 +194,8 @@ export function postMatrixPage(citations,lineage,bundle=readBundle()) {
       }
       assert.equal(current,path.upstream_source_id,'Pós-matriz: origem declarada divergente');
     }
-    lines.push(`### ${esc(item.id)}`,'',
+    lines.push('<span id="'+postMatrixAnchor(item.id)+'" tabindex="-1"></span>','',
+      `### ${esc(item.id)}`,'',
       `**Fonte:** ${esc(item.source_id)} · **Família:** ${esc(dep.source_family)}`,'',
       `**Estado canônico:** \`${item.status}\` · **Independência jornalística:** \`${item.journalistic_source_independence}\`.`,'',
       `**O que o documento afirma:** ${esc(item.proposition)}`,'',

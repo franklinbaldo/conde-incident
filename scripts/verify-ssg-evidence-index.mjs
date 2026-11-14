@@ -74,20 +74,23 @@ const suppressed=(tag,attrs)=>rawTags.has(tag) ||
     .test(attribute(attrs,'style') ?? '');
 
 export function visibleDocument(html) {
-  const links=new Set(),content=[],activeAnchors=new Map(),idCounts=new Map();
+  const links=new Set(),content=[],visibleMarkup=[],activeAnchors=new Map(),idCounts=new Map();
   const stack=[];
   let last=0;
   // Quote-aware tags: a '>' inside an attribute must not terminate a tag.
   const tokens=/<!--[\s\S]*?-->|<(?:[^>"']|"[^"]*"|'[^']*')*>/g;
   for (const match of html.matchAll(tokens)) {
     const parent=stack.at(-1);
-    if (parent?.main && !parent.hidden && match.index>last)
+    if (parent?.main && !parent.hidden && match.index>last) {
       content.push(html.slice(last,match.index));
+      visibleMarkup.push(html.slice(last,match.index));
+    }
     last=match.index+match[0].length;
     const token=match[0];
     if (token.startsWith('<!--') || /^<!/.test(token)) continue;
     const closing=/^<\s*\/\s*([\w:-]+)/.exec(token);
     if (closing) {
+      if(parent?.main && !parent.hidden) visibleMarkup.push(token);
       const i=stack.findLastIndex(item=>item.tag===closing[1].toLowerCase());
       if (i!==-1) stack.length=i;
       continue;
@@ -98,6 +101,7 @@ export function visibleDocument(html) {
     const attrs=token.slice(opening[0].length,-1);
     const hidden=Boolean(parent?.hidden || suppressed(tag,attrs));
     const main=Boolean(parent?.main || tag==='main');
+    if(main && !hidden) visibleMarkup.push(token);
     // Fragment resolution uses the first DOM ID, including hidden elements.
     // Count IDs across the document; require exactly one active target inside main.
     const id=attribute(attrs,'id');
@@ -110,7 +114,7 @@ export function visibleDocument(html) {
     }
     if (!voidTags.has(tag) && !/\/\s*>$/.test(token)) stack.push({tag,hidden,main});
   }
-  return {links,visibleText:content.join(' '),activeAnchors,idCounts};
+  return {links,visibleText:content.join(' '),visibleMarkup:visibleMarkup.join(''),activeAnchors,idCounts};
 }
 
 export function readBundle(root='.') {

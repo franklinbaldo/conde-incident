@@ -110,6 +110,12 @@ export function dragJacobiPowerKm2S3(s: State, atmosphere: Atmosphere): number {
 
 export function rk4(s: State, dtS: number, dynamics: Dynamics = {}): State {
   if (!Number.isFinite(dtS) || dtS <= 0) throw new RangeError('RK4 step must be finite and positive');
+  // A stalled RK4 midpoint/end would corrupt sampled time and orbit progress.
+  const midpointS = s.tS + dtS / 2;
+  const endpointS = s.tS + dtS;
+  if (Number.isFinite(s.tS) && (!(midpointS > s.tS) || !(endpointS > midpointS) ||
+      !Number.isFinite(endpointS)))
+    throw new NumericalIntegrationBreakdown();
   const derivative = (q: State) => {
     // A finite domain endpoint does NOT guarantee numerically representable
     // intermediate states. Keep a distinct error from invalid force inputs.
@@ -166,9 +172,18 @@ export function propagate(
   if (altitudeKm(initial) <= terminationAltitudeKm) return { state: initial, event: 'reentry-threshold', steps: 0 };
   let current = initial;
   let count = 0;
-  while (current.tS - initial.tS < durationS - 1e-10) {
-    const step = Math.min(stepS, durationS - (current.tS - initial.tS));
-    const next = rk4(current, step, dynamics);
+  // Accumulate relative time: subtracting large epochs loses step precision.
+  let elapsedS = 0;
+  while (elapsedS < durationS - 1e-10) {
+    const step = Math.min(stepS, durationS - elapsedS);
+    const nextElapsedS = elapsedS + step;
+    if (!(step > 0) || !(nextElapsedS > elapsedS))
+      throw new NumericalIntegrationBreakdown();
+    const integrated = rk4(current, step, dynamics);
+    const timestampS = initial.tS + nextElapsedS;
+    if (!(timestampS > current.tS) || !Number.isFinite(timestampS))
+      throw new NumericalIntegrationBreakdown();
+    const next: State = { ...integrated, tS: timestampS };
     count++;
     // The endpoint can be ABOVE the threshold even though the orbit passed
     // BELOW it at perigee inside this step. A plain endpoint check misses that
@@ -196,9 +211,13 @@ export function propagate(
         if (altitudeKm(rk4(current, mid, dynamics)) > terminationAltitudeKm) low = mid;
         else high = mid;
       }
-      return { state: rk4(current, high, dynamics), event: 'reentry-threshold', steps: count };
+      return {
+        state: { ...rk4(current, high, dynamics), tS: initial.tS + (elapsedS + high) },
+        event: 'reentry-threshold', steps: count,
+      };
     }
     current = next;
+    elapsedS = nextElapsedS;
   }
   return { state: current, event: 'elapsed', steps: count };
 }

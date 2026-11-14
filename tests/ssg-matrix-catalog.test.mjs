@@ -112,7 +112,7 @@ test('built matrix audit rejects inert and duplicated fragment targets',()=>{
     }
     for(const path of ['evidencias/index.html','evidencias/arquivo/index.html'])
       write(path,'<html><main>'+link('/conde-incident/evidencias/matriz/')+'</main></html>');
-    assert.deepEqual(auditBuiltMatrixCatalog(bundle,root),{pages:14,occurrences:241});
+    assert.deepEqual(auditBuiltMatrixCatalog(bundle,root,null),{pages:14,occurrences:241});
     const path=join(root,'evidencias/matriz/paginas/01/index.html');
     const original=readFileSync(path,'utf8');
     const marker='<span id="'+entries[0].pointer.occurrence.replace('#','-')+'" tabindex="-1"></span>';
@@ -126,7 +126,7 @@ test('built matrix audit rejects inert and duplicated fragment targets',()=>{
       ['duplicate',marker+marker],
     ]){
       writeFileSync(path,original.replace(marker,replacement));
-      assert.throws(()=>auditBuiltMatrixCatalog(bundle,root),
+      assert.throws(()=>auditBuiltMatrixCatalog(bundle,root,null),
         /Missing unique active target anchor/,scenario);
     }
   }finally{rmSync(root,{recursive:true,force:true});}
@@ -151,4 +151,51 @@ test('each published fragment binds its own exact heading, source, digest and cu
   assert.throws(()=>auditBuiltMatrixSections(duplicate,sample),/anchors missing, duplicated/);
   const shuffled='<main>'+sample.slice().reverse().map(htmlSection).join('')+'</main>';
   assert.throws(()=>auditBuiltMatrixSections(shuffled,sample),/reordered/);
+});
+
+test('later archival leads have exact reciprocal links without promoting matrix curatorship',()=>{
+  const bundle=readBundle();
+  const citations=JSON.parse(readFileSync('public/data/conde-source-citations.json','utf8'));
+  const {files,entries,related}=matrixCatalogPages(bundle,citations);
+  const refs=[...related.values()].flat();
+  assert.equal(refs.length,10,'Expected ten source-locked reverse links');
+  const linked=entries.find(({pointer})=>related.has(pointer.occurrence));
+  const unlinked=entries.find(({pointer})=>!related.has(pointer.occurrence));
+  assert.ok(linked&&unlinked);
+  const target=related.get(linked.pointer.occurrence)[0];
+  assert.ok(target.url.startsWith('/conde-incident/evidencias/arquivo/pos-matriz/#postmatrix-'));
+  const index=entries.indexOf(linked);
+  const md=files.get('paginas/'+String(Math.floor(index/20)+1).padStart(2,'0')+'/index.md');
+  assert.ok(md.includes('['+target.id+']('+target.url+')'));
+  assert.ok(md.includes('sem curadoria nova ou observação independente'));
+  const good='<main>'+htmlSection(linked)+
+    '<p>Pista documental posterior à matriz, sem curadoria nova ou observação independente: '+
+    '<a href="'+target.url+'">'+target.id+'</a></p></main>';
+  assert.equal(auditBuiltMatrixSections(good,[linked],related),1);
+
+  // The historic assertion only checked href presence: a bogus label passed.
+  const authentic='<a href="'+target.url+'">'+target.id+'</a>';
+  assert.throws(()=>auditBuiltMatrixSections(good.replace(authentic,
+    '<a href="'+target.url+'">observação física comprovada</a>'),[linked],related),
+    /rótulo diverge do identificador canônico/);
+  assert.throws(()=>auditBuiltMatrixSections(good.replace(authentic,authentic+authentic),
+    [linked],related),/link visível ausente ou duplicado/);
+
+  assert.throws(()=>auditBuiltMatrixSections(good.replace(target.url,'/wrong/'),[linked],related),
+    /backlinks changed/);
+  assert.throws(()=>auditBuiltMatrixSections(good.replace('Pista documental posterior à matriz','Alegação confirmada'),[linked],related),
+    /epistemic warning missing/);
+  const notRelated='<main>'+htmlSection(unlinked)+
+    '<a href="'+target.url+'">alegação posterior atribuída indevidamente</a></main>';
+  assert.throws(()=>auditBuiltMatrixSections(notRelated,[unlinked],related),
+    /backlinks changed/);
+  const counterfeit=clone(citations);
+  counterfeit.post_matrix_occurrences[0].related_matrix_occurrences[0]='C999#1';
+  assert.throws(()=>matrixCatalogPages(bundle,counterfeit),/ID não pertence à matriz/);
+  const badSnapshot=clone(citations);
+  badSnapshot.post_matrix_occurrences[0].related_matrix_snapshot_refs[0]='matrix:fake:C44#1';
+  assert.throws(()=>matrixCatalogPages(bundle,badSnapshot),/snapshot da relação adulterado/);
+  const promoted=clone(citations);
+  promoted.post_matrix_occurrences[0].not_a_verified_conde_physical_event=false;
+  assert.throws(()=>matrixCatalogPages(bundle,promoted),/não pode verificar evento físico/);
 });

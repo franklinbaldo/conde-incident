@@ -1,0 +1,195 @@
+{
+  "activation": false,
+  "graph": [
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "PRESERVES_FACSIMILE",
+      "source": "DOC:NARA-ISCAP-2009-068-35",
+      "target": "PDF:NORAD-WIR-29-64-P6"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "PRINTED_PAGE_AND_HASH",
+      "source": "PDF:NORAD-WIR-29-64-P6",
+      "target": "DOC:C241-L65"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "PRINTS_1964_Z_WINDOW",
+      "source": "DOC:C241-L65",
+      "target": "ROW:COSMOS34-1964"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "QUALIFIED_INTELLIGENCE_ASSESSMENT",
+      "source": "ROW:COSMOS34-1964",
+      "target": "H:1964_APPARENT_DEORBIT"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NO_SENSOR_LOG_IDENTIFIED",
+      "source": "H:1964_APPARENT_DEORBIT",
+      "target": "LATENT:COSMOS34:terminal_sensor"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NO_STATISTICAL_ERROR_IN_REPORT",
+      "source": "H:1964_APPARENT_DEORBIT",
+      "target": "LATENT:COSMOS34:clock_error_sigma"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "PRINTS_1963_CALENDAR_RANGE",
+      "source": "DOC:C241-L64",
+      "target": "ROW:OMEGA1-1963"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "CROSSWALK_NOT_IN_NASA_ROW",
+      "source": "ROW:OMEGA1-1963",
+      "target": "H:308_SECONDARY_IDENTITY"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "ORIGINAL_IDENTITY_AND_EPOCH_MISSING",
+      "source": "H:308_SECONDARY_IDENTITY",
+      "target": "LATENT:NORAD:308:terminal_utc"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "DIFFERENT_OBJECT_YEAR_AND_EVENT_TYPE",
+      "source": "LATENT:COSMOS34:clock_error_sigma",
+      "target": "H:NO_TRANSFER_1964_TO_1963"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NO_COMMON_INSTRUMENTAL_CALIBRATION",
+      "source": "LATENT:NORAD:308:terminal_utc",
+      "target": "H:NO_TRANSFER_1964_TO_1963"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "PREMISE_NOT_PHYSICAL_PROOF",
+      "source": "H:NO_TRANSFER_1964_TO_1963",
+      "target": "LEAN:candidateNoCalibrationTransfer"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NOT_IDENTIFIED",
+      "source": "LEAN:candidateNoCalibrationTransfer",
+      "target": "PARAM:terminal_error_control_308"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NOT_IDENTIFIED",
+      "source": "LEAN:candidateNoCalibrationTransfer",
+      "target": "PARAM:terminal_sigma_528"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NO_EMPIRICAL_CALIBRATION",
+      "source": "PARAM:terminal_error_control_308",
+      "target": "PARAM:reentry_528_drag_calibration"
+    }
+  ],
+  "historical_mcmc": "NOT_RUN",
+  "id": "ABELHA-C241-L65-R59-NORAD-1964-CLOCK-CONTEXT",
+  "independence_between_1963_and_1964_sensor_data": "UNKNOWN_NO_SENSOR_LINEAGE",
+  "lean_candidates": [
+    {
+      "activation": false,
+      "id": "LEAN:candidateNoCalibrationTransfer",
+      "premises_empirically_authenticated": false,
+      "status": "CANDIDATE_ONLY_NOT_COMPILED"
+    }
+  ],
+  "new_activated_physical_constraints_528": 0,
+  "new_independent_instrumental_observations_528": 0,
+  "next_falsifiable_test": "Recover identified 1963 NORAD 528 or 308 sensor messages specifying event semantics, clock scale, station, calibration and an empirically justified uncertainty; do not transfer the 1964 five-minute printed interval.",
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "records": [
+    {
+      "activation": false,
+      "calibrated_sigma_seconds": null,
+      "estimation_method": null,
+      "event_kind": "INTELLIGENCE_APPARENT_DEORBIT",
+      "id": "C241-L65:COSMOS34",
+      "independent_instrumental_lineages": null,
+      "instrument_observation_id": null,
+      "instrumental_terminal_measurement": false,
+      "printed_event_day": "1964-07-09",
+      "printed_nominal_width_minutes": 5,
+      "printed_object": "Cosmos 34",
+      "printed_z_window": [
+        "0931Z",
+        "0936Z"
+      ],
+      "qualifier": "apparently",
+      "sensor": null,
+      "station": null
+    },
+    {
+      "activation": false,
+      "calibrated_sigma_seconds": null,
+      "id": "C241-L64:OMEGA1",
+      "primary_norad_identity": null,
+      "printed_event_range": [
+        "1963-10-29",
+        "1963-10-30"
+      ],
+      "secondary_norad_id": 308,
+      "terminal_utc": null
+    }
+  ],
+  "schema": "conde.c241-l65-intelligence-clock-dependency/v1",
+  "simulator_parameters": [
+    {
+      "activation": false,
+      "id": "PARAM:terminal_error_control_308",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "PARAM:terminal_sigma_528",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "PARAM:reentry_528_drag_calibration",
+      "value": null
+    }
+  ],
+  "sources": [
+    {
+      "grade": "NORAD_PRIMARY_INTELLIGENCE_ASSESSMENT",
+      "id": "C241-L65",
+      "path": "research/tle_custody/norad_wir_cosmos34_1964_C241-L65.json",
+      "pdf_page": 4,
+      "pdf_sha256": "2063f4f8d9082c55990dd4be91b8eb096333143230b6f726639fc58bef7251c5",
+      "printed_page": 6,
+      "published_on": "1964-07-17",
+      "sha256": "79744efefc2b84320102c998786f316f70a30d0d56bd1e38575b38d25fff17c7"
+    },
+    {
+      "grade": "SECONDARY_308_IDENTITY_NOT_INSTRUMENTAL_UTC",
+      "id": "ABELHA-C241-L64-R59-308-CALENDAR-RANGE",
+      "path": "public/data/conde-ssr-308-l64-dependency-bridge.json",
+      "sha256": "f897870189802c840e7423b106d49e829dbc1934efd3b0ac1e0ad60bfec7a04b"
+    }
+  ]
+}

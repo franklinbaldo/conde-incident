@@ -1,0 +1,77 @@
+{
+  "id": "C241-L64",
+  "kind": "NASA_SSR_CONTEMPORARY_DECAY_RANGE_CONTROL",
+  "source": {
+    "ntrs_id": "19640003479",
+    "publication": "1963-12-15",
+    "series": "NASA GSFC Satellite Situation Report, vol. 3, no. 24",
+    "pdf_url": "https://ntrs.nasa.gov/api/citations/19640003479/downloads/19640003479.pdf",
+    "pdf_sha256": "d31a064f8e03fd39be6fe75b88cd5852c0b74c9101fa635cb40ac25c77ef474f",
+    "pdf_bytes": 958927,
+    "pdf_pages": 23,
+    "printed_page": 15,
+    "zero_based_page": 16,
+    "section": "DECAYED OBJECTS (CONT'D)",
+    "new_document": true,
+    "individual_instrumental_observation": false
+  },
+  "original_row": {
+    "section_year": "1962 LAUNCHES (CONT'D)",
+    "printed_designator": "A OMEGA 1",
+    "printed_source": "US",
+    "launch_printed": "18 JUN",
+    "decay_printed": "29-30 OCT 63",
+    "calendar_range_start": "1963-10-29",
+    "calendar_range_end": "1963-10-30",
+    "interpretation": "PUBLISHED_CALENDAR_RANGE_NOT_UTC_EVENT",
+    "printed_norad_id": null,
+    "terminal_utc": null,
+    "utc_interval": null,
+    "sensor": null,
+    "station": null,
+    "original_observation": null,
+    "sigma_seconds": null
+  },
+  "identity": {
+    "secondary_norad_id": 308,
+    "secondary_cospar": "1962-024A",
+    "secondary_name": "FTV 2312 / 1962 Omega 1",
+    "secondary_url": "https://keeptrack.space/satellite/00308",
+    "secondary_name_crosswalk": "https://en.wikipedia.org/wiki/Samos-F",
+    "identity_status": "SECONDARY_CROSSWALK_PENDING_PRIMARY_NORAD_ID",
+    "nasa_explicitly_prints_308": false
+  },
+  "archive_search": {
+    "endpoint": "https://ntrs.nasa.gov/api/citations/search",
+    "method": "POST",
+    "query": {
+      "q": "SATELLITE SITUATION REPORT",
+      "published": {
+        "gte": "1963-10-01",
+        "lte": "1963-12-31"
+      },
+      "page": {
+        "size": 100,
+        "from": 0
+      }
+    },
+    "returned_ids": [
+      "19640000428",
+      "19640001198",
+      "19640002493",
+      "19640003479",
+      "19640005618"
+    ],
+    "no21_in_this_query": true,
+    "no21_nonexistence_established": false
+  },
+  "inference": {
+    "primary_publications_added": 1,
+    "independent_original_sensor_observations_added": 0,
+    "calibrated_terminal_utc_added": 0,
+    "uncertainty_distribution_available": false,
+    "hard_constraints_528_added": 0,
+    "conde_impact_demonstrated": false,
+    "prior_snapshot": "C241-L63 unresolved_control=NOT_RECOVERED; preserved byte-for-byte"
+  }
+}
