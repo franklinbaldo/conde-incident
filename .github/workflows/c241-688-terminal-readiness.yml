@@ -27,15 +27,15 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
       - name: SHA exacto e contraprovas adversariais
         env:
           EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: |
           test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
           python3 -m unittest discover -s tests -p 'test_c241_688_terminal_holdout_readiness.py' -v
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Replay do catálogo secundário com hash fixo
         run: |
           set -euo pipefail
