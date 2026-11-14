@@ -21,7 +21,7 @@ O objeto espacial aparece no [*Satellite Situation Report* da NASA, de 15 de nov
 
 O boletim não traz uma hora terminal nem indica país, oceano ou coordenadas. Também não descreve fragmentos encontrados em terra. O dia anotado no catálogo não permite, por si só, localizar uma queda no mapa.
 
-Para inspecionar a cadeia da fonte NASA, a [ocorrência C131#1 no arquivo curado](/conde-incident/evidencias/arquivo/c131-1/) liga o registro documental, a classificação de seus limites e a linha identificada na matriz histórica. Essa referência não fornece uma trajetória terminal.
+Para inspecionar a cadeia da fonte NASA, a [ocorrência C197#1 no arquivo curado](/conde-incident/evidencias/arquivo/c197-1/) liga o registro documental, a classificação de seus limites e a linha identificada na matriz histórica. Essa referência não fornece uma trajetória terminal.
 
 Essa distinção é decisiva: **deixar a órbita não é o mesmo que comprovar que um objeto reconhecível atingiu o solo**. Para estabelecer esse segundo acontecimento, seria preciso outro tipo de evidência.
 
