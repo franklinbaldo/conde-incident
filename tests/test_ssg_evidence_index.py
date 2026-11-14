@@ -293,7 +293,7 @@ class EvidenceIndexTest(unittest.TestCase):
                              export.MANIFEST: b'manifest\n'}, root=root)
             self.assertFalse((root / export.MANIFEST).exists())
 
-    def test_one_time_legacy_migration_removes_old_numbered_files(self):
+    def test_unpinned_legacy_filename_is_rejected(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             legacy = root / export.DEST / 'part-001.json'
@@ -301,9 +301,51 @@ class EvidenceIndexTest(unittest.TestCase):
             legacy.write_bytes(b'legacy\n')
             raw = b'new\n'
             path = self.named(export.DEST, 1, raw)
-            export.sync({path: raw, export.MANIFEST: b'new manifest\n'}, root=root)
-            self.assertFalse(legacy.exists())
-            self.assertEqual((root / path).read_bytes(), raw)
+            with self.assertRaisesRegex(ValueError, 'não endereçado'):
+                export.sync({path: raw, export.MANIFEST: b'new manifest\n'}, root=root)
+            self.assertEqual(legacy.read_bytes(), b'legacy\n')
+            self.assertFalse((root / export.MANIFEST).exists())
+
+    def test_cached_pre_migration_manifest_remains_fetchable(self):
+        old_raw = (ROOT / 'tests/fixtures/ssg-legacy-manifest-v1.json').read_bytes()
+        ledger = json.loads((ROOT / 'tools/ssg-legacy-shards.json').read_bytes())
+        self.assertEqual(export.digest(old_raw), ledger['source_manifest_sha256'])
+        old = json.loads(old_raw)
+        references = [row for field in ('shards', 'unmapped_shards', 'lookup_shards')
+                      for row in old[field]]
+        self.assertEqual(len(references), 11)
+        self.assertEqual({row['path'] for row in references},
+                         {row['path'] for row in ledger['shards']})
+        for entry in references:
+            payload = (ROOT / entry['path']).read_bytes()
+            self.assertEqual(len(payload), entry['bytes'])
+            self.assertEqual(export.digest(payload), entry['sha256'])
+        # The new mutable manifest coexists with old URLs, not replaced aliases.
+        export.sync(export.build(), root=ROOT, check=True)
+
+    def test_pinned_legacy_alias_missing_or_tampered_fails_closed(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            ledger_path = Path('tools/ssg-legacy-shards.json')
+            (root / ledger_path).parent.mkdir(parents=True)
+            (root / ledger_path).write_bytes((ROOT / ledger_path).read_bytes())
+            ledger = json.loads((root / ledger_path).read_bytes())
+            for row in ledger['shards']:
+                file = root / row['path']
+                file.parent.mkdir(parents=True, exist_ok=True)
+                file.write_bytes((ROOT / row['path']).read_bytes())
+            artifacts = export.build()
+            export.sync(artifacts, root=root)
+            export.sync(artifacts, root=root, check=True)
+            victim = root / ledger['shards'][0]['path']
+            original = victim.read_bytes()
+            victim.write_bytes(original[:-1] + b'X')
+            with self.assertRaisesRegex(ValueError, 'legado adulterado'):
+                export.sync(artifacts, root=root, check=True)
+            victim.write_bytes(original)
+            victim.unlink()
+            with self.assertRaisesRegex(ValueError, 'legado ausente'):
+                export.sync(artifacts, root=root)
 
     def test_orphan_gap_chunk_rejected(self):
         artifacts = export.build()
