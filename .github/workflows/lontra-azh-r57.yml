@@ -1,0 +1,37 @@
+name: C241 Soviet periodical holdings R57
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/azh_1963_holdings_C241_LONTRA_R57.json
+      - research/tle_custody/evidence_matrix_C241-LONTRA-R57_2026-11-14.md
+      - tools/audit_azh_issue_r57.py
+      - tests/test_azh_issue_r57.py
+      - .github/workflows/lontra-azh-r57.yml
+  push:
+    branches: [main]
+    paths:
+      - research/tle_custody/azh_1963_holdings_C241_LONTRA_R57.json
+      - research/tle_custody/evidence_matrix_C241-LONTRA-R57_2026-11-14.md
+      - tools/audit_azh_issue_r57.py
+      - tests/test_azh_issue_r57.py
+      - .github/workflows/lontra-azh-r57.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Exact HEAD
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Documentary audit and adversarial tests
+        run: |
+          set -euo pipefail
+          python3 -m tools.audit_azh_issue_r57
+          python3 -m unittest discover -s tests -p 'test_azh_issue_r57.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_azh_issue_r57.py' -v
