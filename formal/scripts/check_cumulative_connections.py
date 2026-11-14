@@ -188,10 +188,6 @@ def validate(graph: dict) -> dict:
         if oid in ids:
             raise ValueError(f"duplicate observation ID: {oid}")
         ids.add(oid)
-        var = o.get("variable_id")
-        if not isinstance(var, str) or not var.strip() or var in model_variables:
-            raise ValueError(f"duplicate or invalid model variable: {oid}")
-        model_variables.add(var)
         # Two IDs for the same source/table field are not independent samples.
         # A distinct measurement must have a distinct traced source or epoch.
         signature = (
@@ -202,6 +198,10 @@ def validate(graph: dict) -> dict:
         if signature in observation_signatures:
             raise ValueError(f"duplicate source/table observation with new ID: {oid}")
         observation_signatures.add(signature)
+        var = o.get("variable_id")
+        if not isinstance(var, str) or not var.strip() or var in model_variables:
+            raise ValueError(f"duplicate or invalid model variable: {oid}")
+        model_variables.add(var)
         if o["source_id"] not in sources:
             raise ValueError(f"orphan observation source: {oid}")
         src = sources[o["source_id"]]
