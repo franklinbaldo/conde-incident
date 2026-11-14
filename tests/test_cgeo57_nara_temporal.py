@@ -73,6 +73,12 @@ class TestCGEO57(unittest.TestCase):
     def test_source_op_dependency(self):
         self.reject(lambda d: d["scans"][0].update(op_file_no="999999"), parent=True)
 
+    def test_parent_flight_header_dependency(self):
+        self.reject(lambda d: d["scans"][0].update(header_date_reading="1 JAN 43"), parent=True)
+
+    def test_parent_square_dependency(self):
+        self.reject(lambda d: d["scans"][0].update(square="00N000E"), parent=True)
+
     def test_missing_source(self):
         self.reject(lambda d: d["scans"].pop(), parent=True)
 
