@@ -1,0 +1,41 @@
+name: C241 secondary 12-day controls
+on:
+  pull_request:
+    paths:
+      - tools/c241_12day_secondary_holdout.py
+      - tests/test_c241_12day_secondary_holdout.py
+      - research/statistics/C241_12DAY_SECONDARY_HOLDOUT_20261114.md
+      - research/statistics/c241_12day_secondary_holdout_20261114.json
+      - .github/workflows/c241-12day-secondary-holdout.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  secondary-12day:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact head
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Adversarial tests
+        run: python3 -m unittest discover -s tests -p test_c241_12day_secondary_holdout.py -v
+      - name: Pinned numerical mirror and exact replay
+        run: |
+          set -euo pipefail
+          python3 -m pip install pyarrow==21.0.0
+          python3 tools/tle_secondary_1963_ledger.py --download \
+            --parquet "$RUNNER_TEMP/tle_1963.parquet" \
+            --literal research/tle_custody/mirror_528_1963-10-27.tle \
+            --output "$RUNNER_TEMP/source"
+          python3 tools/c241_12day_secondary_holdout.py \
+            --csv "$RUNNER_TEMP/source/norad_527_528_529_numeric_1963.csv" \
+            --output research/statistics/c241_12day_secondary_holdout_20261114.json --check

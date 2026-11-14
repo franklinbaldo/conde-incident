@@ -1,0 +1,314 @@
+{
+  "all_1963": {
+    "527": {
+      "metrics": {
+        "eccentricity_persistence": {
+          "mae": 0.0007622875,
+          "max_abs": 0.0022008,
+          "mean_signed": -0.0005942875,
+          "rmse": 0.0010027783
+        },
+        "inclination_persistence_deg": {
+          "mae": 0.0077381134,
+          "max_abs": 0.0312957764,
+          "mean_signed": 0.0011367798,
+          "rmse": 0.0123731786
+        },
+        "mean_motion_persistence_rev_day": {
+          "mae": 0.0026798375,
+          "max_abs": 0.00955094,
+          "mean_signed": -0.0020875025,
+          "rmse": 0.0047816295
+        },
+        "mean_motion_two_point_rev_day": {
+          "mae": 0.0146620095,
+          "max_abs": 0.08418352,
+          "mean_signed": -0.0090325205,
+          "rmse": 0.0309536357
+        },
+        "raan_j2_deg": {
+          "mae": 0.0673547983,
+          "max_abs": 0.1656162597,
+          "mean_signed": 0.0477224179,
+          "rmse": 0.0814765599
+        },
+        "raan_two_point_deg": {
+          "mae": 0.2418925276,
+          "max_abs": 1.3415717877,
+          "mean_signed": -0.2101554048,
+          "rmse": 0.4878407108
+        }
+      },
+      "pair_count_not_independent": 8,
+      "unique_targets": 8
+    },
+    "529": {
+      "metrics": {
+        "eccentricity_persistence": {
+          "mae": 0.00047817,
+          "max_abs": 0.0013766,
+          "mean_signed": -0.00022561,
+          "rmse": 0.0006135959
+        },
+        "inclination_persistence_deg": {
+          "mae": 0.0138704936,
+          "max_abs": 0.0631027222,
+          "mean_signed": -0.0016436259,
+          "rmse": 0.0188022714
+        },
+        "mean_motion_persistence_rev_day": {
+          "mae": 0.040562146,
+          "max_abs": 0.27279209,
+          "mean_signed": 0.040562146,
+          "rmse": 0.0661602992
+        },
+        "mean_motion_two_point_rev_day": {
+          "mae": 0.0171960449,
+          "max_abs": 0.1535683801,
+          "mean_signed": 0.0080325253,
+          "rmse": 0.0348959339
+        },
+        "raan_j2_deg": {
+          "mae": 0.0857952811,
+          "max_abs": 0.2529742083,
+          "mean_signed": 0.0391879068,
+          "rmse": 0.1025295188
+        },
+        "raan_two_point_deg": {
+          "mae": 0.8265108638,
+          "max_abs": 19.1421693428,
+          "mean_signed": -0.6489528192,
+          "rmse": 3.5138417618
+        }
+      },
+      "pair_count_not_independent": 30,
+      "unique_targets": 25
+    }
+  },
+  "decay_time_error_hours": null,
+  "design": {
+    "future_values_used_in_forecast": false,
+    "horizon_days": [
+      9.0,
+      15.0
+    ],
+    "not_sgp4_or_decay_prediction": true,
+    "overlapping_pairs_are_independent": false,
+    "pair_rule": "each origin chooses nearest future epoch within 9-15 days",
+    "pre_registration": "RETROSPECTIVE_POST_INSPECTION_2026-11-14",
+    "target_days": 12.0,
+    "training": "one origin and preceding sample of same object only"
+  },
+  "limitations": [
+    "Not external measurements, no source sensor covariance/frame verified",
+    "RAAN catalogue frame and mean-element conventions unverified",
+    "Time-to-reentry calibration cannot be inferred from these field residuals",
+    "Data-dependent nearest 12-day target timestamps; overlapping forecasts",
+    "527 October-to-November next interval is > 30 days, not a 12-day control"
+  ],
+  "october_origins_through_oct27": {
+    "527": {
+      "metrics": {
+        "eccentricity_persistence": {
+          "mae": 0.0002204999,
+          "max_abs": 0.0002204999,
+          "mean_signed": 0.0002204999,
+          "rmse": 0.0002204999
+        },
+        "inclination_persistence_deg": {
+          "mae": 0.0046005249,
+          "max_abs": 0.0046005249,
+          "mean_signed": -0.0046005249,
+          "rmse": 0.0046005249
+        },
+        "mean_motion_persistence_rev_day": {
+          "mae": 0.00044677,
+          "max_abs": 0.00044677,
+          "mean_signed": 0.00044677,
+          "rmse": 0.00044677
+        },
+        "mean_motion_two_point_rev_day": {
+          "mae": 0.0003787909,
+          "max_abs": 0.0003787909,
+          "mean_signed": -0.0003787909,
+          "rmse": 0.0003787909
+        },
+        "raan_j2_deg": {
+          "mae": 0.0211694454,
+          "max_abs": 0.0211694454,
+          "mean_signed": 0.0211694454,
+          "rmse": 0.0211694454
+        },
+        "raan_two_point_deg": {
+          "mae": 0.0655665305,
+          "max_abs": 0.0655665305,
+          "mean_signed": -0.0655665305,
+          "rmse": 0.0655665305
+        }
+      },
+      "pair_count_not_independent": 1,
+      "unique_targets": 1
+    },
+    "529": {
+      "metrics": {
+        "eccentricity_persistence": {
+          "mae": 0.0003724001,
+          "max_abs": 0.0009254997,
+          "mean_signed": -6.4399e-06,
+          "rmse": 0.0004966285
+        },
+        "inclination_persistence_deg": {
+          "mae": 0.0104400635,
+          "max_abs": 0.0171966553,
+          "mean_signed": 0.0104400635,
+          "rmse": 0.0117271046
+        },
+        "mean_motion_persistence_rev_day": {
+          "mae": 0.034454888,
+          "max_abs": 0.04416418,
+          "mean_signed": 0.034454888,
+          "rmse": 0.0349582534
+        },
+        "mean_motion_two_point_rev_day": {
+          "mae": 0.0117122007,
+          "max_abs": 0.0170073715,
+          "mean_signed": 0.0075683275,
+          "rmse": 0.0121070368
+        },
+        "raan_j2_deg": {
+          "mae": 0.0857368025,
+          "max_abs": 0.147609839,
+          "mean_signed": -0.0294378456,
+          "rmse": 0.0993282887
+        },
+        "raan_two_point_deg": {
+          "mae": 0.1480416879,
+          "max_abs": 0.3072102446,
+          "mean_signed": -0.1425385958,
+          "rmse": 0.1928673179
+        }
+      },
+      "pair_count_not_independent": 5,
+      "unique_targets": 3
+    }
+  },
+  "october_pairs": [
+    {
+      "horizon_days": 14.979113,
+      "norad": 527,
+      "origin_epoch_utc": "1963-10-01T10:44:17.819808+00:00",
+      "origin_source_row": 2969,
+      "previous_epoch_utc": "1963-08-27T22:53:07.181376+00:00",
+      "previous_source_row": 2968,
+      "signed_errors": {
+        "eccentricity_persistence": 0.0002204999,
+        "inclination_persistence_deg": -0.0046005249,
+        "mean_motion_persistence_rev_day": 0.00044677,
+        "mean_motion_two_point_rev_day": -0.0003787909,
+        "raan_j2_deg": 0.0211694454,
+        "raan_two_point_deg": -0.0655665305
+      },
+      "target_epoch_utc": "1963-10-16T10:14:13.188192+00:00",
+      "target_source_row": 2970
+    },
+    {
+      "horizon_days": 13.933063,
+      "norad": 529,
+      "origin_epoch_utc": "1963-10-03T11:19:43.218336+00:00",
+      "origin_source_row": 3049,
+      "previous_epoch_utc": "1963-09-30T10:09:47.809728+00:00",
+      "previous_source_row": 3048,
+      "signed_errors": {
+        "eccentricity_persistence": 0.0003932,
+        "inclination_persistence_deg": 0.0060043335,
+        "mean_motion_persistence_rev_day": 0.02960522,
+        "mean_motion_two_point_rev_day": 0.0130190894,
+        "raan_j2_deg": 0.0428390772,
+        "raan_two_point_deg": -0.0372596247
+      },
+      "target_epoch_utc": "1963-10-17T09:43:19.822656+00:00",
+      "target_source_row": 3051
+    },
+    {
+      "horizon_days": 11.209347,
+      "norad": 529,
+      "origin_epoch_utc": "1963-10-06T04:41:52.222848+00:00",
+      "origin_source_row": 3050,
+      "previous_epoch_utc": "1963-10-03T11:19:43.218336+00:00",
+      "previous_source_row": 3049,
+      "signed_errors": {
+        "eccentricity_persistence": -2.16002e-05,
+        "inclination_persistence_deg": 0.0088043213,
+        "mean_motion_persistence_rev_day": 0.02714252,
+        "mean_motion_two_point_rev_day": 0.0170073715,
+        "raan_j2_deg": 0.0242350455,
+        "raan_two_point_deg": -0.0985819748
+      },
+      "target_epoch_utc": "1963-10-17T09:43:19.822656+00:00",
+      "target_source_row": 3051
+    },
+    {
+      "horizon_days": 10.797595,
+      "norad": 529,
+      "origin_epoch_utc": "1963-10-17T09:43:19.822656+00:00",
+      "origin_source_row": 3051,
+      "previous_epoch_utc": "1963-10-06T04:41:52.222848+00:00",
+      "previous_source_row": 3050,
+      "signed_errors": {
+        "eccentricity_persistence": 0.0004676003,
+        "inclination_persistence_deg": 0.0039978027,
+        "mean_motion_persistence_rev_day": 0.03614631,
+        "mean_motion_two_point_rev_day": 0.0100008132,
+        "raan_j2_deg": 0.0736732695,
+        "raan_two_point_deg": 0.0137577303
+      },
+      "target_epoch_utc": "1963-10-28T04:51:52.072992+00:00",
+      "target_source_row": 3054
+    },
+    {
+      "horizon_days": 11.812202,
+      "norad": 529,
+      "origin_epoch_utc": "1963-10-24T09:23:00.917376+00:00",
+      "origin_source_row": 3052,
+      "previous_epoch_utc": "1963-10-17T09:43:19.822656+00:00",
+      "previous_source_row": 3051,
+      "signed_errors": {
+        "eccentricity_persistence": -0.0009254997,
+        "inclination_persistence_deg": 0.0161972046,
+        "mean_motion_persistence_rev_day": 0.04416418,
+        "mean_motion_two_point_rev_day": 0.0081740464,
+        "raan_j2_deg": -0.1403267813,
+        "raan_two_point_deg": -0.3072102446
+      },
+      "target_epoch_utc": "1963-11-05T04:52:35.190912+00:00",
+      "target_source_row": 3058
+    },
+    {
+      "horizon_days": 9.873689,
+      "norad": 529,
+      "origin_epoch_utc": "1963-10-26T07:54:28.463040+00:00",
+      "origin_source_row": 3053,
+      "previous_epoch_utc": "1963-10-24T09:23:00.917376+00:00",
+      "previous_source_row": 3052,
+      "signed_errors": {
+        "eccentricity_persistence": 5.41001e-05,
+        "inclination_persistence_deg": 0.0171966553,
+        "mean_motion_persistence_rev_day": 0.03521621,
+        "mean_motion_two_point_rev_day": -0.0103596829,
+        "raan_j2_deg": -0.147609839,
+        "raan_two_point_deg": -0.283398865
+      },
+      "target_epoch_utc": "1963-11-05T04:52:35.190912+00:00",
+      "target_source_row": 3058
+    }
+  ],
+  "schema": "conde.secondary-12day-controls/v1",
+  "source": {
+    "extracted_csv_sha256_checked": "3940715d7c15cf15c24e678a8c5b5fbb34a031b3ffd7e33c0580277377383231",
+    "lineage": "ONE_HISTORICAL_SPACETRACK_MIRROR_NOT_SENSOR_INDEPENDENCE",
+    "parquet_sha256_documented": "c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09",
+    "uri": "https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/4b4fb3a/data/tle_1963.parquet"
+  },
+  "status": "RETROSPECTIVE_SECONDARY_CATALOGUE_RESIDUALS_NOT_INSTRUMENT_SIGMA",
+  "terminal_position_or_phase_error": null
+}
