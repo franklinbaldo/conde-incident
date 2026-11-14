@@ -1,0 +1,49 @@
+{
+  "id": "C241-CERVO-AGENA-2313-NOMENCLATURE",
+  "launch": "1963-003",
+  "catalog_object_of_interest": "NORAD 528 / 1963-003B",
+  "claims": [
+    {
+      "id": "NASA-SP4004-1964",
+      "source_family": "NASA-SP4004",
+      "scope": "launch_vehicle_label",
+      "label": "Thor-Agena D",
+      "verification": "visual_checked_in_prior_project_audit",
+      "source": "https://github.com/franklinbaldo/conde-incident/pull/604",
+      "independent_mass_measurement": false
+    },
+    {
+      "id": "NSA-1975-INDEX",
+      "source_family": "NSA-1975",
+      "scope": "launch_vehicle_label",
+      "label": "Thor-Agena D",
+      "verification": "indexed_text_not_facsimile_verified",
+      "source": "https://www.governmentattic.org/26docs/NSAinSpaceViaNRO_1975.pdf",
+      "independent_mass_measurement": false
+    },
+    {
+      "id": "GCAT-AUXCAT",
+      "source_family": "GCAT",
+      "scope": "upper_stage_label",
+      "label": "Agena B",
+      "verification": "catalog_compilation",
+      "source": "https://planet4589.org/space/gcat/data/cat/auxcat.html",
+      "independent_mass_measurement": false
+    },
+    {
+      "id": "GUNTER-1963",
+      "source_family": "Gunter",
+      "scope": "launch_vehicle_label",
+      "label": "Thor Agena B",
+      "verification": "secondary_compilation",
+      "source": "https://space.skyrocket.de/doc_chr/lau1963.htm",
+      "independent_mass_measurement": false
+    }
+  ],
+  "engineering_component_to_norad_528_crosswalk": null,
+  "mass_528_measurement": null,
+  "historical_mass_constraint_active": false,
+  "historical_mcmc": "NOT_RUN",
+  "posterior_mass_528": null,
+  "domain_reduction": false
+}
