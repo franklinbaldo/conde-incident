@@ -1,0 +1,46 @@
+name: CGEO-38 | IOCS 15-29-Soper archival lineage replay
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo38_iocs29_1913_lineage.*'
+      - 'tools/cgeo38_iocs29_lineage.py'
+      - 'tests/test_cgeo38_iocs29_lineage.py'
+      - '.github/workflows/geo-iocs29-lineage.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo38_iocs29_1913_lineage.*'
+      - 'tools/cgeo38_iocs29_lineage.py'
+      - 'tests/test_cgeo38_iocs29_lineage.py'
+      - '.github/workflows/geo-iocs29-lineage.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  replay-archival-maps:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact commit
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Contract and adversarial tests
+        run: |
+          python3 -m tools.cgeo38_iocs29_lineage
+          python3 -m unittest discover -s tests -p 'test_cgeo38_iocs29_lineage.py' -v
+      - name: Replay three real archival PDFs
+        run: |
+          curl -fsSL --retry 2 --connect-timeout 20 --max-time 100 \
+            'https://upload.wikimedia.org/wikipedia/commons/5/56/Mapa_parcial_do_estado_da_Bahia.pdf' -o "$RUNNER_TEMP/iocs29.pdf"
+          curl -fsSL --retry 2 --connect-timeout 20 --max-time 100 \
+            'https://www.gov.br/arquivonacional/pt-br/servicos/copy_of_instrumentos-de-pesquisa/academia-brasileira-de-letras.pdf' -o "$RUNNER_TEMP/abl.pdf"
+          curl -fsSL --retry 2 --connect-timeout 20 --max-time 100 \
+            'https://www.gov.br/arquivonacional/pt-br/servicos/copy_of_instrumentos-de-pesquisa/bhering-final-14-fev-13.pdf' -o "$RUNNER_TEMP/f4.pdf"
+          python3 -m tools.cgeo38_iocs29_lineage \
+            --map "$RUNNER_TEMP/iocs29.pdf" \
+            --ds "$RUNNER_TEMP/abl.pdf" --f4 "$RUNNER_TEMP/f4.pdf"
