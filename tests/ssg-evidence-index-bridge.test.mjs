@@ -60,7 +60,7 @@ test('gap shard cannot invent epistemic status even with recalculated SHA',()=>{
   const meta=bundle.manifest.unmapped_shards.at(-1);
   meta.sha256=createHash('sha256').update(part.raw).digest('hex');
   meta.bytes=part.raw.length;
-  assert.throws(()=>audit(bundle),/Uncurated claim text\/hash differs/);
+  assert.throws(()=>audit(bundle),/Unexpected gap record fields/);
 });
 
 test('coordinated coverage count shrink fails against original matrix rows',()=>{
@@ -104,6 +104,24 @@ test('synchronized headline rewrite rejected despite genuine matrix row hash',()
   record.claim_text='Impacto físico confirmado em Conde';
   mutateRow(bundle,row=>{row.claim_text=record.claim_text;});
   assert.throws(()=>audit(bundle),/Matrix claim text mismatch/);
+});
+
+test('curated row cannot declare fabricated physical metadata with a valid SHA',()=>{
+  const bundle=clean();
+  mutateRow(bundle,row=>{row.physical_impact_confirmed=true;});
+  assert.throws(()=>audit(bundle),/Unexpected curated record fields/);
+});
+
+test('manifest cannot advertise inferred observations outside the schema',()=>{
+  const bundle=clean();
+  bundle.manifest.independent_observation_count=29;
+  assert.throws(()=>audit(bundle),/Unexpected manifest fields/);
+});
+
+test('shard metadata cannot invent a credibility score',()=>{
+  const bundle=clean();
+  bundle.manifest.shards[0].evidence_strength='verified';
+  assert.throws(()=>audit(bundle),/Unexpected curated shard metadata fields/);
 });
 
 test('tampered shard bytes fail digest validation',()=>{
