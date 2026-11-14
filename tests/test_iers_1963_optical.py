@@ -372,5 +372,7 @@ class G61RetardedCovariance(unittest.TestCase):
                 cls.source[:-1]+b"X", cls.eop, cls.times, UTC,
                 r, v, 0.,0.,0., cov)
 
+from test_iers_1963_lighttime_accel import G63CentralAccelerationDiagnostic
+
 if __name__ == "__main__":
     unittest.main()
