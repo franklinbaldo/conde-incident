@@ -1,0 +1,44 @@
+{
+  "id": "C241-LONTRA-R59",
+  "audit_date_utc": "2026-11-14",
+  "evidence_class": "INSTITUTIONAL_DIGITIZED_SERIAL_RUN_INDEX",
+  "upstream": [
+    "C241-LONTRA-R56",
+    "C241-LONTRA-R57",
+    "C241-LONTRA-R58"
+  ],
+  "catalogue": {
+    "institution": "Smithsonian Astrophysical Observatory / NASA Astrophysics Data System",
+    "url": "https://adsabs.harvard.edu/abs_doc/fulltext_abbr.html",
+    "serial": "Soviet Astronomy",
+    "bibstem": "SvA..",
+    "scanned_range": "v.1-37: 2/1957-12/1993",
+    "status_utc": "2026-11-14",
+    "http_status": 200,
+    "html_bytes": 129845,
+    "html_sha256": "74801612d982bec60b87af20512adcfb2906e3403d98058fd3eab5ecdc86ed37",
+    "hash_scope": "HTML scanned-publication index only; not scans of any volume, issue or article"
+  },
+  "inference_limits": {
+    "english_volume_7_within_index_range": true,
+    "individual_1963_article_link_found": false,
+    "volume_7_issue_3_opened": false,
+    "volume_7_issue_5_opened": false,
+    "original_russian_article_opened": false,
+    "english_translation_article_opened": false,
+    "issue_month_crosswalk_verified": false,
+    "report_1521678463_opened": false,
+    "original_article_author": null,
+    "original_article_pages": null,
+    "pdf_sha256": null,
+    "observations_norad_527_528_529": [],
+    "new_orbital_constraints": 0,
+    "independent_soviet_tracking_sensor": false,
+    "contacted_institution": false
+  },
+  "next_actions": [
+    "Use ADS Journal/Volume/Page scanned-literature service to locate candidate 1963 Soviet Astronomy volume 7 bibliographic entries and inspect article scans individually",
+    "Compare article author, title, page, camera NAFA and chronograph 21-P terminology with 1963 UAH digest and Russian Astronomicheskii Zhurnal volume 40",
+    "Do not infer Russian issue month/number from translated volume or turn catalogue availability into measured observations"
+  ]
+}
