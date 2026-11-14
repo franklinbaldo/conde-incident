@@ -48,3 +48,29 @@ export function relatedDocumentBacklinks(citations,occurrences,matrixSha) {
   for(const refs of backlinks.values())refs.sort((a,b)=>a.id.localeCompare(b.id,'en'));
   return backlinks;
 }
+
+
+/** Audit rendered link *identities*, not only href presence in a Set.
+ * visibleMarkup must come from visibleDocument(), which removes inert content.
+ * A correct URL with a false label can misrepresent archival provenance. */
+export function auditVisibleIdentityLinks(visibleMarkup,expected,prefix,context) {
+  const byUrl=new Map();
+  for(const {id,url} of expected) {
+    assert.ok(url.startsWith(prefix),context+': prefixo inesperado');
+    assert.ok(!byUrl.has(url),context+': destino canônico repetido');
+    byUrl.set(url,id);
+  }
+  const counts=new Map();
+  for(const match of visibleMarkup.matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a\s*>/gi)) {
+    const href=/(?:^|\s)href\s*=\s*(?:"([^"]*)"|'([^']*)')(?=\s|$)/i.exec(match[1]);
+    if(!href)continue;
+    const url=(href[1]??href[2]).replaceAll('&amp;','&');
+    if(!url.startsWith(prefix))continue;
+    assert.ok(byUrl.has(url),context+': destino documental não declarado');
+    const label=match[2].replace(/<[^>]*>/g,'').trim();
+    assert.equal(label,byUrl.get(url),context+': rótulo diverge do identificador canônico');
+    counts.set(url,(counts.get(url)??0)+1);
+  }
+  assert.deepEqual([...counts].sort(),[...byUrl.keys()].map(url=>[url,1]).sort(),
+    context+': link visível ausente ou duplicado');
+}

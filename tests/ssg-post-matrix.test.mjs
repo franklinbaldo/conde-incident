@@ -116,7 +116,8 @@ test('post-matrix built HTML binds navigation, source identity and custody in ea
   const reportDigest=createHash('sha256').update(readFileSync(item.report_path)).digest('hex');
   const locations=postMatrixLinks(citations);
   const expected=item.related_matrix_occurrences.map(id=>locations.get(id));
-  const links=expected.map(url=>'<a href="'+url+'">linha real</a>').join('');
+  const links=item.related_matrix_occurrences.map((id,i)=>
+    '<a href="'+expected[i]+'">'+id+'</a>').join('');
   const field=(label,value)=>'<p><strong>'+label+':</strong> <code>'+value+'</code></p>';
   const source='<a href="'+item.report_citation_url+'">NARA</a>';
   const custody='<a href="https://github.com/franklinbaldo/conde-incident/blob/main/'+
@@ -138,7 +139,7 @@ test('post-matrix built HTML binds navigation, source identity and custody in ea
   assert.throws(()=>auditBuiltPostMatrix(base.replace(marker,'<template>'+marker+'</template>'),citations),
     /âncora documental ativa e única ausente/);
 
-  const target='<a href="'+expected[0]+'">linha real</a>';
+  const target='<a href="'+expected[0]+'">'+item.related_matrix_occurrences[0]+'</a>';
   assert.throws(()=>auditBuiltPostMatrix(base.replace(target,
     '<template>'+target+'</template>'),citations),/link visível na ficha/);
   assert.throws(()=>auditBuiltPostMatrix(base.replace(target,
@@ -146,6 +147,17 @@ test('post-matrix built HTML binds navigation, source identity and custody in ea
   assert.throws(()=>auditBuiltPostMatrix(base.replace(target,
     '<a href="/conde-incident/evidencias/matriz/">linha errada</a>'),citations),
     /link visível na ficha/);
+
+  // A valid href with a counterfeit label or a duplicated visible link is not a valid citation.
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(target,
+    '<a href="'+expected[0]+'">queda física confirmada</a>'),citations),
+    /rótulo diverge do identificador canônico/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(target,target+target),citations),
+    /link visível ausente ou duplicado/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(target,
+    '<a href="'+expected[1]+'">'+item.related_matrix_occurrences[0]+'</a>'),citations),
+    /rótulo diverge do identificador canônico|link visível na ficha/);
+
 
   assert.throws(()=>auditBuiltPostMatrix(base.replace(heading,'<h3>OTHER</h3>'),citations),
     /cabeçalhos ausentes/);

@@ -6,7 +6,7 @@ import {dirname,join,resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {readBundle,audit,visibleDocument} from './verify-ssg-evidence-index.mjs';
 import {matrixRowUrl} from './ssg-documentary-archive.mjs';
-import {relatedDocumentBacklinks,POST_MATRIX_URL} from './ssg-post-matrix-backlinks.mjs';
+import {relatedDocumentBacklinks,POST_MATRIX_URL,auditVisibleIdentityLinks} from './ssg-post-matrix-backlinks.mjs';
 
 const ROOT='/conde-incident/evidencias/matriz/';
 const PER_PAGE=20;
@@ -159,6 +159,8 @@ export function auditBuiltMatrixSections(html,expected,related=new Map()) {
     const found=[...section.links].filter(href=>href.startsWith(POST_MATRIX_URL+'#')).sort();
     assert.deepEqual(found,backlinks.map(ref=>ref.url).sort(),
       'Matrix post-matrix backlinks changed for '+pointer.occurrence);
+    auditVisibleIdentityLinks(section.visibleMarkup,backlinks,POST_MATRIX_URL+'#',
+      'Matrix '+pointer.occurrence);
     if(backlinks.length) assert.ok(section.visibleText.includes('Pista documental posterior à matriz'),
       'Matrix post-matrix epistemic warning missing: '+pointer.occurrence);
     if(pointer.kind==='curated') {

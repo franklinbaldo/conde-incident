@@ -5,7 +5,7 @@ import {createHash} from 'node:crypto';
 import {join} from 'node:path';
 import {readBundle,audit,visibleDocument} from './verify-ssg-evidence-index.mjs';
 import {matrixCatalogPages} from './ssg-matrix-catalog.mjs';
-import {postMatrixAnchor} from './ssg-post-matrix-backlinks.mjs';
+import {postMatrixAnchor,auditVisibleIdentityLinks} from './ssg-post-matrix-backlinks.mjs';
 
 const esc=s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('\\','\\\\').replaceAll('_','\\_').replaceAll('*','\\*').replaceAll('`','\\`').replaceAll('[','\\[').replaceAll(']','\\]').replaceAll('|','\\|').replace(/\r?\n/g,' ');
 const identifier=s=>typeof s==='string'&&/^[A-Z0-9][A-Z0-9_-]{2,99}$/.test(s);
@@ -109,6 +109,9 @@ export function auditBuiltPostMatrix(html,citations,bundle=readBundle()) {
         'Pós-matriz: link visível na ficha para a ocorrência ausente: '+id);
       checked++;
     }
+    auditVisibleIdentityLinks(visible.visibleMarkup,
+      item.related_matrix_occurrences.map(id=>({id,url:locations.get(id)})),
+      '/conde-incident/evidencias/matriz/paginas/','Pós-matriz '+item.id);
   }
   return checked;
 }
