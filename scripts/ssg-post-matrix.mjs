@@ -74,7 +74,11 @@ export function auditBuiltPostMatrix(html,citations,bundle=readBundle()) {
   // source-locked custody report, including the epistemic qualifications.
   const items=[...citations.post_matrix_occurrences].sort((a,b)=>
     a.id.localeCompare(b.id,'en'));
-  const headings=[...main.matchAll(/<h3\b[^>]*>([^<>]*)<\/h3>/gi)];
+  // Read headings and record boundaries from the SAME visible DOM projection.
+  // A raw <h3> nested in <template>, [hidden] or aria-hidden is not a
+  // documentary heading, even if its text looks canonical.
+  const visibleMain=visibleDocument('<main>'+main+'</main>').visibleMarkup;
+  const headings=[...visibleMain.matchAll(/<h3\b[^>]*>([^<>]*)<\/h3>/gi)];
   assert.deepEqual(headings.map(match=>match[1]),items.map(item=>item.id),
     'Pós-matriz: cabeçalhos ausentes, duplicados ou fora da ordem canônica');
   let checked=0;
@@ -87,8 +91,8 @@ export function auditBuiltPostMatrix(html,citations,bundle=readBundle()) {
     const headingDoc=visibleDocument('<main>'+heading[0]+'</main>');
     assert.ok(headingDoc.visibleText.includes(item.id),
       'Pós-matriz: cabeçalho não visível: '+item.id);
-    const section=main.slice(heading.index+heading[0].length,
-      headings[i+1]?.index??main.length);
+    const section=visibleMain.slice(heading.index+heading[0].length,
+      headings[i+1]?.index??visibleMain.length);
     const visible=visibleDocument('<main>'+section+'</main>');
     const field=(label,value)=>{
       const expression=new RegExp('<strong>'+label+':<\/strong>\\s*<code>'+value+'<\/code>');
