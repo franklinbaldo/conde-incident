@@ -3,6 +3,11 @@
   "classification": "DOCUMENTARY_INTERNAL_CONSISTENCY_NOT_INSTRUMENT_TRACK",
   "columns_are_coepoch": null,
   "conditional_rounding_model": {
+    "counterfactual_shared_boundary_minutes": "1893/20",
+    "counterfactual_tie_policy_outputs_minutes": {
+      "half-even": "94.6",
+      "half-up": "94.7"
+    },
     "display_half_width_seconds": "3",
     "first_possible_minutes_closed_envelope": [
       "94.65",
@@ -10,6 +15,10 @@
     ],
     "hypothesis": "each displayed tenth of a minute rounds an unknown underlying period",
     "intervals_touch_at_minutes": "94.65",
+    "no_published_rounding_policy_authenticated": true,
+    "printed_periods_not_proven_same_physical_observable": true,
+    "same_input_distinct_prints_under_different_tie_rules": true,
+    "same_input_distinct_prints_under_one_deterministic_rule": false,
     "second_possible_minutes_closed_envelope": [
       "94.55",
       "94.65"
