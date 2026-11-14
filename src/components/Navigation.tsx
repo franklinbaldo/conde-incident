@@ -125,8 +125,61 @@ export const Navigation: React.FC<NavigationProps> = ({
 
   return (
     <header className="border-b border-zinc-800 bg-zinc-950/90 backdrop-blur md:sticky md:top-0 z-50">
-      {/* Top Banner */}
-      <div className="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs border-b border-zinc-900">
+      {/* Keep the scientific metadata accessible without letting it crowd
+          the mobile first fold, including at 200% resized text. */}
+      <div data-mobile-lab-header className="mx-auto max-w-7xl border-b border-zinc-900 px-3 py-2 text-xs md:hidden">
+        <div className="flex min-w-0 flex-wrap items-center justify-between gap-2">
+          <a href={EDITORIAL_ROUTES.summary.href}
+            aria-label={lang === 'pt' ? 'Voltar ao Caderno' : 'Back to the Notebook'}
+            className="inline-flex min-h-11 items-center gap-1 rounded px-1 text-cyan-300 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
+            <ArrowLeft className="h-4 w-4 shrink-0" aria-hidden="true" />
+            <span>{lang === 'pt' ? 'Caderno' : 'Notebook'}</span>
+          </a>
+          <div className="flex items-center rounded border border-zinc-700 bg-zinc-900 p-0.5">
+            {(['pt', 'en'] as const).map(language => (
+              <button key={language} type="button" onClick={() => setLang(language)}
+                aria-pressed={lang === language}
+                aria-label={language === 'pt' ? 'Português (Brasil)' : 'English'}
+                className={`min-h-11 min-w-11 rounded px-1 text-[11px] font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 ${
+                  lang === language ? 'bg-cyan-700 text-white' : 'text-zinc-300 hover:text-white'
+                }`}>
+                {language === 'pt' ? 'PT-BR' : 'EN'}
+              </button>
+            ))}
+          </div>
+        </div>
+        <details data-lab-metadata className="group mt-2 min-w-0 rounded-md border border-zinc-800 bg-zinc-900/70">
+          <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-2 px-3 py-2 text-zinc-200 [&::-webkit-details-marker]:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
+            <span className="min-w-0 break-words font-medium">
+              NORAD 528 · {lang === 'pt' ? 'NASA: dia, não hora de queda' : 'NASA: day, not impact time'}
+            </span>
+            <ChevronDown className="h-4 w-4 shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
+          </summary>
+          <div className="grid min-w-0 gap-3 border-t border-zinc-800 px-3 py-3 text-zinc-200">
+            <p className="min-w-0 break-words font-mono text-cyan-300">NORAD 528 (1963-003B)</p>
+            <p className="min-w-0 break-words">
+              {lang === 'pt' ? 'Missão NRO 7153 (Thor-Agena D / OPS 0180)' : 'NRO mission 7153 (Thor-Agena D / OPS 0180)'}
+            </p>
+            <p className="min-w-0 break-words text-amber-300">
+              {lang === 'pt' ? 'NASA: dia catalogado 08/11/1963, sem hora de impacto comprovada' : 'NASA: catalogued day 08 Nov 1963; no verified impact time'}
+            </p>
+            {activeTab !== 'summary' && (
+              <a data-mobile-editorial-context href={editorialContext.href}
+                className="min-w-0 break-words text-cyan-300 underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
+                {lang === 'pt' ? `Contexto no Caderno: ${editorialContext.pt}` : `Notebook context: ${editorialContext.en}`}
+              </a>
+            )}
+            <button type="button" onClick={onOpenPython}
+              className="flex min-h-11 min-w-0 items-center gap-2 rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-left text-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
+              <Code className="h-4 w-4 shrink-0" aria-hidden="true" />
+              <span className="min-w-0 break-words">{lang === 'pt' ? 'Script Python' : 'Python Script'}</span>
+            </button>
+          </div>
+        </details>
+      </div>
+
+      {/* Desktop banner retains the detailed provenance and export controls. */}
+      <div className="hidden max-w-7xl mx-auto px-4 py-2.5 md:flex flex-wrap items-center justify-between gap-3 text-xs border-b border-zinc-900">
         <div className="flex flex-wrap items-center gap-2 text-zinc-300">
           <a
             href={EDITORIAL_ROUTES.summary.href}
