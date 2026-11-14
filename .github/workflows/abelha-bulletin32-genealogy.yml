@@ -1,0 +1,36 @@
+name: C241 Bulletin 32 documentary genealogy R57
+on:
+  pull_request:
+    paths:
+      - tools/export_bulletin32_genealogy_bridge.py
+      - tests/test_bulletin32_genealogy_bridge.py
+      - public/data/conde-bulletin32-genealogy-bridge.json
+      - .github/workflows/abelha-bulletin32-genealogy.yml
+  push:
+    branches: [main]
+    paths:
+      - tools/export_bulletin32_genealogy_bridge.py
+      - tests/test_bulletin32_genealogy_bridge.py
+      - public/data/conde-bulletin32-genealogy-bridge.json
+      - .github/workflows/abelha-bulletin32-genealogy.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  documentary-bridge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact HEAD
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Rebuild and check byte-identical scientific graph
+        run: python3 tools/export_bulletin32_genealogy_bridge.py --check-site
+      - name: Test adversarial mutations (normal and optimized)
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p 'test_bulletin32_genealogy_bridge.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_bulletin32_genealogy_bridge.py' -v
