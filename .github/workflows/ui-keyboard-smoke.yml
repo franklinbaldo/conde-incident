@@ -37,6 +37,8 @@ on:
       - 'tests/ui_montecarlo_reflow_smoke.mjs'
       - 'src/components/MonteCarloVisualizer.tsx'
       - 'src/components/InversePassInspector.tsx'
+      - 'src/lib/inversePassPresentation.mjs'
+      - 'tests/inversePassPresentation.test.mjs'
       - 'src/components/AtmosphereSensitivity.tsx'
       - 'src/components/TleAuditViewer.tsx'
       - 'src/components/TriangulationDashboard.tsx'
@@ -115,6 +117,8 @@ on:
       - 'tests/ui_montecarlo_reflow_smoke.mjs'
       - 'src/components/MonteCarloVisualizer.tsx'
       - 'src/components/InversePassInspector.tsx'
+      - 'src/lib/inversePassPresentation.mjs'
+      - 'tests/inversePassPresentation.test.mjs'
       - 'src/components/AtmosphereSensitivity.tsx'
       - 'src/components/TleAuditViewer.tsx'
       - 'src/components/TriangulationDashboard.tsx'
@@ -213,6 +217,8 @@ jobs:
         run: node tests/ui_map_reflow_smoke.mjs
       - name: Chromium Monte Carlo 200% text reflow, accessible controls and table (PT/EN)
         run: node tests/ui_montecarlo_reflow_smoke.mjs
+      - name: Verify locale-specific legacy inverse notes and negative fallbacks
+        run: node --test tests/inversePassPresentation.test.mjs
       - name: Chromium inverse filter 200% text, PT/EN, dates and reflow
         run: node tests/ui_inverse_reflow_smoke.mjs
       - name: Chromium lab context link, TLE note and map note at 200% text (PT/EN)
