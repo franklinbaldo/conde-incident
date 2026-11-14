@@ -14,18 +14,25 @@ from pathlib import Path
 SCALE=1e-10
 LABELS=("baseline","orbital_middle","temporal_12h","joint_middle_12h")
 
+def require(ok, detail):
+    if not ok:
+        raise ValueError("C241 heatmap export: " + detail)
+
 def encode(summary:dict, rows:list[dict]) -> dict:
-    assert summary["schema"]=="conde.c241-joint-orbital-day-scenario-heatmap/v1"
-    assert summary["sample"]["n"]==1_500_000
-    assert summary["historical_Conde_impact_posterior"] is None
-    assert len(rows)==400
+    require(summary["schema"]=="conde.c241-joint-orbital-day-scenario-heatmap/v1",
+            "unexpected source schema")
+    require(summary["sample"]["n"]==1_500_000, "sample count drift")
+    require(summary["historical_Conde_impact_posterior"] is None,
+            "historical impact posterior must remain unavailable")
+    require(len(rows)==400, "expected 400 grid cells")
     encoded={}
     for label in LABELS:
         vals=[int(round(float(r[label+"_global_probability"])/SCALE)) for r in rows]
-        assert all(v>=0 for v in vals)
+        require(all(v>=0 for v in vals), "negative cell probability: " + label)
         reconstructed=sum(vals)*SCALE
         expected=summary["results"][label]["probability_within_2000km"]
-        assert abs(reconstructed-expected)<2e-8
+        require(abs(reconstructed-expected)<2e-8,
+                "grid sum differs from source result: " + label)
         encoded[label]=vals
     return {
         "schema":"conde.static-joint-orbit-day-heatmap/v1",
@@ -66,9 +73,11 @@ def main():
         cells=list(csv.DictReader(f))
     result=encode(summary,cells)
     data=json.dumps(result,ensure_ascii=False,sort_keys=True,separators=(",",":"))+"\n"
-    assert len(data.encode("utf-8"))<20_000, "static-data file limit"
+    require(len(data.encode("utf-8"))<20_000, "static-data file limit")
     if a.check:
-        assert a.output.read_text(encoding="utf-8")==data, "committed heatmap drift"
+        require(a.output.is_file(), "committed heatmap missing")
+        require(a.output.read_text(encoding="utf-8")==data,
+                "committed heatmap drift")
         print("C241 static site heatmap parity PASS")
     else:
         a.output.parent.mkdir(parents=True,exist_ok=True)
