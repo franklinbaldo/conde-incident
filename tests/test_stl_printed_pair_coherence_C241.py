@@ -14,7 +14,7 @@ class STLPairCoherence(unittest.TestCase):
     def test_exact_printed_pair(self):
         r = inspect(self.data, self.raw)
         self.assertEqual(r['printed_altitude_sum'], [620, 620])
-        self.assertEqual(r['printed_mean_altitude_unit_unknown'], ['310', '310'])
+        self.assertEqual(r['printed_mean_altitude_in_printed_miles'], ['310', '310'])
         self.assertEqual(r['period_nominal_difference_first_minus_second_seconds'], '6')
         self.assertEqual(r['conditional_rounding_model']['intervals_touch_at_minutes'], '94.65')
         self.assertEqual(r['observational_design']['new_528_tracking_observations'], 0)
@@ -37,7 +37,10 @@ class STLPairCoherence(unittest.TestCase):
         self.invalid('printed_row', 'period_minutes_in_printed_order', [94.7, 94.7])
 
     def test_reject_unverified_unit(self):
-        self.invalid('printed_row', 'perigee_apogee_unit_on_b12', 'miles')
+        self.invalid('printed_row', 'perigee_apogee_unit_on_b12', 'km')
+
+    def test_reject_invented_statute_mile_subtype(self):
+        self.invalid('printed_row', 'mile_variant_as_printed', 'statute')
 
     def test_reject_sensor_promotion(self):
         changed = copy.deepcopy(self.data)
@@ -54,3 +57,4 @@ class STLPairCoherence(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
