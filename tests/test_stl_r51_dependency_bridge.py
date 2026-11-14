@@ -38,7 +38,11 @@ class STLBridgeTests(unittest.TestCase):
         self.assertEqual([94.7, 94.6], data['printed_values']['period_min'])
         self.assertEqual([82.0, 81.9], data['printed_values']['inclination_deg'])
         self.assertEqual('initial_orbital_data_as_of_1963_01_31', data['source_epoch_context'])
-        self.assertIsNone(data['altitude_unit_verified'])
+        self.assertEqual('miles', data['altitude_unit_verified'])
+        self.assertIsNone(data['altitude_mile_subtype_verified'])
+        self.assertEqual('NASA_TM_X59315_B12_FOOTER_PDF_PAGE_105', data['altitude_unit_evidence'])
+        self.assertEqual([298, 286], data['printed_values']['perigee_miles_as_printed'])
+        self.assertIn('LATENT:mile_subtype', [x['id'] for x in data['latents']])
         self.assertFalse(data['pair_mapping_proven'])
 
     def reject(self, which, path, value):
@@ -50,8 +54,11 @@ class STLBridgeTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             bridge.build(r51, r49)
 
-    def test_reject_unverified_unit_promotion(self):
+    def test_reject_false_km_unit(self):
         self.reject('r51', ['printed_row', 'perigee_apogee_unit_on_b12'], 'km')
+
+    def test_reject_fabricated_statute_mile_subtype(self):
+        self.reject('r51', ['printed_row', 'mile_variant_as_printed'], 'statute')
 
     def test_reject_unverified_stl_genealogy(self):
         self.reject('r51', ['scientific_interpretation', 'candidate_upstream_proven'], True)
