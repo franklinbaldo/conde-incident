@@ -83,6 +83,40 @@ class TemporalAvailabilityControls(unittest.TestCase):
         self.assertEqual(json.dumps(summarize(records), sort_keys=True),
                          json.dumps(summarize(list(reversed(records))), sort_keys=True))
 
+
+    def test_decay_day_not_ordered_as_post_event(self):
+        day = datetime(1963, 11, 8, tzinfo=timezone.utc)
+        records = [row(527, 0, 1, epoch=(day - timedelta(microseconds=1)).isoformat().replace("+00:00", "Z")),
+                   row(527, 0, 2, epoch=day.isoformat().replace("+00:00", "Z")),
+                   row(527, 0, 3, epoch=(day + timedelta(hours=23)).isoformat().replace("+00:00", "Z")),
+                   row(527, 0, 4, epoch=(day + timedelta(days=1)).isoformat().replace("+00:00", "Z")),
+                   row(528, 0, 5, epoch=day.isoformat().replace("+00:00", "Z")),
+                   row(529, 0, 6, epoch=(day + timedelta(days=1)).isoformat().replace("+00:00", "Z"))]
+        d = summarize(records)["post_decay_day_control_coverage"]
+        self.assertEqual((d["by_norad"]["527"]["distinct_epochs_before_day"],
+                          d["by_norad"]["527"]["distinct_epochs_on_ambiguous_day"],
+                          d["by_norad"]["527"]["distinct_epochs_after_day"]), (1, 2, 1))
+        self.assertEqual(d["by_norad"]["527"]["first_after_day"]["source_rows"], [4])
+        self.assertTrue(d["both_controls_have_later_catalog_epochs"])
+        self.assertEqual(d["historical_holdout"], "NOT_RUN")
+        self.assertEqual(d["528_trajectory_restriction"], "NONE")
+
+    def test_post_day_duplicate_source_rows_not_independent(self):
+        day = datetime(1963, 11, 9, tzinfo=timezone.utc).isoformat().replace("+00:00", "Z")
+        d = summarize([row(527, 0, 1, epoch=day), row(527, 0, 2, epoch=day),
+                       row(528, 0, 3), row(529, 0, 4, epoch=day)])[
+                           "post_decay_day_control_coverage"]
+        self.assertEqual(d["by_norad"]["527"]["post_day_source_rows"], [[1, 2]])
+        self.assertEqual(d["by_norad"]["527"]["distinct_epochs_after_day"], 1)
+        self.assertIsNone(d["by_norad"]["527"]["catalog_gap_last_pre_first_post_seconds"])
+
+    def test_absent_later_record_stays_absent(self):
+        d = summarize([row(527, 0, 1), row(528, 0, 2), row(529, 0, 3)])[
+            "post_decay_day_control_coverage"]
+        self.assertFalse(d["both_controls_have_later_catalog_epochs"])
+        self.assertIsNone(d["by_norad"]["529"]["first_after_day"])
+        self.assertEqual(d["physical_joint_fit"], "NOT_RUN")
+
     def test_pinned_reader_rejects_synthetic_csv(self):
         with tempfile.TemporaryDirectory() as directory:
             file = Path(directory) / "invented.csv"
