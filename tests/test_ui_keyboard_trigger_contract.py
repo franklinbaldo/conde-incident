@@ -34,6 +34,9 @@ REQUIRED_SMOKE_ENTRYPOINTS = (
 
 REQUIRED_INPUTS = (
     ".github/workflows/ui-keyboard-smoke.yml",
+    "src/components/AtmosphereSensitivity.tsx",
+    "src/components/TleAuditViewer.tsx",
+    "src/components/TriangulationDashboard.tsx",
     "tests/test_ui_keyboard_trigger_contract.py",
     "scripts/prepare-ssg.mjs",
     "scripts/enable-article-frames.mjs",

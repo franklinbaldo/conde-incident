@@ -90,11 +90,11 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
             <Wind className="w-3.5 h-3.5 text-cyan-400" />
             <span>{isPt ? 'MODELAGEM TERMOESFÉRICA & ARRASTO' : 'THERMOSPHERIC DRAG MODELING'}</span>
           </div>
-          <h2 className="text-lg font-bold text-zinc-100">
+          <h1 className="text-lg font-bold text-zinc-100">
             {isPt
               ? 'Análise de Sensibilidade do Decaimento Atmosférico'
               : 'Atmospheric Decay Sensitivity Analysis'}
-          </h2>
+          </h1>
           <p className="text-xs text-zinc-300 leading-relaxed">
             {isPt
               ? 'A 345 km de altitude, o decaimento orbital do NORAD 528 é governado pelo arrasto molecular da alta termosfera. Novembro de 1963 coincidiu com o mínimo do Ciclo Solar 19, caracterizado por fluxo solar calmo (F10.7 ≈ 76 sfu) e baixa densidade exosférica. Ajuste os parâmetros físicos para inspecionar a data prevista de quebra a 120 km.'

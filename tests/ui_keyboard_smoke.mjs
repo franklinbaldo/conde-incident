@@ -248,6 +248,23 @@ try {
     }
     await page.screenshot({ path: out + '/' + viewport.name + '-inverse-contrast.png', fullPage: true });
 
+    // G69: live Pages had three routes with no H1 despite route titles.
+    // Test real route rendering and both locales, not static source strings.
+    for (const locale of ['en', 'pt']) {
+      if (locale === 'pt') await page.getByRole('button', { name: 'Português (Brasil)' }).click();
+      for (const [route, heading] of [
+        ['sensitivity', locale === 'pt' ? /Análise de Sensibilidade do Decaimento Atmosférico/ : /Atmospheric Decay Sensitivity Analysis/],
+        ['tles', locale === 'pt' ? /Linhas TLE em auditoria/ : /TLE/],
+        ['triangulation', locale === 'pt' ? /Objetos 527, 528 e 529/ : /Objects 527, 528 and 529/],
+      ]) {
+        await page.goto(new URL('#/' + route, origin).href);
+        await page.getByRole('heading', { level: 1, name: heading }).waitFor();
+        assert.equal(await page.getByRole('main').getByRole('heading', { level: 1 }).count(), 1,
+          `route ${route} must expose exactly one main H1 (${viewport.name}, ${locale})`);
+      }
+    }
+
+    await page.getByRole('button', { name: 'English' }).click();
     assert.equal(errors.length, 0, `uncaught page errors: ${errors.join('; ')}`);
     findings.push({ viewport: viewport.name, skip_target: focused.id, hash_preserved: true, nav_hash: '#/map', html_lang: 'en', overflow_px: horizontal.document - horizontal.viewport });
     await page.close();
