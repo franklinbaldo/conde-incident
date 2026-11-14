@@ -51,6 +51,8 @@ jobs:
         run: python3 scripts/build-conde-context-map.py --check
       - name: Test SSG local TLE syntax audit with adversarial bytes
         run: node --test tests/ssg-tle-syntax.test.mjs
+      - name: Test verified reverse-source index UI and static fallback
+        run: node --test tests/ssg-source-lookup-ui.test.mjs
       - name: Test no-JS map on the independent SSG page
         run: node --test tests/ssg-map-context.test.mjs
       - name: Validate chapter schema and chronology

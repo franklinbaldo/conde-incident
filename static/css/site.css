@@ -97,3 +97,13 @@ a:focus-visible,button:focus-visible,iframe:focus-visible{outline:3px solid #ffd
 .tle-audit :is(button,textarea):focus-visible,.tle-audit-results:focus{outline:3px solid #ffd278;outline-offset:3px}
 .tle-audit-results:not(:empty){border-top:1px solid var(--line);margin-top:1.2rem;padding-top:1rem}
 .tle-audit-results p:first-child{font-weight:700}
+
+/* SSG verified reverse source lookup: readable at 320px and enlarged text. */
+.source-lookup-panel{min-width:0;max-width:100%;overflow-wrap:anywhere}
+#source-lookup-form{max-width:100%;padding:1rem 0}
+#source-lookup-form label{display:block;font-weight:700;margin-bottom:.5rem}
+#source-lookup-id{display:block;max-width:100%;width:100%;min-height:44px;padding:.6rem;background:var(--paper);color:var(--ink);border:1px solid #87929e;border-radius:.4rem;font:inherit}
+#source-lookup-id:focus-visible,#source-lookup-retry:focus-visible{outline:3px solid #ffd278;outline-offset:3px}
+#source-lookup-results li{overflow-wrap:anywhere;margin:1rem 0}
+#source-lookup-results li p{margin:.25rem 0;font-size:.85rem;line-height:1.65;color:var(--muted)}
+#source-lookup-retry{min-height:44px;padding:.65rem 1rem;cursor:pointer}

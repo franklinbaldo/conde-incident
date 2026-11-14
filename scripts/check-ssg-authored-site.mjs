@@ -20,6 +20,10 @@ for(const slug of AUTHORED_ROUTES){
   assert.ok(page.includes('/conde-incident/'),
     'Página publicada sem prefixo GitHub Pages: '+slug);
 }
+const lookupPage=read('evidencias/fontes');
+assert.match(lookupPage,/id="source-lookup-form"/, 'Consulta documental SSG ausente');
+assert.match(lookupPage,/js\/ssg-source-lookup-ui\.mjs/, 'Módulo de consulta não publicado');
+assert.match(lookupPage,/evidencias\/arquivo\//, 'Fallback sem JS não publicado');
 // The SSG Map page is useful offline, without the React lab or tile-provider quota.
 const editorialMap=read('mapa');
 assert.match(editorialMap,/<figure class="context-map">[\s\S]*?<img\b[^>]*src="\/conde-incident\/img\/conde-bahia-context\.svg"/,

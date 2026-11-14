@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 import {AUTHORED_ROUTES,checkPage} from '../scripts/ssg-authored-pages.mjs';
 
 test('todas as páginas canônicas têm URL própria, tipo e acesso à ferramenta',()=>{
-  assert.equal(AUTHORED_ROUTES.length,9);
+  assert.equal(AUTHORED_ROUTES.length,10);
   for(const slug of AUTHORED_ROUTES){
     const page=readFileSync('pages/'+slug+'/page.md','utf8');
     assert.equal(checkPage(slug,page),page);
