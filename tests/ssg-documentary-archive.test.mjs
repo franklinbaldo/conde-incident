@@ -281,3 +281,33 @@ test('UX-04: every curated canonical state has legible, non-probabilistic readin
   assert.throws(()=>archivePages(unknown,ancestry),/sem leitura editorial revisada/);
   assert.throws(()=>interpretArchiveStatus('__proto__'),/sem leitura editorial revisada/);
 });
+
+
+test('chapter 03 keeps FBIS and NASA as separate, reversible documentary journeys', () => {
+  const chapter=readFileSync('stories/2026-11-12-a-resposta-que-veio-de-salvador.md','utf8');
+  const pages=archivePages(feed,ancestry);
+  for (const [occurrence,anchor,label] of [
+    ['C01#1','contexto-fbis','a transmissão FBIS'],
+    ['C197#1','contexto-nasa','a data no catálogo NASA'],
+  ]) {
+    const record=feed.records.find(r=>r.occurrence===occurrence);
+    assert.ok(record, 'Ocorrência científica ausente: '+occurrence);
+    const file=occurrence.toLowerCase().replace('#','-')+'/index.md';
+    const toArchive='/conde-incident/evidencias/arquivo/'+file.replace('index.md','');
+    const back='/conde-incident/stories/2026-11-12-a-resposta-que-veio-de-salvador/#'+anchor;
+    assert.ok(chapter.includes('id="'+anchor+'"'), 'Âncora editorial ausente');
+    assert.ok(chapter.includes(']('+toArchive+')'), 'Sem entrada para ocorrência');
+    for (const target of [file,
+      'fontes/'+record.source_id.toLowerCase().replaceAll('_','-')+'/index.md',
+      'obras/'+record.work_id.toLowerCase().replaceAll('_','-')+'/index.md']) {
+      const data=pages.get(target);
+      assert.ok(data?.includes(']('+back+')'), 'Retorno editorial ausente: '+target);
+      assert.ok(data.includes(record.citation_url), 'Original custodiado perdeu link: '+target);
+    }
+    assert.ok(pages.get(file).includes('SHA-256 da linha na matriz'));
+    assert.ok(pages.get(file).includes('Não permite concluir'));
+    assert.ok(pages.get(file).includes('Voltar à reportagem: '+label));
+  }
+  // No unrelated occurrence may acquire a spurious link to this article.
+  assert.doesNotMatch(pages.get('c232-1/index.md'),/Voltar à reportagem/);
+});
