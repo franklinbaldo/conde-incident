@@ -22,6 +22,12 @@ on:
       - 'tests/test_c241_modern_boundary_plane_g77.py'
       - 'research/statistics/c241_modern_boundary_plane_g77.json'
       - 'research/geo/conde_ibge_2025_sirgas2000.json'
+      - 'research/geo/cgeo61_conder_sede_point.json'
+      - 'tools/cgeo61_conder_sede_point.py'
+      - 'tools/c241_conder_seat_plane_g78.py'
+      - 'tests/test_c241_conder_seat_plane_g78.py'
+      - 'research/statistics/c241_conder_seat_plane_g78.json'
+      - 'research/statistics/C241_G78_CONDER_SEAT_PLANE_20261114.md'
   push:
     branches: [main]
     paths:
@@ -45,6 +51,12 @@ on:
       - 'tests/test_c241_modern_boundary_plane_g77.py'
       - 'research/statistics/c241_modern_boundary_plane_g77.json'
       - 'research/geo/conde_ibge_2025_sirgas2000.json'
+      - 'research/geo/cgeo61_conder_sede_point.json'
+      - 'tools/cgeo61_conder_sede_point.py'
+      - 'tools/c241_conder_seat_plane_g78.py'
+      - 'tests/test_c241_conder_seat_plane_g78.py'
+      - 'research/statistics/c241_conder_seat_plane_g78.json'
+      - 'research/statistics/C241_G78_CONDER_SEAT_PLANE_20261114.md'
   workflow_dispatch:
 permissions:
   contents: read
@@ -95,3 +107,10 @@ jobs:
           python3 -m unittest discover -s tests -p 'test_c241_modern_boundary_plane_g77.py' -v
           python3 -O -m unittest discover -s tests -p 'test_c241_modern_boundary_plane_g77.py' -v
           python3 tools/c241_modern_boundary_plane_g77.py --repo . --output research/statistics/c241_modern_boundary_plane_g77.json --check
+
+      - name: Replay G78 CONDER versus OSM modern-seat plane roots and negative controls
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p 'test_c241_conder_seat_plane_g78.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_c241_conder_seat_plane_g78.py' -v
+          python3 tools/c241_conder_seat_plane_g78.py --repo . --output research/statistics/c241_conder_seat_plane_g78.json --check
