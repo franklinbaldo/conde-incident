@@ -1,0 +1,167 @@
+{
+  "activation": false,
+  "graph": [
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "METADATA_LOCATES_FACSIMILE",
+      "source": "DOC:NTRS-19640003479",
+      "target": "PDF:NASA-SSR-V3N24-P15"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "CUSTODIED_PDF_SHA256",
+      "source": "PDF:NASA-SSR-V3N24-P15",
+      "target": "DOC:C241-L64"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "PRINTS_29_TO_30_OCT_1963",
+      "source": "DOC:C241-L64",
+      "target": "ROW:NASA-OMEGA1-1963"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "PUBLICATION_NOT_SENSOR",
+      "source": "ROW:NASA-OMEGA1-1963",
+      "target": "H:CALENDAR_RANGE_NOT_UTC"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "SECONDARY_IDENTITY_ONLY",
+      "source": "SRC:KEEPTRACK-308",
+      "target": "CROSSWALK:NORAD-308-OMEGA1"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NASA_ROW_HAS_NO_NORAD",
+      "source": "CROSSWALK:NORAD-308-OMEGA1",
+      "target": "H:308_IDENTITY_PENDING_PRIMARY"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "SECONDARY_SINGLE_DAY_30_OCT",
+      "source": "DOC:R59-LEDGER",
+      "target": "LEAD:NORAD:308"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "SECONDARY_DAY_NOT_TERMINAL_INSTANT",
+      "source": "LEAD:NORAD:308",
+      "target": "H:R59_DAY_NOT_UTC"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "UTC_AND_ERROR_UNAVAILABLE",
+      "source": "H:CALENDAR_RANGE_NOT_UTC",
+      "target": "LATENT:NORAD:308:terminal_utc"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "IDENTITY_LINK_UNCALIBRATED",
+      "source": "H:308_IDENTITY_PENDING_PRIMARY",
+      "target": "LATENT:NORAD:308:terminal_utc"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "SOURCE_DEPENDENCE_UNRESOLVED",
+      "source": "H:R59_DAY_NOT_UTC",
+      "target": "LATENT:NORAD:308:terminal_utc"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "ONLY_CONDITIONAL_CALENDAR_INFORMATION",
+      "source": "LATENT:NORAD:308:terminal_utc",
+      "target": "LEAN:candidateTerminalControlEvidence"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NO_INSTRUMENTAL_TERMINAL_EVENT_OR_SIGMA",
+      "source": "LEAN:candidateTerminalControlEvidence",
+      "target": "PARAM:terminal_error_control_308"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NO_EMPIRICAL_TRANSFER_TO_528",
+      "source": "PARAM:terminal_error_control_308",
+      "target": "PARAM:reentry_528_drag_calibration"
+    }
+  ],
+  "historical_mcmc": "NOT_RUN",
+  "id": "ABELHA-C241-L64-R59-308-CALENDAR-RANGE",
+  "lean_candidates": [
+    {
+      "activation": false,
+      "id": "LEAN:candidateTerminalControlEvidence",
+      "status": "CANDIDATE_ONLY_NOT_COMPILED"
+    }
+  ],
+  "new_activated_physical_constraints": 0,
+  "new_independent_instrumental_observations": 0,
+  "next_falsifiable_test": "Locate an original identified observation or terminal report tying Omega 1 to NORAD 308, with clock scale, instrument, frame, event definition and uncertainty.",
+  "observation": {
+    "activation": false,
+    "id": "C241-L64:OMEGA1",
+    "identity_grade": "SECONDARY_CROSSWALK_PENDING_PRIMARY_NORAD_ID",
+    "independent_instrumental_lineages": null,
+    "nasa_printed_norad_id": null,
+    "printed_calendar_range": [
+      "1963-10-29",
+      "1963-10-30"
+    ],
+    "printed_identifier": "A OMEGA 1",
+    "r59_secondary_calendar_day": "1963-10-30",
+    "range_is_instrumental_utc": false,
+    "reference_frame": null,
+    "secondary_cospar": "1962-024A",
+    "secondary_norad_id": 308,
+    "sensor": null,
+    "station": null,
+    "terminal_event_utc": null,
+    "terminal_sigma_seconds": null
+  },
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "schema": "conde.c241-l64-r59-calendar-dependency/v1",
+  "simulator_parameters": [
+    {
+      "activation": false,
+      "id": "PARAM:terminal_error_control_308",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "PARAM:reentry_528_drag_calibration",
+      "value": null
+    }
+  ],
+  "sources": [
+    {
+      "id": "C241-L64",
+      "path": "research/tle_custody/nasa_ssr_terminal_control_308_C241-L64.json",
+      "pdf_bytes": 958927,
+      "pdf_sha256": "d31a064f8e03fd39be6fe75b88cd5852c0b74c9101fa635cb40ac25c77ef474f",
+      "printed_page": 15,
+      "publication_date": "1963-12-15",
+      "sha256": "c7f66c31e40a833bd52c2ec6943247fd507705a141d2ff5116131a82d936dbe4"
+    },
+    {
+      "grade": "SECONDARY_ARCHIVE_SEARCH_NOT_CALIBRATED",
+      "id": "ABELHA-C241-CERVO-R59-TERMINAL-CONTROLS",
+      "path": "public/data/conde-terminal-control-r59-scientific-bridge.json",
+      "sha256": "00824c60d9489a8c5c7d8691635d47237a273e1284392a4bcc45cc3c72ee1611"
+    }
+  ]
+}
