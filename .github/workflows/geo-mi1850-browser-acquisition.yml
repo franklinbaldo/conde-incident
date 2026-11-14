@@ -1,0 +1,50 @@
+name: CGEO-44 SGB MI-1850 authenticated browser capture
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo44_mi1850_photoindex.json'
+      - 'research/geo/CGEO44_MI1850_USAF_BROWSER_INDEX.md'
+      - 'tools/cgeo44_browser_photoindex.py'
+      - 'tests/test_cgeo44_browser_photoindex.py'
+      - '.github/workflows/geo-mi1850-browser-acquisition.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo44_mi1850_photoindex.json'
+      - 'research/geo/CGEO44_MI1850_USAF_BROWSER_INDEX.md'
+      - 'tools/cgeo44_browser_photoindex.py'
+      - 'tests/test_cgeo44_browser_photoindex.py'
+      - '.github/workflows/geo-mi1850-browser-acquisition.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-authenticated-image:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - name: Checkout exact HEAD
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact checkout SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Offline contract and adversarial tests
+        run: |
+          python3 tools/cgeo44_browser_photoindex.py
+          python3 -m unittest discover -s tests -p 'test_cgeo44_browser_photoindex.py' -v
+      - name: Install browser and image inspector
+        run: |
+          python3 -m pip install --disable-pip-version-check playwright==1.57.0 pillow==12.0.0
+          python3 -m playwright install --with-deps chromium
+      - name: Reacquire JPEG with live browser state
+        run: python3 tools/cgeo44_browser_photoindex.py --live --output-dir "$RUNNER_TEMP/cgeo44"
+      - name: Check whitespace and tree
+        run: |
+          git diff --check
+          test -z "$(git status --porcelain)"

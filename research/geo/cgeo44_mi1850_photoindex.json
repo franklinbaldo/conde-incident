@@ -1,0 +1,43 @@
+{
+  "schema": "conde.cgeo.photoindex-acquisition/v1",
+  "id": "CGEO-44",
+  "source": {
+    "institution": "Serviço Geológico do Brasil (SGB)",
+    "collection": "FotoUSAF",
+    "url": "https://acervo.sgb.gov.br/DocReader/DocReader.aspx?bib=FotoUSAF&pasta=1850",
+    "requested_folder": "1850",
+    "selected_node": "680",
+    "selected_folder_label": "1850 Projeto USAF 63-32 - área A: SC.24-Z-C-VI"
+  },
+  "acquisition": {
+    "date_utc": "2026-11-14",
+    "method": "Headless Chromium using real Telerik ASP.NET browser state and network response",
+    "repeat_count": 2,
+    "independent_sessions_same_jpeg_sha256": true,
+    "image_bytes_saved_outside_repository": true,
+    "response_status": 200,
+    "source_image_prefix": "I0000680-",
+    "jpeg_bytes": 957893,
+    "jpeg_sha256": "45d72dff84520bb387d5b8ce7c5a8f4c9361457841341b2c21016e992c0fef79",
+    "image_dimensions_pixels": [4355, 4350],
+    "source_cache_path_varies_per_session": true
+  },
+  "printed_metadata": {
+    "date_range_literal": "Date 1964-1970",
+    "scale_of_photography_literal": "Scale of Photography 1:60,000",
+    "scale_of_index_literal": "Scale of Index 1:180,000",
+    "altitude_literal": "ALT. 30,000' ASL",
+    "frame_specific_capture_dates": null,
+    "survey_1963_proven": false
+  },
+  "interpretation": {
+    "catalogue_series": "USAF 63-32",
+    "printed_attribution": "and Geodetic Service (ACGS)",
+    "provenance_gap": "Catalogue USAF 63-32 and visible cartouche ACGS/1964-1970 require separate verification",
+    "index_image_acquired": true,
+    "individual_original_aerial_frames_acquired": false,
+    "historic_center_conde_1963_geometry": null,
+    "event_reentry_position": null,
+    "orbital_constraint_activated": false
+  }
+}
