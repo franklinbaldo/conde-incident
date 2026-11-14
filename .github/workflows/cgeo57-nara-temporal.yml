@@ -2,18 +2,22 @@ name: CGEO-57 NARA temporal provenance
 on:
   pull_request:
     paths:
+      - 'research/geo/cgeo56_nara_sortie_cross_square.json'
       - 'research/geo/cgeo57_nara_overlay_preparation_dates.json'
       - 'research/geo/CGEO57_NARA_1956_PREPARATION_DATES.md'
       - 'tools/cgeo57_nara_temporal.py'
       - 'tests/test_cgeo57_nara_temporal.py'
+      - 'tests/test_cgeo57_workflow_contract.py'
       - '.github/workflows/cgeo57-nara-temporal.yml'
   push:
     branches: [main]
     paths:
+      - 'research/geo/cgeo56_nara_sortie_cross_square.json'
       - 'research/geo/cgeo57_nara_overlay_preparation_dates.json'
       - 'research/geo/CGEO57_NARA_1956_PREPARATION_DATES.md'
       - 'tools/cgeo57_nara_temporal.py'
       - 'tests/test_cgeo57_nara_temporal.py'
+      - 'tests/test_cgeo57_workflow_contract.py'
       - '.github/workflows/cgeo57-nara-temporal.yml'
 permissions:
   contents: read
@@ -36,5 +40,7 @@ jobs:
           python3 tools/cgeo57_nara_temporal.py
           python3 -m unittest discover -s tests -p 'test_cgeo57_nara_temporal.py' -v
           python3 -O -m unittest discover -s tests -p 'test_cgeo57_nara_temporal.py' -v
+          python3 -m unittest discover -s tests -p 'test_cgeo57_workflow_contract.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_cgeo57_workflow_contract.py' -v
       - name: Live NARA four-JPEG source replay
         run: python3 tools/cgeo57_nara_temporal.py --live

@@ -57,6 +57,10 @@ def validate(d, parent=None):
             raise ValueError("source bytes not inherited from CGEO-56")
         if row.get("op_file") != by_sheet[sheet]["op_file_no"]:
             raise ValueError("O.P. changed from parent")
+        if (row.get("square"), row.get("flight_date_reading")) != (
+            by_sheet[sheet]["square"], by_sheet[sheet]["header_date_reading"]
+        ):
+            raise ValueError("CGEO-57 flight header differs from CGEO-56 source")
     if seen != set(EXPECTED):
         raise ValueError("missing scans")
     if d.get("counts") != {
