@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
 import {postMatrixPage,postMatrixLinks,auditBuiltPostMatrix} from '../scripts/ssg-post-matrix.mjs';
 
 const citations=JSON.parse(readFileSync('public/data/conde-source-citations.json','utf8'));
@@ -68,6 +69,28 @@ test('post-matrix rejects links, paths and digests that fail custody',()=>{
   const rendered=postMatrixPage(xss,lineage);
   assert.doesNotMatch(rendered,/<script>/);
   assert.match(rendered,/&lt;script&gt;/);
+});
+
+test('post-matrix cross-checks digital object against the actual archived report',()=>{
+  const file=citations.post_matrix_occurrences[0].report_path;
+  const expected=createHash('sha256').update(readFileSync(file)).digest('hex');
+  assert.match(postMatrixPage(citations,lineage),new RegExp(expected));
+  const changed=clone(citations);
+  changed.post_matrix_occurrences[0].image_sha256='0'.repeat(64);
+  changed.post_matrix_occurrences[0].report_object_sha256='0'.repeat(64);
+  assert.throws(()=>postMatrixPage(changed,lineage),/SHA-256 diverge do relatório/);
+  const other=clone(citations);
+  other.post_matrix_occurrences[0].nara_object_id=302531015;
+  assert.throws(()=>postMatrixPage(other,lineage),/nome do objeto diverge do relatório/);
+  const url=clone(citations);
+  url.post_matrix_occurrences[0].report_citation_url='https://example.org/0810.jp2';
+  assert.throws(()=>postMatrixPage(url,lineage),/URL diverge do relatório/);
+  const unit=clone(citations);
+  unit.post_matrix_occurrences[0].report_file_unit_id='NARA_BB_UNIT_000000000';
+  assert.throws(()=>postMatrixPage(unit,lineage),/identificador da unidade divergente/);
+  const fileName=clone(citations);
+  fileName.post_matrix_occurrences[0].image_filename='0811.jp2';
+  assert.throws(()=>postMatrixPage(fileName,lineage),/nome do objeto diverge do relatório/);
 });
 
 test('post-matrix references open real no-JS matrix anchors and reject coordinated fake IDs',()=>{
