@@ -87,6 +87,11 @@ jobs:
           cp -R dist/. public/lab/
           cp -R static/css/. public/css/
           cp -R static/img/. public/img/
+      - name: Build and verify no-JS SSG deep-page breadcrumbs
+        run: |
+          node --test tests/ssg-breadcrumbs.test.mjs
+          node scripts/ssg-breadcrumbs.mjs public
+          node scripts/ssg-breadcrumbs.mjs public --check
       - name: Verify published SSG documentary status deep links
         run: node --test tests/ssg-state-fragments-built.check.mjs
       - name: Check reversible report-to-document journeys in built HTML

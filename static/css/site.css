@@ -57,3 +57,13 @@ a:focus-visible,button:focus-visible,iframe:focus-visible{outline:3px solid #ffd
    inside the code block instead of forcing the entire page to pan. */
 .wrap pre{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin}
 .wrap pre:focus-visible{outline:3px solid #ffd278;outline-offset:3px}
+
+
+/* Navegação estrutural de páginas SSG profundas, sem dependência de React. */
+.breadcrumbs{margin:1.15rem 0 0;font:500 .85rem/1.65 system-ui,sans-serif;color:var(--muted)}
+.breadcrumbs ol{display:flex;flex-wrap:wrap;gap:.2rem .5rem;list-style:none;padding:0;margin:0;min-width:0}
+.breadcrumbs li{min-width:0;max-width:100%;overflow-wrap:anywhere}
+.breadcrumbs li+li::before{content:"/";margin-right:.5rem;color:var(--muted)}
+.breadcrumbs [aria-current="page"]{color:var(--ink)}
+.breadcrumbs a{display:inline-block;min-height:28px}
+.breadcrumbs a:focus-visible{outline:3px solid #ffd278;outline-offset:2px}
