@@ -27,6 +27,8 @@ on:
       - 'stories/2026-11-11-o-dia-em-que-dois-relatos-se-cruzaram.md'
       - 'src/components/OrbitalMap.tsx'
       - 'tests/ui_map_reflow_smoke.mjs'
+      - 'tests/ui_montecarlo_reflow_smoke.mjs'
+      - 'src/components/MonteCarloVisualizer.tsx'
       - 'src/components/map/**'
       - 'tests/ui_keyboard_smoke.mjs'
       - 'tests/ui_mobile_sections_smoke.mjs'
@@ -95,6 +97,8 @@ jobs:
         run: node tests/ui_documentary_archive_smoke.mjs
       - name: Chromium quota-free map 200% text reflow, SVG, dates and zoom (PT/EN)
         run: node tests/ui_map_reflow_smoke.mjs
+      - name: Chromium Monte Carlo 200% text reflow, accessible controls and table (PT/EN)
+        run: node tests/ui_montecarlo_reflow_smoke.mjs
       - name: Chromium lazy-download failure and recovery (PT/EN)
         run: node tests/ui_lab_chunk_failure_smoke.mjs
       - name: Browser export chunk failure, modal keyboard recovery and language
