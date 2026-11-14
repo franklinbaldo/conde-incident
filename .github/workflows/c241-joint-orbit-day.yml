@@ -3,8 +3,12 @@ on:
   pull_request:
     paths:
       - tools/c241_joint_orbit_day_heatmap.py
+      - research/tle_custody/mirror_528_1963-10-27.tle
+      - research/constraints/C241_nov8_two_sided_day_likelihood_2026-11-13.json
+      - research/statistics/c241_528_unweighted_2000km_scenarios.json
       - tools/export_c241_joint_heatmap.py
       - tests/test_c241_joint_orbit_day_heatmap.py
+      - tests/test_c241_joint_orbit_day_workflow.py
       - research/statistics/c241_joint_orbit_day_1p5m_summary.json
       - research/statistics/C241_joint_orbit_day_heatmap_2026-11-13.md
       - public/data/conde-joint-orbit-day-heatmap.json
@@ -13,8 +17,12 @@ on:
     branches: [main]
     paths:
       - tools/c241_joint_orbit_day_heatmap.py
+      - research/tle_custody/mirror_528_1963-10-27.tle
+      - research/constraints/C241_nov8_two_sided_day_likelihood_2026-11-13.json
+      - research/statistics/c241_528_unweighted_2000km_scenarios.json
       - tools/export_c241_joint_heatmap.py
       - tests/test_c241_joint_orbit_day_heatmap.py
+      - tests/test_c241_joint_orbit_day_workflow.py
       - research/statistics/c241_joint_orbit_day_1p5m_summary.json
       - research/statistics/C241_joint_orbit_day_heatmap_2026-11-13.md
       - public/data/conde-joint-orbit-day-heatmap.json
@@ -39,7 +47,9 @@ jobs:
       - name: Install numerical stack with declared pins
         run: python3 -m pip install --disable-pip-version-check numpy==2.2.6 scipy==1.15.3
       - name: Run adversarial unit tests before benchmark
-        run: python3 -m unittest discover -s tests -p test_c241_joint_orbit_day_heatmap.py -v
+        run: |
+          python3 -m unittest discover -s tests -p test_c241_joint_orbit_day_workflow.py -v
+          python3 -m unittest discover -s tests -p test_c241_joint_orbit_day_heatmap.py -v
       - name: Re-run one and a half million coupled orbital and NASA-day candidates
         run: |
           python3 tools/c241_joint_orbit_day_heatmap.py --draws 1500000 --seed 19631108 --batch 50000 \

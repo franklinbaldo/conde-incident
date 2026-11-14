@@ -1,0 +1,113 @@
+{
+  "schema": "conde.gaviao-retrospective-main/v1",
+  "audit_id": "G53",
+  "reviewed_on_utc_date": "2026-11-14",
+  "base_exclusive": "cae934b92882dc34ed5dd9538e132a5905255014",
+  "head_inclusive": "9baf7b17de82f08a957b1fec71269cd0cdbbe34d",
+  "first_parent_integrations": 13,
+  "dag_commits": 13,
+  "conventional_merge_commits": 0,
+  "historical_check_policy": "NOT_CHECKED unless individually inspected",
+  "deep_reviewed_change": "#692 C241 joint orbital/NASA day 1.5m-draw workflow and direct input files",
+  "finding": {
+    "id": "G53-F1",
+    "severity": "SCIENTIFIC_REPLAY_NOT_TRIGGERED_ON_DIRECT_SOURCE_ONLY_CHANGES",
+    "status": "RED_REPRODUCED_GREEN_LOCAL_PR_698_PENDING_CI",
+    "red": "3 load_sources() inputs missing from both pull_request and push paths filters: TLE mirror, Nov8 NASA day model, previous aggregate; single-file changes skip specialized 1.5m replay. Test RED for both events.",
+    "green": "Add paths to both event filters, include and execute regression in dedicated job; stdlib regression PASS locally for both events.",
+    "limitation": "Synthetic path-filter failure; no evidence of historical bypass or actual orbital/impact observation. 1.5m model remains conditional."
+  },
+  "integrations": [
+    {
+      "sha": "4234c8b8a834d98b34d1de0ce768f4777ed07693",
+      "subject": "🦅 G52: enforce INTEROBS custody under -O and replay pinned HTML (#686)",
+      "pr_number": 686,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "9dd40d106b74cb18d69a5764b6c3ffa4a551c5e8",
+      "subject": "🐝 C241-L44: conectar escopo seletivo SAO P-17 ao grafo científico inativo (#688)",
+      "pr_number": 688,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "29d66b47b6f2d63be2a00399b7b3f7c61bb5cd1a",
+      "subject": "🦌 C241: certificar sensibilidade dos priors de massa (#689)",
+      "pr_number": 689,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "d4c0e78b32092a3930605d329962055c9d0664c5",
+      "subject": "95 🦦 C241-LONTRA-R39: fac-símile húngaro confirma publicação de dados INTEROBS 1963–64 (#691)",
+      "pr_number": 691,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "57c0efe99d8d28bd9da416ec6ec465436f91df5b",
+      "subject": "96 🦌 Mapa 200 km: integrar probabilidade orbital e NASA-dia em 1,5 milhão de trajetórias Python (#692)",
+      "pr_number": 692,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "ed6c22da0b633b7d3f519c79ec131edd03d0d411",
+      "subject": "90 🐙 C241-P27: auditar custódia Wayback e contexto cartográfico sem inflar evidência (#693)",
+      "pr_number": 693,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "7e2c9347bce4d9b069c4b15620b60f4ff6490fb1",
+      "subject": "92 🦫 G51: precisão subsegundo e derivada por segundo SI (#694)",
+      "pr_number": 694,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "12c57d28833f2e7dfbe34dcc3eb5a579f1877005",
+      "subject": "🦎 attest frozen evidence matrix with SHA-256 in SSG manifest (#690)",
+      "pr_number": 690,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "06b6fc5c0202450b4798e74932594d4ab637d2a2",
+      "subject": "95 🦇 UX-04: capítulo → ocorrência → fonte → retorno no Pages (#682)",
+      "pr_number": 682,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "57badbee694e5c439836669a77deb38be5e687c9",
+      "subject": "86 🦀 CGEO-39: acervo IBRAM do IOCS 15 e custódia sem falsa independência (#687)",
+      "pr_number": 687,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "8d0600b3a6deb6fca7f5d898d6764c8ca5f5fa9c",
+      "subject": "90 🦊 Mapa editorial offline Natural Earth sem tiles (#695)",
+      "pr_number": 695,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "f83b53e10d3012f6f175e8a6b172ad0befcc00bd",
+      "subject": "🦉 Caderno 30: diário britânico de 1963 e limites da observação (#696)",
+      "pr_number": 696,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "9baf7b17de82f08a957b1fec71269cd0cdbbe34d",
+      "subject": "C241-L45: provenance lock for SAO RU478 finding aid (#697)",
+      "pr_number": 697,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    }
+  ]
+}
