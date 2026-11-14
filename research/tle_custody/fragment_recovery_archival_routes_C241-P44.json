@@ -1,6 +1,6 @@
 {
   "schema": "conde.fragment-archive-route/v1",
-  "id": "C241-P43",
+  "id": "C241-P44",
   "audit_date_utc": "2026-11-14",
   "question": "Can identifiable 1963 space-fragment recovery correspondence yield a primary case record for NORAD 528 or Conde, Bahia?",
   "sources": [
@@ -36,7 +36,7 @@
   ],
   "archival_routes": [
     {
-      "id": "P43-R1",
+      "id": "P44-R1",
       "collection": "Space Fragment Files",
       "repository": "NASA History Office, Washington, DC",
       "cited_item": "Briefing Memorandum, 23 February 1968",
@@ -47,7 +47,7 @@
       "recommended_lookup": "Request series scope and 1963 Brazil/Conde case inventory; do not assume the 1968 memorandum concerns 1963"
     },
     {
-      "id": "P43-R2",
+      "id": "P44-R2",
       "collection": "General Correspondence of National Aeronautics and Space Council Executive Secretary Edward Welsh, 1961-1969",
       "repository": "NARA Record Group 220, College Park, MD",
       "box": 17,
@@ -59,7 +59,7 @@
       "recommended_lookup": "Locate the named policy memoranda; policy is not a record of the Conde event"
     },
     {
-      "id": "P43-R3",
+      "id": "P44-R3",
       "collection": "General Correspondence of National Aeronautics and Space Council Executive Secretary Edward Welsh, 1961-1969",
       "repository": "NARA Record Group 220, College Park, MD",
       "box": 18,
@@ -71,7 +71,7 @@
       "recommended_lookup": "Review May-1963 correspondence for administrative pathways; no implication it documents November-1963"
     },
     {
-      "id": "P43-R4",
+      "id": "P44-R4",
       "collection": "1960-1963 Central Decimal Files",
       "repository": "NARA Record Group 59, College Park, MD",
       "box": 2989,

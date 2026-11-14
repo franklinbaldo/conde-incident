@@ -5,20 +5,20 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-LEDGER = ROOT / "research/tle_custody/fragment_recovery_archival_routes_C241-P43.json"
+LEDGER = ROOT / "research/tle_custody/fragment_recovery_archival_routes_C241-P44.json"
 EXPECTED = (
-    ("P43-R1", "NASA History Office", None, "23 February 1968"),
-    ("P43-R2", "Record Group 220", 17, "Guidelines for Interagency"),
-    ("P43-R3", "Record Group 220", 18, "22 May 1963"),
-    ("P43-R4", "Record Group 59", 2989, "14 June 1962"),
+    ("P44-R1", "NASA History Office", None, "23 February 1968"),
+    ("P44-R2", "Record Group 220", 17, "Guidelines for Interagency"),
+    ("P44-R3", "Record Group 220", 18, "22 May 1963"),
+    ("P44-R4", "Record Group 59", 2989, "14 June 1962"),
 )
 
 def require(condition: bool, reason: str) -> None:
     if not condition:
-        raise ValueError("P43 archival custody: " + reason)
+        raise ValueError("P44 archival custody: " + reason)
 
 def audit(data: dict) -> dict:
-    require(data.get("id") == "C241-P43" and data.get("schema") == "conde.fragment-archive-route/v1", "ledger identity")
+    require(data.get("id") == "C241-P44" and data.get("schema") == "conde.fragment-archive-route/v1", "ledger identity")
     sources = data.get("sources")
     require(isinstance(sources, list) and len(sources) == 2, "source count")
     article, museum = sources
