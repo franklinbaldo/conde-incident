@@ -299,5 +299,78 @@ class G60LightTimeSensitivity(unittest.TestCase):
             sensitivity_from_teme(self.source[:-1]+b"X", self.eop, self.times,
                                   UTC, r, [0.,7.,0.], 0., 0., 0.)
 
+
+# G61: implicit flight-time derivatives, included in the pinned IERS replay.
+from iers_1963_optical_lighttime_jacobian import (
+    linearized_retarded_direction, linearized_retarded_from_teme,
+)
+
+
+class G61RetardedCovariance(unittest.TestCase):
+    def test_six_columns_and_time_gradient_finite_difference(self):
+        r, v, s = (np.array(x) for x in (
+            [7000., 350., 200.], [1.2, 7.1, -.3], [6120., 100., 50.]))
+        out = linearized_retarded_direction(r, v, s)
+        basis = np.asarray(out["retarded_tangent_basis_gcrs"])
+        h = np.asarray(out["retarded_tangent_jacobian_rad_per_gcrs_state6d"])
+        grad = np.asarray(out["light_time_derivative_s_per_gcrs_state6d"])
+        for col in range(6):
+            dr, dv = np.zeros(3), np.zeros(3)
+            delta = 1e-3 if col < 3 else 1e-2
+            (dr if col < 3 else dv)[col % 3] = delta
+            p = constant_velocity_light_time(r + dr, v + dv, s)
+            m = constant_velocity_light_time(r - dr, v - dv, s)
+            nplus, nminus = (np.asarray(x["retarded_line_of_sight_gcrs"])
+                             for x in (p, m))
+            estimated = basis @ ((nplus - nminus) / (2*delta))
+            self.assertTrue(np.allclose(estimated, h[:, col],
+                                        rtol=8e-7, atol=2e-11), col)
+            estimated_time = (p["light_time_s"] - m["light_time_s"])/(2*delta)
+            self.assertAlmostEqual(estimated_time, grad[col], delta=1e-12)
+
+    def test_stationary_and_radial_limit(self):
+        out = linearized_retarded_direction(
+            [7000., 0., 0.], [0., 0., 0.], [6000., 0., 0.])
+        h = np.asarray(out["retarded_tangent_jacobian_rad_per_gcrs_state6d"])
+        self.assertTrue(np.allclose(h[:, 0], 0., atol=1e-14))
+        self.assertTrue(np.allclose(h[:, 3], 0., atol=1e-14))
+        self.assertAlmostEqual(np.linalg.norm(h[:, 1]), 1/1000.)
+        self.assertAlmostEqual(np.linalg.norm(h[:, 4]),
+                               out["light_time_s"]/1000.)
+
+    def test_state_covariance_psd_and_negative_rejection(self):
+        cov = np.diag([.04, .09, .16, 1e-6, 4e-6, 9e-6])
+        args = ([7000.,300.,250.], [1.,7.,.3], [6000.,0.,0.])
+        out = linearized_retarded_direction(*args, cov)
+        h = np.asarray(out["retarded_tangent_jacobian_rad_per_gcrs_state6d"])
+        got = np.asarray(out["retarded_state_only_angular_covariance_rad2"])
+        self.assertTrue(np.allclose(got, h@cov@h.T, rtol=1e-12))
+        self.assertGreaterEqual(np.linalg.eigvalsh(got).min(), 0.)
+        self.assertEqual(out["historical_holdout"], "NOT_RUN")
+        bad = cov.copy()
+        bad[5,5] = -1e-7
+        with self.assertRaisesRegex(ValueError, "negative marginal variance"):
+            linearized_retarded_direction(*args, bad)
+
+    def test_teme_frame_rate_covariance_and_iers_source(self):
+        G53StationOptical.setUpClass()
+        cls = G53StationOptical
+        station = cls.site_g
+        r = cls.m["teme_to_gcrs"].T @ (
+            station + 1500.*station/np.linalg.norm(station))
+        v = np.array([0.,7.,0.])
+        cov = np.diag([.04,.04,.04,1e-6,1e-6,1e-6])
+        got = linearized_retarded_from_teme(
+            cls.source, cls.eop, cls.times, UTC, r, v, 0.,0.,0., cov)
+        h = np.asarray(got["retarded_tangent_jacobian_rad_per_teme_state6d"])
+        self.assertTrue(np.allclose(
+            got["retarded_state_only_angular_covariance_rad2"],
+            h@cov@h.T, rtol=1e-10, atol=1e-18))
+        self.assertEqual(got["historical_holdout"], "NOT_RUN")
+        with self.assertRaises(ValueError):
+            linearized_retarded_from_teme(
+                cls.source[:-1]+b"X", cls.eop, cls.times, UTC,
+                r, v, 0.,0.,0., cov)
+
 if __name__ == "__main__":
     unittest.main()
