@@ -1,5 +1,5 @@
 ---
-type: EvidenceMatrix
+type: Guide
 title: 'C241-LONTRA-R53: teste dimensional das altitudes STL B-12'
 description: 'Comparação reprodutível de duas hipóteses de unidade com cinco linhas na mesma folha NASA, sem sensor novo.'
 ---
