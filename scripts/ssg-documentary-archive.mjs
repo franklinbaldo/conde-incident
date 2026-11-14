@@ -5,6 +5,7 @@ import {join} from 'node:path';
 import {archiveKey,verifiedArchiveLinks} from './ssg-wayback-links.mjs';
 import {interpretArchiveStatus,archiveStatusGuide} from './archive-source-status.mjs';
 import {renderArchiveStatusIndex,archiveStatusLink,ARCHIVE_ROOT,MATRIX_ROW_ROOT} from './archive-status-index.mjs';
+import {returnToStory} from './ssg-editorial-return.mjs';
 
 const ROOT=ARCHIVE_ROOT;
 const MATRIX=MATRIX_ROW_ROOT;
@@ -132,6 +133,8 @@ export function archivePages(citations, lineage, wayback=null) {
         parts.push('');
       }
     }
+    const storyReturn=returnToStory(id);
+    if (storyReturn) parts.push(storyReturn, '');
     parts.push('[Voltar ao índice curado]('+ROOT+') · [Índice de famílias documentais]('+ROOT+'familias/) · [Abrir laboratório antigo](/conde-incident/lab/#/documents)');
     files.set(slug+'/index.md', page(`${id}: referências documentais`,
       `Proveniência curada da ocorrência ${id}`, parts.join('\n'), 'Evidence', {
@@ -206,6 +209,7 @@ export function archivePages(citations, lineage, wayback=null) {
         `- [Ficha da fonte](${ROOT}fontes/${sourceSlug(record.source_id)}/)`,
         `- [Linha da matriz imutável](${MATRIX}${record.matrix_line})`,
         `- [Consultar documento](${record.citation_url})`,
+        ...(returnToStory(id) ? [returnToStory(id)] : []),
         `- [Ver família](${ROOT}familias/${familySlug(record.source_family)}/)`, '',
       ]),
       `[Índice de obras](${ROOT}obras/) · [Famílias documentais](${ROOT}familias/) · [Arquivo curado](${ROOT})`,
@@ -214,7 +218,7 @@ export function archivePages(citations, lineage, wayback=null) {
       `Índice reverso da obra ${work}; não prova de observação independente.`, body));
     workLinks.push(`- [${safe(work)}](${ROOT}obras/${slug}/) · ${occurrences.size} ocorrência(s), ${sources.size} fonte(s)`);
   }
-  // Reverse source index: repeat references, not independent physical witnesses.
+  // Reverse source index; references are not witnesses.
   const bySource = new Map();
   for (const [id, entries] of sorted) {
     for (const {record} of entries) {
@@ -243,7 +247,8 @@ export function archivePages(citations, lineage, wayback=null) {
         `- [Linha da matriz imutável](${MATRIX}${record.matrix_line})`,
         `- [Ocorrência e genealogia](${ROOT}${id.toLowerCase().replace('#','-')}/)`,
         `- [Obra relacionada](${ROOT}obras/${workSlug(record.work_id)}/)`,
-        `- [Documento original](${record.citation_url})`, '',
+        `- [Documento original](${record.citation_url})`,
+        ...(returnToStory(id) ? [returnToStory(id)] : []), '',
       ]),
       `[Índice de identificadores](${ROOT}fontes/) · [Arquivo curado](${ROOT})`,
     ].join('\n');
