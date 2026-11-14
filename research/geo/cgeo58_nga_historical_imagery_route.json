@@ -1,0 +1,83 @@
+{
+  "schema": "conde.cgeo.nga-historical-imagery-route/v1",
+  "id": "CGEO-58",
+  "date": "2026-11-14",
+  "parent": "CGEO-57",
+  "subject": "Conde, Bahia; candidate aerial photography preceding November 1963",
+  "classification": "new institutional retrieval lead, not new aerial photography",
+  "sources": [
+    {
+      "id": "NGA-HIST",
+      "url": "https://www.nga.mil/resources/Historical_Maps_and_Charts.html",
+      "role": "NGA institutional capacity statement",
+      "http_status": 200,
+      "bytes": 27834,
+      "sha256": "7f21f746057d7cebb2064946d051a4adde7f8263af8629cd8bacdb554a4a070d"
+    },
+    {
+      "id": "NGA-FOIA",
+      "url": "https://www.nga.mil/resources/FOIA_Information.html",
+      "role": "NGA existing-records FOIA request channel",
+      "http_status": 200,
+      "bytes": 35581,
+      "sha256": "71ee943bfaf0810792b1950308d6b7a76991b8001859e77e2bdd69ef476d72a7"
+    },
+    {
+      "id": "NARA-GUIDE",
+      "url": "https://www.archives.gov/research/cartographic/aerial-photography/rg-373-dia-foreign-aerial-photography",
+      "role": "RG 373 original film can locator workflow; availability not established",
+      "http_status": 200,
+      "bytes": 51079,
+      "sha256": "326b33c82aaef86bfba3b4be2a201c311ad167a6a2a0785dcb366ed1ff836648"
+    }
+  ],
+  "claims": [
+    {
+      "source_id": "NGA-HIST",
+      "claim": "NGA states it can provide digitized copies of aerial and satellite film missions from 1935 to 2004; also states an arrangement to obtain NARA original negative film from 1936 onward.",
+      "implication": "Separate potential digitization route to investigate, not confirmed public access for this mission."
+    },
+    {
+      "source_id": "NGA-FOIA",
+      "claim": "NGA describes FOIA as a channel for requests for existing agency records, subject to exemptions.",
+      "implication": "FOIA is not proof that the agency must create a scan on demand."
+    },
+    {
+      "source_id": "NARA-GUIDE",
+      "claim": "NARA's RG 373 can locator links verified spot numbers to film cans; its overlays and photographs are distinct materials.",
+      "implication": "Still requires validated spot number and exposure for O.P. 125370/125374."
+    }
+  ],
+  "known_index": {
+    "archive": "NARA RG 373 / M1765 reel 317",
+    "op_file_numbers": [
+      "125370",
+      "125374"
+    ],
+    "sheets": [
+      "00247",
+      "00248",
+      "00431",
+      "00432"
+    ],
+    "spot_numbers_verified": [],
+    "individual_exposure_ids_verified": [],
+    "film_can_identifiers_verified": []
+  },
+  "contact": {
+    "nga_request_sent": false,
+    "foia_request_sent": false,
+    "nara_contact_sent": false
+  },
+  "limitations": {
+    "nga_has_specific_conde_negative": null,
+    "nga_record_identified": null,
+    "nga_public_digitization_available": null,
+    "nga_fees_or_conditions": null,
+    "original_film_frames_acquired": 0,
+    "verified_conde_1963_geometry": null,
+    "verified_fall_location": null,
+    "orbital_constraint_activated": false
+  }
+}
+

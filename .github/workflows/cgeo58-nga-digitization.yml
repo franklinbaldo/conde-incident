@@ -1,0 +1,41 @@
+name: CGEO-58 NGA historical imagery route
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo58_nga_historical_imagery_route.json'
+      - 'research/geo/CGEO58_NGA_DIGITAL_RETRIEVAL_ROUTE.md'
+      - 'tools/cgeo58_nga_digitization.py'
+      - 'tests/test_cgeo58_nga_digitization.py'
+      - '.github/workflows/cgeo58-nga-digitization.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo58_nga_historical_imagery_route.json'
+      - 'research/geo/CGEO58_NGA_DIGITAL_RETRIEVAL_ROUTE.md'
+      - 'tools/cgeo58_nga_digitization.py'
+      - 'tests/test_cgeo58_nga_digitization.py'
+      - '.github/workflows/cgeo58-nga-digitization.yml'
+permissions:
+  contents: read
+jobs:
+  primary-sources:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact checkout
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+          git show -s --format='HEAD=%H TREE=%T' HEAD
+      - name: Run contract and adversarial tests
+        run: |
+          python3 tools/cgeo58_nga_digitization.py
+          python3 -m unittest discover -s tests -p 'test_cgeo58_nga_digitization.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_cgeo58_nga_digitization.py' -v
+      - name: Live NGA and NARA source re-acquisition
+        run: python3 tools/cgeo58_nga_digitization.py --live
+
