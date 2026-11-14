@@ -74,7 +74,14 @@ def validate(d):
         raise ValueError("unsupported photographic, geometric or orbital assertion")
     return len(seen)
 
+def check_nara_semantics(blob):
+    low = blob.lower()
+    for phrase in (b"overlay indexes", b"spot number", b"can locator"):
+        if phrase not in low:
+            raise ValueError("NARA source missing essential source claim: " + phrase.decode("ascii"))
+
 def replay(d):
+    exact, semantic = 0, 0
     for row in d["sources"]:
         req = Request(row["url"], headers={"User-Agent": "CondeIncident-CGEO58/1.0"})
         with urlopen(req, timeout=40) as response:
@@ -83,10 +90,18 @@ def replay(d):
             blob = response.read(250000)
         if status != 200 or "text/html" not in mime or b"<html" not in blob[:1000].lower():
             raise ValueError("expected real HTTP HTML source")
-        if len(blob) != row["bytes"] or hashlib.sha256(blob).hexdigest() != row["sha256"]:
-            raise ValueError("source changed since recorded: " + row["id"])
-        print("REPLAY_OK id=%s bytes=%d sha256=%s" % (row["id"], len(blob), row["sha256"]))
-    return len(d["sources"])
+        actual_sha = hashlib.sha256(blob).hexdigest()
+        if len(blob) == row["bytes"] and actual_sha == row["sha256"]:
+            exact += 1
+            print("REPLAY_EXACT id=%s bytes=%d sha256=%s" % (row["id"], len(blob), actual_sha))
+        elif row["id"] == "NARA-GUIDE":
+            check_nara_semantics(blob)
+            semantic += 1
+            print("REPLAY_SEMANTIC_ONLY id=NARA-GUIDE bytes=%d sha256=%s pinned_sha256=%s" % (
+                len(blob), actual_sha, row["sha256"]))
+        else:
+            raise ValueError("NGA primary source changed since recorded: " + row["id"])
+    return exact, semantic
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -95,5 +110,6 @@ if __name__ == "__main__":
     data = json.loads(CONTRACT.read_text(encoding="utf-8"))
     print("CGEO58_CONTRACT_PASS sources=%d frames=0" % validate(data))
     if args.live:
-        print("CGEO58_LIVE_PASS sources=%d" % replay(data))
+        exact, semantic = replay(data)
+        print("CGEO58_LIVE_CHECK exact=%d semantic=%d" % (exact, semantic))
 

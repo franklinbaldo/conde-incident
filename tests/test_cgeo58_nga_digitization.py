@@ -74,6 +74,13 @@ class TestNGA(unittest.TestCase):
     def test_no_foia_overclaim(self):
         self.reject(lambda x: x["claims"][1].update(implication="NGA must create an image"))
 
+    def test_nara_semantic_guard_rejects_empty_source(self):
+        with self.assertRaises(ValueError):
+            m.check_nara_semantics(b"<html>Access denied</html>")
+
+    def test_nara_semantic_guard_accepts_archival_cues(self):
+        m.check_nara_semantics(b"<html>Overlay Indexes. Spot Number. Can Locator.</html>")
+
     def test_no_wrong_parent(self):
         self.reject(lambda x: x.update(parent="CGEO-54"))
 
