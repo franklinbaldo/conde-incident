@@ -228,7 +228,7 @@ export function OrbitalMap({ lang, selectedTimeMs, onTimeChange }: Props) {
         <p className="text-xs text-slate-400">{t.noMarkers}</p>
       </section>
 
-      <aside className="space-y-2 text-xs text-slate-300" aria-label={t.source}>
+      <aside role="note" className="space-y-2 text-xs text-slate-300" aria-label={t.source}>
         <p>{t.dynamics}</p>
         <div className="flex flex-wrap gap-x-5 gap-y-2 underline underline-offset-2">
           <a href={MATRIX + '#L839-L845'} target="_blank" rel="noopener noreferrer">{t.sources}</a>

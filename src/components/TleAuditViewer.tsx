@@ -121,7 +121,7 @@ export const TleAuditViewer: React.FC<TleAuditViewerProps> = ({ lang }) => {
   };
 
   return (
-    <section aria-labelledby="tle-title" className="space-y-6 text-zinc-200">
+    <section aria-labelledby="tle-title" className="min-w-0 space-y-6 break-words text-zinc-200">
       <header className="rounded-xl border border-zinc-700 bg-zinc-900 p-4 sm:p-6">
         <h1 id="tle-title" className="text-xl font-semibold text-zinc-50">{t.heading}</h1>
         <p className="mt-2 text-sm text-zinc-300">{t.subtitle}</p>
@@ -168,15 +168,15 @@ export const TleAuditViewer: React.FC<TleAuditViewerProps> = ({ lang }) => {
 
         <div className="rounded-lg border border-zinc-700 p-4">
           <h4 className="mb-3 font-semibold">{t.data}</h4>
-          <dl className="grid gap-3 text-sm sm:grid-cols-3">
-            <div><dt className="text-zinc-400">{t.epoch}</dt><dd className="mt-1 break-words font-mono text-zinc-100">{sat.epochStr}</dd></div>
-            <div><dt className="text-zinc-400">{t.raan}</dt><dd className="mt-1 font-mono text-zinc-100">{selectedId === 528 ? `${sat.raanDeg.toFixed(4)}°` : t.unverified}</dd></div>
-            <div><dt className="text-zinc-400">{t.bstar}</dt><dd className="mt-1 font-mono text-zinc-100">{sat.bstar.toExponential(3)}</dd></div>
+          <dl className="grid min-w-0 grid-cols-1 gap-3 text-sm sm:grid-cols-3">
+            <div className="min-w-0"><dt className="break-words text-zinc-400">{t.epoch}</dt><dd className="mt-1 break-all font-mono text-zinc-100">{sat.epochStr}</dd></div>
+            <div className="min-w-0"><dt className="break-words text-zinc-400">{t.raan}</dt><dd className="mt-1 font-mono text-zinc-100">{selectedId === 528 ? `${sat.raanDeg.toFixed(4)}°` : t.unverified}</dd></div>
+            <div className="min-w-0"><dt className="break-words text-zinc-400">{t.bstar}</dt><dd className="mt-1 font-mono text-zinc-100">{sat.bstar.toExponential(3)}</dd></div>
           </dl>
         </div>
       </div>
 
-      <aside aria-labelledby="tle-limit-title" className="rounded-xl border border-amber-800 bg-zinc-950 p-4 sm:p-6">
+      <aside role="note" aria-labelledby="tle-limit-title" className="rounded-xl border border-amber-800 bg-zinc-950 p-4 sm:p-6">
         <h3 id="tle-limit-title" className="font-semibold">{t.assumptions}</h3>
         <p className="mt-3 text-sm leading-relaxed text-zinc-300">{t.status}</p>
         <p className="mt-3 text-sm leading-relaxed text-zinc-300">{t.drag}</p>
