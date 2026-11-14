@@ -1,0 +1,73 @@
+{
+  "id": "C241-LONTRA-R63",
+  "schema": "conde.archival_instrument_era_locator/v1",
+  "date_checked_utc": "2026-11-14",
+  "source": {
+    "type": "RETROSPECTIVE_RESEARCH_ARTICLE_2020",
+    "title": "Військове устаткування, яке використовувалось у наукових дослідженнях. Кінофототеодоліт",
+    "authors": [
+      "Л. В. Казанцева",
+      "С. Л. Салата"
+    ],
+    "journal": "Воєнно-історичний вісник",
+    "volume_issue": "38(4)",
+    "publication_date": "2020-12-02",
+    "pages_printed": "254-272",
+    "doi": "10.33099/2707-1383-2020-38-4-254-272",
+    "article_url": "https://viv.nuou.org.ua/article/view/229864",
+    "pdf_url": "https://viv.nuou.org.ua/article/download/229864/228719/523958",
+    "pdf_page_visual_checked_one_based": 10,
+    "printed_page_visual_checked": 263,
+    "source_read_method": "WEB_PDF_PAGE_VISUALLY_INSPECTED",
+    "ifro_download_status": "HTTP_403_OR_TIMEOUT",
+    "pdf_bytes_recovered_in_executor": false,
+    "pdf_bytes_sha256": null,
+    "pdf_bytes_length": null
+  },
+  "historical_facts": {
+    "station_code": "1023",
+    "station_city": "Kyiv",
+    "station_visual_observation_started": 1957,
+    "station_reported_operating_end": 1989,
+    "kyiv_kft_model": "КФТ-10/20",
+    "instrument_received_from_moscow_year": 1965,
+    "observatory_prepared_instrument_year": 1966,
+    "additional_chronograph_shutter_timing_project_year": 1969,
+    "timing_delays_report_year": 1976,
+    "timing_delays_s": {
+      "chronograph": 0.029,
+      "shutter": 0.004
+    },
+    "source_page_for_station_and_arrival": 263,
+    "source_page_for_1976_delays": 265
+  },
+  "archival_followups": [
+    {
+      "holder": "Архів Музею Київської Астрономічної обсерваторії (МКАО)",
+      "fond": "Астрономічна обсерваторія",
+      "file": "ССШСЗ-04-18-01",
+      "leaves": "1-7",
+      "source_page": 265,
+      "material": "later KFT observing instruction cited; original not seen"
+    },
+    {
+      "holder": "Архів Музею Київської Астрономічної обсерваторії (МКАО)",
+      "fond": "Астрономічна обсерваторія",
+      "file": "ССШСЗ-04-18-02",
+      "leaves": "1-12",
+      "source_page": 265,
+      "material": "later KFT observing instruction cited; original not seen"
+    }
+  ],
+  "boundaries": {
+    "station_exists_in_1963": true,
+    "kft_1023_in_service_in_1963": false,
+    "may_transfer_1976_precision_to_1963": false,
+    "original_archival_files_read": false,
+    "observations_identified_norad_527_528_529": [],
+    "new_orbital_constraints": 0,
+    "archive_contacted": false,
+    "epistemic_class": "RETROSPECTIVE_INSTRUMENT_TIMELINE_NOT_PRIMARY_OBSERVATION"
+  },
+  "next_step": "Prioritize 1957-1963 Kyiv station 1023 observer logs, photographs and instruments preceding the KFT; do not request 1965+ KFT material as proof of 1963 tracking."
+}

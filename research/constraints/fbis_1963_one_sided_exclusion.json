@@ -1,0 +1,43 @@
+{
+  "schema": "conde.fbis-one-sided-exclusion-result/v1",
+  "issue": 886,
+  "preregistration": "C241-P50, 2026-11-14, separate from P48",
+  "scope": "RIO_DE_JANEIRO_RADIO_1963_11_22",
+  "independent_same_broadcast_anchors_p48": 0,
+  "events_from_external_chronology_not_fbis_clocks": [
+    {
+      "id": "JFK_SHOTS",
+      "utc": "1963-11-22T18:30Z",
+      "url": "https://www.archives.gov/research/jfk/warren-commission-report/chapter-1",
+      "source_sha256": null
+    },
+    {
+      "id": "JFK_PRONOUNCED_DEAD",
+      "utc": "1963-11-22T19:00Z",
+      "url": "https://www.whitehouse.gov/jfk-files/",
+      "source_sha256": null
+    },
+    {
+      "id": "LBJ_OATH",
+      "utc": "1963-11-22T20:38Z",
+      "url": "https://www.whitehouse.gov/jfk-files/",
+      "source_sha256": null
+    }
+  ],
+  "observed_fbis_count": 0,
+  "status": "UNRESOLVED_NO_ITEMS",
+  "vetoed_assumptions": [],
+  "non_vetoed_not_confirmed": [
+    "GMT",
+    "RIO_LOCAL"
+  ],
+  "items": [],
+  "limits": {
+    "header_clock_calibrated": false,
+    "footer_111A_decoded": false,
+    "timestamp_of_1963_conde_event": null,
+    "source_semantics_not_machine_authenticated": true,
+    "active_physical_lean_predicates": 0,
+    "physical_domain_effect": "THETA_UNCHANGED"
+  }
+}
