@@ -12,9 +12,18 @@ try {
   for (const route of routes) for (const [width, zoom] of [[320,1], [320,2], [375,2], [1440,1]]) {
     const page = await browser.newPage({ viewport: {width, height: 812}, javaScriptEnabled: false, bypassCSP: true });
     try {
-      const res = await page.goto(new URL(route, base).href, {waitUntil: 'domcontentloaded'});
+      const url = new URL(route, base).href;
+      // JavaScript is intentionally disabled. Playwright addStyleTag() never
+      // resolves in this context, so modify only the test response HTML.
+      if (zoom === 2) await page.route(url, async request => {
+        const response = await request.fetch();
+        const html = await response.text();
+        assert.match(html, /<\/head>/i, 'SSG page is missing its head');
+        await request.fulfill({response, body: html.replace(/<\/head>/i,
+          '<style>html {font-size: 200%}</style></head>')});
+      });
+      const res = await page.goto(url, {waitUntil: 'domcontentloaded'});
       assert(res?.ok(), `HTML unavailable: ${route} ${res?.status()}`);
-      if (zoom === 2) await page.addStyleTag({content:'html {font-size: 200%}'});
       const stats = await page.evaluate(() => ({
         width: document.documentElement.clientWidth,
         scroll: document.documentElement.scrollWidth,
