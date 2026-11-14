@@ -6,6 +6,9 @@ description: "Fac-símile contemporâneo do SSR vol. 3 nº 24 e relação secund
 
 # C241-L64: um intervalo de datas para o controle 308
 
+**ERRATA de leitura do fac-símile (C241-L65, 14/11/2026):** o objeto impresso é `OMEGA 1`, **não** `A OMEGA 1`. O `A` pertence a uma série posterior (a linha seguinte à `OMEGA 3` é `A BETA 1`). Veja [correção por reinspeção visual](nasa_ssr_omega1_corrigendum_C241-L65.md). A tabela abaixo reproduz a **transcrição histórica incorreta**, preservada para auditoria; não a reutilize como identificação original.
+
+
 O [NASA/Goddard *Satellite Situation Report*, vol. 3, nº 24, de **15/12/1963**](https://ntrs.nasa.gov/citations/19640003479), em seu [fac-símile oficial, página PDF **17**](https://ntrs.nasa.gov/api/citations/19640003479/downloads/19640003479.pdf#page=17), contém uma linha na tabela **DECAYED OBJECTS (CONT'D)**, sob **1962 LAUNCHES (CONT'D)**:
 
 | Campo impresso | Leitura da mesma linha |
