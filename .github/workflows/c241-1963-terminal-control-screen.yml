@@ -86,7 +86,11 @@ jobs:
           assert x['inference']['active_constraint_528'] is False
           assert x['inference']['sigma_terminal_hours'] is None
           assert x['inference']['impact_probability'] is None
-          print('R61: two printed dates, no new sensor or terminal holdout')
+          assert x['methods']['last_two']['ssr_two_day_common_clock_24h']['status']=='NO_COMMON_H_FOR_ANY_SHIFT_IN_STRESS_WINDOW'
+          assert x['methods']['last_two']['ssr_two_day_independent_shift_1d']['status']=='INCOMPATIBLE_UNDER_INDEPENDENT_SHIFTS'
+          assert x['methods']['median_three']['ssr_two_day_common_clock_24h']['status']=='FEASIBLE_ONLY_IN_ASSUMED_SHIFT_MODEL'
+          assert x['methods']['median_three']['ssr_two_day_independent_shift_1d']['status']=='INCONCLUSIVE_UNDER_INDEPENDENT_SHIFTS'
+          print('R61: two printed dates, method-split certified; no calibrated terminal holdout')
           PY
           printf 'damaged archive' > "$RUNNER_TEMP/mutant.parquet"
           if python3 tools/c241_1963_terminal_control_screen.py --parquet "$RUNNER_TEMP/mutant.parquet" \
