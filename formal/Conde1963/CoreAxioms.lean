@@ -2,6 +2,7 @@ import Conde1963.Core
 import Conde1963.CircularMCMC
 import Conde1963.HastingsKernel
 import Conde1963.OpticalRayVisibility
+import Conde1963.SharedStateParallax
 import Conde1963.SsrSurvivorIntervals
 import Conde1963.RelativeTrajectories
 import Conde1963.SsrNovember
@@ -68,3 +69,8 @@ does not authenticate observed positions or establish a 1963 reentry. -/
 /-! Conditional ray-occlusion proof, no 1963 observation. -/
 #print axioms Conde1963.OpticalRayVisibility.first_earth_entry_excludes_all_larger_ranges
 #print axioms Conde1963.OpticalRayVisibility.endpoints_outside_do_not_imply_clear_ray
+
+/-! Exact correlated versus fictitiously independent optical errors (G62). -/
+#print axioms Conde1963.SharedStateParallax.covariance_includes_two_cross_terms
+#print axioms Conde1963.SharedStateParallax.identical_sensitivities_cancel_shared_noise
+#print axioms Conde1963.SharedStateParallax.independence_approximation_changes_result
