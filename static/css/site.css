@@ -67,3 +67,9 @@ a:focus-visible,button:focus-visible,iframe:focus-visible{outline:3px solid #ffd
 .breadcrumbs [aria-current="page"]{color:var(--ink)}
 .breadcrumbs a{display:inline-block;min-height:28px}
 .breadcrumbs a:focus-visible{outline:3px solid #ffd278;outline-offset:2px}
+
+/* Mapa SSG independente do laboratório e de serviços de tiles. */
+.context-map{margin:1.5rem 0 2rem;max-width:100%;overflow:hidden;border:1px solid var(--line);border-radius:.75rem;background:var(--panel)}
+.context-map img{display:block;width:100%;height:auto;max-width:100%}
+.context-map figcaption{padding:1rem 1.2rem;color:var(--muted);font:.9rem/1.7 system-ui,sans-serif;overflow-wrap:anywhere}
+.context-map figcaption a{display:inline-block;padding:.15rem 0}
