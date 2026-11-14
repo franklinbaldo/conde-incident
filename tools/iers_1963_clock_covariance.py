@@ -38,8 +38,11 @@ def _covariance(value):
         raise ValueError("Expected finite 2x2 clock covariance in s²")
     if c[0, 0] < 0 or c[1, 1] < 0:
         raise ValueError("Negative clock variance")
-    scale = float(np.max(np.abs(c)))
-    if abs(float(c[0, 1] - c[1, 0])) > 64*np.finfo(float).eps*scale:
+    # Compare each off-diagonal pair in its OWN scale. A huge diagonal
+    # must not hide asymmetry in a tiny cross covariance (G52 regression).
+    offdiag_scale = max(abs(float(c[0, 1])), abs(float(c[1, 0])))
+    if (abs(float(c[0, 1] - c[1, 0])) >
+            64*np.finfo(float).eps*offdiag_scale):
         raise ValueError("Asymmetric clock covariance")
     c = (c+c.T)/2
     if c[0, 0] == 0 or c[1, 1] == 0:
