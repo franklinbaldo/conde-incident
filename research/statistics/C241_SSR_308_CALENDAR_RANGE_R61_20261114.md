@@ -8,7 +8,7 @@ verification_status: CONDITIONAL_PROXY_REPLAYED_NOT_HISTORICAL
 
 # R61: intervalo civil impresso muda o teste, não a identificabilidade terminal
 
-A fonte contemporânea NASA/Goddard *Satellite Situation Report*, vol. 3, nº 24, de 15/12/1963, p. impressa 15, linha `A OMEGA 1 | US | 18 JUN | 29-30 OCT 63`, contém **dois dias civis impressos**. Fac-símile [NTRS 19640003479](https://ntrs.nasa.gov/citations/19640003479), SHA-256 `d31a064f8e03fd39be6fe75b88cd5852c0b74c9101fa635cb40ac25c77ef474f`, manifesto [C241-L64](../tle_custody/nasa_ssr_terminal_control_308_C241-L64.md). A identidade Omega 1 → 1962-024A → NORAD 308 vem de crosswalk **secundário**; o número 308 não está impresso no documento.
+A fonte contemporânea NASA/Goddard *Satellite Situation Report*, vol. 3, nº 24, de 15/12/1963, p. impressa 15, linha `OMEGA 1 | US | 18 JUN | 29-30 OCT 63`, contém **dois dias civis impressos**. Fac-símile [NTRS 19640003479](https://ntrs.nasa.gov/citations/19640003479), SHA-256 `d31a064f8e03fd39be6fe75b88cd5852c0b74c9101fa635cb40ac25c77ef474f`, manifesto [C241-L64](../tle_custody/nasa_ssr_terminal_control_308_C241-L64.md) e [errata visual C241-L65](../tle_custody/nasa_ssr_omega1_corrigendum_C241-L65.md) (o registro legado transcrevia indevidamente o prefixo `A`). A identidade Omega 1 → 1962-024A → NORAD 308 vem de crosswalk **secundário**; o número 308 não está impresso no documento.
 
 ## Desenho congelado
 
