@@ -32,6 +32,8 @@ on:
       - 'stories/2026-11-11-o-dia-em-que-dois-relatos-se-cruzaram.md'
       - 'src/components/OrbitalMap.tsx'
       - 'tests/ui_map_reflow_smoke.mjs'
+      - 'tests/map-provider-request-guard.mjs'
+      - 'tests/map-provider-request-guard.test.mjs'
       - 'tests/ui_montecarlo_reflow_smoke.mjs'
       - 'src/components/MonteCarloVisualizer.tsx'
       - 'src/components/InversePassInspector.tsx'
@@ -108,6 +110,8 @@ on:
       - 'stories/2026-11-11-o-dia-em-que-dois-relatos-se-cruzaram.md'
       - 'src/components/OrbitalMap.tsx'
       - 'tests/ui_map_reflow_smoke.mjs'
+      - 'tests/map-provider-request-guard.mjs'
+      - 'tests/map-provider-request-guard.test.mjs'
       - 'tests/ui_montecarlo_reflow_smoke.mjs'
       - 'src/components/MonteCarloVisualizer.tsx'
       - 'src/components/InversePassInspector.tsx'
@@ -203,6 +207,8 @@ jobs:
         run: node tests/ui_lab_language_smoke.mjs
       - name: Chromium documentary archive provenance, links and reflow (320/390/1440)
         run: node tests/ui_documentary_archive_smoke.mjs
+      - name: Reject hosted map tile/API domains (including XYZ subdomains)
+        run: node tests/map-provider-request-guard.test.mjs
       - name: Chromium quota-free map 200% text reflow, SVG, dates and zoom (PT/EN)
         run: node tests/ui_map_reflow_smoke.mjs
       - name: Chromium Monte Carlo 200% text reflow, accessible controls and table (PT/EN)
