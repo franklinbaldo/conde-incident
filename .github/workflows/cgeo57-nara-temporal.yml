@@ -1,0 +1,40 @@
+name: CGEO-57 NARA temporal provenance
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo57_nara_overlay_preparation_dates.json'
+      - 'research/geo/CGEO57_NARA_1956_PREPARATION_DATES.md'
+      - 'tools/cgeo57_nara_temporal.py'
+      - 'tests/test_cgeo57_nara_temporal.py'
+      - '.github/workflows/cgeo57-nara-temporal.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo57_nara_overlay_preparation_dates.json'
+      - 'research/geo/CGEO57_NARA_1956_PREPARATION_DATES.md'
+      - 'tools/cgeo57_nara_temporal.py'
+      - 'tests/test_cgeo57_nara_temporal.py'
+      - '.github/workflows/cgeo57-nara-temporal.yml'
+permissions:
+  contents: read
+jobs:
+  provenance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact checkout SHA
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+          git show -s --format='HEAD=%H TREE=%T' HEAD
+      - name: Validate lineage and adversarial tests
+        run: |
+          python3 tools/cgeo57_nara_temporal.py
+          python3 -m unittest discover -s tests -p 'test_cgeo57_nara_temporal.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_cgeo57_nara_temporal.py' -v
+      - name: Live NARA four-JPEG source replay
+        run: python3 tools/cgeo57_nara_temporal.py --live

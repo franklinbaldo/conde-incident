@@ -1,0 +1,67 @@
+{
+  "schema": "conde.cgeo.nara-overlay-temporal-provenance/v1",
+  "id": "CGEO-57",
+  "parent": "CGEO-56",
+  "record_group": "NARA RG373 / 306062 / M1765 reel 317",
+  "method": "Human visual inspection of PREPARED BY, DATE and OVERLAY FILE NO. fields on original JPEGs; compilation date separate from candidate flight-date readings",
+  "scans": [
+    {
+      "sheet": "00247",
+      "square": "11S037W",
+      "op_file": "125370",
+      "flight_date_reading": "27 SEP 42",
+      "preparation_date_reading": "5 OCT 56",
+      "preparation_date_iso": "1956-10-05",
+      "prepared_by_name": null,
+      "bytes": 2497049,
+      "sha256": "b671f0378e2b57502f616be5aaa57ae45041048aa576bbf04c6eed9a6843a404"
+    },
+    {
+      "sheet": "00432",
+      "square": "12S037W",
+      "op_file": "125370",
+      "flight_date_reading": "27 SEP 42",
+      "preparation_date_reading": "5 OCT 56",
+      "preparation_date_iso": "1956-10-05",
+      "prepared_by_name": null,
+      "bytes": 2420414,
+      "sha256": "fcd14c0cd438c40e4ce6733c896869d12e8899e31d2cf9c5cb62ce03ba4af6b9"
+    },
+    {
+      "sheet": "00248",
+      "square": "11S037W",
+      "op_file": "125374",
+      "flight_date_reading": "7, 14, 18, 20 SEP 42",
+      "preparation_date_reading": "6 OCT 56",
+      "preparation_date_iso": "1956-10-06",
+      "prepared_by_name": null,
+      "bytes": 2519162,
+      "sha256": "21016e6c141d5ac495893e13bc9a4b01bbf992e596416054fd0c03c164f3d2a0"
+    },
+    {
+      "sheet": "00431",
+      "square": "12S037W",
+      "op_file": "125374",
+      "flight_date_reading": "7, 14, 18, 20 SEP 42",
+      "preparation_date_reading": "6 OCT 56",
+      "preparation_date_iso": "1956-10-06",
+      "prepared_by_name": null,
+      "bytes": 2487325,
+      "sha256": "b4422aad1d0ca1a53dbb762c20e653cb34c42785abcd4e162e3f943300c6227d"
+    }
+  ],
+  "counts": {
+    "original_film_frames_acquired": 0,
+    "original_overlay_jpegs_referenced": 4,
+    "preparation_dates_visually_read": 4
+  },
+  "limits": {
+    "photo_capture_utc": null,
+    "georeferenced_frame_footprint": null,
+    "verified_spot_number": null,
+    "film_can": null,
+    "conde_1963_center": null,
+    "fall_location": null,
+    "orbital_constraint_activated": false
+  }
+}
