@@ -8,23 +8,23 @@
     "CGEO-30",
     "CGEO-31"
   ],
-  "session_note": "Each GET and AJAX POST was made in the same requests.Session; separate GET requests had distinct session IDs. AJAX response silently selected folder 0335 in BOTH trials.",
+  "session_note": "Every selected GET and its corresponding image AJAX POST were captured in the SAME requests.Session and preserved as paired raw byte responses. In both cases, AJAX silently selected folder 0335.",
   "probes": [
     {
       "requested_pasta": "1850",
       "pre_selection": {
         "file": "research/geo/evidence/cgeo43_1850_selected.txt",
         "raw_response_bytes": 585770,
-        "raw_sha256": "9cd1a0517304fe8bfae8687d242f9bb45f6ffb19b6f3af8e79cd90a96f4baafd",
+        "raw_sha256": "2aca849dce408aa55795fbcfc934eb34f1d8e9b2ee2513c66289a2d26d4f7ba0",
         "excerpt_sha256": "8f4ad167cafcfb08b81d4bb306c6ce823759e79cedf9323e5e434703ea3f6410",
         "value": "680",
         "label": "1850 Projeto USAF 63-32 - área A: SC.24-Z-C-VI"
       },
       "ajax": {
         "file": "research/geo/evidence/cgeo43_1850_ajax.txt",
-        "raw_response_bytes": 461611,
-        "raw_sha256": "29aefae29baee22e6627ba44114fd07bf419d0ad56bf5d65db9cfc676f741425",
-        "excerpt_sha256": "36db561468eab362a9f756bfcbb86c0d6a7a12e361b0f21d679c66e93231bee3",
+        "raw_response_bytes": 461612,
+        "raw_sha256": "e332fee01482e02aba8b5363cdcc657de5cf582424c5d7f52507fe583e16df23",
+        "excerpt_sha256": "535773dd9df68d54e5bb2a4334664bcc929b7092f30c8d941030fe0542299a3a",
         "value": "1",
         "label": "0335 Projeto USAF 63-32 - área A: SA.22-X-B-V"
       }
@@ -33,17 +33,17 @@
       "requested_pasta": "1851",
       "pre_selection": {
         "file": "research/geo/evidence/cgeo43_1851_selected.txt",
-        "raw_response_bytes": 585766,
-        "raw_sha256": "fb6cc95eb8ec47615be93de5ae95989a39d512a25fafed3c17e884b6f790a061",
+        "raw_response_bytes": 585770,
+        "raw_sha256": "18ea7a783d5ff274e47883e1b268225b6457251f356a9aec16c9607380760dfa",
         "excerpt_sha256": "479bb8b6562d70115bda4fa1e21efa80575825aad1a81cb8d53632f30352efc8",
         "value": "681",
         "label": "1851 Projeto USAF 63-32 - área A: SC.24-Z-D-IV"
       },
       "ajax": {
         "file": "research/geo/evidence/cgeo43_1851_ajax.txt",
-        "raw_response_bytes": 461611,
-        "raw_sha256": "dbbe9b5179109ac41332bbe8f2f34e161423a68fcb3bbb97476f21c1c32dc182",
-        "excerpt_sha256": "70d7e6a3d186f86e4be37df88128fcc91c57612c3953d00ec6f640d29bbfea72",
+        "raw_response_bytes": 461612,
+        "raw_sha256": "c54bf585dba1d9b3586fd3e2117a2714cbad1b825d42141f2079ee08bb96b4b6",
+        "excerpt_sha256": "9a6e4fe4d4be1f99813ac62390fa53d50071f5b076c603e096d0b6983aa075d8",
         "value": "1",
         "label": "0335 Projeto USAF 63-32 - área A: SA.22-X-B-V"
       }
