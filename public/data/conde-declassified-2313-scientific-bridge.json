@@ -1,0 +1,271 @@
+{
+  "activation": false,
+  "dependency_graph": [
+    {
+      "activation": false,
+      "from": "C241-L51",
+      "independent_instrumental_observation": false,
+      "relation": "VERIFIED_FACSIMILE_SHA256",
+      "to": "DOC:NSA-BYE-19385-75"
+    },
+    {
+      "activation": false,
+      "from": "C241-L51",
+      "independent_instrumental_observation": false,
+      "relation": "VERIFIED_FACSIMILE_SHA256",
+      "to": "DOC:NRO-SIGINT-STORY-1994"
+    },
+    {
+      "activation": false,
+      "from": "DOC:NSA-BYE-19385-75",
+      "independent_instrumental_observation": false,
+      "relation": "VISUALLY_READ_1975_TABLE",
+      "to": "ROW:NSA:p132:APPENDIX-A:p5"
+    },
+    {
+      "activation": false,
+      "from": "ROW:NSA:p132:APPENDIX-A:p5",
+      "independent_instrumental_observation": false,
+      "relation": "MISSION_7153_LAUNCH_LABEL_D",
+      "to": "VEHICLE:2313"
+    },
+    {
+      "activation": false,
+      "from": "DOC:NRO-SIGINT-STORY-1994",
+      "independent_instrumental_observation": false,
+      "relation": "VISUALLY_READ_1994_NARRATIVE",
+      "to": "TEXT:NRO:p123:print90"
+    },
+    {
+      "activation": false,
+      "from": "TEXT:NRO:p123:print90",
+      "independent_instrumental_observation": false,
+      "relation": "THOR_MISSION_7153_NO_AGENA_VARIANT",
+      "to": "VEHICLE:2313"
+    },
+    {
+      "activation": false,
+      "from": "TEXT:NRO:p123:print90",
+      "independent_instrumental_observation": false,
+      "relation": "TWO_DAY_OPERATION_NOT_REENTRY",
+      "to": "H:7153_BATTERY_FAILURE"
+    },
+    {
+      "activation": false,
+      "from": "C241-L50",
+      "independent_instrumental_observation": false,
+      "relation": "EARLIER_QUEST1995_LABEL_D",
+      "to": "VEHICLE:2313"
+    },
+    {
+      "activation": false,
+      "from": "C241-L15",
+      "independent_instrumental_observation": false,
+      "relation": "NASA1964_GROUP_LABEL_D_NOT_PIECE",
+      "to": "LAUNCH:1963-003"
+    },
+    {
+      "activation": false,
+      "from": "C241-L40",
+      "independent_instrumental_observation": false,
+      "relation": "MODERN_GCAT_LABEL_B",
+      "to": "VEHICLE:2313"
+    },
+    {
+      "activation": false,
+      "from": "C241-L48",
+      "independent_instrumental_observation": false,
+      "relation": "PREVIOUS_TEXT_ONLY_NOW_FACSIMILE_AUDITED",
+      "to": "DOC:NRO-SIGINT-STORY-1994"
+    },
+    {
+      "activation": false,
+      "from": "VEHICLE:2313",
+      "independent_instrumental_observation": false,
+      "relation": "CONFLICT_UNRESOLVED",
+      "to": "H:2313_B_OR_D"
+    },
+    {
+      "activation": false,
+      "from": "LAUNCH:1963-003",
+      "independent_instrumental_observation": false,
+      "relation": "GROUP_ASSOCIATION_NOT_PIECE_IDENTITY",
+      "to": "NORAD:528/1963-003B"
+    },
+    {
+      "activation": false,
+      "from": "NORAD:528/1963-003B",
+      "independent_instrumental_observation": false,
+      "relation": "ENGINEERING_IDENTITY_UNVERIFIED",
+      "to": "H:528_PIECE_IDENTITY"
+    },
+    {
+      "activation": false,
+      "from": "H:2313_B_OR_D",
+      "independent_instrumental_observation": false,
+      "relation": "ENGINEERING_VARIANT_REQUIRED",
+      "to": "LATENT:2313:stage"
+    },
+    {
+      "activation": false,
+      "from": "H:528_PIECE_IDENTITY",
+      "independent_instrumental_observation": false,
+      "relation": "DEBRIS_PIECE_MAPPING_REQUIRED",
+      "to": "LATENT:528:hardware"
+    },
+    {
+      "activation": false,
+      "from": "DOC:NRO-SIGINT-STORY-1994",
+      "independent_instrumental_observation": false,
+      "relation": "NO_528_OBSERVATION",
+      "to": "LATENT:528:tracking_utc"
+    }
+  ],
+  "facsimiles": [
+    {
+      "document_year": 1975,
+      "documentary_class": "RETROSPECTIVE_ADMINISTRATIVE_TABLE_VISUALLY_CHECKED",
+      "hash_scope": "FULL_PDF_BYTES_NOT_PAGE_IMAGE",
+      "id": "NSA-BYE-19385-75",
+      "observation_of_norad_528": false,
+      "pdf_bytes": 4853647,
+      "pdf_pages": 248,
+      "pdf_sha256": "3d5d7a22608d3eb9ab23f61f46da924708d471917f77ee5f3a68ae8910aeab74",
+      "physical_pdf_page": 132,
+      "printed_page": 5,
+      "printed_section": "Appendix A payload summary, not main text page 5",
+      "release_date": "2017-11-08",
+      "source_url": "https://www.governmentattic.org/26docs/NSAinSpaceViaNRO_1975.pdf"
+    },
+    {
+      "document_year": 1994,
+      "documentary_class": "RETROSPECTIVE_MISSION_HISTORY_VISUALLY_CHECKED",
+      "hash_scope": "FULL_PDF_BYTES_NOT_PAGE_IMAGE",
+      "id": "NRO-SIGINT-STORY-1994",
+      "observation_of_norad_528": false,
+      "pdf_bytes": 14454222,
+      "pdf_pages": 430,
+      "pdf_sha256": "1bffa3e121073c8a312c9f67393efac09aa0a322e18ce039e592df0454e13c8a",
+      "physical_pdf_page": 123,
+      "printed_page": 90,
+      "printed_section": "History narrative on vehicle 2313 and adjacent 2314",
+      "release_date": null,
+      "source_url": "https://www.governmentattic.org/19docs/NRO-SIGINTsatStory_1994u.pdf"
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "H:2313_B_OR_D",
+      "status": "OPEN_ENGINEERING_PROOF_MISSING"
+    },
+    {
+      "id": "H:528_PIECE_IDENTITY",
+      "status": "OPEN_PHYSICAL_MAPPING_MISSING"
+    },
+    {
+      "id": "H:7153_BATTERY_FAILURE",
+      "status": "DOCUMENTED_MISSION_END_NOT_ORBITAL_DECAY"
+    },
+    {
+      "id": "H:528_OBSERVABLES",
+      "status": "OPEN_SPADATS_SAO_PRIMARY_LOGS_MISSING"
+    }
+  ],
+  "id": "ABELHA-C241-L51-01",
+  "independence": {
+    "documentary_genealogy_independence": null,
+    "editorial_agreement_proves_instrumental_independence": false,
+    "facsimiles_count": 2,
+    "historical_measurements_added": 0,
+    "nro_battery_failure_is_reentry_epoch": false,
+    "the_1994_nro_page_labels_agena_variant": false
+  },
+  "input_sha256": {
+    "public/data/conde-quest-stage-scientific-bridge.json": "e68ef57489f65be7209070e542125444c36fd4bf6ff181916984f13f0865b9e7",
+    "research/tle_custody/declassified_facsimiles_C241-L51.json": "8dd677f66becd34112e0370f5fe6c676110b4828e73083783dcab12a00f7412c"
+  },
+  "instrumental_covariance": null,
+  "instrumental_epoch_utc": null,
+  "instrumental_frame": null,
+  "instrumental_station": null,
+  "lean_candidate": "Conde1963.stage2313RequiresEngineeringIdentity",
+  "lean_status": "DOCUMENTARY_CANDIDATE_NOT_COMPILED_ORBITAL_PROOF",
+  "matrix_relationship": "NASA_DECAY_CONTEXT_NOT_PIECE_IDENTITY_OR_MASS",
+  "new_528_instrumental_observations": 0,
+  "next_test": "Original 1963 engineering identification for Agena 2313 and NORAD 528 piece-specific SPADATS/SAO observation with UTC, station, reference frame and covariance.",
+  "parent_bridge": {
+    "does_not_modify_parent_evidence": true,
+    "id": "ABELHA-C241-L50-01",
+    "new_status": "NRO_1994_FACSIMILE_VERIFIED_IN_L51",
+    "sha256": "e68ef57489f65be7209070e542125444c36fd4bf6ff181916984f13f0865b9e7",
+    "status_at_publication": "NRO_TEXT_ONLY_IN_L48"
+  },
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "related_matrix_occurrence": "C197#1",
+  "schema": "conde.declassified-2313-scientific-bridge/v1",
+  "simulator_latent_parameters": [
+    {
+      "activation": false,
+      "id": "2313:stage",
+      "required_evidence": "1963 engineering configuration",
+      "uncertainty": "B_VS_D_UNRESOLVED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "528:hardware",
+      "required_evidence": "piece-specific structural attribution",
+      "uncertainty": "UNKNOWN_PIECE",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "528:mass",
+      "required_evidence": "piece-specific mass and error",
+      "uncertainty": "NOT_MEASURED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "528:separation_utc",
+      "required_evidence": "breakup epoch",
+      "uncertainty": "NOT_OBSERVED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "528:tracking_utc",
+      "required_evidence": "instrumental epoch",
+      "uncertainty": "NOT_OBSERVED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "528:tracking_station",
+      "required_evidence": "station and location",
+      "uncertainty": "NOT_OBSERVED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "528:tracking_frame",
+      "required_evidence": "reference frame and time scale",
+      "uncertainty": "NOT_OBSERVED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "528:tracking_covariance",
+      "required_evidence": "sensor uncertainty",
+      "uncertainty": "NOT_OBSERVED",
+      "value": null
+    }
+  ],
+  "source_occurrences": [
+    "C241-L51",
+    "C241-L50",
+    "C241-L15",
+    "C241-L48",
+    "C241-L40"
+  ]
+}
