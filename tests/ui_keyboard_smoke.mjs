@@ -2,6 +2,7 @@
 // Run against the local PR HEAD. Screenshots are evidence, not visual approval.
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
+import { checkSensitivityA11y } from './ui_sensitivity_accessibility.mjs';
 import fs from 'node:fs/promises';
 
 const origin = process.env.UI_AUDIT_URL || 'http://127.0.0.1:3000/';
@@ -19,8 +20,6 @@ try {
     await page.getByRole('heading', { level: 1 }).first().waitFor({ timeout: 20000 });
     assert.equal(await page.getByRole('heading', { level: 1 }).count(), 1,
       'SPA must expose exactly one route-specific H1, not a duplicate static heading');
-    // In a 1280 px desktop browser at 200% zoom, layout can approach 640 CSS px.
-    // This emulates the reflow width, NOT native browser zoom or screen-reader QA.
     const headerLayout = await page.locator('header').first().evaluate(el => ({
       position: getComputedStyle(el).position,
       height: el.getBoundingClientRect().height,
@@ -255,8 +254,7 @@ try {
     }
     await page.screenshot({ path: out + '/' + viewport.name + '-inverse-contrast.png', fullPage: true });
 
-    // G69: live Pages had three routes with no H1 despite route titles.
-    // Test real route rendering and both locales, not static source strings.
+    // G69: check route headings and sensitivity semantics in both locales.
     for (const locale of ['en', 'pt']) {
       if (locale === 'pt') await page.getByRole('button', { name: 'Português (Brasil)' }).click();
       for (const [route, heading] of [
@@ -268,24 +266,7 @@ try {
         await page.getByRole('heading', { level: 1, name: heading }).waitFor();
         assert.equal(await page.getByRole('main').getByRole('heading', { level: 1 }).count(), 1,
           `route ${route} must expose exactly one main H1 (${viewport.name}, ${locale})`);
-        if (route === 'sensitivity') {
-          const sliders = await page.locator('input[type="range"]').evaluateAll(inputs =>
-            inputs.map(input => ({
-              id: input.id,
-              label: input.labels?.[0]?.textContent?.trim(),
-            }))
-          );
-          assert.equal(sliders.length, 3, 'expected three physical sensitivity controls');
-          assert(sliders.every(slider => slider.id && slider.label),
-            'all physical sliders must have programmatically associated visible labels');
-          await page.addStyleTag({ content: ':root { font-size: 200% !important; }' });
-          const reflow = await page.evaluate(() => ({
-            viewport: document.documentElement.clientWidth,
-            scroll: document.documentElement.scrollWidth,
-          }));
-          assert(reflow.scroll <= reflow.viewport + 1,
-            `sensitivity has horizontal overflow at 200% text (${viewport.name}, ${locale}): ${JSON.stringify(reflow)}`);
-        }
+        if (route === 'sensitivity') await checkSensitivityA11y(page, viewport, locale);
       }
     }
 
