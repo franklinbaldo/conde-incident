@@ -4,13 +4,24 @@ import {readFileSync} from 'node:fs';
 import {AUTHORED_ROUTES,checkPage} from '../scripts/ssg-authored-pages.mjs';
 
 test('todas as páginas canônicas têm URL própria, tipo e acesso à ferramenta',()=>{
-  assert.equal(AUTHORED_ROUTES.length,11);
+  assert.equal(AUTHORED_ROUTES.length,12);
   for(const slug of AUTHORED_ROUTES){
     const page=readFileSync('pages/'+slug+'/page.md','utf8');
     assert.equal(checkPage(slug,page),page);
     assert.match(page,/^---\ntype: Page\n/);
     assert.ok(page.includes('canonical_route: "/conde-incident/'+slug+'/"'));
   }
+});
+test('a porta de entrada tem URL própria, fonte e link no dossiê',()=>{
+  const intro=readFileSync('pages/o-que-sabemos/page.md','utf8');
+  const casefile=readFileSync('pages/dossie/page.md','utf8');
+  assert.equal(checkPage('o-que-sabemos',intro),intro);
+  assert.match(intro,/\[.*?\]\(https:\/\/ntrs\.nasa\.gov\/api\/citations\/19640001198\/downloads\/19640001198\.pdf\)/);
+  assert.match(intro,/Rádio Tupi/);
+  assert.match(intro,/NORAD 528/);
+  assert.match(intro,/NORAD 637/);
+  assert.match(casefile,/href="\/conde-incident\/o-que-sabemos\/"/);
+  assert.throws(()=>checkPage('o-que-sabemos',intro.replace('type: Page','type: Story')));
 });
 test('oito perguntas conectam contexto SSG e instrumento real, sem links órfãos',()=>{
   const content=readFileSync('pages/simulacoes/page.md','utf8');

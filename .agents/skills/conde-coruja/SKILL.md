@@ -29,5 +29,21 @@ A história pertence ao leitor curioso sobre **o que ocorreu (ou teria ocorrido)
 - **Não narrar mudanças no site anterior, commits, PRs, workflows, versões, CI ou contagens de testes como notícia sobre 1963.** Quando método científico mudar uma interpretação, contar a consequência para o caso. Deixar rastreabilidade técnica em notas discretas e PRs do projeto.
 - Ao recuperar capítulos antigos, reescrever passagens internas para o público geral, sem apagar documentos originais, limites ou resultados negativos. Isso é correção editorial, não capítulo novo nem descoberta científica.
 
+## Linha editorial: uma história inteira antes de outra nota (Conde #885)
+
+**Referência de método, sem imitação de voz:** *The Constant*, de Mark Chrisler, como exemplo de narrativa investigativa sobre como uma versão errada nasceu, circulou, pareceu razoável e encontrou uma contraprova. A voz é autoral, em português brasileiro, com ironia seca apenas quando os próprios documentos a sustentarem.
+
+1. **O erro e as pessoas:** recuperar quem publicou, leu, corrigiu ou retransmitiu, sem atribuir intenções, testemunhos ou cenas imaginárias.
+2. **A digressão paga:** uma tabela soviética, um telégrafo ou uma crônica só entra quando explica algo concreto do caso Conde. Toda peça retorna à notícia de 1963.
+3. **A virada documental:** mostrar a hipótese plausível, o documento que a fortaleceu ou desfez e a pergunta ainda testável. Não ocultar um fato conhecido para fabricar suspense.
+4. **O tema maior:** contágio de versões, cópias tomadas como observações independentes, data de catálogo confundida com lugar, e limites de uma apuração à distância.
+5. **A prova manda:** manter fontes primárias, independência, ressalva precisa no ponto necessário e distinção entre notícia, parecer administrativo, dado orbital e vestígio físico. Nenhuma redução de rigor pelo efeito narrativo.
+
+**Porta de entrada:** manter [*O que sabemos até agora*](/conde-incident/o-que-sabemos/) (página, não capítulo) com atualização datada e máximo de 2.000 palavras. A primeira leitura deve incluir o relato Tupi/FBIS, a negativa consular, hipótese meteorológica, NORAD 528 e rival 637, e a falta de hora/observação física. Apontar do dossiê para essa página. Melhorar o acesso no índice do Caderno em coordenação com o dono dos templates/SSG; nunca alterar template comum em conflito.
+
+**Cadência:** preferir consolidar capítulos existentes e notas de evidência. Durante a consolidação, no máximo uma história nova por dia. Material de custódia e negativas sem virada ficam em `research/` e memória, não ganham manchete por contagem de PRs.
+
+**Teste de saída por artigo:** leitor de fora compreende a história sem GitHub? A incerteza foi dita uma vez com precisão, sem repetição? Há uma ligação explícita com Conde? O texto não tem SHA, bytes, HTTP, pipeline ou detalhes de CI no corpo? Links e IDs históricos foram preservados? Se um teste falhar, reescrever antes da PR.
+
 ## Fronteiras
 Nenhuma história sem delta. Incompatibilidade de fonte ou cálculo contrário à hipótese é notícia tão válida quanto confirmação.
