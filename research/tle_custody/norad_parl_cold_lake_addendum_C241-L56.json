@@ -1,0 +1,50 @@
+{
+  "schema": "conde.c241-l56-parl-feed/v1",
+  "id": "C241-L56",
+  "parent_id": "C241-L52",
+  "parent_sha256": "59de53b50a29c23c5d286b59b72591ee51efb055081f9fd57c29fe3aea8154eb",
+  "source_url": "https://documents.theblackvault.com/documents/afhistory/norad/%28U%29%201963%20NORAD%20CONAD%20History%20Jul-Dec.pdf",
+  "source_sha256": "eb8682425a393b016642165a9c00b6be8868a27954ddd0e55c40c1e14da425b4",
+  "source_bytes": 7111330,
+  "source_pages": 122,
+  "source_independence": "SAME_BINARY_AS_C241-L52_NOT_NEW_SOURCE_OR_SENSOR",
+  "anchors": [
+    {
+      "id": "COLD_LAKE_CONTROL",
+      "pdf_page_zero_based": 70,
+      "printed_page": 55,
+      "phrase": "RCAF ADC put the camera at Cold Lake under the operational control of CINCNORAD",
+      "scope": "Institutional control of Cold Lake optical camera by end-1962, not proof of 528 measurements"
+    },
+    {
+      "id": "PRINCE_ALBERT_PART_TIME",
+      "pdf_page_zero_based": 72,
+      "printed_page": 57,
+      "phrase": "supplied information to SPADATS on a part-time basis",
+      "scope": "PARL radar supplied some information to SPADATS, unspecified target and clock"
+    },
+    {
+      "id": "PRINCE_ALBERT_JAN1964",
+      "pdf_page_zero_based": 72,
+      "printed_page": 57,
+      "phrase": "PARL was still providing information to SPADATS",
+      "scope": "Report's January 1964 administrative status, not a 1963 individual observation or uninterrupted service"
+    }
+  ],
+  "distinction": "PARL at Prince Albert: DRB radar; Cold Lake: RCAF Baker-Nunn optical camera. Site reports are not independent 528 measurements.",
+  "scope": {
+    "named_527": null,
+    "named_528": null,
+    "named_529": null,
+    "utc_528": null,
+    "station_of_528": null,
+    "frame_528": null,
+    "sigma_528": null,
+    "data_receipt_528": null,
+    "independent_sensors_528": null,
+    "decay_hour_528": null,
+    "fall_location_528": null,
+    "physical_constraint_active": false,
+    "theta": "THETA_UNCHANGED"
+  }
+}
