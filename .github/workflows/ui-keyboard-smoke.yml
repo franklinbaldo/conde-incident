@@ -13,6 +13,7 @@ on:
       - 'src/lib/editorialRoutes.ts'
       - 'tests/editorialRoutes.test.mjs'
       - 'tests/editorial_journey_smoke.mjs'
+      - 'stories/2026-11-11-o-dia-em-que-dois-relatos-se-cruzaram.md'
       - 'src/components/OrbitalMap.tsx'
       - 'src/components/map/**'
       - 'tests/ui_keyboard_smoke.mjs'
