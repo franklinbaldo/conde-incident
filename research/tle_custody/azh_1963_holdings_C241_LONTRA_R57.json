@@ -1,0 +1,93 @@
+{
+  "id": "C241-LONTRA-R57",
+  "audit_date_utc": "2026-11-14",
+  "evidence_class": "BIBLIOGRAPHIC_HOLDINGS_AND_CITATION_CHRONOLOGY",
+  "upstream": {
+    "project_record": "research/tle_custody/uah_sin_196311_C241_LONTRA_R56.json",
+    "claimed_citation": "Astronomicheskiy Zhurnal, Moskva, no. 5, May 1963",
+    "intermediary_us_report_number": "1521678463",
+    "intermediary_us_report_date": "1963-06-19",
+    "secondary_us_digest": "Space Intelligence Notes 4(11), November 1963, p. 24",
+    "reference_only": true
+  },
+  "original_publication": {
+    "name_original": "Астрономический журнал",
+    "name_transliterated": "Astronomicheskii Zhurnal",
+    "volume": 40,
+    "year": 1963,
+    "claimed_issue": 5,
+    "claimed_month": "1963-05",
+    "actual_issue_month": null,
+    "article_author": null,
+    "article_title": null,
+    "article_pages": null,
+    "facsimile_retrieved": false,
+    "original_pdf_sha256": null,
+    "status": "ORIGINAL_NOT_RETRIEVED"
+  },
+  "holdings": [
+    {
+      "institution": "Main Astronomical Observatory of the National Academy of Sciences of Ukraine (MAO NASU)",
+      "catalogue_url": "https://www.mao.kiev.ua/index.php/en/library/12-biblioteka/95-ourperiodika?showall=1",
+      "catalogue_type": "ONLINE_SERIALS_HOLDINGS",
+      "year": 1963,
+      "volume": 40,
+      "issues_listed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "entry_original": "1963 Т.40 Вып.1-6",
+      "http_status_observed": 200,
+      "html_bytes_observed": 434958,
+      "html_sha256_observed": "f6a392494d5100a44a5343190561c81bb57d6366193c2dc113202b904848913f",
+      "status": "CATALOGUE_HTML_RETRIEVED_HOLDINGS_ONLY",
+      "issue_original_seen": false
+    },
+    {
+      "institution": "National Academy of Sciences of Ukraine Institute of Theoretical Physics (NANU023), catalogue p37",
+      "catalogue_url": "https://irbis-nbuv.gov.ua/cgi-bin/irbis_nas/cgiirbis_64.exe?C21COM=S&I21DBN=NANU023&P21DBN=NANU023&S21ALL=%28%3C.%3EK%3D%D0%90%D0%A1%D0%A2%D0%A0%D0%9E%D0%9D%D0%9E%D0%9C%D0%98%D0%A7%D0%95%D0%A1%D0%9A%24%3C.%3E%29&S21CNR=20&S21FMT=fullw&S21REF=10&S21SRD=&S21SRW=AVHEAD&S21STN=1&Z21ID=",
+      "catalogue_type": "INSTITUTIONAL_LIBRARY_SERIALS_HOLDINGS",
+      "year": 1963,
+      "volume": 40,
+      "issues_listed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "entry_original": "1963 т.40; N : 1,2,3,4,5,6;",
+      "http_status_observed": 403,
+      "status": "SEARCH_INDEX_EXCERPT_ONLY_REPLAY_403",
+      "issue_original_seen": false
+    }
+  ],
+  "chronology_review": {
+    "frequency_reference": "6 issues/year until 1999 (Russian institutional bibliographic record); 1956 no. 5 labelled September–October in a separate specimen",
+    "inconsistency": "Digest says issue 5 is May 1963 even though the serial is indexed as six issues per year; the 19 June 1963 intelligence report predates the usual fifth bimonthly issue.",
+    "status": "CITATION_CHRONOLOGY_UNRESOLVED",
+    "possible_explanations": [
+      "month or issue number mistranscribed",
+      "different publication abbreviated similarly",
+      "digest quoted intermediary date instead of issue date"
+    ],
+    "conclusion_not_allowed": "The catalogues do not date the exact 1963 issue and cannot prove the digest wrong without the issue cover or article."
+  },
+  "scientific_limits": {
+    "norad_527_528_529_instrumental_observations": [],
+    "new_sensor_identified": false,
+    "activated_orbital_constraints": 0,
+    "contact_with_institutions": false,
+    "independence": "Two holdings are independent cataloguing locations, NOT two independent satellite observations."
+  },
+  "next_verifications": [
+    "Inspect original Astronomicheskii Zhurnal 1963 vol. 40 issues 3 and 5 (cover, table of contents, relevant article)",
+    "Recover US information report 1521678463 dated 1963-06-19",
+    "Compare exact device designations and numerical timing values without inferential station links"
+  ]
+}
