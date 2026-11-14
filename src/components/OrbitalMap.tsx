@@ -42,6 +42,7 @@ const copy = {
     land: 'Litoral Natural Earth 1:110m (domínio público)',
     permalink: 'Link para este instante do cenário (não é uma hora observada)',
     coastlines: 'Mostrar litoral generalizado', graticule: 'Mostrar grade geográfica',
+    uncertain2d: 'As faixas hipotéticas só podem ser visualizadas no mapa 2D.',
   },
   en: {
     title: 'Exploratory orbit map',
@@ -67,6 +68,7 @@ const copy = {
     land: 'Natural Earth 1:110m coastlines (public domain)',
     permalink: 'Link to this scenario instant (not an observed time)',
     coastlines: 'Show generalized coastline', graticule: 'Show geographic grid',
+    uncertain2d: 'Hypothetical envelope rails can only be displayed on the 2D map.',
   },
 };
 
@@ -136,9 +138,10 @@ export function OrbitalMap({ lang, selectedTimeMs, onTimeChange }: Props) {
       {text}
     </button>
   );
-  const layer = (label: string, checked: boolean, set: (value: boolean) => void) => (
-    <label className="inline-flex items-center gap-2 rounded-md border border-slate-700 px-2 py-1.5 text-xs text-slate-200">
-      <input type="checkbox" checked={checked} onChange={e => set(e.target.checked)}
+  const layer = (label: string, checked: boolean, set: (value: boolean) => void, disabled = false) => (
+    <label className={"inline-flex items-center gap-2 rounded-md border border-slate-700 px-2 py-1.5 text-xs " +
+      (disabled ? 'text-slate-400' : 'text-slate-200')}>
+      <input type="checkbox" checked={checked} disabled={disabled} onChange={e => set(e.target.checked)}
         className="accent-cyan-500" />{label}
     </label>
   );
@@ -157,7 +160,8 @@ export function OrbitalMap({ lang, selectedTimeMs, onTimeChange }: Props) {
         <button type="button" aria-pressed={mode === 'globe'} onClick={() => setMode('globe')}
           className={'rounded-md px-3 py-1.5 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300 ' + (mode === 'globe' ? 'bg-cyan-700 text-white' : 'bg-slate-800 text-slate-200')}>{t.globe}</button>
         {layer(t.sisters, showSisters, setShowSisters)}
-        {layer(t.uncertain, showUncertainty, setShowUncertainty)}
+        {layer(t.uncertain, mode === 'flat' && showUncertainty, setShowUncertainty, mode === 'globe')}
+        {mode === 'globe' && <p className="basis-full text-xs text-slate-300" role="note">{t.uncertain2d}</p>}
         {layer(t.vectors, showConnections, setShowConnections)}
         {layer(t.coastlines, showCoastlines, setShowCoastlines)}
         {layer(t.graticule, showGraticule, setShowGraticule)}
