@@ -32,3 +32,19 @@ test('o design system é CSS nativo e reutiliza classes de cartões',()=>{
   assert.match(css,/@media\(max-width:700px\)/);
   assert.match(css, /@media\(prefers-reduced-motion:reduce\)/);
 });
+
+test('a trilha do dossiê é navegação real sem JS, com quatro destinos internos únicos',()=>{
+  const trail=src.match(/<nav aria-label="Etapas do dossiê">([\\s\\S]*?)<\\/nav>/)?.[1];
+  assert.ok(trail,'falta landmark de navegação de etapas');
+  const targets=[...trail.matchAll(/<li><a href="#([a-z]+)">/g)].map(m=>m[1]);
+  assert.deepEqual(targets,['relato','fontes','hipoteses','experimentos']);
+  for(const id of targets){
+    assert.equal([...src.matchAll(new RegExp('\\\\bid="'+id+'"','g'))].length,1,
+      'destino da trilha ausente ou duplicado: '+id);
+    assert.match(src,new RegExp('id="'+id+'" tabindex="-1"'),
+      'destino de fragmento precisa aceitar foco de teclado: '+id);
+  }
+  assert.doesNotMatch(trail,/<button|onclick|<script/i);
+  assert.match(css,/\\.casefile \\.cf-trail a:focus-visible|\\.casefile a:focus-visible/,
+    'a trilha precisa de foco de teclado visível');
+});
