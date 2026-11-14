@@ -1,0 +1,56 @@
+{
+  "schema": "conde.geo.iocs15-museum-holdings/v1",
+  "id": "CGEO-39",
+  "checked_on": "2026-11-13",
+  "previous_id": "CGEO-38",
+  "archival_collection": {
+    "institution": "Museu da República (IBRAM), Arquivo Histórico e Institucional",
+    "series_code": "BR RJMRAHI EP-IC-MA",
+    "collection": "Epitácio Pessoa",
+    "catalogue_page": "https://atom-museurepublica.museus.gov.br/index.php/mapas-2",
+    "finding_aid_url": "https://atom-museurepublica.museus.gov.br/downloads/epitacio-pessoa.pdf",
+    "finding_aid_pdf_bytes": 136248,
+    "finding_aid_pdf_sha256": "2f99bbd2594254ce484b5c905907852eb1b6142f6c44d94913837aeb89edca4f",
+    "page_zero_index": 26,
+    "printed_page": 27,
+    "maps_listed": 11,
+    "physical_items_declared": 12,
+    "duplicates_declared": 1,
+    "includes_literal_title": "Mapa da Bacia do Rio Itapicuru (BA)",
+    "original_item_inspected": false,
+    "individual_map_digitization_acquired": false,
+    "item_level_accession_known": false,
+    "rights_for_republication_verified": false
+  },
+  "prior_archive": {
+    "institution": "Arquivo Nacional, fundo Francisco Bhering",
+    "catalogue_url": "https://www.gov.br/arquivonacional/pt-br/servicos/copy_of_instrumentos-de-pesquisa/bhering-final-14-fev-13.pdf",
+    "reference": "BR AN,RIO F4.0.MAP.448",
+    "work": "Mapa da bacia do rio Itapicuru, estado da Bahia",
+    "publication_number": 15,
+    "publication_year": 1912,
+    "series": "I-G",
+    "scale_denominator": 500000,
+    "physical_copy_identity_with_ibram": false
+  },
+  "link": {
+    "relation": "SAME_TITLE_FAMILY_CANDIDATE_DIFFERENT_CATALOGUES",
+    "cross_custodian_copy_identity_verified": false,
+    "independent_survey_proven": false,
+    "original_1912_image_acquired": false,
+    "pixel_comparison_performed": false
+  },
+  "next_actions": [
+    "Solicitar cota de item individual ou imagem digital de IOCS n. 15 ao Museu da Republica, sem contato institucional nesta rodada",
+    "Obter fac-simile da publicacao IOCS 15 e comparar a cobertura grafica com IOCS 29 e Soper 1914",
+    "Manter fotoindice USAF 63-32 como linha documental distinta"
+  ],
+  "limits": {
+    "center_1963": null,
+    "reported_fall": null,
+    "uncertainty_m": null,
+    "flight_date": null,
+    "spatial_coverage_confirmed": false,
+    "can_constrain_orbital_reentry": false
+  }
+}
