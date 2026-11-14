@@ -16,12 +16,12 @@ class R51Tests(unittest.TestCase):
         self.data = json.loads(mod.SOURCE.read_text())
 
     def test_genuine_manifest(self):
-        self.assertEqual('EDITORIAL_REPRODUCTION_UNITS_PENDING_ZERO_CONSTRAINTS', mod.audit(self.data))
+        self.assertEqual('EDITORIAL_REPRODUCTION_MILES_PRINTED_SUBTYPE_PENDING_ZERO_CONSTRAINTS', mod.audit(self.data))
 
     def test_binary_replay(self):
         p = Path('/workspace/.lontra-r51-nasa-databook.pdf')
         if p.exists():
-            self.assertEqual('EDITORIAL_REPRODUCTION_UNITS_PENDING_ZERO_CONSTRAINTS', mod.audit(self.data,p))
+            self.assertEqual('EDITORIAL_REPRODUCTION_MILES_PRINTED_SUBTYPE_PENDING_ZERO_CONSTRAINTS', mod.audit(self.data,p))
 
     def reject(self, path, value):
         data = copy.deepcopy(self.data)
@@ -37,6 +37,17 @@ class R51Tests(unittest.TestCase):
 
     def test_reject_web_transcription_of_inclination(self):
         self.reject(['printed_row', 'inclinations_degrees_in_printed_order'], [82.9])
+
+    def test_accept_documented_miles_without_subtype(self):
+        row = self.data['printed_row']
+        self.assertEqual(row['perigee_apogee_unit_on_b12'], 'miles')
+        self.assertIsNone(row['mile_variant_as_printed'])
+
+    def test_reject_missing_or_fabricated_miles(self):
+        self.reject(['printed_row', 'perigee_apogee_unit_on_b12'], None)
+        self.reject(['printed_row', 'mile_variant_as_printed'], 'statute')
+        self.reject(['printed_row', 'unit_legend_location'], 'B-11')
+        self.reject(['scientific_interpretation', 'miles_as_printed_confirmed'], False)
 
     def test_reject_unverified_km_claim(self):
         self.reject(['printed_row', 'perigee_apogee_unit_on_b12'], 'km')

@@ -1,6 +1,8 @@
 {
   "activation": false,
-  "altitude_unit_verified": null,
+  "altitude_mile_subtype_verified": null,
+  "altitude_unit_evidence": "NASA_TM_X59315_B12_FOOTER_PDF_PAGE_105",
+  "altitude_unit_verified": "miles",
   "custody": {
     "pdf_bytes": 31749209,
     "pdf_page_one_based": 105,
@@ -11,7 +13,7 @@
   },
   "diagnostics": {
     "is_instrumental_measurement": false,
-    "statute_miles_candidate_not_documented": true,
+    "statute_mile_subtype_not_printed": true,
     "two_body_km_interpretation_consistent": false
   },
   "graph": [
@@ -46,9 +48,9 @@
     {
       "activation": false,
       "documentary_only": true,
-      "relation": "PAGE_B12_UNIT_UNVERIFIED",
+      "relation": "PAGE_B12_MILES_SUBTYPE_NOT_PRINTED",
       "source": "DATUM:1963_3A_JAN31_PRINTED_PAIRS",
-      "target": "LATENT:altitude_unit"
+      "target": "LATENT:mile_subtype"
     },
     {
       "activation": false,
@@ -95,8 +97,8 @@
     {
       "activation": false,
       "documentary_only": true,
-      "relation": "UNITS_REQUIRED_BEFORE_COMPARISON",
-      "source": "LATENT:altitude_unit",
+      "relation": "MILE_VARIANT_REQUIRED_BEFORE_NUMERIC_CONVERSION",
+      "source": "LATENT:mile_subtype",
       "target": "MODEL:orbital_cross_epoch"
     },
     {
@@ -142,8 +144,8 @@
     },
     {
       "activation": false,
-      "id": "LATENT:altitude_unit",
-      "unit": "km_or_mi_with_original_legend",
+      "id": "LATENT:mile_subtype",
+      "unit": "statute_or_nautical_definition_not_printed",
       "value": null
     },
     {
@@ -181,7 +183,7 @@
   "lean_status": "CANDIDATE_ONLY_NOT_COMPILED",
   "new_activated_physical_constraints": 0,
   "new_confirmed_norad_528_observations": 0,
-  "next_falsifiable_test": "Recover STL Space Log vol.3 no.4 original and its units/paired-column legend, then trace dated publications of 1963 orbital elements to the BSE 1964 page 503; reject any transfer to NORAD 528 without dated instrumental target identification.",
+  "next_falsifiable_test": "Recover STL Space Log vol.3 no.4 original and its mile subtype/paired-column legend, then trace dated publications of 1963 orbital elements to the BSE 1964 page 503; reject any transfer to NORAD 528 without dated instrumental target identification.",
   "other_norad_candidates": [
     {
       "activation": false,
@@ -206,7 +208,7 @@
   "physical_domain_effect": "THETA_UNCHANGED",
   "printed_identity": "1963 3A",
   "printed_values": {
-    "apogee_unverified_unit": [
+    "apogee_miles_as_printed": [
       322,
       334
     ],
@@ -214,7 +216,7 @@
       82.0,
       81.9
     ],
-    "perigee_unverified_unit": [
+    "perigee_miles_as_printed": [
       298,
       286
     ],
@@ -242,7 +244,7 @@
     {
       "occurrence_id": "C241-LONTRA-R51",
       "path": "research/tle_custody/stl_space_log_nasa_r51.json",
-      "sha256": "18cdbed4e9a2d31d3b402b4456f547c3902bbcb0ecfc992efe4c4c3a3a24bcb5"
+      "sha256": "2943e1f0a1ea6b4267f95a9ff14c022a55f7b4b0a7132cf5b37a489480bcf7e9"
     },
     {
       "occurrence_id": "C241-LONTRA-R49",

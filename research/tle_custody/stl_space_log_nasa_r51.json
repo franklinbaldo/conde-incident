@@ -20,28 +20,43 @@
     "launch_date_as_printed": "Jan 16, 1963",
     "launch_site": "VAFB",
     "vehicle": "Thor-Agena D",
-    "period_minutes_in_printed_order": [94.7, 94.6],
-    "perigee_altitudes_in_printed_order": [298, 286],
-    "apogee_altitudes_in_printed_order": [322, 334],
-    "inclinations_degrees_in_printed_order": [82.0, 81.9],
-    "perigee_apogee_unit_on_b12": null,
+    "period_minutes_in_printed_order": [
+      94.7,
+      94.6
+    ],
+    "perigee_altitudes_in_printed_order": [
+      298,
+      286
+    ],
+    "apogee_altitudes_in_printed_order": [
+      322,
+      334
+    ],
+    "inclinations_degrees_in_printed_order": [
+      82.0,
+      81.9
+    ],
+    "perigee_apogee_unit_on_b12": "miles",
     "row_note": "In orbit: classified payload (initial orbital data as of January 31, 1963)",
     "individual_measurement_utc": null,
     "station_or_instrument": null,
-    "observational_uncertainty": null
+    "observational_uncertainty": null,
+    "unit_legend_location": "B-12 lower-right footer (PDF page 105/117)",
+    "mile_variant_as_printed": null
   },
   "scientific_interpretation": {
     "printed_pair_is_not_two_independent_sensors": true,
     "orbital_data_date_is_not_1963_11_07_09": true,
     "km_interpretation_inconsistent_with_printed_period_under_two_body_assumption": true,
     "statute_mile_interpretation_numerically_plausible_not_documented": true,
-    "km_status": "UNIT_NOT_VERIFIED_ON_CRITICAL_PAGE",
+    "km_status": "CONTRADICTS_PRINTED_B12_MILES_LEGEND",
     "original_stl_pages_or_date_verified": false,
     "source_is_candidate_upstream_for_soviet_1964_table": true,
     "candidate_upstream_proven": false,
     "new_1963_11_07_09_measurements": 0,
     "independent_instrumental_sensors_added": 0,
     "new_physical_constraints_activated": 0,
-    "archive_external_contact_sent": false
+    "archive_external_contact_sent": false,
+    "miles_as_printed_confirmed": true
   }
 }
