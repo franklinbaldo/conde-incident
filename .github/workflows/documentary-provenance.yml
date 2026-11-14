@@ -31,6 +31,11 @@ jobs:
           python3 -m unittest discover -s tests -p 'test_sao_l43_scientific_bridge.py' -v
           python3 -O -m unittest discover -s tests -p 'test_sao_l43_scientific_bridge.py' -q
           python3 tools/export_sao_l43_scientific_bridge.py --check-site
+      - name: SAO P-17 selected catalogue scope to inactive graph (C241-L44)
+        run: |
+          python3 -m unittest discover -s tests -p 'test_sao_p17_scientific_bridge.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_sao_p17_scientific_bridge.py' -q
+          python3 tools/export_sao_p17_scientific_bridge.py --check-site
       - name: Export crosswalk for Polvo and site (no asserted physical landing)
         run: |
           python3 tools/provenance_graph.py --check-site --output /tmp/conde-documentary-provenance.json --citations /tmp/conde-documentary-citations.json
