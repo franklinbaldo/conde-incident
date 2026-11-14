@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {referenceView,sourceFromUrl,sourceLookupUrl} from '../static/js/ssg-source-lookup-ui.mjs';
+import {referenceView,sourceFromUrl,sourceLookupUrl,sourceArchiveUrl} from '../static/js/ssg-source-lookup-ui.mjs';
 
 const page=readFileSync('pages/evidencias/fontes/page.md','utf8');
 const loader=readFileSync('static/js/ssg-source-lookup-loader.mjs','utf8');
@@ -89,4 +89,26 @@ test('reject plausible but swapped archival page and alien upstream source befor
   const spoofed=structuredClone(withEdges);
   spoofed.references[0].upstream_edges[0][0]='OUTRO_DOCUMENTO';
   assert.throws(()=>referenceView(spoofed),/Referência inválida/);
+});
+
+// The UI must not require JS to reach the full status, original document
+// locator and epistemic qualification already published by the SSG archive.
+test('all curated source IDs have deterministic, guarded static profile routes',()=>{
+  const routes=new Set();
+  for(const source of index.sources){
+    const route=sourceArchiveUrl(source.source_id);
+    assert.match(route,/^\/conde-incident\/evidencias\/arquivo\/fontes\/[a-z0-9-]+\/$/);
+    assert.equal(route,'/conde-incident/evidencias/arquivo/fontes/'+
+      source.source_id.toLowerCase().replaceAll('_','-')+'/');
+    assert.ok(!routes.has(route),'duplicate static source route');
+    routes.add(route);
+  }
+  assert.equal(routes.size,index.sources.length);
+  for(const forged of ['', '../forged', 'SOURCE%2FOTHER', '<script>',
+    'https://example.org/other', 'lowercase', null]){
+    assert.throws(()=>sourceArchiveUrl(forged),/Identificador de fonte inválido/);
+  }
+  assert.match(ui,/profileLink\.href=sourceArchiveUrl\(source\.source_id\)/);
+  assert.match(ui,/Abrir ficha documental estática de/);
+  assert.match(page,/\/conde-incident\/evidencias\/arquivo\/fontes\//);
 });
