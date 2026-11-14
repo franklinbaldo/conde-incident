@@ -1,0 +1,40 @@
+name: C241 UAH Space Intelligence Notes R56
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/uah_sin_196311_C241_LONTRA_R56.json
+      - research/tle_custody/evidence_matrix_C241-LONTRA-R56_2026-11-14.md
+      - tools/audit_uah_sin_r56.py
+      - tests/test_uah_sin_r56.py
+      - .github/workflows/c241-uah-sin-r56.yml
+  push:
+    branches: [main]
+    paths:
+      - research/tle_custody/uah_sin_196311_C241_LONTRA_R56.json
+      - research/tle_custody/evidence_matrix_C241-LONTRA-R56_2026-11-14.md
+      - tools/audit_uah_sin_r56.py
+      - tests/test_uah_sin_r56.py
+      - .github/workflows/c241-uah-sin-r56.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Exact HEAD
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Tests normal and -O
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p test_uah_sin_r56.py -v
+          python3 -O -m unittest discover -s tests -p test_uah_sin_r56.py -v
+          curl --fail --location --silent --show-error --retry 2 --max-time 120 \
+            'https://digitalprojects.uah.edu/files/original/195/3372/spaceintelligencenotes_19631100.pdf' \
+            --output /tmp/uah-sin-196311.pdf
+          python3 -m tools.audit_uah_sin_r56 --pdf /tmp/uah-sin-196311.pdf

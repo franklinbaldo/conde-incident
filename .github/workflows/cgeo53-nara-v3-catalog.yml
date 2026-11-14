@@ -1,0 +1,38 @@
+name: CGEO-53 NARA structured catalog
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo53_nara_v3_catalog.json'
+      - 'research/geo/CGEO53_NARA_V3_CATALOG.md'
+      - 'tools/cgeo53_nara_v3_catalog.py'
+      - 'tests/test_cgeo53_nara_v3_catalog.py'
+      - '.github/workflows/cgeo53-nara-v3-catalog.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo53_nara_v3_catalog.json'
+      - 'research/geo/CGEO53_NARA_V3_CATALOG.md'
+      - 'tools/cgeo53_nara_v3_catalog.py'
+      - 'tests/test_cgeo53_nara_v3_catalog.py'
+      - '.github/workflows/cgeo53-nara-v3-catalog.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact commit
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+      - name: Offline contract and adversarial checks
+        run: |
+          python3 tools/cgeo53_nara_v3_catalog.py
+          python3 -m unittest discover -s tests -p 'test_cgeo53_nara_v3_catalog.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_cgeo53_nara_v3_catalog.py' -v
+      - name: Live structured NARA JSON replay
+        run: python3 tools/cgeo53_nara_v3_catalog.py --live

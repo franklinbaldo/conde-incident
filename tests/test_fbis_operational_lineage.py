@@ -4,6 +4,7 @@ from __future__ import annotations
 import copy
 import json
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -29,7 +30,9 @@ class FbisOperationalLineageTest(unittest.TestCase):
                          ["C212#1", "C213#1", "C214#1"])
         self.assertTrue(all(e["source_work_id"] == fbis.SOURCE_ID
                             for e in self.data["edges"]))
-        self.assertEqual(self.data["source"]["source_pdf_sha256"], None)
+        self.assertEqual(self.data["source"]["source_pdf_sha256"], fbis.SOURCE_PDF_SHA256)
+        self.assertEqual(self.data["source"]["source_pdf_size_bytes"], fbis.SOURCE_PDF_SIZE)
+        self.assertFalse(self.data["source"]["raw_pdf_bytes_replayed_this_run"])
         self.assertEqual(fbis.OUTPUT.read_bytes(), fbis.encoded(self.data))
 
     def test_crosswalk_adds_three_documentary_links_not_three_sensors(self):
@@ -48,6 +51,7 @@ class FbisOperationalLineageTest(unittest.TestCase):
             ("publication_date", "1963-11-08"),
             ("url", "https://example.com"),
             ("source_pdf_sha256", "0" * 64),
+            ("source_pdf_size_bytes", 0),
             ("raw_pdf_bytes_replayed_this_run", True),
             ("source_count", 3),
         ):
@@ -56,6 +60,30 @@ class FbisOperationalLineageTest(unittest.TestCase):
                 data["source"][field] = value
                 with self.assertRaisesRegex(ValueError, "source identity"):
                     fbis.audit(data, self.rows)
+
+    def test_source_pdf_replay_rejects_short_and_invalid_content(self):
+        with tempfile.TemporaryDirectory() as directory:
+            pdf = Path(directory) / "source.pdf"
+            pdf.write_bytes(b"%PDF-1.4\n%%EOF\n")
+            with self.assertRaisesRegex(ValueError, "byte length"):
+                fbis.verify_source_pdf(pdf)
+            with self.assertRaisesRegex(ValueError, "file missing"):
+                fbis.verify_source_pdf(pdf.with_name("missing.pdf"))
+            # A sparse same-size fake catches attacks that pass the byte-count gate.
+            with pdf.open("wb") as stream:
+                stream.seek(fbis.SOURCE_PDF_SIZE - 1)
+                stream.write(b"X")
+            with self.assertRaisesRegex(ValueError, "header"):
+                fbis.verify_source_pdf(pdf)
+            with pdf.open("r+b") as stream:
+                stream.write(b"%PDF-1.4")
+            with self.assertRaisesRegex(ValueError, "EOF"):
+                fbis.verify_source_pdf(pdf)
+            with pdf.open("r+b") as stream:
+                stream.seek(-6, 2)
+                stream.write(b"%%EOF\n")
+            with self.assertRaisesRegex(ValueError, "digest"):
+                fbis.verify_source_pdf(pdf)
 
     def test_mutated_line_hash_page_and_shared_family_rejected(self):
         for field, value in (

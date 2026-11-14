@@ -91,7 +91,8 @@
     "raw_pdf_bytes_replayed_this_run": false,
     "source_class": "RETROSPECTIVE_PRIMARY_INSTITUTIONAL_HISTORY",
     "source_count": 1,
-    "source_pdf_sha256": null,
+    "source_pdf_sha256": "77e3dcb65844a1c2965ba4649bb1b1a35e4e67a6c15d7ac38c6579b50c299f86",
+    "source_pdf_size_bytes": 8533908,
     "title": "Foreign Broadcast Information Service History, Part III: 1957-1967",
     "url": "https://www.govinfo.gov/content/pkg/GOVPUB-PREX3-PURL-gpo254964/pdf/GOVPUB-PREX3-PURL-gpo254964.pdf",
     "work_id": "CIA-RDP05-01429R000100010001-0"

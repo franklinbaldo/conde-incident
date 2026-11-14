@@ -148,7 +148,15 @@ def main() -> None:
     p.add_argument('--ledger', type=Path, default=LEDGER)
     p.add_argument('--output', type=Path, required=True)
     args = p.parse_args()
-    result = analyze(extract_pinned(args.parquet), json.loads(args.ledger.read_text(encoding='utf-8')))
+    catalogue = extract_pinned(args.parquet)
+    result = analyze(catalogue, json.loads(args.ledger.read_text(encoding='utf-8')))
+    # O workflow de replay existente executa esta entrada: uma página pública
+    # que repete a mesma época não deve ser promovida a segunda observação.
+    from c241_688_public_tle_duplicate import LINE1, LINE2, audit, parse_tle
+    duplicate = audit(parse_tle(LINE1, LINE2), catalogue)
+    if not duplicate['duplicate_state_candidate']:
+        raise ValueError('public 688 TLE mismatch: independent manual review required')
+    result['external_tle_duplicate_audit'] = duplicate
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
     print(f"688: {result['objects']['688']['secondary_catalogue_epoch_count']} prior epoch; "
