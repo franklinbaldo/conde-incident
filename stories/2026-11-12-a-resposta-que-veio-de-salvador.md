@@ -17,8 +17,8 @@ A pergunta atravessou o Atlântico em novembro de 1963. O relato atribuído à R
 
 
 <figure class="story-visual story-map">
-  <iframe loading="lazy" title="Mapa interativo de localização da sede de Conde, no litoral norte da Bahia" src="https://www.openstreetmap.org/export/embed.html?bbox=-38.15%2C-12.1%2C-37.10%2C-11.30&amp;layer=mapnik&amp;marker=-11.81%2C-37.61" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-  <figcaption><strong>Onde fica Conde?</strong> O marcador indica aproximadamente a <em>sede municipal</em> na Bahia, não o local de qualquer objeto alegadamente encontrado em 1963. Coordenadas de referência: <a href="https://www.conde.ba.gov.br/site/dadosmunicipais">Prefeitura de Conde</a>; mapa: <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors</a>. <a href="https://www.openstreetmap.org/?mlat=-11.81&amp;mlon=-37.61#map=10/-11.81/-37.61">Abrir o mapa</a>.</figcaption>
+  <img src="/conde-incident/img/conde-bahia-context.svg" width="800" height="500" loading="lazy" alt="Mapa regional com costa atlântica generalizada, grade geográfica e a sede aproximada de Conde, no litoral da Bahia. Não é um local de queda.">
+  <figcaption><strong>Onde fica Conde?</strong> O marcador situa aproximadamente a <em>sede municipal</em>, não um local de queda ou descoberta em 1963. Coordenadas de referência: <a href="https://www.conde.ba.gov.br/site/dadosmunicipais">Prefeitura de Conde</a>. Litoral generalizado <a href="https://www.naturalearthdata.com/about/terms-of-use/">Natural Earth 1:110m, domínio público</a>, produzido e hospedado neste site sem chave, tiles ou requisições cartográficas externas. <a href="/conde-incident/lab/#/map">Explorar o mapa orbital interativo, com cenários explicitados</a>.</figcaption>
 </figure>
 
 <a id="contexto-fbis" tabindex="-1"></a>
