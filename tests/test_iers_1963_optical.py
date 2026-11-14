@@ -187,5 +187,97 @@ class G53StationOptical(unittest.TestCase):
             self.call(self.from_gcrs(polar_site + [0.,0.,1000.]), lat=80)
 
 
+# G60 finite-light-time diagnostic: imported here so the pinned IERS workflow
+# exercises it at the exact PR head without weakening any existing CI gate.
+from iers_1963_optical_lighttime import (
+    constant_velocity_light_time, sensitivity_from_teme,
+    SPEED_OF_LIGHT_KM_S,
+)
+
+
+class G60LightTimeSensitivity(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        G53StationOptical.setUpClass()
+        cls.source = G53StationOptical.source
+        cls.eop = G53StationOptical.eop
+        cls.times = G53StationOptical.times
+        cls.m = G53StationOptical.m
+        cls.station_gcrs = G53StationOptical.site_g
+
+    def test_stationary_and_radial_closed_form(self):
+        s = [6000., 0., 0.]
+        r = [7000., 0., 0.]
+        stationary = constant_velocity_light_time(r, [0., 0., 0.], s)
+        self.assertAlmostEqual(stationary["light_time_s"], 1000. / SPEED_OF_LIGHT_KM_S)
+        self.assertAlmostEqual(stationary["geometric_to_retarded_angle_arcsec"], 0.)
+        receding = constant_velocity_light_time(r, [7., 0., 0.], s)
+        approaching = constant_velocity_light_time(r, [-7., 0., 0.], s)
+        self.assertAlmostEqual(receding["light_time_s"], 1000. / (SPEED_OF_LIGHT_KM_S + 7.))
+        self.assertAlmostEqual(approaching["light_time_s"], 1000. / (SPEED_OF_LIGHT_KM_S - 7.))
+        self.assertEqual(receding["geometric_to_retarded_angle_arcsec"], 0.)
+        self.assertEqual(approaching["geometric_to_retarded_angle_arcsec"], 0.)
+
+    def test_transverse_lag_is_arcseconds_not_instantaneous(self):
+        lag = constant_velocity_light_time([7000., 0., 0.], [0., 7., 0.],
+                                            [6000., 0., 0.])
+        self.assertGreater(lag["geometric_to_retarded_angle_arcsec"], 4.7)
+        self.assertLess(lag["geometric_to_retarded_angle_arcsec"], 4.9)
+        self.assertLess(abs(lag["light_time_equation_residual_km"]), 1e-10)
+        self.assertLess(lag["emission_position_gcrs_km"][1], 0.)
+        self.assertEqual(lag["historical_holdout"], "NOT_RUN")
+
+    def test_rotation_translation_invariance(self):
+        r = np.array([7000., 1500., -1000.])
+        v = np.array([1., 7., -.2])
+        s = np.array([6200., 400., 200.])
+        a = constant_velocity_light_time(r, v, s)
+        rotation = np.array([[0., -1., 0.], [1., 0., 0.], [0., 0., 1.]])
+        delta = np.array([1000., 2000., -1000.])
+        b = constant_velocity_light_time(rotation @ r + delta,
+                                         rotation @ v, rotation @ s + delta)
+        self.assertAlmostEqual(a["light_time_s"], b["light_time_s"], places=14)
+        self.assertAlmostEqual(a["geometric_to_retarded_angle_arcsec"],
+                               b["geometric_to_retarded_angle_arcsec"], places=9)
+
+    def test_fail_closed_nans_superluminal_and_coincident(self):
+        with self.assertRaisesRegex(ValueError, "Sub-luminal"):
+            constant_velocity_light_time([7000.,0,0], [SPEED_OF_LIGHT_KM_S,0,0],
+                                         [6000.,0,0])
+        with self.assertRaisesRegex(ValueError, "finite"):
+            constant_velocity_light_time([7000.,0,0], [0,float("nan"),0],
+                                         [6000.,0,0])
+        with self.assertRaisesRegex(ValueError, "Degenerate"):
+            constant_velocity_light_time([6000.,0,0], [0,0,0], [6000.,0,0])
+
+    def test_teme_integrates_source_rotation_and_visibility(self):
+        site = station_itrs_km(0,0,0)
+        up = site / np.linalg.norm(site)
+        target_gcrs = self.station_gcrs + (1300. * self.m["gcrs_to_itrs"].T @ up)
+        target_teme = self.m["teme_to_gcrs"].T @ target_gcrs
+        result = sensitivity_from_teme(
+            self.source, self.eop, self.times, UTC, target_teme,
+            [0., 7., 0.], 0., 0., 0.)
+        self.assertAlmostEqual(result["instantaneous_geometric_range_km"],
+                               1300., places=7)
+        self.assertLess(abs(result["light_time_equation_residual_km"]), 1e-8)
+        self.assertEqual(result["historical_holdout"], "NOT_RUN")
+        self.assertEqual(result["source_state_class"],
+                         "CALLER_SUPPLIED_NOT_INSTRUMENTALLY_AUTHENTICATED")
+        self.assertIn("ABERRATION", result["model_omissions"])
+        with self.assertRaisesRegex(ValueError, "Earth-occluded"):
+            hidden = self.m["teme_to_gcrs"].T @ (
+                self.m["gcrs_to_itrs"].T @ np.array([-7000., 0., 0.]))
+            sensitivity_from_teme(self.source, self.eop, self.times, UTC,
+                                  hidden, [0., 7., 0.], 0., 0., 0.)
+
+    def test_mutated_iers_original_bytes_refused(self):
+        site = station_itrs_km(0,0,0)
+        r = self.m["teme_to_gcrs"].T @ (
+            self.m["gcrs_to_itrs"].T @ (site + [1000., 0., 0.]))
+        with self.assertRaises(ValueError):
+            sensitivity_from_teme(self.source[:-1]+b"X", self.eop, self.times,
+                                  UTC, r, [0.,7.,0.], 0., 0., 0.)
+
 if __name__ == "__main__":
     unittest.main()
