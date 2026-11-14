@@ -1,0 +1,94 @@
+{
+  "id": "C241-L66",
+  "kind": "NASA_SSR_CROSS_EDITION_OMEGA_308_DISCREPANCY",
+  "previous_records": [
+    "C241-L64",
+    "C241-L65",
+    "C241-L32"
+  ],
+  "sources": {
+    "contemporary_1963": {
+      "ntrs_id": "19640003479",
+      "publication": "1963-12-15",
+      "pdf_url": "https://ntrs.nasa.gov/api/citations/19640003479/downloads/19640003479.pdf",
+      "sha256": "d31a064f8e03fd39be6fe75b88cd5852c0b74c9101fa635cb40ac25c77ef474f",
+      "bytes": 958927,
+      "pages": 23,
+      "pdf_page_1based": 17,
+      "printed_page": 15,
+      "printed_norad_number": null,
+      "visually_read_rows": [
+        {
+          "designator": "OMEGA 1",
+          "launch": "18 JUN",
+          "decay": "29-30 OCT 63"
+        },
+        {
+          "designator": "OMEGA 2",
+          "launch": "18 JUN",
+          "decay": "12 JUL 62"
+        },
+        {
+          "designator": "OMEGA 3",
+          "launch": "18 JUN",
+          "decay": "14 JUL 62"
+        }
+      ],
+      "row_alignment_uncertainty": "NEIGHBOR_DATES_REQUIRE_INDEPENDENT_CONFIRMATION"
+    },
+    "retrospective_1977": {
+      "ntrs_id": "19780009188",
+      "pdf_url": "https://ntrs.nasa.gov/api/citations/19780009188/downloads/19780009188.pdf",
+      "sha256": "c5c66eb7eab242ab5b3dd56567de8bab2d404d0a6776baeb3b79383c86bc5ba8",
+      "bytes": 11563410,
+      "pages": 115,
+      "pdf_page_1based": 46,
+      "printed_page": -42,
+      "visually_read_rows": [
+        {
+          "designator": "OMEGA 1",
+          "catalog_number": 307,
+          "source": "US",
+          "launch": "17 JUN",
+          "decay": "18 JUN 62"
+        },
+        {
+          "designator": "OMEGA 2",
+          "catalog_number": 308,
+          "source": "US",
+          "launch": "18 JUN",
+          "decay": "29-30 OCT 63"
+        },
+        {
+          "designator": "OMEGA 3",
+          "catalog_number": 310,
+          "source": "US",
+          "launch": "18 JUN",
+          "decay": "12 JUL 62"
+        }
+      ],
+      "source_already_in_custody": "C241-L32"
+    }
+  },
+  "finding": {
+    "retrospective_explicit_norad_crosswalk": "OMEGA 2 = 308 IN 1977 NASA TABLE",
+    "contemporary_matching_launch_and_decay_label": "OMEGA 1",
+    "label_conflict": "UNRESOLVED_PRINTED_NAME_CROSS_EDITION",
+    "same_launch_and_decay_dates": true,
+    "cause_of_discrepancy": null,
+    "contemporary_omega1_identity_to_308": "NOT_CONFIRMED_BY_CONCURRENT_PRIMARY_ROW"
+  },
+  "inference": {
+    "new_primary_pdf_families": 0,
+    "independent_instrumental_measurements": 0,
+    "terminal_event_utc": null,
+    "terminal_sigma_seconds": null,
+    "station": null,
+    "sensor": null,
+    "contemporaneous_norad_308_printed": false,
+    "retrospective_norad_308_printed": true,
+    "historical_mcmc": "NOT_RUN",
+    "active_constraint_528": false,
+    "impact_geography": null
+  }
+}
