@@ -51,6 +51,13 @@ try {
         // CSS text resize is checked here; native browser zoom and readers need separate trials.
         if (tab === 'summary' && width <= 390) {
           const scaled = await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+          const metadata = page.locator('header [data-lab-metadata]');
+          assert.equal(await metadata.getAttribute('open'), null,
+            'scientific metadata starts collapsed on mobile');
+          await metadata.locator('summary').focus();
+          await page.keyboard.press('Enter');
+          assert.notEqual(await metadata.getAttribute('open'), null,
+            'keyboard must open mobile scientific metadata');
           const controls = [
             page.getByRole('button', { name: 'Script Python' }),
             page.getByRole('button', { name: 'Português (Brasil)' }),
@@ -66,10 +73,19 @@ try {
           }
           await page.locator('header').screenshot({ path: 'test-results/ui/lab-text-resize-' + width + '.png' });
           await scaled.evaluate(element => element.remove());
+          await metadata.locator('summary').click();
+        }
+        // Context was deliberately moved into the mobile native disclosure.
+        // Verify the same counterpart route after revealing it, not hidden DOM.
+        if (tab !== 'summary' && width < 768) {
+          await page.locator('header [data-lab-metadata] summary').click();
         }
         const backToContext = tab === 'summary'
           ? page.getByRole('link', { name: 'Voltar ao Caderno' })
-          : page.getByRole('link', { name: /^Abrir no Caderno:/ });
+          : width < 768
+            ? page.locator('header a[data-mobile-editorial-context]')
+            : page.getByRole('link', { name: /^Abrir no Caderno:/ });
+        assert(await backToContext.isVisible(), 'editorial return must be visible');
         const contextHref = new URL(await backToContext.getAttribute('href'), page.url());
         assert.equal(contextHref.pathname, prefix + context);
         assert.equal(contextHref.origin, new URL(origin).origin,

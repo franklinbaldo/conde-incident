@@ -29,8 +29,6 @@ try {
       'Lab header must not cover reading content at narrow/reflow widths: ' + JSON.stringify(headerLayout));
     assert(headerLayout.height < headerLayout.viewportHeight * 0.75,
       'Lab header takes over too much of the available height: ' + JSON.stringify(headerLayout));
-    // The laboratory is a separate SPA: users need a visible way back to the
-    // published editorial Caderno, including on the narrowest mobile layout.
     const backToCaderno = page.getByRole('link', { name: 'Voltar ao Caderno' });
     assert.equal(await backToCaderno.count(), 1, 'missing accessible return to Caderno');
     assert.equal(await backToCaderno.getAttribute('href'), '/conde-incident/',
@@ -79,7 +77,6 @@ try {
         'mobile navigation must hide its list after following a section link');
     }
     assert.equal(new URL(page.url()).hash, '#/map');
-    // Hash changes synchronously; React state and aria-current update on a later tick.
     await page.waitForFunction(() => document.querySelector('nav a[aria-current="page"]')?.textContent?.includes('Rastreamento & Mapa'));
     const current = await sections.locator(viewport.width < 768
       ? '[data-mobile-tabs] [aria-current="page"]'
@@ -89,7 +86,6 @@ try {
     assert.equal(await page.locator('header').getByRole('status').innerText(),
       'Seção ativa: Rastreamento & Mapa',
       'changing a hash route must announce the new section without shifting focus');
-    // Real DOM check of independent, keyboard-operable context layers.
     const mapSvg = page.getByRole('img', { name: /Mapa orbital esquemático/ });
     await mapSvg.waitFor();
     const coast = page.getByRole('checkbox', { name: 'Mostrar litoral generalizado' });
@@ -132,8 +128,6 @@ try {
     assert.equal(await page.getByRole('link', { name: 'Back to the Notebook' }).count(), 1,
       'editorial return link must follow the selected language');
     assert.equal(await page.getByRole('link', { name: 'Skip to main content' }).count(), 1);
-    // Switching locale must also translate badges, export controls and footer,
-    // not only the tab headings or the root html[lang] attribute.
     const englishNav = page.getByRole('navigation', { name: 'Laboratory sections' });
     await page.waitForFunction(() => document.querySelector('header [role="status"]')?.textContent?.includes('Active section: Tracking & Map'));
     assert.equal(await page.locator('header').getByRole('status').innerText(),
@@ -143,11 +137,23 @@ try {
         `untranslated badge in English UI: ${badge}`);
     }
     assert.equal(await englishNav.getByText('Fontes', { exact: true }).count(), 0);
+    if (viewport.width < 768) {
+      await page.locator('header [data-lab-metadata] summary').click();
+    }
     assert.equal(await page.getByRole('button', { name: 'Python Script' }).first()
       .getAttribute('title'), 'Export reproducible Python code');
     assert.equal(await page.getByRole('button', { name: 'Export Python' }).count(), 1);
     assert.equal(await page.getByText('Models: SGP4, WGS84, J2, Solar-Min Thermosphere 1963', { exact: true }).count(), 1);
-    assert.equal(await page.getByText('NRO mission 7153 (Thor-Agena D / OPS 0180)', { exact: true }).count(), 1);
+    const mission = 'NRO mission 7153 (Thor-Agena D / OPS 0180)';
+    if (viewport.width < 768) {
+      const metadata = page.locator('header [data-lab-metadata]');
+      assert(await metadata.getByText(mission, { exact: true }).isVisible(),
+        'mission metadata must remain reachable inside the mobile disclosure');
+      await metadata.locator('summary').click();
+    } else {
+      assert.equal(await page.getByText(mission, { exact: true }).filter({ visible: true }).count(), 1,
+        'desktop mission metadata should remain visible');
+    }
     if (viewport.width < 768) await englishNav.locator('summary').click();
     await englishNav.getByRole('link', { name: /Summary & limits/ }).click();
     await page.waitForFunction(() => document.querySelector('header [role="status"]')?.textContent?.includes('Active section: Summary & limits'));
@@ -161,12 +167,13 @@ try {
       `body overflow on ${viewport.name}: ${JSON.stringify(horizontal)}`);
     await page.screenshot({ path: `${out}/${viewport.name}-summary.png`, fullPage: true });
 
-    // Verify modal name, focus entry/loop, Escape dismissal and trigger focus restoration.
+    if (viewport.width < 768) {
+      await page.locator('header [data-lab-metadata] summary').click();
+    }
     const exportTrigger = page.getByRole('button', { name: 'Python Script' }).first();
     await exportTrigger.click();
     const dialog = page.getByRole('dialog', { name: 'norad528_reconstruction.py' });
     await dialog.waitFor();
-    // Mobile modal controls must remain reachable with wide filenames.
     const mobileLayout = await dialog.evaluate(node => {
       const header = node.children[0];
       const instructions = node.children[1];
@@ -208,8 +215,6 @@ try {
     assert(await exportTrigger.evaluate(element => document.activeElement === element),
       'Escape must close export dialog and restore trigger focus');
 
-    // Check computed contrast in the browser, not just source CSS or a fixture.
-    // These small labels distinguish model results and must meet WCAG AA 4.5:1.
     if (viewport.width < 768) await englishNav.locator('summary').click();
     await englishNav.getByRole('link', { name: /Inverse scenarios/ }).click();
     await page.getByRole('heading', { name: /Inverse Test:/ }).waitFor();
@@ -225,7 +230,6 @@ try {
         fontSize: getComputedStyle(el).fontSize,
       })),
     ];
-    // Convert rendered oklch colors to sRGB using Chromium canvas.
     const sampleRgb = await page.evaluate(samples => {
       const canvas = document.createElement('canvas');
       canvas.width = canvas.height = 1;
@@ -250,7 +254,6 @@ try {
     }
     await page.screenshot({ path: out + '/' + viewport.name + '-inverse-contrast.png', fullPage: true });
 
-    // G69: check route headings and sensitivity semantics in both locales.
     for (const locale of ['en', 'pt']) {
       if (locale === 'pt') await page.getByRole('button', { name: 'Português (Brasil)' }).click();
       for (const [route, heading] of [
@@ -258,8 +261,6 @@ try {
         ['tles', locale === 'pt' ? /Linhas TLE em auditoria/ : /TLE/],
         ['triangulation', locale === 'pt' ? /Objetos 527, 528 e 529/ : /Objects 527, 528 and 529/],
       ]) {
-        // A full, shareable English URL must retain ?lang=en across navigation.
-        // Do not silently test English against the default Portuguese URL.
         const shareableRoute = new URL((locale === 'en' ? '?lang=en' : '') + '#/' + route, origin).href;
         await page.goto(shareableRoute);
         assert.equal(await page.evaluate(() => document.documentElement.lang),
@@ -276,7 +277,6 @@ try {
     findings.push({ viewport: viewport.name, skip_target: focused.id, hash_preserved: true, nav_hash: '#/map', html_lang: 'en', overflow_px: horizontal.document - horizontal.viewport });
     await page.close();
   }
-  // Verify the no-JS entrypoint; not an assistive-device test.
   for (const viewport of [
     { name: 'desktop', width: 1440, height: 900 },
     { name: 'mobile', width: 375, height: 812 },

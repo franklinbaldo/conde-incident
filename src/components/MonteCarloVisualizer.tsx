@@ -141,12 +141,12 @@ export const MonteCarloVisualizer: React.FC<MonteCarloVisualizerProps> = ({
   return (
     <div className="space-y-6">
       {/* Intro Header */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+      <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-3 sm:p-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="space-y-1 max-w-3xl">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-800 text-cyan-300 text-xs font-mono">
-              <Activity className="w-3.5 h-3.5 text-cyan-400" />
-              <span>{isPt ? 'PROPAGAÇÃO ESTOCÁSTICA DE DECISÃO' : 'STOCHASTIC DECISION PROPAGATION'}</span>
+          <div className="min-w-0 w-full max-w-3xl space-y-1">
+            <div className="inline-flex min-w-0 max-w-full items-start gap-1.5 rounded-xl border border-cyan-800 bg-cyan-950/80 px-2.5 py-0.5 text-xs font-mono text-cyan-300">
+              <Activity className="w-3.5 h-3.5 shrink-0 text-cyan-400" />
+              <span className="min-w-0 break-words">{isPt ? 'PROPAGAÇÃO ESTOCÁSTICA DE DECISÃO' : 'STOCHASTIC DECISION PROPAGATION'}</span>
             </div>
             <h1 className="text-lg font-bold text-zinc-100">
               {isPt
@@ -176,10 +176,10 @@ export const MonteCarloVisualizer: React.FC<MonteCarloVisualizerProps> = ({
             <button
               onClick={executeSimulation}
               disabled={isRunning}
-              className="px-4 py-2 rounded-lg bg-cyan-700 hover:bg-cyan-600 disabled:bg-zinc-800 text-white font-medium text-xs flex items-center gap-2 transition-colors cursor-pointer shadow"
+              className="flex w-full min-w-0 max-w-full items-center gap-2 rounded-lg bg-cyan-700 px-3 py-2 text-left text-xs font-medium text-white shadow transition-colors hover:bg-cyan-600 disabled:bg-zinc-800 sm:w-auto"
             >
               <Play className="w-3.5 h-3.5" />
-              <span>{isPt ? (isRunning ? 'Simulando...' : 'Re-executar') : (isRunning ? 'Running...' : 'Run again')}</span>
+              <span className="min-w-0 break-words">{isPt ? (isRunning ? 'Simulando...' : 'Re-executar') : (isRunning ? 'Running...' : 'Run again')}</span>
             </button>
           </div>
         </div>

@@ -23,13 +23,18 @@ try {
         assert(response?.ok(), `${route}: laboratory HTTP failed`);
         await page.locator('main h1').first().waitFor();
         await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+        // In the compact mobile shell the editorial context lives inside
+        // an accessible disclosure, rather than occupying the first fold.
+        if (width < 768) {
+          await page.locator('header [data-lab-metadata] summary').click();
+        }
 
         for (const lang of ['pt', 'en']) {
           if (lang === 'en') {
             await page.getByRole('button', { name: 'English' }).click();
           }
           const nav = page.locator(
-            'header a[aria-label^="Abrir no Caderno"], header a[aria-label^="Open in Notebook"]',
+            'header a[data-mobile-editorial-context]:visible, header a[aria-label^="Abrir no Caderno"]:visible, header a[aria-label^="Open in Notebook"]:visible',
           );
           assert.equal(await nav.count(), 1, `${route}/${lang}: missing editorial context link`);
           const linkRect = await nav.boundingBox();

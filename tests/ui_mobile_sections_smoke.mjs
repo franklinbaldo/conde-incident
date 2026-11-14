@@ -137,6 +137,83 @@ try {
       await page.close();
     }
   }
+  // Morcego #18: full scientific metadata should be keyboard-retrievable
+  // without pushing the first heading below the fold at resized text.
+  // This is CSS text scaling, not native zoom or screen-reader certification.
+  for (const width of [320, 375]) {
+    for (const route of ['summary', 'map', 'montecarlo']) {
+      const page = await browser.newPage({
+        viewport: { width, height: 812 }, reducedMotion: 'reduce',
+      });
+      const pageErrors = [];
+      page.on('pageerror', error => pageErrors.push(error.message));
+      try {
+        const response = await page.goto(origin + '#/' + route, { waitUntil: 'load' });
+        assert(response?.ok(), route + ': HTTP error');
+        await page.locator('main h1').first().waitFor();
+        const disclosure = page.locator('header [data-lab-metadata]');
+        const sections = page.locator('header nav details').first();
+        assert(await disclosure.isVisible(), route + ': mobile metadata disclosure absent');
+        for (const scale of [100, 200]) {
+          if (scale === 200) {
+            await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+          }
+          for (const lang of ['pt', 'en']) {
+            await page.getByRole('button', {
+              name: lang === 'pt' ? 'Português (Brasil)' : 'English',
+            }).click();
+            const measurements = await page.evaluate(() => {
+              const heading = document.querySelector('main h1');
+              const header = document.querySelector('header');
+              return {
+                headingTop: heading?.getBoundingClientRect().top,
+                headerHeight: header?.getBoundingClientRect().height,
+                viewport: innerHeight,
+                scrollWidth: document.documentElement.scrollWidth,
+                clientWidth: document.documentElement.clientWidth,
+              };
+            });
+            assert(typeof measurements.headingTop === 'number' &&
+              measurements.headingTop >= 0 && measurements.headingTop < 812,
+              `first fold lost ${route}/${lang}/${width}/${scale}: ${JSON.stringify(measurements)}`);
+            assert(measurements.scrollWidth <= measurements.clientWidth + 1,
+              `document overflow ${route}/${lang}/${width}/${scale}: ${JSON.stringify(measurements)}`);
+            assert.equal(await disclosure.getAttribute('open'), null,
+              'metadata must begin collapsed');
+            assert.equal(await sections.getAttribute('open'), null,
+              'mobile sections must begin collapsed');
+            assert(await page.getByRole('link', {
+              name: lang === 'pt' ? 'Voltar ao Caderno' : 'Back to the Notebook',
+            }).isVisible(), 'Notebook return must remain visible');
+            const metadataSummary = disclosure.locator('summary');
+            await metadataSummary.focus();
+            await page.keyboard.press('Enter');
+            assert.notEqual(await disclosure.getAttribute('open'), null);
+            assert(await disclosure.getByText('NORAD 528 (1963-003B)').isVisible());
+            assert(await disclosure.getByText(/NRO (mission|7153)|Missão NRO/).isVisible());
+            assert(await disclosure.getByText(/NASA: (dia catalogado|catalogued day)/).isVisible());
+            assert(await disclosure.getByRole('button', {
+              name: lang === 'pt' ? 'Script Python' : 'Python Script',
+            }).isVisible());
+            if (route !== 'summary') {
+              assert(await disclosure.locator('[data-mobile-editorial-context]').isVisible());
+            }
+            await page.keyboard.press(' ');
+            assert.equal(await disclosure.getAttribute('open'), null);
+            assert.equal(new URL(page.url()).hash, '#/' + route);
+            if (scale === 200 && lang === 'en') {
+              await page.screenshot({
+                path: `${out}/lab-first-fold-${route}-${width}-200-en.png`,
+              });
+            }
+          }
+        }
+        assert.deepEqual(pageErrors, [], route + ': uncaught JS');
+      } finally {
+        await page.close();
+      }
+    }
+  }
  } finally {
   await browser.close();
 }
