@@ -1,0 +1,362 @@
+{
+  "activation": false,
+  "global_unknown_528_observation_count": null,
+  "graph": [
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "PUBLISHED_SOURCE_PDF",
+      "source": "C241-L59",
+      "target": "DOC:SAO:P14:SR185"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "PUBLISHED_SOURCE_PDF",
+      "source": "C241-L60",
+      "target": "DOC:SAO:SR266"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "CATALOG_SCOPE_ONLY",
+      "source": "DOC:SAO:P14:SR185",
+      "target": "SERIES:P14:NINE_SELECTED_TARGETS"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "NEGATIVE_SCOPE_ONLY",
+      "source": "SERIES:P14:NINE_SELECTED_TARGETS",
+      "target": "H:P14_528_UNLISTED"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "HISTORICAL_CLOCK_FORMULA",
+      "source": "DOC:SAO:P14:SR185",
+      "target": "CAL:A1_MINUS_WWV_EMITTED"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "MISSING_CONVERSION",
+      "source": "CAL:A1_MINUS_WWV_EMITTED",
+      "target": "LATENT:WWV_EMITTED_TO_UTC"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "PREMISE_NOT_VERIFIED",
+      "source": "LATENT:WWV_EMITTED_TO_UTC",
+      "target": "LEAN:candidateSaoClockCompatibility"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "NOT_TEME",
+      "source": "DOC:SAO:P14:SR185",
+      "target": "FRAME:TOPO_RA_DEC_MEAN_1950"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "REQUIRES_EPOCH_AND_STATION",
+      "source": "FRAME:TOPO_RA_DEC_MEAN_1950",
+      "target": "LATENT:FRAME_TRANSFORM"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "NOT_WGS84",
+      "source": "DOC:SAO:P14:SR185",
+      "target": "DATUM:KAULA_1964"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "REQUIRES_CALIBRATION",
+      "source": "DATUM:KAULA_1964",
+      "target": "LATENT:STATION_GEODETIC_TRANSFORM"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "DERIVED_FROM_OVERLAPPING_FRAMES",
+      "source": "DOC:SAO:SR266",
+      "target": "METHOD:SYNTHETIC_SIMULTANEOUS_PAIRS"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "SHARED_INPUT_FRAMES",
+      "source": "METHOD:SYNTHETIC_SIMULTANEOUS_PAIRS",
+      "target": "H:SYNTHETIC_NOT_NEW_SENSOR"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "NOT_TEME",
+      "source": "DOC:SAO:SR266",
+      "target": "FRAME:HISTORIC_FIXED_EARTH"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "NOT_UTC_NOT_A1",
+      "source": "DOC:SAO:SR266",
+      "target": "CLOCK:A_S_ATOMIC"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "MISSING_CONVERSION",
+      "source": "CLOCK:A_S_ATOMIC",
+      "target": "LATENT:AS_TO_UTC"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "PREMISE_NOT_VERIFIED",
+      "source": "LATENT:AS_TO_UTC",
+      "target": "LEAN:candidateSaoClockCompatibility"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "NOT_GLOBAL_NEGATIVE",
+      "source": "H:P14_528_UNLISTED",
+      "target": "H:528_INSTRUMENTAL_OBSERVATION_UNKNOWN"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "NOT_GLOBAL_NEGATIVE",
+      "source": "H:SYNTHETIC_NOT_NEW_SENSOR",
+      "target": "H:528_INSTRUMENTAL_OBSERVATION_UNKNOWN"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "MISSING_ORIGINAL_RECORD",
+      "source": "H:528_INSTRUMENTAL_OBSERVATION_UNKNOWN",
+      "target": "LATENT:RAW_528_IDENTIFICATION"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "CONDITIONAL_IDENTITY",
+      "source": "LATENT:RAW_528_IDENTIFICATION",
+      "target": "LEAN:candidateSaoClockCompatibility"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "NOT_COMPILED_NO_528_DATA",
+      "source": "LEAN:candidateSaoClockCompatibility",
+      "target": "MODEL:OBSERVABLE_528_TIMESTAMP"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "NOT_CALIBRATED",
+      "source": "LATENT:FRAME_TRANSFORM",
+      "target": "MODEL:OBSERVABLE_528_DIRECTION"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "NOT_CALIBRATED",
+      "source": "LATENT:STATION_GEODETIC_TRANSFORM",
+      "target": "MODEL:OBSERVABLE_528_DIRECTION"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "NOT_ACTIVATED",
+      "source": "MODEL:OBSERVABLE_528_TIMESTAMP",
+      "target": "PARAM:orbit_measurement_epoch_528"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "NOT_ACTIVATED",
+      "source": "MODEL:OBSERVABLE_528_DIRECTION",
+      "target": "PARAM:orbit_line_of_sight_528"
+    },
+    {
+      "activation": false,
+      "epistemic_status": "DOCUMENTARY_DEPENDENCY_ONLY",
+      "relation": "NOT_CALIBRATED",
+      "source": "H:SYNTHETIC_NOT_NEW_SENSOR",
+      "target": "PARAM:measurement_independence_weight_528"
+    }
+  ],
+  "hypotheses": [
+    "H:P14_528_UNLISTED",
+    "H:SYNTHETIC_NOT_NEW_SENSOR",
+    "H:528_INSTRUMENTAL_OBSERVATION_UNKNOWN"
+  ],
+  "id": "ABELHA-C241-L59-L60-01",
+  "independent_instrumental_measurements_added_for_528": 0,
+  "latents": [
+    {
+      "activation": false,
+      "id": "LATENT:WWV_EMITTED_TO_UTC",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:AS_TO_UTC",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:FRAME_TRANSFORM",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:STATION_GEODETIC_TRANSFORM",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:RAW_528_IDENTIFICATION",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:RAW_528_FRAME",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:RAW_528_STATION",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:RAW_528_UTC",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:RAW_528_COVARIANCE",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:SYNTHETIC_INPUT_OVERLAP",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:HISTORICAL_CLOCK_CALIBRATION",
+      "value": null
+    }
+  ],
+  "lean_candidate": "candidateSaoClockCompatibility",
+  "lean_required_premises": [
+    "same_target_identity",
+    "original_raw_frame_and_UTC_epoch",
+    "clock_to_UTC_calibration",
+    "station_geodetic_datum_transform",
+    "direction_frame_transform",
+    "covariance_and_input_measurement_dependency"
+  ],
+  "lean_status": "CANDIDATE_ONLY_NOT_COMPILED",
+  "matrix_line": null,
+  "matrix_snapshot_ref": null,
+  "new_activated_physical_constraints": 0,
+  "next_falsifiable_test": "Locate original identified 528 raw frame or ledger row with station, UTC/time scale, calibration, directional frame, uncertainty and shared input provenance; never transfer P14 or SR266 errors or clock models by analogy.",
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "published_target_scope": {
+    "527_528_529_listed_in_either": false,
+    "P14_number_of_selected_targets": 9,
+    "P14_selected_rows": 5140,
+    "SR266_table1_targets": 12,
+    "not_in_catalogue_is_not_global_absence": true
+  },
+  "row_sha256": null,
+  "schema": "conde.sao-clock-method-dependencies/v1",
+  "simulator_parameters": [
+    {
+      "activation": false,
+      "id": "PARAM:orbit_measurement_epoch_528",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "PARAM:orbit_line_of_sight_528",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "PARAM:measurement_independence_weight_528",
+      "value": null
+    }
+  ],
+  "source_lineage_type": "TWO_DISTINCT_SAO_METHOD_PUBLICATIONS_NOT_TWO_528_SENSORS",
+  "source_only_error_context": {
+    "P14_assigned_angular_standard_error_arcsec": 4.0,
+    "P14_timing_milliseconds_range": [
+      0.5,
+      20.0
+    ],
+    "SR266_synthetic_rejection_threshold_arcsec": 2.0,
+    "SR266_timing_milliseconds_context": [
+      0.3,
+      5.0
+    ],
+    "none_are_covariance_for_528": true
+  },
+  "sources": [
+    {
+      "occurrence_id": "C241-L59",
+      "original_pdf_pages_inspected_zero_based": [
+        0,
+        2,
+        3,
+        4,
+        5
+      ],
+      "original_pdf_sha256": "d7140f9b78991d1bb75857ba6a109fb553b80eab16f7dd89c41cc799d9e53980",
+      "original_pdf_url": "https://ntrs.nasa.gov/api/citations/19660001360/downloads/19660001360.pdf",
+      "path": "research/tle_custody/sao_p14_a1_clock_1963_C241-L59.json",
+      "sha256": "b5424d7c2258dd695be8c2643c5599abcd3a931af8b66b5be8e0be71f4546975",
+      "status": "PUBLISHED_PRIMARY_METHOD_NOT_TARGET_528_OBSERVATION"
+    },
+    {
+      "occurrence_id": "C241-L60",
+      "original_pdf_pages_inspected_zero_based": [
+        8,
+        9,
+        13,
+        15
+      ],
+      "original_pdf_sha256": "287158c6a3044a1d088cb5addf4635af6921222abf21a917b08bbe81c967f9b6",
+      "original_pdf_url": "https://ntrs.nasa.gov/api/citations/19690000806/downloads/19690000806.pdf",
+      "path": "research/tle_custody/sao_sr266_synthetic_1963_C241-L60.json",
+      "sha256": "64f4fcd78ee7c9063e71d2f1e712eadc5512295b609ad652c67c03f4893a0c55",
+      "status": "PUBLISHED_PRIMARY_METHOD_NOT_TARGET_528_OBSERVATION"
+    }
+  ],
+  "time_model": {
+    "P14": {
+      "A1_minus_WWV_emitted_seconds_at_mjd_38030": 2.292725,
+      "intercept_seconds": 2.292725,
+      "not_a_UTC_conversion": true,
+      "reference": "WWV_EMITTED",
+      "reported_scale": "SMOOTHED_PRELIMINARY_A1_NOT_UTC",
+      "slope_seconds_per_day": 0.001118458,
+      "valid_mjd_lower_inclusive": 38030.0,
+      "valid_mjd_upper_exclusive": 38334.0
+    },
+    "SR266": {
+      "not_A1_or_UTC": true,
+      "reported_scale": "A.S._ATOMIC_TIME_NOT_UTC"
+    },
+    "transfer_between_series_authorized": false
+  }
+}
