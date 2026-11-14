@@ -1,0 +1,64 @@
+{
+  "schema": "conde.contemporary_satellite_tracking_bibliography/v1",
+  "id": "C241-LONTRA-R42",
+  "audit_date": "2026-11-14",
+  "status": "PRIMARY_1964_YEARBOOK_REPORTS_HUNGARIAN_STATION_CAPACITY_AND_AMERICAN_SATELLITE_OBSERVATIONS_WITHOUT_TARGET_IDENTITIES",
+  "source": {
+    "kind": "1964_printed_hungarian_yearbook_original_page_facsimile",
+    "title": "Csillagászati évkönyv az 1965. évre",
+    "publisher": "Gondolat Kiadó",
+    "publication_year": 1964,
+    "cover_year": 1965,
+    "repository": "REAL-J, Library and Information Centre of the Hungarian Academy of Sciences",
+    "catalog_url": "https://real-j.mtak.hu/15941/",
+    "url": "https://real-j.mtak.hu/15941/1/csillagaszati_evkonyv_1965.pdf",
+    "http_status": 200,
+    "tls_validated": true,
+    "bytes": 6850486,
+    "sha256": "c76ff17e965af626bbf0f85a3f0f4b1f86b3804ff84e5e5867cf74e8f65039f4",
+    "pdf_pages": 206,
+    "pages": [
+      {"section": "Baja", "printed_page": 109, "pdf_index_zero_based": 110, "visually_inspected": true},
+      {"section": "Baja", "printed_page": 110, "pdf_index_zero_based": 111, "visually_inspected": true},
+      {"section": "Miskolc", "printed_page": 112, "pdf_index_zero_based": 113, "visually_inspected": true}
+    ],
+    "full_pdf_retrieved": true,
+    "instrumental_logs_retrieved": false
+  },
+  "baja": {
+    "report_period": "1963-04-01/1964-04",
+    "reported_positional_observations_per_year": "several thousand, no exact count",
+    "observations_predominantly_visual": true,
+    "reported_chronograph_readout_accuracy_seconds": 0.005,
+    "readout_accuracy_not_per_position_astrometric_error": true,
+    "soviet_supplied_nafa_camera_test_exposures_reported": true,
+    "nafa_scientific_program_in_report_period": false,
+    "nafa_scientific_program_blocker": "lack of suitable film by end of reporting period",
+    "nafa_model_exact_ocr_conflicted_between_pages": true,
+    "interobs_participants_reported": 25,
+    "interobs_western_participants_reported": 2,
+    "december_1963_moscow_meeting": "1963-12-19/1963-12-23",
+    "specific_527_528_529_observation": null
+  },
+  "miskolc": {
+    "report_period": "1963/1964; no precise closing day in the section",
+    "station_activity_since": "1963-05-01",
+    "soviet_and_american_satellites_observed": true,
+    "aggregate_positional_measurements": 218,
+    "instrument": "AT-1 visual telescope modified by Varga Pál by mid-June 1963",
+    "observations_visual_during_period": true,
+    "observations_on_1963_11_07_to_09": null,
+    "american_satellite_target_identity_confirmed": false,
+    "raw_measurement_rows_retrieved": false
+  },
+  "limits": {
+    "target_observations_identified": false,
+    "raw_instrumental_observations_retrieved": false,
+    "november_1963_campaign_confirmed": false,
+    "position_uncertainty_inferred_from_chronograph": false,
+    "orbital_constraints_activated": 0,
+    "new_target_orbital_measurements": 0,
+    "outreach_sent": false
+  },
+  "follow_up": "Prioritize the original Miskolc 1963/1964 visual observation log and Baja visual logs; locate entries 1963-11-07 to 1963-11-09 with original object identifiers, time base, instrument, angles and uncertainties. Continue searching INTEROBS Folge I-II independently. No positive or negative target coverage is inferred from this aggregate report."
+}
