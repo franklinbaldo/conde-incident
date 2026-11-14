@@ -35,6 +35,9 @@ class G54OpticalResidual(unittest.TestCase):
         # Synthetic state: geometric GCRS RA near 360-degree boundary.
         u = np.array([math.cos(math.radians(0.01)), -math.sin(math.radians(0.01)), 0.])
         state = m["teme_to_gcrs"].T @ (station + 1500 * u)
+        cls.IERS_SOURCE = source
+        cls.EOP_RECORD = eop
+        cls.TIME_RECORD = times
         cls.STATE_SOURCE = json.dumps({
             "schema": "TEME_POSITION_ONLY_V1",
             "object_id": "SYNTHETIC_ONLY_NOT_528", "epoch_utc": UTC,
@@ -70,7 +73,8 @@ class G54OpticalResidual(unittest.TestCase):
                 "observation": observed,
             }, sort_keys=True).encode()
         return compare_geometric_gcrs(predicted, observed, source_bytes,
-                                      state_bytes, extraction_bytes)
+                                      state_bytes, extraction_bytes,
+                                      self.IERS_SOURCE, self.EOP_RECORD, self.TIME_RECORD)
 
     def test_g57_extraction_custody_rejects_post_transcription_changes(self):
         d = self.datum()
@@ -119,19 +123,54 @@ class G54OpticalResidual(unittest.TestCase):
         self.assertAlmostEqual(got["residual_east_north_arcsec"][1], 0, places=7)
         self.assertAlmostEqual(got["squared_mahalanobis_2d"], .25, places=5)
 
-    def test_covariance_combination_and_correlations(self):
+    def test_position_only_cannot_smuggle_state_covariance(self):
         d = self.datum()
         p = copy.deepcopy(self.prediction)
-        conv = (180*3600/math.pi)**2
-        p["state_only_angular_covariance_rad2"] = [[1/conv, 0], [0, 1/conv]]
-        d["right_ascension_deg"] = (d["right_ascension_deg"] + 1./3600) % 360
-        got = self.compare(p, d, DOCUMENT, self.STATE_SOURCE)
-        self.assertAlmostEqual(got["combined_covariance_arcsec2"][0][0], 5, places=10)
-        self.assertAlmostEqual(got["combined_covariance_arcsec2"][1][1], 10, places=10)
-        self.assertAlmostEqual(got["squared_mahalanobis_2d"], .2, places=5)
+        conv = (180 * 3600 / math.pi) ** 2
+        p["state_only_angular_covariance_rad2"] = [[1e12 / conv, 0], [0, 1e12 / conv]]
+        d["right_ascension_deg"] = (d["right_ascension_deg"] + 1. / 3600) % 360
+        with self.assertRaisesRegex(ValueError, "Unbound state covariance"):
+            self.compare(p, d, DOCUMENT, self.STATE_SOURCE)
+        # Only source-declared instrument covariance contributes.
+        got = self.compare(self.prediction, d, DOCUMENT, self.STATE_SOURCE)
+        self.assertAlmostEqual(got["squared_mahalanobis_2d"], .25, places=5)
+        self.assertIn("POSITION_ONLY", got["uncertainty_contract"])
         d["instrument_covariance_arcsec2"] = [[4, 5], [5, 4]]
         with self.assertRaisesRegex(ValueError, "positive definite"):
-            self.compare(p, d, DOCUMENT, self.STATE_SOURCE)
+            self.compare(self.prediction, d, DOCUMENT, self.STATE_SOURCE)
+
+    def test_g58_predicted_angles_must_match_replayed_state_and_iers(self):
+        d = self.datum()
+        got = self.compare(self.prediction, d, DOCUMENT, self.STATE_SOURCE)
+        self.assertEqual(got["prediction_binding"],
+                         "REPLAYED_FROM_ORIGINAL_TEME_AND_IERS_BYTES")
+        for name, shift in (("right_ascension_deg", 1 / 3600),
+                            ("declination_deg", 1 / 3600)):
+            changed = copy.deepcopy(self.prediction)
+            changed[name] += shift
+            with self.subTest(name=name), self.assertRaisesRegex(
+                    ValueError, "differ from original IERS/state replay"):
+                self.compare(changed, d, DOCUMENT, self.STATE_SOURCE)
+
+    def test_g58_original_iers_and_derived_time_records_are_checked(self):
+        d = self.datum()
+        with self.assertRaises(ValueError):
+            compare_geometric_gcrs(self.prediction, d, DOCUMENT, self.STATE_SOURCE,
+                json.dumps({"schema": EXTRACTION_SCHEMA,
+                            "evidence_class": "SYNTHETIC_SCENARIO",
+                            "observation": d}, sort_keys=True).encode(),
+                self.IERS_SOURCE+b"X", self.EOP_RECORD, self.TIME_RECORD)
+        shifted = copy.deepcopy(self.TIME_RECORD)
+        # Prevent a different EOP/time record from changing a prediction without
+        # authenticating the same full historical source.
+        changed_key = next(iter(shifted))
+        shifted[changed_key] = {"tampered": True}
+        with self.assertRaises(ValueError):
+            compare_geometric_gcrs(self.prediction, d, DOCUMENT, self.STATE_SOURCE,
+                json.dumps({"schema": EXTRACTION_SCHEMA,
+                            "evidence_class": "SYNTHETIC_SCENARIO",
+                            "observation": d}, sort_keys=True).encode(),
+                self.IERS_SOURCE, self.EOP_RECORD, shifted)
 
     def test_historical_catalogues_and_clock_bias_fail_closed(self):
         d = self.datum()
@@ -200,7 +239,7 @@ class G54OpticalResidual(unittest.TestCase):
             self.compare(self.prediction, d, DOCUMENT, self.STATE_SOURCE)
         p = copy.deepcopy(self.prediction)
         p["state_only_angular_covariance_rad2"] = [[1e-10, 0], [0, -1e-10]]
-        with self.assertRaisesRegex(ValueError, "positive semidefinite"):
+        with self.assertRaisesRegex(ValueError, "Unbound state covariance"):
             self.compare(p, self.datum(), DOCUMENT, self.STATE_SOURCE)
 
 
