@@ -1,0 +1,43 @@
+name: C241-L61 SAO P17 Nov-1963 clock custody
+
+on:
+  pull_request:
+    paths:
+      - "research/tle_custody/sao_p17_nov_clock_C241-L61.*"
+      - "tools/tle_sao_p17_wwv_step_c241_l61.py"
+      - "tests/test_tle_sao_p17_wwv_step_c241_l61.py"
+      - ".github/workflows/tle-sao-p17-clock-c241-l61.yml"
+  push:
+    branches: [main]
+    paths:
+      - "research/tle_custody/sao_p17_nov_clock_C241-L61.*"
+      - "tools/tle_sao_p17_wwv_step_c241_l61.py"
+      - "tests/test_tle_sao_p17_wwv_step_c241_l61.py"
+      - ".github/workflows/tle-sao-p17-clock-c241-l61.yml"
+  workflow_dispatch:
+
+jobs:
+  historical-clock-contract:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact tested SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: astral-sh/setup-uv@v6
+      - name: Adversarial tests (normal and -O)
+        run: |
+          python -m unittest discover -s tests -p 'test_tle_sao_p17_wwv_step_c241_l61.py' -v
+          python -O -m unittest discover -s tests -p 'test_tle_sao_p17_wwv_step_c241_l61.py' -v
+      - name: Replay immutable P17 original
+        run: |
+          curl -fLsS --retry 2 --max-time 120 'https://ntrs.nasa.gov/api/citations/19680020675/downloads/19680020675.pdf' -o /tmp/sao-p17.pdf
+          uv run --with pypdf==6.1.3 python tools/tle_sao_p17_wwv_step_c241_l61.py --pdf /tmp/sao-p17.pdf --mjd 38341

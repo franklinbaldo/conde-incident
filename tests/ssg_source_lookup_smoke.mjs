@@ -56,6 +56,17 @@ try {
       assert.match(await page.locator('main').innerText(),/ocorrência|evidência|arquivo/i);
       await page.goBack({waitUntil:'networkidle'});
       await page.locator('#source-lookup-form').waitFor({state:'visible'});
+      // Verify the full, no-JS source profile is really reachable from the
+      // hash-verified reverse lookup, including on a narrow viewport.
+      const profile=page.getByRole('link',{name:/Abrir ficha documental estática de/});
+      assert.equal(await profile.count(),1);
+      const profilePath=await profile.getAttribute('href');
+      assert.match(profilePath,/^\/conde-incident\/evidencias\/arquivo\/fontes\/[a-z0-9-]+\/$/);
+      await profile.click();
+      await page.waitForURL(new RegExp(profilePath.replaceAll('/','\\/')));
+      assert.match(await page.locator('main').innerText(),/Identificador de fonte|Fonte|referência/i);
+      await page.goBack({waitUntil:'networkidle'});
+      await page.locator('#source-lookup-form').waitFor({state:'visible'});
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true,
         'source lookup has horizontal overflow at '+width+'px');
       assert.deepEqual(errors,[],'script errors');
@@ -86,5 +97,10 @@ try {
     await page.goto(url,{waitUntil:'domcontentloaded'});
     assert.equal(await page.locator('#source-lookup-form').isVisible(),false);
     assert.equal(await page.getByRole('link',{name:/arquivo documental estático/i}).count(),1);
+    const sourceIndex=page.getByRole('link',{name:/identificadores de fontes/i});
+    assert.equal(await sourceIndex.count(),1);
+    await sourceIndex.click();
+    await page.waitForURL(/\/evidencias\/arquivo\/fontes\/$/);
+    assert.match(await page.locator('main').innerText(),/Identificadores de fontes/i);
   } finally {await noJs.close();}
 } finally {await browser.close();}

@@ -1,0 +1,98 @@
+{
+  "schema": "conde.fragment-archive-route/v1",
+  "id": "C241-P44",
+  "audit_date_utc": "2026-11-14",
+  "question": "Can identifiable 1963 space-fragment recovery correspondence yield a primary case record for NORAD 528 or Conde, Bahia?",
+  "sources": [
+    {
+      "id": "JAMES-DAVID-2005",
+      "kind": "secondary_scholarly_article_index_and_references",
+      "title": "Was It Really 'Space Junk'? US Intelligence Interest in Space Debris That Returned to Earth",
+      "doi": "10.1080/14777620590933584",
+      "url": "https://www.tandfonline.com/doi/abs/10.1080/14777620590933584",
+      "journal_year": 2005,
+      "online_date": "2006-08-07",
+      "journal_pages": "43-65",
+      "raw_article_pdf_retrieved": false,
+      "source_payload_sha256": null,
+      "access_level": "PUBLISHER_INDEX_REFERENCES_ONLY",
+      "specific_528_or_conde_case_confirmed": false
+    },
+    {
+      "id": "NASM-A19650278001",
+      "kind": "museum_artifact_catalogue",
+      "url": "https://airandspace.si.edu/collection-objects/satellite-tanks-propellant-storage-agena/nasm_A19650278001",
+      "catalogue_accession": "A19650278001",
+      "object": "two Agena D propellant storage tanks",
+      "launch_year": 1962,
+      "recovery_year": 1963,
+      "recovery_months": ["April", "June"],
+      "recovery_place": "Mt. Stuart Station, New South Wales, Australia",
+      "identified_with_norad_528": false,
+      "raw_artifact_examined": false,
+      "source_payload_sha256": null,
+      "specific_528_or_conde_case_confirmed": false
+    }
+  ],
+  "archival_routes": [
+    {
+      "id": "P44-R1",
+      "collection": "Space Fragment Files",
+      "repository": "NASA History Office, Washington, DC",
+      "cited_item": "Briefing Memorandum, 23 February 1968",
+      "source_id": "JAMES-DAVID-2005",
+      "kind": "secondary_citation_to_primary_record",
+      "item_retrieved": false,
+      "case_1963_003_b_confirmed": false,
+      "recommended_lookup": "Request series scope and 1963 Brazil/Conde case inventory; do not assume the 1968 memorandum concerns 1963"
+    },
+    {
+      "id": "P44-R2",
+      "collection": "General Correspondence of National Aeronautics and Space Council Executive Secretary Edward Welsh, 1961-1969",
+      "repository": "NARA Record Group 220, College Park, MD",
+      "box": 17,
+      "cited_item": "Public Statement of Handling of Space Vehicle Fragments; Guidelines for Interagency Handling of Space Vehicle Fragments",
+      "source_id": "JAMES-DAVID-2005",
+      "kind": "secondary_citation_to_primary_record",
+      "item_retrieved": false,
+      "case_1963_003_b_confirmed": false,
+      "recommended_lookup": "Locate the named policy memoranda; policy is not a record of the Conde event"
+    },
+    {
+      "id": "P44-R3",
+      "collection": "General Correspondence of National Aeronautics and Space Council Executive Secretary Edward Welsh, 1961-1969",
+      "repository": "NARA Record Group 220, College Park, MD",
+      "box": 18,
+      "cited_item": "Memorandum for Record, 22 May 1963",
+      "source_id": "JAMES-DAVID-2005",
+      "kind": "secondary_citation_to_primary_record",
+      "item_retrieved": false,
+      "case_1963_003_b_confirmed": false,
+      "recommended_lookup": "Review May-1963 correspondence for administrative pathways; no implication it documents November-1963"
+    },
+    {
+      "id": "P44-R4",
+      "collection": "1960-1963 Central Decimal Files",
+      "repository": "NARA Record Group 59, College Park, MD",
+      "box": 2989,
+      "cited_item": "CW-9986, 14 June 1962",
+      "source_id": "JAMES-DAVID-2005",
+      "kind": "secondary_citation_to_primary_record",
+      "item_retrieved": false,
+      "case_1963_003_b_confirmed": false,
+      "recommended_lookup": "Inspect interagency fragment-routing precedent; document predates the target launch"
+    }
+  ],
+  "classification": {
+    "stage": "ARCHIVAL_FINDING_AID_CANDIDATES_NOT_CASE_EVIDENCE",
+    "publisher_index_not_primary_paper": true,
+    "museum_1962_launch_is_not_1963_003": true,
+    "institutional_leads_count": 4,
+    "source_works_count": 2,
+    "primary_case_files_retrieved": 0,
+    "observations_of_527_528_529_added": 0,
+    "sensor_epochs_utc_added": 0,
+    "physical_constraints_activated": 0,
+    "theta_effect": "UNCHANGED"
+  }
+}

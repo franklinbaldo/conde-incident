@@ -26,10 +26,18 @@ export function sourceLookupUrl(href,id){
   return url.pathname+url.search+url.hash;
 }
 
+// Mirror the SSG archive's sourceSlug, without trusting an arbitrary URL or ID.
+// Every destination is already materialized by the static archive generator.
+export function sourceArchiveUrl(id){
+  if(typeof id!=='string' || !/^[A-Z][A-Z0-9_]{1,95}$/.test(id))
+    throw Error('Identificador de fonte inválido');
+  return PREFIX+'evidencias/arquivo/fontes/'+id.toLowerCase().replaceAll('_','-')+'/';
+}
+
 export function referenceView(source){
-  if(!source || typeof source.source_id!=='string' ||
-     typeof source.source_family!=='string' || !Array.isArray(source.references))
-    throw Error('Fonte incompatível');
+  if(!source || typeof source.source_family!=='string' ||
+     !Array.isArray(source.references)) throw Error('Fonte incompatível');
+  sourceArchiveUrl(source.source_id);
   return source.references.map(ref=>{
     const expected='/conde-incident/evidencias/arquivo/'+
       String(ref.occurrence).toLowerCase().replace('#','-')+'/';
@@ -70,6 +78,14 @@ export async function mountSourceLookup(doc=document, loader=loadCondeSourceLook
     results.append(textElement('h2','Fonte '+source.source_id));
     results.append(textElement('p','Família documental: '+source.source_family+'. '+
       refs.length+' vínculo(s) curado(s), não contagem de observações físicas independentes.'));
+    // The static profile carries document URLs, statuses and locators that the
+    // compact reverse-index deliberately does not duplicate in its shard.
+    const profile=doc.createElement('p');
+    const profileLink=doc.createElement('a');
+    profileLink.href=sourceArchiveUrl(source.source_id);
+    profileLink.textContent='Abrir ficha documental estática de '+source.source_id;
+    profile.append(profileLink);
+    results.append(profile);
     const list=doc.createElement('ol');
     for(const ref of refs){
       const li=doc.createElement('li');
