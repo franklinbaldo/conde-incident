@@ -18,7 +18,16 @@ import math
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 import numpy as np
-from scipy.special import ndtr
+try:
+    from scipy.special import ndtr
+except ModuleNotFoundError:
+    # Universal CI may test this module before installing optional SciPy.
+    # Slow but accurate standard-library fallback; full 1.5m workflow pins SciPy.
+    def ndtr(z):
+        a=np.asarray(z,dtype=np.float64)
+        values=np.fromiter((.5*math.erfc(-float(x)/math.sqrt(2))
+                            for x in a.flat),dtype=np.float64,count=a.size)
+        return values.reshape(a.shape)
 
 ROOT=Path(__file__).resolve().parents[1]
 TLE=ROOT/"research/tle_custody/mirror_528_1963-10-27.tle"
