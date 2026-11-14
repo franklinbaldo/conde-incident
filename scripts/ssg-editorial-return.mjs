@@ -5,7 +5,7 @@ const editorialReturns = new Map([
 ]);
 export const returnToStory = occurrence => {
   const context=editorialReturns.get(occurrence);
-  return context ? `[Voltar à reportagem: ${context.label}](/conde-incident/stories/2026-11-12-a-resposta-que-veio-de-salvador/#${context.anchor})` : null;
+  return context ? `[Voltar à reportagem: ${context.label}](/conde-incident/stories/2026-11-12-a-resposta-que-veio-de-salvador/#${context.anchor})\n\n${returnToDossier(occurrence)}` : null;
 };
 
 // Return path for the two occurrences that are actually discussed in the opening dossier.
