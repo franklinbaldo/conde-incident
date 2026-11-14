@@ -67,11 +67,18 @@ try {
     if (viewport.width < 768) {
       const chooser = sections.locator('summary');
       assert.match(await chooser.innerText(), /Explorar 8 seções[\s\S]*Síntese e limites/);
+      assert.equal(await sections.locator('[data-mobile-tabs]').isVisible(), false,
+        'closed mobile menu must not expose hidden links');
       await chooser.click();
+      assert.equal(await sections.locator('[data-mobile-tabs]').isVisible(), true);
       assert.equal(await sections.locator('[data-mobile-tabs] a').count(), 8);
     }
     await sections.getByRole('link', { name: /Rastreamento & Mapa/ }).click();
-    if (viewport.width < 768) assert.equal(await sections.locator('details').getAttribute('open'), null);
+    if (viewport.width < 768) {
+      assert.equal(await sections.locator('details').getAttribute('open'), null);
+      assert.equal(await sections.locator('[data-mobile-tabs]').isVisible(), false,
+        'mobile navigation must hide its list after following a section link');
+    }
     assert.equal(new URL(page.url()).hash, '#/map');
     // Hash changes synchronously; React state and aria-current update on a later tick.
     await page.waitForFunction(() => document.querySelector('nav a[aria-current="page"]')?.textContent?.includes('Rastreamento & Mapa'));
@@ -261,6 +268,24 @@ try {
         await page.getByRole('heading', { level: 1, name: heading }).waitFor();
         assert.equal(await page.getByRole('main').getByRole('heading', { level: 1 }).count(), 1,
           `route ${route} must expose exactly one main H1 (${viewport.name}, ${locale})`);
+        if (route === 'sensitivity') {
+          const sliders = await page.locator('input[type="range"]').evaluateAll(inputs =>
+            inputs.map(input => ({
+              id: input.id,
+              label: input.labels?.[0]?.textContent?.trim(),
+            }))
+          );
+          assert.equal(sliders.length, 3, 'expected three physical sensitivity controls');
+          assert(sliders.every(slider => slider.id && slider.label),
+            'all physical sliders must have programmatically associated visible labels');
+          await page.addStyleTag({ content: ':root { font-size: 200% !important; }' });
+          const reflow = await page.evaluate(() => ({
+            viewport: document.documentElement.clientWidth,
+            scroll: document.documentElement.scrollWidth,
+          }));
+          assert(reflow.scroll <= reflow.viewport + 1,
+            `sensitivity has horizontal overflow at 200% text (${viewport.name}, ${locale}): ${JSON.stringify(reflow)}`);
+        }
       }
     }
 
