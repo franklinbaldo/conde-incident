@@ -1,0 +1,66 @@
+{
+  "id": "C241-LONTRA-R52",
+  "evidence_class": "CATALOG_AND_COMMERCIAL_INVENTORY_ONLY",
+  "audit_date_utc": "2026-11-14",
+  "predecessor_id": "C241-LONTRA-R51",
+  "target": {
+    "title": "STL Space Log",
+    "volume": 3,
+    "issue": 4,
+    "year": 1963,
+    "physical_original_retrieved": false,
+    "original_pages_inspected": false,
+    "original_page_count": null,
+    "original_pdf_sha256": null,
+    "perigee_apogee_units_from_original": null
+  },
+  "sources": [
+    {
+      "id": "R52-S1",
+      "role": "secondary_commercial_inventory",
+      "url": "https://www.bolerium.com/pages/books/275244/space-log-26-issues",
+      "statement": "Oferta de 26 fasciculos; lista explicitamente v.3 nos. 1, 2, 4.",
+      "web_index_read": true,
+      "jatoba_http_code": 429,
+      "source_payload_sha256": null,
+      "facsimile_retrieved": false,
+      "independent_instrumental_observation": false
+    },
+    {
+      "id": "R52-S2",
+      "role": "digitized_bibliographic_record_snippet_only",
+      "url": "https://books.google.com/books?id=uUhwtQJoegAC",
+      "statement": "TRW Space Log, Volume 3; 1963; original da University of Colorado Boulder, digitalizado em 2023-05-09. A ficha NAO confirma inclusao do fasciculo 4.",
+      "web_index_read": true,
+      "jatoba_http_code": 200,
+      "source_payload_sha256": null,
+      "facsimile_retrieved": false,
+      "contains_issue_4": null,
+      "independent_instrumental_observation": false
+    },
+    {
+      "id": "R52-S3",
+      "role": "previously_verified_nasa_reproduction",
+      "url": "https://ntrs.nasa.gov/api/citations/19670008638/downloads/19670008638.pdf",
+      "linked_evidence_id": "C241-LONTRA-R51",
+      "printed_page": "B-12",
+      "statement": "Reproducao NASA credita STL Space Log v.3 n.4; nao e o fasciculo STL original.",
+      "new_bytes_retrieved_in_this_round": false,
+      "facsimile_retrieved_this_round": false,
+      "independent_instrumental_observation": false
+    }
+  ],
+  "limitations": {
+    "original_fascicle_access": "NOT_RETRIEVED",
+    "original_units_verified": false,
+    "google_books_issue_4_contents_verified": false,
+    "commercial_inventory_proves_current_archival_access": false,
+    "commercial_index_http429_is_not_absence": true,
+    "direct_stl_to_soviet_1964_copying_demonstrated": false,
+    "observations_527_528_529_1963_11_07_to_09": 0,
+    "independent_instrumental_sensors_added": 0,
+    "new_orbital_constraints_activated": 0,
+    "external_institution_contact_sent": false
+  },
+  "next_step": "Recuperar pagina/legenda do exemplar original v3 n4, verificando unidade, data e fonte da tabela; testar se Google Books v3 inclui o n4 antes de atribuir paginas."
+}
