@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {referenceView} from '../static/js/ssg-source-lookup-ui.mjs';
+import {referenceView,sourceFromUrl,sourceLookupUrl} from '../static/js/ssg-source-lookup-ui.mjs';
 
 const page=readFileSync('pages/evidencias/fontes/page.md','utf8');
 const loader=readFileSync('static/js/ssg-source-lookup-loader.mjs','utf8');
@@ -38,4 +38,20 @@ test('page is progressive, CSP-local and explicitly limits inference',()=>{
   assert.doesNotMatch(ui,/\.innerHTML\s*=/);
   assert.match(loader,/shard-digest/);
   assert.match(loader,/mixed-snapshot/);
+});
+
+test('shareable reverse-source selection trusts only verified IDs, preserves unrelated URL state',()=>{
+  const known=new Map(index.sources.map(s=>[s.source_id,s]));
+  const id=index.sources[0].source_id;
+  const base='https://example.org/conde-incident/evidencias/fontes/?lang=pt#consultar';
+  const link=sourceLookupUrl(base,id);
+  assert.equal(link,'/conde-incident/evidencias/fontes/?lang=pt&source='+encodeURIComponent(id)+'#consultar');
+  assert.deepEqual(sourceFromUrl('https://example.org'+link,known),{id,invalid:false});
+  assert.deepEqual(sourceFromUrl(base,known),{id:'',invalid:false});
+  assert.deepEqual(sourceFromUrl(base.replace('?lang=pt','?source=NAO-EXISTE&lang=pt'),known),
+    {id:'',invalid:true});
+  assert.deepEqual(sourceFromUrl(base.replace('?lang=pt','?source=%3Cscript%3E&lang=pt'),known),
+    {id:'',invalid:true});
+  assert.equal(sourceLookupUrl('https://example.org'+link,''),
+    '/conde-incident/evidencias/fontes/?lang=pt#consultar');
 });
