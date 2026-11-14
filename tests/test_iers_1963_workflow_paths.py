@@ -10,6 +10,8 @@ REQUIRED = {
     'research/constraints/iers_1963_optical_lighttime_G60.md',
     'research/constraints/iers_1963_optical_retarded_covariance_G61.md',
     'tests/test_iers_1963_workflow_paths.py',
+    'tests/test_iers_1963_lighttime_accel.py',
+    'research/constraints/iers_1963_acceleration_sensitivity_G63.md',
 }
 
 
@@ -38,6 +40,10 @@ def assert_replay_paths(source):
             raise AssertionError(f'{event}: missing source-only trigger paths: {sorted(missing)}')
     if "python3 -m unittest discover -s tests -p 'test_iers_1963_optical.py' -v" not in source:
         raise AssertionError('Original IERS optical test replay command missing')
+    if "python3 -m unittest discover -s tests -p 'test_iers_1963_lighttime_accel.py' -v" not in source:
+        raise AssertionError('G63 acceleration sensitivity regression must execute')
+    if "python3 -O -m unittest discover -s tests -p 'test_iers_1963_lighttime_accel.py' -v" not in source:
+        raise AssertionError('G63 accelerated regression must also execute with -O')
     if "python3 -m unittest discover -s tests -p 'test_iers_1963_workflow_paths.py' -v" not in source:
         raise AssertionError('Source-only trigger regression must execute')
 
