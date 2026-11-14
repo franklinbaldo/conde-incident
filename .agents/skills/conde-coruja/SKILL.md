@@ -57,3 +57,12 @@ Fonte de verdade: [Conde #885](https://github.com/franklinbaldo/conde-incident/i
 
 ## Fronteiras
 Nenhuma história sem delta. Incompatibilidade de fonte ou cálculo contrário à hipótese é notícia tão válida quanto confirmação.
+
+
+## Local definitivo das linhas narrativas (14/11/2026)
+
+- A pauta e as fichas de **linhas narrativas** ficam em `research/editorial/` (OKF `type: Guide`), **fora** do conteúdo publicado pelo SSG. A primeira oficina comparativa está em [`coruja-linhas-narrativas-20261114.md`](../../research/editorial/coruja-linhas-narrativas-20261114.md). A criação dessa ficha **não é publicação** nem autoriza novo capítulo em `stories/`.
+- Em rodada sem capítulo, abrir/manter **8 a 12 linhas concorrentes** com frase-foco, X/Y, E/Mas/Portanto; comparar personagem, virada, cena concreta, retorno a Conde, tema e lastro numa escala editorial 0–3. Escolher só depois de comparar; conservar linhas perdedoras e bloqueios.
+- Para linha candidata, grafo Mermaid de 6 ou mais batidas curtas com `DOC <ID>`, `INF` e `FALTA`; exigir **≥50% `DOC`**, cada um ancorado em fonte, identificando quando vários nós dependem do mesmo registro. Sem tornar `INF` ou `FALTA` fatos em prosa.
+- Atingir metade `DOC` é **condição necessária, não suficiente**: a linha também precisa ser história completa, de fonte acessível e pertinente a Conde. Publicar no máximo **um capítulo novo por data local de Porto Velho** e nenhum quando o lastro não permitir. Para documentação de #887, a 🦀 Caranguejo permanece responsável pelo corpus e taxas-base; a Coruja só transforma resultado validado em linha.
+- Preferir **nenhuma mudança em `stories/`** nas rodadas de apuração/planejamento; manter sempre o texto histórico publicado e suas URLs intactos.
