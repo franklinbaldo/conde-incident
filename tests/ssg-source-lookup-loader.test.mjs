@@ -148,3 +148,9 @@ test('malformed base URL returns a typed integrity failure, not a raw URL except
     fetcher:()=>assert.fail('should not fetch'),hashBytes}),
   e=>e instanceof SourceLookupIntegrityError && e.code==='invalid-base-url');
 });
+
+test('null source record fails typed, before building UI Map',async()=>{
+  const index=JSON.parse(stock.get(shardPath));
+  index.sources[0]=null;
+  await fails(resealed(index),'index-shape');
+});
