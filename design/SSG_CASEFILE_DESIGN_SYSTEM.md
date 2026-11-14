@@ -31,3 +31,5 @@ Uma ocorrência por ID não converte documento em evento físico. Classes de evi
 Migrações posteriores devem preservar URLs, fonte canônica, links de retorno e paridade científica. Não retirar React ou cálculos TypeScript antes de comparar saídas com alternativas SSG + JS/WASM por ferramenta. O cabeçalho global é responsabilidade da Raposa e já tem PR específica #860; esta implementação não modifica menus nem roteadores.
 
 **Checks mínimos:** contrato Node do conteúdo, HTML gerado, build SSG real, ssg audit, largura 320/375/1440px no Chromium com JS desligado, teclado e contraste. Zoom nativo e leitor de tela só podem ser marcados PASS se efetivamente executados. Build verde não é prova de publicação atualizada.
+
+**Lição do build:** usar seções com títulos para os cartões. Elementos article internos fizeram o gerador classificar indevidamente a rota como Article, cujo gate JSON-LD exige autoria e data de publicação. A estrutura com section mantém a Page como WebPage e passa no auditor sem fabricar metadados históricos.
