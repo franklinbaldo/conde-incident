@@ -10,7 +10,7 @@ from export_soviet_nasa_dependency_bridge import render as render_r49
 
 ROOT = Path(__file__).resolve().parents[1]
 R51_PATH = 'research/tle_custody/stl_space_log_nasa_r51.json'
-R51_SHA = '18cdbed4e9a2d31d3b402b4456f547c3902bbcb0ecfc992efe4c4c3a3a24bcb5'
+R51_SHA = '2943e1f0a1ea6b4267f95a9ff14c022a55f7b4b0a7132cf5b37a489480bcf7e9'
 R49_PATH = 'public/data/conde-soviet-nasa-dependency-bridge.json'
 R49_SHA = 'e68cedb94fcff2e88db2ef81214ef2d5d279616bef24f7d9a05bcab90552782d'
 OUT = ROOT / 'public/data/conde-stl-space-log-dependency-bridge.json'
@@ -38,7 +38,7 @@ def read_pinned(root, path, sha):
 def load(root=ROOT):
     r51 = read_pinned(root, R51_PATH, R51_SHA)
     r49 = read_pinned(root, R49_PATH, R49_SHA)
-    require(audit_stl(r51) == 'EDITORIAL_REPRODUCTION_UNITS_PENDING_ZERO_CONSTRAINTS', 'R51 audit')
+    require(audit_stl(r51) == 'EDITORIAL_REPRODUCTION_MILES_PRINTED_SUBTYPE_PENDING_ZERO_CONSTRAINTS', 'R51 audit')
     require((root / R49_PATH).read_bytes() == render_r49(), 'upstream R49 regeneration drift')
     return r51, r49
 
@@ -57,7 +57,7 @@ def build(r51, r49):
     row = r51['printed_row']
     interpretation = r51['scientific_interpretation']
     require(row['international_designation_as_printed'] == '1963 3A', 'R51 print target')
-    require(row['perigee_apogee_unit_on_b12'] is None, 'unknown altitude unit')
+    require(row['perigee_apogee_unit_on_b12'] == 'miles' and row['mile_variant_as_printed'] is None, 'documented miles, unresolved subtype')
     require(row['individual_measurement_utc'] is None and row['station_or_instrument'] is None
             and row['observational_uncertainty'] is None, 'no raw observation')
     require(interpretation['candidate_upstream_proven'] is False
@@ -69,14 +69,14 @@ def build(r51, r49):
         edge('DOC:NASA-TMX59315:B12', 'WORK:STL-SPACE-LOG:v3:n4', 'EXPLICIT_REPRODUCTION_CREDIT'),
         edge('WORK:STL-SPACE-LOG:v3:n4', 'LATENT:STL_ORIGINAL_ISSUE', 'ORIGINAL_NOT_YET_RECOVERED'),
         edge('DOC:NASA-TMX59315:B12', 'DATUM:1963_3A_JAN31_PRINTED_PAIRS', 'PAIRS_NOT_INDEPENDENT_SENSORS'),
-        edge('DATUM:1963_3A_JAN31_PRINTED_PAIRS', 'LATENT:altitude_unit', 'PAGE_B12_UNIT_UNVERIFIED'),
+        edge('DATUM:1963_3A_JAN31_PRINTED_PAIRS', 'LATENT:mile_subtype', 'PAGE_B12_MILES_SUBTYPE_NOT_PRINTED'),
         edge('DATUM:1963_3A_JAN31_PRINTED_PAIRS', 'LATENT:pair_semantics', 'TWO_PRINTED_VALUES_WITH_UNKNOWN_MAPPING'),
         edge('DATUM:1963_3A_JAN31_PRINTED_PAIRS', 'H:JANUARY_PRINT_CONTEXT_ONLY', 'NOVEMBER_528_NOT_OBSERVED'),
         edge('C241-LONTRA-R49', 'H:SHARED_EDITORIAL_UPSTREAM', 'PRIOR_SOVIET_NASA_CANDIDATE'),
         edge('WORK:STL-SPACE-LOG:v3:n4', 'H:SHARED_EDITORIAL_UPSTREAM', 'STL_ANCESTRY_UNTESTED_FOR_SOVIET_TABLE'),
         edge('H:SHARED_EDITORIAL_UPSTREAM', 'LATENT:upstream_publication', 'NO_STL_ORIGINAL_OR_CHAIN_TO_BSE'),
         edge('H:JANUARY_PRINT_CONTEXT_ONLY', 'MODEL:orbital_cross_epoch', 'DIFFERENT_EPOCHS_NO_TRANSFER'),
-        edge('LATENT:altitude_unit', 'MODEL:orbital_cross_epoch', 'UNITS_REQUIRED_BEFORE_COMPARISON'),
+        edge('LATENT:mile_subtype', 'MODEL:orbital_cross_epoch', 'MILE_VARIANT_REQUIRED_BEFORE_NUMERIC_CONVERSION'),
         edge('MODEL:orbital_cross_epoch', 'LEAN:candidateStlEpochAndUnitConsistency', 'PREMISES_MISSING_NOT_COMPILED'),
         edge('LEAN:candidateStlEpochAndUnitConsistency', 'PARAM:orbit_prior_527', 'CANDIDATE_NOT_ACTIVATED'),
         edge('H:JANUARY_PRINT_CONTEXT_ONLY', 'PARAM:orbit_prior_528', 'NO_528_MEASUREMENT'),
@@ -86,7 +86,7 @@ def build(r51, r49):
         for key, unit in (
             ('LATENT:STL_ORIGINAL_ISSUE', 'verified_original_edition_id'),
             ('LATENT:upstream_publication', 'cited_historical_publication'),
-            ('LATENT:altitude_unit', 'km_or_mi_with_original_legend'),
+            ('LATENT:mile_subtype', 'statute_or_nautical_definition_not_printed'),
             ('LATENT:pair_semantics', 'initial_vs_later_or_other_source'),
             ('LATENT:observational_utc', 'UTC'),
             ('LATENT:station', 'instrument_id'),
@@ -111,12 +111,14 @@ def build(r51, r49):
         'source_epoch_context': 'initial_orbital_data_as_of_1963_01_31',
         'pair_mapping_proven': False,
         'printed_values': {'period_min': row['period_minutes_in_printed_order'],
-                           'perigee_unverified_unit': row['perigee_altitudes_in_printed_order'],
-                           'apogee_unverified_unit': row['apogee_altitudes_in_printed_order'],
+                           'perigee_miles_as_printed': row['perigee_altitudes_in_printed_order'],
+                           'apogee_miles_as_printed': row['apogee_altitudes_in_printed_order'],
                            'inclination_deg': row['inclinations_degrees_in_printed_order']},
-        'altitude_unit_verified': None,
+        'altitude_unit_verified': 'miles',
+        'altitude_mile_subtype_verified': None,
+        'altitude_unit_evidence': 'NASA_TM_X59315_B12_FOOTER_PDF_PAGE_105',
         'diagnostics': {'two_body_km_interpretation_consistent': False,
-                        'statute_miles_candidate_not_documented': True,
+                        'statute_mile_subtype_not_printed': True,
                         'is_instrumental_measurement': False},
         'other_norad_candidates': [
             {'norad_id': n, 'observation_utc': None, 'physical_constraint': None,
@@ -135,7 +137,7 @@ def build(r51, r49):
         'new_activated_physical_constraints': 0,
         'activation': False,
         'physical_domain_effect': 'THETA_UNCHANGED',
-        'next_falsifiable_test': 'Recover STL Space Log vol.3 no.4 original and its units/paired-column legend, then trace dated publications of 1963 orbital elements to the BSE 1964 page 503; reject any transfer to NORAD 528 without dated instrumental target identification.',
+        'next_falsifiable_test': 'Recover STL Space Log vol.3 no.4 original and its mile subtype/paired-column legend, then trace dated publications of 1963 orbital elements to the BSE 1964 page 503; reject any transfer to NORAD 528 without dated instrumental target identification.',
     }
 
 
