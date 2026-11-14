@@ -46,7 +46,7 @@ export function renderTleCustody(raw) {
     '- **Época inscrita na linha 1:** `'+epoch+'` (ano de 1963, dia ordinal 300 com fração; não é hora de reentrada).',
     '- **RAAN inscrito na linha 2:** `'+raan+'°` (valor do espelho, não medição independente).', '',
     '## Linhas verificadas apenas quanto à sintaxe', '',
-    '```text',first,second,'```','',
+    '<pre class="tle-source-lines" tabindex="0" role="region" aria-label="Duas linhas do TLE secundário NORAD 528; rolagem horizontal"><code>'+first+'\n'+second+'</code></pre>','',
     '| Linha | Comprimento | Dígito no arquivo | Dígito recalculado | Inspeção sintática |',
     '|:--|--:|--:|--:|:--|',
     ...lines.map((line,i)=>{
