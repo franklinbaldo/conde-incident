@@ -1,0 +1,31 @@
+name: CGEO-51 NARA research-room reproduction policy
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo51_nara_copy_access.json'
+      - 'research/geo/CGEO51_NARA_COPY_ACCESS.md'
+      - 'research/geo/cgeo50_nara_locator_search.json'
+      - 'tools/cgeo51_nara_copy_access.py'
+      - 'tests/test_cgeo51_nara_copy_access.py'
+      - '.github/workflows/cgeo51-nara-copy-access.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Exact head gate
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+      - name: Offline contract and adversarial tests normal and optimized
+        run: |
+          python3 tools/cgeo51_nara_copy_access.py
+          python3 -m unittest discover -s tests -p 'test_cgeo51_nara_copy_access.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_cgeo51_nara_copy_access.py' -v
+      - name: Replay authoritative online access policies
+        run: python3 tools/cgeo51_nara_copy_access.py --live
