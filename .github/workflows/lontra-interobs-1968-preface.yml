@@ -1,0 +1,39 @@
+name: Lontra INTEROBS 1968 closure preface archival audit
+on:
+  pull_request:
+    paths:
+      - 'research/tle_custody/*LONTRA-R40*'
+      - 'research/tle_custody/interobs_1968_closure_preface_C241-LONTRA-R40.json'
+      - 'tools/verify_interobs_1968_preface.py'
+      - 'tests/test_interobs_1968_preface.py'
+      - '.github/workflows/lontra-interobs-1968-preface.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/tle_custody/*LONTRA-R40*'
+      - 'research/tle_custody/interobs_1968_closure_preface_C241-LONTRA-R40.json'
+      - 'tools/verify_interobs_1968_preface.py'
+      - 'tests/test_interobs_1968_preface.py'
+      - '.github/workflows/lontra-interobs-1968-preface.yml'
+  workflow_dispatch:
+jobs:
+  custody:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Check exact HEAD
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Manifest adversarial tests, normal and optimized
+        run: |
+          python3 -m unittest discover -s tests -p 'test_interobs_1968_preface.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_interobs_1968_preface.py' -v
+      - name: Replay primary three-page PDF from MTA repository
+        run: |
+          python3 -m pip install 'pypdf==6.4.0'
+          curl --fail --show-error --silent --location --retry 2 --max-time 120 \
+            'https://real.mtak.hu/143828/1/vorwort_interobs_programs.pdf' -o /tmp/interobs-preface-1968.pdf
+          python3 tools/verify_interobs_1968_preface.py --pdf-original /tmp/interobs-preface-1968.pdf
+          python3 -O tools/verify_interobs_1968_preface.py --pdf-original /tmp/interobs-preface-1968.pdf
