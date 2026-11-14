@@ -81,6 +81,28 @@ test('reject undocumented atmospheric density and nonphysical controls', () => {
   assert.throws(() => propagate(circular, 10, 1, NaN));
 });
 
+test('G74 rejects invalid initial phase space even on zero-duration and threshold fast paths', () => {
+  const invalid = [
+    { ...circular, vKmS: [NaN, 0, 0] },
+    { ...circular, rKm: [EARTH.radiusKm + 50, 0, 0], vKmS: [Infinity, 0, 0] },
+    { ...circular, tS: NaN },
+    { ...circular, rKm: [0, 0, 0] },
+    { ...circular, rKm: [1e200, 0, 0] },
+    { ...circular, vKmS: [1e200, 0, 0] },
+    { ...circular, rKm: null },
+  ];
+  for (const state of invalid) {
+    for (const durationS of [0, 15])
+      assert.throws(() => propagate(state, durationS, 5, 80),
+        /Invalid initial osculating state/);
+  }
+  const below = { ...circular, rKm: [EARTH.radiusKm + 60, 0, 0] };
+  assert.deepEqual(propagate(below, 0, 5, 80),
+    {state: below, event: 'reentry-threshold', steps: 0});
+  assert.deepEqual(propagate(circular, 0, 5, 80),
+    {state: circular, event: 'elapsed', steps: 0});
+});
+
 test('seeded ensemble repeats exactly and remains coupled to its state', () => {
   const a = propagateEnsemble(circular, 1963, 8, 0.004, 1000, 10, 80, { j2: true });
   const b = propagateEnsemble(circular, 1963, 8, 0.004, 1000, 10, 80, { j2: true });

@@ -149,6 +149,16 @@ export function propagate(
       !Number.isSafeInteger(Math.ceil(durationS / stepS)) || Math.ceil(durationS / stepS) > 1_000_000) {
     throw new RangeError('Invalid duration, step or explicit reentry threshold');
   }
+  // Validate before the zero-duration or below-threshold fast paths. Otherwise
+  // an invalid state can be returned as a seemingly successful physical result.
+  // The guard matches the finite phase-space domain used by RK4 itself.
+  if (!initial || !Array.isArray(initial.rKm) || !finiteVec(initial.rKm) ||
+      !Array.isArray(initial.vKmS) || !finiteVec(initial.vKmS) ||
+      !Number.isFinite(initial.tS) ||
+      !Number.isFinite(norm(initial.rKm)) ||
+      !Number.isFinite(norm(initial.vKmS)) ||
+      !(norm(initial.rKm) > EARTH.radiusKm * 0.5))
+    throw new RangeError('Invalid initial osculating state');
   // A threshold is a stopping convention, NOT a measured breakup or impact altitude.
   if (altitudeKm(initial) <= terminationAltitudeKm) return { state: initial, event: 'reentry-threshold', steps: 0 };
   let current = initial;
