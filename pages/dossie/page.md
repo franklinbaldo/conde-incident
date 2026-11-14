@@ -42,7 +42,7 @@ canonical_route: "/conde-incident/dossie/"
     <p class="cf-kicker">Duas fontes contemporâneas, funções diferentes</p>
     <h2 id="cf-fontes-title">O que os registros permitem afirmar</h2>
     <div class="cf-cards">
-      <article class="cf-card">
+      <section class="cf-card">
         <p class="cf-type">Registro de circulação de notícia · C01#1</p>
         <h3>Relato atribuído à Rádio Tupi</h3>
         <p>O monitoramento FBIS preservou a circulação de alegações sobre esfera e cratera. Não autentica testemunho presencial nem vestígios materiais em Conde.</p>
@@ -50,8 +50,8 @@ canonical_route: "/conde-incident/dossie/"
           <a href="/conde-incident/evidencias/arquivo/c01-1/">Ficha, proveniência e limites</a>
           <a href="https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf">Fac-símile FBIS</a>
         </div>
-      </article>
-      <article class="cf-card">
+      </section>
+      <section class="cf-card">
         <p class="cf-type">Catálogo de decaimento · C197#1</p>
         <h3>NASA: objeto 1963-003B</h3>
         <p>O boletim de 15/11/1963 registra o dia 8 de novembro para o decaimento do objeto associado ao NORAD 528. Não informa hora terminal ou local de impacto.</p>
@@ -59,7 +59,7 @@ canonical_route: "/conde-incident/dossie/"
           <a href="/conde-incident/evidencias/arquivo/c197-1/">Ficha, proveniência e limites</a>
           <a href="https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf">Boletim NASA original</a>
         </div>
-      </article>
+      </section>
     </div>
     <p class="cf-note">A data da publicação, a época da observação e a hora de uma transmissão são variáveis distintas. Essas fontes não são duas confirmações independentes de uma queda no solo.</p>
   </section>
@@ -68,17 +68,17 @@ canonical_route: "/conde-incident/dossie/"
     <p class="cf-kicker">O que falta para decidir?</p>
     <h2 id="cf-exper-title">Hipóteses e instrumentos</h2>
     <div class="cf-cards cf-cards-compact">
-      <article class="cf-card">
+      <section class="cf-card">
         <h3>Confrontar explicações</h3>
         <p>Reentrada, origem meteorológica ou circulação documental exigem testes diferentes e fontes independentes.</p>
         <a class="cf-button" href="/conde-incident/hipoteses/">Comparar hipóteses</a>
-      </article>
-      <article class="cf-card">
+      </section>
+      <section class="cf-card">
         <h3>Explorar trajetórias condicionais</h3>
         <p>O mapa e o laboratório exibem cenários modelados. Nenhum representa uma passagem ou impacto instrumentalmente comprovado em Conde.</p>
         <a class="cf-button" href="/conde-incident/lab/#/map">Abrir mapa interativo</a>
         <a class="cf-text-link" href="/conde-incident/mapa/">Consultar mapa estático sem JavaScript</a>
-      </article>
+      </section>
     </div>
   </section>
 
