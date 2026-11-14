@@ -1,0 +1,34 @@
+name: CGEO-64 FBIS narrative null preregistration
+on:
+  pull_request:
+    paths:
+      - 'research/editorial/cgeo64_null_narrative_prereg_20261114.json'
+      - 'tools/cgeo64_prereg_validate.py'
+      - 'tests/test_cgeo64_narrative_prereg.py'
+      - '.github/workflows/cgeo64-narrative-prereg.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/editorial/cgeo64_null_narrative_prereg_20261114.json'
+      - 'tools/cgeo64_prereg_validate.py'
+      - 'tests/test_cgeo64_narrative_prereg.py'
+      - '.github/workflows/cgeo64-narrative-prereg.yml'
+permissions:
+  contents: read
+jobs:
+  verify-prereg:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify checked-out exact commit
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+      - name: Verify immutable preregistered JSON and adversarial tests
+        run: |
+          python3 tools/cgeo64_prereg_validate.py
+          python3 -m unittest discover -s tests -p 'test_cgeo64_narrative_prereg.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_cgeo64_narrative_prereg.py' -v
