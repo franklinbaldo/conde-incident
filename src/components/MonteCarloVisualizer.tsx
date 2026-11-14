@@ -148,11 +148,11 @@ export const MonteCarloVisualizer: React.FC<MonteCarloVisualizerProps> = ({
               <Activity className="w-3.5 h-3.5 text-cyan-400" />
               <span>{isPt ? 'PROPAGAÇÃO ESTOCÁSTICA DE DECISÃO' : 'STOCHASTIC DECISION PROPAGATION'}</span>
             </div>
-            <h2 className="text-lg font-bold text-zinc-100">
+            <h1 className="text-lg font-bold text-zinc-100">
               {isPt
                 ? 'Simulação Monte Carlo: Teste de Falsificação H1 vs H0'
                 : 'Monte Carlo Simulation: Falsification Test H1 vs H0'}
-            </h2>
+            </h1>
             <p className="text-xs text-zinc-300 leading-relaxed">
               {isPt
                 ? 'Avaliamos a hipótese H1 (reentrada em Conde) contra a hipótese H0 (reentrada noutra região). Amostramos trajetórias estocásticas variando a época, arrasto balístico, escala de altura e flutuações solares de nov/1963, sem condicionar a amostra a priori a Conde.'
@@ -161,24 +161,25 @@ export const MonteCarloVisualizer: React.FC<MonteCarloVisualizerProps> = ({
           </div>
 
           {/* Sample Size selector & Run Button */}
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex w-full min-w-0 flex-wrap items-center gap-2 sm:w-auto">
             <select
+              aria-label={isPt ? 'Número de trajetórias' : 'Number of trajectories'}
               value={sampleSize}
               onChange={(e) => setSampleSize(Number(e.target.value))}
-              className="bg-zinc-950 border border-zinc-800 text-zinc-300 text-xs rounded-lg px-3 py-2 font-mono cursor-pointer"
+              className="w-full min-w-0 max-w-full bg-zinc-950 border border-zinc-800 text-zinc-300 text-xs rounded-lg px-3 py-2 font-mono cursor-pointer sm:w-auto"
             >
-              <option value={1000}>N = 1.000 trajetórias</option>
-              <option value={2000}>N = 2.000 trajetórias</option>
-              <option value={5000}>N = 5.000 trajetórias</option>
+              <option value={1000}>{isPt ? 'N = 1.000 trajetórias' : 'N = 1,000 trajectories'}</option>
+              <option value={2000}>{isPt ? 'N = 2.000 trajetórias' : 'N = 2,000 trajectories'}</option>
+              <option value={5000}>{isPt ? 'N = 5.000 trajetórias' : 'N = 5,000 trajectories'}</option>
             </select>
 
             <button
               onClick={executeSimulation}
               disabled={isRunning}
-              className="px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 disabled:bg-zinc-800 text-white font-medium text-xs flex items-center gap-2 transition-colors cursor-pointer shadow"
+              className="px-4 py-2 rounded-lg bg-cyan-700 hover:bg-cyan-600 disabled:bg-zinc-800 text-white font-medium text-xs flex items-center gap-2 transition-colors cursor-pointer shadow"
             >
               <Play className="w-3.5 h-3.5" />
-              <span>{isRunning ? 'Simulando...' : 'Re-executar'}</span>
+              <span>{isPt ? (isRunning ? 'Simulando...' : 'Re-executar') : (isRunning ? 'Running...' : 'Run again')}</span>
             </button>
           </div>
         </div>
@@ -186,7 +187,7 @@ export const MonteCarloVisualizer: React.FC<MonteCarloVisualizerProps> = ({
 
       {/* Dispersion Scatter Plot Canvas */}
       <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 space-y-3">
-        <div className="flex items-center justify-between text-xs">
+        <div className="flex min-w-0 flex-col gap-3 text-xs sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2">
             <BarChart3 className="w-4 h-4 text-cyan-400" />
             <span className="font-bold text-zinc-200">
@@ -195,18 +196,18 @@ export const MonteCarloVisualizer: React.FC<MonteCarloVisualizerProps> = ({
                 : 'Global Dispersion of Terminal Reentry Points (<80 km)'}
             </span>
           </div>
-          <div className="flex items-center gap-3 text-[11px] font-mono text-zinc-400">
+          <div className="flex min-w-0 flex-wrap items-center gap-3 text-[11px] font-mono text-zinc-300">
             <span className="flex items-center gap-1">
               <span className="w-2.5 h-2.5 rounded-full bg-cyan-400/40 inline-block" />
-              <span>Reentrada Global (H0)</span>
+              <span>{isPt ? 'Reentrada Global (H0)' : 'Global reentry (H0)'}</span>
             </span>
             <span className="flex items-center gap-1">
               <span className="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block" />
-              <span>Regional (&lt;500 km)</span>
+              <span>{isPt ? 'Regional (<500 km)' : 'Regional (<500 km)'}</span>
             </span>
             <span className="flex items-center gap-1">
               <span className="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block" />
-              <span>Conde (&lt;100 km)</span>
+              <span>{isPt ? 'Conde (<100 km)' : 'Conde (<100 km)'}</span>
             </span>
           </div>
         </div>
@@ -225,33 +226,33 @@ export const MonteCarloVisualizer: React.FC<MonteCarloVisualizerProps> = ({
       {summary && (
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs font-mono">
           <div className="p-3.5 rounded-xl bg-zinc-900 border border-zinc-800">
-            <div className="text-zinc-500">Trajetórias Amostradas:</div>
+            <div className="text-zinc-300">Trajetórias Amostradas:</div>
             <div className="text-lg font-bold text-zinc-100 mt-1">{summary.totalRuns}</div>
-            <div className="text-[10px] text-zinc-500 mt-0.5">
+            <div className="text-[10px] text-zinc-300 mt-0.5">
               Decaídas em 08/11: {summary.runsDecayedOnNov8} ({((summary.runsDecayedOnNov8/summary.totalRuns)*100).toFixed(1)}%)
             </div>
           </div>
 
           <div className="p-3.5 rounded-xl bg-zinc-900 border border-zinc-800">
-            <div className="text-zinc-500">Faixa de Latitude Conde:</div>
+            <div className="text-zinc-300">Faixa de Latitude Conde:</div>
             <div className="text-lg font-bold text-cyan-300 mt-1">{summary.runsInCondeLatitudeBand}</div>
-            <div className="text-[10px] text-zinc-500 mt-0.5">
+            <div className="text-[10px] text-zinc-300 mt-0.5">
               {((summary.runsInCondeLatitudeBand / summary.totalRuns) * 100).toFixed(2)}% da amostra
             </div>
           </div>
 
           <div className="p-3.5 rounded-xl bg-zinc-900 border border-zinc-800">
-            <div className="text-zinc-500">Dentro de 500 km de Conde:</div>
+            <div className="text-zinc-300">Dentro de 500 km de Conde:</div>
             <div className="text-lg font-bold text-amber-300 mt-1">{summary.runsWithin500Km}</div>
-            <div className="text-[10px] text-zinc-500 mt-0.5">
+            <div className="text-[10px] text-zinc-300 mt-0.5">
               Probabilidade empírica: {(summary.empiricalProbability500Km * 100).toFixed(3)}%
             </div>
           </div>
 
           <div className="p-3.5 rounded-xl bg-zinc-900 border border-zinc-800">
-            <div className="text-zinc-500">Dentro de 100 km de Conde:</div>
+            <div className="text-zinc-300">Dentro de 100 km de Conde:</div>
             <div className="text-lg font-bold text-rose-400 mt-1">{summary.runsWithin100Km}</div>
-            <div className="text-[10px] text-zinc-500 mt-0.5">
+            <div className="text-[10px] text-zinc-300 mt-0.5">
               Probabilidade empírica: {(summary.empiricalProbability100Km * 100).toFixed(4)}%
             </div>
           </div>
@@ -270,7 +271,10 @@ export const MonteCarloVisualizer: React.FC<MonteCarloVisualizerProps> = ({
               ? 'Em vez de cortar abruptamente em 7/11 ou 9/11, usamos uma verossimilhança suavizada do dia catalogado. Cada linha supõe um erro gaussiano diferente, ainda não medido para o NORAD 528. Os resultados abaixo são frequências condicionais do simulador exploratório, não probabilidades históricas de impacto ou sobrevivência atmosférica.'
               : 'Rather than truncating at November 7 or 9, the reported calendar day receives two-sided uncertainty. Each row assumes a hypothetical Gaussian timing error, not an observed NORAD 528 precision. These are exploratory scenario frequencies, not historical impact or fragment-survival probabilities.'}
           </p>
-          <div className="overflow-x-auto">
+          <div className="max-w-full overflow-x-auto"
+            role="region"
+            tabIndex={0}
+            aria-label={isPt ? 'Tabela de incerteza da data de decaimento' : 'Decay date uncertainty table'}>
             <table className="w-full text-xs font-mono text-zinc-300">
               <thead>
                 <tr className="border-b border-zinc-700 text-zinc-400">
@@ -297,7 +301,7 @@ export const MonteCarloVisualizer: React.FC<MonteCarloVisualizerProps> = ({
               </tbody>
             </table>
           </div>
-          <p className="text-[11px] text-zinc-500">
+          <p className="text-[11px] text-zinc-300">
             {isPt
               ? 'A NASA informou o dia catalogado de decaimento orbital, não a hora nem o local do impacto. Um atraso entre reentrada e deposição de fragmentos exige modelo físico independente. As amostras anteriores usam órbitas e parâmetros exploratórios, portanto suas frequências ponderadas não são uma posterior histórica.'
               : 'NASA reported a catalogued orbital decay day, not a physical impact time or location. Fragment travel and deposition require independent physics. The weighted frequencies inherit the exploratory prior and are not a historical posterior.'}
