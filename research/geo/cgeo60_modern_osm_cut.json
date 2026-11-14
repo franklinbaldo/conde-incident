@@ -1,0 +1,81 @@
+{
+  "schema": "conde.gis.modern-osm-place-proxies/v1",
+  "id": "CGEO-60",
+  "as_of_utc_date": "2026-11-14",
+  "municipality": {"name": "Conde", "uf": "BA", "ibge_code": "2908606"},
+  "source": {
+    "provider": "OpenStreetMap API v0.6",
+    "license": "ODbL 1.0",
+    "attribution": "© OpenStreetMap contributors",
+    "license_url": "https://www.openstreetmap.org/copyright",
+    "record_access_method": "GET /api/0.6/node/{id}; raw XML",
+    "no_inference_of_ibge_survey_geolocation": true
+  },
+  "nodes": [
+    {
+      "id": "OSM-CONDE-TOWN-2026",
+      "url": "https://api.openstreetmap.org/api/0.6/node/415521889",
+      "osm_node_id": 415521889,
+      "osm_version": 18,
+      "record_modified_utc": "2026-09-18T15:25:50Z",
+      "name_exact": "Conde",
+      "place_tag": "town",
+      "latitude": -11.8129758,
+      "longitude": -37.6138705,
+      "source_tag": "IBGE",
+      "source_tag_not_a_positional_certification": true,
+      "http_status_at_acquisition": 200,
+      "raw_xml_bytes": 813,
+      "raw_xml_sha256": "cbd57dad048e8111d36435689d7baa5a821f35b883cdc3dc851883fa48bdd3d4",
+      "role": "modern_osm_named_place_node_not_centroid_of_1963_center"
+    },
+    {
+      "id": "OSM-VILLA-VELHA-2023",
+      "url": "https://api.openstreetmap.org/api/0.6/node/4697713641",
+      "osm_node_id": 4697713641,
+      "osm_version": 3,
+      "record_modified_utc": "2023-12-12T22:34:35Z",
+      "name_exact": "Villa Velha",
+      "place_tag": "village",
+      "latitude": -11.7968448,
+      "longitude": -37.6214666,
+      "source_tag": null,
+      "source_tag_not_a_positional_certification": true,
+      "http_status_at_acquisition": 200,
+      "raw_xml_bytes": 545,
+      "raw_xml_sha256": "7273d6ba1e5e09d490b394c8115eb2983aca25d1dcd3b033a8c9781ebda1d66e",
+      "role": "modern_osm_named_place_node_not_equated_with_vila20"
+    }
+  ],
+  "derived": {
+    "great_circle_distance_km_earth_radius_6371": 1.975064,
+    "distance_is_between_two_osm_nodes_not_urban_extent_or_accuracy": true,
+    "feature_diameter_scenario_m": 4,
+    "usaf_photo_scale_denominator": 60000,
+    "diameter_on_analog_photo_mm_scenario": 0.066667,
+    "detectability": "NOT_DEMONSTRATED_IMAGE_RESOLUTION_CONTRAST_TIME_UNKNOWN"
+  },
+  "historical_context": {
+    "nara_flights_candidate_year": 1942,
+    "nara_index_preparation_year": 1956,
+    "nara_can_show_november_1963_trace": false,
+    "sgb_usaf_photoindex_date_label": "1964-1970",
+    "sgb_is_a_validated_1963_capture": false,
+    "cgeo20_centro20_point_1963": null,
+    "cgeo20_vila20_point_1963": null,
+    "modern_nodes_equate_to_cgeo20_historical_sites": false,
+    "time_bridge_to_1963": null,
+    "reentry_impact_location": null,
+    "can_constrain_orbital_reentry": false
+  },
+  "castor_handoff": {
+    "modern_proxy_sensitivity_inputs_only": true,
+    "source_geometry_role": "named_osm_place_nodes",
+    "historical_centro20_status": "NOT_EVALUATED_NO_CUSTODIED_POINT",
+    "historical_vila20_status": "NOT_EVALUATED_NO_CUSTODIED_POINT",
+    "phase_constraint": "NOT_EVALUATED",
+    "posterior": false,
+    "active_constraint": false,
+    "candidate_comparison_can_be_run_as_separately_labelled_counterfactual": true
+  }
+}

@@ -1,0 +1,42 @@
+name: C241-L64 NASA SSR 308 October range
+on:
+  pull_request:
+    paths:
+      - 'research/tle_custody/nasa_ssr_terminal_control_308_C241-L64.*'
+      - 'tools/tle_ssr_308_c241_l64.py'
+      - 'tests/test_tle_ssr_308_c241_l64.py'
+      - '.github/workflows/tle-ssr-308-c241-l64.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/tle_custody/nasa_ssr_terminal_control_308_C241-L64.*'
+      - 'tools/tle_ssr_308_c241_l64.py'
+      - 'tests/test_tle_ssr_308_c241_l64.py'
+      - '.github/workflows/tle-ssr-308-c241-l64.yml'
+  workflow_dispatch:
+jobs:
+  original-nasa-range:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact SHA
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Normal and optimized adversarial tests
+        run: |
+          python -m unittest discover -s tests -p 'test_tle_ssr_308_c241_l64.py' -v
+          python -O -m unittest discover -s tests -p 'test_tle_ssr_308_c241_l64.py' -v
+      - uses: astral-sh/setup-uv@v6
+      - name: Replay original PDF with pinned hash and pages
+        run: |
+          curl -fLsS --retry 2 --max-time 90 "https://ntrs.nasa.gov/api/citations/19640003479/downloads/19640003479.pdf" -o /tmp/19640003479.pdf
+          python tools/tle_ssr_308_c241_l64.py --pdf /tmp/19640003479.pdf
+          uv run --with pypdf==6.1.3 python -c "from pypdf import PdfReader; assert len(PdfReader('/tmp/19640003479.pdf').pages) == 23"

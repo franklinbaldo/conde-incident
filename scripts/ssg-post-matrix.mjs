@@ -92,10 +92,8 @@ export function auditBuiltPostMatrix(html,citations,bundle=readBundle()) {
     const visible=visibleDocument('<main>'+section+'</main>');
     const field=(label,value)=>{
       const expression=new RegExp('<strong>'+label+':<\/strong>\\s*<code>'+value+'<\/code>');
-      assert.match(section,expression,
-        'Pós-matriz: campo vinculado ao registro ausente: '+item.id+' / '+label);
-      assert.ok(visible.visibleText.includes(value),
-        'Pós-matriz: valor visível ausente: '+item.id+' / '+label);
+      assert.match(visible.visibleMarkup,expression,
+        'Pós-matriz: campo visível vinculado ao registro ausente: '+item.id+' / '+label);
     };
     field('Estado canônico',item.status);
     field('Independência jornalística',item.journalistic_source_independence);
