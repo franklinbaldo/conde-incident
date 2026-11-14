@@ -37,6 +37,25 @@ try {
       assert(dimensions.scrollWidth <= dimensions.viewport + 1,
         `horizontal overflow on ${width}px in ${locale}: ${JSON.stringify(dimensions)}`);
     }
+    // At 200% text size, native form controls and documentary IDs must
+    // remain inside narrow viewports. The default input min-content width
+    // previously pushed a 375px viewport to 464 CSS pixels.
+    if (width <= 390) {
+      await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+      const citation = page.locator('#source-citations-heading').locator('xpath=..');
+      // The feed can legitimately be unavailable in dev: its runtime error state
+      // must not block checking the always-rendered input. Check records when served.
+      const selectors = ['label[for="citation-occurrence"]', '#citation-occurrence'];
+      if (await citation.locator('dl').count()) selectors.push('dl dt', 'dl dd');
+      for (const selector of selectors) {
+        for (const element of await citation.locator(selector).all()) {
+          const rect = await element.boundingBox();
+          assert(rect && rect.x >= -1 && rect.x + rect.width <= width + 1,
+            `documentary ${selector} clipped at 200% / ${width}px: ${JSON.stringify(rect)}`);
+        }
+      }
+      await page.screenshot({ path: `${out}/documentary-archive-reflow-200pct-${width}.png` });
+    }
     await page.screenshot({ path: `${out}/documentary-archive-${width}.png`, fullPage: true });
     assert.deepEqual(errors, [], `console page errors at ${width}px`);
     await page.close();

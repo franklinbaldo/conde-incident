@@ -88,10 +88,10 @@ export function SourceCitationFeed({ lang }: Props) {
         </p>
       </div>
       <form className="flex flex-wrap items-end gap-2" onSubmit={(event) => { event.preventDefault(); setSelected(input); }}>
-        <label htmlFor="citation-occurrence" className="flex flex-col gap-1 text-sm text-zinc-200">
+        <label htmlFor="citation-occurrence" className="flex min-w-0 w-full flex-col gap-1 text-sm text-zinc-200 sm:w-auto sm:max-w-full">
           {pt ? 'ID e ocorrência exatos (ex.: C197#1)' : 'Exact ID and occurrence (e.g. C197#1)'}
           <input id="citation-occurrence" name="occurrence" value={input} onChange={(event) => setInput(event.target.value)}
-            className="rounded-md border border-zinc-600 bg-zinc-950 px-3 py-2 text-zinc-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300"
+            className="min-w-0 w-full max-w-full rounded-md border border-zinc-600 bg-zinc-950 px-3 py-2 text-zinc-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300"
             spellCheck={false} autoComplete="off" />
         </label>
         <button type="submit" className="rounded-md border border-cyan-600 bg-cyan-950 px-4 py-2 text-sm font-medium text-cyan-100 hover:bg-cyan-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-300">
@@ -134,11 +134,11 @@ export function SourceCitationFeed({ lang }: Props) {
                     <h4 className="font-semibold text-zinc-100 break-all">
                       {index + 1}. <code>{record.source_id}</code>
                     </h4>
-            <dl className="grid gap-2 sm:grid-cols-2 text-xs">
-              <div><dt className="text-zinc-400">{pt ? 'Família da fonte' : 'Source family'}</dt><dd className="font-mono break-words">{record.source_family}</dd></div>
-              <div><dt className="text-zinc-400">{pt ? 'Obra documental' : 'Documentary work'}</dt><dd className="font-mono break-words">{record.work_id}</dd></div>
-              <div><dt className="text-zinc-400">{pt ? 'Tipo / relação' : 'Type / relation'}</dt><dd className="font-mono break-words">{record.relation}</dd></div>
-              <div><dt className="text-zinc-400">{pt ? 'Limite / estado' : 'Limit / status'}</dt><dd className="font-mono break-words">{record.scope}</dd></div>
+            <dl className="grid min-w-0 grid-cols-1 gap-2 text-xs sm:grid-cols-2">
+              <div className="min-w-0"><dt className="text-zinc-400">{pt ? 'Família da fonte' : 'Source family'}</dt><dd className="font-mono [overflow-wrap:anywhere]">{record.source_family}</dd></div>
+              <div className="min-w-0"><dt className="text-zinc-400">{pt ? 'Obra documental' : 'Documentary work'}</dt><dd className="font-mono [overflow-wrap:anywhere]">{record.work_id}</dd></div>
+              <div className="min-w-0"><dt className="text-zinc-400">{pt ? 'Tipo / relação' : 'Type / relation'}</dt><dd className="font-mono [overflow-wrap:anywhere]">{record.relation}</dd></div>
+              <div className="min-w-0"><dt className="text-zinc-400">{pt ? 'Limite / estado' : 'Limit / status'}</dt><dd className="font-mono [overflow-wrap:anywhere]">{record.scope}</dd></div>
             </dl>
             <p className="text-xs text-amber-200">{pt
               ? 'Sem confirmação de impacto em Conde, hora ou longitude de reentrada. Este vínculo não fornece uma observação física adicional.'
