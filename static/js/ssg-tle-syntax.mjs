@@ -47,9 +47,16 @@ function attachChecker() {
   form.hidden = false;
   const firstInput = form.elements.namedItem('line1');
   const secondInput = form.elements.namedItem('line2');
-  // A previous PASS belongs to the previous bytes, never to edited input.
+  // Never leave invalid states referencing a verdict for previous bytes.
+  function clearVerdict() {
+    output.replaceChildren();
+    for (const input of [firstInput, secondInput]) {
+      input.removeAttribute('aria-invalid');
+      input.setAttribute('aria-describedby', 'ssg-tle-instructions');
+    }
+  }
   form.addEventListener('input', event => {
-    if (event.target === firstInput || event.target === secondInput) output.replaceChildren();
+    if (event.target === firstInput || event.target === secondInput) clearVerdict();
   });
   firstInput.addEventListener('paste', event => {
     const pair = splitTlePairPaste(event.clipboardData?.getData('text/plain') ?? '');
@@ -57,7 +64,7 @@ function attachChecker() {
     event.preventDefault();
     firstInput.value = pair[0];
     secondInput.value = pair[1];
-    output.replaceChildren();
+    clearVerdict();
     secondInput.focus();
   });
   form.addEventListener('submit', event => {
@@ -70,11 +77,21 @@ function attachChecker() {
       ? 'As duas linhas passaram na verificação mínima de comprimento, identificação e checksum. Isso NÃO autentica os dados.'
       : 'Uma ou ambas as linhas não passaram na verificação mínima de sintaxe.';
     const list = document.createElement('ul');
-    for (const [label, data] of [['Linha 1', result.first], ['Linha 2', result.second]]) {
+    for (const [label, data, input, id] of [
+      ['Linha 1', result.first, firstInput, 'ssg-tle-result-line1'],
+      ['Linha 2', result.second, secondInput, 'ssg-tle-result-line2'],
+    ]) {
       const item = document.createElement('li');
+      item.id = id;
       item.textContent = label + ': ' + data.length + '/69 caracteres; prefixo/NORAD ' + (data.prefixMatches ? 'confere' : 'não confere')
         + '; dígito informado ' + (data.actualChecksum ?? 'indisponível') + ', calculado ' + (data.computedChecksum ?? 'indisponível')
         + '. ' + (data.valid ? 'Checksum confere.' : 'Inconsistente.');
+      input.removeAttribute('aria-invalid');
+      input.setAttribute('aria-describedby', 'ssg-tle-instructions');
+      if (!data.valid) {
+        input.setAttribute('aria-invalid', 'true');
+        input.setAttribute('aria-describedby', 'ssg-tle-instructions ' + id);
+      }
       list.append(item);
     }
     const limit = document.createElement('p');
