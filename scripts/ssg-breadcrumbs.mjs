@@ -42,14 +42,23 @@ export function addBreadcrumbs(html, path, hasPage = () => true) {
   const match = /<title>([^<>\r\n]{1,320})<\/title>/i.exec(activeHtml);
   assert.ok(match && match[1].trim(), 'Título textual seguro ausente: ' + path);
   const items = ['<li><a href="' + prefix + '">Início</a></li>'];
+  let nearest = { href: prefix, label: 'Início' };
   for (let i = 1; i < parts.length; i++) {
     const ancestor = parts.slice(0, i).join('/');
     if (!hasPage(ancestor)) continue; // No dead links to intermediate routes.
-    items.push('<li><a href="' + prefix + ancestor + '/">' + label(parts[i - 1]) + '</a></li>');
+    nearest = { href: prefix + ancestor + '/', label: label(parts[i - 1]) };
+    items.push('<li><a href="' + nearest.href + '">' + nearest.label + '</a></li>');
   }
   items.push('<li><span aria-current="page">' + match[1] + '</span></li>');
-  const trail = '<nav aria-label="Trilha de navegação" class="breadcrumbs"><ol>' +
-    items.join('') + '</ol></nav>';
+  // Current title is already the H1. On narrow screens avoid repeating a long
+  // documentary identifier above the H1; retain the full route on demand.
+  const full = '<ol class="breadcrumbs-trail">' + items.join('') + '</ol>';
+  const compact = '<div class="breadcrumbs-mobile"><a class="breadcrumb-parent" href="' +
+    nearest.href + '">← Voltar para ' + nearest.label + '</a>' +
+    '<details><summary>Trilha completa</summary><ol>' + items.join('') +
+    '</ol></details></div>';
+  const trail = '<nav aria-label="Trilha de navegação" class="breadcrumbs">' +
+    full + compact + '</nav>';
   // A bare aria-label anywhere in the HTML is not proof of a usable trail.
   // Validate the exact static navigation *inside* the canonical main, including
   // the ancestor links and the title; do not trust a stale or empty breadcrumb.
