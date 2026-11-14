@@ -36,6 +36,11 @@ jobs:
           python3 -m unittest discover -s tests -p 'test_sao_p17_scientific_bridge.py' -v
           python3 -O -m unittest discover -s tests -p 'test_sao_p17_scientific_bridge.py' -q
           python3 tools/export_sao_p17_scientific_bridge.py --check-site
+      - name: NRO 7153 operational versus orbital clock guard (C241-L48)
+        run: |
+          python3 -m unittest discover -s tests -p 'test_nro_7153_mission_scope.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_nro_7153_mission_scope.py' -q
+          python3 -m tools.nro_7153_mission_scope > /tmp/c241-l48-nro-clock.json
       - name: Export crosswalk for Polvo and site (no asserted physical landing)
         run: |
           python3 tools/provenance_graph.py --check-site --output /tmp/conde-documentary-provenance.json --citations /tmp/conde-documentary-citations.json
