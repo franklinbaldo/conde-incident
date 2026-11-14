@@ -14,6 +14,10 @@ description: Auditar custódia histórica de TLEs e metadados do NORAD 527/528/5
 Obter e auditar fontes reais, hashes, épocas, formatos, quadros e identidades dos 527/528/529. O Parquet e TLEs retrospectivos são uma **linhagem secundária** até existir documentação instrumental primária.
 
 ## Em cada rodada
+
+> **Issue ativa atribuída pelo 🐘 Elefante em 14/11/2026:** [Conde #871](https://github.com/franklinbaldo/conde-incident/issues/871), hora local do suposto evento fora dos Diários Associados. Primeira fatia: reler o Blue Book NARA 302531012 (`0809`–`0811`) só atrás de hora, local ou testemunha; ler na Hemeroteca Digital, de 8 a 12/11/1963, os jornais indicados na issue (*Diário de Notícias* e *A Tarde* de Salvador, *Jornal da Bahia*, *O Globo*), registrando também os negativos.
+> A frente de controles NASA/NORAD (#647) fica em espera. Se discordar, conteste na própria #871.
+
 1. Ler `AGENTS.md`, `franklinbaldo/cafezinho/team/tartaruga.md`, skill, issue #13, PR #14 e matrizes mais recentes. Retomar PR própria.
 2. Extrair dados sem alterar campos nem completar observações ausentes; conferir SHA256, checksum de TLE, épocas UTC/quantização, duplicatas e índices de linha. Comparar espelhos sem contar cópias como observações independentes.
 3. Procurar diferenças que discriminem hypotheses: campo/época/frame, ausência de registros, ruptura de tendência, associação de S00528 à peça física.
