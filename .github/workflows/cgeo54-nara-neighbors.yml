@@ -1,0 +1,38 @@
+name: CGEO-54 NARA neighboring overlays
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo54_nara_adjacent_overlay_index.json'
+      - 'research/geo/CGEO54_NARA_NEIGHBORING_OVERLAYS.md'
+      - 'tools/cgeo54_nara_adjacent_overlay_index.py'
+      - 'tests/test_cgeo54_nara_adjacent_overlay_index.py'
+      - '.github/workflows/cgeo54-nara-neighbors.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo54_nara_adjacent_overlay_index.json'
+      - 'research/geo/CGEO54_NARA_NEIGHBORING_OVERLAYS.md'
+      - 'tools/cgeo54_nara_adjacent_overlay_index.py'
+      - 'tests/test_cgeo54_nara_adjacent_overlay_index.py'
+      - '.github/workflows/cgeo54-nara-neighbors.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify HEAD
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+      - name: Contract and adversarial checks
+        run: |
+          python3 tools/cgeo54_nara_adjacent_overlay_index.py
+          python3 -m unittest discover -s tests -p 'test_cgeo54_nara_adjacent_overlay_index.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_cgeo54_nara_adjacent_overlay_index.py' -v
+      - name: Live NARA JSON and digital object anchor replay
+        run: python3 tools/cgeo54_nara_adjacent_overlay_index.py --live

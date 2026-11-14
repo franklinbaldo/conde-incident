@@ -123,7 +123,7 @@ export const TleAuditViewer: React.FC<TleAuditViewerProps> = ({ lang }) => {
   return (
     <section aria-labelledby="tle-title" className="space-y-6 text-zinc-200">
       <header className="rounded-xl border border-zinc-700 bg-zinc-900 p-4 sm:p-6">
-        <h2 id="tle-title" className="text-xl font-semibold text-zinc-50">{t.heading}</h2>
+        <h1 id="tle-title" className="text-xl font-semibold text-zinc-50">{t.heading}</h1>
         <p className="mt-2 text-sm text-zinc-300">{t.subtitle}</p>
         <p className="mt-3 rounded-lg border border-amber-700/70 bg-amber-950/30 p-3 text-sm text-amber-100">{t.notice}</p>
         <div role="group" aria-label={t.select} className="mt-5 flex flex-wrap gap-2">

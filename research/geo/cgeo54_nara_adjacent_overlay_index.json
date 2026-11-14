@@ -1,0 +1,228 @@
+{
+  "schema": "conde.cgeo.nara-adjacent-overlay-index/v1",
+  "id": "CGEO-54",
+  "observed_on": "2026-11-14",
+  "parent": "CGEO-53",
+  "endpoint": "https://catalog.archives.gov/proxy/v3/records/search",
+  "query_limit": 10,
+  "record_group": "373",
+  "series": "306062",
+  "microfilm": "M1765",
+  "roll": "317",
+  "source_family": "NARA RG373 M1765 roll 317",
+  "records": [
+    {
+      "square": "10S036W",
+      "naid": "46716333",
+      "query_total": 1,
+      "query_result": "fileUnit",
+      "title": "Overlay indexes for degree square 10S036W",
+      "scans": [
+        "m1765-317-00007.jpg",
+        "m1765-317-00008.jpg",
+        "m1765-317-00009.jpg",
+        "m1765-317-00010.jpg",
+        "m1765-317-00011.jpg",
+        "m1765-317-00012.jpg",
+        "m1765-317-00013.jpg",
+        "m1765-317-00014.jpg",
+        "m1765-317-00015.jpg",
+        "m1765-317-00016.jpg",
+        "m1765-317-00017.jpg",
+        "m1765-317-00018.jpg"
+      ],
+      "snapshot": {
+        "http_status": 200,
+        "content_type": "application/json",
+        "body_bytes": 9151,
+        "sha256": "0af3bef4ebb8e22b1172052edc8d91630f3c50d5d3de3a1533b65df0842166f5"
+      }
+    },
+    {
+      "square": "10S037W",
+      "naid": "46716347",
+      "query_total": 1,
+      "query_result": "fileUnit",
+      "title": "Overlay indexes for degree square 10S037W",
+      "scans": [
+        "m1765-317-00019.jpg",
+        "m1765-317-00020.jpg",
+        "m1765-317-00021.jpg",
+        "m1765-317-00022.jpg",
+        "m1765-317-00023.jpg",
+        "m1765-317-00024.jpg",
+        "m1765-317-00025.jpg",
+        "m1765-317-00026.jpg",
+        "m1765-317-00027.jpg",
+        "m1765-317-00028.jpg",
+        "m1765-317-00029.jpg"
+      ],
+      "snapshot": {
+        "http_status": 200,
+        "content_type": "application/json",
+        "body_bytes": 8743,
+        "sha256": "918d639fe8732ec7a35434fbed831785261a67ad8656007a2340a73517af87b8"
+      }
+    },
+    {
+      "square": "10S038W",
+      "naid": "46716360",
+      "query_total": 1,
+      "query_result": "fileUnit",
+      "title": "Overlay indexes for degree square 10S038W",
+      "scans": [
+        "m1765-317-00030.jpg",
+        "m1765-317-00031.jpg",
+        "m1765-317-00032.jpg",
+        "m1765-317-00033.jpg",
+        "m1765-317-00034.jpg",
+        "m1765-317-00035.jpg"
+      ],
+      "snapshot": {
+        "http_status": 200,
+        "content_type": "application/json",
+        "body_bytes": 6703,
+        "sha256": "09ae8950f158dbcc352e16c2d8c63f69e760a1a8aabbd071068f75129ca94d4c"
+      }
+    },
+    {
+      "square": "11S036W",
+      "naid": null,
+      "query_total": 0,
+      "query_result": "zero_hits_not_absence",
+      "title": null,
+      "scans": [],
+      "snapshot": {
+        "http_status": 200,
+        "content_type": "application/json",
+        "body_bytes": 1130,
+        "sha256": "4078e0e07af3bd8e81023cffc7f2f06aa95acd7aa22d1abffc1655290bbcfd09"
+      }
+    },
+    {
+      "square": "11S037W",
+      "naid": "46716637",
+      "query_total": 1,
+      "query_result": "fileUnit",
+      "title": "Overlay indexes for degree square 11S037W",
+      "scans": [
+        "m1765-317-00245.jpg",
+        "m1765-317-00246.jpg",
+        "m1765-317-00247.jpg",
+        "m1765-317-00248.jpg",
+        "m1765-317-00249.jpg",
+        "m1765-317-00250.jpg"
+      ],
+      "snapshot": {
+        "http_status": 200,
+        "content_type": "application/json",
+        "body_bytes": 6705,
+        "sha256": "95886f2dea9a7f12914e8ae72a53bba98d207508c17386467ff0b9ba424099a6"
+      }
+    },
+    {
+      "square": "11S038W",
+      "naid": "46716645",
+      "query_total": 1,
+      "query_result": "fileUnit",
+      "title": "Overlay indexes for degree square 11S038W",
+      "scans": [
+        "m1765-317-00251.jpg",
+        "m1765-317-00252.jpg",
+        "m1765-317-00253.jpg",
+        "m1765-317-00254.jpg",
+        "m1765-317-00255.jpg",
+        "m1765-317-00256.jpg",
+        "m1765-317-00257.jpg",
+        "m1765-317-00258.jpg"
+      ],
+      "snapshot": {
+        "http_status": 200,
+        "content_type": "application/json",
+        "body_bytes": 7519,
+        "sha256": "655539796f2b02ffbd33f87b1fc687116ece22c1402af9372f7bccf60070373d"
+      }
+    },
+    {
+      "square": "12S036W",
+      "naid": null,
+      "query_total": 0,
+      "query_result": "zero_hits_not_absence",
+      "title": null,
+      "scans": [],
+      "snapshot": {
+        "http_status": 200,
+        "content_type": "application/json",
+        "body_bytes": 1130,
+        "sha256": "835a6069a1c9f577d12cc5c035464c9b4d735fb95f275beb31a64705e603382b"
+      }
+    },
+    {
+      "square": "12S037W",
+      "naid": "46716877",
+      "query_total": 1,
+      "query_result": "fileUnit",
+      "title": "Overlay indexes for degree square 12S037W",
+      "scans": [
+        "m1765-317-00429.jpg",
+        "m1765-317-00430.jpg",
+        "m1765-317-00431.jpg",
+        "m1765-317-00432.jpg"
+      ],
+      "snapshot": {
+        "http_status": 200,
+        "content_type": "application/json",
+        "body_bytes": 5887,
+        "sha256": "a47d0359277bb3b09dfd8e86fb9d510928d916333c800b6a9b0225b3eac6b399"
+      }
+    },
+    {
+      "square": "12S038W",
+      "naid": "46716883",
+      "query_total": 1,
+      "query_result": "fileUnit",
+      "title": "Overlay indexes for degree square 12S038W",
+      "scans": [
+        "m1765-317-00433.jpg",
+        "m1765-317-00434.jpg",
+        "m1765-317-00435.jpg",
+        "m1765-317-00436.jpg",
+        "m1765-317-00437.jpg",
+        "m1765-317-00438.jpg",
+        "m1765-317-00439.jpg",
+        "m1765-317-00440.jpg",
+        "m1765-317-00441.jpg",
+        "m1765-317-00442.jpg",
+        "m1765-317-00443.jpg",
+        "m1765-317-00444.jpg",
+        "m1765-317-00445.jpg",
+        "m1765-317-00446.jpg",
+        "m1765-317-00447.jpg",
+        "m1765-317-00448.jpg"
+      ],
+      "snapshot": {
+        "http_status": 200,
+        "content_type": "application/json",
+        "body_bytes": 10786,
+        "sha256": "120e02e1e5499b078dd7bbe2f1b699592411177c05aa4cd7e6d5bf7c2a61a12f"
+      }
+    }
+  ],
+  "interpretation": {
+    "file_units_confirmed": 7,
+    "catalogued_index_scans": 63,
+    "original_aerial_photographs_acquired": 0,
+    "zero_hit_squares_are_proven_absent": false,
+    "all_index_sheets_are_original_frames": false,
+    "independent_photographic_observations": 0
+  },
+  "limitations": {
+    "photographic_coverage_of_conde": null,
+    "historical_city_center_geometry_1963": null,
+    "alleged_event_location": null,
+    "spot_number_for_125374": null,
+    "negative_can": null,
+    "orbital_constraint_activated": false
+  },
+  "next": "Open/index the newly identified neighbor overlays, then prove exposure ID + film can + dated original frame + actual footprint. Do not infer 1963 imagery from catalog year or square label."
+}
