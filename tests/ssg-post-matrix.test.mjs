@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {postMatrixPage,postMatrixLinks,auditBuiltPostMatrix} from '../scripts/ssg-post-matrix.mjs';
+import {postMatrixAnchor} from '../scripts/ssg-post-matrix-backlinks.mjs';
 
 const citations=JSON.parse(readFileSync('public/data/conde-source-citations.json','utf8'));
 const lineage=JSON.parse(readFileSync('public/data/conde-declared-dependence.json','utf8'));
@@ -125,9 +126,17 @@ test('post-matrix built HTML binds navigation, source identity and custody in ea
   const imageDigest=field('SHA-256 da imagem arquivística',item.image_sha256);
   const report=field('SHA-256 do relatório de custódia versionado',reportDigest);
   const heading='<h3>'+item.id+'</h3>';
+  const marker='<span id="'+postMatrixAnchor(item.id)+'"></span>';
   const base='<main><a href="/conde-incident/evidencias/matriz/">Matriz</a>'+
-    heading+state+independence+imageDigest+report+source+custody+links+'</main>';
+    marker+heading+state+independence+imageDigest+report+source+custody+links+'</main>';
   assert.equal(auditBuiltPostMatrix(base,citations),expected.length);
+
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(marker,''),citations),
+    /âncora documental ativa e única ausente/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(marker,marker+marker),citations),
+    /âncora documental ativa e única ausente/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(marker,'<template>'+marker+'</template>'),citations),
+    /âncora documental ativa e única ausente/);
 
   const target='<a href="'+expected[0]+'">linha real</a>';
   assert.throws(()=>auditBuiltPostMatrix(base.replace(target,
