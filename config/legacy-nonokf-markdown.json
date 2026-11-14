@@ -2,20 +2,12 @@
   "policy": "Frozen legacy Markdown exempt from current normative OKF check only at its exact Git blob SHA. Every added or modified Markdown is checked by prek and okf-parser. Remove entries as files are migrated.",
   "legacy_markdown": [
     {
-      "path": ".agents/skills/conde-caranguejo/SKILL.md",
-      "git_blob_sha": "7c88ae966d9034e01d97331479c7fca76b3f0bc6"
-    },
-    {
       "path": ".agents/skills/conde-castor/SKILL.md",
       "git_blob_sha": "f489a29529b305ab702d5a9b76da0b8ec15de1cd"
     },
     {
       "path": ".agents/skills/conde-cervo/SKILL.md",
       "git_blob_sha": "165d40da9280afed00e78521b934d95de6f382b4"
-    },
-    {
-      "path": ".agents/skills/conde-coruja/SKILL.md",
-      "git_blob_sha": "7b9a22d63d16c13d68987b0ed3dafed549ef1cc2"
     },
     {
       "path": ".agents/skills/conde-elefante/SKILL.md",
@@ -40,10 +32,6 @@
     {
       "path": ".agents/skills/conde-raposa/SKILL.md",
       "git_blob_sha": "9b2890e6aa3f63b12a66822e295d62712177e98b"
-    },
-    {
-      "path": ".agents/skills/conde-tartaruga/SKILL.md",
-      "git_blob_sha": "4604f733a21e534ed3938d254d19830b4e166532"
     },
     {
       "path": ".agents/skills/conde-texugo/SKILL.md",

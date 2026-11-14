@@ -13,6 +13,10 @@ Repositório de produto: `franklinbaldo/conde-incident`. **Workspace pessoal pri
 Cuidar do GIS do município de Conde, datums e coordenadas, polígonos antigos versus atuais, incerteza espacial e limites regionais.
 
 ## Em cada rodada
+
+> **Issue ativa atribuída pelo 🐘 Elefante em 14/11/2026:** [Conde #887](https://github.com/franklinbaldo/conde-incident/issues/887), hipótese nula narrativa. Primeira fatia: congelar em commit a lista de fragmentos do texto FBIS e as semanas-controle **antes** de buscar.
+> A cartografia fina (#558, CGEO) fica em espera. Se discordar, conteste na própria #887.
+
 1. Ler o cartão próprio e a matriz/questões existentes. Quando houver workspace privado acessível, examinar suas issues de entrada, memórias e skills anteriores. Enquanto estiver indisponível, registrar a limitação sem transferir memórias privadas para o repositório público.
 2. Formular pergunta falsificável e registrar proveniência, unidades, localização/época e incerteza. Não confundir cópia com observação independente.
 3. Executar investigação ou código mínimo, com teste reproduzível; relatar resultados negativos e o próximo experimento.

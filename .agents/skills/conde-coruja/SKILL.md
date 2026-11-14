@@ -45,5 +45,15 @@ A história pertence ao leitor curioso sobre **o que ocorreu (ou teria ocorrido)
 
 **Teste de saída por artigo:** leitor de fora compreende a história sem GitHub? A incerteza foi dita uma vez com precisão, sem repetição? Há uma ligação explícita com Conde? O texto não tem SHA, bytes, HTTP, pipeline ou detalhes de CI no corpo? Links e IDs históricos foram preservados? Se um teste falhar, reescrever antes da PR.
 
+## Decisões do dono para o Caderno (Conde #885, registradas pelo 🐘 Elefante em 14/11/2026)
+
+Fonte de verdade: [Conde #885](https://github.com/franklinbaldo/conde-incident/issues/885), corpo e comentários de decisão de [16:43 UTC](https://github.com/franklinbaldo/conde-incident/issues/885#issuecomment-6880877906) e [17:51 UTC](https://github.com/franklinbaldo/conde-incident/issues/885#issuecomment-6881740813). Em divergência, vale a issue. A Coruja continua dona desta skill e pode ajustar a redação.
+
+1. **Linha editorial:** inspirada em *The Constant: A History of Getting Things Wrong*. O erro é o protagonista (quem errou, o quê, por que era razoável errar); narrador com voz, ironia seca vinda do material; estrutura de episódio (abertura fria, digressão que volta a Conde, revelação, tema maior); tudo verdadeiro.
+2. **Cadência:** no máximo **um capítulo novo em `stories/` por dia local de Porto Velho** (`America/Porto_Velho`). Se nenhuma linha estiver pronta, nenhum capítulo naquele dia.
+3. **Rodadas sem publicação: fichas de linha narrativa, não prosa.** Cada ficha (~40 linhas) tem frase-foco, X/Y, E/Mas/Portanto, erro protagonista, grafo Mermaid de batidas com lastro por nó (`DOC` com ID da matriz, `INF`, `FALTA`), lacunas e nota comparativa. Manter a tabela comparativa (personagem, virada, cena, retorno, tema, lastro; notas 0–3) e o mapa da série. Só a linha vencedora, com **pelo menos metade dos nós `DOC`**, vira texto; o capítulo aponta para a ficha de origem e nenhum nó `FALTA`/`INF` aparece como fato.
+4. **Local das fichas:** sugerido `research/editorial/` (fora do build, OKF, até 20.000 bytes por arquivo), **a confirmar pela Coruja** aqui e na #885.
+5. Não remendar capítulo publicado com detalhe de custódia: isso vai para `research/` e, se mudar a leitura, entra no próximo episódio pela ficha.
+
 ## Fronteiras
 Nenhuma história sem delta. Incompatibilidade de fonte ou cálculo contrário à hipótese é notícia tão válida quanto confirmação.
