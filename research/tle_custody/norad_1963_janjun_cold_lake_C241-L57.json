@@ -1,0 +1,73 @@
+{
+  "schema": "conde.norad-1963-janjun-cold-lake/v1",
+  "evidence_id": "C241-L57",
+  "source": {
+    "title": "NORAD/CONAD Historical Summary, January–June 1963",
+    "reporting_period": "1963-01-01/1963-06-30",
+    "publication_date": "1963-11-01",
+    "source_owner": "North American Air Defense Command and Continental Air Defense Command",
+    "official_archive_index": "https://www.norad.mil/About-NORAD/NORAD-History/",
+    "accessed_pdf_url": "https://documents.theblackvault.com/documents/afhistory/norad/%28U%29%201963%20NORAD%20CONAD%20History%20Jan-Jun.pdf",
+    "pdf_bytes": 12218228,
+    "pdf_sha256": "0ee50f207563618f98173d61be9bcc1db1b0a2afa83978ec9d6ee797a5d806f6",
+    "pdf_pages": 107,
+    "printed_pages": [
+      33,
+      34
+    ],
+    "pdf_page_indices_zero_based": [
+      47,
+      48
+    ],
+    "page_mapping_status": "INFERRED_FROM_ADJACENT_RENDER_P35_INDEX49",
+    "reading_status": "INDEXED_TEXT_TARGET_PAGES_VISUAL_PENDING",
+    "retrieval_date": "2026-11-14",
+    "source_class": "CONTEMPORARY_INSTITUTIONAL_HISTORY_NOT_SENSOR_LOG"
+  },
+  "events": [
+    {
+      "date": "1963-01-09",
+      "kind": "PLAN_REVIEW",
+      "claim": "Secretary of Defense requested camera capabilities and required accuracy analysis before the proposed network approval",
+      "instrumental_observation": false
+    },
+    {
+      "date": "1963-02-12",
+      "kind": "REQUEST_REVIEW",
+      "claim": "Joint Chiefs asked NORAD to re-evaluate Baker-Nunn requirements",
+      "instrumental_observation": false
+    },
+    {
+      "date": "1963-03-19",
+      "kind": "NORAD_RESPONSE",
+      "claim": "NORAD defended the requirements for a military Baker-Nunn camera network independent of reliance on scientific agencies",
+      "instrumental_observation": false
+    },
+    {
+      "date": "1963-05-09",
+      "kind": "CAPABILITIES_ANALYSIS_SUBMITTED",
+      "claim": "NORAD forwarded Baker-Nunn capability and accuracy analysis to the Joint Chiefs",
+      "instrumental_observation": false
+    }
+  ],
+  "cold_lake": {
+    "camera": "Baker-Nunn",
+    "operator": "Royal Canadian Air Force (RCAF)",
+    "place": "Cold Lake, Alberta, Canada",
+    "statement": "The Canadian Cold Lake camera had been placed under NORAD direct operational control by the period covered in the report",
+    "exact_effective_date": null,
+    "station_operation_claim": true,
+    "report_for_528": null,
+    "spadats_528_receipt": null,
+    "caveat": "Operational control is not proof of a named observation, date, instrument precision or effective delivery of 528 data"
+  },
+  "independence": "Same NORAD institutional reporting lineage as C241-L52 and C241-L56; RCAF Roundel C241-L55 is an editorial description, not an automatically independent 528 sensor record",
+  "individual_527_528_529_observations_recovered": 0,
+  "norad_528_observation_utc": null,
+  "norad_528_observation_station": null,
+  "norad_528_sigma": null,
+  "terminal_event_utc": null,
+  "orbital_parameters": null,
+  "physical_constraint_active": false,
+  "next_acquisition": "RU263 series 9 box 72 folder #420 Operations 1963-1965 and #130 Inventory and audits 1963; request RCAF Cold Lake 1963 camera exposure reports with target, UTC, clock calibration, and named SPADATS transmission/receipt for NORAD 528"
+}
