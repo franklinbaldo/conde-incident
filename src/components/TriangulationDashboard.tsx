@@ -57,10 +57,10 @@ export const TriangulationDashboard: React.FC<TriangulationDashboardProps> = ({ 
           <Satellite className="h-4 w-4" aria-hidden="true" />
           {isPt ? 'Comparação documental e condicional' : 'Documentary and conditional comparison'}
         </div>
-        <h2 id="triangulation-title" className="text-xl font-bold text-zinc-100">
+        <h1 id="triangulation-title" className="text-xl font-bold text-zinc-100">
           {isPt ? 'Objetos 527, 528 e 529: o que sabemos e o que calculamos'
             : 'Objects 527, 528 and 529: records versus calculations'}
-        </h2>
+        </h1>
         <p className="text-sm leading-relaxed text-zinc-300">
           {isPt
             ? 'Os registros relacionam os três números de catálogo ao lançamento de janeiro de 1963. Os vetores de 527 e 529 usados no modelo exploratório não foram autenticados como observações coépocas do 528. Compará-los não determina hora, local ou corredor de reentrada.'
