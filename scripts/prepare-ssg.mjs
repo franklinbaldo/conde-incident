@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {readFileSync,readdirSync,mkdirSync,rmSync,writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 import {writeArchivePages} from './ssg-documentary-archive.mjs';
+import {writePostMatrixPage} from './ssg-post-matrix.mjs';
 import {writeMatrixCatalogPages} from './ssg-matrix-catalog.mjs';
 import {writeTleCustodyPage} from './ssg-tle-custody.mjs';
 import {writeAuthoredPages} from './ssg-authored-pages.mjs';
@@ -94,12 +95,15 @@ const archiveCount = writeArchivePages('content/evidencias/arquivo',
   JSON.parse(readFileSync('public/data/conde-source-citations.json', 'utf8')),
   JSON.parse(readFileSync('public/data/conde-declared-dependence.json', 'utf8')), 
   JSON.parse(readFileSync('public/data/conde-wayback-citation-links.json', 'utf8')));
+writePostMatrixPage('content/evidencias/arquivo',
+  JSON.parse(readFileSync('public/data/conde-source-citations.json','utf8')),
+  JSON.parse(readFileSync('public/data/conde-declared-dependence.json','utf8')));
 const archiveHome='content/evidencias/arquivo/index.md';
 const archiveIndex=readFileSync(archiveHome,'utf8');
 const archiveMarker='## Ocorrências curadas';
 assert.ok(archiveIndex.includes(archiveMarker),'Arquivo curado sem âncora de matriz');
 writeFileSync(archiveHome,archiveIndex.replace(archiveMarker,
-  '[Percorrer toda a matriz, inclusive ocorrências ainda sem ficha](/conde-incident/evidencias/matriz/)\n\n'+archiveMarker));
+  '[Percorrer toda a matriz, inclusive ocorrências ainda sem ficha](/conde-incident/evidencias/matriz/)\n\n[Documentos posteriores ao congelamento da matriz (sem nova ocorrência histórica)](/conde-incident/evidencias/arquivo/pos-matriz/)\n\n'+archiveMarker));
 console.log('Arquivo SSG: '+archiveCount+' páginas Markdown para SSG sem JS.');
 const matrixCount=writeMatrixCatalogPages('content/evidencias/matriz');
 console.log('Matriz SSG integral: '+matrixCount+' páginas geradas sem JS.');
