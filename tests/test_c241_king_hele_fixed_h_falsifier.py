@@ -9,6 +9,7 @@ import unittest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from c241_king_hele_fixed_h_falsifier import (  # noqa: E402
     civil_day_utc_counterfactual, required_h_for_one_origin, intersection, report,
+    common_h_under_day_shift,
 )
 
 UTC = timezone.utc
@@ -24,6 +25,11 @@ def observation(day: int, motion: float, row: int | None = None) -> dict:
 def status_interval(low: float, high: float) -> dict:
     return {"status": "COUNTERFACTUAL_INTERVAL_ONLY",
             "required_H_km_UTC_DAY_COUNTERFACTUAL": [low, high]}
+
+
+def moving_interval(low: float, high: float, velocity: float) -> dict:
+    return {**status_interval(low, high),
+            "decay_magnitude_km_day_LOCAL_PROXY": velocity}
 
 
 class FixedHTests(unittest.TestCase):
@@ -125,6 +131,74 @@ class FixedHTests(unittest.TestCase):
     def test_missing_object_rejected(self):
         with self.assertRaises(ValueError):
             report({528: self.rows})
+
+
+    def test_clock_shift_has_no_effect_when_velocities_equal(self):
+        records = [moving_interval(1, 2, 24), moving_interval(2, 3, 24)]
+        result = common_h_under_day_shift(records, -24, 24)
+        self.assertEqual(result["status"],
+                         "NO_COMMON_H_FOR_ANY_SHIFT_IN_STRESS_WINDOW")
+        self.assertIsNotNone(result["incompatible_pair_witness"])
+        self.assertEqual(result["incompatible_pair_witness"]
+                         ["max_upper_minus_lower_km_over_shift_range"], 0)
+
+    def test_shift_can_rescue_only_as_assumption(self):
+        # x=shift hours: [1+x, 2+x) vs [2+2x, 3+2x).
+        # A common positive H exists for -1 < x < 0 in [-1,0].
+        records = [moving_interval(1, 2, 24), moving_interval(2, 3, 48)]
+        result = common_h_under_day_shift(records, -1, 0)
+        self.assertEqual(result["status"], "FEASIBLE_ONLY_IN_ASSUMED_SHIFT_MODEL")
+        self.assertEqual(result["feasible_shift_hours"], [-1, 0.0])
+        self.assertEqual(result["feasible_shift_endpoints_inclusive"], [True, False])
+        self.assertFalse(result["calibrated_timezone"])
+        self.assertEqual(common_h_under_day_shift(records, 0, 24)["status"],
+                         "NO_COMMON_H_FOR_ANY_SHIFT_IN_STRESS_WINDOW")
+
+    def test_boundary_touch_never_becomes_positive_overlap(self):
+        records = [moving_interval(3, 4, 24), moving_interval(4, 5, 24)]
+        for x in (-3, 0, 3):
+            with self.subTest(shift=x):
+                self.assertEqual(common_h_under_day_shift(records, x, x)["status"],
+                                 "NO_COMMON_H_FOR_ANY_SHIFT_IN_STRESS_WINDOW")
+
+    def test_positive_height_constraint_included(self):
+        # Both intervals would overlap after -2h, but both are nonpositive.
+        records = [moving_interval(1, 2, 24), moving_interval(1, 2, 24)]
+        self.assertEqual(common_h_under_day_shift(records, -4, -2)["status"],
+                         "NO_COMMON_H_FOR_ANY_SHIFT_IN_STRESS_WINDOW")
+        self.assertEqual(common_h_under_day_shift(records, -1, 0)["status"],
+                         "FEASIBLE_ONLY_IN_ASSUMED_SHIFT_MODEL")
+
+    def test_missing_origin_prevents_clock_shift_rescue(self):
+        records = [moving_interval(1, 2, 24),
+                   {"status": "NOT_ESTIMABLE_FEWER_PRIOR_EPOCHS"}]
+        result = common_h_under_day_shift(records, -14, 14)
+        self.assertEqual(result["status"], "NOT_ESTIMABLE_ALL_CUTOFFS")
+        self.assertIsNone(result["feasible_shift_hours"])
+
+    def test_bad_shift_bounds_and_degeneracies_rejected(self):
+        import math
+        records = [moving_interval(1, 2, 24)]
+        for low, high in ((4, -4), (math.nan, 1), (-1, math.inf)):
+            with self.subTest(bounds=(low, high)), self.assertRaises(ValueError):
+                common_h_under_day_shift(records, low, high)
+        for bad in (moving_interval(-1, 1, 24),
+                    moving_interval(1, 1, 24),
+                    moving_interval(1, 2, 0),
+                    moving_interval(1, 2, math.nan)):
+            with self.subTest(record=bad), self.assertRaises(ValueError):
+                common_h_under_day_shift([bad], -14, 14)
+
+    def test_real_report_structure_never_claims_terminal_posterior(self):
+        result = report({637: self.rows, 528: self.rows})
+        for obj in result["objects"].values():
+            for variant in obj["variants"].values():
+                stress = variant["day_boundary_shift_stress"]
+                self.assertEqual(set(stress), {"plus_minus_14h", "plus_minus_24h"})
+                self.assertFalse(stress["plus_minus_14h"]["calibrated_timezone"])
+        self.assertEqual(result["inference"]["historical_mcmc"], "NOT_RUN")
+        self.assertIsNone(result["inference"]["impact_geography"])
+
 
 
 if __name__ == "__main__":

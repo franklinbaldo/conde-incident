@@ -60,6 +60,13 @@ jobs:
           assert result['objects']['637']['variants']['median_three']['fixed_H_test']['status'] == 'EMPTY_INTERSECTION_CONDITIONAL_FIXED_H'
           assert all(result['objects']['637']['variants'][method]['fixed_H_test']['cutoffs_estimable'] == 4 for method in ('last_two','median_three'))
           assert all(result['objects']['528']['variants'][method]['fixed_H_test']['cutoffs_estimable'] == 1 for method in ('last_two','median_three'))
+          for method in ('last_two', 'median_three'):
+              for name in ('plus_minus_14h', 'plus_minus_24h'):
+                  stress = result['objects']['637']['variants'][method]['day_boundary_shift_stress'][name]
+                  assert stress['status'] == 'NO_COMMON_H_FOR_ANY_SHIFT_IN_STRESS_WINDOW', stress
+                  assert stress['incompatible_pair_witness'] is not None, stress
+                  assert stress['calibrated_timezone'] is False
+          assert result['objects']['528']['variants']['last_two']['day_boundary_shift_stress']['plus_minus_24h']['calibrated_timezone'] is False
           assert result['inference'] == {
             'active_constraint': False, 'historical_mcmc': 'NOT_RUN',
             'terminal_time_sigma_hours': None, 'impact_geography': None,

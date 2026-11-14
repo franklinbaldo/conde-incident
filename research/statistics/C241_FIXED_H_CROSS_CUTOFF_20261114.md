@@ -32,3 +32,23 @@ Para 528 existe **somente um corte**: H requerido `[38,16; 41,51)` km em ambos o
 O script `tools/c241_king_hele_fixed_h_falsifier.py` produz JSON determinístico, registrando todos os cortes, variantes, origem, último índice de fonte, intervalos não arredondados e status. `tests/test_c241_king_hele_fixed_h_falsifier.py` inclui 15 testes de vazamento temporal, limites semiabertos, cortes faltantes, duplicatas, aproximação de arrasto não-decrescente e invariantes de incerteza. O workflow `c241-fixed-h-day-window.yml` repete download, SHA, testes normais/otimizados e verificação do resultado sobre bytes históricos.
 
 **Inferência:** `active_constraint=false`; `historical_mcmc=NOT_RUN`; `terminal_time_sigma_hours=null`; `impact_geography=null`. Nenhum posterior foi ajustado, nenhuma região excluída. Este experimento aponta uma necessidade prioritária: reentradas de 1963 com **múltiplas órbitas pré-terminais instrumentadas** e intervalo terminal independente, mais horário e semântica precisos do boletim NASA, para calibrar erros fora da amostra. Referências: [Conde #647](https://github.com/franklinbaldo/conde-incident/issues/647), [Cervo #4](https://github.com/franklinbaldo/cervo/issues/4), [Conde #396](https://github.com/franklinbaldo/conde-incident/issues/396).
+
+
+## R58: deslocamento comum do início do dia civil, sem escolher fuso
+
+**Nova pergunta de sensibilidade:** a rejeição do H efetivo constante nos quatro cortes do 637 seria apenas um artefato de supor que o dia NASA começou à meia-noite UTC? Para separar a semântica do rótulo de um relógio observado, a rotina **common_h_under_day_shift** considera um único deslocamento contrafactual \(\delta\) do início da janela civil, idêntico para os quatro cortes do **mesmo evento**. Os domínios \([-14,+14]\) e \([-24,+24]\) horas são **faixas exploratórias explícitas**, não evidência do fuso de 1963 nem de um atraso editorial conhecido.
+
+Para cada origem \(i\), o intervalo requerido se desloca conforme \(H_i(\delta)=[\max(0,a_i+v_i\delta/24),\,b_i+v_i\delta/24)\) km, onde \(v_i>0\) é a perda local aproximada de semieixo (km/dia) estimada **somente antes do corte**. A existência de um \(H>0\) comum equivale às desigualdades estritas \(b_j-a_i+(v_j-v_i)\delta/24>0\), para todos os pares \(i,j\), e \(b_i+v_i\delta/24>0\). O auditor resolve as inequações lineares no intervalo contínuo de \(\delta\), sem fazer varredura em grade, sem otimizar parâmetros nos holdouts e preservando os limites semiabertos.
+
+**Replay de 14/11/2026**, sobre os mesmos 4.567 registros secundários com SHA-256 c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09, no IFRO, HEAD df8b1e0ba0d772971093475dc115606afc238d22 (testes preliminares; CI final deve validar novo HEAD):
+
+| Secante pré-corte | Deslocamento ±14h | Deslocamento ±24h | Par de cortes incompatível em toda a faixa ±24h | Menor separação garantida, ±24h |
+| --- | --- | --- | --- | ---: |
+| Duas últimas épocas | Sem H comum | Sem H comum | origem 27/10 contra 30/10 | 16,44 km |
+| Mediana de três secantes | Sem H comum | Sem H comum | origem 18/10 contra 30/10 | 9,17 km |
+
+Os valores positivos da última coluna medem a distância **entre intervalos de H no proxy**, não distância de órbitas ou margens físicas observadas. A saída JSON inclui índices do par e máximo da folga \(upper_j-lower_i\) sobre a faixa, sempre negativa nos dois casos. Um contraexemplo sintético mostra que um deslocamento pode, em outros dados, recuperar compatibilidade; não é impossível por construção.
+
+**Interpretação estreita:** para um deslocamento civil comum de até um dia em qualquer direção, a incompatibilidade do H constante no *modelo local específico* persiste. Isso reduz a plausibilidade de atribuir toda a divergência apenas à escolha de meia-noite UTC sob tais hipóteses. Não resolve se o rótulo NASA se refere à data de observação, de catalogação ou de outro evento; deslocamentos diferentes por origem, mudanças no modelo de arrasto e erros de catálogo não são testados aqui. Não se identifica H verdadeiro, sigma horário, massa, probabilidade ou geografia. **active_constraint=false**, **historical_mcmc=NOT_RUN**, **impact_geography=null**.
+
+A suíte adversarial cobre fronteiras estritas, H positivo, velocidades iguais, deslocamento que resgata um caso sintético, origem faltante e limites inválidos. O workflow .github/workflows/c241-fixed-h-day-window.yml exige esses testes em Python normal/otimizado e repete o Parquet com SHA pinado antes de afirmar os resultados no HEAD real. Ver [Conde #647](https://github.com/franklinbaldo/conde-incident/issues/647) e [Cervo #4](https://github.com/franklinbaldo/cervo/issues/4).
