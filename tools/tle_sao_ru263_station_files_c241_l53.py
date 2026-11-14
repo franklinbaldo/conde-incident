@@ -26,13 +26,33 @@ def check(condition: bool, message: str) -> None:
     if not condition:
         raise ValueError(message)
 
+def unique_keys(pairs: list[tuple[str, object]]) -> dict:
+    result = {}
+    for key, value in pairs:
+        check(key not in result, "duplicate JSON key: " + key)
+        result[key] = value
+    return result
+
 def read_model(path: Path = LEDGER) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+    return json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=unique_keys)
 
 def audit(model: dict) -> dict:
     check(model.get("schema") == "conde.sao-ru263-station-records-custody/v1", "schema drift")
     check(model.get("id") == "C241-L53", "evidence ID drift")
+    check(set(model) == {
+        "schema", "id", "source", "anchors", "related_conde_evidence",
+        "cross_collection_independent_observations", "norad_527_observation",
+        "norad_528_observation", "norad_529_observation", "norad_528_station",
+        "norad_528_utc", "norad_528_sensor_sigma",
+        "norad_528_data_received_by_spadats",
+        "individual_observations_recovered_from_this_finding_aid",
+        "physical_constraints_activated", "impact_at_conde", "inference", "next_acquisition",
+    }, "unexpected/missing top-level field")
     src = model["source"]
+    check(set(src) == {
+        "repository", "creator", "collection", "catalog_url", "url", "sha256",
+        "bytes", "pdf_pages", "printed_pages", "boxes_in_collection", "source_class",
+    }, "unexpected/missing source field")
     check(src["url"] == URL and src["sha256"] == SHA and src["bytes"] == SIZE,
           "PDF identity modified")
     check(src["repository"] == "Smithsonian Institution Archives", "custodian modified")
@@ -43,6 +63,9 @@ def audit(model: dict) -> dict:
           "archive inventory promoted to instrumental observation")
     check(len(model["anchors"]) == len(LOCATORS), "archive locators dropped/added")
     for item, locator in zip(model["anchors"], LOCATORS):
+        check(set(item) == {"id", "series", "box", "printed_page",
+                             "pdf_page_index_zero_based", "phrase", "scope"},
+              "unexpected/missing archive anchor key")
         actual = tuple(item[k] for k in ("id", "series", "box", "printed_page",
                                           "pdf_page_index_zero_based", "phrase"))
         check(actual == locator, "archive locator mismatch: " + locator[0])
