@@ -1,0 +1,40 @@
+name: CGEO-59 NARA multi-square lookup
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo59_nara_cross_square_query.json'
+      - 'research/geo/CGEO59_NARA_CROSS_SQUARE_QUERY.md'
+      - 'tools/cgeo59_nara_query_audit.py'
+      - 'tests/test_cgeo59_nara_query_audit.py'
+      - '.github/workflows/cgeo59-nara-catalog.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo59_nara_cross_square_query.json'
+      - 'research/geo/CGEO59_NARA_CROSS_SQUARE_QUERY.md'
+      - 'tools/cgeo59_nara_query_audit.py'
+      - 'tests/test_cgeo59_nara_query_audit.py'
+      - '.github/workflows/cgeo59-nara-catalog.yml'
+permissions:
+  contents: read
+jobs:
+  catalog:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact HEAD
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+          git show -s --format='HEAD=%H TREE=%T' HEAD
+      - name: Contract and adversarial tests
+        run: |
+          python3 tools/cgeo59_nara_query_audit.py
+          python3 -m unittest discover -s tests -p 'test_cgeo59_nara_query_audit.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_cgeo59_nara_query_audit.py' -v
+      - name: Live catalog replay
+        run: python3 tools/cgeo59_nara_query_audit.py --live
