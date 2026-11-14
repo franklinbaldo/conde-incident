@@ -15,6 +15,10 @@ on:
       - research/tle_custody/ferret_1500_crosssource_C241.json
       - research/statistics/C241_ferret_1500_crosssource.md
       - tools/ferret_mass_crosssource_C241.py
+      - tools/ftv2313_secondary_geometry_C241.py
+      - tests/test_ftv2313_secondary_geometry_C241.py
+      - research/tle_custody/ftv2313_gmspazio_secondary_C241.json
+      - research/statistics/C241_FTV2313_SECONDARY_GEOMETRY.md
       - tests/test_ferret_mass_crosssource_C241.py
       - .github/workflows/c241-mass-identifiability.yml
   push:
@@ -33,6 +37,10 @@ on:
       - research/tle_custody/ferret_1500_crosssource_C241.json
       - research/statistics/C241_ferret_1500_crosssource.md
       - tools/ferret_mass_crosssource_C241.py
+      - tools/ftv2313_secondary_geometry_C241.py
+      - tests/test_ftv2313_secondary_geometry_C241.py
+      - research/tle_custody/ftv2313_gmspazio_secondary_C241.json
+      - research/statistics/C241_FTV2313_SECONDARY_GEOMETRY.md
       - tests/test_ferret_mass_crosssource_C241.py
       - .github/workflows/c241-mass-identifiability.yml
   workflow_dispatch:
@@ -53,6 +61,8 @@ jobs:
         run: |
           python3 -m unittest discover -s tests -p test_mass_identifiability_C241.py -v
           python3 -m unittest discover -s tests -p test_ferret_mass_crosssource_C241.py -v
+          python3 -m unittest discover -s tests -p test_ftv2313_secondary_geometry_C241.py -v
+          python3 -m tools.ftv2313_secondary_geometry_C241 > "$RUNNER_TEMP/ftv2313-geometry.json"
           python3 -m tools.ferret_mass_crosssource_C241 > "$RUNNER_TEMP/ferret-mass-crosssource.json"
           python3 -m unittest discover -s tests -p test_c241_stage_epoch_ambiguity.py -v
           python3 -m tools.c241_stage_epoch_ambiguity > "$RUNNER_TEMP/mass-stage-epoch.json"

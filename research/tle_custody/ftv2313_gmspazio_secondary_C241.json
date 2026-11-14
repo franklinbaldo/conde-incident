@@ -1,0 +1,45 @@
+{
+  "schema": "conde.c241-ftv2313-secondary-geometry/v1",
+  "id": "C241-CERVO-FTV2313-L49",
+  "source": {
+    "url": "https://findyourobject.gmspazio.com/en/en/obj/14/699/ftv-2313.aspx",
+    "consulted_utc_date": "2026-11-14",
+    "retrieval": "WEB_TEXT_INDEXED",
+    "binary_sha256": null,
+    "binary_verification": "NOT_VERIFIED_TLS_CERTIFICATE_ERROR",
+    "publisher_lineage_from_gcat": null
+  },
+  "listing": {
+    "name": "FTV 2313",
+    "norad": 527,
+    "cospar": "1963-003A",
+    "mass_label": "Mass (kg)",
+    "mass_kg": 1176,
+    "shape": "Cyl + Irr",
+    "diameter_m": 1.5,
+    "height_m": 7.99,
+    "lifetime_label": "6 - 10 days",
+    "narrative_operational_duration": "two days after battery failure"
+  },
+  "gcat_comparison": {
+    "source_ledger": "research/tle_custody/gcat_mass_semantics_C241-L40.json",
+    "object": "S00527",
+    "field": "TotMass",
+    "value_kg": 1176,
+    "same_field_semantics_verified": false,
+    "same_physical_epoch_verified": false
+  },
+  "interpretation": {
+    "dimensions_are_528_dimensions": false,
+    "geometry_is_verified_exact_cylinder": false,
+    "mass_is_independent_instrumental_measurement": false,
+    "source_independence_from_gcat_established": false,
+    "secondary_1176_is_a_closed_inventory_527_528_529": false,
+    "physical_lifetime_6_to_10_days_of_527_established": false,
+    "operational_lifetime_is_orbital_reentry_lifetime": false,
+    "historical_mass_rank_increase": 0,
+    "historical_mcmc": "NOT_RUN",
+    "posterior_mass_528_kg": null,
+    "geographic_domain_reduction": false
+  }
+}
