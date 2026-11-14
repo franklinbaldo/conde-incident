@@ -77,12 +77,13 @@ def normalized(text):
 
 
 def verify_pdf(raw, doc=None):
-    from pypdf import PdfReader
-
     doc = doc or read_model()
     s = doc["source"]
     require(raw[:4] == b"%PDF", "not PDF")
     require(len(raw) == s["bytes"] and hashlib.sha256(raw).hexdigest() == s["sha256"], "PDF identity drift")
+    # Integration tests run without pypdf installed; bad bytes must fail first.
+    from pypdf import PdfReader
+
     pdf = PdfReader(io.BytesIO(raw), strict=False)
     require(len(pdf.pages) == s["pdf_pages"], "PDF page count drift")
     page = normalized(pdf.pages[s["pdf_page_index_zero_based"]].extract_text() or "")
