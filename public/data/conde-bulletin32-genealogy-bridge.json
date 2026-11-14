@@ -1,0 +1,182 @@
+{
+  "delta_links": 16,
+  "delta_orbital_constraints": 0,
+  "graph": [
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "CUSTODIED_1969_BIBLIOGRAPHY",
+      "source": "SOURCE:OSZCZAK-1969-PDF",
+      "target": "DOC:C241-LONTRA-R60"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "PRINTS_REFERENCE_13",
+      "source": "DOC:C241-LONTRA-R60",
+      "target": "REF:OSZCZAK-1969-13"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "CITES_UNRETRIEVED_1963_WORK",
+      "source": "REF:OSZCZAK-1969-13",
+      "target": "WORK:SOVIET-BULLETIN-32-1963"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "CUSTODIED_INSTITUTIONAL_HOLDINGS",
+      "source": "CATALOG:KYIV-2026-HTML",
+      "target": "DOC:C241-LONTRA-R61"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "CROSS_CATALOG_HOLDINGS_ONLY",
+      "source": "CATALOG:NII-AA00566856",
+      "target": "DOC:C241-LONTRA-R61"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "LISTS_FASCICLE_NOT_ARTICLE",
+      "source": "DOC:C241-LONTRA-R61",
+      "target": "HOLDING:SOVIET-BULLETIN-32"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NO_ARTICLE_LEVEL_INVENTORY",
+      "source": "HOLDING:SOVIET-BULLETIN-32",
+      "target": "H:ARTICLE_IDENTITY_UNVERIFIED"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "ORIGINAL_NOT_RETRIEVED",
+      "source": "WORK:SOVIET-BULLETIN-32-1963",
+      "target": "H:ARTICLE_IDENTITY_UNVERIFIED"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "REQUIRES_PRIMARY_FACSIMILE",
+      "source": "H:ARTICLE_IDENTITY_UNVERIFIED",
+      "target": "LATENT:BULLETIN32:original_pages"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "BIBLIOGRAPHIC_METHOD_ONLY",
+      "source": "WORK:SOVIET-BULLETIN-32-1963",
+      "target": "H:OPTICAL_METHOD_MAY_BE_RELEVANT"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "TARGET_ID_NOT_PRINTED",
+      "source": "H:OPTICAL_METHOD_MAY_BE_RELEVANT",
+      "target": "LATENT:BULLETIN32:norad_identity"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NO_INSTRUMENTAL_RECORD",
+      "source": "H:OPTICAL_METHOD_MAY_BE_RELEVANT",
+      "target": "LATENT:BULLETIN32:station_utc_frame"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "PREMISES_NOT_ESTABLISHED",
+      "source": "LATENT:BULLETIN32:station_utc_frame",
+      "target": "LEAN:candidateBulletin32OpticalTiming"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "TARGET_MAPPING_MISSING",
+      "source": "LATENT:BULLETIN32:norad_identity",
+      "target": "LEAN:candidateBulletin32OpticalTiming"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "CANDIDATE_ONLY",
+      "source": "LEAN:candidateBulletin32OpticalTiming",
+      "target": "PARAM:optical_timing_offset_528"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "CANDIDATE_ONLY",
+      "source": "LEAN:candidateBulletin32OpticalTiming",
+      "target": "PARAM:optical_range_sigma_528"
+    }
+  ],
+  "id": "C241-ABELHA-R57-BULLETIN32",
+  "independence_of_underlying_1963_observations": null,
+  "independent_observations_from_these_sources": 0,
+  "lean_candidate": {
+    "compiled_theorem_claimed": false,
+    "id": "candidateBulletin32OpticalTiming",
+    "missing_premises": [
+      "original_fascicle_scan",
+      "article_page_identity",
+      "norad_target_identity",
+      "instrument_station",
+      "utc_or_calibrated_clock",
+      "reference_frame",
+      "measurement_uncertainty_and_dependencies"
+    ],
+    "status": "NOT_PROMOTED"
+  },
+  "limitations": [
+    "R60 is a 1969 secondary citation; it does not supply a 1963 observation.",
+    "R61 is a 2026 institutional holdings HTML; it does not inventory the referenced article.",
+    "Kyiv and Japanese holdings are not two independent satellite measurements.",
+    "No instrument, NORAD 528 measurement, UTC calibration, frame, or covariance is supplied."
+  ],
+  "not_a_new_matrix_occurrence": true,
+  "occurrence_ids": [
+    "C241-LONTRA-R60",
+    "C241-LONTRA-R61"
+  ],
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "schema": "conde-documentary-to-science-v1",
+  "simulator_parameters": [
+    {
+      "activation": false,
+      "id": "optical_timing_offset_528",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "optical_range_sigma_528",
+      "value": null
+    }
+  ],
+  "source_family": "SOVIET_BULLETIN_32_BIBLIOGRAPHIC_LOCATOR",
+  "sources": [
+    {
+      "evidence_class": "VERIFIED_1969_TECHNICAL_BIBLIOGRAPHY_AND_1963_PRIMARY_LOCATOR",
+      "id": "C241-LONTRA-R60",
+      "manifest_sha256": "03c1c49e0a9c1ed28bd5afb21902563f635a9fd066db8dfa47033d5fca837b02",
+      "path": "research/tle_custody/polish_nafa_soviet_refs_C241_LONTRA_R60.json",
+      "pdf_sha256": "f83992fecb15d01fbba0a9e8e3b94bdc81d6620f89ed4790dc4c5ee940bed0c4",
+      "printed_pages": "61-71",
+      "year": 1969
+    },
+    {
+      "evidence_class": "INSTITUTIONAL_SERIAL_HOLDINGS_NOT_PRIMARY_FACSIMILE",
+      "html_sha256": "5ec7eeef7492fb0c4d135f6d5ae5f0378c7290fffd86d49d633da4e1f53e0480",
+      "id": "C241-LONTRA-R61",
+      "issue_held": 32,
+      "manifest_sha256": "d0a981fe6aae55d4d222f2848e309c895ea7c87a86836b0efc13948141f84643",
+      "path": "research/tle_custody/ukraine_bulletin32_holdings_C241_LONTRA_R61.json",
+      "year": 2026
+    }
+  ],
+  "work_id": "SOVIET-BULLETIN-32-1963"
+}
