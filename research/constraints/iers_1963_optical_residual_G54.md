@@ -17,3 +17,7 @@ No ponto previsto, constrói eixos leste/norte ortogonais e projeta a direção 
 Baixar a série original IERS `https://datacenter.iers.org/products/179/14334/orig/eopc04_05_IAU2000.63` e confirmar SHA-256 `66711a146bd3a2752f8824a193431955a687ac7be013ebb0dfe0d86f64d5b264`. Executar `IERS_1963_SOURCE=/tmp/iers-1963-eop.bin python -m unittest discover -s tests -p test_iers_1963_optical_residual.py -v`. G53 mantém o campo de estação numérico na saída para impedir associação acidental com outra posição. O workflow IERS executa os testes G46–G54 no HEAD da PR, com fonte original.
 
 **Para ativar validação histórica posteriormente:** recuperar ficha instrumental original com identificador 527/528/529, estação em 1963 com datum/época, escala de tempo e correção de relógio, quadro de ângulos observado e transformação documentada (por exemplo FK4/B1950→GCRS geométrico), incertezas instrumentais e bytes preservados. Não reinterpretar um valor de catálogo como sensor independente.
+
+## Endurecimento de proveniência G56
+
+O comparador G54 foi atualizado em [G56](iers_1963_optical_source_G56.md): exige agora também os bytes originais do registro de estado TEME da previsão, com objeto, época e posição fonteados. Assinatura atual: `compare_geometric_gcrs(prediction, observation, observation_original_bytes, teme_state_original_bytes)`. A primeira predição deve vir de `forward_source_bound_optical`; `forward_optical` sem vínculo permanece apenas ferramenta geométrica e não é admissível para comparação rotulada por NORAD.
