@@ -40,6 +40,11 @@ does not authenticate observed positions or establish a 1963 reentry. -/
 /-! Exact synthetic circular-MCMC structural audit, not historical inference. -/
 #print axioms Conde1963.CircularMCMC.acceptedFlow_detailed_balance
 #print axioms Conde1963.CircularMCMC.acceptedFlow_list_balance
+#print axioms Conde1963.CircularMCMC.hastingsFlow_detailed_balance
+#print axioms Conde1963.CircularMCMC.hastingsFlow_le_forward
+#print axioms Conde1963.CircularMCMC.hastingsFlow_maximal
+#print axioms Conde1963.CircularMCMC.hastingsFlow_list_balance
+#print axioms Conde1963.CircularMCMC.hastingsFlow_asymmetric_example
 #print axioms Conde1963.CircularMCMC.asymmetric_proposal_counterexample
 #print axioms Conde1963.CircularMCMC.residual_gauge_invariant
 #print axioms Conde1963.CircularMCMC.residualVector_gauge_invariant
