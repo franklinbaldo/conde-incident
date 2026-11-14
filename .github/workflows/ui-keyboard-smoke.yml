@@ -61,6 +61,10 @@ on:
       - 'scripts/enable-article-frames.mjs'
       - 'ssg.toml'
       - 'templates/template.html'
+      - 'templates/shell.html'
+      - 'templates/components/**'
+      - 'scripts/ssg-shell-sync.mjs'
+      - 'tests/ssg-shell-sync.test.mjs'
       - 'templates/tera/base.html'
       - '.github/workflows/ui-keyboard-smoke.yml'
   push:
@@ -125,6 +129,10 @@ on:
       - 'scripts/enable-article-frames.mjs'
       - 'ssg.toml'
       - 'templates/template.html'
+      - 'templates/shell.html'
+      - 'templates/components/**'
+      - 'scripts/ssg-shell-sync.mjs'
+      - 'tests/ssg-shell-sync.test.mjs'
       - 'templates/tera/base.html'
       - '.github/workflows/ui-keyboard-smoke.yml'
   workflow_dispatch:
