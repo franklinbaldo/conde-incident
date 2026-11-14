@@ -4,7 +4,7 @@ import {dirname,join,relative} from 'node:path';
 
 // Explicit paths make the source-to-public-URL mapping reviewable.
 export const AUTHORED_ROUTES=Object.freeze([
-  'hipoteses','metodo','simulacoes','mapa',
+  'dossie','hipoteses','metodo','simulacoes','mapa',
   'simulacoes/inverso','simulacoes/triangulacao',
   'simulacoes/sensibilidade','simulacoes/montecarlo',
   'simulacoes/tles','evidencias/fontes',
