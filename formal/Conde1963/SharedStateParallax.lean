@@ -24,7 +24,7 @@ theorem covariance_includes_two_cross_terms (ha hb : Int) :
     sharedContrastVariance ha hb =
       independentMarginalVariance ha hb - (ha * hb + hb * ha) := by
   simp only [sharedContrastVariance, independentMarginalVariance,
-    mul_sub, sub_mul]
+    Int.mul_sub, Int.sub_mul]
   omega
 
 /-- Two equally sensitive views of the same latent state have zero
