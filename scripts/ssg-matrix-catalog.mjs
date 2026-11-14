@@ -117,6 +117,49 @@ export function writeMatrixCatalogPages(outputDir,bundle=readBundle()) {
   return files.size;
 }
 
+/** Each digest, title, source link and curatorial state must belong to its own
+ * visible occurrence section, not simply occur somewhere else on the page. */
+const htmlPlain=source=>source.replace(/<[^>]*>/g,'').replace(/&(#x[0-9a-f]+|#[0-9]+|amp|lt|gt|quot|apos|nbsp);/gi,(_,value)=>{
+  const key=value.toLowerCase();
+  if(key[0]==='#') return String.fromCodePoint(Number.parseInt(key.slice(key[1]==='x'?2:1),key[1]==='x'?16:10));
+  return {amp:'&',lt:'<',gt:'>',quot:'"',apos:"'",nbsp:'\u00a0'}[key];
+});
+
+export function auditBuiltMatrixSections(html,expected) {
+  const tokens=[...html.matchAll(/<span id="(C[0-9]{2,3}-[0-9]+)" tabindex="-1"><\/span>/g)];
+  const ids=expected.map(({pointer})=>anchor(pointer.occurrence));
+  assert.deepEqual(tokens.map(match=>match[1]),ids,
+    'Matrix HTML anchors missing, duplicated, reordered or invented');
+  for(let i=0;i<expected.length;i++) {
+    const {pointer,record}=expected[i];
+    const fragment=html.slice(tokens[i].index+tokens[i][0].length,
+      tokens[i+1]?.index??html.indexOf('</main>',tokens[i].index));
+    const heading=/^\s*<\/p>\s*<h2>([\s\S]*?)<\/h2>/.exec(fragment);
+    assert.ok(heading,'Missing adjacent visible H2: '+pointer.occurrence);
+    const visibleTitle=htmlPlain(heading[1]).replace(/\\+(?=[\[\]_*`<>|])/g,'');
+    assert.equal(visibleTitle,pointer.occurrence+' · '+record.claim_text,
+      'Matrix heading differs from frozen claim: '+pointer.occurrence);
+    const section=visibleDocument('<main>'+fragment+'</main>');
+    assert.ok(section.links.has(matrixRowUrl(record.matrix_line)),
+      'Missing per-occurrence source row link: '+pointer.occurrence);
+    const sha=/<strong>SHA-256 da linha:<\/strong>\s*<code>([0-9a-f]{64})<\/code>/.exec(fragment)?.[1];
+    assert.equal(sha,record.row_sha256,
+      'Per-occurrence digest differs from frozen row: '+pointer.occurrence);
+    if(pointer.kind==='curated') {
+      assert.ok(section.visibleText.includes('ficha documental curada'),
+        'Curated coverage label absent: '+pointer.occurrence);
+      assert.ok(section.links.has(record.archive_path),
+        'Curated archive absent from its own section: '+pointer.occurrence);
+    } else {
+      assert.ok(section.visibleText.includes('ainda sem ficha documental curada'),
+        'Unmapped coverage label absent: '+pointer.occurrence);
+      assert.ok(![...section.links].some(link=>link.startsWith('/conde-incident/evidencias/arquivo/c')),
+        'Unmapped occurrence acquired an invented curated archive link: '+pointer.occurrence);
+    }
+  }
+  return expected.length;
+}
+
 export function auditBuiltMatrixCatalog(bundle,siteRoot='public') {
   audit(bundle);
   const {entries,pages}=matrixCatalogPages(bundle);
@@ -139,6 +182,7 @@ export function auditBuiltMatrixCatalog(bundle,siteRoot='public') {
       if(pointer.kind==='curated')assert.ok(doc.links.has(record.archive_path),
         'Missing curated evidence link '+pointer.occurrence);
     }
+    auditBuiltMatrixSections(html,entries.slice(i*PER_PAGE,(i+1)*PER_PAGE));
   }
   for(const path of ['evidencias/index.html','evidencias/arquivo/index.html']){
     const doc=visibleDocument(readFileSync(join(siteRoot,path),'utf8'));

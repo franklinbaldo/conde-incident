@@ -5,10 +5,26 @@ import {tmpdir} from 'node:os';
 import {dirname,join} from 'node:path';
 import assert from 'node:assert/strict';
 import {readBundle,audit} from '../scripts/verify-ssg-evidence-index.mjs';
-import {matrixCatalogPages,auditBuiltMatrixCatalog} from '../scripts/ssg-matrix-catalog.mjs';
+import {matrixCatalogPages,auditBuiltMatrixCatalog,auditBuiltMatrixSections} from '../scripts/ssg-matrix-catalog.mjs';
 import {matrixRowUrl} from '../scripts/ssg-documentary-archive.mjs';
 
 const clone=o=>JSON.parse(JSON.stringify(o));
+
+/** An attacker must not be able to place a correct digest elsewhere on the
+ * page while altering the title, state or row link for the target fragment. */
+const xml=value=>String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+function htmlSection({pointer,record}) {
+  const curated=pointer.kind==='curated';
+  const coverage=curated
+    ? 'ficha documental curada <a href="'+record.archive_path+'">Abrir fonte</a>'
+    : 'ainda sem ficha documental curada';
+  return '<p><span id="'+pointer.occurrence.replace('#','-')+'" tabindex="-1"></span></p>'+
+    '<h2>'+xml(pointer.occurrence+' · '+record.claim_text)+'</h2>'+
+    '<p><strong>Cobertura do índice:</strong> '+coverage+'</p>'+
+    '<p><a href="'+matrixRowUrl(record.matrix_line)+'">Consultar linha original</a> · '+
+    '<strong>SHA-256 da linha:</strong> <code>'+record.row_sha256+'</code></p>';
+}
+
 
 test('241 frozen occurrences have stable paginated HTML source links, including uncurated gaps',()=>{
   const bundle=readBundle();
@@ -90,12 +106,7 @@ test('built matrix audit rejects inert and duplicated fragment targets',()=>{
       ...entries.map(({pointer},i)=>link(pages[Math.floor(i/20)].url+'#'+pointer.occurrence.replace('#','-'))),
     ].join('')+'</main></html>');
     for(let i=0;i<pages.length;i++){
-      const parts=entries.slice(i*20,(i+1)*20).map(({pointer,record})=>[
-        `<span id="${pointer.occurrence.replace('#','-')}" tabindex="-1"></span>`,
-        `<h2>${pointer.occurrence}</h2><p>${record.row_sha256}</p>`,
-        link(matrixRowUrl(record.matrix_line)),
-        ...(pointer.kind==='curated'?[link(record.archive_path)]:[]),
-      ].join(''));
+      const parts=entries.slice(i*20,(i+1)*20).map(htmlSection);
       write('evidencias/matriz/paginas/'+String(i+1).padStart(2,'0')+'/index.html',
         '<html><main>'+link('/conde-incident/evidencias/matriz/')+parts.join('')+'</main></html>');
     }
@@ -119,4 +130,25 @@ test('built matrix audit rejects inert and duplicated fragment targets',()=>{
         /Missing unique active target anchor/,scenario);
     }
   }finally{rmSync(root,{recursive:true,force:true});}
+});
+
+test('each published fragment binds its own exact heading, source, digest and curatorial state',()=>{
+  const {entries}=matrixCatalogPages(readBundle());
+  const sample=[entries[0],entries.find(({pointer})=>pointer.kind==='unmapped')];
+  const good='<main>'+sample.map(htmlSection).join('')+'</main>';
+  assert.equal(auditBuiltMatrixSections(good,sample),2);
+  const [curated,gap]=sample;
+  const digestMoved=good.replace(curated.record.row_sha256,'0'.repeat(64));
+  assert.throws(()=>auditBuiltMatrixSections(digestMoved,sample),/Per-occurrence digest/);
+  const fakeSource=good.replace(matrixRowUrl(curated.record.matrix_line),'/conteudo-inexistente/');
+  assert.throws(()=>auditBuiltMatrixSections(fakeSource,sample),/per-occurrence source row link/);
+  const fakeTitle=good.replace(xml(curated.record.claim_text),'outra alegação');
+  assert.throws(()=>auditBuiltMatrixSections(fakeTitle,sample),/heading differs from frozen/);
+  const promoted=good.replace('ainda sem ficha documental curada',
+    'ainda sem ficha documental curada <a href="/conde-incident/evidencias/arquivo/c99-1/">Fonte inventada</a>');
+  assert.throws(()=>auditBuiltMatrixSections(promoted,sample),/invented curated archive link/);
+  const duplicate=good.replace('</main>',htmlSection(gap)+'</main>');
+  assert.throws(()=>auditBuiltMatrixSections(duplicate,sample),/anchors missing, duplicated/);
+  const shuffled='<main>'+sample.slice().reverse().map(htmlSection).join('')+'</main>';
+  assert.throws(()=>auditBuiltMatrixSections(shuffled,sample),/reordered/);
 });
