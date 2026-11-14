@@ -127,6 +127,8 @@ jobs:
         run: node tests/ssg_search_dialog_smoke.mjs
       - name: Chromium editorial ↔ laboratory journeys (320px and desktop)
         run: node tests/editorial_journey_smoke.mjs
+      - name: Chromium TLE custody mobile code reflow and keyboard focus
+        run: node tests/ssg_tle_code_scroll_smoke.mjs
       - name: Upload screenshots and findings even on failure
         if: always()
         uses: actions/upload-artifact@v4
