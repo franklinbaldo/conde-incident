@@ -67,6 +67,49 @@ class SourceLookupTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'Lineage citation'):
                 module.build(Path(folder))
 
+    def test_resealed_crossfeed_cannot_move_source_to_another_occurrence(self):
+        # Alter both canonical JSON inputs consistently, including the lineage key,
+        # so row digest and source bijection still pass. Only the matrix owns IDs.
+        with TemporaryDirectory() as folder:
+            self.source_copy(folder)
+            citations_path = Path(folder) / module.CITATIONS
+            lineage_path = Path(folder) / module.LINEAGE
+            citations = json.loads(citations_path.read_bytes())
+            lineage = json.loads(lineage_path.read_bytes())
+            old = citations['records'][0]['snapshot_ref']
+            replacement = 'C238#1'
+            new = old.rsplit(':', 1)[0] + ':' + replacement
+            citations['records'][0]['occurrence'] = replacement
+            citations['records'][0]['snapshot_ref'] = new
+            target = next(row for row in lineage['citation_lineages']
+                          if row['snapshot_ref'] == old)
+            target['snapshot_ref'] = new
+            citations_path.write_bytes(module.encode(citations))
+            lineage_path.write_bytes(module.encode(lineage))
+            self.reseal_manifest_source(folder, module.CITATIONS)
+            self.reseal_manifest_source(folder, module.LINEAGE)
+            with self.assertRaisesRegex(ValueError, 'occurrence identity'):
+                module.build(Path(folder))
+
+    def test_snapshot_ref_must_match_occurrence_even_if_row_hash_matches(self):
+        with TemporaryDirectory() as folder:
+            self.source_copy(folder)
+            citations_path = Path(folder) / module.CITATIONS
+            lineage_path = Path(folder) / module.LINEAGE
+            citations = json.loads(citations_path.read_bytes())
+            lineage = json.loads(lineage_path.read_bytes())
+            old = citations['records'][0]['snapshot_ref']
+            new = 'matrix:' + '0' * 40 + ':' + citations['records'][0]['occurrence']
+            citations['records'][0]['snapshot_ref'] = new
+            next(row for row in lineage['citation_lineages']
+                 if row['snapshot_ref'] == old)['snapshot_ref'] = new
+            citations_path.write_bytes(module.encode(citations))
+            lineage_path.write_bytes(module.encode(lineage))
+            self.reseal_manifest_source(folder, module.CITATIONS)
+            self.reseal_manifest_source(folder, module.LINEAGE)
+            with self.assertRaisesRegex(ValueError, 'occurrence identity'):
+                module.build(Path(folder))
+
     def test_physical_independence_cannot_be_forged(self):
         with TemporaryDirectory() as folder:
             self.source_copy(folder)
