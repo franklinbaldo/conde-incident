@@ -1,0 +1,38 @@
+name: CGEO-55 NARA 1942 cross-square overlays
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo55_nara_12s037w_overlays.json'
+      - 'research/geo/CGEO55_NARA_12S037W_VISUAL.md'
+      - 'tools/cgeo55_nara_visual_overlays.py'
+      - 'tests/test_cgeo55_nara_visual_overlays.py'
+      - '.github/workflows/cgeo55-nara-1942-overlays.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo55_nara_12s037w_overlays.json'
+      - 'research/geo/CGEO55_NARA_12S037W_VISUAL.md'
+      - 'tools/cgeo55_nara_visual_overlays.py'
+      - 'tests/test_cgeo55_nara_visual_overlays.py'
+      - '.github/workflows/cgeo55-nara-1942-overlays.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact HEAD
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+      - name: Verify contract and negative tests
+        run: |
+          python3 tools/cgeo55_nara_visual_overlays.py
+          python3 -m unittest discover -s tests -p 'test_cgeo55_nara_visual_overlays.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_cgeo55_nara_visual_overlays.py' -v
+      - name: Reacquire six original NARA JPEGs and verify SHA256
+        run: python3 tools/cgeo55_nara_visual_overlays.py --live
