@@ -155,12 +155,33 @@ def transform_covariance(covariance: object, jacobian: object) -> list[list[floa
         raise ValueError("Covariance and Jacobian must both be 6x6")
     if not (np.isfinite(cov).all() and np.isfinite(jac).all()):
         raise ValueError("Covariance and Jacobian must be finite")
-    if np.max(np.abs(cov - cov.T)) > 1e-10 * max(1, np.max(np.abs(cov))):
+    # A global absolute tolerance makes a small velocity covariance invisible
+    # whenever one position variance is enormous.  Require entrywise symmetry.
+    if not np.allclose(cov, cov.T, rtol=1e-12, atol=0.):
         raise ValueError("Covariance must be symmetric")
-    # Eigenvalues checked in physically scaled units: [km, km/s * 1 s].
-    if np.linalg.eigvalsh(cov).min() < -1e-11 * max(1., np.linalg.norm(cov, ord=2)):
-        raise ValueError("Covariance must be positive semidefinite")
+    diagonal = np.diag(cov)
+    if np.any(diagonal < 0):
+        raise ValueError("Covariance has negative marginal variance")
+    nonzero = diagonal > 0
+    # For a PSD matrix a zero-variance variable has *no* covariance with any
+    # other variable.  Reject inconsistent zero rows instead of inventing a
+    # variance floor, especially when velocities are near zero.
+    if np.any(cov[~nonzero, :] != 0):
+        raise ValueError("Zero-variance covariance row must be zero")
+    if np.any(nonzero):
+        sigma = np.sqrt(diagonal[nonzero])
+        # Test the correlation matrix, not raw eigenvalues of mixed km² and
+        # km²/s² scales.  Eigenvalue tolerance is now dimensionless.
+        with np.errstate(over="raise", divide="raise", invalid="raise"):
+            try:
+                correlation = cov[np.ix_(nonzero, nonzero)] / np.outer(sigma, sigma)
+            except FloatingPointError as exc:
+                raise ValueError("Covariance cannot be normalized") from exc
+        if not np.isfinite(correlation).all() or np.linalg.eigvalsh(correlation).min() < -1e-12:
+            raise ValueError("Covariance must be positive semidefinite")
     out = jac @ cov @ jac.T
+    if not np.isfinite(out).all():
+        raise ValueError("Non-finite propagated covariance")
     return ((out + out.T) / 2).tolist()
 
 
