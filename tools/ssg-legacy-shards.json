@@ -1,0 +1,62 @@
+{
+  "schema": "conde.ssg-legacy-shards/v1",
+  "shards": [
+    {
+      "bytes": 11669,
+      "path": "public/data/conde-evidence-index/part-001.json",
+      "sha256": "4284067a38d552e6edf1a5a79846a5435446969e9ce427f97c8ed424060982b5"
+    },
+    {
+      "bytes": 11382,
+      "path": "public/data/conde-evidence-index/part-002.json",
+      "sha256": "91f70ffb5f7acb925cab00788bc070033e363f48e11a42b18798fa6c081d5512"
+    },
+    {
+      "bytes": 6953,
+      "path": "public/data/conde-evidence-index/part-003.json",
+      "sha256": "086efc328801de72b03a5390f99195cd6ebebf3cbde7f1ceb1b440f727746571"
+    },
+    {
+      "bytes": 11973,
+      "path": "public/data/conde-evidence-gaps/part-001.json",
+      "sha256": "c44362b706567b1d32014d6f2b3232ead51b8b02aefb0c62ba4f628a1eff1a48"
+    },
+    {
+      "bytes": 11915,
+      "path": "public/data/conde-evidence-gaps/part-002.json",
+      "sha256": "c6de7b324874ee7317cdee2b851e3496efb1f9fefac6c0a816d058d0476a7108"
+    },
+    {
+      "bytes": 11955,
+      "path": "public/data/conde-evidence-gaps/part-003.json",
+      "sha256": "31181af9946e07194847e9623a80b8bef1312e024747324e6e7ac320f9cc9b87"
+    },
+    {
+      "bytes": 11742,
+      "path": "public/data/conde-evidence-gaps/part-004.json",
+      "sha256": "6e36b36bfa73449983a00a59cd9907a30caaa25e57aa7097a6af88c4ff6f7665"
+    },
+    {
+      "bytes": 11837,
+      "path": "public/data/conde-evidence-gaps/part-005.json",
+      "sha256": "25e3c4bdc92be57ffb0896b659dbffbb77946d18e840ce8306d91e21c6260f80"
+    },
+    {
+      "bytes": 1395,
+      "path": "public/data/conde-evidence-gaps/part-006.json",
+      "sha256": "0be99d1f5145018c5df7edddc2770c29c7217e771283f22bf2cac371bb419a7b"
+    },
+    {
+      "bytes": 11973,
+      "path": "public/data/conde-evidence-lookup/part-001.json",
+      "sha256": "23558226949dfb0a491d00daedd7c46d0f995ea9961fe2c96f90b186254a4f1b"
+    },
+    {
+      "bytes": 3119,
+      "path": "public/data/conde-evidence-lookup/part-002.json",
+      "sha256": "5b662b386270e54d22df340af966149531353a99ccdb10ced117ab987bc75da0"
+    }
+  ],
+  "source_commit": "b905dd5b3d197d340261e395b19079642e3ae99f",
+  "source_manifest_sha256": "35a4d1a0853fe71e95d155fb6117c386f6dde849fa0e1f68588018396f11e740"
+}

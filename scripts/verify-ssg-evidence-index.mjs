@@ -3,11 +3,12 @@ import assert from 'node:assert/strict';
 import {tracked,exactKeys,manifestKeys,curatedKeys,shardMetaKeys,gapKeys}
   from './ssg-evidence-index-schema.mjs';
 import {createHash} from 'node:crypto';
-import {existsSync, readFileSync, readdirSync} from 'node:fs';
+import {existsSync, readFileSync} from 'node:fs';
 import {join, resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {archivePages,matrixRowUrl} from './ssg-documentary-archive.mjs';
 import {auditLookup} from './verify-ssg-evidence-lookup.mjs';
+import {auditPublishedHistory} from './ssg-evidence-published-history.mjs';
 
 const PREFIX='/conde-incident/evidencias/arquivo/';
 const DATA='public/data/';
@@ -335,25 +336,7 @@ export function auditBuiltSite(bundle,siteRoot='public') {
 if (process.argv[1] && import.meta.url===pathToFileURL(resolve(process.argv[1])).href) {
   const root=resolve(import.meta.dirname,'..');
   const bundle=readBundle(root);
-  // Historical immutable shards are valid. Missing referenced shards or
-  // retained files whose content disagrees with their name are never valid.
-  for (const [folder,refs] of [
-    ['conde-evidence-index',bundle.manifest.shards],
-    ['conde-evidence-gaps',bundle.manifest.unmapped_shards],
-    ['conde-evidence-lookup',bundle.manifest.lookup_shards],
-  ]) {
-    const location=join(root,'public/data',folder);
-    const actual=readdirSync(location).filter(name=>/^part-.*\.json$/.test(name));
-    const names=new Set(actual);
-    for (const meta of refs) assert.ok(names.has(meta.path.split('/').at(-1)),
-      'Missing '+folder+' shard: '+meta.path);
-    for (const name of actual) {
-      const match=PART_NAME.exec(name);
-      assert.ok(match,'Unversioned/orphan '+folder+' shard: '+name);
-      assert.equal(hash(readFileSync(join(location,name))),match[1],
-        'Historical '+folder+' shard hash mismatch: '+name);
-    }
-  }
+  auditPublishedHistory(root,bundle.manifest);
   const result=process.argv.includes('--built-site')
     ? auditBuiltSite(bundle,join(root,'public')):audit(bundle);
   console.log('SSG ↔ JSON:',JSON.stringify(result));
