@@ -13,6 +13,8 @@ const forge=(bundle,mutate)=>{
   const meta=bundle.manifest.lookup_shards.at(-1);
   meta.sha256=digest(part.raw);
   meta.bytes=part.raw.length;
+  meta.path=meta.path.replace(/-[a-f0-9]{64}\.json$/,'-'+meta.sha256+'.json');
+  part.path=meta.path;
 };
 
 test('every original occurrence resolves exactly to a curated or unmapped shard',()=>{

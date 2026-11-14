@@ -13,6 +13,9 @@ const PREFIX='/conde-incident/evidencias/arquivo/';
 const DATA='public/data/';
 const MATRIX='research/evidence_matrix_C001-C238_2026-11-11.md';
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
+const addressedPart=(folder,index,sha)=>
+  DATA+folder+'/part-'+String(index).padStart(3,'0')+'-'+sha+'.json';
+const PART_NAME=/^part-[0-9]{3}-([a-f0-9]{64})\.json$/;
 const gitBlob=bytes=>createHash('sha1')
   .update(Buffer.from('blob '+bytes.length+'\0')).update(bytes).digest('hex');
 const slug=value=>value.toLowerCase().replaceAll('_','-');
@@ -166,7 +169,7 @@ export function audit(bundle) {
   const publishedGaps=[];
   for (const [i,meta] of manifest.unmapped_shards.entries()) {
     exactKeys(meta,shardMetaKeys,'gap shard metadata');
-    const expectedPath=`public/data/conde-evidence-gaps/part-${String(i+1).padStart(3,'0')}.json`;
+    const expectedPath=addressedPart('conde-evidence-gaps',i+1,meta.sha256);
     assert.equal(meta.path,expectedPath,'Unexpected gap shard path/order');
     const part=gapShards[i];
     assert.equal(part.path,meta.path);
@@ -201,7 +204,7 @@ export function audit(bundle) {
   const actual=new Map();
   for (const [i,meta] of manifest.shards.entries()) {
     exactKeys(meta,shardMetaKeys,'curated shard metadata');
-    assert.equal(meta.path,`public/data/conde-evidence-index/part-${String(i+1).padStart(3,'0')}.json`,
+    assert.equal(meta.path,addressedPart('conde-evidence-index',i+1,meta.sha256),
       'Unexpected shard path/order');
     const part=shards[i];
     assert.equal(part.path,meta.path);
@@ -332,16 +335,24 @@ export function auditBuiltSite(bundle,siteRoot='public') {
 if (process.argv[1] && import.meta.url===pathToFileURL(resolve(process.argv[1])).href) {
   const root=resolve(import.meta.dirname,'..');
   const bundle=readBundle(root);
-  // Do not run a stale-shard audit if the directory holds extra unmapped parts.
+  // Historical immutable shards are valid. Missing referenced shards or
+  // retained files whose content disagrees with their name are never valid.
   for (const [folder,refs] of [
     ['conde-evidence-index',bundle.manifest.shards],
     ['conde-evidence-gaps',bundle.manifest.unmapped_shards],
     ['conde-evidence-lookup',bundle.manifest.lookup_shards],
   ]) {
-    const actual=readdirSync(join(root,'public/data',folder))
-      .filter(name=>/^part-.*\.json$/.test(name)).sort();
-    assert.deepEqual(actual,refs.map(m=>m.path.split('/').at(-1)),
-      'Orphan/missing '+folder+' shard');
+    const location=join(root,'public/data',folder);
+    const actual=readdirSync(location).filter(name=>/^part-.*\.json$/.test(name));
+    const names=new Set(actual);
+    for (const meta of refs) assert.ok(names.has(meta.path.split('/').at(-1)),
+      'Missing '+folder+' shard: '+meta.path);
+    for (const name of actual) {
+      const match=PART_NAME.exec(name);
+      assert.ok(match,'Unversioned/orphan '+folder+' shard: '+name);
+      assert.equal(hash(readFileSync(join(location,name))),match[1],
+        'Historical '+folder+' shard hash mismatch: '+name);
+    }
   }
   const result=process.argv.includes('--built-site')
     ? auditBuiltSite(bundle,join(root,'public')):audit(bundle);

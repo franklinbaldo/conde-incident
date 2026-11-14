@@ -41,5 +41,5 @@ class LookupTest(unittest.TestCase):
             export.sync(artifacts, root=copy)
             location = next(path for path in artifacts if path.parent == export.LOOKUP_DEST)
             (copy / location).write_bytes(b'{}')
-            with self.assertRaisesRegex(ValueError, 'não reproduzível'):
+            with self.assertRaisesRegex(ValueError, 'imutável'):
                 export.sync(artifacts, root=copy, check=True)

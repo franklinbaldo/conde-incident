@@ -8,13 +8,19 @@ import {dirname,join} from 'node:path';
 import {audit,auditBuiltSite,readBundle,visibleDocument} from '../scripts/verify-ssg-evidence-index.mjs';
 
 const clean=()=>readBundle(); // Fresh, independent on-disk fixture each time.
+const reseal=(part,meta)=>{
+  const sha=createHash('sha256').update(part.raw).digest('hex');
+  meta.sha256=sha;
+  meta.bytes=part.raw.length;
+  meta.path=meta.path.replace(/-[a-f0-9]{64}\.json$/,'-'+sha+'.json');
+  part.path=meta.path;
+};
 const mutateRow=(bundle,change)=>{
   const shard=bundle.shards[0];
   const data=JSON.parse(shard.raw);
   change(data.records[0]);
   shard.raw=Buffer.from(JSON.stringify(data));
-  bundle.manifest.shards[0].sha256=createHash('sha256').update(shard.raw).digest('hex');
-  bundle.manifest.shards[0].bytes=shard.raw.length;
+  reseal(shard,bundle.manifest.shards[0]);
 };
 
 test('every published JSON record links to a generated, navigable SSG occurrence',()=>{
@@ -45,8 +51,7 @@ test('gap claim rewrite fails even when the shard SHA is recomputed',()=>{
   const forged=JSON.parse(part.raw);
   forged.records[0].claim_text='Impacto físico comprovado em Conde';
   part.raw=Buffer.from(JSON.stringify(forged));
-  bundle.manifest.unmapped_shards[0].sha256=createHash('sha256').update(part.raw).digest('hex');
-  bundle.manifest.unmapped_shards[0].bytes=part.raw.length;
+  reseal(part,bundle.manifest.unmapped_shards[0]);
   assert.throws(()=>audit(bundle),/Uncurated claim text\/hash differs/);
 });
 
@@ -58,8 +63,7 @@ test('gap shard cannot invent epistemic status even with recalculated SHA',()=>{
   forged.records[0].source_status='CONFIRMED_PHYSICAL_IMPACT';
   part.raw=Buffer.from(JSON.stringify(forged));
   const meta=bundle.manifest.unmapped_shards.at(-1);
-  meta.sha256=createHash('sha256').update(part.raw).digest('hex');
-  meta.bytes=part.raw.length;
+  reseal(part,meta);
   assert.throws(()=>audit(bundle),/Unexpected gap record fields/);
 });
 
@@ -154,8 +158,7 @@ function mutateSynchronizedLineage(bundle,change) {
   indexed.declared_upstream_paths=structuredClone(entry.declared_upstream_paths);
   shard.raw=Buffer.from(JSON.stringify(data));
   const meta=bundle.manifest.shards.find(item=>item.path===shard.path);
-  meta.sha256=createHash('sha256').update(shard.raw).digest('hex');
-  meta.bytes=shard.raw.length;
+  reseal(shard,meta);
 }
 
 test('synchronized source and shard cannot smuggle an unvalidated terminal claim',()=>{
