@@ -103,6 +103,19 @@ class ReadinessTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'SHA mismatch'):
                 extract_pinned(p)
 
+    def test_secondary_public_tle_does_not_add_epoch(self):
+        from c241_688_public_tle_duplicate import LINE1, LINE2, audit, parse_tle
+        public = parse_tle(LINE1, LINE2)
+        self.assertEqual(public['epoch_utc'].date().isoformat(), '1963-11-11')
+        groups = {687: self.groups[687], 688: [{**self.groups[688][0],
+                  'epoch': public['epoch_utc'],
+                  'mean_motion_rev_day': public['mean_motion_rev_day']}]}
+        report = audit(public, groups)
+        self.assertTrue(report['duplicate_state_candidate'])
+        self.assertFalse(report['independent_new_epoch_found'])
+        self.assertFalse(report['identifiability']['688_secant_identifiable_from_pinned_plus_public'])
+        self.assertIsNone(report['identifiability']['terminal_sigma_hours'])
+
     def test_no_claimed_probability_or_geo(self):
         result = analyze(self.groups, self.ledger)
         self.assertIsNone(result['inference']['impact_geography_528'])
