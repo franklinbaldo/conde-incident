@@ -285,6 +285,7 @@ export function archivePages(citations, lineage, wayback=null) {
     `**Cobertura:** ${citations.curated_occurrences} ocorrências curadas de ${citations.total_matrix_occurrences}. ${citations.unmapped_occurrences} ocorrências não mapeadas no feed parcial **não significam fonte inexistente**.`, '',
     'Uma mesma obra pode originar múltiplos vínculos documentais, sem criar novas testemunhas físicas. Ausência de genealogia declarada não significa independência. Datas NASA são entradas de catálogo, não posições ou horários observados de queda.', '',
     '[Consultar famílias documentais e ocorrências relacionadas]('+ROOT+'familias/) · [Consultar obras e suas reutilizações]('+ROOT+'obras/) · [Consultar identificadores de fontes]('+ROOT+'fontes/) · [Explorar por estado documental]('+ROOT+'estados/)', '',
+    '[Percorrer toda a matriz, inclusive 213 ocorrências sem ficha curada](/conde-incident/evidencias/matriz/)', '',
     '## Ocorrências curadas', '',
     ...links, '',
     ...archiveStatusGuide(citations.records), '',
