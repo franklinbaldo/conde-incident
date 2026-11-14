@@ -31,6 +31,27 @@ try {
         const day8 = filter.getByRole('button', { name: lang === 'pt' ? /08\/11/ : /08 Nov/ });
         await day8.click();
         assert.equal(await day8.getAttribute('aria-pressed'), 'true', 'catalog-day filter must activate');
+        // The scientific solver retains PT notes; the UI must translate them
+        // without silently dropping unexpected legacy claims.
+        const detailLabels = lang === 'pt'
+          ? ['Tempo do cenário UTC:', 'Tempo do cenário (BA):', 'Distância calculada:', 'Altitude calculada:']
+          : ['Scenario time (UTC):', 'Scenario time (Bahia):', 'Calculated distance:', 'Calculated altitude:'];
+        for (const label of detailLabels) {
+          assert.equal(await page.getByText(label, { exact: true }).count(), 1,
+            `${lang} ${width}: missing localized detail label ${label}`);
+        }
+        const note = page.getByText(
+          lang === 'pt' ? 'Nota do algoritmo legado (não verificada)' : 'Legacy algorithm note (unverified)',
+          { exact: true },
+        ).locator('..').locator('p');
+        const noteText = (await note.textContent()) ?? '';
+        assert(noteText.length > 20, `${lang} ${width}: legacy note must remain visible`);
+        if (lang === 'en') {
+          assert(!/Geometria nominal|Passagem regional|Fora de qualquer|Altura orbital|CORREDOR DE REENTRADA|Untranslated legacy/.test(noteText),
+            `Untranslated Portuguese inverse note: ${noteText}`);
+          assert.equal(await page.getByText('Tempo do cenário UTC:', { exact: true }).count(), 0,
+            'Portuguese detail labels must not leak into EN');
+        }
         const size = await page.evaluate(() => ({
           width: document.documentElement.clientWidth,
           scroll: document.documentElement.scrollWidth,
