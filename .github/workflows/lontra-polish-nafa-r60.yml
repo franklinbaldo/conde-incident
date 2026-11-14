@@ -1,0 +1,39 @@
+name: C241 Polish NAFA references R60
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/polish_nafa_soviet_refs_C241_LONTRA_R60.json
+      - tools/audit_polish_nafa_r60.py
+      - tests/test_polish_nafa_r60.py
+      - .github/workflows/lontra-polish-nafa-r60.yml
+  push:
+    branches: [main]
+    paths:
+      - research/tle_custody/polish_nafa_soviet_refs_C241_LONTRA_R60.json
+      - tools/audit_polish_nafa_r60.py
+      - tests/test_polish_nafa_r60.py
+      - .github/workflows/lontra-polish-nafa-r60.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  pdf-custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact HEAD
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Audit bibliographic custody and negative cases
+        run: |
+          set -euo pipefail
+          python3 -m tools.audit_polish_nafa_r60
+          python3 -m unittest discover -s tests -p 'test_polish_nafa_r60.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_polish_nafa_r60.py' -v
+      - name: Replay verified original PDF
+        run: |
+          set -euo pipefail
+          python3 -m tools.audit_polish_nafa_r60 --live
