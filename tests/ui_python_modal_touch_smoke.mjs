@@ -17,6 +17,8 @@ try {
       const response = await page.goto(origin, { waitUntil: 'domcontentloaded' });
       assert(response?.ok(), 'laboratory must load');
       if (lang === 'en') await page.getByRole('button', { name: 'English' }).click();
+      // Keep the compact header small until export is explicitly requested.
+      if (width < 768) await page.locator('header [data-lab-metadata] summary').click();
       const opener = page.getByRole('button', { name: lang === 'pt' ? 'Script Python' : 'Python Script' }).first();
       await opener.click();
       const dialog = page.getByRole('dialog', { name: 'norad528_reconstruction.py' });
