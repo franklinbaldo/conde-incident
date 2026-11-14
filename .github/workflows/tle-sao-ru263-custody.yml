@@ -4,14 +4,18 @@ on:
     paths:
       - 'research/tle_custody/*C241-L53*'
       - 'tools/tle_sao_ru263_station_files_c241_l53.py'
+      - 'tools/tle_sao_ru263_box72_c241_l53.py'
       - 'tests/test_tle_sao_ru263_station_files_c241_l53.py'
+      - 'tests/test_tle_sao_ru263_box72_c241_l53.py'
       - '.github/workflows/tle-sao-ru263-custody.yml'
   push:
     branches: [main]
     paths:
       - 'research/tle_custody/*C241-L53*'
       - 'tools/tle_sao_ru263_station_files_c241_l53.py'
+      - 'tools/tle_sao_ru263_box72_c241_l53.py'
       - 'tests/test_tle_sao_ru263_station_files_c241_l53.py'
+      - 'tests/test_tle_sao_ru263_box72_c241_l53.py'
       - '.github/workflows/tle-sao-ru263-custody.yml'
   workflow_dispatch:
 permissions:
@@ -36,5 +40,9 @@ jobs:
         run: |
           python -m unittest discover -s tests -p test_tle_sao_ru263_station_files_c241_l53.py -v
           python -O -m unittest discover -s tests -p test_tle_sao_ru263_station_files_c241_l53.py -v
+          python -m unittest discover -s tests -p test_tle_sao_ru263_box72_c241_l53.py -v
+          python -O -m unittest discover -s tests -p test_tle_sao_ru263_box72_c241_l53.py -v
       - name: Independently redownload RU263 and verify original bytes, pagination and labels
-        run: python tools/tle_sao_ru263_station_files_c241_l53.py --live
+        run: |
+          python tools/tle_sao_ru263_station_files_c241_l53.py --live
+          python tools/tle_sao_ru263_box72_c241_l53.py --live
