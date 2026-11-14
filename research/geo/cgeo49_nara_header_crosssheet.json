@@ -1,0 +1,40 @@
+{
+  "schema": "conde.cgeo.nara-overlay-headers/v1",
+  "id": "CGEO-49",
+  "observed_on": "2026-11-14",
+  "parent_evidence": ["CGEO-47", "CGEO-48"],
+  "record_group": "373",
+  "nara_series": "306062",
+  "nara_unit": "46716637",
+  "degree_square": "11S037W",
+  "microfilm": "M1765",
+  "roll": "317",
+  "catalog_url": "https://catalog.archives.gov/id/46716637",
+  "reading_method": "Human visual comparison of four original NARA overlay JPEG headers; provisional handwriting transcription; no OCR",
+  "archival_method_url": "https://unwritten-record.blogs.archives.gov/2019/09/11/researching-foreign-aerial-photography/",
+  "sheets": [
+    {"filename": "m1765-317-00247.jpg", "sha256": "b671f0378e2b57502f616be5aaa57ae45041048aa576bbf04c6eed9a6843a404", "handwritten_number": "125370", "number_position": "above printed O.P. FILE NO. field; classification unverified", "header_date_reading": "27 SEP 42", "header_date_status": "provisional_visual_transcription", "verified_spot_number": null, "verified_negative_can": null},
+    {"filename": "m1765-317-00248.jpg", "sha256": "21016e6c141d5ac495893e13bc9a4b01bbf992e596416054fd0c03c164f3d2a0", "handwritten_number": "125374", "number_position": "above printed O.P. FILE NO. field; classification unverified", "header_date_reading": "7,11,18,20 SEP 42", "header_date_status": "provisional_visual_transcription", "verified_spot_number": null, "verified_negative_can": null},
+    {"filename": "m1765-317-00249.jpg", "sha256": "5116df3dee9d0a78ac12b4984c1d211f81008ed395f219adeb6ad1bba72ad470", "handwritten_number": "133002", "number_position": "above printed O.P. FILE NO. field; classification unverified", "header_date_reading": "21 AUG 43", "header_date_status": "provisional_visual_transcription", "verified_spot_number": null, "verified_negative_can": null},
+    {"filename": "m1765-317-00250.jpg", "sha256": "1cb357a05384e763c893924b79ff1711aceea8f602e6d94eab31bf61b6bfed26", "handwritten_number": "133002", "number_position": "above printed O.P. FILE NO. field; classification unverified", "header_date_reading": "21 AUG 43", "header_date_status": "provisional_visual_transcription", "verified_spot_number": null, "verified_negative_can": null}
+  ],
+  "cross_sheet_inferences": {
+    "number_repeated_on": ["m1765-317-00249.jpg", "m1765-317-00250.jpg"],
+    "repeated_number": "133002",
+    "conclusion": "The same heading appears on two overlays; number not independently established as spot number, exposure, or can",
+    "number_125374_is_confirmed_spot": null,
+    "number_133002_is_confirmed_spot": null,
+    "images_of_conde_confirmed": false
+  },
+  "limitations": {
+    "source_sha_references_are_parent_CGEO47": true,
+    "archival_locator_crosswalk_done": false,
+    "original_aerial_negative_acquired": false,
+    "historical_center_geometry_1963": null,
+    "verified_aerial_exposure_date_at_conde": null,
+    "ground_footprint_georeferenced": false,
+    "reentry_location": null,
+    "orbital_constraints_activated": false,
+    "final_status": "CROSS_SHEET_HEADER_CANDIDATES_ONLY"
+  }
+}
