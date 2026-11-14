@@ -1,0 +1,18 @@
+{
+ "schema":"conde.c241.visual-correction/v1",
+ "evidence_id":"C241-L58",
+ "parent_id":"C241-L57",
+ "parent_sha256":"4132de53581548fbe867677fdb220668c3a05b400df822b8fa59c880fd756ab8",
+ "source":{"url":"https://documents.theblackvault.com/documents/afhistory/norad/%28U%29%201963%20NORAD%20CONAD%20History%20Jan-Jun.pdf","sha256":"0ee50f207563618f98173d61be9bcc1db1b0a2afa83978ec9d6ee797a5d806f6","bytes":12218228,"pdf_pages":107,"publication_date":"1963-11-01","independent_source":false},
+ "prior_error":{"claimed_printed_pages":[33,34],"claimed_zero_based_indices":[47,48],"status":"OFF_BY_ONE_AND_MISSING_PAGE_35"},
+ "pages":[
+  {"printed":33,"pdf_one_based":47,"pdf_zero_based":46,"fact":"USAF five cameras, one to Canada, SAO twelve, total seventeen","visual_checked":true},
+  {"printed":34,"pdf_one_based":48,"pdf_zero_based":47,"fact":"January Defence accuracy review, February JCS request, March NORAD response","visual_checked":true},
+  {"printed":35,"pdf_one_based":49,"pdf_zero_based":48,"fact":"May NORAD analysis submitted; RCAF Cold Lake under NORAD direct control","visual_checked":true}
+ ],
+ "visual_scope":"MANUAL_CHECK_OF_PRINTED_PAGES_33_TO_35_NOT_ORBITAL_MEASUREMENT",
+ "inventory":{"USAF_original":5,"USAF_to_Canada_mid_1962":1,"SAO_for_NASA":12,"total_in_existence":17,"Canada_part_of_original_five":true},
+ "cold_lake":{"operator":"RCAF","control":"NORAD","claim_printed_page":35,"effective_date":null,"528_exposure_utc":null,"528_data_receipt":null,"528_instrument_sigma":null},
+ "epistemic":{"source_class":"CONTEMPORARY_INSTITUTIONAL_HISTORY","independent_instrumental_observations":0,"active_physical_constraint":false,"528_terminal_utc":null,"528_impact_location":null},
+ "acquisition":"RU263 series 9 box 72 folders 420 Operations and 130 Inventory and audits; seek original exposure and receipt naming NORAD 528"
+}
