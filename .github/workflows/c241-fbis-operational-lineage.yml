@@ -1,6 +1,9 @@
 name: C241-P42 FBIS documentary lineage
+permissions:
+  contents: read
 on:
   push:
+    branches: [main]
     paths:
       - 'tools/export_fbis_operational_lineage.py'
       - 'tools/audit_matrix_coverage.py'
@@ -21,6 +24,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify checked-out SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
