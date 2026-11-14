@@ -8,7 +8,7 @@ verification_status: CONDITIONAL_MATHEMATICS_NOT_TERMINAL_CALIBRATION
 
 # R62: uma faixa de dois dias não equivale a um erro horário medido
 
-A NASA/GSFC, no *Satellite Situation Report* vol. 3 nº 24, p. 15, publica **A OMEGA 1 → 29–30 OCT 63**, custodiado como [C241-L64](../tle_custody/nasa_ssr_terminal_control_308_C241-L64.md), PDF [NTRS 19640003479](https://ntrs.nasa.gov/citations/19640003479), SHA-256 d31a064f8e03fd39be6fe75b88cd5852c0b74c9101fa635cb40ac25c77ef474f. O catálogo secundário do [R59](C241_1963_TERMINAL_CONTROL_SCREEN_20261114.md) indica o **dia 30/10/1963** para NORAD 308; a identidade da linha A OMEGA 1 ↔ NORAD 308 é apenas um *crosswalk* secundário. O documento NASA não imprime 308, sensor, horário UTC nem erro instrumental.
+A NASA/GSFC, no *Satellite Situation Report* vol. 3 nº 24, p. 15, publica **OMEGA 1 → 29–30 OCT 63**, custodiado como [C241-L64](../tle_custody/nasa_ssr_terminal_control_308_C241-L64.md), corrigido visualmente por [C241-L65](../tle_custody/nasa_ssr_omega1_corrigendum_C241-L65.md), PDF [NTRS 19640003479](https://ntrs.nasa.gov/citations/19640003479), SHA-256 d31a064f8e03fd39be6fe75b88cd5852c0b74c9101fa635cb40ac25c77ef474f. O catálogo secundário do [R59](C241_1963_TERMINAL_CONTROL_SCREEN_20261114.md) indica o **dia 30/10/1963** para NORAD 308; a identidade da linha OMEGA 1 ↔ NORAD 308 é apenas um *crosswalk* secundário. O documento NASA não imprime 308, sensor, horário UTC nem erro instrumental.
 
 ## Informação identificável condicional
 
@@ -30,4 +30,4 @@ Com o replay R60 em arquivo, executar:
 
     python3 tools/c241_terminal_calendar_minimax_r62.py --r60 /tmp/c241-1963-fixed-h.json --ssr research/tle_custody/nasa_ssr_terminal_control_308_C241-L64.json --output /tmp/c241-terminal-minimax-r62.json
 
-O workflow c241-1963-terminal-control-screen.yml deve comprovar o SHA exato, os testes e o replay real. Não confundir o estudo matemático com validação física. Próxima observação discriminante: vínculo instrumental primário de NORAD 308 com A OMEGA 1, horário/intervalo terminal identificado, fuso e incerteza documentados, mais previsão pré-terminal congelada.
+O workflow c241-1963-terminal-control-screen.yml deve comprovar o SHA exato, os testes e o replay real. Não confundir o estudo matemático com validação física. Próxima observação discriminante: vínculo instrumental primário de NORAD 308 com OMEGA 1, horário/intervalo terminal identificado, fuso e incerteza documentados, mais previsão pré-terminal congelada.
