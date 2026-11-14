@@ -68,7 +68,7 @@ def live():
                  ("image/jpeg","image/jpg","application/octet-stream"),"MIME "+k)
             data=r.read(size+1)
         need(len(data)==size,"bytes "+k)
-        need(data[:3]==b"\\xff\\xd8\\xff" and data[-2:]==b"\\xff\\xd9","JPEG boundaries "+k)
+        need(data[:3]==b"\xff\xd8\xff" and data[-2:]==b"\xff\xd9","JPEG boundaries "+k)
         need(hashlib.sha256(data).hexdigest()==sha,"SHA256 "+k)
         print("CGEO56_JPEG_PASS",k,len(data),sha)
     print("CGEO56_NARA_ALL_FOUR_PASS")
