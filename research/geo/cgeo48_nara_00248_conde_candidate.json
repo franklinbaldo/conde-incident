@@ -1,0 +1,41 @@
+{
+  "schema": "conde.cgeo.nara-overlay-screen-registration/v1",
+  "id": "CGEO-48",
+  "observed_on": "2026-11-14",
+  "parent_evidence": "CGEO-47",
+  "record_group": "373",
+  "nara_degree_square": "11S037W",
+  "nara_file_unit": "46716637",
+  "reference_scans": [
+    {"filename": "m1765-317-00246.jpg", "role": "base_map", "sha256": "902ce5bb15f6b40ddeecd793ec6407d3728a880e91cfd0d455519bdddbd33dda", "native_size_px": [3636,4002]},
+    {"filename": "m1765-317-00248.jpg", "role": "flight_overlay", "sha256": "21016e6c141d5ac495893e13bc9a4b01bbf992e596416054fd0c03c164f3d2a0", "native_size_px": [3620,3988]}
+  ],
+  "inspection_method": "Human visual comparison of the original scans after independent resize to a common 1080x1200 pixel preview; display-only registration, not GIS georeferencing",
+  "preview_dimensions_px": [1080,1200],
+  "paper_registration_controls_px": {
+    "base_upper_left": [214,342], "overlay_upper_left": [215,341],
+    "base_lower_right": [965,1080], "overlay_lower_right": [962,1077],
+    "control_max_displacement_px": 6
+  },
+  "map_label": {"literal": "Conde", "approximate_symbol_center_px": [516,937], "kind": "cartographic_toponym_not_1963_urban_centroid"},
+  "overlay_00248": {
+    "visible_annotations": {"exposure_numbers_near_candidate_strip": [26,16], "header_date_transcription": "7,11,18,20 SEP 42", "header_date_reading": "provisional_visual_transcription", "unresolved_header_number": "125374", "unresolved_header_number_is_spot_number": null},
+    "candidate_strip_proxy_line_preview_px": [[550,878],[485,1048]],
+    "proximity_threshold_px_for_visual_screening_only": 25,
+    "town_symbol_is_near_strip_on_registered_preview": true,
+    "verified_aerial_exposure_at_town": false,
+    "verified_original_negative": false,
+    "verified_spot_number": null,
+    "verified_exposure_date": null
+  },
+  "limitations": {
+    "source_jpegs_acquired_and_hashed_in_cgeo47": true,
+    "modern_geodetic_coordinates_derived": false,
+    "georeferenced_footprint_validated": false,
+    "historical_center_polygon_1963": null,
+    "same_flight_as_sgb_1964_1970": null,
+    "reentry_event_location": null,
+    "orbital_constraints_activated": false,
+    "final_status": "CANDIDATE_VISUAL_CORRIDOR_ONLY"
+  }
+}

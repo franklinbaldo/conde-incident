@@ -1,0 +1,31 @@
+name: CGEO-48 NARA screen-space candidate provenance
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo48_nara_00248_conde_candidate.json'
+      - 'research/geo/cgeo47_nara_m1765_conde_pre1963.json'
+      - 'research/geo/CGEO48_NARA_VISUAL_CANDIDATE.md'
+      - 'tools/cgeo48_nara_overlay.py'
+      - 'tests/test_cgeo48_nara_overlay.py'
+      - '.github/workflows/cgeo48-nara-overlap.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Enforce exact PR head checkout
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+      - name: Verify source lineage, visual-screen candidate, and negative mutants
+        run: |
+          python3 tools/cgeo48_nara_overlay.py
+          python3 -m unittest discover -s tests -p 'test_cgeo48_nara_overlay.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_cgeo48_nara_overlay.py' -v
+      - name: Independently read the two original NARA JPEGs and verify full SHA-256
+        run: python3 tools/cgeo48_nara_overlay.py --live
