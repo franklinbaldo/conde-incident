@@ -103,6 +103,57 @@ def nearest(epoch, rows):
             "half_tle_quantum_or_less": abs(delta) <= 432}
 
 
+def post_decay_day_controls(by_sat):
+    """Return source catalog coverage, not physical before/after decay observations.
+
+    NASA C197 dates the 528 decay to the *day* 1963-11-08. Only epochs
+    >= 1963-11-09T00Z are strictly later than the reported calendar day;
+    1963-11-08 epochs are temporally ambiguous with respect to decay.
+    """
+    start = datetime(1963, 11, 8, tzinfo=timezone.utc)
+    end = datetime(1963, 11, 9, tzinfo=timezone.utc)
+
+    def as_record(entry):
+        if entry is None:
+            return None
+        return {"epoch_utc": entry["epoch"].isoformat(timespec="microseconds").replace("+00:00", "Z"),
+                "source_rows": entry["source_rows"]}
+
+    chronology = {}
+    for sid in IDS:
+        seq = by_sat[sid]
+        before = [e for e in seq if e["epoch"] < start]
+        during = [e for e in seq if start <= e["epoch"] < end]
+        after = [e for e in seq if e["epoch"] >= end]
+        chronology[str(sid)] = {
+            "distinct_epochs_before_day": len(before),
+            "distinct_epochs_on_ambiguous_day": len(during),
+            "distinct_epochs_after_day": len(after),
+            "last_before_day": as_record(before[-1] if before else None),
+            "on_ambiguous_day": [as_record(e) for e in during],
+            "first_after_day": as_record(after[0] if after else None),
+            "last_after_day": as_record(after[-1] if after else None),
+            "post_day_source_rows": [e["source_rows"] for e in after],
+            "catalog_gap_last_pre_first_post_seconds":
+                micros(after[0]["epoch"] - before[-1]["epoch"]) / 1_000_000
+                if after and before else None,
+        }
+    return {
+        "source": "NASA SSR 1963-11-15 C197 day-only decay + SHA-pinned secondary TLE catalog",
+        "decay_day_utc": "1963-11-08",
+        "guaranteed_after_reported_day_from_utc": "1963-11-09T00:00:00Z",
+        "by_norad": chronology,
+        "both_controls_have_later_catalog_epochs": all(
+            chronology[str(sid)]["distinct_epochs_after_day"] > 0
+            for sid in (527, 529)),
+        "independent_instrumental_tracking": "NOT_ESTABLISHED",
+        "physical_joint_fit": "NOT_RUN",
+        "historical_holdout": "NOT_RUN",
+        "528_trajectory_restriction": "NONE",
+        "impact_time_or_location": "NOT_INFERRED",
+    }
+
+
 def summarize(raw_rows):
     by_sat, counts = normalize(raw_rows)
     coverage = {str(h) + "h": {"527": 0, "529": 0, "both": 0} for h in WINDOW_HOURS}
@@ -147,6 +198,7 @@ def summarize(raw_rows):
         "windows_hours": list(WINDOW_HOURS),
         "window_meaning": "Predeclared calendar-distance queries; NOT observational uncertainty or orbital synchrony",
         "object_extents": extents,
+        "post_decay_day_control_coverage": post_decay_day_controls(by_sat),
         "nearest_by_528_epoch": entries,
         "count_of_528_epochs_with_nearby_527_529": coverage,
         "count_of_exact_shared_epochs": exact,
