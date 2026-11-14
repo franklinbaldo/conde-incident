@@ -68,7 +68,8 @@ class G64ClockCovariance(unittest.TestCase):
         v = 1e-4
         for c in (
             [[-1e-30, 0], [0, v]], [[v, 2*v], [2*v, v]],
-            [[v, 1e-10], [0, v]], [[0, 1e-12], [1e-12, v]],
+            [[v, 1e-10], [0, v]], [[1e12, 1e-7], [0, 1e-7]],
+            [[0, 1e-12], [1e-12, v]],
             [[float("nan"), 0], [0, v]], [[v, float("inf")], [0, v]],
             [[v, 0, 0], [0, v, 0]], "uncalibrated", [[True, False], [False, True]],
         ):
