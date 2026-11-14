@@ -1,0 +1,51 @@
+{
+  "id": "C241-L68",
+  "kind": "NASA_SSR_OCT1963_OMEGA1_PRINTED_CATALOG_ROW",
+  "source": {
+    "title": "NASA/Goddard Satellite Situation Report, volume 3 number 20",
+    "publication_date": "1963-10-15",
+    "report_as_of_utc": "1963-10-15T12:00:00Z",
+    "ntrs_id": "19640000428",
+    "pdf_url": "https://ntrs.nasa.gov/api/citations/19640000428/downloads/19640000428.pdf",
+    "pdf_sha256": "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+    "pdf_bytes": 286417,
+    "pdf_pages": 9,
+    "pdf_page_1based": 5,
+    "printed_page": 3,
+    "family": "NASA_GSFC_SSR_NORAD_SHARED"
+  },
+  "row": {
+    "table_heading": "OBJECTS IN ORBIT",
+    "section": "1962 LAUNCHES",
+    "printed_name": "OMEGA 1",
+    "source_country": "US",
+    "launch_day_month": "18 JUN",
+    "nodal_period_minutes": "89.7",
+    "inclination_degrees": "82.15",
+    "apogee_km": 263,
+    "perigee_km": 254,
+    "catalog_number_printed": null
+  },
+  "related": [
+    "C241-L12",
+    "C241-L64",
+    "C241-L65",
+    "C241-L66",
+    "C241-L67"
+  ],
+  "limits": {
+    "row_is_instrumental_observation": false,
+    "as_of_is_instrumental_epoch": false,
+    "source_independent_of_nasa_1963_1977_catalog_family": false,
+    "norad_308_identification_from_this_row": null,
+    "physical_survival_at_report_cutoff_proven": false,
+    "independent_instrumental_observations_added": 0,
+    "terminal_event_utc": null,
+    "terminal_sigma_seconds": null,
+    "sensor": null,
+    "station": null,
+    "active_constraint_528": false,
+    "historical_mcmc": "NOT_RUN",
+    "impact_location": null
+  }
+}
