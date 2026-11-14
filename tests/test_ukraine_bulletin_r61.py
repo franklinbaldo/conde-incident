@@ -1,8 +1,9 @@
 """Negative tests for the Kyiv serial holdings and source/genealogy boundary."""
 import copy
 import json
+import hashlib
 import unittest
-from tools.audit_ukraine_bulletin_r61 import PATH, validate, check_holding_context
+from tools.audit_ukraine_bulletin_r61 import PATH, validate, check_holding_context, verify_snapshot_digest
 
 CONTEXT = ("Бюллетень станций оптического наблюдения ИСЗ "
            "1958 N3 1962 N25-31 1963 N32-37 1964 N38-43").encode("utf-8")
@@ -26,6 +27,12 @@ class TestR61(unittest.TestCase):
             with self.subTest(field=key):
                 x=copy.deepcopy(self.base);x["catalog"][key]=value
                 with self.assertRaises(ValueError):validate(x)
+    def test_snapshot_digest_fail_closed(self):
+        original = b"historical catalogue content"
+        sha = hashlib.sha256(original).hexdigest()
+        self.assertEqual(verify_snapshot_digest(original, sha), sha)
+        with self.assertRaisesRegex(ValueError, "digest mismatch"):
+            verify_snapshot_digest(original + b"tampered", sha)
     def test_holding_context_is_not_issue_substring(self):
         for variant in [
             CONTEXT.replace(b"1963 N32-37",b"1963 N33-37"),
