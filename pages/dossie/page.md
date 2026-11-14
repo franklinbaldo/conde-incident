@@ -12,7 +12,7 @@ canonical_route: "/conde-incident/dossie/"
 
 <div class="casefile" aria-label="Dossiê investigativo orientado por evidências">
   <p class="cf-kicker">Dossiê 01 · Duas cadeias documentais</p>
-  <div class="cf-hero">
+  <div class="cf-hero" id="relato" tabindex="-1">
     <div class="cf-copy">
       <p class="cf-lead">Uma notícia extraordinária chegou pelos serviços de rádio. Um boletim da NASA registrou um decaimento orbital no mesmo período. O que os documentos realmente conectam?</p>
       <p class="cf-status"><strong>Estado da investigação:</strong> a coincidência de datas não demonstra que o objeto espacial caiu em Conde.</p>
@@ -30,15 +30,17 @@ canonical_route: "/conde-incident/dossie/"
   <section class="cf-section" id="pergunta" aria-labelledby="cf-trilha-title">
     <p class="cf-kicker">Como ler a investigação</p>
     <h2 id="cf-trilha-title">Siga a evidência, não a conclusão</h2>
-    <ol class="cf-trail">
-      <li><span>01</span><strong>Afirmação</strong><small>O que foi relatado?</small></li>
-      <li><span>02</span><strong>Documento</strong><small>Quem registrou, quando e onde?</small></li>
-      <li><span>03</span><strong>Hipótese</strong><small>Que ligação ainda precisa de prova?</small></li>
-      <li><span>04</span><strong>Experimento</strong><small>O que pode ser testado sob premissas?</small></li>
-    </ol>
+    <nav aria-label="Etapas do dossiê">
+      <ol class="cf-trail">
+        <li><a href="#relato"><span>01</span><strong>Afirmação</strong><small>O que foi relatado?</small></a></li>
+        <li><a href="#fontes"><span>02</span><strong>Documento</strong><small>Quem registrou, quando e onde?</small></a></li>
+        <li><a href="#hipoteses"><span>03</span><strong>Hipótese</strong><small>Que ligação ainda precisa de prova?</small></a></li>
+        <li><a href="#experimentos"><span>04</span><strong>Experimento</strong><small>O que pode ser testado sob premissas?</small></a></li>
+      </ol>
+    </nav>
   </section>
 
-  <section class="cf-section" id="fontes" aria-labelledby="cf-fontes-title">
+  <section class="cf-section" id="fontes" tabindex="-1" aria-labelledby="cf-fontes-title">
     <p class="cf-kicker">Duas fontes contemporâneas, funções diferentes</p>
     <h2 id="cf-fontes-title">O que os registros permitem afirmar</h2>
     <div class="cf-cards">
@@ -64,7 +66,7 @@ canonical_route: "/conde-incident/dossie/"
     <p class="cf-note">A data da publicação, a época da observação e a hora de uma transmissão são variáveis distintas. Essas fontes não são duas confirmações independentes de uma queda no solo.</p>
   </section>
 
-  <section class="cf-section" aria-labelledby="cf-exper-title">
+  <section class="cf-section" id="hipoteses" tabindex="-1" aria-labelledby="cf-exper-title">
     <p class="cf-kicker">O que falta para decidir?</p>
     <h2 id="cf-exper-title">Hipóteses e instrumentos</h2>
     <div class="cf-cards cf-cards-compact">
@@ -73,7 +75,7 @@ canonical_route: "/conde-incident/dossie/"
         <p>Reentrada, origem meteorológica ou circulação documental exigem testes diferentes e fontes independentes.</p>
         <a class="cf-button" href="/conde-incident/hipoteses/">Comparar hipóteses</a>
       </section>
-      <section class="cf-card">
+      <section class="cf-card" id="experimentos" tabindex="-1">
         <h3>Explorar trajetórias condicionais</h3>
         <p>O mapa e o laboratório exibem cenários modelados. Nenhum representa uma passagem ou impacto instrumentalmente comprovado em Conde.</p>
         <a class="cf-button" href="/conde-incident/lab/#/map">Abrir mapa interativo</a>

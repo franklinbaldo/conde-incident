@@ -152,9 +152,12 @@ a:focus-visible,button:focus-visible,iframe:focus-visible{outline:3px solid #ffd
 .casefile .cf-button-primary:hover{color:#fff;background:#123d4d}
 .casefile .cf-section{padding-block:clamp(1.6rem,3vw,2.7rem);border-top:1px solid var(--cf-line)}
 .casefile .cf-trail{list-style:none;counter-reset:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.7rem;padding:0;margin:1.5rem 0 0}
-.casefile .cf-trail li{display:grid;gap:.2rem;border-top:3px solid var(--cf-accent);padding:.65rem .3rem}
-.casefile .cf-trail li span{font-weight:800;color:var(--cf-accent);font-size:.8rem}
-.casefile .cf-trail li small{color:var(--cf-muted);font-size:.85rem}
+.casefile .cf-trail a{display:grid;gap:.2rem;border-top:3px solid var(--cf-accent);padding:.65rem .3rem;color:var(--cf-ink);text-decoration:none;border-radius:.25rem}
+.casefile .cf-trail a:hover{background:#e8f0ee}
+.casefile .cf-trail a:hover strong{text-decoration:underline;text-underline-offset:.2em}
+.casefile :is(#relato,#fontes,#hipoteses,#experimentos):focus-visible{outline:3px solid var(--cf-focus);outline-offset:4px}
+.casefile .cf-trail a span{font-weight:800;color:var(--cf-accent);font-size:.8rem}
+.casefile .cf-trail a small{color:var(--cf-muted);font-size:.85rem}
 .casefile .cf-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
 .casefile .cf-card{padding:clamp(1rem,2.3vw,1.45rem);border:1px solid var(--cf-line);border-radius:.75rem;background:var(--cf-surface)}
 .casefile .cf-type{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--cf-warm)}
