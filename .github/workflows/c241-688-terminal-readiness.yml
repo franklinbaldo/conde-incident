@@ -27,6 +27,9 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: SHA exacto e contraprovas adversariais
         env:
           EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
