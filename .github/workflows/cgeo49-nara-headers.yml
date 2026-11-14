@@ -1,0 +1,31 @@
+name: CGEO-49 NARA overlay header cross-sheet
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo49_nara_header_crosssheet.json'
+      - 'research/geo/cgeo47_nara_m1765_conde_pre1963.json'
+      - 'research/geo/CGEO49_NARA_HEADER_CROSSSHEET.md'
+      - 'tools/cgeo49_nara_headers.py'
+      - 'tests/test_cgeo49_nara_headers.py'
+      - '.github/workflows/cgeo49-nara-headers.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact PR head
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+      - name: Offline lineage and adversarial tests
+        run: |
+          python3 tools/cgeo49_nara_headers.py
+          python3 -m unittest discover -s tests -p 'test_cgeo49_nara_headers.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_cgeo49_nara_headers.py' -v
+      - name: Acquire four original NARA JPEGs and compare SHA-256
+        run: python3 tools/cgeo49_nara_headers.py --live
