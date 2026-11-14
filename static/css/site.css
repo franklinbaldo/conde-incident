@@ -160,3 +160,30 @@ a:focus-visible,button:focus-visible,iframe:focus-visible{outline:3px solid #ffd
 }
 @media(max-width:370px){.casefile .cf-trail{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.casefile *{scroll-behavior:auto}}
+
+/* SSG-first print mode: preserva a prova documental e a leitura em papel/PDF.
+   Sem JavaScript, sem backend e sem substituir fontes por resumo. */
+@media print {
+  :root {
+    color-scheme: light;
+    --paper:#fff;--panel:#fff;--ink:#1b2730;--muted:#38464f;
+    --line:#9aa6ad;--accent:#174f61;
+  }
+  html,body{background:#fff!important;color:#1b2730!important}
+  .masthead,.skip-link,#ssg-search-header{display:none!important}
+  .wrap{width:100%;max-width:none;margin:0}
+  .intro,.intro.compact{padding:0;border:0}
+  .full-story{max-width:none;padding:0}
+  .story-body,.story-body p{color:#1b2730}
+  .story-body pre,.wrap pre{white-space:pre-wrap;overflow-wrap:anywhere;overflow:visible}
+  a{color:#174f61!important;text-decoration:underline}
+  .casefile{background:#fff;color:#1b2730;border:0;border-radius:0;padding:0}
+  .casefile .cf-hero,.casefile .cf-cards{grid-template-columns:1fr}
+  .casefile .cf-trail{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .casefile :is(.cf-card,.cf-figure,.cf-trail li){break-inside:avoid-page}
+  .casefile .cf-card,.casefile .cf-figure{background:#fff}
+  .casefile .cf-button,.casefile .cf-button-primary{background:#fff;color:#174f61!important;padding:.3rem .5rem;min-height:0}
+  .casefile .cf-status,.casefile .cf-bottom{background:#fff}
+  .story-document iframe{display:none}
+  img,svg{max-width:100%;height:auto}
+}
