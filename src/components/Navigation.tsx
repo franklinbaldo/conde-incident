@@ -208,10 +208,10 @@ export const Navigation: React.FC<NavigationProps> = ({
         {/* A native, fully labelled list replaces the undiscoverable horizontal
             strip at mobile/reflow widths. Desktop retains the compact tabs. */}
         <details ref={mobileMenuRef} className="group md:hidden">
-          <summary className="flex min-h-11 list-none cursor-pointer items-center justify-between gap-3 rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-zinc-100 [&::-webkit-details-marker]:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
+          <summary className="grid min-h-11 list-none cursor-pointer grid-cols-[minmax(0,1fr)_auto] items-center gap-x-1 gap-y-1 rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-zinc-100 [&::-webkit-details-marker]:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
             <span className="min-w-0 break-words font-semibold">{lang === 'pt' ? 'Explorar 8 seções' : 'Explore 8 sections'}</span>
-            <span className="min-w-0 text-right text-cyan-300">{lang === 'pt' ? currentTab?.labelPt : currentTab?.labelEn}</span>
-            <ChevronDown className="h-4 w-4 shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
+            <span className="col-span-2 min-w-0 break-words text-cyan-300">{lang === 'pt' ? currentTab?.labelPt : currentTab?.labelEn}</span>
+            <ChevronDown className="col-start-2 row-start-1 h-4 w-4 shrink-0 justify-self-end transition-transform group-open:rotate-180" aria-hidden="true" />
           </summary>
           <div data-mobile-tabs className="grid gap-1 pt-2 pb-1">
             {tabs.map(tab => {

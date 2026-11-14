@@ -56,6 +56,15 @@ try {
         }));
         assert(dimensions.scrollWidth <= dimensions.viewport + 1,
           `documentary archive 200% text overflow at ${width}px in ${locale}: ${JSON.stringify(dimensions)}`);
+        // A zero-overflow page can still squeeze each menu label into a
+        // two-character column. Require usable widths for both labels.
+        const chooser = page.locator('nav summary');
+        const labels = await chooser.evaluate(el => ({
+          width: el.getBoundingClientRect().width,
+          spans: [...el.querySelectorAll(':scope > span')].map(node => node.getBoundingClientRect().width),
+        }));
+        assert(labels.spans.length === 2 && labels.spans.every(w => w >= labels.width * 0.6),
+          `mobile chooser squeezed at 200% / ${width}px in ${locale}: ${JSON.stringify(labels)}`);
         await page.screenshot({ path: `${out}/documentary-archive-reflow-200pct-${locale}-${width}.png` });
       }
       const citation = page.locator('#source-citations-heading').locator('xpath=..');
