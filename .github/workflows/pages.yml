@@ -49,6 +49,8 @@ jobs:
         run: node --test tests/ssg-documentary-archive.test.mjs tests/ssg-wayback-custody.test.mjs tests/ssg-matrix-catalog.test.mjs
       - name: Verify quota-free local geography from pinned Natural Earth
         run: python3 scripts/build-conde-context-map.py --check
+      - name: Test SSG local TLE syntax audit with adversarial bytes
+        run: node --test tests/ssg-tle-syntax.test.mjs
       - name: Test no-JS map on the independent SSG page
         run: node --test tests/ssg-map-context.test.mjs
       - name: Validate chapter schema and chronology
@@ -85,10 +87,11 @@ jobs:
         run: node scripts/enable-article-frames.mjs
       - name: Unite Vite lab and styles with SSG output
         run: |
-          mkdir -p public/lab public/css public/img
+          mkdir -p public/lab public/css public/img public/js
           cp -R dist/. public/lab/
           cp -R static/css/. public/css/
           cp -R static/img/. public/img/
+          cp -R static/js/. public/js/
       - name: Build and verify no-JS SSG deep-page breadcrumbs
         run: |
           node --test tests/ssg-breadcrumbs.test.mjs
