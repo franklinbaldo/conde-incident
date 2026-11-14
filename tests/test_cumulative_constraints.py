@@ -166,6 +166,18 @@ class CumulativeConstraintGraphTests(unittest.TestCase):
             validate(bad)
 
 
+    def test_model_variable_alias_does_not_silently_merge_distinct_observations(self):
+        bad = copy.deepcopy(self.graph)
+        bad["observations"][1]["variable_id"] = bad["observations"][0]["variable_id"]
+        with self.assertRaisesRegex(ValueError, "duplicate or invalid model variable"):
+            validate(bad)
+
+    def test_blank_model_variable_cannot_hide_missing_observable_link(self):
+        bad = copy.deepcopy(self.graph)
+        bad["observations"][0]["variable_id"] = "   "
+        with self.assertRaisesRegex(ValueError, "duplicate or invalid model variable"):
+            validate(bad)
+
     def test_new_id_cannot_duplicate_same_published_observation(self):
         bad = copy.deepcopy(self.graph)
         forged = copy.deepcopy(bad["observations"][0])
