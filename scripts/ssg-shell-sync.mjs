@@ -13,6 +13,10 @@ export function renderShell(shell, navigation) {
     'unsupported SSG 0.0.75 template directive');
   const links = [...navigation.matchAll(/<a href="([^"]+)">([^<]+)<\/a>/g)];
   assert.equal(links.length, 9, 'expected exactly nine navigation items');
+  const groups = [...navigation.matchAll(/<div class="nav-cluster" role="group" aria-label="([^"]+)" data-group="([^"]+)">/g)];
+  assert.deepEqual(groups.map(m => m[1]), ['Entender', 'Verificar', 'Experimentar'],
+    'the nine routes must have three named information-architecture groups');
+  assert.ok(groups.every(m => m[1] === m[2]), 'accessible and visible group labels must agree');
   assert.equal(new Set(links.map(m => m[1])).size, 9,
     'navigation paths must be unique');
   for (const [, href, label] of links) {
@@ -36,6 +40,12 @@ export function checkOrWrite({ check = true } = {}) {
       writeFileSync(file, output);
     }
   }
+  // Tera also serves editorial templates. Reject a second, divergent nav model.
+  const tera = readFileSync('templates/tera/base.html', 'utf8');
+  const teraNavs = [...tera.matchAll(/<nav aria-label="Navegação principal">([\s\S]*?)<\/nav>/g)];
+  assert.equal(teraNavs.length, 2, 'Tera base must expose desktop and mobile navigation');
+  for (const nav of teraNavs) assert.equal(nav[1].trim(), navigation.trim(),
+    'Tera base navigation must match the canonical partial');
   return ENTRYPOINTS.length;
 }
 

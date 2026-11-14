@@ -108,8 +108,11 @@ a:focus-visible,button:focus-visible,iframe:focus-visible{outline:3px solid #ffd
 #source-lookup-results li p{margin:.25rem 0;font-size:.85rem;line-height:1.65;color:var(--muted)}
 #source-lookup-retry{min-height:44px;padding:.65rem 1rem;cursor:pointer}
 
-/* Nine SSG destinations: desktop inline, mobile native disclosure without JS.
-   A closed <details> is absent from tab order; desktop clone is display:none. */
+/* Native SSG information architecture: the same nine routes have three
+   meaningful groups in both nav landmarks; no runtime navigation scripts. */
+.masthead nav{column-gap:1rem}
+.masthead .nav-cluster{display:flex;flex-wrap:wrap;align-items:center;gap:.25rem 1rem}
+.masthead .nav-cluster+.nav-cluster{border-left:1px solid var(--line);padding-left:1rem}
 .masthead .mobile-navigation{display:none}
 .masthead .mobile-navigation:not([open]) nav{display:none}
 .masthead .mobile-navigation summary{min-height:44px;cursor:pointer;padding:.75rem 1.25rem;font:700 1rem/1.5 system-ui,sans-serif;overflow-wrap:anywhere}
@@ -118,6 +121,9 @@ a:focus-visible,button:focus-visible,iframe:focus-visible{outline:3px solid #ffd
   .masthead .desktop-navigation{display:none}
   .masthead .mobile-navigation{display:block}
   .masthead .mobile-navigation nav{display:flex;flex-direction:column;align-items:stretch;gap:0;padding:.2rem 1.25rem 1rem}
+  .masthead .mobile-navigation .nav-cluster{display:flex;flex-direction:column;align-items:stretch;gap:0;padding:.55rem 0}
+  .masthead .mobile-navigation .nav-cluster+.nav-cluster{border-left:0;border-top:1px solid var(--line);padding-left:0}
+  .masthead .mobile-navigation .nav-cluster::before{content:attr(data-group);font:700 .75rem/1.5 var(--font-interface);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);padding:.4rem .25rem}
   .masthead .mobile-navigation nav a{display:block;min-height:44px;padding:.6rem .25rem;white-space:normal;overflow-wrap:anywhere}
 }
 
