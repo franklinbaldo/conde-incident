@@ -1,0 +1,230 @@
+{
+  "activation": false,
+  "as_of_label": "1963-01-31",
+  "as_of_meaning": "EDITORIAL_INITIAL_DATA_NOT_MEASUREMENT_UTC",
+  "columns_coepoch": null,
+  "custody": {
+    "original_stl_issue_observed": false,
+    "pdf_page_one_based": 105,
+    "pdf_sha256": "f77b0e8998d467dd457d0ab8e8012e6e9d69c60fb6180aa3d68f1e8422b32786",
+    "pdf_url": "https://ntrs.nasa.gov/api/citations/19670008638/downloads/19670008638.pdf",
+    "printed_page": "B-12"
+  },
+  "first_column_is_initial": null,
+  "graph": [
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "ONE_PRINTED_FACSIMILE",
+      "source": "C241-LONTRA-R51",
+      "target": "DOC:NASA-TMX59315:B12"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "DERIVED_FROM_SAME_PDF_NOT_INDEPENDENT",
+      "source": "C241-CERVO-STL-PAIR-COHERENCE",
+      "target": "C241-LONTRA-R51"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "SAME_PDF_NOT_NEW_SENSOR",
+      "source": "ABELHA-C241-LONTRA-R53-01",
+      "target": "DOC:NASA-TMX59315:B12"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "REPRODUCES_ORIGINAL_NOT_HELD",
+      "source": "DOC:NASA-TMX59315:B12",
+      "target": "WORK:STL-SPACE-LOG:v3:n4"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "EDITORIAL_AS_OF_NOT_MEASUREMENT_UTC",
+      "source": "DOC:NASA-TMX59315:B12",
+      "target": "DATUM:1963_3A_JAN31_PRINTED_PAIRS"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "UNVERIFIED",
+      "source": "DATUM:1963_3A_JAN31_PRINTED_PAIRS",
+      "target": "H:PRINTED_PAIR_COEPOCH"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "UNKNOWN_ORDER_AND_EPOCH",
+      "source": "H:PRINTED_PAIR_COEPOCH",
+      "target": "LATENT:paired_column_semantics"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "EXACT_INTERNAL_DIAGNOSTIC",
+      "source": "C241-CERVO-STL-PAIR-COHERENCE",
+      "target": "H:SAME_MEAN_ALTITUDE_DIFFERENT_PRINTED_PERIOD"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "MAY_DIFFER",
+      "source": "H:SAME_MEAN_ALTITUDE_DIFFERENT_PRINTED_PERIOD",
+      "target": "LATENT:element_conventions"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "COUNTERFACTUAL_ONLY",
+      "source": "H:SAME_MEAN_ALTITUDE_DIFFERENT_PRINTED_PERIOD",
+      "target": "LATENT:rounding_policy"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "MISSING_PREMISE",
+      "source": "LATENT:paired_column_semantics",
+      "target": "LEAN:candidateStlEpochAndUnitConsistency"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "MISSING_PREMISE",
+      "source": "LATENT:element_conventions",
+      "target": "LEAN:candidateStlEpochAndUnitConsistency"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "MISSING_PREMISE",
+      "source": "LATENT:rounding_policy",
+      "target": "LEAN:candidateStlEpochAndUnitConsistency"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "CONDITIONAL_NOT_COMPILED",
+      "source": "LEAN:candidateStlEpochAndUnitConsistency",
+      "target": "MODEL:printed_pair_epoch_translation"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NO_INSTRUMENT_EPOCH",
+      "source": "MODEL:printed_pair_epoch_translation",
+      "target": "PARAM:orbit_prior_527"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "DIFFERENT_OBJECT_NO_TRANSFER",
+      "source": "MODEL:printed_pair_epoch_translation",
+      "target": "PARAM:orbit_prior_528"
+    }
+  ],
+  "hypotheses": [
+    "H:PRINTED_PAIR_COEPOCH",
+    "H:SAME_MEAN_ALTITUDE_DIFFERENT_PRINTED_PERIOD"
+  ],
+  "id": "ABELHA-C241-STL-EPOCH-INDEPENDENCE-R53",
+  "latents": [
+    {
+      "activation": false,
+      "id": "LATENT:paired_column_semantics",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:element_conventions",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:rounding_policy",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:first_column_instrument_utc",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:other_column_instrument_utc",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:station",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:reference_frame",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:measurement_covariance",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:STL_original_issue",
+      "value": null
+    }
+  ],
+  "lean_candidate": "candidateStlEpochAndUnitConsistency",
+  "lean_status": "CANDIDATE_ONLY_NOT_COMPILED",
+  "mean_altitudes_in_printed_miles": [
+    "310",
+    "310"
+  ],
+  "measurement_epoch_utc": null,
+  "new_activated_physical_constraints": 0,
+  "new_independent_instrumental_observations": 0,
+  "next_falsifiable_test": "Retrieve the original STL Space Log v3 n4 caption and column definitions; recover time-tagged sensor data with station, frame, covariance and object mapping before any November 528 inference.",
+  "not_a_norad_528_observation": true,
+  "other_column_measurement_utc": null,
+  "period_difference_excludes_zero": false,
+  "period_printed_delta_seconds": "6",
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "printed_target": "1963 3A",
+  "schema": "conde.stl-epoch-independence/v1",
+  "simulator_parameters": [
+    {
+      "activation": false,
+      "id": "PARAM:orbit_prior_527",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "PARAM:orbit_prior_528",
+      "value": null
+    }
+  ],
+  "sources": [
+    {
+      "occurrence_id": "C241-LONTRA-R51",
+      "path": "research/tle_custody/stl_space_log_nasa_r51.json",
+      "role": "original_pdf_custody_ledger",
+      "sha256": "2943e1f0a1ea6b4267f95a9ff14c022a55f7b4b0a7132cf5b37a489480bcf7e9"
+    },
+    {
+      "occurrence_id": "C241-CERVO-STL-PAIR-COHERENCE",
+      "path": "research/statistics/C241_stl_printed_pair_coherence.json",
+      "role": "derived_arithmetic_same_pdf_not_independent_sensor",
+      "sha256": "50c6d92bdeee8e6f3368faa6200ecc67c03f39fcc770883a60fcfa8f05b12c48"
+    },
+    {
+      "occurrence_id": "ABELHA-C241-LONTRA-R53-01",
+      "path": "public/data/conde-stl-mile-subtype-bridge.json",
+      "role": "existing_mile_subtype_bridge_same_pdf",
+      "sha256": "f70c8defe88497eb3790485c8ec32046c44a5a7c69e622a59d5e47c7ba148589"
+    }
+  ],
+  "underlying_period_difference_identified": false
+}
