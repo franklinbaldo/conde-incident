@@ -1,0 +1,62 @@
+{
+  "id": "C241-L63",
+  "kind": "NASA_SSR_CONTEMPORARY_DECAY_DAY_CONTROL",
+  "source": {
+    "ntrs_id": "19640000428",
+    "publication": "1963-10-15",
+    "series": "NASA GSFC Satellite Situation Report, volume 3, number 20",
+    "pdf_url": "https://ntrs.nasa.gov/api/citations/19640000428/downloads/19640000428.pdf",
+    "pdf_sha256": "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2",
+    "pdf_bytes": 286417,
+    "pdf_pages": 9,
+    "zero_based_page": 8,
+    "printed_page": 7,
+    "section": "PLEASE ADD THE FOLLOWING TO THE DECAYED OBJECTS LIST",
+    "preexisting_same_publication": "C241-L12",
+    "independently_observed_sensor": false
+  },
+  "catalogue_day": {
+    "printed_designator": "1963 37 A",
+    "printed_norad_id": null,
+    "secondary_norad_id": 668,
+    "secondary_designator": "1963-037A",
+    "secondary_crosswalk": "https://keeptrack.space/satellite/668",
+    "source": "US",
+    "launch_printed": "24 SEP",
+    "decay_printed": "12 OCT 63",
+    "decay_calendar_date": "1963-10-12",
+    "time_precision": "CALENDAR_DAY_LABEL_ONLY",
+    "terminal_utc": null,
+    "terminal_time_interval": null,
+    "instrumental_station": null,
+    "sensor": null,
+    "error_sigma": null,
+    "raw_tle": null,
+    "original_observation": null
+  },
+  "lineage": {
+    "related_un_inventory": "https://www.unoosa.org/documents/pdf/inf055E.pdf",
+    "related_un_label": "1963-37A",
+    "related_un_cutoff": "2400Z 15 OCTOBER 1963",
+    "related_un_occurrence": "C241-L33",
+    "independently_corroborated_sensor": false,
+    "independence_of_nasa_and_un": false,
+    "independent_original_668_observations": 0
+  },
+  "unresolved_control": {
+    "secondary_norad_id": 308,
+    "secondary_catalogue_day": "1963-10-30",
+    "source": "https://keeptrack.space/satellite/308",
+    "primary_day": "NOT_RECOVERED",
+    "primary_terminal_utc": null,
+    "original_sensor_log": null
+  },
+  "inference": {
+    "novel_primary_publications": 0,
+    "original_sensor_observations_added": 0,
+    "calibrated_terminal_times_added": 0,
+    "historical_528_constraints_added": 0,
+    "atmospheric_model_update": false,
+    "conde_impact_demonstrated": false
+  }
+}
