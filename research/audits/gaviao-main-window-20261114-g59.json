@@ -1,0 +1,30 @@
+{
+  "schema": "conde.audit.gaviao-retrospective/v1",
+  "agent": "gaviao",
+  "round": "G59",
+  "date": "2026-11-14",
+  "repository": "franklinbaldo/conde-incident",
+  "reviewed_window": {
+    "base_exclusive": "deb7e8562107f9f7b5dfe5998f5fe1237659056e",
+    "head_inclusive": "81f705f5d37f214cd0a3f1370f9435895b26788f",
+    "first_parent_integrations": 14,
+    "dag_commits": 20,
+    "merge_commits": 3,
+    "historical_checks": "NOT_CHECKED"
+  },
+  "finding": {
+    "id": "G59-F1",
+    "introduced_by_pr": 748,
+    "class": "BUILT_HTML_NAVIGATION_GATE",
+    "claim": "The matrix Pages audit accepted an occurrence fragment present only inside HTML comments, because it used html.includes of a span literal; no real DOM target was required",
+    "reproduction": "TEST_RED: node --test tests/ssg-matrix-catalog.test.mjs returned 3/4 PASS; negative comment mutation was accepted; synthetic built-site fixture contains 241 original entries",
+    "correction": "Extract active span fragment targets from visibleDocument and require exactly one active span plus exactly one document-wide id; reject comment, script, template, aria-hidden, outside-main and duplicated-ID mutations",
+    "validation": "TEST_GREEN: 42/42 Node tests PASS on ifro, including six adversarial variants; git diff --check PASS; the test is integrated into Pages build",
+    "scope": "SYNTHETIC_BYPASS_REPRODUCED; PUBLISHED_SITE_DEFECT_NOT_DEMONSTRATED",
+    "science": "No newly authenticated NORAD 528 observation, reentry time, or location"
+  },
+  "ci": {
+    "head": "PENDING",
+    "merge": "NOT_ATTEMPTED"
+  }
+}
