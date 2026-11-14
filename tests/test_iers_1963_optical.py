@@ -47,10 +47,15 @@ class G53StationOptical(unittest.TestCase):
                                        np.array([0, 6378.137, 0])), 1e-8)
 
     def test_line_of_sight_ra_dec_and_range(self):
-        target = self.site_g + np.array([1000., 0., 0.])
+        # Earlier synthetic GCRS +X ray passed *through* the Earth. Use
+        # the local radial outward direction and verify its celestial angles.
+        up = self.site_g / np.linalg.norm(self.site_g)
+        target = self.site_g + 1000. * up
         out = self.call(self.from_gcrs(target))
-        self.assertAlmostEqual(out["right_ascension_deg"], 0., places=10)
-        self.assertAlmostEqual(out["declination_deg"], 0., places=10)
+        self.assertAlmostEqual(out["right_ascension_deg"],
+                               math.degrees(math.atan2(up[1], up[0])) % 360., places=10)
+        self.assertAlmostEqual(out["declination_deg"],
+                               math.degrees(math.asin(up[2])), places=10)
         self.assertAlmostEqual(out["range_km"], 1000., places=9)
         self.assertEqual(out["output_frame"], "GCRS")
         self.assertIsNone(out["historical_527_528_529_observation"])
@@ -70,7 +75,8 @@ class G53StationOptical(unittest.TestCase):
         self.assertLess(far["range_km"], 4000.)
 
     def test_analytic_angular_jacobian_against_finite_differences(self):
-        r = self.from_gcrs(self.site_g + [400., 700., 600.])
+        up = self.site_g / np.linalg.norm(self.site_g)
+        r = self.from_gcrs(self.site_g + 1200. * up + [0., 700., 600.])
         out = self.call(r)
         j = np.array(out["angular_jacobian_east_north_rad_per_km_and_km_s"])
         self.assertEqual(j.shape, (2, 6))
@@ -89,7 +95,8 @@ class G53StationOptical(unittest.TestCase):
             self.assertLess(np.max(np.abs(measured-j[:, k])), 3e-12)
 
     def test_state_covariance_tangent_plane_not_instrument_sigma(self):
-        r = self.from_gcrs(self.site_g + [1000., 0., 0.])
+        up = self.site_g / np.linalg.norm(self.site_g)
+        r = self.from_gcrs(self.site_g + 1000. * up)
         c = np.diag([.01]*3 + [1e-6]*3)
         out = self.call(r, cov=c)
         d = np.array(out["state_only_angular_covariance_rad2"])
@@ -100,8 +107,65 @@ class G53StationOptical(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "negative marginal"):
             self.call(r, cov=c)
 
+    def from_itrs(self, itrs):
+        return self.from_gcrs(self.m["gcrs_to_itrs"].T @ np.asarray(itrs))
+
+    def test_g59_reference_ellipsoid_blocks_solid_earth(self):
+        # Same station, satellite on the opposite side of Earth: both
+        # endpoints outside the ellipsoid, but the optical ray is occulted.
+        with self.assertRaisesRegex(ValueError, "Earth-occluded"):
+            self.call(self.from_itrs([-7000., 0., 0.]))
+        # A satellite point itself beneath the reference ellipsoid is invalid.
+        with self.assertRaisesRegex(ValueError, "Satellite lies inside"):
+            self.call(self.from_itrs([6000., 0., 0.]))
+        # A 1-degree downward surface ray may emerge from the far side;
+        # valid endpoint altitude alone cannot prove visible line of sight.
+        a = 6378.137
+        downward = np.radians(1.)
+        far_side = [a - 2000. * math.sin(downward),
+                    2000. * math.cos(downward), 0.]
+        with self.assertRaisesRegex(ValueError, "Earth-occluded"):
+            self.call(self.from_itrs(far_side))
+
+    def test_g59_tangent_horizon_is_clear_at_sea_level(self):
+        a = 6378.137
+        got = self.call(self.from_itrs([a, 1000., 0.]))
+        self.assertAlmostEqual(got["elevation_deg"], 0., places=8)
+        self.assertEqual(got["earth_occultation"],
+                         "CLEAR_AGAINST_WGS84_ELLIPSOID_ONLY")
+        self.assertEqual(got["historical_holdout"], "NOT_RUN")
+        self.assertIn("TERRAIN_AND_OBSERVATION_WEATHER", got["model_omissions"])
+
+    def test_g59_elevated_site_can_see_below_horizontal(self):
+        # 2-km-high observer: a -0.1-degree depression does NOT imply
+        # solid-Earth occultation. This catches naive elevation < 0 vetoes.
+        a = 6378.137
+        site = a + 2.
+        tilt = math.radians(.1)
+        target = [site - 400. * math.sin(tilt),
+                  400. * math.cos(tilt), 0.]
+        got = self.call(self.from_itrs(target), h=2000)
+        self.assertAlmostEqual(got["elevation_deg"], -.1, places=7)
+        self.assertEqual(got["earth_occultation"],
+                         "CLEAR_AGAINST_WGS84_ELLIPSOID_ONLY")
+
+    def test_g59_source_bound_prediction_rejects_occulted_state(self):
+        # A synthetic observed angle can be made to agree exactly with a
+        # claimed prediction from the far side; replay must still reject it.
+        from iers_1963_optical import forward_source_bound_optical
+        state = json.dumps({"schema": "TEME_POSITION_ONLY_V1",
+                            "object_id": "SYNTHETIC_OCCULTED_NOT_NORAD",
+                            "epoch_utc": UTC, "frame": "TEME",
+                            "teme_position_km": self.from_itrs([-7000., 0., 0.]).tolist(),
+                            "record_class": "SYNTHETIC_SCENARIO"}).encode()
+        with self.assertRaisesRegex(ValueError, "Earth-occluded"):
+            forward_source_bound_optical(self.source, self.eop, self.times,
+                                         UTC, state, "urn:synthetic:occulted",
+                                         0, 0, 0)
+
     def test_untrusted_source_bad_geometry_and_missing_1963_utc(self):
-        r = self.from_gcrs(self.site_g + [1000., 0., 0.])
+        up = self.site_g / np.linalg.norm(self.site_g)
+        r = self.from_gcrs(self.site_g + 1000. * up)
         with self.assertRaises(ValueError):
             forward_optical(self.source[:-1] + b'X', self.eop, self.times,
                             UTC, r, 0, 0, 0)
@@ -119,7 +183,8 @@ class G53StationOptical(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Degenerate"):
             self.call(self.from_gcrs(self.site_g))
         with self.assertRaisesRegex(ValueError, "RA undefined"):
-            self.call(self.from_gcrs(self.site_g + [0.,0.,1000.]))
+            polar_site = self.m["gcrs_to_itrs"].T @ station_itrs_km(0, 80, 0)
+            self.call(self.from_gcrs(polar_site + [0.,0.,1000.]), lat=80)
 
 
 if __name__ == "__main__":

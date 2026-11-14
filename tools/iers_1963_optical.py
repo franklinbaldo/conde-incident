@@ -40,6 +40,39 @@ def station_itrs_km(lon_deg: float, lat_deg: float, height_m: float) -> np.ndarr
                                  math.radians(lat), height)) / 1000.
 
 
+def _require_clear_wgs84_sightline(station_itrs: np.ndarray,
+                                    target_itrs: np.ndarray) -> None:
+    """Reject a solid-Earth occultation, not a cloudy/terrain horizon.
+
+    In ellipsoid-normalized coordinates the squared radius along the finite
+    station-to-target segment is a convex quadratic. Its constrained minimum
+    is exact up to floating-point rounding, including grazing rays and
+    observers above the ellipsoid with *negative* geometric elevation.
+    This is an idealized WGS84 veto; it does not model mountains or refraction.
+    """
+    semimajor_m, flattening = erfa.eform(1)
+    a_km = semimajor_m / 1000.
+    b_km = a_km * (1. - flattening)
+    radii = np.array([a_km, a_km, b_km])
+    start = station_itrs / radii
+    target = target_itrs / radii
+    delta = target - start
+    initial_q = float(start @ start)
+    final_q = float(target @ target)
+    # WGS84 is an ideal reference ellipsoid, not a historical terrain map.
+    if initial_q < 1. - 1e-12:
+        raise ValueError("Station lies inside WGS84 reference ellipsoid")
+    if final_q < 1. - 1e-12:
+        raise ValueError("Satellite lies inside WGS84 reference ellipsoid")
+    length2 = float(delta @ delta)
+    if not math.isfinite(length2) or length2 == 0:
+        raise ValueError("Degenerate station-to-satellite segment")
+    fraction = max(0., min(1., -float(start @ delta) / length2))
+    near = start + fraction * delta
+    if float(near @ near) < 1. - 1e-12:
+        raise ValueError("Earth-occluded WGS84 geometric line of sight")
+
+
 def forward_optical(source: bytes, eop: dict, times: dict, utc: str,
                     teme_position_km: object, station_lon_deg: float,
                     station_lat_deg: float, station_height_m: float,
@@ -57,6 +90,9 @@ def forward_optical(source: bytes, eop: dict, times: dict, utc: str,
     m = matrices_at(utc, eop, times)
     station_gcrs = m["gcrs_to_itrs"].T @ station_itrs
     r_gcrs = m["teme_to_gcrs"] @ r_teme
+    # A matching RA/Dec below the solid Earth is not an admissible ground
+    # optical sightline. Evaluate in ITRS using the same sourced orientation.
+    _require_clear_wgs84_sightline(station_itrs, m["gcrs_to_itrs"] @ r_gcrs)
     los = r_gcrs - station_gcrs
     rho = float(np.linalg.norm(los))
     if not math.isfinite(rho) or rho < 1e-6:
@@ -97,6 +133,7 @@ def forward_optical(source: bytes, eop: dict, times: dict, utc: str,
                                   "latitude_deg": float(station_lat_deg),
                                   "height_m": float(station_height_m)},
         "earth_orientation": "IERS_RETROSPECTIVE_SOURCE_BYTES_AUTHENTICATED",
+        "earth_occultation": "CLEAR_AGAINST_WGS84_ELLIPSOID_ONLY",
         "range_km": rho, "right_ascension_deg": math.degrees(alpha),
         "declination_deg": math.degrees(delta), "elevation_deg": elevation,
         "unit_line_of_sight_gcrs": u.tolist(),
@@ -104,7 +141,8 @@ def forward_optical(source: bytes, eop: dict, times: dict, utc: str,
         "state_only_angular_covariance_rad2": None if cov2 is None else cov2.tolist(),
         "angle_type": "INSTANTANEOUS_GEOMETRIC_NOT_APPARENT_FK4",
         "model_omissions": ["LIGHT_TIME", "ABERRATION", "REFRACTION",
-                            "FK4_B1950", "STATION_SURVEY_1963", "CLOCK_CALIBRATION"],
+                            "FK4_B1950", "STATION_SURVEY_1963", "CLOCK_CALIBRATION",
+                            "TERRAIN_AND_OBSERVATION_WEATHER"],
         "historical_527_528_529_observation": None,
         "historical_holdout": "NOT_RUN", "impact_inference": "NOT_SUPPORTED",
     }

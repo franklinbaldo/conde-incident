@@ -31,9 +31,14 @@ class G54OpticalResidual(unittest.TestCase):
         eop = json.loads((ROOT / EOP).read_text())
         times = json.loads((ROOT / TIME).read_text())
         m = matrices_at(UTC, eop, times)
-        station = m["gcrs_to_itrs"].T @ station_itrs_km(0, 0, 0)
-        # Synthetic state: geometric GCRS RA near 360-degree boundary.
+        # Preserve the RA=360/0 wrap test while rotating the synthetic
+        # station into the same outward hemisphere. G54 previously used an
+        # Earth-intersecting source state (now physically vetoed by G59).
         u = np.array([math.cos(math.radians(0.01)), -math.sin(math.radians(0.01)), 0.])
+        u_itrs = m["gcrs_to_itrs"] @ u
+        cls.STATION_LON = math.degrees(math.atan2(u_itrs[1], u_itrs[0]))
+        cls.STATION_LAT = math.degrees(math.atan2(u_itrs[2], math.hypot(u_itrs[0], u_itrs[1])))
+        station = m["gcrs_to_itrs"].T @ station_itrs_km(cls.STATION_LON, cls.STATION_LAT, 0)
         state = m["teme_to_gcrs"].T @ (station + 1500 * u)
         cls.IERS_SOURCE = source
         cls.EOP_RECORD = eop
@@ -46,7 +51,7 @@ class G54OpticalResidual(unittest.TestCase):
         }, sort_keys=True).encode()
         cls.prediction = forward_source_bound_optical(
             source, eop, times, UTC, cls.STATE_SOURCE,
-            "urn:synthetic:g56:teme-state", 0, 0, 0)
+            "urn:synthetic:g56:teme-state", cls.STATION_LON, cls.STATION_LAT, 0)
 
     def datum(self):
         p = self.prediction
@@ -75,6 +80,22 @@ class G54OpticalResidual(unittest.TestCase):
         return compare_geometric_gcrs(predicted, observed, source_bytes,
                                       state_bytes, extraction_bytes,
                                       self.IERS_SOURCE, self.EOP_RECORD, self.TIME_RECORD)
+
+    def test_g59_comparator_replays_solid_earth_occultation(self):
+        # Even matching claimed angular values cannot legalize a TEME state
+        # that places the target behind the solid Earth relative to the site.
+        m = matrices_at(UTC, self.EOP_RECORD, self.TIME_RECORD)
+        site = station_itrs_km(self.STATION_LON, self.STATION_LAT, 0)
+        hidden_itrs = -7000. * site / np.linalg.norm(site)
+        hidden_teme = m["teme_to_gcrs"].T @ m["gcrs_to_itrs"].T @ hidden_itrs
+        state = json.loads(self.STATE_SOURCE)
+        state["teme_position_km"] = hidden_teme.tolist()
+        bytes_hidden = json.dumps(state, sort_keys=True).encode()
+        claimed = copy.deepcopy(self.prediction)
+        claimed["input_teme_position_km"] = state["teme_position_km"]
+        claimed["state_source_binding"]["document_sha256"] = hashlib.sha256(bytes_hidden).hexdigest()
+        with self.assertRaisesRegex(ValueError, "Earth-occluded"):
+            self.compare(claimed, self.datum(), DOCUMENT, bytes_hidden)
 
     def test_g57_extraction_custody_rejects_post_transcription_changes(self):
         d = self.datum()
