@@ -98,6 +98,9 @@ export async function loadCondeSourceLookup({baseUrl, fetcher=globalThis.fetch,
     && Array.isArray(index.post_matrix_only), 'index-shape');
   // A verified digest does not make duplicated source IDs or broken family joins safe
   // for the browser: the UI selects sources by ID and would silently overwrite them.
+  requireTrue(index.sources.every(s=>s && typeof s==='object' && !Array.isArray(s))
+    && index.families.every(f=>f && typeof f==='object' && !Array.isArray(f)),
+  'index-shape');
   const ids=index.sources.map(s=>s.source_id);
   const families=index.families.map(f=>f.family_id);
   requireTrue(ids.every(id=>typeof id==='string' && id.length>0)
