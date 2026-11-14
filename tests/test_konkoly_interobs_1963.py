@@ -2,6 +2,8 @@
 import copy
 import importlib.util
 import json
+import subprocess
+import sys
 from pathlib import Path
 import unittest
 
@@ -21,11 +23,47 @@ class CustodyTests(unittest.TestCase):
         for key in keys[:-1]:
             parent = parent[key]
         parent[keys[-1]] = value
-        with self.assertRaises(AssertionError):
+        with self.assertRaises(ValueError):
             MODULE.validate(mutated)
 
     def test_manifest_passes(self):
         self.assertTrue(MODULE.validate(self.data))
+
+    def test_optimized_python_rejects_three_falsifications(self):
+        # Run in a REAL optimized interpreter; changing __debug__ in a mock is insufficient.
+        script = r"""
+import copy, importlib.util, json
+from pathlib import Path
+p = Path('tools/verify_konkoly_interobs_1963.py')
+spec = importlib.util.spec_from_file_location('konkoly_opt', p)
+module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(module)
+base = json.loads(module.MANIFEST.read_text(encoding='utf-8'))
+if module.validate(base) is not True:
+    raise RuntimeError("clean source failed in optimized Python")
+for kind in ['source_hash', 'wrong_target', 'invented_orbit']:
+    sample = copy.deepcopy(base)
+    if kind == 'source_hash': sample['source']['sha256'] = '0' * 64
+    if kind == 'wrong_target': sample['study']['object_is_1963_003_abc'] = True
+    if kind == 'invented_orbit': sample['limits']['orbital_constraints_activated'] = 1
+    try:
+        module.validate(sample)
+    except ValueError:
+        continue
+    raise RuntimeError(f'optimized Python accepted falsified {kind}')
+"""
+        for argv in ([sys.executable, '-O'], [sys.executable]):
+            with self.subTest(interpreter=argv):
+                completed = subprocess.run([*argv, '-c', script], cwd=ROOT, capture_output=True, text=True)
+                self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
+
+    def test_fake_html_bytes_rejected(self):
+        from tempfile import TemporaryDirectory
+        with TemporaryDirectory() as tmp:
+            fake = Path(tmp) / 'source.html'
+            fake.write_text('Kiev U.S.S.R. 1023 29', encoding='utf-8')
+            with self.assertRaises(ValueError):
+                MODULE.validate(self.data, fake)
 
     def test_exact_html_replay_when_available(self):
         snapshot = Path('/workspace/lontra-r38-konkoly59.html')
