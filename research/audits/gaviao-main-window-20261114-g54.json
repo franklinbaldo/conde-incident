@@ -1,0 +1,106 @@
+{
+  "schema": "conde.gaviao-retrospective-main/v1",
+  "audit_id": "G54",
+  "reviewed_on_utc_date": "2026-11-14",
+  "base_exclusive": "9baf7b17de82f08a957b1fec71269cd0cdbbe34d",
+  "head_inclusive": "7784cf8bd217d4f2bc0f2719c1bff7e24d72d168",
+  "first_parent_integrations": 12,
+  "dag_commits": 12,
+  "conventional_merge_commits": 0,
+  "historical_check_policy": "NOT_CHECKED unless individually inspected",
+  "deep_reviewed_change": "#692 C241 joint orbital/NASA day 1.5m exporter and #698 specialized workflow",
+  "finding": {
+    "id": "G54-F1",
+    "severity": "OPTIMIZED_PYTHON_DISABLING_SCIENTIFIC_EXPORT_GUARDS",
+    "status": "RED_REPRODUCED_GREEN_LOCAL_PR_PENDING_CI",
+    "red": "Real python3 -O CLI accepted false historical impact posterior, negative cell, 399-cell grid, stale published bytes and absent published file; 5 negative subtests failed before repair.",
+    "green": "Replace exporter production asserts with unconditional ValueError guards and run real Python optimized subprocess checks in both interpreter modes; 6 tests PASS after fix.",
+    "limitation": "Only synthetic inputs were mutated; no inference of historical reentry, impact position, or existence of real tampering. No 1.5m scientific rerun claimed locally."
+  },
+  "integrations": [
+    {
+      "sha": "e5c242113f7c62e1df3783e55b8ac7e6201cff17",
+      "subject": "96 🦅 G53: impedir que fonte TLE/NASA alterada pule replay de 1,5 milhão (#698)",
+      "pr_number": 698,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "638bc0c152858a44ef0df2da41f05d873662e04a",
+      "subject": "95 🦎 SSG: rejeitar metadados epistemológicos não curados no índice JSON (#699)",
+      "pr_number": 699,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "c63960fa00f4b63d9917deb03547b22937b9ec11",
+      "subject": "🦀 CGEO-40: AHEx cota 05.36.334, catálogo sem fac-símile",
+      "pr_number": null,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "7e7ed67f0d7368280b1e2b42178d565aa40e6810",
+      "subject": "94 🐝 C241-L45: ligar RU478, crosswalk e SAO P-17 a restrições pendentes (#701)",
+      "pr_number": 701,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "0f30c2c845d92e53b064c1c4c67c98b52b7dab7b",
+      "subject": "97 🦌 C241: testar ambiguidade de massa e época da Agena (#702)",
+      "pr_number": 702,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "b1c9fb983864b102451497bffdac582ba0941ec4",
+      "subject": "90 🐙 C241-P28: reconcile 241 occurrences across curated index and scientific links (#704)",
+      "pr_number": 704,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "e2b95de0965ac6687ccdf27b1c35e63b1cd588dd",
+      "subject": "95 🦦 C241-LONTRA-R40: prefácio original encerra série INTEROBS e aponta sucessora (#703)",
+      "pr_number": 703,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "a2d823befd77d8c0ca8654cd68e7280d2225d756",
+      "subject": "96 🦌 C241-L39: salvar prova Lean de massa composta sem ativar inventário fictício (#705)",
+      "pr_number": 705,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "2d3d9020966ffa87356ead504b8e214cf7de0876",
+      "subject": "fix(castor): G52 validate 6D covariance across mixed scales (#706)",
+      "pr_number": 706,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "be636e277034e9d26deeb4b315d9cb0543c6e620",
+      "subject": "90 🦊 UX-02: descobrir as 8 seções do laboratório no celular (#707)",
+      "pr_number": 707,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "ac524fa19ac5dd7bf947f6a9e7cdb4b339b27424",
+      "subject": "85 🦉 Caderno 31: arquivo de Polyot 1 e identidade do NORAD 528 (#708)",
+      "pr_number": 708,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "7784cf8bd217d4f2bc0f2719c1bff7e24d72d168",
+      "subject": "95 🦇 UX-10: preservar linhas TLE com rolagem local acessível no celular (#709)",
+      "pr_number": 709,
+      "parents": 1,
+      "historical_checks": "NOT_CHECKED"
+    }
+  ]
+}
