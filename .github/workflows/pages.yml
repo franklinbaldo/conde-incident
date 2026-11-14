@@ -25,6 +25,8 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
       - run: bun run lint
+      - name: Audit casefile UX architecture and no-JS prototype
+        run: node --test tests/ux-casefile-prototype.test.mjs
       - name: Build scientific lab at nested Pages path
         run: VITE_BASE_PATH=/conde-incident/lab/ bun run build
       - name: Verify lazy instrument chunks and lab entry payload (UX-08)
