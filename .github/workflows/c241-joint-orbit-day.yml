@@ -8,6 +8,7 @@ on:
       - research/statistics/c241_528_unweighted_2000km_scenarios.json
       - tools/export_c241_joint_heatmap.py
       - tests/test_c241_joint_orbit_day_heatmap.py
+      - tests/test_c241_joint_heatmap_export.py
       - tests/test_c241_joint_orbit_day_workflow.py
       - research/statistics/c241_joint_orbit_day_1p5m_summary.json
       - research/statistics/C241_joint_orbit_day_heatmap_2026-11-13.md
@@ -22,6 +23,7 @@ on:
       - research/statistics/c241_528_unweighted_2000km_scenarios.json
       - tools/export_c241_joint_heatmap.py
       - tests/test_c241_joint_orbit_day_heatmap.py
+      - tests/test_c241_joint_heatmap_export.py
       - tests/test_c241_joint_orbit_day_workflow.py
       - research/statistics/c241_joint_orbit_day_1p5m_summary.json
       - research/statistics/C241_joint_orbit_day_heatmap_2026-11-13.md
@@ -50,6 +52,7 @@ jobs:
         run: |
           python3 -m unittest discover -s tests -p test_c241_joint_orbit_day_workflow.py -v
           python3 -m unittest discover -s tests -p test_c241_joint_orbit_day_heatmap.py -v
+          python3 -m unittest discover -s tests -p test_c241_joint_heatmap_export.py -v
       - name: Re-run one and a half million coupled orbital and NASA-day candidates
         run: |
           python3 tools/c241_joint_orbit_day_heatmap.py --draws 1500000 --seed 19631108 --batch 50000 \
