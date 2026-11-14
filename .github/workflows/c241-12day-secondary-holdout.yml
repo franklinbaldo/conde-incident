@@ -7,6 +7,20 @@ on:
       - research/statistics/C241_12DAY_SECONDARY_HOLDOUT_20261114.md
       - research/statistics/c241_12day_secondary_holdout_20261114.json
       - .github/workflows/c241-12day-secondary-holdout.yml
+      - tests/test_c241_ci_workflows.py
+      - tools/tle_secondary_1963_ledger.py
+      - research/tle_custody/mirror_528_1963-10-27.tle
+  push:
+    branches: [main]
+    paths:
+      - tools/c241_12day_secondary_holdout.py
+      - tests/test_c241_12day_secondary_holdout.py
+      - research/statistics/C241_12DAY_SECONDARY_HOLDOUT_20261114.md
+      - research/statistics/c241_12day_secondary_holdout_20261114.json
+      - .github/workflows/c241-12day-secondary-holdout.yml
+      - tests/test_c241_ci_workflows.py
+      - tools/tle_secondary_1963_ledger.py
+      - research/tle_custody/mirror_528_1963-10-27.tle
   workflow_dispatch:
 permissions:
   contents: read
@@ -27,7 +41,9 @@ jobs:
         with:
           python-version: '3.12'
       - name: Adversarial tests
-        run: python3 -m unittest discover -s tests -p test_c241_12day_secondary_holdout.py -v
+        run: |
+          python3 -m unittest discover -s tests -p test_c241_12day_secondary_holdout.py -v
+          python3 -m unittest discover -s tests -p test_c241_ci_workflows.py -v
       - name: Pinned numerical mirror and exact replay
         run: |
           set -euo pipefail
