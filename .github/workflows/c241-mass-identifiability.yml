@@ -3,10 +3,13 @@ on:
   pull_request:
     paths:
       - tools/mass_identifiability_C241.py
+      - tools/c241_stage_epoch_ambiguity.py
       - tools/mass_prior_sensitivity_C241.py
       - tests/test_mass_identifiability_C241.py
+      - tests/test_c241_stage_epoch_ambiguity.py
       - tests/test_mass_prior_sensitivity_C241.py
       - research/statistics/C241_mass_identifiability_C241.md
+      - research/statistics/C241_stage_epoch_ambiguity.md
       - research/statistics/C241_mass_prior_sensitivity_C241.md
       - research/tle_custody/gcat_mass_semantics_C241-L40.json
       - .github/workflows/c241-mass-identifiability.yml
@@ -14,10 +17,13 @@ on:
     branches: [main]
     paths:
       - tools/mass_identifiability_C241.py
+      - tools/c241_stage_epoch_ambiguity.py
       - tools/mass_prior_sensitivity_C241.py
       - tests/test_mass_identifiability_C241.py
+      - tests/test_c241_stage_epoch_ambiguity.py
       - tests/test_mass_prior_sensitivity_C241.py
       - research/statistics/C241_mass_identifiability_C241.md
+      - research/statistics/C241_stage_epoch_ambiguity.md
       - research/statistics/C241_mass_prior_sensitivity_C241.md
       - research/tle_custody/gcat_mass_semantics_C241-L40.json
       - .github/workflows/c241-mass-identifiability.yml
@@ -38,6 +44,8 @@ jobs:
       - name: Exact rational tests and catalog gate
         run: |
           python3 -m unittest discover -s tests -p test_mass_identifiability_C241.py -v
+          python3 -m unittest discover -s tests -p test_c241_stage_epoch_ambiguity.py -v
+          python3 -m tools.c241_stage_epoch_ambiguity > "$RUNNER_TEMP/mass-stage-epoch.json"
           python3 -m unittest discover -s tests -p test_mass_prior_sensitivity_C241.py -v
           python3 -m tools.mass_prior_sensitivity_C241 > "$RUNNER_TEMP/mass-prior-only.json"
           python3 tools/mass_identifiability_C241.py > "$RUNNER_TEMP/mass-identifiability.json"
