@@ -34,8 +34,9 @@ jobs:
         run: |
           python -m unittest discover -s tests -p 'test_tle_ssr_terminal_controls_c241_l62.py' -v
           python -O -m unittest discover -s tests -p 'test_tle_ssr_terminal_controls_c241_l62.py' -v
+      - uses: astral-sh/setup-uv@v6
       - name: Replay original NASA PDF bytes
         run: |
           curl -fLsS --retry 2 --max-time 90 "https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf" -o /tmp/nasa-19640002493.pdf
           python tools/tle_ssr_terminal_controls_c241_l62.py --pdf /tmp/nasa-19640002493.pdf
-          test "$(pdfinfo /tmp/nasa-19640002493.pdf | awk '/^Pages:/ {print $2}')" = "10"
+          uv run --with pypdf==6.1.3 python -c "from pypdf import PdfReader; assert len(PdfReader('/tmp/nasa-19640002493.pdf').pages) == 10"
