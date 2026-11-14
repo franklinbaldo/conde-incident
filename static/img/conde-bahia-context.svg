@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="map-title map-desc">
+<title id="map-title">Conde, Bahia: localização aproximada da sede municipal</title>
+<desc id="map-desc">Mapa de contexto com litoral generalizado do Nordeste brasileiro, grade de latitude e longitude e marcador na sede aproximada de Conde. Não representa local de queda ou evento de 1963.</desc>
+<rect width="800" height="500" rx="12" fill="#eaf5f8"/>
+<rect x="55" y="55" width="690" height="375" fill="#d2eef5" stroke="#63899a" stroke-width="1.5"/>
+<g stroke="#89b9c7" stroke-width="1" stroke-dasharray="4 7"><path d="M112 55V430"/><path d="M228 55V430"/><path d="M342 55V430"/><path d="M458 55V430"/><path d="M572 55V430"/><path d="M688 55V430"/><path d="M55 130H745"/><path d="M55 205H745"/><path d="M55 280H745"/><path d="M55 355H745"/></g>
+<g fill="none" stroke="#44615a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M553.2,55.0 L595.5,58.8 M595.5,58.8 L645.5,113.5 M645.5,113.5 L622.5,155.0 M622.5,155.0 L419.0,256.5 M419.0,256.5 L384.5,376.8 M384.5,376.8 L334.2,430.0"/></g>
+<g fill="#173b47" font-family="system-ui, sans-serif">
+<text x="58" y="35" font-size="19" font-weight="700">Conde no litoral da Bahia</text>
+<text x="66" y="76" font-size="14">Interior do Brasil</text>
+<text x="620" y="396" font-size="14">Oceano Atlântico</text>
+<text x="238" y="298" font-size="20" opacity="0.75">Bahia</text>
+<text x="56" y="456" font-size="13">45° O</text>
+<text x="707" y="456" font-size="13">33° O</text>
+<text x="7" y="61" font-size="13">5° S</text>
+<text x="7" y="428" font-size="13">20° S</text>
+</g>
+<circle cx="479.9" cy="225.2" r="11" fill="#fff" opacity="0.92"/>
+<circle cx="479.9" cy="225.2" r="6" fill="#b32236" stroke="#fff" stroke-width="2"/>
+<path d="M489.9,218.2 l14,-19" fill="none" stroke="#621b2b" stroke-width="2"/>
+<text x="507.9" y="194.2" font-family="system-ui, sans-serif" font-size="17" font-weight="700" fill="#621b2b">Conde (sede aprox.)</text>
+<text x="56" y="483" font-family="system-ui, sans-serif" font-size="12" fill="#38545e">Costa: Natural Earth 1:110m (domínio público), simplificada. Não é carta local.</text>
+</svg>
