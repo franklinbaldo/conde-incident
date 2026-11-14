@@ -1,5 +1,6 @@
 /** Regression tests: static SSG routes and immutable documentary JSON stay joined. */
 import './ssg-evidence-published-history.test.mjs';
+import './ssg-source-lookup.test.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
