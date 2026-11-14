@@ -36,12 +36,25 @@ try {
       await button.click();
       assert.match(await page.locator('#ssg-tle-results').innerText(), /NÃO autentica os dados/);
       assert.equal(await page.evaluate(() => document.activeElement.id), 'ssg-tle-results');
+      assert.equal(await page.getByLabel('Linha 1').getAttribute('aria-invalid'), null);
+      assert.equal(await page.getByLabel('Linha 2').getAttribute('aria-invalid'), null);
       // Edits invalidate the old success rather than leaving a stale PASS
       // visible to keyboard and screen-reader users.
       await page.getByLabel('Linha 2').fill(makeLine(2, 527));
       assert.equal(await page.locator('#ssg-tle-results').innerText(), '');
+      assert.equal(await page.getByLabel('Linha 2').getAttribute('aria-invalid'), null,
+        'editing removes stale invalid state');
       await button.click();
       assert.match(await page.locator('#ssg-tle-results').innerText(), /não passaram/);
+      assert.equal(await page.getByLabel('Linha 1').getAttribute('aria-invalid'), null);
+      assert.equal(await page.getByLabel('Linha 2').getAttribute('aria-invalid'), 'true');
+      assert.match(await page.getByLabel('Linha 2').getAttribute('aria-describedby') || '',
+        /ssg-tle-result-line2/);
+      assert.match(await page.locator('#ssg-tle-result-line2').innerText(), /Inconsistente/);
+      await page.getByLabel('Linha 2').fill(makeLine(2, 528));
+      assert.equal(await page.getByLabel('Linha 2').getAttribute('aria-invalid'), null);
+      assert.equal(await page.getByLabel('Linha 2').getAttribute('aria-describedby'), 'ssg-tle-instructions');
+      assert.equal(await page.locator('#ssg-tle-results').innerText(), '');
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), true, 'horizontal overflow');
       assert.deepEqual(errors, [], 'runtime exceptions');
     } finally { await page.close(); }
