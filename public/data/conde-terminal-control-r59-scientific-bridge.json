@@ -1,0 +1,627 @@
+{
+  "activation": false,
+  "archive_search_order": [
+    292,
+    308,
+    565,
+    668
+  ],
+  "catalogue_epochs_are_independent_instrumental_observations": false,
+  "catalogue_epochs_new_candidates_total": 146,
+  "design": "RETROSPECTIVE_ARCHIVE_TRIAGE_NOT_PROSPECTIVE_HOLDOUT",
+  "graph": [
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "DECLARED_ONE_SECONDARY_LINEAGE",
+      "source": "DOC:R59-LEDGER",
+      "target": "SRC:SPACE-TRACK-1963-PARQUET"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "AUDIT_GENERATED_FROM_PINNED_INPUT",
+      "source": "DOC:R59-LEDGER",
+      "target": "CODE:R59-AUDITOR"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "CATALOGUE_EPOCHS_NOT_INSTRUMENT_MEASUREMENTS",
+      "source": "SRC:SPACE-TRACK-1963-PARQUET",
+      "target": "H:CATALOGUE_SECANT_NOT_TERMINAL_HOLDOUT"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "ONE_SECONDARY_CATALOGUE_CONTAINS_EPOCHS",
+      "source": "SRC:SPACE-TRACK-1963-PARQUET",
+      "target": "CAT:NORAD:292"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "CALENDAR_DAY_WITH_GRADE_SECONDARY_DECAY_DAY_LEAD",
+      "source": "DOC:R59-LEDGER",
+      "target": "LEAD:NORAD:292"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "TRACKING_SENSOR_AND_INDEPENDENCE_UNKNOWN",
+      "source": "CAT:NORAD:292",
+      "target": "LATENT:NORAD:292:observation_lineage"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "EVENT_TIME_AND_SOURCE_CONVENTION_UNVERIFIED",
+      "source": "LEAD:NORAD:292",
+      "target": "LATENT:NORAD:292:terminal_utc"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "MISSING_TERMINAL_EVENT_CALIBRATION",
+      "source": "LATENT:NORAD:292:terminal_utc",
+      "target": "LEAN:candidateTerminalControlEvidence"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "SECONDARY_CATALOGUE_NOT_A_HOLDOUT",
+      "source": "LATENT:NORAD:292:observation_lineage",
+      "target": "LEAN:candidateCatalogueSecantCalibration"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NO_TIME_SIGMA_OR_INDEPENDENT_TERMINAL_DATA",
+      "source": "LEAN:candidateTerminalControlEvidence",
+      "target": "PARAM:terminal_error_control_292"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "ONE_SECONDARY_CATALOGUE_CONTAINS_EPOCHS",
+      "source": "SRC:SPACE-TRACK-1963-PARQUET",
+      "target": "CAT:NORAD:308"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "CALENDAR_DAY_WITH_GRADE_SECONDARY_DECAY_DAY_LEAD",
+      "source": "DOC:R59-LEDGER",
+      "target": "LEAD:NORAD:308"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "TRACKING_SENSOR_AND_INDEPENDENCE_UNKNOWN",
+      "source": "CAT:NORAD:308",
+      "target": "LATENT:NORAD:308:observation_lineage"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "EVENT_TIME_AND_SOURCE_CONVENTION_UNVERIFIED",
+      "source": "LEAD:NORAD:308",
+      "target": "LATENT:NORAD:308:terminal_utc"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "MISSING_TERMINAL_EVENT_CALIBRATION",
+      "source": "LATENT:NORAD:308:terminal_utc",
+      "target": "LEAN:candidateTerminalControlEvidence"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "SECONDARY_CATALOGUE_NOT_A_HOLDOUT",
+      "source": "LATENT:NORAD:308:observation_lineage",
+      "target": "LEAN:candidateCatalogueSecantCalibration"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NO_TIME_SIGMA_OR_INDEPENDENT_TERMINAL_DATA",
+      "source": "LEAN:candidateTerminalControlEvidence",
+      "target": "PARAM:terminal_error_control_308"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "ONE_SECONDARY_CATALOGUE_CONTAINS_EPOCHS",
+      "source": "SRC:SPACE-TRACK-1963-PARQUET",
+      "target": "CAT:NORAD:565"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "CALENDAR_DAY_WITH_GRADE_SECONDARY_DECAY_DAY_LEAD",
+      "source": "DOC:R59-LEDGER",
+      "target": "LEAD:NORAD:565"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "TRACKING_SENSOR_AND_INDEPENDENCE_UNKNOWN",
+      "source": "CAT:NORAD:565",
+      "target": "LATENT:NORAD:565:observation_lineage"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "EVENT_TIME_AND_SOURCE_CONVENTION_UNVERIFIED",
+      "source": "LEAD:NORAD:565",
+      "target": "LATENT:NORAD:565:terminal_utc"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "MISSING_TERMINAL_EVENT_CALIBRATION",
+      "source": "LATENT:NORAD:565:terminal_utc",
+      "target": "LEAN:candidateTerminalControlEvidence"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "SECONDARY_CATALOGUE_NOT_A_HOLDOUT",
+      "source": "LATENT:NORAD:565:observation_lineage",
+      "target": "LEAN:candidateCatalogueSecantCalibration"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NO_TIME_SIGMA_OR_INDEPENDENT_TERMINAL_DATA",
+      "source": "LEAN:candidateTerminalControlEvidence",
+      "target": "PARAM:terminal_error_control_565"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "ONE_SECONDARY_CATALOGUE_CONTAINS_EPOCHS",
+      "source": "SRC:SPACE-TRACK-1963-PARQUET",
+      "target": "CAT:NORAD:668"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "CALENDAR_DAY_WITH_GRADE_SECONDARY_DECAY_DAY_LEAD",
+      "source": "DOC:R59-LEDGER",
+      "target": "LEAD:NORAD:668"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "TRACKING_SENSOR_AND_INDEPENDENCE_UNKNOWN",
+      "source": "CAT:NORAD:668",
+      "target": "LATENT:NORAD:668:observation_lineage"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "EVENT_TIME_AND_SOURCE_CONVENTION_UNVERIFIED",
+      "source": "LEAD:NORAD:668",
+      "target": "LATENT:NORAD:668:terminal_utc"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "MISSING_TERMINAL_EVENT_CALIBRATION",
+      "source": "LATENT:NORAD:668:terminal_utc",
+      "target": "LEAN:candidateTerminalControlEvidence"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "SECONDARY_CATALOGUE_NOT_A_HOLDOUT",
+      "source": "LATENT:NORAD:668:observation_lineage",
+      "target": "LEAN:candidateCatalogueSecantCalibration"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NO_TIME_SIGMA_OR_INDEPENDENT_TERMINAL_DATA",
+      "source": "LEAN:candidateTerminalControlEvidence",
+      "target": "PARAM:terminal_error_control_668"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "ONE_SECONDARY_CATALOGUE_CONTAINS_EPOCHS",
+      "source": "SRC:SPACE-TRACK-1963-PARQUET",
+      "target": "CAT:NORAD:637"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "CALENDAR_DAY_WITH_GRADE_NASA_SSR_CALENDAR_DAY_TZ_UNVERIFIED",
+      "source": "DOC:R59-LEDGER",
+      "target": "LEAD:NORAD:637"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "TRACKING_SENSOR_AND_INDEPENDENCE_UNKNOWN",
+      "source": "CAT:NORAD:637",
+      "target": "LATENT:NORAD:637:observation_lineage"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "EVENT_TIME_AND_SOURCE_CONVENTION_UNVERIFIED",
+      "source": "LEAD:NORAD:637",
+      "target": "LATENT:NORAD:637:terminal_utc"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "MISSING_TERMINAL_EVENT_CALIBRATION",
+      "source": "LATENT:NORAD:637:terminal_utc",
+      "target": "LEAN:candidateTerminalControlEvidence"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "SECONDARY_CATALOGUE_NOT_A_HOLDOUT",
+      "source": "LATENT:NORAD:637:observation_lineage",
+      "target": "LEAN:candidateCatalogueSecantCalibration"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "ONE_SECONDARY_CATALOGUE_CONTAINS_EPOCHS",
+      "source": "SRC:SPACE-TRACK-1963-PARQUET",
+      "target": "CAT:NORAD:688"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "CALENDAR_DAY_WITH_GRADE_AF_IN_23784_INTERVAL_2210_2400Z",
+      "source": "DOC:R59-LEDGER",
+      "target": "LEAD:NORAD:688"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "TRACKING_SENSOR_AND_INDEPENDENCE_UNKNOWN",
+      "source": "CAT:NORAD:688",
+      "target": "LATENT:NORAD:688:observation_lineage"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "EVENT_TIME_AND_SOURCE_CONVENTION_UNVERIFIED",
+      "source": "LEAD:NORAD:688",
+      "target": "LATENT:NORAD:688:terminal_utc"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "MISSING_TERMINAL_EVENT_CALIBRATION",
+      "source": "LATENT:NORAD:688:terminal_utc",
+      "target": "LEAN:candidateTerminalControlEvidence"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "SECONDARY_CATALOGUE_NOT_A_HOLDOUT",
+      "source": "LATENT:NORAD:688:observation_lineage",
+      "target": "LEAN:candidateCatalogueSecantCalibration"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "ONE_SECONDARY_CATALOGUE_CONTAINS_EPOCHS",
+      "source": "SRC:SPACE-TRACK-1963-PARQUET",
+      "target": "CAT:NORAD:528"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "CALENDAR_DAY_WITH_GRADE_NASA_SSR_CALENDAR_DAY_TZ_UNVERIFIED",
+      "source": "DOC:R59-LEDGER",
+      "target": "LEAD:NORAD:528"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "TRACKING_SENSOR_AND_INDEPENDENCE_UNKNOWN",
+      "source": "CAT:NORAD:528",
+      "target": "LATENT:NORAD:528:observation_lineage"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "EVENT_TIME_AND_SOURCE_CONVENTION_UNVERIFIED",
+      "source": "LEAD:NORAD:528",
+      "target": "LATENT:NORAD:528:terminal_utc"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "MISSING_TERMINAL_EVENT_CALIBRATION",
+      "source": "LATENT:NORAD:528:terminal_utc",
+      "target": "LEAN:candidateTerminalControlEvidence"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "SECONDARY_CATALOGUE_NOT_A_HOLDOUT",
+      "source": "LATENT:NORAD:528:observation_lineage",
+      "target": "LEAN:candidateCatalogueSecantCalibration"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NO_TRANSFER_FROM_UNCALIBRATED_CONTROLS",
+      "source": "LEAN:candidateCatalogueSecantCalibration",
+      "target": "PARAM:reentry_528_drag_calibration"
+    }
+  ],
+  "historical_mcmc": "NOT_RUN",
+  "hypotheses": [
+    "H:CATALOGUE_SECANT_NOT_TERMINAL_HOLDOUT",
+    "H:INDEPENDENT_TERMINAL_CALIBRATION_MISSING"
+  ],
+  "id": "ABELHA-C241-CERVO-R59-TERMINAL-CONTROLS",
+  "input_sources": [
+    {
+      "id": "C241-1963-TERMINAL-CONTROLS-R59",
+      "path": "research/statistics/C241_1963_TERMINAL_CONTROL_SCREEN_20261114.md",
+      "role": "documented_retrospective_screen",
+      "sha256": "8495e42842f429b143bb1339ed24f25c25b81b8f6dd13c50bd1f990330c552ab"
+    },
+    {
+      "id": "CODE:R59-AUDITOR",
+      "path": "tools/c241_1963_terminal_control_screen.py",
+      "role": "deterministic_secondary_catalogue_screen",
+      "sha256": "f2bb01247800837929462327d38471e0831a66fab0537f454ed64ed748005342"
+    },
+    {
+      "id": "SRC:SPACE-TRACK-1963-PARQUET",
+      "role": "single_secondary_catalogue_lineage_not_independent_sensors",
+      "sha256": "c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09",
+      "url": "https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/4b4fb3a/data/tle_1963.parquet"
+    }
+  ],
+  "latents": [
+    {
+      "activation": false,
+      "id": "LATENT:NORAD:292:terminal_utc",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:NORAD:292:observation_lineage",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:NORAD:308:terminal_utc",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:NORAD:308:observation_lineage",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:NORAD:565:terminal_utc",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:NORAD:565:observation_lineage",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:NORAD:668:terminal_utc",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:NORAD:668:observation_lineage",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:NORAD:637:terminal_utc",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:NORAD:637:observation_lineage",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:NORAD:688:terminal_utc",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:NORAD:688:observation_lineage",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:NORAD:528:terminal_utc",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:NORAD:528:observation_lineage",
+      "value": null
+    }
+  ],
+  "lean_candidates": [
+    "candidateTerminalControlEvidence",
+    "candidateCatalogueSecantCalibration"
+  ],
+  "lean_status": "CANDIDATE_ONLY_NOT_COMPILED",
+  "new_activated_physical_constraints": 0,
+  "new_independent_instrumental_observations": 0,
+  "next_falsifiable_test": "Retrieve identified instrument-level terminal events with UTC, station, frame and error for each control, then pre-register a holdout before comparing predictions.",
+  "observations": [
+    {
+      "activation": false,
+      "archive_search_only": true,
+      "catalogue_epochs_1963": 53,
+      "date_as_instrumental_utc": null,
+      "day_evidence_grade": "SECONDARY_DECAY_DAY_LEAD",
+      "id": "R59:NORAD:292",
+      "independent_instrumental_lineages": null,
+      "instrument_station": null,
+      "norad_id": 292,
+      "reference_frame": null,
+      "reported_calendar_day": "1963-11-26",
+      "role": "CANDIDATE",
+      "source_url": "https://keeptrack.space/satellite/00292",
+      "terminal_event_utc": null,
+      "terminal_phenomenon_definition": null,
+      "terminal_sigma_seconds": null
+    },
+    {
+      "activation": false,
+      "archive_search_only": true,
+      "catalogue_epochs_1963": 52,
+      "date_as_instrumental_utc": null,
+      "day_evidence_grade": "SECONDARY_DECAY_DAY_LEAD",
+      "id": "R59:NORAD:308",
+      "independent_instrumental_lineages": null,
+      "instrument_station": null,
+      "norad_id": 308,
+      "reference_frame": null,
+      "reported_calendar_day": "1963-10-30",
+      "role": "CANDIDATE",
+      "source_url": "https://keeptrack.space/satellite/00308",
+      "terminal_event_utc": null,
+      "terminal_phenomenon_definition": null,
+      "terminal_sigma_seconds": null
+    },
+    {
+      "activation": false,
+      "archive_search_only": true,
+      "catalogue_epochs_1963": 31,
+      "date_as_instrumental_utc": null,
+      "day_evidence_grade": "SECONDARY_DECAY_DAY_LEAD",
+      "id": "R59:NORAD:565",
+      "independent_instrumental_lineages": null,
+      "instrument_station": null,
+      "norad_id": 565,
+      "reference_frame": null,
+      "reported_calendar_day": "1963-11-24",
+      "role": "CANDIDATE",
+      "source_url": "https://keeptrack.space/satellite/565",
+      "terminal_event_utc": null,
+      "terminal_phenomenon_definition": null,
+      "terminal_sigma_seconds": null
+    },
+    {
+      "activation": false,
+      "archive_search_only": true,
+      "catalogue_epochs_1963": 10,
+      "date_as_instrumental_utc": null,
+      "day_evidence_grade": "SECONDARY_DECAY_DAY_LEAD",
+      "id": "R59:NORAD:668",
+      "independent_instrumental_lineages": null,
+      "instrument_station": null,
+      "norad_id": 668,
+      "reference_frame": null,
+      "reported_calendar_day": "1963-10-12",
+      "role": "CANDIDATE",
+      "source_url": "https://keeptrack.space/satellite/00668",
+      "terminal_event_utc": null,
+      "terminal_phenomenon_definition": null,
+      "terminal_sigma_seconds": null
+    },
+    {
+      "activation": false,
+      "archive_search_only": true,
+      "catalogue_epochs_1963": 25,
+      "date_as_instrumental_utc": null,
+      "day_evidence_grade": "NASA_SSR_CALENDAR_DAY_TZ_UNVERIFIED",
+      "id": "R59:NORAD:637",
+      "independent_instrumental_lineages": null,
+      "instrument_station": null,
+      "norad_id": 637,
+      "reference_frame": null,
+      "reported_calendar_day": "1963-11-07",
+      "role": "KNOWN_CONTROL",
+      "source_url": "https://ntrs.nasa.gov/",
+      "terminal_event_utc": null,
+      "terminal_phenomenon_definition": null,
+      "terminal_sigma_seconds": null
+    },
+    {
+      "activation": false,
+      "archive_search_only": true,
+      "catalogue_epochs_1963": 1,
+      "date_as_instrumental_utc": null,
+      "day_evidence_grade": "AF_IN_23784_INTERVAL_2210_2400Z",
+      "id": "R59:NORAD:688",
+      "independent_instrumental_lineages": null,
+      "instrument_station": null,
+      "norad_id": 688,
+      "reference_frame": null,
+      "reported_calendar_day": "1963-11-12",
+      "role": "INCOMPLETE_CONTROL",
+      "source_url": "https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/08.pdf",
+      "terminal_event_utc": null,
+      "terminal_phenomenon_definition": null,
+      "terminal_sigma_seconds": null
+    },
+    {
+      "activation": false,
+      "archive_search_only": true,
+      "catalogue_epochs_1963": 45,
+      "date_as_instrumental_utc": null,
+      "day_evidence_grade": "NASA_SSR_CALENDAR_DAY_TZ_UNVERIFIED",
+      "id": "R59:NORAD:528",
+      "independent_instrumental_lineages": null,
+      "instrument_station": null,
+      "norad_id": 528,
+      "reference_frame": null,
+      "reported_calendar_day": "1963-11-08",
+      "role": "TARGET_NOT_CONTROL",
+      "source_url": "https://ntrs.nasa.gov/",
+      "terminal_event_utc": null,
+      "terminal_phenomenon_definition": null,
+      "terminal_sigma_seconds": null
+    }
+  ],
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "schema": "conde.c241-r59-terminal-control-bridge/v1",
+  "simulator_parameters": [
+    {
+      "activation": false,
+      "id": "PARAM:terminal_error_control_292",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "PARAM:terminal_error_control_308",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "PARAM:terminal_error_control_565",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "PARAM:terminal_error_control_668",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "PARAM:reentry_528_drag_calibration",
+      "value": null
+    }
+  ]
+}
