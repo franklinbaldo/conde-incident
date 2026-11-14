@@ -1,0 +1,50 @@
+{
+  "schema": "conde.contemporary_satellite_tracking_bibliography/v1",
+  "id": "C241-LONTRA-R39",
+  "audit_date": "2026-11-14",
+  "status": "CONTEMPORARY_YEARBOOK_IDENTIFIES_1963_1964_INTEROBS_CAMPAIGN_VOLUMES_NOT_TARGET_OBSERVATIONS",
+  "source": {
+    "kind": "full_original_page_facsimile_in_scanned_hungarian_yearbook",
+    "title": "Csillagászati Évkönyv az 1966. évre",
+    "editor": "TIT Csillagászati és Űrhajózási Szakosztályainak Országos Választmánya",
+    "publisher": "Gondolat Kiadó",
+    "publication_year": 1965,
+    "cover_year": 1966,
+    "chapter": "BAJA: Beszámoló az Intézetben folyt munkákról, 1964. május 1. és 1965. április 30.",
+    "url": "https://real-j.mtak.hu/15014/1/csillagaszati_evkonyv_1966.pdf",
+    "repository": "REAL-J, Library and Information Centre of the Hungarian Academy of Sciences",
+    "http_status": 200,
+    "https_download_succeeded": true,
+    "bytes": 7868699,
+    "sha256": "8061e6c164836e6b6e0e465be801fcb891002204bd3a523b4eda43a81d8d459a",
+    "pdf_page_count": 244,
+    "page_zero_based": 120,
+    "printed_page": 119,
+    "page_visually_inspected": true,
+    "original_print_page_facsimile_retrieved": true,
+    "original_interobs_campaign_volumes_retrieved": false
+  },
+  "report": {
+    "report_period": "1964-05-01/1965-04-30",
+    "states_dataset_from_1963_and_1964_prepared_and_published": true,
+    "cited_publication_title": "Ergebnisse der im Rahmen des INTEROBS-Programmes abgehaltenen Kooperationswochen",
+    "cited_publication_volumes": ["Folge I", "Folge II"],
+    "reported_observation_years": [1963, 1964],
+    "campaign_coverage_1963_11_07_to_09": null,
+    "reported_over_7000_measurements": true,
+    "over_7000_measurements_attributable_to_1963": false,
+    "listed_satellite_codes_for_processing": ["60053", "63431"],
+    "listed_satellite_codes_proven_to_be_527_528_529": false,
+    "station_logs_retrieved": false
+  },
+  "follow_up": "Seek INTEROBS Folge I/II first-hand pages, campaign dates and satellite designations; separately seek station 1023/1078/1035 logs 1963-11-07 through 1963-11-09. The yearbook confirms reported publication of 1963-64 data but cannot establish November 1963 coverage or NORAD 527, 528, 529.",
+  "limits": {
+    "target_observations_identified": false,
+    "raw_instrumental_observations_retrieved": false,
+    "november_1963_campaign_confirmed": false,
+    "original_campaign_volume_pages_read": false,
+    "orbital_constraints_activated": 0,
+    "new_target_orbital_measurements": 0,
+    "outreach_sent": false
+  }
+}

@@ -86,9 +86,14 @@ def interpolate_at(utc: str, eop: dict, times: dict) -> dict:
     yp = linear(a["y_arcsec"], b["y_arcsec"])
     lod = linear(a["lod_s"], b["lod_s"])
     # Two-part MJD Julian dates retain sub-second rotation precision.
+    # Keep the fractional day in its own SOFA JD part: adding it to a
+    # 38,000-day MJD float loses sub-microsecond temporal precision.  That
+    # jitter is amplified when G50 differentiates the frame for velocity.
+    mjd_day = int(mjd)
+    fraction = mjd - Decimal(mjd_day)
     matrix = erfa.c2t00a(
-        2400000.5, float(mjd + tt_utc / DAY_S),
-        2400000.5, float(mjd + dut1 / DAY_S),
+        2400000.5 + mjd_day, float(fraction + tt_utc / DAY_S),
+        2400000.5 + mjd_day, float(fraction + dut1 / DAY_S),
         xp * AS2RAD, yp * AS2RAD,
     ).tolist()
     residual = orthogonality_error(matrix)
