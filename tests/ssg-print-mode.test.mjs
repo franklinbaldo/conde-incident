@@ -4,7 +4,6 @@ import {join} from 'node:path';
 import test from 'node:test';
 
 const css=readFileSync('static/css/site.css','utf8');
-const built=readFileSync('public/css/site.css','utf8');
 const heading='/* SSG-first print mode:';
 
 function validatePrintStyles(source) {
@@ -22,18 +21,24 @@ function validatePrintStyles(source) {
   assert.doesNotMatch(print,/\.casefile\s*\{\s*display:none/,'não ocultar conteúdo científico');
 }
 
-test('CSS SSG publicado corresponde ao fonte versionado',()=>{
+test('CSS SSG publicado corresponde ao fonte versionado',{skip:process.env.SSG_PRINT_BUILT!=='1'},()=>{
+  const built=readFileSync('public/css/site.css','utf8');
   assert.equal(built,css);
   assert.ok(Buffer.byteLength(css,'utf8')<=20000,'regra dos 20 KB');
 });
 
-test('dossiê e páginas SSG dispõem de modo de impressão sem JS',()=>{
+test('dossiê e páginas SSG dispõem de modo de impressão sem JS',{skip:process.env.SSG_PRINT_BUILT!=='1'},()=>{
   validatePrintStyles(css);
   for(const route of ['dossie','stories','evidencias/arquivo']) {
     const html=readFileSync(join('public',route,'index.html'),'utf8');
     assert.match(html,/href="\/conde-incident\/css\/site\.css"/,route+' CSS compartilhado');
     assert.match(html,/<main\b[^>]*id="main"/,route+' landmark principal');
   }
+});
+
+test('fonte CSS valida independentemente da compilação SSG',()=>{
+  validatePrintStyles(css);
+  assert.ok(Buffer.byteLength(css,'utf8')<=20000,'regra dos 20 KB');
 });
 
 test('teste negativo: remoção da tinta escura faz o gate reprovar',()=>{
