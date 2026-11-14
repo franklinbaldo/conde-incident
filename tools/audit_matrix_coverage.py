@@ -17,6 +17,7 @@ import provenance_graph as pg
 import export_observable_dependency_links as observable
 import export_wayback_citation_links as wayback
 import export_cgeo35_raster_bridge as cgeo35
+import export_fbis_operational_lineage as fbis
 
 ROOT = Path(__file__).resolve().parents[1]
 CITATIONS = ROOT / "public/data/conde-source-citations.json"
@@ -24,6 +25,7 @@ OBSERVABLES = ROOT / "public/data/conde-observable-dependency-links.json"
 BRIDGE_SECTIONS = ("edges", "pending_december_compilation_edges")
 ARCHIVE = ROOT / "public/data/conde-wayback-citation-links.json"
 CARTOGRAPHY = ROOT / "public/data/conde-cgeo35-raster-anchor-bridge.json"
+FBIS = fbis.OUTPUT
 
 
 def require(ok: bool, reason: str) -> None:
@@ -210,6 +212,33 @@ def rebuild(root: Path = ROOT) -> dict:
     result = audit(rows, original_citations, current_bridges)
     result["supplemental_context_layers"] = audit_context_layers(
         rows, original_citations, archived, json.loads(mapped))
+    # A third, independently replayed documentary layer must not inflate the
+    # original two-feed source/observable metric.  C212-C214 share ONE work.
+    fbis_doc = fbis.build(root)
+    require((root / FBIS.relative_to(ROOT)).read_bytes() == fbis.encoded(fbis_doc),
+            "FBIS operational source graph stale")
+    fbis.audit(fbis_doc, rows)
+    fbis_refs = {edge["matrix_occurrence"] for edge in fbis_doc["edges"]}
+    previously_linked = {
+        item["snapshot_ref"] for item in original_citations["records"]
+    } | {
+        edge["matrix_occurrence"]
+        for section in BRIDGE_SECTIONS for edge in current_bridges[section]
+    }
+    new_refs = fbis_refs - previously_linked
+    require(len(fbis_refs) == 3 and len(new_refs) == 3,
+            "FBIS source work unexpectedly duplicated or previously linked")
+    result["supplemental_context_layers"]["fbis_operational_history"] = {
+        "feed": FBIS.name,
+        "source_works": 1,
+        "snapshotted_documentary_connections": len(fbis_refs),
+        "new_connections_outside_two_feed_scope": len(new_refs),
+        "occurrences": sorted(x.rsplit(":", 1)[-1] for x in fbis_refs),
+        "new_independent_physical_sensors": 0,
+        "physical_domain_effect": "THETA_UNCHANGED",
+    }
+    result["supplemental_documentary_links_distinct_occurrences"] = len(new_refs)
+    result["documented_in_either_two_feeds_or_fbis"] = result["represented_in_either"] + len(new_refs)
     return result
 
 
