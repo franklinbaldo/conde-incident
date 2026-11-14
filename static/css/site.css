@@ -149,8 +149,8 @@ a:focus-visible,button:focus-visible,iframe:focus-visible{outline:3px solid #ffd
 .casefile .cf-figure figcaption{padding:.9rem 1rem;font-size:.82rem;color:var(--cf-muted)}
 .casefile .cf-actions,.casefile .cf-links{display:flex;flex-wrap:wrap;gap:.65rem;align-items:center}
 .casefile .cf-button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.65rem 1rem;border:2px solid var(--cf-accent);border-radius:.5rem;font-weight:750;text-decoration:none}
-.casefile .cf-button-primary{background:var(--cf-accent);color:#fff}
-.casefile .cf-button-primary:hover{color:#fff;background:var(--color-casefile-hover)}
+.casefile .cf-button-primary{background:var(--cf-accent);color:var(--color-casefile-button-text)}
+.casefile .cf-button-primary:hover{color:var(--color-casefile-button-text);background:var(--color-casefile-hover)}
 .casefile .cf-section{padding-block:clamp(1.6rem,3vw,2.7rem);border-top:1px solid var(--cf-line)}
 .casefile .cf-trail{list-style:none;counter-reset:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.7rem;padding:0;margin:1.5rem 0 0}
 .casefile .cf-trail a{display:grid;gap:.2rem;border-top:3px solid var(--cf-accent);padding:.65rem .3rem;color:var(--cf-ink);text-decoration:none;border-radius:.25rem}
