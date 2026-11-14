@@ -1,0 +1,37 @@
+name: CGEO-40 | AHEx catalogue custody offline gates
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo40_ahex_iocs15_holdings.*'
+      - 'tools/cgeo40_ahex_iocs15.py'
+      - 'tests/test_cgeo40_ahex_iocs15.py'
+      - '.github/workflows/geo-ahex-iocs15.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo40_ahex_iocs15_holdings.*'
+      - 'tools/cgeo40_ahex_iocs15.py'
+      - 'tests/test_cgeo40_ahex_iocs15.py'
+      - '.github/workflows/geo-ahex-iocs15.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-indexed-catalogue-claims:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact checkout
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Verify custody contract and adversarial cases
+        run: |
+          python3 -m tools.cgeo40_ahex_iocs15
+          python3 -m unittest discover -s tests -p 'test_cgeo40_ahex_iocs15.py' -v
+      - name: Print acquisition limitation
+        run: echo 'CATALOGUE_ONLY_NO_VERIFIED_DOWNLOAD_OR_MAP_FACSIMILE'
