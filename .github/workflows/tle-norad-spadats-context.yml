@@ -1,0 +1,30 @@
+name: NORAD 1963 contemporaneous custody C241-L46
+on:
+  pull_request:
+    paths:
+      - 'research/tle_custody/norad_spadats_context_C241-L46.json'
+      - 'tools/tle_norad_spadats_context_audit.py'
+      - 'tests/test_tle_norad_spadats_context.py'
+      - '.github/workflows/tle-norad-spadats-context.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/tle_custody/norad_spadats_context_C241-L46.json'
+      - 'tools/tle_norad_spadats_context_audit.py'
+      - 'tests/test_tle_norad_spadats_context.py'
+      - '.github/workflows/tle-norad-spadats-context.yml'
+  workflow_dispatch:
+jobs:
+  custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Contraprovas e escopo
+        run: python3 -m unittest discover -s tests -p 'test_tle_norad_spadats_context.py' -v
+      - name: PDFs oficiais publicados em 2023, SHA de bytes
+        run: python3 tools/tle_norad_spadats_context_audit.py --verify-remote
+
