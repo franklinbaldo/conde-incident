@@ -81,6 +81,79 @@ def constant_velocity_light_time(
     }
 
 
+
+def quadratic_central_gravity_light_time(
+    reception_position_gcrs_km: object,
+    reception_velocity_gcrs_km_s: object,
+    station_reception_gcrs_km: object,
+    gm_km3_s2: float = 398600.4418,
+) -> dict:
+    """G63: second-order central-acceleration sensitivity to G60's omission.
+
+    Local Taylor expansion r(t_rec-tau) ~= r-v*tau+a_rec*tau**2/2,
+    a_rec=-GM*r/|r|**3. This is NOT an orbit propagation, measurement,
+    historically calibrated error or a bound on unmodelled perturbations.
+    Reception station is fixed as in G60; only short light times allowed.
+    """
+    r = _validated_vector(reception_position_gcrs_km, "GCRS r (km)")
+    v = _validated_vector(reception_velocity_gcrs_km_s, "GCRS v (km/s)")
+    s = _validated_vector(station_reception_gcrs_km, "GCRS station (km)")
+    gm = float(gm_km3_s2)
+    if not math.isfinite(gm) or gm < 0:
+        raise ValueError("Finite nonnegative central GM required")
+    radial_norm = float(np.linalg.norm(r))
+    if radial_norm < 6350. or not math.isfinite(radial_norm):
+        raise ValueError("Outside-Earth reception state required")
+    if float(np.linalg.norm(v)) > 20.:
+        raise ValueError("Near-Earth state speed must not exceed 20 km/s")
+    linear = constant_velocity_light_time(r, v, s)
+    tau_linear = float(linear["light_time_s"])
+    if tau_linear > 0.2:
+        raise ValueError("Local Taylor diagnostic requires light time <= 0.2 s")
+    acceleration = -gm * r / radial_norm**3
+    tau = tau_linear
+    for _ in range(24):
+        photon = r - v*tau + .5*acceleration*tau*tau - s
+        next_tau = float(np.linalg.norm(photon)) / SPEED_OF_LIGHT_KM_S
+        if not math.isfinite(next_tau) or next_tau <= 0 or next_tau > 0.2:
+            raise ValueError("Invalid quadratic light-time iterate")
+        if abs(next_tau - tau) <= 1e-14:
+            tau = next_tau
+            break
+        tau = next_tau
+    else:
+        raise ValueError("Quadratic light-time iteration did not converge")
+    photon = r - v*tau + .5*acceleration*tau*tau - s
+    distance = float(np.linalg.norm(photon))
+    residual = distance - SPEED_OF_LIGHT_KM_S*tau
+    if abs(residual) > 1e-8:
+        raise ValueError("Quadratic light-time residual exceeds 10 micrometres")
+    linear_ray = np.asarray(linear["retarded_line_of_sight_gcrs"])
+    quadratic_ray = photon / distance
+    angle = math.atan2(float(np.linalg.norm(np.cross(linear_ray, quadratic_ray))),
+                       float(linear_ray @ quadratic_ray))
+    displacement_m = 500. * float(np.linalg.norm(acceleration)) * tau*tau
+    return {
+        "model": "G63_RECEPTION_CENTRAL_ACCELERATION_SECOND_ORDER_DIAGNOSTIC",
+        "gm_km3_s2": gm,
+        "reception_central_acceleration_km_s2": acceleration.tolist(),
+        "constant_velocity_light_time_s": tau_linear,
+        "quadratic_light_time_s": tau,
+        "quadratic_light_time_equation_residual_km": residual,
+        "second_order_acceleration_displacement_m": displacement_m,
+        "quadratic_retarded_line_of_sight_gcrs": quadratic_ray.tolist(),
+        "quadratic_vs_linear_angle_arcsec": angle * ARCSEC_PER_RAD,
+        "limitations": [
+            "RECEPTION_CENTRAL_ACCELERATION_ONLY", "NO_J2_OR_DRAG_OVER_LIGHT_TIME",
+            "STATION_FIXED_AT_RECEPTION", "NO_RELATIVITY_OR_ABERRATION",
+            "NO_1963_OBSERVATION_OR_INSTRUMENT_SIGMA",
+        ],
+        "evidence_class": "SYNTHETIC_LOCAL_TAYLOR_SENSITIVITY_ONLY",
+        "historical_holdout": "NOT_RUN",
+        "historical_impact_inference": None,
+    }
+
+
 def sensitivity_from_teme(
     original_iers_bytes: bytes, eop: dict, times: dict, utc: str,
     teme_position_km: object, teme_velocity_km_s: object,
