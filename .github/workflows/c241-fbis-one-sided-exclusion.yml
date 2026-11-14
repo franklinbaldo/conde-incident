@@ -1,0 +1,47 @@
+name: C241-P50 FBIS one-sided event clock falsification
+
+on:
+  pull_request:
+    paths:
+      - 'tools/fbis_1963_one_sided_exclusion.py'
+      - 'tests/test_fbis_1963_one_sided_exclusion.py'
+      - 'research/constraints/fbis_1963_one_sided_manifest.json'
+      - 'research/constraints/fbis_1963_one_sided_exclusion.json'
+      - 'research/constraints/C241_P50_FBIS_ONE_SIDED_EXCLUSION_20261114.md'
+      - '.github/workflows/c241-fbis-one-sided-exclusion.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/fbis_1963_one_sided_exclusion.py'
+      - 'tests/test_fbis_1963_one_sided_exclusion.py'
+      - 'research/constraints/fbis_1963_one_sided_manifest.json'
+      - 'research/constraints/fbis_1963_one_sided_exclusion.json'
+      - 'research/constraints/C241_P50_FBIS_ONE_SIDED_EXCLUSION_20261114.md'
+      - '.github/workflows/c241-fbis-one-sided-exclusion.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  event-veto-verified:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact head
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Replay P50 preregistration and exact derived JSON
+        run: python3 tools/fbis_1963_one_sided_exclusion.py --check
+      - name: Adversarial tests (normal Python and optimized Python)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p 'test_fbis_1963_one_sided_exclusion.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_fbis_1963_one_sided_exclusion.py' -v
