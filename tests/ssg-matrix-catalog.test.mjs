@@ -22,9 +22,12 @@ test('241 frozen occurrences have stable paginated HTML source links, including 
   assert.ok(Buffer.byteLength(files.get('index.md'),'utf8')<=20000);
   for(const [n,{pointer,record}] of entries.entries()){
     const destination='/conde-incident/evidencias/matriz/paginas/'+String(Math.floor(n/20)+1).padStart(2,'0')+'/';
-    assert.ok(files.get('index.md').includes('['+pointer.occurrence+']('+destination+')'),
+    const anchor=pointer.occurrence.replace('#','-');
+    assert.ok(files.get('index.md').includes('['+pointer.occurrence+']('+destination+'#'+anchor+')'),
       'Missing direct ID locator for '+pointer.occurrence);
     const page=files.get('paginas/'+String(Math.floor(n/20)+1).padStart(2,'0')+'/index.md');
+    assert.ok(page.includes('<span id="'+anchor+'" tabindex="-1"></span>'),
+      'Missing fragment target for '+pointer.occurrence);
     assert.ok(page.includes('## '+pointer.occurrence+' · '),pointer.occurrence);
     assert.ok(page.includes(matrixRowUrl(record.matrix_line)),pointer.occurrence);
     assert.ok(page.includes(record.row_sha256),pointer.occurrence);
