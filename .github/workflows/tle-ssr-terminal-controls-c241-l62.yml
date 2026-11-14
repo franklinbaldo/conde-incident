@@ -1,0 +1,41 @@
+name: C241-L62 NASA SSR terminal-day controls 292 565
+on:
+  pull_request:
+    paths:
+      - "research/tle_custody/nasa_ssr_terminal_controls_C241-L62.*"
+      - "tools/tle_ssr_terminal_controls_c241_l62.py"
+      - "tests/test_tle_ssr_terminal_controls_c241_l62.py"
+      - ".github/workflows/tle-ssr-terminal-controls-c241-l62.yml"
+  push:
+    branches: [main]
+    paths:
+      - "research/tle_custody/nasa_ssr_terminal_controls_C241-L62.*"
+      - "tools/tle_ssr_terminal_controls_c241_l62.py"
+      - "tests/test_tle_ssr_terminal_controls_c241_l62.py"
+      - ".github/workflows/tle-ssr-terminal-controls-c241-l62.yml"
+  workflow_dispatch:
+jobs:
+  catalogue-day-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify checkout SHA
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Adversarial tests (including optimized Python)
+        run: |
+          python -m unittest discover -s tests -p 'test_tle_ssr_terminal_controls_c241_l62.py' -v
+          python -O -m unittest discover -s tests -p 'test_tle_ssr_terminal_controls_c241_l62.py' -v
+      - name: Replay original NASA PDF bytes
+        run: |
+          curl -fLsS --retry 2 --max-time 90 "https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf" -o /tmp/nasa-19640002493.pdf
+          python tools/tle_ssr_terminal_controls_c241_l62.py --pdf /tmp/nasa-19640002493.pdf
+          test "$(pdfinfo /tmp/nasa-19640002493.pdf | awk '/^Pages:/ {print $2}')" = "10"
