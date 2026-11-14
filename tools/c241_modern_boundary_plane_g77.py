@@ -45,7 +45,10 @@ def nearest_root(fn, reference: datetime) -> datetime:
         result = result + timedelta(seconds=step)
         if abs((result - reference).total_seconds()) > 180:
             raise ValueError("root matches a different plane crossing")
-    if not math.isfinite(fn(result)) or abs(fn(result)) > 1e-6:
+    # The upstream G76 GMST uses a single Julian-day float; its ~40 us
+    # time quantization at 1963 implies centimeter-scale crossing residuals.
+    # A 5 cm numerical-only tolerance avoids fictitious sub-ULP precision.
+    if not math.isfinite(fn(result)) or abs(fn(result)) > 5e-5:
         raise ValueError("plane root failed independent residual check")
     return result
 
