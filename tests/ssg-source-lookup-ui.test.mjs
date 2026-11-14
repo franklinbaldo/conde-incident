@@ -13,8 +13,10 @@ test('every actual curated source points only to archival pages with pinned matr
   const refs=index.sources.flatMap(referenceView);
   assert.equal(refs.length,index.curated_reference_count);
   for(const ref of refs){
-    assert.ok(ref.archive_path.startsWith('/conde-incident/evidencias/arquivo/'));
+    assert.equal(ref.archive_path,'/conde-incident/evidencias/arquivo/'+
+      ref.occurrence.toLowerCase().replace('#','-')+'/');
     assert.equal(ref.row_sha256.length,64);
+    assert.ok(Array.isArray(ref.upstream_edges));
   }
 });
 test('reject wrong occurrence, path escape, and tampered row SHA before rendering',()=>{
@@ -62,4 +64,29 @@ test('shareable reverse-source selection trusts only verified IDs, preserves unr
     {id:'',invalid:true});
   assert.equal(sourceLookupUrl('https://example.org'+link,''),
     '/conde-incident/evidencias/fontes/?lang=pt#consultar');
+});
+
+test('documentary upstream links expose declared citations, not independent witnesses',()=>{
+  const refs=index.sources.flatMap(referenceView);
+  const edges=refs.flatMap(ref=>ref.upstream_edges);
+  assert.equal(edges.length,13);
+  assert.equal(new Set(edges.map(edge=>JSON.stringify(edge))).size,8);
+  const indexed=new Set(index.sources.map(s=>s.source_id));
+  assert.ok(edges.some(edge=>!indexed.has(edge[2])));
+  assert.match(ui,/Relações documentais declaradas \(não são observações independentes\)/);
+  assert.match(ui,/sources\.has\(target\)/);
+  assert.match(ui,/sourceLookupUrl\(doc\.location\.href,target\)/);
+  assert.match(ui,/fora deste índice curado/);
+  assert.match(ui,/EDGE_LABELS\[kind\]/);
+  assert.doesNotMatch(ui,/\.innerHTML\s*=/);
+});
+
+test('reject plausible but swapped archival page and alien upstream source before rendering',()=>{
+  const withEdges=index.sources.find(s=>s.references.some(r=>r.upstream_edges.length));
+  const wrongPage=structuredClone(withEdges);
+  wrongPage.references[0].archive_path='/conde-incident/evidencias/arquivo/c999-1/';
+  assert.throws(()=>referenceView(wrongPage),/Referência inválida/);
+  const spoofed=structuredClone(withEdges);
+  spoofed.references[0].upstream_edges[0][0]='OUTRO_DOCUMENTO';
+  assert.throws(()=>referenceView(spoofed),/Referência inválida/);
 });

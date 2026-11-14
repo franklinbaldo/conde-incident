@@ -182,3 +182,19 @@ test('null source record fails typed, before building UI Map',async()=>{
   index.sources[0]=null;
   await fails(resealed(index),'index-shape');
 });
+
+// R53: a freshly re-sealed index may be internally hashed yet wrong about
+// which frozen row / archival page / documentary dependency it describes.
+for(const [label,change] of [
+  ['swapped archival page',i=>{i.sources[0].references[0].archive_path='/conde-incident/evidencias/arquivo/c180-1/';}],
+  ['forged matrix occurrence ordinal',i=>{i.sources[0].references[0].snapshot_ref='matrix:'+i.matrix_git_blob_sha1+':C180#1';}],
+  ['source spoofed on outgoing dependency',i=>{const s=i.sources.find(s=>s.references.some(r=>r.upstream_edges.length));s.references[0].upstream_edges[0][0]='OTHER_SOURCE';}],
+  ['fabricated upstream physical observation',i=>{const s=i.sources.find(s=>s.references.some(r=>r.upstream_edges.length));s.references[0].upstream_edges[0][1]='';}],
+  ['duplicated citation identity',i=>{i.sources[0].references.push(structuredClone(i.sources[0].references[0]));}],
+]) {
+  test('re-sealed index cannot accept '+label,async()=>{
+    const index=JSON.parse(stock.get(shardPath));
+    change(index);
+    await fails(resealed(index),'reference-contract');
+  });
+}
