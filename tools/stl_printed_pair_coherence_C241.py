@@ -24,7 +24,7 @@ def require(condition: bool, msg: str) -> None:
 def inspect(doc: dict, source_bytes: bytes) -> dict:
     # An existing independently tested audit pins the editorial transcription.
     from tools.audit_stl_space_log_r51 import audit
-    require(audit(doc) == 'EDITORIAL_REPRODUCTION_UNITS_PENDING_ZERO_CONSTRAINTS',
+    require(audit(doc) == 'EDITORIAL_REPRODUCTION_MILES_PRINTED_SUBTYPE_PENDING_ZERO_CONSTRAINTS',
             'STL R51 provenance not validated')
     row = doc['printed_row']
     p = row['perigee_altitudes_in_printed_order']
@@ -56,12 +56,12 @@ def inspect(doc: dict, source_bytes: bytes) -> dict:
         'source_sha256': hashlib.sha256(source_bytes).hexdigest(),
         'source_pdf_sha256': doc['pdf_sha256'],
         'printed_designation': row['international_designation_as_printed'],
-        'printed_altitude_unit': None,
+        'printed_altitude_unit': 'miles',
         'original_stl_issue_retrieved': False,
         'columns_are_coepoch': None,
         'period_and_altitude_element_conventions_equal': None,
         'printed_altitude_sum': sums,
-        'printed_mean_altitude_unit_unknown': [str(v) for v in half],
+        'printed_mean_altitude_in_printed_miles': [str(v) for v in half],
         'perigee_difference_second_minus_first_printed_units': p[1]-p[0],
         'apogee_difference_second_minus_first_printed_units': a[1]-a[0],
         'period_nominal_difference_first_minus_second_seconds': str((t[0]-t[1])*60),
@@ -115,3 +115,4 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
+
