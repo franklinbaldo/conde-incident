@@ -1,0 +1,60 @@
+{
+  "schema": "conde.archival_crosswalk/v1",
+  "id": "C241-LONTRA-R50",
+  "audit_date_utc": "2026-11-14",
+  "status": "RETROSPECTIVE_IDENTIFIED_PRINT_ROW_SOURCE_DEPENDENCE_UNRESOLVED",
+  "source": {
+    "institution": "Stockholm International Peace Research Institute (SIPRI)",
+    "title": "World Armaments and Disarmament: SIPRI Yearbook 1973",
+    "publisher": "Almqvist & Wiksell",
+    "publication_year": 1973,
+    "pdf_url": "https://www.sipri.org/sites/default/files/SIPRI%20Yearbook%201973.pdf",
+    "chapter": "3: Verification using reconnaissance satellites",
+    "table": "3A.2: US electronic or ferret reconnaissance satellites",
+    "printed_page": 84,
+    "pdf_page_one_based": null,
+    "digital_text_extracted_from_web": true,
+    "critical_page_visually_inspected": false,
+    "pdf_retrieved_https": true,
+    "pdf_bytes": 10149951,
+    "pdf_sha256": "e4938f51e42243e36aa632e6385fbb024b688e5062f5dff2ff965f9023591b6e",
+    "pdf_magic": "%PDF-1.6",
+    "pdf_eof_verified": true,
+    "physical_print_copy_inspected": false,
+    "archive_external_contact_sent": false
+  },
+  "printed_row": {
+    "designation": "USAF (1963-03A)",
+    "launch_vehicle": "Van Th/A-D",
+    "launch_date_gmt_as_printed": "16 Jan 2248",
+    "inclination_deg": "81.89",
+    "period_min": "94.66",
+    "perigee_km": 459,
+    "apogee_km": 533,
+    "life_time_years_printed": "6",
+    "observation_epoch_utc": null,
+    "instrument_station": null,
+    "measurement_uncertainty": null,
+    "raan_deg": null,
+    "source_of_orbital_elements": null
+  },
+  "comparison": {
+    "soviet_1964_ledger": "research/tle_custody/soviet_bse1964_1963_003_C241_LONTRA_R48.json",
+    "nasa_1963_ledger": "research/tle_custody/nasa_ssr_jul_dec_1963_C241-L18.json",
+    "soviet_all_four_orbital_values_exact_match": true,
+    "soviet_launch_vehicle_label_agenad_match": true,
+    "soviet_printed_designation_is_anonymous": true,
+    "later_sipri_explicit_1963_003a_supports_candidate_identity": true,
+    "soviet_1964_derived_from_sipri_1973_possible": false,
+    "both_derived_from_earlier_western_compilation_possible": true,
+    "independent_instrumental_sources_count_added": 0,
+    "new_1963_11_07_09_observations": 0,
+    "new_physical_constraints_activated": 0
+  },
+  "remaining": [
+    "Identify dated 1963 upstream issue in Flight, Aviation Week, Missiles and Rockets, Interavia or Air Letter",
+    "Find an independently calibrated Soviet 1963 sensor with station and measurement UTC",
+    "Verify PDF critical page by a renderer; web PDF screenshot timed out",
+    "Check historically conflicting launch time and launch-vehicle designation before using them"
+  ]
+}
