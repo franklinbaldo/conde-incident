@@ -61,19 +61,53 @@ export function postMatrixLinks(citations,bundle=readBundle()) {
 
 /** Check actual, visible built HTML, not a matching href inside scripts or templates. */
 export function auditBuiltPostMatrix(html,citations,bundle=readBundle()) {
-  const doc=visibleDocument(html);
   const locations=postMatrixLinks(citations,bundle);
+  const main=/<main\b[^>]*>([\s\S]*?)<\/main>/i.exec(html)?.[1];
+  assert.ok(main,'Pós-matriz: HTML sem região principal');
+  const doc=visibleDocument(html);
+  assert.ok(doc.links.has('/conde-incident/evidencias/matriz/'),
+    'Pós-matriz: falta retorno visível à matriz');
+
+  // A valid link or digest elsewhere on the page cannot authenticate a record.
+  // Audit each rendered record separately against its canonical source and
+  // source-locked custody report, including the epistemic qualifications.
+  const items=[...citations.post_matrix_occurrences].sort((a,b)=>
+    a.id.localeCompare(b.id,'en'));
+  const headings=[...main.matchAll(/<h3\b[^>]*>([^<>]*)<\/h3>/gi)];
+  assert.deepEqual(headings.map(match=>match[1]),items.map(item=>item.id),
+    'Pós-matriz: cabeçalhos ausentes, duplicados ou fora da ordem canônica');
   let checked=0;
-  for(const item of citations.post_matrix_occurrences) {
+  for(let i=0;i<items.length;i++) {
+    const item=items[i];
+    const heading=headings[i];
+    const headingDoc=visibleDocument('<main>'+heading[0]+'</main>');
+    assert.ok(headingDoc.visibleText.includes(item.id),
+      'Pós-matriz: cabeçalho não visível: '+item.id);
+    const section=main.slice(heading.index+heading[0].length,
+      headings[i+1]?.index??main.length);
+    const visible=visibleDocument('<main>'+section+'</main>');
+    const field=(label,value)=>{
+      const expression=new RegExp('<strong>'+label+':<\/strong>\\s*<code>'+value+'<\/code>');
+      assert.match(section,expression,
+        'Pós-matriz: campo vinculado ao registro ausente: '+item.id+' / '+label);
+      assert.ok(visible.visibleText.includes(value),
+        'Pós-matriz: valor visível ausente: '+item.id+' / '+label);
+    };
+    field('Estado canônico',item.status);
+    field('Independência jornalística',item.journalistic_source_independence);
+    field('SHA-256 da imagem arquivística',item.image_sha256);
+    field('SHA-256 do relatório de custódia versionado',auditedReportDigest(item));
+    assert.ok(visible.links.has(item.report_citation_url),
+      'Pós-matriz: link NARA ausente na ficha: '+item.id);
+    assert.ok(visible.links.has('https://github.com/franklinbaldo/conde-incident/blob/main/'+item.report_path),
+      'Pós-matriz: relatório de custódia não navegável: '+item.id);
     for(const id of item.related_matrix_occurrences) {
       assert.ok(locations.has(id),'Pós-matriz: ID ausente da matriz: '+id);
-      assert.ok(doc.links.has(locations.get(id)),
-        'Pós-matriz: link visível para a ocorrência ausente: '+id);
+      assert.ok(visible.links.has(locations.get(id)),
+        'Pós-matriz: link visível na ficha para a ocorrência ausente: '+id);
       checked++;
     }
   }
-  assert.ok(doc.links.has('/conde-incident/evidencias/matriz/'),
-    'Pós-matriz: falta retorno visível à matriz');
   return checked;
 }
 

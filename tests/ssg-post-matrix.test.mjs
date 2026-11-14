@@ -110,22 +110,49 @@ test('post-matrix references open real no-JS matrix anchors and reject coordinat
     /snapshot diferente do índice canônico auditado/);
 });
 
-test('post-matrix built HTML must expose each actual matrix link in visible main',()=>{
+test('post-matrix built HTML binds navigation, source identity and custody in each visible record',()=>{
+  const item=citations.post_matrix_occurrences[0];
+  const reportDigest=createHash('sha256').update(readFileSync(item.report_path)).digest('hex');
   const locations=postMatrixLinks(citations);
-  const expected=citations.post_matrix_occurrences[0].related_matrix_occurrences
-    .map(id=>locations.get(id));
+  const expected=item.related_matrix_occurrences.map(id=>locations.get(id));
   const links=expected.map(url=>'<a href="'+url+'">linha real</a>').join('');
+  const field=(label,value)=>'<p><strong>'+label+':</strong> <code>'+value+'</code></p>';
+  const source='<a href="'+item.report_citation_url+'">NARA</a>';
+  const custody='<a href="https://github.com/franklinbaldo/conde-incident/blob/main/'+
+    item.report_path+'">Relatório</a>';
+  const state=field('Estado canônico',item.status);
+  const independence=field('Independência jornalística',item.journalistic_source_independence);
+  const imageDigest=field('SHA-256 da imagem arquivística',item.image_sha256);
+  const report=field('SHA-256 do relatório de custódia versionado',reportDigest);
+  const heading='<h3>'+item.id+'</h3>';
   const base='<main><a href="/conde-incident/evidencias/matriz/">Matriz</a>'+
-    links+'</main>';
+    heading+state+independence+imageDigest+report+source+custody+links+'</main>';
   assert.equal(auditBuiltPostMatrix(base,citations),expected.length);
+
   const target='<a href="'+expected[0]+'">linha real</a>';
   assert.throws(()=>auditBuiltPostMatrix(base.replace(target,
-    '<template>'+target+'</template>'),citations),
-    /link visível para a ocorrência ausente/);
+    '<template>'+target+'</template>'),citations),/link visível na ficha/);
   assert.throws(()=>auditBuiltPostMatrix(base.replace(target,
-    '<div aria-hidden="true">'+target+'</div>'),citations),
-    /link visível para a ocorrência ausente/);
+    '<div aria-hidden="true">'+target+'</div>'),citations),/link visível na ficha/);
   assert.throws(()=>auditBuiltPostMatrix(base.replace(target,
     '<a href="/conde-incident/evidencias/matriz/">linha errada</a>'),citations),
-    /link visível para a ocorrência ausente/);
+    /link visível na ficha/);
+
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(heading,'<h3>OTHER</h3>'),citations),
+    /cabeçalhos ausentes/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(state,
+    '<div hidden>'+state+'</div>'),citations),/valor visível ausente/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(independence,
+    field('Independência jornalística','CONFIRMED')),citations),/campo vinculado/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(imageDigest,
+    field('SHA-256 da imagem arquivística','0'.repeat(64))),citations),/campo vinculado/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(report,
+    field('SHA-256 do relatório de custódia versionado','0'.repeat(64))),citations),
+    /campo vinculado/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(source,
+    '<a href="https://example.org/not-nara">NARA</a>'),citations),/link NARA ausente/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(custody,''),citations),
+    /relatório de custódia não navegável/);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace(report,'')+report,citations),
+    /campo vinculado/);
 });
