@@ -1,0 +1,80 @@
+{
+  "schema": "c241-l47-uah-soviet-camera-context-v1",
+  "evidence_id": "C241-L47",
+  "epistemic_status": "CONTEMPORARY_SECONDHAND_INSTRUMENT_CONTEXT_ONLY",
+  "source_lineage": "Soviet astronomical journal (May 1963, not retrieved) -> US Department of Defense intelligence abstract 19 June 1963 (not retrieved) -> NASA Marshall Space Flight Center Space Intelligence Notes, November 1963 (facsimile inspected) -> UAH digitization",
+  "family_count": 1,
+  "orbital_constraint_active": false,
+  "target": {
+    "norad": 528,
+    "designator": "1963-003B",
+    "specific_object_mentioned_on_inspected_page": false,
+    "raw_observation": null,
+    "observation_utc": null,
+    "station": null,
+    "sensor_identity_for_528": null,
+    "frame": null,
+    "instrument_sigma_for_528": null,
+    "orbital_covariance": null,
+    "decay_hour_utc": null,
+    "reentry_location": null
+  },
+  "source_copies": [
+    {
+      "id": "C241-L47-UAH-OCT",
+      "month": "1963-10",
+      "issue": "vol. 4, no. 10",
+      "item": "https://digitalprojects.uah.edu/items/show/3371",
+      "pdf": "https://digitalprojects.uah.edu/files/original/195/3371/spaceintelligencenotes_19631000.pdf",
+      "sha256": "41a7ecbf20ecbb799709905ad52d1c4e900c5c348c0273e7314506670e7c3509",
+      "bytes": 9678172,
+      "pdf_pages": 28,
+      "text_layer_chars_pypdf": 0,
+      "specific_page_reviewed": false
+    },
+    {
+      "id": "C241-L47-UAH-NOV",
+      "month": "1963-11",
+      "issue": "vol. 4, no. 11",
+      "item": "https://digitalprojects.uah.edu/items/show/3372",
+      "pdf": "https://digitalprojects.uah.edu/files/original/195/3372/spaceintelligencenotes_19631100.pdf",
+      "sha256": "f953ffe533a7f6e0a3430c6381903be57dd98521523622e4b6e90c7830080318",
+      "bytes": 10004789,
+      "pdf_pages": 28,
+      "text_layer_chars_pypdf": 0,
+      "specific_page_reviewed": true
+    },
+    {
+      "id": "C241-L47-UAH-DEC",
+      "month": "1963-12",
+      "issue": "vol. 4, no. 12",
+      "item": "https://digitalprojects.uah.edu/items/show/3373",
+      "pdf": "https://digitalprojects.uah.edu/files/original/195/3373/spaceintelligencenotes_19631200.pdf",
+      "sha256": "e5552268a1ec86ab1823a409bb7e2b994a11b42eed9890affc9ae7a0a73d57ea",
+      "bytes": 3761647,
+      "pdf_pages": 9,
+      "text_layer_chars_pypdf": 0,
+      "specific_page_reviewed": false
+    }
+  ],
+  "inspected_context": {
+    "source_id": "C241-L47-UAH-NOV",
+    "page_printed": 24,
+    "page_pdf_index_zero_based": 23,
+    "heading": "STUDY OF STANDARD EQUIPMENT FOR PHOTOGRAPHIC OBSERVATION OF ARTIFICIAL EARTH SATELLITES",
+    "camera": "NAFA-3S/25-S",
+    "report_reference": "Dept. of Defense Intelligence Info., Report No. 1521678463, 19 June 1963",
+    "earlier_publication_reference": "Astronomicheskiy Zhurnal, Moskva, No. 5, May 1963",
+    "original_russian_page_recovered": false,
+    "underlying_dod_report_recovered": false,
+    "opening_shutter_delay_seconds_printed": "0.0022",
+    "opening_shutter_plusminus_seconds_printed": "0.0002",
+    "closing_shutter_lag_seconds_printed": "0.0002",
+    "closing_shutter_plusminus_seconds_printed": "0.0002",
+    "chronograph_delay_at_210_volts_seconds_printed": "0.0268",
+    "chronograph_delay_at_230_volts_seconds_printed": "0.0254",
+    "interpretation": "A contemporary digest of laboratory equipment timing, not a tracking record, not a calibration or covariance for the 527/528/529, and ± is not certified as orbital 1-sigma.",
+    "visual_check": "Rendered original PDF page 24 (zero-based 23) at 1.25x and cropped at 2x; manually cross-read printed values against neighbors. No OCR promoted to source."
+  },
+  "next_test": "Retrieve the Russian Astronomicheskiy Zhurnal May 1963 study or DoD report 1521678463, then separately locate an actual 528 observation with station, exposure/time calibration, frame and residuals."
+}
