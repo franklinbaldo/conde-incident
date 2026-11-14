@@ -1,0 +1,287 @@
+{
+  "activation": false,
+  "custody": {
+    "original_stl_issue_retrieved": false,
+    "pdf_page_one_based": 105,
+    "pdf_sha256": "f77b0e8998d467dd457d0ab8e8012e6e9d69c60fb6180aa3d68f1e8422b32786",
+    "print_page": "B-12",
+    "printed_unit": "miles",
+    "url": "https://ntrs.nasa.gov/api/citations/19670008638/downloads/19670008638.pdf"
+  },
+  "diagnostics": {
+    "conditional_comparison_not_sensor": true,
+    "data_family": "NASA_TM_X59315_B12_REPRINT",
+    "method": "two_body_kepler_fixed_radius_mu",
+    "rows": [
+      {
+        "designation": "1963 3A",
+        "if_km_minutes": 90.578,
+        "if_miles_minutes": 94.446,
+        "if_nautical_miles_minutes": 96.002,
+        "km_residual_minutes": 4.122,
+        "miles_residual_minutes": 0.254,
+        "name": "1963 3A first",
+        "nautical_residual_minutes": 1.302,
+        "printed_period_minutes": 94.7
+      },
+      {
+        "designation": "1963 3A",
+        "if_km_minutes": 90.578,
+        "if_miles_minutes": 94.446,
+        "if_nautical_miles_minutes": 96.002,
+        "km_residual_minutes": 4.022,
+        "miles_residual_minutes": 0.154,
+        "name": "1963 3A second",
+        "nautical_residual_minutes": 1.402,
+        "printed_period_minutes": 94.6
+      },
+      {
+        "designation": "1963 6A",
+        "if_km_minutes": 87.705,
+        "if_miles_minutes": 89.773,
+        "if_nautical_miles_minutes": 90.601,
+        "km_residual_minutes": 2.095,
+        "miles_residual_minutes": 0.027,
+        "name": "Cosmos 13",
+        "nautical_residual_minutes": 0.801,
+        "printed_period_minutes": 89.8
+      },
+      {
+        "designation": "1963 4A",
+        "if_km_minutes": 797.708,
+        "if_miles_minutes": 1426.226,
+        "if_nautical_miles_minutes": 1708.4,
+        "km_residual_minutes": 628.792,
+        "miles_residual_minutes": 0.274,
+        "name": "Syncom 1 first",
+        "nautical_residual_minutes": 281.9,
+        "printed_period_minutes": 1426.5
+      },
+      {
+        "designation": "1963 4A",
+        "if_km_minutes": 797.792,
+        "if_miles_minutes": 1426.39,
+        "if_nautical_miles_minutes": 1708.601,
+        "km_residual_minutes": 628.708,
+        "miles_residual_minutes": 0.11,
+        "name": "Syncom 1 second",
+        "nautical_residual_minutes": 282.101,
+        "printed_period_minutes": 1426.5
+      }
+    ]
+  },
+  "graph": [
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "SAME_PDF_AS_R51_NOT_NEW_SENSOR",
+      "source": "C241-LONTRA-R53",
+      "target": "DOC:NASA-TMX59315:B12"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "PARENT_CUSTODY",
+      "source": "C241-LONTRA-R51",
+      "target": "DOC:NASA-TMX59315:B12"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "REPRODUCTION_CREDIT_NOT_ORIGINAL",
+      "source": "DOC:NASA-TMX59315:B12",
+      "target": "WORK:STL-SPACE-LOG:v3:n4"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "FIVE_ROWS_ONE_EDITORIAL_PAGE",
+      "source": "C241-LONTRA-R53",
+      "target": "DIAGNOSTIC:STL_UNIT_R53"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "LOW_AND_HIGH_ORBIT_CONTROLS",
+      "source": "DIAGNOSTIC:STL_UNIT_R53",
+      "target": "H:STATUTE_MILE_CONSISTENCY"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NUMERICAL_NOT_TEXTUAL",
+      "source": "H:STATUTE_MILE_CONSISTENCY",
+      "target": "LATENT:mile_subtype"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "FASCICLE_UNRECOVERED",
+      "source": "WORK:STL-SPACE-LOG:v3:n4",
+      "target": "LATENT:original_STL_legend"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "FIXED_R_AND_MU",
+      "source": "DIAGNOSTIC:STL_UNIT_R53",
+      "target": "LATENT:two_body_assumption"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "UNCERTIFIED_PREMISE",
+      "source": "LATENT:mile_subtype",
+      "target": "LEAN:candidateStlEpochAndUnitConsistency"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "UPSTREAM_MISSING",
+      "source": "LATENT:original_STL_legend",
+      "target": "LEAN:candidateStlEpochAndUnitConsistency"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "CONDITIONAL_ONLY",
+      "source": "H:STATUTE_MILE_CONSISTENCY",
+      "target": "MODEL:historical_unit_translation"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NOT_ACTIVATED",
+      "source": "MODEL:historical_unit_translation",
+      "target": "PARAM:historical_printed_altitude_scale"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NO_NOVEMBER_528_OBSERVATION",
+      "source": "LEAN:candidateStlEpochAndUnitConsistency",
+      "target": "PARAM:orbit_prior_528"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NOT_NOVEMBER_1963",
+      "source": "DOC:NASA-TMX59315:B12",
+      "target": "H:JANUARY_PRINT_CONTEXT_ONLY"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NO_PHYSICAL_TRANSFER",
+      "source": "H:JANUARY_PRINT_CONTEXT_ONLY",
+      "target": "PARAM:orbit_prior_527"
+    }
+  ],
+  "hypotheses": [
+    "H:STATUTE_MILE_CONSISTENCY",
+    "H:JANUARY_PRINT_CONTEXT_ONLY"
+  ],
+  "id": "ABELHA-C241-LONTRA-R53-01",
+  "independent_from_R51": false,
+  "latents": [
+    {
+      "activation": false,
+      "id": "LATENT:mile_subtype",
+      "unit": "statute_or_nautical_not_certified",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:original_STL_legend",
+      "unit": "facsimile_with_caption",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:two_body_assumption",
+      "unit": "model_bias_rounded_elements",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:paired_columns",
+      "unit": "unknown_semantics",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:measurement_utc",
+      "unit": "UTC",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:station",
+      "unit": "instrument_id",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:reference_frame",
+      "unit": "frame_id",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:covariance",
+      "unit": "covariance_matrix",
+      "value": null
+    }
+  ],
+  "lean_candidate": "candidateStlEpochAndUnitConsistency",
+  "lean_status": "CANDIDATE_ONLY_NOT_COMPILED",
+  "new_activated_physical_constraints": 0,
+  "new_independent_instrumental_observations": 0,
+  "new_november_observations_527_528_529": 0,
+  "next_falsifiable_test": "Obtain original STL Space Log v3 n4 legend, paired columns and epoch; do not transfer to 528 without target, UTC, station, frame, covariance.",
+  "not_equivalent_to": [
+    "1963-003B",
+    "NORAD 528"
+  ],
+  "numerically_favoured_subtype": "statute_miles",
+  "original_STL_unit_subtype_certified": false,
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "physical_observation_count_in_corpus": null,
+  "printed_target": "1963 3A",
+  "printed_unit_verified": "miles",
+  "schema": "conde.stl-mile-subtype-dependency/v1",
+  "simulator_parameters": [
+    {
+      "activation": false,
+      "id": "PARAM:historical_printed_altitude_scale",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "PARAM:orbit_prior_527",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "PARAM:orbit_prior_528",
+      "value": null
+    }
+  ],
+  "source_class": "INFERENCE_ON_SINGLE_HISTORICAL_EDITORIAL_REPRODUCTION",
+  "sources": [
+    {
+      "occurrence_id": "C241-LONTRA-R53",
+      "path": "research/tle_custody/stl_unit_crosscheck_C241_LONTRA_R53.json",
+      "role": "numerical_crosscheck_not_new_sensor",
+      "sha256": "65c2db57f9ee7c573d07b360623b79656895c9a1513e8dfc3857daf18b643454"
+    },
+    {
+      "occurrence_id": "C241-LONTRA-R51",
+      "path": "public/data/conde-stl-space-log-dependency-bridge.json",
+      "role": "custody_not_independent_sensor",
+      "sha256": "38c62a9d5ac1f090489fc175c098332dcf7cf6ef25a3808c54d31ecd5d2a7571"
+    }
+  ],
+  "subtype_inferred_not_authenticated": true,
+  "subtype_value_for_orbit_simulation": null
+}
