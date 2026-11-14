@@ -1,0 +1,82 @@
+{
+  "schema": "conde.archival_locator_custody/v1",
+  "id": "C241-LONTRA-R48",
+  "audit_date_utc": "2026-11-14",
+  "status": "FACSIMILE_RETRIEVED_SECONDARY_PRINT_ROW_UNIDENTIFIED_OBJECT",
+  "work": {
+    "title": "Ежегодник Большой советской энциклопедии: 1964, выпуск восьмой",
+    "publication_year": 1964,
+    "publisher": "Советская энциклопедия",
+    "bibliographic_record": "https://books.google.com/books?id=oyoH0AEACAAJ",
+    "digitization_catalogue": "https://istmat.org/node/35454",
+    "section": "Наука и техника",
+    "section_pdf": "https://istmat.org/files/uploads/35454/14_nauka_i_tehnika.pdf",
+    "section_pdf_page_one_based": 7,
+    "printed_page": 503,
+    "table_title": "Американские искусственные спутники Земли, выведенные на орбиту в 1963 г.",
+    "source_type": "1964 contemporary printed retrospective; modern scan"
+  },
+  "document_custody": {
+    "pdf_retrieved": true,
+    "retrieval_transport": "HTTPS verified, curl -fL",
+    "pdf_bytes": 23846637,
+    "pdf_sha256": "d2372fe5b073c95366681bf550a0688ee47a6d2b6c4c612125e006a79fcdc613",
+    "pdf_page_count": 70,
+    "pdf_magic": "%PDF-",
+    "pdf_page_7_visually_inspected": true,
+    "pdf_downloaded_into_git": false,
+    "archival_print_source_physically_inspected": false,
+    "print_page_photo_direct_from_press": false
+  },
+  "printed_table_row": {
+    "row_number": 3,
+    "launch_date_printed": "16.01",
+    "launch_date_inferred_year_from_heading": 1963,
+    "satellite_designation_printed": "Секретный",
+    "rocket_printed": "Тор — Аджена D",
+    "perigee_km_printed": 459,
+    "apogee_km_printed": 533,
+    "period_minutes_printed": 94.66,
+    "inclination_degrees_printed": 81.89,
+    "weight_kg_printed": null,
+    "observation_epoch_printed": null,
+    "sensor_identifier_printed": null,
+    "norad_identifier_printed": null,
+    "cospar_identifier_printed": null,
+    "raan_degrees_printed": null
+  },
+  "source_genealogy": {
+    "print_footnote_periodicals": [
+      "Flight",
+      "Aviation Week",
+      "Missiles and Rockets",
+      "Interavia",
+      "Air Letter"
+    ],
+    "periodicals_are_untraced_possible_sources": true,
+    "direct_soviet_station_measurement_claimed": false,
+    "independent_tracking_source_proven": false,
+    "same_launch_day_is_unique_satellite_identification": false,
+    "possible_rocket_model_discrepancy_needs_crosscheck": true
+  },
+  "target": {
+    "norad": [527, 528, 529],
+    "designations": ["1963-003A", "1963-003B", "1963-003C"],
+    "historical_launch_day_from_existing_matrix": "1963-01-16",
+    "printed_row_explicitly_ids_any_target": false,
+    "measured_NORAD_527_528_529_in_retrieved_document": false,
+    "independent_measurements_retrieved": 0,
+    "new_orbital_constraints_activated": 0,
+    "matches_november_7_9_1963_window": false,
+    "relation": "DATE_MATCH_ONLY_UNRESOLVED_GENEALOGY"
+  },
+  "limitations": [
+    "A 1964 Soviet printed table is independent editorial evidence, not proof of an independent Soviet sensor.",
+    "The row lacks NORAD/COSPAR, sensor, observation UTC, measurement uncertainty and RAAN.",
+    "Numeric initial orbital elements are printed without identification of the observation or data producer.",
+    "The page's literature footnote names Western periodicals; data may derive from Western reporting.",
+    "A launch vehicle D versus B mismatch should be investigated before relying on row-to-object mapping.",
+    "No numerical estimate should enter the physical reconstruction solely from this row."
+  ],
+  "external_archive_contact_sent": false
+}
