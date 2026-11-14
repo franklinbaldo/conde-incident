@@ -32,7 +32,7 @@ async function assertLanguageContrast(page, name, width) {
       (Math.min(foreground, background) + 0.05);
   });
   assert(sample >= 4.5,
-    \`WCAG AA contrast failed for \${name} at \${width}px: \${sample.toFixed(2)}:1\`);
+    `WCAG AA contrast failed for ${name} at ${width}px: ${sample.toFixed(2)}:1`);
 }
 
 const browser = await chromium.launch({ headless: true });
