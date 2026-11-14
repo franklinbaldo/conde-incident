@@ -1,0 +1,29 @@
+name: C241 Hungarian INTEROBS bibliography R64
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/hungarian_interobs_bibliography_C241_LONTRA_R64.json
+      - research/tle_custody/evidence_matrix_C241-LONTRA-R64_2026-11-14.md
+      - tools/audit_hungarian_interobs_r64.py
+      - tests/test_hungarian_interobs_r64.py
+      - .github/workflows/lontra-hungarian-interobs-r64.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact commit
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Audit references and negative mutations
+        run: |
+          set -euo pipefail
+          python3 -m tools.audit_hungarian_interobs_r64
+          python3 -m unittest discover -s tests -p 'test_hungarian_interobs_r64.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_hungarian_interobs_r64.py' -v
