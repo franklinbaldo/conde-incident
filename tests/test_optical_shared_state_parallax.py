@@ -8,6 +8,8 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
 from optical_shared_state_parallax import differential_retarded_parallax
 from iers_1963_optical_lighttime import constant_velocity_light_time
+# IERS CI executes this module: discover and run the separate G63 suite too.
+from test_optical_joint_receiver_noise import JointReceiverNoiseTests  # noqa: F401
 
 R = np.array([7000., 400., 300.])
 V = np.array([1.1, 7.2, .3])

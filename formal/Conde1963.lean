@@ -33,3 +33,4 @@ import Conde1963.CircularMCMC
 import Conde1963.HastingsKernel
 import Conde1963.OpticalRayVisibility
 import Conde1963.SharedStateParallax
+import Conde1963.CorrelatedReceiverNoise
