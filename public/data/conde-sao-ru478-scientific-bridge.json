@@ -1,0 +1,397 @@
+{
+  "activation": false,
+  "archive_routes": [
+    {
+      "activation": false,
+      "box": 1,
+      "finding": "The inventory lists Iran station 9008 weather files for 1963; no daily report was opened.",
+      "id": "RU478-WEATHER-1963",
+      "pdf_page_index_zero_based": 4,
+      "phrase": "Iran #9008, 1966, 1965, 1964, 1963",
+      "printed_page": 3,
+      "source_class": "ARCHIVAL_LOCATOR_ONLY",
+      "upstream_occurrence": "MOR-RU478-03"
+    },
+    {
+      "activation": false,
+      "box": 4,
+      "finding": "Agreement files include an Air Force/NORAD heading; no agreement contents or tracking data were opened.",
+      "id": "RU478-AF-NORAD",
+      "pdf_page_index_zero_based": 6,
+      "phrase": "Air Force - NORAD",
+      "printed_page": 5,
+      "source_class": "ARCHIVAL_LOCATOR_ONLY",
+      "upstream_occurrence": null
+    },
+    {
+      "activation": false,
+      "box": 59,
+      "finding": "A series covers 1963; neither the November 1963 issue nor an object observation was inspected.",
+      "id": "RU478-MONTHLY-REPORTS",
+      "pdf_page_index_zero_based": 25,
+      "phrase": "Baker-Nunn Observation Monthly Reports, 1961-1968",
+      "printed_page": 24,
+      "source_class": "ARCHIVAL_LOCATOR_ONLY",
+      "upstream_occurrence": "MOR-RU478-01"
+    },
+    {
+      "activation": false,
+      "box": 65,
+      "finding": "This is the archive label for tape 12546; its contents, completeness and coverage of NORAD 528 remain unverified.",
+      "id": "RU478-TAPE-12546",
+      "pdf_page_index_zero_based": 26,
+      "phrase": "12546 All Photo-Reduced Observations through 1974",
+      "printed_page": 25,
+      "source_class": "ARCHIVAL_LOCATOR_ONLY",
+      "upstream_occurrence": "MOR-RU478-02"
+    }
+  ],
+  "candidate_restriction": "IF_TARGET_ID_STATION_TIME_FRAME_ANGLE_SIGMA_AND_CLOCK_CALIBRATED_THEN_ANGULAR_RESIDUAL",
+  "conditional_forward_operator": "RADEC_from_orbit_station_epoch",
+  "dependency_graph": [
+    {
+      "from": "C241-L45",
+      "independent_observation": false,
+      "relation": "ORIGINAL_OFFICIAL_PDF_HOLDINGS_ONLY",
+      "to": "SAO:RU478:ORIGINAL_FINDING_AID"
+    },
+    {
+      "from": "SAO:RU478:ORIGINAL_FINDING_AID",
+      "independent_observation": false,
+      "relation": "RELATED_SAO_PROGRAM_NOT_PROVEN_SHARED_TARGET_DATA",
+      "to": "C241-L44"
+    },
+    {
+      "from": "SAO:RU478:ORIGINAL_FINDING_AID",
+      "independent_observation": false,
+      "relation": "PRINTED_PAGE_BOX_LOCATOR",
+      "to": "RU478-WEATHER-1963"
+    },
+    {
+      "from": "RU478-WEATHER-1963",
+      "independent_observation": false,
+      "relation": "PREVIOUSLY_CATALOGUED_ARCHIVE_ROUTE_NOT_NEW_SENSOR",
+      "to": "MOR-RU478-03"
+    },
+    {
+      "from": "SAO:RU478:ORIGINAL_FINDING_AID",
+      "independent_observation": false,
+      "relation": "PRINTED_PAGE_BOX_LOCATOR",
+      "to": "RU478-AF-NORAD"
+    },
+    {
+      "from": "SAO:RU478:ORIGINAL_FINDING_AID",
+      "independent_observation": false,
+      "relation": "PRINTED_PAGE_BOX_LOCATOR",
+      "to": "RU478-MONTHLY-REPORTS"
+    },
+    {
+      "from": "RU478-MONTHLY-REPORTS",
+      "independent_observation": false,
+      "relation": "PREVIOUSLY_CATALOGUED_ARCHIVE_ROUTE_NOT_NEW_SENSOR",
+      "to": "MOR-RU478-01"
+    },
+    {
+      "from": "SAO:RU478:ORIGINAL_FINDING_AID",
+      "independent_observation": false,
+      "relation": "PRINTED_PAGE_BOX_LOCATOR",
+      "to": "RU478-TAPE-12546"
+    },
+    {
+      "from": "RU478-TAPE-12546",
+      "independent_observation": false,
+      "relation": "PREVIOUSLY_CATALOGUED_ARCHIVE_ROUTE_NOT_NEW_SENSOR",
+      "to": "MOR-RU478-02"
+    },
+    {
+      "from": "RU478-TAPE-12546",
+      "independent_observation": false,
+      "relation": "SEARCH_CANDIDATE_NOT_PRINTED_TARGET_IDENTIFICATION",
+      "to": "SAO-RU478:TRACK_SEARCH:527"
+    },
+    {
+      "from": "RU478-TAPE-12546",
+      "independent_observation": false,
+      "relation": "SEARCH_CANDIDATE_NOT_PRINTED_TARGET_IDENTIFICATION",
+      "to": "SAO-RU478:TRACK_SEARCH:528"
+    },
+    {
+      "from": "RU478-TAPE-12546",
+      "independent_observation": false,
+      "relation": "SEARCH_CANDIDATE_NOT_PRINTED_TARGET_IDENTIFICATION",
+      "to": "SAO-RU478:TRACK_SEARCH:529"
+    }
+  ],
+  "global_nonobservation_proved": false,
+  "id": "ABELHA-C241-L45-RU478-01",
+  "independent_instrumental_observations_added": 0,
+  "inputs": [
+    {
+      "path": "research/tle_custody/sao_ru478_finding_aid_C241-L45.json",
+      "sha256": "f51192f1e1776c0c4d35ea4c4bc5ee33182a44823a53fa024139c378423d5812"
+    },
+    {
+      "path": "research/constraints/morcego_sao_ru478_1963_crosswalk.json",
+      "sha256": "c67e9019f179683b7304f52a2de6a41fef0e2df8792ac1977bb2aa3b703a4201"
+    },
+    {
+      "path": "public/data/conde-sao-p17-scope-bridge.json",
+      "sha256": "4f8d9621693c91c09383058e040a6a3f73282e45c9a471db49f3582fa973ca25"
+    }
+  ],
+  "lean_candidate": "Conde1963.saoRU478FindingAidRoutes",
+  "lean_status": "DOCUMENTARY_PREDICATE_CANDIDATE_NOT_COMPILED_PHYSICAL_THEOREM",
+  "negative_scope": "NO_TARGET_527_528_529_IDENTIFIED_IN_FOUR_INVENTORY_ANCHORS",
+  "next_test": "Acquire box59 November 1963 observation report, box65 tape12546 contents and box51-52 station/clock cards; verify target, date, station, angular error and WWV correction.",
+  "not_covered_by_new_pdf_locators": [
+    "MOR-RU478-04"
+  ],
+  "object_search_candidates": [
+    {
+      "activation": false,
+      "angle_sigma_radians": null,
+      "clock_correction_seconds": null,
+      "epoch_utc": null,
+      "intldes": "1963-003A",
+      "norad_id": 527,
+      "ra_dec_radians": null,
+      "reference_frame": null,
+      "station": null,
+      "target_observation_id": null
+    },
+    {
+      "activation": false,
+      "angle_sigma_radians": null,
+      "clock_correction_seconds": null,
+      "epoch_utc": null,
+      "intldes": "1963-003B",
+      "norad_id": 528,
+      "ra_dec_radians": null,
+      "reference_frame": null,
+      "station": null,
+      "target_observation_id": null
+    },
+    {
+      "activation": false,
+      "angle_sigma_radians": null,
+      "clock_correction_seconds": null,
+      "epoch_utc": null,
+      "intldes": "1963-003C",
+      "norad_id": 529,
+      "ra_dec_radians": null,
+      "reference_frame": null,
+      "station": null,
+      "target_observation_id": null
+    }
+  ],
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "schema": "conde.sao-ru478-scientific-bridge/v1",
+  "simulator_latent_parameters": [
+    {
+      "id": "sc8_site_1963",
+      "kind": "categorical",
+      "metadata_only": true,
+      "physical_activation": false,
+      "source_occurrence": "MOR-SR353-05",
+      "uncertainty": "SITE_METADATA_NOT_INSTRUMENT_OBSERVATION",
+      "value": "Shiraz, Iran"
+    },
+    {
+      "id": "sc8_station_code_1963",
+      "kind": "code",
+      "metadata_only": true,
+      "physical_activation": false,
+      "source_occurrence": "MOR-SR353-05",
+      "uncertainty": "SITE_METADATA_NOT_INSTRUMENT_OBSERVATION",
+      "value": "9008"
+    },
+    {
+      "id": "sc9_site_1963",
+      "kind": "categorical",
+      "metadata_only": true,
+      "physical_activation": false,
+      "source_occurrence": "MOR-SR353-05",
+      "uncertainty": "SITE_METADATA_NOT_INSTRUMENT_OBSERVATION",
+      "value": "Curaçao, Netherlands Antilles"
+    },
+    {
+      "id": "sc9_station_code_1963",
+      "kind": "code",
+      "metadata_only": true,
+      "physical_activation": false,
+      "source_occurrence": "MOR-SR353-05",
+      "uncertainty": "SITE_METADATA_NOT_INSTRUMENT_OBSERVATION",
+      "value": "9009"
+    },
+    {
+      "id": "ru478_nov63_monthly_report",
+      "kind": "document_identity",
+      "metadata_only": false,
+      "physical_activation": false,
+      "source_occurrence": "MOR-RU478-01",
+      "uncertainty": "UNKNOWN_NOT_ZERO",
+      "value": null
+    },
+    {
+      "id": "tape12546_object528_present",
+      "kind": "tri_state",
+      "metadata_only": false,
+      "physical_activation": false,
+      "source_occurrence": "MOR-RU478-02",
+      "uncertainty": "UNKNOWN_NOT_ZERO",
+      "value": null
+    },
+    {
+      "id": "sc8_1963_station_coordinates",
+      "kind": "geodetic_coordinates",
+      "metadata_only": false,
+      "physical_activation": false,
+      "source_occurrence": "MOR-RU478-04",
+      "uncertainty": "UNKNOWN_NOT_ZERO",
+      "value": null
+    },
+    {
+      "id": "sc8_1963_exposure_utc",
+      "kind": "instant",
+      "metadata_only": false,
+      "physical_activation": false,
+      "source_occurrence": "MOR-RU478-04",
+      "uncertainty": "UNKNOWN_NOT_ZERO",
+      "value": null
+    },
+    {
+      "id": "sc8_1963_angle",
+      "kind": "radians",
+      "metadata_only": false,
+      "physical_activation": false,
+      "source_occurrence": "MOR-RU478-02",
+      "uncertainty": "UNKNOWN_NOT_ZERO",
+      "value": null
+    },
+    {
+      "id": "sc8_1963_angle_error",
+      "kind": "radians",
+      "metadata_only": false,
+      "physical_activation": false,
+      "source_occurrence": "MOR-RU478-02",
+      "uncertainty": "UNKNOWN_NOT_ZERO",
+      "value": null
+    },
+    {
+      "id": "sc8_1963_clock_correction",
+      "kind": "seconds",
+      "metadata_only": false,
+      "physical_activation": false,
+      "source_occurrence": "MOR-SR353-06",
+      "uncertainty": "UNKNOWN_NOT_ZERO",
+      "value": null
+    },
+    {
+      "id": "sc8_1963_weather",
+      "kind": "weather_station_observation",
+      "metadata_only": false,
+      "physical_activation": false,
+      "source_occurrence": "MOR-RU478-03",
+      "uncertainty": "UNKNOWN_NOT_ZERO",
+      "value": null
+    }
+  ],
+  "source": {
+    "hash_scope": "COMPLETE_FINDING_AID_PDF_NOT_INSTRUMENTAL_LOG",
+    "independence_family": "SMITHSONIAN_SAO_PROGRAM",
+    "original_pdf_bytes": 118909,
+    "original_pdf_sha256": "e4f2b29b9882cdfac1812b41251b087354e311822d7302e4655a89bc4a06c07e",
+    "pdf_pages": 30,
+    "source_class": "OFFICIAL_FINDING_AID_NOT_INSTRUMENTAL_LOG",
+    "url": "https://sirismm.si.edu/EADpdfs/SIA.FARU0478.pdf"
+  },
+  "source_occurrence": "C241-L45",
+  "upstream_hypotheses": [
+    {
+      "id": "H_OPTICAL_528_OBSERVED",
+      "status": "OPEN",
+      "test": "Find time-stamped photo-reduced record explicitly marked NORAD 528"
+    },
+    {
+      "id": "H_RU301_8NOV_ABSENCE_EXCLUDES_528",
+      "status": "NOT_SUPPORTABLE_FROM_SAMPLE",
+      "test": "RU301 curated sample versus full box59/tape inventory"
+    },
+    {
+      "id": "H_SC8_IS_CARIBBEAN",
+      "status": "REFUTED_SC8_IS_SHIRAZ_SC9_IS_CURACAO",
+      "test": "Compare first-party SAO SR353 station history"
+    }
+  ],
+  "upstream_variable_dependencies": [
+    {
+      "hard_physical_constraint": false,
+      "id": "RU301_SC8_FILMS_LINKED_TO_SHIRAZ",
+      "metadata_active": true,
+      "status": "ACTIVE_METADATA_ONLY",
+      "upstream": "research/constraints/baker_nunn_ru301_1963_film_index.json",
+      "variables": [
+        "sc8_site_1963",
+        "sc8_station_code_1963"
+      ]
+    },
+    {
+      "hard_physical_constraint": false,
+      "id": "RU478_MONTHLY_REPORT_MAY_SUPPLY_EPOCH",
+      "metadata_active": false,
+      "status": "CONNECTED_PENDING_EVIDENCE",
+      "upstream": null,
+      "variables": [
+        "ru478_nov63_monthly_report",
+        "sc8_1963_exposure_utc"
+      ]
+    },
+    {
+      "hard_physical_constraint": false,
+      "id": "RU478_TAPE_MAY_SUPPLY_OBJECT_AND_ANGLE",
+      "metadata_active": false,
+      "status": "CONNECTED_PENDING_EVIDENCE",
+      "upstream": null,
+      "variables": [
+        "tape12546_object528_present",
+        "sc8_1963_angle"
+      ]
+    },
+    {
+      "hard_physical_constraint": false,
+      "id": "RU478_WEATHER_INFORMS_SELECTION_NOT_DETECTION",
+      "metadata_active": false,
+      "status": "CONNECTED_PENDING_EVIDENCE",
+      "upstream": null,
+      "variables": [
+        "sc8_1963_weather",
+        "sc8_1963_exposure_utc"
+      ]
+    },
+    {
+      "hard_physical_constraint": false,
+      "id": "RU478_CLOCK_CORRECTION_FOR_1963",
+      "metadata_active": false,
+      "status": "CONNECTED_PENDING_EVIDENCE",
+      "upstream": null,
+      "variables": [
+        "sc8_1963_clock_correction",
+        "sc8_1963_exposure_utc"
+      ]
+    },
+    {
+      "hard_physical_constraint": false,
+      "id": "FUTURE_TOPCENTRIC_ANGULAR_RESIDUAL",
+      "metadata_active": false,
+      "status": "CONNECTED_PENDING_EVIDENCE",
+      "upstream": null,
+      "variables": [
+        "sc8_1963_station_coordinates",
+        "sc8_1963_exposure_utc",
+        "sc8_1963_angle",
+        "sc8_1963_angle_error",
+        "tape12546_object528_present"
+      ]
+    }
+  ]
+}
