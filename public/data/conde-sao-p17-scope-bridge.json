@@ -1,0 +1,347 @@
+{
+  "activation": false,
+  "candidate_restriction_status": "CONNECTED_ONLY_TO_PUBLICATION_SELECTION",
+  "dependency_graph": [
+    {
+      "from": "C241-L44",
+      "independent_sensor": false,
+      "relation": "ORIGINAL_PUBLISHED_SELECTED_CATALOGUE",
+      "to": "NASA:NTRS:19680020675:SAO-P17"
+    },
+    {
+      "from": "C241-L43",
+      "independent_sensor": false,
+      "relation": "RELATED_SAO_FINDING_AID_NOT_PROVEN_SAME_DATA",
+      "to": "NASA:NTRS:19680020675:SAO-P17"
+    },
+    {
+      "from": "SIA.FARU0171:refIDd1e2142",
+      "independent_sensor": false,
+      "relation": "ORIGINAL_REPORT_SEARCH_ROUTE_NOT_DOCUMENT_IDENTITY",
+      "to": "NASA:NTRS:19680020675:SAO-P17"
+    },
+    {
+      "from": "SIA.FARU0171:refIDd1e2360",
+      "independent_sensor": false,
+      "relation": "CLOCK_CALIBRATION_SEARCH_ROUTE_NOT_TARGET_TIME",
+      "to": "NASA:NTRS:19680020675:SAO-P17"
+    },
+    {
+      "from": "NASA:NTRS:19680020675:SAO-P17",
+      "independent_sensor": false,
+      "relation": "EXPLICITLY_LISTED_IN_SELECTED_PUBLICATION",
+      "to": "SAO-P17:PRINTED:1959_Alpha_1"
+    },
+    {
+      "from": "NASA:NTRS:19680020675:SAO-P17",
+      "independent_sensor": false,
+      "relation": "EXPLICITLY_LISTED_IN_SELECTED_PUBLICATION",
+      "to": "SAO-P17:PRINTED:1959_Eta_1"
+    },
+    {
+      "from": "NASA:NTRS:19680020675:SAO-P17",
+      "independent_sensor": false,
+      "relation": "EXPLICITLY_LISTED_IN_SELECTED_PUBLICATION",
+      "to": "SAO-P17:PRINTED:1960_Iota_2"
+    },
+    {
+      "from": "NASA:NTRS:19680020675:SAO-P17",
+      "independent_sensor": false,
+      "relation": "EXPLICITLY_LISTED_IN_SELECTED_PUBLICATION",
+      "to": "SAO-P17:PRINTED:1961_Omicron_1"
+    },
+    {
+      "from": "NASA:NTRS:19680020675:SAO-P17",
+      "independent_sensor": false,
+      "relation": "EXPLICITLY_LISTED_IN_SELECTED_PUBLICATION",
+      "to": "SAO-P17:PRINTED:1961_Omicron_2"
+    },
+    {
+      "from": "NASA:NTRS:19680020675:SAO-P17",
+      "independent_sensor": false,
+      "relation": "EXPLICITLY_LISTED_IN_SELECTED_PUBLICATION",
+      "to": "SAO-P17:PRINTED:1961_Alpha_Delta_1"
+    },
+    {
+      "from": "NASA:NTRS:19680020675:SAO-P17",
+      "independent_sensor": false,
+      "relation": "EXPLICITLY_LISTED_IN_SELECTED_PUBLICATION",
+      "to": "SAO-P17:PRINTED:1962_Alpha_Epsilon_1"
+    },
+    {
+      "from": "NASA:NTRS:19680020675:SAO-P17",
+      "independent_sensor": false,
+      "relation": "EXPLICITLY_LISTED_IN_SELECTED_PUBLICATION",
+      "to": "SAO-P17:PRINTED:1962_Beta_Mu_1"
+    },
+    {
+      "from": "NASA:NTRS:19680020675:SAO-P17",
+      "independent_sensor": false,
+      "relation": "EXPLICITLY_LISTED_IN_SELECTED_PUBLICATION",
+      "to": "SAO-P17:PRINTED:1962_Beta_Upsilon_1"
+    },
+    {
+      "from": "NASA:NTRS:19680020675:SAO-P17",
+      "independent_sensor": false,
+      "relation": "EXPLICITLY_LISTED_IN_SELECTED_PUBLICATION",
+      "to": "SAO-P17:PRINTED:1963_13A"
+    },
+    {
+      "from": "NASA:NTRS:19680020675:SAO-P17",
+      "independent_sensor": false,
+      "relation": "EXPLICITLY_LISTED_IN_SELECTED_PUBLICATION",
+      "to": "SAO-P17:PRINTED:1963_26A"
+    },
+    {
+      "from": "NASA:NTRS:19680020675:SAO-P17",
+      "independent_sensor": false,
+      "relation": "NOT_LISTED_IN_THIS_SELECTED_CATALOGUE_ONLY",
+      "to": "SAO-P17:NOT_LISTED:1963-003A"
+    },
+    {
+      "from": "SAO-P17:NOT_LISTED:1963-003A",
+      "independent_sensor": false,
+      "relation": "CATALOGUE_SELECTION_CONDITIONS_SEARCH_NOT_ORBIT",
+      "to": "sao_p17_scope_target_527"
+    },
+    {
+      "from": "NASA:NTRS:19680020675:SAO-P17",
+      "independent_sensor": false,
+      "relation": "NOT_LISTED_IN_THIS_SELECTED_CATALOGUE_ONLY",
+      "to": "SAO-P17:NOT_LISTED:1963-003B"
+    },
+    {
+      "from": "SAO-P17:NOT_LISTED:1963-003B",
+      "independent_sensor": false,
+      "relation": "CATALOGUE_SELECTION_CONDITIONS_SEARCH_NOT_ORBIT",
+      "to": "sao_p17_scope_target_528"
+    },
+    {
+      "from": "NASA:NTRS:19680020675:SAO-P17",
+      "independent_sensor": false,
+      "relation": "NOT_LISTED_IN_THIS_SELECTED_CATALOGUE_ONLY",
+      "to": "SAO-P17:NOT_LISTED:1963-003C"
+    },
+    {
+      "from": "SAO-P17:NOT_LISTED:1963-003C",
+      "independent_sensor": false,
+      "relation": "CATALOGUE_SELECTION_CONDITIONS_SEARCH_NOT_ORBIT",
+      "to": "sao_p17_scope_target_529"
+    }
+  ],
+  "hypotheses": [
+    "H_P17_PUBLICATION_SELECTION_DOES_NOT_EXHAUST_SAO_FILMS",
+    "H_ORIGINAL_SAO_REPORT_MAY_IDENTIFY_527_528_529"
+  ],
+  "id": "ABELHA-C241-L44-SAO-P17-01",
+  "independent_instrumental_observations_added": 0,
+  "inputs": [
+    {
+      "path": "research/tle_custody/sao_p17_oct_dec_1963_scope_C241-L44.json",
+      "sha256": "3e0e3530f31a506d9af7acc52180bca97c8406bf904a93d12e3370b8c073273c"
+    },
+    {
+      "path": "public/data/conde-sao-1963-archive-bridge.json",
+      "sha256": "197a69824bf07ed183b4d5adf2ab2966d9217ebf4113be4b4280711fbfeb28d6"
+    }
+  ],
+  "lean_candidate": "Conde1963.saoP17SelectedCatalogueScope",
+  "lean_status": "DOCUMENTARY_PREDICATE_CANDIDATE_NOT_COMPILED_PHYSICAL_THEOREM",
+  "methodology_applies_only_to_listed_observations": {
+    "clock_uncertainty_context_ms_range": [
+      0.5,
+      20
+    ],
+    "fields": [
+      "date",
+      "smoothed_preliminary_A1_time",
+      "time_rms_milliseconds",
+      "topocentric_ra_fk4_1950",
+      "topocentric_dec_fk4_1950",
+      "position_rms_arcseconds",
+      "station_id",
+      "film_frame",
+      "observation_id"
+    ],
+    "position_rms_context_arcsec": 4,
+    "star_frame": "FK4 equator and equinox 1950.0; not TEME or modern ITRF",
+    "time_standard": "Smoothed preliminary A.1, conversion from WWV emitted in source; NOT automatically UTC",
+    "transfer_precision_to_527_528_529": false
+  },
+  "negative_finding_scope": "527_528_529_NOT_IN_THIS_SELECTED_P17_PRINTED_CATALOGUE",
+  "next_falsifier": "Inspect original SAO optical log and timing-calibration file; establish designation, UTC conversion, station, FK4 frame, uncertainties and observation lineage",
+  "not_supported": [
+    "NO_SAO_OBSERVATION_EVER_EXISTED",
+    "NO_NORAD_OBSERVATION_EXISTED",
+    "REENTRY_TIME_OR_LOCATION"
+  ],
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "printed_catalogue_rows": [
+    {
+      "designation": "1959 Alpha 1",
+      "id": "SAO-P17:PRINTED:1959_Alpha_1",
+      "is_researched_target": false,
+      "printed_count": 425
+    },
+    {
+      "designation": "1959 Eta 1",
+      "id": "SAO-P17:PRINTED:1959_Eta_1",
+      "is_researched_target": false,
+      "printed_count": 562
+    },
+    {
+      "designation": "1960 Iota 2",
+      "id": "SAO-P17:PRINTED:1960_Iota_2",
+      "is_researched_target": false,
+      "printed_count": 937
+    },
+    {
+      "designation": "1961 Omicron 1",
+      "id": "SAO-P17:PRINTED:1961_Omicron_1",
+      "is_researched_target": false,
+      "printed_count": 181
+    },
+    {
+      "designation": "1961 Omicron 2",
+      "id": "SAO-P17:PRINTED:1961_Omicron_2",
+      "is_researched_target": false,
+      "printed_count": 133
+    },
+    {
+      "designation": "1961 Alpha Delta 1",
+      "id": "SAO-P17:PRINTED:1961_Alpha_Delta_1",
+      "is_researched_target": false,
+      "printed_count": 2246
+    },
+    {
+      "designation": "1962 Alpha Epsilon 1",
+      "id": "SAO-P17:PRINTED:1962_Alpha_Epsilon_1",
+      "is_researched_target": false,
+      "printed_count": 524
+    },
+    {
+      "designation": "1962 Beta Mu 1",
+      "id": "SAO-P17:PRINTED:1962_Beta_Mu_1",
+      "is_researched_target": false,
+      "printed_count": 1041
+    },
+    {
+      "designation": "1962 Beta Upsilon 1",
+      "id": "SAO-P17:PRINTED:1962_Beta_Upsilon_1",
+      "is_researched_target": false,
+      "printed_count": 158
+    },
+    {
+      "designation": "1963 13A",
+      "id": "SAO-P17:PRINTED:1963_13A",
+      "is_researched_target": false,
+      "printed_count": 612
+    },
+    {
+      "designation": "1963 26A",
+      "id": "SAO-P17:PRINTED:1963_26A",
+      "is_researched_target": false,
+      "printed_count": 364
+    }
+  ],
+  "schema": "conde.sao-p17-selected-catalogue-bridge/v1",
+  "simulator_latent_parameters": [
+    {
+      "activation": false,
+      "candidate_node": "sao_p17_scope_target_527",
+      "conditional_forward_operator": "RADEC_from_state_at_station_and_epoch",
+      "constraint": "IF_ORIGINAL_TRACK_TARGET_FRAME_EPOCH_CALIBRATION_THEN_RADEC_RESIDUAL",
+      "global_sao_nonobservation_proved": false,
+      "international_designator": "1963-003A",
+      "object_id": 527,
+      "observables": {
+        "angular_covariance_rad2": null,
+        "angular_position_rad": null,
+        "clock_error_seconds": null,
+        "observation_epoch_utc": null,
+        "observatory_station": null,
+        "reference_frame": null,
+        "source_observation_id": null,
+        "time_standard_conversion": null
+      },
+      "published_catalogue_includes_target": false,
+      "requires": [
+        "original_1963_target_identification",
+        "film_or_log_measurement_and_station",
+        "A1_to_UTC_calibration_and_time_sigma",
+        "FK4_1950_to_model_frame_transform",
+        "angular_error_and_independence_lineage"
+      ]
+    },
+    {
+      "activation": false,
+      "candidate_node": "sao_p17_scope_target_528",
+      "conditional_forward_operator": "RADEC_from_state_at_station_and_epoch",
+      "constraint": "IF_ORIGINAL_TRACK_TARGET_FRAME_EPOCH_CALIBRATION_THEN_RADEC_RESIDUAL",
+      "global_sao_nonobservation_proved": false,
+      "international_designator": "1963-003B",
+      "object_id": 528,
+      "observables": {
+        "angular_covariance_rad2": null,
+        "angular_position_rad": null,
+        "clock_error_seconds": null,
+        "observation_epoch_utc": null,
+        "observatory_station": null,
+        "reference_frame": null,
+        "source_observation_id": null,
+        "time_standard_conversion": null
+      },
+      "published_catalogue_includes_target": false,
+      "requires": [
+        "original_1963_target_identification",
+        "film_or_log_measurement_and_station",
+        "A1_to_UTC_calibration_and_time_sigma",
+        "FK4_1950_to_model_frame_transform",
+        "angular_error_and_independence_lineage"
+      ]
+    },
+    {
+      "activation": false,
+      "candidate_node": "sao_p17_scope_target_529",
+      "conditional_forward_operator": "RADEC_from_state_at_station_and_epoch",
+      "constraint": "IF_ORIGINAL_TRACK_TARGET_FRAME_EPOCH_CALIBRATION_THEN_RADEC_RESIDUAL",
+      "global_sao_nonobservation_proved": false,
+      "international_designator": "1963-003C",
+      "object_id": 529,
+      "observables": {
+        "angular_covariance_rad2": null,
+        "angular_position_rad": null,
+        "clock_error_seconds": null,
+        "observation_epoch_utc": null,
+        "observatory_station": null,
+        "reference_frame": null,
+        "source_observation_id": null,
+        "time_standard_conversion": null
+      },
+      "published_catalogue_includes_target": false,
+      "requires": [
+        "original_1963_target_identification",
+        "film_or_log_measurement_and_station",
+        "A1_to_UTC_calibration_and_time_sigma",
+        "FK4_1950_to_model_frame_transform",
+        "angular_error_and_independence_lineage"
+      ]
+    }
+  ],
+  "source": {
+    "bibliography_url": "https://ntrs.nasa.gov/citations/19680020675",
+    "hash_scope": "COMPLETE_ORIGINAL_PDF_NOT_MEASUREMENT_FOR_528",
+    "ntrs_id": "19680020675",
+    "observations_interval": [
+      "1963-10-01",
+      "1963-12-31"
+    ],
+    "pdf_bytes": 10988993,
+    "pdf_pages": 176,
+    "pdf_sha256": "6b77e832e4273f7781cb61bfea7d38685c99d63e2f6b370a76d0b28a225ddf86",
+    "published": "1968-05-14",
+    "url": "https://ntrs.nasa.gov/api/citations/19680020675/downloads/19680020675.pdf"
+  },
+  "source_occurrence": "C241-L44",
+  "source_type": "ORIGINAL_PUBLISHED_1968_SELECTED_CATALOGUE_OF_1963_OBSERVATIONS"
+}

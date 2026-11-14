@@ -1,0 +1,82 @@
+name: C241 joint orbital and temporal likelihood on same 1.5m draws
+on:
+  pull_request:
+    paths:
+      - tools/c241_joint_orbit_day_heatmap.py
+      - tools/export_c241_joint_heatmap.py
+      - tests/test_c241_joint_orbit_day_heatmap.py
+      - research/statistics/c241_joint_orbit_day_1p5m_summary.json
+      - research/statistics/C241_joint_orbit_day_heatmap_2026-11-13.md
+      - public/data/conde-joint-orbit-day-heatmap.json
+      - .github/workflows/c241-joint-orbit-day.yml
+  push:
+    branches: [main]
+    paths:
+      - tools/c241_joint_orbit_day_heatmap.py
+      - tools/export_c241_joint_heatmap.py
+      - tests/test_c241_joint_orbit_day_heatmap.py
+      - research/statistics/c241_joint_orbit_day_1p5m_summary.json
+      - research/statistics/C241_joint_orbit_day_heatmap_2026-11-13.md
+      - public/data/conde-joint-orbit-day-heatmap.json
+      - .github/workflows/c241-joint-orbit-day.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact source SHA
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install numerical stack with declared pins
+        run: python3 -m pip install --disable-pip-version-check numpy==2.2.6 scipy==1.15.3
+      - name: Run adversarial unit tests before benchmark
+        run: python3 -m unittest discover -s tests -p test_c241_joint_orbit_day_heatmap.py -v
+      - name: Re-run one and a half million coupled orbital and NASA-day candidates
+        run: |
+          python3 tools/c241_joint_orbit_day_heatmap.py --draws 1500000 --seed 19631108 --batch 50000 \
+            --out-dir "$RUNNER_TEMP/c241_joint" --save-draws
+      - name: Compare source-locked numerical benchmark and static cell parity
+        run: |
+          python3 - "$RUNNER_TEMP/c241_joint/summary.json" \
+            research/statistics/c241_joint_orbit_day_1p5m_summary.json <<'PY'
+          import json,sys,math
+          actual,ref=(json.load(open(p)) for p in sys.argv[1:])
+          assert actual['sample']['n']==ref['sample']['n']==1500000
+          assert actual['sample']['seed']==ref['sample']['seed']==19631108
+          assert actual['sources']==ref['sources']
+          assert actual['assumptions']==ref['assumptions']
+          assert actual['historical_Conde_impact_posterior'] is None
+          for key,expected in ref['results'].items():
+              observed=actual['results'][key]
+              for field in ('probability_within_2000km','effective_sample_size'):
+                  assert math.isclose(observed[field],expected[field],rel_tol=1e-10,abs_tol=1e-8), (key,field)
+          PY
+          python3 tools/export_c241_joint_heatmap.py \
+            --summary "$RUNNER_TEMP/c241_joint/summary.json" \
+            --cells "$RUNNER_TEMP/c241_joint/cells_200km.csv" \
+            --output public/data/conde-joint-orbit-day-heatmap.json --check
+          python3 - "$RUNNER_TEMP/c241_joint/individual_candidates.npy" <<'PY'
+          import numpy as np,sys
+          p=np.load(sys.argv[1],mmap_mode='r')
+          assert len(p)==1500000
+          assert np.isfinite(p['unix_utc_seconds']).all()
+          assert (p['scenario_id']>=0).all() and (p['scenario_id']<12).all()
+          print('All individual candidates retained with time, phase scenario and location')
+          PY
+      - name: Preserve the actual per-candidate sample and spatial map
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: c241-joint-1p5m-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ${{ runner.temp }}/c241_joint/
+          if-no-files-found: warn
+          retention-days: 30

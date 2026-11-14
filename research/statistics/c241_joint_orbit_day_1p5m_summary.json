@@ -1,0 +1,263 @@
+{
+  "assumptions": {
+    "GMST": "UTC_APPROX_UT1_NO_HISTORICAL_EOP",
+    "cell_km": 200,
+    "day_label_likelihood": "normal CDF integrated over whole Nov 8 UTC",
+    "fragment_ablation_or_survival_modeled": false,
+    "impact_location_modeled": false,
+    "joint_weight": "PER_DRAW orbital_likelihood*temporal_likelihood",
+    "map": "spherical azimuthal equidistant on Conde BA, radius 2000km",
+    "ndot_rev_day2": [
+      0.0,
+      0.01373126,
+      0.04
+    ],
+    "not_SGP4_or_reentry_dynamics": true,
+    "orbital": "approximate first order J2/Kepler mean element phase",
+    "orbital_prior_authenticated": false,
+    "orbital_priors": {
+      "broad": [
+        180.0,
+        0.05,
+        0.0
+      ],
+      "middle": [
+        90.0,
+        0.02,
+        0.0
+      ],
+      "middle_rho_neg": [
+        90.0,
+        0.02,
+        -0.5
+      ],
+      "middle_rho_pos": [
+        90.0,
+        0.02,
+        0.5
+      ],
+      "tight": [
+        25.0,
+        0.006,
+        0.0
+      ]
+    },
+    "phase_offsets_deg": [
+      0.0,
+      90.0,
+      180.0,
+      270.0
+    ],
+    "reference_coordinate": [
+      -11.8139,
+      -37.6108
+    ],
+    "scenario_priors": "UNIFORM_OVER_12_CHOICES",
+    "sensor_sigma_historically_calibrated": false,
+    "time_prior": "UNIFORM_1963-11-05_00Z_to_1963-11-12_00Z",
+    "time_sigma_hours": [
+      6,
+      12,
+      24
+    ]
+  },
+  "denominator": "ALL GLOBAL SUBPOINTS, not just points inside Conde circle",
+  "historical_Conde_impact_posterior": null,
+  "historical_reentry_probability": null,
+  "id": "C241-JOINT-ORBIT-DAY-20261113",
+  "output_files": [
+    "summary.json",
+    "cells_200km.csv",
+    "east_west_bands.csv",
+    "north_south_bands.csv",
+    "individual_candidates.npy"
+  ],
+  "representative_heatmap": "joint_middle_12h",
+  "results": {
+    "baseline": {
+      "effective_sample_size": 1500000.0,
+      "global_weight_sum": 1500000.0,
+      "percent_within_2000km": 1.6739333333333333,
+      "probability_within_2000km": 0.016739333333333332,
+      "region_weight_sum": 25109.0
+    },
+    "joint_broad_12h": {
+      "effective_sample_size": 426826.46233772434,
+      "global_weight_sum": 170540.35239113044,
+      "percent_within_2000km": 1.6540011190266977,
+      "probability_within_2000km": 0.016540011190266976,
+      "region_weight_sum": 2820.7393369413708
+    },
+    "joint_broad_24h": {
+      "effective_sample_size": 765119.224016066,
+      "global_weight_sum": 170543.4393067596,
+      "percent_within_2000km": 1.6448673204478157,
+      "probability_within_2000km": 0.016448673204478157,
+      "region_weight_sum": 2805.2133003246436
+    },
+    "joint_broad_6h": {
+      "effective_sample_size": 288587.3573167459,
+      "global_weight_sum": 170415.92659010575,
+      "percent_within_2000km": 1.6630040529752173,
+      "probability_within_2000km": 0.016630040529752175,
+      "region_weight_sum": 2834.02376610873
+    },
+    "joint_middle_12h": {
+      "effective_sample_size": 313732.1392343757,
+      "global_weight_sum": 92781.8781566096,
+      "percent_within_2000km": 1.6727532767819728,
+      "probability_within_2000km": 0.016727532767819728,
+      "region_weight_sum": 1552.0119071245447
+    },
+    "joint_middle_24h": {
+      "effective_sample_size": 562110.2593115895,
+      "global_weight_sum": 92753.7478706792,
+      "percent_within_2000km": 1.6527808879449495,
+      "probability_within_2000km": 0.016527808879449494,
+      "region_weight_sum": 1533.0162176592314
+    },
+    "joint_middle_6h": {
+      "effective_sample_size": 212178.13483471287,
+      "global_weight_sum": 92726.53691248063,
+      "percent_within_2000km": 1.6855577292039754,
+      "probability_within_2000km": 0.016855577292039754,
+      "region_weight_sum": 1562.9593099514946
+    },
+    "joint_middle_rho_neg_12h": {
+      "effective_sample_size": 280738.5043716419,
+      "global_weight_sum": 81802.3829932546,
+      "percent_within_2000km": 1.6667449525676992,
+      "probability_within_2000km": 0.01666744952567699,
+      "region_weight_sum": 1363.437089620169
+    },
+    "joint_middle_rho_neg_24h": {
+      "effective_sample_size": 502761.7480388811,
+      "global_weight_sum": 81774.21495748781,
+      "percent_within_2000km": 1.647589698290413,
+      "probability_within_2000km": 0.01647589698290413,
+      "region_weight_sum": 1347.3035414974272
+    },
+    "joint_middle_rho_neg_6h": {
+      "effective_sample_size": 189876.74387565945,
+      "global_weight_sum": 81741.45904435482,
+      "percent_within_2000km": 1.6725910748664632,
+      "probability_within_2000km": 0.01672591074866463,
+      "region_weight_sum": 1367.200348441504
+    },
+    "joint_middle_rho_pos_12h": {
+      "effective_sample_size": 278435.7240846198,
+      "global_weight_sum": 81439.40321761365,
+      "percent_within_2000km": 1.688601251308743,
+      "probability_within_2000km": 0.016886012513087433,
+      "region_weight_sum": 1375.186781790997
+    },
+    "joint_middle_rho_pos_24h": {
+      "effective_sample_size": 498850.1995645128,
+      "global_weight_sum": 81411.99502594261,
+      "percent_within_2000km": 1.6623107145494131,
+      "probability_within_2000km": 0.01662310714549413,
+      "region_weight_sum": 1353.3203162446791
+    },
+    "joint_middle_rho_pos_6h": {
+      "effective_sample_size": 188342.49350530165,
+      "global_weight_sum": 81396.17584865415,
+      "percent_within_2000km": 1.7115175163223497,
+      "probability_within_2000km": 0.017115175163223494,
+      "region_weight_sum": 1393.1098072662576
+    },
+    "joint_tight_12h": {
+      "effective_sample_size": 42380.091461947464,
+      "global_weight_sum": 19206.651843603686,
+      "percent_within_2000km": 1.7830448260273135,
+      "probability_within_2000km": 0.017830448260273135,
+      "region_weight_sum": 342.46321195045516
+    },
+    "joint_tight_24h": {
+      "effective_sample_size": 75848.95592916886,
+      "global_weight_sum": 19202.992353222053,
+      "percent_within_2000km": 1.7062735213253504,
+      "probability_within_2000km": 0.0170627352132535,
+      "region_weight_sum": 327.65557382515965
+    },
+    "joint_tight_6h": {
+      "effective_sample_size": 28625.80777307811,
+      "global_weight_sum": 19168.3831301237,
+      "percent_within_2000km": 1.8349783248917346,
+      "probability_within_2000km": 0.018349783248917347,
+      "region_weight_sum": 351.7356756699737
+    },
+    "orbital_broad": {
+      "effective_sample_size": 1452272.5910289597,
+      "global_weight_sum": 1194268.4383726823,
+      "percent_within_2000km": 1.6751017541708013,
+      "probability_within_2000km": 0.016751017541708012,
+      "region_weight_sum": 20005.211560689037
+    },
+    "orbital_middle": {
+      "effective_sample_size": 1067019.1352307736,
+      "global_weight_sum": 649182.6054732903,
+      "percent_within_2000km": 1.6789046334087645,
+      "probability_within_2000km": 0.016789046334087645,
+      "region_weight_sum": 10899.15684257481
+    },
+    "orbital_middle_rho_neg": {
+      "effective_sample_size": 954120.5866363064,
+      "global_weight_sum": 572204.1542899156,
+      "percent_within_2000km": 1.6739593035473868,
+      "probability_within_2000km": 0.016739593035473867,
+      "region_weight_sum": 9578.464676020685
+    },
+    "orbital_middle_rho_pos": {
+      "effective_sample_size": 946999.7241606003,
+      "global_weight_sum": 569822.3333207231,
+      "percent_within_2000km": 1.6858538247234376,
+      "probability_within_2000km": 0.016858538247234378,
+      "region_weight_sum": 9606.371600415747
+    },
+    "orbital_tight": {
+      "effective_sample_size": 143693.82572403282,
+      "global_weight_sum": 134192.92065418384,
+      "percent_within_2000km": 1.7310061121066507,
+      "probability_within_2000km": 0.01731006112106651,
+      "region_weight_sum": 2322.8876585383505
+    },
+    "temporal_12h": {
+      "effective_sample_size": 440922.12437314924,
+      "global_weight_sum": 214143.54776576554,
+      "percent_within_2000km": 1.646500476240614,
+      "probability_within_2000km": 0.01646500476240614,
+      "region_weight_sum": 3525.874533801876
+    },
+    "temporal_24h": {
+      "effective_sample_size": 790323.4462290005,
+      "global_weight_sum": 214167.41952040125,
+      "percent_within_2000km": 1.6411380848510975,
+      "probability_within_2000km": 0.016411380848510976,
+      "region_weight_sum": 3514.783087092129
+    },
+    "temporal_6h": {
+      "effective_sample_size": 298150.7449639685,
+      "global_weight_sum": 213967.37286224673,
+      "percent_within_2000km": 1.6542317050968696,
+      "probability_within_2000km": 0.016542317050968695,
+      "region_weight_sum": 3539.5161204501205
+    }
+  },
+  "sample": {
+    "batch": 50000,
+    "draw_dtype": "[('unix_utc_seconds', '<f8'), ('scenario_id', '<i2'), ('latitude_deg', '<f4'), ('longitude_deg', '<f4'), ('x_east_km', '<f4'), ('y_north_km', '<f4'), ('distance_from_conde_km', '<f4')]",
+    "n": 1500000,
+    "saved_individual_draws": true,
+    "seed": 19631108
+  },
+  "schema": "conde.c241-joint-orbital-day-scenario-heatmap/v1",
+  "sources": {
+    "NASA_event_sigma_hours": null,
+    "NASA_reported_day": "1963-11-08",
+    "old_aggregate_not_reweighted_as_if_individual": true,
+    "reference_old_aggregate_percent": 1.6992666666666667,
+    "tle_epoch_utc": "1963-10-27T14:40:16.132512Z",
+    "tle_lineage": "SECONDARY_NOT_INSTRUMENTALLY_AUTHENTICATED",
+    "tle_sha256": "18cf11665e061b5ec8679242e10b00b82accf29bc6f0b9b7b6330b9c44e341cd"
+  }
+}
