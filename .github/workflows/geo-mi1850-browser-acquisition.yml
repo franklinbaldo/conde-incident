@@ -20,7 +20,7 @@ permissions:
   contents: read
 jobs:
   verify-authenticated-image:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 12
     steps:
       - name: Checkout exact HEAD
