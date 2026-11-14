@@ -106,6 +106,32 @@ try {
       await page.close();
     }
   }
+  // Reflow audit: the documentary summary must not force a document-wide
+  // horizontal pan when only text is resized to 200% (not browser zoom).
+  // An unbroken epistemic label and auto-sized claim grid previously made
+  // the 320px published page 517px wide, hiding parts of the explanation.
+  for (const width of [320, 375, 390, 640]) {
+    const page = await browser.newPage({ viewport: { width, height: 800 } });
+    try {
+      await page.goto(origin + '#/summary', { waitUntil: 'domcontentloaded' });
+      await page.locator('#constraints-title').waitFor();
+      await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+      const result = await page.evaluate(() => ({
+        width: innerWidth,
+        scroll: document.documentElement.scrollWidth,
+        cards: [...document.querySelectorAll('#claims-title + div article')]
+          .map(el => { const r = el.getBoundingClientRect(); return { left: r.left, right: r.right }; }),
+      }));
+      assert.equal(result.cards.length, 3);
+      assert(result.scroll <= width + 1,
+        '200% summary text overflows the viewport: ' + JSON.stringify(result));
+      assert(result.cards.every(card => card.left >= -1 && card.right <= width + 1),
+        'claim cards clipped at 200%: ' + JSON.stringify(result));
+      await page.screenshot({ path: out + '/summary-reflow-200pct-' + width + '.png' });
+    } finally {
+      await page.close();
+    }
+  }
  } finally {
   await browser.close();
 }
