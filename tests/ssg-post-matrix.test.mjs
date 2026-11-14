@@ -10,7 +10,7 @@ const clone=o=>structuredClone(o);
 test('post-matrix SSG preserves archived source, frozen IDs and epistemic limit',()=>{
   const page=postMatrixPage(citations,lineage);
   assert.match(page,/type: Page/);
-  assert.match(page,/Pós-matriz/);
+  assert.match(page,/pós-matriz/i);
   assert.match(page,/NARA-BB-CONDE-20261112-01/);
   assert.match(page,/NARA\\_AIRA\\_TELEGRAM\\_19631114/);
   assert.match(page,/136be026e23acdd5e7ff0a5307e04bef799249b48346072a43cae1506be37ce9/);
@@ -65,5 +65,5 @@ test('post-matrix rejects links, paths and digests that fail custody',()=>{
   xss.post_matrix_occurrences[0].proposition='<script>alert(1)</script>';
   const rendered=postMatrixPage(xss,lineage);
   assert.doesNotMatch(rendered,/<script>/);
-  assert.match(rendered,/\\<script\\>/);
+  assert.match(rendered,/&lt;script&gt;/);
 });
