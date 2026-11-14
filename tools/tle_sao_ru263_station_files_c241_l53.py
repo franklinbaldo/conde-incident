@@ -20,6 +20,8 @@ LOCATORS = (
     ("RU263-COLD-LAKE-ENGINEERING", 8, 67, 43, 44, "Cold Lake, Canada, 1961-1963"),
     ("RU263-IRAN-ENGINEERING", 8, 69, 43, 44, "Iran, 1959-1963"),
     ("RU263-CURACAO-ENGINEERING", 8, 68, 43, 44, "Curacao, 1959-1963"),
+    ("RU263-COLD-LAKE-S9-OPERATIONS", 9, 72, 47, 48, "#420 Operations, 1963-1965."),
+    ("RU263-COLD-LAKE-S9-INVENTORY", 9, 72, 47, 48, "#130 Inventory and audits, 1963."),
 )
 
 def check(condition: bool, message: str) -> None:
@@ -98,6 +100,12 @@ def live_check(pdf: bytes) -> dict:
         check(f"Page {printed} of 56" in page, "wrong page mapping: " + identifier)
         # Whitespace-normalized continuous text is sufficient for a finding-aid label.
         check(phrase in page, "missing locator phrase: " + identifier)
+        if identifier.startswith("RU263-COLD-LAKE-S9-"):
+            # Bind the label to the Cold Lake subsection, not to another station on page 47.
+            start = page.find("Cold Lake, Canada")
+            end = page.find("Curacao", start)
+            section = page[start:end if end != -1 else None] if start >= 0 else ""
+            check(phrase in section, "folder label not under Cold Lake: " + identifier)
     return {"bytes": SIZE, "sha256": SHA, "pdf_pages": len(pages), "anchors_checked": len(LOCATORS)}
 
 def main() -> None:
