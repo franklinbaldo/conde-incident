@@ -1,0 +1,40 @@
+name: CGEO-56 NARA multi-field sortie cross-square
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo56_nara_sortie_cross_square.json'
+      - 'research/geo/CGEO56_NARA_SORTIE_CROSS_SQUARE.md'
+      - 'tools/cgeo56_nara_sortie_family.py'
+      - 'tests/test_cgeo56_nara_sortie_family.py'
+      - '.github/workflows/cgeo56-nara-sortie.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo56_nara_sortie_cross_square.json'
+      - 'research/geo/CGEO56_NARA_SORTIE_CROSS_SQUARE.md'
+      - 'tools/cgeo56_nara_sortie_family.py'
+      - 'tests/test_cgeo56_nara_sortie_family.py'
+      - '.github/workflows/cgeo56-nara-sortie.yml'
+permissions:
+  contents: read
+jobs:
+  source-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Exact SHA and tree
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+          git show -s --format='HEAD=%H TREE=%T' HEAD
+      - name: Verify manifest and 22 tests (normal and optimized)
+        run: |
+          python3 tools/cgeo56_nara_sortie_family.py
+          python3 -m unittest discover -s tests -p 'test_cgeo56_nara_sortie_family.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_cgeo56_nara_sortie_family.py' -v
+      - name: Replay four NARA original JPEGs and SHA-256
+        run: python3 tools/cgeo56_nara_sortie_family.py --live

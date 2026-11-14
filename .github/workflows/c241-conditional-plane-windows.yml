@@ -1,0 +1,65 @@
+name: C241 conditional orbital-plane windows replay
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/c241-conditional-plane-windows.yml'
+      - 'tools/c241_conditional_plane_windows.py'
+      - 'tools/c241_637_regime_holdout.py'
+      - 'tests/test_c241_conditional_plane_windows.py'
+      - 'tests/test_c241_plane_replay_workflow.py'
+      - 'research/geo/cgeo15_vila_matriz_2022_camera_points.json'
+      - 'research/geo/conde_ibge_2022_sirgas2000.json'
+      - 'research/geo/cgeo20_centro_vila_2020.json'
+      - 'research/statistics/C241_CONDITIONAL_PLANE_WINDOWS_20261114.md'
+      - 'research/statistics/c241_plane_*.json'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/c241-conditional-plane-windows.yml'
+      - 'tools/c241_conditional_plane_windows.py'
+      - 'tools/c241_637_regime_holdout.py'
+      - 'tests/test_c241_conditional_plane_windows.py'
+      - 'tests/test_c241_plane_replay_workflow.py'
+      - 'research/geo/cgeo15_vila_matriz_2022_camera_points.json'
+      - 'research/geo/conde_ibge_2022_sirgas2000.json'
+      - 'research/geo/cgeo20_centro_vila_2020.json'
+      - 'research/statistics/C241_CONDITIONAL_PLANE_WINDOWS_20261114.md'
+      - 'research/statistics/c241_plane_*.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  conditional-plane-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact source HEAD
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run scientific and workflow-policy adversarial tests (normal and optimized)
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p 'test_c241_conditional_plane_windows.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_c241_conditional_plane_windows.py' -v
+          python3 -m unittest discover -s tests -p 'test_c241_plane_replay_workflow.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_c241_plane_replay_workflow.py' -v
+      - name: Reacquire secondary Parquet and verify original bytes
+        run: |
+          set -euo pipefail
+          python3 -m pip install pyarrow==21.0.0
+          curl --fail --location --silent --show-error --retry 3 --connect-timeout 15 --max-time 120 \
+            'https://huggingface.co/datasets/oxzoid/space-track-tle-history/resolve/4b4fb3a/data/tle_1963.parquet' \
+            --output "$RUNNER_TEMP/tle_1963.parquet"
+          echo 'c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09' " $RUNNER_TEMP/tle_1963.parquet" | sha256sum -c -
+      - name: Replay all 21 tracked scientific artifacts, byte for byte
+        run: |
+          set -euo pipefail
+          python3 tools/c241_conditional_plane_windows.py --parquet "$RUNNER_TEMP/tle_1963.parquet" --repo . --output-dir research/statistics --check
