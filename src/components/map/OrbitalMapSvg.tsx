@@ -97,7 +97,7 @@ export function OrbitalMapSvg({
 
   return (
     <svg
-      className="block w-full rounded-lg border border-slate-700 bg-[#081527] select-none"
+      className="block min-w-0 max-w-full rounded-lg border border-slate-700 bg-[#081527] select-none"
       viewBox="0 0 960 480"
       width="960"
       height="480"

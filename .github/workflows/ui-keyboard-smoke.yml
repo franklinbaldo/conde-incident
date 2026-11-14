@@ -22,6 +22,7 @@ on:
       - 'tests/ssg-authored-pages.test.mjs'
       - 'stories/2026-11-11-o-dia-em-que-dois-relatos-se-cruzaram.md'
       - 'src/components/OrbitalMap.tsx'
+      - 'tests/ui_map_reflow_smoke.mjs'
       - 'src/components/map/**'
       - 'tests/ui_keyboard_smoke.mjs'
       - 'tests/ui_mobile_sections_smoke.mjs'
@@ -88,6 +89,8 @@ jobs:
         run: node tests/ui_mobile_sections_smoke.mjs
       - name: Chromium documentary archive provenance, links and reflow (320/390/1440)
         run: node tests/ui_documentary_archive_smoke.mjs
+      - name: Chromium quota-free map 200% text reflow, SVG, dates and zoom (PT/EN)
+        run: node tests/ui_map_reflow_smoke.mjs
       - name: Chromium lazy-download failure and recovery (PT/EN)
         run: node tests/ui_lab_chunk_failure_smoke.mjs
       - name: Browser export chunk failure, modal keyboard recovery and language
