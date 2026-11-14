@@ -1,0 +1,38 @@
+name: Lontra 1964 Baja and Miskolc original yearbook custody
+on:
+  pull_request:
+    paths:
+      - 'research/tle_custody/*LONTRA-R42*'
+      - 'tools/verify_baja_miskolc_1965_yearbook.py'
+      - 'tests/test_baja_miskolc_1965_yearbook.py'
+      - '.github/workflows/lontra-baja-miskolc-1965-yearbook.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/tle_custody/*LONTRA-R42*'
+      - 'tools/verify_baja_miskolc_1965_yearbook.py'
+      - 'tests/test_baja_miskolc_1965_yearbook.py'
+      - '.github/workflows/lontra-baja-miskolc-1965-yearbook.yml'
+  workflow_dispatch:
+jobs:
+  custody:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact audited HEAD
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Independent adversarial tests in both Python modes
+        run: |
+          python3 -m unittest discover -s tests -p 'test_baja_miskolc_1965_yearbook.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_baja_miskolc_1965_yearbook.py' -v
+      - name: Replay and hash official original PDF
+        run: |
+          python3 -m pip install 'pypdf==6.4.0'
+          curl --fail --show-error --silent --location --retry 2 --max-time 120 \
+            'https://real-j.mtak.hu/15941/1/csillagaszati_evkonyv_1965.pdf' \
+            -o /tmp/baja-miskolc-1965-original.pdf
+          python3 tools/verify_baja_miskolc_1965_yearbook.py --pdf-original /tmp/baja-miskolc-1965-original.pdf
+          python3 -O tools/verify_baja_miskolc_1965_yearbook.py --pdf-original /tmp/baja-miskolc-1965-original.pdf
