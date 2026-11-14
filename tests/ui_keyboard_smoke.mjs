@@ -143,6 +143,9 @@ try {
         `untranslated badge in English UI: ${badge}`);
     }
     assert.equal(await englishNav.getByText('Fontes', { exact: true }).count(), 0);
+    if (viewport.width < 768) {
+      await page.locator('header [data-lab-metadata] summary').click();
+    }
     assert.equal(await page.getByRole('button', { name: 'Python Script' }).first()
       .getAttribute('title'), 'Export reproducible Python code');
     assert.equal(await page.getByRole('button', { name: 'Export Python' }).count(), 1);
@@ -150,7 +153,6 @@ try {
     const mission = 'NRO mission 7153 (Thor-Agena D / OPS 0180)';
     if (viewport.width < 768) {
       const metadata = page.locator('header [data-lab-metadata]');
-      await metadata.locator('summary').click();
       assert(await metadata.getByText(mission, { exact: true }).isVisible(),
         'mission metadata must remain reachable inside the mobile disclosure');
       await metadata.locator('summary').click();
@@ -172,6 +174,9 @@ try {
     await page.screenshot({ path: `${out}/${viewport.name}-summary.png`, fullPage: true });
 
     // Verify modal name, focus entry/loop, Escape dismissal and trigger focus restoration.
+    if (viewport.width < 768) {
+      await page.locator('header [data-lab-metadata] summary').click();
+    }
     const exportTrigger = page.getByRole('button', { name: 'Python Script' }).first();
     await exportTrigger.click();
     const dialog = page.getByRole('dialog', { name: 'norad528_reconstruction.py' });
