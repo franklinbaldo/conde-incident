@@ -7,6 +7,34 @@ import { mkdir } from 'node:fs/promises';
 const origin = process.env.UI_AUDIT_URL || 'http://127.0.0.1:3000/';
 const out = process.env.UI_AUDIT_OUT || 'test-results/ui';
 await mkdir(out, { recursive: true });
+
+// Small PT/EN labels require >=4.5:1 WCAG AA; measure rendered Tailwind v4
+// oklch colors through a canvas rather than approximating RGB from CSS text.
+async function assertLanguageContrast(page, name, width) {
+  const sample = await page.getByRole('button', { name }).evaluate(el => {
+    const style = getComputedStyle(el);
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = 1;
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    if (!ctx) throw new Error('Canvas unavailable for WCAG measurement');
+    const rgb = css => {
+      ctx.clearRect(0, 0, 1, 1);
+      ctx.fillStyle = css;
+      ctx.fillRect(0, 0, 1, 1);
+      return [...ctx.getImageData(0, 0, 1, 1).data].slice(0, 3);
+    };
+    const luminance = css => rgb(css).map(v => v / 255).map(v =>
+      v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4
+    ).reduce((sum, v, i) => sum + v * [0.2126, 0.7152, 0.0722][i], 0);
+    const foreground = luminance(style.color);
+    const background = luminance(style.backgroundColor);
+    return (Math.max(foreground, background) + 0.05) /
+      (Math.min(foreground, background) + 0.05);
+  });
+  assert(sample >= 4.5,
+    \`WCAG AA contrast failed for \${name} at \${width}px: \${sample.toFixed(2)}:1\`);
+}
+
 const browser = await chromium.launch({ headless: true });
 try {
   // Deep links name the current section in the closed mobile menu.
@@ -18,6 +46,7 @@ try {
       const nav = page.getByRole('navigation', { name: 'Seções do laboratório' });
       const chooser = nav.locator('summary');
       await chooser.waitFor();
+      await assertLanguageContrast(page, 'Português (Brasil)', width);
       await page.waitForFunction(() => document.title.startsWith('Arquivo e proveniência |'));
       assert.match(await page.title(), /NORAD 528 · Caso Conde \(1963\)$/);
       assert.match(await chooser.innerText(), /Arquivo e proveniência/);
@@ -64,6 +93,8 @@ try {
       }
       if (width === 320) {
         await page.getByRole('button', { name: 'English' }).click();
+        await page.waitForTimeout(250); // wait for transition-colors to settle
+        await assertLanguageContrast(page, 'English', width);
         await page.waitForFunction(() => document.title.startsWith('Archive & provenance |'));
         assert.match(await page.title(), /Conde case \(1963\)$/);
         await page.getByRole('button', { name: 'Português (Brasil)' }).click();
