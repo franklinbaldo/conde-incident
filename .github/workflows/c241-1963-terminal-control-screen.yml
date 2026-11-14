@@ -15,6 +15,9 @@ on:
       - research/statistics/C241_SSR_308_CALENDAR_RANGE_R61_20261114.md
       - research/statistics/C241_TERMINAL_CALENDAR_MINIMAX_R62_20261114.md
       - research/tle_custody/nasa_ssr_terminal_control_308_C241-L64.json
+      - tools/c241_omega1_308_crosssource_r65.py
+      - tests/test_c241_omega1_308_crosssource_r65.py
+      - research/statistics/C241_OMEGA1_308_CROSSSOURCE_R65_20261114.md
       - .github/workflows/c241-1963-terminal-control-screen.yml
   push:
     branches: [main]
@@ -32,6 +35,9 @@ on:
       - research/statistics/C241_SSR_308_CALENDAR_RANGE_R61_20261114.md
       - research/statistics/C241_TERMINAL_CALENDAR_MINIMAX_R62_20261114.md
       - research/tle_custody/nasa_ssr_terminal_control_308_C241-L64.json
+      - tools/c241_omega1_308_crosssource_r65.py
+      - tests/test_c241_omega1_308_crosssource_r65.py
+      - research/statistics/C241_OMEGA1_308_CROSSSOURCE_R65_20261114.md
       - .github/workflows/c241-1963-terminal-control-screen.yml
   workflow_dispatch:
 permissions:
@@ -57,7 +63,9 @@ jobs:
       - name: Run synthetic adversarial tests (normal and optimized)
         run: |
           set -euo pipefail
+          python3 -m unittest discover -s tests -p test_c241_omega1_308_crosssource_r65.py -v
           python3 -m unittest discover -s tests -p test_c241_1963_terminal_control_screen.py -v
+          python3 -O -m unittest discover -s tests -p test_c241_omega1_308_crosssource_r65.py -v
           python3 -O -m unittest discover -s tests -p test_c241_1963_terminal_control_screen.py -v
           python3 -m unittest discover -s tests -p test_c241_1963_archive_fixed_h_stress.py -v
           python3 -O -m unittest discover -s tests -p test_c241_1963_archive_fixed_h_stress.py -v
@@ -116,7 +124,34 @@ jobs:
           assert x['inference']['active_constraint_528'] is False
           print('R62: conditional minimax only, no measured sigma or terminal instant')
           PY
+          python3 tools/c241_omega1_308_crosssource_r65.py \
+            --ssr research/tle_custody/nasa_ssr_omega1_oct15_C241-L68.json \
+            --parquet "$RUNNER_TEMP/tle_1963.parquet" --output "$RUNNER_TEMP/c241-r65.json"
+          python3 - "$RUNNER_TEMP/c241-r65.json" <<'PY'
+          import json, sys
+          x=json.load(open(sys.argv[1],encoding='utf-8'))
+          assert x['schema']=='conde.c241-omega1-308-numeric-fingerprint-r65/v1'
+          c=x['candidate']
+          assert (c['raw_rows'],c['unique_epochs'],c['pre_cutoff_epochs'],c['excluded_at_or_after_cutoff'])==(52,52,44,8)
+          assert c['last_pre_cutoff_epoch_utc']=='1963-10-14T23:23:55.702464Z'
+          assert abs(x['difference_candidate_minus_printed']['period_minutes']+0.064883886)<1e-6
+          assert x['inference']['historical_mcmc']=='NOT_RUN'
+          assert x['inference']['identity_probability'] is None
+          assert x['inference']['terminal_sigma_hours'] is None
+          assert x['inference']['active_constraint_528'] is False
+          print('R65: numerical fingerprint, zero calibrated observations')
+          PY
           printf 'damaged archive' > "$RUNNER_TEMP/mutant.parquet"
+          if python3 tools/c241_omega1_308_crosssource_r65.py \
+               --ssr research/tle_custody/nasa_ssr_omega1_oct15_C241-L68.json \
+               --parquet "$RUNNER_TEMP/mutant.parquet" --output "$RUNNER_TEMP/should-not-exist-r65.json" \
+               2>"$RUNNER_TEMP/r65-negative.log"; then
+            echo "FAIL: R65 accepted tampered corpus"
+            exit 1
+          fi
+          grep -q 'pinned secondary archive SHA mismatch' "$RUNNER_TEMP/r65-negative.log"
+          test ! -e "$RUNNER_TEMP/should-not-exist-r65.json"
+
           if python3 tools/c241_1963_terminal_control_screen.py --parquet "$RUNNER_TEMP/mutant.parquet" \
                --output "$RUNNER_TEMP/should-not-exist.json" --check 2>"$RUNNER_TEMP/negative.log"; then
             echo "FAIL: corrupted archive incorrectly passed"

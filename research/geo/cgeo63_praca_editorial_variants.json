@@ -1,0 +1,109 @@
+{
+  "id": "CGEO-63",
+  "schema": "conde.gis.historical-plaza-editorial-variants/v1",
+  "municipality": {
+    "name": "Conde",
+    "uf": "BA",
+    "ibge_code": "2908606"
+  },
+  "sources": [
+    {
+      "id": "JGB2018",
+      "kind": "contemporary_secondary_event_schedule",
+      "url": "https://jornalgrandebahia.com.br/2018/02/conde-apresenta-o-1o-festival-do-coco/",
+      "published_date": "2018-02-22",
+      "event_period": "2018-01-22/2018-01-28",
+      "fetch_date_utc": "2026-11-14",
+      "http_status": 200,
+      "raw_bytes": 379832,
+      "raw_sha256": "45a86bade93889c5bdf734acb96453f7973e81a81882879b2440087ac308dfeb",
+      "raw_bytes_versioned": false,
+      "visible_text_provenance": "same HTML article; not independent witnesses",
+      "literal_utf8_counts": {
+        "Severiano Vieira": 2,
+        "Severino Vieira": 7
+      }
+    },
+    {
+      "id": "HIST2025",
+      "kind": "retrospective_secondary_local_history",
+      "url": "https://conde.portaldacidade.com/noticias/cidade/historia-de-conde-parte-iv-curiosidades-do-municipio-entre-os-seculos-xix-e-xx-2248",
+      "published_date": "2025-08-04",
+      "updated_date": "2025-08-09",
+      "attributed_researcher": "Walber Luide Andrade da Silva",
+      "retrieval_status": "WEB_TEXT_VISIBLE_BINARY_NOT_ACQUIRED_HTTP_403_IFRO",
+      "raw_bytes": null,
+      "raw_sha256": null
+    },
+    {
+      "id": "MUNI2020",
+      "kind": "municipal_primary_2020",
+      "reference": "research/geo/cgeo20_centro_vila_2020.json",
+      "place_name": "Praça Severino Vieira (centro)",
+      "survey_geometry_1963": null
+    },
+    {
+      "id": "IBGE1958",
+      "kind": "ibge_publication_1958",
+      "reference": "research/geo/cgeo17_1958_urban_toponym_crosswalk.json",
+      "place_name": "Praça Severiano Lima",
+      "equivalence_to_severino_vieira": null
+    },
+    {
+      "id": "OSM2026",
+      "kind": "modern_osm_geometry",
+      "reference": "research/geo/cgeo62_praca_severino_vieira.json",
+      "count_named_ways": 4
+    }
+  ],
+  "readings": [
+    {
+      "source": "JGB2018",
+      "literal": "Praça Severiano Vieira",
+      "role": "prose_2018_event_location",
+      "count_in_original_html": 2
+    },
+    {
+      "source": "JGB2018",
+      "literal": "Praça Severino Vieira",
+      "role": "schedule_2018_event_location",
+      "count_in_original_html": 7
+    },
+    {
+      "source": "HIST2025",
+      "claimed_event": "inauguration_of_square_named_for_Severino_Vieira",
+      "event_year": 1904,
+      "claim_scope": "Ribeira de Conde",
+      "primary_contemporary_record": null,
+      "verification": "secondary_retrospective_claim"
+    },
+    {
+      "source": "HIST2025",
+      "claimed_event": "bust_of_Severino_Vieira_in_square",
+      "event_date": "1949-07-08",
+      "primary_contemporary_record": null,
+      "verification": "secondary_retrospective_claim"
+    },
+    {
+      "source": "HIST2025",
+      "claimed_event": "new_church_of_Senhor_do_Bonfim",
+      "event_year": 1960,
+      "primary_contemporary_record": null,
+      "verification": "secondary_retrospective_claim"
+    }
+  ],
+  "interpretation": {
+    "same_2018_event_venue_named_using_two_spellings_in_one_article": true,
+    "independent_2018_venue_witnesses": 1,
+    "historical_place_may_preexist_1963": "secondary_retrospective_hypothesis_only",
+    "identity_with_1958_praca_severiano_lima": null,
+    "identity_with_2020_severino_vieira_geometry": null,
+    "identity_with_modern_osm_ways": null,
+    "street_or_plaza_rename_document": null,
+    "historical_center_polygon_1963": null,
+    "event_location_1963": null,
+    "positional_uncertainty_m": null,
+    "can_constrain_orbital_reentry": false,
+    "active_constraint": false
+  }
+}

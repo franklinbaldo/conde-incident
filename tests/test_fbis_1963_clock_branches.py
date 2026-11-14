@@ -13,7 +13,7 @@ def synthetic_anchor(index, utc="1963-11-08T23:30Z"):
         "item_id": "SYNTHETIC-" + str(index),
         "fbis_document_url": "https://invalid.example/fbis-" + str(index),
         "fbis_sha256": format(index + 10, "064x"),
-        "fbis_page": str(index),
+        "fbis_page": str(index + 1),
         "independent_source_url": "https://invalid.example/radio-" + str(index),
         "independent_source_sha256": format(index + 2000, "064x"),
         "independent_page": "1",
@@ -168,6 +168,28 @@ class FBISClockTests(unittest.TestCase):
             row["header_local_text"] = "2330 30 NOV 63"
         self.assertEqual(f.qualification(rows)["status"], "RIO_LOCAL")
         # All examples are synthetic. This is a boundary-of-calendar test only.
+
+    def test_independent_source_cannot_be_another_fbis_facsimile(self):
+        a, b = synthetic_anchor(0), synthetic_anchor(1)
+        b["independent_source_sha256"] = a["fbis_sha256"]
+        b["independent_source_url"] = a["fbis_document_url"]
+        with self.assertRaisesRegex(ValueError, "other FBIS"):
+            f.anchors_from_manifest({
+                "schema": "conde.fbis-clock-anchors/v1",
+                "independent_anchors": [a, b],
+            })
+
+    def test_page_numbers_are_positive_printed_page_indices(self):
+        for key in ("fbis_page", "independent_page"):
+            for wrong in ("0", "-1", "not-a-page", "1.0", " 1"):
+                with self.subTest(field=key, value=wrong):
+                    a = synthetic_anchor(0)
+                    a[key] = wrong
+                    with self.assertRaisesRegex(ValueError, "positive page"):
+                        f.anchors_from_manifest({
+                            "schema": "conde.fbis-clock-anchors/v1",
+                            "independent_anchors": [a],
+                        })
 
     def test_hash_and_source_lineage_are_pinned(self):
         self.assertEqual(self.report["source"]["facsimile_sha256"],

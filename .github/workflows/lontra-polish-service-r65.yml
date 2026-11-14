@@ -1,0 +1,29 @@
+name: C241 Polish observation service R65
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/polish_observation_service_C241_LONTRA_R65.json
+      - research/tle_custody/evidence_matrix_C241-LONTRA-R65_2026-11-14.md
+      - tools/audit_polish_observation_service_r65.py
+      - tests/test_polish_observation_service_r65.py
+      - .github/workflows/lontra-polish-service-r65.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact commit
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Audit source and negative mutations
+        run: |
+          set -euo pipefail
+          python3 -m tools.audit_polish_observation_service_r65
+          python3 -m unittest discover -s tests -p 'test_polish_observation_service_r65.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_polish_observation_service_r65.py' -v

@@ -1,0 +1,64 @@
+{
+  "id": "C241-LONTRA-R65",
+  "schema": "conde.archival_observation_service_report/v1",
+  "checked_utc": "2026-11-14",
+  "source": {
+    "institution": "Polskie Towarzystwo Astronomiczne / Postępy Astronomii",
+    "author": [
+      "Ludosław Cichowicz",
+      "Włodzimierz Zonn"
+    ],
+    "title": "Udział Polski w badaniach przestrzeni kosmicznej",
+    "periodical": "Postępy Astronomii",
+    "volume": "XII",
+    "issue": 3,
+    "publication_year": 1964,
+    "publication_months": "July–September",
+    "publisher_location": "Warszawa",
+    "url": "https://www.urania.edu.pl/pliki/archiwum/postepy_astronomii_1964_03.pdf",
+    "full_pdf_bytes": 4882674,
+    "full_pdf_sha256": "0664d3134c15e999a67158c1dfd013a49e435fc00dbe86c78fc2b2452b526c94",
+    "full_pdf_pages": 62,
+    "pdf_pages_one_based": [
+      30,
+      31
+    ],
+    "printed_pages": [
+      190,
+      191
+    ],
+    "verification": "FULL_BINARY_DOWNLOADED_IFRO_AND_VISUAL_SCREENSHOT_PDF_PAGES_30_31"
+  },
+  "reported_service": {
+    "started_year": 1957,
+    "observations_through_year": 1963,
+    "aggregate_count_lower_bound_exclusive": 25000,
+    "count_scope": "MULTI_YEAR_MULTI_TARGET_ALL_STATIONS",
+    "satellite_origins": [
+      "USSR",
+      "USA"
+    ],
+    "measurement_methods": [
+      "visual",
+      "photographic",
+      "radio"
+    ],
+    "stations_approx_before_1964": 10,
+    "stations_in_1964": 12,
+    "cospar_station_id_first": 1151,
+    "cospar_station_id_last": 1162,
+    "international_coordination_center": "Moscow",
+    "echo1_project_since": 1963
+  },
+  "boundaries": {
+    "observations_for_norad_527_528_529": [],
+    "independent_measurement_rows_recovered": 0,
+    "object_specific_time_observed": null,
+    "original_station_logs_recovered": false,
+    "individual_station_instrument_calibration_recovered": false,
+    "new_orbital_constraints": 0,
+    "author_or_institution_contacted": false,
+    "interpretation": "CONTEMPORANEOUS_AGGREGATE_SERVICE_REPORT_NOT_OBJECT_MEASUREMENTS"
+  },
+  "next_step": "Search Polish stations 1151–1162 observation logs, circulars and 1963 daily observations for identifiers 1963-003A/B/C, 527/528/529; coordinate crosswalk with Tartaruga."
+}
