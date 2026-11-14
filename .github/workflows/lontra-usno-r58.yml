@@ -1,0 +1,37 @@
+name: C241 USNO translation custody R58
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/usno_soviet_astronomy_translation_C241_LONTRA_R58.json
+      - research/tle_custody/evidence_matrix_C241-LONTRA-R58_2026-11-14.md
+      - tools/audit_usno_translation_r58.py
+      - tests/test_usno_translation_r58.py
+      - .github/workflows/lontra-usno-r58.yml
+  push:
+    branches: [main]
+    paths:
+      - research/tle_custody/usno_soviet_astronomy_translation_C241_LONTRA_R58.json
+      - research/tle_custody/evidence_matrix_C241-LONTRA-R58_2026-11-14.md
+      - tools/audit_usno_translation_r58.py
+      - tests/test_usno_translation_r58.py
+      - .github/workflows/lontra-usno-r58.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: HEAD exatamente auditado
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Auditoria e contraprovas, normal e otimizado
+        run: |
+          set -euo pipefail
+          python3 -m tools.audit_usno_translation_r58
+          python3 -m unittest discover -s tests -p 'test_usno_translation_r58.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_usno_translation_r58.py' -v
