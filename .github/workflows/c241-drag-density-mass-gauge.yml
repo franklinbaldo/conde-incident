@@ -1,0 +1,44 @@
+name: C241 drag-density mass gauge exact
+on:
+  pull_request:
+    paths:
+      - tools/drag_density_mass_gauge_C241.py
+      - tests/test_drag_density_mass_gauge_C241.py
+      - research/statistics/C241_drag_density_mass_gauge.md
+      - .github/workflows/c241-drag-density-mass-gauge.yml
+  push:
+    branches: [main]
+    paths:
+      - tools/drag_density_mass_gauge_C241.py
+      - tests/test_drag_density_mass_gauge_C241.py
+      - research/statistics/C241_drag_density_mass_gauge.md
+      - .github/workflows/c241-drag-density-mass-gauge.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-design:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact SHA
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Unit tests and reproducible evidence
+        run: |
+          python3 -m unittest discover -s tests -p test_drag_density_mass_gauge_C241.py -v
+          python3 -m tools.drag_density_mass_gauge_C241 > "$RUNNER_TEMP/c241-gauge.json"
+          python3 - "$RUNNER_TEMP/c241-gauge.json" <<'PY'
+          import json, sys
+          p = json.load(open(sys.argv[1], encoding="utf-8"))
+          assert (p["scenarios"]["drag_only"]["rank"],
+                  p["scenarios"]["drag_only"]["nullity"]) == (4, 4)
+          assert p["holdout_design"]["future_528_with_527_e1_control"]
+          assert not p["scenarios"]["drag_only"]["q528_estimable"]
+          assert p["historical_mcmc"] == "NOT_RUN"
+          assert not p["historical_constraint_active"]
+          assert p["historical_mass_posterior"] is None
+          PY
