@@ -1,0 +1,41 @@
+name: CGEO-39 | IOCS15 IBRAM catalog provenance replay
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo39_ibram_iocs15_holdings.*'
+      - 'tools/cgeo39_ibram_iocs15.py'
+      - 'tests/test_cgeo39_ibram_iocs15.py'
+      - '.github/workflows/geo-iocs15-ibram.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo39_ibram_iocs15_holdings.*'
+      - 'tools/cgeo39_ibram_iocs15.py'
+      - 'tests/test_cgeo39_ibram_iocs15.py'
+      - '.github/workflows/geo-iocs15-ibram.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  replay-ibram-catalogue:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact checkout
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Offline contract and adversarial tests
+        run: |
+          python3 -m tools.cgeo39_ibram_iocs15
+          python3 -m unittest discover -s tests -p 'test_cgeo39_ibram_iocs15.py' -v
+      - name: Replay original IBRAM finding aid (not historical map)
+        run: |
+          curl -fsSL --retry 2 --connect-timeout 20 --max-time 100 \
+            'https://atom-museurepublica.museus.gov.br/downloads/epitacio-pessoa.pdf' \
+            -o "$RUNNER_TEMP/epitacio-pessoa.pdf"
+          python3 -m tools.cgeo39_ibram_iocs15 --pdf "$RUNNER_TEMP/epitacio-pessoa.pdf"
