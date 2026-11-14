@@ -1,0 +1,20 @@
+name: CGEO-43 SGB AJAX identity
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  fail-closed-source-identity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - name: Checkout exact HEAD
+        uses: actions/checkout@v4
+      - name: Verify selected folder versus AJAX response
+        run: |
+          python3 tools/cgeo43_sgb_ajax_identity.py
+          python3 -m unittest discover -s tests -p 'test_cgeo43_sgb_ajax_identity.py' -v
+      - name: Confirm no whitespace errors
+        run: git diff --check
