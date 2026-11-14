@@ -61,7 +61,7 @@ export const ExecutiveSummary: React.FC<ExecutiveSummaryProps> = ({ lang, onJump
   const pt = lang === 'pt';
 
   return (
-    <div className="space-y-7 pb-12">
+    <div className="space-y-7 pb-12 wrap-anywhere">
       <section aria-labelledby="summary-title" className="rounded-xl border border-zinc-700 bg-zinc-900 p-5 sm:p-8">
         <p className="mb-3 flex items-center gap-2 text-sm text-cyan-300">
           <BookOpen aria-hidden="true" className="h-5 w-5" />
@@ -88,7 +88,7 @@ export const ExecutiveSummary: React.FC<ExecutiveSummaryProps> = ({ lang, onJump
         <h2 id="claims-title" className="text-xl font-semibold text-zinc-100">
           {pt ? 'Ocorrências e limites das fontes' : 'Source occurrences and limitations'}
         </h2>
-        <div className="grid gap-4 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
           {claims.map((claim) => (
             <article key={claim.occurrence} className="rounded-xl border border-zinc-700 bg-zinc-900/70 p-5">
               <p className="font-mono text-xs text-cyan-300">{claim.occurrence}</p>
