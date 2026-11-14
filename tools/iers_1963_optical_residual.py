@@ -1,0 +1,159 @@
+#!/usr/bin/env python3
+"""G54: source-bound conditional angular residual for G53 geometric GCRS.
+
+Accepts only a fully specified, *geometric instantaneous GCRS* datum whose
+timestamp and WGS84 scenario station match the G53 predictor. Historical
+FK4/film or apparent positions are deliberately NOT reinterpreted as GCRS.
+This numerical contract cannot turn a supplied datum into a verified 1963
+NORAD instrument observation or calibrate an unknown error distribution.
+"""
+from __future__ import annotations
+
+import hashlib
+import math
+import re
+from collections.abc import Mapping
+
+import numpy as np
+
+ARCSEC_RAD = math.pi / (180.0 * 3600.0)
+FRAME = "GCRS"
+ANGLE_TYPE = "INSTANTANEOUS_GEOMETRIC_NOT_APPARENT_FK4"
+SHA256 = re.compile(r"^[0-9a-f]{64}$")
+
+
+def _finite_number(value: object, name: str) -> float:
+    if isinstance(value, (bool, str)):
+        raise ValueError(f"{name} must be a finite number")
+    try:
+        number = float(value)
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise ValueError(f"{name} must be a finite number") from exc
+    if not math.isfinite(number):
+        raise ValueError(f"{name} must be a finite number")
+    return number
+
+
+def _covariance(value: object, name: str, *, require_pd: bool) -> np.ndarray:
+    try:
+        arr = np.asarray(value, dtype=float)
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise ValueError(f"{name} must be a 2x2 covariance") from exc
+    if arr.shape != (2, 2) or not np.isfinite(arr).all():
+        raise ValueError(f"{name} must be a finite 2x2 covariance")
+    # An absolute or global-matrix tolerance could silently admit a negative
+    # velocity/angle variance hidden beside a much larger marginal (G52).
+    x, y = float(arr[0, 0]), float(arr[1, 1])
+    xy, yx = float(arr[0, 1]), float(arr[1, 0])
+    if abs(xy - yx) > 1e-12 * max(abs(xy), abs(yx), np.finfo(float).tiny):
+        raise ValueError(f"{name} must be symmetric")
+    if x < 0 or y < 0:
+        raise ValueError(f"{name} must be positive semidefinite")
+    if require_pd and (x <= 0 or y <= 0):
+        raise ValueError(f"{name} must be positive definite")
+    cross = (xy + yx) / 2
+    if x == 0 or y == 0:
+        if cross != 0:
+            raise ValueError(f"{name} must be positive semidefinite")
+    else:
+        # Dimensionless correlation avoids global scale masking, and avoids
+        # overflow from computing x*y when marginal scales are far apart.
+        rho = cross / math.sqrt(x) / math.sqrt(y)
+        if not math.isfinite(rho) or abs(rho) > (1 - 1e-12 if require_pd else 1 + 1e-12):
+            raise ValueError(f"{name} must be {'positive definite' if require_pd else 'positive semidefinite'}")
+    return np.array([[x, cross], [cross, y]])
+
+
+def _unit(ra_deg: float, dec_deg: float) -> np.ndarray:
+    ra, dec = math.radians(ra_deg), math.radians(dec_deg)
+    return np.array([math.cos(dec) * math.cos(ra),
+                     math.cos(dec) * math.sin(ra), math.sin(dec)])
+
+
+def compare_geometric_gcrs(predicted: Mapping, observed: Mapping,
+                           original_document_bytes: bytes) -> dict:
+    """Evaluate a conditional angular residual, NOT a 527/529 holdout.
+
+    The observation must declare its own instrumental error covariance in
+    arcsec^2, document digest, UTC, exact frame/angle type, and station
+    geodetic parameters. No uncertainty, catalogue transformation or clock
+    correction is silently supplied. State angular uncertainty is optional,
+    never silently interpreted as instrument calibration.
+    """
+    if not isinstance(predicted, Mapping) or not isinstance(observed, Mapping):
+        raise ValueError("Prediction and observation must be records")
+    if predicted.get("output_frame") != FRAME or predicted.get("angle_type") != ANGLE_TYPE:
+        raise ValueError("Prediction is not instantaneous geometric GCRS")
+    if predicted.get("historical_holdout") != "NOT_RUN":
+        raise ValueError("Unexpected historical holdout status")
+    if predicted.get("station_coordinate_contract") != "WGS84_GEODETIC_SCENARIO_NOT_1963_SURVEY":
+        raise ValueError("Station survey contract is not supported")
+    if observed.get("frame") != FRAME or observed.get("angle_type") != ANGLE_TYPE:
+        raise ValueError("Observation frame/angle type requires explicit conversion")
+    if not isinstance(observed.get("epoch_utc"), str) or observed["epoch_utc"] != predicted.get("epoch_utc"):
+        raise ValueError("Unmatched UTC epoch; clock bias is not calibrated")
+    for name in ("object_id", "station_id", "document_uri"):
+        if not isinstance(observed.get(name), str) or not observed[name].strip():
+            raise ValueError(f"Missing observation provenance: {name}")
+    digest = observed.get("document_sha256")
+    if not isinstance(digest, str) or not SHA256.fullmatch(digest):
+        raise ValueError("Expected a lowercase SHA-256 digest")
+    if not isinstance(original_document_bytes, bytes) or not original_document_bytes:
+        raise ValueError("Original observation source bytes are required")
+    if hashlib.sha256(original_document_bytes).hexdigest() != digest:
+        raise ValueError("Original observation source digest mismatch")
+    ps = predicted.get("station_wgs84_geodetic")
+    osite = observed.get("station_wgs84_geodetic")
+    if not isinstance(ps, Mapping) or not isinstance(osite, Mapping):
+        raise ValueError("Unspecified scenario station")
+    for name in ("longitude_deg", "latitude_deg", "height_m"):
+        p, o = _finite_number(ps.get(name), name), _finite_number(osite.get(name), name)
+        if p != o:
+            raise ValueError("Observation station differs from prediction")
+
+    pra = _finite_number(predicted.get("right_ascension_deg"), "predicted RA")
+    pdec = _finite_number(predicted.get("declination_deg"), "predicted Dec")
+    ora = _finite_number(observed.get("right_ascension_deg"), "observed RA")
+    odec = _finite_number(observed.get("declination_deg"), "observed Dec")
+    if not (0 <= pra < 360 and 0 <= ora < 360 and -90 < pdec < 90 and -90 < odec < 90):
+        raise ValueError("RA/Dec out of normalized domain")
+    pred_unit, obs_unit = _unit(pra, pdec), _unit(ora, odec)
+    cos_sep = float(pred_unit @ obs_unit)
+    if cos_sep <= math.cos(math.radians(5.)):
+        raise ValueError("Offset exceeds 5 degrees; tangent-plane linearization invalid")
+    a, d = math.radians(pra), math.radians(pdec)
+    east = np.array([-math.sin(a), math.cos(a), 0.])
+    north = np.array([-math.sin(d)*math.cos(a), -math.sin(d)*math.sin(a), math.cos(d)])
+    residual = np.array([east @ obs_unit, north @ obs_unit]) / cos_sep
+    # Both angular covariances refer to the predicted tangent frame; the
+    # bounded 5-degree domain still requires small-error justification.
+    instrument_arcsec2 = _covariance(observed.get("instrument_covariance_arcsec2"),
+                                    "Instrument covariance", require_pd=True)
+    instrument = instrument_arcsec2 * ARCSEC_RAD**2
+    state = predicted.get("state_only_angular_covariance_rad2")
+    model = np.zeros((2, 2)) if state is None else _covariance(
+        state, "State covariance", require_pd=False)
+    total = instrument + model
+    # Cholesky avoids explicitly inverting a covariance in disparate units.
+    z = np.linalg.solve(np.linalg.cholesky(total), residual)
+    chi2 = float(z @ z)
+    if not math.isfinite(chi2):
+        raise ValueError("Nonfinite angular distance")
+    return {
+        "epoch_utc": predicted["epoch_utc"], "object_id": observed["object_id"],
+        "station_id": observed["station_id"], "document_uri": observed["document_uri"],
+        "document_sha256_verified": digest, "frame": FRAME,
+        "residual_east_north_arcsec": (residual / ARCSEC_RAD).tolist(),
+        "combined_covariance_arcsec2": (total / ARCSEC_RAD**2).tolist(),
+        "squared_mahalanobis_2d": chi2,
+        "uncertainty_contract": "SUPPLIED_INSTRUMENT_PLUS_OPTIONAL_STATE_NOT_CALIBRATED",
+        "comparison_status": "CONDITIONAL_GEOMETRIC_ONLY",
+        "historical_holdout": "NOT_RUN",
+        "impact_inference": "NOT_SUPPORTED",
+        "missing_historical_requirements": [
+            "1963_STATION_SURVEY", "CLOCK_CALIBRATION",
+            "FK4_APPARENT_TO_GEOMETRIC_GCRS_IF_APPLICABLE",
+            "INDEPENDENT_NORAD_OBJECT_IDENTIFICATION",
+            "INSTRUMENT_ERROR_CALIBRATION"
+        ],
+    }
