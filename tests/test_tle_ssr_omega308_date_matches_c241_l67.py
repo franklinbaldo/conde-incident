@@ -70,6 +70,23 @@ class DateMatchTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unmatched"):
             a.derive(self.data["contemporary_rows"], rows)
 
+    def test_parent_contemporary_launch_tamper(self):
+        p = copy.deepcopy(self.parent)
+        p["sources"]["contemporary_1963"]["visually_read_rows"][0]["launch"] = "17 JUN"
+        with self.assertRaisesRegex(ValueError, "parent 1963 row"):
+            a.validate(self.data, p)
+
+    def test_parent_retrospective_launch_tamper(self):
+        p = copy.deepcopy(self.parent)
+        p["sources"]["retrospective_1977"]["visually_read_rows"][1]["launch"] = "17 JUN"
+        with self.assertRaisesRegex(ValueError, "parent 1977 row"):
+            a.validate(self.data, p)
+
+    def test_launch_is_printed_not_inferred_year(self):
+        self.assertTrue(all(row["launch"] == "18 JUN"
+                            for key in ("contemporary_rows", "retrospective_rows")
+                            for row in self.data[key]))
+
     def test_parent_hash_tamper(self):
         p = copy.deepcopy(self.parent)
         p["sources"]["retrospective_1977"]["sha256"] = "0" * 64

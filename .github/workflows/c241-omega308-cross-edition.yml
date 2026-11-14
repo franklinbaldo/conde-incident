@@ -10,6 +10,9 @@ on:
       - research/tle_custody/nasa_ssr_omega308_date_matches_C241-L67.md
       - tools/tle_ssr_omega308_date_matches_c241_l67.py
       - tests/test_tle_ssr_omega308_date_matches_c241_l67.py
+      - research/tle_custody/nasa_ssr_omega1_oct15_C241-L68.json
+      - research/tle_custody/nasa_ssr_omega1_oct15_C241-L68.md
+      - tools/tle_ssr_omega1_oct15_c241_l68.py
       - .github/workflows/c241-omega308-cross-edition.yml
   push:
     branches: [main]
@@ -22,6 +25,9 @@ on:
       - research/tle_custody/nasa_ssr_omega308_date_matches_C241-L67.md
       - tools/tle_ssr_omega308_date_matches_c241_l67.py
       - tests/test_tle_ssr_omega308_date_matches_c241_l67.py
+      - research/tle_custody/nasa_ssr_omega1_oct15_C241-L68.json
+      - research/tle_custody/nasa_ssr_omega1_oct15_C241-L68.md
+      - tools/tle_ssr_omega1_oct15_c241_l68.py
       - .github/workflows/c241-omega308-cross-edition.yml
 permissions:
   contents: read
@@ -66,3 +72,12 @@ jobs:
           fi
           echo "NEGATIVE_PDF_MUTANT_REJECTED"
           python3 tools/tle_ssr_omega308_date_matches_c241_l67.py
+      - name: Verify October 1963 Omega 1 original PDF, 13 negative mutants
+        run: |
+          set -euo pipefail
+          curl -fLsS --retry 3 --connect-timeout 15 --max-time 120 \
+            https://ntrs.nasa.gov/api/citations/19640000428/downloads/19640000428.pdf \
+            -o "$RUNNER_TEMP/ssr-oct15-1963.pdf"
+          echo "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2  $RUNNER_TEMP/ssr-oct15-1963.pdf" | sha256sum -c -
+          python3 tools/tle_ssr_omega1_oct15_c241_l68.py --self-test --pdf "$RUNNER_TEMP/ssr-oct15-1963.pdf"
+          python3 -O tools/tle_ssr_omega1_oct15_c241_l68.py --self-test --pdf "$RUNNER_TEMP/ssr-oct15-1963.pdf"
