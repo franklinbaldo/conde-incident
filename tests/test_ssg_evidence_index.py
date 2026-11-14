@@ -17,6 +17,10 @@ class EvidenceIndexTest(unittest.TestCase):
         artifacts = export.build()
         manifest = json.loads(artifacts[export.MANIFEST])
         self.assertEqual(manifest['schema'], 'conde.evidence-index/v1')
+        matrix_raw = (ROOT / export.MATRIX).read_bytes()
+        self.assertEqual(manifest['matrix_source'],
+                         {'path': str(export.MATRIX), 'bytes': len(matrix_raw),
+                          'sha256': export.digest(matrix_raw)})
         self.assertIsNone(manifest['independent_physical_observation_count'])
         self.assertFalse(manifest['absence_of_declared_dependency_proves_independence'])
         self.assertEqual(len(manifest['post_matrix_ids_not_in_curated_index']), 1)

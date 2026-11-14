@@ -125,6 +125,9 @@ export function audit(bundle) {
   assert.equal(manifest.matrix_git_blob_sha1,citations.matrix_git_blob_sha1);
   assert.equal(gitBlob(matrixBytes),manifest.matrix_git_blob_sha1,
     'Frozen matrix Git blob mismatch');
+  assert.deepEqual(manifest.matrix_source,{
+    path:MATRIX,bytes:matrixBytes.length,sha256:hash(matrixBytes),
+  },'Frozen matrix SHA-256/size/path mismatch');
   const matrixLines=matrixBytes.toString('utf8').split('\n');
   const matrixInventory=new Map(),labelCounts=new Map();
   for (const [index,line] of matrixLines.entries()) {
