@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { auditTlePair, auditTleSyntax } from '../static/js/ssg-tle-syntax.mjs';
+import { auditTlePair, auditTleSyntax, splitTlePairPaste } from '../static/js/ssg-tle-syntax.mjs';
 
 function makeLine(lineNumber, id) {
   // Synthetic bytes, not historical TLEs or complete validated fields.
@@ -43,4 +43,16 @@ test('audit deliberately remains minimal, not full TLE field validation', () => 
   const js = readFileSync('static/js/ssg-tle-syntax.mjs', 'utf8');
   assert.match(js, /Não testa campos orbitais completos/);
   assert.match(js, /NÃO autentica os dados/);
+});
+
+test('two-line paste splits only terminators, without trimming or repairing bytes', () => {
+  const first = makeLine(1, 528);
+  const second = makeLine(2, 528);
+  assert.deepEqual(splitTlePairPaste(first + '\n' + second), [first, second]);
+  assert.deepEqual(splitTlePairPaste(first + '\r\n' + second + '\r\n'), [first, second]);
+  assert.equal(splitTlePairPaste(first), null);
+  assert.equal(splitTlePairPaste('ISSUED BY UNKNOWN\n' + first + '\n' + second), null);
+  assert.equal(splitTlePairPaste(first + '\n' + second + '\nthird line'), null);
+  assert.deepEqual(splitTlePairPaste(' ' + first + '\n' + second), [' ' + first, second]);
+  assert.equal(auditTlePair(...splitTlePairPaste(' ' + first + '\n' + second)).valid, false);
 });

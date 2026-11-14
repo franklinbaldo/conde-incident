@@ -17,15 +17,29 @@ try {
       const response = await page.goto(new URL('simulacoes/tles/', base).toString(), { waitUntil: 'networkidle' });
       assert(response?.ok(), 'SSG TLE page HTTP failure');
       await page.locator('#ssg-tle-audit').waitFor({ state: 'visible' });
-      await page.getByLabel('Linha 1').fill(makeLine(1, 528));
-      await page.getByLabel('Linha 2').fill(makeLine(2, 528));
+      // Simulate a real clipboard payload (including Windows CRLF and a final
+      // terminator) while retaining every character inside each TLE line.
+      await page.getByLabel('Linha 1').focus();
+      await page.evaluate(text => {
+        const clipboard = new DataTransfer();
+        clipboard.setData('text/plain', text);
+        const event = new ClipboardEvent('paste', { bubbles: true, cancelable: true, clipboardData: clipboard });
+        document.getElementById('ssg-tle-line1').dispatchEvent(event);
+        if (!event.defaultPrevented) throw new Error('paired paste was not handled');
+      }, makeLine(1, 528) + '\r\n' + makeLine(2, 528) + '\r\n');
+      assert.equal(await page.getByLabel('Linha 1').inputValue(), makeLine(1, 528));
+      assert.equal(await page.getByLabel('Linha 2').inputValue(), makeLine(2, 528));
+      assert.equal(await page.evaluate(() => document.activeElement.id), 'ssg-tle-line2');
       const button = page.getByRole('button', { name: 'Verificar duas linhas' });
       const box = await button.boundingBox();
       assert(box && box.height >= 44, 'touch target below 44 CSS px');
       await button.click();
       assert.match(await page.locator('#ssg-tle-results').innerText(), /NÃO autentica os dados/);
       assert.equal(await page.evaluate(() => document.activeElement.id), 'ssg-tle-results');
+      // Edits invalidate the old success rather than leaving a stale PASS
+      // visible to keyboard and screen-reader users.
       await page.getByLabel('Linha 2').fill(makeLine(2, 527));
+      assert.equal(await page.locator('#ssg-tle-results').innerText(), '');
       await button.click();
       assert.match(await page.locator('#ssg-tle-results').innerText(), /não passaram/);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), true, 'horizontal overflow');
