@@ -147,7 +147,17 @@ try {
       .getAttribute('title'), 'Export reproducible Python code');
     assert.equal(await page.getByRole('button', { name: 'Export Python' }).count(), 1);
     assert.equal(await page.getByText('Models: SGP4, WGS84, J2, Solar-Min Thermosphere 1963', { exact: true }).count(), 1);
-    assert.equal(await page.getByText('NRO mission 7153 (Thor-Agena D / OPS 0180)', { exact: true }).count(), 1);
+    const mission = 'NRO mission 7153 (Thor-Agena D / OPS 0180)';
+    if (viewport.width < 768) {
+      const metadata = page.locator('header [data-lab-metadata]');
+      await metadata.locator('summary').click();
+      assert(await metadata.getByText(mission, { exact: true }).isVisible(),
+        'mission metadata must remain reachable inside the mobile disclosure');
+      await metadata.locator('summary').click();
+    } else {
+      assert.equal(await page.getByText(mission, { exact: true }).filter({ visible: true }).count(), 1,
+        'desktop mission metadata should remain visible');
+    }
     if (viewport.width < 768) await englishNav.locator('summary').click();
     await englishNav.getByRole('link', { name: /Summary & limits/ }).click();
     await page.waitForFunction(() => document.querySelector('header [role="status"]')?.textContent?.includes('Active section: Summary & limits'));
