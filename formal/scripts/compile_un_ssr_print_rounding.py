@@ -125,7 +125,7 @@ def build(un=None, nasa_model=None, nasa_ledgers=None, nasa_decay=None):
             "under integer-centiminute round-half-up or half-even conventions. "
             "The historical printer tie convention is UNKNOWN. These are "
             "SHARP bounds on a common-offset printed-table model, NOT historical "
-            "sensor accuracy, physical orbital dynamics, or a reentry location." 
+            "sensor accuracy, physical orbital dynamics, or a reentry location."
         )
     }
 

@@ -36,6 +36,10 @@ jobs:
           if grep -E 'sorryAx|unsafe|error:' core-axioms.log; then
             exit 1
           fi
+      - name: Check exact circular-MCMC balance and gauge model
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s formal/tests -p 'test_circular_mcmc_contract.py' -v
       - name: Verify curated documentary Cnn occurrence bridge to Lean
         run: |
           set -euo pipefail
