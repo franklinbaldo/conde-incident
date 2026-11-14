@@ -21,9 +21,13 @@ A pergunta atravessou o Atlântico em novembro de 1963. O relato atribuído à R
   <figcaption><strong>Onde fica Conde?</strong> O marcador indica aproximadamente a <em>sede municipal</em> na Bahia, não o local de qualquer objeto alegadamente encontrado em 1963. Coordenadas de referência: <a href="https://www.conde.ba.gov.br/site/dadosmunicipais">Prefeitura de Conde</a>; mapa: <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors</a>. <a href="https://www.openstreetmap.org/?mlat=-11.81&amp;mlon=-37.61#map=10/-11.81/-37.61">Abrir o mapa</a>.</figcaption>
 </figure>
 
+<a id="contexto-fbis" tabindex="-1"></a>
+
 ## De uma transmissão de rádio a um pedido de confirmação
 
 O ponto de partida está numa [folha do serviço de monitoramento FBIS](https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf), com cabeçalho atribuindo a notícia à **Rádio Tupi do Rio de Janeiro**, em 8 de novembro de 1963. O texto fala de uma esfera, aberturas envidraçadas, um corpo e uma cratera de quatro metros. Não identifica o autor do relato em Conde, nem alguém que tenha examinado o objeto. É uma notícia transmitida, não um registro de inspeção.
+
+[Examinar a ocorrência C01#1 no arquivo documental, sua origem e seus limites](/conde-incident/evidencias/arquivo/c01-1/). O documento original continua acessível acima; a ficha não transforma a transmissão em testemunho presencial.
 
 Uma anotação manuscrita na mesma folha, datada de **13 de novembro**, pede ao Departamento de Estado americano notícias sobre eventual acompanhamento da embaixada. Um relato que começou no rádio passou, assim, a circular pelos canais oficiais.
 
@@ -71,11 +75,15 @@ Esse detalhe não autentica, sozinho, a viagem do repórter, a origem da primeir
 
 Há ainda uma pequena armadilha no próprio arquivo: o **assunto** do aerograma A-628 menciona por engano **8 de novembro de 1964**, embora o documento esteja datado de **20 de novembro de 1963**, cite o telegrama de 14 de novembro de 1963 e trate claramente do episódio daquele ano. Um erro no cabeçalho não transforma a história num caso ocorrido um ano depois.
 
+<a id="contexto-nasa" tabindex="-1"></a>
+
 ## O que essa resposta muda na investigação
 
 O registro diplomático oferece uma **contestação contemporânea e atribuída** da narrativa da esfera. É uma evidência importante contra a ideia de que o relato radiofônico já representava um achado verificado. Não é, por outro lado, uma demonstração física de onde estava qualquer objeto espacial em 8 de novembro.
 
 A [lista de decaimentos da NASA, publicada em 15 de novembro de 1963](https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf#page=10), registra o dia **8 de novembro** para o objeto **1963-003B**, conhecido como NORAD 528. Ela não fornece hora ou lugar. Os telegramas sobre Conde não mencionam uma medição orbital desse objeto. **As duas trilhas documentais continuam separadas**, mesmo quando suas datas despertam curiosidade.
+
+[Examinar a ocorrência C197#1 no arquivo documental, sua fonte NASA e a limitação da data](/conde-incident/evidencias/arquivo/c197-1/). O registro não fornece hora ou coordenadas de reentrada.
 
 O passo seguinte é voltar ao Brasil de 1963: ler as páginas originais do *Diário de Notícias* e do *Jornal da Bahia*, identificar o crédito de cada matéria e procurar a notícia de ***O Globo*, de 8 de novembro**, mencionada em correspondência americana preservada no [Project Blue Book](https://catalog.archives.gov/id/302531012). Esses documentos podem ajudar a descobrir não apenas como a história foi desmentida, mas **de onde ela saiu**.
 
