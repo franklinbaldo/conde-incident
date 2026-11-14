@@ -33,9 +33,9 @@ jobs:
         run: |
           python3 -m tools.cgeo42_hcurb_iocs15_holdings
           python3 -m unittest discover -s tests -p 'test_cgeo42_hcurb_iocs15_holdings.py' -v
-      - name: Replay 2014 paper PDF from publisher
+      - name: Replay identical 2014 PDF from publisher legacy domain
         run: |
           curl -fsSL --retry 2 --connect-timeout 20 --max-time 90 \
-            'https://revistes.ub.edu/index.php/ScriptaNova/article/download/15027/18380' \
+            'https://www.ub.edu/geocrit/sn/sn-493/493-38.pdf' \
             -o "$RUNNER_TEMP/hcurb2014.pdf"
           python3 -m tools.cgeo42_hcurb_iocs15_holdings --pdf "$RUNNER_TEMP/hcurb2014.pdf"
