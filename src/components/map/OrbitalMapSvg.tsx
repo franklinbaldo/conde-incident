@@ -133,12 +133,12 @@ export function OrbitalMapSvg({
             </g>
           )}
           {displayed.map(id => (
-            <g key={'track-' + id}>
+            <g key={'track-' + id} data-layer="scenario-track" data-satellite={id}>
               {lines(tracks[id], COLORS[id], id === 528 ? 2.6 : 1.5)}
             </g>
           ))}
           {shouldShowScenarioConnections(showConnections, showSisters, Boolean(positions[528])) && (
-            <g>
+            <g data-layer="scenario-connections">
               {([527, 529] as const).map(id => {
                 const from = project(positions[528]!.longitude, positions[528]!.latitude);
                 const other = positions[id];
@@ -164,7 +164,7 @@ export function OrbitalMapSvg({
             if (!pos) return null;
             const p = project(pos.longitude, pos.latitude);
             if (!p.visible) return null;
-            return <g key={'satellite-' + id}>
+            return <g key={'satellite-' + id} data-layer="scenario-marker" data-satellite={id}>
               <circle cx={p.x} cy={p.y} r={id === 528 ? 7 : 5} fill={COLORS[id]} stroke="#fff" strokeWidth="1" />
               <text x={p.x + 10} y={p.y + 4} fill={COLORS[id]} fontSize="13" stroke="#081527"
                 strokeWidth="2" paintOrder="stroke">NORAD {id}</text>
