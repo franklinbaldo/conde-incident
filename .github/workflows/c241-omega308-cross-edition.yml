@@ -6,6 +6,10 @@ on:
       - research/tle_custody/nasa_ssr_omega308_cross_edition_C241-L66.md
       - tools/tle_ssr_omega308_cross_edition_c241_l66.py
       - tests/test_tle_ssr_omega308_cross_edition_c241_l66.py
+      - research/tle_custody/nasa_ssr_omega308_date_matches_C241-L67.json
+      - research/tle_custody/nasa_ssr_omega308_date_matches_C241-L67.md
+      - tools/tle_ssr_omega308_date_matches_c241_l67.py
+      - tests/test_tle_ssr_omega308_date_matches_c241_l67.py
       - .github/workflows/c241-omega308-cross-edition.yml
   push:
     branches: [main]
@@ -14,6 +18,10 @@ on:
       - research/tle_custody/nasa_ssr_omega308_cross_edition_C241-L66.md
       - tools/tle_ssr_omega308_cross_edition_c241_l66.py
       - tests/test_tle_ssr_omega308_cross_edition_c241_l66.py
+      - research/tle_custody/nasa_ssr_omega308_date_matches_C241-L67.json
+      - research/tle_custody/nasa_ssr_omega308_date_matches_C241-L67.md
+      - tools/tle_ssr_omega308_date_matches_c241_l67.py
+      - tests/test_tle_ssr_omega308_date_matches_c241_l67.py
       - .github/workflows/c241-omega308-cross-edition.yml
 permissions:
   contents: read
@@ -41,6 +49,8 @@ jobs:
           set -euo pipefail
           python3 -m unittest discover -s tests -p test_tle_ssr_omega308_cross_edition_c241_l66.py -v
           python3 -O -m unittest discover -s tests -p test_tle_ssr_omega308_cross_edition_c241_l66.py -v
+          python3 -m unittest discover -s tests -p test_tle_ssr_omega308_date_matches_c241_l67.py -v
+          python3 -O -m unittest discover -s tests -p test_tle_ssr_omega308_date_matches_c241_l67.py -v
       - name: Retrieve and verify both original PDFs, including negative mutant
         run: |
           set -euo pipefail
@@ -55,3 +65,4 @@ jobs:
             exit 1
           fi
           echo "NEGATIVE_PDF_MUTANT_REJECTED"
+          python3 tools/tle_ssr_omega308_date_matches_c241_l67.py
