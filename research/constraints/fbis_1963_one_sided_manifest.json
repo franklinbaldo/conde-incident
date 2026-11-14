@@ -1,0 +1,31 @@
+{
+  "schema": "conde.fbis-one-sided-event-exclusion/v1",
+  "preregistered_date": "2026-11-14",
+  "scope": "RIO_DE_JANEIRO_RADIO_1963_11_22",
+  "guard_minutes": 5,
+  "events": [
+    {
+      "id": "JFK_SHOTS",
+      "event_utc": "1963-11-22T18:30Z",
+      "required_claim": "reports that shots were fired at Kennedy",
+      "source_url": "https://www.archives.gov/research/jfk/warren-commission-report/chapter-1",
+      "source_digest_sha256": null
+    },
+    {
+      "id": "JFK_PRONOUNCED_DEAD",
+      "event_utc": "1963-11-22T19:00Z",
+      "required_claim": "reports Kennedy pronounced dead, not just shooting",
+      "source_url": "https://www.whitehouse.gov/jfk-files/",
+      "source_digest_sha256": null
+    },
+    {
+      "id": "LBJ_OATH",
+      "event_utc": "1963-11-22T20:38Z",
+      "required_claim": "reports Johnson already sworn in, not an intended oath",
+      "source_url": "https://www.whitehouse.gov/jfk-files/",
+      "source_digest_sha256": null
+    }
+  ],
+  "observed_fbis_items": [],
+  "note": "No historical FBIS item has been independently recovered, hashed and inspected for this test. Do not use hypothetical examples as evidence."
+}
