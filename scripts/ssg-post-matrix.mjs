@@ -68,6 +68,8 @@ export function auditBuiltPostMatrix(html,citations,bundle=readBundle()) {
   const doc=visibleDocument(html);
   assert.ok(doc.links.has('/conde-incident/evidencias/matriz/'),
     'Pós-matriz: falta retorno visível à matriz');
+  assert.ok(doc.links.has('/conde-incident/evidencias/arquivo/fontes/'),
+    'Pós-matriz: falta retorno visível ao índice de fontes');
 
   // A valid link or digest elsewhere on the page cannot authenticate a record.
   // Audit each rendered record separately against its canonical source and
@@ -213,7 +215,7 @@ export function postMatrixPage(citations,lineage,bundle=readBundle()) {
       item.related_matrix_occurrences.map(id=>'['+id+']('+locations.get(id)+')').join(' · '),'',
       `**Próxima fonte necessária:** ${esc(item.next_dependency)}`,'');
   }
-  lines.push('[Voltar ao arquivo documental](/conde-incident/evidencias/arquivo/) · [Consultar a matriz histórica](/conde-incident/evidencias/matriz/)');
+  lines.push('[Voltar ao arquivo documental](/conde-incident/evidencias/arquivo/) · [Consultar identificadores documentais](/conde-incident/evidencias/arquivo/fontes/) · [Consultar a matriz histórica](/conde-incident/evidencias/matriz/)');
   return ['---','type: Page','title: "Suplemento pós-matriz: documentos e pendências"',
     'description: "Pistas documentais posteriores à matriz, com custódia e incerteza explícitas."',
     'layout: page','language: pt-BR','date: "2026-11-14"',
