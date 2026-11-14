@@ -1,0 +1,76 @@
+{
+  "schema": "conde.archival_locator_custody/v1",
+  "id": "C241-LONTRA-R44",
+  "audit_date_utc": "2026-11-14",
+  "status": "CATALOGUE_ONLY_NO_1963_OBSERVATION_RETRIEVED",
+  "repository": {
+    "name": "Science Museum Group Collection",
+    "collection": "Geoffrey Perry/Kettering Group",
+    "collection_id": "KET",
+    "catalogue_url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110093443"
+  },
+  "new_locator": {
+    "id": "KET/A/6",
+    "catalogue_url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110118055",
+    "title": "Radio observations, satellite launches and related documents",
+    "extent": "one folder",
+    "description": "Item 1 describes radio observations of satellites arranged by year, 1960-1973",
+    "date_range_description": "1957-1981 overall; subset 1960-1973",
+    "has_1963_material_in_catalogue_date_range": true,
+    "has_verified_pages_for_1963": false,
+    "has_november_1963_observation_line": false,
+    "has_confirmed_527_528_529": false
+  },
+  "scope_controls": [
+    {
+      "id": "KET/A/5/2",
+      "catalogue_url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110093443",
+      "description": "Published children of Kettering Grammar School radio observation notebooks begin with year 1965",
+      "negative_scope": "No 1963 notebook shown among enumerated children; not proof of no 1963 observations in collection"
+    },
+    {
+      "id": "KET/A/3/1",
+      "catalogue_url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110093443",
+      "description": "Farnham station observation/correspondence file covers 1964-1965",
+      "negative_scope": "Not a 1963 source by its catalogued coverage; not proof archive has no older logs"
+    }
+  ],
+  "retrieval": {
+    "catalogue_inspected_via_web_viewer": true,
+    "api_use_documented_officially": true,
+    "api_terms_url": "https://www.sciencemuseumgroup.org.uk/our-work/our-collection/using-our-collection-api",
+    "direct_get_from_jatoba": {
+      "url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110118055",
+      "date_utc": "2026-11-14",
+      "http_status": 403,
+      "tls_verify_result": 0
+    },
+    "catalogue_binary_downloaded": false,
+    "catalogue_html_sha256": null,
+    "facsimile_retrieved": false,
+    "facsimile_sha256": null,
+    "facsimile_pages_read": 0
+  },
+  "targets": {
+    "international_designations": [
+      "1963-003A",
+      "1963-003B",
+      "1963-003C"
+    ],
+    "norad_ids": [
+      527,
+      528,
+      529
+    ],
+    "identification_verified": false,
+    "dated_observation_verified": false,
+    "independent_measurements_retrieved": 0,
+    "new_orbital_constraints_activated": 0
+  },
+  "next_steps": [
+    "Locate the 1963 subsection of KET/A/6 and specifically 7-9 November 1963, noting all timebases/frequencies/target IDs",
+    "Cross-check contemporaneous diary KET/A/1/09 and DSIR results KET/A/2/1; keep different record families distinct",
+    "Request a copy through institutional reproduction channel only with suitable authorization; no outreach sent"
+  ],
+  "outreach_sent": false
+}
