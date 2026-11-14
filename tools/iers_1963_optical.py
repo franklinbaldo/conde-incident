@@ -21,6 +21,7 @@ import numpy as np
 from iers_1963_frame import EOP, TIME
 from iers_1963_intraday import checked_source
 from iers_1963_teme import matrices_at, transform_covariance, _validated_vector
+from optical_wgs84_ray_range import first_earth_entry_km
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -134,6 +135,8 @@ def forward_optical(source: bytes, eop: dict, times: dict, utc: str,
                                   "height_m": float(station_height_m)},
         "earth_orientation": "IERS_RETROSPECTIVE_SOURCE_BYTES_AUTHENTICATED",
         "earth_occultation": "CLEAR_AGAINST_WGS84_ELLIPSOID_ONLY",
+        "wgs84_ray_first_earth_entry_km": first_earth_entry_km(
+            tuple(station_itrs), tuple(itrs_los)),
         "range_km": rho, "right_ascension_deg": math.degrees(alpha),
         "declination_deg": math.degrees(delta), "elevation_deg": elevation,
         "unit_line_of_sight_gcrs": u.tolist(),
