@@ -8,7 +8,7 @@
 {% if page is defined and page.author %}<meta name="author" content="{{ page.author }}">{% endif %}
 <link rel="stylesheet" href="/conde-incident/css/site.css"></head>
 <body><a class="skip-link" href="#main">Pular para conteúdo</a>
-<header class="masthead"><nav aria-label="Navegação principal">
+<header class="masthead"><div class="desktop-navigation"><nav aria-label="Navegação principal">
 <a href="/conde-incident/">Início</a>
 <a href="/conde-incident/stories/">Histórias</a>
 <a href="/conde-incident/cronologia/">Cronologia</a>
@@ -17,7 +17,16 @@
 <a href="/conde-incident/mapa/">Mapa</a>
 <a href="/conde-incident/simulacoes/">Simulações</a>
 <a href="/conde-incident/metodo/">Método</a>
-<a href="/conde-incident/lab/">Laboratório</a></nav></header>
+<a href="/conde-incident/lab/">Laboratório</a></nav></div><details class="mobile-navigation"><summary>Explorar as 9 seções</summary><nav aria-label="Navegação principal">
+<a href="/conde-incident/">Início</a>
+<a href="/conde-incident/stories/">Histórias</a>
+<a href="/conde-incident/cronologia/">Cronologia</a>
+<a href="/conde-incident/evidencias/">Evidências</a>
+<a href="/conde-incident/hipoteses/">Hipóteses</a>
+<a href="/conde-incident/mapa/">Mapa</a>
+<a href="/conde-incident/simulacoes/">Simulações</a>
+<a href="/conde-incident/metodo/">Método</a>
+<a href="/conde-incident/lab/">Laboratório</a></nav></details></header>
 <main id="main" class="wrap" tabindex="-1">{% block content %}{% endblock %}</main>
 <footer class="site-footer"><div class="wrap">
 <p>Documento, relato, hipótese e simulação são categorias diferentes.</p>

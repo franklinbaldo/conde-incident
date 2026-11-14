@@ -107,3 +107,16 @@ a:focus-visible,button:focus-visible,iframe:focus-visible{outline:3px solid #ffd
 #source-lookup-results li{overflow-wrap:anywhere;margin:1rem 0}
 #source-lookup-results li p{margin:.25rem 0;font-size:.85rem;line-height:1.65;color:var(--muted)}
 #source-lookup-retry{min-height:44px;padding:.65rem 1rem;cursor:pointer}
+
+/* Nine SSG destinations: desktop inline, mobile native disclosure without JS.
+   A closed <details> is absent from tab order; desktop clone is display:none. */
+.masthead .mobile-navigation{display:none}
+.masthead .mobile-navigation:not([open]) nav{display:none}
+.masthead .mobile-navigation summary{min-height:44px;cursor:pointer;padding:.75rem 1.25rem;font:700 1rem/1.5 system-ui,sans-serif;overflow-wrap:anywhere}
+.masthead .mobile-navigation summary:focus-visible{outline:3px solid #ffd278;outline-offset:-3px}
+@media(max-width:720px){
+  .masthead .desktop-navigation{display:none}
+  .masthead .mobile-navigation{display:block}
+  .masthead .mobile-navigation nav{display:flex;flex-direction:column;align-items:stretch;gap:0;padding:.2rem 1.25rem 1rem}
+  .masthead .mobile-navigation nav a{display:block;min-height:44px;padding:.6rem .25rem;white-space:normal;overflow-wrap:anywhere}
+}
