@@ -1,0 +1,232 @@
+{
+  "activation": false,
+  "dependency_graph": [
+    {
+      "activation": false,
+      "from": "C241-L50",
+      "independent_instrumental_observation": false,
+      "relation": "EDITORIAL_TABLE_VISUALLY_CHECKED",
+      "to": "QUEST1995:2313:p40"
+    },
+    {
+      "activation": false,
+      "from": "QUEST1995:2313:p40",
+      "independent_instrumental_observation": false,
+      "relation": "VEHICLE_ASSOCIATION_NOT_PIECE",
+      "to": "LAUNCH:1963-003"
+    },
+    {
+      "activation": false,
+      "from": "C241-L15",
+      "independent_instrumental_observation": false,
+      "relation": "NASA1964_AGGREGATE_LABEL_D",
+      "to": "LAUNCH:1963-003"
+    },
+    {
+      "activation": false,
+      "from": "C241-L48",
+      "independent_instrumental_observation": false,
+      "relation": "NRO1994_RETROSPECTIVE_TEXT_ONLY",
+      "to": "VEHICLE:2313"
+    },
+    {
+      "activation": false,
+      "from": "C241-L40",
+      "independent_instrumental_observation": false,
+      "relation": "MODERN_GCAT_LABEL_B",
+      "to": "VEHICLE:2313"
+    },
+    {
+      "activation": false,
+      "from": "QUEST1995:2313:p40",
+      "independent_instrumental_observation": false,
+      "relation": "AGREES_ON_D_INDEPENDENCE_UNKNOWN",
+      "to": "C241-L15"
+    },
+    {
+      "activation": false,
+      "from": "QUEST1995:2313:p40",
+      "independent_instrumental_observation": false,
+      "relation": "CONFLICTS_ON_B_AUTHOR_OVERLAP",
+      "to": "C241-L40"
+    },
+    {
+      "activation": false,
+      "from": "QUEST1995:2313:p40",
+      "independent_instrumental_observation": false,
+      "relation": "SAME_MISSION_CONTEXT_NOT_SENSOR",
+      "to": "C241-L48"
+    },
+    {
+      "activation": false,
+      "from": "LAUNCH:1963-003",
+      "independent_instrumental_observation": false,
+      "relation": "LAUNCH_MEMBERSHIP_NOT_HARDWARE_ID",
+      "to": "NORAD:528/1963-003B"
+    },
+    {
+      "activation": false,
+      "from": "NORAD:528/1963-003B",
+      "independent_instrumental_observation": false,
+      "relation": "UNVERIFIED_PHYSICAL_MAPPING",
+      "to": "H:528_PIECE_IDENTITY"
+    },
+    {
+      "activation": false,
+      "from": "H:528_PIECE_IDENTITY",
+      "independent_instrumental_observation": false,
+      "relation": "ENGINEERING_PIECE_RECORD_MISSING",
+      "to": "LATENT:528:hardware"
+    },
+    {
+      "activation": false,
+      "from": "C241-L40",
+      "independent_instrumental_observation": false,
+      "relation": "CATALOG_ZERO_NOT_A_MEASUREMENT",
+      "to": "LATENT:528:mass"
+    },
+    {
+      "activation": false,
+      "from": "C241-L50",
+      "independent_instrumental_observation": false,
+      "relation": "CONFLICT_OPEN",
+      "to": "H:2313_B_OR_D"
+    },
+    {
+      "activation": false,
+      "from": "H:2313_B_OR_D",
+      "independent_instrumental_observation": false,
+      "relation": "ENGINEERING_CONFIGURATION_MISSING",
+      "to": "LATENT:2313:stage"
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "H:2313_B_OR_D",
+      "status": "OPEN_UNDISCRIMINATED"
+    },
+    {
+      "id": "H:528_PIECE_IDENTITY",
+      "status": "OPEN_UNVERIFIED"
+    },
+    {
+      "id": "H:NASA_D_IMPLIES_528_MASS",
+      "status": "REJECTED_UNSUPPORTED_TRANSFER"
+    }
+  ],
+  "id": "ABELHA-C241-L50-01",
+  "independence": {
+    "agreement_d_is_two_independent_instruments": false,
+    "nasa_underlying_data_source_for_row": null,
+    "nro_pdf_verified": false,
+    "quest_gcat_author_overlap": true
+  },
+  "input_sha256": {
+    "research/tle_custody/gcat_mass_semantics_C241-L40.json": "f8c1c6e1d2c7fdc6e2226934b6835c6bcca116c2c566eaa9214617f3cd53edf4",
+    "research/tle_custody/nasa_sp4004_1963_group_custody_C241-L15.json": "fdfe30eb79febb998f5eae8b206a86175696218d6b332b38cdf24e00c15932b7",
+    "research/tle_custody/nro_7153_mission_scope_C241-L48.json": "ca257c02142276a68ad8d7c0c585045784fc39f0d176663232cfbcbce7dedebd",
+    "research/tle_custody/quest_stage_C241-L50.json": "b2932319722baef5119aec1332a4d353ed3f62415e6e545d8558a14c64a8678c"
+  },
+  "lean_candidate": "Conde1963.stage2313RequiresEngineeringIdentity",
+  "lean_status": "DOCUMENTARY_CANDIDATE_NOT_COMPILED_ORBITAL_PROOF",
+  "matrix_relationship": "NASA_DECAY_DATE_CONTEXT_NOT_LAUNCH_STAGE_PROOF",
+  "new_528_instrumental_observations": 0,
+  "next_test": "Find 1963 hardware configuration for 2313 and a debris-piece mapping for NORAD 528; obtain calibrated observation with UTC/station/frame/covariance.",
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "quest_source": {
+    "bytes": 14469995,
+    "has_1963_instrument_epoch_or_sigma": false,
+    "hash_scope": "WHOLE_1995_PDF_VISUALLY_CHECKED_ROW",
+    "orbit_as_printed": "459 x 533 x 81.9",
+    "pdf_page_index": 1,
+    "pdf_sha256": "9dec4037537ea648a41501381c62d0f6eadfbd4fad807d27eb1fd7f748eb1ed1",
+    "period_as_printed": "94.7",
+    "printed_page": 40,
+    "stage": "Thor Agena D",
+    "url": "https://planet4589.org/jcm/pubs/space/papers/1995/Quest95b.pdf",
+    "vehicle": "2313"
+  },
+  "related_matrix_occurrence": "C197#1",
+  "schema": "conde.quest-stage-scientific-bridge/v1",
+  "simulator_latent_parameters": [
+    {
+      "activation": false,
+      "id": "2313:stage",
+      "required_evidence": "1963 engineering configuration",
+      "uncertainty": "B_VS_D_UNRESOLVED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "528:hardware",
+      "required_evidence": "piece-specific structural attribution",
+      "uncertainty": "UNKNOWN_PIECE",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "528:mass",
+      "required_evidence": "piece-specific mass and error",
+      "uncertainty": "NOT_MEASURED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "528:separation_utc",
+      "required_evidence": "breakup epoch",
+      "uncertainty": "NOT_OBSERVED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "528:tracking_utc",
+      "required_evidence": "instrumental epoch",
+      "uncertainty": "NOT_OBSERVED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "528:tracking_station",
+      "required_evidence": "station and location",
+      "uncertainty": "NOT_OBSERVED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "528:tracking_frame",
+      "required_evidence": "reference frame and time scale",
+      "uncertainty": "NOT_OBSERVED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "528:tracking_covariance",
+      "required_evidence": "sensor uncertainty",
+      "uncertainty": "NOT_OBSERVED",
+      "value": null
+    }
+  ],
+  "source_occurrences": [
+    "C241-L50",
+    "C241-L15",
+    "C241-L48",
+    "C241-L40"
+  ],
+  "stage_conflict": [
+    {
+      "label": "Thor-Agena D",
+      "scope": "NASA1964_LAUNCH_GROUP",
+      "source": "C241-L15"
+    },
+    {
+      "label": "Thor Agena D",
+      "scope": "QUEST1995_VEHICLE2313",
+      "source": "C241-L50"
+    },
+    {
+      "label": "Thor Agena B",
+      "scope": "GCAT2026_LAUNCH_GROUP",
+      "source": "C241-L40"
+    }
+  ]
+}
