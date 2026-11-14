@@ -24,6 +24,7 @@
   --color-casefile-status: #eee8dd;
   --color-casefile-hover: #123d4d;
   --color-casefile-highlight: #e8f0ee;
+  --color-casefile-button-text: #ffffff;
   /* Compatibility API for existing SSG widgets and editorial components. */
   --paper: var(--color-page);
   --panel: var(--color-surface);
