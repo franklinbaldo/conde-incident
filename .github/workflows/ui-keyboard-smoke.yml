@@ -17,6 +17,7 @@ on:
       - 'src/components/OrbitalMap.tsx'
       - 'src/components/map/**'
       - 'tests/ui_keyboard_smoke.mjs'
+      - 'tests/ui_mobile_sections_smoke.mjs'
       - 'src/components/SourceCitationFeed.tsx'
       - 'tests/ui_documentary_archive_smoke.mjs'
       - 'tests/lab_python_export_failure_smoke.mjs'
@@ -76,6 +77,8 @@ jobs:
           exit 1
       - name: Browser keyboard and desktop/mobile screenshots
         run: node tests/ui_keyboard_smoke.mjs
+      - name: Chromium native mobile section navigation (320/375/640)
+        run: node tests/ui_mobile_sections_smoke.mjs
       - name: Chromium documentary archive provenance, links and reflow (320/390/1440)
         run: node tests/ui_documentary_archive_smoke.mjs
       - name: Chromium lazy-download failure and recovery (PT/EN)

@@ -63,13 +63,21 @@ try {
     assert.equal(focused.tag, 'MAIN');
     assert.equal(focused.id, 'main-content');
     assert.equal(focused.hash, before, 'skip link must not replace the hash-router route');
-    await page.getByRole('navigation', { name: 'Seções do laboratório' })
-      .getByRole('link', { name: /Rastreamento & Mapa/ }).click();
+    const sections = page.getByRole('navigation', { name: 'Seções do laboratório' });
+    if (viewport.width < 768) {
+      const chooser = sections.locator('summary');
+      assert.match(await chooser.innerText(), /Explorar 8 seções[\s\S]*Síntese e limites/);
+      await chooser.click();
+      assert.equal(await sections.locator('[data-mobile-tabs] a').count(), 8);
+    }
+    await sections.getByRole('link', { name: /Rastreamento & Mapa/ }).click();
+    if (viewport.width < 768) assert.equal(await sections.locator('details').getAttribute('open'), null);
     assert.equal(new URL(page.url()).hash, '#/map');
     // Hash changes synchronously; React state and aria-current update on a later tick.
     await page.waitForFunction(() => document.querySelector('nav a[aria-current="page"]')?.textContent?.includes('Rastreamento & Mapa'));
-    const current = await page.getByRole('navigation', { name: 'Seções do laboratório' })
-      .locator('[aria-current="page"]').textContent();
+    const current = await sections.locator(viewport.width < 768
+      ? '[data-mobile-tabs] [aria-current="page"]'
+      : '[data-desktop-tabs] [aria-current="page"]').textContent();
     assert.match(current || '', /Rastreamento & Mapa/);
     await page.waitForFunction(() => document.querySelector('header [role="status"]')?.textContent?.includes('Seção ativa: Rastreamento & Mapa'));
     assert.equal(await page.locator('header').getByRole('status').innerText(),
@@ -134,8 +142,8 @@ try {
     assert.equal(await page.getByRole('button', { name: 'Export Python' }).count(), 1);
     assert.equal(await page.getByText('Models: SGP4, WGS84, J2, Solar-Min Thermosphere 1963', { exact: true }).count(), 1);
     assert.equal(await page.getByText('NRO mission 7153 (Thor-Agena D / OPS 0180)', { exact: true }).count(), 1);
-    await page.getByRole('navigation', { name: 'Laboratory sections' })
-      .getByRole('link', { name: /Summary & limits/ }).click();
+    if (viewport.width < 768) await englishNav.locator('summary').click();
+    await englishNav.getByRole('link', { name: /Summary & limits/ }).click();
     await page.waitForFunction(() => document.querySelector('header [role="status"]')?.textContent?.includes('Active section: Summary & limits'));
     assert.equal(await page.locator('header').getByRole('status').innerText(),
       'Active section: Summary & limits', 'the announcement must follow further route changes');
@@ -198,8 +206,8 @@ try {
 
     // Check computed contrast in the browser, not just source CSS or a fixture.
     // These small labels distinguish model results and must meet WCAG AA 4.5:1.
-    await page.getByRole('navigation', { name: 'Laboratory sections' })
-      .getByRole('link', { name: /Inverse scenarios/ }).click();
+    if (viewport.width < 768) await englishNav.locator('summary').click();
+    await englishNav.getByRole('link', { name: /Inverse scenarios/ }).click();
     await page.getByRole('heading', { name: /Inverse Test:/ }).waitFor();
     const inverseLabel = page.getByText('Tempo do cenário UTC:', { exact: true });
     await inverseLabel.waitFor();
@@ -243,44 +251,6 @@ try {
     assert.equal(errors.length, 0, `uncaught page errors: ${errors.join('; ')}`);
     findings.push({ viewport: viewport.name, skip_target: focused.id, hash_preserved: true, nav_hash: '#/map', html_lang: 'en', overflow_px: horizontal.document - horizontal.viewport });
     await page.close();
-  }
-  // A direct link to a later tab must show the selected item even when the
-  // horizontal nav strip starts at scrollLeft=0 (320px, 375px, reflow width).
-  for (const width of [320, 375, 640]) {
-    const page = await browser.newPage({ viewport: { width, height: 800 } });
-    try {
-      await page.goto(origin + '#/documents', { waitUntil: 'domcontentloaded' });
-      const nav = page.getByRole('navigation', { name: 'Seções do laboratório' });
-      const active = nav.locator('[aria-current="page"]');
-      await active.waitFor();
-      const assertRevealed = async () => {
-        await page.waitForFunction(() => {
-          const el = document.querySelector('nav [aria-current="page"]');
-          if (!el) return false;
-          const tab = el.getBoundingClientRect();
-          const strip = el.closest('nav').getBoundingClientRect();
-          return tab.left >= strip.left + 12 && tab.right <= strip.right - 12;
-        }, null, { timeout: 3000 });
-        const bounds = await active.evaluate(el => {
-          const tab = el.getBoundingClientRect();
-          const strip = el.closest('nav').getBoundingClientRect();
-          return { left: tab.left, right: tab.right, stripLeft: strip.left, stripRight: strip.right };
-        });
-        assert(bounds.left >= bounds.stripLeft + 12 && bounds.right <= bounds.stripRight - 12,
-          'deep-linked selected tab hidden at ' + width + ': ' + JSON.stringify(bounds));
-        assert.equal(await page.evaluate(() => window.scrollY), 0,
-          'revealing the current tab must not scroll the article vertically');
-      };
-      assert.match(await active.innerText(), /Arquivo e proveniência/);
-      await assertRevealed();
-      if (width === 640) {
-        await page.setViewportSize({ width: 320, height: 800 });
-        await assertRevealed();
-      }
-      await page.screenshot({ path: `${out}/deep-link-documents-${width}.png` });
-    } finally {
-      await page.close();
-    }
   }
   // Verify the real HTML entrypoint with scripts disabled. This is a browser
   // fallback test, not a screen-reader evaluation or native 200% zoom test.

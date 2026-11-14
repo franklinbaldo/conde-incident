@@ -14,6 +14,7 @@ import {
   Calendar,
   Binary,
   ArrowLeft,
+  ChevronDown,
 } from 'lucide-react';
 
 export type TabId = LabTab;
@@ -31,7 +32,8 @@ export const Navigation: React.FC<NavigationProps> = ({
   setLang,
   onOpenPython,
 }) => {
-  const navRef = React.useRef<HTMLElement>(null);
+  const navRef = React.useRef<HTMLDivElement>(null);
+  const mobileMenuRef = React.useRef<HTMLDetailsElement>(null);
   const editorialContext = EDITORIAL_ROUTES[activeTab];
 
   // On narrow screens the tab strip scrolls horizontally. Deep links and
@@ -40,7 +42,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     const revealActiveTab = () => {
       const nav = navRef.current;
       const active = nav?.querySelector<HTMLElement>('[aria-current="page"]');
-      if (!nav || !active) return;
+      if (!nav || !active || !nav.offsetWidth) return;
       const strip = nav.getBoundingClientRect();
       const tab = active.getBoundingClientRect();
       const left = strip.left + 16;
@@ -193,7 +195,45 @@ export const Navigation: React.FC<NavigationProps> = ({
       </div>
 
       {/* Main Navigation Tabs */}
-      <nav ref={navRef} aria-label={lang === 'pt' ? 'Seções do laboratório' : 'Laboratory sections'} className="max-w-7xl mx-auto px-4 flex space-x-1 overflow-x-auto py-1.5 scrollbar-thin">
+      <nav aria-label={lang === 'pt' ? 'Seções do laboratório' : 'Laboratory sections'} className="max-w-7xl mx-auto px-4 py-1.5">
+        {/* A native, fully labelled list replaces the undiscoverable horizontal
+            strip at mobile/reflow widths. Desktop retains the compact tabs. */}
+        <details ref={mobileMenuRef} className="group md:hidden">
+          <summary className="flex min-h-11 list-none cursor-pointer items-center justify-between gap-3 rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-zinc-100 [&::-webkit-details-marker]:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
+            <span className="shrink-0 font-semibold">{lang === 'pt' ? 'Explorar 8 seções' : 'Explore 8 sections'}</span>
+            <span className="min-w-0 text-right text-cyan-300">{lang === 'pt' ? currentTab?.labelPt : currentTab?.labelEn}</span>
+            <ChevronDown className="h-4 w-4 shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
+          </summary>
+          <div data-mobile-tabs className="grid gap-1 pt-2 pb-1">
+            {tabs.map(tab => {
+              const isActive = activeTab === tab.id;
+              const Icon = tab.icon;
+              return (
+                <a
+                  key={tab.id}
+                  href={tabHref(tab.id)}
+                  aria-current={isActive ? 'page' : undefined}
+                  onClick={() => {
+                    const menu = mobileMenuRef.current;
+                    if (menu) {
+                      menu.open = false;
+                      menu.querySelector<HTMLElement>('summary')?.focus();
+                    }
+                  }}
+                  className={`flex min-h-11 items-center gap-3 rounded-md border px-3 py-2 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 \${
+                    isActive
+                      ? 'border-cyan-800 bg-zinc-800 text-cyan-300'
+                      : 'border-zinc-800 bg-zinc-950 text-zinc-200 hover:bg-zinc-800'
+                  }`}
+                >
+                  <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  <span>{lang === 'pt' ? tab.labelPt : tab.labelEn}</span>
+                </a>
+              );
+            })}
+          </div>
+        </details>
+        <div ref={navRef} data-desktop-tabs className="hidden md:flex space-x-1 overflow-x-auto scrollbar-thin">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -224,6 +264,7 @@ export const Navigation: React.FC<NavigationProps> = ({
             </a>
           );
         })}
+        </div>
       </nav>
       {/* Announce SPA route changes without moving keyboard focus or reading the entire main region. */}
       <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
