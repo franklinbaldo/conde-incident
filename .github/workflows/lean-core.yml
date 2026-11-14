@@ -129,6 +129,13 @@ jobs:
           python3 -m formal.scripts.compile_un_ssr_cross_compilation --check
           python3 -m unittest discover -s formal/tests -p 'test_un_ssr_cross_compilation.py' -v
 
+      - name: Check 26-cell nearest-tenth rounding sensitivity (C241-P34)
+        run: |
+          set -euo pipefail
+          python3 -m formal.scripts.compile_un_ssr_print_rounding --check
+          python3 -m unittest discover -s formal/tests -p 'test_un_ssr_print_rounding.py' -v
+          python3 -O -m unittest discover -s formal/tests -p 'test_un_ssr_print_rounding.py' -v
+
       - name: Certify maximal publication-level SSR survivors (C241-P21)
         run: |
           set -euo pipefail
