@@ -25,6 +25,8 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
       - run: bun run lint
+      - name: Test shareable laboratory language and hostile query strings
+        run: node --test tests/labLanguage.test.mjs
       - name: Audit casefile UX architecture and no-JS prototype
         run: node --test tests/ux-casefile-prototype.test.mjs
       - name: Build scientific lab at nested Pages path
