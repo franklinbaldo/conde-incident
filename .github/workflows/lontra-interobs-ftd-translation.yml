@@ -1,0 +1,31 @@
+name: Lontra FTD-HT-23-856-68 archival scope audit
+on:
+  pull_request:
+    paths:
+      - 'research/tle_custody/*LONTRA-R41*'
+      - 'tools/verify_interobs_ftd_translation.py'
+      - 'tests/test_interobs_ftd_translation.py'
+      - '.github/workflows/lontra-interobs-ftd-translation.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/tle_custody/*LONTRA-R41*'
+      - 'tools/verify_interobs_ftd_translation.py'
+      - 'tests/test_interobs_ftd_translation.py'
+      - '.github/workflows/lontra-interobs-ftd-translation.yml'
+  workflow_dispatch:
+jobs:
+  archival-scope:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Exact head SHA
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Offline manifest plus adversarial tests (both Python modes)
+        run: |
+          python3 tools/verify_interobs_ftd_translation.py
+          python3 -m unittest discover -s tests -p 'test_interobs_ftd_translation.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_interobs_ftd_translation.py' -v
