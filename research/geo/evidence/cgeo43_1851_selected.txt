@@ -1,0 +1,3 @@
+PastaTxt: 1851 Projeto USAF 63-32 - área A: SC.24-Z-D-IV
+_selectedValue: 681
+DocumentoImg: <img id="DocumentoImg" onDragStart="return false;" onMouseDown="return false;" />

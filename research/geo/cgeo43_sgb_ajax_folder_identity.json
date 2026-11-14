@@ -1,0 +1,73 @@
+{
+  "schema": "conde.geo.sgb-ajax-document-identity/v1",
+  "id": "CGEO-43",
+  "verified_on": "2026-11-14",
+  "source": "https://acervo.sgb.gov.br/DocReader/DocReader.aspx?bib=FotoUSAF",
+  "parent_ids": [
+    "CGEO-29",
+    "CGEO-30",
+    "CGEO-31"
+  ],
+  "session_note": "Every selected GET and its corresponding image AJAX POST were captured in the SAME requests.Session and preserved as paired raw byte responses. In both cases, AJAX silently selected folder 0335.",
+  "probes": [
+    {
+      "requested_pasta": "1850",
+      "pre_selection": {
+        "file": "research/geo/evidence/cgeo43_1850_selected.txt",
+        "raw_response_bytes": 585770,
+        "raw_sha256": "2aca849dce408aa55795fbcfc934eb34f1d8e9b2ee2513c66289a2d26d4f7ba0",
+        "excerpt_sha256": "8f4ad167cafcfb08b81d4bb306c6ce823759e79cedf9323e5e434703ea3f6410",
+        "value": "680",
+        "label": "1850 Projeto USAF 63-32 - área A: SC.24-Z-C-VI"
+      },
+      "ajax": {
+        "file": "research/geo/evidence/cgeo43_1850_ajax.txt",
+        "raw_response_bytes": 461612,
+        "raw_sha256": "e332fee01482e02aba8b5363cdcc657de5cf582424c5d7f52507fe583e16df23",
+        "excerpt_sha256": "535773dd9df68d54e5bb2a4334664bcc929b7092f30c8d941030fe0542299a3a",
+        "value": "1",
+        "label": "0335 Projeto USAF 63-32 - área A: SA.22-X-B-V"
+      }
+    },
+    {
+      "requested_pasta": "1851",
+      "pre_selection": {
+        "file": "research/geo/evidence/cgeo43_1851_selected.txt",
+        "raw_response_bytes": 585770,
+        "raw_sha256": "18ea7a783d5ff274e47883e1b268225b6457251f356a9aec16c9607380760dfa",
+        "excerpt_sha256": "479bb8b6562d70115bda4fa1e21efa80575825aad1a81cb8d53632f30352efc8",
+        "value": "681",
+        "label": "1851 Projeto USAF 63-32 - área A: SC.24-Z-D-IV"
+      },
+      "ajax": {
+        "file": "research/geo/evidence/cgeo43_1851_ajax.txt",
+        "raw_response_bytes": 461612,
+        "raw_sha256": "c54bf585dba1d9b3586fd3e2117a2714cbad1b825d42141f2079ee08bb96b4b6",
+        "excerpt_sha256": "9a6e4fe4d4be1f99813ac62390fa53d50071f5b076c603e096d0b6983aa075d8",
+        "value": "1",
+        "label": "0335 Projeto USAF 63-32 - área A: SA.22-X-B-V"
+      }
+    }
+  ],
+  "image_response_observed": {
+    "cache_derivative_bytes": 558245,
+    "jpeg_dimensions": [
+      3767,
+      3928
+    ],
+    "sha256": "21acae03404dae880b40c69565c841bf7a3cdf1dc392c11bfe1cbe83828a4bd0",
+    "same_digest_across_two_requests": true,
+    "attribution": "FOLDER_0335_ONLY",
+    "printed_year_range_on_unrelated_image": "1967-1969",
+    "handwriting": "Não voada pela USAF",
+    "individual_exposure_date_for_MI1850": null,
+    "flight_cover_for_MI1850": null,
+    "original_source_photoindex_Mi1850_acquired": false,
+    "caveat": "JPEG is a dynamic cache derivative of folder 0335, not original MI-1850 image"
+  },
+  "evidence_state": "SGB_PHOTOINDEX_AJAX_FALLBACK_FALSE_ATTRIBUTION_BLOCKED",
+  "historical_center_geometry": null,
+  "event_position_1963": null,
+  "can_constrain_orbital_reentry": false,
+  "next_test": "Use a real browser network trace to preserve Telerik state through the image callback, prove PastaTxt=1850 and selectedValue=680 in the same image-bearing response, then authenticate image bytes and flight dates."
+}
