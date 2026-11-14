@@ -24,8 +24,9 @@ try {
       ['Arquivo e proveniência', 'Arquivo documental', '/conde-incident/evidencias/arquivo/'],
       ['Auditoria de TLEs', 'Custódia documental dos TLEs', '/conde-incident/simulacoes/tles/custodia/'],
     ]) {
-      await page.getByRole('navigation', { name: 'Seções do laboratório' })
-        .getByRole('link', { name: new RegExp(tab) }).click();
+      const sections = page.getByRole('navigation', { name: 'Seções do laboratório' });
+      if (width < 768) await sections.locator('summary').click();
+      await sections.getByRole('link', { name: new RegExp(tab) }).click();
       const link = page.getByRole('link', { name: 'Abrir no Caderno: ' + label });
       await link.waitFor();
       assert.equal(await link.getAttribute('href'), expected);
