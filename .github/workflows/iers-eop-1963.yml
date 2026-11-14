@@ -14,6 +14,8 @@ on:
       - research/constraints/iers_1963_optical_lighttime_G60.md
       - research/constraints/iers_1963_optical_retarded_covariance_G61.md
       - tests/test_iers_1963_workflow_paths.py
+      - tests/test_iers_1963_lighttime_accel.py
+      - research/constraints/iers_1963_acceleration_sensitivity_G63.md
       - tools/optical_wgs84_ray_range.py
       - tools/iers_1963_optical_residual.py
       - tests/test_iers_1963_eop.py
@@ -52,6 +54,8 @@ on:
       - research/constraints/iers_1963_optical_lighttime_G60.md
       - research/constraints/iers_1963_optical_retarded_covariance_G61.md
       - tests/test_iers_1963_workflow_paths.py
+      - tests/test_iers_1963_lighttime_accel.py
+      - research/constraints/iers_1963_acceleration_sensitivity_G63.md
       - tools/optical_wgs84_ray_range.py
       - tools/iers_1963_optical_residual.py
       - tests/test_iers_1963_eop.py
@@ -110,6 +114,8 @@ jobs:
           python3 tools/iers_1963_teme.py --source /tmp/iers-1963-eop.bin --check
           python3 -m unittest discover -s tests -p 'test_optical_wgs84_ray_range.py' -v
           IERS_1963_SOURCE=/tmp/iers-1963-eop.bin python3 -m unittest discover -s tests -p 'test_iers_1963_optical.py' -v
+          python3 -m unittest discover -s tests -p 'test_iers_1963_lighttime_accel.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_iers_1963_lighttime_accel.py' -v
           python3 -m unittest discover -s tests -p 'test_iers_1963_workflow_paths.py' -v
           IERS_1963_SOURCE=/tmp/iers-1963-eop.bin python3 -m unittest discover -s tests -p 'test_iers_1963_optical_residual.py' -v
           python3 -m unittest discover -s tests -p 'test_optical_shared_state_parallax.py' -v
