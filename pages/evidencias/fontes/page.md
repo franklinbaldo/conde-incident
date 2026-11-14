@@ -28,6 +28,8 @@ Uma fonte pode aparecer em várias fichas; isso **não significa múltiplas obse
 
 ## Navegação sem JavaScript
 
+[Consultar os identificadores de fontes e suas fichas estáticas](/conde-incident/evidencias/arquivo/fontes/).
+
 [Percorrer as ocorrências e famílias no arquivo documental estático](/conde-incident/evidencias/arquivo/).
 
 [Consultar a matriz integral, inclusive ocorrências sem ficha](/conde-incident/evidencias/matriz/). O catálogo reverso não inclui vínculos pós-matriz como observações verificadas e não atribui probabilidades nem localização de queda.
