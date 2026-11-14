@@ -166,9 +166,7 @@ try {
     await exportTrigger.click();
     const dialog = page.getByRole('dialog', { name: 'norad528_reconstruction.py' });
     await dialog.waitFor();
-    // At mobile/reflow widths, all three modal actions must remain reachable.
-    // A wide filename and a non-wrapping toolbar previously pushed close
-    // and download beyond the visible dialog, even though keyboard focus worked.
+    // Mobile modal controls must remain reachable with wide filenames.
     const mobileLayout = await dialog.evaluate(node => {
       const header = node.children[0];
       const instructions = node.children[1];
@@ -227,9 +225,7 @@ try {
         fontSize: getComputedStyle(el).fontSize,
       })),
     ];
-    // Tailwind v4 resolves these classes to oklch() in Chromium. Convert actual
-    // rendered colors through a 1px sRGB canvas rather than parsing CSS strings
-    // as if every getComputedStyle(color) returned rgb().
+    // Convert rendered oklch colors to sRGB using Chromium canvas.
     const sampleRgb = await page.evaluate(samples => {
       const canvas = document.createElement('canvas');
       canvas.width = canvas.height = 1;
@@ -280,8 +276,7 @@ try {
     findings.push({ viewport: viewport.name, skip_target: focused.id, hash_preserved: true, nav_hash: '#/map', html_lang: 'en', overflow_px: horizontal.document - horizontal.viewport });
     await page.close();
   }
-  // Verify the real HTML entrypoint with scripts disabled. This is a browser
-  // fallback test, not a screen-reader evaluation or native 200% zoom test.
+  // Verify the no-JS entrypoint; not an assistive-device test.
   for (const viewport of [
     { name: 'desktop', width: 1440, height: 900 },
     { name: 'mobile', width: 375, height: 812 },
