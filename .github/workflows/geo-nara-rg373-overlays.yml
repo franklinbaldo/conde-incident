@@ -1,0 +1,47 @@
+name: CGEO-46 NARA RG373 overlay crosswalk
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo46_nara_rg373_overlays.json'
+      - 'research/geo/CGEO46_NARA_RG373_OVERLAYS.md'
+      - 'tools/cgeo46_nara_rg373.py'
+      - 'tests/test_cgeo46_nara_rg373.py'
+      - '.github/workflows/geo-nara-rg373-overlays.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo46_nara_rg373_overlays.json'
+      - 'research/geo/CGEO46_NARA_RG373_OVERLAYS.md'
+      - 'tools/cgeo46_nara_rg373.py'
+      - 'tests/test_cgeo46_nara_rg373.py'
+      - '.github/workflows/geo-nara-rg373-overlays.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-nara-guide:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - name: Checkout exact HEAD
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Test search key and nonpromotion contracts
+        run: |
+          python3 tools/cgeo46_nara_rg373.py
+          python3 -m unittest discover -s tests -p 'test_cgeo46_nara_rg373.py' -v
+      - name: Read institutional guide live (bytes + content anchors)
+        run: python3 tools/cgeo46_nara_rg373.py --live
+      - name: Verify clean checkout
+        run: |
+          git diff --check
+          test -z "$(git status --porcelain)"
+
