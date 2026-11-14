@@ -52,8 +52,8 @@ def replay(path):
 
 if __name__=="__main__":
     p=argparse.ArgumentParser()
-    p.add_argument("--pdf",type=Path)
+    p.add_argument("--pdf", type=Path, required=True, help="original Smithsonian RU398 PDF; mandatory for custody gate")
     a=p.parse_args()
     audit(json.loads(SOURCE.read_text(encoding="utf-8")))
-    if a.pdf and not replay(a.pdf):p.error("finding aid PDF mismatch")
-    print("R55 OK: finding aid verified; physical folders not opened")
+    if not replay(a.pdf):p.error("finding aid PDF mismatch")
+    print("R55 OK: original finding aid PDF hash and size verified; physical folders not opened")
