@@ -1,0 +1,89 @@
+{
+  "schema": "c241-l46-norad-spadats-context-v1",
+  "epistemic_status": "CONTEXT_ONLY_NOT_ACTIVATED",
+  "lineage": "Two chronological declassified USAF messages quoting NORAD/SPADATS about 1963-044; not independent orbital observations, and not the 1963-003 launch",
+  "target": {
+    "norad": 528,
+    "designator": "1963-003B",
+    "observation_utc": null,
+    "station": null,
+    "frame": null,
+    "sigma": null,
+    "decay_hour_utc": null,
+    "reentry_location": null,
+    "activation": false
+  },
+  "sources": [
+    {
+      "id": "C241-L46-D07",
+      "url": "https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/07.pdf",
+      "landing": "https://nsarchive.gwu.edu/document/29911-document-7-department-air-force-staff-message-branch-incoming-messages-12-november",
+      "sha256": "b1d6a37572e6c7ffa806f07f30ae714730a8d17724942638ac591c661bef97fe",
+      "bytes": 929016,
+      "pages": 6,
+      "document_date": "1963-11-12",
+      "message": "AF IN 20080",
+      "object_ids": [
+        687,
+        688
+      ],
+      "launch": "1963-044",
+      "findings": [
+        {
+          "page_index": 1,
+          "printed": "2 of 6",
+          "text": "NORAD Space Intelligence Bulletin 35-63, explicitly preliminary and revisable"
+        },
+        {
+          "page_index": 2,
+          "printed": "3 of 6",
+          "text": "Shemya radar 0642Z 11 Nov 1963; three objects detected, orbital elements for two; object 687 as of revolution 7"
+        },
+        {
+          "page_index": 3,
+          "printed": "4 of 6",
+          "text": "object 688, 1963-44B, orbital parameters as of revolution 7"
+        }
+      ],
+      "decay_window": null,
+      "measurement_528": null
+    },
+    {
+      "id": "C241-L46-D08",
+      "url": "https://nsarchive.gwu.edu/sites/default/files/documents/rr5xh6-kw4gj/08.pdf",
+      "landing": "https://nsarchive.gwu.edu/document/29912-document-8-department-air-force-staff-message-branch-incoming-messages-secret-14",
+      "sha256": "65452b827428bdbef37bf96fb915a1411c2798d5a16939d845abe561aa12e13e",
+      "bytes": 520901,
+      "pages": 3,
+      "document_date": "1963-11-14",
+      "message": "AF IN 23784 (corrected copy of AF IN 22976)",
+      "object_ids": [
+        687,
+        688
+      ],
+      "launch": "1963-044",
+      "findings": [
+        {
+          "page_index": 1,
+          "printed": "2 of 3",
+          "text": "object 688 stated to decay 2210Z to 2400Z on 12 Nov; object 687 still in orbit as of 1900Z 13 Nov, revolution 41"
+        },
+        {
+          "page_index": 2,
+          "printed": "3 of 3",
+          "text": "object 687 forecast to decay in next few days, not a measured time"
+        }
+      ],
+      "decay_window": {
+        "object_id": 688,
+        "date_utc": "1963-11-12",
+        "start": "2210Z",
+        "end": "2400Z",
+        "kind": "REPORTED_INTERVAL_FOR_DIFFERENT_OBJECT_NOT_SIGMA"
+      },
+      "measurement_528": null
+    }
+  ],
+  "next_search": "AF IN and NORAD Space Intelligence Bulletin reports covering 1963-003B / SPADATS 528 prior to 8 Nov 1963; request originals and tracking residuals, not infer from 687/688"
+}
+
