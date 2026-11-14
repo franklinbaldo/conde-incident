@@ -43,6 +43,25 @@ class EvidenceTests(unittest.TestCase):
     def test_source_sha(self):
         self.invalid(lambda d: d["source_copies"][1].update(sha256="0" * 64))
 
+    def test_narrative_cannot_plant_orbital_claim(self):
+        self.invalid(lambda d: d["inspected_context"].update(
+            interpretation=d["inspected_context"]["interpretation"]
+            + " A direct NORAD 528 measurement proves a Conde impact at 23:40 UTC."))
+
+    def test_visual_check_cannot_certify_unseen_tracking(self):
+        self.invalid(lambda d: d["inspected_context"].update(
+            visual_check=d["inspected_context"]["visual_check"]
+            + " Independent sensor tracking established the 528 impact."))
+
+    def test_lineage_cannot_claim_unretrieved_original_is_verified(self):
+        self.invalid(lambda d: d.update(
+            source_lineage=d["source_lineage"]
+            + "; original Russian and DoD reports now independently verified"))
+
+    def test_next_test_cannot_be_rewritten_as_confirmed_reentry(self):
+        self.invalid(lambda d: d.update(
+            next_test="Confirmed historic NORAD 528 reentry at Conde, Bahia"))
+
     def test_source_swapped(self):
         self.invalid(lambda d: d["source_copies"].reverse())
 
