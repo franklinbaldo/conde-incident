@@ -19,6 +19,8 @@ try {
     await page.goto(origin, { waitUntil: 'domcontentloaded' });
     await page.getByRole('heading', { level: 1 }).first().waitFor();
     if (lang === 'en') await page.getByRole('button', { name: 'English' }).click();
+    // Export is inside the native metadata disclosure in the compact shell.
+    if (width < 768) await page.locator('header [data-lab-metadata] summary').click();
     const opener = page.getByRole('button', { name: trigger }).first();
     await opener.click();
     const dialog = page.getByRole('dialog', { name: lang === 'pt' ? 'Exportação Python' : 'Python export' });
