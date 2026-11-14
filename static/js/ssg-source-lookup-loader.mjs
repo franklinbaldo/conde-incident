@@ -84,6 +84,19 @@ export async function loadCondeSourceLookup({baseUrl, fetcher=globalThis.fetch,
     'shard-digest');
   const evidence = decode(evidenceBytes);
   const index = decode(indexBytes);
+  // The reverse lookup can be from a different generation even when the
+  // frozen matrix and all coverage counts are identical. Bind its two
+  // declared input digests to the *independent* evidence manifest as well.
+  const sourcePaths = [
+    'public/data/conde-source-citations.json',
+    'public/data/conde-declared-dependence.json',
+  ];
+  requireTrue(Array.isArray(evidence.source_files)
+    && evidence.source_files.length === sourcePaths.length
+    && new Set(evidence.source_files.map(s => s?.path)).size === sourcePaths.length
+    && evidence.source_files.every(s => keysEqual(s, ['path', 'sha256'])
+      && sourcePaths.includes(s.path) && SHA.test(s.sha256)
+      && dependencies[s.path] === s.sha256), 'mixed-source-generation');
   requireTrue(index.schema === 'conde.source-reverse-lookup/v1'
     && index.matrix_git_blob_sha1 === evidence.matrix_git_blob_sha1
     && index.independent_physical_observation_count === null
