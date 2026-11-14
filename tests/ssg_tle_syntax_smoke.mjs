@@ -30,6 +30,20 @@ try {
       assert.equal(await page.getByLabel('Linha 1').inputValue(), makeLine(1, 528));
       assert.equal(await page.getByLabel('Linha 2').inputValue(), makeLine(2, 528));
       assert.equal(await page.evaluate(() => document.activeElement.id), 'ssg-tle-line2');
+      // Three-line files include an optional untrusted name line. It is shown
+      // as text only, and cleared when the actual orbital bytes change.
+      await page.getByLabel('Linha 1').focus();
+      await page.evaluate(text => {
+        const clipboard = new DataTransfer();
+        clipboard.setData('text/plain', text);
+        const event = new ClipboardEvent('paste', {bubbles: true, cancelable: true, clipboardData: clipboard});
+        document.getElementById('ssg-tle-line1').dispatchEvent(event);
+        if (!event.defaultPrevented) throw new Error('three-line paste was not handled');
+      }, '0 <img src=x onerror=alert(1)>\r\n' + makeLine(1, 528) + '\r\n' + makeLine(2, 528) + '\r\n');
+      assert.equal(await page.getByLabel('Linha 1').inputValue(), makeLine(1, 528));
+      assert.equal(await page.getByLabel('Linha 2').inputValue(), makeLine(2, 528));
+      assert.match(await page.locator('#ssg-tle-import-note').innerText(), /não autenticado/);
+      assert.equal(await page.locator('#ssg-tle-import-note img').count(), 0, 'untrusted title must be text, not HTML');
       const button = page.getByRole('button', { name: 'Verificar duas linhas' });
       const box = await button.boundingBox();
       assert(box && box.height >= 44, 'touch target below 44 CSS px');
@@ -42,6 +56,8 @@ try {
       // visible to keyboard and screen-reader users.
       await page.getByLabel('Linha 2').fill(makeLine(2, 527));
       assert.equal(await page.locator('#ssg-tle-results').innerText(), '');
+      assert.equal(await page.locator('#ssg-tle-import-note').isVisible(), false,
+        'editing must remove stale copied-name attribution');
       assert.equal(await page.getByLabel('Linha 2').getAttribute('aria-invalid'), null,
         'editing removes stale invalid state');
       await button.click();

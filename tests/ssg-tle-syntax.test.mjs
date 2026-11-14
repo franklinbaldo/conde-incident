@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { auditTlePair, auditTleSyntax, splitTlePairPaste } from '../static/js/ssg-tle-syntax.mjs';
+import { auditTlePair, auditTleSyntax, splitTlePairPaste, parseTleClipboard } from '../static/js/ssg-tle-syntax.mjs';
 
 function makeLine(lineNumber, id) {
   // Synthetic bytes, not historical TLEs or complete validated fields.
@@ -55,4 +55,26 @@ test('two-line paste splits only terminators, without trimming or repairing byte
   assert.equal(splitTlePairPaste(first + '\n' + second + '\nthird line'), null);
   assert.deepEqual(splitTlePairPaste(' ' + first + '\n' + second), [' ' + first, second]);
   assert.equal(auditTlePair(...splitTlePairPaste(' ' + first + '\n' + second)).valid, false);
+});
+
+
+test('three-line TLE clipboard imports an untrusted header without changing orbital columns', () => {
+  const first = makeLine(1, 528);
+  const second = makeLine(2, 528);
+  for (const title of ['0 EXEMPLO NÃO AUTENTICADO', 'NORAD SAMPLE 528']) {
+    const block = title + '\r\n' + first + '\r\n' + second + '\r\n';
+    assert.deepEqual(parseTleClipboard(block), {lines: [first, second], title});
+    assert.equal(auditTlePair(...parseTleClipboard(block).lines).valid, true);
+  }
+  assert.deepEqual(parseTleClipboard(first + '\n' + second), {lines: [first, second], title: null});
+  assert.equal(parseTleClipboard(''), null);
+  assert.equal(auditTlePair(...parseTleClipboard('HEADER\n' + first).lines).valid, false,
+    'a malformed two-line paste stays visible for diagnosis instead of being silently repaired');
+  assert.equal(parseTleClipboard('HEADER\n' + first + '\n' + second + '\nFOURTH'), null);
+  assert.equal(parseTleClipboard(first + '\n' + first + '\n' + second), null,
+    'a duplicate first orbital line cannot be mistaken for a title');
+  assert.equal(parseTleClipboard('LABEL\n' + first + '\n' + second.replace('2 ', '1 ')), null);
+  assert.equal(parseTleClipboard('X'.repeat(121) + '\n' + first + '\n' + second), null);
+  assert.equal(parseTleClipboard('TAB\tHEADER\n' + first + '\n' + second), null);
+  assert.match(readFileSync('pages/simulacoes/tles/page.md', 'utf8'), /não identifica nem autentica a fonte/);
 });
