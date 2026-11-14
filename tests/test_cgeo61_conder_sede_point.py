@@ -68,6 +68,12 @@ class TestConderSede(unittest.TestCase):
     def test_reject_wrong_spatial_reference(self):
         self.rejects(lambda d:d["source"].update(spatial_reference="EPSG:3857"))
 
+    def test_reject_substituted_source_sha256(self):
+        self.rejects(lambda d:d["source"]["service_queries"][0].update(raw_sha256="0"*64))
+
+    def test_reject_substituted_source_size(self):
+        self.rejects(lambda d:d["source"]["service_queries"][1].update(raw_bytes=490))
+
     def test_reject_new_official_coordinates(self):
         self.rejects(lambda d:d["point"].update(longitude=-37.60))
 
