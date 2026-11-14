@@ -1,0 +1,38 @@
+name: Abelha Polish service documentary bridge R59
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/polish_observation_service_C241_LONTRA_R65.json
+      - tools/export_polish_service_scientific_bridge.py
+      - tests/test_polish_service_scientific_bridge.py
+      - public/data/conde-polish-service-station-dependency.json
+      - .github/workflows/abelha-polish-service-r59.yml
+  push:
+    branches: [main]
+    paths:
+      - research/tle_custody/polish_observation_service_C241_LONTRA_R65.json
+      - tools/export_polish_service_scientific_bridge.py
+      - tests/test_polish_service_scientific_bridge.py
+      - public/data/conde-polish-service-station-dependency.json
+      - .github/workflows/abelha-polish-service-r59.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  scientific-bridge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact HEAD
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Rebuild bridge and check byte-identical exported graph
+        run: python3 tools/export_polish_service_scientific_bridge.py --check-site
+      - name: Adversarial tests, normal and optimized
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p 'test_polish_service_scientific_bridge.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_polish_service_scientific_bridge.py' -v
