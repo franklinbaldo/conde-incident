@@ -1,0 +1,32 @@
+name: Lontra Kettering series boundary R47
+
+on:
+  pull_request:
+    paths:
+      - "research/tle_custody/kettering_series_boundary_C241_LONTRA_R47.json"
+      - "research/tle_custody/evidence_matrix_C241-LONTRA-R47_2026-11-14.md"
+      - "tests/test_kettering_series_boundary_r47.py"
+      - ".github/workflows/lontra-kettering-series-r47.yml"
+  push:
+    branches: [main]
+    paths:
+      - "research/tle_custody/kettering_series_boundary_C241_LONTRA_R47.json"
+      - "research/tle_custody/evidence_matrix_C241-LONTRA-R47_2026-11-14.md"
+      - "tests/test_kettering_series_boundary_r47.py"
+      - ".github/workflows/lontra-kettering-series-r47.yml"
+  workflow_dispatch:
+
+jobs:
+  boundary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact source SHA
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Run actual real-source scope tests
+        run: |
+          python -m unittest discover -s tests -p 'test_kettering_series_boundary_r47.py' -v
+          python -O -m unittest discover -s tests -p 'test_kettering_series_boundary_r47.py' -v

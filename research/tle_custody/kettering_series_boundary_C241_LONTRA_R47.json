@@ -1,0 +1,112 @@
+{
+  "schema": "conde.archival_locator_custody/v1",
+  "id": "C241-LONTRA-R47",
+  "audit_date_utc": "2026-11-14",
+  "status": "KET_SERIES_BOUNDARY_NO_1963_TARGET_FOLIOS",
+  "archive": "Science Museum Group — Geoffrey Perry/Kettering Group (KET)",
+  "purpose": "Distinguir alcance de subseries, sem confundir início do catálogo com ausência de observações em 1963",
+  "catalogue_records": [
+    {
+      "shelfmark": "KET/A/1/09",
+      "url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110118009",
+      "title": "GE Perry desk diary for the year 1963",
+      "catalogue_period": "1963",
+      "catalogue_type": "diary",
+      "may_cover_1963": true,
+      "november_7_9_folios_inspected": false,
+      "contains_target_in_unseen_pages": null,
+      "facsimile_retrieved": false,
+      "facsimile_sha256": null
+    },
+    {
+      "shelfmark": "KET/A/2/1",
+      "url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110118047",
+      "title": "Observation results sent to DSIR and related correspondence for the years 1960–1964",
+      "catalogue_period": "1960-1964",
+      "catalogue_type": "correspondence_and_results",
+      "may_cover_1963": true,
+      "november_7_9_folios_inspected": false,
+      "contains_target_in_unseen_pages": null,
+      "facsimile_retrieved": false,
+      "facsimile_sha256": null
+    },
+    {
+      "shelfmark": "KET/A/6",
+      "url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110118055",
+      "title": "Satellite radio observations arranged by year, 1960–1973",
+      "catalogue_period": "1960-1973",
+      "catalogue_type": "annual_radio_material",
+      "may_cover_1963": true,
+      "november_7_9_folios_inspected": false,
+      "contains_target_in_unseen_pages": null,
+      "facsimile_retrieved": false,
+      "facsimile_sha256": null
+    },
+    {
+      "shelfmark": "KET/A/5/2/01",
+      "url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110118072",
+      "title": "Kettering Grammar School log book of satellite radio observations, March–December 1965",
+      "catalogue_period": "1965-03/1965-12",
+      "catalogue_type": "school_radio_logbook",
+      "may_cover_1963": false,
+      "november_7_9_folios_inspected": false,
+      "contains_target_in_unseen_pages": null,
+      "facsimile_retrieved": false,
+      "facsimile_sha256": null
+    },
+    {
+      "shelfmark": "KET/C/3/11",
+      "url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110121265",
+      "title": "File for Cosmos 22 (1963-45A) and Cosmos 24 (1963-52A) radio observations",
+      "catalogue_period": "1963",
+      "catalogue_type": "other_spacecraft_control",
+      "may_cover_1963": true,
+      "november_7_9_folios_inspected": false,
+      "contains_target_in_unseen_pages": null,
+      "facsimile_retrieved": false,
+      "facsimile_sha256": null
+    }
+  ],
+  "series_boundary": {
+    "KET_A_5_2_first_catalogued_volume": "KET/A/5/2/01",
+    "first_catalogued_volume_begins": "1965-03",
+    "excludes_1963_from_this_identified_volume": true,
+    "proves_no_kettering_observations_in_1963": false,
+    "proves_1963_diary_or_correspondence_empty": false,
+    "proves_unlisted_1963_logbooks_never_existed": false
+  },
+  "target": {
+    "norad": [
+      527,
+      528,
+      529
+    ],
+    "designations": [
+      "1963-003A",
+      "1963-003B",
+      "1963-003C"
+    ],
+    "window_utc": [
+      "1963-11-07",
+      "1963-11-09"
+    ],
+    "identified_in_retrieved_folios": false,
+    "identified_measurements_retrieved": 0,
+    "station_clock_frame_provenance_verified": false,
+    "new_orbital_constraints_activated": 0
+  },
+  "custody": {
+    "catalogue_text_consulted_by_web": true,
+    "raw_catalogue_html_retrieved_on_jatoba": false,
+    "raw_catalogue_html_http_status_on_jatoba": 403,
+    "facsimile_bytes_retrieved": 0,
+    "source_binary_sha256": null,
+    "external_contact_sent": false
+  },
+  "acquisition_priority": [
+    "KET/A/1/09: identificar folhas de 7–9 novembro 1963 e reproduzir anotação marginal com paginação e referência física",
+    "KET/A/6: localizar seção 1963, procurar labels 1963-003A/B/C, 527/528/529 e datas efetivas, não presumir ausência",
+    "KET/A/2/1: conferir remessas DSIR, data instrumental, estação e genealogia de resumos antes de alegar novo sensor",
+    "KET/C/3/11: usar Cosmos 22/24 somente como controle de funcionamento instrumental, sem transferência orbital"
+  ]
+}
