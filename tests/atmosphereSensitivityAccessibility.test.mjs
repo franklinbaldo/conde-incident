@@ -37,9 +37,9 @@ test('negative: removing one visible label causes the audit to fail', () => {
 });
 
 function assertSequentialSensitivityHeadings(source) {
-  const levels = [...source.matchAll(/<h([1-6])\\b/g)].map(match => Number(match[1]));
+  const levels = (source.match(/<h[1-6]/g) ?? []).map(tag => Number(tag.at(-1)));
   assert.deepEqual(levels, [1, 2, 2, 2], 'component headings follow H1 → H2 without skipped levels');
-  assert.equal((source.match(/<\\/h2>/g) ?? []).length, 3, 'all H2 headings close correctly');
+  assert.equal(source.split('</h2>').length - 1, 3, 'all H2 headings close correctly');
 }
 
 test('sensitivity heading outline is sequential and complete', () => {
