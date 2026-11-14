@@ -1,0 +1,36 @@
+name: C241 STL unit crosscheck R53
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/stl_unit_crosscheck_C241_LONTRA_R53.json
+      - research/tle_custody/evidence_matrix_C241-LONTRA-R53_2026-11-14.md
+      - tools/audit_stl_unit_crosscheck_r53.py
+      - tests/test_stl_unit_crosscheck_r53.py
+      - .github/workflows/c241-stl-unit-crosscheck-r53.yml
+  push:
+    branches: [main]
+    paths:
+      - research/tle_custody/stl_unit_crosscheck_C241_LONTRA_R53.json
+      - research/tle_custody/evidence_matrix_C241-LONTRA-R53_2026-11-14.md
+      - tools/audit_stl_unit_crosscheck_r53.py
+      - tests/test_stl_unit_crosscheck_r53.py
+      - .github/workflows/c241-stl-unit-crosscheck-r53.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  crosscheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Exact HEAD
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Check independently transcribed numerical controls
+        run: |
+          python3 -m unittest discover -s tests -p test_stl_unit_crosscheck_r53.py -v
+          python3 -O -m unittest discover -s tests -p test_stl_unit_crosscheck_r53.py -v
+          python3 -m tools.audit_stl_unit_crosscheck_r53

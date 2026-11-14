@@ -21,6 +21,23 @@ def require(condition: bool, msg: str) -> None:
         raise ValueError(msg)
 
 
+def round_nearest_tenth_positive(value: Fraction, *, tie: str) -> Fraction:
+    """Exact decimal quantization: no binary floats or inferred sensor sigma.
+
+    The two documented policies give different outputs only at an exact tie.
+    They are *counterfactual conventions*, not verified STL editorial rules.
+    """
+    if not isinstance(value, Fraction) or value < 0 or tie not in ('half-even', 'half-up'):
+        raise ValueError('positive rational and supported deterministic tie policy required')
+    units = 10 * value
+    lower = units.numerator // units.denominator
+    remainder = units - lower
+    if remainder > Fraction(1, 2) or (remainder == Fraction(1, 2) and
+        (tie == 'half-up' or (tie == 'half-even' and lower % 2 != 0))):
+        lower += 1
+    return Fraction(lower, 10)
+
+
 def inspect(doc: dict, source_bytes: bytes) -> dict:
     # An existing independently tested audit pins the editorial transcription.
     from tools.audit_stl_space_log_r51 import audit
@@ -49,6 +66,16 @@ def inspect(doc: dict, source_bytes: bytes) -> dict:
     intersect_at = max(intervals[0][0], intervals[1][0])
     require(intersect_at == min(intervals[0][1], intervals[1][1]),
             'printed period rounding intervals no longer touch')
+    # At their shared boundary x=94.65, two *different* deterministic tie
+    # conventions produce the adjacent printed values. No *single* deterministic
+    # convention can map one identical input to two different printed outputs.
+    tie_witness = intersect_at
+    tie_results = {}
+    for mode in ('half-even', 'half-up'):
+        rounded_tenths = int(10 * round_nearest_tenth_positive(tie_witness, tie=mode))
+        tie_results[mode] = f'{rounded_tenths // 10}.{rounded_tenths % 10}'
+    require(tie_results == {'half-even': '94.6', 'half-up': '94.7'},
+            'tenth-minute quantization witness drifted')
     return {
         'id': 'C241-CERVO-STL-PAIR-COHERENCE',
         'classification': 'DOCUMENTARY_INTERNAL_CONSISTENCY_NOT_INSTRUMENT_TRACK',
@@ -73,6 +100,12 @@ def inspect(doc: dict, source_bytes: bytes) -> dict:
             'intervals_touch_at_minutes': f'{float(intersect_at):.2f}',
             'tie_handling_unknown': True,
             'zero_underlying_difference_excluded': False,
+            'same_input_distinct_prints_under_one_deterministic_rule': False,
+            'same_input_distinct_prints_under_different_tie_rules': True,
+            'counterfactual_shared_boundary_minutes': str(tie_witness),
+            'counterfactual_tie_policy_outputs_minutes': tie_results,
+            'printed_periods_not_proven_same_physical_observable': True,
+            'no_published_rounding_policy_authenticated': True,
         },
         'two_body_invariance': {
             'claim': 'same printed mean height implies same Kepler period for any common unit scale, GM and Earth radius, if the columns are comparable',

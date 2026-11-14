@@ -1,0 +1,31 @@
+name: CGEO-50 NARA catalog ambiguity and can locator status
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo50_nara_locator_search.json'
+      - 'research/geo/CGEO50_NARA_LOCATOR_SEARCH.md'
+      - 'research/geo/cgeo49_nara_header_crosssheet.json'
+      - 'tools/cgeo50_nara_locator_search.py'
+      - 'tests/test_cgeo50_nara_locator_search.py'
+      - '.github/workflows/cgeo50-nara-locator.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Exact head gate
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+      - name: Offline lineage and adversarial tests
+        run: |
+          python3 tools/cgeo50_nara_locator_search.py
+          python3 -m unittest discover -s tests -p 'test_cgeo50_nara_locator_search.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_cgeo50_nara_locator_search.py' -v
+      - name: Live NARA catalog endpoint verification (not fixed hit counts)
+        run: python3 tools/cgeo50_nara_locator_search.py --live

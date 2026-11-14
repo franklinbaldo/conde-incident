@@ -1,0 +1,77 @@
+{
+  "schema": "conde.cgeo.nara-locator-search/v1",
+  "id": "CGEO-50",
+  "observed_on": "2026-11-14",
+  "parent_evidence": [
+    "CGEO-47",
+    "CGEO-48",
+    "CGEO-49"
+  ],
+  "nara_file_unit": "46716637",
+  "degree_square": "11S037W",
+  "record_group": "373",
+  "series_id": "306062",
+  "microfilm": "M1765",
+  "microfilm_roll": "317",
+  "candidate_overlay": "m1765-317-00248.jpg",
+  "candidate_exposure_labels": [
+    "26",
+    "16"
+  ],
+  "candidate_handwritten_number": "125374",
+  "number_printed_field": "O.P. FILE NO.",
+  "candidate_spot_number": null,
+  "candidate_original_negative_can": null,
+  "catalog_query_scope": "Free-text, general catalog search; results are not restricted to RG373; top results are unrelated; this is not an exhaustive negative search of film inventories",
+  "catalog_searches": [
+    {
+      "term": "125374",
+      "url": "https://catalog.archives.gov/proxy/records/search?limit=10&page=1&q=125374",
+      "http_status": 200,
+      "response_bytes": 40034,
+      "response_sha256": "fdb8ea200ef501ac80f4b44a73e17ac55e2885005692bbb8ad459b307479adce",
+      "hits_total": 183,
+      "first_result_title": "AMBASSADOR ARTHUR GOLDBERG SPEECH AT THE UNITED NATIONS",
+      "matched_1942_negative_confirmed": false
+    },
+    {
+      "term": "125370",
+      "url": "https://catalog.archives.gov/proxy/records/search?limit=10&page=1&q=125370",
+      "http_status": 200,
+      "response_bytes": 67956,
+      "response_sha256": "0ac13b7b0ba83d942c54a13b9af8b237eca3e83c17565685797331bce417ab58",
+      "hits_total": 258,
+      "first_result_title": "MODERNIZATION #40: IT HAPPENED IN HADAE-RI",
+      "matched_1942_negative_confirmed": false
+    },
+    {
+      "term": "133002",
+      "url": "https://catalog.archives.gov/proxy/records/search?limit=10&page=1&q=133002",
+      "http_status": 200,
+      "response_bytes": 44460,
+      "response_sha256": "71727149cd61ff9124b1e8046759f347ba32af996167d97744bc0cd65dc0a7bb",
+      "hits_total": 3451,
+      "first_result_title": "PRESS CONFERENCE USA: GRACE HALSO, AUTHOR OF SOUL SISTER",
+      "matched_1942_negative_confirmed": false
+    }
+  ],
+  "primary_research_guides": [
+    "https://www.archives.gov/research/cartographic/aerial-photography/rg-373-dia-foreign-aerial-photography",
+    "https://unwritten-record.blogs.archives.gov/2019/09/11/researching-foreign-aerial-photography/"
+  ],
+  "can_locator_available_on_open_web": false,
+  "can_locator_request_channel": "carto@nara.gov",
+  "archivist_contact_sent": false,
+  "can_locator_crosswalk_confirmed": false,
+  "next_verifiable_action": "Ask NARA Cartographic Branch to identify whether 125374 (O.P. FILE NO.) on sheet m1765-317-00248 is a spot number or relates to a different archival identifier, and locate film cans and exposure 26/16 if available; do not assume both labels are available originals",
+  "limitations": {
+    "public_search_proves_absence_of_negative": false,
+    "film_can_recovered": false,
+    "exposure_date_at_conde_verified": null,
+    "conde_urban_center_1963": null,
+    "event_location": null,
+    "geometry_georeferenced": false,
+    "orbital_constraints_activated": false,
+    "final_status": "PUBLIC_CATALOG_AMBIGUOUS_ARCHIVIST_LOOKUP_REQUIRED"
+  }
+}
