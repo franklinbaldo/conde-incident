@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="openstreetmap-cgimap 2.1.1 (4073297 spike-06.openstreetmap.org)" copyright="OpenStreetMap and contributors" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+ <node id="2160415973" visible="true" version="5" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8127901" lon="-37.6116358"/>
+ <node id="4602293827" visible="true" version="4" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8118195" lon="-37.6109787"/>
+ <node id="4602293836" visible="true" version="5" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8120446" lon="-37.6111083"/>
+ <node id="14316576646" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8127798" lon="-37.6115370"/>
+ <node id="14316576649" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8126574" lon="-37.6114658"/>
+ <node id="14316576651" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8127984" lon="-37.6115687"/>
+ <node id="14316608898" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8120902" lon="-37.6111358"/>
+ <way id="206041518" visible="true" version="4" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993">
+  <nd ref="2160415973"/>
+  <nd ref="14316576651"/>
+  <nd ref="14316576646"/>
+  <nd ref="14316576649"/>
+  <nd ref="14316608898"/>
+  <nd ref="4602293836"/>
+  <nd ref="4602293827"/>
+  <tag k="highway" v="tertiary"/>
+  <tag k="lanes" v="2"/>
+  <tag k="name" v="Praça Severino Vieira"/>
+  <tag k="oneway" v="yes"/>
+  <tag k="source" v="GPX"/>
+ </way>
+</osm>

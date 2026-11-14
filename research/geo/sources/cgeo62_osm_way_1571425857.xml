@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="openstreetmap-cgimap 2.1.1 (4073297 spike-06.openstreetmap.org)" copyright="OpenStreetMap and contributors" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+ <node id="14316576660" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8127019" lon="-37.6116640"/>
+ <node id="14316576661" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8127056" lon="-37.6116646"/>
+ <node id="14316576662" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8127094" lon="-37.6116621"/>
+ <node id="14316576663" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8127629" lon="-37.6115716"/>
+ <node id="14316576664" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8127637" lon="-37.6115676"/>
+ <node id="14316576665" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8127624" lon="-37.6115641"/>
+ <node id="14316576666" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8127403" lon="-37.6115520"/>
+ <node id="14316576667" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8124221" lon="-37.6113664"/>
+ <node id="14316576668" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8122377" lon="-37.6112588"/>
+ <node id="14316576669" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8120409" lon="-37.6111439"/>
+ <node id="14316576670" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8120317" lon="-37.6111597"/>
+ <node id="14316576671" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8119247" lon="-37.6110990"/>
+ <node id="14316576672" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8119345" lon="-37.6110824"/>
+ <node id="14316576673" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8119207" lon="-37.6110771"/>
+ <node id="14316576674" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8119095" lon="-37.6110770"/>
+ <node id="14316576675" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8119007" lon="-37.6110797"/>
+ <node id="14316576676" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8118924" lon="-37.6110873"/>
+ <node id="14316576677" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8118875" lon="-37.6110958"/>
+ <node id="14316576678" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8118847" lon="-37.6111060"/>
+ <node id="14316576679" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8118839" lon="-37.6111155"/>
+ <node id="14316576680" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8118861" lon="-37.6111256"/>
+ <node id="14316576681" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8118932" lon="-37.6111362"/>
+ <node id="14316576682" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8119014" lon="-37.6111420"/>
+ <node id="14316576683" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8119105" lon="-37.6111263"/>
+ <node id="14316576684" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8120157" lon="-37.6111925"/>
+ <node id="14316576685" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8120052" lon="-37.6112091"/>
+ <node id="14316576686" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993" lat="-11.8123198" lon="-37.6114146"/>
+ <way id="1571425857" visible="true" version="1" changeset="190984717" timestamp="2026-10-24T19:25:38Z" user="jpguimas11" uid="23571993">
+  <nd ref="14316576660"/>
+  <nd ref="14316576661"/>
+  <nd ref="14316576662"/>
+  <nd ref="14316576663"/>
+  <nd ref="14316576664"/>
+  <nd ref="14316576665"/>
+  <nd ref="14316576666"/>
+  <nd ref="14316576667"/>
+  <nd ref="14316576668"/>
+  <nd ref="14316576669"/>
+  <nd ref="14316576670"/>
+  <nd ref="14316576671"/>
+  <nd ref="14316576672"/>
+  <nd ref="14316576673"/>
+  <nd ref="14316576674"/>
+  <nd ref="14316576675"/>
+  <nd ref="14316576676"/>
+  <nd ref="14316576677"/>
+  <nd ref="14316576678"/>
+  <nd ref="14316576679"/>
+  <nd ref="14316576680"/>
+  <nd ref="14316576681"/>
+  <nd ref="14316576682"/>
+  <nd ref="14316576683"/>
+  <nd ref="14316576684"/>
+  <nd ref="14316576685"/>
+  <nd ref="14316576686"/>
+  <nd ref="14316576660"/>
+  <tag k="leisure" v="park"/>
+  <tag k="name" v="Praça Severino Vieira"/>
+ </way>
+</osm>
