@@ -89,11 +89,11 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
       {/* Intro Header */}
       <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6">
         <div className="space-y-1 max-w-3xl">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-800 text-cyan-300 text-xs font-mono">
+          <div className="inline-flex flex-wrap max-w-full min-w-0 items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-800 text-cyan-300 text-xs font-mono">
             <Wind className="w-3.5 h-3.5 text-cyan-400" />
-            <span>{isPt ? 'MODELAGEM TERMOESFÉRICA & ARRASTO' : 'THERMOSPHERIC DRAG MODELING'}</span>
+            <span className="min-w-0 break-words">{isPt ? 'MODELAGEM TERMOESFÉRICA & ARRASTO' : 'THERMOSPHERIC DRAG MODELING'}</span>
           </div>
-          <h1 className="text-lg font-bold text-zinc-100">
+          <h1 className="text-lg font-bold text-zinc-100 break-words">
             {isPt
               ? 'Análise de Sensibilidade do Decaimento Atmosférico'
               : 'Atmospheric Decay Sensitivity Analysis'}
@@ -110,7 +110,7 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 min-w-0">
         {/* Controls (7 Cols) */}
         <div className="lg:col-span-7 min-w-0 bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6 space-y-5">
-          <h3 className="text-sm font-bold text-zinc-100 flex items-center gap-2">
+          <h3 className="text-sm font-bold text-zinc-100 flex flex-wrap items-center gap-2 min-w-0 break-words">
             <Gauge className="w-4 h-4 text-cyan-400" />
             <span>{isPt ? 'Parâmetros Físicos e Ambientais de 1963' : '1963 Physical & Environmental Parameters'}</span>
           </h3>
@@ -208,7 +208,7 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
         {/* Reference Table (5 Cols) */}
         <div className="lg:col-span-5 min-w-0 bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-5 flex flex-col justify-between space-y-4">
           <div className="space-y-3">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2 min-w-0">
               <Calendar className="w-4 h-4 text-cyan-400" />
               <h3 className="text-sm font-bold text-zinc-100">
                 {isPt ? 'Tabela Histórica de Sensibilidade (Handoff)' : 'Historical Sensitivity Table (Handoff)'}
