@@ -1,0 +1,118 @@
+{
+  "schema": "conde.gaviao-retrospective-main/v1",
+  "audit_id": "G52",
+  "reviewed_on_utc_date": "2026-11-14",
+  "base_exclusive": "cf163c5841c33343346f6c966657e27724e0197d",
+  "head_inclusive": "cae934b92882dc34ed5dd9538e132a5905255014",
+  "first_parent_integrations": 12,
+  "dag_commits": 12,
+  "conventional_merge_commits": 0,
+  "historical_check_policy": "NOT_CHECKED unless individually inspected",
+  "deep_reviewed_change": "C241-LONTRA-R38 1965 INTEROBS HTML custody, integrated by #677",
+  "finding": {
+    "id": "G52-F1",
+    "severity": "SOURCE_CUSTODY_DISABLED_IN_OPTIMIZED_PYTHON_AND_NOT_REPLAYED_IN_CI",
+    "status": "RED_REPRODUCED_GREEN_LOCAL_PR_PENDING",
+    "red": "Original validator accepts synthetic source SHA tampering, false NORAD 527-529 identification, and activated orbital constraint under python3 -O; specialized CI does not retrieve or replay 57,146-byte HTML",
+    "green": "28 assert guards replaced by unconditional checks; true optimized subprocess regressions and source-byte replay in dedicated workflow",
+    "limitation": "Synthetic control-flow falsification, not evidence of real document tampering. HTML is a 1965 transcription of Sputnik 4 (1960 epsilon 3), not a 527-529 observation."
+  },
+  "integrations": [
+    {
+      "sha": "fc2db9581353974494695405aeb3d01409fa8f8e",
+      "subject": "research(tle): document Smithsonian 1963 optical tracking archive locators (C241-L43) (#673)",
+      "pr_number": 673,
+      "parents": 1,
+      "files_changed_first_parent": 5,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "cb08da95880371a3138c609909bc6a96775dfb73",
+      "subject": "🦅 G51: enforce Kyiv custody checks under optimized Python (#674)",
+      "pr_number": 674,
+      "parents": 1,
+      "files_changed_first_parent": 4,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "af2ebbdc61c3cfaf9bd7e9b6d7fc9cb18bd72139",
+      "subject": "93 🦎 SSG: índice textual verificável das 213 lacunas de curadoria (#675)",
+      "pr_number": 675,
+      "parents": 1,
+      "files_changed_first_parent": 12,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "234d2add5cb2c571e6e6f4cf96379a785c0f3261",
+      "subject": "95 🦦 C241-L38: fonte contemporânea INTEROBS identifica Kyiv 1023 e os volumes de Baja (#677)",
+      "pr_number": 677,
+      "parents": 1,
+      "files_changed_first_parent": 5,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "641d98a64d518e444b5c55e5c926dc06f4abc129",
+      "subject": "research(abelha): connect SAO 1963 archival locators to pending observables (#678)",
+      "pr_number": 678,
+      "parents": 1,
+      "files_changed_first_parent": 4,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "16ed1fdc93344a47631dcba3544e3bf50afb326d",
+      "subject": "95 🐙 C241-P26: cobertura auditável por ocorrência em dois feeds (#676)",
+      "pr_number": 676,
+      "parents": 1,
+      "files_changed_first_parent": 3,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "7acfae0835decd478eca57cd60e3bec857f46d6b",
+      "subject": "96 🦌 C241: posto exato da massa e testemunha de arrasto sem posterior (#679)",
+      "pr_number": 679,
+      "parents": 1,
+      "files_changed_first_parent": 4,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "e4d8a0eaa01067a5408e9ad005c9d99f69173ff9",
+      "subject": "🦀 CGEO-38: genealogia cartográfica IOCS 15→29→Soper 1914",
+      "pr_number": null,
+      "parents": 1,
+      "files_changed_first_parent": 5,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "aa71453ba4769678cdb18f0f04d0ac518046dc5a",
+      "subject": "85 🦫 G50 TEME→ITRS/GCRS state and covariance with IERS 1963 (#681)",
+      "pr_number": 681,
+      "parents": 1,
+      "files_changed_first_parent": 4,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "545a9baccffcd936dfa28043c2595ab2a645d311",
+      "subject": "90 🦊 UX-04: ida e retorno da reportagem às fontes FBIS e NASA (#683)",
+      "pr_number": 683,
+      "parents": 1,
+      "files_changed_first_parent": 6,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "1640d3722c0f1c041e44305d7227ff7adc8d4796",
+      "subject": "85 🦉 Caderno 29: imagem de Baja e registros INTEROBS de outro satélite (#684)",
+      "pr_number": 684,
+      "parents": 1,
+      "files_changed_first_parent": 1,
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "cae934b92882dc34ed5dd9538e132a5905255014",
+      "subject": "🐢 C241-L44: delimitar cobertura do SAO P-17 (scope-only)",
+      "pr_number": null,
+      "parents": 1,
+      "files_changed_first_parent": 4,
+      "historical_checks": "NOT_CHECKED"
+    }
+  ]
+}

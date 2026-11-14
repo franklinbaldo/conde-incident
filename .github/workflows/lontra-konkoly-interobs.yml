@@ -34,3 +34,10 @@ jobs:
         run: |
           python3 -m unittest discover -s tests -p 'test_konkoly_interobs_1963.py' -v
           python3 tools/verify_konkoly_interobs_1963.py
+      - name: Fetch pinned source and replay full-text checks
+        run: |
+          curl --fail --location --silent --show-error --max-time 45 \
+            'https://webarch.konkoly.hu/mitteilungen/Mitt059/059.html' \
+            -o "$RUNNER_TEMP/konkoly-059.html"
+          python3 tools/verify_konkoly_interobs_1963.py \
+            --html-original "$RUNNER_TEMP/konkoly-059.html"
