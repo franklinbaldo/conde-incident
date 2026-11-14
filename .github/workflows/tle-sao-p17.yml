@@ -1,0 +1,37 @@
+name: Tartaruga - SAO P17 scope and custody
+on:
+  pull_request:
+    paths:
+      - research/tle_custody/sao_p17_oct_dec_1963_scope_C241-L44.json
+      - tools/tle_sao_p17_coverage_c241_l44.py
+      - tests/test_tle_sao_p17_coverage_c241_l44.py
+      - .github/workflows/tle-sao-p17.yml
+  push:
+    branches: [main]
+    paths:
+      - research/tle_custody/sao_p17_oct_dec_1963_scope_C241-L44.json
+      - tools/tle_sao_p17_coverage_c241_l44.py
+      - tests/test_tle_sao_p17_coverage_c241_l44.py
+      - .github/workflows/tle-sao-p17.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  catalogue-scope:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Check exact HEAD and offline adversarial tests
+        run: |
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+          python3 -m unittest discover -s tests -p 'test_tle_sao_p17_coverage_c241_l44.py' -v
+          python3 tools/tle_sao_p17_coverage_c241_l44.py
+          git diff --check
+      - name: Verify original SAO PDF bytes and scope (live)
+        run: |
+          python3 -m pip install 'pypdf==5.5.0'
+          python3 tools/tle_sao_p17_coverage_c241_l44.py --live

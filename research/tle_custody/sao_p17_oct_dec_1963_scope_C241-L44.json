@@ -1,0 +1,88 @@
+{
+  "id": "C241-L44",
+  "type": "HISTORICAL_CATALOG_SCOPE_AUDIT",
+  "source": {
+    "institution": "Smithsonian Astrophysical Observatory",
+    "report": "SAO Special Report 275 / P-17 / NASA-CR-95872",
+    "ntrs_id": "19680020675",
+    "url": "https://ntrs.nasa.gov/api/citations/19680020675/downloads/19680020675.pdf",
+    "bibliography_url": "https://ntrs.nasa.gov/citations/19680020675",
+    "published": "1968-05-14",
+    "observations_interval": [
+      "1963-10-01",
+      "1963-12-31"
+    ],
+    "bytes": 10988993,
+    "sha256": "6b77e832e4273f7781cb61bfea7d38685c99d63e2f6b370a76d0b28a225ddf86",
+    "pages": 176,
+    "table_of_contents_pdf_zero_index": 2,
+    "scope_narrative_pdf_zero_index": 5,
+    "method_pdf_zero_index": 6
+  },
+  "included_designations": [
+    "1959 Alpha 1",
+    "1959 Eta 1",
+    "1960 Iota 2",
+    "1961 Omicron 1",
+    "1961 Omicron 2",
+    "1961 Alpha Delta 1",
+    "1962 Alpha Epsilon 1",
+    "1962 Beta Mu 1",
+    "1962 Beta Upsilon 1",
+    "1963 13A",
+    "1963 26A"
+  ],
+  "included_counts": [
+    425,
+    562,
+    937,
+    181,
+    133,
+    2246,
+    524,
+    1041,
+    158,
+    612,
+    364
+  ],
+  "researched_objects": [
+    "1963-003A",
+    "1963-003B",
+    "1963-003C"
+  ],
+  "observed_targets_in_this_publication": [],
+  "observational_fields_documented_for_listed_objects": [
+    "date",
+    "smoothed_preliminary_A1_time",
+    "time_rms_milliseconds",
+    "topocentric_ra_fk4_1950",
+    "topocentric_dec_fk4_1950",
+    "position_rms_arcseconds",
+    "station_id",
+    "film_frame",
+    "observation_id"
+  ],
+  "context_not_target_sigma": {
+    "position_rms_for_printed_rows_arcsec": 4,
+    "clock_uncertainty_range_milliseconds": [
+      0.5,
+      20
+    ]
+  },
+  "time_reference": "Smoothed preliminary A.1, conversion from WWV emitted in source; NOT automatically UTC",
+  "star_reference": "FK4 equator and equinox 1950.0; not TEME or modern ITRF",
+  "inference": "SELECTIVE_PUBLISHED_CATALOG_EXCLUDES_TARGETS_NOT_ALL_OBSERVATIONS",
+  "station_for_527_528_529": null,
+  "epoch_utc_for_527_528_529": null,
+  "raw_measurements_for_527_528_529": null,
+  "orbital_covariance_for_527_528_529": null,
+  "independent_target_measurements_recovered": 0,
+  "physical_constraints_activated": 0,
+  "conde_impact_location": "INDETERMINATE",
+  "caveats": [
+    "No claim that a Baker-Nunn station did not observe these targets",
+    "No claim that this report exhausts SAO film holdings or NORAD observations",
+    "Do not transfer catalog general accuracy to NORAD 528",
+    "No date/time/location of reentry established"
+  ]
+}
