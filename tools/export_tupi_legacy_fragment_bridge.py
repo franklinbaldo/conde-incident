@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""C02 FBIS and the unverified Última Hora parallel, as a nonphysical graph.
+"""C02 FBIS and the verified Última Hora page, as a nonphysical graph.
 
 A wording coincidence is a research question, not evidence of transmission.
 Sources are checked against the frozen matrix and canonical documentary feed.
@@ -19,6 +19,11 @@ EDITORIAL = Path('research/editorial/tupi_fragmentos_20261113.md')
 LINEAGES = Path('research/provenance/lineages.json')
 PARENT = Path('public/data/conde-declared-dependence.json')
 LOCATOR = Path('research/archive/ultima_hora_pe_00471_1963_locator_20261113.json')
+VERIFIED = Path('research/editorial/ultima_hora_00471_original_verificado_20261114.md')
+VERIFIED_SHA256 = '781a53a4a1051c2af9d4260581c4ce72931898b6dab5cbdad8dc11dca8893426'
+PDF_SHA256 = 'e121d6ea9784bcb77a02e1a6e3c453f23987103940f5993190237c45499a95ec'
+PDF_URL = 'https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00471.pdf'
+PDF_NODE = 'DOC-UH-PE-1963-00471-PDF-20261114'
 LOCATOR_SHA256 = 'cf761332644243ec2943d4fd299d292408176c9a1dd5125295a63d16a8ab41a8'
 EDITORIAL_SHA256 = '9ab9ecb181bbe262e5696bed8fcf48ab4258a400fc1345bf94380c93f9f589eb'
 FBIS = 'FBIS_EOP_UAP_D001'
@@ -36,11 +41,22 @@ def encoded(value: dict) -> bytes:
 
 
 def build(parent: dict, lineage: dict, editorial_bytes: bytes, parent_sha256: str,
-          locator_bytes: bytes) -> dict:
+          locator_bytes: bytes, verified_bytes: bytes) -> dict:
     require(hashlib.sha256(editorial_bytes).hexdigest() == EDITORIAL_SHA256,
             'editorial snapshot changed; re-audit source before updating pin')
     require(hashlib.sha256(locator_bytes).hexdigest() == LOCATOR_SHA256,
             'newspaper locator bytes changed; independently re-audit')
+    require(hashlib.sha256(verified_bytes).hexdigest() == VERIFIED_SHA256,
+            'newspaper facsimile verification ledger changed; re-audit before repinning')
+    verified_text = verified_bytes.decode('utf-8')
+    require(PDF_URL in verified_text and PDF_SHA256 in verified_text
+            and '4.337.426 bytes' in verified_text
+            and '8 páginas' in verified_text
+            and 'num buraco de quatro metros de profundidade' in verified_text
+            and 'página digital 8' in verified_text
+            and 'GET HTTPS reproduzido em 14/11/2026' in verified_text
+            and 'não demonstrada' in verified_text,
+            'newspaper ledger identity, page, custody or inference limit changed')
     locator = json.loads(locator_bytes)
     require(locator['id'] == 'DOC-UH-PE-1963-00471-LOCATOR'
             and locator['edition'] == '00471'
@@ -112,6 +128,8 @@ def build(parent: dict, lineage: dict, editorial_bytes: bytes, parent_sha256: st
              'identity': 'EDITORIAL_INTERPRETATION_NOT_PRIMARY_FACSIMILE'},
             {'path': str(LOCATOR), 'sha256': LOCATOR_SHA256,
              'identity': 'FBN_DOCREADER_EDITION_LOCATOR_NOT_PAGE_FACSIMILE'},
+            {'path': str(VERIFIED), 'sha256': VERIFIED_SHA256,
+             'identity': 'ORIGINAL_NEWSPAPER_FACSIMILE_VERIFIED_LEDGER_NOT_TUPI_AUDIO'},
         ],
         'documentary_occurrences': checked,
         'comparison': {
@@ -125,20 +143,28 @@ def build(parent: dict, lineage: dict, editorial_bytes: bytes, parent_sha256: st
             'other_source_id': UH,
             'other_source_family': 'ULTIMA_HORA_NORDESTE_NEWSPAPER',
             'other_source_url': locator['catalog_url'],
-            'other_locator': 'Última Hora Nordeste, edição 00471; IDs físicos '
-                             '5339–5346; 5346 apenas candidato à p.8 impressa',
+            'other_locator': 'Última Hora Nordeste, edição 00471; IDs DocReader '
+                             '5339–5346 não equivalem a paginação impressa; '
+                             'PDF original tem página digital 8 verificada',
             'other_document_locator_id': locator['id'],
             'other_page8_candidate_url': locator['docreader_requested_page8_candidate_url'],
             'other_page8_raster_retrieved': locator['docreader_page8_raster_retrieved'],
             'other_printed_page8_inspected': locator['page_8_inspected'],
+            'other_verified_digital_page8_inspected': True,
+            'other_pdf_page_count_verified': 8,
+            'other_pdf_get_status_verified': 200,
+            'other_pdf_get_date_verified': '2026-11-14',
+            'other_pdf_bytes_verified': 4337426,
+            'other_original_facsimile_node': PDF_NODE,
             'other_pdf_url': locator['pdf_exact_url'],
             'other_pdf_head_status': locator['pdf_head_status'],
             'earlier_wrong_docreader_url': locator['earlier_catalog_url'],
             'earlier_wrong_docreader_edition': locator['earlier_catalog_selected_edition'],
             'other_matrix_occurrence_ref': None,
-            'other_original_pdf_sha256': None,
+            'other_original_pdf_sha256': PDF_SHA256,
             'other_reported_claim': 'FOUR_METRE_HOLE_IN_DISTINCT_STOLEN_STATUES_NEWS',
-            'other_evidence_status': 'REPORTED_BY_PREVIOUS_SEMANTIC_STUDY_NOT_REINSPECTED_HTTP_403',
+            'other_evidence_status': 'ORIGINAL_PDF_PAGE8_TEXT_VERIFIED_NO_PHYSICAL_EVENT',
+            'other_previous_403_status': 'HISTORICAL_ACCESS_FAILURE_NOT_CURRENT_CUSTODY',
             'direct_textual_dependency': None,
             'independent_witness_count': None,
             'chronological_priority_proven': False,
@@ -152,10 +178,10 @@ def build(parent: dict, lineage: dict, editorial_bytes: bytes, parent_sha256: st
         ],
         'candidate': {
             'id': 'TUPI_1963_NARRATIVE_TRANSMISSION_PATH',
-            'observable': 'shared_four_metre_wording_in_two_reported_texts',
-            'inference_operator': 'TEXTUAL_LINEAGE_COMPARISON_PENDING_SOURCE_REINSPECTION',
+            'observable': 'four_metre_claim_present_in_1963_newspaper_and_FBISED_TUPI',
+            'inference_operator': 'TEXTUAL_LINEAGE_COMPARISON_PENDING_TUPI_ORIGINAL_AND_CHRONOLOGY',
             'missing_conditions': [
-                'recapture_00471_page_8_original_facsimile_and_digest',
+                'original_portuguese_tupi_audio_or_transcript_for_literal_comparison',
                 'broadcast_audio_or_script_and_source_chain',
                 'edition_print_and_broadcast_time_zones_with_provenance',
                 'textual_direction_and_independence_test',
@@ -170,16 +196,17 @@ def build(parent: dict, lineage: dict, editorial_bytes: bytes, parent_sha256: st
         'graph_edges': [
             {'from': TUPI, 'to': FBIS, 'kind': 'TRANSCRIBED_BY'},
             {'from': FBIS, 'to': pg.matrix_ref('C02#1'), 'kind': 'REPORTS_NOT_OBSERVES'},
-            {'from': locator['id'], 'to': UH,
-             'kind': 'LOCATES_EDITION_NOT_PAGE_FACSIMILE'},
+            {'from': locator['id'], 'to': PDF_NODE,
+             'kind': 'EDITION_LOCATOR_LINKED_TO_VERIFIED_ORIGINAL_PDF'},
+            {'from': PDF_NODE, 'to': UH, 'kind': 'PAGE8_PRINTED_CLAIM_VERIFIED'},
             {'from': UH, 'to': 'FOUR_METRE_WORDING_TUPI_VS_UH00471',
-             'kind': 'SECONDARY_READING_ONLY'},
+             'kind': 'CONTEMPORARY_TEXT_COMPARISON_NO_SHARED_EVENT'},
             {'from': pg.matrix_ref('C02#1'), 'to': 'FOUR_METRE_WORDING_TUPI_VS_UH00471',
              'kind': 'WORDING_COMPARISON_NOT_DEPENDENCY_PROOF'},
             {'from': 'FOUR_METRE_WORDING_TUPI_VS_UH00471', 'to': 'TUPI_1963_NARRATIVE_TRANSMISSION_PATH',
              'kind': 'PENDING_TEXTUAL_INFERENCE'},
         ],
-        'delta_links': 6,
+        'delta_links': 7,
         'delta_physical_domain': 'NONE',
         'independent_528_physical_observation_count': None,
     }
@@ -191,7 +218,7 @@ def from_repo(root: Path = ROOT) -> dict:
     require(raw == encoded(documentary.build(root)), 'stale or altered parent graph')
     return build(json.loads(raw), json.loads((root / LINEAGES).read_text()),
                  (root / EDITORIAL).read_bytes(), hashlib.sha256(raw).hexdigest(),
-                 (root / LOCATOR).read_bytes())
+                 (root / LOCATOR).read_bytes(), (root / VERIFIED).read_bytes())
 
 
 def main() -> None:

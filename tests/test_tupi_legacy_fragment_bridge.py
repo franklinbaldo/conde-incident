@@ -18,12 +18,14 @@ class TupiLegacyFragmentTests(unittest.TestCase):
         cls.lineage = json.loads((ROOT / bridge.LINEAGES).read_text())
         cls.editorial = (ROOT / bridge.EDITORIAL).read_bytes()
         cls.locator = (ROOT / bridge.LOCATOR).read_bytes()
+        cls.verified = (ROOT / bridge.VERIFIED).read_bytes()
 
-    def build_with(self, parent=None, lineage=None, editorial=None, locator=None):
+    def build_with(self, parent=None, lineage=None, editorial=None, locator=None, verified=None):
         return bridge.build(parent if parent is not None else self.parent,
                             lineage if lineage is not None else self.lineage,
                             editorial if editorial is not None else self.editorial, 'testsha',
-                            locator if locator is not None else self.locator)
+                            locator if locator is not None else self.locator,
+                            verified if verified is not None else self.verified)
 
     def test_three_occurrences_single_transmission_family(self):
         self.assertEqual([x['occurrence_ref'].rsplit(':', 1)[-1] for x in self.record['documentary_occurrences']],
@@ -33,7 +35,12 @@ class TupiLegacyFragmentTests(unittest.TestCase):
 
     def test_other_newspaper_is_reported_not_a_new_eyewitness(self):
         x = self.record['comparison']
-        self.assertIsNone(x['other_original_pdf_sha256'])
+        self.assertEqual(x['other_original_pdf_sha256'], bridge.PDF_SHA256)
+        self.assertTrue(x['other_verified_digital_page8_inspected'])
+        self.assertEqual(x['other_pdf_get_status_verified'], 200)
+        self.assertEqual(x['other_pdf_bytes_verified'], 4337426)
+        self.assertEqual(x['other_pdf_page_count_verified'], 8)
+        self.assertEqual(x['other_original_facsimile_node'], bridge.PDF_NODE)
         self.assertIsNone(x['other_matrix_occurrence_ref'])
         self.assertIsNone(x['direct_textual_dependency'])
         self.assertIsNone(x['independent_witness_count'])
@@ -48,10 +55,15 @@ class TupiLegacyFragmentTests(unittest.TestCase):
         self.assertEqual(c['other_pdf_head_status'], 403)
         self.assertFalse(c['other_page8_raster_retrieved'])
         self.assertFalse(c['other_printed_page8_inspected'])
-        self.assertEqual(self.record['delta_links'], 6)
+        self.assertEqual(self.record['delta_links'], 7)
         self.assertIn({'from': c['other_document_locator_id'],
-                       'to': bridge.UH, 'kind': 'LOCATES_EDITION_NOT_PAGE_FACSIMILE'},
+                       'to': bridge.PDF_NODE,
+                       'kind': 'EDITION_LOCATOR_LINKED_TO_VERIFIED_ORIGINAL_PDF'},
                       self.record['graph_edges'])
+        self.assertIn({'from': bridge.PDF_NODE, 'to': bridge.UH,
+                       'kind': 'PAGE8_PRINTED_CLAIM_VERIFIED'}, self.record['graph_edges'])
+        self.assertNotIn('recapture_00471_page_8_original_facsimile_and_digest',
+                         self.record['candidate']['missing_conditions'])
 
     def test_wrong_edition_or_false_facsimile_promotion_rejected(self):
         for key, val in (('docreader_selected_edition', '00507'),
@@ -64,6 +76,19 @@ class TupiLegacyFragmentTests(unittest.TestCase):
                 locator[key] = val
                 with self.assertRaisesRegex(ValueError, 'locator bytes changed'):
                     self.build_with(locator=bridge.encoded(locator))
+
+    def test_mutated_primary_ledger_is_rejected(self):
+        with self.assertRaisesRegex(ValueError, 'verification ledger changed'):
+            self.build_with(verified=self.verified.replace(b'4.337.426', b'4.337.427'))
+
+    def test_no_false_dependency_or_printed_page_promotion(self):
+        c = self.record['comparison']
+        self.assertFalse(c['other_printed_page8_inspected'])
+        self.assertFalse(c['other_page8_raster_retrieved'])
+        self.assertIsNone(c['direct_textual_dependency'])
+        self.assertIsNone(c['tupi_broadcast_epoch_utc'])
+        self.assertEqual(c['other_previous_403_status'],
+                         'HISTORICAL_ACCESS_FAILURE_NOT_CURRENT_CUSTODY')
 
     def test_hypotheses_and_simulator_stay_pending(self):
         self.assertEqual(len(self.record['hypotheses']), 4)
