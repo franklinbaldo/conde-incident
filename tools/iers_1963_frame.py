@@ -52,9 +52,12 @@ def matrix_at_epoch(eop: dict, times: dict) -> list[list[float]]:
     """IAU 2000A GCRS->ITRS orientation at *daily* UTC 00:00 only."""
     import erfa
     # SOFA two-part JD: TT for precession/nutation, UT1 for Earth rotation.
-    tt = Decimal(times['mjd']) + (Decimal(str(times['tt_minus_utc_s'])) / 86400)
-    ut1 = Decimal(times['mjd']) + (Decimal(str(eop['ut1_minus_utc_s'])) / 86400)
-    return erfa.c2t00a(2400000.5, float(tt), 2400000.5, float(ut1),
+    # SOFA 2-part JD with the integer MJD in part 1 and the offset in part
+    # 2. Keeping 38,000 days in a single float needlessly quantizes UTC.
+    jd1 = 2400000.5 + times['mjd']
+    tt = float(Decimal(str(times['tt_minus_utc_s'])) / Decimal(86400))
+    ut1 = float(Decimal(str(eop['ut1_minus_utc_s'])) / Decimal(86400))
+    return erfa.c2t00a(jd1, tt, jd1, ut1,
                        eop['x_arcsec'] * AS2RAD, eop['y_arcsec'] * AS2RAD).tolist()
 
 

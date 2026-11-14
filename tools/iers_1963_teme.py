@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 from datetime import datetime, timedelta
+from decimal import Decimal
 import json
 import math
 from pathlib import Path
@@ -18,6 +19,7 @@ import numpy as np
 
 from iers_1963_frame import AS2RAD, EOP, TIME
 from iers_1963_intraday import checked_source, fractional_mjd, interpolate_at
+from iers_1963_timescales import UTC_RATE_S_PER_DAY
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_STEP_SECONDS = 1.0
@@ -57,11 +59,17 @@ def matrices_at(utc: str, eop: dict, times: dict) -> dict[str, np.ndarray | floa
     All input EOP values come from the authenticated G46/G47 ledgers.
     """
     row = interpolate_at(utc, eop, times)
-    utc_mjd = row["mjd_utc"]
-    ut1_mjd = utc_mjd + row["ut1_minus_utc_s"] / 86400.
-    tt_mjd = utc_mjd + row["tt_minus_utc_s"] / 86400.
-    theta = float(erfa.gmst82(2400000.5, ut1_mjd))
-    sp = float(erfa.sp00(2400000.5, tt_mjd))
+    # Do not round fractional MJD to a 38,000-day binary64 before passing
+    # it to ERFA. Preserve the integer day and the subsecond part separately.
+    mjd = fractional_mjd(utc)
+    mjd_day = int(mjd)
+    fraction = mjd - Decimal(mjd_day)
+    jd_day = 2400000.5 + mjd_day
+    day_seconds = Decimal(86400)
+    ut1_part = float(fraction + Decimal(str(row["ut1_minus_utc_s"])) / day_seconds)
+    tt_part = float(fraction + Decimal(str(row["tt_minus_utc_s"])) / day_seconds)
+    theta = float(erfa.gmst82(jd_day, ut1_part))
+    sp = float(erfa.sp00(jd_day, tt_part))
     polar = erfa.pom00(row["x_arcsec"] * AS2RAD,
                        row["y_arcsec"] * AS2RAD, sp)
     teme_to_itrs = polar @ _rotation_z_passive(theta)
@@ -95,7 +103,10 @@ def frame_operator(utc: str, eop: dict, times: dict,
     mid = matrices_at(utc, eop, times)[key]
     before = matrices_at(earlier, eop, times)[key]
     after = matrices_at(later, eop, times)[key]
-    derivative = (after - before) / (2 * step_seconds)
+    # Prior to 1972 UTC was frequency-offset from atomic time. Input TEME
+    # velocities are per SI second, so use the elapsed TAI, not UTC label time.
+    tai_seconds_per_utc_second = 1. + float(UTC_RATE_S_PER_DAY / Decimal(86400))
+    derivative = (after - before) / (2 * step_seconds * tai_seconds_per_utc_second)
     # Rotation derivatives must be tangent to SO(3).
     tangent = mid.T @ derivative
     if np.max(np.abs(tangent + tangent.T)) > 1e-7:
