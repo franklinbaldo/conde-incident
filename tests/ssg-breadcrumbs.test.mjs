@@ -1,5 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { addBreadcrumbs } from '../scripts/ssg-breadcrumbs.mjs';
 
 const main = '<main id="main" class="wrap" tabindex="-1">';
@@ -83,3 +84,30 @@ test('não confunde trilha em comentário inerte com breadcrumb no DOM', () => {
   }
 });
 
+
+test('navegação móvel aponta ao ancestral existente mais próximo e preserva trilha expandível', () => {
+  const path = 'evidencias/arquivo/fontes/nara-bb/index.html';
+  const full = addBreadcrumbs(page('NARA: documento histórico extenso'), path,
+    ancestor => ['evidencias', 'evidencias/arquivo', 'evidencias/arquivo/fontes']
+      .includes(ancestor));
+  assert.match(full.html,
+    /class="breadcrumb-parent" href="\/conde-incident\/evidencias\/arquivo\/fontes\/">← Voltar para Fontes<\/a>/);
+  assert.match(full.html, /<details><summary>Trilha completa<\/summary><ol>/);
+  assert.equal((full.html.match(/aria-current="page"/g) || []).length, 2);
+  assert.equal(addBreadcrumbs(full.html, path).changed, false);
+  // Never point to a dead intermediate page, including within the return link.
+  const missing = addBreadcrumbs(page('Fonte'), path,
+    ancestor => ancestor === 'evidencias');
+  assert.match(missing.html,
+    /class="breadcrumb-parent" href="\/conde-incident\/evidencias\/"/);
+  assert.doesNotMatch(missing.html,
+    /class="breadcrumb-parent" href="\/conde-incident\/evidencias\/arquivo\/"/);
+});
+
+test('tema móvel mantém retorno e disclosure nativos sem JS e não altera desktop', () => {
+  const css = readFileSync(new URL('../static/css/site.css', import.meta.url), 'utf8');
+  assert.match(css, /\.breadcrumbs-mobile\{display:none\}/);
+  assert.match(css, /@media\(max-width:620px\)\{\s*\.breadcrumbs>\.breadcrumbs-trail\{display:none\}/);
+  assert.match(css, /\.breadcrumbs-mobile\{display:flex;/);
+  assert.match(css, /\.breadcrumbs-mobile summary:focus-visible\{outline:3px/);
+});
