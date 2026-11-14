@@ -1,0 +1,75 @@
+{
+  "schema": "conde.c241-ferret-mass-crosssource/v1",
+  "id": "C241-CERVO-FERRET1500-20261114",
+  "observation_kind": "MODERN_SECONDARY_LISTING_NOT_INSTRUMENTAL_MASS_MEASUREMENT",
+  "captured_page": {
+    "url": "https://astronautix.com/f/ferret.html",
+    "retrieval_utc_date": "2026-11-14",
+    "bytes": 53630,
+    "sha256": "70fa299371bad0efd27ce920ea05bac60be38412521d9a6a3ead3162aaa20b63",
+    "custody_note": "Full HTML fetched over HTTPS; SHA256 and bytes refer to HTTP response body, not an archived copy. No page-level historical publication vintage established."
+  },
+  "catalog_comparison": {
+    "ledger": "research/tle_custody/gcat_mass_semantics_C241-L40.json",
+    "family": "GCAT_SECONDARY",
+    "object": "S00527",
+    "mass_kg": 306,
+    "total_mass_kg": 1176,
+    "launch_payload_plus_stage_mass_kg": 1206,
+    "mass_528_kg": null,
+    "mass_529_kg": null
+  },
+  "astronautix_family": "ASTRONAUTIX_MARK_WADE_SECONDARY",
+  "entries": [
+    {
+      "designation": "Ferret 1",
+      "norad": 242,
+      "year": 1962,
+      "reported_mass_kg": 1500,
+      "source_role": "CLASS_SERIES_COMPARATOR"
+    },
+    {
+      "designation": "Ferret 2",
+      "norad": 308,
+      "year": 1962,
+      "reported_mass_kg": 1500,
+      "source_role": "CLASS_SERIES_COMPARATOR"
+    },
+    {
+      "designation": "OPS 0180 / Ferret 3",
+      "norad": 527,
+      "cospar": "1963-003A",
+      "year": 1963,
+      "reported_mass_kg": 1500,
+      "launch_vehicle": "Thor Agena B",
+      "upper_stage": "2313",
+      "source_role": "SAME_MISSION_DIFFERENT_SECONDARY_LISTING"
+    }
+  ],
+  "interpretation": {
+    "printed_1500_mass_unit": "kg",
+    "printed_1500_meaning": "UNRESOLVED_CLASS_OR_LAUNCH_CONFIG_VALUE",
+    "repeated_same_value_across_three_missions": true,
+    "independent_instrument_or_engineering_measurement": false,
+    "independence_from_gcat_source_family": null,
+    "attribution_to_528_kg": null,
+    "common_mass_epoch_with_gcat": false,
+    "source_supports_separation_inventory": false,
+    "source_supports_1500_as_measured_mass_of_527": false,
+    "nominal_difference_from_gcat_totmass_kg": 324,
+    "nominal_difference_from_payload_plus_stage_mass_kg": 294,
+    "numerical_differences_are_physical_losses": false,
+    "conditional_rank_if_authenticated_closed_inventory": 1,
+    "historical_rank_of_527_528_529_X": 0,
+    "historical_constraint_active": false,
+    "historical_mass_posterior": null,
+    "historical_mcmc": "NOT_RUN",
+    "geographical_domain_reduction": false
+  },
+  "required_discriminator": [
+    "Mission-specific engineering mass sheet or flight telemetry with object component inventory",
+    "Mass epoch, whether wet/dry/launch/in-orbit, and correspondence of Agena 2313 to S00527",
+    "Documented accounting of discarded pieces S00528/S00529 and untracked residual mass",
+    "Independent evidence of instrumental or engineering provenance, including uncertainties"
+  ]
+}
