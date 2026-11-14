@@ -31,14 +31,16 @@ function fileParts(path) {
 export function addBreadcrumbs(html, path, hasPage = () => true) {
   const parts = fileParts(path);
   if (!parts.length) return { html, eligible: false, changed: false };
-  assert.ok(html.includes(main), 'Main canônico ausente: ' + path);
-  if (html.includes('aria-label="Trilha de navegação"')) {
-    assert.equal(html.split('aria-label="Trilha de navegação"').length, 2,
-      'Trilha duplicada: ' + path);
-    return { html, eligible: true, changed: false };
-  }
-  const match = /<title>([^<>\r\n]{1,320})<\/title>/i.exec(html);
-  assert.ok(match, 'Título textual seguro ausente: ' + path);
+  // Preserve offsets while excluding inert markup: an exact breadcrumb string
+  // in a comment, script, template or textarea is not a navigable DOM node.
+  const activeHtml = html
+    .replace(/<!--[\s\S]*?(?:-->|$)/g, text => ' '.repeat(text.length))
+    .replace(/<(script|style|template|textarea)\b[^>]*>[\s\S]*?<\/\1\s*>/gi,
+      text => ' '.repeat(text.length));
+  const mainAt = activeHtml.indexOf(main);
+  assert.ok(mainAt >= 0, 'Main canônico ausente: ' + path);
+  const match = /<title>([^<>\r\n]{1,320})<\/title>/i.exec(activeHtml);
+  assert.ok(match && match[1].trim(), 'Título textual seguro ausente: ' + path);
   const items = ['<li><a href="' + prefix + '">Início</a></li>'];
   for (let i = 1; i < parts.length; i++) {
     const ancestor = parts.slice(0, i).join('/');
@@ -48,7 +50,19 @@ export function addBreadcrumbs(html, path, hasPage = () => true) {
   items.push('<li><span aria-current="page">' + match[1] + '</span></li>');
   const trail = '<nav aria-label="Trilha de navegação" class="breadcrumbs"><ol>' +
     items.join('') + '</ol></nav>';
-  return { html: html.replace(main, main + trail), eligible: true, changed: true };
+  // A bare aria-label anywhere in the HTML is not proof of a usable trail.
+  // Validate the exact static navigation *inside* the canonical main, including
+  // the ancestor links and the title; do not trust a stale or empty breadcrumb.
+  const markers = activeHtml.split('aria-label="Trilha de navegação"').length - 1;
+  if (markers > 0) {
+    assert.equal(markers, 1, 'Trilha preexistente duplicada: ' + path);
+    assert.equal(activeHtml.indexOf(main + trail), mainAt,
+      'Trilha preexistente não corresponde ao contrato: ' + path);
+    return { html, eligible: true, changed: false };
+  }
+  const insertion = mainAt + main.length;
+  return { html: html.slice(0, insertion) + trail + html.slice(insertion),
+    eligible: true, changed: true };
 }
 function* pages(root) {
   for (const entry of readdirSync(root, { withFileTypes: true })) {
@@ -78,3 +92,4 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     process.argv.includes('--check'));
   console.log('SSG breadcrumbs:', report);
 }
+

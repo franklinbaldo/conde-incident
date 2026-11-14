@@ -45,3 +45,41 @@ test('falha fechado com HTML sem main, title inválido ou rota insegura', () => 
   assert.throws(() => addBreadcrumbs(page('Título'), 'stories/../invalida/index.html'),
     /insegura/);
 });
+
+test('trilha preexistente fora de main não satisfaz o contrato', () => {
+  const fake = page('Capítulo legítimo').replace('</head>',
+    '<meta aria-label="Trilha de navegação" content="não é um nav"></head>');
+  assert.throws(() => addBreadcrumbs(fake, 'stories/capitulo/index.html',
+    ancestor => ancestor === 'stories'), /Trilha preexistente/);
+});
+
+test('trilha com marcador mas sem ancestrais não vale como validada', () => {
+  const original = page('Título correto');
+  const fake = original.replace('<h1>Conteúdo</h1>',
+    '<nav aria-label="Trilha de navegação" class="breadcrumbs"><ol></ol></nav><h1>Conteúdo</h1>');
+  assert.throws(() => addBreadcrumbs(fake, 'evidencias/arquivo/c197-1/index.html',
+    ancestor => ['evidencias', 'evidencias/arquivo'].includes(ancestor)),
+  /Trilha preexistente/);
+});
+
+test('não confunde trilha em comentário inerte com breadcrumb no DOM', () => {
+  const path = 'stories/capitulo/index.html';
+  const original = page('Capítulo legítimo');
+  const canonical = addBreadcrumbs(original, path, ancestor => ancestor === 'stories').html;
+  const trail = canonical.slice(canonical.indexOf(main) + main.length, canonical.indexOf('<h1>'));
+  const fakeInside = original.replace('<h1>', '<!--' + main + trail + '--><h1>');
+  const result = addBreadcrumbs(fakeInside, path, ancestor => ancestor === 'stories');
+  assert.equal(result.changed, true);
+  assert.ok(result.html.includes(main + trail));
+  const fakeBefore = original.replace(main, '<!--' + main + trail + '-->' + main);
+  const repaired = addBreadcrumbs(fakeBefore, path, ancestor => ancestor === 'stories');
+  assert.equal(repaired.changed, true);
+  assert.ok(repaired.html.endsWith('</main></body></html>'));
+  assert.ok(repaired.html.includes('-->' + main + trail));
+  for (const element of ['template', 'script', 'style', 'textarea']) {
+    const fake = original.replace('<h1>', '<' + element + '>' + main + trail + '</' + element + '><h1>');
+    assert.equal(addBreadcrumbs(fake, path, ancestor => ancestor === 'stories').changed, true,
+      'Elemento inerte ' + element + ' não pode atestar navegação');
+  }
+});
+

@@ -20,6 +20,20 @@ for(const slug of AUTHORED_ROUTES){
   assert.ok(page.includes('/conde-incident/'),
     'Página publicada sem prefixo GitHub Pages: '+slug);
 }
+// The SSG Map page is useful offline, without the React lab or tile-provider quota.
+const editorialMap=read('mapa');
+assert.match(editorialMap,/<figure class="context-map">[\s\S]*?<img\b[^>]*src="\/conde-incident\/img\/conde-bahia-context\.svg"/,
+  'Página Mapa perdeu a cartografia SVG local');
+assert.match(editorialMap,/<img\b[^>]*alt="[^"]*Conde[^"]*queda[^"]*"/,
+  'Mapa sem descrição textual distinguindo sede e local de queda');
+assert.match(editorialMap,/Natural Earth 1:110m/,
+  'Mapa SSG sem fonte cartográfica e escala');
+assert.match(editorialMap,/href="\/conde-incident\/img\/conde-bahia-context\.svg"/,
+  'Mapa SSG sem acesso ao original independente de JavaScript');
+assert.doesNotMatch(editorialMap, /<iframe\b|www\.openstreetmap\.org\/export\/embed|maps\.googleapis\.com/i,
+  'Mapa SSG contém serviço externo de tiles');
+assert.ok(readFileSync('public/img/conde-bahia-context.svg','utf8').includes('Natural Earth 1:110m'),
+  'Mapa local não foi incluído no site publicado');
 const legacy=[
   ['mapa','map'],
   ['simulacoes/inverso','inverse'],
