@@ -3,6 +3,21 @@ import {loadCondeSourceLookup} from './ssg-source-lookup-loader.mjs';
 const PREFIX='/conde-incident/';
 const KNOWN_PATH=/^\/conde-incident\/evidencias\/arquivo\/[a-z0-9-]+\/$/;
 
+// A link is actionable only if its source ID belongs to the verified index.
+export function sourceFromUrl(href,verifiedSources){
+  const requested=new URL(href).searchParams.get('source');
+  if(requested===null) return {id:'',invalid:false};
+  return verifiedSources.has(requested)
+    ? {id:requested,invalid:false} : {id:'',invalid:true};
+}
+
+export function sourceLookupUrl(href,id){
+  const url=new URL(href);
+  if(id) url.searchParams.set('source',id);
+  else url.searchParams.delete('source');
+  return url.pathname+url.search+url.hash;
+}
+
 export function referenceView(source){
   if(!source || typeof source.source_id!=='string' ||
      typeof source.source_family!=='string' || !Array.isArray(source.references))
@@ -51,7 +66,26 @@ export async function mountSourceLookup(doc=document, loader=loadCondeSourceLook
     }
     results.append(list);
   };
-  select.addEventListener('change',render);
+  const updateSelection=()=>{
+    render();
+    const source=sources.get(select.value);
+    status.textContent=source
+      ? 'Fonte '+source.source_id+' selecionada: '+source.references.length+' vínculo(s) curado(s).'
+      : 'Índice verificado: '+sources.size+' fonte(s) curada(s). Escolha uma fonte.';
+  };
+  const restoreSelection=()=>{
+    const selected=sourceFromUrl(doc.location.href,sources);
+    select.value=selected.id;
+    updateSelection();
+    if(selected.invalid)
+      status.textContent='A fonte indicada no link não consta do índice verificado. Escolha uma fonte disponível.';
+  };
+  select.addEventListener('change',()=>{
+    const id=sources.has(select.value)?select.value:'';
+    doc.defaultView?.history?.pushState(null,'',sourceLookupUrl(doc.location.href,id));
+    updateSelection();
+  });
+  doc.defaultView?.addEventListener('popstate',restoreSelection);
   async function refresh(){
     form.hidden=true;retry.hidden=true;clear();
     status.textContent='Verificando manifesto, versão da matriz e SHA-256 das fontes…';
@@ -69,7 +103,7 @@ export async function mountSourceLookup(doc=document, loader=loadCondeSourceLook
         select.append(option);
       }
       form.hidden=false;
-      status.textContent='Índice verificado: '+next.size+' fonte(s) curada(s). Escolha uma fonte.';
+      restoreSelection();
     } catch {
       sources=new Map();
       status.textContent='Não foi possível verificar a integridade do índice ou a rede. Nenhum resultado foi exibido. Use o arquivo documental estático.';

@@ -23,6 +23,18 @@ try {
         'Fonte documental control below first 720px viewport at '+width+'px: '+JSON.stringify(rect));
       assert.equal(await selector.locator('option').count(),16,'15 curated sources plus prompt');
       await selector.selectOption({index:1});
+      const selected=await selector.inputValue();
+      assert.equal(new URL(page.url()).searchParams.get('source'),selected,
+        'source selection must be shareable');
+      await page.reload({waitUntil:'networkidle'});
+      assert.equal(await selector.inputValue(),selected,
+        'verified deep link must restore the selection');
+      await page.goBack({waitUntil:'networkidle'});
+      assert.equal(await selector.inputValue(),'',
+        'browser Back must restore the previous selection');
+      await page.goForward({waitUntil:'networkidle'});
+      assert.equal(await selector.inputValue(),selected,
+        'browser Forward must restore the verified selection');
       const entries=page.locator('#source-lookup-results li');
       assert((await entries.count())>0,'no occurrence rendered');
       const link=entries.first().getByRole('link',{name:/Abrir ocorrência/});
@@ -41,6 +53,14 @@ try {
       assert.deepEqual(errors,[],'script errors');
     } finally {await page.close();}
   }
+  const invalid=await browser.newPage();
+  try {
+    await invalid.goto(url+'?source=%3Cscript%3E',{waitUntil:'networkidle'});
+    assert.equal(await invalid.locator('#source-lookup-form').isVisible(),true);
+    assert.equal(await invalid.locator('#source-lookup-id').inputValue(),'');
+    assert.match(await invalid.locator('#source-lookup-status').innerText(),/não consta do índice verificado/);
+    assert.equal(await invalid.locator('#source-lookup-results a').count(),0);
+  } finally {await invalid.close();}
   const broken=await browser.newPage();
   try{
     await broken.route('**/data/conde-source-lookup-manifest.json',route=>route.fulfill({status:200,
