@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Scope-limited, occurrence-aware coverage audit for the frozen 241-row matrix.
 
-Only two explicit, independently replayed contracts are counted:
-the curated citation feed and the observable-dependency feed. Other scientific
-bridges may exist; absence from these TWO feeds is not missing historical data,
+Only two explicit, independently replayed contracts contribute to DIRECT
+coverage: the curated citation feed and the observable-dependency feed.
+Additional archival and cartographic feeds are revalidated as contextual layers
+without inflating direct coverage. Their absence is not missing historical data,
 nor evidence against reentry in Conde. No free-text matching promotes a source.
 """
 from __future__ import annotations
@@ -14,11 +15,15 @@ from pathlib import Path
 
 import provenance_graph as pg
 import export_observable_dependency_links as observable
+import export_wayback_citation_links as wayback
+import export_cgeo35_raster_bridge as cgeo35
 
 ROOT = Path(__file__).resolve().parents[1]
 CITATIONS = ROOT / "public/data/conde-source-citations.json"
 OBSERVABLES = ROOT / "public/data/conde-observable-dependency-links.json"
 BRIDGE_SECTIONS = ("edges", "pending_december_compilation_edges")
+ARCHIVE = ROOT / "public/data/conde-wayback-citation-links.json"
+CARTOGRAPHY = ROOT / "public/data/conde-cgeo35-raster-anchor-bridge.json"
 
 
 def require(ok: bool, reason: str) -> None:
@@ -102,6 +107,89 @@ def audit(rows: list[dict], citations: dict, bridges: dict) -> dict:
     }
 
 
+def audit_context_layers(rows: list[dict], citations: dict,
+                         archive: dict, cartography: dict) -> dict:
+    """Account for documentary reuse and map context, not physical observations.
+
+    Snapshot-qualified archival copies can certify preservation of an already
+    curated citation. The historic map only provides an *unqualified context*
+    for C24#1: it does not certify the modern IBGE coordinate/boundary claim.
+    Neither layer may increase the direct source/observable coverage count.
+    """
+    by_ref = {row["snapshot_ref"]: row for row in rows}
+    by_occ = {row["occurrence"]: row for row in rows}
+    curated = {(r["snapshot_ref"], r["source_id"]): r
+               for r in citations["records"]}
+    require(archive.get("schema") == "conde.wayback-citation-links/v1"
+            and archive.get("matrix_git_blob_sha1") == pg.MATRIX_BLOB_SHA,
+            "archival provenance snapshot mismatch")
+    require(archive.get("counts", {}).get("independent_physical_observations_added") == 0
+            and archive.get("epistemic_limits", {}).get("no_active_lean_constraint") is True
+            and archive["epistemic_limits"].get("no_simulator_parameter_activated") is True,
+            "archival capture promoted to physical observation")
+    frozen = [n for n in archive["nodes"]
+              if n.get("kind") == "FROZEN_MATRIX_CITATION"]
+    require(len(frozen) == 2 and len({n["id"] for n in frozen}) == 2
+            and archive["counts"].get("matrix_occurrences_linked") == 2,
+            "archival citation multiplicity changed")
+    expected_ids = {"C197#1", "C198#1"}
+    require({n["snapshot_ref"].rsplit(":", 1)[-1] for n in frozen} == expected_ids,
+            "archival reference outside verified NASA/NTRS work")
+    for n in frozen:
+        ref = n["snapshot_ref"]
+        require(ref in by_ref and (ref, n["source_id"]) in curated,
+                "archival citation without authenticated matrix parent")
+        row, cite = by_ref[ref], curated[(ref, n["source_id"])]
+        require(n["row_sha256"] == cite["row_sha256"] == row["row_sha256"]
+                and n["matrix_line"] == cite["matrix_line"] == row["matrix_line"],
+                "archival citation row/line mutated")
+        require(n.get("activation") is False and n.get("simulator_value") is None
+                and n.get("new_physical_observations") == 0,
+                "archival citation falsely activated")
+    require(archive["counts"].get("nasa_legacy_distinct_pdf_payloads") == 1
+            and archive["epistemic_limits"].get("NASA_NTRS_same_work_not_two_independent_sensors") is True,
+            "NASA/NTRS lineage incorrectly multiplied")
+
+    # CGEO-35 links an original 1954/1961 cartographic image to one historical
+    # matrix row. No content-addressed matrix citation is carried in this feed;
+    # its contextual edge must NOT count as evidence for C24's *modern* GIS.
+    require(cartography.get("schema") == "conde.cgeo35-raster-anchor-scientific-bridge/v1"
+            and cartography.get("matrix_context") == "C24#1"
+            and "C24#1" in by_occ,
+            "map contextual occurrence unidentified")
+    links = [edge for edge in cartography.get("dependency_graph", [])
+             if edge.get("to") == "C24#1"]
+    require(len(links) == 1
+            and links[0].get("from") == "CGEO-35"
+            and links[0].get("relation") == "CARTOGRAPHIC_CONTEXT_VIA_CGEO34_NO_NEW_WITNESS"
+            and links[0].get("active_geographic_constraint") is False,
+            "map context promoted or relabeled")
+    coords = cartography.get("image_coordinate_datum", {})
+    require(coords.get("coordinate_system") == "ORIGINAL_JP2_PIXEL_XY_TOP_LEFT"
+            and coords.get("geographic_coordinates") is None
+            and coords.get("ground_tolerance_m") is None,
+            "map pixels falsely georeferenced")
+    require(cartography.get("activation") is False
+            and cartography.get("new_numeric_orbital_constraints") == 0
+            and cartography.get("independent_physical_witnesses_added") == 0
+            and cartography.get("physical_domain_effect") == "THETA_UNCHANGED"
+            and all(not p.get("activation") and p.get("value") is None
+                    and p.get("uncertainty") is None
+                    for p in cartography["simulator_latent_parameters"]),
+            "map label promoted to observed fall/geodetic constraint")
+    return {
+        "archival_feed": ARCHIVE.name,
+        "archival_citations": len(frozen),
+        "archival_distinct_matrix_occurrences": len({n["snapshot_ref"] for n in frozen}),
+        "archival_new_matrix_occurrences": 0,
+        "archival_new_independent_instrument_observations": 0,
+        "cartographic_feed": CARTOGRAPHY.name,
+        "unqualified_cartographic_context_ids": ["C24#1"],
+        "unqualified_cartographic_context_not_counted_as_direct_support": 1,
+        "physical_domain_effect": "THETA_UNCHANGED",
+    }
+
+
 def rebuild(root: Path = ROOT) -> dict:
     rows = pg.matrix_occurrences((root / pg.MATRIX.relative_to(ROOT)).read_bytes())
     config = json.loads((root / pg.LINEAGES.relative_to(ROOT)).read_bytes())
@@ -113,7 +201,16 @@ def rebuild(root: Path = ROOT) -> dict:
             "curated feed stale; regenerate original exporter")
     require((root / OBSERVABLES.relative_to(ROOT)).read_bytes() == dep_bytes,
             "dependency feed stale; regenerate original exporter")
-    return audit(rows, original_citations, current_bridges)
+    archived = wayback.build(root)
+    require((root / ARCHIVE.relative_to(ROOT)).read_bytes() == wayback.encode(archived),
+            "Wayback archival feed stale; regenerate original exporter")
+    mapped = (root / CARTOGRAPHY.relative_to(ROOT)).read_bytes()
+    require(mapped == cgeo35.render(),
+            "cartographic feed stale; regenerate original exporter")
+    result = audit(rows, original_citations, current_bridges)
+    result["supplemental_context_layers"] = audit_context_layers(
+        rows, original_citations, archived, json.loads(mapped))
+    return result
 
 
 def main() -> None:
