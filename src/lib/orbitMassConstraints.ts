@@ -247,7 +247,8 @@ export function conditionalProjectedAreaEnvelope(input: {
     throw new RangeError('Exactly six named mass, B and Cd bounds required');
   const { massMinKg: mLo, massMaxKg: mHi, bMinM2Kg: bLo, bMaxM2Kg: bHi,
     cdMin: cdLo, cdMax: cdHi } = input;
-  if ([mLo,mHi,bLo,bHi,cdLo,cdHi].some(v => v === null))
+  if (mLo === null || mHi === null || bLo === null || bHi === null ||
+      cdLo === null || cdHi === null)
     return {areaMinM2:null,areaMaxM2:null,
       historicalConstraintActive:false as const,
       reason:'Mass, B and Cd are not jointly calibrated'};
