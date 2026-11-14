@@ -36,6 +36,12 @@ jobs:
           if grep -E 'sorryAx|unsafe|error:' core-axioms.log; then
             exit 1
           fi
+      - name: Source-lock SAO P-17 November 1963 clock step to Lean
+        run: |
+          set -euo pipefail
+          python3 -m formal.scripts.compile_sao_p17_clock_step --check
+          python3 -m unittest discover -s formal/tests -p 'test_sao_p17_clock_step.py' -v
+          python3 -O -m unittest discover -s formal/tests -p 'test_sao_p17_clock_step.py' -v
       - name: Check exact circular-MCMC balance and gauge model
         run: |
           set -euo pipefail
