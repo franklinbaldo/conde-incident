@@ -8,6 +8,7 @@ Tupi, that TEXT verifies a witness, or that an absent Daily Report was silence.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 
@@ -18,6 +19,8 @@ OUTPUT = ROOT / "public/data/conde-fbis-operational-lineage.json"
 SOURCE_URL = ("https://www.govinfo.gov/content/pkg/GOVPUB-PREX3-PURL-gpo254964/"
               "pdf/GOVPUB-PREX3-PURL-gpo254964.pdf")
 SOURCE_ID = "CIA-RDP05-01429R000100010001-0"
+SOURCE_PDF_SHA256 = "77e3dcb65844a1c2965ba4649bb1b1a35e4e67a6c15d7ac38c6579b50c299f86"
+SOURCE_PDF_SIZE = 8_533_908
 # (occurrence, frozen row SHA-256, original printed page, PDF zero-based index,
 #  documentary variable, what remains unverified).
 CLAIMS = (
@@ -92,7 +95,8 @@ def build(root: Path = ROOT) -> dict:
             "publication_date": "1972-05",
             "declassification_release_date": "2012-11-01",
             "source_class": "RETROSPECTIVE_PRIMARY_INSTITUTIONAL_HISTORY",
-            "source_pdf_sha256": None,
+            "source_pdf_sha256": SOURCE_PDF_SHA256,
+            "source_pdf_size_bytes": SOURCE_PDF_SIZE,
             "raw_pdf_bytes_replayed_this_run": False,
             "pages_visually_reinspected": [5, 54, 69],
             "source_count": 1,
@@ -126,7 +130,8 @@ def audit(data: dict, rows: list[dict]) -> None:
     require(s.get("work_id") == SOURCE_ID and s.get("url") == SOURCE_URL
             and s.get("publication_date") == "1972-05"
             and s.get("source_class") == "RETROSPECTIVE_PRIMARY_INSTITUTIONAL_HISTORY"
-            and s.get("source_pdf_sha256") is None
+            and s.get("source_pdf_sha256") == SOURCE_PDF_SHA256
+            and s.get("source_pdf_size_bytes") == SOURCE_PDF_SIZE
             and s.get("raw_pdf_bytes_replayed_this_run") is False
             and s.get("source_count") == 1, "invalid source identity or replay claim")
     by_ref = {r["snapshot_ref"]: r for r in rows}
@@ -172,6 +177,25 @@ def audit(data: dict, rows: list[dict]) -> None:
             }, "false scientific activation or counting")
 
 
+def verify_source_pdf(path: Path) -> None:
+    """Replay the original public PDF bytes; no PDF bytes enter git or the feed.
+
+    The digest proves byte identity only. It does not make the 1972 document
+    a 1963 instrumental observation or establish Tupi/Panama attribution.
+    """
+    require(path.is_file(), "source PDF file missing")
+    require(path.stat().st_size == SOURCE_PDF_SIZE, "source PDF byte length mismatch")
+    digest = hashlib.sha256()
+    with path.open("rb") as stream:
+        require(stream.read(8).startswith(b"%PDF-"), "source PDF header invalid")
+        stream.seek(-128, 2)
+        require(b"%%EOF" in stream.read(), "source PDF EOF marker absent")
+        stream.seek(0)
+        for chunk in iter(lambda: stream.read(1024 * 1024), b""):
+            digest.update(chunk)
+    require(digest.hexdigest() == SOURCE_PDF_SHA256, "source PDF digest mismatch")
+
+
 def encoded(data: dict) -> bytes:
     return (json.dumps(data, ensure_ascii=False, sort_keys=True, indent=2) + "\n").encode()
 
@@ -181,7 +205,10 @@ def main() -> None:
     action = ap.add_mutually_exclusive_group(required=True)
     action.add_argument("--write-site", action="store_true")
     action.add_argument("--check-site", action="store_true")
+    ap.add_argument("--source-pdf", type=Path, help="replay pinned CIA PDF bytes locally")
     args = ap.parse_args()
+    if args.source_pdf is not None:
+        verify_source_pdf(args.source_pdf)
     output = encoded(build())
     require(len(output) < 20_000, "file exceeds normative 20KB")
     if args.write_site:
