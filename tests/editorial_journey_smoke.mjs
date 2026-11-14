@@ -39,8 +39,20 @@ try {
       const sections = page.getByRole('navigation', { name: 'Seções do laboratório' });
       if (width < 768) await sections.locator('summary').click();
       await sections.getByRole('link', { name: new RegExp(tab) }).click();
-      const link = page.getByRole('link', { name: 'Abrir no Caderno: ' + label });
-      await link.waitFor();
+      // The mobile shell intentionally keeps documentary context in a native
+      // disclosure. Verify the path after opening it, not a hidden link.
+      let link;
+      if (width < 768) {
+        const metadata = page.locator('header [data-lab-metadata]');
+        assert(await metadata.isVisible(), 'mobile case metadata disclosure missing');
+        await metadata.locator('summary').click();
+        link = metadata.locator('a[data-mobile-editorial-context]');
+        assert.match(await link.innerText(), new RegExp(label),
+          'mobile editorial context must identify the selected instrument');
+      } else {
+        link = page.getByRole('link', { name: 'Abrir no Caderno: ' + label });
+      }
+      await link.waitFor({ state: 'visible' });
       assert.equal(await link.getAttribute('href'), expected);
       const box = await link.boundingBox();
       assert(box && box.x >= -1 && box.x + box.width <= width + 1,
