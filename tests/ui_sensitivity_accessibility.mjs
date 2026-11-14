@@ -17,7 +17,7 @@ export async function checkSensitivityA11y(page, viewport, locale) {
     assert(sliders[i].valueText.includes(['km', 'sfu', 'm²/kg'][i]),
       `slider ${i} missing unit (${locale}): ${sliders[i].valueText}`);
   }
-  const text = await page.getByRole('main').innerText();
+  const text = await page.getByRole('main').textContent(); // CSS text-transform must not change the tested translation
   assert(text.includes(locale === 'pt' ? 'Resultado do modelo simplificado' : 'Simplified model result'),
     `simplified-formula explanation must match locale ${locale}`);
   assert(text.includes(locale === 'pt' ? 'Cenários ilustrativos de sensibilidade' : 'Illustrative sensitivity scenarios'),
