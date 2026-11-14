@@ -18,18 +18,18 @@ const contrast = (a, b) => {
   const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
   return (hi + .05) / (lo + .05);
 };
-const themeLink = '/conde-incident/css/tokens.css';
 const siteLink = '/conde-incident/css/site.css';
-const assertThemeOrder = html => {
-  const tokenAt = html.indexOf('href="' + themeLink + '"');
-  const siteAt = html.indexOf('href="' + siteLink + '"');
-  assert.ok(tokenAt >= 0 && siteAt > tokenAt,
-    'theme must load before editorial CSS');
+const assertStylesheet = html => {
+  assert.ok(html.includes('href="' + siteLink + '"'),
+    'SSG must link the editorial stylesheet');
 };
 
-test('SSG theme tokens are a single, static theme loaded before editorial CSS', () => {
-  assertThemeOrder(shell);
-  assert.doesNotMatch(site, /^:root\{/);
+test('SSG-first: the single CSS theme loads before editorial rules without JS', () => {
+  assertStylesheet(shell);
+  assert.ok(site.startsWith('@import url("./tokens.css");\n'),
+    'theme import must precede all other stylesheet rules');
+  assert.equal((site.match(/@import/g) ?? []).length, 1);
+  assert.doesNotMatch(site, /^:root\{/m);
   for (const name of ['page', 'surface', 'text', 'subtle-text', 'border', 'link', 'focus']) {
     assert.ok(colors['--color-' + name], 'missing design token: ' + name);
   }
@@ -43,7 +43,7 @@ test('SSG theme tokens are a single, static theme loaded before editorial CSS', 
   assert.ok(tokens.includes('--measure-reading: 760px;'));
 });
 
-test('WCAG AA contrast: foreground, secondary text and links at least 4.5:1', () => {
+test('WCAG AA: editorial foreground, secondary text and links at least 4.5:1', () => {
   for (const name of ['text', 'subtle-text', 'link']) {
     assert.ok(contrast(colors['--color-' + name], colors['--color-page']) >= 4.5,
       'low contrast for ' + name);
@@ -51,13 +51,13 @@ test('WCAG AA contrast: foreground, secondary text and links at least 4.5:1', ()
   assert.ok(contrast(colors['--color-focus'], colors['--color-page']) >= 3);
 });
 
-test('negative test: an unsafe foreground cannot pass contrast threshold', () => {
+test('negative: an unsafe foreground cannot pass contrast threshold', () => {
   assert.ok(contrast('#333333', '#11141b') < 4.5);
 });
 
 if (process.argv.includes('--built-site')) {
-  test('built Pages HTML and assets contain the exact static CSS tokens', () => {
-    assertThemeOrder(read('public/index.html'));
+  test('built Pages HTML and assets publish the exact CSS theme', () => {
+    assertStylesheet(read('public/index.html'));
     assert.equal(read('public/css/tokens.css'), tokens);
     assert.equal(read('public/css/site.css'), site);
   });
