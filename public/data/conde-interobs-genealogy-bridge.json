@@ -1,0 +1,374 @@
+{
+  "activation": false,
+  "approximate_interobs_positions_1963_all_objects": 600,
+  "approximate_position_count_is_not_target_count": true,
+  "dependency_graph": [
+    {
+      "activation": false,
+      "from": "SOVIET_INTEROBS_COMPILATION_1967",
+      "physical_measurement_independence": "SAME_WORK_NOT_NEW_SENSOR",
+      "relation": "TRANSLATION_OF_SAME_WORK",
+      "to": "USAF_FTD_TRANSLATION_1968_AD684833"
+    },
+    {
+      "activation": false,
+      "from": "USAF_FTD_TRANSLATION_1968_AD684833",
+      "physical_measurement_independence": "SAME_WORK_NOT_NEW_SENSOR",
+      "relation": "VIEWER_COPY_UNHASHED",
+      "to": "C241-LONTRA-R41"
+    },
+    {
+      "activation": false,
+      "from": "C241-LONTRA-R38",
+      "physical_measurement_independence": "NOT_ESTABLISHED",
+      "relation": "BIBLIOGRAPHIC_REFERENCE_UNREAD",
+      "to": "INTEROBS_FOLGE_I_II"
+    },
+    {
+      "activation": false,
+      "from": "C241-LONTRA-R39",
+      "physical_measurement_independence": "NOT_ESTABLISHED",
+      "relation": "YEARBOOK_REPORTS_PUBLICATION_UNREAD",
+      "to": "INTEROBS_FOLGE_I_II"
+    },
+    {
+      "activation": false,
+      "from": "C241-LONTRA-R40",
+      "physical_measurement_independence": "NOT_ESTABLISHED",
+      "relation": "ISSUE_7_STRUCTURE_ONLY_NOT_1963_CONTENT",
+      "to": "INTEROBS_LIST_1_2"
+    },
+    {
+      "activation": false,
+      "from": "C241-LONTRA-R41",
+      "physical_measurement_independence": "NOT_ESTABLISHED",
+      "relation": "REPORT_CITES_SERIES_NOT_PRIMARY_DATA",
+      "to": "INTEROBS_FOLGE_I_II"
+    },
+    {
+      "activation": false,
+      "from": "INTEROBS_FOLGE_I_II",
+      "physical_measurement_independence": "NOT_ESTABLISHED",
+      "relation": "SEARCH_CANDIDATE_NOT_OBSERVATION",
+      "to": "H_INTEROBS_528_NOV1963_OBS"
+    },
+    {
+      "activation": false,
+      "from": "H_INTEROBS_528_NOV1963_OBS",
+      "physical_measurement_independence": "NOT_ESTABLISHED",
+      "relation": "REQUIRES_TARGET_STATION_TIME_FRAME_CALIBRATION",
+      "to": "OPTICAL_DIRECTION_RA_DEC_528"
+    },
+    {
+      "activation": false,
+      "from": "OPTICAL_DIRECTION_RA_DEC_528",
+      "physical_measurement_independence": "NOT_ESTABLISHED",
+      "relation": "CONDITIONAL_OPERATOR_NOT_EVALUATED",
+      "to": "SIMULATOR_528_OPTICAL_LIKELIHOOD"
+    }
+  ],
+  "follow_up": "Recover full Folge I-II Lists 1/2 and original station logs; verify 1963-11-07/09 target aliases, station, time, frame, instrument uncertainty, and source independence before activating optical residual.",
+  "hypotheses": [
+    {
+      "id": "H_INTEROBS_528_NOV1963_OBS",
+      "required": "Folge I-II List 1 target identifiers and List 2 dated station records",
+      "status": "OPEN_UNVERIFIED",
+      "target": 528
+    },
+    {
+      "id": "H_SPUTNIK4_1963_ROWS_ARE_528",
+      "status": "REJECTED_DIFFERENT_OBJECT"
+    },
+    {
+      "id": "H_600_POSITIONS_IMPLY_528_TRACK",
+      "status": "UNSUPPORTED_AGGREGATE_TO_TARGET_TRANSFER"
+    }
+  ],
+  "id": "ABELHA-INTEROBS-R38-R41-01",
+  "independent_target_observations_added": 0,
+  "input_sha256": {
+    "C241-LONTRA-R38": {
+      "path": "research/tle_custody/konkoly_interobs_1963_C241-LONTRA-R38.json",
+      "sha256": "d0c2dbc9e661eaa8fcb8fd1e8155d62709e604e2eb2c6bfdad1f2a806cb6bb76"
+    },
+    "C241-LONTRA-R39": {
+      "path": "research/tle_custody/baja_1966_yearbook_interobs_C241-LONTRA-R39.json",
+      "sha256": "630167657fabebb51243ebb411a62c21bcada307da76c86203246c7f0f352ffc"
+    },
+    "C241-LONTRA-R40": {
+      "path": "research/tle_custody/interobs_1968_closure_preface_C241-LONTRA-R40.json",
+      "sha256": "d4ebdfddcad5e36927067b344a794b9b9756f205f222fff625ae4bb5147702db"
+    },
+    "C241-LONTRA-R41": {
+      "path": "research/tle_custody/interobs_ftd_translation_C241-LONTRA-R41.json",
+      "sha256": "d8a99d9b41ee1e11fa23c043535f8e8c313ae49a0ac8f9e2b1157c0a93471889"
+    }
+  },
+  "lean_candidate": "Conde1963.interobsDocumentarySourceDependency",
+  "lean_status": "DOCUMENTARY_CANDIDATE_NOT_COMPILED_AS_ORBITAL_RESTRICTION",
+  "matrix_occurrence": null,
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "schema": "conde.interobs-genealogy-scientific-bridge/v1",
+  "simulator_latent_parameters": [
+    {
+      "activation": false,
+      "id": "INTEROBS:527:target_identifier",
+      "source_candidates": [
+        "C241-LONTRA-R38",
+        "C241-LONTRA-R39",
+        "C241-LONTRA-R40",
+        "C241-LONTRA-R41"
+      ],
+      "uncertainty": "UNQUANTIFIED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "INTEROBS:527:station_geodetic_position_1963",
+      "source_candidates": [
+        "C241-LONTRA-R38",
+        "C241-LONTRA-R39",
+        "C241-LONTRA-R40",
+        "C241-LONTRA-R41"
+      ],
+      "uncertainty": "UNQUANTIFIED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "INTEROBS:527:epoch_utc_and_clock_sigma",
+      "source_candidates": [
+        "C241-LONTRA-R38",
+        "C241-LONTRA-R39",
+        "C241-LONTRA-R40",
+        "C241-LONTRA-R41"
+      ],
+      "uncertainty": "UNQUANTIFIED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "INTEROBS:527:optical_ra_dec_observable",
+      "source_candidates": [
+        "C241-LONTRA-R38",
+        "C241-LONTRA-R39",
+        "C241-LONTRA-R40",
+        "C241-LONTRA-R41"
+      ],
+      "uncertainty": "UNQUANTIFIED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "INTEROBS:527:reference_frame_and_reduction",
+      "source_candidates": [
+        "C241-LONTRA-R38",
+        "C241-LONTRA-R39",
+        "C241-LONTRA-R40",
+        "C241-LONTRA-R41"
+      ],
+      "uncertainty": "UNQUANTIFIED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "INTEROBS:527:angular_covariance",
+      "source_candidates": [
+        "C241-LONTRA-R38",
+        "C241-LONTRA-R39",
+        "C241-LONTRA-R40",
+        "C241-LONTRA-R41"
+      ],
+      "uncertainty": "UNQUANTIFIED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "INTEROBS:528:target_identifier",
+      "source_candidates": [
+        "C241-LONTRA-R38",
+        "C241-LONTRA-R39",
+        "C241-LONTRA-R40",
+        "C241-LONTRA-R41"
+      ],
+      "uncertainty": "UNQUANTIFIED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "INTEROBS:528:station_geodetic_position_1963",
+      "source_candidates": [
+        "C241-LONTRA-R38",
+        "C241-LONTRA-R39",
+        "C241-LONTRA-R40",
+        "C241-LONTRA-R41"
+      ],
+      "uncertainty": "UNQUANTIFIED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "INTEROBS:528:epoch_utc_and_clock_sigma",
+      "source_candidates": [
+        "C241-LONTRA-R38",
+        "C241-LONTRA-R39",
+        "C241-LONTRA-R40",
+        "C241-LONTRA-R41"
+      ],
+      "uncertainty": "UNQUANTIFIED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "INTEROBS:528:optical_ra_dec_observable",
+      "source_candidates": [
+        "C241-LONTRA-R38",
+        "C241-LONTRA-R39",
+        "C241-LONTRA-R40",
+        "C241-LONTRA-R41"
+      ],
+      "uncertainty": "UNQUANTIFIED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "INTEROBS:528:reference_frame_and_reduction",
+      "source_candidates": [
+        "C241-LONTRA-R38",
+        "C241-LONTRA-R39",
+        "C241-LONTRA-R40",
+        "C241-LONTRA-R41"
+      ],
+      "uncertainty": "UNQUANTIFIED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "INTEROBS:528:angular_covariance",
+      "source_candidates": [
+        "C241-LONTRA-R38",
+        "C241-LONTRA-R39",
+        "C241-LONTRA-R40",
+        "C241-LONTRA-R41"
+      ],
+      "uncertainty": "UNQUANTIFIED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "INTEROBS:529:target_identifier",
+      "source_candidates": [
+        "C241-LONTRA-R38",
+        "C241-LONTRA-R39",
+        "C241-LONTRA-R40",
+        "C241-LONTRA-R41"
+      ],
+      "uncertainty": "UNQUANTIFIED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "INTEROBS:529:station_geodetic_position_1963",
+      "source_candidates": [
+        "C241-LONTRA-R38",
+        "C241-LONTRA-R39",
+        "C241-LONTRA-R40",
+        "C241-LONTRA-R41"
+      ],
+      "uncertainty": "UNQUANTIFIED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "INTEROBS:529:epoch_utc_and_clock_sigma",
+      "source_candidates": [
+        "C241-LONTRA-R38",
+        "C241-LONTRA-R39",
+        "C241-LONTRA-R40",
+        "C241-LONTRA-R41"
+      ],
+      "uncertainty": "UNQUANTIFIED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "INTEROBS:529:optical_ra_dec_observable",
+      "source_candidates": [
+        "C241-LONTRA-R38",
+        "C241-LONTRA-R39",
+        "C241-LONTRA-R40",
+        "C241-LONTRA-R41"
+      ],
+      "uncertainty": "UNQUANTIFIED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "INTEROBS:529:reference_frame_and_reduction",
+      "source_candidates": [
+        "C241-LONTRA-R38",
+        "C241-LONTRA-R39",
+        "C241-LONTRA-R40",
+        "C241-LONTRA-R41"
+      ],
+      "uncertainty": "UNQUANTIFIED",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "INTEROBS:529:angular_covariance",
+      "source_candidates": [
+        "C241-LONTRA-R38",
+        "C241-LONTRA-R39",
+        "C241-LONTRA-R40",
+        "C241-LONTRA-R41"
+      ],
+      "uncertainty": "UNQUANTIFIED",
+      "value": null
+    }
+  ],
+  "simulator_operator": "CONDITIONAL_TOPOCENTRIC_OPTICAL_RA_DEC_RESIDUAL",
+  "source_custody": [
+    {
+      "observed_target": "1960 epsilon 3 / Sputnik 4",
+      "representation": "TRANSCRIBED_HTML_NOT_ORIGINAL_PRINT_FACSIMILE",
+      "source_occurrence": "C241-LONTRA-R38",
+      "source_sha256": "70a0e99bf61528d28b48f583295a4984ae2b9056595d1bb9d7a626a61a47ebe5",
+      "source_url": "https://webarch.konkoly.hu/mitteilungen/Mitt059/059.html",
+      "target_527_529": false
+    },
+    {
+      "printed_page": 119,
+      "representation": "1965_YEARBOOK_ORIGINAL_PAGE_PDF",
+      "source_occurrence": "C241-LONTRA-R39",
+      "source_sha256": "8061e6c164836e6b6e0e465be801fcb891002204bd3a523b4eda43a81d8d459a",
+      "source_url": "https://real-j.mtak.hu/15014/1/csillagaszati_evkonyv_1966.pdf",
+      "target_527_529": null
+    },
+    {
+      "printed_page": 3,
+      "representation": "1968_PREFACE_EXCERPT_ONLY",
+      "source_occurrence": "C241-LONTRA-R40",
+      "source_sha256": "997ff8bed4924b9cfcba7a018ebeed176ac9602e0484e41c899235b2515e110c",
+      "source_url": "https://real.mtak.hu/143828/1/vorwort_interobs_programs.pdf",
+      "target_527_529": null
+    },
+    {
+      "printed_pages": [
+        18,
+        19
+      ],
+      "representation": "USAF_1968_TRANSLATION_VIEWED_NOT_DOWNLOADED",
+      "source_occurrence": "C241-LONTRA-R41",
+      "source_sha256": null,
+      "source_url": "https://scispace.com/pdf/artificial-satellite-tracking-1957-1967-46qi6y1apc.pdf",
+      "target_527_529": null
+    }
+  ],
+  "source_occurrences": [
+    "C241-LONTRA-R38",
+    "C241-LONTRA-R39",
+    "C241-LONTRA-R40",
+    "C241-LONTRA-R41"
+  ]
+}
