@@ -5,7 +5,7 @@ import {join} from 'node:path';
 import {archiveKey,verifiedArchiveLinks} from './ssg-wayback-links.mjs';
 import {interpretArchiveStatus,archiveStatusGuide} from './archive-source-status.mjs';
 import {renderArchiveStatusIndex,archiveStatusLink,ARCHIVE_ROOT,MATRIX_ROW_ROOT} from './archive-status-index.mjs';
-import {returnToStory,returnToDossier} from './ssg-editorial-return.mjs';
+import {returnToStory} from './ssg-editorial-return.mjs';
 
 const ROOT=ARCHIVE_ROOT;
 const MATRIX=MATRIX_ROW_ROOT;
@@ -135,8 +135,6 @@ export function archivePages(citations, lineage, wayback=null) {
     }
     const storyReturn=returnToStory(id);
     if (storyReturn) parts.push(storyReturn, '');
-    const dossierReturn=returnToDossier(id);
-    if (dossierReturn) parts.push(dossierReturn, '');
     parts.push('[Voltar ao índice curado]('+ROOT+') · [Índice de famílias documentais]('+ROOT+'familias/) · [Abrir laboratório antigo](/conde-incident/lab/#/documents)');
     files.set(slug+'/index.md', page(`${id}: referências documentais`,
       `Proveniência curada da ocorrência ${id}`, parts.join('\n'), 'Evidence', {
