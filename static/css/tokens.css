@@ -12,6 +12,18 @@
   --font-interface: system-ui, sans-serif;
   --measure-reading: 760px;
   --measure-layout: 960px;
+  /* SSG dossier light palette: the second editorial theme is a first-class token set. */
+  --color-casefile-paper: #f5f2e9;
+  --color-casefile-surface: #fffdf8;
+  --color-casefile-ink: #20313c;
+  --color-casefile-muted: #445865;
+  --color-casefile-line: #b5c4ca;
+  --color-casefile-accent: #174f61;
+  --color-casefile-warm: #74512d;
+  --color-casefile-focus: #94461c;
+  --color-casefile-status: #eee8dd;
+  --color-casefile-hover: #123d4d;
+  --color-casefile-highlight: #e8f0ee;
   /* Compatibility API for existing SSG widgets and editorial components. */
   --paper: var(--color-page);
   --panel: var(--color-surface);
