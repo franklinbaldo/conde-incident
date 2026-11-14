@@ -47,6 +47,26 @@ try {
         await page.waitForFunction(() => document.title.includes('NORAD 528'));
         assert.equal(await page.locator('nav[aria-label="Seções do laboratório"] a[aria-current="page"][href="#/' + tab + '"]').count(), 2,
           'mobile and desktop navigation should identify the same active view');
+        // Accessibility: resizing text to 200% must not push keyboard controls off-screen.
+        // CSS text resize is checked here; native browser zoom and readers need separate trials.
+        if (tab === 'summary' && width <= 390) {
+          const scaled = await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+          const controls = [
+            page.getByRole('button', { name: 'Exportar código Python reprodutível' }),
+            page.getByRole('button', { name: 'Português (Brasil)' }),
+            page.getByRole('button', { name: 'English' }),
+            page.locator('nav details summary'),
+            page.locator('nav details summary span').first(),
+          ];
+          for (const control of controls) {
+            const bounds = await control.boundingBox();
+            assert(bounds && bounds.x >= -1 && bounds.x + bounds.width <= width + 1,
+              '200% text clips lab navigation control at ' + width + 'px: '
+              + await control.evaluate(element => element.textContent.trim()));
+          }
+          await page.locator('header').screenshot({ path: 'test-results/ui/lab-text-resize-' + width + '.png' });
+          await scaled.evaluate(element => element.remove());
+        }
         const backToContext = tab === 'summary'
           ? page.getByRole('link', { name: 'Voltar ao Caderno' })
           : page.getByRole('link', { name: /^Abrir no Caderno:/ });
