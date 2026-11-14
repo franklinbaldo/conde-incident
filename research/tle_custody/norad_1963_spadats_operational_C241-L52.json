@@ -1,0 +1,77 @@
+{
+  "schema": "c241-l52-norad-spadats-operational/v1",
+  "evidence_id": "C241-L52",
+  "source_kind": "CONTEMPORARY_INSTITUTIONAL_SUMMARY_NOT_RAW_TRACKING",
+  "source": {
+    "url": "https://documents.theblackvault.com/documents/afhistory/norad/%28U%29%201963%20NORAD%20CONAD%20History%20Jul-Dec.pdf",
+    "institution": "Headquarters NORAD/CONAD",
+    "title": "NORAD/CONAD Historical Summary, July-December 1963",
+    "report_date": "1964-05-01",
+    "coverage": "1963-07 through 1963-12",
+    "holder": "The Black Vault declassified-scan mirror; official NORAD history inventory lists the title",
+    "bytes": 7111330,
+    "sha256": "eb8682425a393b016642165a9c00b6be8868a27954ddd0e55c40c1e14da425b4",
+    "pdf_pages": 122,
+    "read_method": "Scanned pages visually inspected, PDF indexes 70/71; hash is of the exact mirrored binary downloaded 2026-11-14"
+  },
+  "events": [
+    {
+      "id": "JCS_1963_07_17",
+      "date": "1963-07-17",
+      "pdf_page_index": 70,
+      "printed_page": 55,
+      "finding": "JCS advised NORAD that the three SAO-operated cameras would not be available under the proposed transfer; requested plan for four USAF-owned cameras plus Cold Lake.",
+      "kind": "administrative-plan-decision"
+    },
+    {
+      "id": "JCS_NASA_DATA_REQUEST",
+      "date": "1963-07-17",
+      "pdf_page_index": 70,
+      "printed_page": 55,
+      "finding": "JCS requested every effort to have NASA provide Baker-Nunn data to SPADATS; this documents a request, not receipt of any named measurement.",
+      "kind": "data-sharing-request"
+    },
+    {
+      "id": "NORAD_REPLAN_1963_09",
+      "date": "1963-09",
+      "pdf_page_index": 71,
+      "printed_page": 56,
+      "finding": "NORAD described a revised mutually supporting USAF/RCAF camera subsystem, with SAO camera contributions still to be determined before recommendations.",
+      "kind": "planned-system-integration"
+    },
+    {
+      "id": "NAVY_CALIBRATION_1963_10",
+      "date": "1963-10",
+      "pdf_page_index": 71,
+      "printed_page": 56,
+      "finding": "NORAD learned that the Navy no longer required Baker-Nunn cameras for SPASUR calibration and JCS approved no further action on this calibration request.",
+      "kind": "calibration-plan-change"
+    },
+    {
+      "id": "COLD_LAKE_COMMS_1963_12",
+      "date": "1963-12",
+      "pdf_page_index": 71,
+      "printed_page": 56,
+      "finding": "The report states secure communication circuits scheduled for 15 November at Cold Lake had still not been installed by the end of 1963; operational control did not prove direct real-time data feed.",
+      "kind": "communications-availability-context"
+    }
+  ],
+  "scope": {
+    "instrumental_observation_527": null,
+    "instrumental_observation_528": null,
+    "instrumental_observation_529": null,
+    "station_of_528": null,
+    "epoch_528_utc": null,
+    "frame_528": null,
+    "sigma_528": null,
+    "actual_1963_sao_to_spadats_528_transfer": null,
+    "independent_instrumental_family_count": null,
+    "physical_piece_528": null,
+    "decay_hour_528": null,
+    "impact_location_528": null,
+    "physical_constraint_active": false,
+    "graph_state": "CONTEXT_ONLY_NOT_ACTIVATED",
+    "orbit_parameters": "THETA_UNCHANGED"
+  },
+  "next_test": "Recover actual 1963 tracking log with NORAD 528/1963-003B, station, UTC timestamp, observable, reference frame, calibration and error; audit actual NSA/NASA/SAO-to-SPADATS data transfers."
+}
