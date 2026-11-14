@@ -63,6 +63,13 @@ def validate(data):
         raise ValueError("A holdings catalog cannot add observational constraints")
     return True
 
+def verify_snapshot_digest(raw, expected_sha256=SHA256):
+    """Fail closed if catalog bytes differ from the evidenced snapshot."""
+    digest = hashlib.sha256(raw).hexdigest()
+    if digest != expected_sha256:
+        raise ValueError("Institutional holdings snapshot digest mismatch")
+    return digest
+
 def replay():
     req = urllib.request.Request(URL, headers={"User-Agent":"Mozilla/5.0 (Conde archival research)"})
     with urllib.request.urlopen(req, timeout=25) as resp:
@@ -70,9 +77,11 @@ def replay():
     if status != 200 or len(raw) > 750_000:
         raise ValueError("Unexpected HTTP status or excessive response")
     check_holding_context(raw)
-    digest = hashlib.sha256(raw).hexdigest()
+    if len(raw) != 63640:
+        raise ValueError("Institutional holdings snapshot length mismatch")
+    digest = verify_snapshot_digest(raw)
     print(json.dumps({"http":status,"bytes":len(raw),"sha256":digest,
-                      "snapshot_sha256_matches":digest == SHA256,"1963_issue_32_holding_confirmed":True}))
+                      "snapshot_sha256_matches":True,"1963_issue_32_holding_confirmed":True}))
     return True
 
 if __name__ == "__main__":
