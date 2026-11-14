@@ -1,0 +1,60 @@
+{
+  "schema": "c241-l50-quest-stage-v1",
+  "evidence_id": "C241-L50",
+  "status": "RETROSPECTIVE_EDITORIAL_NO_INSTRUMENTAL_MEASUREMENT",
+  "physical_constraint_active": false,
+  "source": {
+    "author": "Jonathan McDowell",
+    "title": "U.S. Reconnaissance Satellite Programs, Part 2: Beyond Imaging",
+    "publication": "Quest vol. 4 no. 4 (1995)",
+    "url": "https://planet4589.org/jcm/pubs/space/papers/1995/Quest95b.pdf",
+    "bytes": 14469995,
+    "sha256": "9dec4037537ea648a41501381c62d0f6eadfbd4fad807d27eb1fd7f748eb1ed1",
+    "pages": 7,
+    "pdf_page_index_zero_based": 1,
+    "printed_page": 40,
+    "text_layer_characters": 0,
+    "inspection": "Full PDF downloaded and hashed; page 40 visually read in raster crop, not OCR."
+  },
+  "rows": [
+    {
+      "ferret": 2,
+      "vehicle": "2312",
+      "date": "1962 Jun 18",
+      "stage": "Thor Agena B"
+    },
+    {
+      "ferret": 3,
+      "vehicle": "2313",
+      "date": "1963 Jan 16",
+      "stage": "Thor Agena D",
+      "orbit_as_printed": "459 x 533 x 81.9",
+      "period_as_printed": "94.7"
+    },
+    {
+      "ferret": 4,
+      "vehicle": "2314",
+      "date": "1963 Jun 29",
+      "stage": "TAT Agena B"
+    }
+  ],
+  "comparison": {
+    "nasa_sp4004_1964": "D, group 1963-3, page 502, C241-L15",
+    "nsa_1975": "D, 7153/2313, indexed text pending facsimile",
+    "modern_gunter": "B, 2313, modern secondary catalog",
+    "source_independence": "editorial publication; independent instrumental origin not established"
+  },
+  "norad528": {
+    "designator": "1963-003B",
+    "individual_row": false,
+    "observation_utc": null,
+    "station": null,
+    "frame": null,
+    "sigma": null,
+    "object_hardware": null,
+    "decay_hour": null,
+    "impact_location": null
+  },
+  "status_of_orbital_parameters": "THETA_UNCHANGED",
+  "next_test": "Find engineering record for Agena 2313 B/D and raw 1963-003B observation with UTC, station, frame and uncertainty."
+}
