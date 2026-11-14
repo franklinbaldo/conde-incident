@@ -50,6 +50,71 @@ theorem acceptedFlow_list_balance {State : Type}
     simp only [List.map_cons, List.sum_cons]
     rw [acceptedFlow_detailed_balance weight proposal symmetry i j, ih]
 
+/-! ## General Hastings correction for unequal proposal rates
+
+For a common proposal row denominator, or for actual proposal rates,
+\`weight i * proposal i j\` is the unnormalized *forward capacity*.
+The accepted bidirectional flow must fit **both** capacities. Its largest
+possible reversible value is their minimum. This generalizes the symmetric
+formula above; it is not a proof that a floating-point sampler has this kernel.
+-/
+
+/-- Corrected unnormalized off-diagonal Hastings flow. Integer proposal counts
+    stand for rates with the SAME denominator across source states. If the
+    rows have different denominators, convert them to common units first. -/
+def hastingsFlow {State : Type} (weight : State → Nat)
+    (proposal : State → State → Nat) (src dst : State) : Nat :=
+  Nat.min (weight src * proposal src dst) (weight dst * proposal dst src)
+
+/-- The general Hastings correction restores pairwise reversibility for even
+    asymmetric proposals, without a symmetry premise. -/
+theorem hastingsFlow_detailed_balance {State : Type}
+    (weight : State → Nat) (proposal : State → State → Nat)
+    (i j : State) :
+    hastingsFlow weight proposal i j = hastingsFlow weight proposal j i := by
+  simp [hastingsFlow, Nat.min_comm]
+
+/-- Accepted flow never exceeds the forward proposal capacity. -/
+theorem hastingsFlow_le_forward {State : Type}
+    (weight : State → Nat) (proposal : State → State → Nat)
+    (i j : State) :
+    hastingsFlow weight proposal i j ≤ weight i * proposal i j := by
+  exact Nat.min_le_left _ _
+
+/-- No reversible flow respecting both directions can exceed the corrected
+    acceptance flow: it is the MAXIMAL feasible bidirectional mass. -/
+theorem hastingsFlow_maximal {State : Type}
+    (weight : State → Nat) (proposal : State → State → Nat)
+    (i j : State) (candidate : Nat)
+    (hforward : candidate ≤ weight i * proposal i j)
+    (hreverse : candidate ≤ weight j * proposal j i) :
+    candidate ≤ hastingsFlow weight proposal i j := by
+  exact Nat.le_min.mpr ⟨hforward, hreverse⟩
+
+/-- On any finite enumeration of destination states, incoming and outgoing
+    corrected accepted flows balance. This does not assert stationarity of a
+    FULL kernel with self-loops, stochastic normalization, or ergodicity. -/
+theorem hastingsFlow_list_balance {State : Type}
+    (weight : State → Nat) (proposal : State → State → Nat)
+    (i : State) (states : List State) :
+    (states.map (fun j => hastingsFlow weight proposal i j)).sum =
+    (states.map (fun j => hastingsFlow weight proposal j i)).sum := by
+  induction states with
+  | nil => rfl
+  | cons j rest ih =>
+    simp only [List.map_cons, List.sum_cons]
+    rw [hastingsFlow_detailed_balance weight proposal i j, ih]
+
+/-- A skew proposal 3:1 with equal positive target weights is corrected to
+    accepted mass 2:2, whereas the symmetric-only formula gave 6:2. -/
+theorem hastingsFlow_asymmetric_example :
+    hastingsFlow (fun _ : Bool => 2)
+      (fun x y => if x == y then 0 else if x then 3 else 1)
+      true false = 2 ∧
+    hastingsFlow (fun _ : Bool => 2)
+      (fun x y => if x == y then 0 else if x then 3 else 1)
+      false true = 2 := by decide
+
 /-- A concrete counterexample: without symmetric proposals the off-diagonal
     MH flow formula must not be used as a general Hastings correction. -/
 theorem asymmetric_proposal_counterexample : acceptedFlow (fun _ : Bool => 2)

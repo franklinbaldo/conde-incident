@@ -17,6 +17,14 @@ def accepted_mass(src_weight: int, dst_weight: int, proposal: int) -> Fraction:
     return src_weight * proposal * min(Fraction(1), Fraction(dst_weight, src_weight))
 
 
+def corrected_hastings_mass(src_weight: int, dst_weight: int,
+                            forward_rate: int, reverse_rate: int) -> Fraction:
+    if min(src_weight, dst_weight) <= 0 or min(forward_rate, reverse_rate) < 0:
+        raise ValueError("positive target weights and nonnegative rates required")
+    return min(Fraction(src_weight * forward_rate),
+               Fraction(dst_weight * reverse_rate))
+
+
 def circular_residual(y: int, h: int, theta: int, bias: int) -> int:
     return (y - h - theta - bias) % 360_000
 
@@ -31,6 +39,31 @@ class CircularMCMCFormalContract(unittest.TestCase):
 
     def test_asymmetric_proposals_are_not_reversible_by_simple_ratio(self):
         self.assertNotEqual(accepted_mass(2, 2, 3), accepted_mass(2, 2, 1))
+
+    def test_asymmetric_hastings_is_reversible_and_maximal(self):
+        # Exhaust a finite exact grid, including a missing reverse proposal.
+        for wi, wj, qij, qji in product(range(1, 6), range(1, 6), range(5), range(5)):
+            with self.subTest(wi=wi, wj=wj, qij=qij, qji=qji):
+                f = corrected_hastings_mass(wi, wj, qij, qji)
+                self.assertEqual(f, corrected_hastings_mass(wj, wi, qji, qij))
+                self.assertLessEqual(f, wi * qij)
+                self.assertLessEqual(f, wj * qji)
+                # Every candidate above accepted flow violates one capacity.
+                self.assertTrue(all(
+                    not (candidate <= wi * qij and candidate <= wj * qji)
+                    for candidate in range(int(f) + 1, max(wi * qij, wj * qji) + 2)
+                ))
+        self.assertEqual(corrected_hastings_mass(2, 2, 3, 1), 2)
+        self.assertEqual(corrected_hastings_mass(2, 2, 1, 3), 2)
+        self.assertEqual(corrected_hastings_mass(2, 2, 3, 0), 0)
+        self.assertNotEqual(accepted_mass(2, 2, 3), accepted_mass(2, 2, 1))
+
+    def test_hastings_matches_fractional_acceptance(self):
+        # Independent acceptance-ratio calculation for non-zero proposal rates.
+        for wi, wj, qij, qji in product(range(1, 6), range(1, 6), range(1, 5), range(5)):
+            ratio = Fraction(wj * qji, wi * qij)
+            accepted = Fraction(wi * qij) * min(Fraction(1), ratio)
+            self.assertEqual(accepted, corrected_hastings_mass(wi, wj, qij, qji))
 
     def test_group_gauge_on_modular_grid_and_wrap(self):
         rows = [(4, 120, 200_000), (5, -1, 359_999), (4, 200, -1)]
@@ -77,6 +110,11 @@ class CircularMCMCFormalContract(unittest.TestCase):
         theorem_names = (
             "acceptedFlow_detailed_balance", "acceptedFlow_list_balance",
             "asymmetric_proposal_counterexample", "residual_gauge_invariant",
+            "hastingsFlow_detailed_balance",
+            "hastingsFlow_le_forward",
+            "hastingsFlow_maximal",
+            "hastingsFlow_list_balance",
+            "hastingsFlow_asymmetric_example",
             "residualVector_gauge_invariant", "likelihood_gauge_invariant",
             "fixed_bias_can_break_gauge", "unanchored_phase_has_compensator",
             "calibrated_anchor_identifies_phase_modulo",
