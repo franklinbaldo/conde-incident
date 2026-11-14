@@ -114,6 +114,15 @@ export const Navigation: React.FC<NavigationProps> = ({
 
   const currentTab = tabs.find(tab => tab.id === activeTab);
 
+  // A hash route is a distinct destination: announce it in browser tabs,
+  // history entries and assistive technology, in the selected language.
+  React.useEffect(() => {
+    const section = lang === 'pt' ? currentTab?.labelPt : currentTab?.labelEn;
+    if (!section) return;
+    document.title = `${section} | NORAD 528 · ${lang === 'pt' ? 'Caso Conde (1963)' : 'Conde case (1963)'}`;
+  }, [activeTab, lang]);
+
+
   return (
     <header className="border-b border-zinc-800 bg-zinc-950/90 backdrop-blur md:sticky md:top-0 z-50">
       {/* Top Banner */}

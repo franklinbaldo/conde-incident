@@ -18,6 +18,8 @@ try {
       const nav = page.getByRole('navigation', { name: 'Seções do laboratório' });
       const chooser = nav.locator('summary');
       await chooser.waitFor();
+      await page.waitForFunction(() => document.title.startsWith('Arquivo e proveniência |'));
+      assert.match(await page.title(), /NORAD 528 · Caso Conde \(1963\)$/);
       assert.match(await chooser.innerText(), /Arquivo e proveniência/);
       await chooser.focus();
       await page.keyboard.press('Enter');
@@ -46,6 +48,7 @@ try {
       }
       await nav.getByRole('link', { name: /Rastreamento & Mapa/ }).click();
       assert.equal(new URL(page.url()).hash, '#/map');
+      await page.waitForFunction(() => document.title.startsWith('Rastreamento & Mapa |'));
       assert.equal(await nav.locator('details').getAttribute('open'), null);
       await page.waitForFunction(() => document.querySelector('nav summary')?.textContent?.includes('Rastreamento & Mapa'));
       assert.match(await chooser.innerText(), /Rastreamento & Mapa/);
@@ -53,10 +56,18 @@ try {
         'closing mobile section list must preserve keyboard focus');
       await page.goBack();
       await page.waitForFunction(() => document.querySelector('nav summary')?.textContent?.includes('Arquivo e proveniência'));
+      await page.waitForFunction(() => document.title.startsWith('Arquivo e proveniência |'));
       assert.match(await chooser.innerText(), /Arquivo e proveniência/);
       if (width === 640) {
         await page.setViewportSize({ width: 320, height: 800 });
         assert.match(await chooser.innerText(), /Arquivo e proveniência/);
+      }
+      if (width === 320) {
+        await page.getByRole('button', { name: 'English' }).click();
+        await page.waitForFunction(() => document.title.startsWith('Archive & provenance |'));
+        assert.match(await page.title(), /Conde case \(1963\)$/);
+        await page.getByRole('button', { name: 'Português (Brasil)' }).click();
+        await page.waitForFunction(() => document.title.startsWith('Arquivo e proveniência |'));
       }
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1), true);
       await page.screenshot({ path: out + '/deep-link-documents-' + width + '.png' });
