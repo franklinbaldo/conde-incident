@@ -177,8 +177,12 @@ jobs:
         uses: actions/deploy-pages@v4
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.sha }}
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
           persist-credentials: false
+      - name: Assert deployed workflow source SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
       - name: Compare deployed Pages manifest and four served files with build bytes
         shell: bash
         env:
