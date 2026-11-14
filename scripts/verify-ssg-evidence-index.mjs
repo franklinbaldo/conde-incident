@@ -70,7 +70,7 @@ const suppressed=(tag,attrs)=>rawTags.has(tag) ||
     .test(attribute(attrs,'style') ?? '');
 
 export function visibleDocument(html) {
-  const links=new Set(),content=[];
+  const links=new Set(),content=[],activeAnchors=new Map(),idCounts=new Map();
   const stack=[];
   let last=0;
   // Quote-aware tags: a '>' inside an attribute must not terminate a tag.
@@ -94,13 +94,19 @@ export function visibleDocument(html) {
     const attrs=token.slice(opening[0].length,-1);
     const hidden=Boolean(parent?.hidden || suppressed(tag,attrs));
     const main=Boolean(parent?.main || tag==='main');
+    // Fragment resolution uses the first DOM ID, including hidden elements.
+    // Count IDs across the document; require exactly one active target inside main.
+    const id=attribute(attrs,'id');
+    if(id) idCounts.set(id,(idCounts.get(id)??0)+1);
+    if(tag==='span' && main && !hidden && attribute(attrs,'tabindex')==='-1' && id)
+      activeAnchors.set(id,(activeAnchors.get(id)??0)+1);
     if (tag==='a' && main && !hidden && attribute(attrs,'tabindex')!=='-1') {
       const href=attribute(attrs,'href');
       if (href) links.add(href.replaceAll('&amp;','&'));
     }
     if (!voidTags.has(tag) && !/\/\s*>$/.test(token)) stack.push({tag,hidden,main});
   }
-  return {links,visibleText:content.join(' ')};
+  return {links,visibleText:content.join(' '),activeAnchors,idCounts};
 }
 
 export function readBundle(root='.') {
