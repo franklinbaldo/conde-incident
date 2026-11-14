@@ -59,9 +59,11 @@ def validate_inputs(repo: Path):
     nodes = osm["nodes"]
     if len(nodes) != 2 or [n["osm_node_id"] for n in nodes] != [415521889, 4697713641]:
         raise ValueError("missing or reordered OSM source nodes")
-    for n, role in zip(nodes, ("modern_osm_named_place_node_not_centroid_of_1963_center",
-                               "modern_osm_named_place_node_not_equated_with_vila20")):
-        if (n["role"] != role or n["source_tag_not_a_positional_certification"] is not True
+    for n, role, expected_geo in zip(nodes, ("modern_osm_named_place_node_not_centroid_of_1963_center",
+                                             "modern_osm_named_place_node_not_equated_with_vila20"),
+                                     ((-11.8129758, -37.6138705), (-11.7968448, -37.6214666))):
+        if ((n["latitude"], n["longitude"]) != expected_geo
+                or n["role"] != role or n["source_tag_not_a_positional_certification"] is not True
                 or not math.isfinite(n["latitude"]) or not math.isfinite(n["longitude"])
                 or not -90 <= n["latitude"] <= 90 or not -180 <= n["longitude"] <= 180
                 or len(n["raw_xml_sha256"]) != 64):
