@@ -116,6 +116,11 @@ try {
       await page.goto(origin + '#/summary', { waitUntil: 'domcontentloaded' });
       await page.locator('#constraints-title').waitFor();
       await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
+      // CI screenshots at 320px/200% exposed isolated decorative pipe characters
+      // occupying entire flex rows in the wrapping laboratory header. Gaps and
+      // labelled links already establish the hierarchy without those glyphs.
+      assert.equal(await page.locator('header span').filter({ hasText: /^\|$/ }).count(), 0,
+        'decorative pipe separators must not fragment the mobile header at 200% text');
       const result = await page.evaluate(() => ({
         width: innerWidth,
         scroll: document.documentElement.scrollWidth,
