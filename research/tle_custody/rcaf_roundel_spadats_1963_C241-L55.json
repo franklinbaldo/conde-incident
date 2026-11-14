@@ -1,0 +1,55 @@
+{
+  "schema": "conde.c241-l55-rcaf-spadats-custody/v1",
+  "evidence_id": "C241-L55",
+  "source": {
+    "institution": "Royal Canadian Air Force",
+    "periodical": "Roundel",
+    "issue": "September 1963",
+    "publication_date_precision": "MONTH_ONLY",
+    "url": "https://publications.rcaf.info/RCAF/Roundel/1963/Roundel-1963-09.pdf",
+    "retrieval_date": "2026-11-14",
+    "sha256": "830a7707f3ce611172ff6b6942794654b1fc30d564f97e2b7bf78f2c981657b3",
+    "bytes": 36226444,
+    "pdf_pages": 36,
+    "printed_page": 5,
+    "pdf_page_index_zero_based": 6,
+    "source_class": "CONTEMPORARY_RCAF_EDITORIAL_ACCOUNT_NOT_RAW_SENSOR_DATA",
+    "scan_pdf_creation_date": "2022-06-01"
+  },
+  "anchors": [
+    {
+      "id": "RCAF_COLD_LAKE_SPADATS",
+      "text": "The RCAF input into SPADATS is from a Baker-Nunn camera installation at RCAF Station Cold Lake.",
+      "kind": "PUBLISHED_SYSTEM_LEVEL_OPERATIONAL_ASSERTION",
+      "evidentiary_scope": "Contemporaneous RCAF statement describing a system-level contribution; not a transmission log, named object observation, or proof of direct secure circuits."
+    },
+    {
+      "id": "DRB_PRINCE_ALBERT",
+      "text": "such as the Canadian Defence Research Board's tracker unit at Prince Albert",
+      "kind": "PUBLISHED_NETWORK_DESCRIPTION",
+      "evidentiary_scope": "Describes institutional contributor Prince Albert; no individual 527/528/529 radar return, measurement or clock."
+    },
+    {
+      "id": "RCAF_CAMERA_PHOTO",
+      "text": "AC A. Dew and LAC K. Dodds work with a satellite tracking camera.",
+      "kind": "ILLUSTRATION_WITH_CAPTION",
+      "evidentiary_scope": "Published photo of operators with camera; caption does not establish the photo's station, date of exposure, or a 528 observation."
+    }
+  ],
+  "independence": {
+    "editorial_provenance": "RCAF magazine; underlying operational reporting and independence from NORAD are unverified",
+    "independent_instrumental_observations_recovered": 0,
+    "duplicate_528_measurement_with_other_ledgers": null
+  },
+  "norad_528_observation_utc": null,
+  "norad_528_observation_station": null,
+  "norad_528_sensor_sigma": null,
+  "norad_528_transmission_receipt": null,
+  "norad_528_frame": null,
+  "cold_lake_named_observations_recovered": 0,
+  "physical_constraint_active": false,
+  "orbit_parameters": "THETA_UNCHANGED",
+  "impact_at_conde": "NOT_ESTABLISHED",
+  "related_evidence": ["C241-L52", "C241-L53", "C241-L54"],
+  "next_acquisition": "Inspect RU263 series 9 box 72 folder #420 Operations (1963-1965), #130 Inventory and audits (1963), boxes 36/67, and contemporaneous PARL records for a specific NORAD 528/1963-003B observation or SPADATS receipt with UTC, station, observable, instrument, error and genealogy."
+}
