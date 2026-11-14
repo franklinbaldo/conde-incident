@@ -5,6 +5,9 @@ on:
       - 'research/tle_custody/nasa_ssr_terminal_control_308_C241-L64.*'
       - 'tools/tle_ssr_308_c241_l64.py'
       - 'tests/test_tle_ssr_308_c241_l64.py'
+      - 'tests/test_c241_ssr_omega_corrigendum_r63.py'
+      - 'tools/c241_ssr_omega_corrigendum_r63.py'
+      - 'research/tle_custody/nasa_ssr_omega1_corrigendum_C241-L65.*'
       - '.github/workflows/tle-ssr-308-c241-l64.yml'
   push:
     branches: [main]
@@ -12,6 +15,9 @@ on:
       - 'research/tle_custody/nasa_ssr_terminal_control_308_C241-L64.*'
       - 'tools/tle_ssr_308_c241_l64.py'
       - 'tests/test_tle_ssr_308_c241_l64.py'
+      - 'tests/test_c241_ssr_omega_corrigendum_r63.py'
+      - 'tools/c241_ssr_omega_corrigendum_r63.py'
+      - 'research/tle_custody/nasa_ssr_omega1_corrigendum_C241-L65.*'
       - '.github/workflows/tle-ssr-308-c241-l64.yml'
   workflow_dispatch:
 jobs:
@@ -34,9 +40,12 @@ jobs:
         run: |
           python -m unittest discover -s tests -p 'test_tle_ssr_308_c241_l64.py' -v
           python -O -m unittest discover -s tests -p 'test_tle_ssr_308_c241_l64.py' -v
+          python -m unittest discover -s tests -p 'test_c241_ssr_omega_corrigendum_r63.py' -v
+          python -O -m unittest discover -s tests -p 'test_c241_ssr_omega_corrigendum_r63.py' -v
       - uses: astral-sh/setup-uv@v6
       - name: Replay original PDF with pinned hash and pages
         run: |
           curl -fLsS --retry 2 --max-time 90 "https://ntrs.nasa.gov/api/citations/19640003479/downloads/19640003479.pdf" -o /tmp/19640003479.pdf
           python tools/tle_ssr_308_c241_l64.py --pdf /tmp/19640003479.pdf
+          python tools/c241_ssr_omega_corrigendum_r63.py
           uv run --with pypdf==6.1.3 python -c "from pypdf import PdfReader; assert len(PdfReader('/tmp/19640003479.pdf').pages) == 23"
