@@ -13,7 +13,8 @@ try {
       const response=await page.goto(url,{waitUntil:'networkidle'});
       assert(response?.ok(),'Reverse source page must be generated on this HEAD');
       const form=page.locator('#source-lookup-form');
-      await form.waitFor({state:'visible'});
+      await page.waitForFunction(()=>{const s=document.querySelector('#source-lookup-status')?.textContent||''; return s.includes('Índice verificado')||s.includes('Não foi possível verificar');});
+      assert.equal(await form.isVisible(),true,'O formulário não abriu: '+await page.locator('#source-lookup-status').innerText());
       assert.match(await page.locator('#source-lookup-status').innerText(),/Índice verificado/);
       const selector=page.getByLabel('Fonte documental');
       assert.equal(await selector.locator('option').count(),16,'15 curated sources plus prompt');
