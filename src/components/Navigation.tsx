@@ -128,10 +128,10 @@ export const Navigation: React.FC<NavigationProps> = ({
       {/* Keep the scientific metadata accessible without letting it crowd
           the mobile first fold, including at 200% resized text. */}
       <div data-mobile-lab-header className="mx-auto max-w-7xl border-b border-zinc-900 px-2 py-2 text-xs md:hidden">
-        <div className="flex min-w-0 flex-wrap items-center justify-between gap-2">
+        <div className="flex min-w-0 flex-wrap items-center justify-between gap-1">
           <a href={EDITORIAL_ROUTES.summary.href}
             aria-label={lang === 'pt' ? 'Voltar ao Caderno' : 'Back to the Notebook'}
-            className="inline-flex min-h-11 items-center gap-1 rounded px-1 text-cyan-300 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
+            className="inline-flex min-h-11 items-center gap-1 rounded px-1 text-[0.6875rem] text-cyan-300 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
             <ArrowLeft className="h-4 w-4 shrink-0" aria-hidden="true" />
             <span>{lang === 'pt' ? 'Caderno' : 'Notebook'}</span>
           </a>
