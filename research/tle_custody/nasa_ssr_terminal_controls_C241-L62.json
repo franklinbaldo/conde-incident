@@ -1,0 +1,77 @@
+{
+  "id": "C241-L62",
+  "purpose": "Contemporary NASA SSR decay day statements for NORAD 292 and 565, requested as temporal controls in Tartaruga inbox #8. NOT independent terminal time measurements.",
+  "source": {
+    "ntrs_id": "19640002493",
+    "title": "Satellite Situation Report, volume 3, number 23",
+    "publication_date": "1963-11-30",
+    "document_family": "NASA/GSFC-NORAD-SAO compiled Satellite Situation Report",
+    "pdf_url": "https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf",
+    "pdf_bytes": 1266393,
+    "pdf_sha256": "9f2b6973117bb709bd26893a90e42b170e58f245c0fa11370ab26cfda3b0d94d",
+    "pdf_page_index": 9,
+    "printed_page": 8,
+    "heading": "PLEASE ADD THE FOLLOWING TO THE DECAYED OBJECTS LIST",
+    "time_resolution": "CALENDAR_DAY_ONLY",
+    "compiled_data_is_independent_instrumental_observation": false,
+    "same_pdf_as_existing_C241_L18": true
+  },
+  "controls": [
+    {
+      "norad_id": 292,
+      "printed_designation": "1962 SIGMA 1",
+      "modern_designator": "1962-018A",
+      "secondary_crosswalk_url": "https://keeptrack.space/satellite/292",
+      "printed_source": "US",
+      "printed_launch": "15 MAY",
+      "printed_decay_day": "26 NOV 63",
+      "catalog_decay_date": "1963-11-26",
+      "terminal_utc": null,
+      "terminal_interval_utc": null,
+      "station": null,
+      "frame": null,
+      "measurement_error": null,
+      "original_instrument_log": null,
+      "kind": "CONTEMPORARY_COMPILED_CATALOG_DAY"
+    },
+    {
+      "norad_id": 565,
+      "printed_designation": "1963 9B",
+      "modern_designator": "1963-009B",
+      "secondary_crosswalk_url": "https://keeptrack.space/satellite/565",
+      "printed_source": "US",
+      "printed_launch": "3 APR",
+      "printed_decay_day": "24 NOV 63",
+      "catalog_decay_date": "1963-11-24",
+      "terminal_utc": null,
+      "terminal_interval_utc": null,
+      "station": null,
+      "frame": null,
+      "measurement_error": null,
+      "original_instrument_log": null,
+      "kind": "CONTEMPORARY_COMPILED_CATALOG_DAY"
+    }
+  ],
+  "unresolved": [
+    {
+      "norad_id": 308,
+      "secondary_day": "1963-10-30",
+      "source": "https://keeptrack.space/satellite/308",
+      "primary_terminal_time_status": "NOT_RECOVERED",
+      "terminal_utc": null
+    },
+    {
+      "norad_id": 668,
+      "secondary_day": "1963-10-12",
+      "source": "https://keeptrack.space/satellite/668",
+      "primary_terminal_time_status": "NOT_RECOVERED",
+      "terminal_utc": null
+    }
+  ],
+  "inference": {
+    "independent_sensor_count_added": 0,
+    "terminal_timestamp_measurements_added": 0,
+    "physical_domain_effect": "NONE",
+    "NORAD_528_constraints_added": 0
+  }
+}
