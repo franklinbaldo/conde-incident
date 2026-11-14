@@ -6,6 +6,7 @@ import {archiveKey,verifiedArchiveLinks} from './ssg-wayback-links.mjs';
 import {interpretArchiveStatus,archiveStatusGuide} from './archive-source-status.mjs';
 import {renderArchiveStatusIndex,archiveStatusLink,ARCHIVE_ROOT,MATRIX_ROW_ROOT} from './archive-status-index.mjs';
 import {returnToStory} from './ssg-editorial-return.mjs';
+import {sourceIndexBody} from './ssg-post-matrix-discovery.mjs';
 
 const ROOT=ARCHIVE_ROOT;
 const MATRIX=MATRIX_ROW_ROOT;
@@ -257,11 +258,8 @@ export function archivePages(citations, lineage, wayback=null) {
     sourceLinks.push(`- [${safe(source)}](${ROOT}fontes/${slug}/) · ${occurrences.size} ocorrência(s), ${works.size} obra(s)`);
   }
   files.set('fontes/index.md', page('Identificadores documentais: índice',
-    'Fontes citadas e reutilizações, sem presumir testemunhos independentes.', [
-      '## Identificadores de fontes', '',
-      '**Uma fonte pode aparecer em várias ocorrências.** O índice distingue referências documentais de observações instrumentais e conserva cada ligação à matriz.', '',
-      ...sourceLinks, '', `[Voltar ao arquivo curado](${ROOT})`,
-    ].join('\n')));
+    'Fontes citadas e reutilizações, sem presumir testemunhos independentes.',
+    sourceIndexBody(sourceLinks,ROOT,citations)));
   files.set('obras/index.md', page('Obras documentais: índice',
     'Obras citadas no arquivo curado, com ocorrências e dependências rastreáveis.', [
       '## Obras documentais', '',

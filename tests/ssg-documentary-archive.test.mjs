@@ -4,6 +4,7 @@ import {readFileSync} from 'node:fs';
 import {archivePages} from '../scripts/ssg-documentary-archive.mjs';
 import {interpretArchiveStatus} from '../scripts/archive-source-status.mjs';
 import {archiveStatusAnchor,archiveStatusLink} from '../scripts/archive-status-index.mjs';
+import {postMatrixAnchor} from '../scripts/ssg-post-matrix-backlinks.mjs';
 
 const feed = JSON.parse(readFileSync('public/data/conde-source-citations.json','utf8'));
 const ancestry = JSON.parse(readFileSync('public/data/conde-declared-dependence.json','utf8'));
@@ -316,4 +317,30 @@ test('chapter 03 keeps FBIS and NASA as separate, reversible documentary journey
   }
   // No unrelated occurrence may acquire a spurious link to this article.
   assert.doesNotMatch(pages.get('c232-1/index.md'),/Voltar à reportagem/);
+});
+
+test('pistas pós-matriz ficam navegáveis sem virar fontes ou eventos curados',()=>{
+  const pages=archivePages(feed,ancestry);
+  const contents=pages.get('fontes/index.md');
+  const lead=feed.post_matrix_occurrences[0];
+  assert.match(contents,/Pistas documentais posteriores à matriz/);
+  assert.ok(contents.includes(String.fromCharCode(10)+'## Pistas documentais posteriores à matriz'+String.fromCharCode(10)));
+  assert.ok(contents.includes('/conde-incident/evidencias/arquivo/pos-matriz/#'+
+    postMatrixAnchor(lead.id)));
+  assert.ok(contents.includes(lead.id));
+  assert.ok(contents.includes(lead.status));
+  assert.match(contents,/não acrescentam linhas à matriz/);
+  assert.equal(pages.size,feed.curated_occurrences+5+
+    new Set(feed.records.map(r=>r.source_family)).size+
+    new Set(feed.records.map(r=>r.work_id)).size+
+    new Set(feed.records.map(r=>r.source_id)).size);
+  const duplicated=clone(feed);
+  duplicated.post_matrix_occurrences.push(clone(lead));
+  assert.throws(()=>archivePages(duplicated,ancestry),/Pós-matriz: ID duplicado/);
+  const promoted=clone(feed);
+  promoted.post_matrix_occurrences[0].observation_type='PHYSICAL_OBSERVATION';
+  assert.throws(()=>archivePages(promoted,ancestry),/não é observação física/);
+  const unsafe=clone(feed);
+  unsafe.post_matrix_occurrences[0].status='<script>';
+  assert.throws(()=>archivePages(unsafe,ancestry),/estado inválido/);
 });

@@ -24,6 +24,8 @@ test('post-matrix SSG preserves archived source, frozen IDs and epistemic limit'
   assert.match(page,/C01#1/);
   assert.match(page,/Independência jornalística/);
   assert.match(page,/Próxima fonte necessária/);
+  assert.match(page,/Consultar identificadores documentais/);
+  assert.match(page,/evidencias\/arquivo\/fontes\//);
   assert.doesNotMatch(page,/<script|onclick=|onload=/i);
   assert.doesNotMatch(page,/C999#1/);
 });
@@ -128,8 +130,11 @@ test('post-matrix built HTML binds navigation, source identity and custody in ea
   const report=field('SHA-256 do relatório de custódia versionado',reportDigest);
   const heading='<h3 id="'+postMatrixAnchor(item.id)+'" tabindex="-1">'+item.id+'</h3>';
   const base='<main><a href="/conde-incident/evidencias/matriz/">Matriz</a>'+
+    '<a href="/conde-incident/evidencias/arquivo/fontes/">Fontes</a>'+
     heading+state+independence+imageDigest+report+source+custody+links+'</main>';
   assert.equal(auditBuiltPostMatrix(base,citations),expected.length);
+  assert.throws(()=>auditBuiltPostMatrix(base.replace('<a href="/conde-incident/evidencias/arquivo/fontes/">Fontes</a>',''),citations),
+    /falta retorno visível ao índice de fontes/);
 
   // A raw <h3> cannot authenticate a record when an ancestor hides it.
   // Earlier auditing detached the heading from its hidden parent.
