@@ -1,4 +1,5 @@
 import Conde1963.Core
+import Conde1963.CircularMCMC
 import Conde1963.SsrSurvivorIntervals
 import Conde1963.RelativeTrajectories
 import Conde1963.SsrNovember
@@ -28,3 +29,13 @@ does not authenticate observed positions or establish a 1963 reentry. -/
 
 #print axioms Conde1963.UnSsrCrossCompilation.cross_agency_lower_bound
 #print axioms Conde1963.UnSsrCrossCompilation.cross_agency_attaining_witness
+
+/-! Exact synthetic circular-MCMC structural audit, not historical inference. -/
+#print axioms Conde1963.CircularMCMC.acceptedFlow_detailed_balance
+#print axioms Conde1963.CircularMCMC.acceptedFlow_list_balance
+#print axioms Conde1963.CircularMCMC.asymmetric_proposal_counterexample
+#print axioms Conde1963.CircularMCMC.residual_gauge_invariant
+#print axioms Conde1963.CircularMCMC.residualVector_gauge_invariant
+#print axioms Conde1963.CircularMCMC.likelihood_gauge_invariant
+#print axioms Conde1963.CircularMCMC.fixed_bias_can_break_gauge
+#print axioms Conde1963.CircularMCMC.unanchored_phase_has_compensator
