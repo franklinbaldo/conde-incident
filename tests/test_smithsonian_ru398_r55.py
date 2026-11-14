@@ -1,9 +1,12 @@
 """Adversarial custody checks, compatible with Python normal and -O."""
 import copy
 import json
+import subprocess
+import sys
+import tempfile
 import unittest
 from pathlib import Path
-from tools.audit_smithsonian_ru398_r55 import SOURCE,audit,replay
+from tools.audit_smithsonian_ru398_r55 import ROOT,SOURCE,audit,replay
 
 class TestR55(unittest.TestCase):
     def setUp(self): self.doc=json.loads(SOURCE.read_text(encoding="utf-8"))
@@ -35,3 +38,28 @@ class TestR55(unittest.TestCase):
     def test_theta_unchanged(self):self.invalid(["conclusions","activated_orbital_constraints"],1)
     def test_no_contact(self):self.invalid(["conclusions","institutional_contacts_sent"],1)
     def test_python_not_pdf(self):self.assertFalse(replay(Path(__file__)))
+
+
+class TestR55CliMandatoryBytes(unittest.TestCase):
+    """No CI success from a manifest-only run or an altered lookalike PDF."""
+
+    def cli(self, *args):
+        return subprocess.run(
+            [sys.executable, "-m", "tools.audit_smithsonian_ru398_r55", *args],
+            cwd=ROOT, capture_output=True, text=True, timeout=15, check=False,
+        )
+
+    def test_manifest_only_invocation_fails(self):
+        result = self.cli()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("--pdf", result.stderr)
+        self.assertNotIn("R55 OK", result.stdout)
+
+    def test_lookalike_pdf_fails(self):
+        with tempfile.TemporaryDirectory() as directory:
+            fake = Path(directory) / "finding-aid.pdf"
+            fake.write_bytes(b"%PDF-1.7\n%%EOF\n")
+            result = self.cli("--pdf", str(fake))
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("PDF mismatch", result.stderr)
+        self.assertNotIn("R55 OK", result.stdout)

@@ -31,6 +31,11 @@ jobs:
         run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
       - name: Tests normal and -O
         run: |
+          set -euo pipefail
           python3 -m unittest discover -s tests -p test_smithsonian_ru398_r55.py -v
           python3 -O -m unittest discover -s tests -p test_smithsonian_ru398_r55.py -v
-          python3 -m tools.audit_smithsonian_ru398_r55
+          # A manifest asserting the historical SHA is not a replay of original bytes.
+          curl --fail --location --silent --show-error --retry 2 --max-time 90 \
+            'https://sirismm.si.edu/EADpdfs/SIA.FARU0398.pdf' \
+            --output /tmp/smithsonian-ru398.pdf
+          python3 -m tools.audit_smithsonian_ru398_r55 --pdf /tmp/smithsonian-ru398.pdf
