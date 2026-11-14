@@ -75,11 +75,8 @@ Scope of shared scientific/product work: **franklinbaldo/conde-incident**. Perma
 
 A nova separação entre projeto e memória pessoal está especificada em [docs/AGENT_WORKSPACES.md](docs/AGENT_WORKSPACES.md). Cada animal usa como **objetivo** um repositório GitHub privado próprio `franklinbaldo/<animal>`, com push direto, memória/skill/ferramentas livres; mensagens entre animais via issues no repositório privado do destinatário. Issues e PRs de implementação pertencem ao repositório do projeto. **Verificação de 12/11/2026:** os 13 repositórios pessoais já existem, com owner `franklinbaldo`, privacidade e Issues confirmadas pela API autenticada. O scaffold ainda está **parcial**, conforme `franklinbaldo/cafezinho/team/roster.json` e a issue #93. Cada animal pode ler sua skill privada, registrar memória privada e usar issues do destinatário; código de produto permanece aqui por PR/CI. Não presumir que todas as pastas de bootstrap ou escritas individuais já tenham sido auditadas e jamais copiar memórias pessoais para o projeto público.
 
-## Next targets
-- PR #1: evidence-first site, cumulative C01–C238 research matrix, SGP4 baseline fixes, Lean core and CI; inspect, validate, integrate in a controlled manner.
-- Full Lean archive from original compiled package: `Evidence.lean`, 154 propositions / 151 labels, including C44–C46 collisions.
-- Original TLEs: 527/528/529 historical epochs and provenance, calibrated dynamics, holdout baseline versus coupled multi-target fit.
-- Genealogy: *Diário de Notícias* (Salvador) 9 Nov, *Jornal da Bahia* 11 Nov, *O Jornal* (Rio) 7–12 Nov, FBIS and diplomatic A-628 attachments; avoid counting repetition as confirmation.
+## Prioridades vigentes (decisão do dono, 14/11/2026)
+A fila canônica está em [docs/PRIORITIES.md](docs/PRIORITIES.md): prioridades 1–6 com issue e responsável, o que está pausado e a fila do dono (#884). Antes de escolher a fatia, leia esse arquivo e os comentários `De: 🐘 Elefante` na sua issue; eles fazem parte da fila. Frente pausada só com defeito real ou ordem do dono.
 
 
 ## Scientific correction: cumulative constraint graph before immediate narrowing (owner decision, 12 Nov 2026)
