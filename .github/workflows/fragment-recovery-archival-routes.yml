@@ -1,0 +1,39 @@
+name: C241-P43 fragment recovery archival routes
+
+on:
+  pull_request:
+    paths:
+      - "research/tle_custody/fragment_recovery_archival_routes_C241-P43.json"
+      - "tools/audit_fragment_recovery_routes_C241_P43.py"
+      - "tests/test_fragment_recovery_routes_C241_P43.py"
+      - ".github/workflows/fragment-recovery-archival-routes.yml"
+  push:
+    branches: [main]
+    paths:
+      - "research/tle_custody/fragment_recovery_archival_routes_C241-P43.json"
+      - "tools/audit_fragment_recovery_routes_C241_P43.py"
+      - "tests/test_fragment_recovery_routes_C241_P43.py"
+      - ".github/workflows/fragment-recovery-archival-routes.yml"
+  workflow_dispatch:
+
+jobs:
+  custody-guards:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify head identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Inspect candidate archival routes
+        run: |
+          python3 tools/audit_fragment_recovery_routes_C241_P43.py
+          python3 -m unittest discover -s tests -p 'test_fragment_recovery_routes_C241_P43.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_fragment_recovery_routes_C241_P43.py' -v
