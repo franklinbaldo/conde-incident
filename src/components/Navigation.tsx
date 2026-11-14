@@ -170,6 +170,7 @@ export const Navigation: React.FC<NavigationProps> = ({
               </a>
             )}
             <button type="button" onClick={onOpenPython}
+              title={lang === 'pt' ? 'Exportar código Python reprodutível' : 'Export reproducible Python code'}
               className="flex min-h-11 min-w-0 items-center gap-2 rounded-md border border-zinc-700 bg-zinc-950 px-3 py-2 text-left text-cyan-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
               <Code className="h-4 w-4 shrink-0" aria-hidden="true" />
               <span className="min-w-0 break-words">{lang === 'pt' ? 'Script Python' : 'Python Script'}</span>
