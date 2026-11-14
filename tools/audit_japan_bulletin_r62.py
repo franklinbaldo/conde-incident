@@ -77,7 +77,7 @@ def check_html(raw, data):
         raise ValueError("catalogue snapshot digest mismatch")
     parser = PlainText()
     parser.feed(raw.decode("utf-8"))
-    plain = re.sub(r"\\s+", " ", " ".join(parser.parts))
+    plain = re.sub(r"\s+", " ", " ".join(parser.parts))
     if p["exact_title_nii"] not in plain:
         raise ValueError("CiNii serial title absent")
     for item in data["holdings"]:
