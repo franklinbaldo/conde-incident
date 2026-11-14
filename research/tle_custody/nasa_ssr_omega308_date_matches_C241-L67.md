@@ -16,6 +16,8 @@ O [boletim NASA/GSFC de 31/12/1977](https://ntrs.nasa.gov/api/citations/19780009
 | OMEGA 2 | 12 JUL 62 | OMEGA 3 / 310 |
 | OMEGA 3 | 14 JUL 62 | A-ALPHA 5 / 314 |
 
+**Fidelidade da transcrição:** a célula `LAUNCH` de cada uma dessas seis linhas imprime **18 JUN**, sem ano na própria célula. A indicação **[1962]** decorre da seção/tabela, não deve ser injetada no valor literalmente transcrito. A comparação entre edições utiliza as datas impressas, enquanto o auditor confronta os campos `LAUNCH` dos registros ancestrais onde disponíveis. A terceira linha retrospectiva (A-ALPHA 5/314) ainda depende da leitura visual original, pois não consta nas três linhas preservadas por L66.
+
 **Diagnóstico de identificabilidade:** o par de datas distingue as três linhas **dentro dessas tabelas**, porém igualdade de datas editoriais não comprova identidade física, sensor, correção oficial nem independência das publicações. Não atribuir um NORAD contemporâneo às três linhas por essa junção. O boletim de 1977 contém o catálogo retrospectivo expresso; o de 1963 não. A causa dos nomes divergentes permanece indeterminada. O registro C241-L66 da 🐢 Tartaruga continua íntegro e é validado como dependência, não substituído.
 
 **Insumos custodiados:** 1963 NTRS `19640003479`, PDF SHA-256 `d31a064f8e03fd39be6fe75b88cd5852c0b74c9101fa635cb40ac25c77ef474f`; 1977 NTRS `19780009188`, SHA-256 `c5c66eb7eab242ab5b3dd56567de8bab2d404d0a6776baeb3b79383c86bc5ba8`. Dados em `nasa_ssr_omega308_date_matches_C241-L67.json`, teste determinístico em `tools/tle_ssr_omega308_date_matches_c241_l67.py` e suíte adversarial. O CI existente C241-L66 verifica os dois PDFs por SHA e executa as duas suítes em Python normal e otimizado.
