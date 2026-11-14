@@ -40,7 +40,8 @@ export async function loadCondeSourceLookup({baseUrl, fetcher=globalThis.fetch,
   requireTrue(typeof baseUrl === 'string' && baseUrl.endsWith('/'), 'invalid-base-url');
   requireTrue(typeof fetcher === 'function', 'fetch-unavailable');
   const base = new URL(baseUrl);
-  requireTrue(base.protocol === 'https:' || base.hostname === 'localhost', 'unsafe-origin');
+  requireTrue(base.protocol === 'https:' || (base.protocol === 'http:' &&
+    ['localhost','127.0.0.1','[::1]'].includes(base.hostname)), 'unsafe-origin');
   const get = async (relative, cache, limit) => {
     const url = new URL(relative, base);
     requireTrue(url.origin === base.origin && url.pathname.startsWith(base.pathname), 'path-escape');
