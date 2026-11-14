@@ -6,8 +6,10 @@ This machine index is an optional input for browser search and cross-references.
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
+import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 CITATIONS = Path('public/data/conde-source-citations.json')
@@ -298,21 +300,46 @@ def build(root=ROOT):
 
 
 def sync(artifacts, root=ROOT, check=False):
-    directory = root / DEST
+    """Stage complete outputs before replacing any published file.
+
+    The manifest is committed last: a failed staging write must not expose
+    partial JSON or new metadata. Per-file replacement is atomic; publishing
+    multiple files is NOT a filesystem-wide transaction. Git/CI remains the
+    publication boundary for a coherent version of this directory.
+    """
     folders = (DEST, GAPS_DEST, LOOKUP_DEST)
     existing = {p for folder in folders for p in (root / folder).glob('part-*.json')}
     expected = {root / p for p in artifacts if p.parent in folders}
-    require(not check or existing == expected, 'Lista de shards desatualizada')
-    for path, raw in artifacts.items():
-        target = root / path
-        if check:
-            require(target.exists() and target.read_bytes() == raw,
+    require(MANIFEST in artifacts, 'Manifesto obrigatório antes de publicar shards')
+    require(all(p == MANIFEST or p.parent in folders for p in artifacts),
+            'Artefato fora do diretório canônico de publicação')
+    if check:
+        require(existing == expected, 'Lista de shards desatualizada')
+        for relative, raw in artifacts.items():
+            path = root / relative
+            require(path.exists() and path.read_bytes() == raw,
                     'Índice não reproduzível: ' + str(path))
-        else:
+        return
+
+    base = root / 'public/data'
+    base.mkdir(parents=True, exist_ok=True)
+    # Same filesystem as the published data so os.replace is atomic per file.
+    with tempfile.TemporaryDirectory(prefix='.conde-evidence-stage-', dir=base) as temp:
+        stage = Path(temp)
+        for relative, raw in artifacts.items():
+            staged = stage / relative.relative_to('public/data')
+            staged.parent.mkdir(parents=True, exist_ok=True)
+            staged.write_bytes(raw)
+        # Never publish the manifest pointing at incompletely staged bytes.
+        for relative in artifacts:
+            if relative == MANIFEST:
+                continue
+            target = root / relative
             target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_bytes(raw)
-    if not check:
-        for stale in existing - expected:
+            os.replace(stage / relative.relative_to('public/data'), target)
+        os.replace(stage / MANIFEST.relative_to('public/data'), root / MANIFEST)
+        # Remove obsolete shards only after the new manifest is in place.
+        for stale in sorted(existing - expected):
             stale.unlink()
 
 
