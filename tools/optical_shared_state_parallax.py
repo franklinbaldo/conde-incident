@@ -4,7 +4,9 @@
 Two stations view ONE reception-epoch GCRS 6D state. Its covariance is a
 common latent error, so per-station angular covariance blocks are correlated.
 Subtract the retarded unit directions in a FROZEN common tangent basis, and
-apply (H_a - H_b) Sigma (H_a - H_b)^T. This must NOT be interpreted as a
+apply (H_a - H_b) Sigma (H_a - H_b)^T. Optionally propagate an explicitly
+supplied joint 4x4 measurement-noise covariance through [I,-I], preserving
+cross-station correlations; without one, the TOTAL error is unknown. This must NOT be interpreted as a
 historical likelihood: station, clock, film, atmosphere and instrument errors
 are absent; no independent NORAD 528 measurement is asserted.
 """
@@ -16,12 +18,36 @@ from iers_1963_optical_lighttime_jacobian import linearized_retarded_direction
 from iers_1963_teme import _validated_vector, transform_covariance
 
 
+
+def _validated_receiver_noise_covariance(value: object) -> np.ndarray:
+    """Validate JOINT 4x4 covariance of two 2D receiver errors.
+
+    Directions are projected onto the SAME frozen GCRS tangent basis.
+    The off-diagonal 2x2 blocks encode shared instrument/calibration error.
+    No independence or zero sensor noise is assumed.
+    """
+    try:
+        cov = np.asarray(value, dtype=float)
+    except (TypeError, ValueError) as error:
+        raise ValueError('Receiver noise covariance must be numeric') from error
+    if cov.shape != (4, 4) or not np.isfinite(cov).all():
+        raise ValueError('Receiver noise covariance must be finite 4x4')
+    if not np.allclose(cov, cov.T, rtol=1e-12, atol=1e-24):
+        raise ValueError('Receiver noise covariance must be symmetric')
+    eigs = np.linalg.eigvalsh((cov + cov.T) / 2)
+    if eigs[0] < -max(1e-28, 1e-11 * np.max(np.abs(eigs))):
+        raise ValueError('Receiver noise covariance must be positive semidefinite')
+    return (cov + cov.T) / 2
+
+
 def differential_retarded_parallax(
     position_gcrs_km: object,
     velocity_gcrs_km_s: object,
     station_a_gcrs_km: object,
     station_b_gcrs_km: object,
     shared_state_covariance_gcrs6d: object,
+    receiver_noise_covariance_common_tangent_4d_rad2: object | None = None,
+    assume_receiver_state_independent: bool = False,
 ) -> dict:
     """Linearized sky-plane A−B difference and correlated state covariance.
 
@@ -57,6 +83,27 @@ def differential_retarded_parallax(
     if not all(np.isfinite(x).all() for x in
                (joint, shared, false_independent, missing_cross)):
         raise ValueError('Nonfinite joint angular state covariance')
+    # A supplied JOINT receiver covariance may include correlated calibration
+    # errors. Its absence is UNKNOWN, never interpreted as a zero matrix.
+    receiver_joint = (
+        None if receiver_noise_covariance_common_tangent_4d_rad2 is None
+        else _validated_receiver_noise_covariance(
+            receiver_noise_covariance_common_tangent_4d_rad2))
+    if type(assume_receiver_state_independent) is not bool:
+        raise ValueError('Receiver/state independence must be an explicit bool')
+    if assume_receiver_state_independent and receiver_joint is None:
+        raise ValueError('Cannot assume zero receiver noise from absent covariance')
+    receiver_diff = None
+    total = None
+    if receiver_joint is not None:
+        contrast = np.hstack([np.eye(2), -np.eye(2)])
+        receiver_diff = contrast @ receiver_joint @ contrast.T
+        receiver_diff = (receiver_diff + receiver_diff.T) / 2
+        if assume_receiver_state_independent:
+            total = shared + receiver_diff
+            total = (total + total.T) / 2
+            if not np.isfinite(total).all():
+                raise ValueError('Nonfinite conditional total differential covariance')
     return {
         'model': 'G62_SAME_EPOCH_SHARED_STATE_DIFFERENTIAL_RETARDED_PARALLAX',
         'units': 'GCRS km; km/s; radians and rad^2',
@@ -69,6 +116,17 @@ def differential_retarded_parallax(
         'independent_marginals_counterfactual_covariance_rad2':
             ((false_independent + false_independent.T)/2).tolist(),
         'cross_terms_omitted_by_independence_rad2': missing_cross.tolist(),
+        'receiver_noise_covariance_common_tangent_4d_rad2':
+            None if receiver_joint is None else receiver_joint.tolist(),
+        'receiver_noise_differential_covariance_rad2':
+            None if receiver_diff is None else receiver_diff.tolist(),
+        'total_differential_covariance_rad2':
+            None if total is None else total.tolist(),
+        'receiver_noise_status': ('UNSPECIFIED_NOT_ZERO' if receiver_joint is None
+                                  else 'EXPLICIT_CONDITIONAL_JOINT_COVARIANCE'),
+        'receiver_state_cross_covariance_status': (
+            'ASSUMED_ZERO_NOT_HISTORICALLY_VALIDATED'
+            if assume_receiver_state_independent else 'UNKNOWN_NOT_ZERO'),
         'light_time_a_s': a['light_time_s'],
         'light_time_b_s': b['light_time_s'],
         'covariance_scope': 'SAME_ORBITAL_STATE_ONLY_NOT_SENSOR_CLOCK_OR_STATION',
