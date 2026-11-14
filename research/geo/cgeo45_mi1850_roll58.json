@@ -1,0 +1,67 @@
+{
+  "schema": "conde.cgeo.photoindex-flightline/v1",
+  "id": "CGEO-45",
+  "based_on": "CGEO-44",
+  "source": {
+    "url": "https://acervo.sgb.gov.br/DocReader/DocReader.aspx?bib=FotoUSAF&pasta=1850",
+    "node": "680",
+    "folder": "1850",
+    "sha256": "45d72dff84520bb387d5b8ce7c5a8f4c9361457841341b2c21016e992c0fef79",
+    "bytes": 957893,
+    "dimensions": [
+      4355,
+      4350
+    ]
+  },
+  "inspection": {
+    "date": "2026-11-14",
+    "method": "manual visual reading of the hash-verified JPEG; no OCR",
+    "upper": {
+      "roll": "58",
+      "line": "X-NNI",
+      "printed_frame": "7157",
+      "crop_pixels": [
+        2940,
+        970,
+        3930,
+        1680
+      ]
+    },
+    "lower": {
+      "roll": "58",
+      "line": "X-NNI",
+      "printed_frame": "7150",
+      "crop_pixels": [
+        1650,
+        3620,
+        2700,
+        4340
+      ]
+    },
+    "inset": {
+      "title": "INDEX TO SHEETS",
+      "area": "9",
+      "hatched_sheet": "6219",
+      "crop_pixels": [
+        2320,
+        0,
+        4000,
+        450
+      ]
+    },
+    "cartouche_range": "1964-1970"
+  },
+  "limitations": {
+    "intermediate_frames_verified": false,
+    "original_frames_acquired": false,
+    "capture_dates": null,
+    "flight_time": null,
+    "datum": null,
+    "georeferenced_footprint": null,
+    "center_conde_1963": null,
+    "reentry_point": null,
+    "orbital_restriction": false,
+    "scope": "One narrow diagonal photo-mosaic strip depicted, not full-sheet aerial coverage; blank paper does not exclude other campaigns."
+  },
+  "next_search": "Seek original roll 58, line X-NNI, endpoint labels 7150 and 7157. Inspect primary images, dates, coverage, and custody."
+}

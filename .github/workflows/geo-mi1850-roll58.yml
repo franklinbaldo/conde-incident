@@ -1,0 +1,52 @@
+name: CGEO-45 MI-1850 roll 58 source replay
+on:
+  pull_request:
+    paths:
+      - 'research/geo/cgeo45_mi1850_roll58.json'
+      - 'research/geo/CGEO45_MI1850_ROLL58.md'
+      - 'tools/cgeo45_photoindex_roll.py'
+      - 'tests/test_cgeo45_photoindex_roll.py'
+      - '.github/workflows/geo-mi1850-roll58.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo45_mi1850_roll58.json'
+      - 'research/geo/CGEO45_MI1850_ROLL58.md'
+      - 'tools/cgeo45_photoindex_roll.py'
+      - 'tests/test_cgeo45_photoindex_roll.py'
+      - '.github/workflows/geo-mi1850-roll58.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  authenticate-flightline:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - name: Checkout exact HEAD
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Offline contract and sixteen adversarial tests
+        run: |
+          python3 tools/cgeo45_photoindex_roll.py
+          python3 -m unittest discover -s tests -p 'test_cgeo45_photoindex_roll.py' -v
+      - name: Install Chromium and Pillow
+        run: |
+          python3 -m pip install --disable-pip-version-check playwright==1.57.0 pillow==12.0.0
+          python3 -m playwright install --with-deps chromium
+      - name: Live reacquisition of authenticated photoindex
+        run: python3 tools/cgeo44_browser_photoindex.py --live --output-dir "$RUNNER_TEMP/cgeo45"
+      - name: Compare actual JPEG bytes to pinned digest and dimensions
+        run: python3 tools/cgeo45_photoindex_roll.py --image "$RUNNER_TEMP/cgeo45/cgeo44_mi1850.jpg"
+      - name: Verify clean tree
+        run: |
+          git diff --check
+          test -z "$(git status --porcelain)"
