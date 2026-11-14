@@ -1,0 +1,39 @@
+{
+  "id": "C241-LONTRA-R66",
+  "schema": "conde.archival_editorial_cutoff/v1",
+  "verified_on": "2026-11-14",
+  "source": {
+    "institution": "Polskie Towarzystwo Astronomiczne / Urania digital archive",
+    "periodical": "Postępy Astronomii",
+    "volume": "XI",
+    "issue": 4,
+    "year": 1963,
+    "issue_cover_months": "October–December 1963",
+    "pdf_url": "https://www.urania.edu.pl/sites/default/files/archiwum/postepy_astronomii_1963_04.pdf",
+    "pdf_bytes": 5014393,
+    "pdf_sha256": "d83044a1bcbb43b8448614adf7778e8ee811776925160b7bc86840c4da3084c2",
+    "pdf_pages": 76,
+    "colophon_pdf_page_one_based": 2,
+    "editorial_print_handoff_date": "1963-10-12",
+    "printing_completed_month": "1963-10",
+    "visual_page_checked": true,
+    "binary_integrity": "FULL_PDF_IFRO_SHA256_AND_PDFINFO"
+  },
+  "chronology": {
+    "investigated_report_date": "1963-11-07",
+    "printing_completed_before_report": true,
+    "scope": "PRINTED_Q4_1963_ISSUE_ONLY",
+    "meaning": "The original printed edition was completed in October, prior to the November 7 report; cannot include a contemporaneous account of that later report as part of its initial printing."
+  },
+  "limits": {
+    "original_1963_satellite_station_log_recovered": false,
+    "norad_527_528_529_rows": [],
+    "independent_observations_recovered": 0,
+    "new_orbital_constraints": 0,
+    "all_other_polish_journals_excluded": false,
+    "all_station_logs_excluded": false,
+    "later_errata_checked": false,
+    "contacts_sent": false
+  },
+  "next_step": "Seek dated November–December 1963 observation logs for Polish COSPAR stations 1151–1162, or 1964 printed retrospective issues; do not treat the October printing as proof of no November observations."
+}
