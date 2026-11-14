@@ -1,0 +1,52 @@
+{
+  "schema": "conde.contemporary_satellite_tracking_bibliography/v1",
+  "id": "C241-LONTRA-R40",
+  "audit_date": "2026-11-14",
+  "status": "CONTEMPORARY_1968_PREFACE_IDENTIFIES_INTEROBS_SERIES_CLOSURE_AND_SUCCESSOR_NOT_TARGET_MEASUREMENT",
+  "source": {
+    "title": "Vorwort, Ergebnisse der im Rahmen des INTEROBS-Programms abgehaltenen Kooperationswochen, Heft Nr. 7",
+    "author": "Márton Ill",
+    "place": "Baja, Hungary",
+    "document_date": "1968-07-01",
+    "publication_year": 1968,
+    "series_issue": 7,
+    "covered_observation_year": 1966,
+    "institutional_repository": "REAL, Library and Information Centre of the Hungarian Academy of Sciences",
+    "repository_record": "https://real.mtak.hu/143828/",
+    "pdf_url": "https://real.mtak.hu/143828/1/vorwort_interobs_programs.pdf",
+    "repository_deposit_date": "2022-08-25",
+    "repository_last_modified": "2025-12-18",
+    "http_status": 200,
+    "tls_validated": true,
+    "bytes": 725023,
+    "sha256": "997ff8bed4924b9cfcba7a018ebeed176ac9602e0484e41c899235b2515e110c",
+    "pdf_page_count": 3,
+    "preface_pdf_page_zero_based": 0,
+    "preface_printed_page": 3,
+    "page_visually_inspected": true,
+    "complete_volume_retrieved": false,
+    "excerpt_facsimile_retrieved": true
+  },
+  "preface": {
+    "reports_issue_7_as_final_issue_of_series": true,
+    "describes_satellite_grouped_summary_list_1": true,
+    "describes_satellite_grouped_observation_material_list_2": true,
+    "actual_list_1_or_list_2_retrieved": false,
+    "satellite_ids_in_issue_7": ["65-106-01", "65-106-02", "65-112-01"],
+    "satellite_ids_proven_equivalent_to_527_528_529": false,
+    "future_publication_series_romanized_as_printed": "Resultati Nabljudenij Sowjetskich Iskustwennich Sputnikow Semli",
+    "future_series_supported_by_astronomical_council_ussr": true,
+    "successor_volume_retrieved": false,
+    "earlier_folge_1_2_volumes_retrieved": false,
+    "november_1963_campaign_confirmed": false
+  },
+  "chronology_notes": "Heft 7 was printed in 1968 and reported observations from 1966. Earlier Folge I-II were reported as containing 1963-1964 observations by the 1965 Baja yearbook (L39), not found here. The 3-page PDF consists of a preface and two title-page facsimiles, not the complete Heft 7.",
+  "follow_up": "Locate complete INTEROBS Folge I-II (1964-1965) and their List 1 / List 2 pages, identify dates including 1963-11-07 through 1963-11-09 and object designation before use. Investigate the stated Soviet publication successor as a separate bibliographic route; do not equate its Soviet-title semantics with observation of US 1963-003A/B/C.",
+  "limits": {
+    "target_observations_identified": false,
+    "raw_instrumental_observations_retrieved": false,
+    "orbital_constraints_activated": 0,
+    "new_target_orbital_measurements": 0,
+    "outreach_sent": false
+  }
+}
