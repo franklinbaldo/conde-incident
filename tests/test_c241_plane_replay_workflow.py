@@ -26,9 +26,18 @@ REQUIRED_PATHS = (
     "research/geo/cgeo20_centro_vila_2020.json",
     "research/statistics/C241_CONDITIONAL_PLANE_WINDOWS_20261114.md",
     "research/statistics/c241_plane_*.json",
+    "tools/c241_plane_proxy_clock_g76.py",
+    "tests/test_c241_plane_proxy_clock_g76.py",
+    "research/geo/cgeo60_modern_osm_cut.json",
+    "research/constraints/fbis_1963_clock_branches.json",
+    "research/statistics/c241_plane_proxy_clock_g76.json",
+    "research/statistics/C241_G76_OSM_FBis_SENSITIVITY_20261114.md",
 )
 TEST_PATTERN = "test_c241_conditional_plane_windows.py"
 POLICY_PATTERN = "test_c241_plane_replay_workflow.py"
+PROXY_PATTERN = "test_c241_plane_proxy_clock_g76.py"
+PROXY_REPLAY = ("python3 tools/c241_plane_proxy_clock_g76.py --repo . "
+                "--output research/statistics/c241_plane_proxy_clock_g76.json --check")
 REPLAY = (
     'python3 tools/c241_conditional_plane_windows.py --parquet '
     '"$RUNNER_TEMP/tle_1963.parquet" --repo . '
@@ -56,7 +65,7 @@ def validate(text: str) -> None:
         raise ValueError("missing exact checkout evidence")
     if "persist-credentials: false" not in text:
         raise ValueError("checkout credentials persist")
-    for pattern in (TEST_PATTERN, POLICY_PATTERN):
+    for pattern in (TEST_PATTERN, POLICY_PATTERN, PROXY_PATTERN):
         for command in (
             f"python3 -m unittest discover -s tests -p '{pattern}' -v",
             f"python3 -O -m unittest discover -s tests -p '{pattern}' -v",
@@ -69,6 +78,8 @@ def validate(text: str) -> None:
         raise ValueError("missing actual original-bytes SHA gate")
     if not re.search(r"(?m)^          " + re.escape(REPLAY) + r"$", text):
         raise ValueError("no byte-for-byte check of all tracked outputs")
+    if not re.search(r"(?m)^          " + re.escape(PROXY_REPLAY) + r"$", text):
+        raise ValueError("no byte-for-byte G76 modern proxy replay")
     for bypass in ("continue-on-error: true", "|| true", "exit 0", "if: false"):
         if bypass in text:
             raise ValueError("workflow bypass " + bypass)
@@ -94,6 +105,7 @@ class ReplayWorkflowContract(unittest.TestCase):
         original = WORKFLOW.read_text(encoding="utf-8")
         for old, new in (
             (REPLAY, "echo skipped replay"),
+            (PROXY_REPLAY, "echo skipped G76 replay"),
             ("sha256sum -c -", "cat"),
             ("python3 -O -m unittest discover -s tests -p '" + TEST_PATTERN + "' -v", "echo skipped"),
             ("python3 -m unittest discover -s tests -p '" + POLICY_PATTERN + "' -v", "echo skipped"),
