@@ -22,7 +22,13 @@ try {
         await request.fulfill({response, body: html.replace(/<\/head>/i,
           '<style>html {font-size: 200%}</style></head>')});
       });
-      const res = await page.goto(url, {waitUntil: 'domcontentloaded'});
+      // The SSG stylesheet is fingerprinted; DOMContentLoaded alone races
+      // CSS loading on slow runners and yields false overflow measurements.
+      const res = await page.goto(url, {waitUntil: 'load'});
+      await page.evaluate(() => document.fonts.ready);
+      assert(await page.evaluate(() => [...document.styleSheets].some(
+        sheet => sheet.href?.includes('/conde-incident/'))),
+        'SSG stylesheet did not load');
       assert(res?.ok(), `HTML unavailable: ${route} ${res?.status()}`);
       const stats = await page.evaluate(() => ({
         width: document.documentElement.clientWidth,
