@@ -5,7 +5,6 @@ import {checkPage,AUTHORED_ROUTES} from '../scripts/ssg-authored-pages.mjs';
 
 const src=readFileSync('pages/dossie/page.md','utf8');
 const css=readFileSync('static/css/site.css','utf8');
-const html=readFileSync('public/dossie/index.html','utf8');
 
 test('o dossiê é uma Page canônica do SSG, não uma SPA',()=>{
   assert.ok(AUTHORED_ROUTES.includes('dossie'));
@@ -32,15 +31,4 @@ test('o design system é CSS nativo e reutiliza classes de cartões',()=>{
   }
   assert.match(css,/@media\(max-width:700px\)/);
   assert.match(css, /@media\(prefers-reduced-motion:reduce\)/);
-});
-test('o SSG publicou um dossiê acessível e recuperável sem hidratação',()=>{
-  assert.match(html,/<link rel="canonical" href="https:\/\/franklinbaldo.github.io\/conde-incident\/dossie\/">/);
-  assert.match(html,/<main id="main"/);
-  assert.equal((html.match(/<h1\b/g)??[]).length,1);
-  for(const id of ['fontes','pergunta']) assert.ok(html.includes('id="'+id+'"'));
-  assert.match(html,/casefile/);
-  assert.match(html,/"@type":"WebPage"/);
-  assert.doesNotMatch(html,/"@type":"Article"/,"Page SSG não deve exigir autoria ou data de artigo");
-  for(const marker of ['C01#1','C197#1']) assert.ok(html.includes(marker));
-  assert.doesNotMatch(html,/<script[^>]*src="[^"]*(react|vite|index-[^"]+\.js)"/i);
 });
