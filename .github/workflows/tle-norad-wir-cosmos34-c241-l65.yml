@@ -1,0 +1,42 @@
+name: C241-L65 NORAD 1964 apparent deorbit, not 1963 decay
+on:
+  pull_request:
+    paths:
+      - 'research/tle_custody/norad_wir_cosmos34_1964_C241-L65.*'
+      - 'tools/tle_norad_wir_cosmos34_c241_l65.py'
+      - 'tests/test_tle_norad_wir_cosmos34_c241_l65.py'
+      - '.github/workflows/tle-norad-wir-cosmos34-c241-l65.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/tle_custody/norad_wir_cosmos34_1964_C241-L65.*'
+      - 'tools/tle_norad_wir_cosmos34_c241_l65.py'
+      - 'tests/test_tle_norad_wir_cosmos34_c241_l65.py'
+      - '.github/workflows/tle-norad-wir-cosmos34-c241-l65.yml'
+  workflow_dispatch:
+jobs:
+  custody-and-counterexamples:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Exact head is checked out
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Normal and optimized negative controls
+        run: |
+          python -m unittest discover -s tests -p 'test_tle_norad_wir_cosmos34_c241_l65.py' -v
+          python -O -m unittest discover -s tests -p 'test_tle_norad_wir_cosmos34_c241_l65.py' -v
+      - name: Replay NORAD declassified original, pinned by hash and size
+        run: |
+          curl -fLsS --retry 2 --connect-timeout 20 --max-time 180 "https://www.archives.gov/files/declassification/iscap/pdf/2009-068-doc35.pdf" -o /tmp/norad-wir-29-64.pdf
+          python tools/tle_norad_wir_cosmos34_c241_l65.py --pdf /tmp/norad-wir-29-64.pdf
+          python -m pip install --disable-pip-version-check pypdf==6.1.3
+          python -c "from pypdf import PdfReader; assert len(PdfReader('/tmp/norad-wir-29-64.pdf').pages) == 10"

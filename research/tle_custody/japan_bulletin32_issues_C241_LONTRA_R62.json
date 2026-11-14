@@ -1,0 +1,129 @@
+{
+  "id": "C241-LONTRA-R62",
+  "audit_date_utc": "2026-11-14",
+  "evidence_class": "NATIONAL_AGGREGATE_HOLDINGS_NOT_FACSIMILE",
+  "provenance": {
+    "institution": "National Institute of Informatics (Japan), CiNii Books",
+    "ncid": "AA00566856",
+    "url": "https://ci.nii.ac.jp/ncid/AA00566856",
+    "retrieval_executor": "Ifro",
+    "retrieval_status": 200,
+    "retrieved_html_bytes": 54342,
+    "html_sha256": "da7b7e445ccaf5569bccbb42809f9da471318cebebe6d713ec0deb0a08c31034",
+    "hashed_object": "CiNii HTML response only, NOT a 1963 bulletin or article",
+    "publication_place_catalogued": "Москва",
+    "run_catalogued": "no. 1 (1958)–no. 59 (1971)",
+    "exact_title_nii": "Бюллетень Станции оптического наблюдения искусственных спутников Земли",
+    "exact_title_kyiv": "Бюллетень станций оптического наблюдения ИСЗ",
+    "equivalence_status": "UNRESOLVED_TITLE_VARIANT_CHECK_ORIGINAL_TITLE_PAGE"
+  },
+  "upstream": [
+    "C241-LONTRA-R60",
+    "C241-LONTRA-R61"
+  ],
+  "holdings": [
+    {
+      "id": "kyoto",
+      "library": "Kyoto University, Faculty of Science, Space",
+      "native": "京都大学 理学部 宇宙",
+      "coverage": "32-59",
+      "issues_1963": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "catalog_opac": "https://kuline.kulib.kyoto-u.ac.jp/opac/opac_openurl/?ncid=AA00566856"
+    },
+    {
+      "id": "naoj",
+      "library": "National Astronomical Observatory of Japan, Library",
+      "native": "国立天文台 図書室",
+      "coverage": "1-53, 56-59",
+      "issues_1963": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "catalog_opac": "https://libopac.mtk.nao.ac.jp/opac/opac_openurl/?ncid=AA00566856"
+    },
+    {
+      "id": "mizusawa",
+      "library": "NAOJ Mizusawa VLBI Observatory Library",
+      "native": "国立天文台 水沢VLBI観測所",
+      "coverage": "32-52, 53(1), 54-59",
+      "issues_1963": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ]
+    },
+    {
+      "id": "nipr",
+      "library": "National Institute of Polar Research, Information Library",
+      "native": "国立極地研究所 情報図書室",
+      "coverage": "3-6, 9-13, 19-20, 23-33, 36-39, 41-46, 49-54, 56",
+      "issues_1963": [
+        32,
+        33,
+        36,
+        37
+      ],
+      "catalog_opac": "https://libsv.nipr.ac.jp/opac/opac_openurl/?ncid=AA00566856"
+    },
+    {
+      "id": "tohoku",
+      "library": "Tohoku University, Kita-Aobayama Library",
+      "native": "東北大学 附属図書館 北青葉山分館",
+      "coverage": "32-59",
+      "issues_1963": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37
+      ],
+      "catalog_opac": "https://opac.library.tohoku.ac.jp/opac/opac_openurl/?ncid=AA00566856"
+    }
+  ],
+  "by_issue_reported_holder_count": {
+    "32": 5,
+    "33": 5,
+    "34": 4,
+    "35": 4,
+    "36": 5,
+    "37": 5
+  },
+  "ready_but_not_sent_request": {
+    "target_issues": [
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "priority_issue": 32,
+    "requested_material": "Cover, complete contents page and colophon for no. 32 (1963); Medvedeva–Firago title and page range if listed; publication dates, digitization links; if available, contents/observation tables for nos. 33–37 and the catalog shelfmark.",
+    "conditional_evidence_requirements": "Only classify as measurement with actual satellite identity, observing station, observation epoch/time scale, and primary record page.",
+    "contact_sent": false
+  },
+  "boundaries": {
+    "scan_or_issue_contents_accessed": false,
+    "article_original_verified": false,
+    "author_or_pages_from_original_verified": false,
+    "independent_observations_norad_527_528_529": [],
+    "new_orbital_constraints": 0,
+    "meaning": "Five reported institutional holdings through one aggregate catalogue, not five instrumentally independent data sources"
+  },
+  "opac_attempts": "Direct web requests to Kyoto, NAOJ and Tohoku OPAC returned HTTP 403 during this search; does not demonstrate absence of copies or digital scans."
+}
