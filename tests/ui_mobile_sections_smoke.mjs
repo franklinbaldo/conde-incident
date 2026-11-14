@@ -33,10 +33,12 @@ try {
       await nav.getByRole('link', { name: /Rastreamento & Mapa/ }).click();
       assert.equal(new URL(page.url()).hash, '#/map');
       assert.equal(await nav.locator('details').getAttribute('open'), null);
+      await page.waitForFunction(() => document.querySelector('nav summary')?.textContent?.includes('Rastreamento & Mapa'));
       assert.match(await chooser.innerText(), /Rastreamento & Mapa/);
       assert(await chooser.evaluate(el => document.activeElement === el),
         'closing mobile section list must preserve keyboard focus');
       await page.goBack();
+      await page.waitForFunction(() => document.querySelector('nav summary')?.textContent?.includes('Arquivo e proveniência'));
       assert.match(await chooser.innerText(), /Arquivo e proveniência/);
       if (width === 640) {
         await page.setViewportSize({ width: 320, height: 800 });
