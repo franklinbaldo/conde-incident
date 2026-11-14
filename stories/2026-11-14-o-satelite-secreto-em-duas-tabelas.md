@@ -63,6 +63,14 @@ Há também um [anúncio bibliográfico de exemplar usado](https://www.nadirkita
 
 Um testemunho da própria época ajuda a entender por que esses dados se repetiam. No [*Air Force/Space Digest* de abril de 1963, página impressa 121](https://www.airandspaceforces.com/app/uploads/2025/11/0463_April1963_LR.pdf), os editores descreviam o *STL Space Log* como publicação **trimestral** e declaravam utilizá-la, junto com documentos da NASA, para seu quadro de lançamentos. É evidência de **circulação editorial entre compilações**, não de sensor autônomo ou prova de cópia da linha específica do objeto 1963-003A. Falta localizar o **cabeçalho, a legenda e a linha original de dezembro de 1963**, preservando as duas colunas e respectivas fontes. Catálogos são caminhos até a prova, não a própria prova.
 
+### A caixa 63 do Smithsonian
+
+A investigação ganhou um endereço mais preciso, desta vez dentro de um arquivo. O [inventário do Smithsonian Institution Archives, Record Unit 398, página 61 (folha 63 do PDF)](https://sirismm.si.edu/EADpdfs/SIA.FARU0398.pdf#page=63) enumera **64 caixas** de correspondência e documentos associados ao Departamento de Astronáutica do museu. Na **caixa 63, pasta 6**, há um item descrito como *TRW Space Log, Index, Volumes 1–5*, sem data indicada. É um **índice físico** de volumes que incluem o ano procurado, não uma descrição do fascículo 3(4) nem prova de que esse número esteja naquela pasta.
+
+Duas pastas depois, na **pasta 8 da mesma caixa**, o catálogo menciona *Soviet Space Log, 1957–1967, A Space Publication*. A proximidade no inventário é real. A tentação de costurar uma rota direta entre o Space Log americano, o anuário soviético de 1964 e o volume sueco de 1973, porém, continua sem fundamento: **não lemos o conteúdo de nenhuma dessas pastas**, e o título *Soviet Space Log* tampouco identifica a tabela «Секретный» que abriu esta história.
+
+O achado foi preservado pela [auditoria documental da Lontra, C241-LONTRA-R55](https://github.com/franklinbaldo/conde-incident/pull/858), que conferiu visualmente a folha e identificou as caixas e pastas. Ele transforma uma busca vaga por um periódico numa pergunta arquivística concreta: **o índice da pasta 6 aponta para o volume 3, número 4, de dezembro de 1963?** Só a consulta ao índice e, depois, à página do exemplar original poderá responder. Nenhum documento de rastreamento do 528 surgiu dessa descoberta.
+
 Por isso, a aparição do *Space Log* não resolve a pergunta de onde surgiram **459/533, 94,66 e 81,89°**. Ela elimina um atalho: unir números extraídos de páginas, datas e unidades diferentes para criar uma aparente sequência orbital contínua.
 
 ## Dez anos depois, os números reapareceram na Suécia
