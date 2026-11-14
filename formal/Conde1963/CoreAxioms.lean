@@ -1,5 +1,6 @@
 import Conde1963.Core
 import Conde1963.CircularMCMC
+import Conde1963.HastingsKernel
 import Conde1963.SsrSurvivorIntervals
 import Conde1963.RelativeTrajectories
 import Conde1963.SsrNovember
@@ -54,3 +55,11 @@ does not authenticate observed positions or establish a 1963 reentry. -/
 
 #print axioms Conde1963.CircularMCMC.calibrated_anchor_identifies_phase_modulo
 #print axioms Conde1963.CircularMCMC.calibrated_anchor_rejects_noncongruent_phase
+
+/-! Full finite Hastings mass conservation / stationarity audit (synthetic). -/
+#print axioms Conde1963.CircularMCMC.acceptedRow_le_capacity
+#print axioms Conde1963.CircularMCMC.fullTransport_row_conservation
+#print axioms Conde1963.CircularMCMC.fullTransport_detailed_balance
+#print axioms Conde1963.CircularMCMC.fullTransport_stationary
+#print axioms Conde1963.CircularMCMC.twoState_rows_equal_four
+#print axioms Conde1963.CircularMCMC.twoState_rejections_checked
