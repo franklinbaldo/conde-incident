@@ -1,0 +1,48 @@
+name: C241 R59 terminal-control scientific bridge
+on:
+  pull_request:
+    paths:
+      - research/statistics/C241_1963_TERMINAL_CONTROL_SCREEN_20261114.md
+      - tools/c241_1963_terminal_control_screen.py
+      - tools/c241_637_regime_holdout.py
+      - tools/export_terminal_control_r59_bridge.py
+      - tests/test_terminal_control_r59_bridge.py
+      - public/data/conde-terminal-control-r59-scientific-bridge.json
+      - .github/workflows/terminal-control-r59-scientific-bridge.yml
+  push:
+    branches: [main]
+    paths:
+      - research/statistics/C241_1963_TERMINAL_CONTROL_SCREEN_20261114.md
+      - tools/c241_1963_terminal_control_screen.py
+      - tools/c241_637_regime_holdout.py
+      - tools/export_terminal_control_r59_bridge.py
+      - tests/test_terminal_control_r59_bridge.py
+      - public/data/conde-terminal-control-r59-scientific-bridge.json
+      - .github/workflows/terminal-control-r59-scientific-bridge.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-locked-bridge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Confirm exact checkout SHA
+        shell: bash
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Check adversarial documentary contract in normal and optimized modes
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p test_terminal_control_r59_bridge.py -v
+          python3 -O -m unittest discover -s tests -p test_terminal_control_r59_bridge.py -v
+      - name: Verify byte-identical site feed and unchanged source ledgers
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 tools/export_terminal_control_r59_bridge.py --check-site
+          git diff --exit-code --check
