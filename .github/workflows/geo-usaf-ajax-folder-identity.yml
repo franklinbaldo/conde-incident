@@ -1,7 +1,22 @@
 name: CGEO-43 SGB AJAX identity
 on:
-  push:
   pull_request:
+    paths:
+      - 'research/geo/cgeo43_sgb_ajax_folder_identity.*'
+      - 'research/geo/evidence/cgeo43_1850_*.txt'
+      - 'research/geo/evidence/cgeo43_1851_*.txt'
+      - 'tools/cgeo43_sgb_ajax_identity.py'
+      - 'tests/test_cgeo43_sgb_ajax_identity.py'
+      - '.github/workflows/geo-usaf-ajax-folder-identity.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/geo/cgeo43_sgb_ajax_folder_identity.*'
+      - 'research/geo/evidence/cgeo43_1850_*.txt'
+      - 'research/geo/evidence/cgeo43_1851_*.txt'
+      - 'tools/cgeo43_sgb_ajax_identity.py'
+      - 'tests/test_cgeo43_sgb_ajax_identity.py'
+      - '.github/workflows/geo-usaf-ajax-folder-identity.yml'
   workflow_dispatch:
 permissions:
   contents: read
@@ -12,6 +27,13 @@ jobs:
     steps:
       - name: Checkout exact HEAD
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact checkout SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
       - name: Verify selected folder versus AJAX response
         run: |
           python3 tools/cgeo43_sgb_ajax_identity.py
