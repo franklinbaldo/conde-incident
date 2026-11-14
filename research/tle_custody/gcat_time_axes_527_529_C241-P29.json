@@ -1,0 +1,51 @@
+{
+  "capture_date_utc": "2026-11-14",
+  "gc_attribution": "GCAT (J. McDowell, planet4589.org/space/gcat)",
+  "gc_version": "GCAT 1.8.9, Data Update 2026 Nov 13",
+  "interpretation": {
+    "527_remains_possible_survivor_control_on_1963_11_08": true,
+    "catalog_snapshot_is_not_an_instrumental_observation": true,
+    "end_of_transmission_is_not_reentry": true,
+    "new_instrumental_measurements": 0,
+    "physical_domain_effect": "THETA_UNCHANGED",
+    "shared_gcat_lineage_not_independent": true
+  },
+  "research_question": "Resolve apparent 527 Jan 18 1963 vs Jan 9 1969 contradiction without treating payload operations as orbital decay; distinguish 527, 528, 529.",
+  "schema": "conde.gcat-time-axes/v1",
+  "sources": {
+    "object": {
+      "bytes_full_tsv": 14449333,
+      "definitions_url": "https://planet4589.org/space/gcat/web/cat/curcols.html",
+      "header": "#JCAT\tDeepCat\tSatcat\tPiece\tActive\tType\tName\tLDate\tParent\tOwner\tState\tSDate\tExpandedStatus\tDDate\tODate\tPeriod\tPerigee\tPF\tApogee\tAF\tInc\tIF\tOpOrbit",
+      "rows": {
+        "527": {
+          "line": "S00527    \t-\t00527\t1963-003A\tP\tP A         \tOPS 0180\t1963 Jan 16\tA00324\tNROC/NROC\tUS\t1963 Jan 16 2206\tReentered attached to A00324 Agena B 2313\t1969 Jan  9 1200?\t-\t-\t-\t-\t-\t-\t-\t-\t-",
+          "sha256": "15043fc6389daf3f0c98262cfec03f5a6375b5d14d7584fb14f9fcf90e4395e9"
+        },
+        "528": {
+          "line": "S00528    \t-\t00528\t1963-003B\tC\tC  X        \tdeb USAF satellite/Agena D\t1963 Jan 16\tS00527\tNROC/NROC\tUS\t1963 Jan 16 2300?\tReentered Earth atmosphere\t1963 Nov  8\t-\t-\t-\t-\t-\t-\t-\t-\t-",
+          "sha256": "b020f329dc3a52af63f528508bdd9d8ee679f429be6cdbc75cdf8f1e954dc935"
+        },
+        "529": {
+          "line": "S00529    \t-\t00529\t1963-003C\tC\tC  X        \tdeb USAF satellite/Agena D\t1963 Jan 16\tS00527\tNROC/NROC\tUS\t1963 Jan 16 2300?\tReentered Earth atmosphere\t1963 Dec 31\t-\t-\t-\t-\t-\t-\t-\t-\t-",
+          "sha256": "28325fb1c041d8a002e3d4671f20846c8f5997c1436b8a19d976b1132f858c58"
+        }
+      },
+      "sha256_full_tsv": "391cdf7cea7d858fcec660d85b58a270eda61dad8c961422b3be00073fd6fbeb",
+      "url": "https://planet4589.org/space/gcat/tsv/derived/currentcat.tsv"
+    },
+    "payload": {
+      "bytes_full_tsv": 5233316,
+      "definitions_url": "https://planet4589.org/space/gcat/web/cat/pcols.html",
+      "header": "#JCAT\tPiece\tName\tLDate\tTLast\tTOp\tTDate\tTF\tProgram\tPlane\tAtt\tMvr\tClass\tCategory\tResult\tControl\tDiscipline\tUNState\tUNReg\tUNPeriod\tUNPerigee\tUNApogee\tUNInc\tDispEpoch\tDispPeri\tDispApo\tDispInc\tComment",
+      "rows": {
+        "527": {
+          "line": "S00527    \t1963-003A\t-\t1963 Jan 16 \t1963 Jan 18\t1963 Jan 18\t1963 Jan 18\t-\tSAMOS F-2\t-\t-\t-\tD\tSIG\tS\t-\t-\tUS\tA/AC.105/INF.030\t   94.7 \t     480\t     519\t 82.0 \t-\t       0\t       0\t  0.00 \t-",
+          "sha256": "4fa691a0d6e881cdacef834791e9889abd0ce9707ae511a3230873f10d7994d6"
+        }
+      },
+      "sha256_full_tsv": "185bf7b98b540f5819da2ad171aa0376cedf5792cf36cd9a847db7612aa731ea",
+      "url": "https://planet4589.org/space/gcat/tsv/cat/psatcat.tsv"
+    }
+  }
+}
