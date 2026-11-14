@@ -38,7 +38,7 @@ def validate(data):
     if "DECAYED OBJECTS LIST" not in s.get("heading",""): raise ValueError("heading")
     rows=data.get("controls",[])
     if len(rows)!=2: raise ValueError("control count")
-    for row,pin in zip(rows,PINN):
+    for row,pin in zip(rows,PINNED):
         num,printed,modern,launch,day,normalized=pin
         for key,val in {"norad_id":num,"printed_designation":printed,
                         "modern_designator":modern,"printed_launch":launch,
