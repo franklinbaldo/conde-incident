@@ -111,6 +111,32 @@ test('G74 rejects invalid initial phase space even on zero-duration and threshol
     {state: circular, event: 'elapsed', steps: 0});
 });
 
+test('G75 elapsed clock is epoch-offset invariant in vacuum, including a large epoch', () => {
+  const zero = propagate(circular, 1, 0.1, 80);
+  const offsetS = 2 ** 40; // deliberately large, but still resolvable with 0.1 s steps
+  const shifted = propagate({ ...circular, tS: offsetS }, 1, 0.1, 80);
+  assert.equal(shifted.event, 'elapsed');
+  assert.equal(zero.steps, 10);
+  assert.equal(shifted.steps, zero.steps);
+  assert.equal(shifted.state.tS, offsetS + 1);
+  for (const component of ['rKm', 'vKmS']) {
+    for (let i = 0; i < 3; i++)
+      assert.ok(Math.abs(shifted.state[component][i] - zero.state[component][i]) < 1e-11,
+        'vacuum state must not depend on absolute clock: ' + component + i);
+  }
+});
+
+test('G75 nonadvancing RK4 midpoint and outer clock fail without looping', () => {
+  const stuck = { ...circular, tS: 2 ** 53 };
+  assert.throws(() => rk4(stuck, 1), NumericalIntegrationBreakdown);
+  assert.throws(() => propagate(stuck, 1, 1, 80), NumericalIntegrationBreakdown);
+  const stuckMidpoint = { ...circular, tS: 2 ** 52 };
+  assert.throws(() => rk4(stuckMidpoint, 1), NumericalIntegrationBreakdown);
+  assert.equal(propagate(stuck, 0, 1, 80).event, 'elapsed');
+  const below = { ...stuck, rKm: [EARTH.radiusKm + 60, 0, 0] };
+  assert.equal(propagate(below, 1, 1, 80).event, 'reentry-threshold');
+});
+
 test('seeded ensemble repeats exactly and remains coupled to its state', () => {
   const a = propagateEnsemble(circular, 1963, 8, 0.004, 1000, 10, 80, { j2: true });
   const b = propagateEnsemble(circular, 1963, 8, 0.004, 1000, 10, 80, { j2: true });
