@@ -1,0 +1,67 @@
+{
+  "schema": "conde.gis.conder-sede-point-2026/v1",
+  "id": "CGEO-61",
+  "as_of_utc_date": "2026-11-14",
+  "municipality": {
+    "name": "Conde",
+    "uf": "BA",
+    "ibge_code": "2908606"
+  },
+  "source": {
+    "organization": "CONDER/BA",
+    "domain": "mapas.conder.ba.gov.br",
+    "spatial_reference": "EPSG:4326 (ArcGIS wkid 4326)",
+    "data_epoch": null,
+    "measurement_accuracy_m": null,
+    "license": "NOT_VERIFIED",
+    "service_queries": [
+      {
+        "service": "SEDES_MUNICIPAIS_PTO",
+        "where": "MUNICIPIO='CONDE'",
+        "url": "https://mapas.conder.ba.gov.br/arcgis/rest/services/BAHIA/SEDES_MUNICIPAIS_PTO/MapServer/0/query?where=MUNICIPIO%3D%27CONDE%27&outFields=%2A&returnGeometry=true&outSR=4326&f=geojson&resultRecordCount=10",
+        "acquired_http_status": 200,
+        "raw_bytes": 232,
+        "raw_sha256": "dbb93fe280700e3931a30fcef07414030a2eedf5a00b9629ed6496104c2fb7d3"
+      },
+      {
+        "service": "LOCALIDADES",
+        "where": "COD_MUNICIPIO='2908606'",
+        "url": "https://mapas.conder.ba.gov.br/arcgis/rest/services/BAHIA/LOCALIDADES/MapServer/0/query?where=COD_MUNICIPIO%3D%272908606%27&outFields=%2A&returnGeometry=true&outSR=4326&f=geojson&resultRecordCount=10",
+        "acquired_http_status": 200,
+        "raw_bytes": 489,
+        "raw_sha256": "6d2cbd335863ca5525824312fed51c52c4361a2efcd1d3c5e28a202552c6d708"
+      }
+    ]
+  },
+  "point": {
+    "objectid": 1038,
+    "code": "290860605000001",
+    "municipal_code": "2908606",
+    "name": "Conde",
+    "class": "URBANO / CIDADE / Sede",
+    "longitude": -37.60697798199999,
+    "latitude": -11.813431761000004,
+    "role": "CONDER_PRESENT_DAY_SEAT_PROXY_ONLY"
+  },
+  "dependence": {
+    "services_have_same_objectid_code_coordinates": true,
+    "independent_measurements_established": false
+  },
+  "comparator": {
+    "source_contract": "research/geo/cgeo60_modern_osm_cut.json",
+    "osm_node_id": 415521889,
+    "method": "haversine spherical Earth radius 6371000 m",
+    "separation_m": 751.891919,
+    "initial_bearing_deg": 93.86713
+  },
+  "historical_guards": {
+    "as_of_november_1963_point": null,
+    "physical_continuity_to_1963": null,
+    "georeferencing_accuracy_m": null,
+    "impact_location": null,
+    "modern_sede_is_historical_center": false,
+    "can_constrain_orbital_reentry": false,
+    "active_constraint": false,
+    "posterior": false
+  }
+}
