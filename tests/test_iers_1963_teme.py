@@ -174,6 +174,42 @@ class G50TEMEFrame(unittest.TestCase):
                 frame_operator("1963-11-08T12:00:00Z",
                                self.eop, self.times, step_seconds=step)
 
+    def test_covariance_scale_cannot_hide_negative_variance(self):
+        # The original global eigenvalue tolerance was 10 for this matrix,
+        # incorrectly admitting an explicitly negative 1e-7 velocity variance.
+        bad = np.diag([1e12, 1e-2, 1e-2, 1e-8, 1e-8, -1e-7])
+        with self.assertRaisesRegex(ValueError, "negative marginal variance"):
+            transform_covariance(bad, np.eye(6))
+
+    def test_covariance_scale_cannot_hide_asymmetric_velocity_block(self):
+        bad = np.diag([1e12, 1e-2, 1e-2, 1e-8, 1e-8, 1e-8])
+        bad[3, 4] = 1e-5
+        with self.assertRaisesRegex(ValueError, "symmetric"):
+            transform_covariance(bad, np.eye(6))
+
+    def test_covariance_correlation_eigenvalue_not_masked_by_scale(self):
+        bad = np.diag([1e12, 1e-2, 1e-2, 1e-8, 1e-8, 1e-8])
+        # Correlation 2 violates Cauchy-Schwarz, but its raw negative
+        # eigenvalue is only ~1e-8, hidden by an unrelated 1e12 variance.
+        bad[3, 4] = bad[4, 3] = 2e-8
+        with self.assertRaisesRegex(ValueError, "positive semidefinite"):
+            transform_covariance(bad, np.eye(6))
+
+    def test_covariance_zero_variance_cannot_have_cross_term(self):
+        bad = np.diag([1e12, 1e-2, 1e-2, 0., 1e-8, 1e-8])
+        bad[0, 3] = bad[3, 0] = 1e-7
+        with self.assertRaisesRegex(ValueError, "Zero-variance"):
+            transform_covariance(bad, np.eye(6))
+
+    def test_covariance_valid_high_dynamic_range_and_rank_deficiency(self):
+        variances = np.array([1e12, 1e-4, 1e-8, 1e-14, 1e-18, 0.])
+        good = np.diag(variances)
+        good[0, 1] = good[1, 0] = math.sqrt(variances[0] * variances[1])
+        out = np.array(transform_covariance(good, np.eye(6)))
+        self.assertLess(np.max(abs(out-good)), 1e-15)
+        self.assertEqual(out[5, 5], 0.)
+        self.assertTrue(np.isfinite(out).all())
+
     def test_rejects_unphysical_covariances(self):
         eye = np.eye(6)
         for cov in (np.ones((6,3)), [[float("nan")]*6]*6,

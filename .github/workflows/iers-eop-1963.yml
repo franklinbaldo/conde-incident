@@ -21,6 +21,7 @@ on:
       - research/constraints/iers_1963_intraday_G49.md
       - research/constraints/iers_1963_intraday_G49.json
       - research/constraints/iers_1963_teme_G50.md
+      - research/constraints/iers_1963_covariance_G52.md
   push:
     branches: [main]
     paths:
@@ -43,6 +44,7 @@ on:
       - research/constraints/iers_1963_intraday_G49.md
       - research/constraints/iers_1963_intraday_G49.json
       - research/constraints/iers_1963_teme_G50.md
+      - research/constraints/iers_1963_covariance_G52.md
 permissions:
   contents: read
 jobs:
