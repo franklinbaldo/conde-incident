@@ -1,0 +1,87 @@
+{
+  "schema": "conde.gaviao-retrospective-main/v1",
+  "audit_id": "G55",
+  "reviewed_on_utc_date": "2026-11-14",
+  "base_exclusive": "7784cf8bd217d4f2bc0f2719c1bff7e24d72d168",
+  "head_inclusive": "c4e25a0ff8cbf218480d311f83884a9c4deedd80",
+  "first_parent_integrations": 13,
+  "dag_commits": 14,
+  "conventional_merge_commits": 1,
+  "historical_check_policy": "NOT_CHECKED unless individually inspected",
+  "deep_reviewed_change": "#721 SSG no-JS breadcrumbs and their verification gate",
+  "finding": {
+    "id": "G55-F1",
+    "severity": "SSG_BREADCRUMB_FALSE_PASS",
+    "status": "RED_REPRODUCED_GREEN_LOCAL_PR_PENDING_CI",
+    "red": "Synthetic meta aria-label outside main, or empty nav in main, made addBreadcrumbs report changed:false without a valid ancestor trail; two tests failed before repair.",
+    "green": "Existing breadcrumb must match exact computed title and ancestor links after canonical main; six Node tests pass on ifro.",
+    "limitation": "Synthetic HTML proves a validation weakness, not a production incident, NORAD observation or historical impact."
+  },
+  "integrations": [
+    {
+      "sha": "9f129ac46e7de9c791fbaebc9b2b8a243b319d79",
+      "subject": "95 🐢 C241-L46: documentos NORAD de 1963 e limites de precisão para o 528 (#710)",
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "4daff119280643473b089bd1ddc91811facfd4cf",
+      "subject": "96 🦅 G54: proteger exportação C241 contra Python -O e falso PASS (#711)",
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "c9cd91ccb96c4af64869f44db4b0242c561b4cd5",
+      "subject": "94 🐝 C241-L46: ligar mensagens NORAD sobre 687/688 a parâmetros 528 inativos (#712)",
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "fc95605bb854be285fbb2f72eb66760c59cc1440",
+      "subject": "Merge pull request #713 from franklinbaldo/lagarto/r40-matrix-occurrence-lookup",
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "9edb42a561eaf1b141f4b0851c34e14d509c8db8",
+      "subject": "research(lontra): custódia tradução FTD-HT-23-856-68 para INTEROBS 1963 (#714)",
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "c1d087310f4533e9e99dc0720c5ef54dd6ed5b0f",
+      "subject": "90 🐙 C241-P29: distinguir datas operacionais da carga útil e reentrada GCAT",
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "a9252b74b682b3d12ff9fb68b9a2754f86714d56",
+      "subject": "85 🦀 CGEO-41: fac-símile IOCS nº 14 (1912), custódia primária sem confundir nº 15 (#718)",
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "15fbb041b72f261ca006ecb54a5877225c4f1576",
+      "subject": "96 🦌 C241: isolar massa Ferret 1500 kg como fonte secundária (#717)",
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "0e567795817e972cbd2963e48773f0f9f1fba55b",
+      "subject": "90 🦇 Restaurar destaque visual da seção ativa no laboratório móvel (#715)",
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "6e09c34fa5cdbcd36b2efc0642ed87e4890b0716",
+      "subject": "🦫 G53: geometria óptica topocêntrica de cenário com IERS 1963 (#719)",
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "5a8fd5ca1dec33366376cc3cd11531e3e3b6d99d",
+      "subject": "85 🦇 Identificar a seção do laboratório no título do navegador (PT/EN) (#720)",
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "0402f0e8d3fd59608b8405014ef9a87d6a800b0f",
+      "subject": "90 🦊 UX-01: trilhas SSG sem JS (#721)",
+      "historical_checks": "NOT_CHECKED"
+    },
+    {
+      "sha": "c4e25a0ff8cbf218480d311f83884a9c4deedd80",
+      "subject": "🦉 Caderno 32: seiscentas posições e a lacuna do 528 (#722)",
+      "historical_checks": "NOT_CHECKED"
+    }
+  ]
+}
