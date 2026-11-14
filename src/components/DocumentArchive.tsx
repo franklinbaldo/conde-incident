@@ -42,7 +42,7 @@ const guides = [
 export const DocumentArchive: React.FC<{ lang: Language }> = ({ lang }) => {
   const pt = lang === 'pt';
   return (
-    <section className="space-y-6 pb-10" aria-labelledby="archive-heading">
+    <section className="space-y-6 pb-10 [overflow-wrap:anywhere]" aria-labelledby="archive-heading">
       <header className="rounded-xl border border-zinc-700 bg-zinc-900 p-5 sm:p-7">
         <p className="flex items-center gap-2 text-xs font-mono uppercase tracking-wide text-cyan-300">
           <FileText className="h-4 w-4" aria-hidden="true" />
