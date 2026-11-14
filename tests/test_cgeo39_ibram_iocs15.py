@@ -42,6 +42,14 @@ class CGEO39Tests(unittest.TestCase):
         self.reject(lambda d:d["prior_archive"].update(publication_number=29))
         self.reject(lambda d:d["prior_archive"].update(physical_copy_identity_with_ibram=True))
         self.reject(lambda d:d["archival_collection"].update(includes_literal_title=""))
+    def test_same_size_fake_pdf_fails_integrity(self):
+        # Magic bytes and expected size do not establish institutional custody.
+        with tempfile.TemporaryDirectory() as directory:
+            fake=Path(directory)/"same-size-fake.pdf"
+            fake.write_bytes(b"%PDF-"+b"0"*(136248-5))
+            with self.assertRaises(ValueError):
+                verify_finding_aid(fake)
+
     def test_wrong_pdf_bytes_fail(self):
         with tempfile.TemporaryDirectory() as directory:
             wrong=Path(directory)/"fake.pdf"
