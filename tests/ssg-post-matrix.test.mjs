@@ -132,6 +132,19 @@ test('post-matrix built HTML binds navigation, source identity and custody in ea
     marker+heading+state+independence+imageDigest+report+source+custody+links+'</main>';
   assert.equal(auditBuiltPostMatrix(base,citations),expected.length);
 
+  // A raw <h3> cannot authenticate a record when an ancestor hides it.
+  // Earlier auditing detached the heading from its hidden parent.
+  for(const hidden of [
+    '<div hidden>'+heading+'</div>',
+    '<section aria-hidden="true">'+heading+'</section>',
+    '<template>'+heading+'</template>',
+    '<div style="display:none">'+heading+'</div>',
+  ]) {
+    assert.throws(()=>auditBuiltPostMatrix(base.replace(heading,hidden),citations),
+      /cabeçalhos ausentes|cabeçalho não visível/,
+      'hidden headings must not be accepted as visible record headings');
+  }
+
   assert.throws(()=>auditBuiltPostMatrix(base.replace(marker,''),citations),
     /âncora documental ativa e única ausente/);
   assert.throws(()=>auditBuiltPostMatrix(base.replace(marker,marker+marker),citations),
