@@ -1,0 +1,255 @@
+{
+  "activation": false,
+  "altitude_unit_verified": null,
+  "custody": {
+    "pdf_bytes": 31749209,
+    "pdf_page_one_based": 105,
+    "pdf_sha256": "f77b0e8998d467dd457d0ab8e8012e6e9d69c60fb6180aa3d68f1e8422b32786",
+    "print_page": "B-12",
+    "printed_credit": "Material Reproduced from STL SPACE LOG, Vol. 3, No. 4, Space Laboratories, Inc.",
+    "url": "https://ntrs.nasa.gov/api/citations/19670008638/downloads/19670008638.pdf"
+  },
+  "diagnostics": {
+    "is_instrumental_measurement": false,
+    "statute_miles_candidate_not_documented": true,
+    "two_body_km_interpretation_consistent": false
+  },
+  "graph": [
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "PDF_FACSIMILE_PAGE_105",
+      "source": "C241-LONTRA-R51",
+      "target": "DOC:NASA-TMX59315:B12"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "EXPLICIT_REPRODUCTION_CREDIT",
+      "source": "DOC:NASA-TMX59315:B12",
+      "target": "WORK:STL-SPACE-LOG:v3:n4"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "ORIGINAL_NOT_YET_RECOVERED",
+      "source": "WORK:STL-SPACE-LOG:v3:n4",
+      "target": "LATENT:STL_ORIGINAL_ISSUE"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "PAIRS_NOT_INDEPENDENT_SENSORS",
+      "source": "DOC:NASA-TMX59315:B12",
+      "target": "DATUM:1963_3A_JAN31_PRINTED_PAIRS"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "PAGE_B12_UNIT_UNVERIFIED",
+      "source": "DATUM:1963_3A_JAN31_PRINTED_PAIRS",
+      "target": "LATENT:altitude_unit"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "TWO_PRINTED_VALUES_WITH_UNKNOWN_MAPPING",
+      "source": "DATUM:1963_3A_JAN31_PRINTED_PAIRS",
+      "target": "LATENT:pair_semantics"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NOVEMBER_528_NOT_OBSERVED",
+      "source": "DATUM:1963_3A_JAN31_PRINTED_PAIRS",
+      "target": "H:JANUARY_PRINT_CONTEXT_ONLY"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "PRIOR_SOVIET_NASA_CANDIDATE",
+      "source": "C241-LONTRA-R49",
+      "target": "H:SHARED_EDITORIAL_UPSTREAM"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "STL_ANCESTRY_UNTESTED_FOR_SOVIET_TABLE",
+      "source": "WORK:STL-SPACE-LOG:v3:n4",
+      "target": "H:SHARED_EDITORIAL_UPSTREAM"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NO_STL_ORIGINAL_OR_CHAIN_TO_BSE",
+      "source": "H:SHARED_EDITORIAL_UPSTREAM",
+      "target": "LATENT:upstream_publication"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "DIFFERENT_EPOCHS_NO_TRANSFER",
+      "source": "H:JANUARY_PRINT_CONTEXT_ONLY",
+      "target": "MODEL:orbital_cross_epoch"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "UNITS_REQUIRED_BEFORE_COMPARISON",
+      "source": "LATENT:altitude_unit",
+      "target": "MODEL:orbital_cross_epoch"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "PREMISES_MISSING_NOT_COMPILED",
+      "source": "MODEL:orbital_cross_epoch",
+      "target": "LEAN:candidateStlEpochAndUnitConsistency"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "CANDIDATE_NOT_ACTIVATED",
+      "source": "LEAN:candidateStlEpochAndUnitConsistency",
+      "target": "PARAM:orbit_prior_527"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NO_528_MEASUREMENT",
+      "source": "H:JANUARY_PRINT_CONTEXT_ONLY",
+      "target": "PARAM:orbit_prior_528"
+    }
+  ],
+  "hypotheses": [
+    "H:JANUARY_PRINT_CONTEXT_ONLY",
+    "H:SHARED_EDITORIAL_UPSTREAM"
+  ],
+  "id": "ABELHA-C241-LONTRA-R51-01",
+  "independent_instrumental_observations_added": 0,
+  "latents": [
+    {
+      "activation": false,
+      "id": "LATENT:STL_ORIGINAL_ISSUE",
+      "unit": "verified_original_edition_id",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:upstream_publication",
+      "unit": "cited_historical_publication",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:altitude_unit",
+      "unit": "km_or_mi_with_original_legend",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:pair_semantics",
+      "unit": "initial_vs_later_or_other_source",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:observational_utc",
+      "unit": "UTC",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:station",
+      "unit": "instrument_id",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:reference_frame",
+      "unit": "frame_identifier",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:instrument_covariance",
+      "unit": "covariance_matrix",
+      "value": null
+    }
+  ],
+  "lean_candidate": "candidateStlEpochAndUnitConsistency",
+  "lean_status": "CANDIDATE_ONLY_NOT_COMPILED",
+  "new_activated_physical_constraints": 0,
+  "new_confirmed_norad_528_observations": 0,
+  "next_falsifiable_test": "Recover STL Space Log vol.3 no.4 original and its units/paired-column legend, then trace dated publications of 1963 orbital elements to the BSE 1964 page 503; reject any transfer to NORAD 528 without dated instrumental target identification.",
+  "other_norad_candidates": [
+    {
+      "activation": false,
+      "norad_id": 527,
+      "observation_utc": null,
+      "physical_constraint": null
+    },
+    {
+      "activation": false,
+      "norad_id": 528,
+      "observation_utc": null,
+      "physical_constraint": null
+    },
+    {
+      "activation": false,
+      "norad_id": 529,
+      "observation_utc": null,
+      "physical_constraint": null
+    }
+  ],
+  "pair_mapping_proven": false,
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "printed_identity": "1963 3A",
+  "printed_values": {
+    "apogee_unverified_unit": [
+      322,
+      334
+    ],
+    "inclination_deg": [
+      82.0,
+      81.9
+    ],
+    "perigee_unverified_unit": [
+      298,
+      286
+    ],
+    "period_min": [
+      94.7,
+      94.6
+    ]
+  },
+  "schema": "conde.stl-space-log-dependency/v1",
+  "simulator_parameters": [
+    {
+      "activation": false,
+      "id": "PARAM:orbit_prior_527",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "PARAM:orbit_prior_528",
+      "value": null
+    }
+  ],
+  "source_class": "HISTORICAL_EDITORIAL_REPRINT_NOT_INSTRUMENT_DATA",
+  "source_epoch_context": "initial_orbital_data_as_of_1963_01_31",
+  "sources": [
+    {
+      "occurrence_id": "C241-LONTRA-R51",
+      "path": "research/tle_custody/stl_space_log_nasa_r51.json",
+      "sha256": "18cdbed4e9a2d31d3b402b4456f547c3902bbcb0ecfc992efe4c4c3a3a24bcb5"
+    },
+    {
+      "occurrence_id": "C241-LONTRA-R49",
+      "path": "public/data/conde-soviet-nasa-dependency-bridge.json",
+      "role": "previous_scientific_bridge_not_new_observation",
+      "sha256": "e68cedb94fcff2e88db2ef81214ef2d5d279616bef24f7d9a05bcab90552782d"
+    }
+  ],
+  "stl_original_issue_observed": false
+}
