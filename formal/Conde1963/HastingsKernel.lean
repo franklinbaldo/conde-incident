@@ -2,6 +2,8 @@ import Conde1963.CircularMCMC
 
 namespace Conde1963.CircularMCMC
 
+open scoped BigOperators
+
 /-! ## Full finite Hastings transport with explicit rejection self-mass
 
 Earlier lemmas certified only accepted pairwise flows, which alone are not a
