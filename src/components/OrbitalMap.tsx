@@ -144,7 +144,7 @@ export function OrbitalMap({ lang, selectedTimeMs, onTimeChange }: Props) {
   );
 
   return (
-    <section className="space-y-4" aria-labelledby="orbital-heading">
+    <section className="min-w-0 space-y-4 [overflow-wrap:anywhere]" aria-labelledby="orbital-heading">
       <header className="space-y-2">
         <h1 id="orbital-heading" className="text-2xl font-semibold text-slate-100">{t.title}</h1>
         <p className="text-sm text-slate-300">{t.subtitle}</p>
@@ -163,7 +163,7 @@ export function OrbitalMap({ lang, selectedTimeMs, onTimeChange }: Props) {
         {layer(t.graticule, showGraticule, setShowGraticule)}
       </div>
 
-      <div className="rounded-xl border border-slate-700 bg-slate-900 p-2 sm:p-3">
+      <div className="min-w-0 max-w-full rounded-xl border border-slate-700 bg-slate-900 p-2 sm:p-3">
         <OrbitalMapSvg
           lang={lang} mode={mode} zoom={zoom} pan={pan} rotation={rotation}
           positions={positions} tracks={tracks} envelopes={data528.envelopes}
@@ -187,18 +187,18 @@ export function OrbitalMap({ lang, selectedTimeMs, onTimeChange }: Props) {
         <p className="pt-2 text-xs text-slate-400">{t.instructions} {t.geometry}</p>
       </div>
 
-      <section className="space-y-3 rounded-lg border border-slate-800 bg-slate-900 p-3" aria-label={t.time}>
+      <section className="min-w-0 space-y-3 rounded-lg border border-slate-800 bg-slate-900 p-3" aria-label={t.time}>
         <div className="flex flex-wrap items-center gap-3">
-          <strong className="font-mono text-sm text-cyan-200" aria-live="off">{now.toISOString().replace('.000Z', 'Z')}</strong>
-          <label className="text-xs text-slate-200">{t.date}{' '}
+          <strong className="min-w-0 max-w-full font-mono text-sm text-cyan-200 [overflow-wrap:anywhere]" aria-live="off">{now.toISOString().replace('.000Z', 'Z')}</strong>
+          <label className="flex min-w-0 max-w-full flex-col gap-1 text-xs text-slate-200">{t.date}{' '}
             <input type="date" min="1963-01-16" max="1963-11-08" value={now.toISOString().slice(0, 10)}
               onChange={e => { if (e.target.value) changeTime(Date.parse(e.target.value + 'T12:00:00Z')); }}
-              className="rounded bg-slate-800 p-1.5 text-white" />
+              className="min-w-0 max-w-full rounded bg-slate-800 p-1.5 text-white" />
           </label>
         </div>
         <input type="range" min={START} max={END} step={3600000} value={time}
           onChange={e => changeTime(Number(e.target.value))} aria-label={t.time}
-          className="w-full accent-cyan-400" />
+          className="min-w-0 w-full accent-cyan-400" />
         <div className="flex flex-wrap gap-2">
           {viewButton(t.back, () => changeTime(time - 3600000))}
           {viewButton(running ? t.pause : t.play, () => setRunning(v => !v))}
@@ -211,9 +211,9 @@ export function OrbitalMap({ lang, selectedTimeMs, onTimeChange }: Props) {
 
       <section className="space-y-3 rounded-lg border border-slate-800 bg-slate-900 p-3" aria-label={t.legend}>
         <h2 className="font-semibold text-slate-100">{t.legend}</h2>
-        <ul className="grid gap-2 text-sm sm:grid-cols-2" aria-live={running ? "off" : "polite"}>
+        <ul className="min-w-0 grid grid-cols-[minmax(0,1fr)] gap-2 text-sm sm:grid-cols-2" aria-live={running ? "off" : "polite"}>
           {([527, 528, 529] as const).filter(id => id === 528 || showSisters).map(id => (
-            <li key={id} className="rounded border border-slate-700 p-2">
+            <li key={id} className="min-w-0 rounded border border-slate-700 p-2">
               <strong className={id === 528 ? 'text-cyan-300' : id === 527 ? 'text-emerald-300' : 'text-violet-300'}>NORAD {id}</strong>
               <span className="ml-2 text-slate-300">{positions[id]
                 ? t.displayed + ' · ' + positions[id]!.altitudeKm.toFixed(0) + ' km (scenario)'
