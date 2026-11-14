@@ -24,6 +24,8 @@ on:
       - tests/test_iers_1963_optical.py
       - tests/test_optical_wgs84_ray_range.py
       - tests/test_iers_1963_optical_residual.py
+      - tools/optical_shared_state_parallax.py
+      - tests/test_optical_shared_state_parallax.py
       - research/constraints/iers_eop_1963_11_07_09.json
       - research/constraints/iers_eop_1963_G46.md
       - research/constraints/iers_1963_timescales_G47.json
@@ -60,6 +62,8 @@ on:
       - tests/test_iers_1963_optical.py
       - tests/test_optical_wgs84_ray_range.py
       - tests/test_iers_1963_optical_residual.py
+      - tools/optical_shared_state_parallax.py
+      - tests/test_optical_shared_state_parallax.py
       - research/constraints/iers_eop_1963_11_07_09.json
       - research/constraints/iers_eop_1963_G46.md
       - research/constraints/iers_1963_timescales_G47.json
@@ -108,4 +112,6 @@ jobs:
           IERS_1963_SOURCE=/tmp/iers-1963-eop.bin python3 -m unittest discover -s tests -p 'test_iers_1963_optical.py' -v
           python3 -m unittest discover -s tests -p 'test_iers_1963_workflow_paths.py' -v
           IERS_1963_SOURCE=/tmp/iers-1963-eop.bin python3 -m unittest discover -s tests -p 'test_iers_1963_optical_residual.py' -v
+          python3 -m unittest discover -s tests -p 'test_optical_shared_state_parallax.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_optical_shared_state_parallax.py' -v
           python3 -c "import json; a=json.load(open('/tmp/iers-1963-frame-G48.json')); assert len(a['daily_00_utc_only']) == 3 and a['limitations']['holdout_527_529'] == 'NOT_RUN'"
