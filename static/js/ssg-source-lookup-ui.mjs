@@ -2,6 +2,14 @@ import {loadCondeSourceLookup} from './ssg-source-lookup-loader.mjs';
 
 const PREFIX='/conde-incident/';
 const KNOWN_PATH=/^\/conde-incident\/evidencias\/arquivo\/[a-z0-9-]+\/$/;
+const EDGE_LABELS=Object.freeze({
+  aggregates_from:'agrega dados de',
+  catalogue_of_same_work:'cataloga a mesma obra que',
+  later_issue_same_series:'é edição posterior da série de',
+  part_of_archival_unit:'integra a unidade arquivística',
+  quotes_uninspected_source:'cita fonte ainda não inspecionada',
+  transcribes:'transcreve',
+});
 
 // A link is actionable only if its source ID belongs to the verified index.
 export function sourceFromUrl(href,verifiedSources){
@@ -23,12 +31,20 @@ export function referenceView(source){
      typeof source.source_family!=='string' || !Array.isArray(source.references))
     throw Error('Fonte incompatível');
   return source.references.map(ref=>{
-    if(!KNOWN_PATH.test(ref.archive_path) || !/^C\d+#\d+$/.test(ref.occurrence) ||
-       !Number.isInteger(ref.matrix_line) || !/^[a-f0-9]{64}$/.test(ref.row_sha256))
+    const expected='/conde-incident/evidencias/arquivo/'+
+      String(ref.occurrence).toLowerCase().replace('#','-')+'/';
+    if(!KNOWN_PATH.test(ref.archive_path) || !/^C\d+#[1-9]\d*$/.test(ref.occurrence) ||
+       ref.archive_path!==expected || !Number.isSafeInteger(ref.matrix_line) ||
+       ref.matrix_line<1 || !/^[a-f0-9]{64}$/.test(ref.row_sha256) ||
+       !Array.isArray(ref.upstream_edges) || ref.upstream_edges.some(edge=>
+         !Array.isArray(edge) || edge.length!==3 || edge[0]!==source.source_id ||
+         !/^[a-z][a-z0-9_]*$/.test(edge[1]) ||
+         typeof edge[2]!=='string' || !edge[2]))
       throw Error('Referência inválida');
     return {occurrence:ref.occurrence,archive_path:ref.archive_path,
       matrix_line:ref.matrix_line,row_sha256:ref.row_sha256,
-      work_id:ref.work_id,snapshot_ref:ref.snapshot_ref};
+      work_id:ref.work_id,snapshot_ref:ref.snapshot_ref,
+      upstream_edges:ref.upstream_edges};
   });
 }
 
@@ -62,6 +78,22 @@ export async function mountSourceLookup(doc=document, loader=loadCondeSourceLook
       link.textContent='Abrir ocorrência '+ref.occurrence;
       li.append(link,textElement('p','Obra '+ref.work_id+' · Linha da matriz '+ref.matrix_line+
         ' · Snapshot '+ref.snapshot_ref+' · SHA-256 '+ref.row_sha256));
+      if(ref.upstream_edges.length){
+        li.append(textElement('p','Relações documentais declaradas (não são observações independentes):'));
+        const edges=doc.createElement('ul');
+        for(const [,kind,target] of ref.upstream_edges){
+          const node=doc.createElement('li');
+          node.append(textElement('span',(EDGE_LABELS[kind]??'relação '+kind)+': '));
+          if(sources.has(target)){
+            const a=doc.createElement('a');
+            a.href=sourceLookupUrl(doc.location.href,target);
+            a.textContent=target;
+            node.append(a);
+          } else node.append(textElement('span',target+' (fora deste índice curado)'));
+          edges.append(node);
+        }
+        li.append(edges);
+      }
       list.append(li);
     }
     results.append(list);
