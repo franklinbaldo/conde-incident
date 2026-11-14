@@ -32,11 +32,6 @@ export function addBreadcrumbs(html, path, hasPage = () => true) {
   const parts = fileParts(path);
   if (!parts.length) return { html, eligible: false, changed: false };
   assert.ok(html.includes(main), 'Main canônico ausente: ' + path);
-  if (html.includes('aria-label="Trilha de navegação"')) {
-    assert.equal(html.split('aria-label="Trilha de navegação"').length, 2,
-      'Trilha duplicada: ' + path);
-    return { html, eligible: true, changed: false };
-  }
   const match = /<title>([^<>\r\n]{1,320})<\/title>/i.exec(html);
   assert.ok(match, 'Título textual seguro ausente: ' + path);
   const items = ['<li><a href="' + prefix + '">Início</a></li>'];
@@ -48,6 +43,16 @@ export function addBreadcrumbs(html, path, hasPage = () => true) {
   items.push('<li><span aria-current="page">' + match[1] + '</span></li>');
   const trail = '<nav aria-label="Trilha de navegação" class="breadcrumbs"><ol>' +
     items.join('') + '</ol></nav>';
+  // A bare aria-label anywhere in the HTML is not proof of a usable trail.
+  // Validate the exact static navigation *inside* the canonical main, including
+  // the ancestor links and the title; do not trust a stale or empty breadcrumb.
+  const markers = html.split('aria-label="Trilha de navegação"').length - 1;
+  if (markers > 0) {
+    assert.equal(markers, 1, 'Trilha preexistente duplicada: ' + path);
+    assert.ok(html.includes(main + trail),
+      'Trilha preexistente não corresponde ao contrato: ' + path);
+    return { html, eligible: true, changed: false };
+  }
   return { html: html.replace(main, main + trail), eligible: true, changed: true };
 }
 function* pages(root) {
