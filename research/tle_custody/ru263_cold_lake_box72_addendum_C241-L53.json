@@ -1,0 +1,35 @@
+{
+  "schema": "conde.ru263-station-file-addendum/v1",
+  "id": "C241-L53",
+  "amendment": "C241-L54",
+  "parent_manifest_path": "research/tle_custody/sao_ru263_station_files_C241-L53.json",
+  "parent_manifest_sha256": "40bbfda2f2440bae8344f9b42177622e1c3d7eee6aed34560f69e203b01cc473",
+  "source_pdf_sha256": "0648a4807160099c1c5146f9a90e8ab291af8cb7a0eff1f5a9ca0bc53e074603",
+  "source_pdf_bytes": 192142,
+  "anchors": [
+    {
+      "id": "RU263-COLD-LAKE-S9-OPERATIONS",
+      "series": 9,
+      "box": 72,
+      "printed_page": 47,
+      "pdf_page_index_zero_based": 48,
+      "phrase": "#420 Operations, 1963-1965.",
+      "scope": "Engineering Section station file; NOT an observation or a SPADATS transfer receipt"
+    },
+    {
+      "id": "RU263-COLD-LAKE-S9-INVENTORY",
+      "series": 9,
+      "box": 72,
+      "printed_page": 47,
+      "pdf_page_index_zero_based": 48,
+      "phrase": "#130 Inventory and audits, 1963.",
+      "scope": "Engineering Section inventory; NOT evidence of camera operation or a NORAD 528 detection"
+    }
+  ],
+  "independent_instrumental_observations": 0,
+  "individual_observations_recovered": 0,
+  "norad_528_observation_utc": null,
+  "spadats_528_transfer_receipt": null,
+  "physical_constraint_active": false,
+  "next_acquisition": "Open RU263 series 9 box 72 #420 Operations 1963-1965 and #130 Inventory and audits 1963; request documents July-November 1963 with UTC, target identity, station/sensor and clock calibration, plus actual SPADATS transmission and receipt if present."
+}
