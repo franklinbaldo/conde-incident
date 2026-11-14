@@ -1,0 +1,56 @@
+{
+  "id": "C241-LONTRA-R56",
+  "audit_date_utc": "2026-11-14",
+  "evidence_class": "CONTEMPORARY_REPRINT_OF_SOVIET_INSTRUMENT_METHOD",
+  "source": {
+    "institution": "University of Alabama in Huntsville Archives, Special Collections, and Digital Initiatives",
+    "catalogue_url": "https://digitalprojects.uah.edu/items/show/3372",
+    "pdf_url": "https://digitalprojects.uah.edu/files/original/195/3372/spaceintelligencenotes_19631100.pdf",
+    "title": "Space Intelligence Notes, November 1963",
+    "publisher": "George C. Marshall Space Flight Center, Space Systems Information Branch",
+    "volume": 4,
+    "issue": 11,
+    "publication_month": "1963-11",
+    "http_status": 200,
+    "mime": "application/pdf",
+    "downloaded_bytes": 10004789,
+    "sha256": "f953ffe533a7f6e0a3430c6381903be57dd98521523622e4b6e90c7830080318",
+    "pages": 28,
+    "image_only_no_text_layer": true,
+    "visually_inspected_pdf_pages_one_based": [1, 3, 5, 6, 24],
+    "original_pdf_retrieved": true
+  },
+  "instrument_digest": {
+    "printed_page": 24,
+    "pdf_page_one_based": 24,
+    "section": "TRACKING",
+    "topic": "Study of standard equipment for photographic observation of artificial earth satellites",
+    "devices_named": ["NAFA-3S/25-S camera", "21-P chronograph", "1P-M pulse adapter", "PRV radio receiver", "SPV-3 photocell", "8-loop cathode oscillograph"],
+    "shutter_open_delay_seconds": 0.0022,
+    "shutter_open_uncertainty_seconds": 0.0002,
+    "shutter_close_delay_seconds": 0.0002,
+    "shutter_close_uncertainty_seconds": 0.0002,
+    "chronograph_delay_seconds_at_210_v": 0.0268,
+    "chronograph_delay_seconds_at_230_v": 0.0254,
+    "chronograph_voltage_difference_seconds": 0.0014,
+    "secondary_us_report_number": "1521678463",
+    "secondary_us_report_date": "1963-06-19",
+    "claimed_original_journal": "Astronomicheskiy Zhurnal, Moskva, no. 5, May 1963",
+    "original_russian_paper_retrieved": false,
+    "us_intelligence_report_retrieved": false,
+    "observation_record_in_digest": false
+  },
+  "context": {
+    "printed_pages_visually_checked": [3, 5, 6],
+    "soviet_radio_astronomy_visit_lovell_reported": true,
+    "context_is_independent_satellite_measurement": false
+  },
+  "conclusions": {
+    "observations_norad_527_528_529": [],
+    "instrument_epochs_1963_11_07_to_09": [],
+    "new_independent_sensors": 0,
+    "activated_orbital_constraints": 0,
+    "instrument_delays_transferable_to_527_528_529": false,
+    "institutional_contacts_sent": 0
+  }
+}
