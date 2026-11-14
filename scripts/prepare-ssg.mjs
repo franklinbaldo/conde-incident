@@ -89,7 +89,7 @@ landing('cronologia','Cronologia da investigação','Datas editoriais da investi
 landing('evidencias','Evidências e fontes','Índice de textos, fontes e proveniência.',
  '# Evidências e fontes\n\nEste índice cobre os capítulos editoriais, **não toda a matriz científica**. Verifique as fontes originais e a dependência entre relatos.\n\n'+stories.map(s=>
  '- [Capítulo '+s.chapter+': '+s.title+'](/conde-incident/stories/'+s.slug+'/) · [Markdown canônico](https://github.com/franklinbaldo/conde-incident/blob/main/stories/'+s.filename+')'
- ).join('\n')+'\n\n[Arquivo documental estático: proveniência e genealogia](/conde-incident/evidencias/arquivo/)\n\n[Matriz integral: alegações curadas e ainda sem ficha](/conde-incident/evidencias/matriz/)\n\n[Índice documental JSON auditável](/conde-incident/data/conde-evidence-index-manifest.json)\n\n[Pesquisa e evidências completas](https://github.com/franklinbaldo/conde-incident/tree/main/research)');
+ ).join('\n')+'\n\n[Consultar fontes por identificador e suas ocorrências](/conde-incident/evidencias/fontes/)\n\n[Arquivo documental estático: proveniência e genealogia](/conde-incident/evidencias/arquivo/)\n\n[Matriz integral: alegações curadas e ainda sem ficha](/conde-incident/evidencias/matriz/)\n\n[Índice documental JSON auditável](/conde-incident/data/conde-evidence-index-manifest.json)\n\n[Pesquisa e evidências completas](https://github.com/franklinbaldo/conde-incident/tree/main/research)');
 const archiveCount = writeArchivePages('content/evidencias/arquivo',
   JSON.parse(readFileSync('public/data/conde-source-citations.json', 'utf8')),
   JSON.parse(readFileSync('public/data/conde-declared-dependence.json', 'utf8')), 

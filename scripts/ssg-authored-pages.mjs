@@ -7,7 +7,7 @@ export const AUTHORED_ROUTES=Object.freeze([
   'hipoteses','metodo','simulacoes','mapa',
   'simulacoes/inverso','simulacoes/triangulacao',
   'simulacoes/sensibilidade','simulacoes/montecarlo',
-  'simulacoes/tles',
+  'simulacoes/tles','evidencias/fontes',
 ]);
 
 export function checkPage(slug,source){

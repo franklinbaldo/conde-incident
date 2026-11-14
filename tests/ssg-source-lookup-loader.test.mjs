@@ -99,3 +99,17 @@ test('wrong origin is rejected before any fetch',async()=>{
     fetcher:()=>assert.fail('should not fetch'),hashBytes}),
   e=>e.code==='unsafe-origin');
 });
+
+test('loopback Chromium server is safe while HTTP outside loopback remains rejected',async()=>{
+  const f=fixture();
+  const fetcher=async (url,opts)=>{
+    assert.equal(new URL(url).hostname,'127.0.0.1');
+    const path=new URL(url).pathname.replace('/conde-incident/','');
+    const source=stock.get(path);
+    return {ok:Boolean(source),arrayBuffer:async()=>source.buffer.slice(source.byteOffset,source.byteOffset+source.byteLength)};
+  };
+  const verified=await loadCondeSourceLookup({baseUrl:'http://127.0.0.1:4173/conde-incident/',fetcher,hashBytes});
+  assert.equal(verified.sources.length,15);
+  await assert.rejects(loadCondeSourceLookup({baseUrl:'http://example.org/conde-incident/',
+    fetcher,hashBytes}),e=>e.code==='unsafe-origin');
+});
