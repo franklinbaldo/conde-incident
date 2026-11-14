@@ -16,6 +16,8 @@ test('post-matrix SSG preserves archived source, frozen IDs and epistemic limit'
   assert.match(page,/136be026e23acdd5e7ff0a5307e04bef799249b48346072a43cae1506be37ce9/);
   assert.match(page,/catalog.archives.gov/);
   assert.match(page,/reports?|relatório de custódia/i);
+  assert.match(page,/`CONNECTED_PENDING_DOCUMENTARY_VERIFICATION`/);
+  assert.doesNotMatch(page,/CONNECTED\\\\_PENDING/);
   assert.match(page,/C232#1/);
   assert.match(page,/C01#1/);
   assert.match(page,/Independência jornalística/);
