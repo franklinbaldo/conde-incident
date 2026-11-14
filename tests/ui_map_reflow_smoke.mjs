@@ -2,6 +2,7 @@
 // at narrow widths with 200% text. This is CSS text scaling, NOT native zoom.
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
+import { isRemoteMapProviderRequest } from './map-provider-request-guard.mjs';
 import { mkdir } from 'node:fs/promises';
 
 const origin = process.env.UI_AUDIT_URL || 'http://127.0.0.1:3000/';
@@ -15,10 +16,10 @@ try {
     const remoteMapRequests = [];
     page.on('pageerror', error => errors.push(error.message));
     // A quota-free SVG map must never silently fall back to a hosted tile/API SDK.
-    // Google Fonts is not a map provider; matching is intentionally host-specific.
+    // Hostname-aware allowlist of *blocked* map domains, including tile subdomains.
+    // This is a bounded regression guard, not proof against every map provider.
     page.on('request', request => {
-      const host = new URL(request.url()).hostname.toLowerCase();
-      if (/^(?:maps\.googleapis\.com|maps\.gstatic\.com|tile\.openstreetmap\.org|api\.mapbox\.com|api\.maptiler\.com)$/.test(host)) {
+      if (isRemoteMapProviderRequest(request.url())) {
         remoteMapRequests.push(request.url());
       }
     });
