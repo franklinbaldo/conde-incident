@@ -40,6 +40,23 @@ Isso **não prova** que os editores copiaram justamente o relatório da NASA de 
 
 Para saber se houve observação soviética independente, seria preciso encontrar um registro datado de estação ou os periódicos ocidentais citados com os mesmos valores e sua procedência.
 
+## Um quadro com dois valores na mesma célula
+
+Outra publicação americana permite voltar ao começo da história. Na [página impressa B-12 do *Data Book for Environmental Testing and Spacecraft Evaluation*, volume 2, da NASA (folha 105 do PDF)](https://ntrs.nasa.gov/api/citations/19670008638/downloads/19670008638.pdf#page=105), uma tabela de lançamentos descreve o **1963 3A**. A observação mais surpreendente não é um número isolado, mas sua disposição: **há duas cifras na mesma célula**, informação que se perde numa extração automática de texto.
+
+| Elemento | Primeiro valor impresso | Segundo valor impresso |
+| --- | ---: | ---: |
+| Período | 94,7 min | 94,6 min |
+| Perigeu | 298 milhas | 286 milhas |
+| Apogeu | 322 milhas | 334 milhas |
+| Inclinação | 82,0° | 81,9° |
+
+O rodapé da **própria B-12** especifica *miles* para as altitudes, mas não distingue milha terrestre de náutica. Isso importa: comparar os valores 298 e 322 diretamente com **459 e 533 quilômetros** de novembro seria trocar tanto a **unidade** quanto a **época**. A linha situa seus dados orbitais iniciais em **31 de janeiro de 1963**. Não descreve a órbita terminal do satélite B, em novembro.
+
+Há ainda uma assinatura de proveniência: o quadro declara ter sido **reproduzido do *STL Space Log*, volume 3, número 4**. O exemplar original desse número ainda não foi inspecionado na investigação. A reprodução mostra que, antes das tabelas posteriores, já circulavam valores do objeto A, **mas não são os mesmos quatro números** do anuário soviético de 1964 e do SIPRI de 1973. Também não se pode tratar as duas cifras na célula como observações de dois sensores independentes: faltam a legenda que explique a duplicidade, o instrumento, a estação e o instante da medição.
+
+Por isso, a aparição do *Space Log* não resolve a pergunta de onde surgiram **459/533, 94,66 e 81,89°**. Ela elimina um atalho: unir números extraídos de páginas, datas e unidades diferentes para criar uma aparente sequência orbital contínua.
+
 ## Dez anos depois, os números reapareceram na Suécia
 
 Em **1973**, o instituto sueco [SIPRI publicou outra lista de satélites militares](https://www.sipri.org/sites/default/files/SIPRI%20Yearbook%201973.pdf). Na **tabela 3A.2, página impressa 84**, aparece a designação que faltava no anuário russo: **«USAF (1963-03A)»**. A linha reproduz exatamente **459 km**, **533 km**, **94,66 minutos** e **81,89°**. São os quatro números da publicação soviética de **1964**, desta vez acompanhados de uma identificação internacional explícita.
@@ -58,4 +75,4 @@ Duas tabelas podem reforçar a história da **circulação de um dado** sem refo
 
 ## Fontes e limites
 
-O [anuário soviético, p. 503](https://www.istmat.org/node/35454) e o [boletim NASA nº 23, p. 5](https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf#page=7) foram cotejados numericamente na [auditoria documental C241-LONTRA-R49](https://github.com/franklinbaldo/conde-incident/blob/main/research/tle_custody/evidence_matrix_C241-LONTRA-R49_2026-11-14.md), apoiada nos registros anteriores C241-LONTRA-R48 e C241-L18. O [*SIPRI Yearbook 1973*, tabela 3A.2, p. 84](https://www.sipri.org/sites/default/files/SIPRI%20Yearbook%201973.pdf), localizado na [auditoria C241-LONTRA-R50](https://github.com/franklinbaldo/conde-incident/pull/812), reproduz os **quatro valores** e imprime `1963-03A`. Nesta atualização, a linha e o prefácio foram conferidos na **extração textual digital do PDF**, não numa inspeção visual da folha crítica. O exemplar impresso também não foi examinado. A equivalência de alturas é **numérica, não instrumental**; a identificação da linha soviética como 1963-003A é hipótese de correspondência, não identificação expressa no impresso. Nenhuma nova restrição orbital do 528 foi ativada.
+O [volume NASA TM X-59315 / N167-17917, B-12](https://ntrs.nasa.gov/api/citations/19670008638/downloads/19670008638.pdf#page=105) reproduz uma tabela do *STL Space Log* v. 3 n. 4, com pares para `1963 3A`, dados iniciais de janeiro e altitudes impressas em *miles*. A leitura visual da linha e do rodapé está documentada nas [auditorias C241-LONTRA-R51 e correção C241-R39](https://github.com/franklinbaldo/conde-incident/pull/828); o original STL não foi recuperado, e a variante da milha permanece indeterminada. Essa tabela não é fonte comprovada dos quatro números soviéticos/SIPRI e não contém uma observação do 528. O [anuário soviético, p. 503](https://www.istmat.org/node/35454) e o [boletim NASA nº 23, p. 5](https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf#page=7) foram cotejados numericamente na [auditoria documental C241-LONTRA-R49](https://github.com/franklinbaldo/conde-incident/blob/main/research/tle_custody/evidence_matrix_C241-LONTRA-R49_2026-11-14.md), apoiada nos registros anteriores C241-LONTRA-R48 e C241-L18. O [*SIPRI Yearbook 1973*, tabela 3A.2, p. 84](https://www.sipri.org/sites/default/files/SIPRI%20Yearbook%201973.pdf), localizado na [auditoria C241-LONTRA-R50](https://github.com/franklinbaldo/conde-incident/pull/812), reproduz os **quatro valores** e imprime `1963-03A`. Nesta atualização, a linha e o prefácio foram conferidos na **extração textual digital do PDF**, não numa inspeção visual da folha crítica. O exemplar impresso também não foi examinado. A equivalência de alturas é **numérica, não instrumental**; a identificação da linha soviética como 1963-003A é hipótese de correspondência, não identificação expressa no impresso. Nenhuma nova restrição orbital do 528 foi ativada.
