@@ -1,0 +1,278 @@
+{
+  "activation": false,
+  "date_signatures": [
+    {
+      "contemporary_name": "OMEGA 1",
+      "decay_printed": "29-30 OCT 63",
+      "identity_grade": "DATE_SIGNATURE_ONLY_NOT_INSTRUMENTALLY_CONFIRMED",
+      "launch_printed": "18 JUN",
+      "retrospective_catalog_number": 308,
+      "retrospective_name": "OMEGA 2"
+    },
+    {
+      "contemporary_name": "OMEGA 2",
+      "decay_printed": "12 JUL 62",
+      "identity_grade": "DATE_SIGNATURE_ONLY_NOT_INSTRUMENTALLY_CONFIRMED",
+      "launch_printed": "18 JUN",
+      "retrospective_catalog_number": 310,
+      "retrospective_name": "OMEGA 3"
+    },
+    {
+      "contemporary_name": "OMEGA 3",
+      "decay_printed": "14 JUL 62",
+      "identity_grade": "DATE_SIGNATURE_ONLY_NOT_INSTRUMENTALLY_CONFIRMED",
+      "launch_printed": "18 JUN",
+      "retrospective_catalog_number": 314,
+      "retrospective_name": "A-ALPHA 5"
+    }
+  ],
+  "graph": [
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "OCTOBER_CATALOG_FACSIMILE",
+      "source": "PDF:NTRS-19640000428",
+      "target": "DOC:C241-L68"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "PRINTED_ORBIT_TABLE",
+      "source": "DOC:C241-L68",
+      "target": "ROW:OCT63:OMEGA1"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "PUBLISHED_VALUES_NOT_MEASUREMENT",
+      "source": "ROW:OCT63:OMEGA1",
+      "target": "VALUE:OCT63:CATALOG_ORBIT_ELEMENTS"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "REPORT_EDITORIAL_CUTOFF",
+      "source": "DOC:C241-L68",
+      "target": "CUT:1963-10-15T12Z"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NO_INSTRUMENTAL_EPOCH",
+      "source": "CUT:1963-10-15T12Z",
+      "target": "H:CUTOFF_NOT_EPOCH"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "DECEMBER_FACSIMILE",
+      "source": "PDF:NTRS-19640003479",
+      "target": "DOC:C241-L66"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "RETROSPECTIVE_FACSIMILE",
+      "source": "PDF:NTRS-19780009188",
+      "target": "DOC:C241-L66"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "ANCESTRAL_ROW_DEPENDENCE",
+      "source": "DOC:C241-L66",
+      "target": "DOC:C241-L67"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "THREE_MATCHES",
+      "source": "DOC:C241-L67",
+      "target": "SIG:DATE:308_310_314"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "DATE_MATCH_NOT_IDENTITY_PROOF",
+      "source": "SIG:DATE:308_310_314",
+      "target": "H:PRINTED_NAME_CONFLICT"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "PRINTED_DECAY_DAY_RANGE",
+      "source": "DOC:C241-L64",
+      "target": "RANGE:1963-10-29_30"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "CALENDAR_RANGE_NOT_SENSOR_TIMESTAMP",
+      "source": "RANGE:1963-10-29_30",
+      "target": "LATENT:308:terminal_utc"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "REQUIRES_PRIMARY_CROSSWALK",
+      "source": "H:PRINTED_NAME_CONFLICT",
+      "target": "LATENT:308:identity"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "REPORT_CUTOFF_NOT_INSTRUMENTAL_EPOCH",
+      "source": "H:CUTOFF_NOT_EPOCH",
+      "target": "LATENT:308:observation_epoch"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "EPOCH_CALIBRATION_MISSING",
+      "source": "VALUE:OCT63:CATALOG_ORBIT_ELEMENTS",
+      "target": "LATENT:308:observation_epoch"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "UNPROVEN_IDENTITY",
+      "source": "LATENT:308:identity",
+      "target": "LEAN:candidateOmegaControlLink"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "UNAVAILABLE_TERMINAL_UTC",
+      "source": "LATENT:308:terminal_utc",
+      "target": "LEAN:candidateOmegaControlLink"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "UNAVAILABLE_OBSERVATION_EPOCH",
+      "source": "LATENT:308:observation_epoch",
+      "target": "LEAN:candidateOmegaControlLink"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NOT_PROMOTED",
+      "source": "LEAN:candidateOmegaControlLink",
+      "target": "PARAM:terminal_error_control_308"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NO_CALIBRATED_TRANSFER",
+      "source": "PARAM:terminal_error_control_308",
+      "target": "PARAM:reentry_528_drag_calibration"
+    }
+  ],
+  "historical_mcmc": "NOT_RUN",
+  "id": "ABELHA-C241-L68-L67-L66-L64-OMEGA",
+  "independence": {
+    "distinct_facsimiles": 3,
+    "family": "NASA_GSFC_SSR_NORAD_SHARED",
+    "independent_instrumental_observations_added": 0,
+    "number_of_underlying_distinct_sensors": null
+  },
+  "latents": [
+    {
+      "activation": false,
+      "id": "LATENT:308:identity",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:308:observation_epoch",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:308:terminal_utc",
+      "value": null
+    }
+  ],
+  "lean_candidates": [
+    {
+      "activation": false,
+      "id": "LEAN:candidateOmegaControlLink",
+      "status": "CANDIDATE_ONLY_NOT_COMPILED"
+    }
+  ],
+  "new_activated_physical_constraints": 0,
+  "next_test": "Obtain a contemporary source explicitly cross-identifying OMEGA 1/2 and NORAD 308; then recover individual epoch, station, instrument and uncertainty.",
+  "october_catalogue": {
+    "activation": false,
+    "catalogued_elements": {
+      "apogee_km": 263,
+      "inclination_degrees": "82.15",
+      "nodal_period_minutes": "89.7",
+      "perigee_km": 254
+    },
+    "covariance": null,
+    "identity_norad_308": null,
+    "independent_measurement": false,
+    "instrument": null,
+    "instrumental_observation_epoch_utc": null,
+    "occurrence_id": "C241-L68:OMEGA1",
+    "physical_survival_at_cutoff_proven": false,
+    "printed_name": "OMEGA 1",
+    "report_as_of_utc": "1963-10-15T12:00:00Z",
+    "report_cutoff_is_observation_epoch": false,
+    "station": null
+  },
+  "pdfs": [
+    {
+      "edition": "1963-10-15",
+      "ntrs_id": "19640000428",
+      "sha256": "fe5183940081fbbfe1e791b8cf47c1ac2c08ecad0c17f5d54d7cac83fb5992b2"
+    },
+    {
+      "edition": "1963-12-15",
+      "ntrs_id": "19640003479",
+      "sha256": "d31a064f8e03fd39be6fe75b88cd5852c0b74c9101fa635cb40ac25c77ef474f"
+    },
+    {
+      "edition": "1977",
+      "ntrs_id": "19780009188",
+      "sha256": "c5c66eb7eab242ab5b3dd56567de8bab2d404d0a6776baeb3b79383c86bc5ba8"
+    }
+  ],
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "schema": "conde.omega-snapshot-date-genealogy/v1",
+  "simulator_parameters": [
+    {
+      "activation": false,
+      "id": "PARAM:terminal_error_control_308",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "PARAM:reentry_528_drag_calibration",
+      "value": null
+    }
+  ],
+  "sources": [
+    {
+      "id": "C241-L68",
+      "path": "research/tle_custody/nasa_ssr_omega1_oct15_C241-L68.json",
+      "sha256": "7276ae156f129e6c650cea1c02f8f470403ddde0b9c72949e476d940301e6ab8"
+    },
+    {
+      "id": "C241-L67",
+      "path": "research/tle_custody/nasa_ssr_omega308_date_matches_C241-L67.json",
+      "sha256": "9f1596e1f8a6767ebf090c100ed45994ddcf0f875acca542a1034abfa8914e31"
+    },
+    {
+      "id": "C241-L66",
+      "path": "research/tle_custody/nasa_ssr_omega308_cross_edition_C241-L66.json",
+      "sha256": "28534ac7a87c5590d4cd1fcc6f49e678f86ba65e6b43d460997037ef15f58d72"
+    },
+    {
+      "id": "ABELHA-L64-R59",
+      "path": "public/data/conde-ssr-308-l64-dependency-bridge.json",
+      "sha256": "f897870189802c840e7423b106d49e829dbc1934efd3b0ac1e0ad60bfec7a04b"
+    }
+  ]
+}
