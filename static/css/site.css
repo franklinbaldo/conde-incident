@@ -90,6 +90,7 @@ a:focus-visible,button:focus-visible,iframe:focus-visible{outline:3px solid #ffd
 .tle-audit{border:1px solid var(--line);border-radius:.75rem;padding:clamp(.75rem,3vw,1.5rem);background:var(--panel);margin:1.5rem 0}
 .tle-audit label{display:block;margin:1rem 0 .3rem;font:700 .95rem system-ui,sans-serif}
 .tle-audit textarea{display:block;width:100%;max-width:100%;min-width:0;min-height:5rem;overflow:auto;white-space:pre;resize:vertical;background:var(--paper);color:var(--ink);border:1px solid #87929e;border-radius:.35rem;padding:.65rem;font:400 .85rem/1.6 ui-monospace,SFMono-Regular,monospace}
+.tle-audit textarea[aria-invalid="true"]{border:2px solid #b53b2f}
 .tle-audit p,.tle-audit-results{overflow-wrap:anywhere}
 .tle-audit button{min-height:44px;border:1px solid var(--accent);border-radius:.35rem;background:#203b46;color:#fff;font:700 1rem/1.4 system-ui,sans-serif;padding:.65rem 1rem;cursor:pointer}
 .tle-audit button:hover{background:#345662}
