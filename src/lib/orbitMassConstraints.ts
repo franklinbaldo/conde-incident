@@ -91,7 +91,7 @@ const positive = (value: number, context: string): number => {
 export function auditMassBudgetScenario(s: MassBudgetScenario): MassScenarioAudit {
   if (!s || s.schema !== 'conde.conditional-three-object-mass/v1' ||
       s.sourceOccurrence !== GCAT_MASS_FIELDS.occurrence ||
-      !(s.basis in BASE_MASS) ||
+      !(Object.hasOwn(BASE_MASS, s.basis)) ||
       !s.referenceEpochDescription?.trim())
     throw new RangeError('Explicit mass scenario, source and reference convention required');
   const exactIds = Object.keys(s.massesKg ?? {}).sort();
@@ -142,7 +142,7 @@ export function conditionalTrackedMassEnvelope(input: {
   readonly maxPriorLossKg: number | null;
   readonly minRetainedPayloadIn527Kg?: number | null;
 }) {
-  if (!input || !(input.basis in BASE_MASS))
+  if (!input || !(Object.hasOwn(BASE_MASS, input.basis)))
     throw new RangeError('Explicit mass basis required');
   const E = input.maxAbsCatalogErrorKg;
   const X = input.maxUntrackedKg;
@@ -239,20 +239,31 @@ export function conditionalProjectedAreaEnvelope(input: {
   readonly cdMin: number | null;
   readonly cdMax: number | null;
 }) {
-  const vals = Object.values(input);
-  if (vals.some(v => v === null))
+  // Object insertion order is not part of the TypeScript/JSON contract.
+  // Validate the actual runtime keys before trusting externally supplied data.
+  const keys = ['massMinKg','massMaxKg','bMinM2Kg','bMaxM2Kg','cdMin','cdMax'];
+  if (!input || Object.keys(input).length !== keys.length ||
+      !keys.every(key => Object.hasOwn(input, key)))
+    throw new RangeError('Exactly six named mass, B and Cd bounds required');
+  const { massMinKg: mLo, massMaxKg: mHi, bMinM2Kg: bLo, bMaxM2Kg: bHi,
+    cdMin: cdLo, cdMax: cdHi } = input;
+  if (mLo === null || mHi === null || bLo === null || bHi === null ||
+      cdLo === null || cdHi === null)
     return {areaMinM2:null,areaMaxM2:null,
       historicalConstraintActive:false as const,
       reason:'Mass, B and Cd are not jointly calibrated'};
-  const [mLo,mHi,bLo,bHi,cdLo,cdHi] = vals as number[];
   positive(mLo,'lower mass');positive(mHi,'upper mass');
   nonnegative(bLo,'lower B');nonnegative(bHi,'upper B');
   positive(cdLo,'lower Cd');positive(cdHi,'upper Cd');
   if (mLo>mHi || bLo>bHi || cdLo>cdHi)
     throw new RangeError('Ordered mass, B and Cd ranges required');
+  const areaMinM2=bLo*mLo/cdHi;
+  const areaMaxM2=bHi*mHi/cdLo;
+  if (!Number.isFinite(areaMinM2) || !Number.isFinite(areaMaxM2))
+    throw new RangeError('Finite projected-area bounds required');
   return {
-    areaMinM2:bLo*mLo/cdHi,
-    areaMaxM2:bHi*mHi/cdLo,
+    areaMinM2,
+    areaMaxM2,
     historicalConstraintActive:false as const,
     reason:'Conditioned on separately sourced masses, B and Cd',
   };
