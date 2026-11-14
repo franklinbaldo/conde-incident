@@ -11,7 +11,7 @@ export const exactKeys=(value,keys,context)=>assert.deepEqual(
 export const manifestKeys=[
   'schema','description','matrix_git_blob_sha1','matrix_source','source_files',
   'curated_occurrences','curated_reference_count','unmapped_matrix_occurrences',
-  'unmapped_matrix_refs','unmapped_shards','total_matrix_occurrences',
+  'unmapped_matrix_refs','unmapped_shards','lookup_shards','total_matrix_occurrences',
   'post_matrix_ids_not_in_curated_index','independent_physical_observation_count',
   'absence_of_declared_dependency_proves_independence','no_js_index','shards',
 ];

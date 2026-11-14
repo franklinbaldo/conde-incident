@@ -15,6 +15,7 @@ LINEAGE = Path('public/data/conde-declared-dependence.json')
 MATRIX = Path('research/evidence_matrix_C001-C238_2026-11-11.md')
 DEST = Path('public/data/conde-evidence-index')
 GAPS_DEST = Path('public/data/conde-evidence-gaps')
+LOOKUP_DEST = Path('public/data/conde-evidence-lookup')
 MANIFEST = Path('public/data/conde-evidence-index-manifest.json')
 MAX_SHARD_BYTES = 12_000  # Below repository-wide 20,000-byte rule.
 SHA256 = re.compile(r'[a-f0-9]{64}\Z')
@@ -230,6 +231,39 @@ def build(root=ROOT):
         artifacts[relative] = raw
         gap_shards.append({'path': str(relative), 'sha256': digest(raw),
                            'bytes': len(raw), 'record_count': len(records)})
+    # A compact, source-derived occurrence -> shard/offset locator. This is
+    # an index, NOT another claim, editorial judgment or evidence source.
+    positions = {}
+    for kind, groups in (('curated', chunks), ('unmapped', gap_chunks)):
+        for shard_index, group in enumerate(groups):
+            for record_index, record in enumerate(group):
+                item = positions.setdefault(record['occurrence'],
+                                            {'occurrence': record['occurrence'],
+                                             'kind': kind, 'positions': []})
+                require(item['kind'] == kind, 'Curadoria conflitante na busca')
+                item['positions'].append([shard_index, record_index])
+    require(set(positions) == set(inventory), 'Busca não cobre a matriz integral')
+    lookups = [positions[occurrence] for occurrence in inventory]
+    lookup_chunks, chunk = [], []
+    schema = 'conde.evidence-lookup-shard/v1'
+    for item in lookups:
+        require(len(canonical({'schema': schema, 'records': [item]}))
+                <= MAX_SHARD_BYTES, 'Localizador excedeu o teto')
+        if len(canonical({'schema': schema, 'records': chunk + [item]})) > MAX_SHARD_BYTES and chunk:
+            lookup_chunks.append(chunk)
+            chunk = [item]
+        else:
+            chunk.append(item)
+    if chunk:
+        lookup_chunks.append(chunk)
+    lookup_shards = []
+    for index, group in enumerate(lookup_chunks, 1):
+        relative = LOOKUP_DEST / f'part-{index:03d}.json'
+        raw = canonical({'schema': schema, 'records': group})
+        require(len(raw) <= MAX_SHARD_BYTES, 'Shard de busca excedeu 12 kB')
+        artifacts[relative] = raw
+        lookup_shards.append({'path': str(relative), 'sha256': digest(raw),
+                              'bytes': len(raw), 'record_count': len(group)})
     post_ids = [x['id'] for x in citations.get('post_matrix_occurrences', [])]
     require(len(post_ids) == len(set(post_ids)), 'ID pós-matriz repetido')
     manifest = {
@@ -251,6 +285,7 @@ def build(root=ROOT):
         # Line numbers resolve against the immutable Git blob above.
         'unmapped_matrix_refs': gaps,
         'unmapped_shards': gap_shards,
+        'lookup_shards': lookup_shards,
         'total_matrix_occurrences': citations['total_matrix_occurrences'],
         'post_matrix_ids_not_in_curated_index': post_ids,
         'independent_physical_observation_count': None,
@@ -264,9 +299,9 @@ def build(root=ROOT):
 
 def sync(artifacts, root=ROOT, check=False):
     directory = root / DEST
-    existing = {p for folder in (DEST, GAPS_DEST)
-                for p in (root / folder).glob('part-*.json')}
-    expected = {root / p for p in artifacts if p.parent in (DEST, GAPS_DEST)}
+    folders = (DEST, GAPS_DEST, LOOKUP_DEST)
+    existing = {p for folder in folders for p in (root / folder).glob('part-*.json')}
+    expected = {root / p for p in artifacts if p.parent in folders}
     require(not check or existing == expected, 'Lista de shards desatualizada')
     for path, raw in artifacts.items():
         target = root / path
