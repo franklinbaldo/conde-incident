@@ -13,6 +13,25 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / ".github/workflows/ui-keyboard-smoke.yml"
+REQUIRED_SMOKE_ENTRYPOINTS = (
+    "tests/ui_keyboard_smoke.mjs",
+    "tests/ui_mobile_sections_smoke.mjs",
+    "tests/ui_documentary_archive_smoke.mjs",
+    "tests/ui_map_reflow_smoke.mjs",
+    "tests/ui_montecarlo_reflow_smoke.mjs",
+    "tests/ui_lab_chunk_failure_smoke.mjs",
+    "tests/lab_python_export_failure_smoke.mjs",
+    "tests/ui_python_modal_touch_smoke.mjs",
+    "tests/caderno_reflow_smoke.mjs",
+    "tests/ssg_search_dialog_smoke.mjs",
+    "tests/ssg_mobile_heading_smoke.mjs",
+    "tests/editorial_journey_smoke.mjs",
+    "tests/ssg_simulacoes_bridge_smoke.mjs",
+    "tests/ssg_tle_syntax_smoke.mjs",
+    "tests/ssg_tle_code_scroll_smoke.mjs",
+    "tests/ssg_source_lookup_smoke.mjs",
+)
+
 REQUIRED_INPUTS = (
     ".github/workflows/ui-keyboard-smoke.yml",
     "tests/test_ui_keyboard_trigger_contract.py",
@@ -43,6 +62,22 @@ def required_paths(text: str) -> set[str]:
     executed = re.findall(r"(?m)^        run:\s*node\s+(?:--test\s+)?(tests/[\w./-]+\.mjs)\s*$", text)
     if not executed:
         raise AssertionError("no browser smoke entrypoints found")
+    missing_steps = sorted(set(REQUIRED_SMOKE_ENTRYPOINTS) - set(executed))
+    if missing_steps:
+        raise AssertionError(f"mandatory browser smoke executions missing: {missing_steps}")
+    duplicates = sorted(path for path in REQUIRED_SMOKE_ENTRYPOINTS if executed.count(path) != 1)
+    if duplicates:
+        raise AssertionError(f"mandatory smoke executions must occur once: {duplicates}")
+    # A successful workflow with a skipped or tolerated browser step is not a gate.
+    for block in re.split(r"(?m)^      - (?=(?:name|uses):)", text):
+        run = re.search(r"(?m)^        run: node (tests/[\w./-]+\.mjs)\s*$", block)
+        if not run or run.group(1) not in REQUIRED_SMOKE_ENTRYPOINTS:
+            continue
+        if re.search(r"(?m)^        (?:if|continue-on-error|shell):", block):
+            raise AssertionError(f"mandatory browser smoke step is conditional or tolerant: {run.group(1)}")
+    job_header = text.partition("    steps:")[0]
+    if re.search(r"(?m)^    (?:if|continue-on-error):", job_header):
+        raise AssertionError("browser smoke job must not be conditional or tolerant")
     return set(executed) | set(REQUIRED_INPUTS)
 
 
@@ -78,5 +113,39 @@ class UIKeyboardTriggerContractTest(unittest.TestCase):
             assert_covered(mutated)
 
 
+    def test_required_browser_command_cannot_be_replaced_by_noop(self):
+        original = WORKFLOW.read_text()
+        needle = "        run: node tests/ui_keyboard_smoke.mjs"
+        self.assertIn(needle, original)
+        mutated = original.replace(needle, "        run: echo skipped keyboard smoke", 1)
+        with self.assertRaisesRegex(AssertionError, "mandatory browser smoke executions missing"):
+            assert_covered(mutated)
+
+    def test_required_browser_command_cannot_ignore_failure(self):
+        original = WORKFLOW.read_text()
+        needle = "        run: node tests/ui_keyboard_smoke.mjs"
+        self.assertIn(needle, original)
+        mutated = original.replace(needle, "        continue-on-error: true\n" + needle, 1)
+        with self.assertRaisesRegex(AssertionError, "conditional or tolerant"):
+            assert_covered(mutated)
+
+    def test_required_browser_command_cannot_be_skipped_by_condition(self):
+        original = WORKFLOW.read_text()
+        needle = "        run: node tests/ui_keyboard_smoke.mjs"
+        self.assertIn(needle, original)
+        mutated = original.replace(needle, "        if: false\n" + needle, 1)
+        with self.assertRaisesRegex(AssertionError, "conditional or tolerant"):
+            assert_covered(mutated)
+
+    def test_job_level_if_false_is_rejected(self):
+        original = WORKFLOW.read_text()
+        needle = "  ui-keyboard:\n    runs-on: ubuntu-24.04"
+        self.assertIn(needle, original)
+        mutated = original.replace(needle, "  ui-keyboard:\n    if: false\n    runs-on: ubuntu-24.04", 1)
+        with self.assertRaisesRegex(AssertionError, "job must not be conditional"):
+            assert_covered(mutated)
+
+
 if __name__ == "__main__":
     unittest.main()
+
