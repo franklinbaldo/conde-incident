@@ -35,10 +35,13 @@ def audit(data, pdf_path=None):
     require(row['perigee_altitudes_in_printed_order'] == [298, 286], 'Both perigees')
     require(row['apogee_altitudes_in_printed_order'] == [322, 334], 'Both apogees')
     require(row['inclinations_degrees_in_printed_order'] == [82.0, 81.9], 'Both inclinations')
-    require(row['perigee_apogee_unit_on_b12'] is None, 'No unproved units')
+    require(row['perigee_apogee_unit_on_b12'] == 'miles', 'B-12 printed altitude units')
+    require(row['unit_legend_location'] == 'B-12 lower-right footer (PDF page 105/117)', 'Unit provenance')
+    require(row['mile_variant_as_printed'] is None, 'No unsupported statute/nautical subtype')
     require(row['station_or_instrument'] is None and row['individual_measurement_utc'] is None and row['observational_uncertainty'] is None, 'No invented sensor')
     q = data['scientific_interpretation']
-    require(q['km_status'] == 'UNIT_NOT_VERIFIED_ON_CRITICAL_PAGE', 'Unit unresolved')
+    require(q['km_status'] == 'CONTRADICTS_PRINTED_B12_MILES_LEGEND', 'Reject unsupported kilometers')
+    require(q['miles_as_printed_confirmed'] is True, 'Printed unit not verified')
     require(q['printed_pair_is_not_two_independent_sensors'] and q['orbital_data_date_is_not_1963_11_07_09'], 'No double counting')
     require(q['original_stl_pages_or_date_verified'] is False and q['candidate_upstream_proven'] is False, 'No proven direct genealogy')
     require(q['km_interpretation_inconsistent_with_printed_period_under_two_body_assumption'], 'Physical diagnostic preserved')
@@ -53,7 +56,7 @@ def audit(data, pdf_path=None):
         require(len(b) == data['pdf_bytes'] == 31749209, 'PDF size changed')
         require(b[:8].startswith(b'%PDF-1.') and b'%%EOF' in b[-256:], 'PDF completeness')
         require(sha256(b).hexdigest() == data['pdf_sha256'] == 'f77b0e8998d467dd457d0ab8e8012e6e9d69c60fb6180aa3d68f1e8422b32786', 'PDF SHA256')
-    return 'EDITORIAL_REPRODUCTION_UNITS_PENDING_ZERO_CONSTRAINTS'
+    return 'EDITORIAL_REPRODUCTION_MILES_PRINTED_SUBTYPE_PENDING_ZERO_CONSTRAINTS'
 
 
 if __name__ == '__main__':
