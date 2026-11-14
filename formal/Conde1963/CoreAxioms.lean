@@ -3,6 +3,7 @@ import Conde1963.SsrSurvivorIntervals
 import Conde1963.RelativeTrajectories
 import Conde1963.SsrNovember
 import Conde1963.UnSsrCrossCompilation
+import Conde1963.UnSsrPrintRounding
 
 /-! Audit axiom dependencies of existing documentary results and new
 conditional, three-object orbital exclusion theorem. Lean compilation
@@ -28,3 +29,7 @@ does not authenticate observed positions or establish a 1963 reentry. -/
 
 #print axioms Conde1963.UnSsrCrossCompilation.cross_agency_lower_bound
 #print axioms Conde1963.UnSsrCrossCompilation.cross_agency_attaining_witness
+
+#print axioms Conde1963.UnSsrPrintRounding.round_robust_lower_bound
+#print axioms Conde1963.UnSsrPrintRounding.rounded_half_step_lower_bound
+#print axioms Conde1963.UnSsrPrintRounding.all_26_cells_attain_130
