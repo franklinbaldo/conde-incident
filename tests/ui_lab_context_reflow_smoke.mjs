@@ -29,7 +29,7 @@ try {
             await page.getByRole('button', { name: 'English' }).click();
           }
           const nav = page.locator(
-            'header a[aria-label^="Abrir no Caderno"], header a[aria-label^="Open in Notebook"]',
+            'header a[data-mobile-editorial-context]:visible, header a[aria-label^="Abrir no Caderno"]:visible, header a[aria-label^="Open in Notebook"]:visible',
           );
           assert.equal(await nav.count(), 1, `${route}/${lang}: missing editorial context link`);
           const linkRect = await nav.boundingBox();
