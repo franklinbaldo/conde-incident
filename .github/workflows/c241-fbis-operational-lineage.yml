@@ -1,0 +1,32 @@
+name: C241-P42 FBIS documentary lineage
+on:
+  push:
+    paths:
+      - 'tools/export_fbis_operational_lineage.py'
+      - 'tools/audit_matrix_coverage.py'
+      - 'tests/test_fbis_operational_lineage.py'
+      - 'research/evidence_matrix_C001-C238_2026-11-11.md'
+      - 'public/data/conde-fbis-operational-lineage.json'
+      - '.github/workflows/c241-fbis-operational-lineage.yml'
+  pull_request:
+    paths:
+      - 'tools/export_fbis_operational_lineage.py'
+      - 'tools/audit_matrix_coverage.py'
+      - 'tests/test_fbis_operational_lineage.py'
+      - 'research/evidence_matrix_C001-C238_2026-11-11.md'
+      - 'public/data/conde-fbis-operational-lineage.json'
+      - '.github/workflows/c241-fbis-operational-lineage.yml'
+jobs:
+  source-locked-lineage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Replay frozen matrix and FBIS documentary feed
+        run: python3 tools/export_fbis_operational_lineage.py --check-site
+      - name: Adversarial custody and cross-feed tests
+        run: python3 -m unittest discover -s tests -p 'test_fbis_operational_lineage.py' -v
+      - name: Audit cumulative provenance counters
+        run: python3 tools/audit_matrix_coverage.py
