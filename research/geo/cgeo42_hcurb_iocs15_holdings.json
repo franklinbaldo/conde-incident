@@ -1,0 +1,94 @@
+{
+  "schema": "conde.geo.iocs15-hcurb-holdings/v1",
+  "id": "CGEO-42",
+  "previous_id": "CGEO-41",
+  "recorded_on": "2026-11-14",
+  "reference_document": {
+    "title": "Dominar o conhecimento, controlar o território: considerações sobre os mapas da Inspetoria de Obras Contra as Secas – Nordeste/Brasil 1910-1915",
+    "authors": [
+      "Angela Lúcia Ferreira",
+      "Désio Rodrigo da Rocha Silva",
+      "Yuri Simonini"
+    ],
+    "publisher": "Scripta Nova / Universitat de Barcelona",
+    "journal_issue": "vol. XVIII, núm. 493 (38)",
+    "published_on": "2014-11-01",
+    "download_url": "https://revistes.ub.edu/index.php/ScriptaNova/article/download/15027/18380",
+    "document_kind": "SECONDARY_SCHOLARLY_HOLDINGS_REPORT",
+    "pdf_acquired": true,
+    "pdf_bytes": 410611,
+    "pdf_sha256": "e92fcfd90536a7b4ddd0dee21af69d4a089938e98989c57fd99fcb42d5096a26",
+    "pdf_pages": 18,
+    "table_pdf_page_1based": 9,
+    "table_name": "Quadro 01 – Síntese dos mapas elaborados pela IOCS, constantes no acervo do HCUrb"
+  },
+  "new_holdings_route": {
+    "institution": "Grupo de Pesquisa História da Cidade, do Território e do Urbanismo (HCUrb)",
+    "affiliation": "Universidade Federal do Rio Grande do Norte",
+    "institution_url": "https://hcurb.ct.ufrn.br/",
+    "contact_url": "https://hcurb.ct.ufrn.br/contato/",
+    "claim_source": "2014_RESEARCH_ARTICLE_TABLE",
+    "publication_number": 15,
+    "publication_year": 1912,
+    "map_subject": "Bacia do Rio Itapicuru – Bahia",
+    "attributed_engineer": "Guilherme Lane",
+    "scale_denominator": 500000,
+    "dimensions_as_reported_cm": [
+      69,
+      82
+    ],
+    "individual_copy_identified": false,
+    "individual_copy_digitized": false,
+    "primary_map_acquired": false
+  },
+  "comparison": [
+    {
+      "repository": "Arquivo Nacional",
+      "identifier": "BR AN,RIO F4.0.MAP.448",
+      "dimensions_as_cataloged_cm": [
+        64,
+        89
+      ],
+      "source_kind": "ARCHIVAL_CATALOGUE",
+      "physical_identity_resolved": false
+    },
+    {
+      "repository": "Arquivo Histórico do Exército",
+      "identifier": "05.36.334",
+      "dimensions_as_cataloged_cm": [
+        87,
+        67.5
+      ],
+      "source_kind": "ARCHIVAL_CATALOGUE",
+      "physical_identity_resolved": false
+    },
+    {
+      "repository": "Museu da República",
+      "identifier": "BR RJMRAHI EP-IC-MA",
+      "dimensions_as_cataloged_cm": null,
+      "source_kind": "SERIES_CATALOGUE",
+      "physical_identity_resolved": false
+    }
+  ],
+  "lineage": {
+    "iocs15_to_iocs29": "ARCHIVAL_NOTE_SAYS_INCLUDED_IN_NO29_NO_CARTOGRAPHIC_PIXEL_COMPARISON",
+    "hcurb_is_an_independent_survey": false,
+    "comparison_identifies_distinct_editions": false,
+    "differences_may_reflect_measurement_orientation_crop_or_copy": true
+  },
+  "limits": {
+    "iocs15_original_bytes": null,
+    "iocs15_sha256": null,
+    "conde_in_map": null,
+    "georeferenced_polygon": null,
+    "urban_center_1963": null,
+    "reentry_location": null,
+    "spatial_uncertainty_m": null,
+    "can_constrain_orbital_reentry": false
+  },
+  "next_actions": [
+    "Obter reprodução do mapa IOCS 15 com identificador e hash de um dos quatro acervos, sem supor identidade entre exemplares",
+    "Comparar escala, dimensões, cortes e feições cartográficas apenas depois de obter os originais",
+    "Continuar seleção e aquisição dos bytes do fotoíndice USAF 63-32 da issue 558"
+  ]
+}
