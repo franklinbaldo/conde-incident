@@ -76,6 +76,10 @@ jobs:
           mkdir -p "$RUNNER_TEMP/conde-source-data"
           cp -a public/data/. "$RUNNER_TEMP/conde-source-data/"
           test -f "$RUNNER_TEMP/conde-source-data/conde-source-citations.json"
+      - name: Verify canonical SSG shell and navigation components
+        run: |
+          node scripts/ssg-shell-sync.mjs --check
+          node --test tests/ssg-shell-sync.test.mjs
       - name: SSG check
         run: ssg check --config ssg.toml
       - name: SSG build
