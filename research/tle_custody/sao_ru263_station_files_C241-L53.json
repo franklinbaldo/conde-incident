@@ -50,31 +50,9 @@
       "pdf_page_index_zero_based": 44,
       "phrase": "Curacao, 1959-1963",
       "scope": "Technical correspondence for station; no observation or transfer receipt inspected"
-    },
-    {
-      "id": "RU263-COLD-LAKE-S9-OPERATIONS",
-      "series": 9,
-      "box": 72,
-      "printed_page": 47,
-      "pdf_page_index_zero_based": 48,
-      "phrase": "#420 Operations, 1963-1965.",
-      "scope": "Engineering Section operations correspondence; not a satellite observation, transmission receipt, or proof of operation on 8 November 1963"
-    },
-    {
-      "id": "RU263-COLD-LAKE-S9-INVENTORY",
-      "series": 9,
-      "box": 72,
-      "printed_page": 47,
-      "pdf_page_index_zero_based": 48,
-      "phrase": "#130 Inventory and audits, 1963.",
-      "scope": "Engineering Section inventory record may document hardware configuration; not evidence of a camera exposure or target identity"
     }
   ],
-  "related_conde_evidence": [
-    "C241-L43",
-    "C241-L45",
-    "C241-L52"
-  ],
+  "related_conde_evidence": ["C241-L43", "C241-L45", "C241-L52"],
   "cross_collection_independent_observations": "UNKNOWN",
   "norad_527_observation": null,
   "norad_528_observation": null,
@@ -87,5 +65,5 @@
   "physical_constraints_activated": 0,
   "impact_at_conde": "NOT_ESTABLISHED",
   "inference": "HOLDINGS_AND_TECHNICAL_FILE_LEADS_ONLY",
-  "next_acquisition": "Prioritize RU263 series 9 box 72 #420 Operations (1963-1965), then #130 Inventory and audits (1963), to check station equipment/log/communication chronology. Correlate with series 2 box 36 and series 8 box 67 for July-November 1963; require source document, target NORAD 528/1963-003B, station, UTC, sensor, frame and errors, and any SPADATS transfer receipt. No source-specific 528 observation has been retrieved."
+  "next_acquisition": "Inspect RU263 box 36 Cold Lake STP operations and box 67 Cold Lake engineering correspondence for July-November 1963; request transfer receipts or instrument logs naming NORAD 528/1963-003B, UTC, station, calibration, and error. Cross-reference RU478 and NORAD C241-L52 without double-counting the same instrument."
 }
