@@ -96,6 +96,8 @@ jobs:
           cp -R static/css/. public/css/
           cp -R static/img/. public/img/
           cp -R static/js/. public/js/
+      - name: Verify native SSG print mode against built documentary pages
+        run: node --test tests/ssg-print-mode.test.mjs
       - name: Build and verify no-JS SSG deep-page breadcrumbs
         run: |
           node --test tests/ssg-breadcrumbs.test.mjs
