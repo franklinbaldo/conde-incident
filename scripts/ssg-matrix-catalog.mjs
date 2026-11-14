@@ -19,6 +19,10 @@ const page=(title,description,body)=>[
   '---','',body,'',
 ].join('\n');
 const url=index=>ROOT+'paginas/'+String(index+1).padStart(2,'0')+'/';
+const anchor=occurrence=>{
+  assert.match(occurrence,/^C\d{2,3}#\d+$/);
+  return occurrence.replace('#','-');
+};
 const data=bundle=>bundle.lookupShards.flatMap(part=>JSON.parse(part.raw).records)
   .map(pointer=>{
     const meta=pointer.kind==='curated'?bundle.shards:bundle.gapShards;
@@ -50,6 +54,7 @@ export function matrixCatalogPages(bundle) {
       const target=curated?record.archive_path:null;
       if(curated) assert.match(target,/^\/conde-incident\/evidencias\/arquivo\/c\d+-\d+\/$/);
       return [
+        '<span id="'+anchor(pointer.occurrence)+'" tabindex="-1"></span>','',
         '## '+safe(pointer.occurrence)+' · '+safe(record.claim_text),'',
         curated
           ? '**Cobertura do índice:** ficha documental curada, com '+pointer.positions.length+
@@ -87,10 +92,10 @@ export function matrixCatalogPages(bundle) {
       '## Percorrer as ocorrências', '',
       ...pages.map(p=>'- [Registros '+p.start+'–'+p.end+' ('+p.first+' até '+p.last+')]('+p.url+')'),
       '', '## Localizador rápido por identificador', '',
-      'Use a busca do navegador pelo identificador `Cnn#N`. Cada atalho abre a página estática que contém a ocorrência; nenhum JavaScript é necessário.', '',
+      'Use a busca do navegador pelo identificador `Cnn#N`. Cada atalho leva diretamente à ocorrência na página estática; nenhum JavaScript é necessário.', '',
       ...pages.flatMap((p,i)=>[
         '**Registros '+p.start+'–'+p.end+':** '+entries.slice(i*PER_PAGE,(i+1)*PER_PAGE)
-          .map(({pointer})=>'['+pointer.occurrence+']('+p.url+')').join(' · '),
+          .map(({pointer})=>'['+pointer.occurrence+']('+p.url+'#'+anchor(pointer.occurrence)+')').join(' · '),
         '',
       ]),
       '[Arquivo de fichas curadas](/conde-incident/evidencias/arquivo/) · '+
@@ -123,6 +128,10 @@ export function auditBuiltMatrixCatalog(bundle,siteRoot='public') {
     const doc=visibleDocument(html);
     assert.ok(doc.links.has(ROOT),'Page missing return to matrix index: '+name);
     for(const {pointer,record} of entries.slice(i*PER_PAGE,(i+1)*PER_PAGE)){
+      const id=anchor(pointer.occurrence);
+      assert.ok(index.links.has(pages[i].url+'#'+id),'Missing anchored index link '+pointer.occurrence);
+      assert.ok(html.includes('<span id="'+id+'" tabindex="-1"></span>'),
+        'Missing visible target anchor '+pointer.occurrence);
       assert.ok(doc.visibleText.includes(pointer.occurrence),'Missing occurrence '+pointer.occurrence);
       assert.ok(doc.visibleText.includes(record.row_sha256),'Missing row digest '+pointer.occurrence);
       assert.ok(doc.links.has(matrixRowUrl(record.matrix_line)),
