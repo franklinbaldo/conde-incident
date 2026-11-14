@@ -1,0 +1,40 @@
+name: NORAD 1963 PARL feed custody C241-L56
+on:
+  pull_request:
+    paths:
+      - 'research/tle_custody/norad_parl_cold_lake_addendum_C241-L56.json'
+      - 'tools/tle_norad_parl_c241_l56.py'
+      - 'tests/test_tle_norad_parl_c241_l56.py'
+      - '.github/workflows/tle-norad-parl-c241-l56.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/tle_custody/norad_parl_cold_lake_addendum_C241-L56.json'
+      - 'tools/tle_norad_parl_c241_l56.py'
+      - 'tests/test_tle_norad_parl_c241_l56.py'
+      - '.github/workflows/tle-norad-parl-c241-l56.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  custody:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact HEAD
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install PDF reader
+        run: python -m pip install --disable-pip-version-check pypdf==6.1.3
+      - name: Adversarial normal and optimized replay
+        run: |
+          python -m unittest discover -s tests -p test_tle_norad_parl_c241_l56.py -v
+          python -O -m unittest discover -s tests -p test_tle_norad_parl_c241_l56.py -v
+      - name: Check original PDF bytes and page count
+        run: python tools/tle_norad_parl_c241_l56.py --live
