@@ -25,6 +25,20 @@ try {
       assert.equal(await nav.locator('[data-mobile-tabs] a').count(), 8);
       const active = nav.locator('[data-mobile-tabs] [aria-current="page"]');
       assert.match(await active.innerText(), /Arquivo e proveniência/);
+      // Regression: a literal escaped JSX interpolation was shipped in className.
+      // All eight mobile links then lost their active/inactive color hierarchy,
+      // despite correct aria-current and correct navigation behavior.
+      const activeClass = await active.getAttribute('class');
+      assert(!activeClass?.includes('${'), 'escaped JSX expression leaked into the published CSS class');
+      assert.match(activeClass || '', /\bbg-zinc-800\b/);
+      assert.match(activeClass || '', /\btext-cyan-300\b/);
+      const inactive = nav.locator('[data-mobile-tabs] a:not([aria-current])').first();
+      const inactiveClass = await inactive.getAttribute('class');
+      assert.match(inactiveClass || '', /\bbg-zinc-950\b/);
+      assert.notEqual(
+        await active.evaluate(el => getComputedStyle(el).backgroundColor),
+        await inactive.evaluate(el => getComputedStyle(el).backgroundColor),
+        'the active mobile destination must have a distinguishable rendered background');
       for (const link of await nav.locator('[data-mobile-tabs] a').all()) {
         const rect = await link.boundingBox();
         assert(rect && rect.height >= 44 && rect.x >= -1 && rect.x + rect.width <= width + 1,
