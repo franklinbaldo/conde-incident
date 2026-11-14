@@ -1,0 +1,49 @@
+name: Castor G70 SAO Baker-Nunn retrospective source replay
+on:
+  pull_request:
+    paths:
+      - .github/workflows/castor-sao-clock-budget-g70.yml
+      - tools/sao_baker_nunn_budget_G70.py
+      - tests/test_sao_baker_nunn_budget_G70.py
+      - research/constraints/sao_baker_nunn_1973_error_budget_G70.json
+      - research/constraints/sao_baker_nunn_1973_error_budget_G70.md
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/castor-sao-clock-budget-g70.yml
+      - tools/sao_baker_nunn_budget_G70.py
+      - tests/test_sao_baker_nunn_budget_G70.py
+      - research/constraints/sao_baker_nunn_1973_error_budget_G70.json
+      - research/constraints/sao_baker_nunn_1973_error_budget_G70.md
+permissions:
+  contents: read
+jobs:
+  sao-source-locked:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact head
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Acquire and verify 1973 archival PDF
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL --retry 3 --max-time 75 \
+            'https://ntrs.nasa.gov/api/citations/19740019249/downloads/19740019249.pdf' \
+            -o "$RUNNER_TEMP/19740019249.pdf"
+          printf '%s  %s\n' '10f2d85593af7be543326471f8c1eaf234aefc0565515cd4ff059edad20922c8' "$RUNNER_TEMP/19740019249.pdf" | sha256sum -c -
+          python3 tools/sao_baker_nunn_budget_G70.py --source-pdf "$RUNNER_TEMP/19740019249.pdf"
+      - name: Run adversarial source and activation controls
+        run: |
+          python3 -m unittest discover -s tests -p 'test_sao_baker_nunn_budget_G70.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_sao_baker_nunn_budget_G70.py' -v
+          python3 scripts/check_file_size.py

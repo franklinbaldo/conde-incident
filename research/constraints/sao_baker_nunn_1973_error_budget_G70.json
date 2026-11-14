@@ -1,0 +1,48 @@
+{
+  "schema": "CASTOR_G70_SAO_RETROSPECTIVE_ERROR_BUDGET_V1",
+  "source": {
+    "title": "1973 Smithsonian Standard Earth (III)",
+    "publication_date": "1973-11-28",
+    "report": "SAO Special Report 353",
+    "nasa_ntrs_id": "19740019249",
+    "url": "https://ntrs.nasa.gov/api/citations/19740019249/downloads/19740019249.pdf",
+    "pdf_bytes": 12337725,
+    "pdf_sha256": "10f2d85593af7be543326471f8c1eaf234aefc0565515cd4ff059edad20922c8",
+    "pdf_page_numbers_one_based": [35, 36],
+    "printed_page_numbers": [25, 26],
+    "evidence_class": "1973_RETROSPECTIVE_NOT_1963_INSTRUMENT_RECORD",
+    "table_genealogy": "Lambeck (1968b) cited for error budgets; not 1963 observation."
+  },
+  "clock": {
+    "historical_scope": "SAO_BAKER_NUNN_STATIONS_BEFORE_1965",
+    "clock_and_sync": "Norrman clock and WWV broadcasts on HF/VHF",
+    "observation_epoch_rms_s_approx": 0.001,
+    "large_excursions": "Several milliseconds, no distribution or numeric bound",
+    "replacement_note": "EECo beginning in 1964; VLF and portable clocks improved timing",
+    "interpretation": "Retrospective network-level description, not 1963 individual variance"
+  },
+  "table_1": {
+    "printed_page": 26,
+    "units_rate": "arcsec/s",
+    "units_error": "arcsec",
+    "scope": "RETROSPECTIVE_GENERALIZED_BAKER_NUNN_BUDGET_NOT_SENSOR_EVENT",
+    "rows": [
+      {"cycle_s": 32, "rate_min": 0, "rate_max": 250, "vlf_along": 1.8, "vlf_across": 1.8, "vhf_along": 1.8, "vhf_across": 1.8},
+      {"cycle_s": 16, "rate_min": 250, "rate_max": 500, "vlf_along": 1.8, "vlf_across": 1.8, "vhf_along": 2.1, "vhf_across": 1.8},
+      {"cycle_s": 8, "rate_min": 500, "rate_max": 1000, "vlf_along": 1.9, "vlf_across": 1.8, "vhf_along": 2.3, "vhf_across": 1.8},
+      {"cycle_s": 4, "rate_min": 1000, "rate_max": 2000, "vlf_along": 1.9, "vlf_across": 1.8, "vhf_along": 2.7, "vhf_across": 1.8},
+      {"cycle_s": 2, "rate_min": 2000, "rate_max": null, "vlf_along": 2.0, "vlf_across": 1.8, "vhf_along": 3.7, "vhf_across": 1.8}
+    ]
+  },
+  "activation": {
+    "state": "CANDIDATE_NOT_ACTIVATED",
+    "station_crosswalk_1963": null,
+    "norad_527_528_529_exposure_ids": null,
+    "instrumental_utc_epochs": null,
+    "observational_covariance_for_g64": null,
+    "historical_likelihood": null,
+    "independent_1963_holdout": "NOT_RUN",
+    "historical_orbital_domain_reduction": false,
+    "impact_location_or_probability": null
+  }
+}
