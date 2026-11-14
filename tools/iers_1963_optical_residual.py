@@ -10,6 +10,7 @@ NORAD instrument observation or calibrate an unknown error distribution.
 from __future__ import annotations
 
 import hashlib
+import json
 import math
 import re
 from collections.abc import Mapping
@@ -22,6 +23,58 @@ ARCSEC_RAD = math.pi / (180.0 * 3600.0)
 FRAME = "GCRS"
 ANGLE_TYPE = "INSTANTANEOUS_GEOMETRIC_NOT_APPARENT_FK4"
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
+EXTRACTION_SCHEMA = "GCRS_OPTICAL_EXTRACTION_V1"
+EXTRACTION_CLASSES = {"SYNTHETIC_SCENARIO", "SECONDARY_DERIVATIVE_NOT_INSTRUMENT"}
+
+
+def _verified_extraction(observed: Mapping, raw: bytes) -> tuple[str, str]:
+    """Bind typed comparison inputs to extraction bytes, not just to a source PDF hash.
+
+    This is a separately versioned *transcription/derivation* record, not a
+    claim that the primary source contained GCRS angles or calibrated errors.
+    An attacker can forge both inputs: SHA-256 proves identity, not authorship.
+    """
+    if not isinstance(raw, bytes) or not raw:
+        raise ValueError("Original optical extraction bytes required")
+
+    def unique_pairs(pairs):
+        record = {}
+        for key, value in pairs:
+            if key in record:
+                raise ValueError("Duplicate optical extraction key")
+            record[key] = value
+        return record
+
+    def reject_constant(value):
+        raise ValueError("Nonfinite optical extraction constant")
+
+    try:
+        extracted = json.loads(raw.decode("utf-8"), object_pairs_hook=unique_pairs,
+                               parse_constant=reject_constant)
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ValueError("Optical extraction must be UTF-8 JSON") from exc
+    if not isinstance(extracted, Mapping) or set(extracted) != {
+        "schema", "evidence_class", "observation"
+    } or extracted["schema"] != EXTRACTION_SCHEMA:
+        raise ValueError("Unrecognized optical extraction schema")
+    tier = extracted["evidence_class"]
+    if not isinstance(tier, str) or tier not in EXTRACTION_CLASSES:
+        raise ValueError("Unsupported optical extraction evidence class")
+    snapshot = extracted["observation"]
+    if not isinstance(snapshot, Mapping):
+        raise ValueError("Optical extraction observation must be a record")
+    # Byte-for-byte transcription lineage for *all* supplied typed fields.
+    # Sorting JSON keys preserves meaning without allowing missing/extra
+    # fields; serialized form distinguishes bool from 1 and strings from nums.
+    try:
+        extracted_values = json.dumps(snapshot, sort_keys=True, allow_nan=False)
+        supplied_values = json.dumps(dict(observed), sort_keys=True, allow_nan=False)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("Optical extraction contains non-JSON values") from exc
+    if extracted_values != supplied_values:
+        raise ValueError("Optical observation differs from original extraction bytes")
+    return hashlib.sha256(raw).hexdigest(), tier
+
 
 
 def _finite_number(value: object, name: str) -> float:
@@ -73,8 +126,13 @@ def _unit(ra_deg: float, dec_deg: float) -> np.ndarray:
 
 
 def compare_geometric_gcrs(predicted: Mapping, observed: Mapping,
-                           original_document_bytes: bytes, original_state_document_bytes: bytes) -> dict:
+                           original_document_bytes: bytes, original_state_document_bytes: bytes,
+                           original_extraction_bytes: bytes) -> dict:
     """Evaluate a conditional angular residual, NOT a 527/529 holdout.
+
+    Source PDF bytes and separately versioned typed-extraction JSON bytes
+    are required, as well as the TEME state record bytes. Neither digest is
+    proof of historical authorship or independence.
 
     The observation must declare its own instrumental error covariance in
     arcsec^2, document digest, UTC, exact frame/angle type, and station
@@ -167,14 +225,18 @@ def compare_geometric_gcrs(predicted: Mapping, observed: Mapping,
         state, "State covariance", require_pd=False)
     total = instrument + model
     # Cholesky avoids explicitly inverting a covariance in disparate units.
+    # Preserve exact typed-input/extraction binding before emitting a statistic.
     z = np.linalg.solve(np.linalg.cholesky(total), residual)
     chi2 = float(z @ z)
     if not math.isfinite(chi2):
         raise ValueError("Nonfinite angular distance")
+    extraction_digest, extraction_tier = _verified_extraction(observed, original_extraction_bytes)
     return {
         "epoch_utc": predicted["epoch_utc"], "object_id": observed["object_id"],
         "station_id": observed["station_id"], "document_uri": observed["document_uri"],
         "document_sha256_verified": digest,
+        "extraction_sha256_verified": extraction_digest,
+        "extraction_evidence_class": extraction_tier,
         "state_document_sha256_verified": digest_state,
         "state_source_uri": binding["document_uri"],
         "state_source_class": state_record["record_class"], "frame": FRAME,
@@ -184,6 +246,7 @@ def compare_geometric_gcrs(predicted: Mapping, observed: Mapping,
         "uncertainty_contract": "SUPPLIED_INSTRUMENT_PLUS_OPTIONAL_STATE_NOT_CALIBRATED",
         "object_binding": "ORIGINAL_TEME_STATE_BYTES_AND_ID_MATCHED_NOT_HISTORICALLY_VERIFIED",
         "comparison_status": "CONDITIONAL_GEOMETRIC_ONLY",
+        "extraction_binding": "TYPED_FIELDS_MATCH_SUPPLIED_EXTRACTION_NOT_PRIMARY_AUTHENTICITY",
         "historical_holdout": "NOT_RUN",
         "impact_inference": "NOT_SUPPORTED",
         "missing_historical_requirements": [
