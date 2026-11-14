@@ -1,4 +1,4 @@
-"""NASA's reproduced STL table: Kepler dimensional crosscheck, not a new sensor."""
+"""Distinguish statute versus nautical miles in NASA B-12, not a sensor."""
 import json
 import math
 from pathlib import Path
@@ -16,6 +16,7 @@ ROWS = (
 R = 6371.0
 MU = 398600.4418
 MI = 1.609344
+NAUTICAL = 1.852
 
 
 def minutes(perigee, apogee, scale):
@@ -33,11 +34,13 @@ def audit(doc):
         "printed_page": "B-12",
         "upstream": "STL SPACE LOG, Vol. 3, No. 4",
         "upstream_original_retrieved": False,
+        "printed_footer_unit": "miles",
+        "printed_footer_unit_location": "B-12 bottom-right; also B-1; visually checked in R51",
     }.items():
         if doc.get("source", {}).get(k) != v:
             raise ValueError("invalid source: " + k)
     if doc.get("physics") != {
-        "earth_radius_km": R, "earth_mu_km3_s2": MU, "statute_mile_km": MI
+        "earth_radius_km": R, "earth_mu_km3_s2": MU, "statute_mile_km": MI, "nautical_mile_km": NAUTICAL
     }:
         raise ValueError("model assumptions changed")
     if doc.get("rows") != [list(row) for row in ROWS]:
@@ -45,7 +48,8 @@ def audit(doc):
     for k, v in {
         "classification": "NUMERICAL_UNIT_CROSSCHECK_NOT_ORIGINAL_LEGEND",
         "favoured_by_internal_consistency": "statute_miles",
-        "unit_printed_on_B12_directly_certified": False,
+        "printed_unit_miles_certified_on_B12": True,
+        "statute_subtype_certified_by_printed_legend": False,
         "unit_in_original_STL_issue_certified": False,
         "independent_from_R51": False,
         "new_instrumental_sensors": 0,
@@ -58,14 +62,17 @@ def audit(doc):
     for name, designation, printed, perigee, apogee in ROWS:
         km = minutes(perigee, apogee, 1)
         miles = minutes(perigee, apogee, MI)
-        if not abs(printed - miles) < abs(printed - km):
+        nautical = minutes(perigee, apogee, NAUTICAL)
+        if not (abs(printed - miles) < abs(printed - km) and abs(printed - miles) < abs(printed - nautical)):
             raise ValueError("unit consistency failed: " + name)
         computed.append({
             "name": name, "designation": designation, "printed_period_minutes": printed,
             "if_km_minutes": round(km, 3),
             "if_miles_minutes": round(miles, 3),
+            "if_nautical_miles_minutes": round(nautical, 3),
             "km_residual_minutes": round(abs(printed - km), 3),
-            "miles_residual_minutes": round(abs(printed - miles), 3)
+            "miles_residual_minutes": round(abs(printed - miles), 3),
+            "nautical_residual_minutes": round(abs(printed - nautical), 3)
         })
     return computed
 
