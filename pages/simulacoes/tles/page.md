@@ -16,7 +16,7 @@ Um checksum TLE válido verifica somente a estrutura da linha examinada. Não au
 
 ## Verificador local de checksum
 
-Insira **duas linhas de sua escolha**, cada uma com exatamente 69 caracteres. Esta ferramenta roda no navegador, sem enviar o texto a serviços externos, e reproduz apenas as verificações mínimas de comprimento, prefixo/NORAD e dígito módulo 10 do laboratório legado. Ela não autentica TLE histórico, sensor, época, parâmetros orbitais ou local de reentrada.
+Insira **duas linhas de sua escolha**, cada uma com exatamente 69 caracteres. Você pode colar as duas linhas juntas no campo **Linha 1**: o formulário as separa sem modificar os caracteres internos; confira as duas antes de verificar. Esta ferramenta roda no navegador, sem enviar o texto a serviços externos, e reproduz apenas as verificações mínimas de comprimento, prefixo/NORAD e dígito módulo 10 do laboratório legado. Ela não autentica TLE histórico, sensor, época, parâmetros orbitais ou local de reentrada.
 
 <form id="ssg-tle-audit" class="tle-audit" hidden>
   <label for="ssg-tle-line1">Linha 1</label>
