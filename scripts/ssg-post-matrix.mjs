@@ -88,6 +88,10 @@ export function auditBuiltPostMatrix(html,citations,bundle=readBundle()) {
     assert.ok(doc.activeAnchors.get(anchor)===1&&doc.idCounts.get(anchor)===1,
       'Pós-matriz: âncora documental ativa e única ausente: '+item.id);
     const heading=headings[i];
+    assert.ok(heading[0].startsWith('<h3 ') &&
+      heading[0].includes('id="'+anchor+'"') &&
+      heading[0].includes('tabindex="-1"'),
+      'Pós-matriz: foco do fragmento deve estar no cabeçalho: '+item.id);
     const headingDoc=visibleDocument('<main>'+heading[0]+'</main>');
     assert.ok(headingDoc.visibleText.includes(item.id),
       'Pós-matriz: cabeçalho não visível: '+item.id);
@@ -194,8 +198,7 @@ export function postMatrixPage(citations,lineage,bundle=readBundle()) {
       }
       assert.equal(current,path.upstream_source_id,'Pós-matriz: origem declarada divergente');
     }
-    lines.push('<span id="'+postMatrixAnchor(item.id)+'" tabindex="-1"></span>','',
-      `### ${esc(item.id)}`,'',
+    lines.push('<h3 id="'+postMatrixAnchor(item.id)+'" tabindex="-1">'+esc(item.id)+'</h3>','',
       `**Fonte:** ${esc(item.source_id)} · **Família:** ${esc(dep.source_family)}`,'',
       `**Estado canônico:** \`${item.status}\` · **Independência jornalística:** \`${item.journalistic_source_independence}\`.`,'',
       `**O que o documento afirma:** ${esc(item.proposition)}`,'',
