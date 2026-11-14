@@ -42,6 +42,35 @@ try {
       await page.getByRole('navigation', { name: 'Seções do laboratório' }).waitFor();
     }
     await page.screenshot({ path: 'test-results/ui/editorial-lab-' + width + '.png' });
+    // The reader's documentary path is in the public artifact, not only an index.
+    const chapterPath = '/conde-incident/stories/2026-11-11-o-dia-em-que-dois-relatos-se-cruzaram/';
+    const chapterUrl = new URL(chapterPath, origin).toString();
+    for (const { label, occurrence, source, id } of [
+      { label: 'ocorrência C131#1 no arquivo curado', occurrence: '/conde-incident/evidencias/arquivo/c131-1/', source: '/conde-incident/evidencias/arquivo/fontes/nasa-ssr-19631115/', id: 'NASA_SSR_19631115' },
+      { label: 'ocorrência C01#1 no arquivo curado', occurrence: '/conde-incident/evidencias/arquivo/c01-1/', source: '/conde-incident/evidencias/arquivo/fontes/fbis-eop-uap-d001/', id: 'FBIS_EOP_UAP_D001' },
+    ]) {
+      response = await page.goto(chapterUrl);
+      assert(response?.ok(), 'chapter must load from assembled Pages artifact');
+      const claimLink = page.getByRole('link', { name: label });
+      assert.equal(await claimLink.getAttribute('href'), occurrence);
+      const bounds = await claimLink.boundingBox();
+      assert(bounds && bounds.x >= -1 && bounds.x + bounds.width <= width + 1,
+        'source traceability link clipped at ' + width + 'px: ' + label);
+      await claimLink.click();
+      assert.equal(new URL(page.url()).pathname, occurrence);
+      const sourceLink = page.getByRole('link', { name: id, exact: true });
+      await sourceLink.click();
+      assert.equal(new URL(page.url()).pathname, source);
+      assert(await page.getByRole('link', { name: 'Ocorrência e genealogia' }).count() > 0,
+        'source sheet must offer a return to its documented occurrence');
+      if (width === 320) {
+        await page.screenshot({ path: 'test-results/ui/editorial-source-' + id.toLowerCase() + '-320.png' });
+      }
+      await page.goBack();
+      assert.equal(new URL(page.url()).pathname, occurrence);
+      await page.goBack();
+      assert.equal(new URL(page.url()).pathname, chapterPath);
+    }
     assert.deepEqual(errors, [], 'JS errors during SSG ↔ lab navigation at ' + width);
     await page.close();
   }
