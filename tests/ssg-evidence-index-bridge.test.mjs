@@ -72,6 +72,15 @@ test('coordinated coverage count shrink fails against original matrix rows',()=>
   assert.throws(()=>audit(bundle),/Matrix row inventory differs/);
 });
 
+test('forged matrix SHA-256/size metadata fails without changing any source',()=>{
+  const bundle=clean();
+  bundle.manifest.matrix_source.sha256='0'.repeat(64);
+  assert.throws(()=>audit(bundle),/Frozen matrix SHA-256\/size\/path mismatch/);
+  const size=clean();
+  size.manifest.matrix_source.bytes--;
+  assert.throws(()=>audit(size),/Frozen matrix SHA-256\/size\/path mismatch/);
+});
+
 test('modified historical matrix is rejected even with unchanged feeds',()=>{
   const bundle=clean();
   bundle.matrixBytes=Buffer.concat([bundle.matrixBytes,Buffer.from('\n<!-- changed -->\n')]);
