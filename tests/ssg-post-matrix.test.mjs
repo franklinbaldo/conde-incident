@@ -126,7 +126,7 @@ test('post-matrix built HTML binds navigation, source identity and custody in ea
   const imageDigest=field('SHA-256 da imagem arquivística',item.image_sha256);
   const report=field('SHA-256 do relatório de custódia versionado',reportDigest);
   const heading='<h3>'+item.id+'</h3>';
-  const marker='<span id="'+postMatrixAnchor(item.id)+'"></span>';
+  const marker='<span id="'+postMatrixAnchor(item.id)+'" tabindex="-1"></span>';
   const base='<main><a href="/conde-incident/evidencias/matriz/">Matriz</a>'+
     marker+heading+state+independence+imageDigest+report+source+custody+links+'</main>';
   assert.equal(auditBuiltPostMatrix(base,citations),expected.length);
