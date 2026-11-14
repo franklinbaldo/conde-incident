@@ -262,7 +262,12 @@ try {
         ['tles', locale === 'pt' ? /Linhas TLE em auditoria/ : /TLE/],
         ['triangulation', locale === 'pt' ? /Objetos 527, 528 e 529/ : /Objects 527, 528 and 529/],
       ]) {
-        await page.goto(new URL('#/' + route, origin).href);
+        // A full, shareable English URL must retain ?lang=en across navigation.
+        // Do not silently test English against the default Portuguese URL.
+        const shareableRoute = new URL((locale === 'en' ? '?lang=en' : '') + '#/' + route, origin).href;
+        await page.goto(shareableRoute);
+        assert.equal(await page.evaluate(() => document.documentElement.lang),
+          locale === 'en' ? 'en' : 'pt-BR', 'URL must select the requested document language');
         await page.getByRole('heading', { level: 1, name: heading }).waitFor();
         assert.equal(await page.getByRole('main').getByRole('heading', { level: 1 }).count(), 1,
           `route ${route} must expose exactly one main H1 (${viewport.name}, ${locale})`);
