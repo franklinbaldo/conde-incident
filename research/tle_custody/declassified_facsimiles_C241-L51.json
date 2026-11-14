@@ -1,0 +1,75 @@
+{
+  "schema": "c241-l51-declassified-facsimiles-v1",
+  "evidence_id": "C241-L51",
+  "status": "RETROSPECTIVE_DOCUMENTARY_ONLY",
+  "physical_constraint_active": false,
+  "documents": [
+    {
+      "id": "NSA-BYE-19385-75",
+      "title": "NSA in Space",
+      "authored_year": 1975,
+      "release_date": "2017-11-08",
+      "url": "https://www.governmentattic.org/26docs/NSAinSpaceViaNRO_1975.pdf",
+      "filename": "NSAinSpaceViaNRO_1975.pdf",
+      "bytes": 4853647,
+      "sha256": "3d5d7a22608d3eb9ab23f61f46da924708d471917f77ee5f3a68ae8910aeab74",
+      "pdf_pages": 248,
+      "pdf_page_1_based": 132,
+      "printed_page": 5,
+      "printed_page_section": "Appendix A payload summary, not main text page 5",
+      "readout": {
+        "mission": "7153",
+        "payload": "698 BK IV",
+        "vehicle": "2313",
+        "launch_vehicle": "Thor-Agena D",
+        "date_as_printed": "16 Jan 63"
+      },
+      "class": "RETROSPECTIVE_ADMINISTRATIVE_TABLE_VISUALLY_CHECKED"
+    },
+    {
+      "id": "NRO-SIGINT-STORY-1994",
+      "title": "The SIGINT Satellite Story",
+      "authored_year": 1994,
+      "release_date": null,
+      "url": "https://www.governmentattic.org/19docs/NRO-SIGINTsatStory_1994u.pdf",
+      "filename": "NRO-SIGINTsatStory_1994u.pdf",
+      "bytes": 14454222,
+      "sha256": "1bffa3e121073c8a312c9f67393efac09aa0a322e18ce039e592df0454e13c8a",
+      "pdf_pages": 430,
+      "pdf_page_1_based": 123,
+      "printed_page": 90,
+      "printed_page_section": "History narrative on vehicle 2313 and adjacent 2314",
+      "readout": {
+        "mission": "7153",
+        "vehicle": "2313",
+        "date_as_printed": "16 January 1963",
+        "launch_vehicle_wording": "using a Thor",
+        "mission_duration_wording": "only two days due to a battery failure",
+        "next_vehicle": "2314",
+        "next_booster_wording": "launched on 29 June 1963 using a TAT booster"
+      },
+      "class": "RETROSPECTIVE_MISSION_HISTORY_VISUALLY_CHECKED"
+    }
+  ],
+  "conflict": {
+    "nsa_1975_vehicle_2313": "Agena D",
+    "nasa_1964_launch_group_1963_3": "Agena D (C241-L15, not object-specific)",
+    "quest_1995_2313": "Agena D (C241-L50, editorial)",
+    "modern_gunter_2313": "Agena B (secondary catalog)",
+    "nro_1994_2313": "Thor only; no Agena variant given on inspected page",
+    "result": "UNRESOLVED_HARDWARE_VARIANT",
+    "same_observation_family_claim": false
+  },
+  "norad528": {
+    "catalog_identifier": "1963-003B/NORAD 528 (linked by C241-L32, not printed here)",
+    "hardware_identity": null,
+    "observation_utc": null,
+    "station": null,
+    "frame": null,
+    "sigma": null,
+    "decay_hour": null,
+    "impact_location": null
+  },
+  "orbital_parameters": "THETA_UNCHANGED",
+  "next_test": "Acquire contemporaneous 2313 stage engineering record and SPADATS/SAO measurements of 528 with UTC/station/frame/error."
+}
