@@ -55,7 +55,7 @@ theorem endpoints_outside_do_not_imply_clear_ray :
     ¬ insideUnitEllipsoid (rayPoint s d 4) ∧
     occultedThrough s d 4 := by
   dsimp
-  refine ⟨by decide, by decide, ?_⟩
-  exact ⟨2, by decide, by decide⟩
+  refine ⟨by simp [insideUnitEllipsoid], by simp [insideUnitEllipsoid, rayPoint], ?_⟩
+  exact ⟨2, by decide, by simp [insideUnitEllipsoid, rayPoint]⟩
 
 end Conde1963.OpticalRayVisibility
