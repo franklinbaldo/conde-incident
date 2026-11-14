@@ -83,6 +83,15 @@ class ProxyClockG76(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "historical identity"):
                 m.generate(root)
 
+    def test_reject_shifted_osm_coordinate(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            self.sandbox(root)
+            self.mutate(root / m.OSM,
+                        lambda d: d["nodes"][0].__setitem__("latitude", -11.5))
+            with self.assertRaisesRegex(ValueError, "source provenance"):
+                m.generate(root)
+
     def test_reject_fake_clock_verification(self):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
