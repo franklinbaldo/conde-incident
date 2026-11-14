@@ -124,9 +124,10 @@ a:focus-visible,button:focus-visible,iframe:focus-visible{outline:3px solid #ffd
 /* Dossiê SSG v1: tokens e componentes HTML sem dependência de JS ou SPA.
    Escopo local: o laboratório mantém sua paridade numérica e UI existentes. */
 .casefile{
-  --cf-paper:#f5f2e9;--cf-surface:#fffdf8;--cf-ink:#20313c;
-  --cf-muted:#445865;--cf-line:#b5c4ca;--cf-accent:#174f61;
-  --cf-warm:#74512d;--cf-focus:#94461c;
+  --cf-paper:var(--color-casefile-paper);--cf-surface:var(--color-casefile-surface);
+  --cf-ink:var(--color-casefile-ink);--cf-muted:var(--color-casefile-muted);
+  --cf-line:var(--color-casefile-line);--cf-accent:var(--color-casefile-accent);
+  --cf-warm:var(--color-casefile-warm);--cf-focus:var(--color-casefile-focus);
   color-scheme:light;background:var(--cf-paper);color:var(--cf-ink);
   padding:clamp(1.1rem,3vw,2.2rem);border:1px solid var(--cf-line);
   border-radius:1rem;font:400 1rem/1.65 system-ui,sans-serif;
@@ -142,18 +143,18 @@ a:focus-visible,button:focus-visible,iframe:focus-visible{outline:3px solid #ffd
 .casefile .cf-kicker{text-transform:uppercase;letter-spacing:.1em;font:750 .76rem/1.5 system-ui,sans-serif;color:var(--cf-warm);margin:0 0 1rem}
 .casefile .cf-hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(1rem,3vw,2.2rem);align-items:start}
 .casefile .cf-lead{font:400 clamp(1.1rem,1.9vw,1.34rem)/1.57 Georgia,serif;max-width:58ch}
-.casefile .cf-status{padding:.8rem 1rem;border-left:4px solid var(--cf-warm);background:#eee8dd}
+.casefile .cf-status{padding:.8rem 1rem;border-left:4px solid var(--cf-warm);background:var(--color-casefile-status)}
 .casefile .cf-figure{margin:0;border:1px solid var(--cf-line);background:var(--cf-surface);border-radius:.7rem;overflow:hidden}
 .casefile .cf-figure img{display:block;width:100%;height:auto;max-width:100%}
 .casefile .cf-figure figcaption{padding:.9rem 1rem;font-size:.82rem;color:var(--cf-muted)}
 .casefile .cf-actions,.casefile .cf-links{display:flex;flex-wrap:wrap;gap:.65rem;align-items:center}
 .casefile .cf-button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.65rem 1rem;border:2px solid var(--cf-accent);border-radius:.5rem;font-weight:750;text-decoration:none}
 .casefile .cf-button-primary{background:var(--cf-accent);color:#fff}
-.casefile .cf-button-primary:hover{color:#fff;background:#123d4d}
+.casefile .cf-button-primary:hover{color:#fff;background:var(--color-casefile-hover)}
 .casefile .cf-section{padding-block:clamp(1.6rem,3vw,2.7rem);border-top:1px solid var(--cf-line)}
 .casefile .cf-trail{list-style:none;counter-reset:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.7rem;padding:0;margin:1.5rem 0 0}
 .casefile .cf-trail a{display:grid;gap:.2rem;border-top:3px solid var(--cf-accent);padding:.65rem .3rem;color:var(--cf-ink);text-decoration:none;border-radius:.25rem}
-.casefile .cf-trail a:hover{background:#e8f0ee}
+.casefile .cf-trail a:hover{background:var(--color-casefile-highlight)}
 .casefile .cf-trail a:hover strong{text-decoration:underline;text-underline-offset:.2em}
 .casefile :is(#relato,#fontes,#hipoteses,#experimentos):focus-visible{outline:3px solid var(--cf-focus);outline-offset:4px}
 .casefile .cf-trail a span{font-weight:800;color:var(--cf-accent);font-size:.8rem}
