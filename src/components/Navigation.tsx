@@ -143,7 +143,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                 className={`min-h-11 min-w-[44px] rounded px-1 text-[0.6875rem] font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 ${
                   lang === language ? 'bg-cyan-700 text-white' : 'text-zinc-300 hover:text-white'
                 }`}>
-                {language === 'pt' ? 'PT-BR' : 'EN'}
+                {language === 'pt' ? 'PT' : 'EN'}
               </button>
             ))}
           </div>
@@ -151,7 +151,7 @@ export const Navigation: React.FC<NavigationProps> = ({
         <details data-lab-metadata className="group mt-2 min-w-0 rounded-md border border-zinc-800 bg-zinc-900/70">
           <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-2 px-3 py-2 text-zinc-200 [&::-webkit-details-marker]:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300">
             <span className="min-w-0 break-words font-medium">
-              {lang === 'pt' ? 'Dados e limites do caso' : 'Case details and limits'}
+              {lang === 'pt' ? 'Dados e limites' : 'Case details'}
             </span>
             <ChevronDown className="h-4 w-4 shrink-0 transition-transform group-open:rotate-180" aria-hidden="true" />
           </summary>
