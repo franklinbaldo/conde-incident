@@ -43,9 +43,11 @@ try {
     if (width <= 390) {
       await page.addStyleTag({ content: 'html { font-size: 200% !important; }' });
       const citation = page.locator('#source-citations-heading').locator('xpath=..');
-      await citation.locator('dl').first().waitFor();
-      for (const selector of ['label[for="citation-occurrence"]', '#citation-occurrence',
-        'dl dt', 'dl dd']) {
+      // The feed can legitimately be unavailable in dev: its runtime error state
+      // must not block checking the always-rendered input. Check records when served.
+      const selectors = ['label[for="citation-occurrence"]', '#citation-occurrence'];
+      if (await citation.locator('dl').count()) selectors.push('dl dt', 'dl dd');
+      for (const selector of selectors) {
         for (const element of await citation.locator(selector).all()) {
           const rect = await element.boundingBox();
           assert(rect && rect.x >= -1 && rect.x + rect.width <= width + 1,
