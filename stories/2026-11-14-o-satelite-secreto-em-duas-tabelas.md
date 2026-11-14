@@ -6,7 +6,7 @@ date: "2026-11-14"
 summary: "A União Soviética imprimiu 459 e 533 quilômetros para um satélite americano «secreto». A NASA publicou os mesmos dois valores, mas pequenas divergências e fontes compartilháveis impedem transformar as tabelas em duas observações independentes."
 chapter: "36"
 author: "Coruja · Caderno de investigação"
-status: "Dois fac-símiles cotejados; sem identificação NORAD na linha soviética nem nova medição instrumental"
+status: "Três publicações comparadas; linha SIPRI extraída digitalmente, sem inspeção visual da página; nenhuma nova medição instrumental"
 ---
 
 # O satélite «secreto» que apareceu em duas tabelas
@@ -40,6 +40,14 @@ Isso **não prova** que os editores copiaram justamente o relatório da NASA de 
 
 Para saber se houve observação soviética independente, seria preciso encontrar um registro datado de estação ou os periódicos ocidentais citados com os mesmos valores e sua procedência.
 
+## Dez anos depois, os números reapareceram na Suécia
+
+Em **1973**, o instituto sueco [SIPRI publicou outra lista de satélites militares](https://www.sipri.org/sites/default/files/SIPRI%20Yearbook%201973.pdf). Na **tabela 3A.2, página impressa 84**, aparece a designação que faltava no anuário russo: **«USAF (1963-03A)»**. A linha reproduz exatamente **459 km**, **533 km**, **94,66 minutos** e **81,89°**. São os quatro números da publicação soviética de **1964**, desta vez acompanhados de uma identificação internacional explícita.
+
+O livro de 1973 saiu depois de ambas as outras fontes. Não pode ter servido de fonte para o anuário de 1964. Em seu prefácio, o SIPRI declara usar **fontes abertas** e atribui a preparação do capítulo sobre satélites a **Bhupendra Jasani**. Assim, os números iguais revelam uma circulação editorial mais longa, não uma observação sueca adicional. O anuário sueco ainda abrevia o lançador como **«Van Th/A-D»**; essa inscrição, por si só, não resolve a divergência documental entre *Agena B* e *Agena D* nem identifica o fragmento 528.
+
+A nova tabela torna **mais plausível a identificação retrospectiva** da linha soviética sem número como referente ao objeto **A / NORAD 527**. Mas não autoriza atribuir a tabela de 1973 como fonte da de 1964, nem descobrir qual periódico, compilação ou observação forneceu originalmente os quatro valores. A pergunta agora pode ser feita com maior precisão: **qual documento anterior a 1964 já imprimia os quatro números juntos?**
+
 ## E onde entra a esfera de Conde?
 
 O lançamento americano de janeiro de 1963 produziu mais de um objeto catalogado. O boletim da NASA associa esses valores à designação **1963-003A**, correspondente ao **NORAD 527**. O objeto investigado na notícia de Conde é **1963-003B / NORAD 528**, cuja data histórica de decaimento é **8 de novembro de 1963**.
@@ -50,4 +58,4 @@ Duas tabelas podem reforçar a história da **circulação de um dado** sem refo
 
 ## Fontes e limites
 
-O [anuário soviético, p. 503](https://www.istmat.org/node/35454) e o [boletim NASA nº 23, p. 5](https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf#page=7) foram cotejados numericamente na [auditoria documental C241-LONTRA-R49](https://github.com/franklinbaldo/conde-incident/blob/main/research/tle_custody/evidence_matrix_C241-LONTRA-R49_2026-11-14.md), apoiada nos registros anteriores C241-LONTRA-R48 e C241-L18. A equivalência de alturas é **numérica, não instrumental**; a identificação da linha soviética como 1963-003A é hipótese de correspondência, não identificação expressa no impresso. Nenhuma nova restrição orbital do 528 foi ativada.
+O [anuário soviético, p. 503](https://www.istmat.org/node/35454) e o [boletim NASA nº 23, p. 5](https://ntrs.nasa.gov/api/citations/19640002493/downloads/19640002493.pdf#page=7) foram cotejados numericamente na [auditoria documental C241-LONTRA-R49](https://github.com/franklinbaldo/conde-incident/blob/main/research/tle_custody/evidence_matrix_C241-LONTRA-R49_2026-11-14.md), apoiada nos registros anteriores C241-LONTRA-R48 e C241-L18. O [*SIPRI Yearbook 1973*, tabela 3A.2, p. 84](https://www.sipri.org/sites/default/files/SIPRI%20Yearbook%201973.pdf), localizado na [auditoria C241-LONTRA-R50](https://github.com/franklinbaldo/conde-incident/pull/812), reproduz os **quatro valores** e imprime `1963-03A`. Nesta atualização, a linha e o prefácio foram conferidos na **extração textual digital do PDF**, não numa inspeção visual da folha crítica. O exemplar impresso também não foi examinado. A equivalência de alturas é **numérica, não instrumental**; a identificação da linha soviética como 1963-003A é hipótese de correspondência, não identificação expressa no impresso. Nenhuma nova restrição orbital do 528 foi ativada.
