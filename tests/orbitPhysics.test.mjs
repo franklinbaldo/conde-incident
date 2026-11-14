@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  EARTH, rk4, propagate, accelerationKmS2, specificEnergyKm2S2,
+  EARTH, rk4, propagate, NumericalIntegrationBreakdown, accelerationKmS2, specificEnergyKm2S2,
   angularMomentumZ, rotatingFrameIntegralKm2S2, altitudeKm,
   seededUniform, propagateEnsemble, fitInitialVelocity, positionResidualRmsKm,
 } from '../src/lib/orbitPhysics.ts';
@@ -79,6 +79,36 @@ test('reject undocumented atmospheric density and nonphysical controls', () => {
   assert.throws(() => accelerationKmS2(circular, { atmosphere: { source: 'synthetic', densityKgM3: () => -1, cdAreaOverMassM2Kg: 0.1 }}));
   assert.throws(() => propagate(circular, 10, -1, 80));
   assert.throws(() => propagate(circular, 10, 1, NaN));
+});
+
+test('G74 rejects invalid initial phase space even on zero-duration and threshold fast paths', () => {
+  const invalid = [
+    { ...circular, vKmS: [NaN, 0, 0] },
+    { ...circular, rKm: [EARTH.radiusKm + 50, 0, 0], vKmS: [Infinity, 0, 0] },
+    { ...circular, tS: NaN },
+    { ...circular, rKm: [0, 0, 0] },
+    { ...circular, rKm: null },
+  ];
+  for (const state of invalid) {
+    for (const durationS of [0, 15])
+      assert.throws(() => propagate(state, durationS, 5, 80),
+        /Invalid initial osculating state/);
+  }
+  // Huge but individually finite components overflow vector norms. Existing
+  // ensemble controls must continue retaining them as numerical failures.
+  for (const state of [
+    { ...circular, rKm: [1e200, 0, 0] },
+    { ...circular, vKmS: [1e200, 0, 0] },
+  ]) {
+    for (const durationS of [0, 15])
+      assert.throws(() => propagate(state, durationS, 5, 80),
+        NumericalIntegrationBreakdown);
+  }
+  const below = { ...circular, rKm: [EARTH.radiusKm + 60, 0, 0] };
+  assert.deepEqual(propagate(below, 0, 5, 80),
+    {state: below, event: 'reentry-threshold', steps: 0});
+  assert.deepEqual(propagate(circular, 0, 5, 80),
+    {state: circular, event: 'elapsed', steps: 0});
 });
 
 test('seeded ensemble repeats exactly and remains coupled to its state', () => {
