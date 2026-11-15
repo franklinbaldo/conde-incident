@@ -25,6 +25,9 @@ on:
       - tools/c241_omega_print_quantization_r67.py
       - tests/test_c241_omega_print_quantization_r67.py
       - research/statistics/C241_OMEGA_PRINT_QUANTIZATION_R67_20261114.md
+      - tools/c241_decay_day_error_r68.py
+      - tests/test_c241_decay_day_error_r68.py
+      - research/statistics/C241_UNIFIED_DECAY_DAY_ERRORS_R68_20261115.md
       - .github/workflows/c241-1963-terminal-control-screen.yml
   push:
     branches: [main]
@@ -52,6 +55,9 @@ on:
       - tools/c241_omega_print_quantization_r67.py
       - tests/test_c241_omega_print_quantization_r67.py
       - research/statistics/C241_OMEGA_PRINT_QUANTIZATION_R67_20261114.md
+      - tools/c241_decay_day_error_r68.py
+      - tests/test_c241_decay_day_error_r68.py
+      - research/statistics/C241_UNIFIED_DECAY_DAY_ERRORS_R68_20261115.md
       - .github/workflows/c241-1963-terminal-control-screen.yml
   workflow_dispatch:
 permissions:
@@ -98,6 +104,8 @@ jobs:
           python3 -O -m unittest discover -s tests -p test_c241_omega1_308_crosssource_r65.py -v
           python3 -O -m unittest discover -s tests -p test_c241_1963_terminal_control_screen.py -v
           python3 -m unittest discover -s tests -p test_c241_1963_archive_fixed_h_stress.py -v
+          python3 -m unittest discover -s tests -p test_c241_decay_day_error_r68.py -v
+          python3 -O -m unittest discover -s tests -p test_c241_decay_day_error_r68.py -v
           python3 -O -m unittest discover -s tests -p test_c241_1963_archive_fixed_h_stress.py -v
           python3 -m unittest discover -s tests -p test_c241_308_ssr_calendar_range_r61.py -v
           python3 -O -m unittest discover -s tests -p test_c241_308_ssr_calendar_range_r61.py -v
@@ -115,6 +123,28 @@ jobs:
             --output "$RUNNER_TEMP/c241-1963-terminal-controls.json" --check
           python3 tools/c241_1963_archive_fixed_h_stress.py --parquet "$RUNNER_TEMP/tle_1963.parquet" \
             --output "$RUNNER_TEMP/c241-1963-fixed-h.json" --check
+          python3 tools/c241_king_hele_day_holdout.py --parquet "$RUNNER_TEMP/tle_1963.parquet" \
+            --output "$RUNNER_TEMP/c241-king-hele-r54.json"
+          python3 tools/c241_decay_day_error_r68.py \
+            --r54 "$RUNNER_TEMP/c241-king-hele-r54.json" \
+            --r60 "$RUNNER_TEMP/c241-1963-fixed-h.json" \
+            --json "$RUNNER_TEMP/c241-day-error-r68.json" \
+            --tsv "$RUNNER_TEMP/c241-day-error-r68.tsv"
+          python3 - "$RUNNER_TEMP/c241-day-error-r68.json" <<'PY_R68'
+          import json,sys
+          x=json.load(open(sys.argv[1],encoding='utf-8'))
+          assert x['schema']=='conde.c241-decay-day-error-unified-r68/v1'
+          assert len(x['rows'])==64
+          assert sum(bool(r['new_distinct_origin']) for r in x['rows'])==60
+          assert {r['norad'] for r in x['rows']}=={637,292,565,308}
+          assert all(r['identity_308_conditional'] for r in x['rows'] if r['norad']==308)
+          assert x['inference']=={'calibrated_terminal_holdouts':0,
+                                  'terminal_time_sigma_hours':None,
+                                  'historical_mcmc':'NOT_RUN',
+                                  'active_constraint_528':False,
+                                  'impact_geography':None}
+          print('R68 64 conditional error rows on pinned Parquet; zero calibrated holdouts')
+          PY_R68
           python3 tools/c241_308_ssr_calendar_range_r61.py \
             --r60 "$RUNNER_TEMP/c241-1963-fixed-h.json" \
             --ssr research/tle_custody/nasa_ssr_terminal_control_308_C241-L64.json \
@@ -233,6 +263,9 @@ jobs:
           path: |
             ${{ runner.temp }}/c241-1963-terminal-controls.json
             ${{ runner.temp }}/c241-1963-fixed-h.json
+            ${{ runner.temp }}/c241-king-hele-r54.json
+            ${{ runner.temp }}/c241-day-error-r68.json
+            ${{ runner.temp }}/c241-day-error-r68.tsv
             ${{ runner.temp }}/c241-ssr-308-range-r61.json
             ${{ runner.temp }}/c241-terminal-minimax-r62.json
           if-no-files-found: error
