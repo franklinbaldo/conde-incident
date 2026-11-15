@@ -7,7 +7,10 @@ import copy
 import hashlib
 import json
 import unittest
+from unittest import mock
 from pathlib import Path
+
+import test_cgeo74_uh_target_week_census as upstream_audit
 
 ROOT = Path(__file__).resolve().parents[1]
 ED = ROOT / "research/editorial"
@@ -72,6 +75,8 @@ def validate(d):
             prior["coverage"]["by_week_distinct_pages"] ==
             {"TARGET_NOV04": 48, "CONTROL_OCT07": 8,
              "CONTROL_OCT14": 4, "CONTROL_OCT21": 4}, "prior coverage")
+    # An unchanged immediate manifest cannot certify modified ancestral sources.
+    require(not upstream_audit.validate(prior), "prior source ancestry changed")
     inventory = {x["id"]: x for x in load("cgeo65_uh_bn_inventory_20261115.json")["issues"]}
     dates = {x["issue_id"]: x["date"] for x in
              load("cgeo66_uh_cover_dates_20261115.json")["cover_dates"]}
@@ -149,6 +154,30 @@ class CGEO75ControlStop(unittest.TestCase):
         d = copy.deepcopy(self.d)
         update(d)
         self.assertIn(error, validate(d))
+
+    def test_ancestor_interpretation_source_only_mutation_rejected(self):
+        original_read = upstream_audit.upstream_audit.read
+
+        def mutate(path):
+            record = original_read(path)
+            if path.endswith("cgeo72_uh_one_complete_issue_20261115.json"):
+                record["pages"][0]["note"] += " [SYNTHETIC] Conde eyewitness 20:15"
+            return record
+
+        with mock.patch.object(upstream_audit.upstream_audit, "read", side_effect=mutate):
+            self.assertIn("prior source ancestry changed", validate(self.d))
+
+    def test_ancestor_inventory_source_only_mutation_rejected(self):
+        original_read = upstream_audit.upstream_audit.read
+
+        def mutate(path):
+            record = original_read(path)
+            if path.endswith("cgeo65_uh_bn_inventory_20261115.json"):
+                record["issues"][0]["status"] = "SYNTHETIC_FAKE"
+            return record
+
+        with mock.patch.object(upstream_audit.upstream_audit, "read", side_effect=mutate):
+            self.assertIn("prior source ancestry changed", validate(self.d))
 
     def test_source_hash(self):
         self.mutate(lambda d: d["source_pdfs"][0].update(sha256="0" * 64), "source custody")
