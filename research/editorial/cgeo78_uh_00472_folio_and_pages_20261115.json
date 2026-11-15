@@ -1,0 +1,109 @@
+{
+  "type": "HistoricalPressPageReadAndFolioAudit",
+  "id": "CGEO-78",
+  "date_utc": "2026-11-15",
+  "priority": "https://github.com/franklinbaldo/conde-incident/issues/871",
+  "assignment": "https://github.com/franklinbaldo/caranguejo/issues/5",
+  "status": "PARTIAL_ISSUE_NO_EVENT_CLOCK",
+  "source": {
+    "collection": "Biblioteca Nacional, Última Hora, Nordeste/Recife (765147)",
+    "edition": "00472",
+    "cover_date": "1963-11-09",
+    "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00472.pdf",
+    "size_bytes": 5275519,
+    "pdf_pages": 10,
+    "sha256": "8564c0c8c26857e0feda54fc5da0f9d3ca0c34c8de02c44e3074aa79a101cece",
+    "custody": "EXACT_SHA_REPLAY_MATCHES_LONTRA_R67_AND_CGEO77"
+  },
+  "method": {
+    "executor": "Ifro via Jatobá as SSH control plane; max_memory_mb=128",
+    "original_pdf_sha256_rechecked": true,
+    "source_is_an_independent_new_witness": false,
+    "visual": "PDF pages 2-4 rendered separately; each inspected as four quadrants, 4000px (PDF2) or 3600px (PDF3-4) page height; PDF3-5 top folios cross-checked at 6000px",
+    "pdf_text_layer_only_auxiliary": true,
+    "new_ocr": false,
+    "official_pdf_embedded_in_repo": false
+  },
+  "page_reviews": [
+    {
+      "pdf_page": 2,
+      "printed_page": null,
+      "printed_folio": "NOT_CONFIRMED",
+      "status": "LIDO_INTEGRAL_SEM_MENCAO",
+      "topics": [
+        "Iurema e plano de nacionalização das refinarias",
+        "funcionalismo, sindicatos e administração pública",
+        "movimento de cultura popular e notícias políticas"
+      ],
+      "event_hour": null,
+      "eyewitnesses": [],
+      "notes": "Four rendered quadrants inspected. No readable article about a falling object at Conde or its event time. Printed folio digit at the upper edge not authenticated; leave null."
+    },
+    {
+      "pdf_page": 3,
+      "printed_page": 7,
+      "printed_folio": "VISIBLE_AS_PAGINA_7_AT_SOURCE_6000PX",
+      "status": "LIDO_INTEGRAL_SEM_MENCAO",
+      "topics": [
+        "reclassificação dos funcionários da Assembleia",
+        "diretrizes e sindicatos",
+        "política pernambucana e exposição agropecuária"
+      ],
+      "event_hour": null,
+      "eyewitnesses": [],
+      "notes": "Four rendered quadrants inspected. Printed header reads 'Página 7' although this is PDF position 3. No readable Conde incident account or hour; isolated times refer to meetings and exhibitions."
+    },
+    {
+      "pdf_page": 4,
+      "printed_page": 3,
+      "printed_folio": "VISIBLE_AS_PAGINA_3_AT_SOURCE_6000PX",
+      "status": "ILEGIVEL_PARCIAL",
+      "topics": [
+        "reforma constitucional e agrária",
+        "tufão no Rio Grande do Sul com mortes e desabrigados",
+        "notícias políticas e econômicas"
+      ],
+      "event_hour": null,
+      "eyewitnesses": [],
+      "unreadable_area": "Small print in lower and right-hand columns has misregistered/overprinted lettering; not certified as a page-wide negative.",
+      "notes": "Four quadrants inspected; header reads 'Página 3' although this is PDF position 4. The story on storm casualties is not a report about Conde. No independently identified hour in legible areas."
+    }
+  ],
+  "pagination_caution": {
+    "pdf_index_is_not_printed_folio": true,
+    "observed_mapping": [
+      {
+        "pdf_page": 3,
+        "printed_page": 7
+      },
+      {
+        "pdf_page": 4,
+        "printed_page": 3
+      }
+    ],
+    "other_edition_folio_mappings": "NOT_VERIFIED",
+    "do_not_autofill_printed_page_from_pdf_index": true
+  },
+  "genealogy": {
+    "new_independent_eyewitness": false,
+    "new_independent_hour": null,
+    "transmission_hour": null,
+    "source_independence": "NO_NEW_INCIDENT_SOURCE_IDENTIFIED",
+    "orbit_candidate": null
+  },
+  "coverage": {
+    "package_total_pdf_pages": 68,
+    "previously_certified_integral": 4,
+    "newly_certified_integral": 2,
+    "integral_after_this_round": 6,
+    "not_yet_integral": 62,
+    "partially_read_in_this_round": 1,
+    "complete_issues": 0
+  },
+  "limitations": [
+    "Page 4 remains ILEGIVEL_PARCIAL, not a negative; its obscure columns require targeted reinspection.",
+    "Printed folio is derived only where visible, not by assuming PDF sequence.",
+    "The two new negatives apply only to PDF pages 2 and 3 of issue 00472, not the whole edition or the complete six-issue corpus.",
+    "No hour of the supposed Conde event, independent witness, location of impact or 528/637 identification was established."
+  ]
+}
