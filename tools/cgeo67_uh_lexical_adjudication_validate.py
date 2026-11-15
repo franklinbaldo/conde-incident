@@ -42,8 +42,8 @@ def validate(doc: dict, inventory: dict, covers: dict, prereg: dict) -> int:
             and doc.get("cover_crosswalk_path") == "research/editorial/cgeo66_uh_cover_dates_20261115.json", "sources")
     require(prereg.get("id") == "CGEO-64" and len(prereg["frozen_fbis_fragments"]) == 8, "prereg read")
     require(inventory.get("id") == "CGEO-65" and covers.get("id") == "CGEO-66", "upstream identity")
-    assert inventory["coverage"]["pages_fully_inspected_for_rates"] == 0
-    assert covers["coverage"]["pages_fully_read_for_fragment_rates"] == 0
+    require(inventory["coverage"]["pages_fully_inspected_for_rates"] == 0, "upstream has no full-page denominator")
+    require(covers["coverage"]["pages_fully_read_for_fragment_rates"] == 0, "upstream has no full-page denominator")
     by_issue = {x["id"]: x for x in inventory["issues"] if x["status"] == "PDF_BYTES_ACQUIRED"}
     by_date = {x["issue_id"]: x["date"] for x in covers["cover_dates"]}
     by_slot = {(x["date"], x["publication"]): x["week"] for x in covers["slots"]}
