@@ -13,6 +13,18 @@ class TestR73(unittest.TestCase):
         change(document)
         with self.assertRaises(ValueError):
             validate(document)
+    def test_invented_clock_in_free_text(self):
+        self.reject(lambda x:x["pages"][0].update(space_article_classification="Testemunha confirmou queda às 20h15"))
+    def test_invented_brazil_fall_in_other_content(self):
+        self.reject(lambda x:x["pages"][1].update(other_content="Objeto metálico caiu na Bahia às 19h45"))
+    def test_false_nasa_extrapolation(self):
+        self.reject(lambda x:x["external_crosscheck"].update(finding="NASA confirmou queda do NORAD 528 em 1963"))
+    def test_unreviewed_method_field(self):
+        self.reject(lambda x:x["method"].update(verified_independent_event_clock="20h15"))
+    def test_invented_rationale(self):
+        self.reject(lambda x:x.update(rationale="Documento comprova hora de 20h15"))
+    def test_global_negative_in_limitations(self):
+        self.reject(lambda x:x["limitations"].__setitem__(0,"Todos os jornais foram lidos; ausencia global confirmada"))
     def test_original(self):
         self.assertTrue(validate(self.doc))
     def test_wrong_synthetic_target(self):
