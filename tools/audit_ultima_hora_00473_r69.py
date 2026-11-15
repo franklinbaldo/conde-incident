@@ -6,6 +6,36 @@ from pathlib import Path
 PATH = Path(__file__).resolve().parents[1] / "research/archive/ultima_hora_ne_00473_page_review_R69.json"
 EXPECTED_SHA = "f37e4afa500fe841546a751e562cc799c33c699decb8967b2ae00b45e721e349"
 
+
+# Visual observations are part of source custody, not free-form prose.
+# A change requires a fresh review of the identified original page.
+EXPECTED_TOPICS = (
+    "capa anteriormente verificada na R67",
+    "política de Sergipe e crônica do Recife",
+    "governo estadual, trânsito e publicidade",
+    "Congresso e finanças públicas",
+    "explosão de mina no Japão e notícia espacial geral NASA/Explorer 1",
+    "investigação policial no Recife",
+    "debate político e publicidade institucional",
+    "direitos civis dos negros nos EUA",
+    "cultura popular e Bertolt Brecht",
+    "classificados e anúncios",
+    "rádio, TV e folclore",
+    "futebol e esportes",
+    "capa de suplemento feminino e moda de verão",
+    "culinária e passatempos",
+    "chapéus e colunas femininas",
+    "cinema e programação cultural",
+    "cuidados pessoais e decoração",
+    "moda, praia e reportagem social",
+)
+EXPECTED_CONTEXTUAL_ARTICLE = {
+    "pdf_page": 5,
+    "headline": "NASA: 'Explorer 1' abrirá caminho aos cosmonautas",
+    "classification": "notícia espacial geral, sem relato identificado de Conde/BA ou medição individual do NORAD 528",
+    "orbital_observation": False,
+}
+
 def validate(d: dict) -> bool:
     if (d.get("schema"), d.get("id"), d.get("refs_issue")) != ("conde.newspaper_page_review/v1", "C241-LONTRA-R69", 871):
         raise ValueError("review identity")
@@ -30,10 +60,12 @@ def validate(d: dict) -> bool:
             raise ValueError("false page conclusion " + str(i+1))
         if not x["topic_overview"]:
             raise ValueError("page has no scope description")
+    if tuple(x["topic_overview"] for x in p) != EXPECTED_TOPICS:
+        raise ValueError("changed visual page observation requires source re-review")
     if d["possible_false_positives_not_fully_audited"] is not True:
         raise ValueError("unearned exhaustive audit")
-    if (d["contextual_article"]["pdf_page"], d["contextual_article"]["orbital_observation"]) != (5, False):
-        raise ValueError("space news misclassified as measurement")
+    if d["contextual_article"] != EXPECTED_CONTEXTUAL_ARTICLE:
+        raise ValueError("changed contextual article requires source re-review")
     required = {"pages_visually_reviewed":18,"new_internal_pages_reviewed":17,
       "pages_remaining_for_panorama_of_all_four_editions":18,
       "confirmed_independent_event_time":None,"source_chain":"UNDETERMINED",

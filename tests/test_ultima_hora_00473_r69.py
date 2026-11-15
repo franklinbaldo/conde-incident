@@ -42,5 +42,23 @@ class TestUltimaHoraR69(unittest.TestCase):
             with self.assertRaises(ValueError):
                 validate(d)
 
+    def test_page_topic_cannot_fabricate_event_time(self):
+        d = copy.deepcopy(self.data)
+        d["pages"][4]["topic_overview"] = "Testemunha independente confirmou queda em Conde às 19h30"
+        with self.assertRaisesRegex(ValueError, "source re-review"):
+            validate(d)
+
+    def test_page_topic_cannot_erase_context(self):
+        d = copy.deepcopy(self.data)
+        d["pages"][4]["topic_overview"] = "somente anúncios de sapatos"
+        with self.assertRaisesRegex(ValueError, "source re-review"):
+            validate(d)
+
+    def test_contextual_article_cannot_change_classification(self):
+        d = copy.deepcopy(self.data)
+        d["contextual_article"]["classification"] = "NASA confirma o NORAD 528 sobre Conde"
+        with self.assertRaisesRegex(ValueError, "source re-review"):
+            validate(d)
+
 if __name__ == "__main__":
     unittest.main()
