@@ -7,7 +7,10 @@ import copy
 import hashlib
 import json
 import unittest
+from unittest import mock
 from pathlib import Path
+
+import test_cgeo73_uh_nov08_whole_issue as upstream_audit
 
 ROOT = Path(__file__).resolve().parents[1]
 ED = ROOT / "research/editorial"
@@ -45,6 +48,8 @@ def validate(d):
     check(d.get("prior_cumulative_manifest") == "research/editorial/cgeo73_uh_nov08_whole_issue_20261115.json", "prior lineage")
     prior = data("cgeo73_uh_nov08_whole_issue_20261115.json")
     check(canonical(prior) == UPSTREAM_CANONICAL, "prior interpretation changed")
+    # A pinned immediate manifest must not mask changes in its ancestor sources.
+    check(not upstream_audit.validate(prior), "prior source ancestry changed")
     inventory = {x["id"]: x for x in data("cgeo65_uh_bn_inventory_20261115.json")["issues"]}
     covers = {x["issue_id"]: x["date"] for x in data("cgeo66_uh_cover_dates_20261115.json")["cover_dates"]}
     source_ids = set()
@@ -106,6 +111,26 @@ class CGEO74TargetWeek(unittest.TestCase):
         cls.d = json.loads(PATH.read_text(encoding="utf-8"))
     def test_original_record(self):
         self.assertEqual(validate(self.d), [])
+    def test_changed_ancestor_interpretation_rejected(self):
+        original_read = upstream_audit.read
+        def changed(path):
+            record = original_read(path)
+            if path.endswith("cgeo72_uh_one_complete_issue_20261115.json"):
+                record["pages"][0]["note"] += " [synthetic] Conde 20:15 eyewitness"
+            return record
+        with mock.patch.object(upstream_audit, "read", side_effect=changed):
+            self.assertIn("prior source ancestry changed", validate(self.d))
+
+    def test_changed_ancestor_inventory_rejected(self):
+        original_read = upstream_audit.read
+        def changed(path):
+            record = original_read(path)
+            if path.endswith("cgeo65_uh_bn_inventory_20261115.json"):
+                record["issues"][0]["status"] = "SYNTHETIC_FAKE"
+            return record
+        with mock.patch.object(upstream_audit, "read", side_effect=changed):
+            self.assertIn("prior source ancestry changed", validate(self.d))
+
     def test_source_hash_falsification_rejected(self):
         d=copy.deepcopy(self.d); d["source_pdfs"][0]["sha256"]="0"*64
         self.assertIn("source provenance changed", validate(d))
