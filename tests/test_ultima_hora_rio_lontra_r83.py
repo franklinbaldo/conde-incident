@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / "research/archive/ultima_hora_rio_04201_LONTRA_R83.json"
 URL = "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04201.pdf"
 SOURCE_SHA = "b7ce4a3437633fe712fc49df6a0b1f86289912360830b9c979afea1ffa8bd134"
+INTERPRETATION_SHA256 = "6f1c9d1aa32c8f2fd09507aef29992de09494f36442658b645fd7bc3935fb750"
 ASSIGNED = [1, 2, 4, 6, 8]
 
 
@@ -18,7 +19,15 @@ def require(value, message):
         raise ValueError(message)
 
 
+def interpretation_sha256(doc):
+    # Pins the complete reviewed interpretation, not merely the source PDF hash.
+    payload = json.dumps(doc, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
 def validate(doc):
+    require(interpretation_sha256(doc) == INTERPRETATION_SHA256,
+            "complete interpretation changed; review against the original pages")
     require(doc["schema"] == "conde.press_visual_review/v1", "schema")
     require(doc["id"] == "C241-LONTRA-R83" and doc["refs_issue"] == 871, "identity")
     src = doc["source"]
@@ -75,6 +84,14 @@ class TestLontraR83(unittest.TestCase):
         change(doc)
         with self.assertRaises(ValueError):
             validate(doc)
+
+    def test_fabricated_article_in_topics(self):
+        self.reject(lambda d: d["pages"][0].update(
+            topics=d["pages"][0]["topics"] + "; NASA confirma queda em Conde às 20h15"))
+
+    def test_fabricated_folio_note(self):
+        self.reject(lambda d: d["pages"][2].update(
+            false_positive_guard="Testemunha independente viu o objeto em Conde às 20h15"))
 
     def test_wrong_source(self):
         self.reject(lambda d: d["source"].update(sha256="0" * 64))
