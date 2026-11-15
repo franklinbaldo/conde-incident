@@ -1,0 +1,115 @@
+{
+  "schema": "conde.local_clock_visual_pages/v1",
+  "id": "C241-TARTARUGA-R79",
+  "issue": 871,
+  "checked_utc_date": "2026-11-15",
+  "source": {
+    "title": "Correio da Manhã",
+    "city": "Rio de Janeiro",
+    "collection_edition": "089842/21657",
+    "edition_date_visual": "1963-11-09",
+    "edition_number_visual": "21.657",
+    "url": "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21657.pdf",
+    "bytes": 22546215,
+    "sha256": "a5aa619730df13e2a630c7d16fcfde95f58180ec3a05063038177b03fd46f7d0",
+    "pdf_page_count": 28,
+    "pdf_original_reused_on_ifro": true
+  },
+  "reading": {
+    "method": "Visual full-page reading of all columns, photographs, captions, ads and footnotes at 175 dpi with eight overlapping crops per page (two columns by four rows); original PDF text only auxiliary; Ifro rendered and image crops visually inspected",
+    "status_by_pdf_page": [
+      {
+        "pdf_page": 6,
+        "printed_page": 6,
+        "section": "1.º Caderno",
+        "status": "EXAMINADA",
+        "reading_scope": "all editorials and political columns, columns on local government, biography, satire/cartoon, ads and lower strips; eight overlapping image crops",
+        "subjects": "Trabalho extraordinário (Congress recess); Mundo Político (Darcy Ribeiro, Jango, Danton Jobim, PTB, MEC, CPI); Realidades (cost of living); Lauro Müller centenary; Experiência Histórica essay; Rio bus service and police insecurity; no report of falling object in Bahia",
+        "relevant_article": null,
+        "conde_event_time_literal": null,
+        "conde_eyewitness": null,
+        "orbital_constraint_activated": false
+      },
+      {
+        "pdf_page": 7,
+        "printed_page": 7,
+        "section": "1.º Caderno",
+        "status": "EXAMINADA",
+        "reading_scope": "weather indicators, dispatches, transport, school and carnival columns, cemetery and pharmacist labor disputes, Rio education and political demonstration notices; eight overlapping image crops",
+        "subjects": "Rio and Brasília weather forecasts; 12h TCG weather-map time is a forecast-analysis clock, not the event; Normalistas vão escolher grêmio; Greve pode parar cemitérios na GB; Presidente da CFF quer mais árvores; Carnaval; precinct and union news; concentration in Ipanema at 19h on 9 Nov is a political event, not a Conde witness",
+        "relevant_article": null,
+        "conde_event_time_literal": null,
+        "conde_eyewitness": null,
+        "orbital_constraint_activated": false
+      },
+      {
+        "pdf_page": 8,
+        "printed_page": 8,
+        "section": "1.º Caderno",
+        "status": "EXAMINADA",
+        "reading_scope": "crime reports, labor columns, advertisements and photo caption, local infrastructure and entertainment/religious broadcast; eight overlapping image crops",
+        "subjects": "Santa Catarina iron-ore taxation; Colegio Militar student test (14h-17h); girl's doll after burns in Minas Gerais; Lago das Sereias reservoir cleaning; local Rio homicide and fire; Interpol searches Cocucci; Fanny habeas corpus; labour confederations; 8 December Dia da Família broadcast 20h-21h (not falling-object event); newspaper ads",
+        "relevant_article": null,
+        "conde_event_time_literal": null,
+        "conde_eyewitness": null,
+        "orbital_constraint_activated": false
+      }
+    ],
+    "new_pages_fully_examined": [
+      6,
+      7,
+      8
+    ],
+    "previous_pages_fully_examined": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      21
+    ],
+    "cumulative_pages_fully_examined": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      21
+    ],
+    "cumulative_pages_not_fully_examined": [
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28
+    ],
+    "edition_fully_examined": false,
+    "global_negative_asserted": false,
+    "correio_10_nov_full_edition_examined": false
+  },
+  "conclusion": {
+    "classification": "NO_NEW_CONDE_EVENT_HOUR_IN_THREE_ADDITIONAL_FULLY_READ_PAGES",
+    "conde_event_time_literal": null,
+    "conde_eyewitness": null,
+    "source_of_report_independent_from_tupi_fbis": "UNDETERMINED",
+    "orbital_constraint_activated": false,
+    "further_action": "Read pages 9-12 of 9 November, then 13-20 and 22-28; 10 November pages 1-8 already read by Cervo, Tartaruga starts from page 9; negatives limited to observed pages."
+  }
+}
