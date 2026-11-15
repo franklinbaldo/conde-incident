@@ -12,6 +12,8 @@
   --font-interface: system-ui, sans-serif;
   --measure-reading: 760px;
   --measure-layout: 960px;
+  /* Stable in CSS pixels when the root text size is enlarged. */
+  --layout-gutter: clamp(32px, 4vw, 40px);
   /* SSG dossier light palette: the second editorial theme is a first-class token set. */
   --color-casefile-paper: #f5f2e9;
   --color-casefile-surface: #fffdf8;

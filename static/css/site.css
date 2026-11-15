@@ -1,6 +1,6 @@
 @import url("./tokens.css");
 *{box-sizing:border-box}html{font-family:Georgia,serif;background:var(--paper);color:var(--ink)}body{margin:0;line-height:1.65}
-a{color:var(--accent);text-underline-offset:.16em}a:hover{color:#fff}.wrap{width:min(100% - 2.5rem,960px);margin-inline:auto}
+a{color:var(--accent);text-underline-offset:.16em}a:hover{color:#fff}.wrap{width:min(100% - var(--layout-gutter),960px);margin-inline:auto}
 .masthead{border-bottom:1px solid var(--line);background:#0e1016}.masthead-inner{padding:1.05rem 0;display:flex;justify-content:space-between;align-items:center;gap:1rem}
 .brand{text-decoration:none;color:var(--ink);line-height:1.2}.brand small{display:block;color:var(--muted);font:600 .65rem system-ui,sans-serif;text-transform:uppercase;letter-spacing:.12em}.brand strong{display:block;font-size:1.35rem}
 nav{display:flex;gap:1.5rem;font:600 .85rem system-ui,sans-serif}nav a{text-decoration:none}.intro{padding:6rem 0 3.7rem;border-bottom:1px solid var(--line)}.intro.compact{padding:3.5rem 0 2.2rem}
