@@ -95,6 +95,19 @@ class DayErrorTests(unittest.TestCase):
         self.assertEqual({r["norad"] for r in x["rows"]}, {637, 292, 308, 565})
         self.assertTrue(all(r["norad"] != 528 for r in x["rows"]))
 
+    def test_637_duplicate_height_rejected(self):
+        a, b = fixture()
+        a["comparisons"][0]["last_two"]["scenarios"][1]["H_eff_km_ASSUMED"] = 40
+        with self.assertRaisesRegex(ValueError, "637 scenario heights"):
+            build(a, b)
+
+    def test_r60_duplicate_cutoff_rejected(self):
+        a, b = fixture()
+        attempts = b["cases"]["292"]["methods"]["last_two"]["attempts"]
+        attempts[0]["cutoff_utc"] = attempts[1]["cutoff_utc"]
+        with self.assertRaisesRegex(ValueError, "duplicated cutoffs"):
+            build(a, b)
+
     def test_308_alias_never_confirmed(self):
         x = build(*fixture())
         self.assertTrue(all(r["identity_308_conditional"] for r in x["rows"]
