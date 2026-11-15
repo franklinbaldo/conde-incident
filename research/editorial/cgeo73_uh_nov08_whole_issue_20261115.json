@@ -1,0 +1,136 @@
+{
+  "type": "HistoricalPressFrozenWeekWholeIssueArticleBoundaryAudit",
+  "id": "CGEO-73",
+  "date_utc": "2026-11-15",
+  "issue": "https://github.com/franklinbaldo/conde-incident/issues/887",
+  "prereg_path": "research/editorial/cgeo64_null_narrative_prereg_20261114.json",
+  "prereg_git_blob_sha": "0d13d9359080699e5f8402ca9b7014d7f1f6d59a",
+  "source_inventory_path": "research/editorial/cgeo65_uh_bn_inventory_20261115.json",
+  "cover_crosswalk_path": "research/editorial/cgeo66_uh_cover_dates_20261115.json",
+  "prior_whole_page_audits": [
+    "research/editorial/cgeo69_uh_four_frontpages_20261115.json",
+    "research/editorial/cgeo70_uh_four_internal_pages_20261115.json",
+    "research/editorial/cgeo71_uh_four_page3_20261115.json",
+    "research/editorial/cgeo72_uh_one_complete_issue_20261115.json"
+  ],
+  "source": {
+    "publication": "UH_RE",
+    "issue_id": "00471",
+    "cover_date": "1963-11-08",
+    "preregistered_week": "TARGET_NOV04",
+    "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00471.pdf",
+    "sha256": "e121d6ea9784bcb77a02e1a6e3c453f23987103940f5993190237c45499a95ec",
+    "pdf_pages": 8,
+    "source_relation": "One newspaper issue, one editorial lineage; no independent witness to Conde established."
+  },
+  "method": "Ifro: reconfirm full 00471 original PDF SHA-256 (matches CGEO-65), render each of eight PDF pages in pdftoppm at 1700px and inspect each complete facsimile; use PDF text layer only as supporting lead. Adjudicate phrase within its own article and distinguish lexical matches from reports of the claimed Conde event. Printed fine type may remain imperfectly legible.",
+  "pages": [
+    {
+      "pdf_page": 1,
+      "review": "WHOLE_PAGE_VISUAL_1700PX_PDF_TEXT_AUXILIARY",
+      "editorial_context": "Front page: Petrobras refining, Libérato pay dispute, mining rescue by a giant probe (industrial rescue equipment); no Conde fall or FBIS spacecraft composite.",
+      "lexical_f03_hole_other_event_articles": 0,
+      "confirmed_conde_event_composite_articles": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "pdf_page": 2,
+      "review": "WHOLE_PAGE_VISUAL_1700PX_PDF_TEXT_AUXILIARY",
+      "editorial_context": "Regional politics, courts, military-police imprisonment, Itapema fire, labor and commerce; no confirmed Conde-related composite.",
+      "lexical_f03_hole_other_event_articles": 0,
+      "confirmed_conde_event_composite_articles": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "pdf_page": 3,
+      "review": "WHOLE_PAGE_VISUAL_1700PX_PDF_TEXT_AUXILIARY",
+      "editorial_context": "Pernambuco civil-service salaries, state education council and political commentary; no confirmed Conde-related composite.",
+      "lexical_f03_hole_other_event_articles": 0,
+      "confirmed_conde_event_composite_articles": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "pdf_page": 4,
+      "review": "WHOLE_PAGE_VISUAL_1700PX_PDF_TEXT_AUXILIARY",
+      "editorial_context": "National politics, rent and storms in Rio Grande do Sul; no confirmed Conde-related composite.",
+      "lexical_f03_hole_other_event_articles": 0,
+      "confirmed_conde_event_composite_articles": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "pdf_page": 5,
+      "review": "WHOLE_PAGE_VISUAL_1700PX_PDF_TEXT_AUXILIARY",
+      "editorial_context": "Mine rescue of thirteen survivors and other international/political news; buried miners are not a human body recovered from a metallic sphere.",
+      "lexical_f03_hole_other_event_articles": 0,
+      "confirmed_conde_event_composite_articles": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "pdf_page": 6,
+      "review": "WHOLE_PAGE_VISUAL_1700PX_PDF_TEXT_AUXILIARY",
+      "editorial_context": "Society, cinema, horoscope, arts and crossword; no confirmed Conde-related composite.",
+      "lexical_f03_hole_other_event_articles": 0,
+      "confirmed_conde_event_composite_articles": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "pdf_page": 7,
+      "review": "WHOLE_PAGE_VISUAL_1700PX_PDF_TEXT_AUXILIARY",
+      "editorial_context": "Sporting results and football columns; 'centro' as a field position is not the city center of Conde.",
+      "lexical_f03_hole_other_event_articles": 0,
+      "confirmed_conde_event_composite_articles": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "pdf_page": 8,
+      "review": "WHOLE_PAGE_VISUAL_1700PX_PDF_TEXT_AUXILIARY",
+      "editorial_context": "Police report on stolen sculptures buried in Rio Doce explicitly contains a four-meter-deep hole (one F03 lexical article); a separate Stanislaw Ponte Preta column contains a window reference (not spacecraft windows). Same-page coincidence and same-day publication cannot establish copying before FBIS/Tupi.",
+      "lexical_f03_hole_other_event_articles": 1,
+      "confirmed_conde_event_composite_articles": 0,
+      "independent_conde_witness": false
+    }
+  ],
+  "article_boundary": {
+    "reference": "CGEO-67 and CGEO-68 earlier passage-level adjudications on the same PDF page 8; not independent new observations.",
+    "lexical_article": "POLÍCIA ARRANCA CONFISSÃO DO PESCADOR: ROUBEI ESTÁTUAS E ENTERREI EM RIO DOCE",
+    "lexical_fragment_id": "F03_FOUR_METER_HOLE",
+    "lexical_match_count": 1,
+    "matches_fbis_conde_event": false,
+    "same_day_but_known_pre_fbis_publication": false,
+    "other_article": "Stanislaw Ponte Preta, Cão, o Melhor Amigo, Como Sempre",
+    "other_article_window_is_fbis_f04": false,
+    "same_page_means_same_article": false,
+    "same_newspaper_means_independent_witness": false
+  },
+  "coverage": {
+    "new_fully_reviewed_pages": 8,
+    "previous_distinct_fully_reviewed_pages": 20,
+    "combined_distinct_fully_reviewed_pages": 28,
+    "by_week_distinct_pages": {
+      "CONTROL_OCT07": 8,
+      "CONTROL_OCT14": 4,
+      "CONTROL_OCT21": 4,
+      "TARGET_NOV04": 12
+    },
+    "completed_issue_ids": [
+      "00442",
+      "00471"
+    ],
+    "completed_issue_count": 2,
+    "target_issue_00471_pages": 8,
+    "f03_lexical_articles_different_story_same_day": 1,
+    "confirmed_fbis_conde_event_composite_articles": 0,
+    "journal_do_brasil_pages": 0,
+    "preregistered_date_slots_changed": 0,
+    "first_pre_event_occurrence": null,
+    "representative_baseline_rate": null,
+    "general_verdict": "UNDETERMINED"
+  },
+  "limits": [
+    "Reading all eight pages of one target-week issue does not make the four sampled dates or eight composite motifs a random or representative census.",
+    "The one F03 lexical match concerns stolen statues in Rio Doce, not Conde. Its publication day is the FBIS/Tupi day, but hour/order of production are not authenticated.",
+    "Article on a mine rescue uses 'sonda' as rescue machinery; it is not a spacecraft from Conde.",
+    "No new independent witness, local event hour, authenticated 1963 center geometry or orbital constraint.",
+    "The preregistered eight fragment IDs and 50 date-newspaper slots remain unchanged; rates for unreviewed pages and blocked Jornal do Brasil remain unknown."
+  ]
+}
