@@ -81,6 +81,8 @@ def build(r54: dict, r60: dict) -> dict:
             payload = c[key]
             if payload["status"] != "HEURISTIC_ONLY" or len(payload["scenarios"]) != 2:
                 raise ValueError("missing 637 scenario")
+            if {item["H_eff_km_ASSUMED"] for item in payload["scenarios"]} != set(HEIGHTS):
+                raise ValueError("637 scenario heights must include exactly 40 and 50 km")
             for scenario in payload["scenarios"]:
                 h = scenario["H_eff_km_ASSUMED"]
                 pred = utc(scenario["hypothetical_terminal_utc"])
@@ -107,8 +109,10 @@ def build(r54: dict, r60: dict) -> dict:
             attempts = method_data["attempts"]
             origins = method_data["origins"]
             by_origin = {item["origin_utc"]: item for item in origins}
-            if len(attempts) != 4 or len(by_origin) != len(origins):
-                raise ValueError("missing cutoffs or conflicting origins")
+            if (len(attempts) != 4
+                    or len({a["cutoff_utc"] for a in attempts}) != 4
+                    or len(by_origin) != len(origins)):
+                raise ValueError("missing or duplicated cutoffs or conflicting origins")
             seen = set()
             for attempt in attempts:
                 origin = attempt["origin_utc"]
