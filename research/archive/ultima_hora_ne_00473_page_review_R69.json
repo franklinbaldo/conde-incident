@@ -1,0 +1,233 @@
+{
+  "schema": "conde.newspaper_page_review/v1",
+  "id": "C241-LONTRA-R69",
+  "refs_issue": 871,
+  "review_date_utc": "2026-11-15",
+  "source": {
+    "institution": "Fundação Biblioteca Nacional",
+    "collection_id": "765147",
+    "newspaper": "Última Hora, edição Nordeste (PE)",
+    "edition": "00473",
+    "date_printed": "1963-11-10",
+    "pdf_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00473.pdf",
+    "pdf_sha256": "f37e4afa500fe841546a751e562cc799c33c699decb8967b2ae00b45e721e349",
+    "pdf_bytes": 8298891,
+    "pdf_pages": 18,
+    "source_manifest": "research/archive/ultima_hora_ne_nov1963_C241_LONTRA_R67.json",
+    "redownload": false,
+    "integrity_rechecked_on_ifro": true
+  },
+  "method": {
+    "execution": "Ifro; Jatobá só orquestra",
+    "visual_scope": "páginas 2–18 em panoramas de manchetes e diagramação; não leitura integral de todas as colunas",
+    "text_assist": "índice textual preexistente usado apenas como apoio de triagem",
+    "full_body_reading": false,
+    "negative_is_page_scoped": false
+  },
+  "pages": [
+    {
+      "pdf_page": 1,
+      "status": "EXAMINADA",
+      "review_scope": "CAPA_VERIFICADA_R67",
+      "topic_overview": "capa anteriormente verificada na R67",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 2,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "política de Sergipe e crônica do Recife",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 3,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "governo estadual, trânsito e publicidade",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 4,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "Congresso e finanças públicas",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 5,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "explosão de mina no Japão e notícia espacial geral NASA/Explorer 1",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 6,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "investigação policial no Recife",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 7,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "debate político e publicidade institucional",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 8,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "direitos civis dos negros nos EUA",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 9,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "cultura popular e Bertolt Brecht",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 10,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "classificados e anúncios",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 11,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "rádio, TV e folclore",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 12,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "futebol e esportes",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 13,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "capa de suplemento feminino e moda de verão",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 14,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "culinária e passatempos",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 15,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "chapéus e colunas femininas",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 16,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "cinema e programação cultural",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 17,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "cuidados pessoais e decoração",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 18,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "moda, praia e reportagem social",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    }
+  ],
+  "possible_false_positives_not_fully_audited": true,
+  "contextual_article": {
+    "pdf_page": 5,
+    "headline": "NASA: 'Explorer 1' abrirá caminho aos cosmonautas",
+    "classification": "notícia espacial geral, sem relato identificado de Conde/BA ou medição individual do NORAD 528",
+    "orbital_observation": false
+  },
+  "result": {
+    "pages_visually_reviewed": 18,
+    "new_internal_pages_reviewed": 17,
+    "pages_remaining_for_panorama_of_all_four_editions": 18,
+    "confirmed_independent_event_time": null,
+    "source_chain": "UNDETERMINED",
+    "whole_edition_no_article_claim": false,
+    "whole_edition_no_time_claim": false,
+    "physical_orbital_constraint_added": false
+  },
+  "limitations": [
+    "Panorama de manchetes não substitui leitura integral das colunas nem autoriza LIDO_SEM_HORA da edição.",
+    "Nenhuma hora local independente do episódio foi confirmada nas manchetes visíveis; textos não lidos permanecem indeterminados.",
+    "A nota NASA/Explorer 1 não identifica Conde/BA, 528 ou observação orbital do alvo.",
+    "Ainda faltam 18 páginas internas de 00474 e 00475 para panorama e leitura aprofundada das colunas das quatro edições.",
+    "Sem contato com acervo ou nova restrição física."
+  ]
+}
