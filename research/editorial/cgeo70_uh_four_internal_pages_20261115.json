@@ -1,0 +1,160 @@
+{
+  "type": "HistoricalPressFrozenWeekInternalPageAudit",
+  "id": "CGEO-70",
+  "date_utc": "2026-11-15",
+  "issue": "https://github.com/franklinbaldo/conde-incident/issues/887",
+  "prereg_path": "research/editorial/cgeo64_null_narrative_prereg_20261114.json",
+  "prereg_blob_sha": "0d13d9359080699e5f8402ca9b7014d7f1f6d59a",
+  "source_inventory_path": "research/editorial/cgeo65_uh_bn_inventory_20261115.json",
+  "source_cover_crosswalk": "research/editorial/cgeo66_uh_cover_dates_20261115.json",
+  "prior_audit_path": "research/editorial/cgeo69_uh_four_frontpages_20261115.json",
+  "method": "Verify original PDF SHA-256 on Ifro; render each specified internal PDF page at 2300px, inspect all four quadrants visually, and compare entire page to text layer for leads. Confirm composite FBIS fragments only at same-article level, never from OCR cooccurrence or independent columns. Images held on Ifro only.",
+  "selection_bias": "Pages purposely chosen using already available lexical leads, except 00467 page 2 as next fixed target page; these pages are NOT a random or representative sample. Counts and denominators describe viewed pages only and MUST NOT be extrapolated to an entire edition, week or newspaper.",
+  "pages": [
+    {
+      "publication": "UH_RE",
+      "issue_id": "00442",
+      "date": "1963-10-09",
+      "week": "CONTROL_OCT07",
+      "pdf_page": 6,
+      "source_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00442.pdf",
+      "source_sha256": "7b7c6189f86a9da5457332927f847262a72a4d0989a18f9b0042283c83e90a6a",
+      "review": "FULL_PAGE_VISUAL_FOUR_QUADRANTS_TEXT_LAYER_AUXILIARY",
+      "selection": "PURPOSIVE_TEXT_LAYER_LEAD_OR_FIXED_NEXT_PAGE",
+      "genre": "CLASSIFIED_PROPERTY",
+      "confirmed_article_counts": {
+        "F01_METAL_SPHERE": 0,
+        "F02_CITY_CENTER": 0,
+        "F03_FOUR_METER_HOLE": 0,
+        "F04_WINDOWS": 0,
+        "F05_THICK_GLASS": 0,
+        "F06_HUMAN_BODY": 0,
+        "F07_HEAVY_CLOTHES": 0,
+        "F08_INDECIPHERABLE_INSCRIPTIONS": 0
+      },
+      "lexical_adjudication": {
+        "fragment_or_context": "F04_WINDOWS",
+        "context": "Janelas in property-classified OCR; visual page is real-estate advertising, not a spacecraft aperture.",
+        "fbis_composite_match": false
+      },
+      "whole_issue_read": false,
+      "independent_conde_witness": false
+    },
+    {
+      "publication": "UH_RE",
+      "issue_id": "00447",
+      "date": "1963-10-14",
+      "week": "CONTROL_OCT14",
+      "pdf_page": 5,
+      "source_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00447.pdf",
+      "source_sha256": "e249c946712b7685e0a34d3de9a7250929957deb7a4c5894fbdb94aa0d02242b",
+      "review": "FULL_PAGE_VISUAL_FOUR_QUADRANTS_TEXT_LAYER_AUXILIARY",
+      "selection": "PURPOSIVE_TEXT_LAYER_LEAD_OR_FIXED_NEXT_PAGE",
+      "genre": "BUDDHIST_REPORT",
+      "confirmed_article_counts": {
+        "F01_METAL_SPHERE": 0,
+        "F02_CITY_CENTER": 0,
+        "F03_FOUR_METER_HOLE": 0,
+        "F04_WINDOWS": 0,
+        "F05_THICK_GLASS": 0,
+        "F06_HUMAN_BODY": 0,
+        "F07_HEAVY_CLOTHES": 0,
+        "F08_INDECIPHERABLE_INSCRIPTIONS": 0
+      },
+      "lexical_adjudication": {
+        "fragment_or_context": "F01_METAL_SPHERE",
+        "context": "Metaphorical 'esfera orgânica' in Buddhist-monks report, not a metal sphere.",
+        "fbis_composite_match": false
+      },
+      "whole_issue_read": false,
+      "independent_conde_witness": false
+    },
+    {
+      "publication": "UH_RE",
+      "issue_id": "00455",
+      "date": "1963-10-22",
+      "week": "CONTROL_OCT21",
+      "pdf_page": 5,
+      "source_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00455.pdf",
+      "source_sha256": "d4e08e37c815b538d29eb56c2354ddb3d60b8e2f3dbf27573d643693a7110830",
+      "review": "FULL_PAGE_VISUAL_FOUR_QUADRANTS_TEXT_LAYER_AUXILIARY",
+      "selection": "PURPOSIVE_TEXT_LAYER_LEAD_OR_FIXED_NEXT_PAGE",
+      "genre": "SPACE_PROGRAM_REPORT",
+      "confirmed_article_counts": {
+        "F01_METAL_SPHERE": 0,
+        "F02_CITY_CENTER": 0,
+        "F03_FOUR_METER_HOLE": 0,
+        "F04_WINDOWS": 0,
+        "F05_THICK_GLASS": 0,
+        "F06_HUMAN_BODY": 0,
+        "F07_HEAVY_CLOTHES": 0,
+        "F08_INDECIPHERABLE_INSCRIPTIONS": 0
+      },
+      "lexical_adjudication": {
+        "fragment_or_context": "X01_SATELLITE",
+        "context": "Reporting about rockets, spacecraft/satellites and prospects of reaching the Moon; genuine space vocabulary but not any frozen FBIS composite motif.",
+        "fbis_composite_match": false
+      },
+      "whole_issue_read": false,
+      "independent_conde_witness": false
+    },
+    {
+      "publication": "UH_RE",
+      "issue_id": "00467",
+      "date": "1963-11-04",
+      "week": "TARGET_NOV04",
+      "pdf_page": 2,
+      "source_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00467.pdf",
+      "source_sha256": "82c0345dccc9c7d48db3512b134b84b0d1d39579410b5f91530109674bd995f9",
+      "review": "FULL_PAGE_VISUAL_FOUR_QUADRANTS_TEXT_LAYER_AUXILIARY",
+      "selection": "PURPOSIVE_TEXT_LAYER_LEAD_OR_FIXED_NEXT_PAGE",
+      "genre": "URBAN_PLANNING",
+      "confirmed_article_counts": {
+        "F01_METAL_SPHERE": 0,
+        "F02_CITY_CENTER": 0,
+        "F03_FOUR_METER_HOLE": 0,
+        "F04_WINDOWS": 0,
+        "F05_THICK_GLASS": 0,
+        "F06_HUMAN_BODY": 0,
+        "F07_HEAVY_CLOTHES": 0,
+        "F08_INDECIPHERABLE_INSCRIPTIONS": 0
+      },
+      "lexical_adjudication": {
+        "fragment_or_context": "X01_SATELLITE",
+        "context": "Urban-development 'cidades satélites' is a place-planning usage, not an orbiting spacecraft.",
+        "fbis_composite_match": false
+      },
+      "whole_issue_read": false,
+      "independent_conde_witness": false
+    }
+  ],
+  "coverage": {
+    "new_internal_pages_fully_read": 4,
+    "prior_front_pages_fully_read": 4,
+    "total_pages_scoped_across_cgeo69_cgeo70": 8,
+    "pages_by_week_scoped": {
+      "CONTROL_OCT07": 2,
+      "CONTROL_OCT14": 2,
+      "CONTROL_OCT21": 2,
+      "TARGET_NOV04": 2
+    },
+    "whole_issues_read": 0,
+    "jb_pages_read": 0,
+    "predeclared_slots_changed": 0,
+    "full_corpus_baseline_rate": null,
+    "first_pre_event_occurrence": null,
+    "general_verdict": "UNDETERMINED"
+  },
+  "lineage_and_limits": {
+    "distinct_publication_lineages_for_four_pages": 1,
+    "same_article_republications_authenticated": 0,
+    "independent_conde_witness_found": false,
+    "source_hour_of_event_found": false,
+    "space_vocabulary_is_not_fbis_sphere_fragment": true,
+    "not_all_pages_of_any_issue_inspected": true,
+    "historical_center_1963": null,
+    "orbital_constraint_activated": false,
+    "deliberate_fraud_proven": false
+  },
+  "interpretation": "Four additional fully reviewed pages yield zero confirmed frozen composite motifs on those pages. This does not reject or support H0-H3 globally. Satellite terminology in 22 Oct space-program coverage is contextual, not proof of borrowing; spatially separate stories and adverts are not independent witnesses."
+}
