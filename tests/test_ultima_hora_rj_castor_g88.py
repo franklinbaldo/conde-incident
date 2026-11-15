@@ -1,18 +1,28 @@
 """C241-G88: audit a limited five-page visual second pass without promoting negatives."""
 import copy
+import hashlib
 import json
 import unittest
 from pathlib import Path
 
+from tools.audit_ultima_hora_rj_castor_g86 import validate as validate_g86
+
 ROOT = Path(__file__).resolve().parents[1]
 G88 = ROOT / "research/archive/ultima_hora_rj_1963_11_09_C241_CASTOR_G88.json"
 G86 = ROOT / "research/archive/ultima_hora_rj_1963_11_09_10_C241_CASTOR_G86.json"
+CANONICAL_SHA256 = "1cccb44fbfb8dcc964e4b5d56672ee8e7178a45856b30162126d914753b02f75"
 
 def require(condition, detail):
     if not condition:
         raise ValueError(detail)
 
 def validate(doc, parent):
+    canonical = json.dumps(
+        doc, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    require(hashlib.sha256(canonical).hexdigest() == CANONICAL_SHA256,
+            "G88 full interpreted record changed")
+    validate_g86(parent)  # Source-only ancestor mutations must not pass.
     source = doc["source"]
     require(doc["schema"] == "conde.press_visual_review/v1" and doc["id"] == "C241-CASTOR-G88", "id")
     require(doc["date_reviewed"] == "2026-11-15", "review date")
@@ -58,6 +68,16 @@ class TestG88(unittest.TestCase):
         node[path[-1]] = value
         with self.assertRaises(ValueError):
             validate(changed, self.parent)
+
+    def test_reject_prose_mutation(self):
+        self.mutate(["pages", 0, "assessment"],
+                    "NASA confirmed fall in Conde at 20h15")
+
+    def test_reject_ancestor_source_only(self):
+        parent = copy.deepcopy(self.parent)
+        parent["coverage"]["pages"][0]["topics"] = "NASA confirmed 20h15"
+        with self.assertRaises(ValueError):
+            validate(self.doc, parent)
 
     def test_fake_event_clock(self):
         self.mutate(["interpretation","independent_conde_event_time"], "1963-11-08T21:30:00-03:00")

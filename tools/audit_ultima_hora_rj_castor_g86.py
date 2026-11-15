@@ -6,6 +6,7 @@ from pathlib import Path
 
 MANIFEST = Path(__file__).resolve().parents[1] / "research/archive/ultima_hora_rj_1963_11_09_10_C241_CASTOR_G86.json"
 SHA256 = "320aeb075b99fc6f2884904d9e1aa801b9d3f6be2b131ded30093caaaa6ce352"
+CANONICAL_SHA256 = "59b604b23673bfbc325acd193e66289b3ac7f70a2c88d2b22a42a702bb26d2f1"
 BYTES = 10778040
 URL = "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04200.pdf"
 
@@ -14,6 +15,11 @@ def require(condition, message):
         raise ValueError(message)
 
 def validate(doc):
+    canonical = json.dumps(
+        doc, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    require(hashlib.sha256(canonical).hexdigest() == CANONICAL_SHA256,
+            "G86 original full interpretation changed")
     require(doc["schema"] == "conde.local_clock_press_custody/v1", "schema")
     require(doc["id"] == "C241-CASTOR-G86" and doc["issue"] == 871, "identity")
     s = doc["source"]
