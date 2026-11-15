@@ -43,6 +43,37 @@ test('SSG-first: the single CSS theme loads before editorial rules without JS', 
   assert.ok(tokens.includes('--measure-reading: 760px;'));
 });
 
+const parseLayoutGutter = (theme, stylesheet) => {
+  const token = theme.match(/--layout-gutter:\s*clamp\((\d+)px,\s*([\d.]+)vw,\s*(\d+)px\);/);
+  assert.ok(token, 'layout gutter must use fixed px/vw units, not rem-based spacing');
+  assert.match(stylesheet, /\.wrap\{width:min\(100% - var\(--layout-gutter\),960px\);margin-inline:auto\}/);
+  const [, minimum, percent, maximum] = token.map(Number);
+  return viewport => Math.min(Math.max(Number(minimum), viewport * percent / 100), Number(maximum));
+};
+
+test('SSG reflow gutter remains stable when root text size doubles', () => {
+  const gutter = parseLayoutGutter(tokens, site);
+  for (const viewport of [320, 375, 1440]) {
+    const available = Math.min(viewport - gutter(viewport), 960);
+    assert.ok(available > 0);
+    for (const rootFontSize of [16, 32]) {
+      const oldRemBasedWidth = Math.min(viewport - 2.5 * rootFontSize, 960);
+      if (viewport <= 375) assert.ok(available > oldRemBasedWidth,
+        'fixed gutter must leave more reading width than a rem gutter at ' + rootFontSize + 'px');
+      assert.equal(Math.min(viewport - gutter(viewport), 960), available);
+    }
+  }
+  assert.equal(gutter(320), 32);
+  assert.equal(Math.min(320 - gutter(320), 960), 288);
+  assert.equal(Math.min(375 - gutter(375), 960), 343);
+});
+
+test('negative: a rem gutter must not satisfy the SSG reflow contract', () => {
+  assert.throws(() => parseLayoutGutter(tokens.replace(
+    /--layout-gutter: clamp\([^;]+;/, '--layout-gutter: 2.5rem;'
+  ), site), /fixed px\/vw/);
+});
+
 test('WCAG AA: editorial foreground, secondary text and links at least 4.5:1', () => {
   for (const name of ['text', 'subtle-text', 'link']) {
     assert.ok(contrast(colors['--color-' + name], colors['--color-page']) >= 4.5,
