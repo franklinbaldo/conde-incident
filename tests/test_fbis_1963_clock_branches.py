@@ -17,6 +17,10 @@ def synthetic_anchor(index, utc="1963-11-08T23:30Z"):
         "independent_source_url": "https://invalid.example/radio-" + str(index),
         "independent_source_sha256": format(index + 2000, "064x"),
         "independent_page": "1",
+        "fbis_heading_verbatim": (
+            f"RIO DE JANEIRO RADIO SYNTHETIC{index} IN PORTUGUESE "
+            "2330 8 NOV 63 W"
+        ),
         "header_local_text": "2330 8 NOV 63",
         "external_broadcast_utc": utc,
         "independence_rationale": (
@@ -166,6 +170,10 @@ class FBISClockTests(unittest.TestCase):
                 for i in range(10)]
         for row in rows:
             row["header_local_text"] = "2330 30 NOV 63"
+            row["fbis_heading_verbatim"] = (
+                row["fbis_heading_verbatim"].replace("2330 8 NOV 63",
+                                                    "2330 30 NOV 63")
+            )
         self.assertEqual(f.qualification(rows)["status"], "RIO_LOCAL")
         # All examples are synthetic. This is a boundary-of-calendar test only.
 
@@ -178,6 +186,50 @@ class FBISClockTests(unittest.TestCase):
                 "schema": "conde.fbis-clock-anchors/v1",
                 "independent_anchors": [a, b],
             })
+
+    def test_syndicated_same_broadcast_cannot_make_two_independent_votes(self):
+        # Two separate scans/hashes/pages, but the same station and time.
+        a, b = synthetic_anchor(0), synthetic_anchor(1)
+        b["fbis_heading_verbatim"] = a["fbis_heading_verbatim"]
+        with self.assertRaisesRegex(ValueError, "same broadcast reissued"):
+            f.anchors_from_manifest({
+                "schema": "conde.fbis-clock-anchors/v1",
+                "independent_anchors": [a, b],
+            })
+
+    def test_ten_reprints_of_one_broadcast_cannot_form_gmt_quorum(self):
+        rows = [synthetic_anchor(i) for i in range(10)]
+        for row in rows:
+            row["fbis_heading_verbatim"] = rows[0]["fbis_heading_verbatim"]
+        with self.assertRaisesRegex(ValueError, "same broadcast reissued"):
+            f.anchors_from_manifest({
+                "schema": "conde.fbis-clock-anchors/v1",
+                "independent_anchors": rows,
+            })
+
+    def test_clock_must_match_verbatim_heading_not_a_second_guess(self):
+        bad = synthetic_anchor(0)
+        bad["header_local_text"] = "2331 8 NOV 63"
+        with self.assertRaisesRegex(ValueError, "differs"):
+            f.anchors_from_manifest({
+                "schema": "conde.fbis-clock-anchors/v1",
+                "independent_anchors": [bad],
+            })
+
+    def test_wrong_city_or_missing_original_heading_rejected(self):
+        for heading in (
+            "SAO PAULO RADIO TEST IN PORTUGUESE 2330 8 NOV 63 W",
+            "RIO DE JANEIRO RADIO TEST IN PORTUGUESE 2330 8 NOV 63",
+            "",
+        ):
+            bad = synthetic_anchor(0)
+            bad["fbis_heading_verbatim"] = heading
+            with self.subTest(heading=heading):
+                with self.assertRaises(ValueError):
+                    f.anchors_from_manifest({
+                        "schema": "conde.fbis-clock-anchors/v1",
+                        "independent_anchors": [bad],
+                    })
 
     def test_page_numbers_are_positive_printed_page_indices(self):
         for key in ("fbis_page", "independent_page"):

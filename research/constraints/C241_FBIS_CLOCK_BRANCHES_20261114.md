@@ -40,6 +40,22 @@ Essas diferenças são *ordens temporais calculadas*, não probabilidades nem ex
 
 Antes de contar resultados, exigir **dez ou mais itens FBIS distintos de novembro de 1963**, cada qual com URL, página e SHA do FBIS, mais URL, página, SHA e cadeia independente de uma **fonte contemporânea que determine a hora efetiva da mesma transmissão**. Correspondência do tópico geral ou repetição da mesma linhagem não conta. Para os dez primeiros itens verificáveis, confrontar 'GMT' e 'RIO_LOCAL' contra hora externa em UTC, com margem operacional pré-fixada de **até cinco minutos**, apenas nas emissoras e datas em que o UTC−2 da Guanabara se aplica. Só escolher um ramo quando **todos** os dez ou mais itens o sustentarem e nenhum contradisser; caso contrário retornar 'UNRESOLVED'. Esta margem **não** é sigma instrumental.
 
+### Unidade observacional, não unidade de arquivo (C241-P54)
+
+O item contado é **a transmissão singular** (emissora e data/hora no cabeçalho
+completo), não a digitalização ou o número de arquivo. Cada candidato P48 deve
+conservar `fbis_heading_verbatim` da folha original, além de
+`header_local_text`; o auditor exige concordância exata entre ambos e
+identificação literal de estação de rádio do Rio. Dez cópias ou recortes com
+SHAs/páginas diferentes da **mesma transmissão** contam como **uma**
+ocorrência e, na implementação, são rejeitados como duplicatas, mesmo quando
+seus outros identificadores são diferentes. Esse controle elimina a falsa
+unanimidade demonstrada antes da correção. O campo integral não demonstra por
+si só autenticidade do original: o exame visual e o relógio externo
+independente continuam obrigatórios. A regra de unanimidade, a tolerância de
+5 minutos e o limiar de 10 transmissões distintas **não mudaram**. Os testes
+sintéticos usam estações fictícias distintas apenas para exercitar os ramos.
+
 O manifesto [fbis_1963_clock_anchors.json](fbis_1963_clock_anchors.json) está vazio e não possui exemplos sintéticos disfarçados de observações. [Gerador e auditor](../../tools/fbis_1963_clock_branches.py) exporta [JSON derivado](fbis_1963_clock_branches.json) e compara bytes com '--check'. Os testes incluem controles sintéticos negativos que **não são inseridos** no manifesto histórico.
 
 **Saída para Castor (#870):** consumir os três ramos e o indicador 'orbit_exclusion_licensed=false', nunca selecionar fuso por conveniência para ajustar a simulação. **Para Lontra (#871):** preservar cabeçalho e rodapé literais enquanto a fonte comparável ainda não for encontrada. **Estado:** 'THETA_UNCHANGED'; nenhuma prova Lean nova é legitimada por estas premissas.
