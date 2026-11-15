@@ -7,6 +7,7 @@ import {writeMatrixCatalogPages} from './ssg-matrix-catalog.mjs';
 import {writeTleCustodyPage} from './ssg-tle-custody.mjs';
 import {writeAuthoredPages} from './ssg-authored-pages.mjs';
 import {editorialChronology} from './ssg-chronology.mjs';
+import {checkSsgSources} from './ssg-source-preflight.mjs';
 
 // stories/*.md is the sole human-authored content; content/ is regenerated.
 const names=readdirSync('stories').filter(n=>/^\d{4}-\d{2}-\d{2}-[a-z0-9-]+\.md$/.test(n)).sort();
@@ -46,7 +47,9 @@ stories.forEach((s,i)=>{
   if(i) assert.ok(stories[i-1].date<=s.date,'Cronologia retrocedeu');
 });
 if(process.argv.includes('--check')) {
+  const checked=checkSsgSources();
   console.log('Validados '+stories.length+' capítulos canônicos; nenhuma cópia escrita.');
+  console.log('Preflight de fontes SSG (sem escrita): '+JSON.stringify(checked));
   process.exit(0);
 }
 rmSync('content',{recursive:true,force:true});
