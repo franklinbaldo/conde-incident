@@ -265,3 +265,19 @@ test("G79: finite inputs cannot silently yield infinite projected area",()=>{
     bMinM2Kg:0,bMaxM2Kg:1e308,cdMin:1,cdMax:2,
   }),RangeError);
 });
+
+test('G81: declared retained payload imposes a tracked-mass floor even with unconstrained residual',()=>{
+  const x=conditionalTrackedMassEnvelope({
+    basis:'GCAT_TOTMASS_1176',maxAbsCatalogErrorKg:0,
+    maxUntrackedKg:1176,maxPriorLossKg:0,minRetainedPayloadIn527Kg:306,
+  });
+  assert.equal(x.trackedTotalInfimumKg,306);
+  assert.equal(x.trackedTotalSupremumKg,1176);
+  const uncertain=conditionalTrackedMassEnvelope({
+    basis:'GCAT_TOTMASS_1176',maxAbsCatalogErrorKg:null,
+    maxUntrackedKg:null,maxPriorLossKg:null,minRetainedPayloadIn527Kg:306,
+  });
+  assert.equal(uncertain.trackedTotalInfimumKg,306);
+  assert.equal(uncertain.trackedTotalSupremumKg,null);
+  assert.equal(uncertain.historicalConstraintActive,false);
+});
