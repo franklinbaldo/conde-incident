@@ -1,6 +1,8 @@
 """CGEO-71: article boundaries and strict page-limited negative evidence."""
 import json
 from pathlib import Path
+
+from cgeo69_uh_four_frontpages_validate import FROZEN, PREREG, blob_sha
 ROOT=Path(__file__).resolve().parents[1]/"research/editorial"
 names=["cgeo71_uh_four_page3_20261115.json","cgeo65_uh_bn_inventory_20261115.json",
        "cgeo66_uh_cover_dates_20261115.json","cgeo64_null_narrative_prereg_20261114.json",
@@ -24,7 +26,10 @@ def load():
     return [json.loads((ROOT/n).read_text(encoding="utf8")) for n in names]
 def validate(d, inv, covers, pre, old69, old70):
     require((d.get("id"),d.get("type"))==("CGEO-71","HistoricalPressFrozenWeekFixedPageAudit"),"id/type")
-    require(d.get("prereg_blob_sha")=="0d13d9359080699e5f8402ca9b7014d7f1f6d59a","immutable prereg")
+    require(d.get("prereg_blob_sha")==FROZEN,"immutable prereg declared hash")
+    prereg_raw = PREREG.read_bytes()
+    require(blob_sha(prereg_raw)==FROZEN,"prereg source bytes changed")
+    require(pre==json.loads(prereg_raw),"prereg in-memory data differs from frozen source")
     require([pre["id"],inv["id"],covers["id"],old69["id"],old70["id"]]==["CGEO-64","CGEO-65","CGEO-66","CGEO-69","CGEO-70"],"lineage")
     require(d["prior_audit_paths"]==[
       "research/editorial/cgeo69_uh_four_frontpages_20261115.json",
