@@ -1,0 +1,104 @@
+{
+  "type": "HistoricalPressPageReadAndFolioAudit",
+  "id": "CGEO-79",
+  "date_utc": "2026-11-15",
+  "priority": "https://github.com/franklinbaldo/conde-incident/issues/871",
+  "assignment": "https://github.com/franklinbaldo/caranguejo/issues/5",
+  "status": "PARTIAL_ISSUE_NO_EVENT_CLOCK",
+  "source": {
+    "collection": "Biblioteca Nacional, Última Hora, Nordeste/Recife (765147)",
+    "edition": "00472",
+    "cover_date": "1963-11-09",
+    "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00472.pdf",
+    "size_bytes": 5275519,
+    "pdf_pages": 10,
+    "sha256": "8564c0c8c26857e0feda54fc5da0f9d3ca0c34c8de02c44e3074aa79a101cece",
+    "custody": "EXACT_SHA_REPLAY_MATCHES_LONTRA_R67_CGEO77_CGEO78"
+  },
+  "method": {
+    "executor": "Ifro via Jatobá SSH control only, max_memory_mb=128 explicit",
+    "original_pdf_sha256_rechecked": true,
+    "original_pdf_embedded_in_repo": false,
+    "visual": "Pages 5 and 6 individually rendered at 4200 px height, inspected as four high-resolution quadrants each",
+    "pdf_text_layer_only_auxiliary": true,
+    "new_ocr": false,
+    "printed_folio_assumed_from_pdf_index": false,
+    "source_is_an_independent_new_witness": false
+  },
+  "page_reviews": [
+    {
+      "pdf_page": 5,
+      "printed_page": 5,
+      "printed_folio": "VISIBLE_AS_PAGINA_5_AT_TOP_RIGHT",
+      "status": "LIDO_INTEGRAL_SEM_MENCAO",
+      "topics": [
+        "Diem e crise política no Vietnã",
+        "trabalhadores de Capuava e indústria petrolífera",
+        "notas internacionais via agências FP e AP",
+        "loteria pernambucana e publicidade elétrica"
+      ],
+      "event_hour": null,
+      "eyewitnesses": [],
+      "notes": "Quatro quadrantes de alta resolução examinados. Notícias sobre Vietnã, Peine, OTAN, EUA, trabalho e economia; nenhum artigo legível relata queda de objeto em Conde. Horários de publicidade e data da loteria não são relógios do acontecimento."
+    },
+    {
+      "pdf_page": 6,
+      "printed_page": null,
+      "printed_folio": "NOT_CONFIRMED",
+      "status": "ILEGIVEL_PARCIAL",
+      "topics": [
+        "investigação do homicídio de Palmira Tavares em Recife",
+        "quatro suspeitos e depoimentos policiais",
+        "coluna Cidade Nua de M. Barbosa"
+      ],
+      "event_hour": null,
+      "eyewitnesses": [],
+      "unreadable_area": "Algumas letras de linhas estreitas de narrativa policial e da coluna literária aparecem sobreimpressas/desregistradas, impedindo negativo integral.",
+      "notes": "Quatro quadrantes examinados. 'Cerca de oito horas' e '5h30' pertencem à investigação de homicídio não relacionado em Recife; não são hora de queda em Conde. Nenhum relato legível de Conde. Áreas difíceis permanecem sem certificação de negativo."
+    }
+  ],
+  "temporal_false_positives": [
+    {
+      "pdf_page": 5,
+      "phrase": "ENTRE 5:00 E 11:00 HORAS",
+      "context": "horário de serviço na publicidade de eletricidade",
+      "kind": "ADVERTISEMENT_SERVICE_HOUR_NOT_EVENT",
+      "phenomenon_hour": false
+    },
+    {
+      "pdf_page": 6,
+      "phrase": "cerca de oito horas",
+      "context": "narrativa policial sobre localização de vítima em Recife",
+      "kind": "UNRELATED_HOMICIDE_CLOCK_NOT_EVENT",
+      "phenomenon_hour": false
+    },
+    {
+      "pdf_page": 6,
+      "phrase": "5h30",
+      "context": "hora em narrativa policial de homicídio sem vínculo com Conde",
+      "kind": "UNRELATED_HOMICIDE_CLOCK_NOT_EVENT",
+      "phenomenon_hour": false
+    }
+  ],
+  "genealogy": {
+    "new_independent_eyewitness": false,
+    "new_independent_hour": null,
+    "source_independence": "NO_NEW_INCIDENT_SOURCE_IDENTIFIED",
+    "orbit_candidate": null
+  },
+  "coverage": {
+    "package_total_pdf_pages": 68,
+    "previously_certified_integral": 6,
+    "newly_certified_integral": 1,
+    "integral_after_this_round": 7,
+    "not_yet_integral": 61,
+    "partially_read_in_this_round": 1,
+    "complete_issues": 0
+  },
+  "limitations": [
+    "PDF p. 6 has partly illegible microprint; it remains ILEGIVEL_PARCIAL, not a negative.",
+    "Printed folio 5 was visually verified on PDF p. 5; no printed folio authenticated for PDF p. 6.",
+    "Only PDF p. 5 is a new page-wide negative; PDF p. 6 contributes readable unrelated context without being counted complete.",
+    "No independent hour, independent observer, or orbital identification was obtained. The 61 pages pending certification may include partially inspected pages."
+  ]
+}
