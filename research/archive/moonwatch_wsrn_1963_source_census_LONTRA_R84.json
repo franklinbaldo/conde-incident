@@ -1,0 +1,197 @@
+{
+  "schema": "conde.original_observer_source_census/v1",
+  "id": "C241-LONTRA-R84",
+  "as_of_utc": "2026-11-15",
+  "issue_numbers": [
+    1093,
+    396,
+    871
+  ],
+  "assignment": "lontra#11; Elefante 2026-11-15",
+  "window_utc_start": "1963-11-01T00:00:00Z",
+  "window_utc_end": "1963-11-10T00:00:00Z",
+  "objects": [
+    {
+      "norad": 527,
+      "international_designator": "1963-003A"
+    },
+    {
+      "norad": 528,
+      "international_designator": "1963-003B"
+    },
+    {
+      "norad": 529,
+      "international_designator": "1963-003C"
+    },
+    {
+      "norad": 637,
+      "international_designator": "1963-035A"
+    }
+  ],
+  "finding": "Seven archival/source locators, no recovered original observation or verified object/epoch; finding aids are not measurements.",
+  "access_method": "Web catalog lookup and direct GET from Ifro; Jatoba used solely as orchestration with explicit max_memory_mb=128; HTTP 403 from this network does not establish universal restriction.",
+  "archives": [
+    {
+      "id": "RU255_BOX10_BRASIL",
+      "institution": "Smithsonian Institution Archives",
+      "catalog_url": "https://siarchives.si.edu/collections/siris_arc_216819",
+      "container": "RU255 / Box 10",
+      "folder": "Brazil: Bauru (1958-63), Curvelo (1962-64), Paraiba (1962-69, 1975), Porto Alegre (1962-63), Sao Paulo (1957-64, 1967-68)",
+      "source_status": "SOURCE_CATALOG_ONLY",
+      "observed_date_utc": null,
+      "object_id": null,
+      "instrument": null,
+      "observable": null,
+      "original_page": null,
+      "facsimile_url": null,
+      "pdf_bytes": null,
+      "pdf_sha256": null,
+      "primary_observation_confirmed": false,
+      "online_access": "CATALOG_INDEXED__ORIGIN_HTTP_403_FROM_IFRO",
+      "limitations": "Dates are collection-level ranges, not dated 1-9 Nov 1963 sightings; no original sheets inspected."
+    },
+    {
+      "id": "RU255_BOX15_ADMIN",
+      "institution": "Smithsonian Institution Archives",
+      "catalog_url": "https://siarchives.si.edu/collections/siris_arc_216819",
+      "container": "RU255 / Box 15",
+      "folder": "Monthly re-entry reports (1963-69); Moonwatch Technical Bulletins (1957-63, 1964, 1966-68)",
+      "source_status": "SOURCE_CATALOG_ONLY",
+      "observed_date_utc": null,
+      "object_id": null,
+      "instrument": null,
+      "observable": null,
+      "original_page": null,
+      "facsimile_url": null,
+      "pdf_bytes": null,
+      "pdf_sha256": null,
+      "primary_observation_confirmed": false,
+      "online_access": "CATALOG_INDEXED__ORIGIN_HTTP_403_FROM_IFRO",
+      "limitations": "Neither report nor bulletin has been inspected; no confirmation of 528/637 or an event on 1-9 Nov 1963."
+    },
+    {
+      "id": "RU255_BOX21_SIGHTINGS",
+      "institution": "Smithsonian Institution Archives",
+      "catalog_url": "https://siarchives.si.edu/collections/siris_arc_216819",
+      "container": "RU255 / Box 21",
+      "folder": "VFON / sighting reports (1963-64); must distinguish satellite, meteor and other accounts",
+      "source_status": "SOURCE_CATALOG_ONLY",
+      "observed_date_utc": null,
+      "object_id": null,
+      "instrument": null,
+      "observable": null,
+      "original_page": null,
+      "facsimile_url": null,
+      "pdf_bytes": null,
+      "pdf_sha256": null,
+      "primary_observation_confirmed": false,
+      "online_access": "CATALOG_INDEXED__ORIGIN_HTTP_403_FROM_IFRO",
+      "limitations": "Folder dates do not prove that 1963-11-01 through 1963-11-09 contain observations; none retrieved."
+    },
+    {
+      "id": "RU255_BOX22_NEWS",
+      "institution": "Smithsonian Institution Archives",
+      "catalog_url": "https://siarchives.si.edu/collections/siris_arc_216819",
+      "container": "RU255 / Box 22",
+      "folder": "VFON newsletters / 1963; SAO confirmations of VFON reports (1963-69)",
+      "source_status": "SOURCE_CATALOG_ONLY",
+      "observed_date_utc": null,
+      "object_id": null,
+      "instrument": null,
+      "observable": null,
+      "original_page": null,
+      "facsimile_url": null,
+      "pdf_bytes": null,
+      "pdf_sha256": null,
+      "primary_observation_confirmed": false,
+      "online_access": "CATALOG_INDEXED__ORIGIN_HTTP_403_FROM_IFRO",
+      "limitations": "Newsletters and confirmation series are not themselves original astrometric observations. No target identified."
+    },
+    {
+      "id": "WSRN_SID_65_1176",
+      "institution": "North American Aviation / NASA NTRS search",
+      "catalog_url": "https://ntrs.nasa.gov/api/citations/search?reportNumber=SID%2065-1176",
+      "container": "Report SID 65-1176 (1965)",
+      "folder": "Satellite Optical Characteristics Study, G.A. McCue, J.G. Williams, H.J. DuPrie, R.C. Hoy",
+      "source_status": "SOURCE_CATALOG_ONLY",
+      "observed_date_utc": null,
+      "object_id": null,
+      "instrument": null,
+      "observable": null,
+      "original_page": null,
+      "facsimile_url": null,
+      "pdf_bytes": null,
+      "pdf_sha256": null,
+      "primary_observation_confirmed": false,
+      "online_access": "NASA_NTRS_REPORTNUMBER_0_MATCHES__ORIGINAL_NOT_RETRIEVED",
+      "limitations": "NTRS exact report-number search returned total=0 on 2026-11-15; title search was broad and not proof of holding. SD68-629 (1968) cites 1965 work, but is only indirect index. No original 1965 pages or 527/528/529/637 entries examined."
+    },
+    {
+      "id": "KET_A_2_1",
+      "institution": "Science Museum Group",
+      "catalog_url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110118047",
+      "container": "KET/A/2/1",
+      "folder": "Observation results sent to DSIR and related correspondence, 1960-1964 (one folder)",
+      "source_status": "SOURCE_CATALOG_ONLY",
+      "observed_date_utc": null,
+      "object_id": null,
+      "instrument": null,
+      "observable": null,
+      "original_page": null,
+      "facsimile_url": null,
+      "pdf_bytes": null,
+      "pdf_sha256": null,
+      "primary_observation_confirmed": false,
+      "online_access": "CATALOG_ON_WEB__DIRECT_HTTP_403_FROM_IFRO",
+      "limitations": "Museum catalog calls this Open Access (catalog/access designation), not freely digitized scans. No pages/observations examined; physical access or copies require separate permission."
+    },
+    {
+      "id": "KET_A_1_09",
+      "institution": "Science Museum Group",
+      "catalog_url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110118009",
+      "container": "KET/A/1/09",
+      "folder": "Geoffrey E. Perry 1963 desk diary (one volume, observations annotated; yearly summary on pages 116-117)",
+      "source_status": "SOURCE_CATALOG_ONLY",
+      "observed_date_utc": null,
+      "object_id": null,
+      "instrument": null,
+      "observable": null,
+      "original_page": null,
+      "facsimile_url": null,
+      "pdf_bytes": null,
+      "pdf_sha256": null,
+      "primary_observation_confirmed": false,
+      "online_access": "CATALOG_ON_WEB__DIRECT_HTTP_403_FROM_IFRO",
+      "limitations": "New specific locator: page 116-117 yearly summary per museum catalog. Those pages are NOT read, PDF pagination unknown; no object/epoch claimed."
+    }
+  ],
+  "nasa_searches": [
+    {
+      "url": "https://ntrs.nasa.gov/api/citations/search?reportNumber=SID+65-1176&page.size=5",
+      "status": 200,
+      "total": 0,
+      "exact_match": false
+    },
+    {
+      "url": "https://ntrs.nasa.gov/api/citations/search?keyword=SID+65-1176&page.size=5",
+      "status": 200,
+      "total": 0,
+      "exact_match": false
+    },
+    {
+      "url": "https://ntrs.nasa.gov/api/citations/search?title=Satellite+Optical+Characteristics+Study&page.size=5",
+      "status": 200,
+      "total": 49831,
+      "exact_match": false,
+      "notes": "Broad tokenized search; returned no exact-title candidate in inspected first five."
+    }
+  ],
+  "indirect_reference": "https://citeseerx.ist.psu.edu/document?doi=397301d65b31ed468f3b68cff3f0e19873c6e71d&repid=rep1&type=pdf",
+  "states_count": {
+    "SOURCE_CATALOG_ONLY": 7,
+    "CONFIRMED_INSTRUMENT": 0
+  },
+  "owner_dependency": "To inspect undigitized holdings/copies or make institutional contact, obtain explicit owner's authorization via Conde #884; no outreach occurred.",
+  "handoff": "Tartaruga not triggered: no CONFIRMED_INSTRUMENT or original observation retrieved. Stop after this census unless new access or original facsimile appears.",
+  "negative_scope": "No original for 1-9 Nov 1963 found in the tested online avenues, NOT proof none exists in archive."
+}
