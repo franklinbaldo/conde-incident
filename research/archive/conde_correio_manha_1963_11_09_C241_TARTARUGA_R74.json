@@ -1,0 +1,57 @@
+{
+  "schema": "conde.local_clock_press_custody/v1",
+  "id": "C241-TARTARUGA-R74",
+  "issue": 871,
+  "checked_utc_date": "2026-11-15",
+  "source": {
+    "title": "Correio da Manhã",
+    "city": "Rio de Janeiro",
+    "edition_date_visual": "1963-11-09",
+    "edition_number_visual": "21.657",
+    "collection_edition": "089842/21657",
+    "original_url": "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21657.pdf",
+    "format": "application/pdf",
+    "bytes": 22546215,
+    "sha256": "a5aa619730df13e2a630c7d16fcfde95f58180ec3a05063038177b03fd46f7d0",
+    "pdf_page_count": 28,
+    "cover_pdf_page": 1,
+    "article_pdf_page": 5,
+    "article_printed_page": 5,
+    "article_title": "OBJETO MISTERIOSO CAI EM RIO DE SP",
+    "article_lead_credit": "IGUAPE (Do enviado especial da sucursal SP)",
+    "article_status": "ARTICLE_VISUALLY_READ",
+    "full_page_5_read": false,
+    "full_edition_read": false
+  },
+  "article": {
+    "reported_location": "IGUAPE_SP_RIO_PEROPAVA",
+    "reported_relative_day_literal": "na tarde do 29 último",
+    "inferred_reported_day": "1963-10-29",
+    "day_inference_is_not_a_verbatim_date": true,
+    "named_reported_witnesses_iguape": ["Ruth de Souza", "Antônio de Souza", "Justino Nunes da Veiga"],
+    "named_official_iguape": "Carlos Ariovaldo",
+    "conde_eyewitness": null,
+    "conde_event_time_literal": null,
+    "conde_event_link_claimed": false,
+    "reporting_classification": "IGUAPE_CONTEXT_ONLY_NOT_CONDE",
+    "reporter_identity_authenticated": false,
+    "independent_conde_observation": false,
+    "orbital_constraint_activated": false
+  },
+  "scope": {
+    "cover_verified_date_and_number_only": true,
+    "article_read_only_on_page_5": true,
+    "all_other_articles_not_certified": true,
+    "remaining_pdf_pages_not_fully_reviewed": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
+    "correio_10_nov_full_edition_read": false,
+    "other_page_negative_not_asserted": true,
+    "publication_date_is_not_event_time": true
+  },
+  "notes": [
+    "The 9 Nov edition is authenticated by the cover itself, not interpolated from the 10 Nov edition number.",
+    "An Iguape/SP report of a 29-last-month event is not an eyewitness account or clock for Conde/BA.",
+    "The 10 Nov page 8 mentions Iguape and Conde as separate allegations; no merged event graph edge.",
+    "Text layer has extraction errors; only the identified article and the cover were visually inspected this round.",
+    "Next: inspect all columns on all pages of the 9 Nov issue and then the 10 Nov issue, without treating OCR hits as full-page negatives."
+  ]
+}
