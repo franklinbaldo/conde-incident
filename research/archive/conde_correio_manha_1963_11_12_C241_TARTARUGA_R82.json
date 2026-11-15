@@ -1,0 +1,117 @@
+{
+  "schema": "conde.local_clock_press_nucleus_increment/v1",
+  "id": "C241-TARTARUGA-R82",
+  "checked_utc_date": "2026-11-15",
+  "research_issue": 871,
+  "predecessor_manifest": "research/archive/conde_correio_manha_1963_11_12_14_C241_TARTARUGA_R81.json",
+  "source": {
+    "collection": "Hemeroteca Digital BN, Correio da Manhã, coleção 089842",
+    "edition": "21659",
+    "printed_date": "1963-11-12",
+    "original_url": "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21659.pdf",
+    "original_bytes": 20179037,
+    "original_sha256": "a744f75a91462d2246ecf905353143ffe72a9c326ab0462a1241a4db3a2bc606",
+    "pdf_pages": 28,
+    "first_caderno_pdf_start": 1,
+    "first_caderno_pdf_end": 15
+  },
+  "method": {
+    "executor": "Ifro",
+    "control_plane": "Jatobá, SSH, explicit max_memory_mb=128",
+    "original_reused_from": "/var/tmp/lagarto-r75-20261115/21659.pdf",
+    "visual_exam": "Each page rendered at 175 dpi and inspected in six overlapping crops (2 columns x 3 rows); headlines, body text, captions and advertising included; OCR is auxiliary only.",
+    "render_software": "pdftoppm; Pillow",
+    "page_reading_is_not_edition_negative": true
+  },
+  "readings": [
+    {
+      "pdf_page": 5,
+      "printed_folio": "5",
+      "status": "EXAMINADA",
+      "subjects": "Brasília/Fatos e Personagens: Biblioteca do Trabalhador and atomic-energy meeting; Rio education council; newborn mix-up at maternity hospital; Brigitte Bardot rumor; commercial advertisements.",
+      "unrelated_clock_labels": [
+        "20h = inauguration of Brasília workers' library",
+        "21h = piano concert in Brasília",
+        "até 22 horas = apartment-sales advertisement"
+      ],
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "attribution": null,
+      "orbital_constraint_active": false
+    },
+    {
+      "pdf_page": 6,
+      "printed_folio": "6",
+      "status": "EXAMINADA",
+      "subjects": "Brazil-France diplomatic relations; Congresso and party politics; historical article on Anchieta and the foundation of São Paulo; political commentary; essay on free will.",
+      "unrelated_clock_labels": [],
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "attribution": null,
+      "orbital_constraint_active": false
+    },
+    {
+      "pdf_page": 7,
+      "printed_folio": null,
+      "printed_folio_note": "Numeral at top right is not completely unambiguous in the facsimile; do not infer a definitive printed folio.",
+      "status": "EXAMINADA",
+      "subjects": "Editorial/opinion page on nationalization of private oil refineries and Capuava. Reprinted commentary cites Jornal do Brasil, Última Hora, O Globo, Diário de São Paulo and Folha de São Paulo from 8–11 November, all concerning petroleum, not the Conde occurrence.",
+      "unrelated_clock_labels": [
+        "8–11 November 1963 = newspaper publication dates for reprinted petroleum opinion, not local event times"
+      ],
+      "reprint_attribution_is_independent_conde_source": false,
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "attribution": null,
+      "orbital_constraint_active": false
+    }
+  ],
+  "scope": {
+    "edition": "21659",
+    "previously_examined_pages": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "newly_examined_pages": [
+      5,
+      6,
+      7
+    ],
+    "cumulatively_examined_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "remaining_unread_first_caderno_pages": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "first_caderno_fully_examined": false,
+    "entire_edition_fully_examined": false,
+    "global_negative_asserted": false,
+    "other_editions_21660_21661": "CUSTODIED_SECTION_MAPPED_NOT_VISUALLY_READ"
+  },
+  "conclusion": {
+    "classification": "THREE_PAGE_LOCAL_NEGATIVE_21659",
+    "conde_event_hour_literal": null,
+    "independent_eyewitness": null,
+    "report_independence_from_tupi_fbis_diarios_associados": "UNDETERMINED",
+    "excludes_norad_528_or_637": false,
+    "next_action": "Read Correio da Manhã 21659 first-caderno PDF pages 8–15, then 21660 PDF 1–12 and 21661 PDF 1–13, subject to the current Elefante orders."
+  }
+}
