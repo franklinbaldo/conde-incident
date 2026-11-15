@@ -1,0 +1,140 @@
+{
+  "schema": "conde.press_visual_review/v1",
+  "id": "C241-CASTOR-G93",
+  "issue": 871,
+  "reviewed_utc": "2026-11-15",
+  "source": {
+    "publication": "Última Hora (Rio)",
+    "collection": "386030",
+    "edition": "04200",
+    "date_from_cover": "1963-11-09",
+    "pdf_pages": 16,
+    "url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04200.pdf",
+    "sha256": "320aeb075b99fc6f2884904d9e1aa801b9d3f6be2b131ded30093caaaa6ce352",
+    "bytes": 10778040,
+    "parent_review": "research/archive/ultima_hora_rj_1963_11_09_C241_CASTOR_G92.json"
+  },
+  "method": {
+    "executor": "Ifro",
+    "tool": "pdftoppm + Pillow",
+    "dpi": 240,
+    "source_hash_rechecked": true,
+    "pdf_rendered_again": true,
+    "region_protocol": "TWO_OVERLAPPING_HALVES_X_THREE_OVERLAPPING_BANDS",
+    "visual_tiles_per_page": 6,
+    "half_x_fractions": [
+      [
+        0,
+        0.54
+      ],
+      [
+        0.46,
+        1
+      ]
+    ],
+    "band_y_fractions": [
+      [
+        0,
+        0.36
+      ],
+      [
+        0.32,
+        0.69
+      ],
+      [
+        0.65,
+        1
+      ]
+    ],
+    "ocr_as_negative": false,
+    "review": "DIRECT_VISUAL_WHOLE_PAGE_ARTICLE_SCALE",
+    "review_limitation": "Identification of visible articles and cover calls, not independent authentication of the news claims"
+  },
+  "pages": [
+    {
+      "pdf_page": 1,
+      "printed_page": 1,
+      "page_status": "EXAMINADA",
+      "source_scope": "ONLY_PDF_PAGE_1",
+      "regions_seen": [
+        "top_left",
+        "top_right",
+        "middle_left",
+        "middle_right",
+        "bottom_left",
+        "bottom_right"
+      ],
+      "editorial_sections": [
+        "Escândalo na Convocação do Congresso: Deputados Querem Cr$ 3 Milhões por Mês",
+        "Assembleia Aprova Aumento na GB: Mínimo de 50% e Reestruturação para Servidores",
+        "Soldados Levam à Cova Amigo Morto",
+        "Terrorismo na Universidade",
+        "IPM das Armas de Jacarepaguá Conclui: Tribunal Militar para a Dupla Borges e Borer",
+        "Família do Homem Rico por Engano de Novo Dorme no Chão",
+        "Armas Eram Só Contra o Pecado",
+        "Chico Anísio: Não Ganho Nem Cr$ 3,5 Milhões na TV",
+        "Fila Abre Rodada de Morte",
+        "Assassino das Gêmeas é Louco",
+        "Médicos Admitem: Droga Fez o Bebê-Monstro",
+        "Zero Hora: Novo Salário-Mínimo no 1.º Semestre de 64",
+        "Operários e Sargentos Preparam Homenagem a Jango"
+      ],
+      "page_negative_for_conde_event_report": true,
+      "independent_event_hour": null,
+      "independent_witness": null,
+      "disambiguation": "Capa dominada por política, funcionalismo, IPM de armas em Jacarepaguá, notícias policiais e variedades. 'ZERO HORA' é o nome de uma coluna, não horário de observação. Borges e Borer referem-se à investigação sobre armas no Rio, não a Conde/BA. Nenhuma chamada da capa remete ao suposto objeto caído na Bahia."
+    },
+    {
+      "pdf_page": 2,
+      "printed_page": 2,
+      "page_status": "EXAMINADA",
+      "source_scope": "ONLY_PDF_PAGE_2",
+      "regions_seen": [
+        "top_left",
+        "top_right",
+        "middle_left",
+        "middle_right",
+        "bottom_left",
+        "bottom_right"
+      ],
+      "editorial_sections": [
+        "Jango Sancionou o 13.º Para Aposentados e Pensionistas",
+        "Bomba Contra Sambagui Foi Obra dos Vigilantes",
+        "Menina de 3 Anos Morreu Depois de Injeção no HSA",
+        "IPM das Armas: Justiça Militar Julgará Borges e Cecil Borer",
+        "Acontecimentos de Última Hora: Câmara Pode Aprovar Projeto Tancredo na Próxima Semana",
+        "Moscôso: Falhas da Aliança Não São Apenas dos EUA",
+        "Ari Barroso: Não Posso Passar Sem Cheiro de Vida",
+        "TNC Leva o Teatro às Ruas da GB",
+        "Enterro das Gêmeas Queimadas Vivas",
+        "Havelange Deixará a CBD Dia 16",
+        "Piloto Nega Culpa no Desastre do Convair",
+        "Drogas Podem Ter Culpa do Nascimento do Bebê-Monstro",
+        "Ana Nery Voltará ao Tráfego em Seis Meses",
+        "Chico Anísio: Ganhou Menos na TV-Rio Que na Excelsior",
+        "Caxias: Legista Faz Autópsia à Porta do Cemitério",
+        "Morreu Pérola Byington"
+      ],
+      "page_negative_for_conde_event_report": true,
+      "independent_event_hour": null,
+      "independent_witness": null,
+      "disambiguation": "Noticiário de aposentadorias, IPM, incidentes policiais, aeronave Convair no Rio, saúde, navio Ana Nery e TV. O acidente de Convair em janeiro no Rio é caso aeronáutico distinto e não objeto espacial em Conde. 'Fenômeno' em nota sobre malformação congênita é termo médico. Sorteio de Natal na TV-Rio em 17/11 às 11 horas e programa sobre Dia da Família das 20 às 21 horas não datam o evento de Conde. Nenhuma notícia do caso baiano foi identificada nesta página."
+    }
+  ],
+  "interpretation": {
+    "new_historical_event_time": null,
+    "fbis_clock": "UNRESOLVED",
+    "orbit_exclusion_licensed": false,
+    "theta_changed": false,
+    "complete_edition_negative": false,
+    "nov10_special_edition": "NOT_ESTABLISHED",
+    "pdf_pages_with_new_page_level_negative": [
+      1,
+      2
+    ],
+    "castor_assigned_core_lot_complete": true,
+    "pdf_page_8_status": "ILEGÍVEL_PARCIAL",
+    "stop_criterion_met": false
+  },
+  "limitations": "Negativo apenas das páginas PDF/impressas 1 e 2. Junto da p. 4 já examinada, completa o lote nuclear atribuído ao Castor em R26; p. 8 permanece ILEGÍVEL_PARCIAL, e outras páginas fora do núcleo não foram lidas integralmente. O critério de parada de todos os jornais ainda não foi atingido. Edição especial de domingo 10/11 não demonstrada nem excluída. Sem hora independente ou relógio FBIS autenticado, G83/G84 e as 34 janelas 528/637 permanecem condicionais."
+}
