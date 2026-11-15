@@ -1,0 +1,35 @@
+name: CGEO-65 original press PDF inventory
+on:
+  pull_request:
+    paths:
+      - 'research/editorial/cgeo65_uh_bn_inventory_20261115.json'
+      - 'tools/cgeo65_uh_bn_inventory_validate.py'
+      - 'tests/test_cgeo65_uh_bn_inventory.py'
+      - '.github/workflows/cgeo65-uh-bn-inventory.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/editorial/cgeo65_uh_bn_inventory_20261115.json'
+      - 'tools/cgeo65_uh_bn_inventory_validate.py'
+      - 'tests/test_cgeo65_uh_bn_inventory.py'
+      - '.github/workflows/cgeo65-uh-bn-inventory.yml'
+permissions:
+  contents: read
+jobs:
+  verify-inventory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact SHA
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+      - name: Manifest and optimized adversarial tests
+        run: |
+          python3 tools/cgeo64_prereg_validate.py
+          python3 tools/cgeo65_uh_bn_inventory_validate.py
+          python3 -m unittest discover -s tests -p 'test_cgeo65_uh_bn_inventory.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_cgeo65_uh_bn_inventory.py' -v
