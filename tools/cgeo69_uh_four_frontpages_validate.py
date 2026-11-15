@@ -1,6 +1,7 @@
 """CGEO-69: verify scoped, fully viewed UH front pages and reject overclaims."""
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 
@@ -27,12 +28,34 @@ EXPECTED_LIMITS = {"independent_event_witness_found": False, "narrative_fabricat
                    "orbital_constraint_activated": False}
 
 
+EXPECTED_METHOD = 'Four pre-registered date slots, one front page from each target/baseline week. For each, verify PDF SHA-256 on Ifro, render PDF p.1 at 3200 px and inspect every quadrant visually, check full-page embedded text for pre-frozen anchors. OCR and text-layer absence alone do not establish absence; distinguish unrelated lexical coincidences. Source images retained on Ifro, not published. Headline/transcription is context, not a separate witness.'
+EXPECTED_CAVEAT = 'Page 1 was selected as a repeatable page number; chosen issue dates are a deliberately small convenience checkpoint within the frozen slots, NOT a random or exhaustive sample of each week. No other pages of the selected issues counted; do not extrapolate page-level negatives to entire issues, weeks, or newspapers.'
+EXPECTED_LIMITATIONS = ['Zero confirmed matches applies only to these four individual front pages, not to editions or unexamined pages.', 'Many front-page stories continue inside their issue; absence from the cover does not establish absence from their whole article.', 'The same newspaper edition is one publication lineage; the four dates are not four independent Conde witnesses.', 'Historical OCR/text layers can omit or corrupt words; the visual review limits only what is legible on the selected page.', "An ordinary 'abertura', 'pesados encargos' or 'queima-roupa' is not the composite FBIS spacecraft motif.", 'No independent local event hour, 1963 geographical point, orbital restriction, copying chronology or deliberate fabrication can be inferred.']
+TOP_KEYS = {'prereg_blob_sha', 'method', 'date_utc', 'interpretation', 'issue', 'prereg_path', 'source_cover_crosswalk', 'selection_caveat', 'coverage', 'type', 'pages', 'limitations', 'source_inventory_path', 'id'}
+PAGE_KEYS = {'review', 'date', 'confirmed_article_counts', 'independent_conde_witness', 'source_url', 'headline_as_seen', 'ambiguous_lexical_leads', 'pdf_page', 'publication', 'week', 'countable_page', 'issue_id', 'whole_edition_read', 'source_sha256'}
+COVERAGE_KEYS = {'predeclared_slots_changed', 'baseline_full_corpus', 'first_pre_event_occurrence', 'front_pages_inspected', 'other_pages_read_in_this_fatia', 'general_verdict', 'whole_issues_read', 'pages_per_week', 'observed_page_rates', 'jb_pages_read'}
+LEAD_KEYS = {'text', 'fragment', 'context', 'fragment_match'}
+
+def require_keys(data: dict, expected: set[str], label: str) -> None:
+    require(type(data) is dict and set(data) == expected, label + " keys changed")
+
+def blob_sha(raw: bytes) -> str:
+    return hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\x00" + raw).hexdigest()
+
+
 def require(ok: bool, reason: str) -> None:
     if not ok:
         raise ValueError(reason)
 
 
 def validate(doc: dict, inv: dict, covers: dict, prereg: dict) -> int:
+    require_keys(doc, TOP_KEYS, "document")
+    require(doc["date_utc"] == "2026-11-15", "audit date")
+    require(doc["method"] == EXPECTED_METHOD and doc["selection_caveat"] == EXPECTED_CAVEAT
+            and doc["limitations"] == EXPECTED_LIMITATIONS, "unreviewed narrative claim")
+    prereg_raw = PREREG.read_bytes()
+    require(blob_sha(prereg_raw) == FROZEN, "prereg source blob differs from frozen SHA")
+    require(prereg == json.loads(prereg_raw), "prereg in-memory data differs from frozen file")
     require((doc.get("type"), doc.get("id")) ==
             ("HistoricalPressFrozenWeekFrontPageAudit", "CGEO-69"), "identity")
     require(doc.get("issue") == "https://github.com/franklinbaldo/conde-incident/issues/887", "issue")
@@ -42,8 +65,6 @@ def validate(doc: dict, inv: dict, covers: dict, prereg: dict) -> int:
     require(doc.get("source_inventory_path") == "research/editorial/cgeo65_uh_bn_inventory_20261115.json" and
             doc.get("source_cover_crosswalk") == "research/editorial/cgeo66_uh_cover_dates_20261115.json", "source paths")
     require(inv.get("id") == "CGEO-65" and covers.get("id") == "CGEO-66", "source identities")
-    require("four" in doc.get("method", "").lower() or "4 quadrants" in doc.get("method", ""), "visual method")
-    require("NOT a random or exhaustive sample" in doc.get("selection_caveat", ""), "sampling limits")
     sources = {row["id"]: row for row in inv["issues"] if row["status"] == "PDF_BYTES_ACQUIRED"}
     dated = {row["issue_id"]: row["date"] for row in covers["cover_dates"]}
     slots = {(row["publication"], row["issue_id"]): (row["date"], row["week"])
@@ -52,6 +73,7 @@ def validate(doc: dict, inv: dict, covers: dict, prereg: dict) -> int:
     pages = doc.get("pages", [])
     require(len(pages) == 4 and {p.get("issue_id") for p in pages} == set(EXPECTED), "exactly 4 distinct pages")
     for row in pages:
+        require_keys(row, PAGE_KEYS, "page")
         key = row["issue_id"]
         date, week, sha, headline, leads = EXPECTED[key]
         require((row.get("publication"), row.get("date"), row.get("week"),
@@ -70,10 +92,13 @@ def validate(doc: dict, inv: dict, covers: dict, prereg: dict) -> int:
                 all(type(counts[k]) is int and counts[k] == 0 for k in fragments), "8 scoped negatives")
         actual_leads = row.get("ambiguous_lexical_leads", [])
         require(len(actual_leads) == len(leads), "leads cardinality")
+        for lead in actual_leads:
+            require_keys(lead, LEAD_KEYS, "lexical lead")
         require([(lead.get("fragment"), lead.get("text"), lead.get("context"),
                   lead.get("fragment_match")) for lead in actual_leads] ==
                 [(frag, txt, ctx, False) for frag, txt, ctx in leads], "adjudicated false leads")
     coverage = doc.get("coverage", {})
+    require_keys(coverage, COVERAGE_KEYS, "coverage")
     require(coverage.get("front_pages_inspected") == 4 and
             coverage.get("pages_per_week") == {w: 1 for w in EXPECTED_WEEKS}, "coverage pages")
     byweek = coverage.get("observed_page_rates", {})
@@ -91,7 +116,6 @@ def validate(doc: dict, inv: dict, covers: dict, prereg: dict) -> int:
             coverage.get("first_pre_event_occurrence") is None and
             coverage.get("general_verdict") == "UNDETERMINED", "no ungrounded inference")
     require(doc.get("interpretation") == EXPECTED_LIMITS, "causal/physical limits")
-    require(len(doc.get("limitations", [])) >= 6, "limits documented")
     return len(pages)
 
 
