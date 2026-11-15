@@ -60,6 +60,22 @@ class TestUltimaHoraR71(unittest.TestCase):
         self.check_rejected(lambda d: d["contextual_article"].update(
             classification="prova original da queda do satélite 528 em Conde"))
 
+    def test_free_text_and_unrecognized_fields_cannot_smuggle_new_evidence(self):
+        self.check_rejected(lambda d: d["contextual_article"].update(
+            classification=d["contextual_article"]["classification"] +
+            "; porém a reportagem prova queda do 528 em Conde às 19h30"))
+        self.check_rejected(lambda d: d.update(
+            limitations=["Testemunha independente confirma a queda às 19h30."] * 5))
+        self.check_rejected(lambda d: d["method"].update(
+            visual_review="Todas as colunas lidas; hora da queda em Conde: 19h30"))
+        self.check_rejected(lambda d: d["result"].update(
+            scientific_conclusion="Fonte prova a reentrada do NORAD 528 às 19h30"))
+        self.check_rejected(lambda d: d["editions"][0]["pages"][1].update(
+            witness_claim="Testemunha confirma queda do 528 às 19h30"))
+        self.check_rejected(lambda d: d.update(
+            conde_event_time="1963-11-08 19:30"))
+
+
     def test_no_ocr_or_unearned_coverage(self):
         self.check_rejected(lambda d: d["method"].update(full_body_reading=True))
         self.check_rejected(lambda d: d["method"].update(ocr_performed=True))
