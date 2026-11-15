@@ -99,8 +99,8 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
           </h1>
           <p className="text-xs text-zinc-300 leading-relaxed">
             {isPt
-              ? 'A 345 km de altitude, o decaimento orbital do NORAD 528 é governado pelo arrasto molecular da alta termosfera. Novembro de 1963 coincidiu com o mínimo do Ciclo Solar 19, caracterizado por fluxo solar calmo (F10.7 ≈ 76 sfu) e baixa densidade exosférica. Ajuste os parâmetros físicos para inspecionar a data prevista de quebra a 120 km.'
-              : 'At 345 km altitude, the orbital decay of NORAD 528 is governed by high thermospheric molecular drag. November 1963 coincided with the Solar Cycle 19 minimum, characterized by quiet solar flux (F10.7 ≈ 76 sfu) and low exospheric density. Tune physical parameters to inspect predicted breakup date at 120 km.'}
+              ? 'Este experimento varia parâmetros ilustrativos de arrasto, fluxo solar e escala atmosférica para um cálculo simplificado de chegada a 120 km. Os valores não foram calibrados com observações instrumentais autenticadas do NORAD 528 e não determinam a data nem o local de reentrada.'
+              : 'This experiment varies illustrative drag, solar-flux and atmospheric scale parameters for a simplified calculation of arrival at 120 km. These inputs were not calibrated against authenticated NORAD 528 instrumental observations and do not establish a reentry date or location.'}
           </p>
         </div>
       </div>
@@ -214,6 +214,11 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
               </span>
             </div>
           </div>
+          <p className="text-xs text-zinc-300 leading-relaxed" data-testid="sensitivity-reference-caveat">
+            {isPt
+              ? 'A duração de referência de 12 dias, contada desde a época codificada de 27/10/1963, produz 08/11/1963 por construção. Mudar os controles mostra apenas a sensibilidade desta fórmula, não uma validação histórica.'
+              : 'The 12-day reference duration, counted from the encoded epoch of October 27, 1963, yields November 8, 1963 by construction. Changing the controls shows only this formula’s sensitivity, not historical validation.'}
+          </p>
         </div>
 
         {/* Reference Table (5 Cols) */}
@@ -258,12 +263,12 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
 
           <div className="p-3 rounded-lg bg-zinc-950 border border-zinc-800 text-[11px] text-zinc-400 space-y-1">
             <strong className="text-zinc-200 block font-semibold">
-              {isPt ? 'Conclusão sobre o parâmetro BSTAR = 0:' : 'Conclusion on BSTAR = 0 field:'}
+              {isPt ? 'Limites do campo BSTAR = 0:' : 'Limits of the BSTAR = 0 field:'}
             </strong>
             <p className="leading-relaxed">
               {isPt
-                ? 'O valor BSTAR = 0 no catálogo de 27/10/1963 NÃO indica ausência de arrasto físico. Trata-se de convenção de registro não-ajustado em catálogos manuais da era pré-computação automatizada. Com H = 45 km e B ≈ 0,022 m²/kg, o decaimento físico coincide exatamente com o dia 8 de novembro catalogado.'
-                : 'The BSTAR = 0 field in the 27/10/1963 record does NOT represent zero physical drag. It is an uncalibrated catalog artifact from early manual tracking procedures. With H = 45 km and B ≈ 0.022 m²/kg, real physical decay lands precisely on November 8.'}
+                ? 'O campo BSTAR = 0 do par TLE secundário preservado não demonstra arrasto físico nulo nem fornece o coeficiente balístico histórico. H = 45 km e B ≈ 0,022 m²/kg são hipóteses ilustrativas, não parâmetros calibrados para o objeto. A coincidência com 08/11 decorre do cenário de referência definido no modelo, não de uma previsão independente.'
+                : 'The BSTAR = 0 field in the preserved secondary TLE does not establish zero physical drag or provide the historical ballistic coefficient. H = 45 km and B ≈ 0.022 m²/kg are illustrative assumptions, not parameters calibrated for this object. The match with November 8 follows from the model reference scenario, not an independent prediction.'}
             </p>
           </div>
         </div>
