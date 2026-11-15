@@ -1,0 +1,100 @@
+{
+  "schema": "conde.local_clock_visual_pages/v1",
+  "id": "C241-TARTARUGA-R78",
+  "issue": 871,
+  "checked_utc_date": "2026-11-15",
+  "source": {
+    "title": "Correio da Manhã",
+    "city": "Rio de Janeiro",
+    "collection_edition": "089842/21657",
+    "edition_date_visual": "1963-11-09",
+    "edition_number_visual": "21.657",
+    "url": "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21657.pdf",
+    "bytes": 22546215,
+    "sha256": "a5aa619730df13e2a630c7d16fcfde95f58180ec3a05063038177b03fd46f7d0",
+    "pdf_page_count": 28,
+    "pdf_original_reused_on_ifro": true
+  },
+  "reading": {
+    "method": "visual full-page overview and four overlapping quadrants at 165 dpi per page on Ifro; extracted PDF text only auxiliary",
+    "status_by_pdf_page": [
+      {
+        "pdf_page": 3,
+        "printed_page": 3,
+        "section": "1.º Caderno",
+        "status": "EXAMINADA",
+        "reading_scope": "all news columns, photographs, captions, subheads and advertisements in four overlapping quadrants",
+        "subjects": "commerce/Christmas price controls; IPEG housing loans; Quinta da Boa Vista zoo births; Guanabara public works; Indian philosopher; Honduras diplomatic asylum; sightseeing and lottery",
+        "relevant_article": null,
+        "conde_event_time_literal": null,
+        "conde_eyewitness": null,
+        "orbital_constraint_activated": false
+      },
+      {
+        "pdf_page": 4,
+        "printed_page": 4,
+        "section": "1.º Caderno",
+        "status": "EXAMINADA",
+        "reading_scope": "international news summary, all agency-wire columns, photo caption, long-form commentary, advertisements and sidebars in four overlapping quadrants",
+        "subjects": "De Gaulle nuclear budget; Finland Finnair plane crash (Marienhamn/UPI-CM), not Bahia; AP-UPI-CM article on UN/US/USSR principles governing outer space, not a satellite fall; Douglas-Home election; NATO; Vietnam; Harriman oil talks; Otto Maria Carpeaux commentary",
+        "relevant_article": null,
+        "conde_event_time_literal": null,
+        "conde_eyewitness": null,
+        "orbital_constraint_activated": false
+      }
+    ],
+    "new_pages_fully_examined": [
+      3,
+      4
+    ],
+    "previous_pages_fully_examined": [
+      1,
+      2,
+      5,
+      21
+    ],
+    "cumulative_pages_fully_examined": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      21
+    ],
+    "cumulative_pages_not_fully_examined": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28
+    ],
+    "edition_fully_examined": false,
+    "global_negative_asserted": false,
+    "correio_10_nov_full_edition_examined": false
+  },
+  "conclusion": {
+    "classification": "NO_NEW_CONDE_EVENT_HOUR_IN_TWO_ADDITIONAL_FULLY_READ_PAGES",
+    "conde_event_time_literal": null,
+    "conde_eyewitness": null,
+    "source_of_report_independent_from_tupi_fbis": "UNDETERMINED",
+    "orbital_constraint_activated": false,
+    "further_action": "Read PDF pages 6,7,8 of 9 November then 9-12, continuing until all 28 pages read; 10 November PDF pages 1-8 allocated to Cervo, Tartaruga starts at page 9."
+  }
+}
