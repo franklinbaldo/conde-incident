@@ -1,0 +1,99 @@
+{
+  "source_id": "C241-CERVO-R79-CM-19631110-P01-P08",
+  "source_url": "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21658.pdf",
+  "date_of_publication": "1963-11-10",
+  "publication": "Correio da Manhã",
+  "edition": "21658",
+  "collection": "FBN 089842",
+  "pdf_bytes": 62742698,
+  "pdf_pages": 97,
+  "pdf_sha256": "75dc400708e80022dc9d1a139739068417e65ff47a3c4130bf0b46b9db4929f3",
+  "read_method": "pdftoppm 180 dpi; 4 enlarged overlapping quadrants per PDF page; primary visual reading; corrupted pdftotext auxiliary only",
+  "date_verified_utc": "2026-11-15",
+  "full_edition_examined": false,
+  "pages_examined": [
+    {
+      "pdf_page": 1,
+      "printed_page": 1,
+      "status": "EXAMINADA",
+      "subject": "Capa: Capuava, monazita Maranhão, Japão, primavera, anúncios",
+      "conde_event_time_literal": null,
+      "conde_eyewitness": null
+    },
+    {
+      "pdf_page": 2,
+      "printed_page": 2,
+      "status": "EXAMINADA",
+      "subject": "Excursões Rio, Natal, festa, ABL, energia atômica em Brasília, orçamento, anúncios",
+      "conde_event_time_literal": null,
+      "conde_eyewitness": null
+    },
+    {
+      "pdf_page": 3,
+      "printed_page": 3,
+      "status": "EXAMINADA",
+      "subject": "Emprego/BNDE, CETEL, ABL, estádios, viagens e anúncios",
+      "conde_event_time_literal": null,
+      "conde_eyewitness": null
+    },
+    {
+      "pdf_page": 4,
+      "printed_page": 4,
+      "status": "EXAMINADA",
+      "subject": "Antimatéria teórica URSS, súmula internacional, Vietnã, petróleo e anúncios",
+      "conde_event_time_literal": null,
+      "conde_eyewitness": null
+    },
+    {
+      "pdf_page": 5,
+      "printed_page": 5,
+      "status": "EXAMINADA",
+      "subject": "Publicidade de página inteira Hotel Internacional do Galeão",
+      "conde_event_time_literal": null,
+      "conde_eyewitness": null
+    },
+    {
+      "pdf_page": 6,
+      "printed_page": 6,
+      "status": "EXAMINADA",
+      "subject": "Capuava/sindicatos, política, ensaio, economia e anúncios",
+      "conde_event_time_literal": null,
+      "conde_eyewitness": null
+    },
+    {
+      "pdf_page": 7,
+      "printed_page": 7,
+      "status": "EXAMINADA",
+      "subject": "Publicidade de página inteira Turismo Rio S.A.",
+      "conde_event_time_literal": null,
+      "conde_eyewitness": null
+    },
+    {
+      "pdf_page": 8,
+      "printed_page": 8,
+      "status": "EXAMINADA",
+      "subject": "Precipitação de objetos continua; Hospital São Sebastião; sindicato; anúncios",
+      "conde_event_time_literal": null,
+      "conde_eyewitness": null
+    }
+  ],
+  "related_article": {
+    "pdf_page": 8,
+    "printed_page": 8,
+    "title": "PRECIPITAÇÃO DE OBJETOS CONTINUA",
+    "byline": null,
+    "conde_location_literal": "Conde, município próximo a Salvador",
+    "coverage": "desmentidos atribuídos à FAB e ao governo baiano; opiniões técnicas; Iguape/SP e Califórnia distintos de Conde",
+    "independence_of_underlying_information": "UNDETERMINED",
+    "eyewitness_at_conde": null,
+    "event_time_literal": null,
+    "previous_source": "C241-TARTARUGA-R72-CM-19631110"
+  },
+  "pages_integrally_read": 8,
+  "pages_pending": 89,
+  "independent_conde_event_hour": null,
+  "terminal_time_sigma_hours": null,
+  "active_constraint_528": false,
+  "historical_mcmc": "NOT_RUN",
+  "negative_scope": "PDF pages 1 through 8 ONLY; not whole edition; not historical absence"
+}
