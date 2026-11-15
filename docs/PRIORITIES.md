@@ -35,7 +35,7 @@ Entregues e fora da lista: hipótese nula narrativa ([#887](https://github.com/f
 
 Tabela de decisão por documento: entregue ([matriz G84](https://github.com/franklinbaldo/conde-incident/blob/main/research/statistics/C241_G84_DOCUMENT_DECISION_20261115.md), [PR #1030](https://github.com/franklinbaldo/conde-incident/pull/1030), 🦫 Castor). Itens 1, 2 e 4 da #884 podem separar 528, 637 ou nenhum, se trouxerem hora do fenômeno; itens 3 e 5 sozinhos não decidem. Nova matriz ou sensibilidade sem documento novo é baixo retorno.
 
-Caderno (`stories/`): linha editorial e cadência na [#885](https://github.com/franklinbaldo/conde-incident/issues/885), com 🦉 Coruja; no máximo um capítulo por dia, e só a partir de uma ficha de linha narrativa com pelo menos metade dos nós `DOC`. Fichas em `research/editorial/`: J (5/7 `DOC`) e D (6/9 `DOC`, [PR #1054](https://github.com/franklinbaldo/conde-incident/pull/1054)) cumprem a cota, mas a própria 🦉 as declara não publicáveis sem virada documental no nó decisivo.
+Caderno (`stories/`): linha editorial e cadência na [#885](https://github.com/franklinbaldo/conde-incident/issues/885), com 🦉 Coruja; no máximo um capítulo por dia, e só a partir de uma ficha de linha narrativa com pelo menos metade dos nós `DOC`. Fichas em `research/editorial/`: J (5/7 `DOC`), D (6/9 `DOC`, [PR #1054](https://github.com/franklinbaldo/conde-incident/pull/1054)) e F (6/9 `DOC`, [PR #1068](https://github.com/franklinbaldo/conde-incident/pull/1068)) cumprem a cota. **Decisão do dono (15/11/2026):** o Caderno volta a publicar; o próximo capítulo é o episódio do carimbo `Hoax` (ficha J), no primeiro dia local sem publicação (15/11 ou 16/11); a virada pode ser a própria incerteza, dita uma vez; D e F seguem na fila, um capítulo por dia; a 🦉 pode contestar a escolha ([pedido](https://github.com/franklinbaldo/conde-incident/issues/885#issuecomment-6903305228)).
 
 Bloqueios que só o dono destrava (login, acervo pago, pedido a acervo, consulta presencial): [#884](https://github.com/franklinbaldo/conde-incident/issues/884), no máximo 5 itens. Não tentar contornar.
 
@@ -56,7 +56,7 @@ Estado em 15/11/2026 ~19h UTC (Conde `70888ac9`). "Integral" é página lida col
 | *Correio da Manhã* 21658 (10/11) | 97 | 1–8 | | 9 até o fim do 1º caderno (extensão a mapear) |
 | **Total das 209** | **209** | **42** | **4** | |
 
-Fora das 209, entram no núcleo: *Última Hora* Rio 04201 (11/11) p. 1, 2, 4, 6, 8, e *Correio da Manhã* 21659–21661 (12–14/11), 1º caderno; edições identificadas pela capa, não custodiadas nem lidas. *Última Hora* Rio de 12–14/11 entra só se a edição for identificada na BN.
+Fora das 209, entram no núcleo: *Última Hora* Rio 04201 (11/11) p. 1, 2, 4, 6, 8, e *Correio da Manhã* 21659–21661 (12–14/11), 1º caderno; edições identificadas pela capa, não custodiadas nem lidas. *Última Hora* Rio 04202–04204 (12–14/11) identificadas pela capa e custodiadas ([PR #1098](https://github.com/franklinbaldo/conde-incident/pull/1098)); entram no núcleo, interior ainda não lido.
 
 **Onde fica o noticiário** (panoramas e leituras R68–R79, CGEO-76 a 81, G86 a G91, R81):
 
@@ -70,7 +70,7 @@ Decisão da direção de pesquisa em 15/11/2026 ~19h UTC. A leitura das ediçõe
 
 1. **Núcleo:** em cada edição de 9 a 14/11 dos três jornais (*Última Hora* NE e Rio, *Correio da Manhã*), capa, política nacional, internacional e agências (teletipo), policial e ciência ou astronáutica. Na prática, as páginas da coluna "Núcleo por ler" e o parágrafo seguinte à tabela. No *Correio*, o 1º caderno inteiro, mais páginas de ciência ou astronáutica de outros cadernos.
 2. **Fora do núcleo, não se lê:** classificados, esporte, turfe, sociedade, cinema, variedades, publicidade de página inteira e suplementos. Exceção: um panorama, índice ou chamada de capa que aponte matéria sobre Conde, objeto caído, satélite, esfera ou disco; então só aquela página.
-3. **Com zero hora no núcleo:** registra-se o negativo na #871 com denominador por jornal, edição e seção (páginas lidas, ilegíveis em parte, não lidas por estarem fora do núcleo). Não é negativo de edição nem prova de ausência; a prioridade 1 passa a depender só da #884 (itens 1, 2 e 4).
+3. **Com zero hora no núcleo:** registra-se o negativo na #871 com denominador por jornal, edição e seção (páginas lidas, ilegíveis em parte, não lidas por estarem fora do núcleo). Não é negativo de edição nem prova de ausência; a prioridade 1 passa a depender só da #884 (itens 1, 2 e 4). Decisão do dono (15/11/2026): fechado o núcleo, a direção de pesquisa passa a duas rodadas por dia até o dono entregar item da #884 ou aparecer evidência nova.
 4. **Com hora candidata:** vai primeiro à #871; a leitura continua nas edições seguintes do mesmo jornal, atrás de desdobramento.
 
 Mapear cadernos (cabeçalho e fólio de cada página do PDF) não é leitura e pode ser feito de uma vez; serve para delimitar o 1º caderno.
@@ -79,11 +79,13 @@ Mapear cadernos (cabeçalho e fólio de cada página do PDF) não é leitura e p
 
 | Leitor | Lote, nesta ordem | Depois |
 |---|---|---|
-| 🦫 Castor ([castor#10](https://github.com/franklinbaldo/castor/issues/10)) | *Última Hora* Rio 04200: p. 4, 1, 2 | parar (p. 8 fica `ILEGÍVEL_PARCIAL`) |
-| 🦀 Caranguejo ([caranguejo#5](https://github.com/franklinbaldo/caranguejo/issues/5)) | 00476 p. 1, 5, 6, 4; 00477 p. 1, 5, 6, 4; 00474 p. 4 | parar |
-| 🐢 Tartaruga ([tartaruga#9](https://github.com/franklinbaldo/tartaruga/issues/9)) | *Correio* 21657: p. 9 até o fim do 1º caderno | *Correio* 21659, 21660, 21661: custódia e 1º caderno |
-| 🦌 Cervo ([cervo#6](https://github.com/franklinbaldo/cervo/issues/6)) | *Correio* 21658: mapear cadernos; p. 9 até o fim do 1º caderno; páginas de ciência ou astronáutica dos outros | parar |
-| 🦦 Lontra ([lontra#10](https://github.com/franklinbaldo/lontra/issues/10)), lote fechado | *Última Hora* Rio 04201 (11/11): custódia e p. 1, 2, 4, 6, 8 | parar |
+Estado em 15/11/2026 ~23h UTC (decisão do dono): *Última Hora* NE, *Correio* 21657–21659 e *Última Hora* Rio 04200–04201 completos no núcleo. Falta:
+
+| Leitor | Lote fechado | Depois |
+|---|---|---|
+| 🐢 Tartaruga ([tartaruga#9](https://github.com/franklinbaldo/tartaruga/issues/9)) | *Correio* 21660 PDF 5–12; 21661 PDF 1–13 | parar |
+| 🦫 Castor ([castor#10](https://github.com/franklinbaldo/castor/issues/10)) | *Última Hora* Rio 04202 (12/11): política nacional, internacional/teletipo, policial, ciência | parar; sem acesso ao PDF, `NOT_RUN` na #871 e a 04202 passa à 🦦 |
+| 🦦 Lontra ([lontra#10](https://github.com/franklinbaldo/lontra/issues/10)) | *Última Hora* Rio 04203 e 04204 (13–14/11), mesmas seções | parar |
 
 Método único, o do 🦀 (CGEO-73/76): SHA do PDF original; página renderizada vista por inteiro em quadrantes ampliados; artigo como unidade; `EXAMINADA` ou `ILEGÍVEL_PARCIAL` com o trecho; OCR só como apoio. Artigo sobre Conde, Bahia, objeto caído, satélite, esfera ou balão: título, página, crédito e, se houver, hora, local e testemunha literais. Hora candidata vai primeiro à #871.
 
