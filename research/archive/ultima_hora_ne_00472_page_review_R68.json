@@ -1,0 +1,159 @@
+{
+  "schema": "conde.newspaper_page_review/v1",
+  "id": "C241-LONTRA-R68",
+  "refs_issue": 871,
+  "review_date_utc": "2026-11-15",
+  "source": {
+    "institution": "Fundação Biblioteca Nacional",
+    "collection_id": "765147",
+    "newspaper": "Última Hora, edição Nordeste (PE)",
+    "edition": "00472",
+    "date_printed": "1963-11-09",
+    "pdf_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00472.pdf",
+    "pdf_sha256": "8564c0c8c26857e0feda54fc5da0f9d3ca0c34c8de02c44e3074aa79a101cece",
+    "pdf_bytes": 5275519,
+    "pdf_pages": 10,
+    "source_manifest": "research/archive/ultima_hora_ne_nov1963_C241_LONTRA_R67.json",
+    "redownload": false,
+    "integrity_rechecked_on_ifro": true
+  },
+  "method": {
+    "execution": "Ifro via Jatobá apenas como orquestrador",
+    "visual_scope": "panorama de cada página, manchetes e estrutura; sem certificação da leitura de cada coluna",
+    "text_assist": "índice textual preexistente, com erros, utilizado apenas para orientar revisão e confirmar falsos positivos",
+    "full_body_reading": false,
+    "negative_is_page_scoped": false
+  },
+  "pages": [
+    {
+      "pdf_page": 1,
+      "status": "EXAMINADA",
+      "review_scope": "CAPA_VERIFICADA_R67",
+      "topic_overview": "capa anteriormente conferida (R67)",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 2,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "politica estadual, concursos e administração",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 3,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "assembleia e funcionalismo",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 4,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "reforma agrária, tufão nas Filipinas",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 5,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "Vietnã, operários e economia",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 6,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "investigação policial e homicídio",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 7,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "sociedade, automóveis e anúncios",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 8,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "sociedade, cinema e programação",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 9,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "classificados",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    },
+    {
+      "pdf_page": 10,
+      "status": "EXAMINADA",
+      "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+      "topic_overview": "futebol",
+      "event_time_literal": null,
+      "conde_ba_article_verified": false,
+      "independent_witness_verified": false,
+      "full_page_body_read": false
+    }
+  ],
+  "false_positives": [
+    {
+      "pdf_page": 7,
+      "term": "Conde",
+      "reading": "Av. Conde da Boa Vista",
+      "classification": "logradouro de Recife, não notícia de Conde/BA"
+    },
+    {
+      "pdf_page": 9,
+      "term": "Conde",
+      "reading": "Av. Conde da Boa Vista",
+      "classification": "logradouro em classificados, não notícia de Conde/BA"
+    }
+  ],
+  "result": {
+    "pages_visually_reviewed": 10,
+    "new_internal_pages_reviewed": 9,
+    "pages_remaining_for_panorama_of_all_four_editions": 35,
+    "confirmed_independent_event_time": null,
+    "source_chain": "UNDETERMINED",
+    "whole_edition_no_article_claim": false,
+    "whole_edition_no_time_claim": false,
+    "physical_orbital_constraint_added": false
+  },
+  "limitations": [
+    "Panorama e conferência de manchetes não substituem leitura integral dos textos de colunas; não usar este registro para declarar LIDO_SEM_HORA da edição inteira.",
+    "A pesquisa textual preexistente tem erros e não produz conclusão negativa sobre um jornal.",
+    "Edições 00473, 00474 e 00475 continuam com interiores PENDENTES nesta revisão.",
+    "Nenhuma observação NORAD 527/528/529 ou hora local independente foi identificada neste lote."
+  ]
+}
