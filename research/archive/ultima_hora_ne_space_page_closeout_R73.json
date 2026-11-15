@@ -1,0 +1,91 @@
+{
+  "schema": "conde.newspaper_two_page_closeout/v1",
+  "id": "C241-LONTRA-R73",
+  "refs_issue": 871,
+  "review_date_utc": "2026-11-15",
+  "rationale": "Fatia final solicitada pelo Elefante em lontra#10: somente as duas paginas PDF 5 com materias espaciais, sem promover as demais 46 paginas panoramicas a leitura integral.",
+  "method": {
+    "executor": "Ifro; Jatoba usado apenas para orquestrar SSH (max_memory_mb=128)",
+    "source": "fac-similes FBN originais ja custodiados (R67), sem redownload",
+    "visual_review": "paginas inteiras e quatro quadrantes por pagina, com recorte ampliado da materia espacial",
+    "pdftotext_negative_inference": false,
+    "new_ocr_performed": false,
+    "scope": "2 paginas PDF especificas, nao 2 edicoes completas"
+  },
+  "pages": [
+    {
+      "edition": "00473",
+      "date_printed": "1963-11-10",
+      "pdf_page": 5,
+      "printed_page": 5,
+      "pdf_pages": 18,
+      "pdf_bytes": 8298891,
+      "pdf_sha256": "f37e4afa500fe841546a751e562cc799c33c699decb8967b2ae00b45e721e349",
+      "pdf_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00473.pdf",
+      "review_status": "LIDO_SEM_MENCAO",
+      "full_page_visual_columns_reviewed": true,
+      "space_headline_literal": "NASA: \"Explorer 18\" Abrirá Caminho Aos Cosmonautas",
+      "space_dateline_literal": "WASHINGTON, 10 (FP)",
+      "space_article_classification": "anuncio antecipado de sondagens interplanetarias pela NASA; nao relata queda, corpo ou hora do fenomeno em Conde/BA",
+      "other_content": "desastre mineiro no Japao, assalto em Manhattan, politica, teletipo e anuncios",
+      "previous_ledger_correction": "R69 identificou erroneamente Explorer 1; fac-simile ampliado comprova Explorer 18",
+      "conde_ba_reference_found": false,
+      "fragment_sphere_or_fall_in_brazil_found": false,
+      "independent_event_time_literal": null,
+      "independent_witness": null,
+      "orbital_observation_of_528_or_637": false,
+      "source_credit_literal": "(FP)"
+    },
+    {
+      "edition": "00475",
+      "date_printed": "1963-11-12",
+      "pdf_page": 5,
+      "printed_page": 5,
+      "pdf_pages": 10,
+      "pdf_bytes": 5031193,
+      "pdf_sha256": "88859dfbab5e9590614b684121507c7eb54148028a66d1efb9a3269d6444611f",
+      "pdf_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00475.pdf",
+      "review_status": "LIDO_SEM_MENCAO",
+      "full_page_visual_columns_reviewed": true,
+      "space_headline_literal": "URSS no Páreo Para Conquista da Lua: \"Polet I\" Rasga Caminho Aos \"Vostoks\"",
+      "space_dateline_literal": "MOSCOU, 12 (FP)",
+      "space_article_classification": "reportagem sobre manobra orbital sovietica, cientistas e planos de exploracao; nao noticia de Conde/BA",
+      "other_content": "politica italiana e alema, comemoracao francesa, navio egipcio e anuncios",
+      "previous_ledger_correction": null,
+      "conde_ba_reference_found": false,
+      "fragment_sphere_or_fall_in_brazil_found": false,
+      "independent_event_time_literal": null,
+      "independent_witness": null,
+      "orbital_observation_of_528_or_637": false,
+      "source_credit_literal": "(FP)"
+    }
+  ],
+  "external_crosscheck": {
+    "source": "NASA News Release 63-249",
+    "release_date": "1963-11-10",
+    "url": "https://ntrs.nasa.gov/api/citations/19760066802/downloads/19760066802.pdf",
+    "original_page": 1,
+    "finding": "IMP-A: primeiro lancamento programado para nao antes de 12/11; isso confirma noticia antecipatoria, nao a realizacao em 12/11",
+    "nasa_nssdc_url": "https://nssdc.gsfc.nasa.gov/multi/explorer.html",
+    "actual_launch_date": "1963-11-27",
+    "cospar": "1963-046A",
+    "identity": "Explorer 18 / IMP-A; distinto dos NORAD 528/637"
+  },
+  "result": {
+    "target_pages_closed": 2,
+    "target_pages_total": 2,
+    "full_editions_read": false,
+    "other_46_pages_scope": "CAPA_OU_PANORAMA_MAIS_TRIAGEM_LEXICAL",
+    "confirmed_independent_local_event_time": null,
+    "independent_witness": null,
+    "all_four_editions_negative": false,
+    "physical_orbital_constraint_added": false,
+    "next_blocker": "conde-incident#884 item 2: A Tarde e Jornal da Bahia, acesso humano"
+  },
+  "limitations": [
+    "Negativo apenas das duas paginas PDF 5 examinadas, nao das edicoes integrais nem das 46 outras paginas.",
+    "Nao inferir ausencia do episodio a partir da leitura de colunas de assunto distinto ou da camada OCR com erros.",
+    "O credito (FP) identifica marca editorial impressa, nao uma testemunha ocular ou medida orbital independente.",
+    "A noticia de 10/11 descreve previsao de lancamento de Explorer 18; a data real 27/11 foi confirmada separadamente pela NASA."
+  ]
+}
