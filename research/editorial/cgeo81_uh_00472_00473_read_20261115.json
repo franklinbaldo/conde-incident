@@ -1,0 +1,250 @@
+{
+  "type": "HistoricalPressPageReadAndClockDisambiguation",
+  "id": "CGEO-81",
+  "date_utc": "2026-11-15",
+  "priority": "https://github.com/franklinbaldo/conde-incident/issues/871",
+  "assignment": "https://github.com/franklinbaldo/caranguejo/issues/5",
+  "status": "PARTIAL_ISSUES_NO_INDEPENDENT_EVENT_HOUR",
+  "sources": [
+    {
+      "collection": "FBN Última Hora Nordeste/Recife 765147",
+      "edition": "00472",
+      "cover_date": "1963-11-09",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00472.pdf",
+      "pdf_pages": 10,
+      "size_bytes": 5275519,
+      "sha256": "8564c0c8c26857e0feda54fc5da0f9d3ca0c34c8de02c44e3074aa79a101cece",
+      "custody": "SHA_RECHECKED_IFRO; SAME_OBJECT_AS_CGEO_80"
+    },
+    {
+      "collection": "FBN Última Hora Nordeste/Recife 765147",
+      "edition": "00473",
+      "cover_date": "1963-11-10",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00473.pdf",
+      "pdf_pages": 18,
+      "size_bytes": 8298891,
+      "sha256": "f37e4afa500fe841546a751e562cc799c33c699decb8967b2ae00b45e721e349",
+      "custody": "SHA_RECHECKED_IFRO; EDITION_AND_DATE_FROM_COVER"
+    }
+  ],
+  "method": {
+    "executor": "Ifro dispatched by Jatobá SSH controller; Jatobá max_memory_mb=128 explicit",
+    "original_pdf_sha256_rechecked": true,
+    "visual": "Each PDF page rendered independently at 1800 and 3600 px; all four 3600-px quadrants inspected for each of five pages",
+    "pdf_text_layer_only_auxiliary": true,
+    "new_ocr": false,
+    "printed_folio_assumed_from_pdf_index": false,
+    "page_statuses_are_not_issue_negatives": true
+  },
+  "page_reviews": [
+    {
+      "edition": "00472",
+      "pdf_page": 4,
+      "printed_page": 3,
+      "status": "ILEGIVEL_PARCIAL",
+      "reinspection": true,
+      "new_integral_credit": false,
+      "sections": [
+        {
+          "title": "Jango: reformar a Constituição para melhor aproveitar a terra",
+          "byline": "Flávio Tavares",
+          "topic": "politica nacional e reforma agraria"
+        },
+        {
+          "title": "Tufão gaúcho deixa 10 mortos, 205 feridos e 2 mil sem teto",
+          "topic": "desastre meteorologico no Rio Grande do Sul"
+        }
+      ],
+      "unreadable_area": "Microtexto/interferência visual em colunas inferiores e junto à reprodução; selo ILEGÍVEL na página original. Sem promoção do negativo integral já vedado pela CGEO-78.",
+      "event_hour": null,
+      "eyewitnesses": [],
+      "notes": "Nova ampliação não demonstrou hora de Conde no conteúdo legível; selo ILEGÍVEL não autoriza negativo integral."
+    },
+    {
+      "edition": "00472",
+      "pdf_page": 6,
+      "printed_page": null,
+      "status": "ILEGIVEL_PARCIAL",
+      "reinspection": true,
+      "new_integral_credit": false,
+      "sections": [
+        {
+          "title": "Morte da milionária abala a sociedade",
+          "topic": "investigação do assassinato de Palmira Tavares no Recife"
+        },
+        {
+          "title": "Cidade Nua",
+          "byline": "M. Barbosa",
+          "topic": "crônica policial"
+        },
+        {
+          "title": "UH-N rompe barreira do silêncio",
+          "topic": "Polinter e suspeitos do homicídio"
+        }
+      ],
+      "unreadable_area": "Faixas de caracteres com sobreimpressão e trechos finos não decifráveis na margem/colunas; negativo integral continua não certificado.",
+      "event_hour": null,
+      "eyewitnesses": [],
+      "notes": "Hora de interrogatório e 5h30 citadas no caso policial são alheias a Conde."
+    },
+    {
+      "edition": "00473",
+      "pdf_page": 1,
+      "printed_page": null,
+      "status": "LIDO_INTEGRAL_SEM_MENCAO",
+      "reinspection": false,
+      "new_integral_credit": true,
+      "sections": [
+        {
+          "title": "Espera de 48 horas frustrou fuga da milionária para a vida na GB",
+          "topic": "homicídio de Palmira Tavares e familiares"
+        },
+        {
+          "title": "Convocação do Congresso oculta escândalo de milhões",
+          "topic": "manchete-remissão para página 4"
+        },
+        {
+          "title": "Zero Hora",
+          "topic": "nota política de convocação legislativa, não relógio do fenômeno"
+        },
+        {
+          "title": "Mina explode no Japão: 172 mortos",
+          "topic": "chamada de acidente no Japão"
+        },
+        {
+          "title": "Beleza do Nordeste estreia na passarela",
+          "topic": "concurso cultural"
+        }
+      ],
+      "event_hour": null,
+      "eyewitnesses": [],
+      "notes": "Capa lida em quatro quadrantes. 48 horas é intervalo do caso policial; Zero Hora é rubrica editorial."
+    },
+    {
+      "edition": "00473",
+      "pdf_page": 4,
+      "printed_page": 4,
+      "status": "LIDO_INTEGRAL_SEM_MENCAO",
+      "reinspection": false,
+      "new_integral_credit": true,
+      "sections": [
+        {
+          "title": "Convocação do Congresso esconde escândalo de bilhões",
+          "byline": "Flávio Tavares",
+          "topic": "Congresso e ajuda de custo parlamentar"
+        },
+        {
+          "title": "Governadores: falhou a reunião preliminar",
+          "topic": "política regional"
+        },
+        {
+          "title": "Jornais & Problemas",
+          "byline": "Octávio Malta",
+          "topic": "artigo de opinião sobre planejamento"
+        },
+        {
+          "title": "Do ponto de vista nacional",
+          "byline": "Adalgisa Nery",
+          "topic": "coluna de opinião"
+        },
+        {
+          "title": "Aviso do Departamento de Estradas de Rodagem",
+          "topic": "edital estadual de Pernambuco"
+        }
+      ],
+      "event_hour": null,
+      "eyewitnesses": [],
+      "notes": "Quatro quadrantes ampliados; horários de ônibus e serviço elétrico são programação urbana, não hora do fenômeno."
+    },
+    {
+      "edition": "00473",
+      "pdf_page": 6,
+      "printed_page": null,
+      "status": "LIDO_INTEGRAL_SEM_MENCAO",
+      "reinspection": false,
+      "new_integral_credit": true,
+      "sections": [
+        {
+          "title": "Genro da milionária na mira da Polícia",
+          "topic": "investigação de homicídio no Recife"
+        },
+        {
+          "title": "Desastre de ônibus fere 13 passageiros",
+          "topic": "colisão urbana"
+        },
+        {
+          "title": "IPM das armas: Justiça Militar julgará Borges e Cecil Borer",
+          "topic": "inquérito militar na Guanabara"
+        },
+        {
+          "title": "Cidade Nua",
+          "byline": "M. Barbosa",
+          "topic": "crônica social e policial"
+        }
+      ],
+      "event_hour": null,
+      "eyewitnesses": [],
+      "notes": "7h30 e 8h10 aparecem na cronologia do homicídio e interrogatório, não do suposto evento de Conde."
+    }
+  ],
+  "temporal_false_positives": [
+    {
+      "edition": "00473",
+      "pdf_page": 1,
+      "phrase": "48 HORAS",
+      "context": "tempo da fuga pretendida no homicídio",
+      "kind": "POLICE_INTERVAL_NOT_EVENT",
+      "phenomenon_hour": false
+    },
+    {
+      "edition": "00473",
+      "pdf_page": 1,
+      "phrase": "ZERO HORA",
+      "context": "título de coluna editorial",
+      "kind": "EDITORIAL_SECTION_NOT_EVENT",
+      "phenomenon_hour": false
+    },
+    {
+      "edition": "00473",
+      "pdf_page": 6,
+      "phrase": "7h30m",
+      "context": "período e horário da investigação do homicídio de Palmira Tavares",
+      "kind": "POLICE_HOUR_NOT_EVENT",
+      "phenomenon_hour": false
+    },
+    {
+      "edition": "00473",
+      "pdf_page": 4,
+      "phrase": "às 5.00",
+      "context": "horário de linhas de ônibus em anúncio",
+      "kind": "TRANSIT_HOUR_NOT_EVENT",
+      "phenomenon_hour": false
+    }
+  ],
+  "genealogy": {
+    "new_independent_eyewitness": false,
+    "new_independent_hour": null,
+    "source_independence": "ONLY_EXISTING_FBN_EDITION; NO_NEW_INCIDENT_ARTICLE",
+    "orbit_candidate": null
+  },
+  "coverage": {
+    "package_total_pdf_pages": 68,
+    "previously_certified_integral": 10,
+    "newly_certified_integral": 3,
+    "integral_after_this_round": 13,
+    "not_yet_integral": 55,
+    "remaining_partial_00472": [
+      4,
+      6,
+      9
+    ],
+    "complete_issues": 0
+  },
+  "limitations": [
+    "00472 páginas 4 e 6 continuam parcialmente ilegíveis após ampliação: não foram contabilizadas como negativas integrais.",
+    "Leitura negativa de uma página não demonstra ausência em fascículo ou ausência de fatos na Bahia.",
+    "OCR/camada textual não usados para decidir negatividade; registros visuais dependem da resolução disponível na FBN.",
+    "Nenhuma matéria sobre Conde/BA nas cinco páginas inspecionadas foi reconhecida; não equivale a testemunho ou hora independente.",
+    "Parte dos textos possui interferência visual; conteúdo residual ilegível não foi convertido em ausência."
+  ]
+}
