@@ -14,6 +14,7 @@ EXPECTED = {
 }
 REQUIRED_TOP = {"schema","id","refs_issue","review_date_utc","rationale","method","pages","external_crosscheck","result","limitations"}
 REQUIRED_PAGE = {"edition","date_printed","pdf_page","printed_page","pdf_pages","pdf_bytes","pdf_sha256","pdf_url","review_status","full_page_visual_columns_reviewed","space_headline_literal","space_dateline_literal","space_article_classification","other_content","previous_ledger_correction","conde_ba_reference_found","fragment_sphere_or_fall_in_brazil_found","independent_event_time_literal","independent_witness","orbital_observation_of_528_or_637","source_credit_literal"}
+FROZEN_REVIEW_SHA256 = "7ee3cc0cb57b8aa52cda9f88d7468656fcbd84e5ee974d0e889ff07a93bedaa8"
 REQUIRED_RESULT = {"target_pages_closed":2,"target_pages_total":2,"full_editions_read":False,"other_46_pages_scope":"CAPA_OU_PANORAMA_MAIS_TRIAGEM_LEXICAL","confirmed_independent_local_event_time":None,"independent_witness":None,"all_four_editions_negative":False,"physical_orbital_constraint_added":False,"next_blocker":"conde-incident#884 item 2: A Tarde e Jornal da Bahia, acesso humano"}
 
 def validate(data):
@@ -45,6 +46,12 @@ def validate(data):
         raise ValueError("R73: NASA identity altered")
     if len(data["limitations"])!=4 or any(not isinstance(s,str) for s in data["limitations"]):
         raise ValueError("R73: limitations altered")
+    # Source bytes have a separate replay; this pins the complete reviewed
+    # interpretation and metadata, not the truth of the newspaper itself.
+    canonical = json.dumps(data, sort_keys=True, ensure_ascii=False,
+                           separators=(",", ":")).encode("utf-8")
+    if hashlib.sha256(canonical).hexdigest() != FROZEN_REVIEW_SHA256:
+        raise ValueError("R73: reviewed interpretation changed; require explicit source review")
     return True
 
 def replay(pdf_dir):
