@@ -1,0 +1,306 @@
+{
+  "activation": false,
+  "calendar_comparison": {
+    "calendar_label_is_calibrated_utc": false,
+    "converted_terminal_utc": null,
+    "crosswalk_norad_308": null,
+    "independent_sensor_observations_from_comparison": 0,
+    "nasa_printed_days": [
+      "1963-10-29",
+      "1963-10-30"
+    ],
+    "nominal_labels_compatible": true,
+    "un_calendar_cutoff": "1963-10-31",
+    "un_heading": "Decay before"
+  },
+  "delta_links": 28,
+  "delta_orbital_constraints": 0,
+  "graph": [
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "MAIN_REGISTRATION",
+      "source": "TABLE:UN:A1",
+      "target": "ENTRY:1962-OMEGA1"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "REGISTERED_FRAGMENT",
+      "source": "TABLE:UN:B1",
+      "target": "ENTRY:1962-OMEGA2"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "REGISTERED_FRAGMENT",
+      "source": "TABLE:UN:B1",
+      "target": "ENTRY:1962-OMEGA3"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "FRAGMENT_NOT_SENSOR",
+      "source": "ENTRY:1962-OMEGA2",
+      "target": "H:ROLE_NOT_ORBIT_ID"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "FRAGMENT_NOT_SENSOR",
+      "source": "ENTRY:1962-OMEGA3",
+      "target": "H:ROLE_NOT_ORBIT_ID"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "TRANSCRIBED_REFERENCE_ONLY",
+      "source": "ENTRY:1962-OMEGA1",
+      "target": "DOC:UN-INF013"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "FACSIMILE_NOT_RECOVERED",
+      "source": "DOC:UN-INF013",
+      "target": "H:ORIGINAL_UN_PENDING"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "REGISTERED_DECAY_REFERENCE",
+      "source": "TABLE:UN:A3",
+      "target": "DOC:UN-INF054"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "DECAY_BEFORE_HEADING",
+      "source": "DOC:UN-INF054",
+      "target": "CUT:BEFORE-1963-10-31"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "CALENDAR_NOT_UTC",
+      "source": "CUT:BEFORE-1963-10-31",
+      "target": "H:NOT_TERMINAL_UTC"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NASA_PRINTED_DAYS",
+      "source": "DOC:C241-L64",
+      "target": "RANGE:NASA-1963-10-29_30"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "DAY_LABELS_NOT_SENSOR_TIME",
+      "source": "RANGE:NASA-1963-10-29_30",
+      "target": "H:NOT_TERMINAL_UTC"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "RETROSPECTIVE_DATE_SIGNATURE",
+      "source": "DOC:C241-L67",
+      "target": "SIGNATURE:NASA-308"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "MATCH_NOT_DIRECT_CROSSWALK",
+      "source": "SIGNATURE:NASA-308",
+      "target": "H:NO_UN_TO_NORAD"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NAME_NOT_DIRECT_CROSSWALK",
+      "source": "ENTRY:1962-OMEGA1",
+      "target": "H:NO_UN_TO_NORAD"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "RAW_UN_SCAN_MISSING",
+      "source": "H:ORIGINAL_UN_PENDING",
+      "target": "LATENT:UN:source_crosswalk"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NORAD_ID_MISSING",
+      "source": "H:NO_UN_TO_NORAD",
+      "target": "LATENT:UN:source_crosswalk"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "UTC_OBSERVATION_MISSING",
+      "source": "H:NOT_TERMINAL_UTC",
+      "target": "LATENT:UN:event_utc"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "ALIAS_ROLE_UNRESOLVED",
+      "source": "H:ROLE_NOT_ORBIT_ID",
+      "target": "LATENT:UN:registration_role"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "INSTRUMENT_INDEPENDENCE_MISSING",
+      "source": "H:ORIGINAL_UN_PENDING",
+      "target": "LATENT:UN:sensor_lineage"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "TIMING_ERROR_MISSING",
+      "source": "H:NOT_TERMINAL_UTC",
+      "target": "LATENT:UN:terminal_sigma"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "MISSING_IDENTITY_PREMISE",
+      "source": "LATENT:UN:source_crosswalk",
+      "target": "LEAN:candidateUnOmegaControlIdentity"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "MISSING_EVENT_TIME",
+      "source": "LATENT:UN:event_utc",
+      "target": "LEAN:candidateUnOmegaControlIdentity"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "MISSING_INDEPENDENCE",
+      "source": "LATENT:UN:sensor_lineage",
+      "target": "LEAN:candidateUnOmegaControlIdentity"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "MISSING_ERROR",
+      "source": "LATENT:UN:terminal_sigma",
+      "target": "LEAN:candidateUnOmegaControlIdentity"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "MISSING_ROLE_RESOLUTION",
+      "source": "LATENT:UN:registration_role",
+      "target": "LEAN:candidateUnOmegaControlIdentity"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NOT_PROMOTED",
+      "source": "LEAN:candidateUnOmegaControlIdentity",
+      "target": "PARAM:terminal_error_control_308"
+    },
+    {
+      "activation": false,
+      "documentary_only": true,
+      "relation": "NO_CALIBRATED_TRANSFER",
+      "source": "PARAM:terminal_error_control_308",
+      "target": "PARAM:reentry_528_drag_calibration"
+    }
+  ],
+  "historical_independent_528_measurements_known": null,
+  "historical_mcmc": "NOT_RUN",
+  "id": "C241-ABELHA-R60-UN-OMEGA",
+  "latents": [
+    {
+      "activation": false,
+      "id": "LATENT:UN:source_crosswalk",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:UN:event_utc",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:UN:sensor_lineage",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:UN:terminal_sigma",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "LATENT:UN:registration_role",
+      "value": null
+    }
+  ],
+  "lean_candidate": {
+    "compiled_theorem_claimed": false,
+    "id": "candidateUnOmegaControlIdentity",
+    "missing_premises": [
+      "source_crosswalk",
+      "event_utc",
+      "sensor_lineage",
+      "terminal_sigma",
+      "registration_role"
+    ],
+    "status": "NOT_PROMOTED"
+  },
+  "matrix_C001_C238_unchanged": true,
+  "new_independent_terminal_measurements": 0,
+  "next_test": "Recover original A/AC.105/INF.013 and INF.054 and a contemporaneous UN-NORAD crosswalk with sensor log, station, UTC convention, reference frame and uncertainty.",
+  "occurrence_ids": [
+    "C241-R66-UN-OMEGA-REGISTRY",
+    "C241-L64",
+    "C241-L67",
+    "C241-L68"
+  ],
+  "original_un_document_scans_verified": false,
+  "physical_domain_effect": "THETA_UNCHANGED",
+  "reported_roles": {
+    "1962 Omega 1": "MAIN_REGISTERED_OBJECT",
+    "1962 Omega 2": "FRAGMENT",
+    "1962 Omega 3": "FRAGMENT"
+  },
+  "schema": "conde.documentary-scientific-bridge/v1",
+  "simulator_parameters": [
+    {
+      "activation": false,
+      "id": "PARAM:terminal_error_control_308",
+      "value": null
+    },
+    {
+      "activation": false,
+      "id": "PARAM:reentry_528_drag_calibration",
+      "value": null
+    }
+  ],
+  "source_family": "UN_SECONDARY_REGISTRY_TRANSCRIPTION_WITH_NASA_SHARED_CATALOG_CONTEXT",
+  "sources": [
+    {
+      "id": "UN-R66",
+      "path": "research/tle_custody/c241_un_omega_registry_leads_r66.json",
+      "role": "SECONDARY_UN_TRANSCRIPTION",
+      "sha256": "66215c3f63c1bf52394afa8dacf6cc86ecc77166bc001d80d1ac08027903f3f3"
+    },
+    {
+      "id": "NASA-OMEGA-R58",
+      "path": "public/data/conde-omega-snapshot-date-genealogy.json",
+      "role": "EXISTING_NASA_GENEALOGY",
+      "sha256": "bfeba1fa6d39c0847b34487728f5d740475976f32dcb12f51c145ca2253905d2"
+    }
+  ],
+  "un_document_identifiers": [
+    "A/AC.105/INF.013",
+    "A/AC.105/INF.054"
+  ]
+}
