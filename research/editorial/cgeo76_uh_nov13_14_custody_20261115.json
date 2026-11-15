@@ -1,0 +1,99 @@
+{
+  "type": "HistoricalPressPartialSourceCustodyAndArticleAdjudication",
+  "id": "CGEO-76",
+  "date_utc": "2026-11-15",
+  "issue": "https://github.com/franklinbaldo/conde-incident/issues/871",
+  "assignment": "https://github.com/franklinbaldo/caranguejo/issues/5",
+  "status": "PARTIAL_ARTICLE_LEVEL_NOT_COMPLETE_ISSUES",
+  "question": "Does the 13–14 Nov 1963 Última Hora NE corpus independently establish a local time for the reported event in Conde, Bahia?",
+  "method": {
+    "executor": "Ifro, invoked from Jatobá only as SSH controller",
+    "acquisition": "HTTP GET from the official FBN PDF service, HTTP 200, original bytes SHA-256 computed locally",
+    "inspection": "pdftotext -layout is auxiliary; pdftoppm rendered source article regions inspected visually at high resolution",
+    "limitations": [
+      "Article-region reading is not equivalent to full-page or whole-issue reading.",
+      "Poor scan/microprint and OCR errors prevent treating absent lexical tokens as absence of articles.",
+      "No full-issue negative has been established for 00476 or 00477.",
+      "Editorial commentary on another report is not a new field witness or independent event observation."
+    ],
+    "source_pdf_bytes_in_git": false
+  },
+  "sources": [
+    {
+      "issue_id": "00476",
+      "cover_date": "1963-11-13",
+      "publication": "Última Hora, edição Nordeste/Recife",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00476.pdf",
+      "http_status": 200,
+      "pdf_size_bytes": 5369187,
+      "pdf_pages": 10,
+      "sha256": "89af71800faf3d447cf7fd3a2ee473ba010516beb8dc45dd200d220ad65c8047",
+      "source_custody": "ACQUIRED_AND_HASH_VERIFIED_IFRO"
+    },
+    {
+      "issue_id": "00477",
+      "cover_date": "1963-11-14",
+      "publication": "Última Hora, edição Nordeste/Recife",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00477.pdf",
+      "http_status": 200,
+      "pdf_size_bytes": 5209201,
+      "pdf_pages": 10,
+      "sha256": "0a5170a69e037166ef1fdf502797cef8fc74211b45183af0da775eedc7072fb0",
+      "source_custody": "ACQUIRED_AND_HASH_VERIFIED_IFRO"
+    }
+  ],
+  "inspected_article_regions": [
+    {
+      "issue_id": "00476",
+      "pdf_page": 5,
+      "printed_page": 5,
+      "review": "ARTICLE_REGION_RENDERED_AND_TEXT_ASSISTED",
+      "headline": "SATÉLITE",
+      "credit": "MOSCOU; FP",
+      "subject": "Brief on the USSR's uncrewed Cosmos 21 and its orbit; separate Soviet space news.",
+      "short_literal": "Cosmos 21, que não leva nenhum ser humano a bordo",
+      "mentions_conde_bahia": false,
+      "source_of_claim": "FP agency dispatch",
+      "event_time_literal": null,
+      "independent_conde_event_witness": false,
+      "phenomenon_time_established": false
+    },
+    {
+      "issue_id": "00477",
+      "pdf_page": 7,
+      "printed_page": 7,
+      "review": "ARTICLE_REGION_RENDERED_AND_TEXT_ASSISTED",
+      "headline": "A Guerra Dos Mundos na Versão Baiana",
+      "credit": "Stanislaw Ponte Preta, signed commentary column",
+      "subject": "Satirical commentary explicitly refers to reports of an object/satellite allegedly fallen in Conde (BA) and proposes an atmospheric sounding balloon as a skeptical explanation; it is about the dissemination of a story, not a documented direct observation.",
+      "short_literal": "Isto aí é um balão de sondagem atmosférica do Serviço de Meteorologia",
+      "mentions_conde_bahia": true,
+      "source_of_claim": "EDITORIAL_COMMENTARY_OF_UNESTABLISHED_NEWS_LINEAGE",
+      "event_time_literal": null,
+      "independent_conde_event_witness": false,
+      "phenomenon_time_established": false
+    }
+  ],
+  "coverage": {
+    "pdf_sources_newly_custodied": 2,
+    "pages_in_new_sources": 20,
+    "whole_pages_fully_read_this_round": 0,
+    "article_regions_read_this_round": 2,
+    "whole_issues_fully_read_this_round": 0,
+    "prior_00472_00475_pages_only_panorama": 46,
+    "prior_00472_00475_pages_fully_read": 2,
+    "full_00472_00477_census_complete": false,
+    "independent_local_event_time_verified": false,
+    "independent_named_eyewitness_verified": false,
+    "new_orbital_constraints": 0
+  },
+  "provenance": {
+    "previous_source_records": [
+      "research/editorial/ultima_hora_ne_1963_11_09_12_C241_LONTRA_R67.md",
+      "research/archive/ultima_hora_ne_00474_00475_page_review_R71.json"
+    ],
+    "same_issue_not_distinct_observation": true,
+    "independent_of_tupi_fbis_event_claim": "NOT_ESTABLISHED"
+  },
+  "next_step": "Review entire pages/columns of 00472–00477 once, preserving page-level legibility and negatives. 00476–00477 are now acquired; do not infer a local event time from a publication date or from Stanislaw's rhetorical example."
+}
