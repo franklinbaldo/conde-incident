@@ -1,0 +1,163 @@
+{
+  "type": "HistoricalPressFrozenWeekFixedPageAudit",
+  "id": "CGEO-71",
+  "date_utc": "2026-11-15",
+  "issue": "https://github.com/franklinbaldo/conde-incident/issues/887",
+  "prereg_path": "research/editorial/cgeo64_null_narrative_prereg_20261114.json",
+  "prereg_blob_sha": "0d13d9359080699e5f8402ca9b7014d7f1f6d59a",
+  "source_inventory_path": "research/editorial/cgeo65_uh_bn_inventory_20261115.json",
+  "source_cover_crosswalk": "research/editorial/cgeo66_uh_cover_dates_20261115.json",
+  "prior_audit_paths": [
+    "research/editorial/cgeo69_uh_four_frontpages_20261115.json",
+    "research/editorial/cgeo70_uh_four_internal_pages_20261115.json"
+  ],
+  "method": "Original BN PDFs reverified on Ifro by full SHA-256; PDF page 3 rendered at 1700 pixels, whole-page visual inspection including all four quadrants with embedded text checked as auxiliary search leads. Confirm only same-article composite FBIS motifs and distinguish article genre from lexical coincidences. Page renderings are derivative views of the four pinned PDFs, never additional independent sources.",
+  "selection_bias": "The page number 3 is fixed equally across four dates already chosen in CGEO-69, reducing post-hoc lexical targeting. The dates themselves are a convenience subset of preregistered slots: NOT a random or representative sample; page-level negatives MUST NOT be extrapolated to editions, weeks or newspapers. No other pages counted this round.",
+  "pages": [
+    {
+      "publication": "UH_RE",
+      "issue_id": "00442",
+      "date": "1963-10-09",
+      "week": "CONTROL_OCT07",
+      "pdf_page": 3,
+      "source_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00442.pdf",
+      "source_sha256": "7b7c6189f86a9da5457332927f847262a72a4d0989a18f9b0042283c83e90a6a",
+      "review": "FULL_PAGE_VISUAL_FOUR_QUADRANTS_TEXT_LAYER_AUXILIARY",
+      "selection": "FIXED_PDF_PAGE_3_IN_EACH_WEEK",
+      "genre": "RECIFE_INDUSTRY",
+      "confirmed_article_counts": {
+        "F01_METAL_SPHERE": 0,
+        "F02_CITY_CENTER": 0,
+        "F03_FOUR_METER_HOLE": 0,
+        "F04_WINDOWS": 0,
+        "F05_THICK_GLASS": 0,
+        "F06_HUMAN_BODY": 0,
+        "F07_HEAVY_CLOTHES": 0,
+        "F08_INDECIPHERABLE_INSCRIPTIONS": 0
+      },
+      "lexical_adjudication": {
+        "fragment_or_context": "F01_METAL_SPHERE",
+        "context": "Industry item refers to metalworkers, not to a metallic sphere.",
+        "fbis_composite_match": false
+      },
+      "whole_issue_read": false,
+      "independent_conde_witness": false
+    },
+    {
+      "publication": "UH_RE",
+      "issue_id": "00447",
+      "date": "1963-10-14",
+      "week": "CONTROL_OCT14",
+      "pdf_page": 3,
+      "source_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00447.pdf",
+      "source_sha256": "e249c946712b7685e0a34d3de9a7250929957deb7a4c5894fbdb94aa0d02242b",
+      "review": "FULL_PAGE_VISUAL_FOUR_QUADRANTS_TEXT_LAYER_AUXILIARY",
+      "selection": "FIXED_PDF_PAGE_3_IN_EACH_WEEK",
+      "genre": "VATICAN_NEWS",
+      "confirmed_article_counts": {
+        "F01_METAL_SPHERE": 0,
+        "F02_CITY_CENTER": 0,
+        "F03_FOUR_METER_HOLE": 0,
+        "F04_WINDOWS": 0,
+        "F05_THICK_GLASS": 0,
+        "F06_HUMAN_BODY": 0,
+        "F07_HEAVY_CLOTHES": 0,
+        "F08_INDECIPHERABLE_INSCRIPTIONS": 0
+      },
+      "lexical_adjudication": {
+        "fragment_or_context": "F04_WINDOWS",
+        "context": "Pope Paul VI addresses pilgrims near the windows of his Vatican apartment; ordinary architectural windows.",
+        "fbis_composite_match": false
+      },
+      "whole_issue_read": false,
+      "independent_conde_witness": false
+    },
+    {
+      "publication": "UH_RE",
+      "issue_id": "00455",
+      "date": "1963-10-22",
+      "week": "CONTROL_OCT21",
+      "pdf_page": 3,
+      "source_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00455.pdf",
+      "source_sha256": "d4e08e37c815b538d29eb56c2354ddb3d60b8e2f3dbf27573d643693a7110830",
+      "review": "FULL_PAGE_VISUAL_FOUR_QUADRANTS_TEXT_LAYER_AUXILIARY",
+      "selection": "FIXED_PDF_PAGE_3_IN_EACH_WEEK",
+      "genre": "EDUCATION_NEWS",
+      "confirmed_article_counts": {
+        "F01_METAL_SPHERE": 0,
+        "F02_CITY_CENTER": 0,
+        "F03_FOUR_METER_HOLE": 0,
+        "F04_WINDOWS": 0,
+        "F05_THICK_GLASS": 0,
+        "F06_HUMAN_BODY": 0,
+        "F07_HEAVY_CLOTHES": 0,
+        "F08_INDECIPHERABLE_INSCRIPTIONS": 0
+      },
+      "lexical_adjudication": {
+        "fragment_or_context": "F06_HUMAN_BODY",
+        "context": "Corpo docente means school teaching staff, not a human body found in a sphere.",
+        "fbis_composite_match": false
+      },
+      "whole_issue_read": false,
+      "independent_conde_witness": false
+    },
+    {
+      "publication": "UH_RE",
+      "issue_id": "00467",
+      "date": "1963-11-04",
+      "week": "TARGET_NOV04",
+      "pdf_page": 3,
+      "source_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00467.pdf",
+      "source_sha256": "82c0345dccc9c7d48db3512b134b84b0d1d39579410b5f91530109674bd995f9",
+      "review": "FULL_PAGE_VISUAL_FOUR_QUADRANTS_TEXT_LAYER_AUXILIARY",
+      "selection": "FIXED_PDF_PAGE_3_IN_EACH_WEEK",
+      "genre": "VIETNAM_FUNERAL",
+      "confirmed_article_counts": {
+        "F01_METAL_SPHERE": 0,
+        "F02_CITY_CENTER": 0,
+        "F03_FOUR_METER_HOLE": 0,
+        "F04_WINDOWS": 0,
+        "F05_THICK_GLASS": 0,
+        "F06_HUMAN_BODY": 0,
+        "F07_HEAVY_CLOTHES": 0,
+        "F08_INDECIPHERABLE_INSCRIPTIONS": 0
+      },
+      "lexical_adjudication": {
+        "fragment_or_context": "F06_HUMAN_BODY",
+        "context": "The burial of Ngo Dinh Diem and his brother in a Saigon wire report is unrelated to a body reportedly found in Conde.",
+        "fbis_composite_match": false
+      },
+      "whole_issue_read": false,
+      "independent_conde_witness": false
+    }
+  ],
+  "coverage": {
+    "new_fixed_page3_fully_reviewed": 4,
+    "prior_cgeo69_pages": 4,
+    "prior_cgeo70_pages": 4,
+    "total_distinct_pages_scoped": 12,
+    "pages_by_week_scoped": {
+      "CONTROL_OCT07": 3,
+      "CONTROL_OCT14": 3,
+      "CONTROL_OCT21": 3,
+      "TARGET_NOV04": 3
+    },
+    "whole_issues_read": 0,
+    "jb_pages_read": 0,
+    "predeclared_slots_changed": 0,
+    "full_corpus_baseline_rate": null,
+    "first_pre_event_occurrence": null,
+    "general_verdict": "UNDETERMINED"
+  },
+  "lineage_and_limits": {
+    "distinct_publication_lineages": 1,
+    "same_article_republications_authenticated": 0,
+    "independent_conde_witness_found": false,
+    "source_hour_of_event_found": false,
+    "not_all_pages_of_any_issue_inspected": true,
+    "historical_center_1963": null,
+    "orbital_constraint_activated": false,
+    "deliberate_fraud_proven": false
+  },
+  "interpretation": "No confirmed composite FBIS narrative motif in these four inspected pages; isolated words such as windows, body and metalworkers refer to different stories. These narrowly scoped negatives do not prove borrowing, assembly, or fraud. Narrative verdict UNDETERMINED; no independent testimony or event hour."
+}
