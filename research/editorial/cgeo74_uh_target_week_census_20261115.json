@@ -1,0 +1,424 @@
+{
+  "type": "NarrativeNullTargetWeekCensus",
+  "id": "CGEO-74",
+  "date_utc": "2026-11-15",
+  "issue": "https://github.com/franklinbaldo/conde-incident/issues/887",
+  "prereg_path": "research/editorial/cgeo64_null_narrative_prereg_20261114.json",
+  "prereg_git_blob_sha": "0d13d9359080699e5f8402ca9b7014d7f1f6d59a",
+  "prior_cumulative_manifest": "research/editorial/cgeo73_uh_nov08_whole_issue_20261115.json",
+  "priority": "docs/PRIORITIES.md; Elephant issue 887 comment 6892050319",
+  "method": "Ifro authorized executor: full original-PDF SHA-256 verified independently for all four files; pdftoppm visual entire pages at 1650-1750px; embedded text used as leads only. Microprint and red scanning artifacts limit certainty; a non-match means no compound motif confirmed at this resolution, not a proof every word is absent.",
+  "source_pdfs": [
+    {
+      "issue_id": "00467",
+      "date": "1963-11-04",
+      "pdf_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00467.pdf",
+      "sha256": "82c0345dccc9c7d48db3512b134b84b0d1d39579410b5f91530109674bd995f9",
+      "pdf_pages": 10,
+      "visual_pages_new": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "issue_id": "00468",
+      "date": "1963-11-05",
+      "pdf_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00468.pdf",
+      "sha256": "b4cc898a2f7fcc6a427f4a0c707045b5bad8d8c819e8034b96d4a4ebcec54eaf",
+      "pdf_pages": 10,
+      "visual_pages_new": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "issue_id": "00469",
+      "date": "1963-11-06",
+      "pdf_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00469.pdf",
+      "sha256": "c1ab434f4253288892f4959d1d39789690e77a5f0be3f801b98c371c5c0641a0",
+      "pdf_pages": 10,
+      "visual_pages_new": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "issue_id": "00470",
+      "date": "1963-11-07",
+      "pdf_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00470.pdf",
+      "sha256": "da04933d49f7a41571701163f341ab67fcb9ab3bcf76f0e620d32f793e889157",
+      "pdf_pages": 10,
+      "visual_pages_new": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    }
+  ],
+  "new_visually_reviewed_pages": [
+    {
+      "issue_id": "00467",
+      "pdf_page": 5,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Real estate classifieds: guarda-roupas means closets, not heavy clothes.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00467",
+      "pdf_page": 6,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Crime and drowning reports mention a child body and victims, unrelated to any spacecraft.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00467",
+      "pdf_page": 7,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Football results and photographs; no Conde event report.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00467",
+      "pdf_page": 8,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Automobile service and sport; a window is ordinary architectural/automotive context.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00467",
+      "pdf_page": 9,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Football editorial; buraco and corpo estranho are sports metaphors.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00467",
+      "pdf_page": 10,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Football report: Nautico 4–0 America and Correia Lima profile.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00468",
+      "pdf_page": 1,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Police station retaliation and Pernambuco public service headline.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00468",
+      "pdf_page": 2,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Housing policy, regional drought, geology congress and ads; metallic text is not a sphere.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00468",
+      "pdf_page": 3,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Civil-service remuneration, Assembly and political coverage.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00468",
+      "pdf_page": 4,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Society, cinema, home library, arts and crossword.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00468",
+      "pdf_page": 5,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Report on trapped miners rescued at Lengede/Peine, not a human body from a metallic craft.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00468",
+      "pdf_page": 6,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Police and crime reportage with human victims unrelated to Conde.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00468",
+      "pdf_page": 7,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Alliance for Progress column and Stanislaw humour; Buraco de Otilia is restaurant listing.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00468",
+      "pdf_page": 8,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Real estate classifieds with guarda-roupas, not F07 heavy clothing.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00468",
+      "pdf_page": 9,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Urban transportation company legal notice and advertisements.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00468",
+      "pdf_page": 10,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Regional football and sport; pesado in ordinary weight/figurative context.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00469",
+      "pdf_page": 1,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Public-servant wages, police affair and drought in Bahia; no spacecraft.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00469",
+      "pdf_page": 2,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Agrarian agreement, labour unions, state politics and taxes.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00469",
+      "pdf_page": 3,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "State assembly and public salary classification politics.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00469",
+      "pdf_page": 4,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Society, cinema and crossword.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00469",
+      "pdf_page": 5,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Trapped German miners survival news and Vietnam political reports; separate events.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00469",
+      "pdf_page": 6,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Police and crime; Olho de Vidro is standalone expression, not thick spacecraft glass.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00469",
+      "pdf_page": 7,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Alliance for Progress and Stanislaw column, no linked Conde composite.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00469",
+      "pdf_page": 8,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Real estate ads including guarda-roupas; no heavy clothing from a recovered body.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00469",
+      "pdf_page": 9,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Transport company advert and personnel list; no spacecraft.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00469",
+      "pdf_page": 10,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Regional football and China team news, no event.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00470",
+      "pdf_page": 1,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "State drought and Pernambuco wages; mine rescue referenced as front-page teaser.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00470",
+      "pdf_page": 2,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Drought in five states, regional geology society and public affairs.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00470",
+      "pdf_page": 3,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Pernambuco state salary politics and domestic appliance advertisement.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00470",
+      "pdf_page": 4,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Culture, clothing and film; janela is context outside the craft narrative.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00470",
+      "pdf_page": 5,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "German miners rescue; separate article about Nazi rocket pieces recovered from Austrian lake, NOT Conde crash or F01.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00470",
+      "pdf_page": 6,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Policing and crime in Pernambuco; no independent witness of Conde.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00470",
+      "pdf_page": 7,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Alliance for Progress article and Stanislaw column, no composite match.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00470",
+      "pdf_page": 8,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Real estate classifieds, no F07 body-clothing article.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00470",
+      "pdf_page": 9,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Sports and local advertising; buraco means a gap in football team.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00470",
+      "pdf_page": 10,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650_TO_1750PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Regional football and income-tax headline; no spacecraft report.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    }
+  ],
+  "genealogy": {
+    "contemporary_vehicle": "Ultima Hora Nordeste/Recife 1963, one newspaper editorial lineage",
+    "other_article_mine": "Lengede/Peine trapped miners coverage across Nov 5-7 (same news subject, repeated newspaper coverage; NOT independent Conde witnesses)",
+    "other_article_rocket": "00470 Nov 7 p5: pieces of Nazi rockets recovered from Austrian lake, independent historic news event, NOT Conde falling metallic sphere",
+    "pre_event_compound_fbis_motif_confirmed": false,
+    "independent_conde_witness_identified": false
+  },
+  "coverage": {
+    "new_distinct_pages": 36,
+    "prior_distinct_pages": 28,
+    "cumulative_distinct_pages": 64,
+    "by_week_distinct_pages": {
+      "TARGET_NOV04": 48,
+      "CONTROL_OCT07": 8,
+      "CONTROL_OCT14": 4,
+      "CONTROL_OCT21": 4
+    },
+    "completed_target_issues": [
+      "00467",
+      "00468",
+      "00469",
+      "00470",
+      "00471"
+    ],
+    "target_week_issues_completed": 5,
+    "target_week_issues_required": 5,
+    "target_week_pdf_pages": 48,
+    "target_week_pages_visually_read": 48,
+    "completed_control_oct07_issues": [
+      "00442"
+    ],
+    "control_oct07_issues_required": 5,
+    "confirmed_compound_motif_articles_in_new_pages": 0,
+    "confirmed_pre_8_nov_motif_origin": null,
+    "same_day_nov08_f03_lexical_article": 1,
+    "journal_do_brasil_status": "HTTP_403_NOT_ACQUIRED_NOT_READ",
+    "baseline_rate_representative": null,
+    "preregistered_eight_fragments_unchanged": true,
+    "preregistered_fifty_slots_unchanged": true,
+    "hypotheses_H0_H3_verdict": "UNDETERMINED"
+  },
+  "interpretation": "All five target-week issues have visually reviewed PDF pages with no confirmed FBIS compound narrative motif predating Nov 8; this does NOT prove absence in microtext or other newspapers, does NOT establish a source genealogy or imply hoax. Continue only the four incomplete 7-11 Oct control issues as specified by the Elephant stop rule.",
+  "limits": [
+    "Selected single newspaper and visual microtext limitation: no representative population baseline.",
+    "00471 Nov 8 p8 four-metre hole is different police story, no authenticated order against FBIS/Tupi.",
+    "Lexical overlaps in other articles are not FBIS compound motifs or independent Conde testimony.",
+    "No physical event hour, event geometry or NORAD constraint established.",
+    "JB slots blocked; other October and December slots not read, never recoded as zero."
+  ]
+}
