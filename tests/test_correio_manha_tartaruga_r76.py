@@ -1,6 +1,7 @@
 """Scope guards for C241-R76: two pages cannot become an edition-wide negative."""
 
 import copy
+import hashlib
 import json
 import unittest
 from pathlib import Path
@@ -11,6 +12,7 @@ MANIFEST = (
     / "research/archive/conde_correio_manha_1963_11_09_C241_TARTARUGA_R76.json"
 )
 PDF_SHA256 = "a5aa619730df13e2a630c7d16fcfde95f58180ec3a05063038177b03fd46f7d0"
+CANONICAL_SHA256 = "1fce0aad42f3130cb5afb5bd02effde0b16e10dae87de08b8426b4d9e40c73b4"
 READ_PAGES = (5, 21)
 REMAINING = tuple(p for p in range(1, 29) if p not in READ_PAGES)
 
@@ -63,6 +65,11 @@ def validate(document):
     check(result["orbital_constraint_activated"] is False, "false orbital exclusion")
     check(result["source_of_report_independent_from_tupi_fbis"] == "UNDETERMINED",
           "false independence claim")
+    canonical = json.dumps(
+        document, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    check(hashlib.sha256(canonical).hexdigest() == CANONICAL_SHA256,
+          "full R76 interpretative record changed")
     return True
 
 
@@ -106,6 +113,18 @@ class TestR76(unittest.TestCase):
         altered["new_satellite_identity"] = "528"
         with self.assertRaises(ValueError):
             validate(altered)
+
+    def test_reject_fabricated_prose_only(self):
+        self.mutate(
+            ("reading", "status_by_pdf_page", 0, "reading_scope"),
+            "NASA confirma queda em Conde às 20h15 (mutante sintético)",
+        )
+
+    def test_reject_interpretive_metadata_only(self):
+        self.mutate(
+            ("conclusion", "further_action"),
+            "Testemunha em Conde teria visto NORAD 528 (mutante sintético)",
+        )
 
     def mutate(self, path, value):
         altered = copy.deepcopy(self.good)

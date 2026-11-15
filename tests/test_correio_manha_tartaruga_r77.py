@@ -6,6 +6,10 @@ import json
 import unittest
 from pathlib import Path
 
+from test_correio_manha_tartaruga_r76 import (
+    MANIFEST as R76_MANIFEST, validate as validate_r76,
+)
+
 
 MANIFEST = (
     Path(__file__).resolve().parents[1]
@@ -18,8 +22,11 @@ CUMULATIVE = [1, 2, 5, 21]
 REMAINING = [p for p in range(1, 29) if p not in CUMULATIVE]
 
 
-def validate(document):
-    """Fail closed if a partial historical read is silently promoted."""
+def validate(document, parent=None):
+    """Validate R77 and the R76 pages on which its accumulated count depends."""
+    if parent is None:
+        parent = json.loads(R76_MANIFEST.read_text(encoding="utf-8"))
+    validate_r76(parent)
     def require(ok, message):
         if not ok:
             raise ValueError(message)
@@ -40,7 +47,9 @@ def validate(document):
 
     r = document["reading"]
     require(r["new_pages_fully_examined"] == READ, "new page list")
-    require(r["previous_pages_fully_examined"] == [5, 21], "prior certified scope")
+    require(r["previous_pages_fully_examined"] == parent["reading"]["pages_fully_examined"],
+            "prior certified scope source-only")
+    require(s["sha256"] == parent["source"]["sha256"], "prior PDF identity")
     require(r["cumulative_pages_fully_examined"] == CUMULATIVE, "inflated coverage")
     require(r["cumulative_pages_not_fully_examined"] == REMAINING, "remaining coverage")
     require(r["edition_fully_examined"] is False, "unearned edition negative")
@@ -82,6 +91,14 @@ class TestC241R77(unittest.TestCase):
 
     def test_original(self):
         self.assertTrue(validate(self.good))
+
+    def test_reject_mutated_R76_source_only(self):
+        parent = json.loads(R76_MANIFEST.read_text(encoding="utf-8"))
+        parent["reading"]["status_by_pdf_page"][0]["reading_scope"] = (
+            "Conde às 20h15: NASA confirma (mutante sintético)"
+        )
+        with self.assertRaises(ValueError):
+            validate(self.good, parent)
 
     def reject(self, path, value):
         changed = copy.deepcopy(self.good)
