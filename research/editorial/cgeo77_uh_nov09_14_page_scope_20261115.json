@@ -1,0 +1,207 @@
+{
+  "type": "HistoricalPressPageScopeAndTemporalPhraseAdjudication",
+  "id": "CGEO-77",
+  "date_utc": "2026-11-15",
+  "issue": "https://github.com/franklinbaldo/conde-incident/issues/871",
+  "assignment": "https://github.com/franklinbaldo/caranguejo/issues/5",
+  "status": "PARTIAL_PAGES_NOT_COMPLETE_ISSUES",
+  "sources": [
+    {
+      "issue_id": "00472",
+      "cover_date": "1963-11-09",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00472.pdf",
+      "pdf_pages": 10,
+      "size_bytes": 5275519,
+      "sha256": "8564c0c8c26857e0feda54fc5da0f9d3ca0c34c8de02c44e3074aa79a101cece",
+      "custody": "REPLAYED_HASH_MATCHES_LONTRA_R67"
+    },
+    {
+      "issue_id": "00477",
+      "cover_date": "1963-11-14",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00477.pdf",
+      "pdf_pages": 10,
+      "size_bytes": 5209201,
+      "sha256": "0a5170a69e037166ef1fdf502797cef8fc74211b45183af0da775eedc7072fb0",
+      "custody": "REPLAYED_HASH_MATCHES_CGEO76"
+    }
+  ],
+  "method": {
+    "executor": "Ifro via SSH controlled from Jatobá with max_memory_mb=128",
+    "download": "HTTP GET official PDF service; SHA-256 matched prior custody and pdfinfo counted pages",
+    "visual": "All 20 pages rendered as navigational panoramas; pages 00472/1 and 00477/7 additionally inspected at 4000px with four quadrant crops each",
+    "text_layer": "Existing noisy PDF text layer consulted only as auxiliary; no new OCR; lexical non-hit is never a negative",
+    "original_pdfs_committed": false
+  },
+  "page_reviews": {
+    "00472": [
+      {
+        "pdf_page": 1,
+        "printed_page": 1,
+        "status": "LIDO_INTEGRAL_SEM_MENCAO",
+        "notes": "Page inspected as four large quadrants; cover covers unrelated police case, municipal pay, cyclone and other headlines. No Conde event time in the readable full page."
+      },
+      {
+        "pdf_page": 2,
+        "printed_page": 2,
+        "status": "PANORAMA_ONLY_NOT_A_NEGATIVE",
+        "notes": "Full-page visual overview at 1400px for topic routing; fine print not column-by-column certified."
+      },
+      {
+        "pdf_page": 3,
+        "printed_page": 3,
+        "status": "PANORAMA_ONLY_NOT_A_NEGATIVE",
+        "notes": "Full-page visual overview at 1400px for topic routing; fine print not column-by-column certified."
+      },
+      {
+        "pdf_page": 4,
+        "printed_page": 4,
+        "status": "PANORAMA_ONLY_NOT_A_NEGATIVE",
+        "notes": "Full-page visual overview at 1400px for topic routing; fine print not column-by-column certified."
+      },
+      {
+        "pdf_page": 5,
+        "printed_page": 5,
+        "status": "PANORAMA_ONLY_NOT_A_NEGATIVE",
+        "notes": "Full-page visual overview at 1400px for topic routing; fine print not column-by-column certified."
+      },
+      {
+        "pdf_page": 6,
+        "printed_page": 6,
+        "status": "PANORAMA_ONLY_NOT_A_NEGATIVE",
+        "notes": "Full-page visual overview at 1400px for topic routing; fine print not column-by-column certified."
+      },
+      {
+        "pdf_page": 7,
+        "printed_page": 7,
+        "status": "PANORAMA_ONLY_NOT_A_NEGATIVE",
+        "notes": "Full-page visual overview at 1400px for topic routing; fine print not column-by-column certified."
+      },
+      {
+        "pdf_page": 8,
+        "printed_page": 8,
+        "status": "PANORAMA_ONLY_NOT_A_NEGATIVE",
+        "notes": "Full-page visual overview at 1400px for topic routing; fine print not column-by-column certified."
+      },
+      {
+        "pdf_page": 9,
+        "printed_page": 9,
+        "status": "PANORAMA_ONLY_NOT_A_NEGATIVE",
+        "notes": "Full-page visual overview at 1400px for topic routing; fine print not column-by-column certified."
+      },
+      {
+        "pdf_page": 10,
+        "printed_page": 10,
+        "status": "PANORAMA_ONLY_NOT_A_NEGATIVE",
+        "notes": "Full-page visual overview at 1400px for topic routing; fine print not column-by-column certified."
+      }
+    ],
+    "00477": [
+      {
+        "pdf_page": 1,
+        "printed_page": 1,
+        "status": "PANORAMA_ONLY_NOT_A_NEGATIVE",
+        "notes": "Full-page visual overview at 1300px; columns not fully certified."
+      },
+      {
+        "pdf_page": 2,
+        "printed_page": 2,
+        "status": "PANORAMA_ONLY_NOT_A_NEGATIVE",
+        "notes": "Full-page visual overview at 1300px; columns not fully certified."
+      },
+      {
+        "pdf_page": 3,
+        "printed_page": 3,
+        "status": "PANORAMA_ONLY_NOT_A_NEGATIVE",
+        "notes": "Full-page visual overview at 1300px; columns not fully certified."
+      },
+      {
+        "pdf_page": 4,
+        "printed_page": 4,
+        "status": "PANORAMA_ONLY_NOT_A_NEGATIVE",
+        "notes": "Full-page visual overview at 1300px; columns not fully certified."
+      },
+      {
+        "pdf_page": 5,
+        "printed_page": 5,
+        "status": "PANORAMA_ONLY_NOT_A_NEGATIVE",
+        "notes": "Full-page visual overview at 1300px; columns not fully certified."
+      },
+      {
+        "pdf_page": 6,
+        "printed_page": 6,
+        "status": "PANORAMA_ONLY_NOT_A_NEGATIVE",
+        "notes": "Full-page visual overview at 1300px; columns not fully certified."
+      },
+      {
+        "pdf_page": 7,
+        "printed_page": 7,
+        "status": "LIDO_INTEGRAL_COM_MENCAO",
+        "notes": "Four high-resolution quadrants inspected. Stanislaw Ponte Preta's signed satire mentions Conde but yields no independent observer or event time; other page material includes administrative reporting and paid advertisement."
+      },
+      {
+        "pdf_page": 8,
+        "printed_page": 8,
+        "status": "PANORAMA_ONLY_NOT_A_NEGATIVE",
+        "notes": "Full-page visual overview at 1300px; columns not fully certified."
+      },
+      {
+        "pdf_page": 9,
+        "printed_page": 9,
+        "status": "PANORAMA_ONLY_NOT_A_NEGATIVE",
+        "notes": "Full-page visual overview at 1300px; columns not fully certified."
+      },
+      {
+        "pdf_page": 10,
+        "printed_page": 10,
+        "status": "PANORAMA_ONLY_NOT_A_NEGATIVE",
+        "notes": "Full-page visual overview at 1300px; columns not fully certified."
+      }
+    ]
+  },
+  "temporal_false_positives": [
+    {
+      "issue_id": "00477",
+      "pdf_page": 7,
+      "article": "A Guerra Dos Mundos na Versão Baiana",
+      "credit": "Stanislaw Ponte Preta (signed satirical commentary)",
+      "short_literal": "duas horas de automóvel da capital",
+      "kind": "TRAVEL_DURATION_NOT_TIME_OF_EVENT",
+      "phenomenon_hour": false
+    },
+    {
+      "issue_id": "00477",
+      "pdf_page": 7,
+      "article": "A Guerra Dos Mundos na Versão Baiana",
+      "credit": "Stanislaw Ponte Preta (signed satirical commentary)",
+      "short_literal": "24 horas",
+      "kind": "NEWS_PROPAGATION_DURATION_NOT_TIME_OF_EVENT",
+      "phenomenon_hour": false
+    }
+  ],
+  "documentary_lineage": {
+    "report_on_conde_in_00477_p7": "SATIRICAL_RETELLING_OF_ALREADY_CIRCULATING_CLAIM",
+    "independent_eyewitness": false,
+    "agency_or_original_reporter_for_event": null,
+    "independent_of_tupi_fbis": "NOT_ESTABLISHED",
+    "new_phenomenon_hour": null,
+    "orbit_candidate_decision": null
+  },
+  "coverage": {
+    "pages_in_two_PDFs": 20,
+    "integral_pages_newly_certified": 2,
+    "panorama_only_pages": 18,
+    "previously_integral_pages_other_editions": 2,
+    "package_total_pages": 68,
+    "package_integral_pages_after_this_round": 4,
+    "package_pages_not_integral": 64,
+    "whole_editions_fully_read": 0
+  },
+  "limits": [
+    "Only two pages acquired new integral review status; the other 18 rendered pages are not negatives.",
+    "The two already-certified Lontra pages are 00473 p.5 and 00475 p.5; do not duplicate their authorship.",
+    "Neither publication date nor 2-hour travel / 24-hour news-delay expressions is an event clock.",
+    "No inference about historical event coordinates, orbital attribution, or authenticity follows.",
+    "The 00472 front page has partly degraded captions; any new ambiguous phrase requires targeted high-resolution reinspection."
+  ],
+  "next_step": "Continue column-by-column inspection of the 64 not-yet-certified pages across issues 00472–00477, prioritizing incident-bearing articles, with exact credit, local time, printed/PDF pages, legibility zones and genealogy."
+}
