@@ -1,0 +1,180 @@
+{
+  "source_id": "C241-CERVO-R80-CM-19631110-CORE-P09-P19",
+  "source_url": "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21658.pdf",
+  "date_of_publication": "1963-11-10",
+  "publication": "Correio da Manhã",
+  "edition": "21658",
+  "collection": "FBN 089842",
+  "pdf_bytes": 62742698,
+  "pdf_pages": 97,
+  "pdf_sha256": "75dc400708e80022dc9d1a139739068417e65ff47a3c4130bf0b46b9db4929f3",
+  "date_verified_utc": "2026-11-15",
+  "read_method": "PDF custodiado no Ifro; pdftoppm para 97 cabeçalhos; p. 9-19 em renderização detalhada e leitura visual da página, com quatro recortes ampliados da página 19; pdftotext usado somente para triagem auxiliar devido à camada parcialmente corrompida",
+  "cadernos_mapped_not_integrally_read": [
+    {
+      "caderno": "1",
+      "pdf_first": 1,
+      "pdf_last": 19
+    },
+    {
+      "caderno": "2",
+      "pdf_first": 20,
+      "pdf_last": 39
+    },
+    {
+      "caderno": "3",
+      "pdf_first": 40,
+      "pdf_last": 68
+    },
+    {
+      "caderno": "4",
+      "pdf_first": 69,
+      "pdf_last": 76
+    },
+    {
+      "caderno": "5",
+      "pdf_first": 77,
+      "pdf_last": 83
+    },
+    {
+      "caderno": "6",
+      "pdf_first": 84,
+      "pdf_last": 89
+    },
+    {
+      "caderno": "suplemento_colorido",
+      "pdf_first": 90,
+      "pdf_last": 97
+    }
+  ],
+  "pages_examined": [
+    {
+      "pdf_page": 9,
+      "printed_page": 9,
+      "caderno": 1,
+      "status": "EXAMINADA",
+      "subject": "Cemitério de cães, serviços públicos, publicidade de relógios e eletrodomésticos",
+      "conde_event_time_literal": null,
+      "conde_eyewitness": null
+    },
+    {
+      "pdf_page": 10,
+      "printed_page": 10,
+      "caderno": 1,
+      "status": "EXAMINADA",
+      "subject": "Máquinas a vapor, UNESCO educação sanitária, indústria, reportagens locais",
+      "conde_event_time_literal": null,
+      "conde_eyewitness": null
+    },
+    {
+      "pdf_page": 11,
+      "printed_page": 11,
+      "caderno": 1,
+      "status": "EXAMINADA",
+      "subject": "Publicidade imobiliária de página inteira (Texas-Ranch/Enchanted Valley)",
+      "conde_event_time_literal": null,
+      "conde_eyewitness": null
+    },
+    {
+      "pdf_page": 12,
+      "printed_page": 12,
+      "caderno": 1,
+      "status": "EXAMINADA",
+      "subject": "Eleitorado e votação, energia elétrica, previsão meteorológica; emergência baiana é outra notícia",
+      "conde_event_time_literal": null,
+      "conde_eyewitness": null
+    },
+    {
+      "pdf_page": 13,
+      "printed_page": 13,
+      "caderno": 1,
+      "status": "EXAMINADA",
+      "subject": "PUC, Santas Casas, população em situação de rua, anúncios comerciais",
+      "conde_event_time_literal": null,
+      "conde_eyewitness": null
+    },
+    {
+      "pdf_page": 14,
+      "printed_page": 14,
+      "caderno": 1,
+      "status": "EXAMINADA",
+      "subject": "Polícia, greve de coveiros e grade da TV-Tupi Canal 6 de 10/11/1963, não rádio de 08/11",
+      "conde_event_time_literal": null,
+      "conde_eyewitness": null
+    },
+    {
+      "pdf_page": 15,
+      "printed_page": 15,
+      "caderno": 1,
+      "status": "EXAMINADA",
+      "subject": "Publicidade de página inteira do Clube do Parque",
+      "conde_event_time_literal": null,
+      "conde_eyewitness": null
+    },
+    {
+      "pdf_page": 16,
+      "printed_page": 16,
+      "caderno": 1,
+      "status": "EXAMINADA",
+      "subject": "Reatores: reunião de energia nuclear, hipnotismo, matérias locais e publicidade",
+      "conde_event_time_literal": null,
+      "conde_eyewitness": null
+    },
+    {
+      "pdf_page": 17,
+      "printed_page": 17,
+      "caderno": 1,
+      "status": "EXAMINADA",
+      "subject": "Publicidade natalina de móveis",
+      "conde_event_time_literal": null,
+      "conde_eyewitness": null
+    },
+    {
+      "pdf_page": 18,
+      "printed_page": 18,
+      "caderno": 1,
+      "status": "EXAMINADA",
+      "subject": "Educação, ciência acadêmica geral, cidade universitária, cursos e publicidade",
+      "conde_event_time_literal": null,
+      "conde_eyewitness": null
+    },
+    {
+      "pdf_page": 19,
+      "printed_page": 19,
+      "caderno": 1,
+      "status": "EXAMINADA",
+      "subject": "Seção Aviação e Astronáutica sobre aviação civil/militar, rotas, aeroporto e pessoal; notícia internacional do Egito",
+      "conde_event_time_literal": null,
+      "conde_eyewitness": null
+    }
+  ],
+  "first_caderno_complete": true,
+  "first_caderno_pages_integrally_examined": 19,
+  "previously_examined_pdf_pages": "1-8 (R79, PR #1081)",
+  "pages_integrally_examined_in_this_record": 11,
+  "full_edition_examined": false,
+  "pages_not_integrally_read": 78,
+  "related_section": {
+    "pdf_page": 19,
+    "printed_page": 19,
+    "title": "Aviação e Astronáutica",
+    "scope": "Aviação civil e militar, rotas e organização aeronáutica; não há observação orbital ou ocorrência de Conde nesta página",
+    "hour_of_conde_event": null,
+    "named_eyewitness_at_conde": null,
+    "provenance": "Seção editorial, não instrumento nem testemunho"
+  },
+  "false_clock": {
+    "pdf_page": 14,
+    "printed_page": 14,
+    "source": "Grade TV-Tupi Canal 6 do domingo de 10/11",
+    "printed_time": "23:40",
+    "program": "Informe Científico",
+    "relevance": "PROGRAMA_DE_TV_NAO_HORA_DO_EVENTO_NEM_RELOGIO_FBIS_TUPI_RADIO_08_NOV"
+  },
+  "independent_conde_event_hour": null,
+  "source_independence": "UNDETERMINED",
+  "terminal_time_sigma_hours": null,
+  "active_constraint_528": false,
+  "historical_mcmc": "NOT_RUN",
+  "negative_scope": "Somente PDF páginas 9-19, somadas à R79 1-8; 78 páginas não lidas integralmente fora do primeiro caderno. Negativo da seção não é negativo da edição, nem ausência histórica."
+}
