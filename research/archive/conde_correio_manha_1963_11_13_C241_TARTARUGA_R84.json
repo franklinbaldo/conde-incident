@@ -1,0 +1,130 @@
+{
+  "schema": "conde.local_clock_press_nucleus_increment/v1",
+  "id": "C241-TARTARUGA-R84",
+  "checked_utc_date": "2026-11-15",
+  "research_issue": 871,
+  "predecessor_manifest": "research/archive/conde_correio_manha_1963_11_12_C241_TARTARUGA_R83.json",
+  "source": {
+    "collection": "Hemeroteca Digital BN, Correio da Manhã, coleção 089842",
+    "edition": "21660",
+    "printed_date": "1963-11-13",
+    "original_url": "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21660.pdf",
+    "original_bytes": 20333897,
+    "original_sha256": "497cd71b643be03f908e26c2e99100fd24908fb026ca33c8e1667d49ee897bc0",
+    "pdf_pages": 26,
+    "first_caderno_pdf_start": 1,
+    "first_caderno_pdf_end": 12,
+    "second_caderno_pdf_start": 13
+  },
+  "method": {
+    "executor": "Ifro",
+    "control_plane": "Jatobá SSH, max_memory_mb=128 explicit; remote Ifro performed image rendering",
+    "original_reused_from": "/var/tmp/lagarto-r75-20261115/21660.pdf",
+    "visual_exam": "Original PDF sha256sum/pdfinfo confirmed; pages 1–4 each viewed as 175-dpi panorama and four overlapping 56%-width/height image quadrants, visually read including headings, columns and captions. OCR was not used to decide the result.",
+    "pages_full_visual_review": 4,
+    "number_overlapping_crops": 16,
+    "scan_is_not_entire_edition_negative": true
+  },
+  "readings": [
+    {
+      "pdf_page": 1,
+      "printed_folio": "1",
+      "status": "EXAMINADA",
+      "subjects": "Front page: Brazil withdraws agrément request involving France; Jango and Capuava/Petrobras strike; naval manoeuvres and military occupation of Manguinhos refinery; Argentine oil contracts; OAS debates coups; UK politics.",
+      "unrelated_clock_labels": [
+        "17h = Petrobras labor meeting/concentration, not a sky phenomenon"
+      ],
+      "disambiguation": "Naval exercise and refinery occupation are not an object descent over Bahia. Cover variant repeated on PDF p.2.",
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "report_attribution": null,
+      "orbital_constraint_active": false
+    },
+    {
+      "pdf_page": 2,
+      "printed_folio": "1 (2.º clichê)",
+      "status": "EXAMINADA",
+      "subjects": "Explicitly marked 2.º CLICHÊ, alternate front-page typesetting: Brazil agrément withdrawal, Illia and USA, Capuava and Manguinhos labor conflict, navy manoeuvres, OAS and UK politics. Editorial variant of PDF p.1, not a second independent account.",
+      "unrelated_clock_labels": [
+        "17h = Petrobras labor context, not sky observation"
+      ],
+      "disambiguation": "A second printing/cliché of the same newspaper cover does not create independent testimony.",
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "report_attribution": null,
+      "orbital_constraint_active": false
+    },
+    {
+      "pdf_page": 3,
+      "printed_folio": "2",
+      "status": "EXAMINADA",
+      "subjects": "International Atomic Energy Agency meeting and water desalination; new regulations for radio channel assignments; Cecilia Gueiros obituary; Capuava strike and national oil policy; journalists' conference; Guanabara politics and public-account disputes.",
+      "unrelated_clock_labels": [
+        "20h = literary tribute event schedule, not object descent"
+      ],
+      "disambiguation": "Radio channels and atomic research are institutional and scientific background, not any recorded satellite observation or Conde occurrence.",
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "report_attribution": null,
+      "orbital_constraint_active": false
+    },
+    {
+      "pdf_page": 4,
+      "printed_folio": "3",
+      "status": "EXAMINADA",
+      "subjects": "Voting rights for illiterate citizens; Sabin vaccination; Lobo Junior viaduct; hand grenade thrown at UNE office; shipyard strike; Banco do Brasil opening hours; extensive Petrobras/Capuava legal statement and advertisements.",
+      "unrelated_clock_labels": [
+        "8h and 17h = vaccination clinic operation, not Conde event",
+        "Bank opening hours refer to employees and are not astronomy"
+      ],
+      "disambiguation": "The grenade at UNE was a terrestrial campus incident; 'novo horário' is a banking dispute; neither is evidence of a falling space object.",
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "report_attribution": null,
+      "orbital_constraint_active": false
+    }
+  ],
+  "scope": {
+    "edition": "21660",
+    "previously_examined_pages": [],
+    "newly_examined_pages": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "cumulatively_examined_first_caderno_pages": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "remaining_unread_first_caderno_pages": [
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "first_caderno_fully_examined": false,
+    "second_caderno_read": false,
+    "entire_edition_fully_examined": false,
+    "global_negative_asserted": false,
+    "correction": "PDF p.1 and p.2 are two editorial clichês of the front page; both visually reviewed, no duplicated source independence."
+  },
+  "conclusion": {
+    "classification": "FOUR_PAGE_LOCAL_NEGATIVE_21660_13NOV_PARTIAL_FIRST_CADERNO",
+    "conde_event_hour_literal": null,
+    "independent_eyewitness": null,
+    "report_independence_from_tupi_fbis_diarios_associados": "UNDETERMINED",
+    "excludes_norad_528_or_637": false,
+    "next_action": "Finish edition 21660 first-caderno PDF pages 5–12, then edition 21661 PDF pages 1–13. Outside-core second-caderno pages are not globally negative."
+  }
+}
