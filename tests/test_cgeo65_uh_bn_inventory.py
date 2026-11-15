@@ -31,3 +31,33 @@ class TestCGEO65(unittest.TestCase):
  def test_real_bytes_required(self):
   with tempfile.TemporaryDirectory() as p:
    with self.assertRaises(FileNotFoundError):v.validate(self.data,p)
+
+# CGEO-66 deliberately reuses this existing CI-triggering test module, without modifying workflow YAML.
+import cgeo66_uh_cover_dates_validate as cover_v
+import cgeo64_prereg_validate as prereg_v
+
+class TestCGEO66CoverCrosswalk(unittest.TestCase):
+ @classmethod
+ def setUpClass(cls):
+  cls.data=json.loads(cover_v.FILE.read_text())
+  cls.inventory=json.loads(v.FILE.read_text())
+  cls.prereg=prereg_v.load_and_verify()
+ def test_verified_cover_mapping(self):
+  self.assertEqual(cover_v.validate(self.data,self.inventory,self.prereg),(19,1))
+ def bad(self,fn):
+  d=copy.deepcopy(self.data);fn(d)
+  with self.assertRaises((ValueError,KeyError)):cover_v.validate(d,self.inventory,self.prereg)
+ def test_undated_404_is_not_a_verified_issue(self):
+  self.bad(lambda d:d["slots"][30].update(issue_id="00454"))
+ def test_no_forged_control_zero(self):
+  self.bad(lambda d:d["coverage"].update(fragment_rates={"F03":0}))
+ def test_no_page_denominator(self):
+  self.bad(lambda d:d["coverage"].update(pages_fully_read_for_fragment_rates=288))
+ def test_date_corruption(self):
+  self.bad(lambda d:d["cover_dates"][0].update(date="1963-11-08"))
+ def test_missing_frozen_slot(self):
+  self.bad(lambda d:d["slots"].pop())
+ def test_no_fraud_claim(self):
+  self.bad(lambda d:d["conclusion"].update(fraud=True))
+ def test_no_false_404_absence(self):
+  self.bad(lambda d:d["slots"][0].update(status="NOT_ACQUIRED_NOT_READ"))
