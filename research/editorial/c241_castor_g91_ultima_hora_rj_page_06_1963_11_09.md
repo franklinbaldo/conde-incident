@@ -1,5 +1,5 @@
 ---
-type: ResearchNote
+type: Guide
 title: C241-G91 - Última Hora Rio 04200, página 6 completa
 description: Leitura direta em mosaico de 12 regiões sobrepostas da página PDF 6, sem notícia de Conde ou hora independente.
 ---
