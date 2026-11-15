@@ -1,0 +1,97 @@
+{
+  "type": "HistoricalPressLexicalAdjudication",
+  "id": "CGEO-67",
+  "date_utc": "2026-11-15",
+  "issue": "https://github.com/franklinbaldo/conde-incident/issues/887",
+  "prereg_path": "research/editorial/cgeo64_null_narrative_prereg_20261114.json",
+  "prereg_blob_sha": "0d13d9359080699e5f8402ca9b7014d7f1f6d59a",
+  "source_inventory_path": "research/editorial/cgeo65_uh_bn_inventory_20261115.json",
+  "cover_crosswalk_path": "research/editorial/cgeo66_uh_cover_dates_20261115.json",
+  "method": "Inspect PDF page image and lexical context; classify *one candidate passage* per record. Other articles on the same page and other pages remain NOT_READ. OCR is lead only.",
+  "adjudicated_passages": [
+    {
+      "id": "C67-A",
+      "publication": "UH_RE",
+      "issue_id": "00440",
+      "date": "1963-10-07",
+      "pdf_page": 5,
+      "week": "CONTROL_OCT07",
+      "fragment_id": "F01_METAL_SPHERE",
+      "source_sha256": "9d62fd8ef1b02b482eecebe43a85b5c40c47c74a075698b59c5e014faf335178",
+      "context": "Soccer match analysis under the heading A LIDERANÇA: esfera refers to the ball; no metallic sphere in this passage.",
+      "lexical_fragment_match": false,
+      "reason": "MISSING_METAL_IN_SAME_ARTICLE",
+      "inspection": "VISUAL_PASSAGE_AND_PDF_TEXT",
+      "whole_page_read": false,
+      "independent_conde_witness": false
+    },
+    {
+      "id": "C67-B",
+      "publication": "UH_RE",
+      "issue_id": "00457",
+      "date": "1963-10-24",
+      "pdf_page": 4,
+      "week": "CONTROL_OCT21",
+      "fragment_id": "F03_FOUR_METER_HOLE",
+      "source_sha256": "e59d21ff175daf6146354a5eb78488efbfed3e925334c4bd7c74947f4228b90c",
+      "context": "Uma original sacola para ir à praia: craft instructions list 4 metros de algodão xadrez, not a pit or crater.",
+      "lexical_fragment_match": false,
+      "reason": "FABRIC_LENGTH_NOT_HOLE",
+      "inspection": "VISUAL_PASSAGE_AND_PDF_TEXT",
+      "whole_page_read": false,
+      "independent_conde_witness": false
+    },
+    {
+      "id": "C67-C",
+      "publication": "UH_RE",
+      "issue_id": "00471",
+      "date": "1963-11-08",
+      "pdf_page": 8,
+      "week": "TARGET_NOV04",
+      "fragment_id": "F03_FOUR_METER_HOLE",
+      "source_sha256": "e121d6ea9784bcb77a02e1a6e3c453f23987103940f5993190237c45499a95ec",
+      "context": "Polícia arranca confissão do pescador: Roubei estátuas e enterrei em Rio Doce. Four-metre-deep hole refers to burial of stolen statues, not Conde.",
+      "lexical_fragment_match": true,
+      "reason": "SAME_DAY_DIFFERENT_STORY_NO_CHRONOLOGY",
+      "inspection": "VISUAL_PASSAGE_AND_PDF_TEXT",
+      "whole_page_read": false,
+      "independent_conde_witness": false
+    }
+  ],
+  "unresolved_ocr_leads": [
+    {
+      "publication": "UH_RE",
+      "issue_id": "00441",
+      "date": "1963-10-08",
+      "pdf_page": 7,
+      "token": "4 metros",
+      "fragment_id": "F03_FOUR_METER_HOLE",
+      "status": "OCR_TOKEN_ONLY_NOT_ARTICLE_ADJUDICATED"
+    }
+  ],
+  "coverage": {
+    "adjudicated_passages": 3,
+    "frozen_edition_date_slots_changed": 0,
+    "pages_fully_read_for_rates": 0,
+    "fully_read_articles_for_rates": 0,
+    "baseline_rates": null,
+    "fragment_verdicts": null,
+    "first_pre_event_borrowing": null,
+    "jb_rj_articles_read": 0
+  },
+  "interpretation": {
+    "verdict": "UNDETERMINED",
+    "same_day_publication_is_pre_event": false,
+    "fbis_portuguese_verbatim_authenticated": false,
+    "narrative_fabrication_proven": false,
+    "orbital_constraint_activated": false,
+    "historical_center_1963": null
+  },
+  "limitations": [
+    "Two false-positive raw OCR cues and one same-day lexical match; candidates are not whole-page exhaustive review.",
+    "A literal fragment in another story does not identify a shared newsroom source or prove deliberate assembly.",
+    "Zero pages have been fully read for baseline, so there is no valid page-rate denominator.",
+    "The 00441 lead is unresolved; an unreviewed OCR token cannot be a negative observation.",
+    "No new event time, location, witness or orbital constraint."
+  ]
+}
