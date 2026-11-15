@@ -1,0 +1,444 @@
+{
+  "schema": "conde.c241-document-decision/g84",
+  "issue": 1020,
+  "as_of_utc": "2026-11-15",
+  "source_files": {
+    "G83": "research/statistics/c241_fbis_plane_ledger_g83.json (PR #1014; rows por NORAD/modelo/crossing_utc)",
+    "PLANE": "research/statistics/C241_CONDITIONAL_PLANE_WINDOWS_20261114.md (PR #892; raiz e cenários de 50/100/200 km)",
+    "CLOCK": "research/constraints/fbis_1963_clock_branches.json (#886; GMT/RIO_LOCAL/OTHER_UNVERIFIED)",
+    "DAY": "research/statistics/C241_UNIFIED_DECAY_DAY_ERRORS_R68_20261115.md e PR #1019 (dias censurados, NÃO horário terminal)",
+    "OWNER": "Conde #884 (acervos ainda não obtidos, 5 itens)",
+    "HOUR": "Conde #871 (hora independente ausente)",
+    "A628": "research/constraints/morcego_a628_processing_dates_20261112.json (anexos não presentes no PDF público)",
+    "P48": "Conde #886 (P48 0/10, P50 0; relógio UNRESOLVED)"
+  },
+  "scope": "Cenários lógicos ilustrativos, NÃO resultados observados nem frequências/probabilidades. Proxy: câmera CGEO15 de 2022; raízes de plano sem fase, com modelos secundários e cortes de dia hipotéticos.",
+  "rule": "COND_* é compatibilidade do PLANO NOMINAL junto ao proxy, não compatibilidade física do objeto com o fenômeno de 1963.",
+  "labels": {
+    "COND_528_ONLY": "Somente plano 528 se aproxima condicionalmente",
+    "COND_637_ONLY": "Somente plano 637 se aproxima condicionalmente",
+    "COND_NONE": "Nenhum dos dois planos nominais se aproxima no cenário declarado",
+    "UNDECIDED": "Não muda seleção entre 528/637",
+    "NOT_EVALUABLE": "Não se pode preencher antes do dado novo/replay"
+  },
+  "historical_event_time_utc": null,
+  "verified_fbis_clock": null,
+  "orbital_phase_evaluated": false,
+  "physical_compatibility_licensed": false,
+  "orbit_exclusion_licensed": false,
+  "active_constraint": false,
+  "posterior": false,
+  "impact_probability": null,
+  "documents": [
+    {
+      "item": 1,
+      "document": "O Globo 08–09/11/1963",
+      "role": "Pode fornecer hora e cadeia editorial fora dos Diários Associados",
+      "scenarios": [
+        {
+          "id": "1a",
+          "if_document_shows": "Hora e localização do evento independentemente autenticadas, dentro de uma janela G83 do 528 e fora das do 637",
+          "model_528": "PLANE_NEAR_IF_PROXY",
+          "model_637": "PLANE_FAR_IF_PROXY",
+          "conditional_readout": "COND_528_ONLY",
+          "source_ids_528": [
+            "G83",
+            "PLANE",
+            "HOUR",
+            "OWNER",
+            "DAY"
+          ],
+          "source_ids_637": [
+            "G83",
+            "PLANE",
+            "HOUR",
+            "OWNER",
+            "DAY"
+          ],
+          "reason": "Exemplo de raiz 528: 08/11 ~20h43 Bahia; nesse dia o 637 já ultrapassa o dia NASA 07/11 sob ambos os cortes hipotéticos"
+        },
+        {
+          "id": "1b",
+          "if_document_shows": "Hora e localização autenticadas, dentro de janela G83 do 637 em 07/11 e fora das do 528",
+          "model_528": "PLANE_FAR_IF_PROXY",
+          "model_637": "PLANE_NEAR_IF_PROXY",
+          "conditional_readout": "COND_637_ONLY",
+          "source_ids_528": [
+            "G83",
+            "PLANE",
+            "HOUR",
+            "OWNER"
+          ],
+          "source_ids_637": [
+            "G83",
+            "PLANE",
+            "HOUR",
+            "OWNER"
+          ],
+          "reason": "Exemplo de raiz 637: 07/11 ~02h24 Bahia, sem inventar que o jornal tenha essa hora"
+        },
+        {
+          "id": "1c",
+          "if_document_shows": "Notícia sem hora, citação de Tupi ou resultado de busca negativo",
+          "model_528": "NO_EVENT_TIME",
+          "model_637": "NO_EVENT_TIME",
+          "conditional_readout": "UNDECIDED",
+          "source_ids_528": [
+            "HOUR",
+            "OWNER",
+            "G83"
+          ],
+          "source_ids_637": [
+            "HOUR",
+            "OWNER",
+            "G83"
+          ],
+          "reason": "Reimpressão ou ausência no acervo não certifica evento nem hora"
+        }
+      ]
+    },
+    {
+      "item": 2,
+      "document": "A Tarde e Jornal da Bahia, 07–12/11/1963",
+      "role": "Duas rotas baianas independentes dos Diários Associados; não contar Diário de Notícias como independente",
+      "scenarios": [
+        {
+          "id": "2a",
+          "if_document_shows": "Hora independente e localização demonstrada caem numa janela apenas do 528",
+          "model_528": "PLANE_NEAR_IF_PROXY",
+          "model_637": "PLANE_FAR_IF_PROXY",
+          "conditional_readout": "COND_528_ONLY",
+          "source_ids_528": [
+            "HOUR",
+            "G83",
+            "PLANE",
+            "DAY",
+            "OWNER"
+          ],
+          "source_ids_637": [
+            "HOUR",
+            "G83",
+            "PLANE",
+            "DAY",
+            "OWNER"
+          ],
+          "reason": "A proximidade é no proxy de câmera moderna, não no ponto de 1963"
+        },
+        {
+          "id": "2b",
+          "if_document_shows": "Hora independente e localização demonstrada caem numa janela apenas do 637",
+          "model_528": "PLANE_FAR_IF_PROXY",
+          "model_637": "PLANE_NEAR_IF_PROXY",
+          "conditional_readout": "COND_637_ONLY",
+          "source_ids_528": [
+            "HOUR",
+            "G83",
+            "PLANE",
+            "OWNER"
+          ],
+          "source_ids_637": [
+            "HOUR",
+            "G83",
+            "PLANE",
+            "OWNER"
+          ],
+          "reason": "Comparação condicional de planos sem fase"
+        },
+        {
+          "id": "2c",
+          "if_document_shows": "Hora independente com localização relevante cai fora das janelas G83 de ambos",
+          "model_528": "PLANE_FAR_IF_PROXY",
+          "model_637": "PLANE_FAR_IF_PROXY",
+          "conditional_readout": "COND_NONE",
+          "source_ids_528": [
+            "HOUR",
+            "G83",
+            "PLANE"
+          ],
+          "source_ids_637": [
+            "HOUR",
+            "G83",
+            "PLANE"
+          ],
+          "reason": "Nenhum plano nominal próximo ao proxy; NÃO equivale a nenhum objeto fisicamente possível"
+        },
+        {
+          "id": "2d",
+          "if_document_shows": "Colunas lidas sem hora ou com hora apenas da publicação",
+          "model_528": "NO_EVENT_TIME",
+          "model_637": "NO_EVENT_TIME",
+          "conditional_readout": "UNDECIDED",
+          "source_ids_528": [
+            "HOUR",
+            "OWNER"
+          ],
+          "source_ids_637": [
+            "HOUR",
+            "OWNER"
+          ],
+          "reason": "Hora da edição/publicação não vira hora do fenômeno"
+        }
+      ]
+    },
+    {
+      "item": 3,
+      "document": "Space-Track gp_history 527/528/529/637 (out–nov/1963)",
+      "role": "Proveniência e elementos orbitais; não identifica hora da notícia",
+      "scenarios": [
+        {
+          "id": "3a",
+          "if_document_shows": "Elementos originais conferem com o espelho secundário para épocas relevantes",
+          "model_528": "SAME_SECONDARY_GEOMETRY",
+          "model_637": "SAME_SECONDARY_GEOMETRY",
+          "conditional_readout": "UNDECIDED",
+          "source_ids_528": [
+            "PLANE",
+            "G83",
+            "OWNER",
+            "DAY"
+          ],
+          "source_ids_637": [
+            "PLANE",
+            "G83",
+            "OWNER",
+            "DAY"
+          ],
+          "reason": "Reduz dúvida de linhagem, não fornece fase ou hora do evento"
+        },
+        {
+          "id": "3b",
+          "if_document_shows": "Elementos novos de 01–08/11 alteram RAAN/época relevante",
+          "model_528": "REPLAY_REQUIRED",
+          "model_637": "REPLAY_REQUIRED",
+          "conditional_readout": "NOT_EVALUABLE",
+          "source_ids_528": [
+            "PLANE",
+            "G83",
+            "OWNER",
+            "DAY"
+          ],
+          "source_ids_637": [
+            "PLANE",
+            "G83",
+            "OWNER",
+            "DAY"
+          ],
+          "reason": "Recalcular depois da custódia, não antecipar resultado com ledger antigo"
+        },
+        {
+          "id": "3c",
+          "if_document_shows": "Consulta não inclui novas épocas nem hora terminal validada",
+          "model_528": "NO_NEW_ORBITAL_OBSERVATION",
+          "model_637": "NO_NEW_ORBITAL_OBSERVATION",
+          "conditional_readout": "UNDECIDED",
+          "source_ids_528": [
+            "OWNER",
+            "PLANE",
+            "DAY"
+          ],
+          "source_ids_637": [
+            "OWNER",
+            "PLANE",
+            "DAY"
+          ],
+          "reason": "R68/#1019 é erro de dia condicional, não sigma de hora nem calibração terminal do 528"
+        }
+      ]
+    },
+    {
+      "item": 4,
+      "document": "Anexos A-628: Diário de Notícias 09/11 e Jornal da Bahia 11/11",
+      "role": "Possível hora num recorte; dependência editorial deve ser testada",
+      "scenarios": [
+        {
+          "id": "4a",
+          "if_document_shows": "Recorte original do Jornal da Bahia contém hora de evento independente e localização verificável, em janela exclusiva de um plano",
+          "model_528": "LOOKUP_G83_AT_EVENT_TIME",
+          "model_637": "LOOKUP_G83_AT_EVENT_TIME",
+          "conditional_readout": "NOT_EVALUABLE",
+          "source_ids_528": [
+            "A628",
+            "HOUR",
+            "G83",
+            "PLANE",
+            "OWNER"
+          ],
+          "source_ids_637": [
+            "A628",
+            "HOUR",
+            "G83",
+            "PLANE",
+            "OWNER"
+          ],
+          "reason": "Só o evento concreto permite escolher 528/637/nenhum; a foto ainda não existe no corpus"
+        },
+        {
+          "id": "4b",
+          "if_document_shows": "Apenas Diário de Notícias (Diários Associados), ou recorte repete Tupi sem hora independente",
+          "model_528": "NO_INDEPENDENT_CLOCK",
+          "model_637": "NO_INDEPENDENT_CLOCK",
+          "conditional_readout": "UNDECIDED",
+          "source_ids_528": [
+            "A628",
+            "HOUR",
+            "OWNER"
+          ],
+          "source_ids_637": [
+            "A628",
+            "HOUR",
+            "OWNER"
+          ],
+          "reason": "Não multiplicar uma cadeia editorial em duas observações"
+        },
+        {
+          "id": "4c",
+          "if_document_shows": "Anexos recuperados mas sem hora local do fenômeno",
+          "model_528": "NO_EVENT_TIME",
+          "model_637": "NO_EVENT_TIME",
+          "conditional_readout": "UNDECIDED",
+          "source_ids_528": [
+            "A628",
+            "HOUR",
+            "G83"
+          ],
+          "source_ids_637": [
+            "A628",
+            "HOUR",
+            "G83"
+          ],
+          "reason": "Data de recorte/A-628 não é hora do evento"
+        }
+      ]
+    },
+    {
+      "item": 5,
+      "document": "FBIS Daily Report e World Reaction Series n. 8-1963",
+      "role": "Autenticar convenção 2330/111A; não substitui hora do evento",
+      "scenarios": [
+        {
+          "id": "5a",
+          "if_document_shows": "Âncoras independentes autenticam 2330 como GMT",
+          "model_528": "528_2343_AFTER_TRANSMISSION",
+          "model_637": "637_SAME_BEFORE_AFTER_COUNTS",
+          "conditional_readout": "UNDECIDED",
+          "source_ids_528": [
+            "CLOCK",
+            "G83",
+            "P48",
+            "OWNER"
+          ],
+          "source_ids_637": [
+            "CLOCK",
+            "G83",
+            "P48",
+            "OWNER"
+          ],
+          "reason": "528 às 23h42–43Z é POSTERIOR ao limite hipotético 23h30Z, mas outras raízes do 528 persistem"
+        },
+        {
+          "id": "5b",
+          "if_document_shows": "Âncoras independentes autenticam 2330 como hora local da Guanabara",
+          "model_528": "528_2343_BEFORE_TRANSMISSION",
+          "model_637": "637_SAME_BEFORE_AFTER_COUNTS",
+          "conditional_readout": "UNDECIDED",
+          "source_ids_528": [
+            "CLOCK",
+            "G83",
+            "P48",
+            "OWNER"
+          ],
+          "source_ids_637": [
+            "CLOCK",
+            "G83",
+            "P48",
+            "OWNER"
+          ],
+          "reason": "528 às 23h42–43Z é ANTERIOR ao limite hipotético 09/11 01h30Z; não demonstra presença do satélite"
+        },
+        {
+          "id": "5c",
+          "if_document_shows": "Sem âncora externa da mesma transmissão; outra convenção possível",
+          "model_528": "CLOCK_UNRESOLVED",
+          "model_637": "CLOCK_UNRESOLVED",
+          "conditional_readout": "NOT_EVALUABLE",
+          "source_ids_528": [
+            "CLOCK",
+            "P48",
+            "OWNER"
+          ],
+          "source_ids_637": [
+            "CLOCK",
+            "P48",
+            "OWNER"
+          ],
+          "reason": "P48 0/10; P50 0; 111A não decodificado"
+        }
+      ]
+    },
+    {
+      "item": 6,
+      "document": "Roteiro Rádio Tupi Rio 08/11/1963 (fora da #884, acervo não identificado)",
+      "role": "Pode autenticar emissão e, apenas se transcrito, eventual hora declarada do fenômeno",
+      "scenarios": [
+        {
+          "id": "6a",
+          "if_document_shows": "Roteiro íntegro documenta hora do próprio fenômeno e sua fonte/localização",
+          "model_528": "LOOKUP_G83_AT_EVENT_TIME",
+          "model_637": "LOOKUP_G83_AT_EVENT_TIME",
+          "conditional_readout": "NOT_EVALUABLE",
+          "source_ids_528": [
+            "CLOCK",
+            "P48",
+            "HOUR",
+            "G83",
+            "PLANE"
+          ],
+          "source_ids_637": [
+            "CLOCK",
+            "P48",
+            "HOUR",
+            "G83",
+            "PLANE"
+          ],
+          "reason": "A hora, fuso e independência teriam de ser autenticados; resultado G83 não se escolhe antecipadamente"
+        },
+        {
+          "id": "6b",
+          "if_document_shows": "Roteiro documenta só grade/hora da emissão de notícia",
+          "model_528": "BROADCAST_UPPER_BOUND_ONLY",
+          "model_637": "BROADCAST_UPPER_BOUND_ONLY",
+          "conditional_readout": "UNDECIDED",
+          "source_ids_528": [
+            "CLOCK",
+            "G83",
+            "P48"
+          ],
+          "source_ids_637": [
+            "CLOCK",
+            "G83",
+            "P48"
+          ],
+          "reason": "Limite de transmissão não é instante do fenômeno"
+        },
+        {
+          "id": "6c",
+          "if_document_shows": "Roteiro indisponível ou repetição da peça FBIS",
+          "model_528": "NO_INDEPENDENT_CLOCK",
+          "model_637": "NO_INDEPENDENT_CLOCK",
+          "conditional_readout": "UNDECIDED",
+          "source_ids_528": [
+            "CLOCK",
+            "P48",
+            "OWNER"
+          ],
+          "source_ids_637": [
+            "CLOCK",
+            "P48",
+            "OWNER"
+          ],
+          "reason": "Acervo ainda não identificado; cópia duplicada não acrescenta voto"
+        }
+      ]
+    }
+  ]
+}
