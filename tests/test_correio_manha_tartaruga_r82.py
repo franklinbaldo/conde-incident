@@ -1,5 +1,7 @@
 """C241-R82: independent runtime gates for three newly read press pages."""
 import copy
+import hashlib
+import importlib.util
 import json
 import unittest
 from pathlib import Path
@@ -8,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 FILE = ROOT / "research/archive/conde_correio_manha_1963_11_12_C241_TARTARUGA_R82.json"
 PREDECESSOR = ROOT / "research/archive/conde_correio_manha_1963_11_12_14_C241_TARTARUGA_R81.json"
 SHA = "a744f75a91462d2246ecf905353143ffe72a9c326ab0462a1241a4db3a2bc606"
+INTERPRETATION_SHA256 = "a93da9cffeaed814e50072603061d79e54a99eab121614f735f938cafdf82099"
 EXPECTED_SUBJECTS = [
     "Brasília/Fatos e Personagens: Biblioteca do Trabalhador and atomic-energy meeting; Rio education council; newborn mix-up at maternity hospital; Brigitte Bardot rumor; commercial advertisements.",
     "Brazil-France diplomatic relations; Congresso and party politics; historical article on Anchieta and the foundation of São Paulo; political commentary; essay on free will.",
@@ -30,11 +33,28 @@ def pairs_no_duplicates(pairs):
 def load(path=FILE):
     return json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=pairs_no_duplicates)
 
+def validate_predecessor(previous):
+    """Reuse R81's full published-interpretation guard, not just its counters."""
+    guard_path = ROOT / "tests/test_correio_manha_tartaruga_r81.py"
+    spec = importlib.util.spec_from_file_location("conde_r81_guard", guard_path)
+    if spec is None or spec.loader is None:
+        raise ValueError("R81 guard unavailable")
+    guard = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(guard)
+    guard.validate(previous)
+
+
 def validate(doc, previous=None):
     def require(ok, message):
         if not ok:
             raise ValueError(message)
 
+    canonical = json.dumps(
+        doc, ensure_ascii=False, sort_keys=True, separators=(",", ":"),
+        allow_nan=False,
+    ).encode("utf-8")
+    require(hashlib.sha256(canonical).hexdigest() == INTERPRETATION_SHA256,
+            "unreviewed R82 interpretation mutation")
     require(set(doc) == {"schema","id","checked_utc_date","research_issue",
                         "predecessor_manifest","source","method","readings",
                         "scope","conclusion"}, "unexpected root fields")
@@ -96,11 +116,13 @@ def validate(doc, previous=None):
     require(c["report_independence_from_tupi_fbis_diarios_associados"] == "UNDETERMINED", "independence")
     require(c["excludes_norad_528_or_637"] is False, "no physical exclusion")
     require(c["next_action"] == "Read Correio da Manhã 21659 first-caderno PDF pages 8–15, then 21660 PDF 1–12 and 21661 PDF 1–13, subject to the current Elefante orders.", "next action")
-    if previous is not None:
-        require(previous["id"] == "C241-TARTARUGA-R81", "ancestor id")
-        require(previous["sources"][0]["sha256"] == s["original_sha256"], "same original")
-        require(previous["reading"]["new_pages_fully_examined"] == [1,2,3,4], "ancestor coverage")
-        require(previous["reading"]["remaining_first_caderno_pages_not_fully_read"] == list(range(5,16)), "ancestor gap")
+    if previous is None:
+        previous = load(PREDECESSOR)
+    validate_predecessor(previous)
+    require(previous["id"] == "C241-TARTARUGA-R81", "ancestor id")
+    require(previous["sources"][0]["sha256"] == s["original_sha256"], "same original")
+    require(previous["reading"]["new_pages_fully_examined"] == [1,2,3,4], "ancestor coverage")
+    require(previous["reading"]["remaining_first_caderno_pages_not_fully_read"] == list(range(5,16)), "ancestor gap")
     return True
 
 class TestC241R82(unittest.TestCase):
@@ -150,6 +172,34 @@ class TestC241R82(unittest.TestCase):
 
     def test_extra_field_rejected(self):
         self.reject(lambda d: d.__setitem__("certainty", 1.0))
+
+    def test_unreviewed_scope_hour_rejected(self):
+        self.reject(lambda d: d["scope"].update(independent_event_hour="20h15"))
+
+    def test_unreviewed_conclusion_witness_rejected(self):
+        self.reject(lambda d: d["conclusion"].update(confirmed_by="NASA witness"))
+
+    def test_unreviewed_method_source_rejected(self):
+        self.reject(lambda d: d["method"].update(independent_source="NASA confirms Conde"))
+
+    def test_ancestor_prose_mutation_rejected(self):
+        previous = copy.deepcopy(self.previous)
+        previous["reading"]["status_by_pdf_page"][0]["subjects"] = (
+            "NASA confirmou objeto em Conde às 20h15"
+        )
+        with self.assertRaises(ValueError):
+            validate(self.doc, previous)
+
+    def test_real_disk_mutation_rejected(self):
+        import tempfile
+        mutated = copy.deepcopy(self.doc)
+        mutated["scope"]["independent_event_hour"] = "20h15"
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "altered.json"
+            path.write_text(json.dumps(mutated, ensure_ascii=False),
+                            encoding="utf-8")
+            with self.assertRaises(ValueError):
+                validate(load(path), self.previous)
 
     def test_duplicate_keys_rejected(self):
         import tempfile
