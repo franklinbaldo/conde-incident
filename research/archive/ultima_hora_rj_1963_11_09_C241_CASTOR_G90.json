@@ -1,0 +1,109 @@
+{
+  "schema": "conde.press_visual_review/v1",
+  "id": "C241-CASTOR-G90",
+  "issue": 871,
+  "reviewed_utc": "2026-11-15",
+  "source": {
+    "publication": "Última Hora (Rio)",
+    "collection": "386030",
+    "edition": "04200",
+    "date_from_cover": "1963-11-09",
+    "pdf_pages": 16,
+    "url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04200.pdf",
+    "sha256": "320aeb075b99fc6f2884904d9e1aa801b9d3f6be2b131ded30093caaaa6ce352",
+    "parent_review": "research/archive/ultima_hora_rj_1963_11_09_C241_CASTOR_G89.json"
+  },
+  "method": {
+    "executor": "Ifro",
+    "tool": "pdftoppm",
+    "dpi": 190,
+    "region_protocol": [
+      "upper_left",
+      "upper_center",
+      "upper_right",
+      "lower_left",
+      "lower_center",
+      "lower_right"
+    ],
+    "review": "DIRECT_VISUAL_AT_ARTICLE_SCALE",
+    "ocr_as_negative": false,
+    "working_directory": "/var/tmp/castor-g90-20261115",
+    "pdf_sha256_rechecked": true
+  },
+  "pages": [
+    {
+      "pdf_page": 7,
+      "printed_page": 7,
+      "regions_seen": [
+        "upper_left",
+        "upper_center",
+        "upper_right",
+        "lower_left",
+        "lower_center",
+        "lower_right"
+      ],
+      "editorial_sections": [
+        "Ex-Pracinhas Acampam no MVOP: Só Sairemos Nomeados",
+        "Diogo Gaspar: Brasil Acha Tímido o Relatório Lleras",
+        "Normalistas Elegem Diretoria",
+        "Conferência Abre Jornada das Mulheres Médicas",
+        "Nova Diretoria do CACO Continua ao Lado do Povo"
+      ],
+      "other_material": "Appointments, notices, Laura Alves' thank-you, Radio Mauá and TV Excelsior schedules and property advertisements",
+      "page_status": "EXAMINADA",
+      "page_negative_for_conde_event_report": true,
+      "source_scope": "ONLY_PDF_PAGE_7",
+      "independent_event_hour": null,
+      "independent_witness": null,
+      "disambiguation": "Rua Conde de Bonfim, 177 in a Tijuca property advertisement is a street address in Rio, not Conde municipality in Bahia; radio/TV schedule hours are advertisement times, not the alleged event."
+    },
+    {
+      "pdf_page": 8,
+      "printed_page": null,
+      "regions_seen": [
+        "upper_left",
+        "upper_center",
+        "upper_right",
+        "lower_left",
+        "lower_center",
+        "lower_right"
+      ],
+      "editorial_sections": [
+        "Caos na Polícia: Detetives em Operação Tartaruga Recebem Ordens de Dois Superintendentes",
+        "Padre da Guerra Contra o Pecado: Armas Importadas São para Caçar",
+        "Manchinha no Queixo Convence os Pais: Menina Não Foi Trocada",
+        "Cr$ 500 Mil em Jóias da Viúva Sumiram na Agência de Penhores",
+        "Matou a Tiros Açougueiro Que Lhe Disputava a Mulher Amada",
+        "Polícia Esconde Ianque-Mistério",
+        "Lei dos Homens: notas jurídicas"
+      ],
+      "other_material": "Police dispatch facsimiles at the top and short Rio crime notices; no Conde incident report in the legible portions",
+      "page_status": "ILEGIVEL_PARCIAL",
+      "page_negative_for_conde_event_report": false,
+      "source_scope": "ONLY_LEGIBLE_REGIONS_PDF_PAGE_8",
+      "independent_event_hour": null,
+      "independent_witness": null,
+      "disambiguation": "News about Rio police and the word 'condenado' in a Portuguese deserter item have no relation to Conde, Bahia; top police facsimile has dark/low-contrast type, so no page-wide negative is claimed.",
+      "unreadable_regions": [
+        "upper-center police facsimile partly darkened near top",
+        "fine print in peripheral crime brief passages"
+      ]
+    }
+  ],
+  "interpretation": {
+    "new_historical_event_time": null,
+    "fbis_clock": "UNRESOLVED",
+    "orbit_exclusion_licensed": false,
+    "theta_changed": false,
+    "complete_edition_negative": false,
+    "nov10_special_edition": "NOT_ESTABLISHED",
+    "pdf_pages_with_new_page_level_negative": [
+      7
+    ],
+    "pdf_pages_with_partial_read": [
+      8
+    ],
+    "stop_criterion_met": false
+  },
+  "limitations": "Only p.7 is classified as examined page-wide; the p.8 police facsimile and some small type remain partially unreadable. Neither a page-level negative nor any advertisement programme time establishes an event time or an orbit. The remaining pages and the possibility of a special Sunday 10 November issue are not resolved."
+}
