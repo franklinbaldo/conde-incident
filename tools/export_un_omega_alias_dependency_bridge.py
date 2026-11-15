@@ -6,10 +6,11 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
-
-from tools.c241_un_omega_registry_alias_r66 import assess
+import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+from tools.c241_un_omega_registry_alias_r66 import assess
 SOURCES = {
     "UN-R66": (
         "research/tle_custody/c241_un_omega_registry_leads_r66.json",
