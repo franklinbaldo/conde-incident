@@ -1,0 +1,98 @@
+{
+  "schema": "conde.press_visual_review/v1",
+  "id": "C241-CASTOR-G89",
+  "issue": 871,
+  "reviewed_utc": "2026-11-15",
+  "source": {
+    "publication": "Última Hora (Rio)",
+    "collection": "386030",
+    "edition": "04200",
+    "date_from_cover": "1963-11-09",
+    "pdf_pages": 16,
+    "url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04200.pdf",
+    "sha256": "320aeb075b99fc6f2884904d9e1aa801b9d3f6be2b131ded30093caaaa6ce352",
+    "parent_review": "research/archive/ultima_hora_rj_1963_11_09_C241_CASTOR_G88.json"
+  },
+  "method": {
+    "executor": "Ifro",
+    "tool": "pdftoppm",
+    "dpi": 190,
+    "region_protocol": [
+      "upper_half",
+      "lower_half"
+    ],
+    "review": "DIRECT_VISUAL_AT_ARTICLE_SCALE",
+    "ocr_as_negative": false,
+    "working_directory": "/var/tmp/castor-g89-review"
+  },
+  "pages": [
+    {
+      "pdf_page": 9,
+      "printed_page": 1,
+      "regions_seen": [
+        "upper_half",
+        "lower_half"
+      ],
+      "editorial_sections": [
+        "Stanislaw Ponte Preta: LATIM — LÍNGUA MORTA COM MÚSICA VIVA",
+        "Fotofocalizando",
+        "Da Correspondência"
+      ],
+      "other_material": "Real-estate advertisement filling lower half",
+      "page_negative_for_conde_event_report": true,
+      "source_scope": "ONLY_PDF_PAGE_9",
+      "independent_event_hour": null,
+      "independent_witness": null,
+      "disambiguation": "Stanislaw's 9 November column discusses Latin instruction and everyday satire, not the separate 14 November Conde piece"
+    },
+    {
+      "pdf_page": 13,
+      "printed_page": 5,
+      "regions_seen": [
+        "upper_half",
+        "lower_half"
+      ],
+      "editorial_sections": [
+        "O CAPITÃO: Os Grandes Cartunistas (2), James Thurber",
+        "PUC SE TRANSFORMA HOJE NUMA GRANDE FESTA",
+        "Para quem fica em casa: charadas e palavras cruzadas"
+      ],
+      "other_material": "TV-Rio combat-series advertisement and classified advertisement",
+      "page_negative_for_conde_event_report": true,
+      "source_scope": "ONLY_PDF_PAGE_13",
+      "independent_event_hour": null,
+      "independent_witness": null,
+      "disambiguation": "The word COMBATE is a TV-series advertisement; the PUC event is unrelated to the historical Conde incident"
+    }
+  ],
+  "additional_visual_scope": {
+    "pages_seen_at_1900px": [
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "counts_as_page_complete": false,
+    "notes": "Other eight pages received headline/region triage only; 1900px panoramas are not legible column-by-column negatives."
+  },
+  "interpretation": {
+    "new_historical_event_time": null,
+    "fbis_clock": "UNRESOLVED",
+    "orbit_exclusion_licensed": false,
+    "theta_changed": false,
+    "complete_edition_negative": false,
+    "nov10_special_edition": "NOT_ESTABLISHED",
+    "pdf_pages_with_new_page_level_negative": [
+      9,
+      13
+    ],
+    "stop_criterion_met": false
+  },
+  "limitations": "Only pages 9 and 13 received full editorial-region review at 190 dpi in this pass. Remaining pages and marginal print defects cannot be promoted to edition-wide negative; dates or hours in advertisements cannot be used as the time of the Conde event."
+}
