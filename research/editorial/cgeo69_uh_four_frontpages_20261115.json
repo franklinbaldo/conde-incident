@@ -1,0 +1,304 @@
+{
+  "type": "HistoricalPressFrozenWeekFrontPageAudit",
+  "id": "CGEO-69",
+  "date_utc": "2026-11-15",
+  "issue": "https://github.com/franklinbaldo/conde-incident/issues/887",
+  "prereg_path": "research/editorial/cgeo64_null_narrative_prereg_20261114.json",
+  "prereg_blob_sha": "0d13d9359080699e5f8402ca9b7014d7f1f6d59a",
+  "source_inventory_path": "research/editorial/cgeo65_uh_bn_inventory_20261115.json",
+  "source_cover_crosswalk": "research/editorial/cgeo66_uh_cover_dates_20261115.json",
+  "method": "Four pre-registered date slots, one front page from each target/baseline week. For each, verify PDF SHA-256 on Ifro, render PDF p.1 at 3200 px and inspect every quadrant visually, check full-page embedded text for pre-frozen anchors. OCR and text-layer absence alone do not establish absence; distinguish unrelated lexical coincidences. Source images retained on Ifro, not published. Headline/transcription is context, not a separate witness.",
+  "selection_caveat": "Page 1 was selected as a repeatable page number; chosen issue dates are a deliberately small convenience checkpoint within the frozen slots, NOT a random or exhaustive sample of each week. No other pages of the selected issues counted; do not extrapolate page-level negatives to entire issues, weeks, or newspapers.",
+  "pages": [
+    {
+      "publication": "UH_RE",
+      "issue_id": "00442",
+      "date": "1963-10-09",
+      "week": "CONTROL_OCT07",
+      "pdf_page": 1,
+      "source_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00442.pdf",
+      "source_sha256": "7b7c6189f86a9da5457332927f847262a72a4d0989a18f9b0042283c83e90a6a",
+      "headline_as_seen": "Mobilização do povo contra custo de vida",
+      "review": "FULL_FRONT_PAGE_VISUAL_4_QUADRANTS_AND_TEXT_LAYER",
+      "countable_page": true,
+      "confirmed_article_counts": {
+        "F01_METAL_SPHERE": 0,
+        "F02_CITY_CENTER": 0,
+        "F03_FOUR_METER_HOLE": 0,
+        "F04_WINDOWS": 0,
+        "F05_THICK_GLASS": 0,
+        "F06_HUMAN_BODY": 0,
+        "F07_HEAVY_CLOTHES": 0,
+        "F08_INDECIPHERABLE_INSCRIPTIONS": 0
+      },
+      "ambiguous_lexical_leads": [],
+      "whole_edition_read": false,
+      "independent_conde_witness": false
+    },
+    {
+      "publication": "UH_RE",
+      "issue_id": "00447",
+      "date": "1963-10-14",
+      "week": "CONTROL_OCT14",
+      "pdf_page": 1,
+      "source_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00447.pdf",
+      "source_sha256": "e249c946712b7685e0a34d3de9a7250929957deb7a4c5894fbdb94aa0d02242b",
+      "headline_as_seen": "Autoridades dominam situação: paz de novo nos sindicatos do campo",
+      "review": "FULL_FRONT_PAGE_VISUAL_4_QUADRANTS_AND_TEXT_LAYER",
+      "countable_page": true,
+      "confirmed_article_counts": {
+        "F01_METAL_SPHERE": 0,
+        "F02_CITY_CENTER": 0,
+        "F03_FOUR_METER_HOLE": 0,
+        "F04_WINDOWS": 0,
+        "F05_THICK_GLASS": 0,
+        "F06_HUMAN_BODY": 0,
+        "F07_HEAVY_CLOTHES": 0,
+        "F08_INDECIPHERABLE_INSCRIPTIONS": 0
+      },
+      "ambiguous_lexical_leads": [
+        {
+          "fragment": "F07_HEAVY_CLOTHES",
+          "text": "pesados encargos",
+          "context": "Economic or organizational burdens, not heavy clothing; adjectival coincidence only.",
+          "fragment_match": false
+        }
+      ],
+      "whole_edition_read": false,
+      "independent_conde_witness": false
+    },
+    {
+      "publication": "UH_RE",
+      "issue_id": "00455",
+      "date": "1963-10-22",
+      "week": "CONTROL_OCT21",
+      "pdf_page": 1,
+      "source_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00455.pdf",
+      "source_sha256": "d4e08e37c815b538d29eb56c2354ddb3d60b8e2f3dbf27573d643693a7110830",
+      "headline_as_seen": "Arraes recusa diálogo proposto por Lacerda",
+      "review": "FULL_FRONT_PAGE_VISUAL_4_QUADRANTS_AND_TEXT_LAYER",
+      "countable_page": true,
+      "confirmed_article_counts": {
+        "F01_METAL_SPHERE": 0,
+        "F02_CITY_CENTER": 0,
+        "F03_FOUR_METER_HOLE": 0,
+        "F04_WINDOWS": 0,
+        "F05_THICK_GLASS": 0,
+        "F06_HUMAN_BODY": 0,
+        "F07_HEAVY_CLOTHES": 0,
+        "F08_INDECIPHERABLE_INSCRIPTIONS": 0
+      },
+      "ambiguous_lexical_leads": [
+        {
+          "fragment": "F07_HEAVY_CLOTHES",
+          "text": "à queima-roupa",
+          "context": "Idiom referring to shooting at close range in a police story, not heavy clothing.",
+          "fragment_match": false
+        }
+      ],
+      "whole_edition_read": false,
+      "independent_conde_witness": false
+    },
+    {
+      "publication": "UH_RE",
+      "issue_id": "00467",
+      "date": "1963-11-04",
+      "week": "TARGET_NOV04",
+      "pdf_page": 1,
+      "source_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00467.pdf",
+      "source_sha256": "82c0345dccc9c7d48db3512b134b84b0d1d39579410b5f91530109674bd995f9",
+      "headline_as_seen": "Povo com JG pela lei de remessa de lucros",
+      "review": "FULL_FRONT_PAGE_VISUAL_4_QUADRANTS_AND_TEXT_LAYER",
+      "countable_page": true,
+      "confirmed_article_counts": {
+        "F01_METAL_SPHERE": 0,
+        "F02_CITY_CENTER": 0,
+        "F03_FOUR_METER_HOLE": 0,
+        "F04_WINDOWS": 0,
+        "F05_THICK_GLASS": 0,
+        "F06_HUMAN_BODY": 0,
+        "F07_HEAVY_CLOTHES": 0,
+        "F08_INDECIPHERABLE_INSCRIPTIONS": 0
+      },
+      "ambiguous_lexical_leads": [
+        {
+          "fragment": "F04_WINDOWS",
+          "text": "abertura do Congresso de Geologia",
+          "context": "Opening ceremony/event, not an opening or window in a metal sphere.",
+          "fragment_match": false
+        }
+      ],
+      "whole_edition_read": false,
+      "independent_conde_witness": false
+    }
+  ],
+  "coverage": {
+    "front_pages_inspected": 4,
+    "pages_per_week": {
+      "CONTROL_OCT07": 1,
+      "CONTROL_OCT14": 1,
+      "CONTROL_OCT21": 1,
+      "TARGET_NOV04": 1
+    },
+    "observed_page_rates": {
+      "CONTROL_OCT07": {
+        "F01_METAL_SPHERE": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F02_CITY_CENTER": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F03_FOUR_METER_HOLE": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F04_WINDOWS": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F05_THICK_GLASS": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F06_HUMAN_BODY": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F07_HEAVY_CLOTHES": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F08_INDECIPHERABLE_INSCRIPTIONS": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        }
+      },
+      "CONTROL_OCT14": {
+        "F01_METAL_SPHERE": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F02_CITY_CENTER": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F03_FOUR_METER_HOLE": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F04_WINDOWS": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F05_THICK_GLASS": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F06_HUMAN_BODY": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F07_HEAVY_CLOTHES": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F08_INDECIPHERABLE_INSCRIPTIONS": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        }
+      },
+      "CONTROL_OCT21": {
+        "F01_METAL_SPHERE": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F02_CITY_CENTER": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F03_FOUR_METER_HOLE": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F04_WINDOWS": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F05_THICK_GLASS": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F06_HUMAN_BODY": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F07_HEAVY_CLOTHES": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F08_INDECIPHERABLE_INSCRIPTIONS": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        }
+      },
+      "TARGET_NOV04": {
+        "F01_METAL_SPHERE": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F02_CITY_CENTER": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F03_FOUR_METER_HOLE": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F04_WINDOWS": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F05_THICK_GLASS": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F06_HUMAN_BODY": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F07_HEAVY_CLOTHES": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        },
+        "F08_INDECIPHERABLE_INSCRIPTIONS": {
+          "confirmed_articles": 0,
+          "pages_read": 1
+        }
+      }
+    },
+    "whole_issues_read": 0,
+    "other_pages_read_in_this_fatia": 0,
+    "jb_pages_read": 0,
+    "predeclared_slots_changed": 0,
+    "baseline_full_corpus": null,
+    "first_pre_event_occurrence": null,
+    "general_verdict": "UNDETERMINED"
+  },
+  "limitations": [
+    "Zero confirmed matches applies only to these four individual front pages, not to editions or unexamined pages.",
+    "Many front-page stories continue inside their issue; absence from the cover does not establish absence from their whole article.",
+    "The same newspaper edition is one publication lineage; the four dates are not four independent Conde witnesses.",
+    "Historical OCR/text layers can omit or corrupt words; the visual review limits only what is legible on the selected page.",
+    "An ordinary 'abertura', 'pesados encargos' or 'queima-roupa' is not the composite FBIS spacecraft motif.",
+    "No independent local event hour, 1963 geographical point, orbital restriction, copying chronology or deliberate fabrication can be inferred."
+  ],
+  "interpretation": {
+    "independent_event_witness_found": false,
+    "narrative_fabrication_proven": false,
+    "chronology_of_8_nov_known": false,
+    "historical_center_1963": null,
+    "orbital_constraint_activated": false
+  }
+}
