@@ -5,7 +5,7 @@ import json
 import unittest
 from pathlib import Path
 
-from test_ultima_hora_rj_castor_g89 import validate as validate_g89, G89
+from test_ultima_hora_rj_castor_g89 import validate as validate_g89, G89, G88
 
 ROOT = Path(__file__).resolve().parents[1]
 G90 = ROOT / "research/archive/ultima_hora_rj_1963_11_09_C241_CASTOR_G90.json"
@@ -18,7 +18,7 @@ def require(value, explanation):
 def validate(d, parent=None):
     if parent is None:
         parent = json.loads(G89.read_text(encoding="utf-8"))
-    validate_g89(parent)
+    validate_g89(parent, json.loads(G88.read_text(encoding="utf-8")))
     canonical = json.dumps(d, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
     require(hashlib.sha256(canonical).hexdigest() == CANONICAL_SHA256, "full G90 interpretation changed")
     require(d["schema"] == "conde.press_visual_review/v1" and d["id"] == "C241-CASTOR-G90", "identity")
