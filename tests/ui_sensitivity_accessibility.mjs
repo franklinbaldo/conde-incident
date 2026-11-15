@@ -29,6 +29,13 @@ export async function checkSensitivityA11y(page, viewport, locale) {
     `illustrative scenario heading must match locale ${locale}`);
   assert(!text.includes('Resultado da Integração Numérica') && !text.includes('Numerical Integration Result'),
     'closed-form scenario must not be announced as numerical integration');
+  const caveat = (await page.getByTestId('sensitivity-reference-caveat').textContent()) ?? '';
+  assert(caveat.includes(locale === 'pt' ? 'por construção' : 'by construction'),
+    'matching the catalogued date is a built-in model reference, not independent validation');
+  assert(text.includes(locale === 'pt' ? 'hipóteses ilustrativas' : 'illustrative assumptions'),
+    'BSTAR and ballistic model assumptions must remain explicitly uncalibrated');
+  assert(!text.includes('decaimento físico coincide exatamente') && !text.includes('real physical decay lands precisely'),
+    'do not present a parameter-tuned result as verified physical decay');
   const first = page.locator('input[type="range"]').first();
   const before = Number(await first.inputValue());
   await first.focus();
