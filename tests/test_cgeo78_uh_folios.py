@@ -4,12 +4,14 @@ The offline checks reject fabricated event clocks, an invented witness, and
 inflated page coverage. A PASS does not prove archival accessibility.
 """
 import copy
+import hashlib
 import json
 import unittest
 from pathlib import Path
 
 PATH = Path(__file__).resolve().parents[1] / "research/editorial/cgeo78_uh_00472_folio_and_pages_20261115.json"
 SHA = "8564c0c8c26857e0feda54fc5da0f9d3ca0c34c8de02c44e3074aa79a101cece"
+EXPECTED_DOCUMENT_SHA256 = "ea278d63d4e77b2e61cf75a9829e256ff19a65f88a46e834531f6dab0b486c82"
 EXPECTED = [(2, None, "LIDO_INTEGRAL_SEM_MENCAO"),
             (3, 7, "LIDO_INTEGRAL_SEM_MENCAO"),
             (4, 3, "ILEGIVEL_PARCIAL")]
@@ -26,6 +28,13 @@ EXPECTED_COVERAGE = {
 
 def validate(doc):
     errors = []
+    # Bind all reviewed narrative, provenance and schema fields to the approved
+    # interpretation. PDF SHA-256 alone does not authenticate these claims.
+    digest = hashlib.sha256(json.dumps(
+        doc, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")).hexdigest()
+    if digest != EXPECTED_DOCUMENT_SHA256:
+        errors.append("frozen reviewed interpretation")
     def check(condition, message):
         if not condition:
             errors.append(message)
@@ -141,6 +150,30 @@ class CGEO78(unittest.TestCase):
         d = self.changed()
         d["method"]["new_ocr"] = True
         self.assertIn("method", validate(d))
+
+
+    def test_synthetic_prose_and_schema_mutations(self):
+        # These mutants preserve PDF SHA, coverage and all older asserted fields.
+        # They must not pass merely because assertions inspect numeric keys.
+        scenarios = (
+            ("invented_time_in_notes", lambda d: d["page_reviews"][0].__setitem__(
+                "notes", "Independent eyewitness reports a fall at Conde at 20h15.")),
+            ("fabricated_source_topic", lambda d: d["page_reviews"][1].__setitem__(
+                "topics", ["NASA confirms a sphere fell at Conde at 20h15"])),
+            ("folio_claim_contamination", lambda d: d["page_reviews"][1].__setitem__(
+                "printed_folio", "VISIBLE_AS_PAGINA_7_AT_SOURCE_6000PX NASA confirmed impact")),
+            ("custody_status_downgrade", lambda d: d["source"].__setitem__(
+                "custody", "UNVERIFIED")),
+            ("unreviewed_clock_key", lambda d: d["page_reviews"][0].__setitem__(
+                "local_event_clock", "20h15 independent")),
+            ("falsified_limitations", lambda d: d["limitations"].__setitem__(
+                3, "NASA confirms the event occurred at Conde at 20h15.")),
+        )
+        for name, alter in scenarios:
+            with self.subTest(name=name):
+                doc = self.changed()
+                alter(doc)
+                self.assertIn("frozen reviewed interpretation", validate(doc))
 
 
 if __name__ == "__main__":
