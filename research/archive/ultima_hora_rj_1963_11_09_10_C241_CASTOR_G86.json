@@ -1,0 +1,231 @@
+{
+  "schema": "conde.local_clock_press_custody/v1",
+  "id": "C241-CASTOR-G86",
+  "issue": 871,
+  "assignment": "https://github.com/franklinbaldo/castor/issues/10",
+  "checked_utc_date": "2026-11-15",
+  "source": {
+    "publication": "Última Hora (RJ)",
+    "collection": "386030",
+    "edition": "04200",
+    "date_from_cover": "1963-11-09",
+    "day_from_cover": "sábado",
+    "original_url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04200.pdf",
+    "http_status_from_ifro": 200,
+    "pdf_bytes": 10778040,
+    "sha256": "320aeb075b99fc6f2884904d9e1aa801b9d3f6be2b131ded30093caaaa6ce352",
+    "pdf_page_count": 16,
+    "cover_pdf_page": 1,
+    "source_custody": "ORIGINAL_BYTES_SHA256_AND_COVER_VERIFIED"
+  },
+  "adjacent_catalog": {
+    "friday_edition": "04199",
+    "friday_date_from_cover": "1963-11-08",
+    "monday_edition": "04201",
+    "monday_date_from_cover": "1963-11-11",
+    "monday_url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04201.pdf",
+    "monday_pdf_bytes": 19995184,
+    "monday_sha256": "b7ce4a3437633fe712fc49df6a0b1f86289912360830b9c979afea1ffa8bd134",
+    "catalog_9": "https://memoria.bn.gov.br/DocReader/DocReader.aspx?bib=386030&pagfis=91206",
+    "catalog_11": "https://memoria.bn.gov.br/DocReader/DocReader.aspx?bib=386030&pagfis=91225",
+    "nov10_regular_edition": "NOT_LOCATED_BETWEEN_ADJACENT_CATALOG_ENTRIES",
+    "nov10_special_edition": "NOT_ESTABLISHED",
+    "nov10_full_edition_read": false,
+    "absence_proven_all_issues": false
+  },
+  "coverage": {
+    "method": "Original PDF downloaded on Ifro; all 16 page images rendered at 1450 px longest side and visually reviewed at panorama resolution; not read fully at small-print column scale",
+    "pages": [
+      {
+        "pdf_page": 1,
+        "printed_page": 1,
+        "visual_inspection": "FULL_PAGE_PANORAMA_AT_1450PX",
+        "small_text_legibility": "PARTIAL",
+        "column_by_column_complete": false,
+        "topic_at_panorama_scale": "capa; funcionalismo; política da Guanabara; crime",
+        "conde_event_time_observed": null,
+        "whole_page_negative_certified": false
+      },
+      {
+        "pdf_page": 2,
+        "printed_page": 2,
+        "visual_inspection": "FULL_PAGE_PANORAMA_AT_1450PX",
+        "small_text_legibility": "PARTIAL",
+        "column_by_column_complete": false,
+        "topic_at_panorama_scale": "Previdência; investigação militar; notícias locais",
+        "conde_event_time_observed": null,
+        "whole_page_negative_certified": false
+      },
+      {
+        "pdf_page": 3,
+        "printed_page": 3,
+        "visual_inspection": "FULL_PAGE_PANORAMA_AT_1450PX",
+        "small_text_legibility": "PARTIAL",
+        "column_by_column_complete": false,
+        "topic_at_panorama_scale": "crônica política; caso de casamento; transporte",
+        "conde_event_time_observed": null,
+        "whole_page_negative_certified": false
+      },
+      {
+        "pdf_page": 4,
+        "printed_page": 4,
+        "visual_inspection": "FULL_PAGE_PANORAMA_AT_1450PX",
+        "small_text_legibility": "PARTIAL",
+        "column_by_column_complete": false,
+        "topic_at_panorama_scale": "política nacional, Congresso e economia",
+        "conde_event_time_observed": null,
+        "whole_page_negative_certified": false
+      },
+      {
+        "pdf_page": 5,
+        "printed_page": 5,
+        "visual_inspection": "FULL_PAGE_PANORAMA_AT_1450PX",
+        "small_text_legibility": "PARTIAL",
+        "column_by_column_complete": false,
+        "topic_at_panorama_scale": "funcionalismo da Guanabara e comércio",
+        "conde_event_time_observed": null,
+        "whole_page_negative_certified": false
+      },
+      {
+        "pdf_page": 6,
+        "printed_page": 6,
+        "visual_inspection": "FULL_PAGE_PANORAMA_AT_1450PX",
+        "small_text_legibility": "PARTIAL",
+        "column_by_column_complete": false,
+        "topic_at_panorama_scale": "noticiário internacional; foguete russo como assunto externo",
+        "conde_event_time_observed": null,
+        "whole_page_negative_certified": false
+      },
+      {
+        "pdf_page": 7,
+        "printed_page": 7,
+        "visual_inspection": "FULL_PAGE_PANORAMA_AT_1450PX",
+        "small_text_legibility": "PARTIAL",
+        "column_by_column_complete": false,
+        "topic_at_panorama_scale": "funcionalismo; rádio, televisão e classificados",
+        "conde_event_time_observed": null,
+        "whole_page_negative_certified": false
+      },
+      {
+        "pdf_page": 8,
+        "printed_page": 8,
+        "visual_inspection": "FULL_PAGE_PANORAMA_AT_1450PX",
+        "small_text_legibility": "PARTIAL",
+        "column_by_column_complete": false,
+        "topic_at_panorama_scale": "polícia fluminense e reportagens criminais",
+        "conde_event_time_observed": null,
+        "whole_page_negative_certified": false
+      },
+      {
+        "pdf_page": 9,
+        "printed_page": 1,
+        "visual_inspection": "FULL_PAGE_PANORAMA_AT_1450PX",
+        "small_text_legibility": "PARTIAL",
+        "column_by_column_complete": false,
+        "topic_at_panorama_scale": "coluna Stanislaw Ponte Preta: LATIM — LINGUA MORTA COM MÚSICA VIVA; sem menção perceptível a Conde na manchete ou texto legível do panorama",
+        "conde_event_time_observed": null,
+        "whole_page_negative_certified": false
+      },
+      {
+        "pdf_page": 10,
+        "printed_page": 2,
+        "visual_inspection": "FULL_PAGE_PANORAMA_AT_1450PX",
+        "small_text_legibility": "PARTIAL",
+        "column_by_column_complete": false,
+        "topic_at_panorama_scale": "cinema, rádio e espetáculos",
+        "conde_event_time_observed": null,
+        "whole_page_negative_certified": false
+      },
+      {
+        "pdf_page": 11,
+        "printed_page": 3,
+        "visual_inspection": "FULL_PAGE_PANORAMA_AT_1450PX",
+        "small_text_legibility": "PARTIAL",
+        "column_by_column_complete": false,
+        "topic_at_panorama_scale": "turismo, moda, horóscopo",
+        "conde_event_time_observed": null,
+        "whole_page_negative_certified": false
+      },
+      {
+        "pdf_page": 12,
+        "printed_page": 4,
+        "visual_inspection": "FULL_PAGE_PANORAMA_AT_1450PX",
+        "small_text_legibility": "PARTIAL",
+        "column_by_column_complete": false,
+        "topic_at_panorama_scale": "literatura, música e roteiros culturais",
+        "conde_event_time_observed": null,
+        "whole_page_negative_certified": false
+      },
+      {
+        "pdf_page": 13,
+        "printed_page": 4,
+        "visual_inspection": "FULL_PAGE_PANORAMA_AT_1450PX",
+        "small_text_legibility": "PARTIAL",
+        "column_by_column_complete": false,
+        "topic_at_panorama_scale": "humor, passatempos e programação",
+        "conde_event_time_observed": null,
+        "whole_page_negative_certified": false
+      },
+      {
+        "pdf_page": 14,
+        "printed_page": 5,
+        "visual_inspection": "FULL_PAGE_PANORAMA_AT_1450PX",
+        "small_text_legibility": "PARTIAL",
+        "column_by_column_complete": false,
+        "topic_at_panorama_scale": "sindicalismo, política e rádio",
+        "conde_event_time_observed": null,
+        "whole_page_negative_certified": false
+      },
+      {
+        "pdf_page": 15,
+        "printed_page": 6,
+        "visual_inspection": "FULL_PAGE_PANORAMA_AT_1450PX",
+        "small_text_legibility": "PARTIAL",
+        "column_by_column_complete": false,
+        "topic_at_panorama_scale": "turfe, corridas, tabelas",
+        "conde_event_time_observed": null,
+        "whole_page_negative_certified": false
+      },
+      {
+        "pdf_page": 16,
+        "printed_page": 8,
+        "visual_inspection": "FULL_PAGE_PANORAMA_AT_1450PX",
+        "small_text_legibility": "PARTIAL",
+        "column_by_column_complete": false,
+        "topic_at_panorama_scale": "futebol nacional e internacional",
+        "conde_event_time_observed": null,
+        "whole_page_negative_certified": false
+      }
+    ],
+    "all_pages_seen_as_panorama": true,
+    "full_columns_read": false,
+    "full_issue_negative_certified": false,
+    "locally_verified_independent_conde_event_time": null,
+    "independent_eyewitness_verified": false,
+    "ocr_only_negative_used": false
+  },
+  "related_headlines": [
+    {
+      "pdf_page": 6,
+      "title": "PERITOS BRITÂNICOS ACHAM QUE FOGUETE RUSSO É BOM",
+      "classification": "OTHER_COUNTRY_ROCKET_NEWS_NOT_CONDE",
+      "relevant_event_witness": false
+    },
+    {
+      "pdf_page": 9,
+      "title": "LATIM — LINGUA MORTA COM MÚSICA VIVA",
+      "byline": "Stanislaw Ponte Preta",
+      "classification": "SEPARATE_COLUMN_NOT_THE_14_NOV_NE_CONDE_COMMENTARY",
+      "relevant_event_witness": false
+    }
+  ],
+  "interpretation": {
+    "transmission_clock_fbis": "UNRESOLVED",
+    "event_clock": "UNDETERMINED",
+    "orbit_exclusion_licensed": false,
+    "active_constraint": false,
+    "impact_probability": null,
+    "theta_changed": false
+  },
+  "next_step": "Reopen the 16 pages at legible column resolution and adjudicate articles individually; do not promote 1450px panorama absence to a full negative. Date 10 Nov: verify separate Sunday/special edition through catalogue rather than interpolate."
+}
