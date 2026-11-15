@@ -18,6 +18,10 @@ on:
       - 'research/geo/cgeo20_centro_vila_2020.json'
       - 'research/statistics/C241_CONDITIONAL_PLANE_WINDOWS_20261114.md'
       - 'research/statistics/c241_plane_*.json'
+      - 'tools/c241_fbis_plane_ledger_g83.py'
+      - 'tests/test_c241_fbis_plane_ledger_g83.py'
+      - 'research/statistics/c241_fbis_plane_ledger_g83.json'
+      - 'research/statistics/C241_G83_FBIS_PLANE_ORDERING_20261114.md'
       - 'tools/c241_modern_boundary_plane_g77.py'
       - 'tests/test_c241_modern_boundary_plane_g77.py'
       - 'research/statistics/c241_modern_boundary_plane_g77.json'
@@ -47,6 +51,10 @@ on:
       - 'research/geo/cgeo20_centro_vila_2020.json'
       - 'research/statistics/C241_CONDITIONAL_PLANE_WINDOWS_20261114.md'
       - 'research/statistics/c241_plane_*.json'
+      - 'tools/c241_fbis_plane_ledger_g83.py'
+      - 'tests/test_c241_fbis_plane_ledger_g83.py'
+      - 'research/statistics/c241_fbis_plane_ledger_g83.json'
+      - 'research/statistics/C241_G83_FBIS_PLANE_ORDERING_20261114.md'
       - 'tools/c241_modern_boundary_plane_g77.py'
       - 'tests/test_c241_modern_boundary_plane_g77.py'
       - 'research/statistics/c241_modern_boundary_plane_g77.json'
@@ -114,3 +122,10 @@ jobs:
           python3 -m unittest discover -s tests -p 'test_c241_conder_seat_plane_g78.py' -v
           python3 -O -m unittest discover -s tests -p 'test_c241_conder_seat_plane_g78.py' -v
           python3 tools/c241_conder_seat_plane_g78.py --repo . --output research/statistics/c241_conder_seat_plane_g78.json --check
+
+      - name: G83 conditional FBIS clock versus archived 528/637 plane-window ledger
+        run: |
+          set -euo pipefail
+          python3 -m unittest discover -s tests -p 'test_c241_fbis_plane_ledger_g83.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_c241_fbis_plane_ledger_g83.py' -v
+          python3 tools/c241_fbis_plane_ledger_g83.py --repo . --check
