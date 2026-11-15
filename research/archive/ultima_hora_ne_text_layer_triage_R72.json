@@ -1,0 +1,151 @@
+{
+  "schema": "conde.newspaper_text_layer_triage/v1",
+  "id": "C241-LONTRA-R72",
+  "refs_issue": 871,
+  "review_date_utc": "2026-11-15",
+  "question": "Triagem do token isolado Conde na camada de texto dos quatro fac-símiles FBN da Última Hora Nordeste, 9–12/11/1963",
+  "method": {
+    "executor": "Ifro; Jatobá somente orquestração com max_memory_mb=128",
+    "tool": "pdftotext -layout -f PAGE -l PAGE PDF -",
+    "pattern": "\\bconde\\b",
+    "normalization": "lowercase, Unicode NFD sem diacríticos",
+    "pages_text_layer_scanned": 48,
+    "new_ocr_performed": false,
+    "scope": "triagem lexical das camadas textuais e conferência visual localizada; não leitura integral das colunas",
+    "whole_edition_negative_certified": false
+  },
+  "editions": [
+    {
+      "edition": "00472",
+      "date_printed": "1963-11-09",
+      "pdf_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00472.pdf",
+      "pdf_sha256": "8564c0c8c26857e0feda54fc5da0f9d3ca0c34c8de02c44e3074aa79a101cece",
+      "pdf_bytes": 5275519,
+      "pdf_pages": 10,
+      "hits_by_pdf_page": {
+        "7": 1,
+        "9": 1
+      },
+      "checked_pages": [
+        {
+          "pdf_page": 7,
+          "classification": "TOPONIMO_RECIFE",
+          "interpretation": "Avenida Conde da Boa Vista, Recife (R68)",
+          "visual_scope": "trecho de página inspecionado, sem leitura integral de todas as colunas",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false
+        },
+        {
+          "pdf_page": 9,
+          "classification": "TOPONIMO_RECIFE",
+          "interpretation": "Avenida Conde da Boa Vista, Recife (R68)",
+          "visual_scope": "trecho de página inspecionado, sem leitura integral de todas as colunas",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false
+        }
+      ]
+    },
+    {
+      "edition": "00473",
+      "date_printed": "1963-11-10",
+      "pdf_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00473.pdf",
+      "pdf_sha256": "f37e4afa500fe841546a751e562cc799c33c699decb8967b2ae00b45e721e349",
+      "pdf_bytes": 8298891,
+      "pdf_pages": 18,
+      "hits_by_pdf_page": {
+        "8": 2
+      },
+      "checked_pages": [
+        {
+          "pdf_page": 8,
+          "classification": "AUTOR_E_FRAGMENTO_OCR",
+          "interpretation": "José Conde em seção de livros; outra ocorrência é fragmento hifenizado de extração, sem referente Conde/BA",
+          "visual_scope": "trecho de página inspecionado, sem leitura integral de todas as colunas",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false
+        }
+      ]
+    },
+    {
+      "edition": "00474",
+      "date_printed": "1963-11-11",
+      "pdf_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00474.pdf",
+      "pdf_sha256": "3d7b9268c1cf45c7700ddf65bfa985c9d17724369d9b0412f9442f4fea87faad",
+      "pdf_bytes": 4884439,
+      "pdf_pages": 10,
+      "hits_by_pdf_page": {
+        "3": 2,
+        "5": 1
+      },
+      "checked_pages": [
+        {
+          "pdf_page": 3,
+          "classification": "NOBREZA_E_LOGRADOURO",
+          "interpretation": "conde Marcelo Jacopo em nota; outra ocorrência em referência a rua de anúncio",
+          "visual_scope": "trecho de página inspecionado, sem leitura integral de todas as colunas",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false
+        },
+        {
+          "pdf_page": 5,
+          "classification": "CLASSIFICADOS_RECIFE",
+          "interpretation": "Conde da Boa Vista em anúncios classificados do Recife",
+          "visual_scope": "trecho de página inspecionado, sem leitura integral de todas as colunas",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false
+        }
+      ]
+    },
+    {
+      "edition": "00475",
+      "date_printed": "1963-11-12",
+      "pdf_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00475.pdf",
+      "pdf_sha256": "88859dfbab5e9590614b684121507c7eb54148028a66d1efb9a3269d6444611f",
+      "pdf_bytes": 5031193,
+      "pdf_pages": 10,
+      "hits_by_pdf_page": {
+        "7": 1,
+        "9": 1
+      },
+      "checked_pages": [
+        {
+          "pdf_page": 7,
+          "classification": "ROTEIRO_RECIFE",
+          "interpretation": "Avenida Conde da Boa Vista em roteiro/anúncio recifense",
+          "visual_scope": "trecho de página inspecionado, sem leitura integral de todas as colunas",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false
+        },
+        {
+          "pdf_page": 9,
+          "classification": "PASSATEMPO",
+          "interpretation": "Fruta-de-conde em palavras cruzadas",
+          "visual_scope": "trecho de página inspecionado, sem leitura integral de todas as colunas",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false
+        }
+      ]
+    }
+  ],
+  "result": {
+    "pages_with_exact_token": 7,
+    "exact_text_layer_tokens": 9,
+    "confirmed_local_event_time": null,
+    "whole_edition_negative": false,
+    "full_column_reading_completed": false,
+    "physical_orbital_constraint_added": false
+  },
+  "limitations": [
+    "Uma palavra ausente da camada textual não está necessariamente ausente do fac-símile: OCR pré-existente tem falhas de leitura e hifenização.",
+    "Classificação dos tokens isolados não substitui inspeção de colunas que não contêm a palavra exata, nem exclui paráfrases do relato.",
+    "Os achados em sete páginas não identificam notícia independente sobre Conde/BA; nenhuma hora de evento nem observação individual do NORAD 528/637 foi obtida.",
+    "A Tarde e Jornal da Bahia permanecem na fila humana #884 item 2, sem leitura remota integral."
+  ]
+}
