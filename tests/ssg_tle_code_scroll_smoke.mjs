@@ -39,7 +39,11 @@ try {
       assert(dims.left >= -1 && dims.right <= width + 1, 'Code region spills out of viewport: ' + JSON.stringify(dims));
       assert.equal(dims.overflowX, 'auto', 'Code region must manage its own overflow');
       if (width <= 640) {
-        assert(dims.scroll > dims.client, 'Narrow viewport must preserve fixed-column lines in nested scroller');
+        // At 640px a wider reading column can fit all 69 columns without scrolling.
+        // Real overflow at 320/375px must still be scrollable and keyboard reachable.
+        const needsScroll = dims.scroll > dims.client + 1;
+        if (width <= 375)
+          assert(needsScroll, '69-column TLE needs an inner scroller at 320/375px');
         await page.keyboard.press('Tab'); // first interactive element is skip-to-content
         await page.keyboard.press('Enter');
         let reached = false;
@@ -51,7 +55,11 @@ try {
         const focus = await pre.evaluate(el => el.matches(':focus-visible'));
         assert(focus, 'No visible keyboard focus state on code region');
         const scrolled = await pre.evaluate(el => { el.scrollLeft = el.scrollWidth; return el.scrollLeft; });
-        assert(scrolled > 0, 'Full 69-column source must remain accessible by horizontal scrolling');
+        if (needsScroll)
+          assert(scrolled > 0, 'Overflowing TLE source must be horizontally scrollable');
+        else
+          assert(dims.scroll <= dims.client + 1 && scrolled === 0,
+            'Fitting TLE source must be fully visible without horizontal scrolling');
       }
       assert.deepEqual(errors, [], 'No page JS errors permitted');
       if (width === 320 || width === 1440)
