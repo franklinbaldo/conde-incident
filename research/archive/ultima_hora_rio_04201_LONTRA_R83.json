@@ -1,0 +1,143 @@
+{
+  "schema": "conde.press_visual_review/v1",
+  "id": "C241-LONTRA-R83",
+  "refs_issue": 871,
+  "assigned_by": "lontra#10: Elefante, 2026-11-15 ~19h UTC",
+  "institution": "Fundação Biblioteca Nacional",
+  "newspaper": "Última Hora, edição Rio de Janeiro",
+  "source": {
+    "collection_id": "386030",
+    "edition": "04201",
+    "date_printed": "1963-11-11",
+    "url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04201.pdf",
+    "sha256": "b7ce4a3437633fe712fc49df6a0b1f86289912360830b9c979afea1ffa8bd134",
+    "bytes": 19995184,
+    "pdf_pages": 32,
+    "http_status": 200,
+    "magic_pdf": true,
+    "eof": true
+  },
+  "method": {
+    "executor": "Ifro externo; Jatobá apenas despacho SSH (max_memory_mb=128)",
+    "tool": "pdftoppm; Pillow para quadrantes",
+    "review": "DIRECT_VISUAL_AT_ARTICLE_SCALE",
+    "full_page_and_quadrants": true,
+    "ocr_as_negative": false,
+    "notes": "Cada página indicada foi vista integralmente em panorama e quatro quadrantes ampliados; não confundir data/horas em notícias com hora do evento."
+  },
+  "pages": [
+    {
+      "pdf_page": 1,
+      "printed_page": 1,
+      "pdf_url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04201.pdf#page=1",
+      "status": "EXAMINADA",
+      "review_protocol": "PANORAMA_PLUS_FOUR_ENLARGED_QUADRANTS",
+      "topics": "capa, salário mínimo, enchentes no Japão, eleições da Guanabara, crime e futebol",
+      "event_report_conde_ba": false,
+      "independent_event_hour": null,
+      "independent_witness": null,
+      "orbital_measurement_found": false,
+      "false_positive_guard": "Zero Hora é seção jornalística, não horário do fenômeno"
+    },
+    {
+      "pdf_page": 2,
+      "printed_page": 2,
+      "pdf_url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04201.pdf#page=2",
+      "status": "EXAMINADA",
+      "review_protocol": "PANORAMA_PLUS_FOUR_ENLARGED_QUADRANTS",
+      "topics": "aluguel e projeto Tancredo, FBI e falso alarme de bomba, greves, cientistas nucleares, notícias locais",
+      "event_report_conde_ba": false,
+      "independent_event_hour": null,
+      "independent_witness": null,
+      "orbital_measurement_found": false,
+      "false_positive_guard": "23 horas refere-se a programa de TV; nenhuma notícia de satélite caído em Conde"
+    },
+    {
+      "pdf_page": 4,
+      "printed_page": 4,
+      "pdf_url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04201.pdf#page=4",
+      "status": "EXAMINADA",
+      "review_protocol": "PANORAMA_PLUS_FOUR_ENLARGED_QUADRANTS",
+      "topics": "congresso, reformas, JK, CPI do IBAD, economia e editoriais",
+      "event_report_conde_ba": false,
+      "independent_event_hour": null,
+      "independent_witness": null,
+      "orbital_measurement_found": false,
+      "false_positive_guard": "menções a bomba nuclear são metáforas políticas; não houve observável orbital"
+    },
+    {
+      "pdf_page": 6,
+      "printed_page": 6,
+      "pdf_url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04201.pdf#page=6",
+      "status": "EXAMINADA",
+      "review_protocol": "PANORAMA_PLUS_FOUR_ENLARGED_QUADRANTS",
+      "topics": "TELETIPO, desastres no Japão, temas internacionais, motor espacial solar, Polet I e agências FP/UPI",
+      "event_report_conde_ba": false,
+      "independent_event_hour": null,
+      "independent_witness": null,
+      "orbital_measurement_found": false,
+      "false_positive_guard": "notícia sobre Polet I / exploração lunar é contexto espacial genérico sem Conde, Bahia ou testemunha; horários não são do fenômeno"
+    },
+    {
+      "pdf_page": 8,
+      "printed_page": 8,
+      "pdf_url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04201.pdf#page=8",
+      "status": "EXAMINADA",
+      "review_protocol": "PANORAMA_PLUS_FOUR_ENLARGED_QUADRANTS",
+      "topics": "energia elétrica, Café Brasil, concurso bancário, publicidade imobiliária, grade de TV",
+      "event_report_conde_ba": false,
+      "independent_event_hour": null,
+      "independent_witness": null,
+      "orbital_measurement_found": false,
+      "false_positive_guard": "o fólio 8 contém anúncios e notícias comerciais, não a seção policial esperada; horários 19h50 a 24h00 são programação de televisão, não hora de Conde"
+    }
+  ],
+  "other_accessible_candidates": [
+    {
+      "edition": "04202",
+      "url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04202.pdf",
+      "http_head": 200,
+      "calendar_date_not_verified": true,
+      "not_read": true
+    },
+    {
+      "edition": "04203",
+      "url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04203.pdf",
+      "http_head": 200,
+      "calendar_date_not_verified": true,
+      "not_read": true
+    },
+    {
+      "edition": "04204",
+      "url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04204.pdf",
+      "http_head": 200,
+      "calendar_date_not_verified": true,
+      "not_read": true
+    }
+  ],
+  "interpretation": {
+    "assigned_pdf_pages": [
+      1,
+      2,
+      4,
+      6,
+      8
+    ],
+    "pages_examined": 5,
+    "independent_event_hour": null,
+    "independent_witness": null,
+    "conde_ba_report_found": false,
+    "whole_edition_negative": false,
+    "unread_pdf_pages": 27,
+    "orbital_constraint_changed": false,
+    "fbis_clock": "UNRESOLVED",
+    "stop_after_this_lot": true
+  },
+  "limits": [
+    "Somente as cinco páginas indicadas; 27 páginas não examinadas. Negativo por página, não por edição.",
+    "A página PDF/impressa 8 contém publicidade e programação, não seção policial; a divergência foi preservada, sem substituir silenciosamente a página.",
+    "Polet I e motores espaciais na p.6 não comprovam relação com NORAD 528/637.",
+    "A correspondência 04202–04204 com 12–14/11 ainda depende de verificação da capa/catálogo; apenas HTTP HEAD foi consultado.",
+    "A Tarde e Jornal da Bahia dependem da #884 item 2; não houve contato com acervos."
+  ]
+}
