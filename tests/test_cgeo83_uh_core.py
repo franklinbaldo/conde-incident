@@ -1,5 +1,6 @@
 """CGEO-83: assigned folios must not become unsupported incident clocks."""
 import copy
+import hashlib
 import json
 import unittest
 from pathlib import Path
@@ -11,9 +12,16 @@ HASHES = {
     "00477": "0a5170a69e037166ef1fdf502797cef8fc74211b45183af0da775eedc7072fb0",
 }
 SCOPE = [("00474", 4, 3, False), ("00476", 4, 4, False), ("00477", 4, 4, True)]
+INTERPRETATION_SHA256 = "38e8de1518c370c5fd4f35f11fb6d7850a86a1420f3b017f2cc8b2152b3acac7"
+
+def interpretation_sha256(doc):
+    payload = json.dumps(doc, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 def validate(d):
     faults = []
+    if interpretation_sha256(d) != INTERPRETATION_SHA256:
+        faults.append("complete-interpretation-digest")
     if d.get("id") != "CGEO-83" or not d.get("method",{}).get("source_hash_rechecked"):
         faults.append("identity-or-custody")
     sources = d.get("sources", [])
@@ -48,6 +56,8 @@ class TestCGEO83(unittest.TestCase):
 
     def test_adversarial(self):
         mutations = {
+            "invent-news-in-note":lambda x:x["pages"][0].__setitem__("notes",x["pages"][0]["notes"]+" NASA confirmou Conde às 20h15"),
+            "invent-new-headline":lambda x:x["pages"][1]["headlines"].append("Queda em Conde confirmada pela NASA"),
             "invent-hour":lambda x:x["pages"][2].__setitem__("event_hour","20h15"),
             "invent-witness":lambda x:x["pages"][0].__setitem__("eyewitnesses",["unknown"]),
             "invent-incident":lambda x:x["pages"][1].__setitem__("incident_article",True),
