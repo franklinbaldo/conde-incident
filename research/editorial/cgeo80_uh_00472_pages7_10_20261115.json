@@ -1,0 +1,199 @@
+{
+  "type": "HistoricalPressPageReadAndFolioAudit",
+  "id": "CGEO-80",
+  "date_utc": "2026-11-15",
+  "priority": "https://github.com/franklinbaldo/conde-incident/issues/871",
+  "assignment": "https://github.com/franklinbaldo/caranguejo/issues/5",
+  "status": "PARTIAL_ISSUE_NO_EVENT_CLOCK",
+  "source": {
+    "collection": "Biblioteca Nacional, Última Hora, Nordeste/Recife (765147)",
+    "edition": "00472",
+    "cover_date": "1963-11-09",
+    "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00472.pdf",
+    "size_bytes": 5275519,
+    "pdf_pages": 10,
+    "sha256": "8564c0c8c26857e0feda54fc5da0f9d3ca0c34c8de02c44e3074aa79a101cece",
+    "custody": "EXACT_SHA_REPLAY_MATCHES_LONTRA_R67_CGEO77_CGEO78_CGEO79"
+  },
+  "method": {
+    "executor": "Ifro via Jatobá SSH control only, max_memory_mb=128 explicit",
+    "original_pdf_sha256_rechecked": true,
+    "original_pdf_embedded_in_repo": false,
+    "visual": "PDF pages 7–10 rendered at 1900–2000 px overview; pages 7–10 individually magnified at 3500–3900 px; detailed quadrants inspected; p. 9 remains illegible in portions of dense advertisements",
+    "pdf_text_layer_only_auxiliary": true,
+    "new_ocr": false,
+    "printed_folio_assumed_from_pdf_index": false,
+    "source_is_an_independent_new_witness": false
+  },
+  "page_reviews": [
+    {
+      "pdf_page": 7,
+      "printed_page": null,
+      "printed_folio": "NOT_CONFIRMED",
+      "status": "LIDO_INTEGRAL_SEM_MENCAO",
+      "sections": [
+        {
+          "name": "UH Nordeste",
+          "topic": "Estudantes do Ceará, bolsas de estudo, normalistas, brigadistas do Parque Aeronáutico da Paraíba, vereadores de Arcoverde",
+          "byline": null
+        },
+        {
+          "name": "Reação veste saia em Belo Horizonte",
+          "topic": "Manifesto da Liga Feminina contra campanha das mineiras, com anúncio de automóvel",
+          "byline": null
+        },
+        {
+          "name": "Fala o Povo na UH",
+          "topic": "Queixas sobre transporte urbano no Recife e prefeitura",
+          "byline": null
+        },
+        {
+          "name": "Stanislaw Ponte Preta",
+          "title": "O pajé da tribo e sua panacéia de maloca",
+          "topic": "Crônica satírica não relacionada a Conde; nota Discoteca Lalau",
+          "byline": "Stanislaw Ponte Preta"
+        }
+      ],
+      "event_hour": null,
+      "eyewitnesses": [],
+      "notes": "Páginas e colunas ampliadas; não é a crônica de 14/11 sobre Conde. Referência a aeronautas descreve inspeção administrativa em parque, não reentrada nem fenômeno."
+    },
+    {
+      "pdf_page": 8,
+      "printed_page": 8,
+      "printed_folio": "VISIBLE_AS_PAGINA_8_TOP_LEFT",
+      "status": "LIDO_INTEGRAL_SEM_MENCAO",
+      "sections": [
+        {
+          "name": "Luzes da Cidade",
+          "title": "Santa Cruz Movimenta Elegante Boate e Anuncia Show",
+          "byline": "Fausto Neto",
+          "topic": "Colunismo social e eventos"
+        },
+        {
+          "name": "Mundo Feminino",
+          "byline": "Gilda Muller",
+          "topic": "Beleza, moda e bordados"
+        },
+        {
+          "name": "Espetáculos",
+          "topic": "Teatro, crítica e cinema"
+        },
+        {
+          "name": "Roteiro de Cinema Teatro TV",
+          "topic": "Programação de cinema, TV e horários de sessões"
+        }
+      ],
+      "event_hour": null,
+      "eyewitnesses": [],
+      "notes": "Quatro quadrantes em 3600 px; horários sociais, sessões e canais de TV são programação, não hora do evento."
+    },
+    {
+      "pdf_page": 9,
+      "printed_page": 9,
+      "printed_folio": "VISIBLE_AS_PAGINA_9_TOP_RIGHT",
+      "status": "ILEGIVEL_PARCIAL",
+      "sections": [
+        {
+          "name": "Anúncios Econômicos",
+          "topic": "Classificados de imóveis, terrenos, aluguéis e comércio",
+          "byline": null
+        }
+      ],
+      "event_hour": null,
+      "eyewitnesses": [],
+      "unreadable_area": "Porções de microtexto de anúncios em várias colunas com sobreimpressão/falha de registro; não certifica negativo integral",
+      "notes": "Quatro quadrantes em 3500 px. Ocorrências de Conde da Boa Vista são endereços no Recife, não município de Conde/BA. Nenhuma matéria pertinente legível; sem negativo de página inteira."
+    },
+    {
+      "pdf_page": 10,
+      "printed_page": null,
+      "printed_folio": "NOT_CONFIRMED",
+      "status": "LIDO_INTEGRAL_SEM_MENCAO",
+      "sections": [
+        {
+          "name": "Esportes",
+          "title": "Paulinho e Sílvio Trocaram Murros Dentro do Gramado",
+          "topic": "Náutico, preparação de times e incidentes em jogo",
+          "byline": null
+        },
+        {
+          "name": "Crescem os Problemas de Janos Tatrai",
+          "topic": "Santa Cruz e jogadores lesionados",
+          "byline": null
+        },
+        {
+          "name": "João Havelange Abandona a CBD",
+          "topic": "Administração do futebol",
+          "byline": null
+        },
+        {
+          "name": "Bola na Rede",
+          "topic": "Crítica à arbitragem",
+          "byline": "Paulo Barreto"
+        },
+        {
+          "name": "Dequinha Tranquilo Espera Hora Para Enfrentar Centro",
+          "topic": "Partida e arbitragem no futebol",
+          "byline": null
+        }
+      ],
+      "event_hour": null,
+      "eyewitnesses": [],
+      "notes": "Quatro quadrantes em 3600 px. Referência a 17h30 no texto Santos Chegou Sem Pelé é chegada de delegação ao aeroporto, não hora do evento."
+    }
+  ],
+  "temporal_false_positives": [
+    {
+      "pdf_page": 7,
+      "phrase": "2h",
+      "context": "intervalo de ônibus, queixa do público no Recife",
+      "kind": "URBAN_TRANSIT_HOUR_NOT_EVENT",
+      "phenomenon_hour": false
+    },
+    {
+      "pdf_page": 8,
+      "phrase": "22 horas",
+      "context": "horário de festa e eventos sociais",
+      "kind": "SOCIAL_EVENT_HOUR_NOT_EVENT",
+      "phenomenon_hour": false
+    },
+    {
+      "pdf_page": 10,
+      "phrase": "17.30 horas",
+      "context": "chegada do Santos ao Aeroporto Santos Dumont no Rio",
+      "kind": "FOOTBALL_TRAVEL_HOUR_NOT_EVENT",
+      "phenomenon_hour": false
+    }
+  ],
+  "geographic_false_positives": [
+    {
+      "pdf_page": 9,
+      "phrase": "Conde da Boa Vista",
+      "context": "endereço imobiliário em Recife",
+      "kind": "RECIFE_STREET_NOT_CONDE_BAHIA",
+      "incident_location": false
+    }
+  ],
+  "genealogy": {
+    "new_independent_eyewitness": false,
+    "new_independent_hour": null,
+    "source_independence": "NO_NEW_INCIDENT_SOURCE_IDENTIFIED",
+    "orbit_candidate": null
+  },
+  "coverage": {
+    "package_total_pdf_pages": 68,
+    "previously_certified_integral": 7,
+    "newly_certified_integral": 3,
+    "integral_after_this_round": 10,
+    "not_yet_integral": 58,
+    "partially_read_in_this_round": 1,
+    "complete_issues": 0
+  },
+  "limitations": [
+    "P. 9 contém microtexto de classificados parcialmente ilegível e não recebe negativo integral.",
+    "P. 7 e 10 sem fólio impresso autenticado; não inferir pelo número PDF.",
+    "Referências a horas de ônibus, recepção social, chegada de clube e horário de TV não datam o incidente.",
+    "Uma edição de Recife não é nova testemunha; nenhum horário independente, observador do evento ou identificação orbital."
+  ]
+}
