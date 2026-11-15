@@ -152,16 +152,19 @@ export function conditionalTrackedMassEnvelope(input: {
   if (L !== null) nonnegative(L, 'prior loss cap');
   if (input.minRetainedPayloadIn527Kg != null)
     nonnegative(input.minRetainedPayloadIn527Kg, 'OPS retained lower bound');
-  const upper = E === null ? null : BASE_MASS[input.basis] + E;
-  const lower = (E === null || X === null || L === null) ? 0 :
-    Math.max(0, BASE_MASS[input.basis] - E - X - L);
   const retained = input.minRetainedPayloadIn527Kg ?? null;
+  const upper = E === null ? null : BASE_MASS[input.basis] + E;
+  const budgetLower = (E === null || X === null || L === null) ? 0 :
+    Math.max(0, BASE_MASS[input.basis] - E - X - L);
+  // The retained payload is part of 527, hence also of the tracked total.
+  // Missing catalog-error bounds cannot erase this separately declared floor.
+  const lower = Math.max(budgetLower, retained ?? 0);
   if (retained !== null && retained > GCAT_MASS_FIELDS.payloadOPS0180MassKg)
     throw new RangeError('Retained payload lower bound exceeds nominal OPS mass');
   const remainingUpper = (retained !== null && upper !== null) ?
     Math.max(0, upper - retained) : null;
   return {
-    trackedTotalInfimumKg: upper === null ? null : lower,
+    trackedTotalInfimumKg: upper === null && retained === null ? null : lower,
     trackedTotalSupremumKg: upper,
     individualMassUpperExclusiveKg: upper,
     othersPlusXAndLossUpperKgIfPayloadRetained: remainingUpper,
