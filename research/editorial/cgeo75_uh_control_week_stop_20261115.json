@@ -1,0 +1,475 @@
+{
+  "type": "NarrativeNullControlWeekStopCensus",
+  "id": "CGEO-75",
+  "date_utc": "2026-11-15",
+  "issue": "https://github.com/franklinbaldo/conde-incident/issues/887",
+  "priority": "docs/PRIORITIES.md; Elephant #887 comment 6892050319; PR #1050 integrated",
+  "prereg_path": "research/editorial/cgeo64_null_narrative_prereg_20261114.json",
+  "prereg_git_blob_sha": "0d13d9359080699e5f8402ca9b7014d7f1f6d59a",
+  "prior_cumulative_manifest": "research/editorial/cgeo74_uh_target_week_census_20261115.json",
+  "prior_canonical_sha256": "9e2299f592d13c5dbd5fcbdb62161f95684c72cbf50a6c7f78f4810785a0e8a3",
+  "method": "All four whole original PDF files acquired on authorized Ifro executor and SHA-256 checked against CGEO-65. All 40 pages rendered via pdftoppm -jpeg -scale-to 1650 and visually reviewed page-wide; pdftotext -layout only lexical aid. Original scans remain on Ifro, not Git. Microprint/red scanning artifacts limit reliable reading: no confirmed compound is NOT proof of universal absence.",
+  "source_pdfs": [
+    {
+      "issue_id": "00440",
+      "date": "1963-10-07",
+      "pdf_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00440.pdf",
+      "sha256": "9d62fd8ef1b02b482eecebe43a85b5c40c47c74a075698b59c5e014faf335178",
+      "pdf_pages": 10,
+      "visual_pages_new": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "issue_id": "00441",
+      "date": "1963-10-08",
+      "pdf_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00441.pdf",
+      "sha256": "d848b848d290bc1a76bf027366d6f547f82cad7a01f505aaa5a63bcbbc2eeb2e",
+      "pdf_pages": 10,
+      "visual_pages_new": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "issue_id": "00443",
+      "date": "1963-10-10",
+      "pdf_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00443.pdf",
+      "sha256": "8d3a2248f2f056c25c6d95b74bd2ac1fef74082657ffbb82aeaca0ec4fc70c93",
+      "pdf_pages": 10,
+      "visual_pages_new": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    {
+      "issue_id": "00444",
+      "date": "1963-10-11",
+      "pdf_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00444.pdf",
+      "sha256": "6b3cb55cb4d8c104b6c7d27b8bf3910858cb91df37043c3777c313a2da42fc25",
+      "pdf_pages": 10,
+      "visual_pages_new": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    }
+  ],
+  "new_visually_reviewed_pages": [
+    {
+      "issue_id": "00440",
+      "pdf_page": 1,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "State-of-siege political headline, football and Hurricane Flora; no Conde article.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00440",
+      "pdf_page": 2,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Cabinet politics, health-cancer conference and trade unions; no Conde article.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00440",
+      "pdf_page": 3,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Brazilian politics and Hurricane Flora casualty report; no spacecraft story.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00440",
+      "pdf_page": 4,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Social page, film listings, women's column and crosswords; ordinary contexts.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00440",
+      "pdf_page": 5,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Recife football coverage; esfera is the football, not metallic spacecraft.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00440",
+      "pdf_page": 6,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Football photo spread and motor racing results; no spacecraft report.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00440",
+      "pdf_page": 7,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Profumo scandal serial and clothes in social/political narrative, not heavy clothing of a body.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00440",
+      "pdf_page": 8,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Classified real estate and accommodation, ordinary contexts for rooms and structures.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00440",
+      "pdf_page": 9,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Property listings and advertising; any windows refer to buildings, not a craft.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00440",
+      "pdf_page": 10,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Police crime and cancer clinic fire; victims and bodies unrelated to Conde.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00441",
+      "pdf_page": 1,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Withdrawal of state-of-siege request and union politics; no Conde article.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00441",
+      "pdf_page": 2,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Politics, education, immigrants and labour, no physical impact.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00441",
+      "pdf_page": 3,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Brazilian state politics and official notices, not a spacecraft.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00441",
+      "pdf_page": 4,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Social, women's and cinema pages; glass/metal are ordinary non-event terms.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00441",
+      "pdf_page": 5,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Jango and Congress debate, international stories and Moon travel article; no metallic sphere impact.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00441",
+      "pdf_page": 6,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Police story about buried deceased child and other unrelated crimes, no Conde event.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00441",
+      "pdf_page": 7,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "US racial unemployment report and Stanislaw commentary; 4 metres reference in a building setback, not crater.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00441",
+      "pdf_page": 8,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Classified real estate listings; windows belong to properties, not spacecraft.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00441",
+      "pdf_page": 9,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "More classified listings; no physical-event report.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00441",
+      "pdf_page": 10,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Football league suspension, player photos and match articles, no Conde event.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00443",
+      "pdf_page": 1,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "SUDENE investments, hurricane aftermath and domestic crime; no craft.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00443",
+      "pdf_page": 2,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "SUDENE and public policy, no independent alleged event testimony.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00443",
+      "pdf_page": 3,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Political reporting, SUDENE, economic plan and notices.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00443",
+      "pdf_page": 4,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Social clubs, women's and film columns; regular vocabulary, not spacecraft.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00443",
+      "pdf_page": 5,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Political intrigue, Moscow treaty and international political reporting.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00443",
+      "pdf_page": 6,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Police domestic-violence reporting and criminal news; no spaceship or Conde witness.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00443",
+      "pdf_page": 7,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Paulo Francis political article and Stanislaw state-of-siege satire.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00443",
+      "pdf_page": 8,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Classified real estate properties and advertisements.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00443",
+      "pdf_page": 9,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Classified apartments, goods and local businesses.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00443",
+      "pdf_page": 10,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Regional football competition and tactics; four defenders are not four-metre crater.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00444",
+      "pdf_page": 1,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Front page: Vajont Italy disaster, Pernambuco IBAD inquiry, crime, and ill woman; no Conde incident.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00444",
+      "pdf_page": 2,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Union politics and film industry strike; no spacecraft report.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00444",
+      "pdf_page": 3,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Government and military activity, education and economics; no impact.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00444",
+      "pdf_page": 4,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Society celebrations, children and cinema, unrelated to alleged craft.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00444",
+      "pdf_page": 5,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Politics and the Italian reservoir catastrophe, a different historical disaster.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00444",
+      "pdf_page": 6,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Police crime, sick woman and homicide, no independent Conde witness.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00444",
+      "pdf_page": 7,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Paulo Francis politics and Stanislaw satire, no relevant compound narrative.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00444",
+      "pdf_page": 8,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Classified real estate and commercial advertisements.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00444",
+      "pdf_page": 9,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Property classifieds, bus timetables and union notices.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    },
+    {
+      "issue_id": "00444",
+      "pdf_page": 10,
+      "review": "FULL_PAGE_VISUAL_RENDER_1650PX_WITH_EMBEDDED_TEXT_LEADS",
+      "context": "Regional football, player transfers and tactics, no aerospace incident.",
+      "confirmed_fbis_compound_motifs": 0,
+      "independent_conde_witness": false
+    }
+  ],
+  "genealogy": {
+    "contemporary_vehicle": "Última Hora Nordeste/Recife, ONE newspaper lineage over two sampled weeks; multiple articles/dates do not create independent witnesses.",
+    "false_matches": [
+      "00440 p5: esfera refers to football; 00440 p7 clothing in separate Profumo scandal story.",
+      "00441 p7: 4 metros refers to a building setback; no crater.",
+      "00443 p10: 4-2-4 refers to football tactics, not a 4-metre hole.",
+      "00444 p1,p5: thousands killed in Vajont Italy reservoir disaster, not a body in Conde.",
+      "00444 p6: domestic crime/illness stories unrelated to alleged Conde witness.",
+      "00471 (already adjudicated): four-metre hole of stolen statues and Stanislaw window in DISTINCT articles on Nov 8, no verified pre-FBIS chronology."
+    ],
+    "pre_8_nov_composite_fbis_motif_found": false,
+    "independent_conde_witness_identified": false,
+    "proof_of_editorial_borrowing": false,
+    "claim_of_fabrication": false
+  },
+  "coverage": {
+    "new_distinct_pages": 40,
+    "prior_distinct_pages": 64,
+    "cumulative_distinct_pages": 104,
+    "by_week_distinct_pages": {
+      "TARGET_NOV04": 48,
+      "CONTROL_OCT07": 48,
+      "CONTROL_OCT14": 4,
+      "CONTROL_OCT21": 4
+    },
+    "completed_target_issues": [
+      "00467",
+      "00468",
+      "00469",
+      "00470",
+      "00471"
+    ],
+    "completed_control_oct07_issues": [
+      "00440",
+      "00441",
+      "00442",
+      "00443",
+      "00444"
+    ],
+    "target_week_pdf_pages": 48,
+    "target_week_pages_visually_read": 48,
+    "control_oct07_week_pdf_pages": 48,
+    "control_oct07_pages_visually_read": 48,
+    "confirmed_compound_motif_articles_new": 0,
+    "confirmed_pre_8_nov_motif_origin": null,
+    "same_day_nov08_f03_lexical_article": 1,
+    "journal_do_brasil_status": "HTTP_403_NOT_ACQUIRED_NOT_READ",
+    "baseline_rate_representative": null,
+    "preregistered_eight_fragments_unchanged": true,
+    "preregistered_fifty_slots_unchanged": true,
+    "hypotheses_H0_H3_verdict": "UNDETERMINED",
+    "stopping_rule_met": true,
+    "stop_after_this_census": true
+  },
+  "interpretation": "The prespecified stopping rule (complete 4–8 November target and 7–11 October control) is met for Última Hora Nordeste/Recife. There is no visually confirmed pre-Nov-8 FBIS compound motif in these pages. This limited null finding does not falsify or validate H0–H3 and cannot decide editorial borrowing, hoax, physical event, clock or orbit.",
+  "limits": [
+    "Only one independent newspaper lineage; Jornal do Brasil 25 planned slots remain blocked HTTP 403.",
+    "14–18 and 21–25 October and December control/sensitivity slots remain NOT_READ, never zero.",
+    "Microtext at page-wide 1650px is partly illegible; a negative is no confirmed compound motif, NOT proof of every word absent.",
+    "One entire fascicle has 8 pages and others have 10; avoid 10*10 invented denominator.",
+    "Same-day 8 November police article has no production timestamp and cannot establish prior origin.",
+    "No authenticated event hour, location geometry, witness, or NORAD constraint; no spurious update to any."
+  ]
+}
