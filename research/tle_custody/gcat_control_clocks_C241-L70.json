@@ -1,0 +1,59 @@
+{
+  "schema": "conde.gcat-control-clocks/v1",
+  "case_id": "C241-L70",
+  "snapshot_ledger": "research/tle_custody/gcat_time_axes_527_529_C241-P29.json",
+  "snapshot_captured_utc": "2026-11-14",
+  "snapshot_gcat_version": "GCAT 1.8.9, Data Update 2026 Nov 13",
+  "sources": {
+    "payload": "https://planet4589.org/space/gcat/tsv/cat/psatcat.tsv",
+    "object": "https://planet4589.org/space/gcat/tsv/derived/currentcat.tsv",
+    "field_definitions": "https://planet4589.org/space/gcat/web/cat/pcols.html"
+  },
+  "objects": {
+    "637": {
+      "piece": "1963-035A",
+      "operational_day": "1963 Sep 1",
+      "catalog_decay_day": "1963 Nov 7",
+      "parent": "A00384",
+      "payload": {
+        "line": "S00637    \t1963-035A\t-\t1963 Aug 29 \t1963 Sep  1\t1963 Sep  1\t1963 Sep  1\t-\tCORONA ARGON\t-\t-\t-\tD\tIMG\tS\t-\t-\tUS\tA/AC.105/INF.049\t   90.8 \t     295\t     326\t 81.9 \t-\t       0\t       0\t  0.00 \t-",
+        "sha256": "5eb456ac107dfd3b673a035e5479727754baaa210b96e7dc734ce5db281bfa34"
+      },
+      "object": {
+        "line": "S00637    \t-\t00637\t1963-035A\tP\tP A         \tOPS 1561\t1963 Aug 29\tA00384\tNROC/NGA\tUS\t1963 Aug 29 2038\tReentered attached to A00384 Agena D 1169\t1963 Nov  7\t-\t-\t-\t-\t-\t-\t-\t-\t-",
+        "sha256": "1c138e7d3a70a27afef6d0c0d57d79d6b6b6df086f657d386901cce03eedf8e3"
+      },
+      "terminal_epoch_utc": null,
+      "sensor_id": null,
+      "terminal_uncertainty_seconds": null,
+      "impact_location": null,
+      "physical_activation": false
+    },
+    "668": {
+      "piece": "1963-037A",
+      "operational_day": "1963 Oct 4",
+      "catalog_decay_day": "1963 Oct 12",
+      "parent": "A00391",
+      "payload": {
+        "line": "S00668    \t1963-037A\t-\t1963 Sep 23 \t1963 Oct  4\t1963 Oct  4\t1963 Oct  4\t-\tCORONA J\t-\t-\t-\tD\tIMG\tS\t-\t-\tUS\tA/AC.105/INF.052\t   90.6 \t     162\t     442\t 74.9 \t-\t       0\t       0\t  0.00 \t-",
+        "sha256": "85af10402a8f434d5fae8253e8f414cd5b27e4a2822da37fe804c0e080c430b1"
+      },
+      "object": {
+        "line": "S00668    \t-\t00668\t1963-037A\tP\tP A         \tOPS 1353\t1963 Sep 23\tA00391\tNROC/CIA\tUS\t1963 Sep 23 2306\tReentered attached to A00391 Agena D 1163\t1963 Oct 12\t-\t-\t-\t-\t-\t-\t-\t-\t-",
+        "sha256": "d2c7691544ad05f77960139d046d4bb1307f8684453c17b07b88731e54383a9f"
+      },
+      "terminal_epoch_utc": null,
+      "sensor_id": null,
+      "terminal_uncertainty_seconds": null,
+      "impact_location": null,
+      "physical_activation": false
+    }
+  },
+  "interpretation": {
+    "operational_dates_are_not_decay_dates": true,
+    "common_catalog_snapshot_not_independent_measurements": true,
+    "terminal_hour_recovered": false,
+    "extra_norad_528_constraints": 0,
+    "physical_domain_effect": "THETA_UNCHANGED"
+  }
+}
