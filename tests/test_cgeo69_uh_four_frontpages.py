@@ -98,6 +98,31 @@ class CGEO69Test(unittest.TestCase):
     def test_no_assertion_or_optimize_bypass(self):
         self.fails(lambda d: d.update(prereg_blob_sha="0" * 40))
 
+    def test_narrative_cannot_append_false_hour(self):
+        self.fails(lambda d: d["limitations"].append(
+            "Testemunha independente viu o 528 cair em Conde às 19h30."))
+
+    def test_narrative_method_cannot_add_witness(self):
+        self.fails(lambda d: d.update(method=d["method"] +
+            " Há testemunha ocular independente às 19h30."))
+
+    def test_sampling_caveat_cannot_claim_population_rate(self):
+        self.fails(lambda d: d.update(selection_caveat=d["selection_caveat"] +
+            " A taxa das edições inteiras é zero."))
+
+    def test_no_unknown_scientific_fields(self):
+        self.fails(lambda d: d.update(confirmed_event_hour="19h30"))
+        self.fails(lambda d: d["pages"][0].update(physical_impact_verified=True))
+        self.fails(lambda d: d["pages"][1]["ambiguous_lexical_leads"][0].update(
+            independent_witness=True))
+        self.fails(lambda d: d["coverage"].update(whole_newspaper_negative=True))
+
+    def test_prereg_meaning_cannot_change_under_same_sha(self):
+        frozen_changed = copy.deepcopy(self.prereg)
+        frozen_changed["frozen_fbis_fragments"][0]["label"] = "queda observada às 19h30"
+        with self.assertRaises(ValueError):
+            v.validate(self.doc, self.inv, self.covers, frozen_changed)
+
     def test_sampling_claim_is_mandatory(self):
         self.fails(lambda d: d.update(selection_caveat="Sample proves baseline absence"))
 
