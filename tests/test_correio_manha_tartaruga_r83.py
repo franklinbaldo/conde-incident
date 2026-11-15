@@ -1,5 +1,7 @@
 """C241-R83: guard press-reading scope and reject invented Conde event times."""
 import copy
+import hashlib
+import importlib.util
 import json
 import unittest
 from pathlib import Path
@@ -8,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 FILE = ROOT / "research/archive/conde_correio_manha_1963_11_12_C241_TARTARUGA_R83.json"
 PREVIOUS = ROOT / "research/archive/conde_correio_manha_1963_11_12_C241_TARTARUGA_R82.json"
 SHA = "a744f75a91462d2246ecf905353143ffe72a9c326ab0462a1241a4db3a2bc606"
+INTERPRETATION_SHA256 = "d07aaad328112f2916477d608251606c3fce063f32e65442bafd5cff427c159f"
 
 EXPECTED_SUBJECTS = [
     "Varig PP-VJA forced landing at Santo Domingo after a false aircraft bomb report; tenant legislation; missing pet snake; labor union news; advertisements.",
@@ -51,10 +54,28 @@ def no_duplicates(pairs):
 def read(path=FILE):
     return json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=no_duplicates)
 
+def validate_predecessor(predecessor):
+    """Reuse the full R82 guard (which also validates R81), not just counts."""
+    guard_path = ROOT / "tests/test_correio_manha_tartaruga_r82.py"
+    spec = importlib.util.spec_from_file_location("conde_r82_guard", guard_path)
+    if spec is None or spec.loader is None:
+        raise ValueError("R82 guard unavailable")
+    guard = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(guard)
+    guard.validate(predecessor)
+
+
 def validate(doc, predecessor):
     def must(ok, reason):
         if not ok:
             raise ValueError(reason)
+
+    canonical = json.dumps(
+        doc, ensure_ascii=False, sort_keys=True, separators=(",", ":"),
+        allow_nan=False,
+    ).encode("utf-8")
+    must(hashlib.sha256(canonical).hexdigest() == INTERPRETATION_SHA256,
+         "unreviewed R83 interpretation mutation")
 
     must(set(doc) == {"schema", "id", "checked_utc_date", "research_issue", "predecessor_manifest",
                      "source", "method", "readings", "scope", "conclusion"}, "unexpected root")
@@ -73,6 +94,7 @@ def validate(doc, predecessor):
          and s["first_caderno_pdf_end"] == 15 and s["second_caderno_pdf_start"] == 16, "caderno boundary")
     must(s["collection"] == "Hemeroteca Digital BN, Correio da Manhã, coleção 089842", "collection")
     must(predecessor["id"] == "C241-TARTARUGA-R82", "predecessor ID")
+    validate_predecessor(predecessor)
     must(predecessor["source"]["original_sha256"] == s["original_sha256"], "source continuity")
     must(predecessor["scope"]["cumulatively_examined_pages"] == list(range(1, 8)), "predecessor read")
     must(predecessor["scope"]["remaining_unread_first_caderno_pages"] == list(range(8, 16)), "predecessor gap")
@@ -168,6 +190,29 @@ class TestC241R83(unittest.TestCase):
 
     def test_extra_field(self):
         self.reject(lambda d: d.__setitem__("certainty", 1))
+
+    def test_unreviewed_method_prose_rejected(self):
+        self.reject(lambda d: d["method"].__setitem__(
+            "visual_exam", d["method"]["visual_exam"] +
+            " NASA confirmed an object at Conde at 20h15."))
+
+    def test_ancestor_r82_prose_rejected(self):
+        predecessor = copy.deepcopy(self.pre)
+        predecessor["readings"][0]["subjects"] = (
+            "NASA confirmed an object at Conde at 20h15"
+        )
+        with self.assertRaises(ValueError):
+            validate(self.doc, predecessor)
+
+    def test_real_disk_mutation_rejected(self):
+        import tempfile
+        altered = copy.deepcopy(self.doc)
+        altered["method"]["visual_exam"] += " NASA confirmed Conde at 20h15."
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "altered.json"
+            path.write_text(json.dumps(altered, ensure_ascii=False), encoding="utf-8")
+            with self.assertRaises(ValueError):
+                validate(read(path), self.pre)
 
     def test_duplicate_keys(self):
         import tempfile
