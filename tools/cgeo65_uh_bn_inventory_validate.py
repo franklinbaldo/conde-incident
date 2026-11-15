@@ -4,6 +4,29 @@ ROOT=pathlib.Path(__file__).resolve().parents[1]
 FILE=ROOT/"research/editorial/cgeo65_uh_bn_inventory_20261115.json"
 BLOB="0d13d9359080699e5f8402ca9b7014d7f1f6d59a"
 URL="https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_"
+# Exact reviewed-page claims are pinned independently of the inventory JSON.
+EXPECTED_VISUAL = [{'id': '00452',
+  'page': 1,
+  'date': '1963-10-19',
+  'scope': 'OUT_OF_SAMPLE',
+  'note': 'Cosmos 20 headline outside frozen control windows'},
+ {'id': '00470',
+  'page': 1,
+  'date': '1963-11-07',
+  'scope': 'TARGET_NOV04',
+  'note': 'cover only'},
+ {'id': '00471',
+  'page': 1,
+  'date': '1963-11-08',
+  'scope': 'TARGET_NOV04',
+  'note': 'cover only'},
+ {'id': '00471',
+  'page': 8,
+  'date': '1963-11-08',
+  'scope': 'TARGET_NOV04',
+  'note': 'statues in Rio Doce article; four metres OCR lead; same publication date; ordering '
+          'versus FBIS unknown'}]
+
 def validate(d,source_dir=None,blob=BLOB):
  if d["type"]!="HistoricalPressSourceInventory" or d["id"]!="CGEO-65" or d["status"]!="INVENTORY_ONLY_NOT_RATE":raise ValueError("contract")
  if blob!=BLOB or d["prereg_git_blob_sha"]!=BLOB:raise ValueError("frozen registration changed")
@@ -25,8 +48,7 @@ def validate(d,source_dir=None,blob=BLOB):
   else:raise ValueError("unknown download status")
  if (acquired,miss,pages)!=(26,2,288):raise ValueError("custody totals changed")
  v=d["visually_reviewed_pdf_pages"]
- if {(p["id"],p["page"]) for p in v}!={("00452",1),("00470",1),("00471",1),("00471",8)}:raise ValueError("visual review")
- if v[0]["scope"]!="OUT_OF_SAMPLE":raise ValueError("selection bias")
+ if v!=EXPECTED_VISUAL:raise ValueError("visually reviewed page assertion drift")
  c=d["coverage"]
  if (c["predeclared_date_vehicle_slots"],c["archive_issues_attempted"],c["original_pdfs_acquired"],c["http404_files"],c["pages_in_acquired_pdfs"],c["pages_fully_inspected_for_rates"])!=(50,28,26,2,288,0):raise ValueError("denominator inflation")
  if c["articles_confirmed_by_protocol"] is not None or c["control_baseline_rates"] is not None:raise ValueError("OCR counted")
