@@ -24,6 +24,15 @@ def load(name):
 def git_blob_sha(b):
     return hashlib.sha1(b"blob " + str(len(b)).encode() + bytes([0]) + b).hexdigest()
 
+# Pin the entire approved interpretation, including free text and unknown keys.
+# Any new scientific claim must undergo explicit documentary review.
+FROZEN_RECORD_SHA256 = "6450eb53c224c74434392f2eed6600ca306cc0127afb45e59b511cbbf2dd22c9"
+
+def record_sha256(d):
+    payload = json.dumps(d, sort_keys=True, ensure_ascii=False,
+                         separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
 def validate(d):
     errors = []
     def check(condition, error):
@@ -91,6 +100,8 @@ def validate(d):
           c["general_verdict"]=="UNDETERMINED", "unsupported scientific conclusion")
     check(d["lineage_and_limits"]["independent_newspaper_issues_in_this_fatia"]==0,
           "independence inflation")
+    check(record_sha256(d) == FROZEN_RECORD_SHA256,
+          "approved CGEO-72 interpretation changed")
     return errors
 
 class CGEO72(unittest.TestCase):
@@ -135,6 +146,31 @@ class CGEO72(unittest.TestCase):
     def test_completed_issue_count_rejected(self):
         d=copy.deepcopy(self.d); d["coverage"]["whole_issues_reviewed_count"]=4
         self.assertIn("unsupported issue completion",validate(d))
+
+    def test_false_hour_in_page_note_rejected(self):
+        d=copy.deepcopy(self.d)
+        d["pages"][0]["note"] += "; witness identified Conde fall at 20:15"
+        self.assertIn("approved CGEO-72 interpretation changed",validate(d))
+
+    def test_false_nasa_confirmation_in_method_rejected(self):
+        d=copy.deepcopy(self.d)
+        d["method"] += "; NASA confirmed NORAD 528 in Conde"
+        self.assertIn("approved CGEO-72 interpretation changed",validate(d))
+
+    def test_page_week_substitution_rejected(self):
+        d=copy.deepcopy(self.d)
+        d["pages"][0]["week"] = "TARGET_NOV04"
+        self.assertIn("approved CGEO-72 interpretation changed",validate(d))
+
+    def test_false_global_baseline_in_selection_bias_rejected(self):
+        d=copy.deepcopy(self.d)
+        d["selection_bias"] += "; global composite rate proven zero"
+        self.assertIn("approved CGEO-72 interpretation changed",validate(d))
+
+    def test_unknown_top_level_hour_rejected(self):
+        d=copy.deepcopy(self.d)
+        d["local_event_hour"] = "20:15"
+        self.assertIn("approved CGEO-72 interpretation changed",validate(d))
 
 if __name__=="__main__":
     unittest.main()
