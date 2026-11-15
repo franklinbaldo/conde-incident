@@ -1,0 +1,272 @@
+{
+  "schema": "conde.newspaper_page_review/v1",
+  "id": "C241-LONTRA-R71",
+  "refs_issue": 871,
+  "review_date_utc": "2026-11-15",
+  "scope": "PANORAMA_MANCHETES_LAYOUT",
+  "institution": "Fundação Biblioteca Nacional",
+  "collection_id": "765147",
+  "newspaper": "Última Hora, edição Nordeste (PE)",
+  "method": {
+    "executor": "Ifro",
+    "jatoba": "apenas orquestração, max_memory_mb=128",
+    "downloaded_and_hashed_on_ifro": true,
+    "visual_review": "18 páginas internas renderizadas a 100 dpi, montagens de três páginas, manchetes e diagramação",
+    "pdf_text_extraction": "não usado para inferências negativas (erros de encoding PDFXC30)",
+    "ocr_performed": false,
+    "full_body_reading": false
+  },
+  "editions": [
+    {
+      "edition": "00474",
+      "date_printed": "1963-11-11",
+      "pdf_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00474.pdf",
+      "pdf_sha256": "3d7b9268c1cf45c7700ddf65bfa985c9d17724369d9b0412f9442f4fea87faad",
+      "pdf_bytes": 4884439,
+      "pdf_pages": 10,
+      "original_custody_manifest": "research/archive/ultima_hora_ne_nov1963_C241_LONTRA_R67.json",
+      "integrity_rechecked_on_ifro": true,
+      "pages": [
+        {
+          "pdf_page": 1,
+          "status": "EXAMINADA",
+          "review_scope": "CAPA_VERIFICADA_R67",
+          "topic_overview": "capa verificada em R67",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false,
+          "full_page_body_read": false
+        },
+        {
+          "pdf_page": 2,
+          "status": "EXAMINADA",
+          "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+          "topic_overview": "politica, Olinda e notícias locais",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false,
+          "full_page_body_read": false
+        },
+        {
+          "pdf_page": 3,
+          "status": "EXAMINADA",
+          "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+          "topic_overview": "disputa partidária, governo e trabalho",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false,
+          "full_page_body_read": false
+        },
+        {
+          "pdf_page": 4,
+          "status": "EXAMINADA",
+          "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+          "topic_overview": "sociedade, homenagens, cultura e cinema",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false,
+          "full_page_body_read": false
+        },
+        {
+          "pdf_page": 5,
+          "status": "EXAMINADA",
+          "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+          "topic_overview": "anúncios classificados",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false,
+          "full_page_body_read": false
+        },
+        {
+          "pdf_page": 6,
+          "status": "EXAMINADA",
+          "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+          "topic_overview": "investigação policial e homicídio em Recife",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false,
+          "full_page_body_read": false
+        },
+        {
+          "pdf_page": 7,
+          "status": "EXAMINADA",
+          "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+          "topic_overview": "futebol e resultados da Paraíba",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false,
+          "full_page_body_read": false
+        },
+        {
+          "pdf_page": 8,
+          "status": "EXAMINADA",
+          "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+          "topic_overview": "automobilismo e notícias esportivas",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false,
+          "full_page_body_read": false
+        },
+        {
+          "pdf_page": 9,
+          "status": "EXAMINADA",
+          "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+          "topic_overview": "jogos e comentários de futebol",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false,
+          "full_page_body_read": false
+        },
+        {
+          "pdf_page": 10,
+          "status": "EXAMINADA",
+          "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+          "topic_overview": "futebol e fotografia esportiva",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false,
+          "full_page_body_read": false
+        }
+      ]
+    },
+    {
+      "edition": "00475",
+      "date_printed": "1963-11-12",
+      "pdf_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00475.pdf",
+      "pdf_sha256": "88859dfbab5e9590614b684121507c7eb54148028a66d1efb9a3269d6444611f",
+      "pdf_bytes": 5031193,
+      "pdf_pages": 10,
+      "original_custody_manifest": "research/archive/ultima_hora_ne_nov1963_C241_LONTRA_R67.json",
+      "integrity_rechecked_on_ifro": true,
+      "pages": [
+        {
+          "pdf_page": 1,
+          "status": "EXAMINADA",
+          "review_scope": "CAPA_VERIFICADA_R67",
+          "topic_overview": "capa verificada em R67",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false,
+          "full_page_body_read": false
+        },
+        {
+          "pdf_page": 2,
+          "status": "EXAMINADA",
+          "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+          "topic_overview": "reformas, política e funcionalismo",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false,
+          "full_page_body_read": false
+        },
+        {
+          "pdf_page": 3,
+          "status": "EXAMINADA",
+          "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+          "topic_overview": "Assembleia, vencimentos e governo",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false,
+          "full_page_body_read": false
+        },
+        {
+          "pdf_page": 4,
+          "status": "EXAMINADA",
+          "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+          "topic_overview": "JK, coligação partidária e política nacional",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false,
+          "full_page_body_read": false
+        },
+        {
+          "pdf_page": 5,
+          "status": "EXAMINADA",
+          "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+          "topic_overview": "notícia sobre Polet I e corrida espacial; política externa",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false,
+          "full_page_body_read": false
+        },
+        {
+          "pdf_page": 6,
+          "status": "EXAMINADA",
+          "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+          "topic_overview": "investigação policial e crime dos Aflitos",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false,
+          "full_page_body_read": false
+        },
+        {
+          "pdf_page": 7,
+          "status": "EXAMINADA",
+          "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+          "topic_overview": "geólogos, petróleo, economia e crônica de Stanislaw Ponte Preta",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false,
+          "full_page_body_read": false
+        },
+        {
+          "pdf_page": 8,
+          "status": "EXAMINADA",
+          "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+          "topic_overview": "classificados e serviços",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false,
+          "full_page_body_read": false
+        },
+        {
+          "pdf_page": 9,
+          "status": "EXAMINADA",
+          "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+          "topic_overview": "sociedade, programação de TV, cinema e passatempos",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false,
+          "full_page_body_read": false
+        },
+        {
+          "pdf_page": 10,
+          "status": "EXAMINADA",
+          "review_scope": "PANORAMA_MANCHETES_LAYOUT",
+          "topic_overview": "futebol e entrevista esportiva",
+          "event_time_literal": null,
+          "conde_ba_article_verified": false,
+          "independent_witness_verified": false,
+          "full_page_body_read": false
+        }
+      ]
+    }
+  ],
+  "contextual_article": {
+    "edition": "00475",
+    "pdf_page": 5,
+    "headline": "URSS no Páreo para Conquista da Lua: 'Polet I' Rasga Caminho Aos 'Vostoks'",
+    "classification": "notícia espacial geral, sem vínculo documental confirmado com Conde ou medição dos NORAD 527/528/529/637",
+    "orbital_observation": false,
+    "local_event_time": false
+  },
+  "result": {
+    "new_internal_pages_visually_reviewed": 18,
+    "total_pages_with_cover_or_panorama_across_four_editions": 48,
+    "pages_remaining_for_panorama_of_all_four_editions": 0,
+    "confirmed_independent_event_time": null,
+    "independent_eyewitness": null,
+    "source_chain": "UNDETERMINED",
+    "whole_edition_no_article_claim": false,
+    "whole_edition_no_time_claim": false,
+    "full_columns_review_completed": false,
+    "physical_orbital_constraint_added": false
+  },
+  "limitations": [
+    "As 18 internas de 11–12/11 foram vistas em panoramas; nenhuma coluna foi declarada integralmente lida.",
+    "Não se identificou nas manchetes examinadas hora local ou testemunha independente, sem concluir ausência em qualquer edição completa.",
+    "A nota sobre Polet I não mede o NORAD 528 e não é confirmação de queda em Conde.",
+    "Páginas internas das quatro edições têm capa/panorama conferidos; leitura ampliada das colunas permanece pendente.",
+    "Acesso remoto aos jornais baianos A Tarde/Jornal da Bahia continua dependente da fila humana #884 item 2."
+  ]
+}
