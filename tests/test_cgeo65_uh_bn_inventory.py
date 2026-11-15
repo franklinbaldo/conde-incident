@@ -48,7 +48,7 @@ class TestCGEO66CoverCrosswalk(unittest.TestCase):
   d=copy.deepcopy(self.data);fn(d)
   with self.assertRaises((ValueError,KeyError)):cover_v.validate(d,self.inventory,self.prereg)
  def test_undated_404_is_not_a_verified_issue(self):
-  self.bad(lambda d:d["slots"][32].update(issue_id="00454"))
+  self.bad(lambda d:d["slots"][30].update(issue_id="00454"))
  def test_no_forged_control_zero(self):
   self.bad(lambda d:d["coverage"].update(fragment_rates={"F03":0}))
  def test_no_page_denominator(self):
