@@ -1,0 +1,174 @@
+{
+  "type": "HistoricalPressVisualPageCensusWithBoundedArticleAdjudication",
+  "id": "CGEO-77",
+  "date_utc": "2026-11-15",
+  "issue": "https://github.com/franklinbaldo/conde-incident/issues/871",
+  "assignment": "https://github.com/franklinbaldo/caranguejo/issues/5",
+  "source": {
+    "publication": "Última Hora, Nordeste/Recife",
+    "issue_id": "00477",
+    "cover_date": "1963-11-14",
+    "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00477.pdf",
+    "pdf_sha256": "0a5170a69e037166ef1fdf502797cef8fc74211b45183af0da775eedc7072fb0",
+    "pdf_size_bytes": 5209201,
+    "pdf_pages": 10,
+    "inherited_custody": "research/editorial/cgeo76_uh_nov13_14_custody_20261115.json"
+  },
+  "method": {
+    "executor": "Ifro; Jatobá used solely as SSH controller with explicit max_memory_mb",
+    "render_command": "pdftoppm -f 1 -l 10 -r 82 -jpeg -jpegopt quality=57 00477.pdf 00477",
+    "inspection": "All ten images viewed; page7 satirical Conde item additionally re-read from 180 dpi two-column crop; embedded pdftotext used only as fallible search aid.",
+    "limitations": [
+      "Panorama reading is not full article-by-article reading at microprint resolution.",
+      "No whole-page, whole-issue, or no-mention negative is certified.",
+      "OCR lexical absence cannot certify absence of a relevant story.",
+      "Rhetorical claims and publication dates do not establish local phenomenon time."
+    ],
+    "renders_committed": false,
+    "pdf_committed": false
+  },
+  "page_screenings": [
+    {
+      "pdf_page": 1,
+      "visual_locator": "Reclassificação hoje com Arraes; greve de servidores de São Paulo",
+      "render_sha256": "162462bb08e23689d8e490ddb905969957c33da6c3458fb1e8c0ba9be29bdc33",
+      "render_resolution_dpi": 82,
+      "render_status": "PANORAMA_IMAGE_REVIEWED",
+      "entire_page_article_read": false,
+      "conde_event_article_fully_read": false,
+      "conde_event_hour_verified": false,
+      "independent_eyewitness_verified": null,
+      "event_hour_literal": null
+    },
+    {
+      "pdf_page": 2,
+      "visual_locator": "Bairros aprovaram plano de Jader: cooperativismo vai vencer custo de vida",
+      "render_sha256": "66fe8b6771d0cafc4f8af4f35d0ba3974e5b7a37a31de3bfbfa920ac50428599",
+      "render_resolution_dpi": 82,
+      "render_status": "PANORAMA_IMAGE_REVIEWED",
+      "entire_page_article_read": false,
+      "conde_event_article_fully_read": false,
+      "conde_event_hour_verified": false,
+      "independent_eyewitness_verified": null,
+      "event_hour_literal": null
+    },
+    {
+      "pdf_page": 3,
+      "visual_locator": "Reclassificação: toda revista será entregue hoje a Arraes",
+      "render_sha256": "24f3b5c2425a68a5db494f3d4fc435b2ea645f21996f2426cc7cec6c2dc11fe3",
+      "render_resolution_dpi": 82,
+      "render_status": "PANORAMA_IMAGE_REVIEWED",
+      "entire_page_article_read": false,
+      "conde_event_article_fully_read": false,
+      "conde_event_hour_verified": false,
+      "independent_eyewitness_verified": null,
+      "event_hour_literal": null
+    },
+    {
+      "pdf_page": 4,
+      "visual_locator": "Opinião pública: contra a encampação das refinarias de petróleo",
+      "render_sha256": "e9387ee040c4dcf900e163998f6e3df0f8b842eb0a6f9ae94eb7e32dbc0022ac",
+      "render_resolution_dpi": 82,
+      "render_status": "PANORAMA_IMAGE_REVIEWED",
+      "entire_page_article_read": false,
+      "conde_event_article_fully_read": false,
+      "conde_event_hour_verified": false,
+      "independent_eyewitness_verified": null,
+      "event_hour_literal": null
+    },
+    {
+      "pdf_page": 5,
+      "visual_locator": "Jair reabre diálogo entre Congresso e Forças Armadas",
+      "render_sha256": "401b375c407df87336267eed63f6de5c743953f06f9ef93db47208e3ea8f22db",
+      "render_resolution_dpi": 82,
+      "render_status": "PANORAMA_IMAGE_REVIEWED",
+      "entire_page_article_read": false,
+      "conde_event_article_fully_read": false,
+      "conde_event_hour_verified": false,
+      "independent_eyewitness_verified": null,
+      "event_hour_literal": null
+    },
+    {
+      "pdf_page": 6,
+      "visual_locator": "Açougueiro destrói álibi na pista das manchas de sangue",
+      "render_sha256": "f9bebfab910493ead295c631eed7b0e18d691717e31609d67a29d56c00e449e8",
+      "render_resolution_dpi": 82,
+      "render_status": "PANORAMA_IMAGE_REVIEWED",
+      "entire_page_article_read": false,
+      "conde_event_article_fully_read": false,
+      "conde_event_hour_verified": false,
+      "independent_eyewitness_verified": null,
+      "event_hour_literal": null
+    },
+    {
+      "pdf_page": 7,
+      "visual_locator": "Arraes consolida posição junto ao funcionalismo; A Guerra Dos Mundos na Versão Baiana",
+      "render_sha256": "052e8f4f08dba1e5697e750052f2110a5e46ca4eb83defdd9608cc3c2e93717b",
+      "render_resolution_dpi": 82,
+      "render_status": "PANORAMA_IMAGE_REVIEWED",
+      "entire_page_article_read": false,
+      "conde_event_article_fully_read": true,
+      "conde_event_hour_verified": false,
+      "independent_eyewitness_verified": false,
+      "event_hour_literal": null
+    },
+    {
+      "pdf_page": 8,
+      "visual_locator": "Anúncios econômicos e roteiro do Recife",
+      "render_sha256": "72c76fa199d6155ed7d005385ac7972890cd00670ed6cdecc5d618c8dbb7c7e1",
+      "render_resolution_dpi": 82,
+      "render_status": "PANORAMA_IMAGE_REVIEWED",
+      "entire_page_article_read": false,
+      "conde_event_article_fully_read": false,
+      "conde_event_hour_verified": false,
+      "independent_eyewitness_verified": null,
+      "event_hour_literal": null
+    },
+    {
+      "pdf_page": 9,
+      "visual_locator": "Walfrido Moura pode substituir Lamartine no América: eleições",
+      "render_sha256": "3aa1227461a2b3d3904dd59d1d80fb9998a68c49b4bf0f0a6d58002eeb3c74bc",
+      "render_resolution_dpi": 82,
+      "render_status": "PANORAMA_IMAGE_REVIEWED",
+      "entire_page_article_read": false,
+      "conde_event_article_fully_read": false,
+      "conde_event_hour_verified": false,
+      "independent_eyewitness_verified": null,
+      "event_hour_literal": null
+    },
+    {
+      "pdf_page": 10,
+      "visual_locator": "Não podemos perder hoje: Santos x Milan",
+      "render_sha256": "566ae88f3bfe629f3ac1dc1d2789ef1fbb38918eade6b47019c56fed1ef8e676",
+      "render_resolution_dpi": 82,
+      "render_status": "PANORAMA_IMAGE_REVIEWED",
+      "entire_page_article_read": false,
+      "conde_event_article_fully_read": false,
+      "conde_event_hour_verified": false,
+      "independent_eyewitness_verified": null,
+      "event_hour_literal": null
+    }
+  ],
+  "article_adjudication": {
+    "pdf_page": 7,
+    "headline": "A Guerra Dos Mundos na Versão Baiana",
+    "credit": "Stanislaw Ponte Preta",
+    "genre": "SATIRICAL_EDITORIAL_COMMENTARY",
+    "short_literal": "Isto aí é um balão de sondagem atmosférica",
+    "lineage": "Comments on news initially reported as coming to Salvador, but does not identify its documentary origin, reporter, or firsthand observer.",
+    "independent_observation": false,
+    "independent_local_event_time": null,
+    "new_witness": false,
+    "same_article_as_cgeo76": true
+  },
+  "coverage": {
+    "distinct_pages_with_panorama_screening": 10,
+    "pages_fully_read_article_by_article_this_round": 0,
+    "full_issues_certified_this_round": 0,
+    "relevant_articles_revisited": 1,
+    "new_independent_event_times": 0,
+    "remaining_pages_in_this_issue_requiring_full_article_review": 10,
+    "priority_one_route_A_complete": false
+  },
+  "scientific_conclusion": "No new independent phenomenon time was identified in the targeted evidence. This is not a negative for the whole issue; close reading of all articles remains pending."
+}
