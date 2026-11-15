@@ -1,0 +1,144 @@
+{
+  "type": "HistoricalPressPageReadAndClockDisambiguation",
+  "id": "CGEO-83",
+  "date_utc": "2026-11-15",
+  "issue": "https://github.com/franklinbaldo/conde-incident/issues/871",
+  "delegation": "https://github.com/franklinbaldo/caranguejo/issues/5",
+  "priority_snapshot": "2026-11-15 ~19h UTC, Conde R26",
+  "claim": "Three specifically assigned PDF-page-4 folios examined; no independent phenomenon hour found in these pages. Two assigned pages are entertainment/society, not the news core.",
+  "sources": [
+    {
+      "edition": "00474",
+      "date": "1963-11-11",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00474.pdf",
+      "sha256": "3d7b9268c1cf45c7700ddf65bfa985c9d17724369d9b0412f9442f4fea87faad",
+      "size_bytes": 4884439
+    },
+    {
+      "edition": "00476",
+      "date": "1963-11-13",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00476.pdf",
+      "sha256": "89af71800faf3d447cf7fd3a2ee473ba010516beb8dc45dd200d220ad65c8047",
+      "size_bytes": 5369187
+    },
+    {
+      "edition": "00477",
+      "date": "1963-11-14",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00477.pdf",
+      "sha256": "0a5170a69e037166ef1fdf502797cef8fc74211b45183af0da775eedc7072fb0",
+      "size_bytes": 5209201
+    }
+  ],
+  "method": {
+    "executor": "Ifro via Jatobá SSH control-plane; max_memory_mb=128 explicitly set on every control call",
+    "source_hash_rechecked": true,
+    "render": "Individual scanned page rendered at 2300px, 00477 p4 also inspected in four overlapping higher-resolution quadrants",
+    "ocr_used": false,
+    "source_PDF_page_numbers_not_printed_folios": true,
+    "negative_scope": "these three PDF pages only, not complete editions"
+  },
+  "pages": [
+    {
+      "edition": "00474",
+      "pdf_page": 4,
+      "printed_folio": 3,
+      "section": "SOCIEDADE_CINEMA",
+      "reading_status": "EXAMINADA",
+      "within_news_core": false,
+      "headlines": [
+        "Barreto ganhou benemerência do Atlântico e foi homenageado com um banquete",
+        "Sociedade",
+        "Mundo Feminino",
+        "Cinema"
+      ],
+      "original_page_stamp": "ILEGÍVEL visible at bottom edge",
+      "event_hour": null,
+      "eyewitnesses": [],
+      "incident_article": false,
+      "notes": "Facsimile contains a printed ILÉGIVEL warning at bottom edge; small-print legibility remains a limitation. This PDF page is not the politics news core despite earlier generic p4 ordering."
+    },
+    {
+      "edition": "00476",
+      "pdf_page": 4,
+      "printed_folio": 4,
+      "section": "SOCIEDADE_CINEMA",
+      "reading_status": "EXAMINADA",
+      "within_news_core": false,
+      "headlines": [
+        "MUNDO LOUCO DE KRAMER: FESTA GRANDE DE HOLLYWOOD",
+        "Sociedade",
+        "Mundo Feminino",
+        "Cinema",
+        "Espectáculos"
+      ],
+      "event_hour": null,
+      "eyewitnesses": [],
+      "incident_article": false,
+      "notes": "Hollywood feature, social column, entertainment listings; no evidenced relevance to Conde. Assigned p4 is not the political page."
+    },
+    {
+      "edition": "00477",
+      "pdf_page": 4,
+      "printed_folio": 4,
+      "section": "OPINIAO_POLITICA_NACIONAL",
+      "reading_status": "EXAMINADA",
+      "within_news_core": true,
+      "headlines": [
+        "OPINIÃO PÚBLICA",
+        "Contra a encampação das refinarias de petróleo",
+        "Encampação e Realidade",
+        "Capuava e os Sindicatos",
+        "A Sovietização do Petróleo"
+      ],
+      "event_hour": null,
+      "eyewitnesses": [],
+      "incident_article": false,
+      "notes": "Political editorials and syndicate positions on Capuava/Petrobras; text examined in four high-resolution quadrants. No narrative of object falling in Conde or local event-hour. Several date/number references concern the refinery dispute."
+    }
+  ],
+  "genealogy": {
+    "new_conde_report": false,
+    "new_independent_testimony": false,
+    "independent_phenomenon_hour": null,
+    "orbital_candidate": null,
+    "orbital_exclusion_licensed": false
+  },
+  "coverage_note": {
+    "already_certified_in_cgeo82": [
+      [
+        "00476",
+        1
+      ],
+      [
+        "00476",
+        5
+      ],
+      [
+        "00476",
+        6
+      ],
+      [
+        "00477",
+        1
+      ],
+      [
+        "00477",
+        5
+      ],
+      [
+        "00477",
+        6
+      ]
+    ],
+    "new_pdf_pages_scoped": 3,
+    "additional_core_pages_examined": 1,
+    "outside_core_pages_examined": 2,
+    "do_not_inflate_baseline": "42/209 snapshot predates CGEO-82; current cumulative count must be recomputed from merged unique edition/pdf_page records. Do not promote to edition-level negative."
+  },
+  "limitations": [
+    "Not evidence that the alleged incident did not happen.",
+    "The society pages were explicitly assigned but are outside the revised R26 core and do not require further reading once section classification is known.",
+    "The p.4 of 00474 is printed folio 3, showing that PDF index and printed page are not interchangeable.",
+    "No claim that all text in other pages or editions was examined."
+  ]
+}
