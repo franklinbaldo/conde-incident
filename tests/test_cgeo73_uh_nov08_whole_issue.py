@@ -9,6 +9,7 @@ import hashlib
 import json
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 ED = ROOT / "research/editorial"
@@ -16,6 +17,14 @@ PATH = ED / "cgeo73_uh_nov08_whole_issue_20261115.json"
 PINNED_RECORD_SHA256 = "083094b506567ec6dd52c471ab80acfd484eaa843377b1c1a96b8fa144216c04"
 PREREG_BLOB = "0d13d9359080699e5f8402ca9b7014d7f1f6d59a"
 SOURCE_SHA = "e121d6ea9784bcb77a02e1a6e3c453f23987103940f5993190237c45499a95ec"
+PINNED_UPSTREAM = {
+    "research/editorial/cgeo65_uh_bn_inventory_20261115.json": "181b9f9279a7caddd7549792f203cc8de811a351aad6a8865f300391c115b671",
+    "research/editorial/cgeo66_uh_cover_dates_20261115.json": "c7f6b17b4a79c4afd4d4db842209737e51d7d31e794890991def5b745388abab",
+    "research/editorial/cgeo69_uh_four_frontpages_20261115.json": "85c2906f8caf815299dacffa34926ea8e7c06791ff775a627ea37c4476af329c",
+    "research/editorial/cgeo70_uh_four_internal_pages_20261115.json": "7ef8147b87cc198e949622626e0ded8577a7eba2cf9a7fa47655970316139520",
+    "research/editorial/cgeo71_uh_four_page3_20261115.json": "179fe47ccfc9800203df01b61c02915af67d5a2576ebe3514491be4ff9f5fb14",
+    "research/editorial/cgeo72_uh_one_complete_issue_20261115.json": "6450eb53c224c74434392f2eed6600ca306cc0127afb45e59b511cbbf2dd22c9",
+}
 F03 = "F03_FOUR_METER_HOLE"
 PREVIOUS = {("00442", p) for p in range(1, 9)}
 PREVIOUS |= {("00447", p) for p in (1, 3, 4, 5)}
@@ -51,6 +60,12 @@ def validate(d):
     def check(ok, msg):
         if not ok:
             errors.append(msg)
+    upstream_paths = {d["source_inventory_path"], d["cover_crosswalk_path"],
+                      *d["prior_whole_page_audits"]}
+    check(upstream_paths == set(PINNED_UPSTREAM), "upstream lineage changed")
+    for path, expected_sha in PINNED_UPSTREAM.items():
+        check(canonical_sha(read(path)) == expected_sha,
+              "upstream approved interpretation changed: " + path)
     frozen = (ROOT / d["prereg_path"]).read_bytes()
     check(git_blob_sha(frozen) == d["prereg_git_blob_sha"] == PREREG_BLOB,
           "preregistered bytes changed")
@@ -201,6 +216,34 @@ class CGEO73WholeIssue(unittest.TestCase):
         d = copy.deepcopy(self.d); d["pages"][0]["editorial_context"] = "Conde vessel recovered"
         self.assertIn("document interpretation changed without review", validate(d))
 
+
+    def test_upstream_prior_note_source_only_mutation_rejected(self):
+        target = self.d["prior_whole_page_audits"][-1]
+        real_read = read
+
+        def mutated(path):
+            doc = real_read(path)
+            if path == target:
+                doc["pages"][0]["note"] += " Synthetic witness in Conde at 20:15."
+            return doc
+
+        with patch(f"{__name__}.read", side_effect=mutated):
+            self.assertIn("upstream approved interpretation changed: " + target,
+                          validate(self.d))
+
+    def test_upstream_inventory_source_only_mutation_rejected(self):
+        target = self.d["source_inventory_path"]
+        real_read = read
+
+        def mutated(path):
+            doc = real_read(path)
+            if path == target:
+                doc["synthetic_claim"] = "NASA confirms Conde fall at 20:15."
+            return doc
+
+        with patch(f"{__name__}.read", side_effect=mutated):
+            self.assertIn("upstream approved interpretation changed: " + target,
+                          validate(self.d))
 
 if __name__ == "__main__":
     unittest.main()
