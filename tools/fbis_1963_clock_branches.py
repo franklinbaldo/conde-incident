@@ -35,6 +35,12 @@ BAHIA_UTC_OFFSET_MINUTES = -180
 PLANE_CROSSING_BAHIA = "1963-11-08T20:44:00"
 THRESHOLD = 10
 MAX_ANCHOR_DIFF_MINUTES = 5
+# The complete station/clock line, not only the printed HHMM, defines a
+# transmission occurrence. Two scans of one wire never count as two anchors.
+FULL_WIRE_HEADER = re.compile(
+    r"RIO DE JANEIRO RADIO (?P<station>[A-Z0-9 .-]+) IN [A-Z]+ "
+    r"(?P<clock>\d{4} \d{1,2} NOV 63) W"
+)
 
 
 def demand(test: bool, why: str) -> None:
@@ -91,12 +97,14 @@ def anchors_from_manifest(data: dict) -> list:
     demand(isinstance(rows, list), "anchors must be a list")
     used = set()
     used_occurrences = set()
+    used_broadcasts = set()
     for row in rows:
         demand(isinstance(row, dict), "anchor must be an object")
         for name in ("item_id", "fbis_document_url", "fbis_sha256",
                      "fbis_page", "independent_source_url",
                      "independent_source_sha256", "independent_page",
-                     "header_local_text", "external_broadcast_utc",
+                     "fbis_heading_verbatim", "header_local_text",
+                     "external_broadcast_utc",
                      "independence_rationale"):
             demand(isinstance(row.get(name), str) and bool(row[name].strip()),
                    "missing anchor field " + name)
@@ -113,6 +121,15 @@ def anchors_from_manifest(data: dict) -> list:
         demand(occurrence not in used_occurrences,
                "duplicate FBIS occurrence under another item ID")
         used_occurrences.add(occurrence)
+        heading = FULL_WIRE_HEADER.fullmatch(row["fbis_heading_verbatim"])
+        demand(heading is not None,
+               "full original heading must identify a Rio radio station")
+        demand(heading.group("clock") == row["header_local_text"],
+               "FBIS date/time differs between full heading and clock field")
+        broadcast = (heading.group("station").strip(), heading.group("clock"))
+        demand(broadcast not in used_broadcasts,
+               "same broadcast reissued under a different FBIS facsimile")
+        used_broadcasts.add(broadcast)
         anchor_clock_pair(row)
         demand(row["independent_source_sha256"] != row["fbis_sha256"],
                "self-confirming FBIS source")
