@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-"""Bind a GitHub Pages build to its deployed manifest and selected served bytes.
+"""Bind a GitHub Pages build to its deployed manifest and bounded HTTPS probes.
 
-A signed GitHub attestation is NOT produced. This checks exact bytes, not who
-authored the evidence or the identity of every file served by the CDN.
+All runtime JS/CSS plus a reproducible, stratified cross-section of documentary
+pages/assets are checked (max 64 files). The remainder are INVENTORIED but not
+read via HTTPS. This is not a signed attestation or complete CDN audit.
 """
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 import hashlib
 import json
 from pathlib import Path, PurePosixPath
@@ -24,6 +26,8 @@ SAMPLES = (
     "css/site.css",
     "evidencias/arquivo/pos-matriz/index.html",
 )
+MAX_LIVE_FILES = 64
+RUNTIME_SUFFIXES = (".js", ".mjs", ".css")
 HEX = re.compile(r"^[0-9a-f]{64}$")
 COMMIT = re.compile(r"^[0-9a-f]{40}$")
 
@@ -122,12 +126,54 @@ def verify_local(root: Path, expected_sha: str, commit: str) -> int:
     return len(files)
 
 
-def verify_deployed(fetcher, expected_sha: str, commit: str,
-                    paths=SAMPLES) -> int:
+def live_paths(files: dict, manifest_sha: str) -> tuple[str, ...]:
+    """Select mandatory runtime code and a SHA-seeded mix of other file types.
+
+    This is a sampling policy, NOT verification of all CDN bytes. Sampling
+    stays deterministic for the exact build; runtime assets are never skipped.
+    Exceeding the budget fails closed so the policy must be consciously revised.
+    """
+    require(bool(HEX.fullmatch(manifest_sha)), "invalid sampling seed")
+    required = set(SAMPLES) | {
+        name for name in files if name.endswith(RUNTIME_SUFFIXES)
+    }
+    require(required.issubset(files), "missing mandatory Pages file")
+    require(len(required) <= MAX_LIVE_FILES,
+            "runtime assets exceed Pages HTTPS verification budget")
+    buckets = {"html": [], "json": [], "xml": [], "other": []}
+    for name in files:
+        if name in required:
+            continue
+        extension = name.rsplit(".", 1)[-1] if "." in name else ""
+        bucket = extension if extension in ("html", "json", "xml") else "other"
+        buckets[bucket].append(name)
+    for entries in buckets.values():
+        entries.sort(key=lambda name: (
+            digest((manifest_sha + ":" + name).encode("utf-8")), name))
+    selected = set(required)
+    target = min(MAX_LIVE_FILES, len(files))
+    while len(selected) < target:
+        progress = False
+        for entries in buckets.values():
+            if entries and len(selected) < target:
+                selected.add(entries.pop())
+                progress = True
+        if not progress:
+            break
+    require(len(selected) == target, "incomplete Pages verification selection")
+    return tuple(sorted(selected))
+
+
+def verify_deployed(fetcher, expected_sha: str, commit: str) -> int:
     files = parse_manifest(fetcher(MANIFEST), expected_sha, commit)
-    for path in paths:
-        require(path in files, "requested path absent from manifest: " + path)
+    paths = live_paths(files, expected_sha)
+
+    def verify_one(path: str) -> None:
         compare_bytes(fetcher(path), files[path], path)
+
+    # Restrict concurrency and request count for predictable public CDN load.
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        list(pool.map(verify_one, paths))
     return len(paths)
 
 
