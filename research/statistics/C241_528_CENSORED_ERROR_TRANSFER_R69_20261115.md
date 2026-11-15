@@ -28,6 +28,17 @@ São 12 combinações (2 métodos × 2 H × 3 estratos). R68 contém 64 linhas e
 
 ## Resultado interpretável e limites
 
+No replay do corpus pinado, os resultados foram os seguintes. Datas abaixo são **envelopes condicionais de cenário**, não previsões históricas validadas. O estrato sem 308 produziu os mesmos extremos do estrato com quatro objetos; portanto, a inclusão do alias não altera o envelope extremo neste corte, mas continua uma premissa não licenciada.
+
+| Método | H km | Quatro controles: cenário UTC [início, fim) | Só 637: cenário UTC [início, fim) | NASA 08/11 intercepta o só-637? |
+|---|---:|---|---|---|
+| Últimas 2 | 40 | 31/10 11:57 – 15/11 18:26 | 31/10 11:57 – 10/11 00:46 | Sim |
+| Últimas 2 | 50 | 30/10 02:06 – 15/11 16:08 | 30/10 02:06 – 10/11 06:09 | Sim |
+| Mediana 3 | 40 | 28/10 18:10 – 12/11 07:28 | 31/10 11:57 – 05/11 18:48 | **Não** |
+| Mediana 3 | 50 | 26/10 08:59 – 11/11 08:25 | 30/10 02:06 – 02/11 17:56 | **Não** |
+
+As duas falhas de sobreposição para 637 isolado, sob a mediana de três secantes, são uma **contraprova de robustez da transferência**, não uma rejeição instrumental do decaimento do 528. Mesmo quando as duas estimativas do 528 coincidem, os **erros derivados dos controles diferem pelo método**. A ausência de relógio terminal independente impede interpretar qualquer das faixas como limite físico.
+
 O pipeline produz **c241-528-day-transfer-r69.json**, junto dos intermediários R54/R68, na mesma execução de CI SHA-pinado. Cada linha inclui a previsão nominal, os extremos do erro censurado e o intervalo resultante sob a suposição não verificada de que os rótulos impressos são dias UTC. A sobreposição com o rótulo NASA do 528 é apenas um diagnóstico condicional, não validação independente. A largura e as datas variam com o estrato e com H: essa instabilidade é o resultado científico, não um intervalo novo para Conde.
 
 **Não identificáveis:** erro horário, distribuição de erro preditivo, época física terminal, escala temporal do rótulo, modelo de seleção/sensor, fase orbital, coeficiente balístico, massa, local de queda e vínculo espacial Conde. A transferência exigiria intercambialidade e documentação da observação terminal que não existem. calibrated_terminal_holdouts=0, terminal_time_sigma_hours=null, historical_mcmc=NOT_RUN, active_constraint_528=false, impact_geography=null.
