@@ -28,6 +28,9 @@ on:
       - tools/c241_decay_day_error_r68.py
       - tests/test_c241_decay_day_error_r68.py
       - research/statistics/C241_UNIFIED_DECAY_DAY_ERRORS_R68_20261115.md
+      - tools/c241_528_censored_transfer_r69.py
+      - tests/test_c241_528_censored_transfer_r69.py
+      - research/statistics/C241_528_CENSORED_ERROR_TRANSFER_R69_20261115.md
       - .github/workflows/c241-1963-terminal-control-screen.yml
   push:
     branches: [main]
@@ -58,6 +61,9 @@ on:
       - tools/c241_decay_day_error_r68.py
       - tests/test_c241_decay_day_error_r68.py
       - research/statistics/C241_UNIFIED_DECAY_DAY_ERRORS_R68_20261115.md
+      - tools/c241_528_censored_transfer_r69.py
+      - tests/test_c241_528_censored_transfer_r69.py
+      - research/statistics/C241_528_CENSORED_ERROR_TRANSFER_R69_20261115.md
       - .github/workflows/c241-1963-terminal-control-screen.yml
   workflow_dispatch:
 permissions:
@@ -106,6 +112,8 @@ jobs:
           python3 -m unittest discover -s tests -p test_c241_1963_archive_fixed_h_stress.py -v
           python3 -m unittest discover -s tests -p test_c241_decay_day_error_r68.py -v
           python3 -O -m unittest discover -s tests -p test_c241_decay_day_error_r68.py -v
+          python3 -m unittest discover -s tests -p test_c241_528_censored_transfer_r69.py -v
+          python3 -O -m unittest discover -s tests -p test_c241_528_censored_transfer_r69.py -v
           python3 -O -m unittest discover -s tests -p test_c241_1963_archive_fixed_h_stress.py -v
           python3 -m unittest discover -s tests -p test_c241_308_ssr_calendar_range_r61.py -v
           python3 -O -m unittest discover -s tests -p test_c241_308_ssr_calendar_range_r61.py -v
@@ -130,6 +138,22 @@ jobs:
             --r60 "$RUNNER_TEMP/c241-1963-fixed-h.json" \
             --json "$RUNNER_TEMP/c241-day-error-r68.json" \
             --tsv "$RUNNER_TEMP/c241-day-error-r68.tsv"
+          python3 tools/c241_528_censored_transfer_r69.py \
+            --r54 "$RUNNER_TEMP/c241-king-hele-r54.json" \
+            --r68 "$RUNNER_TEMP/c241-day-error-r68.json" \
+            --output "$RUNNER_TEMP/c241-528-day-transfer-r69.json"
+          python3 - "$RUNNER_TEMP/c241-528-day-transfer-r69.json" <<'PY_R69'
+          import json,sys
+          x=json.load(open(sys.argv[1],encoding='utf-8'))
+          assert x['schema']=='conde.c241-528-retrospective-day-error-transfer-r69/v1'
+          assert len(x['results'])==12
+          assert x['independent_control_sensors']==0
+          assert x['inference']['terminal_time_sigma_hours'] is None
+          assert x['inference']['historical_mcmc']=='NOT_RUN'
+          assert x['inference']['active_constraint_528'] is False
+          assert all(not r['historical_bound_or_coverage_claim'] for r in x['results'])
+          print('R69: twelve conditional 528 transfer hulls, zero calibrated holdouts')
+          PY_R69
           python3 - "$RUNNER_TEMP/c241-day-error-r68.json" <<'PY_R68'
           import json,sys
           x=json.load(open(sys.argv[1],encoding='utf-8'))
@@ -266,6 +290,7 @@ jobs:
             ${{ runner.temp }}/c241-king-hele-r54.json
             ${{ runner.temp }}/c241-day-error-r68.json
             ${{ runner.temp }}/c241-day-error-r68.tsv
+            ${{ runner.temp }}/c241-528-day-transfer-r69.json
             ${{ runner.temp }}/c241-ssr-308-range-r61.json
             ${{ runner.temp }}/c241-terminal-minimax-r62.json
           if-no-files-found: error
