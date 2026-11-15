@@ -28,7 +28,7 @@ class PagesProvenanceTests(unittest.TestCase):
     def remote(self):
         return {
             rel: (self.root / rel).read_bytes()
-            for rel in (*p.SAMPLES, p.MANIFEST)
+            for rel in (*p.inventory(self.root), p.MANIFEST)
         }
 
     def test_local_good_and_complete_inventory(self):
@@ -62,6 +62,60 @@ class PagesProvenanceTests(unittest.TestCase):
         remote["evidencias/arquivo/pos-matriz/index.html"] = b""
         with self.assertRaisesRegex(ValueError, "served file differs"):
             p.verify_deployed(remote.__getitem__, self.sha, COMMIT)
+
+    def test_mutated_runtime_javascript_not_in_four_original_samples_fails(self):
+        rel = "lab/assets/entry-g79.js"
+        file = self.root / rel
+        file.parent.mkdir(parents=True, exist_ok=True)
+        file.write_bytes(b"export const answer = 42;")
+        sha = p.create(self.root, COMMIT, RUN_ID)
+        remote = self.remote()
+        remote[rel] = b"export const answer = 43;"
+        with self.assertRaisesRegex(ValueError, "served file differs"):
+            p.verify_deployed(remote.__getitem__, sha, COMMIT)
+
+    def test_mutated_documentary_json_not_in_four_original_samples_fails(self):
+        rel = "data/documentary-g79.json"
+        file = self.root / rel
+        file.parent.mkdir(parents=True, exist_ok=True)
+        file.write_bytes(b'{"source":"verified"}')
+        sha = p.create(self.root, COMMIT, RUN_ID)
+        remote = self.remote()
+        remote[rel] = b'{"source":"falsified"}'
+        with self.assertRaisesRegex(ValueError, "served file differs"):
+            p.verify_deployed(remote.__getitem__, sha, COMMIT)
+
+    def test_stratified_live_probe_is_deterministic_and_bounded(self):
+        for extension in ("html", "json", "xml", "txt"):
+            for i in range(30):
+                rel = f"extra/{extension}/file-{i:02}.{extension}"
+                file = self.root / rel
+                file.parent.mkdir(parents=True, exist_ok=True)
+                file.write_bytes(rel.encode())
+        code = self.root / "lab/assets/essential.js"
+        code.parent.mkdir(parents=True, exist_ok=True)
+        code.write_bytes(b"essential JS")
+        sha = p.create(self.root, COMMIT, RUN_ID)
+        paths = p.live_paths(p.inventory(self.root), sha)
+        self.assertEqual(paths, p.live_paths(p.inventory(self.root), sha))
+        self.assertEqual(len(paths), p.MAX_LIVE_FILES)
+        self.assertTrue(set(p.SAMPLES).issubset(paths))
+        self.assertIn("lab/assets/essential.js", paths)
+        self.assertTrue(any(x.endswith(".html") and x not in p.SAMPLES for x in paths))
+        self.assertTrue(any(x.endswith(".json") for x in paths))
+        self.assertTrue(any(x.endswith(".xml") for x in paths))
+        self.assertTrue(any(x.endswith(".txt") for x in paths))
+        remote = self.remote()
+        self.assertEqual(p.verify_deployed(remote.__getitem__, sha, COMMIT), p.MAX_LIVE_FILES)
+
+    def test_excess_runtime_assets_fail_closed_instead_of_silent_skip(self):
+        for i in range(p.MAX_LIVE_FILES + 1):
+            file = self.root / "lab" / "assets" / f"large-{i:03}.js"
+            file.parent.mkdir(parents=True, exist_ok=True)
+            file.write_bytes(b"x")
+        sha = p.create(self.root, COMMIT, RUN_ID)
+        with self.assertRaisesRegex(ValueError, "runtime assets exceed"):
+            p.verify_deployed(self.remote().__getitem__, sha, COMMIT)
 
     def test_local_source_mutation_rejected(self):
         (self.root / "css/site.css").write_text("new css", encoding="utf-8")

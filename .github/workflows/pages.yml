@@ -183,7 +183,7 @@ jobs:
         env:
           EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
-      - name: Compare deployed Pages manifest and four served files with build bytes
+      - name: Compare deployed Pages manifest and up to 64 HTTPS files (all runtime assets)
         shell: bash
         env:
           EXPECTED_SHA: ${{ github.sha }}
