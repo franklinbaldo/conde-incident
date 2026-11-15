@@ -1,0 +1,127 @@
+{
+  "schema": "conde.local_clock_custody/v1",
+  "id": "C241-TARTARUGA-R71",
+  "issue": 871,
+  "checked_utc_date": "2026-11-15",
+  "nara": {
+    "naid": 302531012,
+    "microfilm": "T1206 reel 49",
+    "case_relation": "THREE_PAGES_ONE_ADMINISTRATIVE_CHAIN",
+    "objects": [
+      {
+        "object_id": "0809",
+        "source_url": "https://catalog.archives.gov/medialz/partners/dc-metro/rg-341/597821/T1206-ProjectBlueBook_0049/images/0809.jp2",
+        "source_bytes": 1756950,
+        "source_sha256": "4e8e460cfe8dfa0f0d6ea6b02017e6ff63915935dc5be5bde8e96f52faf6f326",
+        "reading": "COMPLETE_SINGLE_IMAGE",
+        "status": "LIDO_SEM_HORA",
+        "excerpt_scope": "date card 8 NOV 1963; Local field blank; GMT Unknown; Conde, Bahia, Brazil",
+        "telegram_clock": null,
+        "telegram_clock_role": null,
+        "event_clock": null,
+        "eyewitness_name": null,
+        "independent_witness": false
+      },
+      {
+        "object_id": "0810",
+        "source_url": "https://catalog.archives.gov/medialz/partners/dc-metro/rg-341/597821/T1206-ProjectBlueBook_0049/images/0810.jp2",
+        "source_bytes": 1865459,
+        "source_sha256": "136be026e23acdd5e7ff0a5307e04bef799249b48346072a43cae1506be37ce9",
+        "reading": "COMPLETE_SINGLE_IMAGE",
+        "status": "LIDO_SEM_HORA",
+        "excerpt_scope": "USAIRA mentions O GLOBO of 8 Nov and news from Salvador",
+        "telegram_clock": "141955Z",
+        "telegram_clock_role": "MESSAGE_NOT_EVENT",
+        "event_clock": null,
+        "eyewitness_name": null,
+        "independent_witness": false
+      },
+      {
+        "object_id": "0811",
+        "source_url": "https://catalog.archives.gov/medialz/partners/dc-metro/rg-341/597821/T1206-ProjectBlueBook_0049/images/0811.jp2",
+        "source_bytes": 1852266,
+        "source_sha256": "f9c55ab0b14d6e121a4419bef72519a68db29a9ceea6c5bca5ea31fb826cdce7",
+        "reading": "COMPLETE_SINGLE_IMAGE",
+        "status": "LIDO_SEM_HORA",
+        "excerpt_scope": "Consular response reports no sighting corroborated; reporters unnamed",
+        "telegram_clock": "211430Z",
+        "telegram_clock_role": "MESSAGE_NOT_EVENT",
+        "event_clock": null,
+        "eyewitness_name": null,
+        "independent_witness": false
+      }
+    ],
+    "local_event_clock": null,
+    "eyewitness_name": null
+  },
+  "newspapers": [
+    {
+      "title": "Diário de Notícias",
+      "city": "Salvador",
+      "date": "1963-11-08",
+      "status": "INACESSIVEL",
+      "scope": "ORIGINAL_EDITION_NOT_READ",
+      "original_page": null,
+      "original_sha256": null,
+      "reported_event_clock": null,
+      "editorial_network": "DIARIOS_ASSOCIADOS",
+      "article_independence": "UNDETERMINED"
+    },
+    {
+      "title": "Diário de Notícias",
+      "city": "Salvador",
+      "date": "1963-11-09",
+      "status": "INACESSIVEL",
+      "scope": "ORIGINAL_EDITION_NOT_READ",
+      "original_page": null,
+      "original_sha256": null,
+      "reported_event_clock": null,
+      "editorial_network": "DIARIOS_ASSOCIADOS",
+      "article_independence": "UNDETERMINED"
+    },
+    {
+      "title": "O Globo",
+      "city": "Rio de Janeiro",
+      "date": "1963-11-08",
+      "status": "INACESSIVEL",
+      "scope": "ORIGINAL_EDITION_NOT_READ",
+      "original_page": null,
+      "original_sha256": null,
+      "reported_event_clock": null,
+      "editorial_network": "UNKNOWN",
+      "article_independence": "UNDETERMINED"
+    }
+  ],
+  "evidence_links": [
+    {
+      "url": "https://acervo.bn.gov.br/sophia_web/acervo/detalhe/871386",
+      "scope": "FBN Salvador paper catalogue 1875–1981, Associated Diaries 1943–Oct 1980, identified online digitized years 1876–1909"
+    },
+    {
+      "url": "https://bndigital.bn.gov.br/artigos/diario-de-noticias-salvador-1875/",
+      "scope": "FBN historical account of acquisition by Diários Associados in 1943"
+    },
+    {
+      "url": "https://memoria.bn.gov.br/DocReader/DocReader.aspx?bib=098167",
+      "scope": "Known publicly linked digital run stops 1909, not proof no 1963 digitalization elsewhere"
+    },
+    {
+      "url": "https://github.com/franklinbaldo/conde-incident/issues/884",
+      "scope": "Owner-only routes for O Globo and Bahia archives"
+    }
+  ],
+  "notes": [
+    "NARA 0809 Local date-time blank and GMT explicitly Unknown",
+    "NARA telegram headers 141955Z and 211430Z are message time, never event time",
+    "Diário de Notícias Salvador was in Diários Associados in November 1963; article-level dependence remains unknown",
+    "No original newspaper edition was read or authenticated; do not label NOT_DIGITIZED globally",
+    "No documented local hour, independent eyewitness or orbital constraint"
+  ],
+  "limits": {
+    "hour_found": false,
+    "independent_observation": false,
+    "orbital_constraint": false,
+    "no_external_contact": true,
+    "original_nara_hashes_reproduced_on_ifro": true
+  }
+}
