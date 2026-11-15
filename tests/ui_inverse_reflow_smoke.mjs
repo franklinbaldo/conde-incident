@@ -16,6 +16,12 @@ try {
       const response = await page.goto(base.replace(/#.*$/, '') + '#/inverse', { waitUntil: 'domcontentloaded' });
       assert(response?.ok(), 'Inverse laboratory HTTP failed');
       await page.getByRole('heading', { name: /Teste Inverso/, level: 1 }).waitFor();
+      // At ordinary 100% text size the primary map action must be a 44px touch target.
+      // Checking only 200% would mask a small target because rem units double.
+      const mapAction = page.getByRole('button', { name: 'Ver cenário no mapa' });
+      const normalTarget = await mapAction.boundingBox();
+      assert(normalTarget && normalTarget.height >= 43.5,
+        `100% text, ${width}px: map action under 44px: ${JSON.stringify(normalTarget)}`);
       await page.addStyleTag({ content: 'html {font-size:200% !important}' });
       for (const lang of ['pt', 'en']) {
         if (lang === 'en') {
@@ -26,11 +32,24 @@ try {
           name: lang === 'pt' ? 'Filtrar dia do cenário' : 'Filter scenario day',
         });
         const all = filter.getByRole('button', { name: lang === 'pt' ? /Todas/ : /All/ });
+        const status = page.getByTestId('inverse-pass-count');
+        assert.equal(await status.getAttribute('role'), 'status', 'filter count must be a status');
+        assert.equal(await status.getAttribute('aria-live'), 'polite', 'filter changes should be announced');
+        assert.equal(await status.getAttribute('aria-atomic'), 'true', 'announce the full updated count');
         await all.click();
+        const allCount = (await status.textContent()) ?? '';
+        assert.match(allCount, lang === 'pt'
+          ? /Cenários Regionais Gerados \(\d+\)/
+          : /Generated Regional Scenarios \(\d+\)/);
         assert.equal(await all.getAttribute('aria-pressed'), 'true', 'all-days filter must activate');
         const day8 = filter.getByRole('button', { name: lang === 'pt' ? /08\/11/ : /08 Nov/ });
         await day8.click();
         assert.equal(await day8.getAttribute('aria-pressed'), 'true', 'catalog-day filter must activate');
+        const dayCount = (await status.textContent()) ?? '';
+        assert.match(dayCount, lang === 'pt'
+          ? /Cenários Regionais Gerados \(\d+\)/
+          : /Generated Regional Scenarios \(\d+\)/);
+        assert.notEqual(dayCount, allCount, 'date filtering must update the accessible count');
         // The scientific solver retains PT notes; the UI must translate them
         // without silently dropping unexpected legacy claims.
         const detailLabels = lang === 'pt'
