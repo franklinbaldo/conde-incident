@@ -137,7 +137,7 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
         {/* Pass List (Left 7 Cols) */}
         <div className="lg:col-span-7 bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden flex flex-col">
           <div className="p-4 border-b border-zinc-800 bg-zinc-950/60 flex flex-wrap items-center justify-between gap-2">
-            <div className="text-xs font-bold text-zinc-200 uppercase tracking-wider font-mono">
+            <div role="status" aria-live="polite" aria-atomic="true" data-testid="inverse-pass-count" className="text-xs font-bold text-zinc-200 uppercase tracking-wider font-mono">
               {isPt
                 ? `Cenários Regionais Gerados (${filteredPasses.length})`
                 : `Generated Regional Scenarios (${filteredPasses.length})`}
@@ -228,8 +228,9 @@ export const InversePassInspector: React.FC<InversePassInspectorProps> = ({
                   </h2>
                 </div>
                 <button
+                  type="button"
                   onClick={() => onSelectPassTime(selectedPass.epochMs)}
-                  className="px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-medium transition-colors flex items-center gap-1.5 cursor-pointer shadow"
+                  className="min-h-11 min-w-0 px-3 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-medium transition-colors flex items-center justify-center gap-1.5 cursor-pointer shadow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
                 >
                   <span>{isPt ? 'Ver cenário no mapa' : 'View scenario on map'}</span>
                   <ExternalLink className="w-3.5 h-3.5" />
