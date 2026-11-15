@@ -1,0 +1,133 @@
+{
+  "schema": "conde.local_clock_press_nucleus_increment/v1",
+  "id": "C241-TARTARUGA-R85",
+  "checked_utc_date": "2026-11-15",
+  "research_issue": 871,
+  "predecessor_manifest": "research/archive/conde_correio_manha_1963_11_13_C241_TARTARUGA_R84.json",
+  "source": {
+    "collection": "Hemeroteca Digital BN, Correio da Manhã, coleção 089842",
+    "edition": "21660",
+    "printed_date": "1963-11-13",
+    "original_url": "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21660.pdf",
+    "original_bytes": 20333897,
+    "original_sha256": "497cd71b643be03f908e26c2e99100fd24908fb026ca33c8e1667d49ee897bc0",
+    "pdf_pages": 26,
+    "first_caderno_pdf_start": 1,
+    "first_caderno_pdf_end": 12,
+    "second_caderno_pdf_start": 13
+  },
+  "method": {
+    "executor": "Ifro",
+    "control_plane": "Jatobá SSH only, max_memory_mb=128 explicit; all PDF rendering performed on Ifro",
+    "original_reused_from": "/var/tmp/lagarto-r75-20261115/21660.pdf",
+    "visual_exam": "Original SHA-256 and pdfinfo reconfirmed. Full-page panorama for each page; 3600-pixel-high render, read in four 2x2 overlapping quadrants per page. Text judged from facsimile, no OCR.",
+    "pages_full_visual_review": 4,
+    "number_overlapping_crops": 16,
+    "scan_is_not_entire_edition_negative": true
+  },
+  "readings": [
+    {
+      "pdf_page": 5,
+      "printed_folio": "4",
+      "status": "EXAMINADA",
+      "subjects": "International affairs: Soviet condition over Cuba, Britain, Cuba executions, Catholic council. The brief SATÉLITE (Moscou, UPI-CM) says the USSR announced a new uncrewed artificial Earth satellite on the previous day; no satellite ID, descent, impact, Bahia, or Conde event is supplied.",
+      "unrelated_clock_labels": [
+        "10h50m GMT = airport departure time for US military Big Lift (Frankfurt), not an observation above Conde"
+      ],
+      "disambiguation": "The SATÉLITE brief describes a Soviet launch announced around 12 Nov 1963; it cannot be equated with either an 8 Nov 1963 decay or the Conde report. NASA/NORAD identities absent.",
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "report_attribution": null,
+      "orbital_constraint_active": false
+    },
+    {
+      "pdf_page": 6,
+      "printed_folio": "5",
+      "status": "EXAMINADA",
+      "subjects": "Brasília/Senate, real-estate rent strike, coffee meeting, air workers pay, Boeing 727 orders, and article EM LAGOA CAPIXABA FOGO HÁ DEZ DIAS concerning a burning lagoon in São Mateus, Espírito Santo, near Linhares and BR-5.",
+      "unrelated_clock_labels": [
+        "há dez dias = reported duration of a lagoon surface fire in Espírito Santo, not the local hour of a sky incident in Bahia"
+      ],
+      "disambiguation": "Lagoon-fire report explicitly considers a 'meteorito' only as an unverified hypothesis among methane/natural gas or oil explanations; it concerns São Mateus/ES, not Conde/BA, and supplies neither a witnessed satellite descent nor a Conde event hour.",
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "report_attribution": null,
+      "orbital_constraint_active": false
+    },
+    {
+      "pdf_page": 7,
+      "printed_folio": "6",
+      "status": "EXAMINADA",
+      "subjects": "Editorial Uma política autêntica about commerce and development; Mundo Político, political reforms, editorial Explicação on strike law, and cultural essays Ponto de Português and O Eterno Presente.",
+      "unrelated_clock_labels": [],
+      "disambiguation": "The word Lua in the cultural essay is a literary comparison, not a scientific observation or news of a space object.",
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "report_attribution": null,
+      "orbital_constraint_active": false
+    },
+    {
+      "pdf_page": 8,
+      "printed_folio": "7",
+      "status": "EXAMINADA",
+      "subjects": "Indicador de hoje with weather, local train schedules, tide table, public-service notices; social assistance Oitenta senhoras ajudam favelados; strikes in Sandovalina; São Paulo public salaries; Mafia extradition and commercial automobile advertisement.",
+      "unrelated_clock_labels": [
+        "1h55m, 8h40m, 14h25m, 21h00m = predicted Rio tidal times, not hours of Conde episode",
+        "8h–18h = social-assistance clinic opening hours in a separate Rio story"
+      ],
+      "disambiguation": "Weather and tide schedule dates/times are municipal forecast and logistics, not a named witness or astronomical object in Conde.",
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "report_attribution": null,
+      "orbital_constraint_active": false
+    }
+  ],
+  "scope": {
+    "edition": "21660",
+    "previously_examined_pages": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "newly_examined_pages": [
+      5,
+      6,
+      7,
+      8
+    ],
+    "cumulatively_examined_first_caderno_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "remaining_unread_first_caderno_pages": [
+      9,
+      10,
+      11,
+      12
+    ],
+    "first_caderno_fully_examined": false,
+    "second_caderno_read": false,
+    "entire_edition_fully_examined": false,
+    "global_negative_asserted": false,
+    "article_level_independence": "No article on Conde identified in this four-page scope; unrelated articles are not event witnesses."
+  },
+  "conclusion": {
+    "classification": "FOUR_PAGE_LOCAL_NEGATIVE_21660_13NOV_PARTIAL_FIRST_CADERNO",
+    "conde_event_hour_literal": null,
+    "independent_eyewitness": null,
+    "report_independence_from_tupi_fbis_diarios_associados": "UNDETERMINED",
+    "excludes_norad_528_or_637": false,
+    "next_action": "Complete 21660 PDF pp. 9–12, then 21661 pp. 1–13. Do not infer edition-level absence; prioritize any literal Conde event time immediately on issue #871."
+  }
+}
