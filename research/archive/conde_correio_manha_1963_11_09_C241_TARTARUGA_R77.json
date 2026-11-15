@@ -1,0 +1,98 @@
+{
+  "schema": "conde.local_clock_visual_pages/v1",
+  "id": "C241-TARTARUGA-R77",
+  "issue": 871,
+  "checked_utc_date": "2026-11-15",
+  "source": {
+    "title": "Correio da Manhã",
+    "city": "Rio de Janeiro",
+    "collection_edition": "089842/21657",
+    "edition_date_visual": "1963-11-09",
+    "edition_number_visual": "21.657",
+    "url": "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21657.pdf",
+    "bytes": 22546215,
+    "sha256": "a5aa619730df13e2a630c7d16fcfde95f58180ec3a05063038177b03fd46f7d0",
+    "pdf_page_count": 28,
+    "pdf_original_reused_on_ifro": true
+  },
+  "reading": {
+    "method": "visual page-by-page reading in six overlapping crops at 180 dpi per page; OCR and PDF text are not negative evidence",
+    "status_by_pdf_page": [
+      {
+        "pdf_page": 1,
+        "printed_page": 1,
+        "section": "1.º Caderno",
+        "status": "EXAMINADA",
+        "reading_scope": "masthead, all news columns, image captions and callouts",
+        "subjects": "Vatican council; Rio-Light rationing; Dean Rusk on coups in Latin America; pensioners' allowance; oil workers; United Nations disarmament; Luiz Peixoto photo narrative",
+        "relevant_article": null,
+        "conde_event_time_literal": null,
+        "conde_eyewitness": null,
+        "orbital_constraint_activated": false
+      },
+      {
+        "pdf_page": 2,
+        "printed_page": 2,
+        "section": "1.º Caderno",
+        "status": "EXAMINADA",
+        "reading_scope": "all news, political commentary columns, advertisements and photo captions",
+        "subjects": "funeral of Carlos Magalhães de Azeredo; Guanabara legislative salaries; Light workers; Capuava refinery and Petrobras; customs/seizures; political commentary Lembrai-vos de 37",
+        "relevant_article": null,
+        "conde_event_time_literal": null,
+        "conde_eyewitness": null,
+        "orbital_constraint_activated": false
+      }
+    ],
+    "new_pages_fully_examined": [
+      1,
+      2
+    ],
+    "previous_pages_fully_examined": [
+      5,
+      21
+    ],
+    "cumulative_pages_fully_examined": [
+      1,
+      2,
+      5,
+      21
+    ],
+    "cumulative_pages_not_fully_examined": [
+      3,
+      4,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28
+    ],
+    "edition_fully_examined": false,
+    "global_negative_asserted": false,
+    "correio_10_nov_full_edition_examined": false
+  },
+  "conclusion": {
+    "classification": "NO_NEW_CONDE_EVENT_HOUR_IN_TWO_ADDITIONAL_FULLY_READ_PAGES",
+    "conde_event_time_literal": null,
+    "conde_eyewitness": null,
+    "source_of_report_independent_from_tupi_fbis": "UNDETERMINED",
+    "orbital_constraint_activated": false,
+    "further_action": "Read remaining 24 pages of 9 November, then 97 pages of 10 November; do not extend to 11-14 November without Elefante authorization."
+  }
+}
