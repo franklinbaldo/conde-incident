@@ -1,0 +1,363 @@
+{
+  "type": "HistoricalPressSourceInventory",
+  "id": "CGEO-65",
+  "date_utc": "2026-11-15",
+  "issue": "https://github.com/franklinbaldo/conde-incident/issues/887",
+  "prereg_path": "research/editorial/cgeo64_null_narrative_prereg_20261114.json",
+  "prereg_git_blob_sha": "0d13d9359080699e5f8402ca9b7014d7f1f6d59a",
+  "source": "Fundação Biblioteca Nacional, Última Hora (PE), coleção 765147, 1963",
+  "method": "curl -fLsS (4 workers, retry 1); source bytes SHA256; pdfinfo pages; pdftotext -layout only for UNVERIFIED lexical leads; original PDFs retained on Ifro, NOT in Git",
+  "sampling_guard": "Issue numbers are not proven date matches until cover inspection; 404 is NOT zero; partial OCR is NOT full page reading; preregistered 50 slots unchanged",
+  "issues": [
+    {
+      "id": "00439",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00439.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 9325032,
+      "sha256": "6a38de57ce31acf633275a28276aca2006f8d045db007c941d18ef315b8c5d4e",
+      "pages": 21,
+      "ocr_leads_not_verified": {
+        "quatro metros": 1,
+        "esfera": 1,
+        "janelas": 1,
+        "inscrições": 7
+      }
+    },
+    {
+      "id": "00440",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00440.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 5236211,
+      "sha256": "9d62fd8ef1b02b482eecebe43a85b5c40c47c74a075698b59c5e014faf335178",
+      "pages": 10,
+      "ocr_leads_not_verified": {
+        "esfera": 2,
+        "janelas": 1
+      }
+    },
+    {
+      "id": "00441",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00441.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 5648739,
+      "sha256": "d848b848d290bc1a76bf027366d6f547f82cad7a01f505aaa5a63bcbbc2eeb2e",
+      "pages": 10,
+      "ocr_leads_not_verified": {
+        "4 metros": 1,
+        "janelas": 1
+      }
+    },
+    {
+      "id": "00442",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00442.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 4529677,
+      "sha256": "7b7c6189f86a9da5457332927f847262a72a4d0989a18f9b0042283c83e90a6a",
+      "pages": 8,
+      "ocr_leads_not_verified": {
+        "janelas": 1
+      }
+    },
+    {
+      "id": "00443",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00443.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 5597591,
+      "sha256": "8d3a2248f2f056c25c6d95b74bd2ac1fef74082657ffbb82aeaca0ec4fc70c93",
+      "pages": 10,
+      "ocr_leads_not_verified": {
+        "janelas": 1,
+        "inscrições": 1
+      }
+    },
+    {
+      "id": "00444",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00444.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 5507198,
+      "sha256": "6b3cb55cb4d8c104b6c7d27b8bf3910858cb91df37043c3777c313a2da42fc25",
+      "pages": 10,
+      "ocr_leads_not_verified": {
+        "inscrições": 1
+      }
+    },
+    {
+      "id": "00445",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00445.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 5383463,
+      "sha256": "8464fdeb743751bc3430c3917fbaa51bde3ce0d719da81c6ffb340cab3435b73",
+      "pages": 10,
+      "ocr_leads_not_verified": {}
+    },
+    {
+      "id": "00446",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00446.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 9183054,
+      "sha256": "78240583305e3f6025d3549c6b497809fd5106b4ecd64f897e763cf68ea25b24",
+      "pages": 21,
+      "ocr_leads_not_verified": {
+        "inscrições": 2
+      }
+    },
+    {
+      "id": "00447",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00447.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 5192135,
+      "sha256": "e249c946712b7685e0a34d3de9a7250929957deb7a4c5894fbdb94aa0d02242b",
+      "pages": 10,
+      "ocr_leads_not_verified": {
+        "esfera": 2,
+        "janelas": 1
+      }
+    },
+    {
+      "id": "00448",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00448.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 6403472,
+      "sha256": "c772f0ee478ef8981b8d80f6cdca3f5b7118ef029914b3663a4cc671793f5f01",
+      "pages": 12,
+      "ocr_leads_not_verified": {
+        "esfera": 1,
+        "inscrições": 4
+      }
+    },
+    {
+      "id": "00449",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00449.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 5602612,
+      "sha256": "b7d2e5a3cb3124652afac3ba0095af9ff641724512c691b9a8f6f621852e53dd",
+      "pages": 10,
+      "ocr_leads_not_verified": {
+        "esfera": 1,
+        "inscrições": 1
+      }
+    },
+    {
+      "id": "00450",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00450.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 5373333,
+      "sha256": "145682f2406f3a5ac4f18597ed1709479e96401b816a23df2f5ef5eb6475736c",
+      "pages": 10,
+      "ocr_leads_not_verified": {}
+    },
+    {
+      "id": "00451",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00451.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 5498841,
+      "sha256": "2ff25dca69e37e0fe423c9757d3d3dcfa0de1f349f0cf40c5d440a3272fda262",
+      "pages": 10,
+      "ocr_leads_not_verified": {
+        "esfera": 1,
+        "inscrições": 2
+      }
+    },
+    {
+      "id": "00452",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00452.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 5300400,
+      "sha256": "e428cbc8cb8b1c087d87f5e07c2a40344dc88ac002369c189e63878dfd8ed2e0",
+      "pages": 10,
+      "ocr_leads_not_verified": {
+        "satélite": 3
+      }
+    },
+    {
+      "id": "00453",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00453.pdf",
+      "status": "NOT_ACQUIRED",
+      "http_result": "404"
+    },
+    {
+      "id": "00454",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00454.pdf",
+      "status": "NOT_ACQUIRED",
+      "http_result": "404"
+    },
+    {
+      "id": "00455",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00455.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 5271452,
+      "sha256": "d4e08e37c815b538d29eb56c2354ddb3d60b8e2f3dbf27573d643693a7110830",
+      "pages": 10,
+      "ocr_leads_not_verified": {
+        "satélite": 2
+      }
+    },
+    {
+      "id": "00456",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00456.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 5149428,
+      "sha256": "d10e19f2c57ca533e71b52dc90cbd63f793047fc2665d79f09375e66ea334882",
+      "pages": 10,
+      "ocr_leads_not_verified": {
+        "esfera": 1
+      }
+    },
+    {
+      "id": "00457",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00457.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 5252596,
+      "sha256": "e59d21ff175daf6146354a5eb78488efbfed3e925334c4bd7c74947f4228b90c",
+      "pages": 10,
+      "ocr_leads_not_verified": {
+        "4 metros": 1
+      }
+    },
+    {
+      "id": "00458",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00458.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 5358621,
+      "sha256": "9f888c419ed8570896663bb9a60c7158218b6cd5dfe3fa5e1e77d8aeb488da28",
+      "pages": 10,
+      "ocr_leads_not_verified": {
+        "inscrições": 2
+      }
+    },
+    {
+      "id": "00459",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00459.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 5344094,
+      "sha256": "5971c17adfcc8d198ef27c6d37163cc1db168143d2bc89e658d49b0d353c4652",
+      "pages": 10,
+      "ocr_leads_not_verified": {
+        "satélite": 1,
+        "inscrições": 1
+      }
+    },
+    {
+      "id": "00466",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00466.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 8781398,
+      "sha256": "53e8824780c19939becdd136856aaa3289f707f2b804579f59300fa4cb7681f0",
+      "pages": 18,
+      "ocr_leads_not_verified": {}
+    },
+    {
+      "id": "00467",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00467.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 4809214,
+      "sha256": "82c0345dccc9c7d48db3512b134b84b0d1d39579410b5f91530109674bd995f9",
+      "pages": 10,
+      "ocr_leads_not_verified": {
+        "satélite": 1
+      }
+    },
+    {
+      "id": "00468",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00468.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 5339317,
+      "sha256": "b4cc898a2f7fcc6a427f4a0c707045b5bad8d8c819e8034b96d4a4ebcec54eaf",
+      "pages": 10,
+      "ocr_leads_not_verified": {}
+    },
+    {
+      "id": "00469",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00469.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 5283877,
+      "sha256": "c1ab434f4253288892f4959d1d39789690e77a5f0be3f801b98c371c5c0641a0",
+      "pages": 10,
+      "ocr_leads_not_verified": {
+        "inscrições": 1
+      }
+    },
+    {
+      "id": "00470",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00470.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 5336572,
+      "sha256": "da04933d49f7a41571701163f341ab67fcb9ab3bcf76f0e620d32f793e889157",
+      "pages": 10,
+      "ocr_leads_not_verified": {}
+    },
+    {
+      "id": "00471",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00471.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 4337426,
+      "sha256": "e121d6ea9784bcb77a02e1a6e3c453f23987103940f5993190237c45499a95ec",
+      "pages": 8,
+      "ocr_leads_not_verified": {
+        "quatro metros": 1,
+        "janelas": 1
+      }
+    },
+    {
+      "id": "00472",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00472.pdf",
+      "status": "PDF_BYTES_ACQUIRED",
+      "bytes": 5275519,
+      "sha256": "8564c0c8c26857e0feda54fc5da0f9d3ca0c34c8de02c44e3074aa79a101cece",
+      "pages": 10,
+      "ocr_leads_not_verified": {
+        "esfera": 1,
+        "inscrições": 2
+      }
+    }
+  ],
+  "visually_reviewed_pdf_pages": [
+    {
+      "id": "00452",
+      "page": 1,
+      "date": "1963-10-19",
+      "scope": "OUT_OF_SAMPLE",
+      "note": "Cosmos 20 headline outside frozen control windows"
+    },
+    {
+      "id": "00470",
+      "page": 1,
+      "date": "1963-11-07",
+      "scope": "TARGET_NOV04",
+      "note": "cover only"
+    },
+    {
+      "id": "00471",
+      "page": 1,
+      "date": "1963-11-08",
+      "scope": "TARGET_NOV04",
+      "note": "cover only"
+    },
+    {
+      "id": "00471",
+      "page": 8,
+      "date": "1963-11-08",
+      "scope": "TARGET_NOV04",
+      "note": "statues in Rio Doce article; four metres OCR lead; same publication date; ordering versus FBIS unknown"
+    }
+  ],
+  "coverage": {
+    "predeclared_date_vehicle_slots": 50,
+    "archive_issues_attempted": 28,
+    "original_pdfs_acquired": 26,
+    "http404_files": 2,
+    "pages_in_acquired_pdfs": 288,
+    "pages_fully_inspected_for_rates": 0,
+    "articles_confirmed_by_protocol": null,
+    "control_baseline_rates": null
+  },
+  "conclusion": {
+    "general": "UNDETERMINED",
+    "first_pre_event_occurrence": null,
+    "per_fragment": null,
+    "center_1963": null,
+    "orbital_constraint": false,
+    "fraud": false
+  },
+  "status": "INVENTORY_ONLY_NOT_RATE"
+}
