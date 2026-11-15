@@ -1,5 +1,6 @@
 """Mutation tests for the CGEO-71 page-level contract."""
-import copy,sys,unittest
+import copy,json,sys,unittest
+from unittest.mock import patch
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/"tools"))
 import cgeo71_uh_four_page3_validate as v
@@ -32,4 +33,16 @@ class Audit(unittest.TestCase):
     def test_fake_method_hour(self):self.rejects(lambda d:d.update(method=d["method"]+" Event at 21:00"))
     def test_fake_caveat_claim(self):self.rejects(lambda d:d.update(selection_bias=d["selection_bias"]+" The narrative was a fraud."))
     def test_fake_page_claim(self):self.rejects(lambda d:d["pages"][0].update(event_hour="21:00"))
+    def test_in_memory_frozen_fragment_mutation(self):
+        args=copy.deepcopy(self.args)
+        args[3]["frozen_fbis_fragments"][0]["label"]="Fictitious event at 20:15 in Conde"
+        with self.assertRaisesRegex(ValueError,"prereg in-memory"):
+            v.validate(*args)
+    def test_on_disk_frozen_fragment_mutation(self):
+        modified=copy.deepcopy(self.args[3])
+        modified["frozen_fbis_fragments"][0]["label"]="Fictitious event at 20:15 in Conde"
+        fake_bytes=json.dumps(modified,ensure_ascii=False).encode("utf-8")
+        with patch.object(Path,"read_bytes",return_value=fake_bytes):
+            with self.assertRaisesRegex(ValueError,"prereg source bytes changed"):
+                v.validate(*self.args)
 if __name__=="__main__":unittest.main()
