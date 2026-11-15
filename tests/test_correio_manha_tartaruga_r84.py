@@ -3,6 +3,7 @@
 Fingerprint covers all interpretation prose, including unrelated news and citations;
 failing an in-memory mutation is intentional. No bare assert: works with python -O.
 """
+import ast
 import copy
 import hashlib
 import importlib.util
@@ -47,17 +48,6 @@ def validate_predecessor(predecessor):
     guard.validate(predecessor, guard.read(guard.PREVIOUS))
 
 
-def validate_predecessor(predecessor):
-    """Reuse R83's complete interpretation guard, including R82 and R81."""
-    guard_path = ROOT / "tests/test_correio_manha_tartaruga_r83.py"
-    spec = importlib.util.spec_from_file_location("conde_r83_guard", guard_path)
-    if spec is None or spec.loader is None:
-        raise ValueError("R83 guard unavailable")
-    guard = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(guard)
-    guard.validate(predecessor, guard.read(guard.PREVIOUS))
-
-
 def validate(doc, predecessor):
     def require(condition, message):
         if not condition:
@@ -68,7 +58,6 @@ def validate(doc, predecessor):
     require(doc["id"] == "C241-TARTARUGA-R84" and doc["research_issue"] == 871, "identity")
     require(doc["predecessor_manifest"] == str(PREDECESSOR.relative_to(ROOT)), "predecessor path")
     require(predecessor["id"] == "C241-TARTARUGA-R83", "predecessor id")
-    validate_predecessor(predecessor)
     validate_predecessor(predecessor)
     require(predecessor["scope"]["first_caderno_fully_examined"] is True, "predecessor caderno")
     require(predecessor["source"]["edition"] == "21659", "predecessor edition")
@@ -165,13 +154,29 @@ class TestC241R84(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate(self.doc, previous)
 
-    def test_ancestor_r83_prose_rejected(self):
-        previous = copy.deepcopy(self.predecessor)
-        previous["readings"][0]["subjects"] = (
-            "NASA confirmed an object in Conde at 20h15"
+    def test_no_duplicate_definitions_ast(self):
+        """A green unittest suite must not hide overwritten test methods."""
+        def duplicated_defs(source):
+            tree = ast.parse(source)
+            duplicates = []
+            for scope in (tree, *(n for n in tree.body if isinstance(n, ast.ClassDef))):
+                seen = set()
+                for node in scope.body:
+                    if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                        if node.name in seen:
+                            duplicates.append(node.name)
+                        seen.add(node.name)
+            return duplicates
+
+        for path in (Path(__file__), ROOT / "tests/test_correio_manha_tartaruga_r83.py"):
+            with self.subTest(path=path.name):
+                self.assertEqual(duplicated_defs(path.read_text(encoding="utf-8")), [])
+        self.assertEqual(duplicated_defs("def f(): pass\ndef f(): pass\n"), ["f"])
+        self.assertEqual(
+            duplicated_defs("class T:\n    def test_x(self): pass\n"
+                            "    def test_x(self): pass\n"),
+            ["test_x"],
         )
-        with self.assertRaises(ValueError):
-            validate(self.doc, previous)
 
     def test_duplicate_key_rejected(self):
         import tempfile
