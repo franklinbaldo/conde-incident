@@ -1,0 +1,138 @@
+{
+  "schema": "conde.local_clock_press_nucleus/v1",
+  "id": "C241-TARTARUGA-R81",
+  "issue": 871,
+  "checked_utc_date": "2026-11-15",
+  "provenance": {
+    "collection": "Hemeroteca Digital da Biblioteca Nacional, coleção 089842",
+    "newspaper": "Correio da Manhã",
+    "city": "Rio de Janeiro",
+    "executor": "Ifro",
+    "method": "Reused originals located by Lagarto R75; sha256sum and pdfinfo over each original. Date and issue visually confirmed on covers; PDF first-caderno boundaries from folio of last page and separate masthead of next page. For 21659 pages 1–4, 175 dpi full-page rendering plus six overlapping image tiles per page, read article by article. Text extraction is auxiliary only.",
+    "not_all_pages_fully_read": true
+  },
+  "sources": [
+    {
+      "issue": "21659",
+      "date_visual": "1963-11-12",
+      "edition_number_visual": "21.659",
+      "url": "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21659.pdf",
+      "bytes": 20179037,
+      "sha256": "a744f75a91462d2246ecf905353143ffe72a9c326ab0462a1241a4db3a2bc606",
+      "pdf_page_count": 28,
+      "first_caderno_last_pdf_page": 15,
+      "second_caderno_first_pdf_page": 16,
+      "last_page_printed_folio": 15,
+      "cover_date_and_number_checked": true
+    },
+    {
+      "issue": "21660",
+      "date_visual": "1963-11-13",
+      "edition_number_visual": "21.660",
+      "url": "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21660.pdf",
+      "bytes": 20333897,
+      "sha256": "497cd71b643be03f908e26c2e99100fd24908fb026ca33c8e1667d49ee897bc0",
+      "pdf_page_count": 26,
+      "first_caderno_last_pdf_page": 12,
+      "second_caderno_first_pdf_page": 13,
+      "last_page_printed_folio": 11,
+      "cover_date_and_number_checked": true
+    },
+    {
+      "issue": "21661",
+      "date_visual": "1963-11-14",
+      "edition_number_visual": "21.661",
+      "url": "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21661.pdf",
+      "bytes": 21320531,
+      "sha256": "d3b6301c192f8513c8a9a53a06d18eb47fc82b76fda45b6438bc1f416e8854e0",
+      "pdf_page_count": 28,
+      "first_caderno_last_pdf_page": 13,
+      "second_caderno_first_pdf_page": 14,
+      "last_page_printed_folio": 13,
+      "cover_date_and_number_checked": true
+    }
+  ],
+  "reading": {
+    "issue": "21659",
+    "new_pages_fully_examined": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "status_by_pdf_page": [
+      {
+        "pdf_page": 1,
+        "printed_page": 1,
+        "status": "EXAMINADA",
+        "subjects": "UN denuclearization proposed by Brazil, tribute to M. Paulo Filho, French diplomat controversy, petroleum solidarity strike, IBAD inquiry, Argentine petroleum contracts. 'Hora de agir' is about the UN; zero hour starts a labor strike.",
+        "conde_relevant_article": null,
+        "conde_event_time_literal": null,
+        "conde_eyewitness": null,
+        "orbital_constraint_activated": false
+      },
+      {
+        "pdf_page": 2,
+        "printed_page": 2,
+        "status": "EXAMINADA",
+        "subjects": "M. Paulo Filho 52-year tribute and Guanabara governor accounts and local politics. 17h30 belongs to a political studies course, not a falling object.",
+        "conde_relevant_article": null,
+        "conde_event_time_literal": null,
+        "conde_eyewitness": null,
+        "orbital_constraint_activated": false
+      },
+      {
+        "pdf_page": 3,
+        "printed_page": 3,
+        "status": "EXAMINADA",
+        "subjects": "Copacabana parking fines, PUC bazaar, derelict ship 'Aletes' at Guanabara mineral harbor, bankers' working hours, local and foreign diplomacy. 12h30–17h30 refers to banking hours; vessel is a ship.",
+        "conde_relevant_article": null,
+        "conde_event_time_literal": null,
+        "conde_eyewitness": null,
+        "orbital_constraint_activated": false
+      },
+      {
+        "pdf_page": 4,
+        "printed_page": 4,
+        "status": "EXAMINADA",
+        "subjects": "International wire news on Italian cabinet, Berlin, Japan train disaster and UN disarmament. Sidebar 'SATÉLITE' from Vandenberg (UPI-CM) reports a distinct satellite launch and Titan-2 test, not a reentry or Conde event.",
+        "other_satellite_article": {
+          "title": "SATÉLITE",
+          "wire_credit": "UPI-CM",
+          "location": "Base Vandenberg, Califórnia",
+          "event_class": "OTHER_LAUNCH_NOT_CONDE",
+          "conde_event_time_literal": null,
+          "orbit_identity_528_637_established": false
+        },
+        "conde_relevant_article": null,
+        "conde_event_time_literal": null,
+        "conde_eyewitness": null,
+        "orbital_constraint_activated": false
+      }
+    ],
+    "remaining_first_caderno_pages_not_fully_read": [
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "other_issues_status": "FIRST_CADERNO_BOUNDARY_MAPPED_ONLY_NO_COLUMN_READING",
+    "global_negative_asserted": false,
+    "all_three_issues_fully_read": false
+  },
+  "conclusion": {
+    "classification": "FOUR_PAGE_LOCAL_NEGATIVE_21659_WITH_THREE_ORIGINALS_IN_CUSTODY",
+    "conde_event_time_literal": null,
+    "conde_eyewitness": null,
+    "report_independence_from_tupi_diarios_fbis": "UNDETERMINED",
+    "orbit_528_or_637_exclusion_licensed": false,
+    "next_step": "Continue 21659 first caderno pages 5–15, then 21660 pages 1–12 and 21661 pages 1–13 under Elefante R26. Other cadernos only if space/astronautics or flagged by cover. Never infer entire-issue negative from mapped pages."
+  }
+}
