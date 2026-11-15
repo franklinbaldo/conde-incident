@@ -10,7 +10,7 @@ canonical_route: "/conde-incident/o-que-sabemos/"
 
 # A esfera de Conde: o que sabemos até agora
 
-*Atualizado em 14 de novembro de 2026.*
+*Atualizado em 15 de novembro de 2026.*
 
 No dia **8 de novembro de 1963**, uma notícia atribuída à Rádio Tupi do Rio de Janeiro descreveu uma esfera metálica caída no centro de **Conde, na Bahia**. Ela teria aberto uma cratera de quatro metros. Haveria janelas cobertas de vidro e um corpo vestido com roupas pesadas, marcadas por inscrições indecifráveis.
 
@@ -46,7 +46,7 @@ A notícia original descreve uma queda **no centro da cidade**. Sem documento mu
 
 Também não conhecemos uma **hora independente para o suposto evento em solo**. O marcador de horário no registro FBIS pertence à transmissão monitorada e sua convenção ainda requer exame; a transmissão, de todo modo, não é o instante da alegada queda. Sem um horário confiável e sem observações orbitais próximas da reentrada, a coincidência de datas não distingue o 528 de outros cenários.
 
-Três descobertas poderiam mudar materialmente a investigação: a página original de um jornal baiano ou de *O Globo* com fonte e cronologia próprias; um registro instrumental com época, estação e incerteza do objeto orbital pertinente; ou documentação contemporânea independente de vestígios materiais em Conde. Cada uma responde a uma pergunta diferente.
+Três descobertas poderiam mudar materialmente a investigação: a página original de um jornal baiano ou de *O Globo* com fonte e cronologia próprias; um registro instrumental com época, estação e incerteza do objeto orbital pertinente; ou documentação contemporânea independente de vestígios materiais em Conde. Cada uma responde a uma pergunta diferente. A [matriz de decisão documental G84](https://github.com/franklinbaldo/conde-incident/blob/main/research/statistics/C241_G84_DOCUMENT_DECISION_20261115.md) mostra quais documentos pendentes poderiam distinguir condicionalmente 528, 637 ou nenhum dos dois, e quais apenas esclarecem o relógio da notícia sem identificar a queda.
 
 Por enquanto, a conclusão não precisa de suspense artificial. **Há provas documentais de uma notícia extraordinária e de sua contestação, e há um registro de decaimento espacial na mesma data. Não há uma ponte física demonstrada entre eles.** Isso não torna a pesquisa inútil. Torna mais importante descobrir quem viu o quê, quem apenas repetiu e qual documento poderia finalmente separar essas versões.
 
