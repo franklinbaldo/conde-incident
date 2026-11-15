@@ -1,0 +1,278 @@
+{
+  "type": "HistoricalPressPageReadAndClockDisambiguation",
+  "id": "CGEO-82",
+  "date_utc": "2026-11-15",
+  "priority": "https://github.com/franklinbaldo/conde-incident/issues/871",
+  "assignment": "https://github.com/franklinbaldo/caranguejo/issues/5",
+  "status": "PARTIAL_ISSUES_NO_INDEPENDENT_EVENT_HOUR",
+  "sources": [
+    {
+      "collection": "FBN Última Hora Nordeste/Recife, 765147",
+      "edition": "00476",
+      "cover_date": "1963-11-13",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00476.pdf",
+      "size_bytes": 5369187,
+      "pdf_pages": 10,
+      "sha256": "89af71800faf3d447cf7fd3a2ee473ba010516beb8dc45dd200d220ad65c8047",
+      "custody": "COMPLETE_PDF_DOWNLOADED_SHA256_RECHECKED_IFRO"
+    },
+    {
+      "collection": "FBN Última Hora Nordeste/Recife, 765147",
+      "edition": "00477",
+      "cover_date": "1963-11-14",
+      "url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00477.pdf",
+      "size_bytes": 5209201,
+      "pdf_pages": 10,
+      "sha256": "0a5170a69e037166ef1fdf502797cef8fc74211b45183af0da775eedc7072fb0",
+      "custody": "COMPLETE_PDF_DOWNLOADED_SHA256_RECHECKED_IFRO"
+    }
+  ],
+  "method": {
+    "executor": "Ifro reached via Jatobá SSH; Jatobá control plane only, max_memory_mb=128 explicit",
+    "source_sha256_rechecked": true,
+    "full_page_visual": "6 original PDF pages individually rendered at 160 dpi and split into 4 overlapping quadrants (24 quadrants visually inspected)",
+    "pdf_text_layer_only_auxiliary": false,
+    "new_ocr": false,
+    "printed_folio_not_inferred_from_pdf_index": true,
+    "page_negatives_not_issue_negatives": true
+  },
+  "page_reviews": [
+    {
+      "edition": "00476",
+      "pdf_page": 1,
+      "printed_folio": null,
+      "status": "LIDO_INTEGRAL_SEM_MENCAO",
+      "new_integral_credit": true,
+      "articles": [
+        {
+          "title": "90 POR CENTO OU NADA",
+          "context": "remuneração dos servidores da Prefeitura do Recife e vereadores"
+        },
+        {
+          "title": "Amaury tenta solução para a greve da Capuava",
+          "context": "greve e economia"
+        },
+        {
+          "title": "Foto de Cidade Nua fornece à Polícia primeira pista do Monstro do Palacete",
+          "context": "homicídio de Palmira Tavares, Recife"
+        },
+        {
+          "title": "Abelardo da Hora: turismo pode dar milhões ao Recife",
+          "context": "turismo local"
+        }
+      ],
+      "incident_article": false,
+      "independent_event_hour": null,
+      "eyewitnesses": [],
+      "notes": "Coluna Zero Hora é seção editorial, não horário de fenômeno."
+    },
+    {
+      "edition": "00476",
+      "pdf_page": 5,
+      "printed_folio": 5,
+      "status": "LIDO_INTEGRAL_SEM_MENCAO",
+      "new_integral_credit": true,
+      "articles": [
+        {
+          "title": "Juscelino: reforma agrária queira ou não o Congresso",
+          "byline": "Flávio Tavares",
+          "context": "debate legislativo brasileiro"
+        },
+        {
+          "title": "Teletipo: Moscou / Cosmos 21",
+          "credit": "UPI",
+          "context": "satélite soviético lançado, notícia espacial distinta; não relata objeto em Conde"
+        },
+        {
+          "title": "Jean Paul Anglais deve ser considerado persona non grata",
+          "context": "diplomacia"
+        },
+        {
+          "title": "Camboja recusa ajuda",
+          "context": "noticiário internacional"
+        }
+      ],
+      "incident_article": false,
+      "independent_event_hour": null,
+      "eyewitnesses": [],
+      "notes": "Reexame integral de página antes representada somente pela nota Cosmos 21 na CGEO-76; a notícia espacial não é uma testemunha sobre Conde."
+    },
+    {
+      "edition": "00476",
+      "pdf_page": 6,
+      "printed_folio": null,
+      "status": "LIDO_INTEGRAL_SEM_MENCAO",
+      "new_integral_credit": true,
+      "articles": [
+        {
+          "title": "Polícia consegue primeira confissão do Monstro do Palacete",
+          "context": "interrogatório de Raimundo Ferreira da Silva sobre homicídio em Boa Viagem, Recife"
+        },
+        {
+          "title": "Ela estragou a minha vida",
+          "context": "fala atribuída a investigado no caso Palmira Tavares"
+        },
+        {
+          "title": "Cidade Nua",
+          "byline": "M. Barbosa",
+          "context": "crônica de costumes e polícia"
+        }
+      ],
+      "incident_article": false,
+      "independent_event_hour": null,
+      "eyewitnesses": [],
+      "notes": "Referências ao dia 8 e à madrugada pertencem à investigação de homicídio, não ao alegado fenômeno em Conde/BA."
+    },
+    {
+      "edition": "00477",
+      "pdf_page": 1,
+      "printed_folio": null,
+      "status": "LIDO_INTEGRAL_SEM_MENCAO",
+      "new_integral_credit": true,
+      "articles": [
+        {
+          "title": "Reclassificação com Arraes",
+          "context": "serviço público e política em Pernambuco"
+        },
+        {
+          "title": "Greve de servidores pára Prefeitura de São Paulo",
+          "context": "greve municipal"
+        },
+        {
+          "title": "Ex-vigia mentiu na Polícia sobre manchas de sangue",
+          "context": "investigação Palmira Tavares, Recife"
+        },
+        {
+          "title": "Pão vai subir para Cr$ 150 o quilo",
+          "context": "economia"
+        }
+      ],
+      "incident_article": false,
+      "independent_event_hour": null,
+      "eyewitnesses": [],
+      "notes": "Zero Hora é rubrica editorial e não hora local de Conde."
+    },
+    {
+      "edition": "00477",
+      "pdf_page": 5,
+      "printed_folio": 5,
+      "status": "LIDO_INTEGRAL_SEM_MENCAO",
+      "new_integral_credit": true,
+      "articles": [
+        {
+          "title": "Jair reabre diálogo entre Congresso e Forças Armadas",
+          "context": "política brasileira e reformas"
+        },
+        {
+          "title": "Jornais & Problemas",
+          "byline": "Octávio Malta",
+          "context": "análise política"
+        },
+        {
+          "title": "Teletipo",
+          "context": "Iraque, Londres e acontecimentos internacionais via agências"
+        },
+        {
+          "title": "New York Times analisa ação da Aliança",
+          "context": "relações exteriores"
+        }
+      ],
+      "incident_article": false,
+      "independent_event_hour": null,
+      "eyewitnesses": [],
+      "notes": "Referências a crises, conflito e teletipo não descrevem objeto em Conde/BA."
+    },
+    {
+      "edition": "00477",
+      "pdf_page": 6,
+      "printed_folio": null,
+      "status": "LIDO_INTEGRAL_SEM_MENCAO",
+      "new_integral_credit": true,
+      "articles": [
+        {
+          "title": "Açougueiro destrói álibi nas manchas de sangue",
+          "context": "caso Palmira Tavares"
+        },
+        {
+          "title": "Matarei todos os repórteres quando sair daqui",
+          "context": "declaração do suspeito Raimundo Ferreira da Silva"
+        },
+        {
+          "title": "Cidade Nua",
+          "byline": "M. Barbosa",
+          "context": "crônica da cidade"
+        },
+        {
+          "title": "Fortaleza: louco atira criança na fornalha da casa de farinha",
+          "context": "notícia policial cearense"
+        }
+      ],
+      "incident_article": false,
+      "independent_event_hour": null,
+      "eyewitnesses": [],
+      "notes": "Data 12/11 em carta corrigindo versão do homicídio e dia 8 no álibi do investigado são contexto policial, não hora do fenômeno."
+    }
+  ],
+  "false_candidates": [
+    {
+      "edition": "00476",
+      "pdf_page": 1,
+      "phrase": "ZERO HORA",
+      "kind": "EDITORIAL_SECTION_NOT_EVENT",
+      "phenomenon_hour": false
+    },
+    {
+      "edition": "00476",
+      "pdf_page": 5,
+      "phrase": "Cosmos 21",
+      "kind": "UNRELATED_SOVIET_SATELLITE_NOT_EVENT",
+      "phenomenon_hour": false
+    },
+    {
+      "edition": "00476",
+      "pdf_page": 6,
+      "phrase": "dia 8",
+      "kind": "POLICE_ALIBI_DATE_NOT_EVENT",
+      "phenomenon_hour": false
+    },
+    {
+      "edition": "00477",
+      "pdf_page": 1,
+      "phrase": "ZERO HORA",
+      "kind": "EDITORIAL_SECTION_NOT_EVENT",
+      "phenomenon_hour": false
+    },
+    {
+      "edition": "00477",
+      "pdf_page": 6,
+      "phrase": "Recife, 12 de novembro de 1963",
+      "kind": "POLICE_LETTER_DATE_NOT_EVENT",
+      "phenomenon_hour": false
+    }
+  ],
+  "genealogy": {
+    "new_incident_article": false,
+    "new_independent_eyewitness": false,
+    "independent_event_hour": null,
+    "independent_source_new_incident": false,
+    "orbital_candidate": null,
+    "orbital_exclusion_licensed": false,
+    "notes": "Duas edições do mesmo periódico não representam duas testemunhas independentes; a nota Cosmos 21 é outro assunto."
+  },
+  "coverage": {
+    "source_package_pages": 68,
+    "previously_certified_integral": 13,
+    "newly_certified_integral_this_round": 6,
+    "own_chain_integral_after": 19,
+    "lontra_closed_lot_new_integral": 8,
+    "combined_coverage_when_no_overlap": 27,
+    "combined_not_yet_integral": 41,
+    "complete_editions_certified": 0
+  },
+  "limitations": [
+    "Este resultado vale para seis páginas PDF, não para as edições integrais, nem para a ocorrência física alegada.",
+    "Uma parte do microtexto original apresenta artefatos de reprodução; não inferir campos numéricos nem um horário dos artefatos.",
+    "As oito páginas do lote da Lontra são contadas separadamente, sem creditar inspeção visual ao Caranguejo.",
+    "Sem testemunha local, hora literal independente ou calibração do relógio FBIS/Tupi, 528 e 637 não são discriminados."
+  ]
+}
