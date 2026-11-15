@@ -6,6 +6,11 @@ import json
 import unittest
 from pathlib import Path
 
+from test_correio_manha_tartaruga_r77 import (
+    MANIFEST as R77_MANIFEST, validate as validate_r77,
+)
+from test_correio_manha_tartaruga_r76 import MANIFEST as R76_MANIFEST
+
 
 MANIFEST = (
     Path(__file__).resolve().parents[1]
@@ -18,7 +23,12 @@ CUMULATIVE = [1, 2, 3, 4, 5, 21]
 REMAINING = [p for p in range(1, 29) if p not in CUMULATIVE]
 
 
-def validate(document):
+def validate(document, parent=None, ancestor=None):
+    """Validate R78 plus the complete R77→R76 interpretation ancestry."""
+    if parent is None:
+        parent = json.loads(R77_MANIFEST.read_text(encoding="utf-8"))
+    validate_r77(parent, ancestor)
+
     def require(condition, message):
         if not condition:
             raise ValueError(message)
@@ -39,7 +49,9 @@ def validate(document):
 
     reading = document["reading"]
     require(reading["new_pages_fully_examined"] == PAGES, "new scope")
-    require(reading["previous_pages_fully_examined"] == [1, 2, 5, 21], "prior scope")
+    require(reading["previous_pages_fully_examined"] ==
+            parent["reading"]["cumulative_pages_fully_examined"], "prior scope source-only")
+    require(src["sha256"] == parent["source"]["sha256"], "prior PDF identity")
     require(reading["cumulative_pages_fully_examined"] == CUMULATIVE, "inflated coverage")
     require(reading["cumulative_pages_not_fully_examined"] == REMAINING, "remaining pages")
     require(reading["edition_fully_examined"] is False, "fake edition-wide read")
@@ -78,6 +90,22 @@ class TestC241R78(unittest.TestCase):
 
     def test_baseline(self):
         self.assertTrue(validate(self.good))
+
+    def test_reject_mutated_R77_source_only(self):
+        parent = json.loads(R77_MANIFEST.read_text(encoding="utf-8"))
+        parent["reading"]["status_by_pdf_page"][0]["subjects"] = (
+            "NASA confirma Conde às 20h15 (mutante sintético)"
+        )
+        with self.assertRaises(ValueError):
+            validate(self.good, parent)
+
+    def test_reject_mutated_R76_grandparent_only(self):
+        ancestor = json.loads(R76_MANIFEST.read_text(encoding="utf-8"))
+        ancestor["reading"]["status_by_pdf_page"][0]["reading_scope"] = (
+            "NASA confirma Conde às 20h15 (mutante sintético)"
+        )
+        with self.assertRaises(ValueError):
+            validate(self.good, ancestor=ancestor)
 
     def reject(self, path, value):
         changed = copy.deepcopy(self.good)
