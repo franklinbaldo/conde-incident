@@ -24,6 +24,13 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
   const [solarFluxF107, setSolarFluxF107] = useState<number>(76.5);
   const [ballisticCoeff, setBallisticCoeff] = useState<number>(0.022);
 
+  const resetParameters = () => {
+    setScaleHeightKm(45);
+    setSolarFluxF107(76.5);
+    setBallisticCoeff(0.022);
+  };
+  const isReferenceScenario = scaleHeightKm === 45 && solarFluxF107 === 76.5 && ballisticCoeff === 0.022;
+
   // Compute simulated arrival at 120 km interface based on sliders
   const simulatedDecayDays = useMemo(() => {
     // Reference: H = 45 km, B = 0.022, F10.7 = 76.5 -> 12 days (08/11/1963)
@@ -173,6 +180,15 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
             />
           </div>
 
+          <button
+            type="button"
+            onClick={resetParameters}
+            disabled={isReferenceScenario}
+            className="min-h-11 rounded-lg border border-cyan-700 px-4 py-2 text-xs font-semibold text-cyan-200 enabled:hover:bg-cyan-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isPt ? 'Restaurar parâmetros de referência' : 'Reset reference parameters'}
+          </button>
+
           {/* Simulated Decay Output Card */}
           <div className="p-4 rounded-xl bg-zinc-950 border border-zinc-800 space-y-2 font-mono text-xs">
             <div className="text-zinc-400 uppercase tracking-wider text-[10px]">
@@ -209,30 +225,33 @@ export const AtmosphereSensitivity: React.FC<AtmosphereSensitivityProps> = ({
                 {isPt ? 'Cenários ilustrativos de sensibilidade' : 'Illustrative sensitivity scenarios'}
               </h2>
             </div>
-            <p className="text-xs text-zinc-400">
+            <p className="text-xs text-zinc-300">
               {isPt
-                ? 'Datas ilustrativas da tabela legada, partindo de 27/10/1963 em diferentes escalas de altura:'
-                : 'Illustrative legacy-table dates starting 27 Oct 1963 across different scale heights:'}
+                ? 'Escolha uma escala de altura para recalcular a simulação acima. As datas abaixo pertencem à tabela legada ilustrativa, não são resultados da fórmula interativa.'
+                : 'Choose a scale height to recalculate the simulation above. The dates below are from the illustrative legacy table, not outputs of the interactive formula.'}
             </p>
 
-            <div className="space-y-2">
+            <div className="space-y-2" role="group" aria-label={isPt ? 'Selecionar escala de altura ilustrativa' : 'Select illustrative scale height'}>
               {sensitivityTable.map((row) => (
-                <div
+                <button
                   key={row.scale}
-                  className={`p-3 rounded-lg border text-xs font-mono flex flex-wrap items-start justify-between gap-2 min-w-0 ${
-                    row.scale === 45
-                      ? 'bg-cyan-950/40 border-cyan-800'
-                      : 'bg-zinc-950 border-zinc-800/80'
+                  type="button"
+                  onClick={() => setScaleHeightKm(row.scale)}
+                  aria-pressed={scaleHeightKm === row.scale}
+                  className={`w-full text-left p-3 rounded-lg border text-xs font-mono flex flex-wrap items-start justify-between gap-2 min-w-0 min-h-11 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300 ${
+                    scaleHeightKm === row.scale
+                      ? 'bg-cyan-950/40 border-cyan-500'
+                      : 'bg-zinc-950 border-zinc-700 hover:border-cyan-700'
                   }`}
                 >
-                  <div>
-                    <div className="text-zinc-200 font-bold">H = {row.scale} km</div>
-                    <div className="text-[11px] text-zinc-400">{isPt ? 'Cenário:' : 'Scenario:'} {row.arrivalDate}</div>
-                  </div>
+                  <span>
+                    <span className="text-zinc-100 font-bold block">H = {row.scale} km</span>
+                    <span className="text-[11px] text-zinc-300 block">{isPt ? 'Tabela legada:' : 'Legacy table:'} {row.arrivalDate}</span>
+                  </span>
                   <span className={`text-[10px] min-w-0 break-words ${row.matchColor}`}>
                     {row.matchStatus}
                   </span>
-                </div>
+                </button>
               ))}
             </div>
           </div>

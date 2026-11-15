@@ -36,6 +36,32 @@ export async function checkSensitivityA11y(page, viewport, locale) {
   assert.equal(Number(await first.inputValue()), before + 1, 'keyboard must adjust scale height');
   assert.equal(await first.getAttribute('aria-valuetext'), `${before + 1} km`,
     'assistive value must follow keyboard adjustments');
+
+  const choices = page.getByRole('group', { name: locale === 'pt'
+    ? 'Selecionar escala de altura ilustrativa' : 'Select illustrative scale height' });
+  assert.equal(await choices.getByRole('button').count(), 4, 'all four legacy scenarios must be selectable');
+  const selected = choices.getByRole('button', { name: /H = 60 km/ });
+  await selected.focus();
+  await page.keyboard.press('Enter');
+  assert.equal(await first.inputValue(), '60', 'scenario button must update the actual physics control');
+  assert.equal(await first.getAttribute('aria-valuetext'), '60 km', 'assistive value must reflect the selected scenario');
+  assert.equal(await selected.getAttribute('aria-pressed'), 'true', 'selected scenario must expose state');
+  assert.equal(await choices.getByRole('button', { name: /H = 45 km/ }).getAttribute('aria-pressed'),
+    'false', 'reference scenario must not remain selected after a change');
+  const copy = (await page.getByRole('main').textContent()) ?? '';
+  assert(copy.includes(locale === 'pt' ? 'não são resultados da fórmula interativa' : 'not outputs of the interactive formula'),
+    'legacy dates must be explicitly distinguished from interactive calculations');
+
+  const reset = page.getByRole('button', { name: locale === 'pt'
+    ? 'Restaurar parâmetros de referência' : 'Reset reference parameters' });
+  assert(await reset.isEnabled(), 'reset must become available when parameters differ from reference');
+  await reset.focus();
+  await page.keyboard.press('Enter');
+  assert.deepEqual(await page.locator('input[type="range"]').evaluateAll(nodes => nodes.map(n => n.value)),
+    ['45', '76.5', '0.022'], 'reset must restore all three reference parameters');
+  assert(await reset.isDisabled(), 'reset must be disabled when no change remains');
+  assert.equal(await choices.getByRole('button', { name: /H = 45 km/ }).getAttribute('aria-pressed'),
+    'true', 'reference scenario must be selected after reset');
   await page.addStyleTag({ content: ':root { font-size: 200% !important; }' });
   const reflow = await page.evaluate(() => ({
     viewport: document.documentElement.clientWidth,
