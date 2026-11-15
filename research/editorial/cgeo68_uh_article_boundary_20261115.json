@@ -1,0 +1,84 @@
+{
+  "type": "HistoricalPressArticleBoundaryAdjudication",
+  "id": "CGEO-68",
+  "date_utc": "2026-11-15",
+  "issue": "https://github.com/franklinbaldo/conde-incident/issues/887",
+  "prereg_path": "research/editorial/cgeo64_null_narrative_prereg_20261114.json",
+  "prereg_blob_sha": "0d13d9359080699e5f8402ca9b7014d7f1f6d59a",
+  "sources": [
+    "research/editorial/cgeo65_uh_bn_inventory_20261115.json",
+    "research/editorial/cgeo66_uh_cover_dates_20261115.json",
+    "research/editorial/cgeo67_uh_lexical_adjudication_20261115.json"
+  ],
+  "method": "Read original BN PDF image crops of the cited passages; cross-check embedded page text. Article and passage identification, not exhaustive whole-page review. OCR is a lead only.",
+  "adjudications": [
+    {
+      "id": "C68-A",
+      "publication": "UH_RE",
+      "issue_id": "00441",
+      "date": "1963-10-08",
+      "week": "CONTROL_OCT07",
+      "pdf_page": 7,
+      "source_sha256": "d848b848d290bc1a76bf027366d6f547f82cad7a01f505aaa5a63bcbbc2eeb2e",
+      "source_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00441.pdf",
+      "fragment_id": "F03_FOUR_METER_HOLE",
+      "wording": "afastamento de 4 metros em qualquer nova construção naquela artéria",
+      "context": "Municipal-building setback complaint about a building near number 192; no hole, crater or excavation in this passage.",
+      "fragment_match": false,
+      "review": "VISUAL_PASSAGE_AND_PDF_TEXT",
+      "whole_page_read": false,
+      "independent_conde_witness": false
+    },
+    {
+      "id": "C68-B",
+      "publication": "UH_RE",
+      "issue_id": "00471",
+      "date": "1963-11-08",
+      "week": "TARGET_NOV04",
+      "pdf_page": 8,
+      "source_sha256": "e121d6ea9784bcb77a02e1a6e3c453f23987103940f5993190237c45499a95ec",
+      "source_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00471.pdf",
+      "fragment_id": "F04_WINDOWS",
+      "wording": "vinham à janela para espiar o tempo",
+      "context": "Window in the Stanislaw Ponte Preta column 'Cão – o Melhor Amigo, Como Sempre', not a window/opening in a metallic sphere. Separate article from the police report on buried statues on the same PDF page.",
+      "fragment_match": false,
+      "review": "VISUAL_PASSAGE_AND_PDF_TEXT",
+      "whole_page_read": false,
+      "independent_conde_witness": false
+    }
+  ],
+  "same_page_nonindependence": {
+    "issue_id": "00471",
+    "pdf_page": 8,
+    "fragment_A": "F03_FOUR_METER_HOLE",
+    "fragment_B": "F04_WINDOWS",
+    "article_A": "Polícia arranca confissão do pescador: roubei estátuas e enterrei em Rio Doce",
+    "article_B": "Cão – o Melhor Amigo, Como Sempre (Stanislaw Ponte Preta)",
+    "joint_article_with_both_fragments": false,
+    "note": "Co-occurrence on a newspaper page is NOT co-occurrence in one article, still less in one Conde witness. The F03 wording is a same-day different-story lexical match, while singular janela is not the spacecraft F04 motif."
+  },
+  "closes_upstream_ocr_lead": "CGEO-67/00441:p7/4 metros; CGEO-67 remains immutable historical record.",
+  "coverage": {
+    "new_passages_adjudicated": 2,
+    "fully_inspected_newspaper_pages_for_rates": 0,
+    "fully_inspected_articles_for_rates": 0,
+    "predeclared_slots_changed": 0,
+    "baseline_rates": null,
+    "fragment_verdicts": null,
+    "first_pre_event_borrowing": null
+  },
+  "interpretation": {
+    "verdict": "UNDETERMINED",
+    "narrative_fabrication_proven": false,
+    "chronology_same_day_known": false,
+    "historical_center_1963": null,
+    "orbital_constraint_activated": false
+  },
+  "limits": [
+    "One resolved 1963-10-08 OCR cue is a 4-metre construction setback, not a 4-metre hole.",
+    "The Stanislaw column with janela and burial report are distinct articles on 1963-11-08 p.8.",
+    "Neither full-page coverage nor complete article census established; no denominator or zero rate.",
+    "Source PDFs and their SHA-256 are already pinned in CGEO-65; cropped image inspection is not a new independent source.",
+    "No pre-event newsroom transmission, witness, event hour or orbital restriction demonstrated."
+  ]
+}
