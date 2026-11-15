@@ -1,0 +1,548 @@
+{
+  "type": "HistoricalPressCoverDateCrosswalk",
+  "id": "CGEO-66",
+  "date_utc": "2026-11-15",
+  "issue": "https://github.com/franklinbaldo/conde-incident/issues/887",
+  "status": "COVER_DATES_ONLY_NOT_ARTICLE_REVIEW",
+  "source_manifest": "research/editorial/cgeo65_uh_bn_inventory_20261115.json",
+  "prereg_path": "research/editorial/cgeo64_null_narrative_prereg_20261114.json",
+  "prereg_git_blob_sha": "0d13d9359080699e5f8402ca9b7014d7f1f6d59a",
+  "method": "Individual PDF page 1 rendered via pdftoppm on authorized Ifro executor; dated mastheads visually inspected in cover sheets and checked against embedded text for difficult lines; full articles NOT read. Source PDFs remain on Ifro, not in Git.",
+  "caveat": "404 00454 is only a candidate for 1963-10-21 by issue sequence, not a visually dated issue. No missing PDF can count as zero fragments. Other acquired out-of-window editions are excluded from rates. 00472/Nov09 is for Lontra #871.",
+  "cover_dates": [
+    {
+      "issue_id": "00439",
+      "date": "1963-10-06",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00440",
+      "date": "1963-10-07",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00441",
+      "date": "1963-10-08",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00442",
+      "date": "1963-10-09",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00443",
+      "date": "1963-10-10",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00444",
+      "date": "1963-10-11",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00445",
+      "date": "1963-10-12",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00446",
+      "date": "1963-10-13",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00447",
+      "date": "1963-10-14",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00448",
+      "date": "1963-10-15",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00449",
+      "date": "1963-10-16",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00450",
+      "date": "1963-10-17",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00451",
+      "date": "1963-10-18",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00452",
+      "date": "1963-10-19",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00455",
+      "date": "1963-10-22",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00456",
+      "date": "1963-10-23",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00457",
+      "date": "1963-10-24",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00458",
+      "date": "1963-10-25",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00459",
+      "date": "1963-10-26",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00466",
+      "date": "1963-11-03",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00467",
+      "date": "1963-11-04",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00468",
+      "date": "1963-11-05",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00469",
+      "date": "1963-11-06",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00470",
+      "date": "1963-11-07",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00471",
+      "date": "1963-11-08",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    },
+    {
+      "issue_id": "00472",
+      "date": "1963-11-09",
+      "source_page": 1,
+      "verification": "COVER_MASTHEAD_VISUAL_WITH_EMBEDDED_TEXT_CROSSCHECK"
+    }
+  ],
+  "slots": [
+    {
+      "date": "1963-11-04",
+      "week": "TARGET_NOV04",
+      "publication": "UH_RE",
+      "issue_id": "00467",
+      "status": "COVER_DATE_VERIFIED_ARTICLES_NOT_READ"
+    },
+    {
+      "date": "1963-11-04",
+      "week": "TARGET_NOV04",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-11-05",
+      "week": "TARGET_NOV04",
+      "publication": "UH_RE",
+      "issue_id": "00468",
+      "status": "COVER_DATE_VERIFIED_ARTICLES_NOT_READ"
+    },
+    {
+      "date": "1963-11-05",
+      "week": "TARGET_NOV04",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-11-06",
+      "week": "TARGET_NOV04",
+      "publication": "UH_RE",
+      "issue_id": "00469",
+      "status": "COVER_DATE_VERIFIED_ARTICLES_NOT_READ"
+    },
+    {
+      "date": "1963-11-06",
+      "week": "TARGET_NOV04",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-11-07",
+      "week": "TARGET_NOV04",
+      "publication": "UH_RE",
+      "issue_id": "00470",
+      "status": "COVER_DATE_VERIFIED_ARTICLES_NOT_READ"
+    },
+    {
+      "date": "1963-11-07",
+      "week": "TARGET_NOV04",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-11-08",
+      "week": "TARGET_NOV04",
+      "publication": "UH_RE",
+      "issue_id": "00471",
+      "status": "COVER_DATE_VERIFIED_ARTICLES_NOT_READ"
+    },
+    {
+      "date": "1963-11-08",
+      "week": "TARGET_NOV04",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-10-07",
+      "week": "CONTROL_OCT07",
+      "publication": "UH_RE",
+      "issue_id": "00440",
+      "status": "COVER_DATE_VERIFIED_ARTICLES_NOT_READ"
+    },
+    {
+      "date": "1963-10-07",
+      "week": "CONTROL_OCT07",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-10-08",
+      "week": "CONTROL_OCT07",
+      "publication": "UH_RE",
+      "issue_id": "00441",
+      "status": "COVER_DATE_VERIFIED_ARTICLES_NOT_READ"
+    },
+    {
+      "date": "1963-10-08",
+      "week": "CONTROL_OCT07",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-10-09",
+      "week": "CONTROL_OCT07",
+      "publication": "UH_RE",
+      "issue_id": "00442",
+      "status": "COVER_DATE_VERIFIED_ARTICLES_NOT_READ"
+    },
+    {
+      "date": "1963-10-09",
+      "week": "CONTROL_OCT07",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-10-10",
+      "week": "CONTROL_OCT07",
+      "publication": "UH_RE",
+      "issue_id": "00443",
+      "status": "COVER_DATE_VERIFIED_ARTICLES_NOT_READ"
+    },
+    {
+      "date": "1963-10-10",
+      "week": "CONTROL_OCT07",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-10-11",
+      "week": "CONTROL_OCT07",
+      "publication": "UH_RE",
+      "issue_id": "00444",
+      "status": "COVER_DATE_VERIFIED_ARTICLES_NOT_READ"
+    },
+    {
+      "date": "1963-10-11",
+      "week": "CONTROL_OCT07",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-10-14",
+      "week": "CONTROL_OCT14",
+      "publication": "UH_RE",
+      "issue_id": "00447",
+      "status": "COVER_DATE_VERIFIED_ARTICLES_NOT_READ"
+    },
+    {
+      "date": "1963-10-14",
+      "week": "CONTROL_OCT14",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-10-15",
+      "week": "CONTROL_OCT14",
+      "publication": "UH_RE",
+      "issue_id": "00448",
+      "status": "COVER_DATE_VERIFIED_ARTICLES_NOT_READ"
+    },
+    {
+      "date": "1963-10-15",
+      "week": "CONTROL_OCT14",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-10-16",
+      "week": "CONTROL_OCT14",
+      "publication": "UH_RE",
+      "issue_id": "00449",
+      "status": "COVER_DATE_VERIFIED_ARTICLES_NOT_READ"
+    },
+    {
+      "date": "1963-10-16",
+      "week": "CONTROL_OCT14",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-10-17",
+      "week": "CONTROL_OCT14",
+      "publication": "UH_RE",
+      "issue_id": "00450",
+      "status": "COVER_DATE_VERIFIED_ARTICLES_NOT_READ"
+    },
+    {
+      "date": "1963-10-17",
+      "week": "CONTROL_OCT14",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-10-18",
+      "week": "CONTROL_OCT14",
+      "publication": "UH_RE",
+      "issue_id": "00451",
+      "status": "COVER_DATE_VERIFIED_ARTICLES_NOT_READ"
+    },
+    {
+      "date": "1963-10-18",
+      "week": "CONTROL_OCT14",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-10-21",
+      "week": "CONTROL_OCT21",
+      "publication": "UH_RE",
+      "issue_id": null,
+      "status": "UNACQUIRED_404_ISSUE_NUMBER_CANDIDATE_ONLY",
+      "unverified_candidate_id": "00454"
+    },
+    {
+      "date": "1963-10-21",
+      "week": "CONTROL_OCT21",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-10-22",
+      "week": "CONTROL_OCT21",
+      "publication": "UH_RE",
+      "issue_id": "00455",
+      "status": "COVER_DATE_VERIFIED_ARTICLES_NOT_READ"
+    },
+    {
+      "date": "1963-10-22",
+      "week": "CONTROL_OCT21",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-10-23",
+      "week": "CONTROL_OCT21",
+      "publication": "UH_RE",
+      "issue_id": "00456",
+      "status": "COVER_DATE_VERIFIED_ARTICLES_NOT_READ"
+    },
+    {
+      "date": "1963-10-23",
+      "week": "CONTROL_OCT21",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-10-24",
+      "week": "CONTROL_OCT21",
+      "publication": "UH_RE",
+      "issue_id": "00457",
+      "status": "COVER_DATE_VERIFIED_ARTICLES_NOT_READ"
+    },
+    {
+      "date": "1963-10-24",
+      "week": "CONTROL_OCT21",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-10-25",
+      "week": "CONTROL_OCT21",
+      "publication": "UH_RE",
+      "issue_id": "00458",
+      "status": "COVER_DATE_VERIFIED_ARTICLES_NOT_READ"
+    },
+    {
+      "date": "1963-10-25",
+      "week": "CONTROL_OCT21",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-12-02",
+      "week": "CONTROL_DEC02",
+      "publication": "UH_RE",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-12-02",
+      "week": "CONTROL_DEC02",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-12-03",
+      "week": "CONTROL_DEC02",
+      "publication": "UH_RE",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-12-03",
+      "week": "CONTROL_DEC02",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-12-04",
+      "week": "CONTROL_DEC02",
+      "publication": "UH_RE",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-12-04",
+      "week": "CONTROL_DEC02",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-12-05",
+      "week": "CONTROL_DEC02",
+      "publication": "UH_RE",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-12-05",
+      "week": "CONTROL_DEC02",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-12-06",
+      "week": "CONTROL_DEC02",
+      "publication": "UH_RE",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    },
+    {
+      "date": "1963-12-06",
+      "week": "CONTROL_DEC02",
+      "publication": "JB_RJ",
+      "issue_id": null,
+      "status": "NOT_ACQUIRED_NOT_READ"
+    }
+  ],
+  "coverage": {
+    "cover_dated_pdfs": 26,
+    "pre_event_target_and_baseline_uh_slots_cover_dated": 19,
+    "pre_event_target_and_baseline_uh_slots_expected": 20,
+    "pre_event_uh_missing_cover": 1,
+    "post_event_sensitivity_uh_covered": 0,
+    "jb_rj_cover_dated": 0,
+    "total_frozen_slots": 50,
+    "pages_fully_read_for_fragment_rates": 0,
+    "articles_verified_by_full_reading": 0,
+    "fragment_rates": null
+  },
+  "conclusion": {
+    "verdict": "UNDETERMINED",
+    "first_pre_8_nov_occurrence": null,
+    "physical_event_location": null,
+    "orbital_constraint": false,
+    "fraud": false
+  },
+  "handoff": {
+    "issue_id": "00472",
+    "cover_date": "1963-11-09",
+    "target": "https://github.com/franklinbaldo/conde-incident/issues/871",
+    "scope": "Date lookup only; independent event hours and witnesses not checked"
+  }
+}
