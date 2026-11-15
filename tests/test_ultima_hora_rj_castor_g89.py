@@ -1,18 +1,30 @@
 """C241-G89: keep two page-level visual negatives from becoming a false edition-wide negative."""
 import copy
+import hashlib
 import json
 import unittest
 from pathlib import Path
 
+from test_ultima_hora_rj_castor_g88 import validate as validate_g88, G86
+
 ROOT = Path(__file__).resolve().parents[1]
 G89 = ROOT / "research/archive/ultima_hora_rj_1963_11_09_C241_CASTOR_G89.json"
 G88 = ROOT / "research/archive/ultima_hora_rj_1963_11_09_C241_CASTOR_G88.json"
+CANONICAL_SHA256 = "d0e229691e2428f36f371cc7a30036f2c4c431d1c1df457ef504786e80e7cb0b"
 
 def require(ok, label):
     if not ok:
         raise ValueError(label)
 
-def validate(d, parent):
+def validate(d, parent, ancestor=None):
+    canonical = json.dumps(
+        d, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    require(hashlib.sha256(canonical).hexdigest() == CANONICAL_SHA256,
+            "G89 full interpreted record changed")
+    if ancestor is None:
+        ancestor = json.loads(G86.read_text(encoding="utf-8"))
+    validate_g88(parent, ancestor)  # Verify both upstream stages, not just PDF SHA.
     require(d["schema"] == "conde.press_visual_review/v1" and d["id"] == "C241-CASTOR-G89", "identity")
     s=d["source"]
     require(s["sha256"] == parent["source"]["sha256"] == "320aeb075b99fc6f2884904d9e1aa801b9d3f6be2b131ded30093caaaa6ce352", "custody")
@@ -50,6 +62,26 @@ class TestG89(unittest.TestCase):
         node[path[-1]]=value
         with self.assertRaises(ValueError):
             validate(d,self.parent)
+    def test_reject_invented_headline_prose(self):
+        self.mutate(["pages", 0, "editorial_sections", 0],
+                    "NASA confirms fall at Conde 20h15")
+
+    def test_reject_fake_witness_in_explanation(self):
+        self.mutate(["pages", 0, "disambiguation"],
+                    "Independent eyewitness confirms the crash.")
+
+    def test_reject_parent_source_only(self):
+        parent = copy.deepcopy(self.parent)
+        parent["pages"][0]["assessment"] = "Fall at Conde at 20h15"
+        with self.assertRaises(ValueError):
+            validate(self.doc, parent)
+
+    def test_reject_grandparent_source_only(self):
+        ancestor = json.loads(G86.read_text(encoding="utf-8"))
+        ancestor["coverage"]["pages"][0]["topics"] = "NASA confirms 20h15"
+        with self.assertRaises(ValueError):
+            validate(self.doc, self.parent, ancestor)
+
     def test_fake_full_edition_negative(self):
         self.mutate(["interpretation","complete_edition_negative"],True)
     def test_fake_hour(self):
