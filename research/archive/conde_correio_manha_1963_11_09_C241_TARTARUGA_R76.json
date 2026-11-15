@@ -1,0 +1,95 @@
+{
+  "schema": "conde.local_clock_visual_pages/v1",
+  "id": "C241-TARTARUGA-R76",
+  "issue": 871,
+  "checked_utc_date": "2026-11-15",
+  "source": {
+    "title": "Correio da Manhã",
+    "city": "Rio de Janeiro",
+    "collection_edition": "089842/21657",
+    "edition_date_visual": "1963-11-09",
+    "edition_number_visual": "21.657",
+    "url": "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21657.pdf",
+    "bytes": 22546215,
+    "sha256": "a5aa619730df13e2a630c7d16fcfde95f58180ec3a05063038177b03fd46f7d0",
+    "pdf_page_count": 28,
+    "pdf_original_reused_on_ifro": true
+  },
+  "reading": {
+    "method": "full-page visual reading in four overlapping, zoomed quadrants per page; extracted text only auxiliary",
+    "status_by_pdf_page": [
+      {
+        "pdf_page": 5,
+        "printed_page": 5,
+        "section": "1.º Caderno",
+        "status": "EXAMINADA",
+        "reading_scope": "all columns and advertisements; includes Iguape/SP report from R74",
+        "relevant_article": "OBJETO MISTERIOSO CAI EM RIO DE SP",
+        "reported_location": "IGUAPE_SP_RIO_PEROPAVA",
+        "original_report_credit": "IGUAPE (Do enviado especial da sucursal SP)",
+        "other_highlight": "SENSÍVEL VARIAÇÃO MAGNÉTICA NO PAÍS",
+        "conde_event_time_literal": null,
+        "conde_eyewitness": null,
+        "orbital_constraint_activated": false
+      },
+      {
+        "pdf_page": 21,
+        "printed_page": 9,
+        "section": "2.º Caderno",
+        "status": "EXAMINADA",
+        "reading_scope": "all columns and advertisements, including Aviação e Astronáutica",
+        "relevant_article": null,
+        "other_highlight": "Aviação e Astronáutica: novo comandante e pessoal do Galeão",
+        "conde_event_time_literal": null,
+        "conde_eyewitness": null,
+        "orbital_constraint_activated": false
+      }
+    ],
+    "pages_fully_examined": [
+      5,
+      21
+    ],
+    "pages_not_fully_examined": [
+      1,
+      2,
+      3,
+      4,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28
+    ],
+    "edition_fully_examined": false,
+    "global_negative_asserted": false,
+    "panoramic_overview_is_not_full_reading": true,
+    "individual_article_previously_read_in_R74_is_not_page_level_negative": true,
+    "correio_10_nov_full_edition_examined": false
+  },
+  "conclusion": {
+    "classification": "NO_NEW_CONDE_EVENT_HOUR_IN_TWO_FULLY_READ_PAGES",
+    "source_ownership_independent_from_diarios_associados": "UNDETERMINED_LEGAL_OWNER",
+    "source_of_report_independent_from_tupi_fbis": "UNDETERMINED",
+    "conde_event_time_literal": null,
+    "conde_eyewitness": null,
+    "orbital_constraint_activated": false,
+    "further_action": "Read remaining 26 pages of 9 Nov, then 97 pages of 10 Nov; do not extend dates/titles without Elefante authorization."
+  }
+}
