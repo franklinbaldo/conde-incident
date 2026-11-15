@@ -46,8 +46,10 @@ stories.forEach((s,i)=>{
   assert.equal(Number(s.chapter),i+1,'Capítulos não consecutivos');
   if(i) assert.ok(stories[i-1].date<=s.date,'Cronologia retrocedeu');
 });
+// Preflight precedes both the read-only check and every destructive write below.
+// Invalid source material must never erase an earlier generated site.
+const checked=checkSsgSources();
 if(process.argv.includes('--check')) {
-  const checked=checkSsgSources();
   console.log('Validados '+stories.length+' capítulos canônicos; nenhuma cópia escrita.');
   console.log('Preflight de fontes SSG (sem escrita): '+JSON.stringify(checked));
   process.exit(0);

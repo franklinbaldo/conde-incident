@@ -84,3 +84,34 @@ test('SSG --check detects tampered pinned TLE bytes',()=>{
     assert.ok(!existsSync(join(tmp,'content')));
   });
 });
+
+test('SSG generation refuses altered NARA metadata without erasing an existing site',()=>{
+  fixture(({tmp})=>{
+    const page=join(tmp,'content','index.md');
+    mkdirSync(dirname(page),{recursive:true});
+    writeFileSync(page,'prior static publication');
+    edit(tmp,'public/data/conde-source-citations.json',source=>
+      source.replace('"newspaper_page": null','"newspaper_page": "inventada"'));
+    const result=spawnSync(process.execPath,[script],{
+      cwd:tmp,encoding:'utf8',timeout:90_000});
+    assert.notEqual(result.status,0,'generation must fail on altered custody');
+    assert.match(result.stderr,/Source SHA mismatch|metadado jornalístico não verificado/);
+    assert.equal(readFileSync(page,'utf8'),'prior static publication',
+      'invalid input must not erase an earlier generated publication');
+  });
+});
+
+test('SSG generation refuses damaged TLE without erasing an existing site',()=>{
+  fixture(({tmp})=>{
+    const page=join(tmp,'content','stories','index.md');
+    mkdirSync(dirname(page),{recursive:true});
+    writeFileSync(page,'prior story index');
+    edit(tmp,'research/tle_custody/mirror_528_1963-10-27.tle',source=>
+      source.replace('1 00528','1 00529'));
+    const result=spawnSync(process.execPath,[script],{
+      cwd:tmp,encoding:'utf8',timeout:90_000});
+    assert.notEqual(result.status,0,'generation must fail on altered TLE bytes');
+    assert.match(result.stderr,/Bytes de custódia TLE diferentes/);
+    assert.equal(readFileSync(page,'utf8'),'prior story index');
+  });
+});
