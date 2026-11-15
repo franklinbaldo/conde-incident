@@ -1,0 +1,116 @@
+{
+  "schema": "conde.press_visual_review/v1",
+  "id": "C241-LONTRA-R84-PRESS",
+  "refs_issue": 871,
+  "assigned_by": "lontra#10, Elefante 2026-11-15",
+  "scope": "Focal police-section follow-up in 04201 and dated cover identification only in 04202-04204; no reading of interior pages in later editions.",
+  "institution": "Fundação Biblioteca Nacional / Hemeroteca Digital Brasileira",
+  "method": {
+    "executor": "Ifro; Jatoba only orchestrated SSH with max_memory_mb=128",
+    "source_bytes_sha256_verified": true,
+    "tools": "pdftoppm and Pillow; visual inspection",
+    "ocr_as_negative": false,
+    "followup": "p. 12 full panorama + 4 enlarged 150-dpi quadrants; cover-only p. 1 for 04202/04203/04204"
+  },
+  "focal_source": {
+    "newspaper": "Última Hora Rio",
+    "edition": "04201",
+    "date_printed": "1963-11-11",
+    "url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04201.pdf",
+    "sha256": "b7ce4a3437633fe712fc49df6a0b1f86289912360830b9c979afea1ffa8bd134",
+    "bytes": 19995184,
+    "pdf_pages": 32,
+    "prior_review": "C241-LONTRA-R83, PR #1090, pp.1/2/4/6/8",
+    "mapping": {
+      "panorama_pages": "PDF 1-16",
+      "police_page": "PDF 12",
+      "police_section_identification": "Police/crime articles on PDF p.12; p.8 contains advertising and television schedule, not police; PDF p.13 is advertising and later pages in second section",
+      "mapping_not_equivalent_to_reading": true
+    },
+    "pages": [
+      {
+        "pdf_page": 12,
+        "printed_page": 12,
+        "pdf_url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04201.pdf#page=12",
+        "status": "EXAMINADA",
+        "review_protocol": "FULL_PAGE_AND_FOUR_ENLARGED_150_DPI_QUADRANTS",
+        "articles": [
+          "Nove Embaixadas na Lista dos Impalas Roubados Pela 'Gang' Internacional",
+          "Polícia Guarda Testemunha Que Viu Rafles Fugir Com Milhões do Carro-Pagador",
+          "Coronel Captura Bandido Que Lhe Dera Três Tiros",
+          "Laudo Revela Que Fratura de Crânio Matou Menina no HSA"
+        ],
+        "event_report_conde_ba": false,
+        "independent_event_hour": null,
+        "independent_witness": null,
+        "orbital_measurement_found": false,
+        "negative_scope": "Only fully inspected police page 12, not entire edition, police in other uninspected pages or all 32 pages",
+        "false_positive_guard": "Hours and dates in unrelated articles refer to other events, not to Conde"
+      }
+    ]
+  },
+  "cover_identifications": [
+    {
+      "newspaper": "Última Hora Rio",
+      "edition": "04202",
+      "date_printed": "1963-11-12",
+      "date_evidence": "Visually read date on actual first-page masthead, not inferred from sequential issue number",
+      "url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04202.pdf",
+      "cover_url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04202.pdf#page=1",
+      "http_status": 200,
+      "pdf_pages": 18,
+      "bytes": 12325627,
+      "sha256": "4a78697979a3f71c8e28bb94e40a2d2c3c44532ab6e8180a47ee985680f69e94",
+      "reviewed_pages": [
+        1
+      ],
+      "review_level": "COVER_ONLY",
+      "inner_pages_status": "NOT_READ",
+      "event_report_conde_ba": null,
+      "independent_event_hour": null,
+      "independent_witness": null
+    },
+    {
+      "newspaper": "Última Hora Rio",
+      "edition": "04203",
+      "date_printed": "1963-11-13",
+      "date_evidence": "Visually read date on actual first-page masthead, not inferred from sequential issue number",
+      "url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04203.pdf",
+      "cover_url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04203.pdf#page=1",
+      "http_status": 200,
+      "pdf_pages": 16,
+      "bytes": 11178862,
+      "sha256": "cf7b090d711817421c81bc76faed5ec45cbd8e2d1f5efa7bd6d4537be6ec6612",
+      "reviewed_pages": [
+        1
+      ],
+      "review_level": "COVER_ONLY",
+      "inner_pages_status": "NOT_READ",
+      "event_report_conde_ba": null,
+      "independent_event_hour": null,
+      "independent_witness": null
+    },
+    {
+      "newspaper": "Última Hora Rio",
+      "edition": "04204",
+      "date_printed": "1963-11-14",
+      "date_evidence": "Visually read date on actual first-page masthead, not inferred from sequential issue number",
+      "url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04204.pdf",
+      "cover_url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04204.pdf#page=1",
+      "http_status": 200,
+      "pdf_pages": 18,
+      "bytes": 12652710,
+      "sha256": "445499302be534bf41712a9ef177e75658907200a0ceb689d3c917a8f2fa3f7a",
+      "reviewed_pages": [
+        1
+      ],
+      "review_level": "COVER_ONLY",
+      "inner_pages_status": "NOT_READ",
+      "event_report_conde_ba": null,
+      "independent_event_hour": null,
+      "independent_witness": null
+    }
+  ],
+  "result": "No independent event time found on 04201 p.12. Issues 04202-04204 dates and covers confirmed, but not searched or adjudicated for Conde.",
+  "stop": "No interior reading of 04202-04204 authorized yet. Await Elefante allocation; do not infer edition-level negative."
+}
