@@ -1,0 +1,204 @@
+{
+  "schema": "conde.local_clock_press_nucleus_increment/v1",
+  "id": "C241-TARTARUGA-R83",
+  "checked_utc_date": "2026-11-15",
+  "research_issue": 871,
+  "predecessor_manifest": "research/archive/conde_correio_manha_1963_11_12_C241_TARTARUGA_R82.json",
+  "source": {
+    "collection": "Hemeroteca Digital BN, Correio da Manhã, coleção 089842",
+    "edition": "21659",
+    "printed_date": "1963-11-12",
+    "original_url": "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21659.pdf",
+    "original_bytes": 20179037,
+    "original_sha256": "a744f75a91462d2246ecf905353143ffe72a9c326ab0462a1241a4db3a2bc606",
+    "pdf_pages": 28,
+    "first_caderno_pdf_start": 1,
+    "first_caderno_pdf_end": 15,
+    "second_caderno_pdf_start": 16
+  },
+  "method": {
+    "executor": "Ifro",
+    "control_plane": "Jatobá via SSH, max_memory_mb=128 explicit; Ifro rendered all pages",
+    "original_reused_from": "/var/tmp/lagarto-r75-20261115/21659.pdf",
+    "visual_exam": "Full-page panorama plus six overlapping crops (2 columns x 3 rows) per page at 165-170 dpi; manual image inspection; no automated OCR relied upon.",
+    "pages_full_visual_review": 8,
+    "number_overlapping_crops": 48,
+    "scan_is_not_entire_edition_negative": true
+  },
+  "readings": [
+    {
+      "pdf_page": 8,
+      "printed_folio": "8",
+      "status": "EXAMINADA",
+      "subjects": "Varig PP-VJA forced landing at Santo Domingo after a false aircraft bomb report; tenant legislation; missing pet snake; labor union news; advertisements.",
+      "unrelated_clock_labels": [
+        "23h = aircraft radio/departure context, NOT a sky object over Conde"
+      ],
+      "disambiguation": "Aircraft false bomb scare was unrelated to a reentry",
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "report_attribution": null,
+      "orbital_constraint_active": false
+    },
+    {
+      "pdf_page": 9,
+      "printed_folio": "9",
+      "status": "EXAMINADA",
+      "subjects": "Draft labor code at Ministry of Justice; MEC employee welfare; missing ruby in Sao Paulo; full-page Super Ford diesel advertisement.",
+      "unrelated_clock_labels": [],
+      "disambiguation": "No space-related article",
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "report_attribution": null,
+      "orbital_constraint_active": false
+    },
+    {
+      "pdf_page": 10,
+      "printed_folio": "10",
+      "status": "EXAMINADA",
+      "subjects": "Rotten railroad ties derail passenger train near Austin/Nova Iguacu; road works; Belford Roxo child homicide; local police; lottery and commercial advertising.",
+      "unrelated_clock_labels": [
+        "7h30 = train derailment at kilometre 42 in Nova Iguacu",
+        "17h = Belford Roxo family incident"
+      ],
+      "disambiguation": "Rail transport disaster is not satellite descent",
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "report_attribution": null,
+      "orbital_constraint_active": false
+    },
+    {
+      "pdf_page": 11,
+      "printed_folio": "11",
+      "status": "EXAMINADA",
+      "subjects": "Samba congress at MAM; Niteroi civil-service proposals; state firefighter incorporation; fishing yields in Ceara; Pan Am flights advertisement.",
+      "unrelated_clock_labels": [
+        "10h30/11h30 and 21h05 = Pan Am scheduled flights to Mexico",
+        "21h = samba congress schedule"
+      ],
+      "disambiguation": "Plane advertising and samba meetings do not timestamp Conde",
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "report_attribution": null,
+      "orbital_constraint_active": false
+    },
+    {
+      "pdf_page": 12,
+      "printed_folio": null,
+      "status": "EXAMINADA",
+      "subjects": "Furnas nature excursion on foot; Leopoldina railroad labor dispute; Rio and national weather forecast; Capuava refinery management statement; advertising.",
+      "unrelated_clock_labels": [
+        "8h30 = Furnas excursion assembly"
+      ],
+      "disambiguation": "Meteorology concerns weather of named cities, not eyewitness sky observation in Conde",
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "report_attribution": null,
+      "orbital_constraint_active": false
+    },
+    {
+      "pdf_page": 13,
+      "printed_folio": "13",
+      "status": "EXAMINADA",
+      "subjects": "Official Santa Claus feature; evicted families in Guanabara; children's charity campaign; Petrobras hydroelectric plan; TV Excelsior serial advertisement.",
+      "unrelated_clock_labels": [
+        "21h = TV Excelsior Os Intocaveis entertainment broadcast"
+      ],
+      "disambiguation": "TV Excelsior advertisement is not TV Tupi news nor an event time",
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "report_attribution": null,
+      "orbital_constraint_active": false
+    },
+    {
+      "pdf_page": 14,
+      "printed_folio": "14",
+      "status": "EXAMINADA",
+      "subjects": "Economy and finance; UN meeting in Prague; South America capitalization notices; railway proposals; Air Force Directorate of Engineering public tenders for Fortaleza and Santos Dumont airports.",
+      "unrelated_clock_labels": [
+        "13h/14h = bid submission/opening schedules, not fall time"
+      ],
+      "disambiguation": "Ministry of Aeronautics notices concern airport construction only",
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "report_attribution": null,
+      "orbital_constraint_active": false
+    },
+    {
+      "pdf_page": 15,
+      "printed_folio": "15",
+      "status": "EXAMINADA",
+      "subjects": "Currency and securities quotations; agricultural commodities; prospective helicopter factory in Itu; Santo Domingo dollar exchange market; sea and air passenger advertising.",
+      "unrelated_clock_labels": [
+        "11 November = foreign exchange quotation date",
+        "21 November = maritime passenger schedule"
+      ],
+      "disambiguation": "Helicopter factory and Santo Domingo forex report are not space-object reports",
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "report_attribution": null,
+      "orbital_constraint_active": false
+    }
+  ],
+  "scope": {
+    "edition": "21659",
+    "previously_examined_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "newly_examined_pages": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "cumulatively_examined_first_caderno_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "remaining_unread_first_caderno_pages": [],
+    "first_caderno_fully_examined": true,
+    "second_caderno_read": false,
+    "entire_edition_fully_examined": false,
+    "global_negative_asserted": false,
+    "other_editions_21660_21661": "CUSTODIED_SECTION_MAPPED_NOT_VISUALLY_READ"
+  },
+  "conclusion": {
+    "classification": "EIGHT_PAGE_LOCAL_NEGATIVE_21659_FIRST_CADERNO_COMPLETED",
+    "conde_event_hour_literal": null,
+    "independent_eyewitness": null,
+    "report_independence_from_tupi_fbis_diarios_associados": "UNDETERMINED",
+    "excludes_norad_528_or_637": false,
+    "next_action": "Read edition 21660 PDF first-caderno pages 1-12 and edition 21661 PDF first-caderno pages 1-13; second cadernos only on explicit space/astronautics signal or new Elefante order."
+  }
+}
