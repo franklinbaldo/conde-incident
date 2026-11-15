@@ -1,0 +1,36 @@
+name: CGEO-67 newspaper lexical passage adjudication
+on:
+  pull_request:
+    paths:
+      - 'research/editorial/cgeo67_uh_lexical_adjudication_20261115.json'
+      - 'tools/cgeo67_uh_lexical_adjudication_validate.py'
+      - 'tests/test_cgeo67_uh_lexical_adjudication.py'
+      - '.github/workflows/cgeo67-uh-lexical-adjudication.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'research/editorial/cgeo67_uh_lexical_adjudication_20261115.json'
+      - 'tools/cgeo67_uh_lexical_adjudication_validate.py'
+      - 'tests/test_cgeo67_uh_lexical_adjudication.py'
+      - '.github/workflows/cgeo67-uh-lexical-adjudication.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact commit and input blobs
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+          git hash-object research/editorial/cgeo64_null_narrative_prereg_20261114.json | grep -qx 0d13d9359080699e5f8402ca9b7014d7f1f6d59a
+      - name: Verify admissibility and negative controls under normal and optimized Python
+        run: |
+          python3 tools/cgeo67_uh_lexical_adjudication_validate.py
+          python3 -m unittest discover -s tests -p 'test_cgeo67_uh_lexical_adjudication.py' -v
+          python3 -O -m unittest discover -s tests -p 'test_cgeo67_uh_lexical_adjudication.py' -v
