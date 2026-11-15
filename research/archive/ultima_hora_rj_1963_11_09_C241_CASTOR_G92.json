@@ -1,0 +1,84 @@
+{
+  "schema": "conde.press_visual_review/v1",
+  "id": "C241-CASTOR-G92",
+  "issue": 871,
+  "reviewed_utc": "2026-11-15",
+  "source": {
+    "publication": "Última Hora (Rio)",
+    "collection": "386030",
+    "edition": "04200",
+    "date_from_cover": "1963-11-09",
+    "pdf_pages": 16,
+    "url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04200.pdf",
+    "sha256": "320aeb075b99fc6f2884904d9e1aa801b9d3f6be2b131ded30093caaaa6ce352",
+    "bytes": 10778040,
+    "parent_review": "research/archive/ultima_hora_rj_1963_11_09_C241_CASTOR_G91.json"
+  },
+  "method": {
+    "executor": "Ifro",
+    "tool": "pdftoppm + Pillow",
+    "dpi": 190,
+    "source_hash_rechecked": true,
+    "pdf_rendered_again": true,
+    "region_protocol": "FULL_WIDTH_3_OVERLAPPING_BANDS",
+    "visual_tiles": 3,
+    "band_y_fractions": [
+      [
+        0,
+        0.36
+      ],
+      [
+        0.29,
+        0.71
+      ],
+      [
+        0.68,
+        1
+      ]
+    ],
+    "ocr_as_negative": false,
+    "review": "DIRECT_VISUAL_WHOLE_PAGE_ARTICLE_SCALE",
+    "review_limitation": "Inspection of page sectors and identification of printed topics; no independent confirmation of journalistic claims"
+  },
+  "pages": [
+    {
+      "pdf_page": 4,
+      "printed_page": 4,
+      "page_status": "EXAMINADA",
+      "source_scope": "ONLY_PDF_PAGE_4",
+      "regions_seen": [
+        "top_full_width",
+        "middle_full_width",
+        "bottom_full_width"
+      ],
+      "editorial_sections": [
+        "Convocação do Congresso Esconde Escândalo de Bilhões",
+        "Flávio Tavares, Informa de Brasília: Caminho do Impeachment é Manobra de Bastidores",
+        "JK Mostra Hoje Sua Plataforma em Minas",
+        "Mala Diplomática: Brasil Quer Crédito de 200 Milhões de Marcos: Bonn",
+        "Economia & Finanças: CP Fará Críticas à Aliança na Reunião do CIES",
+        "Congresso: UDN Desfecha Obstrução Violenta Contra Governo Federal",
+        "Carta do Embaixador Lincoln Gordon",
+        "Jornais & Problemas, Octávio Malta: Planejamento (Reportagem de Bolso) I",
+        "Retrato Sem Retoque, Adalgisa Nery: Sair do Caos"
+      ],
+      "page_negative_for_conde_event_report": true,
+      "independent_event_hour": null,
+      "independent_witness": null,
+      "disambiguation": "Noticiário de Congresso, economia, política federal, diplomacia, planejamento e colunismo político. A referência à Bahia/Conde como ocorrência local com objeto caído não foi identificada na página 4; as datas políticas e econômicas não são hora do evento. Nenhuma notícia sobre queda de esfera, satélite ou balão em Conde identificada nesta página."
+    }
+  ],
+  "interpretation": {
+    "new_historical_event_time": null,
+    "fbis_clock": "UNRESOLVED",
+    "orbit_exclusion_licensed": false,
+    "theta_changed": false,
+    "complete_edition_negative": false,
+    "nov10_special_edition": "NOT_ESTABLISHED",
+    "pdf_pages_with_new_page_level_negative": [
+      4
+    ],
+    "stop_criterion_met": false
+  },
+  "limitations": "Negativo apenas da página PDF/impressa 4. A página 8 segue ILEGÍVEL_PARCIAL e a edição de 16 páginas não está certificada integralmente. A ausência de edição regular no domingo 10/11 não prova inexistência de especial. Sem hora independente, os 34 cruzamentos 528/637 permanecem condicionais."
+}
