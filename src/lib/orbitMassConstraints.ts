@@ -201,9 +201,16 @@ export function ballisticFromMassScenario(
   if (geometry.historicalGeometryAuthenticated)
     throw new RangeError('Cannot claim authenticated 1963 projected area from this scenario');
   const m = scenario.massesKg[geometry.object];
+  const areaOverMassM2Kg = area / m;
+  const cdAreaOverMassM2Kg = cd * areaOverMassM2Kg;
+  // All scenario inputs may be finite while their drag proxy overflows,
+  // underflows to zero, or otherwise becomes unusable by the propagator.
+  if (!Number.isFinite(areaOverMassM2Kg) || areaOverMassM2Kg <= 0 ||
+      !Number.isFinite(cdAreaOverMassM2Kg) || cdAreaOverMassM2Kg <= 0)
+    throw new RangeError('Finite positive ballistic geometry required');
   return {
-    object: geometry.object, areaOverMassM2Kg: area / m,
-    cdAreaOverMassM2Kg: cd * area / m,
+    object: geometry.object, areaOverMassM2Kg,
+    cdAreaOverMassM2Kg,
     historicalConstraintActive: false,
     budgetConsistent: audit.mathematicallyConsistent,
     provenance: geometry.geometrySource + ' | GCAT C61 conditional '+scenario.basis,
@@ -250,14 +257,18 @@ export function conditionalProjectedAreaEnvelope(input: {
     throw new RangeError('Exactly six named mass, B and Cd bounds required');
   const { massMinKg: mLo, massMaxKg: mHi, bMinM2Kg: bLo, bMaxM2Kg: bHi,
     cdMin: cdLo, cdMax: cdHi } = input;
+  // Even incomplete source calibration must reject invalid supplied bounds.
+  if (mLo !== null) positive(mLo,'lower mass');
+  if (mHi !== null) positive(mHi,'upper mass');
+  if (bLo !== null) nonnegative(bLo,'lower B');
+  if (bHi !== null) nonnegative(bHi,'upper B');
+  if (cdLo !== null) positive(cdLo,'lower Cd');
+  if (cdHi !== null) positive(cdHi,'upper Cd');
   if (mLo === null || mHi === null || bLo === null || bHi === null ||
       cdLo === null || cdHi === null)
     return {areaMinM2:null,areaMaxM2:null,
       historicalConstraintActive:false as const,
       reason:'Mass, B and Cd are not jointly calibrated'};
-  positive(mLo,'lower mass');positive(mHi,'upper mass');
-  nonnegative(bLo,'lower B');nonnegative(bHi,'upper B');
-  positive(cdLo,'lower Cd');positive(cdHi,'upper Cd');
   if (mLo>mHi || bLo>bHi || cdLo>cdHi)
     throw new RangeError('Ordered mass, B and Cd ranges required');
   const areaMinM2=bLo*mLo/cdHi;
@@ -281,15 +292,16 @@ export function conditionalCircularProjectedDiameter(
 ) {
   if (geometryModel !== 'EXPLICIT_EQUIVALENT_CIRCULAR_PROJECTION')
     throw new RangeError('Projected shape must be explicitly declared');
+  if (areaMinM2 !== null) nonnegative(areaMinM2,'lower projected area');
+  if (areaMaxM2 !== null) nonnegative(areaMaxM2,'upper projected area');
   if (areaMinM2 === null || areaMaxM2 === null)
     return {minDiameterM:null,maxDiameterM:null,historicalConstraintActive:false as const};
-  nonnegative(areaMinM2,'lower projected area');
-  nonnegative(areaMaxM2,'upper projected area');
   if (areaMinM2>areaMaxM2)
     throw new RangeError('Inverted projected-area bounds');
   return {
-    minDiameterM:Math.sqrt(4*areaMinM2/Math.PI),
-    maxDiameterM:Math.sqrt(4*areaMaxM2/Math.PI),
+    // Divide before the square root: 4*A can overflow for finite A.
+    minDiameterM:2*Math.sqrt(areaMinM2/Math.PI),
+    maxDiameterM:2*Math.sqrt(areaMaxM2/Math.PI),
     historicalConstraintActive:false as const,
   };
 }

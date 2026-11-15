@@ -281,3 +281,31 @@ test('G81: declared retained payload imposes a tracked-mass floor even with unco
   assert.equal(uncertain.trackedTotalSupremumKg,null);
   assert.equal(uncertain.historicalConstraintActive,false);
 });
+
+
+test('G82: finite area must yield finite equivalent-circle diameter',()=>{
+  const area=Number.MAX_VALUE;
+  const d=conditionalCircularProjectedDiameter(
+    area,area,'EXPLICIT_EQUIVALENT_CIRCULAR_PROJECTION');
+  assert.ok(Number.isFinite(d.minDiameterM));
+  assert.ok(Number.isFinite(d.maxDiameterM));
+  assert.equal(d.minDiameterM,d.maxDiameterM);
+  assert.ok(Math.abs(d.minDiameterM/(2*Math.sqrt(area/Math.PI))-1)<1e-12);
+  assert.equal(d.historicalConstraintActive,false);
+});
+
+test('G82: finite positive geometry must not produce infinite ballistic drag',()=>{
+  const s=scenario({massesKg:{527:900,528:1e-310,529:226}});
+  assert.equal(auditMassBudgetScenario(s).mathematicallyConsistent,true);
+  assert.throws(()=>ballisticFromMassScenario(s,geometry({
+    projectedAreaM2:1,dragCoefficient:2,
+  })),RangeError);
+});
+
+test('G82: missing calibration does not hide invalid supplied numeric bounds',()=>{
+  assert.throws(()=>conditionalProjectedAreaEnvelope({
+    massMinKg:-1,massMaxKg:null,bMinM2Kg:null,bMaxM2Kg:null,cdMin:null,cdMax:null,
+  }),RangeError);
+  assert.throws(()=>conditionalCircularProjectedDiameter(
+    -1,null,'EXPLICIT_EQUIVALENT_CIRCULAR_PROJECTION'),RangeError);
+});
