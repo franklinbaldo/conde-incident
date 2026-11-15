@@ -1,0 +1,110 @@
+{
+  "schema": "conde.press_visual_review/v1",
+  "id": "C241-CASTOR-G88",
+  "date_reviewed": "2026-11-15",
+  "source": {
+    "publication": "Última Hora (Rio)",
+    "edition": "04200",
+    "cover_date": "1963-11-09",
+    "collection": "386030",
+    "url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04200.pdf",
+    "sha256": "320aeb075b99fc6f2884904d9e1aa801b9d3f6be2b131ded30093caaaa6ce352",
+    "parent_manifest": "research/archive/ultima_hora_rj_1963_11_09_10_C241_CASTOR_G86.json"
+  },
+  "method": {
+    "executor": "Ifro",
+    "pdf_tool": "pdftoppm",
+    "dpi": 190,
+    "segments": "PAGE_UPPER_HALF_AND_LOWER_HALF",
+    "inspection": "HUMAN_VISUAL_WITH_EMBEDDED_TEXT_ONLY_AS_AUXILIARY",
+    "working_directory": "/root/castor-g88"
+  },
+  "pages": [
+    {
+      "pdf_page": 1,
+      "printed_page": 1,
+      "regions_inspected": [
+        "upper_half",
+        "lower_half"
+      ],
+      "topics": "Capa: mínimo de 50% e reestruturação do funcionalismo; tribunal militar de Jacarepaguá; notícias policiais",
+      "assessment": "Nenhum horário de Conde ou testemunha identificado nos trechos legíveis da capa",
+      "legibility": "PARTIAL_MICROTEXT_AND_PRINT_DEFECTS",
+      "column_by_column_complete": false,
+      "whole_page_negative_certified": false,
+      "independent_conde_event_time": null
+    },
+    {
+      "pdf_page": 2,
+      "printed_page": 2,
+      "regions_inspected": [
+        "upper_half",
+        "lower_half"
+      ],
+      "topics": "Jango sancionou o 13º para aposentados; bomba contra Sambagui; Justiça Militar; Aliança para o Progresso; Chico Anísio",
+      "assessment": "Noticiário doméstico e político, sem relato identificável de queda em Conde nos trechos legíveis",
+      "legibility": "PARTIAL_MICROTEXT_AND_PRINT_DEFECTS",
+      "column_by_column_complete": false,
+      "whole_page_negative_certified": false,
+      "independent_conde_event_time": null
+    },
+    {
+      "pdf_page": 3,
+      "printed_page": 3,
+      "regions_inspected": [
+        "upper_half",
+        "lower_half"
+      ],
+      "topics": "Funcionário devolve enxoval; crônica política de Berilo Dantas; multas dos bondes; coluna Na Hora H",
+      "assessment": "Bahia é mencionada como destino de viagem política, não como localização de objeto ou relato",
+      "legibility": "PARTIAL_MICROTEXT_AND_PRINT_DEFECTS",
+      "column_by_column_complete": false,
+      "whole_page_negative_certified": false,
+      "independent_conde_event_time": null
+    },
+    {
+      "pdf_page": 4,
+      "printed_page": 4,
+      "regions_inspected": [
+        "upper_half",
+        "lower_half"
+      ],
+      "topics": "Convocação do Congresso; Flávio Tavares; crédito externo, CPI e política econômica",
+      "assessment": "Ocorrências de 'esconde' no texto não são ocorrências do topônimo Conde; sem hora de queda nos trechos legíveis",
+      "legibility": "PARTIAL_MICROTEXT_AND_PRINT_DEFECTS",
+      "column_by_column_complete": false,
+      "whole_page_negative_certified": false,
+      "independent_conde_event_time": null
+    },
+    {
+      "pdf_page": 5,
+      "printed_page": 5,
+      "regions_inspected": [
+        "upper_half",
+        "lower_half"
+      ],
+      "topics": "Aumento para todo o funcionalismo da Guanabara; comércio; câmbio-negro; campanha médica",
+      "assessment": "Noticiário estadual e econômico; nenhum relato de objeto caído em Conde nas regiões legíveis",
+      "legibility": "PARTIAL_MICROTEXT_AND_PRINT_DEFECTS",
+      "column_by_column_complete": false,
+      "whole_page_negative_certified": false,
+      "independent_conde_event_time": null
+    }
+  ],
+  "interpretation": {
+    "independent_conde_event_time": null,
+    "contemporary_witness": null,
+    "fbis_clock": "UNRESOLVED",
+    "orbit_exclusion_licensed": false,
+    "theta_changed": false
+  },
+  "scope": {
+    "pages_high_resolution_reviewed": 5,
+    "edition_pages": 16,
+    "complete_edition_negative": false,
+    "nov10_special_edition": "NOT_ESTABLISHED",
+    "stop_criterion_met": false,
+    "unread_at_column_scale": "PDF PAGES 6-16 EXCEPT PARTS OF PAGE 6 G87; PAGES 1-5 STILL REQUIRE MICROTEXT RECHECK"
+  },
+  "next_step": "Revisit faint microtext in pages 1-5 when feasible; continue legible review of pages 6-16, adjudicating each article. Do not infer an independent event hour or an edition-wide negative from text extraction."
+}
