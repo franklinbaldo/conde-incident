@@ -1,0 +1,321 @@
+{
+  "schema": "conde.press_visual_review/v1",
+  "id": "C241-LONTRA-R88-UHR-CORE",
+  "issue": 871,
+  "assignment": "https://github.com/franklinbaldo/lontra/issues/10#issuecomment-6903302133",
+  "related_prior_custody": "research/archive/ultima_hora_rio_police_and_covers_LONTRA_R84.json",
+  "institution": "Fundação Biblioteca Nacional, Hemeroteca Digital Brasileira",
+  "scope": "Leitura focal de núcleos noticiosos atribuídos à Lontra, somente edições 04203 e 04204 (13–14/11/1963). A capa de cada uma já estava lida no R84 e não foi contabilizada como nova leitura.",
+  "method": {
+    "source": "PDFs originais custodiados no R84; tamanho e SHA-256 de ambos revalidados sobre bytes no Ifro",
+    "executor": "Ifro via SSH; Jatobá apenas orquestração com max_memory_mb=128",
+    "visual_review": "panorama de todas as páginas para localizar seções; quatro quadrantes de cada folha selecionada, 150 dpi, inspeção humana dos artigos",
+    "ocr_as_negative": false,
+    "source_date_is_not_event_time": true,
+    "sections": "política nacional, internacional/teletipo, policial, ciência; revisão pontual de publicidade e setor aeroviário para distinguir falsos positivos",
+    "negative_scope": "Apenas as páginas PDF declaradas EXAMINADA, nunca edição inteira nem outras páginas"
+  },
+  "issues": [
+    {
+      "edition": "04203",
+      "printed_date": "1963-11-13",
+      "url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04203.pdf",
+      "sha256": "cf7b090d711817421c81bc76faed5ec45cbd8e2d1f5efa7bd6d4537be6ec6612",
+      "bytes": 11178862,
+      "pdf_page_count": 16,
+      "prior_cover_page": 1,
+      "pages": [
+        {
+          "pdf_page": 2,
+          "printed_page": 2,
+          "facsimile_pdf_page": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04203.pdf#page=2",
+          "status": "EXAMINADA",
+          "review": "panorama_mais_quatro_quadrantes_150_dpi",
+          "topics_checked": [
+            "greve da Petrobras",
+            "política nacional",
+            "caso de passageira clandestina"
+          ],
+          "report_of_conde_ba": false,
+          "independent_event_hour": null,
+          "independent_witness": null,
+          "primary_orbital_measurement": false,
+          "interpretation_guard": "Nada sobre Conde, hora do fenômeno ou observador orbital."
+        },
+        {
+          "pdf_page": 3,
+          "printed_page": 3,
+          "facsimile_pdf_page": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04203.pdf#page=3",
+          "status": "EXAMINADA",
+          "review": "panorama_mais_quatro_quadrantes_150_dpi",
+          "topics_checked": [
+            "parecer sobre aluguéis",
+            "colunas Na Hora H e Por Trás da Cortina"
+          ],
+          "report_of_conde_ba": false,
+          "independent_event_hour": null,
+          "independent_witness": null,
+          "primary_orbital_measurement": false,
+          "interpretation_guard": "Horas nas colunas de rotina e política não descrevem o incidente."
+        },
+        {
+          "pdf_page": 4,
+          "printed_page": 4,
+          "facsimile_pdf_page": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04203.pdf#page=4",
+          "status": "EXAMINADA",
+          "review": "panorama_mais_quatro_quadrantes_150_dpi",
+          "topics_checked": [
+            "reforma administrativa",
+            "relação Congresso-Forças Armadas",
+            "diplomacia Brasil-França"
+          ],
+          "report_of_conde_ba": false,
+          "independent_event_hour": null,
+          "independent_witness": null,
+          "primary_orbital_measurement": false,
+          "interpretation_guard": "Ausência de referência ao episódio de Conde nas notícias examinadas."
+        },
+        {
+          "pdf_page": 5,
+          "printed_page": 5,
+          "facsimile_pdf_page": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04203.pdf#page=5",
+          "status": "EXAMINADA",
+          "review": "panorama_mais_quatro_quadrantes_150_dpi",
+          "topics_checked": [
+            "contas do governo da Guanabara",
+            "disputa judicial da refinaria Capuava",
+            "notícias legislativas"
+          ],
+          "report_of_conde_ba": false,
+          "independent_event_hour": null,
+          "independent_witness": null,
+          "primary_orbital_measurement": false,
+          "interpretation_guard": "Nomes de lugares e datas são de política e economia, não de queda de objeto."
+        },
+        {
+          "pdf_page": 6,
+          "printed_page": 6,
+          "facsimile_pdf_page": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04203.pdf#page=6",
+          "status": "EXAMINADA",
+          "review": "panorama_mais_quatro_quadrantes_150_dpi",
+          "topics_checked": [
+            "TELETIPO internacional ANSA/UPI/FP/PL/BNS/IF",
+            "Camboja",
+            "crise de gabinete italiano",
+            "notícia de aviação da Guatemala"
+          ],
+          "report_of_conde_ba": false,
+          "independent_event_hour": null,
+          "independent_witness": null,
+          "primary_orbital_measurement": false,
+          "interpretation_guard": "Aviação comercial não equivale a observação espacial ou a relato de Conde."
+        },
+        {
+          "pdf_page": 8,
+          "printed_page": 8,
+          "facsimile_pdf_page": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04203.pdf#page=8",
+          "status": "EXAMINADA",
+          "review": "panorama_mais_quatro_quadrantes_150_dpi",
+          "topics_checked": [
+            "polícia e CPI da Invernada",
+            "suposta gangue de carros",
+            "caso infantil em Belford Roxo"
+          ],
+          "report_of_conde_ba": false,
+          "independent_event_hour": null,
+          "independent_witness": null,
+          "primary_orbital_measurement": false,
+          "interpretation_guard": "A palavra queda em matéria policial infantil não descreve objeto vindo do céu; não confundir com Conde."
+        }
+      ],
+      "not_reviewed_pdf_pages": [
+        7,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ]
+    },
+    {
+      "edition": "04204",
+      "printed_date": "1963-11-14",
+      "url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04204.pdf",
+      "sha256": "445499302be534bf41712a9ef177e75658907200a0ceb689d3c917a8f2fa3f7a",
+      "bytes": 12652710,
+      "pdf_page_count": 18,
+      "prior_cover_page": 1,
+      "pages": [
+        {
+          "pdf_page": 2,
+          "printed_page": 2,
+          "facsimile_pdf_page": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04204.pdf#page=2",
+          "status": "EXAMINADA",
+          "review": "panorama_mais_quatro_quadrantes_150_dpi",
+          "topics_checked": [
+            "acordo trabalhista de Capuava",
+            "monopólio do petróleo",
+            "policiais e bombeiros",
+            "política nacional"
+          ],
+          "report_of_conde_ba": false,
+          "independent_event_hour": null,
+          "independent_witness": null,
+          "primary_orbital_measurement": false,
+          "interpretation_guard": "Horário em cupom de sorteio e outros anúncios não é hora do fenômeno."
+        },
+        {
+          "pdf_page": 3,
+          "printed_page": 3,
+          "facsimile_pdf_page": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04204.pdf#page=3",
+          "status": "EXAMINADA",
+          "review": "panorama_mais_quatro_quadrantes_150_dpi",
+          "topics_checked": [
+            "encampação de refinarias",
+            "colunas Na Hora H e Por Trás da Cortina",
+            "cidadão detido por fraude",
+            "anúncio de cruzeiro"
+          ],
+          "report_of_conde_ba": false,
+          "independent_event_hour": null,
+          "independent_witness": null,
+          "primary_orbital_measurement": false,
+          "interpretation_guard": "Expressão hora H é nome de coluna, não um observável de Conde."
+        },
+        {
+          "pdf_page": 4,
+          "printed_page": 4,
+          "facsimile_pdf_page": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04204.pdf#page=4",
+          "status": "EXAMINADA",
+          "review": "panorama_mais_quatro_quadrantes_150_dpi",
+          "topics_checked": [
+            "expulsão de Falcão do PSD",
+            "congresso e esquerda",
+            "diplomacia Brasil-França",
+            "coluna política e economia"
+          ],
+          "report_of_conde_ba": false,
+          "independent_event_hour": null,
+          "independent_witness": null,
+          "primary_orbital_measurement": false,
+          "interpretation_guard": "Não há referência a fenômeno aéreo baiano nas colunas."
+        },
+        {
+          "pdf_page": 5,
+          "printed_page": 5,
+          "facsimile_pdf_page": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04204.pdf#page=5",
+          "status": "EXAMINADA",
+          "review": "panorama_mais_quatro_quadrantes_150_dpi",
+          "topics_checked": [
+            "contas de Lacerda",
+            "parlamento estadual",
+            "publicidade imobiliária",
+            "noticiário da Guanabara"
+          ],
+          "report_of_conde_ba": false,
+          "independent_event_hour": null,
+          "independent_witness": null,
+          "primary_orbital_measurement": false,
+          "interpretation_guard": "Foto do Rio e elementos gráficos são publicidade, não cenário de Conde."
+        },
+        {
+          "pdf_page": 6,
+          "printed_page": 6,
+          "facsimile_pdf_page": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04204.pdf#page=6",
+          "status": "EXAMINADA",
+          "review": "panorama_mais_quatro_quadrantes_150_dpi",
+          "topics_checked": [
+            "TELETIPO ANSA/UPI/FP/PL/BNS/IF",
+            "golpe no Iraque",
+            "diplomacia",
+            "nota sobre hipótese de vida no cosmos"
+          ],
+          "report_of_conde_ba": false,
+          "independent_event_hour": null,
+          "independent_witness": null,
+          "primary_orbital_measurement": false,
+          "interpretation_guard": "A nota 'Jornalista Diz Que Há Vida no Cosmos' discute especulação sobre Marte e inteligência extraterrestre; não é reportagem, testemunho ou hora do caso de Conde."
+        },
+        {
+          "pdf_page": 8,
+          "printed_page": 8,
+          "facsimile_pdf_page": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04204.pdf#page=8",
+          "status": "EXAMINADA",
+          "review": "panorama_mais_quatro_quadrantes_150_dpi",
+          "topics_checked": [
+            "COMAL e comércio de café",
+            "sorteio de Natal do jornal",
+            "publicidade"
+          ],
+          "report_of_conde_ba": false,
+          "independent_event_hour": null,
+          "independent_witness": null,
+          "primary_orbital_measurement": false,
+          "interpretation_guard": "Página 8 NÃO é a seção policial nesta edição. Datas e horários são de sorteios ou anúncios."
+        },
+        {
+          "pdf_page": 10,
+          "printed_page": 10,
+          "facsimile_pdf_page": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04204.pdf#page=10",
+          "status": "EXAMINADA",
+          "review": "panorama_mais_quatro_quadrantes_150_dpi",
+          "topics_checked": [
+            "seção policial: bebês supostamente trocados na Pró-Matre",
+            "crime e investigação do Guandu",
+            "quadrilha de automóveis",
+            "ocorrências locais"
+          ],
+          "report_of_conde_ba": false,
+          "independent_event_hour": null,
+          "independent_witness": null,
+          "primary_orbital_measurement": false,
+          "interpretation_guard": "Referência a corpo no rio Guandu e outras ocorrências não descreve Conde nem queda orbital."
+        },
+        {
+          "pdf_page": 16,
+          "printed_page": 6,
+          "facsimile_pdf_page": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04204.pdf#page=16",
+          "status": "EXAMINADA",
+          "review": "panorama_mais_quatro_quadrantes_150_dpi",
+          "topics_checked": [
+            "segundo caderno: aeronautas e aeroviários",
+            "plantão militar e FAB",
+            "coluna sindical",
+            "roteiro de bares e aeroportos"
+          ],
+          "report_of_conde_ba": false,
+          "independent_event_hour": null,
+          "independent_witness": null,
+          "primary_orbital_measurement": false,
+          "interpretation_guard": "Página PDF 16 traz PÁGINA IMPRESSA 6. Notícia sindical/voos e aeronaves da FAB não são medição nem relato de objeto orbital."
+        }
+      ],
+      "not_reviewed_pdf_pages": [
+        7,
+        9,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18
+      ]
+    }
+  ],
+  "result": {
+    "new_full_page_reviews": 14,
+    "edition_04203": 6,
+    "edition_04204": 8,
+    "source_facsimiles_verified": 2,
+    "independent_conde_hour": null,
+    "independent_conde_witness": null,
+    "primary_satellite_tracking_observation": null,
+    "negative_limited_to_reviewed_pages": true,
+    "scientific_update": "Nenhuma hora independente ou observável instrumental recuperado nas páginas efetivamente examinadas."
+  },
+  "stop": "Lote exclusivo 04203/04204 encerrado. Não examinar 04202 da responsabilidade do Castor, salvo novo despacho; não simular órbitas sem dado primário."
+}
