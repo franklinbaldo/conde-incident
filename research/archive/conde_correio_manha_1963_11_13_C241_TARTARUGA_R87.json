@@ -1,0 +1,141 @@
+{
+  "schema": "conde.local_clock_press_nucleus_increment/v1",
+  "id": "C241-TARTARUGA-R87",
+  "checked_utc_date": "2026-11-16",
+  "research_issue": 871,
+  "predecessor_manifest": "research/archive/conde_correio_manha_1963_11_14_C241_TARTARUGA_R86.json",
+  "previous_integral_manifest": "research/archive/conde_correio_manha_1963_11_13_C241_TARTARUGA_R85.json",
+  "source": {
+    "collection": "Hemeroteca Digital BN, Correio da Manhã, coleção 089842",
+    "edition": "21660",
+    "printed_date": "1963-11-13",
+    "url": "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21660.pdf",
+    "pdf_pages": 26,
+    "original_bytes": 20333897,
+    "original_sha256": "497cd71b643be03f908e26c2e99100fd24908fb026ca33c8e1667d49ee897bc0",
+    "first_caderno_pdf_pages": [
+      1,
+      12
+    ],
+    "second_caderno_starts_pdf_page": 13
+  },
+  "method": {
+    "heavy_executor": "Ifro (pdftoppm 3200px high; Pillow image crops)",
+    "control_plane": "Jatobá dispatched SSH only; max_memory_mb=128 explicit",
+    "custody": "Original file reused from /var/tmp/lagarto-r75-20261115/21660.pdf; sha256sum, wc -c and pdfinfo confirmed on 2026-11-16.",
+    "visual_exam": "Each of the four PDF pages rendered separately at 3200px height, viewed in its entirety through six contiguous crops in a 2-column x 3-row grid; 24 crops; full-page coverage, not OCR.",
+    "new_pages_fully_examined": 4,
+    "new_visual_crops": 24,
+    "page_negative_scope_only": true
+  },
+  "readings": [
+    {
+      "pdf_page": 9,
+      "printed_folio": "8",
+      "status": "EXAMINADA",
+      "subjects": "Turistas poderão trazer automóveis; coluna dos sindicatos; educação estadual, imprensa sindical e policiais da Guanabara.",
+      "unrelated_clock_labels": [
+        "14h–17h = horário comercial de um anúncio de venda de apartamentos; não é hora do evento de Conde",
+        "19h = assembleia sindical na coluna de notas, sem relação com fenômeno celeste"
+      ],
+      "disambiguation": "Os números e horários são administrativos ou publicitários. Nenhuma reportagem sobre a queda em Conde foi identificada nesta página.",
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "orbital_constraint_active": false
+    },
+    {
+      "pdf_page": 10,
+      "printed_folio": "9",
+      "status": "EXAMINADA",
+      "subjects": "Governo da Guanabara, veículos multados, famílias contra despejo, educação, poliomielite, seminário da ONU e grade TV-Tupi Canal 6 de quarta-feira.",
+      "unrelated_clock_labels": [
+        "16h55, 17h50, 18h45, 19h20, 19h56, 20h20, 20h50, 21h25, 22h15, 23h00 e 23h45 = programas TV-Tupi de 13/11/1963, não horário da transmissão de 8/11 nem do fenômeno"
+      ],
+      "disambiguation": "A expressão publicitária HOJE, 4.ª FEIRA e o cabeçalho de 13 de novembro fixam a grade Tupi no próprio dia 13/11; não transferir para o relógio FBIS/Tupi de 8/11 (#886).",
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "orbital_constraint_active": false
+    },
+    {
+      "pdf_page": 11,
+      "printed_folio": "10",
+      "status": "EXAMINADA",
+      "subjects": "Falências e concordatas, transportes, anel rodoviário de Belo Horizonte, economia, sindicatos rurais, crédito e mercado financeiro.",
+      "unrelated_clock_labels": [
+        "Datas de editais e assembleias societárias = prazos comerciais, não hora de reentrada"
+      ],
+      "disambiguation": "As menções a transporte dizem respeito à logística terrestre. Não se identificou notícia de Conde ou observação astronômica.",
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "orbital_constraint_active": false
+    },
+    {
+      "pdf_page": 12,
+      "printed_folio": "11",
+      "status": "EXAMINADA",
+      "subjects": "Economia e Finanças: câmbio, Bolsa de Valores, mercadorias, seguro de crédito à exportação, comunicados societários, anúncios e balanço bancário.",
+      "unrelated_clock_labels": [
+        "9h30–11h30 e 14h–16h = horário do atendimento de acionistas da Mesbla",
+        "18h–20h30 = programação de curso de administração financeira"
+      ],
+      "disambiguation": "Os horários e datas são comerciais e de expediente. Nenhum vínculo documental com a suposta queda baiana.",
+      "conde_article": null,
+      "conde_event_hour_literal": null,
+      "independent_eyewitness": null,
+      "orbital_constraint_active": false
+    }
+  ],
+  "scope": {
+    "edition": "21660",
+    "previously_integral_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "newly_integral_pages": [
+      9,
+      10,
+      11,
+      12
+    ],
+    "cumulatively_integral_first_caderno_pages": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "remaining_first_caderno_pages": [],
+    "first_caderno_fully_examined": true,
+    "second_caderno_fully_examined": false,
+    "entire_edition_fully_examined": false,
+    "negative_only_for_examined_first_caderno": true,
+    "global_edition_negative_asserted": false,
+    "reviewed_panorama_predecessor": "C241-TARTARUGA-R86",
+    "next_allocated_batch": "Correio da Manhã 21661 (14/11/1963), páginas PDF 1–13, leitura visual integral em quadrantes; notícia científica da p.7 já reconhecida mas sem hora"
+  },
+  "conclusion": {
+    "classification": "FIRST_CADERNO_21660_FULLY_VISUALLY_EXAMINED_NO_CONDE_LOCAL_HOUR",
+    "conde_event_hour_literal": null,
+    "independent_event_eyewitness": null,
+    "source_independence_of_event": "UNDETERMINED",
+    "orbital_constraints_for_528_or_637": false,
+    "independent_time_found": false,
+    "note": "Não extrapolar o negativo do 1º caderno para as 26 páginas da edição; fora do núcleo permanece não lido."
+  }
+}
