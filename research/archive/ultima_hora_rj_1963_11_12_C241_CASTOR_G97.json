@@ -1,0 +1,218 @@
+{
+  "schema": "conde.press_visual_review/v1",
+  "id": "C241-CASTOR-G97",
+  "issue": 871,
+  "reviewed_utc": "2026-11-15",
+  "assigned_lot": "Última Hora Rio 04202 (12/11/1963), núcleo interno, castor#10 por Elefante 15/11/2026",
+  "source": {
+    "publication": "Última Hora (Rio)",
+    "collection": "386030",
+    "edition": "04202",
+    "date_from_cover": "1963-11-12",
+    "pdf_pages": 18,
+    "url": "https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04202.pdf",
+    "sha256": "4a78697979a3f71c8e28bb94e40a2d2c3c44532ab6e8180a47ee985680f69e94",
+    "bytes": 12325627,
+    "prior_cover_review": "research/archive/ultima_hora_rio_police_and_covers_LONTRA_R84.json"
+  },
+  "method": {
+    "executor": "Ifro via Jatobá SSH controlador com max_memory_mb=128",
+    "source_download_http_status": 200,
+    "source_hash_rechecked": true,
+    "tool": "pdftoppm + Pillow, leitura visual direta",
+    "pdf_panorama_all_18_pages": true,
+    "visual_quadrants_each_reviewed_page": 4,
+    "quadrant_protocol": "OVERLAPPING_LEFT_RIGHT_AND_TOP_BOTTOM",
+    "quadrant_x": [
+      [
+        0,
+        0.55
+      ],
+      [
+        0.45,
+        1
+      ]
+    ],
+    "quadrant_y": [
+      [
+        0,
+        0.57
+      ],
+      [
+        0.43,
+        1
+      ]
+    ],
+    "ocr_as_negative": false
+  },
+  "pages": [
+    {
+      "pdf_page": 2,
+      "printed_page": 2,
+      "section": "OPINIAO_PUBLICA_POLITICA",
+      "page_status": "EXAMINADA",
+      "source_scope": "ONLY_PDF_PAGE_2",
+      "render_dpi": 105,
+      "visual_quadrants": 4,
+      "visual_quadrants_overlap": true,
+      "headlines_or_sections": [
+        "Contra a Encampação Das Refinarias Particulares",
+        "A Sovietização do Petróleo",
+        "Ameaça Subversiva",
+        "Caminho da Insensatez",
+        "Perigo Maior"
+      ],
+      "disambiguation": "Editorial de política petrolífera de Capaúva, com reproduções assinadas de outros jornais. Não é registro de objeto ou fenômeno espacial na Bahia.",
+      "page_negative_for_conde_event_report": true,
+      "independent_event_hour": null,
+      "independent_witness": null
+    },
+    {
+      "pdf_page": 4,
+      "printed_page": 4,
+      "section": "POLITICA_NACIONAL",
+      "page_status": "EXAMINADA",
+      "source_scope": "ONLY_PDF_PAGE_4",
+      "render_dpi": 120,
+      "visual_quadrants": 4,
+      "visual_quadrants_overlap": true,
+      "headlines_or_sections": [
+        "Quatro Mil Trabalhadores de Petróleo Decidiram Entrar em Greve à Zero Hora",
+        "400 Mil Famílias Ameaçadas de Despejo se Aluguéis Aumentarem",
+        "PTB Vence Disparado as Eleições no Rio Grande",
+        "Eremildo Deixou a Direção da FNFI Insultando o Presidente"
+      ],
+      "disambiguation": "O termo 'zero hora' marca a greve dos trabalhadores de petróleo de Manguinhos/Capaúva. Não é uma hora de Conde.",
+      "page_negative_for_conde_event_report": true,
+      "independent_event_hour": null,
+      "independent_witness": null
+    },
+    {
+      "pdf_page": 5,
+      "printed_page": 5,
+      "section": "POLITICA_GUANABARA",
+      "page_status": "EXAMINADA",
+      "source_scope": "ONLY_PDF_PAGE_5",
+      "render_dpi": 120,
+      "visual_quadrants": 4,
+      "visual_quadrants_overlap": true,
+      "headlines_or_sections": [
+        "Oposição Lança Repto Para Comprovação Das Contas do Governador",
+        "São Paulo Parou Para Levar Último Adeus a Dona Pérola",
+        "Coordenador do Racionamento: Crise de Energia Foi Superada",
+        "Guanabara Dia a Dia"
+      ],
+      "disambiguation": "Atos legislativos, falecimento de Pérola Byington e horários de racionamento elétrico não são fenômeno de Conde.",
+      "page_negative_for_conde_event_report": true,
+      "independent_event_hour": null,
+      "independent_witness": null
+    },
+    {
+      "pdf_page": 6,
+      "printed_page": 6,
+      "section": "POLITICA_NACIONAL_INTERNACIONAL",
+      "page_status": "EXAMINADA",
+      "source_scope": "ONLY_PDF_PAGE_6",
+      "render_dpi": 155,
+      "visual_quadrants": 4,
+      "visual_quadrants_overlap": true,
+      "headlines_or_sections": [
+        "Jango: Brasil Não Tolera Mais a Sangria do Comércio Exterior",
+        "JK Acha Difícil Que Congresso Dê Reformas",
+        "Jornais & Problemas: Caso de Polícia? Não, de Polícia",
+        "Minerios ao Abandono",
+        "Jean Paul Anglais Deve Ser Considerado Persona Non Grata"
+      ],
+      "disambiguation": "Horários de voo e cerimônias do presidente João Goulart são itinerário político, não data do suposto evento.",
+      "page_negative_for_conde_event_report": true,
+      "independent_event_hour": null,
+      "independent_witness": null
+    },
+    {
+      "pdf_page": 8,
+      "printed_page": 8,
+      "section": "INTERNACIONAL_TELETIPO_CIENCIA",
+      "page_status": "EXAMINADA",
+      "source_scope": "ONLY_PDF_PAGE_8",
+      "render_dpi": 155,
+      "visual_quadrants": 4,
+      "visual_quadrants_overlap": true,
+      "headlines_or_sections": [
+        "Fracassam as Gestões de Harriman em Buenos Aires",
+        "TELETIPO (Condensado da ANSA, UPI, FP, PL, BNS e IF)",
+        "Soviéticos Planejam Veículo Tripulado Para Ir a Marte",
+        "Brasil na ONU Defende a Desnuclearização da AL",
+        "Decretada Anistia Total no Vietname"
+      ],
+      "disambiguation": "A referência ao veículo tripulado soviético é declaração sobre possível viagem futura a Marte/Vênus, não observação nem reentrada dos objetos 528/637 em Conde. Horários em aviso do Posto Del Castilho referem-se a atendimento.",
+      "page_negative_for_conde_event_report": true,
+      "independent_event_hour": null,
+      "independent_witness": null
+    },
+    {
+      "pdf_page": 9,
+      "printed_page": 9,
+      "section": "POLITICA_ECONOMICA",
+      "page_status": "EXAMINADA",
+      "source_scope": "ONLY_PDF_PAGE_9",
+      "render_dpi": 105,
+      "visual_quadrants": 4,
+      "visual_quadrants_overlap": true,
+      "headlines_or_sections": [
+        "Esforço do Governo Federal é Desesperado Para Assegurar a Continuidade das Obras Prioritárias do Desenvolvimento Econômico"
+      ],
+      "disambiguation": "Demais áreas são publicidade de rádio, filmes e grade da TV Excelsior. As horas 19h50, 20h15, 21h, 22h e 24h pertencem à programação televisiva, não ao evento de Conde.",
+      "page_negative_for_conde_event_report": true,
+      "independent_event_hour": null,
+      "independent_witness": null
+    },
+    {
+      "pdf_page": 10,
+      "printed_page": 10,
+      "section": "POLICIAL",
+      "page_status": "EXAMINADA",
+      "source_scope": "ONLY_PDF_PAGE_10",
+      "render_dpi": 155,
+      "visual_quadrants": 4,
+      "visual_quadrants_overlap": true,
+      "headlines_or_sections": [
+        "Caçada Aos Gangsters Internacionais Dos Impalas",
+        "Miguelito Fura o Cêrco Abandonando Mulher Grávida e Dois Filhos Nas Mãos da Polícia",
+        "Vigia Esfaqueado Morreu Quando Ia Denunciar o Crime",
+        "Passarela de Mães na Polícia Para Esclarecer Troca de Bebês",
+        "Mãe e Filha Morreram Com Gás e Anciã Enforcou-se",
+        "Paulista Descarrila Ferindo 30 Passageiros"
+      ],
+      "disambiguation": "Crimes no Rio, troca de bebês e descarrilamento ferroviário são ocorrências distintas; sem notícia de objeto em Conde.",
+      "page_negative_for_conde_event_report": true,
+      "independent_event_hour": null,
+      "independent_witness": null
+    }
+  ],
+  "scope": {
+    "pdf_cover_page_1": "ALREADY_REVIEWED_BY_LONTRA_R84",
+    "nucleus_internal_pages": [
+      2,
+      4,
+      5,
+      6,
+      8,
+      9,
+      10
+    ],
+    "other_pages": "PANORAMA_ONLY_NOT_EXAMINED",
+    "whole_edition_negative": false,
+    "complete_core_lot": true,
+    "complete_corpus_negative": false
+  },
+  "interpretation": {
+    "new_historical_event_time": null,
+    "fbis_clock": "UNRESOLVED",
+    "fbis_2330_gmt_branch_utc": "1963-11-08T23:30:00Z",
+    "fbis_2330_rio_local_branch_utc": "1963-11-09T01:30:00Z",
+    "orbit_exclusion_licensed": false,
+    "theta_changed": false,
+    "moonwatch_confirmed_instrument": false
+  },
+  "limitations": "Negativos restritos às sete páginas PDF do núcleo interno visualmente examinadas; capa p1 fora deste lote, já custodiada e examinada pela Lontra R84. Panorama das demais páginas não autoriza negativo de edição. Nenhum horário de anúncio, greve, cerimônia, TV ou transmissão foi transformado em hora do evento. Não houve observação orbital nem modificação do G83."
+}
