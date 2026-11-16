@@ -1,0 +1,17 @@
+---
+type: Guide
+title: C241-G97 - Última Hora Rio 04202, núcleo noticioso interno de 12/11/1963
+description: Exame visual do núcleo interno de 04202, sete páginas delimitadas e nenhuma hora histórica independente do fenômeno de Conde.
+---
+
+# C241-G97: exame do núcleo interno da edição 04202
+
+**Escopo e ordem:** por despacho do 🐘 Elefante na [Castor #10](https://github.com/franklinbaldo/castor/issues/10#issuecomment-6903301451), esta entrega cobre **somente** o núcleo interno da *Última Hora* carioca de **12/11/1963**. A capa, PDF p. 1, fora examinada pela 🦦 Lontra ([custódia L84](../archive/ultima_hora_rio_police_and_covers_LONTRA_R84.json)). O panorama das 18 páginas identificou as seções pertinentes: política e opinião petrolífera p. 2; política nacional p. 4–6; agências, internacional e ciência p. 8; economia e política governamental p. 9; polícia p. 10. Páginas de classificados, publicidade, cinema, variedades e esportes não recebem negativo integral.
+
+**Original primário:** [FBN, edição 04202, coleção 386030](https://hemeroteca-pdf.bn.gov.br/386030/per386030_1963_04202.pdf), 18 páginas, **12.325.627 bytes**, SHA-256 **`4a78697979a3f71c8e28bb94e40a2d2c3c44532ab6e8180a47ee985680f69e94`**, confirmado após HTTP 200 no Ifro em 15/11/2026. O PDF foi renderizado com `pdftoppm`; todas as páginas receberam panorama, e as sete páginas nucleares foram vistas diretamente por **quatro quadrantes ampliados e sobrepostos** cada, sem recorrer ao OCR para estabelecer negativo. Resolução de leitura: 105 dpi para p. 2/9, 120 para p. 4/5, 155 para p. 6/8/10. Os títulos, regiões, classificação e ressalvas estão no [manifesto G97](../archive/ultima_hora_rj_1963_11_12_C241_CASTOR_G97.json).
+
+**Desambiguações relevantes:** na p. 4, a expressão **“à zero hora”** descreve o início da *greve dos trabalhadores de petróleo*, não a hora de queda em Conde. Na p. 8, **“Soviéticos planejam veículo tripulado para ir a Marte”** é notícia de projeto futurista, não detecção de satélite ou objeto encontrado na Bahia; a coluna TELETIPO noticia eventos internacionais alheios. Na p. 9, os horários 19h50, 20h15, 21h, 22h e 24h pertencem à grade da **TV Excelsior**, e não podem ser convertidos em hora de observação. Horários de viagens de Jango (p. 6) e de atendimento de um posto na Guanabara (p. 8) igualmente não dizem respeito ao caso. A p. 10 trata de crimes cariocas, troca de bebês e acidente ferroviário; não de reentrada espacial.
+
+**Conclusão restrita:** páginas PDF **2, 4, 5, 6, 8, 9 e 10 = `EXAMINADA`**, com negativo somente para notícias identificadas do evento de Conde, hora independente e testemunha nessas páginas. A capa já era objeto de leitura separada da Lontra. **O núcleo interno designado ao Castor está encerrado; não está demonstrado negativo do fascículo de 18 páginas nem de todos os jornais.** Notícias secundárias, impressões parcialmente legíveis e panorama não são um censo de todas as palavras do corpus.
+
+**Consequência física:** o relógio FBIS/Tupi de [#886](https://github.com/franklinbaldo/conde-incident/issues/886) continua `UNRESOLVED` (GMT ou civil da Guanabara); não há hora do suposto fenômeno. A geometria de [#870](https://github.com/franklinbaldo/conde-incident/issues/870) e as 34 janelas condicionais G83 permanecem sem exclusão de NORAD 528/637 (`orbit_exclusion_licensed=false`, `THETA_UNCHANGED`). Moonwatch/WSRN [#1093](https://github.com/franklinbaldo/conde-incident/issues/1093) não acrescentou observação instrumental. **Parar aqui**, conforme a direção, sem refazer simulações.
