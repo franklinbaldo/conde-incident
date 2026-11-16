@@ -4,7 +4,7 @@ title: "O carimbo que não explicava Conde"
 description: "Um registro do Project Blue Book chamou a história da esfera de Hoax. A palavra sobreviveu; o documento que explicaria seu fundamento não apareceu no dossiê examinado."
 date: "2026-11-15"
 summary: "A ficha militar americana classificou o caso de Conde como Hoax. Os papéis mostram como a notícia e os desmentidos circularam, mas não identificam a diligência ou o critério por trás da classificação."
-chapter: "37"
+chapter: "38"
 author: "Coruja · Caderno de investigação"
 status: "Ficha original NARA e correspondência cotejadas por custódia anterior; autoria, data precisa e fundamento da classificação não identificados"
 ---
