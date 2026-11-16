@@ -1,0 +1,225 @@
+{
+  "schema": "conde.local_clock_press_nucleus_increment/v1",
+  "id": "C241-TARTARUGA-R88",
+  "checked_utc_date": "2026-11-16",
+  "research_issue": 871,
+  "predecessor_manifest": "research/archive/conde_correio_manha_1963_11_13_C241_TARTARUGA_R87.json",
+  "prior_panorama_manifest": "research/archive/conde_correio_manha_1963_11_14_C241_TARTARUGA_R86.json",
+  "source": {
+    "collection": "Hemeroteca Digital BN - Correio da Manhã 089842",
+    "edition": "21661",
+    "printed_date": "1963-11-14",
+    "url": "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21661.pdf",
+    "pdf_pages": 28,
+    "original_bytes": 21320531,
+    "original_sha256": "d3b6301c192f8513c8a9a53a06d18eb47fc82b76fda45b6438bc1f416e8854e0",
+    "first_caderno_pdf_pages": [
+      1,
+      13
+    ],
+    "additional_science_pdf_page": 21
+  },
+  "method": {
+    "controller": "Jatobá via SSH, max_memory_mb=128 explícito",
+    "heavy_executor": "Ifro (pdftoppm, Pillow; arquivo FBN pré-existente, hash revalidado)",
+    "render": "14 páginas a 3200 px e seis recortes por página, malha 2x3, sobreposição horizontal 7% e vertical 5%; 84 recortes visualmente examinados, sem inferir de OCR.",
+    "page_coverage": "PDF 1–13 do primeiro caderno; PDF 21 do segundo caderno (coluna Aviação e Astronáutica). PDF 14–20 e 22–28 apenas panorama para triagem, não leitura integral."
+  },
+  "readings": [
+    {
+      "pdf_page": 1,
+      "printed_folio": "1",
+      "status": "EXAMINADA_VISUALMENTE_INTEGRAL",
+      "subjects": "Manchete previdência rural, greves paulistas, política internacional; nenhuma ocorrência celeste de Conde.",
+      "conde_event_hour_literal": null,
+      "conde_independent_eyewitness": null,
+      "conde_orbital_object": null
+    },
+    {
+      "pdf_page": 2,
+      "printed_folio": "2",
+      "status": "EXAMINADA_VISUALMENTE_INTEGRAL",
+      "subjects": "Reforma eleitoral, despedida de Cecília Gueiros, colunas políticas e publicidade; rua Conde de Bonfim é endereço carioca, não município baiano.",
+      "conde_event_hour_literal": null,
+      "conde_independent_eyewitness": null,
+      "conde_orbital_object": null
+    },
+    {
+      "pdf_page": 3,
+      "printed_folio": "3",
+      "status": "EXAMINADA_VISUALMENTE_INTEGRAL",
+      "subjects": "Vacinação Sabin, diplomacia, finanças e coluna editorial sobre Capuava; não há observação de queda em Conde.",
+      "conde_event_hour_literal": null,
+      "conde_independent_eyewitness": null,
+      "conde_orbital_object": null
+    },
+    {
+      "pdf_page": 4,
+      "printed_folio": "4",
+      "status": "EXAMINADA_VISUALMENTE_INTEGRAL",
+      "subjects": "Desatomização latino-americana, crise política iraquiana, Vaticano e diplomacia; 'atômica' não é indício de objeto em Conde.",
+      "conde_event_hour_literal": null,
+      "conde_independent_eyewitness": null,
+      "conde_orbital_object": null
+    },
+    {
+      "pdf_page": 5,
+      "printed_folio": "5",
+      "status": "EXAMINADA_VISUALMENTE_INTEGRAL",
+      "subjects": "Casa própria de músicos, Previdência Rural e protestos de alunos do Colégio Pedro II; horários sem relação com queda.",
+      "conde_event_hour_literal": null,
+      "conde_independent_eyewitness": null,
+      "conde_orbital_object": null
+    },
+    {
+      "pdf_page": 6,
+      "printed_folio": "6",
+      "status": "EXAMINADA_VISUALMENTE_INTEGRAL",
+      "subjects": "Relações franco-brasileiras, transportes e política; menções à Bahia são políticas, não testemunho local.",
+      "conde_event_hour_literal": null,
+      "conde_independent_eyewitness": null,
+      "conde_orbital_object": null
+    },
+    {
+      "pdf_page": 7,
+      "printed_folio": "7",
+      "status": "EXAMINADA_VISUALMENTE_INTEGRAL",
+      "subjects": "Matéria 'CIENTISTA NÃO CRÊ EM NOVO METEORITO': Walter da Silva Curvello comenta relato indireto da Bahia e exemplifica meteoritos passados, inclusive Tunguska. É fala independente do especialista, não testemunho ocular independente nem hora em Conde.",
+      "conde_event_hour_literal": null,
+      "conde_independent_eyewitness": null,
+      "conde_orbital_object": null
+    },
+    {
+      "pdf_page": 8,
+      "printed_folio": "8",
+      "status": "EXAMINADA_VISUALMENTE_INTEGRAL",
+      "subjects": "Anúncio TV-Tupi canal 6 'Aventuras no Paraíso' hoje quinta-feira, 14/11, às 21h45; não é relógio de transmissão de Conde em 8/11. Outras notícias sobre comércio e mineração.",
+      "conde_event_hour_literal": null,
+      "conde_independent_eyewitness": null,
+      "conde_orbital_object": null
+    },
+    {
+      "pdf_page": 9,
+      "printed_folio": "9",
+      "status": "EXAMINADA_VISUALMENTE_INTEGRAL",
+      "subjects": "Lagoa em chamas em São Mateus, Espírito Santo, descrita em 'FOGO DA LAGOA NÃO SERIA DE PETRÓLEO'; evento geográfico distinto do suposto Conde/BA.",
+      "conde_event_hour_literal": null,
+      "conde_independent_eyewitness": null,
+      "conde_orbital_object": null
+    },
+    {
+      "pdf_page": 10,
+      "printed_folio": "10",
+      "status": "EXAMINADA_VISUALMENTE_INTEGRAL",
+      "subjects": "Carnaval, policiamento, obras na orla, TV Rio canal 13 'Rebelde' às 20h10; programação de 14/11, sem valor de relógio para Conde.",
+      "conde_event_hour_literal": null,
+      "conde_independent_eyewitness": null,
+      "conde_orbital_object": null
+    },
+    {
+      "pdf_page": 11,
+      "printed_folio": "11",
+      "status": "EXAMINADA_VISUALMENTE_INTEGRAL",
+      "subjects": "Matéria 'HOMENS-RÃS NADA ACHAM EM IGUAPE': segundo testemunhas, objeto metálico teria caído no Rio Peropava, região de Barra do Capivara, município de Iguape/SP, TARDE DE 29 DE OUTUBRO; Marinha não localizou fragmento. Caso distinto, não Conte/Conde em 8/11. Publicidade 'Espaçorama' da GE é TV.",
+      "conde_event_hour_literal": null,
+      "conde_independent_eyewitness": null,
+      "conde_orbital_object": null
+    },
+    {
+      "pdf_page": 12,
+      "printed_folio": "12",
+      "status": "EXAMINADA_VISUALMENTE_INTEGRAL",
+      "subjects": "Flash de transportes, comércio, finanças e balanços; 'pregão às 10h' é Bolsa de Valores.",
+      "conde_event_hour_literal": null,
+      "conde_independent_eyewitness": null,
+      "conde_orbital_object": null
+    },
+    {
+      "pdf_page": 13,
+      "printed_folio": "13",
+      "status": "EXAMINADA_VISUALMENTE_INTEGRAL",
+      "subjects": "Câmbio, bolsa, telegramas comerciais via Radional e avisos legais; sem relato local do fenômeno.",
+      "conde_event_hour_literal": null,
+      "conde_independent_eyewitness": null,
+      "conde_orbital_object": null
+    },
+    {
+      "pdf_page": 21,
+      "printed_folio": "7 (2º caderno)",
+      "status": "EXAMINADA_VISUALMENTE_INTEGRAL",
+      "subjects": "Segundo caderno, fólio impresso 7: coluna 'Aviação e Astronáutica' relata conferência de tráfego aéreo e informações de avião/transporte; nenhuma queda ou testemunho de Conde.",
+      "conde_event_hour_literal": null,
+      "conde_independent_eyewitness": null,
+      "conde_orbital_object": null
+    }
+  ],
+  "distinct_case": {
+    "pdf_page": 11,
+    "title": "HOMENS-RÃS NADA ACHAM EM IGUAPE",
+    "attribution": "SANTOS (Sucursal), Correio da Manhã",
+    "alleged_event_date": "1963-10-29",
+    "time_precision": "tarde (sem hora numérica)",
+    "location": "Rio Peropava, Barra do Capivara, Iguape, São Paulo, Brasil",
+    "source_assertion": "Segundo testemunhas, um objeto metálico teria se precipitado no rio; homens-rãs da Marinha não localizaram o alegado fragmento e suspenderam buscas.",
+    "possible_natures_attributed": "foguete, satélite artificial ou barco-sonda",
+    "source_independence_class": "SEPARATE_REPORTED_EVENT_WITH_UNNAMED_WITNESSES",
+    "conde_event": false,
+    "identified_norad_object": null,
+    "physical_recovery_confirmed": false,
+    "temporal_relation_to_conde": "10 dias antes de 8 de novembro; jamais fundir relatos de 29/10/Iguape e 8/11/Conde."
+  },
+  "expert_comment": {
+    "pdf_page": 7,
+    "title": "CIENTISTA NÃO CRÊ EM NOVO METEORITO",
+    "expert": "Walter da Silva Curvello",
+    "classification": "INDEPENDENT_EDITORIAL_EXPERT_COMMENT_NOT_PRIMARY_EYEWITNESS",
+    "conde_municipality_explicit": false,
+    "event_hour_literal": null,
+    "named_event_witness": null,
+    "unrelated_clock": "Menção de '4 horas e 47 minutos' à descrição de meteorito histórico, não ao evento baiano."
+  },
+  "broadcast_crosscheck": {
+    "pdf_page": 8,
+    "channel": "TV-Tupi Canal 6",
+    "scheduled_time": "21h45",
+    "advertised_day": "1963-11-14",
+    "program": "Aventuras no Paraíso",
+    "identifies_1963_11_08_coverage": false,
+    "conde_event_hour_literal": null
+  },
+  "other_science_page": {
+    "pdf_page": 21,
+    "printed_folio": "7 (2º caderno)",
+    "topic": "Conferência sobre Controle de Tráfego Aéreo na coluna Aviação e Astronáutica",
+    "conde_report": null
+  },
+  "scope": {
+    "new_pages_certified_integral": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      21
+    ],
+    "first_caderno_fully_examined": true,
+    "additional_science_page_fully_examined": true,
+    "entire_edition_fully_examined": false,
+    "second_caderno_fully_examined": false,
+    "global_edition_negative_asserted": false,
+    "independent_conde_local_time_found": false,
+    "independent_conde_eyewitness_found": false,
+    "conde_physical_recovery_confirmed": false,
+    "orbital_constraint_528_or_637_active": false,
+    "allocation_status": "21660 primeiro caderno e 21661 primeiro caderno integralmente examinados; segunda seção apenas triagem e p.21; aguardar nova decisão do Elefante em #871."
+  },
+  "conclusion": "Não se identificou hora local independente do suposto evento de Conde nas 14 páginas integralmente examinadas. Entrevista na p.7 não é observação independente; outra ocorrência alegada em Iguape/SP (29/10) não é a de Conde/BA. Nenhum vínculo físico NORAD 528/637 estabelecido."
+}

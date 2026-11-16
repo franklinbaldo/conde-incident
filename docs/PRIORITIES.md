@@ -8,7 +8,7 @@ description: Fila canônica de pesquisa, reavaliada pela direção de pesquisa a
 
 **Prioridades reavaliadas pela direção de pesquisa (🐘 Elefante) a cada rodada, por valor de informação; o dono (Franklin) pode mudá-las a qualquer momento.** A lista nasceu de uma conversa com o dono em 14/11/2026 sobre os defeitos daquele momento; ele delegou a reavaliação à direção de pesquisa, que avisa o dono do que mudou e por quê. Este arquivo é a fila canônica do projeto. Instrução em chat isolado não substitui este arquivo.
 
-**Última reavaliação:** 15/11/2026 ~19h UTC (Conde `70888ac9`). A prioridade 1 continua sem hora, local ou testemunha de Conde em fonte fora dos Diários Associados: 42 das 209 páginas lidas por inteiro, todas negativas para hora (contagem conferida pelo 🦅 Gavião, G97). A ordem das prioridades não muda; esta reavaliação grava um **critério de parada** para a leitura (seção [Critério de parada](#critério-de-parada-da-leitura)): o núcleo noticioso de 9 a 14/11 (capa, política nacional, internacional e agências, policial, ciência), não as 209 páginas. Classificados, esporte, sociedade e suplementos não são lidos. Os lotes foram redistribuídos para cobrir esse núcleo. A [matriz G84](https://github.com/franklinbaldo/conde-incident/blob/main/research/statistics/C241_G84_DOCUMENT_DECISION_20261115.md) ([PR #1030](https://github.com/franklinbaldo/conde-incident/pull/1030)) sustenta a ordem: só uma **hora do fenômeno** em fonte independente separa 528 de 637; o relógio FBIS e os elementos de 1–8/11 sozinhos não decidem. Reavaliações anteriores: `git log -p docs/PRIORITIES.md`.
+**Última reavaliação:** 16/11/2026 ~03h UTC (Conde `20e27456`). **O núcleo noticioso de 9 a 14/11 foi lido por inteiro, com zero hora do fenômeno** ([denominador na #871](https://github.com/franklinbaldo/conde-incident/issues/871#issuecomment-6906090911)): três jornais (*Última Hora* NE e Rio, *Correio da Manhã*), cerca de 144 páginas do núcleo, 4 com trecho ilegível registrado. Achados, nenhum com hora, local preciso ou testemunha: o desmentido atribuído à FAB e ao governo baiano (*Correio* 10/11, p. 8), o comentário de Walter da Silva Curvello, do Museu Nacional (*Correio* 14/11, p. 7, [PR #1111](https://github.com/franklinbaldo/conde-incident/pull/1111)), e a crônica de Stanislaw (*Última Hora* NE 14/11, p. 7). Pelo [critério de parada](#critério-de-parada-da-leitura), a prioridade 1 passa a depender só da [#884](https://github.com/franklinbaldo/conde-incident/issues/884) (itens 2, 1 e 4) e a direção de pesquisa passa a **duas rodadas por dia** (decisão do dono, 15/11). A ordem das prioridades não muda. A [matriz G84](https://github.com/franklinbaldo/conde-incident/blob/main/research/statistics/C241_G84_DOCUMENT_DECISION_20261115.md) ([PR #1030](https://github.com/franklinbaldo/conde-incident/pull/1030)) sustenta a ordem: só uma **hora do fenômeno** em fonte independente separa 528 de 637; o relógio FBIS e os elementos de 1–8/11 sozinhos não decidem. Reavaliações anteriores: `git log -p docs/PRIORITIES.md`.
 
 **Pergunta central:** o que reduz a incerteza sobre a ligação entre o evento de Conde (BA, nov/1963) e os satélites (NORAD 528 = 1963-3B; rival 637 = 1963-35A)?
 
@@ -16,9 +16,9 @@ description: Fila canônica de pesquisa, reavaliada pela direção de pesquisa a
 
 | # | Frente | Issue | Responsável |
 |---|---|---|---|
-| 1 | Hora local do suposto evento em fonte fora dos Diários Associados (o *Diário de Notícias* de Salvador é dos Diários Associados desde 1943, R71, [PR #1009](https://github.com/franklinbaldo/conde-incident/pull/1009): serve para a cadeia, não como fonte independente). **Rota aberta: leitura integral, página por página, das edições pós-evento já custodiadas** da Hemeroteca Digital BN (acesso sem login a partir do Ifro): *Última Hora* NE/Recife 9–14/11 (765147, 00472–00477), *Última Hora* do Rio 9/11 (386030, 04200; 10/11 sem edição regular entre 04200 e 04201, especial não excluída), *Correio da Manhã* 9 e 10/11 (089842, 21657 e 21658). Cobertura, onde fica o noticiário e quem lê o quê: [seção abaixo](#ordem-de-leitura-da-prioridade-1). Censo de acesso entregue pelo 🦎 Lagarto ([PR #1057](https://github.com/franklinbaldo/conde-incident/pull/1057); última passada R75, [PR #1065](https://github.com/franklinbaldo/conde-incident/pull/1065)): *Correio da Manhã* 12–14/11 = 21659–21661 pela capa, não lidas; 11/11 sem edição comprovada; catálogos de *Jornal do Brasil*, *Última Hora* do Rio, *Tribuna da Imprensa* e *A Noite* em 403; nenhuma coleção elegível de São Paulo ou Salvador achada (não prova inexistência). Parada: núcleo noticioso de 9–14/11 lido por inteiro ([critério](#critério-de-parada-da-leitura)), artigo como unidade; negativo de página não é negativo de edição. **Depende do dono** ([#884](https://github.com/franklinbaldo/conde-incident/issues/884)): *A Tarde* e *Jornal da Bahia* (item 2), *O Globo* de 8–9/11 (item 1), anexos do A-628 (item 4). Já lido: Blue Book NARA 302531012 (campo `Local` em branco, PR #1009) | [#871](https://github.com/franklinbaldo/conde-incident/issues/871) | 🦀 Caranguejo, 🦫 Castor, 🐢 Tartaruga, 🦌 Cervo; lote fechado com 🦦 Lontra (seção abaixo) |
+| 1 | Hora local do suposto evento em fonte fora dos Diários Associados (o *Diário de Notícias* de Salvador é dos Diários Associados desde 1943, R71, [PR #1009](https://github.com/franklinbaldo/conde-incident/pull/1009): serve para a cadeia, não como fonte independente). **Rota aberta: lida** (16/11/2026): núcleo de 9–14/11 de *Última Hora* NE/Recife (765147, 00472–00477), *Última Hora* do Rio (386030, 04200–04204) e *Correio da Manhã* (089842, 21657–21661, 1º caderno e astronáutica), zero hora ([denominador](https://github.com/franklinbaldo/conde-incident/issues/871#issuecomment-6906090911); [seção abaixo](#ordem-de-leitura-da-prioridade-1)). Não é negativo de edição nem prova de ausência; nenhum jornal baiano. Censo de acesso do 🦎 Lagarto ([PR #1057](https://github.com/franklinbaldo/conde-incident/pull/1057), [PR #1065](https://github.com/franklinbaldo/conde-incident/pull/1065)): catálogos de *Jornal do Brasil*, *Tribuna da Imprensa* e *A Noite* em 403; nenhuma coleção elegível de São Paulo ou Salvador achada (não prova inexistência). **Depende do dono** ([#884](https://github.com/franklinbaldo/conde-incident/issues/884)): *A Tarde* e *Jornal da Bahia* (item 2), *O Globo* de 8–9/11 (item 1), anexos do A-628 (item 4). Já lido: Blue Book NARA 302531012 (campo `Local` em branco, PR #1009) | [#871](https://github.com/franklinbaldo/conde-incident/issues/871) | 🐢 Tartaruga recebe o que vier da #884; leitores do núcleo (🦀, 🦫, 🦦, 🦌) liberados |
 | 2 | Cruzamento das janelas do plano 528/637 com o limite superior do relato: convenção do `2330` FBIS (GMT ou hora da Guanabara, Decreto 52.700) e hora do roteiro Tupi de 8/11. As janelas já existem (#892, G76); falta o relógio. Pela matriz G84, o relógio só diz se a passagem do 528 de 08/11 ~23h43Z veio antes ou depois da transmissão; sozinho não separa 528 de 637 | [#886](https://github.com/franklinbaldo/conde-incident/issues/886) (relógio), [#870](https://github.com/franklinbaldo/conde-incident/issues/870) (janelas) | 🐙 Polvo; 🦫 Castor consome. Apoio do 🦎 Lagarto: 0 candidatos FBIS de novembro de 1963 em acervo aberto ([#886](https://github.com/franklinbaldo/conde-incident/issues/886#issuecomment-6888170176)); a rota é o item 5 da #884 |
-| 4 | Elementos orbitais de 1–8/11/1963 do 528/637 (Space-Track, SPADATS, RAE/SAO, registros soviéticos com data de 7–9/11) | [#396](https://github.com/franklinbaldo/conde-incident/issues/396), [#545](https://github.com/franklinbaldo/conde-incident/issues/545) | Em espera enquanto 🐢 Tartaruga e 🦦 Lontra estão na #871; retomar quando a #871 tiver resposta ou quando chegar o item 3 da #884 (Space-Track) |
+| 4 | Elementos orbitais de 1–8/11/1963 do 528/637 (Space-Track, SPADATS, RAE/SAO, registros soviéticos com data de 7–9/11) | [#396](https://github.com/franklinbaldo/conde-incident/issues/396), [#545](https://github.com/franklinbaldo/conde-incident/issues/545) | Em espera: retomar com hora nova na #871 ou com o item 3 da #884 (Space-Track) |
 
 
 ### Janela autorizada: observações amadoras de 1963 (15/11/2026)
@@ -41,22 +41,7 @@ Bloqueios que só o dono destrava (login, acervo pago, pedido a acervo, consulta
 
 ## Ordem de leitura da prioridade 1
 
-Estado em 15/11/2026 ~19h UTC (Conde `70888ac9`). "Integral" é página lida coluna por coluna (`EXAMINADA` ou `LIDO_INTEGRAL_*`); panorama, recorte e triagem lexical não contam. Números são páginas do PDF; o fólio impresso pode diferir (00472: PDF 3 = p. 7 e PDF 4 = p. 3, CGEO-78). Núcleo = páginas que o critério de parada exige.
-
-| Jornal, edição (data) | Págs. | Integral | Ilegível em parte | Núcleo por ler |
-|---|---|---|---|---|
-| *Última Hora* NE 00472 (9/11) | 10 | 1, 2, 3, 5, 7, 8, 10 | 4, 6, 9 | nenhum |
-| *Última Hora* NE 00473 (10/11) | 18 | 1, 4, 5, 6 | | nenhum |
-| *Última Hora* NE 00474 (11/11) | 10 | 1, 2, 3, 6 | | 4 |
-| *Última Hora* NE 00475 (12/11) | 10 | 1, 4, 5, 6, 7 | | nenhum |
-| *Última Hora* NE 00476 (13/11) | 10 | nenhuma | | 1, 4, 5, 6 |
-| *Última Hora* NE 00477 (14/11) | 10 | 7 | | 1, 4, 5, 6 |
-| *Última Hora* Rio 04200 (9/11) | 16 | 6, 7, 9, 13 | 8 | 1, 2, 4 |
-| *Correio da Manhã* 21657 (9/11) | 28 | 1–8, 21 | | 9 até o fim do 1º caderno (provavelmente 12) |
-| *Correio da Manhã* 21658 (10/11) | 97 | 1–8 | | 9 até o fim do 1º caderno (extensão a mapear) |
-| **Total das 209** | **209** | **42** | **4** | |
-
-Fora das 209, entram no núcleo: *Última Hora* Rio 04201 (11/11) p. 1, 2, 4, 6, 8, e *Correio da Manhã* 21659–21661 (12–14/11), 1º caderno; edições identificadas pela capa, não custodiadas nem lidas. *Última Hora* Rio 04202–04204 (12–14/11) identificadas pela capa e custodiadas ([PR #1098](https://github.com/franklinbaldo/conde-incident/pull/1098)); entram no núcleo, interior ainda não lido.
+**Concluída em 16/11/2026 ~03h UTC** (Conde `20e27456`): todas as páginas do núcleo `EXAMINADA` ou `ILEGÍVEL_PARCIAL`, zero hora do fenômeno. Tabela por jornal, edição e página, achados e limites no [comentário de fechamento](https://github.com/franklinbaldo/conde-incident/issues/871#issuecomment-6906090911). A tabela de andamento anterior está no histórico do arquivo. Fica abaixo, para quem voltar a ler com evidência nova, onde fica o noticiário.
 
 **Onde fica o noticiário** (panoramas e leituras R68–R79, CGEO-76 a 81, G86 a G91, R81):
 
@@ -75,33 +60,20 @@ Decisão da direção de pesquisa em 15/11/2026 ~19h UTC. A leitura das ediçõe
 
 Mapear cadernos (cabeçalho e fólio de cada página do PDF) não é leitura e pode ser feito de uma vez; serve para delimitar o 1º caderno.
 
-**Divisão** (cada leitor pode contestar no seu recado):
-
-| Leitor | Lote, nesta ordem | Depois |
-|---|---|---|
-Estado em 15/11/2026 ~23h UTC (decisão do dono): *Última Hora* NE, *Correio* 21657–21659 e *Última Hora* Rio 04200–04201 completos no núcleo. Falta:
-
-| Leitor | Lote fechado | Depois |
-|---|---|---|
-| 🐢 Tartaruga ([tartaruga#9](https://github.com/franklinbaldo/tartaruga/issues/9)) | *Correio* 21660 PDF 5–12; 21661 PDF 1–13 | parar |
-| 🦫 Castor ([castor#10](https://github.com/franklinbaldo/castor/issues/10)) | *Última Hora* Rio 04202 (12/11): política nacional, internacional/teletipo, policial, ciência | parar; sem acesso ao PDF, `NOT_RUN` na #871 e a 04202 passa à 🦦 |
-| 🦦 Lontra ([lontra#10](https://github.com/franklinbaldo/lontra/issues/10)) | *Última Hora* Rio 04203 e 04204 (13–14/11), mesmas seções | parar |
+**Divisão:** encerrada em 16/11/2026. Lotes entregues por 🦀 Caranguejo, 🐢 Tartaruga, 🦫 Castor, 🦦 Lontra e 🦌 Cervo; não há lote novo. Hora candidata que apareça em fonte nova vai à #871 e reabre a leitura só no mesmo jornal (item 4 do critério).
 
 Método único, o do 🦀 (CGEO-73/76): SHA do PDF original; página renderizada vista por inteiro em quadrantes ampliados; artigo como unidade; `EXAMINADA` ou `ILEGÍVEL_PARCIAL` com o trecho; OCR só como apoio. Artigo sobre Conde, Bahia, objeto caído, satélite, esfera ou balão: título, página, crédito e, se houver, hora, local e testemunha literais. Hora candidata vai primeiro à #871.
 
 ## Se a sua frente depende da fila do dono
 
-A prioridade 2 e a parte baiana da prioridade 1 esperam documento que só o dono obtém ([#884](https://github.com/franklinbaldo/conde-incident/issues/884)); a leitura das edições custodiadas da prioridade 1 está aberta. Antes de declarar uma frente dependente só do dono, confira se toda rota aberta foi lida por inteiro, não só em panorama. Se a sua frente está nessa situação:
+A prioridade 2 e a parte baiana da prioridade 1 esperam documento que só o dono obtém ([#884](https://github.com/franklinbaldo/conde-incident/issues/884)); a leitura das edições custodiadas da prioridade 1 terminou em 16/11 (núcleo, zero hora), e a prioridade 1 inteira depende agora do dono. Antes de declarar uma frente dependente só do dono, confira se toda rota aberta foi lida por inteiro, não só em panorama. Se a sua frente está nessa situação:
 
 1. **Não fabrique fatia.** Nova sensibilidade, novo contador zerado ou nova busca no mesmo acervo fechado não reduzem a incerteza.
 2. **Registre o negativo ou o bloqueio uma vez**, na issue da frente, com a evidência (URL, status HTTP, guia do acervo). Se o bloqueio for algo que só o dono destrava, diga qual item da #884 cobre ou proponha um item.
 3. **Escolha da lista abaixo** ou **encerre a rodada com nota curta** ("frente bloqueada por #884 item N; nada novo"). Encerrar sem PR é resultado válido.
 
-**Lontra e Cervo:** entregaram os lotes fechados de 15/11 ~17h UTC ([PR #1082](https://github.com/franklinbaldo/conde-incident/pull/1082), [PR #1081](https://github.com/franklinbaldo/conde-incident/pull/1081)); recebem novo lote em 15/11 ~19h UTC (seção acima).
+Trabalho aberto e não bloqueado (16/11/2026 ~03h UTC):
 
-Trabalho aberto e não bloqueado (15/11/2026 ~19h UTC):
-
-- Prioridade 1: leitura do núcleo das edições de 9–14/11, na divisão da seção acima, até o critério de parada; quem estiver livre e tiver acesso à Hemeroteca pede um lote na #871, sem pegar página já atribuída.
 - Fichas de linha narrativa da 🦉 Coruja que não dependam de fonte bloqueada (exemplo entregue: ficha J, carimbo `Hoax` do Blue Book, [PR #1016](https://github.com/franklinbaldo/conde-incident/pull/1016)); [#885](https://github.com/franklinbaldo/conde-incident/issues/885).
 - Migração para o grafo cumulativo ([#88](https://github.com/franklinbaldo/conde-incident/issues/88)) **apenas** de ocorrências ligadas às prioridades 1–3.
 - Auditoria retrospectiva do 🦅 Gavião em PRs já integradas das prioridades (como a G81, [PR #1017](https://github.com/franklinbaldo/conde-incident/pull/1017)).
