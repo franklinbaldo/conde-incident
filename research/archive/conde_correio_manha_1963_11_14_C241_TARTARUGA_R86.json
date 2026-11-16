@@ -1,0 +1,128 @@
+{
+  "schema": "conde.local_clock_press_documentary_find/v1",
+  "id": "C241-TARTARUGA-R86",
+  "checked_utc_date": "2026-11-16",
+  "issue": 871,
+  "predecessor_manifest": "research/archive/conde_correio_manha_1963_11_13_C241_TARTARUGA_R85.json",
+  "sources": [
+    {
+      "collection": "Hemeroteca Digital BN - Correio da Manhã 089842",
+      "edition": "21660",
+      "date": "1963-11-13",
+      "url": "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21660.pdf",
+      "pdf_pages": 26,
+      "bytes": 20333897,
+      "sha256": "497cd71b643be03f908e26c2e99100fd24908fb026ca33c8e1667d49ee897bc0",
+      "visual_panorama_pages": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "first_caderno_prior_integral_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "new_pages_certified_integral": []
+    },
+    {
+      "collection": "Hemeroteca Digital BN - Correio da Manhã 089842",
+      "edition": "21661",
+      "date": "1963-11-14",
+      "url": "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21661.pdf",
+      "pdf_pages": 28,
+      "bytes": 21320531,
+      "sha256": "d3b6301c192f8513c8a9a53a06d18eb47fc82b76fda45b6438bc1f416e8854e0",
+      "visual_panorama_pages": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "new_pages_certified_integral": []
+    }
+  ],
+  "method": {
+    "heavy_executor": "Ifro (PDF downloaded and rendered with pdftoppm)",
+    "control": "Jatobá SSH only, max_memory_mb=128 explicit",
+    "visual_evidence": "1800-pixel panoramas for all 17 listed pages; page 7 of edition 21661 additionally rendered at 4300 pixels and the relevant article cropped and read at high resolution. Panorama/target article check is not full page-by-page four-quadrant certification.",
+    "pdf_21661_local_copy": "/root/tartaruga-r86/cm_21661.pdf",
+    "pdf_21660_local_copy": "/root/tartaruga-r73/cm_21660.pdf",
+    "pdf_integrity_confirmed": true
+  },
+  "key_find": {
+    "edition": "21661",
+    "pdf_page": 7,
+    "printed_folio": "7",
+    "article_title": "CIENTISTA NÃO CRÊ EM NOVO METEORITO",
+    "subtitle": "O prof. Walter da Silva Curvello acha que é fantasia",
+    "attribution_printed": "Walter da Silva Curvello, do Museu Nacional, disse ao Correio da Manhã",
+    "event_mentioned": "Relato genérico de pessoas da Bahia que teriam visto a queda de algo semelhante a meteorito, disco-voador ou satélite artificial naquele Estado.",
+    "interpretation": "Entrevista/avaliação científica atribuída ao próprio jornal independente da cadeia editorial dos Diários Associados. A atribuição editorial da entrevista não fornece uma testemunha independente do fenômeno nem autentica o relato subjacente. A negativa do entrevistado é opinião, não prova de ausência de evento.",
+    "source_independence_class": "INDEPENDENT_EDITORIAL_EXPERT_COMMENT_NOT_PRIMARY_EYEWITNESS",
+    "conde_municipality_explicit": false,
+    "local_event_hour_literal": null,
+    "local_event_hour_basis": null,
+    "named_event_eyewitness": null,
+    "identified_norad_object": null,
+    "event_location_confirmed": null,
+    "report_of_physical_recovery": false,
+    "orbital_constraint_active": false
+  },
+  "other_relevant_articles": [
+    {
+      "edition": "21661",
+      "pdf_page": 9,
+      "printed_folio": "9",
+      "title": "FOGO DA LAGOA NÃO SERIA DE PETRÓLEO",
+      "geography": "São Mateus, Espírito Santo",
+      "context": "Lagoa em combustão; diz respeito ao Espírito Santo e não identifica queda de objeto em Conde, Bahia.",
+      "conde_time": null,
+      "independent_eye_witness": null
+    },
+    {
+      "edition": "21661",
+      "pdf_page": 8,
+      "printed_folio": "8",
+      "title": "Aventuras no Paraíso (publicidade TV-Tupi)",
+      "context": "Anúncio da programação regular da TV-Tupi de 14/11 às 21h45. Não é o relógio de uma emissão sobre Conde em 8/11.",
+      "conde_time": null,
+      "independent_eye_witness": null
+    },
+    {
+      "edition": "21660",
+      "pdf_page": 10,
+      "printed_folio": "9",
+      "title": "Grade da TV-Tupi",
+      "context": "Horários da programação de 13/11, sem ligação documental ao fenômeno de 8/11.",
+      "conde_time": null,
+      "independent_eye_witness": null
+    }
+  ],
+  "scope": {
+    "panorama_triage_not_integral": true,
+    "new_pages_certified_integral": [],
+    "all_core_pages_examined": false,
+    "negative_for_entire_editions": false,
+    "event_mentioned_in_21661": true,
+    "local_clock_independent_found": false,
+    "primary_witness_independent_found": false,
+    "do_not_exclude_528_or_637": true,
+    "next": "Informar a matéria da 21661 p. 7 à #871 e conferir os quadrantes de todas as páginas pendentes 21660 p.9-12 e 21661 p.1-13 antes de declarar o núcleo fechado."
+  }
+}
