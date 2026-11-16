@@ -1,5 +1,6 @@
 """C241-R86: the 14 Nov 1963 expert interview is not an independent event clock or eyewitness."""
 import copy
+import hashlib
 import json
 import unittest
 from pathlib import Path
@@ -9,6 +10,12 @@ FILE = ROOT / "research/archive/conde_correio_manha_1963_11_14_C241_TARTARUGA_R8
 EXPECTED_TITLE = "CIENTISTA NÃO CRÊ EM NOVO METEORITO"
 EXPECTED_ATTRIBUTION = "Walter da Silva Curvello, do Museu Nacional, disse ao Correio da Manhã"
 EXPECTED_PDF_SHA = "d3b6301c192f8513c8a9a53a06d18eb47fc82b76fda45b6438bc1f416e8854e0"
+EXPECTED_INTERPRETATION_SHA = "9e8f8b501bde863e9eae93a10d0e2148efb9f9d0d4be25a5fb123f9566c42d42"
+
+
+def interpretation_sha(document):
+    canonical = json.dumps(document, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
 
 def no_duplicates(pairs):
@@ -59,6 +66,7 @@ def validate(d):
     require(scope["event_mentioned_in_21661"] is True and scope["local_clock_independent_found"] is False
             and scope["primary_witness_independent_found"] is False
             and scope["do_not_exclude_528_or_637"] is True, "unsupported physics")
+    require(interpretation_sha(d) == EXPECTED_INTERPRETATION_SHA, "interpretation altered")
     return True
 
 
@@ -74,6 +82,15 @@ class TestR86(unittest.TestCase):
         fn(x)
         with self.assertRaises(ValueError):
             validate(x)
+
+    def test_false_interpretation(self):
+        self.mutate(lambda d: d["key_find"].__setitem__(
+            "interpretation", d["key_find"]["interpretation"]
+            + " A NASA confirmou a queda em Conde às 20h15."))
+
+    def test_false_unrelated_article(self):
+        self.mutate(lambda d: d["other_relevant_articles"][0].__setitem__(
+            "context", "Testemunha independente confirmou a queda em Conde às 20h15."))
 
     def test_false_hour(self):
         self.mutate(lambda d: d["key_find"].__setitem__("local_event_hour_literal", "20h15"))
