@@ -40,14 +40,27 @@ def validate(d, root=ROOT):
             manifest = json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=unique_pairs)
             if s["id"] == "SRC:R79":
                 actual = manifest["pdf_sha256"]
+                source_url = manifest["source_url"]
+                pdf_page = manifest["related_article"]["pdf_page"]
             elif s["id"] == "SRC:R86":
                 actual = manifest["sources"][1]["sha256"]
+                source_url = manifest["sources"][1]["url"]
+                pdf_page = manifest["key_find"]["pdf_page"]
             else:
                 actual = manifest["sources"][1]["sha256"]
+                source_url = manifest["sources"][1]["url"]
+                # Both satirical temporal phrases refer to the same audited page.
+                pages = {entry["pdf_page"] for entry in manifest["temporal_false_positives"]}
+                need(len(pages) == 1, "ambiguous satirical page")
+                pdf_page = pages.pop()
             need(actual == s["source_pdf_sha256"], "original manifest changed")
+            need(s["source_url"] == f"{source_url}#page={pdf_page}",
+                 "URL or page differs from original manifest")
         else:
             need(s["path"] is None and s["source_pdf_sha256"] is None and
-                 s["source_url"].endswith("#issuecomment-6906090911"), "unverified closure source")
+                 s["source_url"] == d["source_closure"] ==
+                 "https://github.com/franklinbaldo/conde-incident/issues/871#issuecomment-6906090911",
+                 "unverified closure source")
     need(sources[0]["editorial_family"] == sources[1]["editorial_family"] == "CORREIO_DA_MANHA",
          "same newspaper must share editorial family")
     claims = d["occurrences"]
@@ -187,6 +200,18 @@ class PressNucleusGraphTest(unittest.TestCase):
 
     def test_reject_false_editorial_independence(self):
         self.mutate(lambda d: d["sources"][1].__setitem__("editorial_family", "PRIMARY_INDEPENDENT"))
+
+    def test_reject_source_pdf_url_swap(self):
+        self.mutate(lambda d: d["sources"][0].__setitem__(
+            "source_url", d["sources"][1]["source_url"]))
+
+    def test_reject_source_pdf_page_swap(self):
+        self.mutate(lambda d: d["sources"][2].__setitem__(
+            "source_url", d["sources"][2]["source_url"].replace("#page=7", "#page=3")))
+
+    def test_reject_lookalike_search_closure(self):
+        self.mutate(lambda d: d["sources"][3].__setitem__(
+            "source_url", "https://example.invalid/#issuecomment-6906090911"))
 
     def test_reject_duplicate_json_key(self):
         with self.assertRaises(ValueError):
