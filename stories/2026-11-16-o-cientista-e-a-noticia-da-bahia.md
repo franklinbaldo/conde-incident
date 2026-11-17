@@ -19,7 +19,7 @@ O jornal identificava Curvello como integrante do **Museu Nacional**. Esse nome 
 
 Treze anos antes, em **30 de abril de 1950**, a primeira página do suplemento *Ciência para Todos*, de *A Manhã*, trazia o artigo **“COMETAS E METEOROS”**, assinado por Walter da Silva Curvello, também identificado com o Museu Nacional. [2]
 
-O título, a assinatura e a data permitem afirmar que Curvello já escrevia publicamente sobre cometas e meteoros. O conteúdo específico do artigo não foi transcrito na ficha de apuração; a notícia baiana apareceria treze anos depois.
+O título, a assinatura e a data são suficientes para estabelecer uma coisa: Curvello já escrevia publicamente sobre cometas e meteoros. A notícia baiana apareceria treze anos depois.
 
 Essa página antiga dá um antecedente ao nome que reaparece no jornal de 1963. A pergunta deixa de ser apenas quem era o professor: **qual informação concreta sobre a Bahia chegou até ele?**
 
