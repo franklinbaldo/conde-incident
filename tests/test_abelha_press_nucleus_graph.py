@@ -96,10 +96,26 @@ def validate(d, root=ROOT):
     need(len(pairs) == len(set(pairs)) == 20, "edge cardinality")
     need(all(a in ids and b in ids for a, b in pairs), "orphan graph edge")
     for e in edges:
-        if e["source"].startswith("LATENT:"):
-            need(e["relation"] == "PREMISE_NOT_ESTABLISHED", "unjustified latent premise")
-        elif e["source"].startswith("LEAN:"):
-            need(e["relation"] == "NOT_ACTIVATED", "unjustified simulation activation")
+        source, target, relation = e["source"], e["target"], e["relation"]
+        if source.startswith("SRC:"):
+            need(target.startswith("DOC:") and relation == "SOURCE_MANIFEST_OR_BOUNDED_AUDIT",
+                 "source edge must remain documentary, not instrumental")
+        elif source.startswith("DOC:"):
+            need(target.startswith("OCC:") and relation == "DOCUMENTS_CLAIM_OR_SEARCH_RESULT",
+                 "document edge must remain a claim, not a measurement")
+        elif source.startswith("OCC:"):
+            expected = {
+                "LATENT:CONDE:EVENT_HOUR": "DOES_NOT_IDENTIFY_EVENT_HOUR",
+                "LATENT:CONDE:PRIMARY_NEWS_INDEPENDENCE": "DOES_NOT_PROVE_PRIMARY_WITNESS",
+            }
+            need(target in expected and relation == expected[target],
+                 "press occurrence cannot promote a primary witness or event hour")
+        elif source.startswith("LATENT:"):
+            need(relation == "PREMISE_NOT_ESTABLISHED", "unjustified latent premise")
+        elif source.startswith("LEAN:"):
+            need(relation == "NOT_ACTIVATED", "unjustified simulation activation")
+        else:
+            need(False, "unknown edge source kind")
     for c in claims:
         need((c["source_id"], c["doc_id"]) in pairs and (c["doc_id"], c["id"]) in pairs, "broken occurrence path")
         need((c["id"], "LATENT:CONDE:EVENT_HOUR") in pairs, "lost clock dependency")
@@ -159,6 +175,15 @@ class PressNucleusGraphTest(unittest.TestCase):
 
     def test_reject_activated_relation_without_evidence(self):
         self.mutate(lambda d: d["edges"][-1].__setitem__("relation", "ACTIVATED"))
+
+    def test_reject_instrumental_source_edge(self):
+        self.mutate(lambda d: d["edges"][0].__setitem__("relation", "INSTRUMENTAL_MEASUREMENT"))
+
+    def test_reject_instrumental_document_edge(self):
+        self.mutate(lambda d: d["edges"][1].__setitem__("relation", "CLOCK_CALIBRATION"))
+
+    def test_reject_invented_primary_witness_edge(self):
+        self.mutate(lambda d: d["edges"][3].__setitem__("relation", "PRIMARY_EVENT_EYEWITNESS"))
 
     def test_reject_false_editorial_independence(self):
         self.mutate(lambda d: d["sources"][1].__setitem__("editorial_family", "PRIMARY_INDEPENDENT"))
