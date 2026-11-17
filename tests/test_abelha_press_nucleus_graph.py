@@ -48,6 +48,8 @@ def validate(d, root=ROOT):
         else:
             need(s["path"] is None and s["source_pdf_sha256"] is None and
                  s["source_url"].endswith("#issuecomment-6906090911"), "unverified closure source")
+    need(sources[0]["editorial_family"] == sources[1]["editorial_family"] == "CORREIO_DA_MANHA",
+         "same newspaper must share editorial family")
     claims = d["occurrences"]
     need(len(claims) == 4 and {c["id"] for c in claims} == EXPECTED_OCCURRENCES, "occurrence cardinality")
     need(len({c["doc_id"] for c in claims}) == 4 and len({c["source_id"] for c in claims}) == 4, "doc/source cardinality")
@@ -80,10 +82,24 @@ def validate(d, root=ROOT):
     nodes = d["nodes"]
     ids = [n["id"] for n in nodes]
     need(len(ids) == len(set(ids)) == 17, "node cardinality")
+    node_by_id = {n["id"]: n for n in nodes}
+    for node_id in ("LATENT:CONDE:EVENT_HOUR", "LATENT:CONDE:PRIMARY_NEWS_INDEPENDENCE",
+                    "PARAM:reentry_528_time_window", "PARAM:reentry_637_time_window"):
+        node = node_by_id[node_id]
+        need(node["activation"] is False and node["value"] is None,
+             "latent or simulator parameter promoted without evidence")
+    lean = node_by_id["LEAN:candidatePressClockCompatibility"]
+    need(lean["activation"] is False and lean["status"] == "NOT_COMPILED_NOT_PROMOTED",
+         "Lean candidate promoted without proof")
     edges = d["edges"]
     pairs = [(e["source"], e["target"]) for e in edges]
     need(len(pairs) == len(set(pairs)) == 20, "edge cardinality")
     need(all(a in ids and b in ids for a, b in pairs), "orphan graph edge")
+    for e in edges:
+        if e["source"].startswith("LATENT:"):
+            need(e["relation"] == "PREMISE_NOT_ESTABLISHED", "unjustified latent premise")
+        elif e["source"].startswith("LEAN:"):
+            need(e["relation"] == "NOT_ACTIVATED", "unjustified simulation activation")
     for c in claims:
         need((c["source_id"], c["doc_id"]) in pairs and (c["doc_id"], c["id"]) in pairs, "broken occurrence path")
         need((c["id"], "LATENT:CONDE:EVENT_HOUR") in pairs, "lost clock dependency")
@@ -131,6 +147,21 @@ class PressNucleusGraphTest(unittest.TestCase):
 
     def test_reject_physical_activation(self):
         self.mutate(lambda d: d["epistemic"].__setitem__("physical_constraints_active", 1))
+
+    def test_reject_promoted_latent_value(self):
+        self.mutate(lambda d: d["nodes"][12].__setitem__("value", "1963-11-08T23:30:00Z"))
+
+    def test_reject_promoted_simulator_parameter(self):
+        self.mutate(lambda d: d["nodes"][-1].__setitem__("activation", True))
+
+    def test_reject_unproven_lean_promotion(self):
+        self.mutate(lambda d: d["nodes"][-3].__setitem__("status", "COMPILED"))
+
+    def test_reject_activated_relation_without_evidence(self):
+        self.mutate(lambda d: d["edges"][-1].__setitem__("relation", "ACTIVATED"))
+
+    def test_reject_false_editorial_independence(self):
+        self.mutate(lambda d: d["sources"][1].__setitem__("editorial_family", "PRIMARY_INDEPENDENT"))
 
     def test_reject_duplicate_json_key(self):
         with self.assertRaises(ValueError):
