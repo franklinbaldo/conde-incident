@@ -16,6 +16,27 @@ EXPECTED_OCCURRENCES = {
     "OCC:UH00477:STANISLAW", "OCC:CORE871:NO_EVENT_HOUR",
 }
 
+# Snapshot of the explicitly bounded pages/dates from Conde #871 (closure 6906090911).
+# A constant denominator alone would accept a swapped page or misdated edition.
+EXPECTED_COVERAGE = (
+    "UH_NE|00472|1963-11-09|1,2,3,4,5,6,7,8,9,10|4,6,9",
+    "UH_NE|00473|1963-11-10|1,4,5,6|",
+    "UH_NE|00474|1963-11-11|1,2,3,4,6|",
+    "UH_NE|00475|1963-11-12|1,4,5,6,7|",
+    "UH_NE|00476|1963-11-13|1,4,5,6|",
+    "UH_NE|00477|1963-11-14|1,4,5,6,7|",
+    "UH_RIO|04200|1963-11-09|1,2,4,6,7,8,9,13|8",
+    "UH_RIO|04201|1963-11-11|1,2,4,6,8,12|",
+    "UH_RIO|04202|1963-11-12|1,2,4,5,6,8,9,10|",
+    "UH_RIO|04203|1963-11-13|1,2,3,4,5,6,8|",
+    "UH_RIO|04204|1963-11-14|1,2,3,4,5,6,8,10,16|",
+    "CORREIO|21657|1963-11-09|1,2,3,4,5,6,7,8,9,10,11,12,21|",
+    "CORREIO|21658|1963-11-10|1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19|",
+    "CORREIO|21659|1963-11-12|1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|",
+    "CORREIO|21660|1963-11-13|1,2,3,4,5,6,7,8,9,10,11,12|",
+    "CORREIO|21661|1963-11-14|1,2,3,4,5,6,7,8,9,10,11,12,13,21|",
+)
+
 def unique_pairs(pairs):
     result = {}
     for key, value in pairs:
@@ -79,6 +100,12 @@ def validate(d, root=ROOT):
     coverage = d["coverage"]
     editions = coverage["editions"]
     need(len(editions) == 16 and len({(e["family"], e["edition"]) for e in editions}) == 16, "edition cardinality")
+    # Anchor exactly which pages, editions, and dates were examined, not just 144/4.
+    actual_scope = tuple("|".join((e["family"], e["edition"], e["publication_date"],
+                                   ",".join(map(str, e["examined_pdf_pages"])),
+                                   ",".join(map(str, e["partially_illegible_pdf_pages"]))))
+                         for e in editions)
+    need(actual_scope == EXPECTED_COVERAGE, "audited coverage scope drift")
     total = 0
     illegible = 0
     for e in editions:
@@ -170,6 +197,13 @@ class PressNucleusGraphTest(unittest.TestCase):
 
     def test_reject_wrong_denominator(self):
         self.mutate(lambda d: d["coverage"]["editions"][0]["examined_pdf_pages"].pop())
+
+    def test_reject_equicardinal_page_swap(self):
+        # Previously passed: 144 pages and four partials remain unchanged.
+        self.mutate(lambda d: d["coverage"]["editions"][0]["examined_pdf_pages"].__setitem__(9, 11))
+
+    def test_reject_wrong_edition_date(self):
+        self.mutate(lambda d: d["coverage"]["editions"][1].__setitem__("publication_date", "1963-11-15"))
 
     def test_reject_global_negative(self):
         self.mutate(lambda d: d["coverage"].__setitem__("negative_for_complete_editions", True))
