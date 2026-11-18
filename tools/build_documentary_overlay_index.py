@@ -236,7 +236,7 @@ def main() -> None:
         target.write_text(content, encoding="utf-8")
         print(f"wrote {target.relative_to(ROOT)}")
     else:
-        require(target.read_text(encoding="utf-8") == content,
+        require(read_json(target.read_bytes()) == load_index(),
                 "generated documentary overlay index differs")
         print("documentary overlay index unchanged; physical domain unchanged")
 
