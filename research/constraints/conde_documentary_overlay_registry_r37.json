@@ -1,0 +1,23 @@
+{
+  "schema": "conde.documentary-overlay-registry/v1",
+  "id": "CONDE-PRESS-R37-READONLY-OVERLAY",
+  "purpose": "Read-only documentary lookup, not cumulative physical graph ingestion or a Lean/solver input.",
+  "parent_graph": {
+    "path": "research/constraints/ssr_1963_observable_graph.json",
+    "schema": "conde.cumulative-constraint-graph/v1"
+  },
+  "feed": {
+    "path": "public/data/conde-press-nucleus-provenance-r37.json",
+    "id": "ABELHA-R37-P1-PRESS-20261117",
+    "schema": "conde.press-nucleus-documentary-bridge/v1",
+    "git_blob_sha1": "3446ff3ef8deb339dfff50bda8cbc9f55bcd545b"
+  },
+  "allowed_effects": {
+    "physical_observations_added": 0,
+    "physical_bridges_added": 0,
+    "physical_domain_delta": 0,
+    "lean_activation": false,
+    "simulator_activation": false
+  },
+  "scope": "Four document/search occurrences; same Correio editorial family; bounded archival search is not an eyewitness."
+}
