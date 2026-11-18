@@ -67,6 +67,11 @@ class DocumentaryOverlayConsumerTest(unittest.TestCase):
         path = Path("public/data/synthetic-overlay-second.json")
         self.write(path, feed)
         registry = self.read(REG)
+        # Subtests reuse the temporary tree: replace the preceding synthetic
+        # receipt instead of leaving a stale pin for the same file path.
+        registry["feeds"] = [
+            ref for ref in registry["feeds"] if ref["id"] != feed["id"]
+        ]
         receipt = copy.deepcopy(registry["feeds"][0])
         receipt.update({
             "id": feed["id"],
