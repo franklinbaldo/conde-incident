@@ -1,4 +1,7 @@
-"""Offline integrity and adversarial tests for the bounded press nucleus graph."""
+"""Integrity tests for an autonomous, not-yet-consumed documentary feed.
+
+This suite does not test ingestion by the cumulative graph, Lean or simulator.
+"""
 import copy
 import json
 import unittest
@@ -14,6 +17,15 @@ EXPECTED_SOURCE_SHA = {
 EXPECTED_OCCURRENCES = {
     "OCC:CM21658:DENIAL", "OCC:CM21661:CURVELLO",
     "OCC:UH00477:STANISLAW", "OCC:CORE871:NO_EVENT_HOUR",
+}
+
+# Closed, occurrence-specific classes from the bounded evidence audit.
+# Editorial commentary or satire must never be promoted to a primary witness.
+EXPECTED_SOURCE_INDEPENDENCE = {
+    "OCC:CM21658:DENIAL": "EDITORIAL_OUTSIDE_DIARIOS_ASSOCIADOS_UNDERLYING_REPORT_UNDETERMINED",
+    "OCC:CM21661:CURVELLO": "INDEPENDENT_EDITORIAL_EXPERT_COMMENT_NOT_PRIMARY_EYEWITNESS",
+    "OCC:UH00477:STANISLAW": "SATIRE_DEPENDENCY_ON_EARLIER_REPORTS_NOT_ESTABLISHED",
+    "OCC:CORE871:NO_EVENT_HOUR": "SEARCH_RESULT_NOT_HISTORICAL_WITNESS",
 }
 
 # Snapshot of the explicitly bounded pages/dates from Conde #871 (closure 6906090911).
@@ -51,6 +63,9 @@ def validate(d, root=ROOT):
             raise ValueError(message)
     need(d["schema"] == "conde.press-nucleus-documentary-bridge/v1", "schema")
     need(d["id"] == "ABELHA-R37-P1-PRESS-20261117", "bridge identity")
+    # A parent_graph path names a prospective consumer; it is not ingestion.
+    need(d["parent_graph"] == "research/constraints/ssr_1963_observable_graph.json",
+         "autonomous feed parent reference")
     sources = d["sources"]
     need({s["id"] for s in sources} == {*EXPECTED_SOURCE_SHA, "SRC:871-CORE"} and len(sources) == 4, "source IDs")
     for s in sources:
@@ -91,7 +106,8 @@ def validate(d, root=ROOT):
         need(c["state"] == "CANDIDATE_NOT_ACTIVATED" and c["active"] is False, "activation")
         need(c["event_time_utc"] is None and c["named_event_eyewitness"] is None
              and c["identified_norad_object"] is None, "invented physical observation")
-        need(c["source_independence"] != "INDEPENDENT_PRIMARY_EVENT_WITNESS", "false independence")
+        need(c["source_independence"] == EXPECTED_SOURCE_INDEPENDENCE[c["id"]],
+             "unverified occurrence independence or aggregate contradiction")
         need(c["source_id"] in {s["id"] for s in sources}, "dangling provenance")
     need([c["publication_date"] for c in claims] == [
         "1963-11-10", "1963-11-14", "1963-11-14", None
@@ -188,6 +204,22 @@ class PressNucleusGraphTest(unittest.TestCase):
 
     def test_reject_fabricated_independent_witness(self):
         self.mutate(lambda d: d["occurrences"][0].__setitem__("source_independence", "INDEPENDENT_PRIMARY_EVENT_WITNESS"))
+
+    def test_reject_confirmed_witness_alias_against_negative_aggregate(self):
+        # Previously accepted because only one exact label was forbidden.
+        self.mutate(lambda d: d["occurrences"][0].__setitem__(
+            "source_independence", "INDEPENDENT_PRIMARY_EVENT_WITNESS_CONFIRMED"))
+
+    def test_reject_occurrence_aggregate_independence_contradiction(self):
+        # No occurrence supports a primary witness or independent underlying report.
+        self.mutate(lambda d: d["independence"].__setitem__(
+            "underlying_news_independence_proven", True))
+
+    def test_reject_swapped_occurrence_independence_class(self):
+        # Even a valid class cannot migrate to another occurrence.
+        self.mutate(lambda d: d["occurrences"][0].__setitem__(
+            "source_independence", EXPECTED_SOURCE_INDEPENDENCE["OCC:CM21661:CURVELLO"]))
+
 
     def test_reject_orphan_edge(self):
         self.mutate(lambda d: d["edges"][0].__setitem__("source", "SRC:MISSING"))
