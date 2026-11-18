@@ -160,6 +160,41 @@ class DocumentaryOverlayConsumerTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "publication date differs from occurrence identity"):
             module.load_index(self.root)
 
+    def test_repin_does_not_swap_correio_pdf_custody(self):
+        feed = self.read(FEED)
+        denial = next(s for s in feed["sources"] if s["id"] == "SRC:R79")
+        expert = next(s for s in feed["sources"] if s["id"] == "SRC:R86")
+        for field in ("path", "source_url", "source_pdf_sha256"):
+            denial[field], expert[field] = expert[field], denial[field]
+        self.repin(feed)
+        with self.assertRaisesRegex(ValueError, "P1 source custody drift"):
+            module.load_index(self.root)
+
+    def test_repin_does_not_retarget_source_url(self):
+        feed = self.read(FEED)
+        denial = next(s for s in feed["sources"] if s["id"] == "SRC:R79")
+        denial["source_url"] = denial["source_url"].replace("#page=8", "#page=7")
+        self.repin(feed)
+        with self.assertRaisesRegex(ValueError, "P1 source custody drift"):
+            module.load_index(self.root)
+
+    def test_repin_does_not_relabel_pdf_hash(self):
+        feed = self.read(FEED)
+        denial = next(s for s in feed["sources"] if s["id"] == "SRC:R79")
+        denial["source_pdf_sha256"] = "0" * 64
+        self.repin(feed)
+        with self.assertRaisesRegex(ValueError, "P1 source custody drift"):
+            module.load_index(self.root)
+
+    def test_repin_does_not_promote_occurrence_type(self):
+        feed = self.read(FEED)
+        denial = next(o for o in feed["occurrences"]
+                      if o["id"] == "OCC:CM21658:DENIAL")
+        denial["type"] = "PRIMARY_EVENT_EYEWITNESS_CONFIRMED"
+        self.repin(feed)
+        with self.assertRaisesRegex(ValueError, "P1 occurrence source/document/type drift"):
+            module.load_index(self.root)
+
     def test_repin_does_not_swap_page_with_denominator_unchanged(self):
         feed = self.read(FEED)
         edition = next(e for e in feed["coverage"]["editions"]
