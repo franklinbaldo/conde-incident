@@ -1,0 +1,361 @@
+#!/usr/bin/env python3
+"""Load byte-pinned documentary overlays without changing physical observations.
+
+The output is a separate, typed documentary index. It is NOT an orbital
+observation, Lean proof, or a new constraint on 528/637.
+"""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+REGISTRY = Path("research/constraints/documentary_overlay_registry.json")
+SITE = Path("public/data/conde-documentary-overlay-index.json")
+KINDS = {
+    "SRC": "SOURCE",
+    "DOC": "DOCUMENT",
+    "OCC": "OCCURRENCE",
+    "LATENT": "LATENT",
+    "LEAN": "LEAN_CANDIDATE",
+    "PARAM": "SIMULATOR_PARAMETER",
+}
+RELATIONS = {
+    ("SOURCE", "DOCUMENT"): {"SOURCE_MANIFEST_OR_BOUNDED_AUDIT"},
+    ("DOCUMENT", "OCCURRENCE"): {"DOCUMENTS_CLAIM_OR_SEARCH_RESULT"},
+    ("OCCURRENCE", "LATENT"): {
+        "DOES_NOT_IDENTIFY_EVENT_HOUR", "DOES_NOT_PROVE_PRIMARY_WITNESS"
+    },
+    ("LATENT", "LEAN_CANDIDATE"): {"PREMISE_NOT_ESTABLISHED"},
+    ("LEAN_CANDIDATE", "SIMULATOR_PARAMETER"): {"NOT_ACTIVATED"},
+}
+
+
+# Fixed identities from the examined P1 scope (Conde #871 / PR #1119).
+# A repinned digest authenticates new bytes but does not prove their interpretation.
+EXPECTED_SOURCE_INDEPENDENCE = {
+    "OCC:CM21658:DENIAL": "EDITORIAL_OUTSIDE_DIARIOS_ASSOCIADOS_UNDERLYING_REPORT_UNDETERMINED",
+    "OCC:CM21661:CURVELLO": "INDEPENDENT_EDITORIAL_EXPERT_COMMENT_NOT_PRIMARY_EYEWITNESS",
+    "OCC:UH00477:STANISLAW": "SATIRE_DEPENDENCY_ON_EARLIER_REPORTS_NOT_ESTABLISHED",
+    "OCC:CORE871:NO_EVENT_HOUR": "SEARCH_RESULT_NOT_HISTORICAL_WITNESS",
+}
+EXPECTED_PUBLICATION_DATES = {
+    "OCC:CM21658:DENIAL": "1963-11-10",
+    "OCC:CM21661:CURVELLO": "1963-11-14",
+    "OCC:UH00477:STANISLAW": "1963-11-14",
+    "OCC:CORE871:NO_EVENT_HOUR": None,
+}
+# Bind the published P1 identities to their examined documentary custody.
+# Byte-level repinning must not silently reassign a URL, PDF digest or claim type.
+EXPECTED_P1_SOURCE_CUSTODY = {
+    "SRC:R79": ("research/archive/conde_correio_manha_1963_11_10_C241_CERVO_R79.json", "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21658.pdf#page=8",
+        "75dc400708e80022dc9d1a139739068417e65ff47a3c4130bf0b46b9db4929f3"),
+    "SRC:R86": ("research/archive/conde_correio_manha_1963_11_14_C241_TARTARUGA_R86.json", "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21661.pdf#page=7",
+        "d3b6301c192f8513c8a9a53a06d18eb47fc82b76fda45b6438bc1f416e8854e0"),
+    "SRC:CGEO77": ("research/editorial/cgeo77_uh_nov09_14_page_scope_20261115.json", "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00477.pdf#page=7",
+        "0a5170a69e037166ef1fdf502797cef8fc74211b45183af0da775eedc7072fb0"),
+    "SRC:871-CORE": (None, "https://github.com/franklinbaldo/conde-incident/issues/871#issuecomment-6906090911",
+        None),
+}
+EXPECTED_P1_OCCURRENCE_LINK_TYPES = {
+    "OCC:CM21658:DENIAL": ("SRC:R79", "DOC:CM21658:P8",
+        "CONTEMPORARY_SECONDHAND_OFFICIAL_DENIAL"),
+    "OCC:CM21661:CURVELLO": ("SRC:R86", "DOC:CM21661:P7",
+        "EXPERT_OPINION_ABOUT_REPORT_NOT_EYEWITNESS"),
+    "OCC:UH00477:STANISLAW": ("SRC:CGEO77", "DOC:UH00477:P7",
+        "CONTEMPORARY_SATIRE_RETELLING"),
+    "OCC:CORE871:NO_EVENT_HOUR": ("SRC:871-CORE", "DOC:CORE871:READING",
+        "BOUNDED_ARCHIVAL_SEARCH_RESULT"),
+}
+
+# All v1 feeds use a reviewed, fail-closed documentary vocabulary.
+# New categories need a contract extension and adversarial tests.
+DOCUMENTARY_OCCURRENCE_TYPES = frozenset(row[2] for row in EXPECTED_P1_OCCURRENCE_LINK_TYPES.values())
+DOCUMENTARY_SOURCE_INDEPENDENCE = frozenset(EXPECTED_SOURCE_INDEPENDENCE.values())
+
+EXPECTED_COVERAGE = (
+    "UH_NE|00472|1963-11-09|1,2,3,4,5,6,7,8,9,10|4,6,9",
+    "UH_NE|00473|1963-11-10|1,4,5,6|",
+    "UH_NE|00474|1963-11-11|1,2,3,4,6|",
+    "UH_NE|00475|1963-11-12|1,4,5,6,7|",
+    "UH_NE|00476|1963-11-13|1,4,5,6|",
+    "UH_NE|00477|1963-11-14|1,4,5,6,7|",
+    "UH_RIO|04200|1963-11-09|1,2,4,6,7,8,9,13|8",
+    "UH_RIO|04201|1963-11-11|1,2,4,6,8,12|",
+    "UH_RIO|04202|1963-11-12|1,2,4,5,6,8,9,10|",
+    "UH_RIO|04203|1963-11-13|1,2,3,4,5,6,8|",
+    "UH_RIO|04204|1963-11-14|1,2,3,4,5,6,8,10,16|",
+    "CORREIO|21657|1963-11-09|1,2,3,4,5,6,7,8,9,10,11,12,21|",
+    "CORREIO|21658|1963-11-10|1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19|",
+    "CORREIO|21659|1963-11-12|1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|",
+    "CORREIO|21660|1963-11-13|1,2,3,4,5,6,7,8,9,10,11,12|",
+    "CORREIO|21661|1963-11-14|1,2,3,4,5,6,7,8,9,10,11,12,13,21|",
+)
+
+def require(condition: bool, reason: str) -> None:
+    if not condition:
+        raise ValueError(reason)
+
+
+def unique_pairs(pairs: list[tuple[str, object]]) -> dict:
+    result = {}
+    for key, value in pairs:
+        require(key not in result, "duplicate JSON key: " + key)
+        result[key] = value
+    return result
+
+
+def read_json(data: bytes) -> dict:
+    value = json.loads(data.decode("utf-8"), object_pairs_hook=unique_pairs)
+    require(isinstance(value, dict), "expected JSON object")
+    return value
+
+
+def safe_file(root: Path, relative: str) -> Path:
+    require(isinstance(relative, str) and relative and
+            not Path(relative).is_absolute(), "invalid relative path")
+    root = root.resolve()
+    file = (root / relative).resolve()
+    require(file.is_relative_to(root) and file.is_file(), "missing or unsafe file: " + relative)
+    return file
+
+
+def load_index(root: Path = ROOT, registry: dict | None = None) -> dict:
+    root = root.resolve()
+    if registry is None:
+        registry = read_json(safe_file(root, str(REGISTRY)).read_bytes())
+    require(registry.get("schema") == "conde.documentary-overlay-registry/v1", "registry schema")
+    parent_path = registry.get("parent_graph")
+    require(parent_path == "research/constraints/ssr_1963_observable_graph.json",
+            "unexpected parent graph")
+    parent = read_json(safe_file(root, parent_path).read_bytes())
+    require(parent.get("schema") == "conde.cumulative-constraint-graph/v1",
+            "parent schema")
+    before_observations = len(parent["observations"])
+    before_bridges = len(parent["physical_bridges"])
+    all_nodes: dict[str, dict] = {}
+    all_edges: set[tuple[str, str, str]] = set()
+    # Registry v1 admits multiple feeds, but IDs denote global identities.
+    # Re-pinning feed bytes cannot reassign a shared source or count an
+    # occurrence twice under distinct feed IDs.
+    all_source_custody: dict[str, tuple] = {}
+    all_occurrence_ids: set[str] = set()
+    crosswalk: list[dict] = []
+    loaded: dict[str, tuple[str, str]] = {}
+    feed_receipts: list[dict] = []
+    feeds = registry.get("feeds")
+    require(isinstance(feeds, list) and bool(feeds), "empty or invalid registry")
+    for ref in feeds:
+        feed_id, path, digest = ref["id"], ref["path"], ref["sha256"]
+        require(isinstance(digest, str) and len(digest) == 64 and
+                all(c in "0123456789abcdef" for c in digest), "invalid SHA-256")
+        previous = loaded.get(feed_id)
+        if previous is not None:
+            require(previous == (path, digest), "conflicting duplicate feed id")
+            continue  # import is idempotent
+        raw = safe_file(root, path).read_bytes()
+        require(hashlib.sha256(raw).hexdigest() == digest, "documentary feed SHA-256 mismatch")
+        feed = read_json(raw)
+        require(feed.get("id") == feed_id and feed.get("schema") == ref["schema"],
+                "feed identity or schema")
+        require(feed.get("parent_graph") == parent_path, "feed parent reference")
+        nodes = feed["nodes"]
+        edges = feed["edges"]
+        occurrences = feed["occurrences"]
+        sources = feed["sources"]
+        require(len(nodes) == ref["nodes"] and len(edges) == ref["edges"] and
+                len(occurrences) == ref["occurrences"], "feed cardinality")
+        kinds: dict[str, str] = {}
+        for node in nodes:
+            node_id = node["id"]
+            require(isinstance(node_id, str) and ":" in node_id, "invalid node id")
+            kind = KINDS.get(node_id.split(":", 1)[0])
+            require(node["kind"] == kind and node_id not in kinds, "node class or duplicate id")
+            kinds[node_id] = kind
+            if kind in {"LATENT", "SIMULATOR_PARAMETER"}:
+                require(node.get("value") is None and node.get("activation") is False,
+                        "physical node promoted")
+            if kind == "LEAN_CANDIDATE":
+                require(node.get("status") == "NOT_COMPILED_NOT_PROMOTED" and
+                        node.get("activation") is False, "Lean candidate promoted")
+        edge_keys = set()
+        for edge in edges:
+            src, dst, rel = edge["source"], edge["target"], edge["relation"]
+            require(src in kinds and dst in kinds, "orphan documentary edge")
+            require(rel in RELATIONS.get((kinds[src], kinds[dst]), set()),
+                    "invalid documentary edge or physical promotion")
+            key = (src, dst, rel)
+            require(key not in edge_keys, "duplicate edge within feed")
+            edge_keys.add(key)
+        source_map = {s["id"]: s for s in sources}
+        require(len(source_map) == len(sources), "duplicate source")
+        for source_id, source in source_map.items():
+            require(kinds.get(source_id) == "SOURCE", "unknown source node")
+            custody = tuple(source.get(field) for field in (
+                "path", "source_url", "source_pdf_sha256", "editorial_family"
+            ))
+            previous_custody = all_source_custody.get(source_id)
+            require(previous_custody is None or previous_custody == custody,
+                    "cross-feed source custody conflict: " + source_id)
+            all_source_custody[source_id] = custody
+        if feed_id == "ABELHA-R37-P1-PRESS-20261117":
+            require(set(source_map) == set(EXPECTED_P1_SOURCE_CUSTODY),
+                    "P1 source identity drift")
+            for source_id, expected in EXPECTED_P1_SOURCE_CUSTODY.items():
+                source = source_map[source_id]
+                require((source.get("path"), source.get("source_url"),
+                         source.get("source_pdf_sha256")) == expected,
+                        "P1 source custody drift: " + source_id)
+        occurrence_ids = set()
+        for occurrence in occurrences:
+            oid, sid, doc = occurrence["id"], occurrence["source_id"], occurrence["doc_id"]
+            require(oid not in occurrence_ids and kinds.get(oid) == "OCCURRENCE",
+                    "duplicate or unknown occurrence")
+            require(oid not in all_occurrence_ids,
+                    "cross-feed occurrence id conflict: " + oid)
+            occurrence_ids.add(oid)
+            all_occurrence_ids.add(oid)
+            if feed_id == "ABELHA-R37-P1-PRESS-20261117":
+                require(oid in EXPECTED_P1_OCCURRENCE_LINK_TYPES and
+                        (sid, doc, occurrence.get("type")) ==
+                        EXPECTED_P1_OCCURRENCE_LINK_TYPES[oid],
+                        "P1 occurrence source/document/type drift: " + oid)
+            require(sid in source_map and kinds.get(sid) == "SOURCE" and
+                    kinds.get(doc) == "DOCUMENT", "orphan source or document")
+            require((sid, doc, "SOURCE_MANIFEST_OR_BOUNDED_AUDIT") in edge_keys and
+                    (doc, oid, "DOCUMENTS_CLAIM_OR_SEARCH_RESULT") in edge_keys,
+                    "missing occurrence provenance path")
+            require(occurrence.get("event_time_utc") is None and
+                    occurrence.get("named_event_eyewitness") is None and
+                    occurrence.get("identified_norad_object") is None and
+                    occurrence.get("active") is False and
+                    occurrence.get("state") == "CANDIDATE_NOT_ACTIVATED",
+                    "documentary occurrence promoted to physical observation")
+            source = source_map[sid]
+            if feed_id == "ABELHA-R37-P1-PRESS-20261117":
+                # A 2026 research synthesis is not a 1963 newspaper edition.
+                if sid == "SRC:871-CORE":
+                    require(occurrence["publication_date"] is None and
+                            occurrence["research_date"] == "2026-11-16",
+                            "research date promoted to publication date")
+                else:
+                    require(occurrence["publication_date"] in {
+                        "1963-11-10", "1963-11-14"
+                    } and occurrence["research_date"] is None,
+                            "historical publication date conflated with research")
+            if feed_id == "ABELHA-R37-P1-PRESS-20261117":
+                require(oid in EXPECTED_SOURCE_INDEPENDENCE and
+                        occurrence.get("source_independence") == EXPECTED_SOURCE_INDEPENDENCE[oid],
+                        "unverified occurrence independence")
+                require(occurrence.get("publication_date") == EXPECTED_PUBLICATION_DATES[oid],
+                        "publication date differs from occurrence identity")
+            require(occurrence.get("type") in DOCUMENTARY_OCCURRENCE_TYPES and
+                    occurrence.get("source_independence") in DOCUMENTARY_SOURCE_INDEPENDENCE,
+                    "unreviewed documentary classification")
+            crosswalk.append({
+                "feed_id": feed_id,
+                "occurrence_id": oid,
+                "document_id": doc,
+                "source_id": sid,
+                "editorial_family": source["editorial_family"],
+                "source_url": source["source_url"],
+                "source_pdf_sha256": source["source_pdf_sha256"],
+                "publication_date": occurrence["publication_date"],
+                "research_date": occurrence["research_date"],
+                "occurrence_type": occurrence["type"],
+                "source_independence": occurrence["source_independence"],
+                "state": occurrence["state"],
+            })
+        require(occurrence_ids == set(ref["occurrence_ids"]), "occurrence identity drift")
+        indep = feed["independence"]
+        ep = feed["epistemic"]
+        require(indep["independent_instrumental_observations_added"] == 0 and
+                indep["primary_event_witnesses_identified"] == 0 and
+                indep["underlying_news_independence_proven"] is False,
+                "fabricated independent observation")
+        require(ep["event_time_utc"] is None and ep["physical_constraints_active"] == 0 and
+                ep["delta_physical_domain"] == 0 and ep["theta"] == "UNCHANGED" and
+                ep["historical_mcmc"] == "NOT_RUN" and
+                ep["norad_528_excluded"] is False and
+                ep["norad_637_excluded"] is False,
+                "physical inference incorrectly activated")
+        require(ep["delta_links"] == len(edges), "documentary link count mismatch")
+        if feed_id == "ABELHA-R37-P1-PRESS-20261117":
+            coverage = feed["coverage"]
+            require(len(coverage["editions"]) == 16 and
+                    coverage["examined_pdf_pages_total"] == 144 and
+                    coverage["partially_illegible_pages_total"] == 4 and
+                    coverage["no_hour_found_in_examined_scope"] is True and
+                    coverage["negative_for_complete_editions"] is False and
+                    coverage["physical_absence_proven"] is False,
+                    "bounded search promoted to historical absence")
+            actual_scope = tuple("|".join((e["family"], e["edition"], e["publication_date"],
+                                           ",".join(map(str, e["examined_pdf_pages"])),
+                                           ",".join(map(str, e["partially_illegible_pdf_pages"]))))
+                                 for e in coverage["editions"])
+            require(actual_scope == EXPECTED_COVERAGE, "audited coverage scope drift")
+            require(source_map["SRC:R79"]["editorial_family"] ==
+                    source_map["SRC:R86"]["editorial_family"] ==
+                    "CORREIO_DA_MANHA", "Correio duplicate editorial family")
+            require(source_map["SRC:871-CORE"]["editorial_family"] ==
+                    "RESEARCH_SYNTHESIS_NOT_HISTORICAL_WITNESS",
+                    "research summary promoted to contemporary source")
+        for node in nodes:
+            old = all_nodes.get(node["id"])
+            require(old is None or old == node, "cross-feed node id conflict")
+            all_nodes[node["id"]] = node
+        all_edges.update(edge_keys)
+        loaded[feed_id] = (path, digest)
+        feed_receipts.append({"id": feed_id, "path": path, "schema": feed["schema"],
+                              "sha256": digest, "nodes": len(nodes),
+                              "edges": len(edges), "occurrences": len(occurrences)})
+    return {
+        "schema": "conde.documentary-overlay-index/v1",
+        "parent_graph": parent_path,
+        "parent_graph_schema": parent["schema"],
+        "interpretation": "DOCUMENTARY_ONLY_NOT_PHYSICAL_OBSERVATIONS",
+        "feeds": sorted(feed_receipts, key=lambda r: r["id"]),
+        "nodes": [{"feed_node_id": key, **node} for key, node in sorted(all_nodes.items())],
+        "edges": [{"source": s, "target": t, "relation": r}
+                  for s, t, r in sorted(all_edges)],
+        "occurrence_crosswalk": sorted(crosswalk, key=lambda item: item["occurrence_id"]),
+        "counts": {
+            "documentary_nodes": len(all_nodes),
+            "documentary_edges": len(all_edges),
+            "documentary_occurrences": len(crosswalk),
+            "parent_observations_before": before_observations,
+            "parent_observations_after": before_observations,
+            "parent_physical_bridges_before": before_bridges,
+            "parent_physical_bridges_after": before_bridges,
+            "parent_added_observations": 0,
+            "parent_added_physical_bridges": 0,
+            "delta_physical_domain": 0,
+        },
+    }
+
+
+def serialize(value: dict) -> str:
+    return json.dumps(value, ensure_ascii=False, indent=2) + "\n"
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument("--write-site", action="store_true")
+    group.add_argument("--check-site", action="store_true")
+    args = parser.parse_args()
+    content = serialize(load_index())
+    target = ROOT / SITE
+    if args.write_site:
+        target.write_text(content, encoding="utf-8")
+        print(f"wrote {target.relative_to(ROOT)}")
+    else:
+        require(read_json(target.read_bytes()) == load_index(),
+                "generated documentary overlay index differs")
+        print("documentary overlay index unchanged; physical domain unchanged")
+
+
+if __name__ == "__main__":
+    main()
