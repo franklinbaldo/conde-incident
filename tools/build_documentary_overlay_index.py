@@ -70,6 +70,11 @@ EXPECTED_P1_OCCURRENCE_LINK_TYPES = {
         "BOUNDED_ARCHIVAL_SEARCH_RESULT"),
 }
 
+# All v1 feeds use a reviewed, fail-closed documentary vocabulary.
+# New categories need a contract extension and adversarial tests.
+DOCUMENTARY_OCCURRENCE_TYPES = frozenset(row[2] for row in EXPECTED_P1_OCCURRENCE_LINK_TYPES.values())
+DOCUMENTARY_SOURCE_INDEPENDENCE = frozenset(EXPECTED_SOURCE_INDEPENDENCE.values())
+
 EXPECTED_COVERAGE = (
     "UH_NE|00472|1963-11-09|1,2,3,4,5,6,7,8,9,10|4,6,9",
     "UH_NE|00473|1963-11-10|1,4,5,6|",
@@ -246,6 +251,9 @@ def load_index(root: Path = ROOT, registry: dict | None = None) -> dict:
                         "unverified occurrence independence")
                 require(occurrence.get("publication_date") == EXPECTED_PUBLICATION_DATES[oid],
                         "publication date differs from occurrence identity")
+            require(occurrence.get("type") in DOCUMENTARY_OCCURRENCE_TYPES and
+                    occurrence.get("source_independence") in DOCUMENTARY_SOURCE_INDEPENDENCE,
+                    "unreviewed documentary classification")
             crosswalk.append({
                 "feed_id": feed_id,
                 "occurrence_id": oid,
