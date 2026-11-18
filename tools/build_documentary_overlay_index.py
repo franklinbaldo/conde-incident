@@ -143,6 +143,17 @@ def load_index(root: Path = ROOT, registry: dict | None = None) -> dict:
                     occurrence.get("state") == "CANDIDATE_NOT_ACTIVATED",
                     "documentary occurrence promoted to physical observation")
             source = source_map[sid]
+            if feed_id == "ABELHA-R37-P1-PRESS-20261117":
+                # A 2026 research synthesis is not a 1963 newspaper edition.
+                if sid == "SRC:871-CORE":
+                    require(occurrence["publication_date"] is None and
+                            occurrence["research_date"] == "2026-11-16",
+                            "research date promoted to publication date")
+                else:
+                    require(occurrence["publication_date"] in {
+                        "1963-11-10", "1963-11-14"
+                    } and occurrence["research_date"] is None,
+                            "historical publication date conflated with research")
             crosswalk.append({
                 "feed_id": feed_id,
                 "occurrence_id": oid,
