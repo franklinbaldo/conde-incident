@@ -1,5 +1,8 @@
 """Adversarial controls for the read-only documentary overlay inspector."""
 import copy
+import json
+import subprocess
+import sys
 import unittest
 from pathlib import Path
 
@@ -25,6 +28,19 @@ class DocumentaryOverlayTests(unittest.TestCase):
         self.assertEqual((one["parent_added_observations"],
                           one["parent_added_physical_bridges"], one["delta_physical_domain"]), (0, 0, 0))
         self.assertEqual(one["crosswalk"][0]["classification"], "DOCUMENTARY_ONLY")
+
+    def test_cli_check_runs_not_only_import(self):
+        proc = subprocess.run(
+            [sys.executable, str(ROOT / "tools/inspect_documentary_overlay.py"), "--check"],
+            cwd=ROOT, capture_output=True, text=True, check=True)
+        report = json.loads(proc.stdout)
+        self.assertEqual(report["documentary_occurrences"], 4)
+        self.assertEqual(report["parent_ingestion"], "NOT_IMPLEMENTED")
+
+    def test_git_blob_pin_detects_byte_mutation(self):
+        raw = (ROOT / overlay.FEED_PATH).read_bytes()
+        self.assertEqual(overlay.blob_sha1(raw), overlay.FEED_GIT_SHA1)
+        self.assertNotEqual(overlay.blob_sha1(raw + b"\\n"), overlay.FEED_GIT_SHA1)
 
     def reject_mutation(self, change):
         changed = copy.deepcopy(self.feed)
