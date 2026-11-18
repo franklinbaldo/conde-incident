@@ -47,6 +47,29 @@ EXPECTED_PUBLICATION_DATES = {
     "OCC:UH00477:STANISLAW": "1963-11-14",
     "OCC:CORE871:NO_EVENT_HOUR": None,
 }
+# Bind the published P1 identities to their examined documentary custody.
+# Byte-level repinning must not silently reassign a URL, PDF digest or claim type.
+EXPECTED_P1_SOURCE_CUSTODY = {
+    "SRC:R79": ("research/archive/conde_correio_manha_1963_11_10_C241_CERVO_R79.json", "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21658.pdf#page=8",
+        "75dc400708e80022dc9d1a139739068417e65ff47a3c4130bf0b46b9db4929f3"),
+    "SRC:R86": ("research/archive/conde_correio_manha_1963_11_14_C241_TARTARUGA_R86.json", "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21661.pdf#page=7",
+        "d3b6301c192f8513c8a9a53a06d18eb47fc82b76fda45b6438bc1f416e8854e0"),
+    "SRC:CGEO77": ("research/editorial/cgeo77_uh_nov09_14_page_scope_20261115.json", "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00477.pdf#page=7",
+        "0a5170a69e037166ef1fdf502797cef8fc74211b45183af0da775eedc7072fb0"),
+    "SRC:871-CORE": (None, "https://github.com/franklinbaldo/conde-incident/issues/871#issuecomment-6906090911",
+        None),
+}
+EXPECTED_P1_OCCURRENCE_LINK_TYPES = {
+    "OCC:CM21658:DENIAL": ("SRC:R79", "DOC:CM21658:P8",
+        "CONTEMPORARY_SECONDHAND_OFFICIAL_DENIAL"),
+    "OCC:CM21661:CURVELLO": ("SRC:R86", "DOC:CM21661:P7",
+        "EXPERT_OPINION_ABOUT_REPORT_NOT_EYEWITNESS"),
+    "OCC:UH00477:STANISLAW": ("SRC:CGEO77", "DOC:UH00477:P7",
+        "CONTEMPORARY_SATIRE_RETELLING"),
+    "OCC:CORE871:NO_EVENT_HOUR": ("SRC:871-CORE", "DOC:CORE871:READING",
+        "BOUNDED_ARCHIVAL_SEARCH_RESULT"),
+}
+
 EXPECTED_COVERAGE = (
     "UH_NE|00472|1963-11-09|1,2,3,4,5,6,7,8,9,10|4,6,9",
     "UH_NE|00473|1963-11-10|1,4,5,6|",
@@ -158,12 +181,25 @@ def load_index(root: Path = ROOT, registry: dict | None = None) -> dict:
             edge_keys.add(key)
         source_map = {s["id"]: s for s in sources}
         require(len(source_map) == len(sources), "duplicate source")
+        if feed_id == "ABELHA-R37-P1-PRESS-20261117":
+            require(set(source_map) == set(EXPECTED_P1_SOURCE_CUSTODY),
+                    "P1 source identity drift")
+            for source_id, expected in EXPECTED_P1_SOURCE_CUSTODY.items():
+                source = source_map[source_id]
+                require((source.get("path"), source.get("source_url"),
+                         source.get("source_pdf_sha256")) == expected,
+                        "P1 source custody drift: " + source_id)
         occurrence_ids = set()
         for occurrence in occurrences:
             oid, sid, doc = occurrence["id"], occurrence["source_id"], occurrence["doc_id"]
             require(oid not in occurrence_ids and kinds.get(oid) == "OCCURRENCE",
                     "duplicate or unknown occurrence")
             occurrence_ids.add(oid)
+            if feed_id == "ABELHA-R37-P1-PRESS-20261117":
+                require(oid in EXPECTED_P1_OCCURRENCE_LINK_TYPES and
+                        (sid, doc, occurrence.get("type")) ==
+                        EXPECTED_P1_OCCURRENCE_LINK_TYPES[oid],
+                        "P1 occurrence source/document/type drift: " + oid)
             require(sid in source_map and kinds.get(sid) == "SOURCE" and
                     kinds.get(doc) == "DOCUMENT", "orphan source or document")
             require((sid, doc, "SOURCE_MANIFEST_OR_BOUNDED_AUDIT") in edge_keys and
