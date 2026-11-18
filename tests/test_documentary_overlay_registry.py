@@ -80,6 +80,57 @@ class DocumentaryOverlayTests(unittest.TestCase):
     def test_independence_claim_rejected(self):
         self.reject_mutation(lambda x: x["independence"].__setitem__("primary_event_witnesses_identified", 1))
 
+    def test_latent_to_lean_relation_cannot_masquerade_as_activation(self):
+        def mutate(feed):
+            edge = next(e for e in feed["edges"]
+                        if e["source"] == "LATENT:CONDE:EVENT_HOUR"
+                        and e["target"] == "LEAN:candidatePressClockCompatibility")
+            edge["relation"] = "NOT_ACTIVATED"
+        self.reject_mutation(mutate)
+
+    def test_lean_to_parameter_relation_cannot_masquerade_as_premise(self):
+        def mutate(feed):
+            edge = next(e for e in feed["edges"]
+                        if e["source"] == "LEAN:candidatePressClockCompatibility")
+            edge["relation"] = "PREMISE_NOT_ESTABLISHED"
+        self.reject_mutation(mutate)
+
+    def test_audit_page_changed_without_changing_denominator_rejected(self):
+        def mutate(feed):
+            edition = feed["coverage"]["editions"][0]
+            self.assertIn(10, edition["examined_pdf_pages"])
+            edition["examined_pdf_pages"][-1] = 11
+            self.assertEqual(sum(len(e["examined_pdf_pages"])
+                                 for e in feed["coverage"]["editions"]), 144)
+        self.reject_mutation(mutate)
+
+    def test_publication_dates_swapped_between_editions_rejected(self):
+        def mutate(feed):
+            a, b = feed["occurrences"][:2]
+            self.assertNotEqual(a["publication_date"], b["publication_date"])
+            a["publication_date"], b["publication_date"] = (
+                b["publication_date"], a["publication_date"])
+        self.reject_mutation(mutate)
+
+    def test_crosswalk_exports_documentary_custody_and_bounded_scope(self):
+        report = overlay.inspect_registry(ROOT)
+        rows = {r["occurrence_id"]: r for r in report["crosswalk"]}
+        denial = rows["OCC:CM21658:DENIAL"]
+        self.assertEqual(denial["publication_date"], "1963-11-10")
+        self.assertTrue(denial["source_url"].endswith("#page=8"))
+        self.assertEqual(len(denial["source_pdf_sha256"]), 64)
+        self.assertEqual(denial["source_independence"],
+                         overlay.EXPECTED_LINKS["OCC:CM21658:DENIAL"][2])
+        self.assertEqual(denial["occurrence_type"],
+                         "CONTEMPORARY_SECONDHAND_OFFICIAL_DENIAL")
+        synthesis = rows["OCC:CORE871:NO_EVENT_HOUR"]
+        self.assertIsNone(synthesis["source_pdf_sha256"])
+        self.assertIsNone(synthesis["publication_date"])
+        self.assertEqual(synthesis["research_date"], "2026-11-16")
+        self.assertEqual(report["negative_scope"]["examined_pdf_pages"], 144)
+        self.assertEqual(report["negative_scope"]["partially_illegible_pdf_pages"], 4)
+        self.assertIs(report["negative_scope"]["physical_absence_proven"], False)
+
     def test_duplicate_json_key_rejected(self):
         with self.assertRaises(ValueError):
             overlay.decode(b'{"a":1,"a":2}')
