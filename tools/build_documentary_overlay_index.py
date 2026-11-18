@@ -33,6 +33,39 @@ RELATIONS = {
 }
 
 
+# Fixed identities from the examined P1 scope (Conde #871 / PR #1119).
+# A repinned digest authenticates new bytes but does not prove their interpretation.
+EXPECTED_SOURCE_INDEPENDENCE = {
+    "OCC:CM21658:DENIAL": "EDITORIAL_OUTSIDE_DIARIOS_ASSOCIADOS_UNDERLYING_REPORT_UNDETERMINED",
+    "OCC:CM21661:CURVELLO": "INDEPENDENT_EDITORIAL_EXPERT_COMMENT_NOT_PRIMARY_EYEWITNESS",
+    "OCC:UH00477:STANISLAW": "SATIRE_DEPENDENCY_ON_EARLIER_REPORTS_NOT_ESTABLISHED",
+    "OCC:CORE871:NO_EVENT_HOUR": "SEARCH_RESULT_NOT_HISTORICAL_WITNESS",
+}
+EXPECTED_PUBLICATION_DATES = {
+    "OCC:CM21658:DENIAL": "1963-11-10",
+    "OCC:CM21661:CURVELLO": "1963-11-14",
+    "OCC:UH00477:STANISLAW": "1963-11-14",
+    "OCC:CORE871:NO_EVENT_HOUR": None,
+}
+EXPECTED_COVERAGE = (
+    "UH_NE|00472|1963-11-09|1,2,3,4,5,6,7,8,9,10|4,6,9",
+    "UH_NE|00473|1963-11-10|1,4,5,6|",
+    "UH_NE|00474|1963-11-11|1,2,3,4,6|",
+    "UH_NE|00475|1963-11-12|1,4,5,6,7|",
+    "UH_NE|00476|1963-11-13|1,4,5,6|",
+    "UH_NE|00477|1963-11-14|1,4,5,6,7|",
+    "UH_RIO|04200|1963-11-09|1,2,4,6,7,8,9,13|8",
+    "UH_RIO|04201|1963-11-11|1,2,4,6,8,12|",
+    "UH_RIO|04202|1963-11-12|1,2,4,5,6,8,9,10|",
+    "UH_RIO|04203|1963-11-13|1,2,3,4,5,6,8|",
+    "UH_RIO|04204|1963-11-14|1,2,3,4,5,6,8,10,16|",
+    "CORREIO|21657|1963-11-09|1,2,3,4,5,6,7,8,9,10,11,12,21|",
+    "CORREIO|21658|1963-11-10|1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19|",
+    "CORREIO|21659|1963-11-12|1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|",
+    "CORREIO|21660|1963-11-13|1,2,3,4,5,6,7,8,9,10,11,12|",
+    "CORREIO|21661|1963-11-14|1,2,3,4,5,6,7,8,9,10,11,12,13,21|",
+)
+
 def require(condition: bool, reason: str) -> None:
     if not condition:
         raise ValueError(reason)
@@ -154,6 +187,12 @@ def load_index(root: Path = ROOT, registry: dict | None = None) -> dict:
                         "1963-11-10", "1963-11-14"
                     } and occurrence["research_date"] is None,
                             "historical publication date conflated with research")
+            if feed_id == "ABELHA-R37-P1-PRESS-20261117":
+                require(oid in EXPECTED_SOURCE_INDEPENDENCE and
+                        occurrence.get("source_independence") == EXPECTED_SOURCE_INDEPENDENCE[oid],
+                        "unverified occurrence independence")
+                require(occurrence.get("publication_date") == EXPECTED_PUBLICATION_DATES[oid],
+                        "publication date differs from occurrence identity")
             crosswalk.append({
                 "feed_id": feed_id,
                 "occurrence_id": oid,
@@ -191,6 +230,11 @@ def load_index(root: Path = ROOT, registry: dict | None = None) -> dict:
                     coverage["negative_for_complete_editions"] is False and
                     coverage["physical_absence_proven"] is False,
                     "bounded search promoted to historical absence")
+            actual_scope = tuple("|".join((e["family"], e["edition"], e["publication_date"],
+                                           ",".join(map(str, e["examined_pdf_pages"])),
+                                           ",".join(map(str, e["partially_illegible_pdf_pages"]))))
+                                 for e in coverage["editions"])
+            require(actual_scope == EXPECTED_COVERAGE, "audited coverage scope drift")
             require(source_map["SRC:R79"]["editorial_family"] ==
                     source_map["SRC:R86"]["editorial_family"] ==
                     "CORREIO_DA_MANHA", "Correio duplicate editorial family")
