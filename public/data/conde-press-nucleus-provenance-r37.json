@@ -1,0 +1,586 @@
+{
+  "schema": "conde.press-nucleus-documentary-bridge/v1",
+  "id": "ABELHA-R37-P1-PRESS-20261117",
+  "parent_graph": "research/constraints/ssr_1963_observable_graph.json",
+  "source_closure": "https://github.com/franklinbaldo/conde-incident/issues/871#issuecomment-6906090911",
+  "scope_note": "Derived from previously integrated source manifests and the 16 Nov 2026 bounded nucleus closure. No new facsimile was inspected for this bridge.",
+  "sources": [
+    {
+      "id": "SRC:R79",
+      "path": "research/archive/conde_correio_manha_1963_11_10_C241_CERVO_R79.json",
+      "source_pdf_sha256": "75dc400708e80022dc9d1a139739068417e65ff47a3c4130bf0b46b9db4929f3",
+      "source_url": "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21658.pdf#page=8",
+      "editorial_family": "CORREIO_DA_MANHA"
+    },
+    {
+      "id": "SRC:R86",
+      "path": "research/archive/conde_correio_manha_1963_11_14_C241_TARTARUGA_R86.json",
+      "source_pdf_sha256": "d3b6301c192f8513c8a9a53a06d18eb47fc82b76fda45b6438bc1f416e8854e0",
+      "source_url": "https://hemeroteca-pdf.bn.gov.br/089842/per089842_1963_21661.pdf#page=7",
+      "editorial_family": "CORREIO_DA_MANHA"
+    },
+    {
+      "id": "SRC:CGEO77",
+      "path": "research/editorial/cgeo77_uh_nov09_14_page_scope_20261115.json",
+      "source_pdf_sha256": "0a5170a69e037166ef1fdf502797cef8fc74211b45183af0da775eedc7072fb0",
+      "source_url": "https://hemeroteca-pdf.bn.gov.br/765147/per765147_1963_00477.pdf#page=7",
+      "editorial_family": "ULTIMA_HORA_NE"
+    },
+    {
+      "id": "SRC:871-CORE",
+      "path": null,
+      "source_pdf_sha256": null,
+      "source_url": "https://github.com/franklinbaldo/conde-incident/issues/871#issuecomment-6906090911",
+      "editorial_family": "RESEARCH_SYNTHESIS_NOT_HISTORICAL_WITNESS"
+    }
+  ],
+  "occurrences": [
+    {
+      "id": "OCC:CM21658:DENIAL",
+      "doc_id": "DOC:CM21658:P8",
+      "source_id": "SRC:R79",
+      "type": "CONTEMPORARY_SECONDHAND_OFFICIAL_DENIAL",
+      "publication_date": "1963-11-10",
+      "research_date": null,
+      "description": "Correio da Manhã atribui desmentidos sobre Conde à FAB e ao governo baiano; originais dos comunicados não recuperados",
+      "source_independence": "EDITORIAL_OUTSIDE_DIARIOS_ASSOCIADOS_UNDERLYING_REPORT_UNDETERMINED",
+      "state": "CANDIDATE_NOT_ACTIVATED",
+      "event_time_utc": null,
+      "named_event_eyewitness": null,
+      "identified_norad_object": null,
+      "active": false
+    },
+    {
+      "id": "OCC:CM21661:CURVELLO",
+      "doc_id": "DOC:CM21661:P7",
+      "source_id": "SRC:R86",
+      "type": "EXPERT_OPINION_ABOUT_REPORT_NOT_EYEWITNESS",
+      "publication_date": "1963-11-14",
+      "research_date": null,
+      "description": "Correio da Manhã atribui a Walter da Silva Curvello avaliação cética de notícia genérica da Bahia, sem identificar Conde",
+      "source_independence": "INDEPENDENT_EDITORIAL_EXPERT_COMMENT_NOT_PRIMARY_EYEWITNESS",
+      "state": "CANDIDATE_NOT_ACTIVATED",
+      "event_time_utc": null,
+      "named_event_eyewitness": null,
+      "identified_norad_object": null,
+      "active": false
+    },
+    {
+      "id": "OCC:UH00477:STANISLAW",
+      "doc_id": "DOC:UH00477:P7",
+      "source_id": "SRC:CGEO77",
+      "type": "CONTEMPORARY_SATIRE_RETELLING",
+      "publication_date": "1963-11-14",
+      "research_date": null,
+      "description": "Crônica satírica de Stanislaw; duas horas de automóvel e 24 horas de circulação não são horário do suposto fenômeno",
+      "source_independence": "SATIRE_DEPENDENCY_ON_EARLIER_REPORTS_NOT_ESTABLISHED",
+      "state": "CANDIDATE_NOT_ACTIVATED",
+      "event_time_utc": null,
+      "named_event_eyewitness": null,
+      "identified_norad_object": null,
+      "active": false
+    },
+    {
+      "id": "OCC:CORE871:NO_EVENT_HOUR",
+      "doc_id": "DOC:CORE871:READING",
+      "source_id": "SRC:871-CORE",
+      "type": "BOUNDED_ARCHIVAL_SEARCH_RESULT",
+      "publication_date": null,
+      "research_date": "2026-11-16",
+      "description": "Leitura delimitada a 144 páginas selecionadas de três jornais, quatro com trechos parcialmente ilegíveis; nenhuma hora de fenômeno confirmada",
+      "source_independence": "SEARCH_RESULT_NOT_HISTORICAL_WITNESS",
+      "state": "CANDIDATE_NOT_ACTIVATED",
+      "event_time_utc": null,
+      "named_event_eyewitness": null,
+      "identified_norad_object": null,
+      "active": false
+    }
+  ],
+  "coverage": {
+    "method": "RESEARCH_READING_WITH_EXPLICIT_DENOMINATOR_NOT_HISTORICAL_NONEXISTENCE",
+    "editions": [
+      {
+        "family": "UH_NE",
+        "edition": "00472",
+        "publication_date": "1963-11-09",
+        "examined_pdf_pages": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "partially_illegible_pdf_pages": [
+          4,
+          6,
+          9
+        ]
+      },
+      {
+        "family": "UH_NE",
+        "edition": "00473",
+        "publication_date": "1963-11-10",
+        "examined_pdf_pages": [
+          1,
+          4,
+          5,
+          6
+        ],
+        "partially_illegible_pdf_pages": []
+      },
+      {
+        "family": "UH_NE",
+        "edition": "00474",
+        "publication_date": "1963-11-11",
+        "examined_pdf_pages": [
+          1,
+          2,
+          3,
+          4,
+          6
+        ],
+        "partially_illegible_pdf_pages": []
+      },
+      {
+        "family": "UH_NE",
+        "edition": "00475",
+        "publication_date": "1963-11-12",
+        "examined_pdf_pages": [
+          1,
+          4,
+          5,
+          6,
+          7
+        ],
+        "partially_illegible_pdf_pages": []
+      },
+      {
+        "family": "UH_NE",
+        "edition": "00476",
+        "publication_date": "1963-11-13",
+        "examined_pdf_pages": [
+          1,
+          4,
+          5,
+          6
+        ],
+        "partially_illegible_pdf_pages": []
+      },
+      {
+        "family": "UH_NE",
+        "edition": "00477",
+        "publication_date": "1963-11-14",
+        "examined_pdf_pages": [
+          1,
+          4,
+          5,
+          6,
+          7
+        ],
+        "partially_illegible_pdf_pages": []
+      },
+      {
+        "family": "UH_RIO",
+        "edition": "04200",
+        "publication_date": "1963-11-09",
+        "examined_pdf_pages": [
+          1,
+          2,
+          4,
+          6,
+          7,
+          8,
+          9,
+          13
+        ],
+        "partially_illegible_pdf_pages": [
+          8
+        ]
+      },
+      {
+        "family": "UH_RIO",
+        "edition": "04201",
+        "publication_date": "1963-11-11",
+        "examined_pdf_pages": [
+          1,
+          2,
+          4,
+          6,
+          8,
+          12
+        ],
+        "partially_illegible_pdf_pages": []
+      },
+      {
+        "family": "UH_RIO",
+        "edition": "04202",
+        "publication_date": "1963-11-12",
+        "examined_pdf_pages": [
+          1,
+          2,
+          4,
+          5,
+          6,
+          8,
+          9,
+          10
+        ],
+        "partially_illegible_pdf_pages": []
+      },
+      {
+        "family": "UH_RIO",
+        "edition": "04203",
+        "publication_date": "1963-11-13",
+        "examined_pdf_pages": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          8
+        ],
+        "partially_illegible_pdf_pages": []
+      },
+      {
+        "family": "UH_RIO",
+        "edition": "04204",
+        "publication_date": "1963-11-14",
+        "examined_pdf_pages": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          8,
+          10,
+          16
+        ],
+        "partially_illegible_pdf_pages": []
+      },
+      {
+        "family": "CORREIO",
+        "edition": "21657",
+        "publication_date": "1963-11-09",
+        "examined_pdf_pages": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          21
+        ],
+        "partially_illegible_pdf_pages": []
+      },
+      {
+        "family": "CORREIO",
+        "edition": "21658",
+        "publication_date": "1963-11-10",
+        "examined_pdf_pages": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "partially_illegible_pdf_pages": []
+      },
+      {
+        "family": "CORREIO",
+        "edition": "21659",
+        "publication_date": "1963-11-12",
+        "examined_pdf_pages": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15
+        ],
+        "partially_illegible_pdf_pages": []
+      },
+      {
+        "family": "CORREIO",
+        "edition": "21660",
+        "publication_date": "1963-11-13",
+        "examined_pdf_pages": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "partially_illegible_pdf_pages": []
+      },
+      {
+        "family": "CORREIO",
+        "edition": "21661",
+        "publication_date": "1963-11-14",
+        "examined_pdf_pages": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          21
+        ],
+        "partially_illegible_pdf_pages": []
+      }
+    ],
+    "examined_pdf_pages_total": 144,
+    "partially_illegible_pages_total": 4,
+    "no_hour_found_in_examined_scope": true,
+    "negative_for_complete_editions": false,
+    "outside_scope": "Other newspaper sections and supplements, Bahia press, uninspected pages and source originals",
+    "physical_absence_proven": false
+  },
+  "nodes": [
+    {
+      "id": "SRC:R79",
+      "kind": "SOURCE"
+    },
+    {
+      "id": "SRC:R86",
+      "kind": "SOURCE"
+    },
+    {
+      "id": "SRC:CGEO77",
+      "kind": "SOURCE"
+    },
+    {
+      "id": "SRC:871-CORE",
+      "kind": "SOURCE"
+    },
+    {
+      "id": "DOC:CM21658:P8",
+      "kind": "DOCUMENT"
+    },
+    {
+      "id": "DOC:CM21661:P7",
+      "kind": "DOCUMENT"
+    },
+    {
+      "id": "DOC:UH00477:P7",
+      "kind": "DOCUMENT"
+    },
+    {
+      "id": "DOC:CORE871:READING",
+      "kind": "DOCUMENT"
+    },
+    {
+      "id": "OCC:CM21658:DENIAL",
+      "kind": "OCCURRENCE"
+    },
+    {
+      "id": "OCC:CM21661:CURVELLO",
+      "kind": "OCCURRENCE"
+    },
+    {
+      "id": "OCC:UH00477:STANISLAW",
+      "kind": "OCCURRENCE"
+    },
+    {
+      "id": "OCC:CORE871:NO_EVENT_HOUR",
+      "kind": "OCCURRENCE"
+    },
+    {
+      "id": "LATENT:CONDE:EVENT_HOUR",
+      "kind": "LATENT",
+      "value": null,
+      "activation": false
+    },
+    {
+      "id": "LATENT:CONDE:PRIMARY_NEWS_INDEPENDENCE",
+      "kind": "LATENT",
+      "value": null,
+      "activation": false
+    },
+    {
+      "id": "LEAN:candidatePressClockCompatibility",
+      "kind": "LEAN_CANDIDATE",
+      "status": "NOT_COMPILED_NOT_PROMOTED",
+      "activation": false
+    },
+    {
+      "id": "PARAM:reentry_528_time_window",
+      "kind": "SIMULATOR_PARAMETER",
+      "value": null,
+      "activation": false
+    },
+    {
+      "id": "PARAM:reentry_637_time_window",
+      "kind": "SIMULATOR_PARAMETER",
+      "value": null,
+      "activation": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "SRC:R79",
+      "target": "DOC:CM21658:P8",
+      "relation": "SOURCE_MANIFEST_OR_BOUNDED_AUDIT"
+    },
+    {
+      "source": "DOC:CM21658:P8",
+      "target": "OCC:CM21658:DENIAL",
+      "relation": "DOCUMENTS_CLAIM_OR_SEARCH_RESULT"
+    },
+    {
+      "source": "OCC:CM21658:DENIAL",
+      "target": "LATENT:CONDE:EVENT_HOUR",
+      "relation": "DOES_NOT_IDENTIFY_EVENT_HOUR"
+    },
+    {
+      "source": "OCC:CM21658:DENIAL",
+      "target": "LATENT:CONDE:PRIMARY_NEWS_INDEPENDENCE",
+      "relation": "DOES_NOT_PROVE_PRIMARY_WITNESS"
+    },
+    {
+      "source": "SRC:R86",
+      "target": "DOC:CM21661:P7",
+      "relation": "SOURCE_MANIFEST_OR_BOUNDED_AUDIT"
+    },
+    {
+      "source": "DOC:CM21661:P7",
+      "target": "OCC:CM21661:CURVELLO",
+      "relation": "DOCUMENTS_CLAIM_OR_SEARCH_RESULT"
+    },
+    {
+      "source": "OCC:CM21661:CURVELLO",
+      "target": "LATENT:CONDE:EVENT_HOUR",
+      "relation": "DOES_NOT_IDENTIFY_EVENT_HOUR"
+    },
+    {
+      "source": "OCC:CM21661:CURVELLO",
+      "target": "LATENT:CONDE:PRIMARY_NEWS_INDEPENDENCE",
+      "relation": "DOES_NOT_PROVE_PRIMARY_WITNESS"
+    },
+    {
+      "source": "SRC:CGEO77",
+      "target": "DOC:UH00477:P7",
+      "relation": "SOURCE_MANIFEST_OR_BOUNDED_AUDIT"
+    },
+    {
+      "source": "DOC:UH00477:P7",
+      "target": "OCC:UH00477:STANISLAW",
+      "relation": "DOCUMENTS_CLAIM_OR_SEARCH_RESULT"
+    },
+    {
+      "source": "OCC:UH00477:STANISLAW",
+      "target": "LATENT:CONDE:EVENT_HOUR",
+      "relation": "DOES_NOT_IDENTIFY_EVENT_HOUR"
+    },
+    {
+      "source": "OCC:UH00477:STANISLAW",
+      "target": "LATENT:CONDE:PRIMARY_NEWS_INDEPENDENCE",
+      "relation": "DOES_NOT_PROVE_PRIMARY_WITNESS"
+    },
+    {
+      "source": "SRC:871-CORE",
+      "target": "DOC:CORE871:READING",
+      "relation": "SOURCE_MANIFEST_OR_BOUNDED_AUDIT"
+    },
+    {
+      "source": "DOC:CORE871:READING",
+      "target": "OCC:CORE871:NO_EVENT_HOUR",
+      "relation": "DOCUMENTS_CLAIM_OR_SEARCH_RESULT"
+    },
+    {
+      "source": "OCC:CORE871:NO_EVENT_HOUR",
+      "target": "LATENT:CONDE:EVENT_HOUR",
+      "relation": "DOES_NOT_IDENTIFY_EVENT_HOUR"
+    },
+    {
+      "source": "OCC:CORE871:NO_EVENT_HOUR",
+      "target": "LATENT:CONDE:PRIMARY_NEWS_INDEPENDENCE",
+      "relation": "DOES_NOT_PROVE_PRIMARY_WITNESS"
+    },
+    {
+      "source": "LATENT:CONDE:EVENT_HOUR",
+      "target": "LEAN:candidatePressClockCompatibility",
+      "relation": "PREMISE_NOT_ESTABLISHED"
+    },
+    {
+      "source": "LATENT:CONDE:PRIMARY_NEWS_INDEPENDENCE",
+      "target": "LEAN:candidatePressClockCompatibility",
+      "relation": "PREMISE_NOT_ESTABLISHED"
+    },
+    {
+      "source": "LEAN:candidatePressClockCompatibility",
+      "target": "PARAM:reentry_528_time_window",
+      "relation": "NOT_ACTIVATED"
+    },
+    {
+      "source": "LEAN:candidatePressClockCompatibility",
+      "target": "PARAM:reentry_637_time_window",
+      "relation": "NOT_ACTIVATED"
+    }
+  ],
+  "independence": {
+    "independent_instrumental_observations_added": 0,
+    "primary_event_witnesses_identified": 0,
+    "underlying_news_independence_proven": false
+  },
+  "epistemic": {
+    "event_time_utc": null,
+    "physical_constraints_active": 0,
+    "delta_links": 20,
+    "delta_physical_domain": 0,
+    "theta": "UNCHANGED",
+    "historical_mcmc": "NOT_RUN",
+    "norad_528_excluded": false,
+    "norad_637_excluded": false
+  },
+  "next_falsifier": "Independent primary Bahia source or A-628 attachment stating an attributable event hour, with event versus publication dates and source lineage audited."
+}
