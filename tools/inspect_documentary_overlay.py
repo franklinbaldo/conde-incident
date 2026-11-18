@@ -33,10 +33,39 @@ EXPECTED_FAMILIES = {
 KINDS = {"SRC": "SOURCE", "DOC": "DOCUMENT", "OCC": "OCCURRENCE",
          "LATENT": "LATENT", "LEAN": "LEAN_CANDIDATE",
          "PARAM": "SIMULATOR_PARAMETER"}
-RELATIONS = {"SOURCE_MANIFEST_OR_BOUNDED_AUDIT",
-             "DOCUMENTS_CLAIM_OR_SEARCH_RESULT",
-             "DOES_NOT_IDENTIFY_EVENT_HOUR", "DOES_NOT_PROVE_PRIMARY_WITNESS",
-             "PREMISE_NOT_ESTABLISHED", "NOT_ACTIVATED"}
+RELATIONS = {
+    ("SOURCE", "DOCUMENT"): {"SOURCE_MANIFEST_OR_BOUNDED_AUDIT"},
+    ("DOCUMENT", "OCCURRENCE"): {"DOCUMENTS_CLAIM_OR_SEARCH_RESULT"},
+    ("OCCURRENCE", "LATENT"): {
+        "DOES_NOT_IDENTIFY_EVENT_HOUR", "DOES_NOT_PROVE_PRIMARY_WITNESS"},
+    ("LATENT", "LEAN_CANDIDATE"): {"PREMISE_NOT_ESTABLISHED"},
+    ("LEAN_CANDIDATE", "SIMULATOR_PARAMETER"): {"NOT_ACTIVATED"},
+}
+# Scope and publication dates are edition-specific. Totals are not custody proof.
+EXPECTED_DATES = {
+    "OCC:CM21658:DENIAL": ("1963-11-10", null),
+    "OCC:CM21661:CURVELLO": ("1963-11-14", null),
+    "OCC:UH00477:STANISLAW": ("1963-11-14", null),
+    "OCC:CORE871:NO_EVENT_HOUR": (null, "2026-11-16"),
+}
+EXPECTED_COVERAGE = (
+    "UH_NE|00472|1963-11-09|1,2,3,4,5,6,7,8,9,10|4,6,9",
+    "UH_NE|00473|1963-11-10|1,4,5,6|",
+    "UH_NE|00474|1963-11-11|1,2,3,4,6|",
+    "UH_NE|00475|1963-11-12|1,4,5,6,7|",
+    "UH_NE|00476|1963-11-13|1,4,5,6|",
+    "UH_NE|00477|1963-11-14|1,4,5,6,7|",
+    "UH_RIO|04200|1963-11-09|1,2,4,6,7,8,9,13|8",
+    "UH_RIO|04201|1963-11-11|1,2,4,6,8,12|",
+    "UH_RIO|04202|1963-11-12|1,2,4,5,6,8,9,10|",
+    "UH_RIO|04203|1963-11-13|1,2,3,4,5,6,8|",
+    "UH_RIO|04204|1963-11-14|1,2,3,4,5,6,8,10,16|",
+    "CORREIO|21657|1963-11-09|1,2,3,4,5,6,7,8,9,10,11,12,21|",
+    "CORREIO|21658|1963-11-10|1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19|",
+    "CORREIO|21659|1963-11-12|1,2,3,4,5,6,7,8,9,10,11,12,13,14,15|",
+    "CORREIO|21660|1963-11-13|1,2,3,4,5,6,7,8,9,10,11,12|",
+    "CORREIO|21661|1963-11-14|1,2,3,4,5,6,7,8,9,10,11,12,13,21|",
+)
 
 
 def require(ok, message):
@@ -90,9 +119,23 @@ def validate_feed(feed):
     edges = feed["edges"]
     keys = [(e["source"], e["target"], e["relation"]) for e in edges]
     require(len(keys) == len(set(keys)) == 20, "edge count/duplicate")
-    require(all(a in kinds and b in kinds and rel in RELATIONS for a, b, rel in keys),
-            "orphan/unknown edge")
+    require(all(a in kinds and b in kinds and
+                rel in RELATIONS.get((kinds[a], kinds[b]), set())
+                for a, b, rel in keys), "orphan, mistyped or promoted edge")
+    require(len({(a, b) for a, b, _ in keys}) == 20,
+            "duplicate source-target edge")
     edge_set = set(keys)
+    expected_terminal = {
+        ("LATENT:CONDE:EVENT_HOUR", "LEAN:candidatePressClockCompatibility",
+         "PREMISE_NOT_ESTABLISHED"),
+        ("LATENT:CONDE:PRIMARY_NEWS_INDEPENDENCE",
+         "LEAN:candidatePressClockCompatibility", "PREMISE_NOT_ESTABLISHED"),
+        ("LEAN:candidatePressClockCompatibility", "PARAM:reentry_528_time_window",
+         "NOT_ACTIVATED"),
+        ("LEAN:candidatePressClockCompatibility", "PARAM:reentry_637_time_window",
+         "NOT_ACTIVATED"),
+    }
+    require(expected_terminal <= edge_set, "missing inactive terminal dependency")
     rows = []
     occurrences = feed["occurrences"]
     require(len(occurrences) == 4 and {c["id"] for c in occurrences} == set(EXPECTED_LINKS),
@@ -113,20 +156,30 @@ def validate_feed(feed):
         require((oid, "LATENT:CONDE:EVENT_HOUR", "DOES_NOT_IDENTIFY_EVENT_HOUR") in edge_set
                 and (oid, "LATENT:CONDE:PRIMARY_NEWS_INDEPENDENCE",
                      "DOES_NOT_PROVE_PRIMARY_WITNESS") in edge_set, "false physical link")
-        if oid == "OCC:CORE871:NO_EVENT_HOUR":
-            require(occ["publication_date"] is None
-                    and occ["research_date"] == "2026-11-16", "research vs publication date")
-        else:
-            require(occ["research_date"] is None
-                    and occ["publication_date"] in {"1963-11-10", "1963-11-14"},
-                    "publication vs research date")
+        require((occ["publication_date"], occ["research_date"]) == EXPECTED_DATES[oid],
+                "publication/research date by occurrence: " + oid)
+        src = source_map[source]
         rows.append({"occurrence_id": oid, "document_id": document, "source_id": source,
-                     "editorial_family": source_map[source]["editorial_family"],
+                     "editorial_family": src["editorial_family"],
+                     "source_url": src["source_url"],
+                     "source_pdf_sha256": src["source_pdf_sha256"],
+                     "source_manifest_path": src["path"],
+                     "occurrence_type": occ["type"],
+                     "source_independence": occ["source_independence"],
                      "publication_date": occ["publication_date"],
                      "research_date": occ["research_date"],
                      "classification": "DOCUMENTARY_ONLY", "physical_observation": False})
 
     cover = feed["coverage"]
+    actual_coverage = tuple(
+        "|".join((e["family"], e["edition"], e["publication_date"],
+                  ",".join(map(str, e["examined_pdf_pages"])),
+                  ",".join(map(str, e["partially_illegible_pdf_pages"]))))
+        for e in cover["editions"])
+    require(actual_coverage == EXPECTED_COVERAGE, "edition/page custody drift")
+    require(all(len(e["examined_pdf_pages"]) == len(set(e["examined_pdf_pages"]))
+                and set(e["partially_illegible_pdf_pages"]) <= set(e["examined_pdf_pages"])
+                for e in cover["editions"]), "invalid page selection")
     require(len(cover["editions"]) == 16
             and sum(len(e["examined_pdf_pages"]) for e in cover["editions"]) == 144
             and sum(len(e["partially_illegible_pdf_pages"]) for e in cover["editions"]) == 4
@@ -176,6 +229,13 @@ def inspect_registry(root=ROOT):
             "documentary_occurrences": len(rows), "parent_added_observations": 0,
             "parent_added_physical_bridges": 0, "delta_physical_domain": 0,
             "parent_ingestion": "NOT_IMPLEMENTED",
+            "negative_scope": {
+                "examined_editions": 16, "examined_pdf_pages": 144,
+                "partially_illegible_pdf_pages": 4,
+                "no_hour_found_in_examined_scope": True,
+                "physical_absence_proven": False,
+                "outside_scope": feed["coverage"]["outside_scope"],
+            },
             "crosswalk": rows}
 
 
