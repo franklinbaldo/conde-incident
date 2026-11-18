@@ -1,0 +1,159 @@
+"""Adversarial offline tests for the documentary-only cumulative overlay consumer."""
+from __future__ import annotations
+
+import copy
+import hashlib
+import importlib.util
+import json
+import tempfile
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+SCRIPT = ROOT / "tools/build_documentary_overlay_index.py"
+spec = importlib.util.spec_from_file_location("documentary_overlay", SCRIPT)
+module = importlib.util.module_from_spec(spec)
+assert spec and spec.loader
+spec.loader.exec_module(module)
+REG = Path("research/constraints/documentary_overlay_registry.json")
+PARENT = Path("research/constraints/ssr_1963_observable_graph.json")
+FEED = Path("public/data/conde-press-nucleus-provenance-r37.json")
+SITE = Path("public/data/conde-documentary-overlay-index.json")
+
+
+class DocumentaryOverlayConsumerTest(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name)
+        for path in [REG, PARENT, FEED, SITE]:
+            target = self.root / path
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes((ROOT / path).read_bytes())
+
+    def read(self, path):
+        return json.loads((self.root / path).read_text(encoding="utf-8"))
+
+    def write(self, path, data):
+        (self.root / path).write_text(
+            json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+        )
+
+    def repin(self, feed):
+        self.write(FEED, feed)
+        registry = self.read(REG)
+        registry["feeds"][0]["sha256"] = hashlib.sha256(
+            (self.root / FEED).read_bytes()
+        ).hexdigest()
+        self.write(REG, registry)
+
+    def test_index_is_actual_materialized_consumer_and_parent_unchanged(self):
+        before = (self.root / PARENT).read_bytes()
+        result = module.load_index(self.root)
+        self.assertEqual(result, self.read(SITE))
+        self.assertEqual(result["interpretation"], "DOCUMENTARY_ONLY_NOT_PHYSICAL_OBSERVATIONS")
+        self.assertEqual(result["counts"]["documentary_nodes"], 17)
+        self.assertEqual(result["counts"]["documentary_edges"], 20)
+        self.assertEqual(result["counts"]["documentary_occurrences"], 4)
+        self.assertEqual(result["counts"]["parent_added_observations"], 0)
+        self.assertEqual(result["counts"]["parent_added_physical_bridges"], 0)
+        self.assertEqual(result["counts"]["delta_physical_domain"], 0)
+        self.assertEqual(before, (self.root / PARENT).read_bytes())
+        self.assertEqual(result, module.load_index(self.root))
+
+    def test_repeat_import_is_idempotent(self):
+        baseline = module.load_index(self.root)
+        registry = self.read(REG)
+        registry["feeds"].append(copy.deepcopy(registry["feeds"][0]))
+        self.write(REG, registry)
+        self.assertEqual(baseline, module.load_index(self.root))
+
+    def test_conflicting_duplicate_id_is_not_silently_deduplicated(self):
+        registry = self.read(REG)
+        second = copy.deepcopy(registry["feeds"][0])
+        second["sha256"] = "0" * 64
+        registry["feeds"].append(second)
+        self.write(REG, registry)
+        with self.assertRaisesRegex(ValueError, "conflicting duplicate feed id"):
+            module.load_index(self.root)
+
+    def test_changed_feed_bytes_fail_even_if_json_remains_valid(self):
+        feed = self.read(FEED)
+        feed["scope_note"] += " tampered"
+        self.write(FEED, feed)
+        with self.assertRaisesRegex(ValueError, "SHA-256 mismatch"):
+            module.load_index(self.root)
+
+    def test_orphan_edge_rejected_after_digest_repin(self):
+        feed = self.read(FEED)
+        feed["edges"][0]["target"] = "DOC:NONEXISTENT"
+        self.repin(feed)
+        with self.assertRaisesRegex(ValueError, "orphan documentary edge"):
+            module.load_index(self.root)
+
+    def test_physical_relation_rejected_after_digest_repin(self):
+        feed = self.read(FEED)
+        feed["edges"][0]["relation"] = "INSTRUMENTAL_MEASUREMENT"
+        self.repin(feed)
+        with self.assertRaisesRegex(ValueError, "invalid documentary edge"):
+            module.load_index(self.root)
+
+    def test_latent_activation_rejected_after_digest_repin(self):
+        feed = self.read(FEED)
+        next(n for n in feed["nodes"] if n["kind"] == "LATENT")["value"] = "1963-11-08T12:00:00Z"
+        self.repin(feed)
+        with self.assertRaisesRegex(ValueError, "physical node promoted"):
+            module.load_index(self.root)
+
+    def test_event_hour_and_primary_witness_not_inferred(self):
+        for field, value in [("event_time_utc", "1963-11-08T12:00:00Z"),
+                             ("named_event_eyewitness", "anonymous witness"),
+                             ("identified_norad_object", 528)]:
+            with self.subTest(field=field):
+                feed = self.read(FEED)
+                feed["occurrences"][0][field] = value
+                self.repin(feed)
+                with self.assertRaisesRegex(ValueError, "promoted to physical observation"):
+                    module.load_index(self.root)
+                self.write(FEED, json.loads((ROOT / FEED).read_text(encoding="utf-8")))
+                registry = self.read(REG)
+                registry["feeds"][0]["sha256"] = hashlib.sha256(
+                    (self.root / FEED).read_bytes()
+                ).hexdigest()
+                self.write(REG, registry)
+
+    def test_editorial_family_does_not_become_independent_instrument(self):
+        feed = self.read(FEED)
+        next(s for s in feed["sources"] if s["id"] == "SRC:R86")["editorial_family"] = "INDEPENDENT_RADAR"
+        self.repin(feed)
+        with self.assertRaisesRegex(ValueError, "Correio duplicate editorial family"):
+            module.load_index(self.root)
+
+    def test_coverage_negative_not_physical_absence(self):
+        feed = self.read(FEED)
+        feed["coverage"]["physical_absence_proven"] = True
+        self.repin(feed)
+        with self.assertRaisesRegex(ValueError, "bounded search promoted"):
+            module.load_index(self.root)
+
+    def test_path_traversal_fails_closed(self):
+        registry = self.read(REG)
+        registry["feeds"][0]["path"] = "../../untrusted.json"
+        self.write(REG, registry)
+        with self.assertRaisesRegex(ValueError, "missing or unsafe file"):
+            module.load_index(self.root)
+
+    def test_duplicate_json_keys_are_rejected(self):
+        (self.root / REG).write_text('{"schema":"x","schema":"y"}', encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "duplicate JSON key"):
+            module.load_index(self.root)
+
+    def test_missing_or_extra_index_entry_fails_semantic_check(self):
+        altered = self.read(SITE)
+        altered["counts"]["parent_added_observations"] = 1
+        self.write(SITE, altered)
+        self.assertNotEqual(self.read(SITE), module.load_index(self.root))
+
+
+if __name__ == "__main__":
+    unittest.main()
