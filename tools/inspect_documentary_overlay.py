@@ -43,10 +43,10 @@ RELATIONS = {
 }
 # Scope and publication dates are edition-specific. Totals are not custody proof.
 EXPECTED_DATES = {
-    "OCC:CM21658:DENIAL": ("1963-11-10", null),
-    "OCC:CM21661:CURVELLO": ("1963-11-14", null),
-    "OCC:UH00477:STANISLAW": ("1963-11-14", null),
-    "OCC:CORE871:NO_EVENT_HOUR": (null, "2026-11-16"),
+    "OCC:CM21658:DENIAL": ("1963-11-10", None),
+    "OCC:CM21661:CURVELLO": ("1963-11-14", None),
+    "OCC:UH00477:STANISLAW": ("1963-11-14", None),
+    "OCC:CORE871:NO_EVENT_HOUR": (None, "2026-11-16"),
 }
 EXPECTED_COVERAGE = (
     "UH_NE|00472|1963-11-09|1,2,3,4,5,6,7,8,9,10|4,6,9",
