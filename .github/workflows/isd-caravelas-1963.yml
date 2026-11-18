@@ -34,7 +34,9 @@ jobs:
           python3 -m unittest discover -s tests -p 'test_isd_caravelas_source_flags_1963.py' -v
       - name: Recover and compare full 1963 NOAA gzip
         run: |
+          # NOAA retired legacy ISD FTP/HTTPS; official NODD bytes matched
+          # the pinned full GZIP SHA-256 on 2026-11-18. Audit remains fail-closed.
           curl -fL --retry 3 --retry-all-errors --connect-timeout 15 --max-time 90 \
-            https://www.ncei.noaa.gov/pub/data/noaa/1963/834970-99999-1963.gz -o /tmp/caravelas-1963.gz
+            https://noaa-isd-pds.s3.amazonaws.com/data/1963/834970-99999-1963.gz -o /tmp/caravelas-1963.gz
           python3 tools/audit_isd_caravelas_1963.py --check --verify-full-gz /tmp/caravelas-1963.gz
           python3 tools/audit_isd_caravelas_source_flags_1963.py --check --verify-full-gz /tmp/caravelas-1963.gz
