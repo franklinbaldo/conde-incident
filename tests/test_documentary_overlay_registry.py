@@ -40,7 +40,7 @@ class DocumentaryOverlayTests(unittest.TestCase):
     def test_git_blob_pin_detects_byte_mutation(self):
         raw = (ROOT / overlay.FEED_PATH).read_bytes()
         self.assertEqual(overlay.blob_sha1(raw), overlay.FEED_GIT_SHA1)
-        self.assertNotEqual(overlay.blob_sha1(raw + b"\\n"), overlay.FEED_GIT_SHA1)
+        self.assertNotEqual(overlay.blob_sha1(raw + bytes([10])), overlay.FEED_GIT_SHA1)
 
     def reject_mutation(self, change):
         changed = copy.deepcopy(self.feed)
