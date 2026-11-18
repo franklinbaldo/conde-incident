@@ -47,6 +47,65 @@ class DocumentaryOverlayConsumerTest(unittest.TestCase):
         ).hexdigest()
         self.write(REG, registry)
 
+    def append_synthetic_second_feed(self, *, distinct_occurrences=False, source_change=None):
+        """Compose two fully pinned test feeds without adding historical evidence."""
+        feed = copy.deepcopy(self.read(FEED))
+        feed["id"] = "SYNTHETIC-SECOND-FEED"
+        if distinct_occurrences:
+            renamed = {o["id"]: o["id"] + ":SECOND" for o in feed["occurrences"]}
+            for node in feed["nodes"]:
+                node["id"] = renamed.get(node["id"], node["id"])
+            for edge in feed["edges"]:
+                edge["source"] = renamed.get(edge["source"], edge["source"])
+                edge["target"] = renamed.get(edge["target"], edge["target"])
+            for occurrence in feed["occurrences"]:
+                occurrence["id"] = renamed[occurrence["id"]]
+        if source_change is not None:
+            field, value = source_change
+            source = next(s for s in feed["sources"] if s["id"] == "SRC:R79")
+            source[field] = value
+        path = Path("public/data/synthetic-overlay-second.json")
+        self.write(path, feed)
+        registry = self.read(REG)
+        receipt = copy.deepcopy(registry["feeds"][0])
+        receipt.update({
+            "id": feed["id"],
+            "path": str(path),
+            "sha256": hashlib.sha256((self.root / path).read_bytes()).hexdigest(),
+            "occurrence_ids": [o["id"] for o in feed["occurrences"]],
+        })
+        registry["feeds"].append(receipt)
+        self.write(REG, registry)
+
+    def test_cross_feed_duplicate_occurrence_rejected_with_valid_pins(self):
+        self.append_synthetic_second_feed()
+        with self.assertRaisesRegex(ValueError, "cross-feed occurrence id conflict"):
+            module.load_index(self.root)
+
+    def test_cross_feed_source_custody_cannot_change_after_repin(self):
+        for field, value in (
+            ("path", "synthetic/another-record.json"),
+            ("source_url", "https://example.invalid/different-edition.pdf"),
+            ("source_pdf_sha256", "a" * 64),
+            ("editorial_family", "UNRELATED_EDITORIAL_GROUP"),
+        ):
+            with self.subTest(field=field):
+                self.append_synthetic_second_feed(
+                    distinct_occurrences=True, source_change=(field, value)
+                )
+                with self.assertRaisesRegex(ValueError, "cross-feed source custody conflict"):
+                    module.load_index(self.root)
+
+    def test_distinct_cross_feed_occurrences_with_shared_custody_are_allowed(self):
+        self.append_synthetic_second_feed(distinct_occurrences=True)
+        result = module.load_index(self.root)
+        ids = [item["occurrence_id"] for item in result["occurrence_crosswalk"]]
+        self.assertEqual(len(ids), len(set(ids)))
+        self.assertEqual(result["counts"]["documentary_occurrences"], 8)
+        self.assertEqual(result["counts"]["documentary_nodes"], 21)
+        self.assertEqual(result["counts"]["documentary_edges"], 32)
+        self.assertEqual(result["counts"]["delta_physical_domain"], 0)
+
     def test_index_is_actual_materialized_consumer_and_parent_unchanged(self):
         before = (self.root / PARENT).read_bytes()
         result = module.load_index(self.root)
