@@ -138,6 +138,46 @@ class DocumentaryOverlayConsumerTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "publication date conflated"):
             module.load_index(self.root)
 
+    def test_repin_does_not_promote_primary_witness_independence(self):
+        feed = self.read(FEED)
+        occurrence = next(o for o in feed["occurrences"]
+                          if o["id"] == "OCC:CM21658:DENIAL")
+        occurrence["source_independence"] = "INDEPENDENT_PRIMARY_EVENT_WITNESS_CONFIRMED"
+        self.repin(feed)
+        with self.assertRaisesRegex(ValueError, "unverified occurrence independence"):
+            module.load_index(self.root)
+
+    def test_repin_does_not_swap_publication_dates_between_occurrences(self):
+        feed = self.read(FEED)
+        denial = next(o for o in feed["occurrences"]
+                      if o["id"] == "OCC:CM21658:DENIAL")
+        expert = next(o for o in feed["occurrences"]
+                      if o["id"] == "OCC:CM21661:CURVELLO")
+        denial["publication_date"], expert["publication_date"] = (
+            expert["publication_date"], denial["publication_date"]
+        )
+        self.repin(feed)
+        with self.assertRaisesRegex(ValueError, "publication date differs from occurrence identity"):
+            module.load_index(self.root)
+
+    def test_repin_does_not_swap_page_with_denominator_unchanged(self):
+        feed = self.read(FEED)
+        edition = next(e for e in feed["coverage"]["editions"]
+                       if e["family"] == "UH_NE" and e["edition"] == "00472")
+        edition["examined_pdf_pages"][-1] = 11  # 10 -> 11; still 144/4
+        self.repin(feed)
+        with self.assertRaisesRegex(ValueError, "audited coverage scope drift"):
+            module.load_index(self.root)
+
+    def test_repin_does_not_change_date_of_examined_edition(self):
+        feed = self.read(FEED)
+        edition = next(e for e in feed["coverage"]["editions"]
+                       if e["family"] == "UH_NE" and e["edition"] == "00472")
+        edition["publication_date"] = "1963-11-10"
+        self.repin(feed)
+        with self.assertRaisesRegex(ValueError, "audited coverage scope drift"):
+            module.load_index(self.root)
+
     def test_coverage_negative_not_physical_absence(self):
         feed = self.read(FEED)
         feed["coverage"]["physical_absence_proven"] = True
