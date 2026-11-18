@@ -129,6 +129,15 @@ class DocumentaryOverlayConsumerTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "Correio duplicate editorial family"):
             module.load_index(self.root)
 
+    def test_publication_and_research_dates_are_not_interchanged(self):
+        feed = self.read(FEED)
+        historical = feed["occurrences"][0]
+        historical["research_date"] = historical["publication_date"]
+        historical["publication_date"] = None
+        self.repin(feed)
+        with self.assertRaisesRegex(ValueError, "publication date conflated"):
+            module.load_index(self.root)
+
     def test_coverage_negative_not_physical_absence(self):
         feed = self.read(FEED)
         feed["coverage"]["physical_absence_proven"] = True
