@@ -22,10 +22,13 @@ jobs:
           python-version: '3.12'
       - name: Retrieve original NOAA metadata (not a weather observation)
         run: |
+          # The ISD legacy service was retired on 2026-07-31; keep both full SHA checks.
+          # NOAA NODD CSV and this Wayback raw capture matched the original pins
+          # by full byte hashes on 2026-11-18 (no regenerated S3 directory listing).
           curl -fLsS --retry 3 --retry-all-errors --connect-timeout 15 --max-time 90 \
-            https://www.ncei.noaa.gov/pub/data/noaa/isd-history.csv -o /tmp/noaa-isd-history.csv
+            https://noaa-isd-pds.s3.amazonaws.com/isd-history.csv -o /tmp/noaa-isd-history.csv
           curl -fLsS --retry 3 --retry-all-errors --connect-timeout 15 --max-time 90 \
-            https://www.ncei.noaa.gov/pub/data/noaa/1963/ -o /tmp/noaa-1963-directory.html
+            'https://web.archive.org/web/20260214165917id_/https://www.ncei.noaa.gov/pub/data/noaa/1963/' -o /tmp/noaa-1963-directory.html
       - name: Verify full-source hashes, catalog join and pending edges
         run: |
           python3 tools/audit_isd_bahia_coastal_1963_archive.py \
