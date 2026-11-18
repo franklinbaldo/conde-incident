@@ -132,6 +132,11 @@ def load_index(root: Path = ROOT, registry: dict | None = None) -> dict:
     before_bridges = len(parent["physical_bridges"])
     all_nodes: dict[str, dict] = {}
     all_edges: set[tuple[str, str, str]] = set()
+    # Registry v1 admits multiple feeds, but IDs denote global identities.
+    # Re-pinning feed bytes cannot reassign a shared source or count an
+    # occurrence twice under distinct feed IDs.
+    all_source_custody: dict[str, tuple] = {}
+    all_occurrence_ids: set[str] = set()
     crosswalk: list[dict] = []
     loaded: dict[str, tuple[str, str]] = {}
     feed_receipts: list[dict] = []
@@ -181,6 +186,15 @@ def load_index(root: Path = ROOT, registry: dict | None = None) -> dict:
             edge_keys.add(key)
         source_map = {s["id"]: s for s in sources}
         require(len(source_map) == len(sources), "duplicate source")
+        for source_id, source in source_map.items():
+            require(kinds.get(source_id) == "SOURCE", "unknown source node")
+            custody = tuple(source.get(field) for field in (
+                "path", "source_url", "source_pdf_sha256", "editorial_family"
+            ))
+            previous_custody = all_source_custody.get(source_id)
+            require(previous_custody is None or previous_custody == custody,
+                    "cross-feed source custody conflict: " + source_id)
+            all_source_custody[source_id] = custody
         if feed_id == "ABELHA-R37-P1-PRESS-20261117":
             require(set(source_map) == set(EXPECTED_P1_SOURCE_CUSTODY),
                     "P1 source identity drift")
@@ -194,7 +208,10 @@ def load_index(root: Path = ROOT, registry: dict | None = None) -> dict:
             oid, sid, doc = occurrence["id"], occurrence["source_id"], occurrence["doc_id"]
             require(oid not in occurrence_ids and kinds.get(oid) == "OCCURRENCE",
                     "duplicate or unknown occurrence")
+            require(oid not in all_occurrence_ids,
+                    "cross-feed occurrence id conflict: " + oid)
             occurrence_ids.add(oid)
+            all_occurrence_ids.add(oid)
             if feed_id == "ABELHA-R37-P1-PRESS-20261117":
                 require(oid in EXPECTED_P1_OCCURRENCE_LINK_TYPES and
                         (sid, doc, occurrence.get("type")) ==
