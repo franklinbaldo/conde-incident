@@ -47,7 +47,7 @@ class DocumentaryOverlayConsumerTest(unittest.TestCase):
         ).hexdigest()
         self.write(REG, registry)
 
-    def append_synthetic_second_feed(self, *, distinct_occurrences=False, source_change=None):
+    def append_synthetic_second_feed(self, *, distinct_occurrences=False, source_change=None, occurrence_change=None):
         """Compose two fully pinned test feeds without adding historical evidence."""
         feed = copy.deepcopy(self.read(FEED))
         feed["id"] = "SYNTHETIC-SECOND-FEED"
@@ -64,6 +64,9 @@ class DocumentaryOverlayConsumerTest(unittest.TestCase):
             field, value = source_change
             source = next(s for s in feed["sources"] if s["id"] == "SRC:R79")
             source[field] = value
+        if occurrence_change is not None:
+            field, value = occurrence_change
+            feed["occurrences"][0][field] = value
         path = Path("public/data/synthetic-overlay-second.json")
         self.write(path, feed)
         registry = self.read(REG)
@@ -99,6 +102,18 @@ class DocumentaryOverlayConsumerTest(unittest.TestCase):
                     distinct_occurrences=True, source_change=(field, value)
                 )
                 with self.assertRaisesRegex(ValueError, "cross-feed source custody conflict"):
+                    module.load_index(self.root)
+
+    def test_other_feed_cannot_promote_eyewitness_via_new_occurrence_id(self):
+        for field, value in (
+            ("type", "PRIMARY_EVENT_EYEWITNESS_CONFIRMED"),
+            ("source_independence", "INDEPENDENT_PRIMARY_EVENT_WITNESS_CONFIRMED"),
+        ):
+            with self.subTest(field=field):
+                self.append_synthetic_second_feed(
+                    distinct_occurrences=True, occurrence_change=(field, value)
+                )
+                with self.assertRaisesRegex(ValueError, "unreviewed documentary classification"):
                     module.load_index(self.root)
 
     def test_distinct_cross_feed_occurrences_with_shared_custody_are_allowed(self):
