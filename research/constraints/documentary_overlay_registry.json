@@ -1,0 +1,22 @@
+{
+  "schema": "conde.documentary-overlay-registry/v1",
+  "parent_graph": "research/constraints/ssr_1963_observable_graph.json",
+  "note": "Separate documentary overlays; the parent cumulative physical graph is not mutated and supplies no new orbital constraints.",
+  "feeds": [
+    {
+      "id": "ABELHA-R37-P1-PRESS-20261117",
+      "path": "public/data/conde-press-nucleus-provenance-r37.json",
+      "schema": "conde.press-nucleus-documentary-bridge/v1",
+      "sha256": "216ef05edb8fa23d3f8eddca2512578e057527d8e9a80f14a4ed9995032184db",
+      "nodes": 17,
+      "edges": 20,
+      "occurrences": 4,
+      "occurrence_ids": [
+        "OCC:CM21658:DENIAL",
+        "OCC:CM21661:CURVELLO",
+        "OCC:UH00477:STANISLAW",
+        "OCC:CORE871:NO_EVENT_HOUR"
+      ]
+    }
+  ]
+}
