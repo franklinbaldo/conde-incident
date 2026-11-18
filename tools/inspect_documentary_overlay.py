@@ -57,7 +57,7 @@ def decode(raw):
 
 
 def blob_sha1(raw):
-    return hashlib.sha1(f"blob {len(raw)}\\0".encode().replace(b"\\0", b"\\x00") + raw).hexdigest()
+    return hashlib.sha1(f"blob {len(raw)}".encode() + bytes([0]) + raw).hexdigest()
 
 
 def validate_feed(feed):
