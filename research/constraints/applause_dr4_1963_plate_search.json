@@ -1,0 +1,97 @@
+{
+  "record_id": "EXP-APPLAUSE-DR4-1963-PLATE-SEARCH",
+  "generated_utc": "2026-11-19T11:45:00Z",
+  "status": "NULL_DETECTION_NON_EXCLUSIONARY",
+  "cumulative_graph_state": "CONNECTED_PENDING_CALIBRATION",
+  "epistemic_classification": "quantitative_inference_from_primary_plate_and_secondary_tle_mirror",
+  "script_ref": "formal/scripts/check_applause_dr4_1963_plates.py",
+  "tle_source": {
+    "dataset": "oxzoid/space-track-tle-history (1963 parquet)",
+    "url": "https://huggingface.co/datasets/oxzoid/space-track-tle-history/resolve/main/data/1963.parquet",
+    "parquet_sha256": "c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09",
+    "provenance_note": "Secondary Space-Track mirror; primary 1963 NORAD/SPADATS custody remains open."
+  },
+  "archive_scan": {
+    "archive": "APPLAUSE DR4 (Archives of Photographic PLates for Astronomical USE)",
+    "tap_endpoint": "https://www.plate-archive.org/tap/sync",
+    "window_utc": ["1963-01-17T00:00:00Z", "1963-11-08T23:59:59Z"],
+    "jd_range": [2438046.5, 2438342.5],
+    "max_tle_age_days": 35.0,
+    "total_solved_exposures_1963": 3826,
+    "exposures_by_archive": {
+      "203_boyden_bamberg_0p10m": 1917,
+      "401_tautenburg_schmidt_1p34m": 1345,
+      "208_bamberg_north_astrograph": 200,
+      "106_hamburg_ag_0p15m": 148,
+      "102_hamburg_schmidt_0p80m": 118,
+      "202_harvard_boyden_metcalf_0p25m": 53,
+      "301_tartu_petzval": 45
+    },
+    "sunlit_crossings_by_norad": {
+      "527": 0,
+      "528": 3,
+      "529": 0,
+      "637": 0
+    },
+    "large_schmidt_sunlit_crossings_401_102": {
+      "527": 0,
+      "528": 0,
+      "529": 0,
+      "637": 0,
+      "shadow_only_note": "NORAD 528 crossed Tautenburg 1.34m plate 70719 on 1963-04-24 22:45 UTC in Earth shadow (sunlit=False)."
+    },
+    "boyden_oct_nov_1963_gap_note": "Zero Boyden plates during 1963-10-26..1963-11-03 due to 1963-11-01 Full Moon; exposures resumed Nov 4-6 when NORAD 637 was already in shadow."
+  },
+  "plate_27600_analysis": {
+    "plate_id": 27600,
+    "archive_id": 203,
+    "observatory": "Dr. Remeis-Observatory, Southern Station (Boyden, Bloemfontein, South Africa)",
+    "site_lat_deg": -29.0389,
+    "site_lon_deg": 26.4056,
+    "telescope": "Astrograph (ten 10-cm Tessar f/6 cameras, f=0.61 m)",
+    "emulsion": "Perutz-Astro",
+    "license": "CC0 1.0",
+    "exposure_utc": ["1963-06-10T16:20:00Z", "1963-06-10T16:50:00Z"],
+    "exptime_s": 1800.0,
+    "fits_url": "https://www.plate-archive.org/files/DR4/scans/Bamberg-South/000011_1963_h.fits",
+    "fits_bytes": 408816000,
+    "fits_sha256": "9526acc0f1f743befdc46502ee8c3c4399815ffee755ff31b48bff4cad959f0c",
+    "dimensions_px": [14000, 14600],
+    "pixel_scale_arcsec": 3.5461,
+    "wcs_calibration": "APPLAUSE DR4 Gaia EDR3 TPV (744 stars, scamp_sigma_mean=1.76 arcsec)",
+    "norad_528_sgp4_track": {
+      "tle_epoch_utc": "1963-06-12T00:43:50.165472Z",
+      "dt_tle_days": -1.339,
+      "inside_duration_s": 25,
+      "crossing_utc": ["1963-06-10T16:49:16Z", "1963-06-10T16:49:40Z"],
+      "entry_px": [3519.6, 14555.7],
+      "exit_px": [252.2, 322.3],
+      "midpoint_ra_deg": 185.291,
+      "midpoint_dec_deg": 12.791,
+      "midpoint_elevation_deg": 47.4,
+      "midpoint_range_km": 583.0,
+      "solar_phase_angle_deg": 79.7,
+      "sunlit": true,
+      "angular_rate_deg_s": 0.595,
+      "pixel_rate_px_s": 602.3,
+      "dwell_time_per_3px_psf_ms": 5.0
+    },
+    "adjacent_plates_same_exposure": {
+      "plate_27601": "Corner graze only (2s, entry (244.5, 14120.7) -> exit (91.4, 13402.5))",
+      "plate_27602": "Outside exact rectangular Gaia EDR3 WCS bounds"
+    },
+    "radon_and_glint_search": {
+      "corridor_half_width_px": 600,
+      "corridor_half_width_deg": 0.59,
+      "norad_528_straight_radon_max_snr": 3.3,
+      "null_control_east_2500px_straight_radon_max_snr": 2.53,
+      "norad_528_tilted_radon_1deg_max_snr": 4.2,
+      "null_control_tilted_radon_1deg_max_snr": 4.75,
+      "norad_528_short_glint_0p5s_max_snr": 5.56,
+      "null_control_short_glint_0p5s_max_snr": 5.35,
+      "control_satellite_norad_292_radon_max_snr": 3.95
+    },
+    "can_exclude_trajectory": false,
+    "non_exclusion_reason": "At 602.3 px/s (~5 ms per 3-px PSF element vs 1800 s exposure for stars), trailing loss and reciprocity failure limit a 10-cm patrol plate to roughly mag 4-6 for moving LEO streaks; a faint debris fragment (steady mag ~8-10) is expected to remain undetected absent a bright specular glint."
+  }
+}
