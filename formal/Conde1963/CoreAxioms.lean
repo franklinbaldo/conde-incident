@@ -2,6 +2,7 @@ import Conde1963.Core
 import Conde1963.CircularMCMC
 import Conde1963.HastingsKernel
 import Conde1963.OpticalRayVisibility
+import Conde1963.OpticalPlateVeto
 import Conde1963.SharedStateParallax
 import Conde1963.SsrSurvivorIntervals
 import Conde1963.RelativeTrajectories
@@ -74,3 +75,9 @@ does not authenticate observed positions or establish a 1963 reentry. -/
 #print axioms Conde1963.SharedStateParallax.covariance_includes_two_cross_terms
 #print axioms Conde1963.SharedStateParallax.identical_sensitivities_cancel_shared_noise
 #print axioms Conde1963.SharedStateParallax.independence_approximation_changes_result
+
+/-! Conditional negative-plate veto and trailing-loss non-exclusion certificate. -/
+#print axioms Conde1963.OpticalPlateVeto.negative_plate_excludes_if_guaranteed
+#print axioms Conde1963.OpticalPlateVeto.higher_trailing_loss_cannot_improve_detectability
+#print axioms Conde1963.OpticalPlateVeto.non_detection_without_trailing_calibration_does_not_exclude
+#print axioms Conde1963.OpticalPlateVeto.bright_object_satisfies_guaranteed_detection
