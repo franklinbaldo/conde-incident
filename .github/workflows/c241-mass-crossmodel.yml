@@ -1,0 +1,60 @@
+name: C241 shared mass bounds across orbital and Bayesian models
+on:
+  pull_request:
+    paths:
+      - src/lib/orbitMassConstraints.ts
+      - src/lib/orbitSpaceWeatherAdapter.ts
+      - src/lib/monteCarlo.ts
+      - src/lib/inverseSolver.ts
+      - tests/orbitMassConstraints.test.mjs
+      - tools/audit_mass_crossmodel.py
+      - tests/test_mass_crossmodel_audit.py
+      - research/constraints/C241_mass_crossmodel_routing_2026-11-13.json
+      - research/statistics/C241_mass_crossmodel_integration_2026-11-13.md
+      - .github/workflows/c241-mass-crossmodel.yml
+  push:
+    branches: [main]
+    paths:
+      - src/lib/orbitMassConstraints.ts
+      - src/lib/orbitSpaceWeatherAdapter.ts
+      - src/lib/monteCarlo.ts
+      - src/lib/inverseSolver.ts
+      - tests/orbitMassConstraints.test.mjs
+      - tools/audit_mass_crossmodel.py
+      - tests/test_mass_crossmodel_audit.py
+      - research/constraints/C241_mass_crossmodel_routing_2026-11-13.json
+      - research/statistics/C241_mass_crossmodel_integration_2026-11-13.md
+      - .github/workflows/c241-mass-crossmodel.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  mass-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact source SHA
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Source-bound consumer coverage and Python adversarial tests
+        run: |
+          python3 -m unittest discover -s tests -p test_mass_crossmodel_audit.py -v
+          python3 tools/audit_mass_crossmodel.py --output "$RUNNER_TEMP/c241_mass_routing.json"
+      - name: Test conserved mass to physical J2, MSISE, inverse and exploratory MC
+        run: |
+          node --experimental-strip-types --test tests/orbitMassConstraints.test.mjs
+          node --experimental-strip-types --test tests/orbitDragDensityGauge.test.mjs tests/orbitSpaceWeatherAdapter.test.mjs
+      - name: Preserve source status and conditional numerical results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: c241-mass-crossmodel-${{ github.event.pull_request.head.sha || github.sha }}
+          path: ${{ runner.temp }}/c241_mass_routing.json
+          if-no-files-found: warn
+          retention-days: 30
