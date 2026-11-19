@@ -13,7 +13,7 @@ Scope of shared scientific/product work: **franklinbaldo/conde-incident**. Perma
 - Label each claim: original directly inspected; contemporary secondhand report; modern secondary catalog; quantitative inference; hypothesis. Documentary proof of the Tupi *report* is not physical proof of a sphere/crater/body.
 - Track dependence chains; NASA/NORAD/catlogs drawing on the same tracking must not be counted as independent measurements, nor Tupi/FBIS/reprints as independent witnesses.
 - Do not invent pass times, reentry coordinates, posterior probabilities, temperatures, ballistic coefficients, historical quotes, TLEs or observational events. Keep negative results and uncertainty.
-- **Mandatory conflict to resolve:** original site RAAN 284.1520° versus prior TLE series RAAN ~198.5261°. Retrieve complete epochs and primary element provenance, do not average them.
+- **Legacy RAAN retired (owner decision):** unsourced 284.1520° is discarded (audit trail only in Git/C241-L8), not an active conflict. Primary 1963 provenance for ~198.5261° remains open.
 - Existing code is exploratory: SGP4 extrapolated ~12 days does not determine a terminal entry; sampling random latitude phase is not a dynamically fitted Monte Carlo; pre-existing inverse feasibility flags are not a physical proof.
 - The day-only NASA decay record of 8 Nov 1963 gives no terminal time or place. Do not treat 23:59 as an observed timestamp.
 - The Lean proof kernel certifies logical implications of premises, not empirical authenticity or orbital integration. Preserve any known holdout failures.

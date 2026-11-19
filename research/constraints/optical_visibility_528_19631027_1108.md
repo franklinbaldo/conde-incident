@@ -17,7 +17,7 @@ Testar se observadores ópticos em **Durban**, **Slough**, **Baja** ou **Meudon*
 **Limites explícitos:**
 - Cálculo exploratório em **SGP4** condicional ao par secundário [`mirror_528_1963-10-27.tle`](../tle_custody/mirror_528_1963-10-27.tle) (`RAAN 198.5261°`, `i = 81.8615°`, `n = 15.74901460 rev/dia`, `B* = 0`).
 - **Não** determina horário ou local de reentrada terminal e **não** substitui observações primárias nem integrações com atmosfera física calibrada.
-- Preserva o conflito histórico de RAAN (`198.5261°` vs. `284.1520°` legado inativo): a exclusão óptica abaixo aplica-se estritamente ao ramo `198.5261°`.
+- A exclusão óptica abaixo é condicional ao par secundário `mirror_528_1963-10-27.tle` (`RAAN 198.5261°`), cuja custódia primária NORAD/SPADATS de 1963 permanece pendente.
 
 ## Método e reprodutibilidade
 
