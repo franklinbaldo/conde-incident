@@ -1,0 +1,68 @@
+{
+  "schema": "conde.contemporary_newspaper_custody/v1",
+  "id": "C241-OGLOBO-19631109-P04",
+  "issues": [871, 884],
+  "checked_utc_date": "2026-11-19",
+  "status": "PRIMARY_1963_FACSIMILE_INSPECTED_NO_EVENT_HOUR_OFFICIAL_DENIAL_AND_UNOFFICIAL_II_ZONA_AEREA_LEAD",
+  "epistemic_label": "ORIGINAL_1963_FACSIMILE_DIRECTLY_INSPECTED_FOR_REPORT_NOT_PHYSICAL_IMPACT",
+  "source": {
+    "newspaper": "O Globo",
+    "city": "Rio de Janeiro",
+    "country": "Brazil",
+    "publication_date": "1963-11-09",
+    "edition_code": "PRM1",
+    "page": 4,
+    "column_position": "top-center",
+    "editorial_network": "ORGANIZACOES_GLOBO_NON_DIARIOS_ASSOCIADOS",
+    "filename": "ge091163004PRM1-1234.pdf",
+    "owner_upload_comment_url": "https://github.com/franklinbaldo/conde-incident/issues/884#issuecomment-7022032794",
+    "attachment_url": "https://github.com/user-attachments/files/35109698/ge091163004PRM1-1234.pdf",
+    "bytes": 945313,
+    "sha256": "7bbd6507e2cf9624315323081cceb3e705b649b53269aa97bcf299bea428b6d8",
+    "pdf_page_count": 1,
+    "visually_inspected": true
+  },
+  "article": {
+    "headline_verbatim": "NÃO HÁ NOTÍCIAS OFICIAIS SÔBRE O GLOBO METÁLICO QUE TERIA CAÍDO EM CONDE",
+    "subheadings_verbatim": [
+      "Globo Tripulado",
+      "Aeronáutica Nada Sabe"
+    ],
+    "text_verbatim": "O MINISTÉRIO da Aeronáutica e o Observatório Nacional não receberam nenhuma notícia oficial sôbre a queda de um globo metálico, tripulado, no município de Conde, próximo a Salvador, Bahia. A notícia, segundo o Professor Eduardo Machado, do Observatório Nacional, é fantasiosa e é mais uma história entre milhares de relatos sôbre aparecimentos, aterragens e quedas de misteriosos objetos espaciais. Em declarações a O GLOBO, o Professor Machado afirmou que o Observatório não tinha tomado nenhuma providência para apurar a notícia, por não dispor de meios suficientes e por saber, de antemão, que a história não tem fundamento. Globo Tripulado — As notícias da queda do globo metálico no município de Conde foram explicadas pelo Professor Eduardo Machado, da seguinte forma: — É muito comum a queda de meteoros, sondas e balões espaciais lançados pelos Estados Unidos e União Soviética, principalmente. Já temos tido inúmeros casos dêstes, e, geralmente, as primeiras notícias contam coisas impossíveis, como homens de aspectos monstruosos, roupas e linguagem estranhas. Aeronáutica Nada Sabe — No Ministério da Aeronáutica, até ontem à tarde também não havia qualquer notícia a respeito. Oficiosamente, informou-se que o Comando da II Zona Aérea tomou conhecimento do fato e enviou dois técnicos ao local da provável queda do objeto. Fontes do Ministério informaram a O GLOBO que comunicados de quedas de objetos misteriosos são assunto quase rotineiro. As mesmas fontes declararam que não havia chegado ao conhecimento do Ministério da Aeronáutica qualquer notícia oficial, da Polícia de Conde, sôbre a queda do \"globo metálico tripulado\".",
+    "reported_event_clock": null,
+    "reported_event_date": null,
+    "eyewitness_name": null,
+    "named_institutional_sources": [
+      "Professor Eduardo Machado (Observatório Nacional)",
+      "Ministério da Aeronáutica (fontes não nomeadas)",
+      "Comando da II Zona Aérea (citado oficiosamente)"
+    ],
+    "internal_temporal_cues": [
+      "\"No Ministério da Aeronáutica, até ontem à tarde também não havia qualquer notícia a respeito\" — confirms O Globo was already querying the Air Ministry on the afternoon of 1963-11-08, prior to the 23:30 Radio Tupi broadcast."
+    ]
+  },
+  "provenance_and_dependencies": {
+    "follows_article": "C241-OGLOBO-19631108-P01",
+    "military_archive_lead": {
+      "unit": "Comando da II Zona Aérea (FAB)",
+      "alleged_action": "Unofficially reported to have sent two technicians to the probable fall site in Conde",
+      "epistemic_status": "UNOFFICIAL_CONTEMPORARY_PRESS_LEAD_NOT_VERIFIED_IN_FAB_ARCHIVES",
+      "official_police_notification_reported": false
+    },
+    "independent_physical_witness": false
+  },
+  "cumulative_graph_bridge": {
+    "status": "CONNECTED_PENDING_CALIBRATION",
+    "narrative_upper_bound_corroboration": "Afternoon of 1963-11-08 institutional query corroborates that O Globo's 1963-11-08 p. 1 story preceded the 23:30 Radio Tupi broadcast.",
+    "missing_bridge": "Primary FAB / II Zona Aérea (CENDOC / II COMAR) archival records for 1963-11-07..15 and Bahian newspaper facsimiles",
+    "physical_constraints_activated": 0,
+    "admissible_domain_delta": "NOT_EVALUABLE",
+    "g84_matrix_classification": "SEM_HORA_DO_EVENTO_MAS_CORROBORA_CRONOLOGIA_TARDE_0811_E_PISTA_II_ZONA_AEREA"
+  },
+  "limits": {
+    "proves_physical_sphere_or_impact": false,
+    "proves_satellite_reentry": false,
+    "proves_ii_zona_aerea_dispatch_occurred": false,
+    "outreach_sent": false
+  }
+}
