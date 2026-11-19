@@ -1,0 +1,65 @@
+{
+  "schema": "conde.contemporary_newspaper_custody/v1",
+  "id": "C241-OGLOBO-19631108-P01",
+  "issues": [871, 884],
+  "checked_utc_date": "2026-11-19",
+  "status": "PRIMARY_1963_FACSIMILE_INSPECTED_NO_EVENT_HOUR_PRECEDES_TUPI_BROADCAST",
+  "epistemic_label": "ORIGINAL_1963_FACSIMILE_DIRECTLY_INSPECTED_FOR_REPORT_NOT_PHYSICAL_IMPACT",
+  "source": {
+    "newspaper": "O Globo",
+    "city": "Rio de Janeiro",
+    "country": "Brazil",
+    "year_roman": "XXXVIII",
+    "weekday": "6.a-feira",
+    "publication_date": "1963-11-08",
+    "issue_number": "11.506",
+    "edition_code": "PRM1",
+    "page": 1,
+    "column_position": "bottom-right",
+    "editorial_network": "ORGANIZACOES_GLOBO_NON_DIARIOS_ASSOCIADOS",
+    "filename": "ge081163001PRM1-1234.pdf",
+    "owner_upload_comment_url": "https://github.com/franklinbaldo/conde-incident/issues/884#issuecomment-7021864481",
+    "attachment_url": "https://github.com/user-attachments/files/35109422/ge081163001PRM1-1234.pdf",
+    "bytes": 885117,
+    "sha256": "16d8712c7021f1c88abf081cf264cd7f810c9b7962bb74dd8d3d0bf0ea55f06d",
+    "pdf_page_count": 1,
+    "visually_inspected": true
+  },
+  "article": {
+    "headline_verbatim": "Grande Globo Metálico, Tripulado, Teria Caído Num Município da Bahia",
+    "text_verbatim": "PERIODICAMENTE o povo é informado, pela imprensa e outros órgãos de divulgação, do aparecimento, neste ou naquele país, de estranhos objetos voadores, oficialmente ainda não identificados. Épocas há, no entanto, em que o fato se constitui numa espécie de psicose coletiva, com inúmeras pessoas afirmando ter visto, realmente, um, dois e até formações inteiras de discos-voadores. Passados os primeiros momentos, os desmentidos começam a surgir através dos órgãos oficiais, identificando tais objetos, quase sempre, como balões-sondas e outros instrumentos próprios para estudos da atmosfera. Agora mesmo chegam notícias de Salvador informando que teria caído no município de Conde, não muito distante daquela capital, um grande globo metálico, cuja queda provocou um buraco de quatro metros de profundidade. E ainda há mais detalhes curiosos: as aberturas do estranho objeto (janelas) são de vidros grossos e no seu bôjo há um corpo humano, vestido com grossas roupas que trazem letras e inscrições desconhecidas. O fato, pelo que se informa, parece que ainda não chegou ao conhecimento das autoridades policiais daquele município.",
+    "reported_event_clock": null,
+    "reported_event_date": null,
+    "eyewitness_name": null,
+    "correspondent_or_agency_credit": null,
+    "origin_city_cited": "Salvador",
+    "municipality_cited": "Conde",
+    "crater_depth_meters_claimed": 4,
+    "editorial_tone": "explicitly_skeptical_framed_as_collective_psychosis_and_unconfirmed_by_local_police",
+    "internal_page1_temporal_cues": [
+      "Ex-pracinhas photo caption: 'esta madrugada, na Praça 15 de Novembro'",
+      "Miss World photo caption: Carole Joan Crawford crowned 'ontem em Londres' (1963-11-07 evening)"
+    ]
+  },
+  "provenance_and_dependencies": {
+    "confirms_bluebook_usaira_pointer": "NARA NAID 302531012 image 0810.jp2 (1963-11-14 telegram citing O GLOBO of 8 Nov)",
+    "replaces_inaccessible_placeholder_in": "research/archive/conde_local_hour_bluebook_C241_TARTARUGA_R71.json",
+    "relation_to_radio_tupi_2330": "Printed in O Globo issue dated 1963-11-08 (PRM1); shares identical core narrative motifs with Radio Tupi/FBIS (metallic globe, 4 m hole, thick-glass windows, human body in thick clothing with unknown inscriptions), showing the story circulated before the 23:30 Tupi broadcast without establishing independent Salvador sourcing.",
+    "independent_physical_witness": false
+  },
+  "cumulative_graph_bridge": {
+    "status": "CONNECTED_PENDING_CALIBRATION",
+    "narrative_upper_bound_variable": "t_press_close_oglobo_19631108_PRM1",
+    "press_closing_time_utc": null,
+    "missing_bridge": "Verified 1963-11-08 press-closing schedule for O Globo edition PRM1 (Rio de Janeiro)",
+    "physical_constraints_activated": 0,
+    "admissible_domain_delta": "NOT_EVALUABLE_UNTIL_PRESS_CLOSING_TIME_CALIBRATED",
+    "g84_matrix_classification": "SEM_HORA_DO_EVENTO_MAS_QUEBRA_ORIGEM_TUPI_2330"
+  },
+  "limits": {
+    "proves_physical_sphere_or_impact": false,
+    "proves_satellite_reentry": false,
+    "proves_independence_from_salvador_wire": false,
+    "outreach_sent": false
+  }
+}
