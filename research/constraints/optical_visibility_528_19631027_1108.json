@@ -1,0 +1,350 @@
+{
+  "experiment_id": "EXP-OPTICAL-VISIBILITY-528-19631027-1108",
+  "verification_status": "EXPLORATORY_SGP4_GEOMETRIC_CHECK",
+  "epistemic_scope": "Conditional on secondary mirror TLE mirror_528_1963-10-27.tle (RAAN 198.5261 deg). SGP4 extrapolated 12 days does not determine terminal entry time or location.",
+  "tle_source": {
+    "path": "research/tle_custody/mirror_528_1963-10-27.tle",
+    "sha256": "18cf11665e061b5ec8679242e10b00b82accf29bc6f0b9b7b6330b9c44e341cd",
+    "epoch_utc": "1963-10-27T14:40:16.132512Z",
+    "line1": "1 00528U 63003  B 63300.61129783  .00686563 +00000-0 +00000-0 0  9990",
+    "line2": "2 00528 081.8615 198.5261 0017147 104.7477 255.4423 15.74901460043614"
+  },
+  "window_utc": {
+    "start": "1963-10-27T14:40:16Z",
+    "end": "1963-11-08T23:59:59Z",
+    "step_seconds": 10,
+    "elevation_threshold_deg": 10.0,
+    "twilight_thresholds_deg": [
+      -6.0,
+      0.0
+    ]
+  },
+  "stations": {
+    "Durban": {
+      "lat_deg": -29.88,
+      "lon_deg": 31.02,
+      "alt_km": 0.05
+    },
+    "Slough": {
+      "lat_deg": 51.48,
+      "lon_deg": -0.56,
+      "alt_km": 0.02
+    },
+    "Baja": {
+      "lat_deg": 46.18,
+      "lon_deg": 18.96,
+      "alt_km": 0.1
+    },
+    "Meudon": {
+      "lat_deg": 48.8,
+      "lon_deg": 2.23,
+      "alt_km": 0.16
+    }
+  },
+  "orbital_plane_vs_sun_nominal": [
+    {
+      "utc": "1963-10-27T14:40Z",
+      "alt_km": 351.0,
+      "raan_deg": 198.53,
+      "sun_ra_deg": 211.23,
+      "raan_minus_sun_ra_deg": -12.7,
+      "sun_dec_deg": -12.67
+    },
+    {
+      "utc": "1963-10-28T14:40Z",
+      "alt_km": 363.4,
+      "raan_deg": 197.36,
+      "sun_ra_deg": 212.19,
+      "raan_minus_sun_ra_deg": -14.84,
+      "sun_dec_deg": -13.01
+    },
+    {
+      "utc": "1963-10-29T14:40Z",
+      "alt_km": 344.0,
+      "raan_deg": 196.18,
+      "sun_ra_deg": 213.16,
+      "raan_minus_sun_ra_deg": -16.98,
+      "sun_dec_deg": -13.34
+    },
+    {
+      "utc": "1963-10-30T14:40Z",
+      "alt_km": 326.6,
+      "raan_deg": 195.02,
+      "sun_ra_deg": 214.13,
+      "raan_minus_sun_ra_deg": -19.12,
+      "sun_dec_deg": -13.68
+    },
+    {
+      "utc": "1963-10-31T14:40Z",
+      "alt_km": 353.1,
+      "raan_deg": 193.84,
+      "sun_ra_deg": 215.1,
+      "raan_minus_sun_ra_deg": -21.26,
+      "sun_dec_deg": -14.0
+    },
+    {
+      "utc": "1963-11-01T14:40Z",
+      "alt_km": 363.3,
+      "raan_deg": 192.67,
+      "sun_ra_deg": 216.08,
+      "raan_minus_sun_ra_deg": -23.41,
+      "sun_dec_deg": -14.33
+    },
+    {
+      "utc": "1963-11-02T14:40Z",
+      "alt_km": 341.2,
+      "raan_deg": 191.5,
+      "sun_ra_deg": 217.06,
+      "raan_minus_sun_ra_deg": -25.56,
+      "sun_dec_deg": -14.65
+    },
+    {
+      "utc": "1963-11-03T14:40Z",
+      "alt_km": 328.0,
+      "raan_deg": 190.33,
+      "sun_ra_deg": 218.04,
+      "raan_minus_sun_ra_deg": -27.71,
+      "sun_dec_deg": -14.96
+    },
+    {
+      "utc": "1963-11-04T14:40Z",
+      "alt_km": 354.6,
+      "raan_deg": 189.15,
+      "sun_ra_deg": 219.03,
+      "raan_minus_sun_ra_deg": -29.88,
+      "sun_dec_deg": -15.27
+    },
+    {
+      "utc": "1963-11-05T14:40Z",
+      "alt_km": 362.9,
+      "raan_deg": 187.99,
+      "sun_ra_deg": 220.02,
+      "raan_minus_sun_ra_deg": -32.03,
+      "sun_dec_deg": -15.58
+    },
+    {
+      "utc": "1963-11-06T14:40Z",
+      "alt_km": 338.3,
+      "raan_deg": 186.81,
+      "sun_ra_deg": 221.01,
+      "raan_minus_sun_ra_deg": -34.2,
+      "sun_dec_deg": -15.88
+    },
+    {
+      "utc": "1963-11-07T14:40Z",
+      "alt_km": 330.3,
+      "raan_deg": 185.65,
+      "sun_ra_deg": 222.01,
+      "raan_minus_sun_ra_deg": -36.36,
+      "sun_dec_deg": -16.18
+    },
+    {
+      "utc": "1963-11-08T14:40Z",
+      "alt_km": 355.6,
+      "raan_deg": 184.47,
+      "sun_ra_deg": 223.01,
+      "raan_minus_sun_ra_deg": -38.54,
+      "sun_dec_deg": -16.48
+    }
+  ],
+  "scenarios": {
+    "Nominal_Bstar_0": {
+      "bstar": 0.0,
+      "tle_bstar_field": "+00000-0",
+      "sgp4_decay_utc": null,
+      "stations": {
+        "Durban": {
+          "passes_el_ge_10": 29,
+          "passes_dark_sun_le_minus6": 16,
+          "visible_passes_sun_le_minus6": 0,
+          "visible_passes_sun_le_0": 0,
+          "min_sun_el_deg_when_sunlit": 41.89
+        },
+        "Slough": {
+          "passes_el_ge_10": 39,
+          "passes_dark_sun_le_minus6": 20,
+          "visible_passes_sun_le_minus6": 0,
+          "visible_passes_sun_le_0": 0,
+          "min_sun_el_deg_when_sunlit": 12.89
+        },
+        "Baja": {
+          "passes_el_ge_10": 34,
+          "passes_dark_sun_le_minus6": 18,
+          "visible_passes_sun_le_minus6": 0,
+          "visible_passes_sun_le_0": 0,
+          "min_sun_el_deg_when_sunlit": 20.51
+        },
+        "Meudon": {
+          "passes_el_ge_10": 38,
+          "passes_dark_sun_le_minus6": 20,
+          "visible_passes_sun_le_minus6": 0,
+          "visible_passes_sun_le_0": 0,
+          "min_sun_el_deg_when_sunlit": 15.97
+        }
+      }
+    },
+    "B1_early_Nov8": {
+      "bstar": 0.008154,
+      "tle_bstar_field": " 81543-2",
+      "sgp4_decay_utc": "1963-11-07T23:58:16Z",
+      "stations": {
+        "Durban": {
+          "passes_el_ge_10": 21,
+          "passes_dark_sun_le_minus6": 12,
+          "visible_passes_sun_le_minus6": 0,
+          "visible_passes_sun_le_0": 0,
+          "min_sun_el_deg_when_sunlit": 47.88
+        },
+        "Slough": {
+          "passes_el_ge_10": 27,
+          "passes_dark_sun_le_minus6": 14,
+          "visible_passes_sun_le_minus6": 0,
+          "visible_passes_sun_le_0": 0,
+          "min_sun_el_deg_when_sunlit": 17.7
+        },
+        "Baja": {
+          "passes_el_ge_10": 27,
+          "passes_dark_sun_le_minus6": 15,
+          "visible_passes_sun_le_minus6": 0,
+          "visible_passes_sun_le_0": 0,
+          "min_sun_el_deg_when_sunlit": 21.18
+        },
+        "Meudon": {
+          "passes_el_ge_10": 26,
+          "passes_dark_sun_le_minus6": 13,
+          "visible_passes_sun_le_minus6": 0,
+          "visible_passes_sun_le_0": 0,
+          "min_sun_el_deg_when_sunlit": 18.03
+        }
+      }
+    },
+    "B2_mid_Nov8": {
+      "bstar": 0.007813,
+      "tle_bstar_field": " 78126-2",
+      "sgp4_decay_utc": "1963-11-08T13:20:16Z",
+      "stations": {
+        "Durban": {
+          "passes_el_ge_10": 22,
+          "passes_dark_sun_le_minus6": 11,
+          "visible_passes_sun_le_minus6": 0,
+          "visible_passes_sun_le_0": 0,
+          "min_sun_el_deg_when_sunlit": 46.45
+        },
+        "Slough": {
+          "passes_el_ge_10": 30,
+          "passes_dark_sun_le_minus6": 15,
+          "visible_passes_sun_le_minus6": 0,
+          "visible_passes_sun_le_0": 0,
+          "min_sun_el_deg_when_sunlit": 16.33
+        },
+        "Baja": {
+          "passes_el_ge_10": 28,
+          "passes_dark_sun_le_minus6": 14,
+          "visible_passes_sun_le_minus6": 0,
+          "visible_passes_sun_le_0": 0,
+          "min_sun_el_deg_when_sunlit": 19.63
+        },
+        "Meudon": {
+          "passes_el_ge_10": 27,
+          "passes_dark_sun_le_minus6": 14,
+          "visible_passes_sun_le_minus6": 0,
+          "visible_passes_sun_le_0": 0,
+          "min_sun_el_deg_when_sunlit": 19.47
+        }
+      }
+    },
+    "B3_late_Nov8": {
+      "bstar": 0.0075,
+      "tle_bstar_field": " 74998-2",
+      "sgp4_decay_utc": "1963-11-08T23:57:16Z",
+      "stations": {
+        "Durban": {
+          "passes_el_ge_10": 23,
+          "passes_dark_sun_le_minus6": 12,
+          "visible_passes_sun_le_minus6": 0,
+          "visible_passes_sun_le_0": 0,
+          "min_sun_el_deg_when_sunlit": 44.35
+        },
+        "Slough": {
+          "passes_el_ge_10": 30,
+          "passes_dark_sun_le_minus6": 15,
+          "visible_passes_sun_le_minus6": 0,
+          "visible_passes_sun_le_0": 0,
+          "min_sun_el_deg_when_sunlit": 14.61
+        },
+        "Baja": {
+          "passes_el_ge_10": 29,
+          "passes_dark_sun_le_minus6": 16,
+          "visible_passes_sun_le_minus6": 0,
+          "visible_passes_sun_le_0": 0,
+          "min_sun_el_deg_when_sunlit": 20.97
+        },
+        "Meudon": {
+          "passes_el_ge_10": 29,
+          "passes_dark_sun_le_minus6": 15,
+          "visible_passes_sun_le_minus6": 0,
+          "visible_passes_sun_le_0": 0,
+          "min_sun_el_deg_when_sunlit": 17.7
+        }
+      }
+    }
+  },
+  "along_track_lead_B2_vs_nominal": [
+    {
+      "days_since_epoch": 1.0,
+      "utc": "1963-10-28T14:40:16Z",
+      "b2_alt_km": 356.4,
+      "phase_lead_revs": 0.012,
+      "approx_dt_min": 1.1
+    },
+    {
+      "days_since_epoch": 2.0,
+      "utc": "1963-10-29T14:40:16Z",
+      "b2_alt_km": 334.9,
+      "phase_lead_revs": 0.05,
+      "approx_dt_min": 4.6
+    },
+    {
+      "days_since_epoch": 4.0,
+      "utc": "1963-10-31T14:40:16Z",
+      "b2_alt_km": 295.6,
+      "phase_lead_revs": 0.219,
+      "approx_dt_min": 20.0
+    },
+    {
+      "days_since_epoch": 6.0,
+      "utc": "1963-11-02T14:40:16Z",
+      "b2_alt_km": 290.3,
+      "phase_lead_revs": 0.543,
+      "approx_dt_min": 49.5
+    },
+    {
+      "days_since_epoch": 8.0,
+      "utc": "1963-11-04T14:40:16Z",
+      "b2_alt_km": 251.1,
+      "phase_lead_revs": 1.089,
+      "approx_dt_min": 99.2
+    },
+    {
+      "days_since_epoch": 10.0,
+      "utc": "1963-11-06T14:40:16Z",
+      "b2_alt_km": 187.2,
+      "phase_lead_revs": 1.937,
+      "approx_dt_min": 176.6
+    },
+    {
+      "days_since_epoch": 11.0,
+      "utc": "1963-11-07T14:40:16Z",
+      "b2_alt_km": 185.0,
+      "phase_lead_revs": 2.513,
+      "approx_dt_min": 229.0
+    },
+    {
+      "days_since_epoch": 11.83,
+      "utc": "1963-11-08T10:40:16Z",
+      "b2_alt_km": 126.6,
+      "phase_lead_revs": 3.085,
+      "approx_dt_min": 281.1
+    }
+  ]
+}
