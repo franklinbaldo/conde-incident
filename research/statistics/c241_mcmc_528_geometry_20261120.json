@@ -1,0 +1,108 @@
+{
+  "experiment_id": "C241-MCMC-528-GEOMETRY-20261120",
+  "verification_status": "EXPLORATORY_MCMC_AND_LEAN4_GEOMETRY_BOUNDS",
+  "lean_certificate_ref": "formal/Conde1963/BallisticGeometryBound.lean",
+  "provenance": {
+    "tle_parquet_sha256": "c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09",
+    "gfz_space_weather_sha256": "5f479a3d98019dbe2324e9dd744932bfb894380ca1b3e9911307b497f890d884",
+    "n_intervals_jan_oct_1963": 43,
+    "total_da_km": -141.88
+  },
+  "seasonal_stability": [
+    {
+      "season": "Jan-Mar",
+      "n_intervals": 10,
+      "total_da_km": -11.16,
+      "weighted_B_m2_kg": 0.23458
+    },
+    {
+      "season": "Apr-Jun",
+      "n_intervals": 10,
+      "total_da_km": -30.18,
+      "weighted_B_m2_kg": 0.23246
+    },
+    {
+      "season": "Jul-Aug",
+      "n_intervals": 9,
+      "total_da_km": -22.65,
+      "weighted_B_m2_kg": 0.25746
+    },
+    {
+      "season": "Sep-Oct",
+      "n_intervals": 14,
+      "total_da_km": -77.89,
+      "weighted_B_m2_kg": 0.24038
+    }
+  ],
+  "storm_vs_quiet_consistency": {
+    "quiet_n": 26,
+    "quiet_weighted_B_m2_kg": 0.23643,
+    "storm_n": 17,
+    "storm_weighted_B_m2_kg": 0.24453
+  },
+  "mcmc_models": {
+    "M1_isotropic_fast_tumbling": {
+      "k": 3,
+      "accept_rate": 0.528,
+      "max_loglik": -38.17,
+      "bic": 87.63,
+      "B0_median_m2_kg": 0.23606,
+      "B0_ci90_m2_kg": [
+        0.22163,
+        0.24876
+      ],
+      "sigma_a_median_km": 0.282,
+      "sigma_f_median_frac": 0.1441
+    },
+    "M2_altitude_trend": {
+      "k": 4,
+      "accept_rate": 0.448,
+      "max_loglik": -37.03,
+      "bic": 89.11,
+      "delta_bic_vs_M1": 1.48,
+      "B350_median_m2_kg": 0.25428,
+      "beta_per_100km_median": -0.151,
+      "beta_per_100km_ci90": [
+        -0.306,
+        0.019
+      ]
+    },
+    "M3_nonspherical_raan_modulation": {
+      "k": 5,
+      "accept_rate": 0.301,
+      "max_loglik": -37.34,
+      "bic": 93.49,
+      "delta_bic_vs_M1": 5.86,
+      "amp_median": 0.0571,
+      "aspect_ratio_median": 1.121
+    }
+  },
+  "posterior_predictive_decay_M1": {
+    "parameter_only": {
+      "median_utc": "1963-11-08T23:32Z",
+      "ci50_utc": [
+        "1963-11-08T17:31Z",
+        "1963-11-09T05:27Z"
+      ],
+      "ci90_utc": [
+        "1963-11-08T09:24Z",
+        "1963-11-09T15:18Z"
+      ],
+      "ci50_width_hours": 11.9,
+      "ci90_width_days": 1.25
+    },
+    "full_predictive_with_sigma_f": {
+      "median_utc": "1963-11-09T02:11Z",
+      "ci50_utc": [
+        "1963-11-07T20:22Z",
+        "1963-11-09T23:44Z"
+      ],
+      "ci90_utc": [
+        "1963-11-06T04:03Z",
+        "1963-11-11T05:02Z"
+      ],
+      "ci50_width_hours": 51.4,
+      "ci90_width_days": 5.04
+    }
+  }
+}
