@@ -39,13 +39,15 @@ theorem solid_sphere_diameter_le_8mm
     (hCd : Cd_centi ≤ 260)
     (hLaw : 2 * B_milli * d_mm * rho ≤ 3 * Cd_centi * 10000) :
     d_mm ≤ 8 := by
-  by_contra hGt
-  have hD : 9 ≤ d_mm := by omega
-  have hLow : 2 * 180 * 9 * 2700 ≤ 2 * B_milli * d_mm * rho :=
-    mul4_le (Nat.le_refl 2) hB hD hRho
-  have hHigh : 3 * Cd_centi * 10000 ≤ 3 * 260 * 10000 :=
-    Nat.mul_le_mul_right 10000 (Nat.mul_le_mul_left 3 hCd)
-  omega
+  cases Nat.le_or_gt d_mm 8 with
+  | inl h => exact h
+  | inr hGt =>
+    have hD : 9 ≤ d_mm := hGt
+    have hLow : 2 * 180 * 9 * 2700 ≤ 2 * B_milli * d_mm * rho :=
+      mul4_le (Nat.le_refl 2) hB hD hRho
+    have hHigh : 3 * Cd_centi * 10000 ≤ 3 * 260 * 10000 :=
+      Nat.mul_le_mul_right 10000 (Nat.mul_le_mul_left 3 hCd)
+    omega
 
 /-- Any macroscopic solid metallic sphere (`d_mm ≥ 100`, i.e., ≥ 10 cm, `rho ≥ 2700`)
 is mathematically incompatible with `B_milli ≥ 180` under `Cd_centi ≤ 260`. -/
@@ -70,13 +72,15 @@ theorem hollow_metal_shell_thickness_le_1337um
     (hCd : Cd_centi ≤ 260)
     (hLaw : 4 * B_milli * t_um * rho ≤ Cd_centi * 10000000) :
     t_um ≤ 1337 := by
-  by_contra hGt
-  have hT : 1338 ≤ t_um := by omega
-  have hLow : 4 * 180 * 1338 * 2700 ≤ 4 * B_milli * t_um * rho :=
-    mul4_le (Nat.le_refl 4) hB hT hRho
-  have hHigh : Cd_centi * 10000000 ≤ 260 * 10000000 :=
-    Nat.mul_le_mul_right 10000000 hCd
-  omega
+  cases Nat.le_or_gt t_um 1337 with
+  | inl h => exact h
+  | inr hGt =>
+    have hT : 1338 ≤ t_um := hGt
+    have hLow : 4 * 180 * 1338 * 2700 ≤ 4 * B_milli * t_um * rho :=
+      mul4_le (Nat.le_refl 4) hB hT hRho
+    have hHigh : Cd_centi * 10000000 ≤ 260 * 10000000 :=
+      Nat.mul_le_mul_right 10000000 hCd
+    omega
 
 /-- A thick-walled titanium or steel spherical vessel (`rho ≥ 4500 kg/m^3`,
 wall thickness `t_um ≥ 3000 um = 3 mm`) cannot satisfy `B_milli ≥ 180` under `Cd_centi ≤ 260`. -/
