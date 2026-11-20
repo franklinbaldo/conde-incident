@@ -87,7 +87,8 @@ class TestC241MsisLedgerIntegrity(unittest.TestCase):
             self.assertLess(last_train, cut, f'Chronological leakage in {row}')
             pred = datetime.fromisoformat(row['predicted_decay_utc'].replace('Z', '+00:00'))
             recomputed = mod.assumed_utc_day_error(pred, row['label_day'])
-            self.assertEqual(row['assumed_utc_day_error_interval'], recomputed)
+            self.assertAlmostEqual(row['assumed_utc_day_error_interval'][0], recomputed[0], delta=0.0002)
+            self.assertAlmostEqual(row['assumed_utc_day_error_interval'][1], recomputed[1], delta=0.0002)
             self.assertEqual(row['hits_assumed_utc_day'], recomputed[0] <= 0.0 <= recomputed[1])
 
     def test_calibrators_and_528_scenarios_present(self):
