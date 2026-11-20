@@ -36,3 +36,5 @@ import Conde1963.OpticalPlateVeto
 import Conde1963.SharedStateParallax
 import Conde1963.CorrelatedReceiverNoise
 import Conde1963.SaoP17ClockStep
+import Conde1963.NewspaperTemporalCutoff
+import Conde1963.TerminalCraterBound

@@ -3,6 +3,8 @@ import Conde1963.CircularMCMC
 import Conde1963.HastingsKernel
 import Conde1963.OpticalRayVisibility
 import Conde1963.OpticalPlateVeto
+import Conde1963.NewspaperTemporalCutoff
+import Conde1963.TerminalCraterBound
 import Conde1963.SharedStateParallax
 import Conde1963.SsrSurvivorIntervals
 import Conde1963.RelativeTrajectories
@@ -81,3 +83,15 @@ does not authenticate observed positions or establish a 1963 reentry. -/
 #print axioms Conde1963.OpticalPlateVeto.higher_trailing_loss_cannot_improve_detectability
 #print axioms Conde1963.OpticalPlateVeto.non_detection_without_trailing_calibration_does_not_exclude
 #print axioms Conde1963.OpticalPlateVeto.bright_object_satisfies_guaranteed_detection
+
+/-! Conditional temporal cutoff from O Globo 1963-11-08/09 primary facsimiles. -/
+#print axioms Conde1963.NewspaperTemporalCutoff.causal_report_excludes_later_pass
+#print axioms Conde1963.NewspaperTemporalCutoff.oglobo_afternoon_excludes_nov08_evening_528
+#print axioms Conde1963.NewspaperTemporalCutoff.morning_528_pass_remains_before_afternoon_cutoff
+
+/-! Conditional work-energy upper bound for 4 m crater excavation by subsonic debris. -/
+#print axioms Conde1963.TerminalCraterBound.energy_deficit_excludes_crater_depth
+#print axioms Conde1963.TerminalCraterBound.higher_work_threshold_preserves_deficit
+#print axioms Conde1963.TerminalCraterBound.hollow_globe_cannot_excavate_4m_crater
+#print axioms Conde1963.TerminalCraterBound.dense_agena_fragment_below_4m_overburden_floor
+#print axioms Conde1963.TerminalCraterBound.high_energy_impactor_satisfies_4m_bound

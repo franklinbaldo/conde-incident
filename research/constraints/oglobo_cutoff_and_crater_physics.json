@@ -1,0 +1,107 @@
+{
+  "schema": "conde.physical_constraint_experiment/v1",
+  "id": "EXP-OGLOBO-CUTOFF-CRATER-20261119",
+  "checked_utc_date": "2026-11-19",
+  "classification": "CONDITIONAL_QUANTITATIVE_INFERENCE_AND_LEAN_CERTIFICATE",
+  "sources": [
+    "research/archive/conde_o_globo_1963_11_08_p01.json",
+    "research/archive/conde_o_globo_1963_11_09_p04.json",
+    "research/constraints/optical_visibility_528_19631027_1108.json",
+    "Day, Logsdon & Latell (1998), Eye in the Sky, Appendix B pp. 238-239 & Ch. 2 p. 34 (NORAD 637 / Mission 9058A Agena D 1169: 1201 kg post-insertion, 5 ft dia, SRV recovered 1963-09-01)"
+  ],
+  "lean_modules": [
+    "formal/Conde1963/NewspaperTemporalCutoff.lean",
+    "formal/Conde1963/TerminalCraterBound.lean"
+  ],
+  "temporal_cutoff": {
+    "date": "1963-11-08",
+    "conde_coords_deg": [-11.81, -37.61],
+    "afternoon_cutoff_source": "C241-OGLOBO-19631109-P04 ('No Ministério da Aeronáutica, até ontem à tarde também não havia qualquer notícia a respeito')",
+    "afternoon_cutoff_utc_min": 1260,
+    "afternoon_cutoff_label": "21:00 UTC (18:00 BA UTC-3; conservative upper bound for 'ontem à tarde')",
+    "norad_528_asc_pass_utc_min": 694,
+    "norad_528_asc_pass_label": "11:34 UTC (08:34 BA UTC-3)",
+    "norad_528_desc_pass_utc_min": 1425,
+    "norad_528_desc_pass_label": "23:45 UTC (20:45 BA UTC-3)",
+    "pass_margin_min": 90,
+    "evening_528_pass_status": "EXCLUDED_AS_CAUSE_OF_OGLOBO_NOV08_REPORT_UNDER_CAUSAL_PREMISE",
+    "morning_528_pass_status": "NOT_EXCLUDED_PENDING_PRM1_PRESS_CLOSING_CLOCK",
+    "caveats": [
+      "Assumes secondary-catalog RAAN = 198.5261 deg on 1963-10-27 with J2 drift -1.173 deg/day (primary 1963 RAAN provenance remains open).",
+      "Excludes only the evening pass as a causal antecedent of the 1963-11-08 O Globo report; does not by itself prove physical impact or date of any non-orbital event."
+    ]
+  },
+  "crater_energy_bound": {
+    "claimed_depth_m": 4.0,
+    "soil_density_kg_m3": 1600.0,
+    "loose_sand_strength_pa": 50000.0,
+    "min_work_4m_overburden_only_kj": 3154.7,
+    "min_work_4m_soft_sand_50kpa_kj": 9856.8,
+    "cases": [
+      {
+        "name": "Hollow Ti pressure sphere (0.5 m, 20 kg)",
+        "mass_kg": 20.0,
+        "diameter_m": 0.5,
+        "cd": 0.47,
+        "terminal_velocity_m_s": 58.9,
+        "kinetic_energy_kj": 34.7,
+        "max_depth_soft_sand_m": 0.67,
+        "max_depth_frictionless_y0_m": 1.29
+      },
+      {
+        "name": "Pressurized tank (0.6 m, 45 kg)",
+        "mass_kg": 45.0,
+        "diameter_m": 0.6,
+        "cd": 0.47,
+        "terminal_velocity_m_s": 73.6,
+        "kinetic_energy_kj": 122.0,
+        "max_depth_soft_sand_m": 1.01,
+        "max_depth_frictionless_y0_m": 1.77
+      },
+      {
+        "name": "Large metallic globe (1.5 m, 150 kg)",
+        "mass_kg": 150.0,
+        "diameter_m": 1.5,
+        "cd": 0.47,
+        "terminal_velocity_m_s": 53.8,
+        "kinetic_energy_kj": 216.9,
+        "max_depth_soft_sand_m": 1.22,
+        "max_depth_frictionless_y0_m": 2.05
+      },
+      {
+        "name": "Large metallic globe (2.0 m, 300 kg)",
+        "mass_kg": 300.0,
+        "diameter_m": 2.0,
+        "cd": 0.47,
+        "terminal_velocity_m_s": 57.0,
+        "kinetic_energy_kj": 487.9,
+        "max_depth_soft_sand_m": 1.58,
+        "max_depth_frictionless_y0_m": 2.50
+      },
+      {
+        "name": "Dense Agena thrust chamber (0.5 m, 150 kg)",
+        "mass_kg": 150.0,
+        "diameter_m": 0.5,
+        "cd": 0.50,
+        "terminal_velocity_m_s": 156.4,
+        "kinetic_energy_kj": 1835.1,
+        "max_depth_soft_sand_m": 2.39,
+        "max_depth_frictionless_y0_m": 3.49
+      },
+      {
+        "name": "Extreme intact dry Agena D nose-first (1.52 m, 700 kg)",
+        "mass_kg": 700.0,
+        "diameter_m": 1.52,
+        "cd": 0.50,
+        "terminal_velocity_m_s": 111.1,
+        "kinetic_energy_kj": 4322.6,
+        "max_depth_soft_sand_m": 3.11,
+        "max_depth_frictionless_y0_m": 4.32
+      }
+    ],
+    "caveats": [
+      "Work-energy bound assumes 100% mechanical efficiency (zero heat/acoustic/deformation loss), so actual depths are strictly smaller than the listed upper bounds.",
+      "Soil density and strength are standard engineering values for loose coastal sand, not 1963 geotechnical measurements of Conde."
+    ]
+  }
+}
