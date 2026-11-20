@@ -39,10 +39,10 @@ theorem solid_sphere_diameter_le_8mm
     (hCd : Cd_centi ≤ 260)
     (hLaw : 2 * B_milli * d_mm * rho ≤ 3 * Cd_centi * 10000) :
     d_mm ≤ 8 := by
-  cases Nat.le_or_gt d_mm 8 with
-  | inl h => exact h
-  | inr hGt =>
-    have hD : 9 ≤ d_mm := hGt
+  if h : d_mm ≤ 8 then
+    exact h
+  else
+    have hD : 9 ≤ d_mm := by omega
     have hLow : 2 * 180 * 9 * 2700 ≤ 2 * B_milli * d_mm * rho :=
       mul4_le (Nat.le_refl 2) hB hD hRho
     have hHigh : 3 * Cd_centi * 10000 ≤ 3 * 260 * 10000 :=
@@ -72,10 +72,10 @@ theorem hollow_metal_shell_thickness_le_1337um
     (hCd : Cd_centi ≤ 260)
     (hLaw : 4 * B_milli * t_um * rho ≤ Cd_centi * 10000000) :
     t_um ≤ 1337 := by
-  cases Nat.le_or_gt t_um 1337 with
-  | inl h => exact h
-  | inr hGt =>
-    have hT : 1338 ≤ t_um := hGt
+  if h : t_um ≤ 1337 then
+    exact h
+  else
+    have hT : 1338 ≤ t_um := by omega
     have hLow : 4 * 180 * 1338 * 2700 ≤ 4 * B_milli * t_um * rho :=
       mul4_le (Nat.le_refl 4) hB hT hRho
     have hHigh : Cd_centi * 10000000 ≤ 260 * 10000000 :=
