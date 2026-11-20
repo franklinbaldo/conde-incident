@@ -1,0 +1,52 @@
+name: Space-Track 1963 Audit (manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      norad_ids:
+        description: "Comma-separated NORAD IDs to audit"
+        required: false
+        default: "527,528,529,637"
+
+permissions:
+  contents: read
+
+jobs:
+  spacetrack-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Assert exact source SHA
+        env:
+          EXPECTED_SHA: ${{ github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run Space-Track 1963 audit
+        env:
+          SPACETRACK_IDENTITY: ${{ secrets.SPACE_TRACK_USER }}
+          SPACETRACK_PASSWORD: ${{ secrets.SPACE_TRACK_PASSWORD }}
+        run: |
+          python3 tools/spacetrack_1963_audit.py \
+            --norad-ids "${{ inputs.norad_ids }}" \
+            --summary-json /tmp/spacetrack_1963_summary.json \
+            --summary-md /tmp/spacetrack_1963_summary.md
+          cat /tmp/spacetrack_1963_summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload summary artifact (1-day retention)
+        uses: actions/upload-artifact@v4
+        with:
+          name: spacetrack-1963-audit-summary
+          path: |
+            /tmp/spacetrack_1963_summary.json
+            /tmp/spacetrack_1963_summary.md
+          retention-days: 1
