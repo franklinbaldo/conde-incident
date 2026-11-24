@@ -61,7 +61,7 @@ export function createGlobe(canvas) {
   function draw() {
     const side = canvas.clientWidth;
     if (!side) return;
-    const density = Math.min(devicePixelRatio, 2);
+    const density = Math.min(devicePixelRatio, 2, 1700 / side);
     const pixels = Math.ceil(side * density);
     if (canvas.width !== pixels || canvas.height !== pixels) {
       canvas.width = pixels;
@@ -194,5 +194,11 @@ export function createGlobe(canvas) {
     draw();
   }
 
-  return { move, stop, centerOn };
+  function position(latitude, longitude, scale, key) {
+    view = { latitude, longitude, scale };
+    selected = key;
+    draw();
+  }
+
+  return { move, stop, centerOn, position };
 }

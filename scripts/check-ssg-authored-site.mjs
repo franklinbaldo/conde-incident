@@ -48,6 +48,22 @@ for (const layer of ['regiao', 'metropole', 'cidade', 'bairro', 'casa-branca', '
 }
 assert.ok(readFileSync(join('public', 'js/apresentacao-descida.mjs')).length,
   'Câmera da abertura ausente do artefato');
+assert.match(deck, /<canvas data-route-earth\b/, 'Câmera geográfica ausente');
+assert.match(deck, /data-desk-reader\b/, 'Leitura do fac-símile ausente');
+assert.ok(readFileSync(join('public', 'js/apresentacao-voo.mjs')).length);
+const { documents } = await import('../public/js/apresentacao-documentos.mjs');
+assert.deepEqual(documents.map(doc => doc.pages.length), [2, 1, 1]);
+for (const doc of documents) {
+  for (const leaf of [doc.key + '-capa.webp', ...doc.pages.flatMap(page => page.strips.map(row => row[0]))]) {
+    assert.equal(readFileSync(join('public/img/apresentacao-documentos', leaf)).toString('ascii', 8, 12),
+      'WEBP', 'Imagem do documento ausente ou inválida: ' + leaf);
+  }
+}
+for (const [key, place] of Object.entries(places)) {
+  if (place.latitude === undefined) continue;
+  const image = readFileSync(join('public/img/apresentacao-lugares', key + '.webp'));
+  assert.equal(image.toString('ascii', 8, 12), 'WEBP', 'Mosaico geográfico ausente: ' + key);
+}
 const lookupPage=read('evidencias/fontes');
 assert.match(lookupPage,/id="source-lookup-form"/, 'Consulta documental SSG ausente');
 // Fail the Pages build if a reverse-index source would lead to a missing or
