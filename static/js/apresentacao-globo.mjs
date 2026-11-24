@@ -63,7 +63,10 @@ export function createGlobe(canvas) {
     if (!side) return;
     const density = Math.min(devicePixelRatio, 2);
     const pixels = Math.ceil(side * density);
-    if (canvas.width !== pixels) canvas.width = canvas.height = pixels;
+    if (canvas.width !== pixels || canvas.height !== pixels) {
+      canvas.width = pixels;
+      canvas.height = pixels;
+    }
     ctx.setTransform(pixels / side, 0, 0, pixels / side, 0, 0);
     ctx.clearRect(0, 0, side, side);
 
