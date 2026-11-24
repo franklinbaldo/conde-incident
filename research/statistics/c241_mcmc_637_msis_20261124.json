@@ -1,0 +1,306 @@
+{
+  "experiment_id": "C241-MCMC-637-MSIS-20261124",
+  "object": {
+    "norad_id": 637,
+    "cospar": "1963-035A",
+    "name": "Thor Agena D 1169 (CORONA KH-4 9058A)"
+  },
+  "verification_status": "EXPLORATORY_MCMC_SECONDARY_TLE_NOT_IMPACT_PROOF",
+  "provenance": {
+    "tle_parquet_url": "https://huggingface.co/datasets/oxzoid/space-track-tle-history/blob/4b4fb3a/data/tle_1963.parquet",
+    "tle_parquet_sha256": "c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09",
+    "gfz_space_weather_url": "https://kp.gfz.de/app/files/Kp_ap_Ap_SN_F107_since_1932.txt",
+    "gfz_space_weather_sha256": "46cea03157cc4b15da577721e0dac59c9a41669d9e93bbeb9c5e55203ea8eb1d",
+    "n_unique_tles": 25,
+    "n_decay_intervals_used": 23,
+    "total_da_km_23_intervals": -109.51,
+    "excluded_intervals": [
+      {
+        "t1": "1963-09-03T01:23Z",
+        "t2": "1963-09-04T18:15Z",
+        "dt_d": 1.703,
+        "da_obs_km": 0.7759,
+        "reason": "positive_da_non_decay_early_mission_or_tle_noise"
+      }
+    ],
+    "nasa_ssr_decay_day_utc": "1963-11-07",
+    "plane_proxy_site": {
+      "id": "CGEO15-CAMERA-01",
+      "lat_deg": -11.7988,
+      "lon_deg": -37.621475,
+      "status": "MODERN_CAMERA_PROXY_NOT_IMPACT_SITE"
+    }
+  },
+  "epistemic_contract": {
+    "historical_event_time_utc": null,
+    "terminal_time_sigma_hours": null,
+    "calibrated_terminal_holdouts": 0,
+    "phase_constraint": "NOT_EVALUATED",
+    "active_constraint_637": false,
+    "impact_geography": null
+  },
+  "models": {
+    "NRLMSIS_2_1": {
+      "weighted_B_all_23_m2_kg": 0.01797,
+      "phase_stability": [
+        {
+          "phase": "Aug30-Sep30",
+          "n_intervals": 9,
+          "total_da_km": -20.71,
+          "weighted_B_m2_kg": 0.01697
+        },
+        {
+          "phase": "Sep30-Oct22",
+          "n_intervals": 8,
+          "total_da_km": -27.4,
+          "weighted_B_m2_kg": 0.01929
+        },
+        {
+          "phase": "Oct22-Nov05",
+          "n_intervals": 6,
+          "total_da_km": -61.4,
+          "weighted_B_m2_kg": 0.01778
+        }
+      ],
+      "storm_vs_quiet_consistency": {
+        "quiet_n": 12,
+        "quiet_weighted_B_m2_kg": 0.01656,
+        "storm_n": 11,
+        "storm_weighted_B_m2_kg": 0.02
+      },
+      "mcmc_models": {
+        "M1_isotropic_fast_tumbling": {
+          "k": 3,
+          "accept_rate": 0.558,
+          "max_loglik": -27.83,
+          "bic": 65.06,
+          "B0_median_m2_kg": 0.01812,
+          "B0_ci90_m2_kg": [
+            0.01685,
+            0.0195
+          ],
+          "sigma_a_median_km": 0.472,
+          "sigma_f_median_frac": 0.1071
+        },
+        "M2_altitude_trend": {
+          "k": 4,
+          "accept_rate": 0.439,
+          "max_loglik": -27.73,
+          "bic": 68.0,
+          "delta_bic_vs_M1": 2.94,
+          "B260_median_m2_kg": 0.01842,
+          "beta_per_100km_median": 0.096,
+          "beta_per_100km_ci90": [
+            -0.25,
+            0.348
+          ]
+        },
+        "M3_nonspherical_raan_modulation": {
+          "k": 5,
+          "accept_rate": 0.22,
+          "max_loglik": -25.1,
+          "bic": 65.88,
+          "delta_bic_vs_M1": 0.82,
+          "amp_median": 0.4312,
+          "aspect_ratio_median": 2.516
+        }
+      },
+      "posterior_predictive_reentry_M1": {
+        "origin_tle_utc": "1963-11-05T07:54:43Z",
+        "origin_hp_ha_km": [
+          199.4,
+          199.6
+        ],
+        "parameter_only": {
+          "median_utc": "1963-11-07T11:18Z",
+          "ci50_utc": [
+            "1963-11-07T09:53Z",
+            "1963-11-07T12:43Z"
+          ],
+          "ci90_utc": [
+            "1963-11-07T08:13Z",
+            "1963-11-07T14:56Z"
+          ],
+          "ci50_width_hours": 2.8,
+          "ci90_width_hours": 6.7,
+          "frac_in_nov07_utc": 1.0,
+          "frac_in_nov07_bahia": 1.0
+        },
+        "full_predictive_with_sigma_f": {
+          "median_utc": "1963-11-07T10:40Z",
+          "ci50_utc": [
+            "1963-11-07T07:17Z",
+            "1963-11-07T13:46Z"
+          ],
+          "ci90_utc": [
+            "1963-11-06T23:07Z",
+            "1963-11-07T22:13Z"
+          ],
+          "ci50_width_hours": 6.5,
+          "ci90_width_hours": 23.1,
+          "frac_in_nov07_utc": 0.91,
+          "frac_in_nov07_bahia": 0.88
+        }
+      },
+      "conde_plane_crossings_1963_11_07": [
+        {
+          "crossing_utc": "1963-11-07T05:23:34Z",
+          "crossing_bahia_utc_minus_3": "1963-11-07 02:23:34",
+          "pass_direction": "descending_north_to_south",
+          "raan_deg": 267.2654,
+          "window_width_min": {
+            "50": 3.687,
+            "100": 7.374,
+            "200": 14.747
+          },
+          "cdf_in_param_only_predictive": 0.01,
+          "cdf_in_full_predictive": 0.1
+        },
+        {
+          "crossing_utc": "1963-11-07T17:05:25Z",
+          "crossing_bahia_utc_minus_3": "1963-11-07 14:05:25",
+          "pass_direction": "ascending_south_to_north",
+          "raan_deg": 266.6264,
+          "window_width_min": {
+            "50": 3.687,
+            "100": 7.373,
+            "200": 14.746
+          },
+          "cdf_in_param_only_predictive": 1.0,
+          "cdf_in_full_predictive": 0.88
+        }
+      ]
+    },
+    "NRLMSISE_00": {
+      "weighted_B_all_23_m2_kg": 0.01508,
+      "phase_stability": [
+        {
+          "phase": "Aug30-Sep30",
+          "n_intervals": 9,
+          "total_da_km": -20.71,
+          "weighted_B_m2_kg": 0.01427
+        },
+        {
+          "phase": "Sep30-Oct22",
+          "n_intervals": 8,
+          "total_da_km": -27.4,
+          "weighted_B_m2_kg": 0.01594
+        },
+        {
+          "phase": "Oct22-Nov05",
+          "n_intervals": 6,
+          "total_da_km": -61.4,
+          "weighted_B_m2_kg": 0.015
+        }
+      ],
+      "storm_vs_quiet_consistency": {
+        "quiet_n": 12,
+        "quiet_weighted_B_m2_kg": 0.01399,
+        "storm_n": 11,
+        "storm_weighted_B_m2_kg": 0.01662
+      },
+      "mcmc_models": {
+        "M1_isotropic_fast_tumbling": {
+          "k": 3,
+          "accept_rate": 0.497,
+          "max_loglik": -26.91,
+          "bic": 63.22,
+          "B0_median_m2_kg": 0.01516,
+          "B0_ci90_m2_kg": [
+            0.01415,
+            0.01622
+          ],
+          "sigma_a_median_km": 0.459,
+          "sigma_f_median_frac": 0.0977
+        },
+        "M2_altitude_trend": {
+          "k": 4,
+          "accept_rate": 0.391,
+          "max_loglik": -26.83,
+          "bic": 66.2,
+          "delta_bic_vs_M1": 2.98,
+          "B260_median_m2_kg": 0.01542,
+          "beta_per_100km_median": 0.086,
+          "beta_per_100km_ci90": [
+            -0.24,
+            0.319
+          ]
+        },
+        "M3_nonspherical_raan_modulation": {
+          "k": 5,
+          "accept_rate": 0.269,
+          "max_loglik": -24.92,
+          "bic": 65.51,
+          "delta_bic_vs_M1": 2.29,
+          "amp_median": 0.2228,
+          "aspect_ratio_median": 1.573
+        }
+      },
+      "posterior_predictive_reentry_M1": {
+        "origin_tle_utc": "1963-11-05T07:54:43Z",
+        "origin_hp_ha_km": [
+          199.4,
+          199.6
+        ],
+        "parameter_only": {
+          "median_utc": "1963-11-07T12:58Z",
+          "ci50_utc": [
+            "1963-11-07T11:27Z",
+            "1963-11-07T14:11Z"
+          ],
+          "ci90_utc": [
+            "1963-11-07T09:46Z",
+            "1963-11-07T17:11Z"
+          ],
+          "ci50_width_hours": 2.7,
+          "ci90_width_hours": 7.4,
+          "frac_in_nov07_utc": 1.0,
+          "frac_in_nov07_bahia": 1.0
+        },
+        "full_predictive_with_sigma_f": {
+          "median_utc": "1963-11-07T12:35Z",
+          "ci50_utc": [
+            "1963-11-07T09:37Z",
+            "1963-11-07T15:15Z"
+          ],
+          "ci90_utc": [
+            "1963-11-07T02:33Z",
+            "1963-11-08T00:22Z"
+          ],
+          "ci50_width_hours": 5.6,
+          "ci90_width_hours": 21.8,
+          "frac_in_nov07_utc": 0.92,
+          "frac_in_nov07_bahia": 0.92
+        }
+      },
+      "conde_plane_crossings_1963_11_07": [
+        {
+          "crossing_utc": "1963-11-07T05:23:34Z",
+          "crossing_bahia_utc_minus_3": "1963-11-07 02:23:34",
+          "pass_direction": "descending_north_to_south",
+          "raan_deg": 267.2664,
+          "window_width_min": {
+            "50": 3.687,
+            "100": 7.374,
+            "200": 14.748
+          },
+          "cdf_in_param_only_predictive": 0.0,
+          "cdf_in_full_predictive": 0.13
+        },
+        {
+          "crossing_utc": "1963-11-07T17:05:26Z",
+          "crossing_bahia_utc_minus_3": "1963-11-07 14:05:26",
+          "pass_direction": "ascending_south_to_north",
+          "raan_deg": 266.6291,
+          "window_width_min": {
+            "50": 3.687,
+            "100": 7.373,
+            "200": 14.746
+          },
+          "cdf_in_param_only_predictive": 0.94,
+          "cdf_in_full_predictive": 0.85
+        }
+      ]
+    }
+  }
+}
