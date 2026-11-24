@@ -1,7 +1,7 @@
 ---
 type: Page
 title: "Conde, 1963 · Anatomia de uma investigação"
-description: "A investigação sobre o relato de Conde em nove slides com recortes, arquivos e testes orbitais."
+description: "Da abertura dos arquivos americanos em 2026 ao primeiro achado que desencadeou a investigação de Conde."
 layout: index
 language: pt-BR
 page_kind: "presentation"
@@ -19,14 +19,61 @@ canonical_route: "/conde-incident/apresentacao/"
 <div class="deck-stage">
 <section class="deck-slide deck-cover" id="abertura" aria-labelledby="slide-abertura">
 <div class="deck-copy">
-<p class="deck-tag">Conde, Bahia · Novembro de 1963</p>
-<h2 id="slide-abertura" tabindex="-1">Anatomia de uma <em>investigação</em></h2>
-<p>Como seguimos a notícia de uma suposta queda, dos jornais de 1963 aos catálogos orbitais.</p>
+<p class="deck-tag">7 de agosto de 2026 · Arquivos dos EUA</p>
+<h2 id="slide-abertura" tabindex="-1">Conde volta ao noticiário</h2>
+<p>Os Estados Unidos divulgam o quinto lote de arquivos históricos do programa PURSUE. Entre eles estão os papéis sobre uma suposta queda em Conde, na Bahia, em 1963.</p>
+<p class="deck-source"><a href="https://www.war.gov/News/Releases/Release/Article/4565994/department-of-war-publishes-fifth-release-of-unidentified-anomalous-phenomena-f/">Anúncio oficial da divulgação</a></p>
 </div>
 <figure class="deck-cover-image">
 <img src="/conde-incident/img/apresentacao-a628.jpg" width="340" height="440" alt="Primeira página do aerograma A-628, com cabeçalho do Departamento de Estado dos EUA">
 <figcaption><a href="https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D002_Diplomatic-Cable_Brazil_November-20-1963.pdf#page=1">Aerograma A-628 · 20 nov. 1963</a></figcaption>
 </figure>
+</section>
+<section class="deck-slide deck-paper" id="imprensa-2026" aria-labelledby="slide-imprensa-2026">
+<div class="deck-copy">
+<p class="deck-tag">Agosto de 2026 · Imprensa brasileira</p>
+<h2 id="slide-imprensa-2026" tabindex="-1">A história reaparece nos jornais</h2>
+<p>A cobertura retomou um relato extraordinário. Uma esfera metálica teria caído no centro de Conde, aberto uma cratera e trazido um corpo no interior. Os arquivos também traziam a resposta do cônsul, que julgou a história aparentemente inventada.</p>
+</div>
+<dl class="deck-list">
+<div><dt><a href="https://www.cnnbrasil.com.br/ciencia/documentos-revelam-investigacao-dos-eua-sobre-ovni-na-bahia/">CNN Brasil</a></dt><dd>A apuração da embaixada americana em 1963.</dd></div>
+<div><dt><a href="https://noticias.uol.com.br/ultimas-noticias/agencia-estado/2026/08/07/documentos-dos-eua-revelam-investigacao-sobre-suposto-ovni-no-brasil-em-1963.amp.htm">Agência Estado no UOL</a></dt><dd>O relato da Rádio Tupi e os recortes baianos.</dd></div>
+<div><dt><a href="https://veja.abril.com.br/mundo/novo-lote-de-arquivos-do-pentagono-sobre-ovnis-inclui-investigacao-no-brasil/">Veja</a></dt><dd>O caso brasileiro no novo lote do Pentágono.</dd></div>
+</dl>
+</section>
+<section class="deck-slide" id="redes-sociais" aria-labelledby="slide-redes-sociais">
+<div class="deck-copy">
+<p class="deck-tag">Agosto de 2026 · Redes sociais</p>
+<h2 id="slide-redes-sociais" tabindex="-1">A discussão chega às redes</h2>
+<p>No Reddit, pessoas comentaram a semelhança com cápsulas da época, especularam sobre programas secretos e perguntaram se havia fotografias. Outros leitores trouxeram para a conversa o próprio aerograma com a resposta consular.</p>
+</div>
+<dl class="deck-list">
+<div><dt><a href="https://www.reddit.com/r/UFOs/comments/1vi9q24/removed_by_moderator/">Reddit · 7 de agosto</a></dt><dd>Comentários públicos de uma discussão sobre os documentos. O post inicial foi removido.</dd></div>
+<div><dt><a href="https://www.youtube.com/watch?v=6tPNJRNYmNg">YouTube · 16 de agosto</a></dt><dd>Um vídeo em português voltou ao caso para ler os documentos divulgados.</dd></div>
+</dl>
+</section>
+<section class="deck-slide deck-close" id="pulga-atras-da-orelha" aria-labelledby="slide-pulga-atras-da-orelha">
+<div class="deck-copy">
+<p class="deck-tag">1963 · Guerra Fria</p>
+<h2 id="slide-pulga-atras-da-orelha" tabindex="-1">Por que fiquei com a pulga atrás da orelha</h2>
+<p>No auge da Guerra Fria, missões espaciais militares eram mantidas em segredo. Será que uma história tão estranha podia ter começado com algo real?</p>
+<p>A embaixada dos EUA pediu ao consulado em Salvador que verificasse o relato. Mais de um jornal brasileiro cobriu o episódio, e o aerograma menciona um repórter em Conde.</p>
+<p class="deck-source"><a href="https://www.nro.gov/About-NRO/history/history-corona/">História do programa CORONA</a> · <a href="/conde-incident/stories/2026-11-12-a-resposta-que-veio-de-salvador/">A consulta americana</a></p>
+</div>
+<blockquote class="deck-question">Será que ninguém foi atrás da história na fonte? E quem foi, o que encontrou?</blockquote>
+</section>
+<section class="deck-slide deck-paper" id="orbitas" aria-labelledby="slide-orbitas">
+<div class="deck-copy">
+<p class="deck-tag">O primeiro achado · 8 de novembro de 1963</p>
+<h2 id="slide-orbitas" tabindex="-1">No mesmo dia, um objeto espacial americano reentrou</h2>
+<p>Ao cruzar as datas, encontrei no boletim da NASA o registro de decaimento do <strong>1963-003B, hoje NORAD 528</strong>, um componente de um lançamento militar dos EUA. Era o mesmo dia da notícia atribuída à Rádio Tupi.</p>
+<p>A tabela dá a data. A hora e o local da reentrada continuam em aberto.</p>
+<p class="deck-source"><a href="https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf#page=10">Boletim da NASA · p. 8 impressa</a> · <a href="/conde-incident/stories/2026-11-11-o-dia-em-que-dois-relatos-se-cruzaram/">O cruzamento das duas fontes</a></p>
+</div>
+<dl class="deck-list">
+<div><dt>08 nov. · Rádio Tupi</dt><dd>Notícia sobre uma suposta queda em Conde.</dd></div>
+<div><dt>08 nov. · NASA</dt><dd>Dia de decaimento registrado para o NORAD 528.</dd></div>
+</dl>
 </section>
 <section class="deck-slide deck-paper" id="radio" aria-labelledby="slide-radio">
 <div class="deck-copy">
@@ -73,27 +120,15 @@ canonical_route: "/conde-incident/apresentacao/"
 </div>
 <div class="deck-stat"><strong>42</strong><span>Páginas baixadas da edição de 9 de novembro, incluindo classificados e suplemento.</span></div>
 </section>
-<section class="deck-slide deck-paper" id="orbitas" aria-labelledby="slide-orbitas">
-<div class="deck-copy">
-<p class="deck-tag">Catálogos · Reconstrução orbital</p>
-<h2 id="slide-orbitas" tabindex="-1">O catálogo registra o dia</h2>
-<p>A NASA registra 8 de novembro para o decaimento do NORAD 528. A entrada fornece uma data, com hora e lugar em aberto. As passagens calculadas para 528 e 637 dependem dos elementos orbitais disponíveis e da extrapolação.</p>
-<p class="deck-source"><a href="https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf#page=10">Boletim NASA · p. 8 impressa</a> · <a href="/conde-incident/simulacoes/">Simulações do projeto</a></p>
-</div>
-<dl class="deck-list">
-<div><dt>528</dt><dd>Dia de decaimento catalogado. Hora e posição terminal em aberto.</dd></div>
-<div><dt>637</dt><dd>A cápsula de filme já havia sido recuperada antes de novembro. A composição do objeto ainda em órbita é uma questão separada.</dd></div>
-</dl>
-</section>
 <section class="deck-slide" id="livros" aria-labelledby="slide-livros">
 <div class="deck-copy">
 <p class="deck-tag">História espacial · Pesquisa bibliográfica</p>
 <h2 id="slide-livros" tabindex="-1">Dois livros abriram novas buscas</h2>
-<p>Os apêndices e as notas de rodapé indicaram documentos que podemos procurar e ajudaram a escolher um caso comparável para testar os cálculos.</p>
+<p>Tentamos reconstruir passagens do 528 e do 637. O cálculo depende dos elementos orbitais ainda disponíveis. Os livros indicaram documentos para procurar e um caso comparável para testar o método.</p>
 <p class="deck-source"><a href="https://github.com/franklinbaldo/conde-incident/blob/main/research/constraints/c241_corona_moonwatch_source_notes_20261123.md">Notas de leitura, páginas e referências</a></p>
 </div>
 <dl class="deck-list">
-<div><dt><i lang="en">Eye in the Sky</i></dt><dd>Detalhes da missão do 637 e a pista que levou à reentrada do CORONA 1005.</dd></div>
+<div><dt><i lang="en">Eye in the Sky</i></dt><dd>A cápsula de filme da missão do 637 já tinha sido recuperada antes de novembro. O livro também levou à pista do CORONA 1005.</dd></div>
 <div><dt><i lang="en">Keep Watching the Skies!</i></dt><dd>Referências a estações, manuais e fichas da rede Moonwatch no Smithsonian.</dd></div>
 </dl>
 </section>
@@ -124,15 +159,18 @@ canonical_route: "/conde-incident/apresentacao/"
 <nav class="deck-controls" aria-label="Navegar pelos slides" hidden>
 <button type="button" data-previous aria-label="Slide anterior">←</button>
 <ol class="deck-steps">
-<li><a href="#abertura" aria-label="1. Abertura">1</a></li>
-<li><a href="#radio" aria-label="2. Rádio">2</a></li>
-<li><a href="#jornais" aria-label="3. Jornais">3</a></li>
-<li><a href="#aerograma" aria-label="4. Aerograma">4</a></li>
-<li><a href="#hemerotecas" aria-label="5. Hemerotecas">5</a></li>
-<li><a href="#orbitas" aria-label="6. Órbitas">6</a></li>
-<li><a href="#livros" aria-label="7. Livros">7</a></li>
-<li><a href="#maracaibo" aria-label="8. Maracaibo">8</a></li>
-<li><a href="#em-aberto" aria-label="9. O que ainda falta">9</a></li>
+<li><a href="#abertura" aria-label="1. Os arquivos de 2026">1</a></li>
+<li><a href="#imprensa-2026" aria-label="2. Imprensa em 2026">2</a></li>
+<li><a href="#redes-sociais" aria-label="3. Redes sociais">3</a></li>
+<li><a href="#pulga-atras-da-orelha" aria-label="4. A dúvida">4</a></li>
+<li><a href="#orbitas" aria-label="5. O primeiro achado">5</a></li>
+<li><a href="#radio" aria-label="6. Rádio Tupi">6</a></li>
+<li><a href="#jornais" aria-label="7. Jornais de 1963">7</a></li>
+<li><a href="#aerograma" aria-label="8. Aerograma">8</a></li>
+<li><a href="#hemerotecas" aria-label="9. Hemerotecas">9</a></li>
+<li><a href="#livros" aria-label="10. Livros e cálculos">10</a></li>
+<li><a href="#maracaibo" aria-label="11. Maracaibo">11</a></li>
+<li><a href="#em-aberto" aria-label="12. O que ainda falta">12</a></li>
 </ol>
 <button type="button" data-next aria-label="Próximo slide">→</button>
 </nav>
