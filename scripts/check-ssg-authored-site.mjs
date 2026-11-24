@@ -20,6 +20,18 @@ for(const slug of AUTHORED_ROUTES){
   assert.ok(page.includes('/conde-incident/'),
     'Página publicada sem prefixo GitHub Pages: '+slug);
 }
+const deck = read('apresentacao');
+assert.ok(home.includes('href="/conde-incident/apresentacao/"'),
+  'Capa do site sem acesso à apresentação');
+const slideIds = Array.from(deck.matchAll(/<section class="deck-slide[^"]*" id="([^"]+)"/g), match => match[1]);
+assert.ok(slideIds.length > 1 && slideIds.length === new Set(slideIds).size,
+  'Apresentação sem slides navegáveis e únicos');
+assert.deepEqual(Array.from(deck.matchAll(/<a href="#([^"]+)" aria-label="\d+\. /g), match => match[1]), slideIds,
+  'Controles da apresentação divergem da sequência de slides');
+for (const asset of ['css/apresentacao.css', 'js/apresentacao.mjs', 'img/apresentacao-a628.jpg']) {
+  assert.ok(deck.includes('/conde-incident/' + asset) && readFileSync(join('public', asset)).length,
+    'Recurso da apresentação ausente do artefato: ' + asset);
+}
 const lookupPage=read('evidencias/fontes');
 assert.match(lookupPage,/id="source-lookup-form"/, 'Consulta documental SSG ausente');
 // Fail the Pages build if a reverse-index source would lead to a missing or
