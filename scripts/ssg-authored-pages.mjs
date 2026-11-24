@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
 import {mkdirSync,readFileSync,readdirSync,writeFileSync,lstatSync} from 'node:fs';
-import {dirname,join,relative} from 'node:path';
+import {basename,dirname,join,relative} from 'node:path';
 
 // Explicit paths make the source-to-public-URL mapping reviewable.
 export const AUTHORED_ROUTES=Object.freeze([
-  'dossie','o-que-sabemos','hipoteses','metodo','simulacoes','mapa',
+  'apresentacao','dossie','o-que-sabemos','hipoteses','metodo','simulacoes','mapa',
   'simulacoes/inverso','simulacoes/triangulacao',
   'simulacoes/sensibilidade','simulacoes/montecarlo',
   'simulacoes/tles','evidencias/fontes',
@@ -46,7 +46,7 @@ function collect(dir,root,found){
     assert.ok(!stat.isSymbolicLink(),'Não incluir symlink em pages/');
     if(stat.isDirectory())collect(file,root,found);
     else {
-      assert.ok(file.endsWith('/page.md'),'Arquivo de Page sem rota: '+file);
+      assert.ok(basename(file)==='page.md','Arquivo de Page sem rota: '+file);
       found.push(relative(root,dirname(file)).replaceAll('\\','/'));
     }
   }
