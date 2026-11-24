@@ -32,6 +32,14 @@ for (const asset of ['css/apresentacao.css', 'js/apresentacao.mjs', 'img/apresen
   assert.ok(deck.includes('/conde-incident/' + asset) && readFileSync(join('public', asset)).length,
     'Recurso da apresentação ausente do artefato: ' + asset);
 }
+const { places } = await import('../public/js/apresentacao-globo.mjs');
+const stops = Array.from(deck.matchAll(/<section class="deck-slide[^"]*" id="[^"]+" data-place="([^"]+)"/g), match => match[1]);
+assert.equal(stops.length, slideIds.length, 'Slide sem local no globo');
+assert.ok(stops.every(place => Object.hasOwn(places, place)), 'Local de slide ausente da cartografia');
+assert.match(deck, /<canvas data-earth\b/, 'Globo ausente da apresentação');
+assert.deepEqual(slideIds.slice(0, 5),
+  ['abertura', 'imprensa-2026', 'redes-sociais', 'pulga-atras-da-orelha', 'orbitas'],
+  'O primeiro achado deve vir depois da repercussão e da pergunta de partida');
 const lookupPage=read('evidencias/fontes');
 assert.match(lookupPage,/id="source-lookup-form"/, 'Consulta documental SSG ausente');
 // Fail the Pages build if a reverse-index source would lead to a missing or
