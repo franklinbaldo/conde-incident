@@ -40,6 +40,14 @@ assert.match(deck, /<canvas data-earth\b/, 'Globo ausente da apresentação');
 assert.deepEqual(slideIds.slice(0, 5),
   ['abertura', 'imprensa-2026', 'redes-sociais', 'pulga-atras-da-orelha', 'orbitas'],
   'O primeiro achado deve vir depois da repercussão e da pergunta de partida');
+assert.match(deck, /<canvas data-descent-earth\b/, 'Descida contínua da capa ausente');
+for (const layer of ['regiao', 'metropole', 'cidade', 'bairro', 'casa-branca', 'telhado', 'mesa']) {
+  const asset = 'img/apresentacao-zoom-' + layer + '.webp';
+  assert.ok(deck.includes('/conde-incident/' + asset), 'Camada da câmera ausente: ' + layer);
+  assert.equal(readFileSync(join('public', asset)).toString('ascii', 8, 12), 'WEBP');
+}
+assert.ok(readFileSync(join('public', 'js/apresentacao-descida.mjs')).length,
+  'Câmera da abertura ausente do artefato');
 const lookupPage=read('evidencias/fontes');
 assert.match(lookupPage,/id="source-lookup-form"/, 'Consulta documental SSG ausente');
 // Fail the Pages build if a reverse-index source would lead to a missing or

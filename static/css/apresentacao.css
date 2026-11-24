@@ -305,3 +305,129 @@ body:has(.conde-deck) #ssg-search-widget { display: none; }
 @media print {
   .conde-deck .deck-world { display: none; }
 }
+
+
+/* The camera transforms concentric layers of one continuous opening tableau. */
+.deck-cover[data-descent-ready] { display: grid; align-content: center; }
+.deck-cover[data-descent-ready] > .deck-cover-image { display: none; }
+.deck-cover[data-descent-ready] > .deck-copy {
+  z-index: 2;
+  grid-column: 1 / -1;
+  width: min(38%, 31rem);
+}
+.deck-cover[data-descent-ready][data-descent-phase="moving"] > .deck-copy,
+.deck-cover[data-descent-ready][data-descent-phase="desk"] > .deck-copy {
+  visibility: hidden;
+}
+.descent-view {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 68% 46%, #1b3c4d 0%, transparent 54%),
+    #101e27;
+}
+.descent-view::after {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse, transparent 52%, #09111b83);
+  content: "";
+  pointer-events: none;
+}
+.descent-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 680px;
+  max-width: none;
+  margin: 0;
+  pointer-events: none;
+  transform-origin: center;
+}
+.descent-earth { height: 680px; }
+.descent-earth canvas { display: block; width: 100%; height: 100%; }
+.descent-aerial { mask-image: radial-gradient(circle closest-side, #000 74%, transparent 100%); }
+.descent-room {
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent),
+    linear-gradient(transparent, #000 10%, #000 90%, transparent);
+  mask-composite: intersect;
+}
+.descent-document img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 2px solid #f9edcc;
+  box-shadow: 0 13px 70px #160b04bd;
+  transform: rotate(-4deg);
+}
+.descent-pin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: .72rem;
+  height: .72rem;
+  border: 2px solid #ffe6bd;
+  border-radius: 50%;
+  background: #ffc174;
+  box-shadow: 0 0 0 .4rem #ffc17432, 0 0 1rem #ffc174e0;
+}
+.descent-hud {
+  position: absolute;
+  z-index: 3;
+  inset: auto clamp(.9rem, 3.4vw, 3rem) clamp(.9rem, 3.4vh, 2rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: .75rem;
+  pointer-events: none;
+}
+.descent-caption {
+  max-width: 27rem;
+  padding: .7rem .8rem;
+  border: 1px solid #829fa290;
+  border-radius: .35rem;
+  background: #0c1d25ec;
+  color: var(--ivory);
+}
+.descent-caption p { margin: 0; }
+.descent-caption [data-descent-place] {
+  color: var(--accent);
+  font: 700 .83rem/1.4 'Courier New', monospace;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.descent-caption .descent-credit { margin-top: .2rem; color: var(--quiet); font-size: .73rem; }
+.descent-hud :is(button, a) { pointer-events: auto; }
+.descent-source { display: inline-block; margin-top: .32rem; font-size: .88rem; }
+.descent-hud button {
+  margin-left: auto;
+  padding: .64rem .9rem;
+  border: 1px solid #ffd58f;
+  border-radius: .35rem;
+  background: #ffc174;
+  color: #14242b;
+  font: 700 .89rem/1.2 system-ui, sans-serif;
+  cursor: pointer;
+}
+.descent-hud button:hover { background: #ffdaa7; }
+.deck-cover[data-descent-phase="globe"] .descent-credit { display: none; }
+@media (max-width: 680px) {
+  .deck-cover[data-descent-ready] { min-height: min(79svh, 44rem); align-content: end; padding-bottom: 6rem; }
+  .deck-cover[data-descent-ready] > .deck-copy { width: 100%; }
+  .deck-cover[data-descent-ready] .deck-copy h2 { font-size: clamp(2rem, 8vw, 3rem); }
+  .deck-cover[data-descent-ready] .deck-copy .deck-tag { font-size: .61rem; }
+  .deck-cover[data-descent-ready] .deck-copy p { font-size: .88rem; }
+  .deck-cover[data-descent-ready] .deck-copy .deck-source { margin-top: .65rem; }
+  .descent-hud { gap: .45rem; }
+  .descent-caption { padding: .45rem .55rem; }
+  .descent-caption [data-descent-place] { font-size: .69rem; }
+  .descent-hud button { font-size: .78rem; }
+}
+@media print {
+  .deck-cover[data-descent-ready] > .deck-copy { grid-column: auto; width: auto; visibility: visible !important; }
+  .deck-cover[data-descent-ready] > .deck-cover-image { display: block; }
+  .descent-view, .descent-hud { display: none; }
+}
