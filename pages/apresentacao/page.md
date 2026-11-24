@@ -20,6 +20,11 @@ canonical_route: "/conde-incident/apresentacao/"
 </div>
 </header>
 <div class="deck-stage">
+<div class="deck-route" data-route hidden>
+<canvas data-route-earth aria-hidden="true"></canvas>
+<img class="deck-route-geography" data-route-map alt="" hidden>
+<div class="deck-route-place" role="status"><span data-route-place></span><strong data-route-title></strong><a data-route-credit href="https://worldview.earthdata.nasa.gov/?l=Landsat_WELD_CorrectedReflectance_TrueColor_Global_Annual" hidden>Landsat / NASA · referência de 2000</a></div>
+</div>
 <section class="deck-world" id="globo" aria-labelledby="deck-world-title" hidden>
 <div class="deck-earth">
 <canvas data-earth aria-hidden="true"></canvas>
@@ -51,14 +56,24 @@ canonical_route: "/conde-incident/apresentacao/"
 <img class="descent-layer descent-aerial" data-descent-layer="roof" src="/conde-incident/img/apresentacao-zoom-casa-branca.webp" alt="" loading="lazy">
 <img class="descent-layer descent-aerial" data-descent-layer="close" src="/conde-incident/img/apresentacao-zoom-telhado.webp" alt="" loading="lazy">
 <img class="descent-layer descent-room" data-descent-layer="room" src="/conde-incident/img/apresentacao-zoom-mesa.webp" alt="" loading="lazy">
-<div class="descent-layer descent-document" data-descent-layer="document"><img src="/conde-incident/img/apresentacao-a628.jpg" width="340" height="440" alt=""></div>
+<div data-desk-sheets></div>
 <div class="descent-pin" data-descent-pin></div>
+</div>
+<div class="desk-reader" data-desk-reader role="region" aria-label="Fac-símile em tamanho de leitura" tabindex="0" hidden>
+<div data-desk-pages></div>
+</div>
+<div class="desk-actions" data-desk-actions hidden>
+<nav aria-label="Documentos sobre a mesa" data-desk-picker></nav>
+<div data-desk-reading-actions hidden>
+<button type="button" data-desk-back>Voltar à mesa</button>
+<button type="button" data-desk-fit>Ver página inteira</button>
+<a data-desk-pdf href="https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D002_Diplomatic-Cable_Brazil_November-20-1963.pdf">PDF original ↗</a>
+</div>
 </div>
 <div class="descent-hud" data-descent-hud hidden>
 <div class="descent-caption" data-descent-caption>
 <p data-descent-place role="status">Washington, D.C.</p>
 <p class="descent-credit">Cena ilustrativa da Casa Branca · <a href="https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPPlus/ImageServer">Imagens aéreas: USGS</a></p>
-<a class="descent-source" data-descent-source href="https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D002_Diplomatic-Cable_Brazil_November-20-1963.pdf#page=1" hidden>Ler o aerograma original ↗</a>
 </div>
 <button type="button" data-descent-action>Aproximar da Casa Branca</button>
 </div>

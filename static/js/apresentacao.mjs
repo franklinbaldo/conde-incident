@@ -3,6 +3,7 @@ const deck = document.querySelector('.conde-deck');
 if (deck) {
   const slides = Array.from(deck.querySelectorAll('.deck-slide'));
   const controls = deck.querySelector('.deck-controls');
+  const stage = deck.querySelector('.deck-stage');
   const steps = Array.from(controls.querySelectorAll('a'));
   const previous = controls.querySelector('[data-previous]');
   const next = controls.querySelector('[data-next]');
@@ -18,7 +19,7 @@ if (deck) {
   let overview = false;
   let globe;
   let places;
-  let arrival;
+  let travel;
   let opening;
 
   const destinations = slides.map((slide, index) => {
@@ -58,17 +59,11 @@ if (deck) {
     worldToggle.textContent = value ? 'Voltar ao slide' : 'Ver globo';
   }
 
-  function showSlide(index, focus = false, arrive = false) {
+  function showSlide(index, focus = false) {
     setOverview(false);
     setCurrent(index);
     world.hidden = true;
     slides.forEach((slide, i) => { slide.hidden = i !== index; });
-    if (arrive && !reducedMotion.matches) {
-      arrival = slides[index].animate([
-        { transform: 'scale(.86)', opacity: .35 },
-        { transform: 'scale(1)', opacity: 1 },
-      ], { duration: 370, easing: 'cubic-bezier(.18,.7,.25,1)' });
-    }
     if (focus) focusTarget(headings[index]);
   }
 
@@ -84,7 +79,10 @@ if (deck) {
 
   function stopMotion() {
     globe?.stop();
-    arrival?.cancel();
+    if (travel?.active) {
+      travel.stop();
+      showSlide(current);
+    }
   }
 
   function openWorld(push, focus = true) {
@@ -104,23 +102,40 @@ if (deck) {
       openWorld(false, focus);
       return;
     }
+    const found = slides.findIndex(slide => '#' + slide.id === location.hash);
+    const index = found < 0 ? 0 : found;
+    if (focus && (index !== current || overview)) {
+      goTo(index, false);
+      return;
+    }
     stopMotion();
-    const index = slides.findIndex(slide => '#' + slide.id === location.hash);
-    showSlide(index < 0 ? 0 : index, focus);
+    showSlide(index, focus);
   }
 
-  function goTo(index) {
+  function goTo(index, push = true) {
     if (!slides[index] || (index === current && !overview)) return;
-    const from = world.hidden ? slides[current].dataset.place : null;
-    const to = slides[index].dataset.place;
     stopMotion();
-    history.pushState(null, '', '#' + slides[index].id);
-    if (!globe || reducedMotion.matches) {
+    const source = overview ? null : slides[current];
+    const destination = slides[index];
+    const fromKey = source?.dataset.place;
+    const toKey = destination.dataset.place;
+    if (push) history.pushState(null, '', '#' + destination.id);
+    if (!travel || reducedMotion.matches) {
       showSlide(index, true);
       return;
     }
-    showWorld(index, true);
-    globe.move(from, to, false, 860, () => showSlide(index, true, true));
+    const outward = source === slides[0] ? opening?.departure() : null;
+    setCurrent(index);
+    setOverview(false);
+    world.hidden = true;
+    travel.fly({
+      source, destination, outward,
+      from: fromKey ? { ...places[fromKey], key: fromKey } : null,
+      to: { ...places[toKey], key: toKey },
+      label: places[toKey].label,
+      titleText: headings[index].textContent,
+      after: () => showSlide(index, true),
+    });
   }
 
   function useLinks(container, links) {
@@ -150,6 +165,7 @@ if (deck) {
   document.addEventListener('keydown', event => {
     if (event.target !== document.body && !deck.contains(event.target)) return;
     if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    if (event.target.closest?.('[data-desk-reader]')) return;
     if (globe && (event.key.toLowerCase() === 'g' || (event.key === 'Escape' && overview))) {
       event.preventDefault();
       if (overview) goTo(current);
@@ -183,15 +199,18 @@ if (deck) {
 
   readLocation();
   controls.hidden = false;
-  import('./apresentacao-globo.mjs').then(module => {
+  import('./apresentacao-globo.mjs').then(async module => {
     places = module.places;
     globe = module.createGlobe(world.querySelector('[data-earth]'));
     if (!globe) return;
     worldToggle.hidden = false;
     if (location.hash === '#globo') readLocation();
-    return import('./apresentacao-descida.mjs').then(async ({ mountDescent }) => {
-      opening = await mountDescent(slides[0], module.createGlobe);
-    });
+    const [{ createTravel }, { mountDescent }] = await Promise.all([
+      import('./apresentacao-voo.mjs'), import('./apresentacao-descida.mjs'),
+    ]);
+    const flightGlobe = module.createGlobe(stage.querySelector('[data-route-earth]'));
+    if (flightGlobe) travel = createTravel(stage, flightGlobe, places);
+    opening = await mountDescent(slides[0], module.createGlobe);
   }).catch(error => {
     console.warn('Globo da apresentação indisponível.', error);
   });

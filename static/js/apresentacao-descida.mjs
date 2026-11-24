@@ -1,3 +1,5 @@
+import { mountDesk } from './apresentacao-documentos.mjs';
+
 const degrees = { latitude: 38.89767, longitude: -77.03655 };
 const earthDiameter = 12_742_000;
 // The USGS exports share the White House as their center in EPSG:3857.
@@ -11,12 +13,12 @@ export async function mountDescent(cover, createGlobe) {
   const hud = cover.querySelector('[data-descent-hud]');
   const button = hud.querySelector('[data-descent-action]');
   const place = hud.querySelector('[data-descent-place]');
-  const source = hud.querySelector('[data-descent-source]');
   const pin = view.querySelector('[data-descent-pin]');
   const layers = Object.fromEntries(Array.from(view.querySelectorAll('[data-descent-layer]'),
     element => [element.dataset.descentLayer, element]));
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   const narrow = matchMedia('(max-width: 680px)');
+  const desk = mountDesk(cover, view, motion, paint);
 
   try {
     await Promise.all(Array.from(view.querySelectorAll('img'), image => {
@@ -44,22 +46,22 @@ export async function mountDescent(cover, createGlobe) {
     const finish = Math.max(width * 1.34, height * 2.17) / widths.room;
     const zoom = start * Math.pow(finish / start, progress);
     const coverDiagonal = 2.25 * Math.hypot(width, height);
-    const documentWidth = Math.min(width * (compact ? .59 : .31), height * .56 * 340 / 440);
+    const documentWidth = Math.min(width * (compact ? .25 : .225), height * .49 * 340 / 440);
+    const tableau = desk.paint(width, height, x, y, progress, documentWidth, zoom / finish);
     const sizes = {
-      earth: earthDiameter * zoom / globeDiameterFraction,
-      ...Object.fromEntries(Object.entries(widths).map(([key, metres]) => [key, metres * zoom])),
-      document: Math.min(documentWidth, documentWidth * zoom / finish),
+      earth: earthDiameter * zoom * tableau.scale / globeDiameterFraction,
+      ...Object.fromEntries(Object.entries(widths).map(([key, metres]) => [key, metres * zoom * tableau.scale])),
     };
     let covered = false;
-    for (const name of ['document', ...Object.keys(widths).reverse(), 'earth']) {
+    for (const name of [...Object.keys(widths).reverse(), 'earth']) {
       const layer = layers[name];
       const size = sizes[name];
       layer.style.visibility = covered || size < .6 ? 'hidden' : 'visible';
       if (!covered && size >= .6) {
-        layer.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0) translate(-50%,-50%) scale('
+        layer.style.transform = 'translate3d(' + tableau.x + 'px,' + tableau.y + 'px,0) translate(-50%,-50%) scale('
           + size / layerBase + ')';
       }
-      if (name !== 'document' && size >= coverDiagonal) covered = true;
+      if (size >= coverDiagonal) covered = true;
     }
     pin.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0) translate(-50%,-50%)';
     pin.hidden = sizes.room > 75;
@@ -73,7 +75,7 @@ export async function mountDescent(cover, createGlobe) {
   function settle(at) {
     progress = at;
     cover.dataset.descentPhase = at === 1 ? 'desk' : 'globe';
-    source.hidden = at !== 1;
+    desk.table(at === 1, at === 1);
     button.textContent = at === 1 ? 'Voltar ao globo' : 'Aproximar da Casa Branca';
     paint();
   }
@@ -91,7 +93,7 @@ export async function mountDescent(cover, createGlobe) {
     const start = performance.now();
     cover.dataset.descentPhase = 'moving';
     button.textContent = to === 1 ? 'Ir direto ao aerograma' : 'Ir direto ao globo';
-    source.hidden = true;
+    if (to === 0) desk.table(false);
 
     function tick(now) {
       const t = Math.min(1, (now - start) / span);
@@ -133,9 +135,27 @@ export async function mountDescent(cover, createGlobe) {
 
   return {
     advance() {
-      if (progress === 1 && !frame) return false;
+      if (progress === 1 && !frame) return desk.busy;
       if (!frame || target === 0) travel(1);
       return true;
+    },
+    departure() {
+      if (!progress) return null;
+      if (frame) cancelAnimationFrame(frame);
+      frame = 0;
+      const start = progress;
+      const paper = desk.lift();
+      cover.dataset.descentPhase = 'moving';
+      const portion = paper.depth ? .27 : 0;
+      return fraction => {
+        if (fraction === 1) {
+          settle(0);
+          return;
+        }
+        if (portion) paper.set(paper.depth * (1 - Math.min(1, fraction / portion)));
+        progress = start * (1 - Math.max(0, (fraction - portion) / (1 - portion)));
+        paint();
+      };
     },
   };
 }
