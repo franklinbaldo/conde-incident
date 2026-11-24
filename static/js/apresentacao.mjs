@@ -19,6 +19,7 @@ if (deck) {
   let globe;
   let places;
   let arrival;
+  let opening;
 
   const destinations = slides.map((slide, index) => {
     const item = document.createElement('li');
@@ -134,7 +135,12 @@ if (deck) {
   useLinks(controls, steps);
   useLinks(itinerary, destinations);
   previous.addEventListener('click', () => goTo(current - 1));
-  next.addEventListener('click', () => goTo(current + 1));
+  function advance() {
+    if (current === 0 && world.hidden && opening?.advance()) return;
+    goTo(current + 1);
+  }
+
+  next.addEventListener('click', advance);
   worldToggle.addEventListener('click', () => {
     if (overview) goTo(current);
     else openWorld(true);
@@ -156,7 +162,8 @@ if (deck) {
     ]).get(event.key);
     if (target === undefined) return;
     event.preventDefault();
-    goTo(target);
+    if (event.key === 'ArrowRight') advance();
+    else goTo(target);
   });
 
   if (document.fullscreenEnabled && deck.requestFullscreen) {
@@ -182,6 +189,9 @@ if (deck) {
     if (!globe) return;
     worldToggle.hidden = false;
     if (location.hash === '#globo') readLocation();
+    return import('./apresentacao-descida.mjs').then(async ({ mountDescent }) => {
+      opening = await mountDescent(slides[0], module.createGlobe);
+    });
   }).catch(error => {
     console.warn('Globo da apresentação indisponível.', error);
   });

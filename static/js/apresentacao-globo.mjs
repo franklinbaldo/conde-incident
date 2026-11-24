@@ -187,5 +187,12 @@ export function createGlobe(canvas) {
   }
 
   new ResizeObserver(draw).observe(canvas);
-  return { move, stop };
+  function centerOn(latitude, longitude) {
+    stop();
+    selected = undefined;
+    view = { latitude, longitude, scale: 1 };
+    draw();
+  }
+
+  return { move, stop, centerOn };
 }

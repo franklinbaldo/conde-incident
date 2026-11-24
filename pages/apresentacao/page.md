@@ -42,6 +42,26 @@ canonical_route: "/conde-incident/apresentacao/"
 <p>Os Estados Unidos divulgam o quinto lote de arquivos históricos do programa PURSUE. Entre eles estão os papéis sobre uma suposta queda em Conde, na Bahia, em 1963.</p>
 <p class="deck-source"><a href="https://www.war.gov/News/Releases/Release/Article/4565994/department-of-war-publishes-fifth-release-of-unidentified-anomalous-phenomena-f/">Anúncio oficial da divulgação</a></p>
 </div>
+<div class="descent-view" data-descent hidden aria-hidden="true">
+<div class="descent-layer descent-earth" data-descent-layer="earth"><canvas data-descent-earth></canvas></div>
+<img class="descent-layer descent-aerial" data-descent-layer="region" src="/conde-incident/img/apresentacao-zoom-regiao.webp" alt="" loading="lazy">
+<img class="descent-layer descent-aerial" data-descent-layer="metro" src="/conde-incident/img/apresentacao-zoom-metropole.webp" alt="" loading="lazy">
+<img class="descent-layer descent-aerial" data-descent-layer="city" src="/conde-incident/img/apresentacao-zoom-cidade.webp" alt="" loading="lazy">
+<img class="descent-layer descent-aerial" data-descent-layer="district" src="/conde-incident/img/apresentacao-zoom-bairro.webp" alt="" loading="lazy">
+<img class="descent-layer descent-aerial" data-descent-layer="roof" src="/conde-incident/img/apresentacao-zoom-casa-branca.webp" alt="" loading="lazy">
+<img class="descent-layer descent-aerial" data-descent-layer="close" src="/conde-incident/img/apresentacao-zoom-telhado.webp" alt="" loading="lazy">
+<img class="descent-layer descent-room" data-descent-layer="room" src="/conde-incident/img/apresentacao-zoom-mesa.webp" alt="" loading="lazy">
+<div class="descent-layer descent-document" data-descent-layer="document"><img src="/conde-incident/img/apresentacao-a628.jpg" width="340" height="440" alt=""></div>
+<div class="descent-pin" data-descent-pin></div>
+</div>
+<div class="descent-hud" data-descent-hud hidden>
+<div class="descent-caption" data-descent-caption>
+<p data-descent-place role="status">Washington, D.C.</p>
+<p class="descent-credit">Cena ilustrativa da Casa Branca · <a href="https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPPlus/ImageServer">Imagens aéreas: USGS</a></p>
+<a class="descent-source" data-descent-source href="https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D002_Diplomatic-Cable_Brazil_November-20-1963.pdf#page=1" hidden>Ler o aerograma original ↗</a>
+</div>
+<button type="button" data-descent-action>Aproximar da Casa Branca</button>
+</div>
 <figure class="deck-cover-image">
 <img src="/conde-incident/img/apresentacao-a628.jpg" width="340" height="440" alt="Primeira página do aerograma A-628, com cabeçalho do Departamento de Estado dos EUA">
 <figcaption><a href="https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D002_Diplomatic-Cable_Brazil_November-20-1963.pdf#page=1">Aerograma A-628 · 20 nov. 1963</a></figcaption>
