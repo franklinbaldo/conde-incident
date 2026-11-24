@@ -14,10 +14,28 @@ canonical_route: "/conde-incident/apresentacao/"
 <div class="conde-deck" aria-label="Apresentação sobre a investigação de Conde">
 <header class="deck-top">
 <a href="/conde-incident/">← Caderno de investigação</a>
+<div class="deck-top-actions">
+<button type="button" data-world aria-controls="globo" aria-pressed="false" hidden>Ver globo</button>
 <button type="button" data-fullscreen hidden>Tela cheia</button>
+</div>
 </header>
 <div class="deck-stage">
-<section class="deck-slide deck-cover" id="abertura" aria-labelledby="slide-abertura">
+<section class="deck-world" id="globo" aria-labelledby="deck-world-title" hidden>
+<div class="deck-earth">
+<canvas data-earth aria-hidden="true"></canvas>
+<div class="deck-location" aria-live="polite">
+<span data-place-name></span>
+<strong data-place-detail></strong>
+</div>
+</div>
+<div class="deck-itinerary">
+<h2 id="deck-world-title" tabindex="-1">A investigação no globo</h2>
+<p>Escolha uma etapa para viajar até o lugar ligado à história.</p>
+<ol data-itinerary></ol>
+<p class="deck-map-source"><a href="https://www.naturalearthdata.com/downloads/110m-physical-vectors/110m-coastline/">Cartografia · Natural Earth</a></p>
+</div>
+</section>
+<section class="deck-slide deck-cover" id="abertura" data-place="arlington" aria-labelledby="slide-abertura">
 <div class="deck-copy">
 <p class="deck-tag">7 de agosto de 2026 · Arquivos dos EUA</p>
 <h2 id="slide-abertura" tabindex="-1">Conde volta ao noticiário</h2>
@@ -29,7 +47,7 @@ canonical_route: "/conde-incident/apresentacao/"
 <figcaption><a href="https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D002_Diplomatic-Cable_Brazil_November-20-1963.pdf#page=1">Aerograma A-628 · 20 nov. 1963</a></figcaption>
 </figure>
 </section>
-<section class="deck-slide deck-paper" id="imprensa-2026" aria-labelledby="slide-imprensa-2026">
+<section class="deck-slide deck-paper" id="imprensa-2026" data-place="sao-paulo" aria-labelledby="slide-imprensa-2026">
 <div class="deck-copy">
 <p class="deck-tag">Agosto de 2026 · Imprensa brasileira</p>
 <h2 id="slide-imprensa-2026" tabindex="-1">A história reaparece nos jornais</h2>
@@ -41,7 +59,7 @@ canonical_route: "/conde-incident/apresentacao/"
 <div><dt><a href="https://veja.abril.com.br/mundo/novo-lote-de-arquivos-do-pentagono-sobre-ovnis-inclui-investigacao-no-brasil/">Veja</a></dt><dd>O caso brasileiro no novo lote do Pentágono.</dd></div>
 </dl>
 </section>
-<section class="deck-slide" id="redes-sociais" aria-labelledby="slide-redes-sociais">
+<section class="deck-slide" id="redes-sociais" data-place="internet" aria-labelledby="slide-redes-sociais">
 <div class="deck-copy">
 <p class="deck-tag">Agosto de 2026 · Redes sociais</p>
 <h2 id="slide-redes-sociais" tabindex="-1">A discussão chega às redes</h2>
@@ -52,7 +70,7 @@ canonical_route: "/conde-incident/apresentacao/"
 <div><dt><a href="https://www.youtube.com/watch?v=6tPNJRNYmNg">YouTube · 16 de agosto</a></dt><dd>Um vídeo em português voltou ao caso para ler os documentos divulgados.</dd></div>
 </dl>
 </section>
-<section class="deck-slide deck-close" id="pulga-atras-da-orelha" aria-labelledby="slide-pulga-atras-da-orelha">
+<section class="deck-slide deck-close" id="pulga-atras-da-orelha" data-place="rio" aria-labelledby="slide-pulga-atras-da-orelha">
 <div class="deck-copy">
 <p class="deck-tag">1963 · Guerra Fria</p>
 <h2 id="slide-pulga-atras-da-orelha" tabindex="-1">Por que fiquei com a pulga atrás da orelha</h2>
@@ -62,7 +80,7 @@ canonical_route: "/conde-incident/apresentacao/"
 </div>
 <blockquote class="deck-question">Será que ninguém foi atrás da história na fonte? E quem foi, o que encontrou?</blockquote>
 </section>
-<section class="deck-slide deck-paper" id="orbitas" aria-labelledby="slide-orbitas">
+<section class="deck-slide deck-paper" id="orbitas" data-place="greenbelt" aria-labelledby="slide-orbitas">
 <div class="deck-copy">
 <p class="deck-tag">O primeiro achado · 8 de novembro de 1963</p>
 <h2 id="slide-orbitas" tabindex="-1">No mesmo dia, um objeto espacial americano reentrou</h2>
@@ -75,7 +93,7 @@ canonical_route: "/conde-incident/apresentacao/"
 <div><dt>08 nov. · NASA</dt><dd>Dia de decaimento registrado para o NORAD 528.</dd></div>
 </dl>
 </section>
-<section class="deck-slide deck-paper" id="radio" aria-labelledby="slide-radio">
+<section class="deck-slide deck-paper" id="radio" data-place="rio" aria-labelledby="slide-radio">
 <div class="deck-copy">
 <p class="deck-tag">08 nov. 1963 · Rádio</p>
 <h2 id="slide-radio" tabindex="-1">Uma esfera no noticiário</h2>
@@ -84,7 +102,7 @@ canonical_route: "/conde-incident/apresentacao/"
 </div>
 <div class="deck-stat"><strong>23h30</strong><span>Horário inscrito no boletim.<br>A hora da suposta queda segue desconhecida.</span></div>
 </section>
-<section class="deck-slide" id="jornais" aria-labelledby="slide-jornais">
+<section class="deck-slide" id="jornais" data-place="salvador" aria-labelledby="slide-jornais">
 <div class="deck-copy">
 <p class="deck-tag">09–11 nov. 1963 · Imprensa</p>
 <h2 id="slide-jornais" tabindex="-1">Três jornais, três pistas</h2>
@@ -97,7 +115,7 @@ canonical_route: "/conde-incident/apresentacao/"
 <div><dt>11 nov. · Jornal da Bahia</dt><dd>O A-628 traduz a manchete como <i lang="en">The Airship that wasn’t there</i>. O recorte em português segue pendente.</dd></div>
 </dl>
 </section>
-<section class="deck-slide deck-paper" id="aerograma" aria-labelledby="slide-aerograma">
+<section class="deck-slide deck-paper" id="aerograma" data-place="salvador" aria-labelledby="slide-aerograma">
 <div class="deck-copy">
 <p class="deck-tag">13–20 nov. 1963 · Correspondência diplomática</p>
 <h2 id="slide-aerograma" tabindex="-1">A consulta a Salvador</h2>
@@ -110,7 +128,7 @@ canonical_route: "/conde-incident/apresentacao/"
 <li><strong>20 nov.</strong> O A-628 reúne o telegrama e descreve os recortes.</li>
 </ol>
 </section>
-<section class="deck-slide" id="hemerotecas" aria-labelledby="slide-hemerotecas">
+<section class="deck-slide" id="hemerotecas" data-place="sao-paulo" aria-labelledby="slide-hemerotecas">
 <div class="deck-copy">
 <p class="deck-tag">Hemerotecas · Busca por edição e página</p>
 <h2 id="slide-hemerotecas" tabindex="-1">O trabalho de localizar um recorte</h2>
@@ -120,7 +138,7 @@ canonical_route: "/conde-incident/apresentacao/"
 </div>
 <div class="deck-stat"><strong>42</strong><span>Páginas baixadas da edição de 9 de novembro, incluindo classificados e suplemento.</span></div>
 </section>
-<section class="deck-slide" id="livros" aria-labelledby="slide-livros">
+<section class="deck-slide" id="livros" data-place="washington" aria-labelledby="slide-livros">
 <div class="deck-copy">
 <p class="deck-tag">História espacial · Pesquisa bibliográfica</p>
 <h2 id="slide-livros" tabindex="-1">Dois livros abriram novas buscas</h2>
@@ -132,7 +150,7 @@ canonical_route: "/conde-incident/apresentacao/"
 <div><dt><i lang="en">Keep Watching the Skies!</i></dt><dd>Referências a estações, manuais e fichas da rede Moonwatch no Smithsonian.</dd></div>
 </dl>
 </section>
-<section class="deck-slide deck-paper" id="maracaibo" aria-labelledby="slide-maracaibo">
+<section class="deck-slide deck-paper" id="maracaibo" data-place="maracaibo" aria-labelledby="slide-maracaibo">
 <div class="deck-copy">
 <p class="deck-tag">26 maio 1964 · Venezuela</p>
 <h2 id="slide-maracaibo" tabindex="-1">Maracaibo põe o método à prova</h2>
@@ -142,7 +160,7 @@ canonical_route: "/conde-incident/apresentacao/"
 </div>
 <div class="deck-stat"><strong>0 de 20</strong><span>Estimativas heurísticas reproduziram o dia catalogado na hipótese de que a data esteja em UTC.</span></div>
 </section>
-<section class="deck-slide deck-close" id="em-aberto" aria-labelledby="slide-em-aberto">
+<section class="deck-slide deck-close" id="em-aberto" data-place="conde" aria-labelledby="slide-em-aberto">
 <div class="deck-copy">
 <p class="deck-tag">O que ainda falta</p>
 <h2 id="slide-em-aberto" tabindex="-1">Uma hora mudaria a investigação</h2>

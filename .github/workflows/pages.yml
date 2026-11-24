@@ -106,6 +106,7 @@ jobs:
           cp -R static/css/. public/css/
           cp -R static/img/. public/img/
           cp -R static/js/. public/js/
+          cp src/lib/coastline110mPart[123].js public/js/
       - name: Verify native SSG print mode against built documentary pages
         run: SSG_PRINT_BUILT=1 node --test tests/ssg-print-mode.test.mjs
       - name: Verify design tokens in final Pages artifact
