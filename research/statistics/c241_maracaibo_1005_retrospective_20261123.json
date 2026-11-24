@@ -1,0 +1,458 @@
+{
+  "schema": "conde.c241-maracaibo-1005-retrospective/v1",
+  "source": {
+    "url": "https://huggingface.co/datasets/oxzoid/space-track-tle-history/resolve/main/data/tle_1964.parquet",
+    "sha256": "bf86a12ff26af0cd56e712e1d5ac80036766b1174b42f86bc0481efd90c592e4",
+    "catalogue_epochs": 11,
+    "bstar_all_zero": true,
+    "epoch_does_not_establish_publication_time": true,
+    "source_row_definition": "1-based ordinal within sorted NORAD 796 rows"
+  },
+  "site": {
+    "gazetteer": "https://www.geonames.org/3633009",
+    "latitude_deg": 10.64232,
+    "longitude_deg": -71.61089,
+    "altitude_km": 0.002
+  },
+  "assumptions": {
+    "retrospective": true,
+    "cutoff_is_exclusive": true,
+    "clock_branches_are_unverified": true,
+    "earth_rotation_ut1_approx_utc": true,
+    "geometric_line_of_sight_only": true,
+    "state_is_vehicle_not_fragment": true
+  },
+  "trials": [
+    {
+      "norad": 796,
+      "cutoff_utc_exclusive": "1964-05-12T00:00:00+00:00",
+      "NASA_reported_calendar_day_timezone_UNVERIFIED": "1964-05-26",
+      "prior_catalogue_epochs": 6,
+      "source_rows_used_for_last_two": [
+        5,
+        6
+      ],
+      "origin_catalogue_epoch_utc": "1964-05-09T15:41:03.352992+00:00",
+      "last_two": {
+        "status": "HEURISTIC_ONLY",
+        "dn_dt_rev_day2": 0.0139053998,
+        "da_dt_km_day": -3.863226,
+        "semimajor_axis_kepler_proxy_km": 6658.62042,
+        "scenarios": [
+          {
+            "H_eff_km_ASSUMED": 40,
+            "life_remaining_days_HEURISTIC": 10.354041,
+            "hypothetical_terminal_utc": "1964-05-20T00:10:52+00:00",
+            "error_days_if_NASA_label_means_UTC_civil_day": [
+              -6.992448,
+              -5.992448
+            ]
+          },
+          {
+            "H_eff_km_ASSUMED": 50,
+            "life_remaining_days_HEURISTIC": 12.942551,
+            "hypothetical_terminal_utc": "1964-05-22T14:18:19+00:00",
+            "error_days_if_NASA_label_means_UTC_civil_day": [
+              -4.403937,
+              -3.403937
+            ]
+          }
+        ]
+      },
+      "median_three_prior_secants": {
+        "status": "HEURISTIC_ONLY",
+        "dn_dt_rev_day2": 0.0099830748,
+        "da_dt_km_day": -2.773518,
+        "semimajor_axis_kepler_proxy_km": 6658.62042,
+        "scenarios": [
+          {
+            "H_eff_km_ASSUMED": 40,
+            "life_remaining_days_HEURISTIC": 14.422118,
+            "hypothetical_terminal_utc": "1964-05-24T01:48:54+00:00",
+            "error_days_if_NASA_label_means_UTC_civil_day": [
+              -2.924371,
+              -1.924371
+            ]
+          },
+          {
+            "H_eff_km_ASSUMED": 50,
+            "life_remaining_days_HEURISTIC": 18.027647,
+            "hypothetical_terminal_utc": "1964-05-27T16:20:52+00:00",
+            "error_days_if_NASA_label_means_UTC_civil_day": [
+              0.681158,
+              1.681158
+            ]
+          }
+        ]
+      },
+      "independent_terminal_time_validation": false,
+      "day_lead_hours": 336,
+      "clock_geometry": {
+        "CIA_0006_IF_GMT": {
+          "utc": "1964-05-26T00:06:00+00:00",
+          "sgp4_error": 0,
+          "elevation_deg": -30.569,
+          "slant_range_km": 6821.4
+        },
+        "MOLCZAN_0409_UTC_REFERENCE_EVENT_UNVERIFIED": {
+          "utc": "1964-05-26T04:09:00+00:00",
+          "sgp4_error": 0,
+          "elevation_deg": -43.01,
+          "slant_range_km": 9171.9
+        },
+        "CIA_0006_IF_VENEZUELAN_CIVIL": {
+          "utc": "1964-05-26T04:36:00+00:00",
+          "sgp4_error": 0,
+          "elevation_deg": -5.619,
+          "slant_range_km": 2258.5
+        }
+      }
+    },
+    {
+      "norad": 796,
+      "cutoff_utc_exclusive": "1964-05-16T00:00:00+00:00",
+      "NASA_reported_calendar_day_timezone_UNVERIFIED": "1964-05-26",
+      "prior_catalogue_epochs": 8,
+      "source_rows_used_for_last_two": [
+        7,
+        8
+      ],
+      "origin_catalogue_epoch_utc": "1964-05-15T09:29:27.813120+00:00",
+      "last_two": {
+        "status": "HEURISTIC_ONLY",
+        "dn_dt_rev_day2": 0.0071070362,
+        "da_dt_km_day": -1.956197,
+        "semimajor_axis_kepler_proxy_km": 6633.87421,
+        "scenarios": [
+          {
+            "H_eff_km_ASSUMED": 40,
+            "life_remaining_days_HEURISTIC": 20.447838,
+            "hypothetical_terminal_utc": "1964-06-04T20:14:21+00:00",
+            "error_days_if_NASA_label_means_UTC_civil_day": [
+              8.843299,
+              9.843299
+            ]
+          },
+          {
+            "H_eff_km_ASSUMED": 50,
+            "life_remaining_days_HEURISTIC": 25.559798,
+            "hypothetical_terminal_utc": "1964-06-09T22:55:34+00:00",
+            "error_days_if_NASA_label_means_UTC_civil_day": [
+              13.955259,
+              14.955259
+            ]
+          }
+        ]
+      },
+      "median_three_prior_secants": {
+        "status": "HEURISTIC_ONLY",
+        "dn_dt_rev_day2": 0.0139053998,
+        "da_dt_km_day": -3.827432,
+        "semimajor_axis_kepler_proxy_km": 6633.87421,
+        "scenarios": [
+          {
+            "H_eff_km_ASSUMED": 40,
+            "life_remaining_days_HEURISTIC": 10.45087,
+            "hypothetical_terminal_utc": "1964-05-25T20:18:42+00:00",
+            "error_days_if_NASA_label_means_UTC_civil_day": [
+              -1.153669,
+              -0.153669
+            ]
+          },
+          {
+            "H_eff_km_ASSUMED": 50,
+            "life_remaining_days_HEURISTIC": 13.063588,
+            "hypothetical_terminal_utc": "1964-05-28T11:01:01+00:00",
+            "error_days_if_NASA_label_means_UTC_civil_day": [
+              1.459049,
+              2.459049
+            ]
+          }
+        ]
+      },
+      "independent_terminal_time_validation": false,
+      "day_lead_hours": 240,
+      "clock_geometry": {
+        "CIA_0006_IF_GMT": {
+          "utc": "1964-05-26T00:06:00+00:00",
+          "sgp4_error": 0,
+          "elevation_deg": -52.633,
+          "slant_range_km": 10455.1
+        },
+        "MOLCZAN_0409_UTC_REFERENCE_EVENT_UNVERIFIED": {
+          "utc": "1964-05-26T04:09:00+00:00",
+          "sgp4_error": 0,
+          "elevation_deg": 2.431,
+          "slant_range_km": 1250.8
+        },
+        "CIA_0006_IF_VENEZUELAN_CIVIL": {
+          "utc": "1964-05-26T04:36:00+00:00",
+          "sgp4_error": 0,
+          "elevation_deg": -59.266,
+          "slant_range_km": 11267.4
+        }
+      }
+    },
+    {
+      "norad": 796,
+      "cutoff_utc_exclusive": "1964-05-20T00:00:00+00:00",
+      "NASA_reported_calendar_day_timezone_UNVERIFIED": "1964-05-26",
+      "prior_catalogue_epochs": 9,
+      "source_rows_used_for_last_two": [
+        8,
+        9
+      ],
+      "origin_catalogue_epoch_utc": "1964-05-17T07:48:14.896224+00:00",
+      "last_two": {
+        "status": "HEURISTIC_ONLY",
+        "dn_dt_rev_day2": 0.007064921,
+        "da_dt_km_day": -1.941858,
+        "semimajor_axis_kepler_proxy_km": 6630.12433,
+        "scenarios": [
+          {
+            "H_eff_km_ASSUMED": 40,
+            "life_remaining_days_HEURISTIC": 20.598829,
+            "hypothetical_terminal_utc": "1964-06-06T22:10:33+00:00",
+            "error_days_if_NASA_label_means_UTC_civil_day": [
+              10.924001,
+              11.924001
+            ]
+          },
+          {
+            "H_eff_km_ASSUMED": 50,
+            "life_remaining_days_HEURISTIC": 25.748536,
+            "hypothetical_terminal_utc": "1964-06-12T01:46:08+00:00",
+            "error_days_if_NASA_label_means_UTC_civil_day": [
+              16.073708,
+              17.073708
+            ]
+          }
+        ]
+      },
+      "median_three_prior_secants": {
+        "status": "HEURISTIC_ONLY",
+        "dn_dt_rev_day2": 0.0071070362,
+        "da_dt_km_day": -1.953434,
+        "semimajor_axis_kepler_proxy_km": 6630.12433,
+        "scenarios": [
+          {
+            "H_eff_km_ASSUMED": 40,
+            "life_remaining_days_HEURISTIC": 20.476763,
+            "hypothetical_terminal_utc": "1964-06-06T19:14:47+00:00",
+            "error_days_if_NASA_label_means_UTC_civil_day": [
+              10.801935,
+              11.801935
+            ]
+          },
+          {
+            "H_eff_km_ASSUMED": 50,
+            "life_remaining_days_HEURISTIC": 25.595954,
+            "hypothetical_terminal_utc": "1964-06-11T22:06:25+00:00",
+            "error_days_if_NASA_label_means_UTC_civil_day": [
+              15.921126,
+              16.921126
+            ]
+          }
+        ]
+      },
+      "independent_terminal_time_validation": false,
+      "day_lead_hours": 144,
+      "clock_geometry": {
+        "CIA_0006_IF_GMT": {
+          "utc": "1964-05-26T00:06:00+00:00",
+          "sgp4_error": 0,
+          "elevation_deg": -59.512,
+          "slant_range_km": 11357.9
+        },
+        "MOLCZAN_0409_UTC_REFERENCE_EVENT_UNVERIFIED": {
+          "utc": "1964-05-26T04:09:00+00:00",
+          "sgp4_error": 0,
+          "elevation_deg": -28.842,
+          "slant_range_km": 6517.5
+        },
+        "CIA_0006_IF_VENEZUELAN_CIVIL": {
+          "utc": "1964-05-26T04:36:00+00:00",
+          "sgp4_error": 0,
+          "elevation_deg": -82.717,
+          "slant_range_km": 12978.7
+        }
+      }
+    },
+    {
+      "norad": 796,
+      "cutoff_utc_exclusive": "1964-05-23T00:00:00+00:00",
+      "NASA_reported_calendar_day_timezone_UNVERIFIED": "1964-05-26",
+      "prior_catalogue_epochs": 10,
+      "source_rows_used_for_last_two": [
+        9,
+        10
+      ],
+      "origin_catalogue_epoch_utc": "1964-05-21T17:43:03.790848+00:00",
+      "last_two": {
+        "status": "HEURISTIC_ONLY",
+        "dn_dt_rev_day2": 0.0123176724,
+        "da_dt_km_day": -3.366637,
+        "semimajor_axis_kepler_proxy_km": 6615.22531,
+        "scenarios": [
+          {
+            "H_eff_km_ASSUMED": 40,
+            "life_remaining_days_HEURISTIC": 11.881295,
+            "hypothetical_terminal_utc": "1964-06-02T14:52:07+00:00",
+            "error_days_if_NASA_label_means_UTC_civil_day": [
+              6.619533,
+              7.619533
+            ]
+          },
+          {
+            "H_eff_km_ASSUMED": 50,
+            "life_remaining_days_HEURISTIC": 14.851618,
+            "hypothetical_terminal_utc": "1964-06-05T14:09:23+00:00",
+            "error_days_if_NASA_label_means_UTC_civil_day": [
+              9.589857,
+              10.589857
+            ]
+          }
+        ]
+      },
+      "median_three_prior_secants": {
+        "status": "HEURISTIC_ONLY",
+        "dn_dt_rev_day2": 0.0071070362,
+        "da_dt_km_day": -1.942478,
+        "semimajor_axis_kepler_proxy_km": 6615.22531,
+        "scenarios": [
+          {
+            "H_eff_km_ASSUMED": 40,
+            "life_remaining_days_HEURISTIC": 20.592254,
+            "hypothetical_terminal_utc": "1964-06-11T07:55:54+00:00",
+            "error_days_if_NASA_label_means_UTC_civil_day": [
+              15.330492,
+              16.330492
+            ]
+          },
+          {
+            "H_eff_km_ASSUMED": 50,
+            "life_remaining_days_HEURISTIC": 25.740317,
+            "hypothetical_terminal_utc": "1964-06-16T11:29:07+00:00",
+            "error_days_if_NASA_label_means_UTC_civil_day": [
+              20.478556,
+              21.478556
+            ]
+          }
+        ]
+      },
+      "independent_terminal_time_validation": false,
+      "day_lead_hours": 72,
+      "clock_geometry": {
+        "CIA_0006_IF_GMT": {
+          "utc": "1964-05-26T00:06:00+00:00",
+          "sgp4_error": 0,
+          "elevation_deg": -41.089,
+          "slant_range_km": 8785.5
+        },
+        "MOLCZAN_0409_UTC_REFERENCE_EVENT_UNVERIFIED": {
+          "utc": "1964-05-26T04:09:00+00:00",
+          "sgp4_error": 0,
+          "elevation_deg": -87.278,
+          "slant_range_km": 13041.7
+        },
+        "CIA_0006_IF_VENEZUELAN_CIVIL": {
+          "utc": "1964-05-26T04:36:00+00:00",
+          "sgp4_error": 0,
+          "elevation_deg": -38.552,
+          "slant_range_km": 8355.7
+        }
+      }
+    },
+    {
+      "norad": 796,
+      "cutoff_utc_exclusive": "1964-05-25T00:00:00+00:00",
+      "NASA_reported_calendar_day_timezone_UNVERIFIED": "1964-05-26",
+      "prior_catalogue_epochs": 11,
+      "source_rows_used_for_last_two": [
+        10,
+        11
+      ],
+      "origin_catalogue_epoch_utc": "1964-05-24T16:52:39.060768+00:00",
+      "last_two": {
+        "status": "HEURISTIC_ONLY",
+        "dn_dt_rev_day2": 0.0494098508,
+        "da_dt_km_day": -13.302675,
+        "semimajor_axis_kepler_proxy_km": 6575.48486,
+        "scenarios": [
+          {
+            "H_eff_km_ASSUMED": 40,
+            "life_remaining_days_HEURISTIC": 3.006914,
+            "hypothetical_terminal_utc": "1964-05-27T17:02:36+00:00",
+            "error_days_if_NASA_label_means_UTC_civil_day": [
+              0.710144,
+              1.710144
+            ]
+          },
+          {
+            "H_eff_km_ASSUMED": 50,
+            "life_remaining_days_HEURISTIC": 3.758643,
+            "hypothetical_terminal_utc": "1964-05-28T11:05:05+00:00",
+            "error_days_if_NASA_label_means_UTC_civil_day": [
+              1.461872,
+              2.461872
+            ]
+          }
+        ]
+      },
+      "median_three_prior_secants": {
+        "status": "HEURISTIC_ONLY",
+        "dn_dt_rev_day2": 0.0123176724,
+        "da_dt_km_day": -3.316302,
+        "semimajor_axis_kepler_proxy_km": 6575.48486,
+        "scenarios": [
+          {
+            "H_eff_km_ASSUMED": 40,
+            "life_remaining_days_HEURISTIC": 12.061627,
+            "hypothetical_terminal_utc": "1964-06-05T18:21:23+00:00",
+            "error_days_if_NASA_label_means_UTC_civil_day": [
+              9.764857,
+              10.764857
+            ]
+          },
+          {
+            "H_eff_km_ASSUMED": 50,
+            "life_remaining_days_HEURISTIC": 15.077034,
+            "hypothetical_terminal_utc": "1964-06-08T18:43:34+00:00",
+            "error_days_if_NASA_label_means_UTC_civil_day": [
+              12.780264,
+              13.780264
+            ]
+          }
+        ]
+      },
+      "independent_terminal_time_validation": false,
+      "day_lead_hours": 24,
+      "clock_geometry": {
+        "CIA_0006_IF_GMT": {
+          "utc": "1964-05-26T00:06:00+00:00",
+          "sgp4_error": 0,
+          "elevation_deg": -35.941,
+          "slant_range_km": 7764.5
+        },
+        "MOLCZAN_0409_UTC_REFERENCE_EVENT_UNVERIFIED": {
+          "utc": "1964-05-26T04:09:00+00:00",
+          "sgp4_error": 0,
+          "elevation_deg": -18.926,
+          "slant_range_km": 4650.8
+        },
+        "CIA_0006_IF_VENEZUELAN_CIVIL": {
+          "utc": "1964-05-26T04:36:00+00:00",
+          "sgp4_error": 0,
+          "elevation_deg": -32.708,
+          "slant_range_km": 7202.6
+        }
+      }
+    }
+  ],
+  "inference": {
+    "calibrated_terminal_holdouts": 0,
+    "terminal_time_sigma_hours": null,
+    "historical_prediction_error": null,
+    "landing_location_error": null
+  }
+}
