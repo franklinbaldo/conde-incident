@@ -28,6 +28,7 @@ Um checksum TLE válido verifica somente a estrutura da linha examinada. Não au
     <option value="pt" lang="pt-BR" selected>Português</option>
     <option value="en" lang="en">English</option>
   </select>
+  <p id="ssg-tle-selection-status" role="status"></p>
   <div id="ssg-tle-embedded-details"></div>
   <button type="button" id="ssg-tle-copy">Copiar as duas linhas</button>
   <p id="ssg-tle-copy-status" role="status"></p>

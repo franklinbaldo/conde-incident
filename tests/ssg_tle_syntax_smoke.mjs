@@ -24,6 +24,18 @@ try {
       const language = page.locator('#ssg-tle-language');
       const copy = page.locator('#ssg-tle-copy');
       const status = page.locator('#ssg-tle-copy-status');
+      const selectionStatus = page.locator('#ssg-tle-selection-status');
+      assert.equal(await selectionStatus.getAttribute('role'), 'status');
+      assert.equal(await selectionStatus.innerText(), '');
+      assert.equal(await detail.getAttribute('aria-live'), null);
+      const matrix = 'https://github.com/franklinbaldo/conde-incident/blob/38ee0f01134f6a1ee07c9346945d058d2ad3ce0b/research/evidence_matrix_C001-C238_2026-11-11.md';
+      const expectedLinks = [
+        '/conde-incident/simulacoes/tles/custodia/',
+        'https://ntrs.nasa.gov/api/citations/19640001198/downloads/19640001198.pdf#page=10',
+        'https://ntrs.nasa.gov/api/citations/19640019314/downloads/19640019314.pdf#page=7',
+        matrix, 'https://github.com/franklinbaldo/conde-incident/pull/14', matrix + '#L839',
+        matrix + '#L905-L910', matrix + '#L164-L177', 'https://github.com/franklinbaldo/conde-incident/pull/28',
+      ];
       const { HISTORICAL_ORBITAL_DATA } = await import('../static/js/orbital-data.mjs');
       assert.equal(await selection.inputValue(), '528');
       for (const locale of ['pt', 'en']) {
@@ -31,6 +43,11 @@ try {
         for (const id of [527, 528, 529]) {
           await selection.selectOption(String(id));
           const sat = HISTORICAL_ORBITAL_DATA[id];
+          assert.equal(await selectionStatus.innerText(), (locale === 'pt' ? 'Objeto selecionado: NORAD ' : 'Selected object: NORAD ') + id);
+          assert.deepEqual(await detail.locator('a').evaluateAll(links => links.map(link => link.getAttribute('href'))), expectedLinks);
+          const limits = await detail.innerText();
+          assert.match(limits, locale === 'pt' ? /valor não zero tampouco certifica calibração histórica/ : /nonzero value also does not certify historical calibration/);
+          assert.match(limits, locale === 'pt' ? /Não há domínio admissível não vazio e reduzido/ : /No established nonempty reduced admissible domain/);
           assert.deepEqual(await detail.locator('pre code').allTextContents(), [sat.line1, sat.line2]);
           assert.match(await detail.innerText(), new RegExp('NORAD ' + id));
           assert.ok((await detail.innerText()).includes(id === 528 ? '198.5261°' : locale === 'pt' ? 'Não autenticado (cenário)' : 'Unauthenticated (scenario)'));
