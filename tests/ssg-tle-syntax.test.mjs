@@ -90,3 +90,29 @@ test('shared checksum preserves every diagnostic field, including nullable ident
   assert.deepEqual(auditTleSyntax(line.slice(0, -1) + '３', 1, 528), { ...valid, actualChecksum: null, valid: false });
   assert.deepEqual(auditTleSyntax(line + '\n', 1, 528), { ...valid, length: 70, actualChecksum: null, computedChecksum: null, valid: false });
 });
+
+test('embedded clipboard status follows only the current request', async () => {
+  const {createCopyFeedback} = await import('../static/js/ssg-tle-embedded.mjs');
+  const pending = [];
+  const states = [];
+  const feedback = createCopyFeedback(text => new Promise((resolve,reject) => pending.push({text,resolve,reject})), state => states.push(state));
+  const a = feedback.copy('first');
+  feedback.invalidate();
+  const b = feedback.copy('second');
+  pending[1].resolve();
+  await b;
+  pending[0].reject(new Error('stale'));
+  await a;
+  assert.deepEqual(states, ['', '', '', 'copied']);
+  const c = feedback.copy('third');
+  feedback.invalidate();
+  feedback.invalidate();
+  pending[2].resolve();
+  await c;
+  assert.equal(states.at(-1), '');
+  const d = feedback.copy('fourth');
+  pending[3].reject(new Error('current'));
+  await d;
+  assert.equal(states.at(-1), 'failed');
+  assert.deepEqual(pending.map(p => p.text), ['first','second','third','fourth']);
+});

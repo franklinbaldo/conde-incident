@@ -17,6 +17,50 @@ try {
       const response = await page.goto(new URL('simulacoes/tles/', base).toString(), { waitUntil: 'networkidle' });
       assert(response?.ok(), 'SSG TLE page HTTP failure');
       await page.locator('#ssg-tle-audit').waitFor({ state: 'visible' });
+      const embedded = page.locator('#ssg-tle-embedded');
+      await embedded.waitFor({ state: 'visible' });
+      const detail = page.locator('#ssg-tle-embedded-details');
+      const selection = page.locator('#ssg-tle-object');
+      const language = page.locator('#ssg-tle-language');
+      const copy = page.locator('#ssg-tle-copy');
+      const status = page.locator('#ssg-tle-copy-status');
+      const { HISTORICAL_ORBITAL_DATA } = await import('../static/js/orbital-data.mjs');
+      assert.equal(await selection.inputValue(), '528');
+      for (const locale of ['pt', 'en']) {
+        await language.selectOption(locale);
+        for (const id of [527, 528, 529]) {
+          await selection.selectOption(String(id));
+          const sat = HISTORICAL_ORBITAL_DATA[id];
+          assert.deepEqual(await detail.locator('pre code').allTextContents(), [sat.line1, sat.line2]);
+          assert.match(await detail.innerText(), new RegExp('NORAD ' + id));
+          assert.ok((await detail.innerText()).includes(id === 528 ? '198.5261°' : locale === 'pt' ? 'Não autenticado (cenário)' : 'Unauthenticated (scenario)'));
+        }
+      }
+      await page.evaluate(() => {
+        window.tlePending = [];
+        Object.defineProperty(navigator, 'clipboard', { configurable: true, value: {
+          writeText: text => new Promise((resolve, reject) => window.tlePending.push({text, resolve, reject}))
+        }});
+      });
+      await selection.selectOption('528');
+      await copy.click();
+      await selection.selectOption('527');
+      await copy.click();
+      assert.deepEqual(await page.evaluate(() => window.tlePending.map(p => p.text)), [528,527].map(id => HISTORICAL_ORBITAL_DATA[id].line1 + '\n' + HISTORICAL_ORBITAL_DATA[id].line2));
+      await page.evaluate(() => window.tlePending[1].resolve());
+      await page.waitForFunction(() => document.getElementById('ssg-tle-copy-status').textContent === 'Lines copied');
+      await page.evaluate(() => window.tlePending[0].reject(new Error('old')));
+      assert.equal(await status.innerText(), 'Lines copied');
+      await copy.click();
+      await selection.selectOption('529');
+      await selection.selectOption('527');
+      await page.evaluate(() => window.tlePending[2].resolve());
+      assert.equal(await status.innerText(), '');
+      await copy.click();
+      await page.evaluate(() => window.tlePending[3].reject(new Error('current')));
+      assert.match(await status.innerText(), /Could not copy/);
+      await language.selectOption('pt');
+      assert.equal(await status.innerText(), '');
       // Simulate a real clipboard payload (including Windows CRLF and a final
       // terminator) while retaining every character inside each TLE line.
       await page.getByLabel('Linha 1').focus();
@@ -80,6 +124,7 @@ try {
     const page = await context.newPage();
     await page.goto(new URL('simulacoes/tles/', base).toString(), { waitUntil: 'domcontentloaded' });
     assert.equal(await page.locator('#ssg-tle-audit').isVisible(), false);
+    assert.equal(await page.locator('#ssg-tle-embedded').isVisible(), false);
     assert.equal(await page.getByRole('link', { name: /ficha estática de custódia/i }).count(), 1);
   } finally { await context.close(); }
 } finally { await browser.close(); }
