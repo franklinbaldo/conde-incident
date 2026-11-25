@@ -53,7 +53,9 @@ Talvez Stanislaw estivesse descrevendo a circulação da notícia; talvez compri
 
 A crônica termina com uma explicação inesperadamente prosaica: um homem em Conde teria identificado o objeto como balão de sondagem meteorológica levado pelo vento.
 
-Esse fecho funciona muito bem como literatura. Como prova, precisa de uma segunda leitura. O texto não oferece nome do homem, fotografia, etiqueta do balão, relatório de meteorologia ou cadeia de recolhimento. E a documentação diplomática contemporânea não confirma que algum balão tenha sido encontrado no solo.
+O balão, porém, já estava no jornal cinco dias antes da crônica. Em 9 de novembro, o *Jornal do Brasil* apresentava na manchete uma explicação meteorológica. Segundo a transcrição do corpo da reportagem, a explicação era atribuída ao chefe de Polícia, e a Aeronáutica contestava a história do satélite e do ocupante. [O balão que chegou ao jornal antes de chegar à prova](/conde-incident/stories/2026-11-12-o-balao-que-chegou-ao-jornal/) é a outra parte desta reportagem: ali estão a página, a atribuição e os limites da leitura. A sequência das publicações não demonstra que Stanislaw tenha lido aquele jornal.
+
+O fecho funciona como literatura. Como prova, falta identificar o homem, o equipamento e seu recolhimento.
 
 No [telegrama americano de 14 de novembro](https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D001_Diplomatic-Cable_Brazil_November-14-1963.pdf), a hipótese meteorológica aparece em meio a informações ainda sujeitas a verificação. O [aerograma A-628 de 20 de novembro](https://media.ondisclosure.org/web/official-uap/pursue/release-05/DOS-UAP-D002_Diplomatic-Cable_Brazil_November-20-1963.pdf) reproduz a contestação consular da notícia e ressalta que nem mesmo um avistamento semelhante a balão fora verificado.
 
