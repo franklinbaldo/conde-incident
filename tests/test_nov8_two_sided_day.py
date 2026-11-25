@@ -22,6 +22,7 @@ class BilateralDayTests(unittest.TestCase):
             "src/lib/catalogDayLikelihood.ts",
             "src/lib/monteCarlo.ts",
             "src/lib/constants.ts",
+            "static/js/orbital-data.mjs",
             "src/lib/astrodynamics.ts",
             "src/types/astrodynamics.ts",
             "src/components/MonteCarloVisualizer.tsx",

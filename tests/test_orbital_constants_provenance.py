@@ -18,7 +18,7 @@ def between(text, before, after):
 class LegacySourceAlignment(unittest.TestCase):
     def test_528_app_uses_traceable_literal_pair(self):
         line1, line2 = PAIR.read_text(encoding="ascii").splitlines()
-        source = (ROOT / "src/lib/constants.ts").read_text(encoding="utf-8")
+        source = (ROOT / "static/js/orbital-data.mjs").read_text(encoding="utf-8")
         block = between(source, "  528: {", "  527: {")
         self.assertIn("line1: '" + line1 + "'", block)
         self.assertIn("line2: '" + line2 + "'", block)
@@ -48,7 +48,7 @@ class LegacySourceAlignment(unittest.TestCase):
                 self.assertNotIn("RAAN_528_DEG = 284.1520", body)
 
     def test_527_529_unverified_vectors_are_not_presented_as_primary(self):
-        source = (ROOT / "src/lib/constants.ts").read_text(encoding="utf-8")
+        source = (ROOT / "static/js/orbital-data.mjs").read_text(encoding="utf-8")
         block_527 = between(source, "  527: {", "  529: {")
         block_529 = between(source, "  529: {", "\n};")
         for block in (block_527, block_529):

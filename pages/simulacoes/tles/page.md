@@ -14,6 +14,26 @@ Um checksum TLE válido verifica somente a estrutura da linha examinada. Não au
 
 [Inspecionar o par TLE secundário do 528, seus checksums e sua proveniência, sem JavaScript](/conde-incident/simulacoes/tles/custodia/)
 
+<section id="ssg-tle-embedded" class="tle-audit" hidden aria-labelledby="ssg-tle-embedded-title">
+  <h2 id="ssg-tle-embedded-title">Inspeção dos conjuntos incorporados</h2>
+  <p id="ssg-tle-embedded-notice"></p>
+  <label for="ssg-tle-object">Objeto</label>
+  <select id="ssg-tle-object">
+    <option value="527">NORAD 527</option>
+    <option value="528" selected>NORAD 528</option>
+    <option value="529">NORAD 529</option>
+  </select>
+  <label for="ssg-tle-language">Idioma da inspeção</label>
+  <select id="ssg-tle-language">
+    <option value="pt" lang="pt-BR" selected>Português</option>
+    <option value="en" lang="en">English</option>
+  </select>
+  <div id="ssg-tle-embedded-details"></div>
+  <button type="button" id="ssg-tle-copy">Copiar as duas linhas</button>
+  <p id="ssg-tle-copy-status" role="status"></p>
+</section>
+<script type="module" src="/conde-incident/js/ssg-tle-embedded.mjs"></script>
+
 ## Verificador local de checksum
 
 Insira **duas linhas de sua escolha**, cada uma com exatamente 69 caracteres. Você pode colar as duas linhas juntas no campo **Linha 1**, inclusive com um título opcional acima delas: o formulário separa os campos sem modificar os 69 caracteres de cada linha. Qualquer título é apenas texto copiado, **não identifica nem autentica a fonte**. Confira as linhas antes de verificar. Esta ferramenta roda no navegador, sem enviar o texto a serviços externos, e reproduz apenas as verificações mínimas de comprimento, prefixo/NORAD e dígito módulo 10 do laboratório legado. Ela não autentica TLE histórico, sensor, época, parâmetros orbitais ou local de reentrada.

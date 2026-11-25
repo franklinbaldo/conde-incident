@@ -63,11 +63,6 @@
       "observed_bytes": 31713
     },
     {
-      "path": "src/lib/constants.ts",
-      "git_blob_sha": "90e8ddec0a175056ddeb756fb3465ef110fbcc3b",
-      "observed_bytes": 20598
-    },
-    {
       "path": "tools/provenance_graph.py",
       "git_blob_sha": "398303934fa39e3bc167dc6de912a3e8d77252ec",
       "observed_bytes": 25101

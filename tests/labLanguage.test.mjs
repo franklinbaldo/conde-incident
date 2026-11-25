@@ -36,7 +36,7 @@ test('app synchronizes native history and language without tracking storage', ()
 
 test('sensitivity UI discloses the reference-date tautology in both languages', () => {
   const source = readFileSync(new URL('../src/components/AtmosphereSensitivity.tsx', import.meta.url), 'utf8');
-  const constants = readFileSync(new URL('../src/lib/constants.ts', import.meta.url), 'utf8');
+  const constants = readFileSync(new URL('../static/js/orbital-data.mjs', import.meta.url), 'utf8');
   assert.match(constants, /epochDate: new Date\('1963-10-27T14:40:16\.132Z'\)/);
   assert.match(source, /return 12\.0 \* Math\.pow\(bRatio, 0\.28\)/);
   assert.match(source, /produz 08\/11\/1963 por construção/);
