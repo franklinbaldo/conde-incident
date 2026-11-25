@@ -1,0 +1,238 @@
+{
+  "experiment_id": "C241-PHYSICAL-CD-PRIORS-20261124",
+  "verification_status": "EXPLORATORY_PHYSICAL_CD_AND_NEGATIVE_STORM_GAMMA_CONTROL",
+  "provenance": {
+    "tle_parquet_sha256": "c4bf072a8fc1084506a6146ec79f97d8f8a918fdbe2fabdd16e8cc077f3ddc09",
+    "gfz_space_weather_sha256": "46cea03157cc4b15da577721e0dac59c9a41669d9e93bbeb9c5e55203ea8eb1d",
+    "atmosphere": "NRLMSIS-2.1 (pymsis 0.13.0)"
+  },
+  "epistemic_contract": {
+    "historical_event_time_utc": null,
+    "mass_528_identified": false,
+    "storm_gamma_promoted": false,
+    "impact_geography": null
+  },
+  "cd_regime_comparison": {
+    "637_fixed_Cd22": {
+      "cd_range": [
+        2.2,
+        2.2
+      ],
+      "Am_median_m2_kg": 0.00819,
+      "sigma_a_km": 0.437,
+      "sigma_f_frac": 0.1225,
+      "bic": 65.05,
+      "beta_res_per_100km": 0.107,
+      "reentry_utc": "1963-11-07T11:29Z",
+      "delta_hours_vs_fixed": 0.0
+    },
+    "637_phys_cyl_L35": {
+      "cd_range": [
+        2.236,
+        2.374
+      ],
+      "Am_median_m2_kg": 0.00797,
+      "sigma_a_km": 0.488,
+      "sigma_f_frac": 0.0966,
+      "bic": 65.43,
+      "beta_res_per_100km": 0.047,
+      "reentry_utc": "1963-11-07T12:50Z",
+      "delta_hours_vs_fixed": 1.35,
+      "cd_at_120km": 1.99
+    },
+    "637_phys_cyl_L152": {
+      "reentry_utc": "1963-11-07T12:30Z",
+      "delta_hours_vs_fixed": 1.02,
+      "cd_at_120km": 2.1
+    },
+    "528_fixed_Cd22": {
+      "cd_range": [
+        2.2,
+        2.2
+      ],
+      "Am_median_m2_kg": 0.10735,
+      "sigma_a_km": 0.284,
+      "sigma_f_frac": 0.1433,
+      "bic": 87.65,
+      "beta_res_per_100km": -0.147,
+      "reentry_utc": "1963-11-08T23:04Z",
+      "delta_hours_vs_fixed": 0.0
+    },
+    "528_phys_plate_tumble": {
+      "cd_range": [
+        2.38,
+        2.66
+      ],
+      "Am_median_m2_kg": 0.09344,
+      "sigma_a_km": 0.275,
+      "sigma_f_frac": 0.1606,
+      "bic": 90.89,
+      "beta_res_per_100km": -0.238,
+      "reentry_utc": "1963-11-10T00:51Z",
+      "delta_hours_vs_fixed": 25.78,
+      "cd_at_120km": 2.19
+    },
+    "528_phys_sphere": {
+      "cd_range": [
+        2.073,
+        2.131
+      ],
+      "Am_median_m2_kg": 0.11254,
+      "sigma_a_km": 0.284,
+      "sigma_f_frac": 0.1465,
+      "bic": 88.15,
+      "beta_res_per_100km": -0.169,
+      "reentry_utc": "1963-11-09T03:54Z",
+      "delta_hours_vs_fixed": 4.83,
+      "cd_at_120km": 2.02
+    }
+  },
+  "engineering_priors": {
+    "norad_637_agena_d_dry_floor_kg": 670.0,
+    "norad_637_attitude_mass_map": [
+      {
+        "length_m": 6.0,
+        "mass_uniform_tumbling_kg": 1015.5,
+        "mass_gravity_gradient_kg": 1147.3,
+        "mass_axial_flow_aligned_kg": 299.9
+      },
+      {
+        "length_m": 7.1,
+        "mass_uniform_tumbling_kg": 1180.7,
+        "mass_gravity_gradient_kg": 1357.6,
+        "mass_axial_flow_aligned_kg": 318.0
+      },
+      {
+        "length_m": 7.6,
+        "mass_uniform_tumbling_kg": 1255.8,
+        "mass_gravity_gradient_kg": 1453.2,
+        "mass_axial_flow_aligned_kg": 326.3
+      }
+    ],
+    "norad_528_thickness_map": [
+      {
+        "material": "Mg_HK31A",
+        "density_kg_m3": 1780,
+        "plate_t_mm_fixed_Cd22": 2.62,
+        "plate_t_mm_phys_Cd248": 2.95,
+        "shell_t_mm_fixed_Cd22": 1.31,
+        "shell_t_mm_phys_Cd210": 1.25
+      },
+      {
+        "material": "Composite_FRP",
+        "density_kg_m3": 1800,
+        "plate_t_mm_fixed_Cd22": 2.59,
+        "plate_t_mm_phys_Cd248": 2.92,
+        "shell_t_mm_fixed_Cd22": 1.29,
+        "shell_t_mm_phys_Cd210": 1.24
+      },
+      {
+        "material": "Al_2024",
+        "density_kg_m3": 2700,
+        "plate_t_mm_fixed_Cd22": 1.73,
+        "plate_t_mm_phys_Cd248": 1.95,
+        "shell_t_mm_fixed_Cd22": 0.86,
+        "shell_t_mm_phys_Cd210": 0.82
+      },
+      {
+        "material": "Ti_6Al_4V",
+        "density_kg_m3": 4430,
+        "plate_t_mm_fixed_Cd22": 1.05,
+        "plate_t_mm_phys_Cd248": 1.19,
+        "shell_t_mm_fixed_Cd22": 0.53,
+        "shell_t_mm_phys_Cd210": 0.5
+      },
+      {
+        "material": "SS_304",
+        "density_kg_m3": 7850,
+        "plate_t_mm_fixed_Cd22": 0.59,
+        "plate_t_mm_phys_Cd248": 0.67,
+        "shell_t_mm_fixed_Cd22": 0.3,
+        "shell_t_mm_phys_Cd210": 0.28
+      }
+    ]
+  },
+  "storm_gamma_negative_control": {
+    "individual_fits": {
+      "81_Exp9": {
+        "n_intervals": 20,
+        "bic_gamma0": 67.02,
+        "bic_free_gamma": 68.49,
+        "delta_bic": 1.47,
+        "sf_gamma0": 0.1525,
+        "sf_free_gamma": 0.1357,
+        "gamma_median": 0.3,
+        "gamma_ci90": [
+          -0.133,
+          0.647
+        ]
+      },
+      "529": {
+        "n_intervals": 14,
+        "bic_gamma0": 20.05,
+        "bic_free_gamma": 22.55,
+        "delta_bic": 2.5,
+        "sf_gamma0": 0.0614,
+        "sf_free_gamma": 0.1196,
+        "gamma_median": -0.158,
+        "gamma_ci90": [
+          -0.728,
+          0.338
+        ]
+      },
+      "637": {
+        "n_intervals": 23,
+        "bic_gamma0": 65.43,
+        "bic_free_gamma": 66.32,
+        "delta_bic": 0.89,
+        "sf_gamma0": 0.0966,
+        "sf_free_gamma": 0.0733,
+        "gamma_median": 0.247,
+        "gamma_ci90": [
+          -0.132,
+          0.546
+        ]
+      },
+      "528": {
+        "n_intervals": 43,
+        "bic_gamma0": 88.15,
+        "bic_free_gamma": 91.92,
+        "delta_bic": 3.77,
+        "sf_gamma0": 0.1465,
+        "sf_free_gamma": 0.1515,
+        "gamma_median": 0.028,
+        "gamma_ci90": [
+          -0.469,
+          0.427
+        ]
+      }
+    },
+    "joint_pre_oct28_mle_gamma": 0.15,
+    "post_oct27_out_of_sample": {
+      "81_Exp9": {
+        "n_train": 16,
+        "n_test": 4,
+        "rel_rmse_gamma0": 0.13,
+        "mean_bias_gamma0": -0.057,
+        "rel_rmse_joint_gamma": 0.129,
+        "mean_bias_joint_gamma": -0.06
+      },
+      "529": {
+        "n_train": 9,
+        "n_test": 5,
+        "rel_rmse_gamma0": 0.146,
+        "mean_bias_gamma0": -0.046,
+        "rel_rmse_joint_gamma": 0.151,
+        "mean_bias_joint_gamma": -0.066
+      },
+      "637": {
+        "n_train": 19,
+        "n_test": 4,
+        "rel_rmse_gamma0": 0.168,
+        "mean_bias_gamma0": 0.107,
+        "rel_rmse_joint_gamma": 0.141,
+        "mean_bias_joint_gamma": 0.094
+      }
+    }
+  }
+}
