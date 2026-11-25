@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { auditTleSyntax } from '../src/lib/tleChecksum.ts';
+import { auditTleSyntax as auditSsgTleSyntax } from '../static/js/ssg-tle-syntax.mjs';
 
 const source = readFileSync(new URL('../src/components/TleAuditViewer.tsx', import.meta.url), 'utf8');
 const first = '1 00528U 63003B   63300.61111111  .00000000  00000-0  00000-0 0  9992';
@@ -52,4 +53,20 @@ test('stable source and matrix occurrence links exist without claiming ground im
 
 test('no broken Evidence/hash deep links are exposed before the research router is integrated', () => {
   assert.doesNotMatch(source, /#\/(?:research|map)/);
+});
+
+test('lab and standalone SSG preserve matching diagnostics on mutated input', () => {
+  for (const [line, number] of [[first, 1], [second, 2]]) {
+    const variants = [line, line.slice(0, -1), ' ' + line, line + '\n'];
+    for (let i = 0; i < line.length; i++) {
+      for (const c of ['0', '-', 'X', 'é', '３']) {
+        variants.push(line.slice(0, i) + c + line.slice(i + 1));
+      }
+    }
+    for (const variant of variants) {
+      for (const [expected, id] of [[number, 528], [3 - number, 528], [number, 527]]) {
+        assert.deepEqual(auditTleSyntax(variant, expected, id), auditSsgTleSyntax(variant, expected, id));
+      }
+    }
+  }
 });
