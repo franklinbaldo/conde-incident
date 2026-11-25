@@ -10,7 +10,7 @@ canonical_route: "/conde-incident/o-que-sabemos/"
 
 # A esfera de Conde: o que sabemos até agora
 
-*Atualizado em 17 de novembro de 2026.*
+*Atualizado em 25 de novembro de 2026.*
 
 No dia **8 de novembro de 1963**, uma notícia atribuída à Rádio Tupi do Rio de Janeiro descreveu uma esfera metálica caída no centro de **Conde, na Bahia**. Ela teria aberto uma cratera de quatro metros. Haveria janelas cobertas de vidro e um corpo vestido com roupas pesadas, marcadas por inscrições indecifráveis.
 
@@ -31,6 +31,8 @@ Um detalhe merece sobreviver a qualquer resumo. O despacho relata que um jornali
 A hipótese de um **balão meteorológico** apareceu cedo no noticiário e nas declarações atribuídas a autoridades. Mas o próprio expediente consular diz que nem esse avistamento fora confirmado. Em **14 de novembro**, **Stanislaw Ponte Preta** já fazia sátira da história que mudava de forma ao circular. Sua crônica é testemunho do ambiente jornalístico, não da queda de uma nave.
 
 Uma reação distinta apareceu no *Correio da Manhã* de **14 de novembro**: o professor **Walter da Silva Curvello** considerou fantasiosa a notícia baiana. No arquivo americano, a ficha do *Project Blue Book* classificou o caso como **`Other (Hoax)`**, mencionando uma investigação sem identificar autores, data ou documentos examinados. **A opinião de Curvello e a classificação administrativa registram respostas à história, não testemunhas da queda nem perícia em Conde.** Os [Cadernos 38](/conde-incident/stories/2026-11-15-o-carimbo-que-nao-explicava-conde/) e [39](/conde-incident/stories/2026-11-16-o-cientista-e-a-noticia-da-bahia/) mostram as duas fontes; a [ficha L](https://github.com/franklinbaldo/conde-incident/blob/main/research/editorial/coruja-ficha-l-cinco-reacoes-20261117.md) coloca essas e outras reações lado a lado, sem contá-las como observações independentes.
+
+A semelhança entre notícias também foi posta à prova. Em 8 de novembro, uma reportagem policial do Recife sobre estátuas furtadas mencionava um buraco de quatro metros. A medida coincide com a da Tupi, mas a matéria descreve outro acontecimento. A leitura de 96 páginas de *Última Hora* Nordeste, em duas semanas de 1963, não identificou uma história anterior que reunisse os detalhes do relato da esfera. A origem da frase e a ordem em que as notícias circularam continuam desconhecidas. [Veja como a comparação foi feita](/conde-incident/stories/2026-11-18-noventa-e-seis-paginas-e-quatro-metros/).
 
 ## Depois, apareceu uma data nos registros espaciais
 
