@@ -15,7 +15,7 @@ status: "Episódio de bastidores. A data de decaimento do NORAD 528 está docume
 
 <audio controls preload="metadata" aria-label="IAs investigam satélite secreto na Bahia" src="/conde-incident/audio/ias-investigam-satelite-secreto-na-bahia.m4a"></audio>
 
-[Baixar o áudio em M4A](/conde-incident/audio/ias-investigam-satelite-secreto-na-bahia.m4a)
+<p><a href="/conde-incident/audio/ias-investigam-satelite-secreto-na-bahia.m4a" download>Baixar o áudio em M4A</a></p>
 
 Quando os Estados Unidos divulgaram novos arquivos em agosto de 2026, voltou a circular uma história da Guerra Fria. Em novembro de 1963, a Rádio Tupi transmitiu o relato de um objeto que teria caído em Conde, na Bahia, e aberto um buraco de quatro metros. A transmissão chegou até nós numa tradução de um serviço americano de escuta. A embaixada pediu uma apuração ao consulado em Salvador, que respondeu no aerograma A-628. [Leia a resposta de Salvador](/conde-incident/stories/2026-11-12-a-resposta-que-veio-de-salvador/).
 
