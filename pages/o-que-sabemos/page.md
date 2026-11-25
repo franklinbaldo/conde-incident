@@ -16,6 +16,8 @@ No dia **8 de novembro de 1963**, uma notícia atribuída à Rádio Tupi do Rio 
 
 É difícil encontrar uma história mais pronta para atravessar redações. O problema é que sabemos **que ela foi contada**, não que a esfera, a cratera ou o corpo tenham sido encontrados. O mais antigo registro conhecido nesta investigação é uma [transcrição de monitoramento do FBIS, preservada em arquivo americano](https://media.ondisclosure.org/web/official-uap/pursue/release-05/EOP-UAP-D001_NASC-Inquiry-into-Bahia-Brazil-Incident_November-13-1963.pdf). Não traz o nome de uma testemunha em Conde, fotografia ou inspeção do terreno.
 
+Há uma pista que impede tratar o rádio como origem comprovada da história: uma [mensagem militar norte-americana de 14 de novembro](https://catalog.archives.gov/medialz/partners/dc-metro/rg-341/597821/T1206-ProjectBlueBook_0049/images/0810.jp2) cita *O Globo* de **8 de novembro de 1963**, com uma notícia recebida de Salvador. O exemplar ainda não foi recuperado. A referência pode indicar uma notícia anterior à Tupi, um despacho comum ou uma citação imprecisa; por enquanto, não permite escolher entre esses caminhos. [O Caderno 20 explica o que falta](/conde-incident/stories/2026-11-13-o-jornal-na-mensagem-militar/).
+
 Essa pequena diferença entre notícia e acontecimento é o fio que liga as duas investigações deste dossiê: **como a história se espalhou** e **o que realmente podia estar no céu naquele dia**.
 
 ## Primeiro, a notícia encontrou quem a contestasse
