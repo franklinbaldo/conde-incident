@@ -78,3 +78,15 @@ test('three-line TLE clipboard imports an untrusted header without changing orbi
   assert.equal(parseTleClipboard('TAB\tHEADER\n' + first + '\n' + second), null);
   assert.match(readFileSync('pages/simulacoes/tles/page.md', 'utf8'), /não identifica nem autentica a fonte/);
 });
+
+test('shared checksum preserves every diagnostic field, including nullable identity', () => {
+  // Synthetic payload: 1 + 5 + 2 + 8 + minus + 1 = 18; final digit 8.
+  const line = '1 00528-1'.padEnd(68, ' ') + '8';
+  const valid = { length: 69, expectedLine: 1, prefixMatches: true,
+    actualChecksum: 8, computedChecksum: 8, valid: true };
+  assert.deepEqual(auditTleSyntax(line, 1, 528), valid);
+  assert.deepEqual(auditTleSyntax(line, 1, null), { ...valid, prefixMatches: false, valid: false });
+  assert.deepEqual(auditTleSyntax(line, 2, 528), { ...valid, expectedLine: 2, prefixMatches: false, valid: false });
+  assert.deepEqual(auditTleSyntax(line.slice(0, -1) + '３', 1, 528), { ...valid, actualChecksum: null, valid: false });
+  assert.deepEqual(auditTleSyntax(line + '\n', 1, 528), { ...valid, length: 70, actualChecksum: null, computedChecksum: null, valid: false });
+});

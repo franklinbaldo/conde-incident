@@ -38,6 +38,8 @@ REQUIRED_INPUTS = (
     ".github/workflows/ui-keyboard-smoke.yml",
     "src/components/AtmosphereSensitivity.tsx",
     "src/components/TleAuditViewer.tsx",
+    "src/lib/tleChecksum.ts",
+    "static/js/tle-checksum.mjs",
     "src/components/TriangulationDashboard.tsx",
     "tests/test_ui_keyboard_trigger_contract.py",
     "tests/map-provider-request-guard.mjs",
