@@ -83,7 +83,7 @@ function attach() {
       pre.className = 'tle-source-lines';
       pre.tabIndex = 0;
       pre.setAttribute('role', 'region');
-      pre.setAttribute('aria-label', heading.textContent);
+      pre.setAttribute('aria-label', 'TLE · NORAD ' + sat.noradId + ' · ' + heading.textContent);
       pre.append(element('code', line));
       nodes.push(heading, pre, element('p', t.length + ': ' + audit.length + '/69; ' +
         t.prefix + ': ' + (audit.prefixMatches ? t.pass : t.fail) + '; ' +
