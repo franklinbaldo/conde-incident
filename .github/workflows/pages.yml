@@ -107,6 +107,17 @@ jobs:
           cp -R static/img/. public/img/
           cp -R static/js/. public/js/
           cp src/lib/coastline110mPart[123].js public/js/
+      - name: Add verified Cafezinho episode audio
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          filename=ias-investigam-satelite-secreto-na-bahia.m4a
+          mkdir -p public/audio
+          gh release download audio-cafezinho-2026-11-24 --repo "$GITHUB_REPOSITORY" --pattern "$filename" --dir public/audio
+          printf '%s  %s\n' 'bb72eefdd8a6604db59848fdf125b1fde0bb8273dfc3ca79187ab1c1a1108602' "public/audio/$filename" | sha256sum --check -
+          grep -F '<audio' public/stories/2026-11-24-ias-investigam-satelite-secreto-na-bahia/index.html
       - name: Verify native SSG print mode against built documentary pages
         run: SSG_PRINT_BUILT=1 node --test tests/ssg-print-mode.test.mjs
       - name: Verify design tokens in final Pages artifact
